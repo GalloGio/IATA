@@ -168,43 +168,67 @@ global class ANG_RME_Alert_Service {
 			else {
 				Account acct = accs[0];
 
-				if(acct.IATA_ISO_Country__r.AMS_Settlement_System__r.RHC_Exceptional_Monitoring__c) {
-					if(isEligibleForRhcExceptionalMonitoring(eventType, req, acct.IATA_ISO_Country__r.AMS_Settlement_System__r.Exc_RHC_Monitoring_Alert__c)){
-						saveAlert(req, acct.Id, null);
-					} else {
-						//Ignore the request
-						setResponse(null, 202);
+				switch on req.eventType {
+					when 'RTSAlert'{ //move to static final above when Salesforce decides is a good idea to release it https://trailblazer.salesforce.com/ideaView?id=0873A000000lLkNQAU
+						//handle Real Time Sales alert request
+						saveRTSAlert(req, acct.Id);
 					}
-				}
-				//handle Real Time Sales alert request
-				else if(req.eventType == RTS_ALERT_EVENT_TYPE) {
-					saveRTSAlert(req, acct.Id);
-				}
-				else if(req.eventType == EDS_ALERT_EVENT_TYPE){
-					saveEDSAlert(req, acct.Id);
-				}
-				else if(acct.RHC_Informations__r.isEmpty()) {
-					setResponse('Agent '+req.iataCode+' does not have RHC set', 404);
-				} 
-				else if(acct.RHC_informations__r.size()>1) {
-					setResponse('Internal Error: Agent '+req.iataCode+' has more than one RHC record', 409);
-				} 
-				else{
-					//information found, validate values
-					ANG_RHC_Information__c rhcInfo = acct.RHC_informations__r[0];
-
-					String errorMessage = '';
-					//if(rhcInfo.ANG_RHC_Amount__c != req.storedRHCValue) errorMessage += '\n- RHC Amount mismatch. Request value: '+req.storedRHCValue+'. Current value: '+rhcInfo.ANG_RHC_Amount__c;
-					if(rhcInfo.CurrencyIsoCode != req.storedBaseCurrency) errorMessage += '\n- Currency mismatch. Request value: '+req.storedBaseCurrency+'. Current value: '+rhcInfo.CurrencyIsoCode;
-
-					if(String.isNotEmpty(errorMessage)) setResponse('Conflicting informations:'+errorMessage, 409);
-					//validation passed, perform logic
-					else if(eventType == RHC_ALERT_EVENT_TYPE){
-						updateRHC(req, rhcInfo);
-						saveAlert(req, rhcInfo.ANG_AccountId__c, rhcInfo.Id);
+					when 'EDSAlert'{
+						//handle EDS alert request
+						saveEDSAlert(req, acct.Id);
 					}
-					else if(eventType == BALANCE_UPDATE_EVENT_TYPE) updateRHC(req, rhcInfo);
-					else setResponse('Invalid Event Type: '+eventType, 405);
+					when 'RHCAlert'{
+						if(acct.IATA_ISO_Country__r.AMS_Settlement_System__r.RHC_Exceptional_Monitoring__c) {
+							if(string.isNotBlank(acct.IATA_ISO_Country__r.AMS_Settlement_System__r.Exc_RHC_Monitoring_Alert__c) 
+								&& acct.IATA_ISO_Country__r.AMS_Settlement_System__r.Exc_RHC_Monitoring_Alert__c.contains(req.thresholdLevel + req.direction)){
+								saveAlert(req, acct.Id, null);
+							} else {
+								//Ignore the request
+								setResponse(null, 202);
+							}
+						}else{
+							if(acct.RHC_Informations__r.isEmpty()) {
+								setResponse('Agent '+req.iataCode+' does not have RHC set', 404);
+							} 
+							else if(acct.RHC_informations__r.size()>1) {
+								setResponse('Internal Error: Agent '+req.iataCode+' has more than one RHC record', 409);
+							} else{
+								ANG_RHC_Information__c rhcInfo = acct.RHC_informations__r[0];
+
+								String errorMessage = '';
+								if(rhcInfo.CurrencyIsoCode != req.storedBaseCurrency) errorMessage += '\n- Currency mismatch. Request value: '+req.storedBaseCurrency+'. Current value: '+rhcInfo.CurrencyIsoCode;
+
+								if(String.isNotEmpty(errorMessage))
+									setResponse('Conflicting informations:'+errorMessage, 409);
+								else{
+									updateRHC(req, rhcInfo);
+									saveAlert(req, rhcInfo.ANG_AccountId__c, rhcInfo.Id);
+								}
+							}
+						}
+					}
+					when 'BalanceUpdate'{
+						if(acct.RHC_Informations__r.isEmpty()) {
+							setResponse('Agent '+req.iataCode+' does not have RHC set', 404);
+						} 
+						else if(acct.RHC_informations__r.size()>1) {
+							setResponse('Internal Error: Agent '+req.iataCode+' has more than one RHC record', 409);
+						} else{
+							ANG_RHC_Information__c rhcInfo = acct.RHC_informations__r[0];
+
+							String errorMessage = '';
+							if(rhcInfo.CurrencyIsoCode != req.storedBaseCurrency) errorMessage += '\n- Currency mismatch. Request value: '+req.storedBaseCurrency+'. Current value: '+rhcInfo.CurrencyIsoCode;
+
+							if(String.isNotEmpty(errorMessage))
+								setResponse('Conflicting informations:'+errorMessage, 409);
+							else{
+								updateRHC(req, rhcInfo);
+							}
+						}
+					}
+					when else {
+						setResponse('Invalid Event Type: '+eventType, 405);
+					}
 				}
 			}
 		}catch(JSONException e){
@@ -224,10 +248,6 @@ global class ANG_RME_Alert_Service {
 	@HttpPost
 	global static void doPost(String accountId){
 		ANG_RME_Alert_Service.requestBalanceUpdate(accountId);
-	}
-
-	private static boolean isEligibleForRhcExceptionalMonitoring(String eventType, RHCMessage request, string AcceptedAlert) {
-		return eventType == RHC_ALERT_EVENT_TYPE && (string.isNotBlank(AcceptedAlert) && AcceptedAlert.contains(request.thresholdLevel + request.direction));
 	}
 
 	private static void saveAlert(RHCMessage message, Id accountId, Id rhcInfoId) {
