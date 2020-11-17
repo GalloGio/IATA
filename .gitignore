@@ -39,9 +39,6 @@ src/staticresources/IEC_carrousel03.resource
 src/staticresources/IEC_windows.resource
 src/staticresources/IEC_carrousel01.resource
 src/staticresources/eBroadcastAssets.resource
-src/applications/standard__Platform.app
-src/applications/standard__LightningSalesConsole.app
-src/applications/standard__LightningService.app
 
 
 .project
@@ -52,9 +49,15 @@ salesforce.schema
 src/workflows/SocialPersona.workflow
 src/workflows/SocialPost.workflow
 src/layouts/EmailMessage-Email Message Layout.layout
+
+#Apps
 src/applications/standard__DataAssessment.app
 src/applications/standard__LightningSales.app
 src/applications/standard__LightningInstrumentation.app
+src/applications/standard__Platform.app
+src/applications/standard__LightningSalesConsole.app
+src/applications/standard__LightningService.app
+src/applications/standard__TrustCard.app
 
 #Queues
 src/queues/CasesAmericasemails.queue
