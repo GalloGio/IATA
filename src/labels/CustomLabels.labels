@@ -51915,7 +51915,7 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>icg fleet</shortDescription>
-        <value>Fleet</value>
+        <value>Fleet (Number of Trucks)</value>
     </labels>
     <labels>
         <fullName>icg_or_create_a_new_hierarchy</fullName>
