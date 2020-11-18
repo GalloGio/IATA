@@ -83,13 +83,10 @@ public class PASS_UserProvisioningRequestHandler_Test {
 		
 		Portal_Application_Right__c portalAccess = new Portal_Application_Right__c();
 		portalAccess.Portal_Application__c = pa.Id;
-		portalAccess.Right__c = 'Access Requested';
+		portalAccess.Right__c = 'Access Granted';
 		portalAccess.Contact__c = con.Id;
 
 		insert portalAccess;
-
-		portalAccess.Right__c = 'Access Granted';
-		update portalAccess;
 
 		portalAccess.Right__c = 'Access Denied';
 		update portalAccess;
