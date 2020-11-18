@@ -691,7 +691,6 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 	updateHiddenOperatingStations(){
 		let hiddenOperatingStations = this.hiddenCargoStations && this.hiddenCargoStations.length > 0 ? 'OperatingCargo:'+this.hiddenCargoStations.join(',')+'|': '';
 		hiddenOperatingStations += this.hiddenRampHandlers && this.hiddenRampHandlers.length > 0 ? 'OperatingRamp:'+this.hiddenRampHandlers.join(',')+'|':'';
-        console.log('this.hiddenRampHandlers' + JSON.stringify(this.hiddenRampHandlers));
         saveHiddenOperatingStations({hiddenOperatingStations : hiddenOperatingStations,facilityId : this.facility.Id}).then(result => {
 			if(!result){
 				this.showToast("Error", this.label.icg_error_update_facility, "error");
@@ -1255,7 +1254,6 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
             this.setFacilityInfo(this.facility.Id, 'nearestAirportObj', response);
         })
         .catch(error => {
-            console.error("error", error);
             this.showToast("Error", this.label.icg_error_update_facility, "error");
         });
         
