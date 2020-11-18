@@ -3317,6 +3317,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Email_Here</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Email Link button Image --></label>
+        <name>CSP_Email_Link_Button_Image</name>
+    </customLabels>
+    <customLabels>
         <label>국제항공운송협회 (IATA)  고객 포털  비밀번호 재설정 요청이 접수되었습니다.</label>
         <name>CSP_Email_Password_Reset_Body_Part_1</name>
     </customLabels>
@@ -3553,7 +3557,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Forgot_Password_Success_Message</name>
     </customLabels>
     <customLabels>
-        <label>지난 90일 동안 로그인하지 않았기 때문에 새 비밀번호가 포함된 이메일을 보냈습니다.</label>
+        <label>보안상의 이유로, 새로운 비밀번호 설정 이메일을 보내 드렸습니다.</label>
         <name>CSP_Frozen_User_Message</name>
     </customLabels>
     <customLabels>
@@ -3571,6 +3575,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>이것은 </label>
         <name>CSP_Give_Feedback_Type_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>자주 묻는 질문으로 이동</label>
+        <name>CSP_Go_to_FAQ</name>
+    </customLabels>
+    <customLabels>
+        <label>iata.org로 이동</label>
+        <name>CSP_Go_to_IataOrg</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Go to Webstar --></label>
@@ -4381,6 +4393,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_LogOut</name>
     </customLabels>
     <customLabels>
+        <label>로그인</label>
+        <name>CSP_Login</name>
+    </customLabels>
+    <customLabels>
         <label>지금 로그인하기</label>
         <name>CSP_Login_Now</name>
     </customLabels>
@@ -4655,6 +4671,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- CSP Record Deleted --></label>
         <name>CSP_Record_Deleted</name>
+    </customLabels>
+    <customLabels>
+        <label>등록</label>
+        <name>CSP_Registration</name>
     </customLabels>
     <customLabels>
         <label>등록이 성공적으로 완료되었습니다</label>
@@ -5037,12 +5057,20 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Share_CopiedToClipBoard</name>
     </customLabels>
     <customLabels>
+        <label>가입하기</label>
+        <name>CSP_Sign_Up</name>
+    </customLabels>
+    <customLabels>
         <label>일단 보류</label>
         <name>CSP_Skip</name>
     </customLabels>
     <customLabels>
         <label>상태</label>
         <name>CSP_Status</name>
+    </customLabels>
+    <customLabels>
+        <label>저장</label>
+        <name>CSP_Store</name>
     </customLabels>
     <customLabels>
         <label>간단한 제목을 작성하세요</label>
@@ -5135,6 +5163,30 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>문제 해결</label>
         <name>CSP_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label>문제에 대한 설명</label>
+        <name>CSP_TroubleshootingDesc</name>
+    </customLabels>
+    <customLabels>
+        <label>문제 해결 양식</label>
+        <name>CSP_TroubleshootingForm</name>
+    </customLabels>
+    <customLabels>
+        <label>위 경로를 통해 문제가 해결되지 않은 경우, 아래를 클릭하여 문의바랍니다.</label>
+        <name>CSP_TroubleshootingMSG</name>
+    </customLabels>
+    <customLabels>
+        <label>양식을 작성하시면, 당사 플랫폼에 접속하실 수 있도록 연락 드리겠습니다.</label>
+        <name>CSP_TroubleshootingSbtitle</name>
+    </customLabels>
+    <customLabels>
+        <label>로그인 및 등록 문제 해결</label>
+        <name>CSP_TroubleshootingTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>도움이 필요합니다:</label>
+        <name>CSP_TroubleshootingType</name>
     </customLabels>
     <customLabels>
         <label>자세한 도움말 확인</label>
@@ -5480,6 +5532,26 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- Case Defect/Issue --></label>
         <name>Case_Defect_Issue</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_KPI_AirlineManagement --></label>
+        <name>Case_KPI_AirlineManagement</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_KPI_Long50d --></label>
+        <name>Case_KPI_Long50d</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_KPI_Medium20d --></label>
+        <name>Case_KPI_Medium20d</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_KPI_Risk --></label>
+        <name>Case_KPI_Risk</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_KPI_Short24 --></label>
+        <name>Case_KPI_Short24</name>
     </customLabels>
     <customLabels>
         <label><!-- Case Type --></label>
@@ -14564,6 +14636,10 @@ and
         <name>ISSP_AMS_LeftNav_Section8_Cargo</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_License_No_Company --></label>
+        <name>ISSP_AMS_License_No_Company</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_Link_Add_Office --></label>
         <name>ISSP_AMS_Link_Add_Office</name>
     </customLabels>
@@ -15096,6 +15172,10 @@ and
         <name>ISSP_AMS_NoC_Change_Bank_Details_message1</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_NoC_Change_Ownership_Legal_Status --></label>
+        <name>ISSP_AMS_NoC_Change_Ownership_Legal_Status</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_NoC_Change_Ownership_Shareholding --></label>
         <name>ISSP_AMS_NoC_Change_Ownership_Shareholding</name>
     </customLabels>
@@ -15146,6 +15226,10 @@ and
     <customLabels>
         <label>회사 조직 유형 및 소유권 정보가 올바른지 확인하십시오.</label>
         <name>ISSP_AMS_NoC_Confirm_Ownership_details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Confirm_Type_of_Entity --></label>
+        <name>ISSP_AMS_NoC_Confirm_Type_of_Entity</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_NoC_Confirm_details --></label>
@@ -15214,6 +15298,10 @@ and
     <customLabels>
         <label><!-- ISSP AMS NoC IATA Admin --></label>
         <name>ISSP_AMS_NoC_IATA_Admin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS NoC IATA Admin Company --></label>
+        <name>ISSP_AMS_NoC_IATA_Admin_Company</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS NoC IATA Only --></label>
@@ -15524,6 +15612,10 @@ and
         <name>ISSP_AMS_NoC_error_message1</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_NoC_error_message1_company --></label>
+        <name>ISSP_AMS_NoC_error_message1_Company</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_NoC_error_message2 --></label>
         <name>ISSP_AMS_NoC_error_message2</name>
     </customLabels>
@@ -15532,12 +15624,20 @@ and
         <name>ISSP_AMS_NoC_error_message2_CNS</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_NoC_error_message2_company --></label>
+        <name>ISSP_AMS_NoC_error_message2_company</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_NoC_error_message3 --></label>
         <name>ISSP_AMS_NoC_error_message3</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_NoC_error_message3_CNS --></label>
         <name>ISSP_AMS_NoC_error_message3_CNS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_error_message3_company --></label>
+        <name>ISSP_AMS_NoC_error_message3_company</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_NoC_error_message4 --></label>
@@ -16128,6 +16228,10 @@ and
         <name>ISSP_AMS_Step0_Minor_Changes</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Step0 Minor Changes --></label>
+        <name>ISSP_AMS_Step0_Minor_Changes_Company</name>
+    </customLabels>
+    <customLabels>
         <label>신규 인가 신청</label>
         <name>ISSP_AMS_Step0_New_Application</name>
     </customLabels>
@@ -16150,6 +16254,10 @@ and
     <customLabels>
         <label>위치, 사명, 법적 지위 또는 &lt;br/&gt;소유권/주식보유액의 변경.</label>
         <name>ISSP_AMS_Step0_Other_Changes_Msg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Step0 Other Changes Msg PostalOperator --></label>
+        <name>ISSP_AMS_Step0_Other_Changes_Msg_PostalOperator</name>
     </customLabels>
     <customLabels>
         <label>다른 유용한 양식</label>
@@ -17152,6 +17260,10 @@ and
         <name>ISSP_AMS_eBulletin_Clear_All</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_CompanyChanges --></label>
+        <name>ISSP_AMS_eBulletin_CompanyChanges</name>
+    </customLabels>
+    <customLabels>
         <label>국가</label>
         <name>ISSP_AMS_eBulletin_Countries</name>
     </customLabels>
@@ -17930,6 +18042,10 @@ and
     <customLabels>
         <label>인가유형 변경 요청 및/또는주소지, 회사 이름, 법적 상태, 소유권/주주 현황의 변경을 IATA로 통보해야 합니다.</label>
         <name>ISSP_ANG_Step0_Other_Changes_Msg_NamPaxAgent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Step0 Other Changes Msg for Nam Pax Agents PostalOperator --></label>
+        <name>ISSP_ANG_Step0_Other_Changes_Msg_NamPaxAgent_PostalOperator</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP ANG Step0 Other Changes Msg RevCaseOpen --></label>
@@ -36520,6 +36636,27 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <sections>
             <label><!-- Objectives --></label>
             <name>Objectives</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- NDC Airlines --></description>
+        <label><!-- NDC Airlines --></label>
+        <name>NDC_Airlines</name>
+        <sections>
+            <label><!-- Account Role Services --></label>
+            <name>Account Role Services</name>
+        </sections>
+        <sections>
+            <label><!-- Account Roles --></label>
+            <name>Account Roles</name>
+        </sections>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- NDC Account Service Details --></label>
+            <name>NDC Account Service Details</name>
         </sections>
     </reportTypes>
     <reportTypes>

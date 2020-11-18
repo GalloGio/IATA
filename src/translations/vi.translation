@@ -1525,7 +1525,8 @@
         <name>ANG_RHC_RHCAmountTooltip</name>
     </customLabels>
     <customLabels>
-        <label>Được xác định bởi lịch sử rủi ro của đại lý và kết quả đánh giá tài chính của họ</label>
+        <label>Trạng thái rủi ro của bạn dựa trên kết quả của cả đánh giá tài chính lần gần nhất và đánh giá lịch sử rủi ro.
+Để biết thêm chi tiết, vui lòng tham khảo Nghị quyết 812 (phần 5.2 và 5.3) có thể được truy cập bằng cách tìm kiếm &quot;Nghị quyết 812&quot; trong Cổng thông tin khách hàng.</label>
         <name>ANG_RHC_RiskStatusTooltip</name>
     </customLabels>
     <customLabels>
@@ -3316,6 +3317,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Email_Here</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Email Link button Image --></label>
+        <name>CSP_Email_Link_Button_Image</name>
+    </customLabels>
+    <customLabels>
         <label>Chúng tôi đã nhận được truy vấn yêu cầu đặt lại mật khẩu cho tài khoản của quý khách trên Cổng thông tin Khách hàng IATA.</label>
         <name>CSP_Email_Password_Reset_Body_Part_1</name>
     </customLabels>
@@ -3552,7 +3557,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Forgot_Password_Success_Message</name>
     </customLabels>
     <customLabels>
-        <label>Vì bạn đã không đăng nhập trong 90 ngày qua, chúng tôi đã gửi cho bạn một email với mật khẩu mới.</label>
+        <label>Vì lý do bảo mật, chúng tôi đã gửi cho bạn một email để đặt mật khẩu mới.</label>
         <name>CSP_Frozen_User_Message</name>
     </customLabels>
     <customLabels>
@@ -3570,6 +3575,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Đây là một</label>
         <name>CSP_Give_Feedback_Type_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Đi tới Câu hỏi thường gặp</label>
+        <name>CSP_Go_to_FAQ</name>
+    </customLabels>
+    <customLabels>
+        <label>Truy cập iata.org</label>
+        <name>CSP_Go_to_IataOrg</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Go to Webstar --></label>
@@ -4380,6 +4393,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_LogOut</name>
     </customLabels>
     <customLabels>
+        <label>Đăng nhập</label>
+        <name>CSP_Login</name>
+    </customLabels>
+    <customLabels>
         <label>Đăng nhập ngay bây giờ</label>
         <name>CSP_Login_Now</name>
     </customLabels>
@@ -4654,6 +4671,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- CSP Record Deleted --></label>
         <name>CSP_Record_Deleted</name>
+    </customLabels>
+    <customLabels>
+        <label>Đăng ký</label>
+        <name>CSP_Registration</name>
     </customLabels>
     <customLabels>
         <label>Đăng ký thành công.</label>
@@ -5036,12 +5057,20 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Share_CopiedToClipBoard</name>
     </customLabels>
     <customLabels>
+        <label>Đăng ký</label>
+        <name>CSP_Sign_Up</name>
+    </customLabels>
+    <customLabels>
         <label>Tạm thời bỏ qua</label>
         <name>CSP_Skip</name>
     </customLabels>
     <customLabels>
         <label>Trạng thái</label>
         <name>CSP_Status</name>
+    </customLabels>
+    <customLabels>
+        <label>Cửa hàng</label>
+        <name>CSP_Store</name>
     </customLabels>
     <customLabels>
         <label>Vui lòng nhập một dòng tiêu đề ngắn</label>
@@ -5134,6 +5163,30 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>xử lý sự cố</label>
         <name>CSP_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label>Mô tả vấn đề:</label>
+        <name>CSP_TroubleshootingDesc</name>
+    </customLabels>
+    <customLabels>
+        <label>Biểu mẫu khắc phục sự cố</label>
+        <name>CSP_TroubleshootingForm</name>
+    </customLabels>
+    <customLabels>
+        <label>Nếu các bước trên không khắc phục được sự cố, hãy nhấp vào bên dưới để liên hệ với chúng tôi:</label>
+        <name>CSP_TroubleshootingMSG</name>
+    </customLabels>
+    <customLabels>
+        <label>Hoàn thành biểu mẫu và chúng tôi sẽ liên hệ với bạn để giúp bạn truy cập vào nền tảng của chúng tôi.</label>
+        <name>CSP_TroubleshootingSbtitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Đăng nhập &amp; Đăng ký Gỡ rối</label>
+        <name>CSP_TroubleshootingTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Tôi cần sự giúp đỡ:</label>
+        <name>CSP_TroubleshootingType</name>
     </customLabels>
     <customLabels>
         <label>Để được trợ giúp kiểm tra thêm</label>
@@ -5478,6 +5531,26 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- Case Defect/Issue --></label>
         <name>Case_Defect_Issue</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_KPI_AirlineManagement --></label>
+        <name>Case_KPI_AirlineManagement</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_KPI_Long50d --></label>
+        <name>Case_KPI_Long50d</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_KPI_Medium20d --></label>
+        <name>Case_KPI_Medium20d</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_KPI_Risk --></label>
+        <name>Case_KPI_Risk</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_KPI_Short24 --></label>
+        <name>Case_KPI_Short24</name>
     </customLabels>
     <customLabels>
         <label><!-- Case Type --></label>
@@ -14560,6 +14633,10 @@ and
         <name>ISSP_AMS_LeftNav_Section8_Cargo</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_License_No_Company --></label>
+        <name>ISSP_AMS_License_No_Company</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_Link_Add_Office --></label>
         <name>ISSP_AMS_Link_Add_Office</name>
     </customLabels>
@@ -15092,6 +15169,10 @@ and
         <name>ISSP_AMS_NoC_Change_Bank_Details_message1</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_NoC_Change_Ownership_Legal_Status --></label>
+        <name>ISSP_AMS_NoC_Change_Ownership_Legal_Status</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_NoC_Change_Ownership_Shareholding --></label>
         <name>ISSP_AMS_NoC_Change_Ownership_Shareholding</name>
     </customLabels>
@@ -15142,6 +15223,10 @@ and
     <customLabels>
         <label>Xác nhận Loại hình pháp nhân và thông tin về Quyền sở hữu là chính xác</label>
         <name>ISSP_AMS_NoC_Confirm_Ownership_details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Confirm_Type_of_Entity --></label>
+        <name>ISSP_AMS_NoC_Confirm_Type_of_Entity</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_NoC_Confirm_details --></label>
@@ -15210,6 +15295,10 @@ and
     <customLabels>
         <label><!-- ISSP AMS NoC IATA Admin --></label>
         <name>ISSP_AMS_NoC_IATA_Admin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS NoC IATA Admin Company --></label>
+        <name>ISSP_AMS_NoC_IATA_Admin_Company</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS NoC IATA Only --></label>
@@ -15520,6 +15609,10 @@ and
         <name>ISSP_AMS_NoC_error_message1</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_NoC_error_message1_company --></label>
+        <name>ISSP_AMS_NoC_error_message1_Company</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_NoC_error_message2 --></label>
         <name>ISSP_AMS_NoC_error_message2</name>
     </customLabels>
@@ -15528,12 +15621,20 @@ and
         <name>ISSP_AMS_NoC_error_message2_CNS</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_NoC_error_message2_company --></label>
+        <name>ISSP_AMS_NoC_error_message2_company</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_NoC_error_message3 --></label>
         <name>ISSP_AMS_NoC_error_message3</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_NoC_error_message3_CNS --></label>
         <name>ISSP_AMS_NoC_error_message3_CNS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_error_message3_company --></label>
+        <name>ISSP_AMS_NoC_error_message3_company</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_NoC_error_message4 --></label>
@@ -16124,6 +16225,10 @@ and
         <name>ISSP_AMS_Step0_Minor_Changes</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Step0 Minor Changes --></label>
+        <name>ISSP_AMS_Step0_Minor_Changes_Company</name>
+    </customLabels>
+    <customLabels>
         <label>Đơn gia nhập làm thành viên mới</label>
         <name>ISSP_AMS_Step0_New_Application</name>
     </customLabels>
@@ -16146,6 +16251,10 @@ and
     <customLabels>
         <label>Với những thay đổi về Địa điểm, Tên Pháp lý, Tư cách Pháp lý hay &lt;br/&gt;Quyền sở hữu / Cổ phần của bạn.</label>
         <name>ISSP_AMS_Step0_Other_Changes_Msg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Step0 Other Changes Msg PostalOperator --></label>
+        <name>ISSP_AMS_Step0_Other_Changes_Msg_PostalOperator</name>
     </customLabels>
     <customLabels>
         <label>Các biểu mẫu khác</label>
@@ -17148,6 +17257,10 @@ and
         <name>ISSP_AMS_eBulletin_Clear_All</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_CompanyChanges --></label>
+        <name>ISSP_AMS_eBulletin_CompanyChanges</name>
+    </customLabels>
+    <customLabels>
         <label>Các quốc gia</label>
         <name>ISSP_AMS_eBulletin_Countries</name>
     </customLabels>
@@ -17926,6 +18039,10 @@ and
     <customLabels>
         <label>&quot;Yêu cầu Thay đổi Mô hình Chứng nhận và/hoặc thông báo cho IATA về những thay đổi về Địa điểm, Tên Công ty, Tư cách Pháp nhân, Quyền sở hữu / Cơ cấu Cổ đông của bạn.&quot;</label>
         <name>ISSP_ANG_Step0_Other_Changes_Msg_NamPaxAgent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Step0 Other Changes Msg for Nam Pax Agents PostalOperator --></label>
+        <name>ISSP_ANG_Step0_Other_Changes_Msg_NamPaxAgent_PostalOperator</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP ANG Step0 Other Changes Msg RevCaseOpen --></label>
@@ -36520,6 +36637,27 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- NDC Airlines --></description>
+        <label><!-- NDC Airlines --></label>
+        <name>NDC_Airlines</name>
+        <sections>
+            <label><!-- Account Role Services --></label>
+            <name>Account Role Services</name>
+        </sections>
+        <sections>
+            <label><!-- Account Roles --></label>
+            <name>Account Roles</name>
+        </sections>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- NDC Account Service Details --></label>
+            <name>NDC Account Service Details</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Network Members --></description>
         <label><!-- Network Members --></label>
         <name>Network_Members</name>
@@ -36687,7 +36825,7 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <label><!-- Opportunities with Accounts and Contracts --></label>
         <name>Opportunities_with_Accounts_and_Contracts</name>
         <sections>
-            <label><!-- Accounts --></label>
+            <label>Các báo cáo</label>
             <name>Accounts</name>
         </sections>
         <sections>
@@ -36721,7 +36859,7 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <label><!-- Opportunities with or without RSL --></label>
         <name>Opportunities_with_or_without_RSL</name>
         <sections>
-            <label><!-- Opportunities --></label>
+            <label>Các báo cáo</label>
             <name>Opportunities</name>
         </sections>
         <sections>

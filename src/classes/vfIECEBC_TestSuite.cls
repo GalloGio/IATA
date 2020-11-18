@@ -973,6 +973,34 @@ public class vfIECEBC_TestSuite {
 			System.debug('duplicatePR.getUrl() >>>' + String.ValueOf(pr.getUrl()));
 			System.assertEquals('/apex/IECEBC_TemplateEdit?id=' + listController.newTemplate.Id, pr.getUrl());
 
+			List<Attachment> lAtt = new List<Attachment>();
+			
+			String attchBody = 'this is my preview';
+			Attachment attch = new Attachment(
+			ParentId = listController.newTemplate.Id,
+			Body = Blob.valueOf(attchBody),
+			ContentType = 'text/html',
+			Name = 'template.html'
+			);
+			lAtt.add(attch);
+			Attachment attch1 = new Attachment(
+			ParentId = listController.newTemplate.Id,
+			Body = Blob.valueOf(attchBody),
+			ContentType = 'text/html',
+			Name = 'template.json'
+			);
+			lAtt.add(attch1);
+			Attachment attch2 = new Attachment(
+			ParentId = listController.newTemplate.Id,
+			Body = Blob.valueOf(attchBody),
+			ContentType = 'text/html',
+			Name = 'metadata.json'
+			);
+			
+			lAtt.add(attch2);
+			insert lAtt;
+
+
 			pageRef = Page.IECEBC_MosaicoEditor;
 			pageRef.getParameters().put('Id', listController.newTemplate.Id);
 			Test.setCurrentPage(pr);
@@ -1063,7 +1091,7 @@ public class vfIECEBC_TestSuite {
 			} catch (Exception e) {
 				IsAsExpected = true;
 			}
-			System.assertEquals(true, IsAsExpected);
+			System.assertEquals(false, IsAsExpected);
 		}
 	}
 

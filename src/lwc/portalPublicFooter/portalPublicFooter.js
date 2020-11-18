@@ -12,4 +12,9 @@ export default class PortalPublicFooter extends LightningElement {
     linkedinIcon = CSP_PortalPath + 'CSPortal/Images/Icons/linkedin-icon-kb.svg';
     youtubeIcon = CSP_PortalPath + 'CSPortal/Images/Icons/youtube-icon-kb.svg';
     rssIcon = CSP_PortalPath + 'CSPortal/Images/Icons/rss_icon.svg';
+
+
+    get currentYear(){
+        return  new Date().getFullYear();
+    }
 }

@@ -294,15 +294,15 @@ public class EF_ContractHandler
 				}
 			}
 
-			if(!contractsNoti.isEmpty()){
+		/*	if(!contractsNoti.isEmpty()){
 				notifyOnCriticalFields(contractsNoti, oldMap, criticalContractFieldList);
 
-			}
+			}*/
 
 		}
 	}
 
-	public static void notifyOnCriticalFields (Map <Id, Contract> newContracts, Map <Id,Contract> oldContractMap, List <String> criticalFieldList ) {
+/*	public static void notifyOnCriticalFields (Map <Id, Contract> newContracts, Map <Id,Contract> oldContractMap, List <String> criticalFieldList ) {
 
 		Map<String, Schema.SobjectField> fields = newContracts.getSObjectType().getDescribe().fields.getMap();
 		String baseUrl = System.URL.getSalesforceBaseUrl().toExternalForm();
@@ -367,7 +367,7 @@ public class EF_ContractHandler
 				Messaging.sendEmail(mails);
 		}
 
-	}
+	}*/
 
 	public static boolean runOnce()
 	{
