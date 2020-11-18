@@ -976,12 +976,10 @@ FALSE
                 <valueName>Emissions_Obligations</valueName>
             </valueSettings>
             <valueSettings>
-                <controllingFieldValue>GSE_In_Facility_2</controllingFieldValue>
                 <controllingFieldValue>Gse_In_Facility</controllingFieldValue>
                 <valueName>Live_Animals_Vehicles</valueName>
             </valueSettings>
             <valueSettings>
-                <controllingFieldValue>GSE_In_Facility_2</controllingFieldValue>
                 <controllingFieldValue>Gse_In_Facility</controllingFieldValue>
                 <valueName>Valuable_Vehicles</valueName>
             </valueSettings>
