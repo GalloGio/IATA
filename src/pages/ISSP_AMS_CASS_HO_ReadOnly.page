@@ -246,7 +246,7 @@
                     
 			<apex:outputText rendered="{!NOT(isocountry.Hide_Tax_Number_VAT__c)}" value="{!IF(isocountry.Tax_Number_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_number__c.Label, isocountry.Tax_Number_label__c)}" />
             <apex:outputField rendered="{!NOT(isocountry.Hide_Tax_Number_VAT__c)}" value="{!newForm.ISSP_AMS_VAT_number__c}"/>
-            <apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Trade_Reg_No__c.Label}" />
+            <apex:outputText value="{!IF(newLabels, $Label.ISSP_AMS_Trade_Reg_Number_PASS, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Trade_Reg_No__c.Label)}" />
             <apex:outputField value="{!newForm.ISSP_AMS_Trade_Reg_No__c}" rendered="{!countryCheckList.Registration_required__c==true}"/>
             <apex:outputText value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Date_Registration_granted__c.Label}" />
             <apex:outputText value="{0,date, MMMM d,  yyyy}" rendered="{!countryCheckList.Registration_required__c==true}"> 

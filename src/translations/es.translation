@@ -5533,6 +5533,26 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>Case_Defect_Issue</name>
     </customLabels>
     <customLabels>
+        <label><!-- Case_KPI_AirlineManagement --></label>
+        <name>Case_KPI_AirlineManagement</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_KPI_Long50d --></label>
+        <name>Case_KPI_Long50d</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_KPI_Medium20d --></label>
+        <name>Case_KPI_Medium20d</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_KPI_Risk --></label>
+        <name>Case_KPI_Risk</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_KPI_Short24 --></label>
+        <name>Case_KPI_Short24</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Case Type --></label>
         <name>Case_Type</name>
     </customLabels>
@@ -14638,6 +14658,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_LeftNav_Section8_Cargo</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_License_No_Company --></label>
+        <name>ISSP_AMS_License_No_Company</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_Link_Add_Office --></label>
         <name>ISSP_AMS_Link_Add_Office</name>
     </customLabels>
@@ -15170,6 +15194,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_NoC_Change_Bank_Details_message1</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_NoC_Change_Ownership_Legal_Status --></label>
+        <name>ISSP_AMS_NoC_Change_Ownership_Legal_Status</name>
+    </customLabels>
+    <customLabels>
         <label>3. Propiedad/Accionariado de la agencia y estado legal</label>
         <name>ISSP_AMS_NoC_Change_Ownership_Shareholding</name>
     </customLabels>
@@ -15220,6 +15248,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label>Confirme que son correctos los datos del tipo de entidad y propiedad</label>
         <name>ISSP_AMS_NoC_Confirm_Ownership_details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Confirm_Type_of_Entity --></label>
+        <name>ISSP_AMS_NoC_Confirm_Type_of_Entity</name>
     </customLabels>
     <customLabels>
         <label>Confirmo que los datos de la agencia que aparecen a continuación son correctos</label>
@@ -15288,6 +15320,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label>Administrador de agencias de la IATA</label>
         <name>ISSP_AMS_NoC_IATA_Admin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS NoC IATA Admin Company --></label>
+        <name>ISSP_AMS_NoC_IATA_Admin_Company</name>
     </customLabels>
     <customLabels>
         <label>Solo usuario interno de la IATA</label>
@@ -15598,6 +15634,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_NoC_error_message1</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_NoC_error_message1_company --></label>
+        <name>ISSP_AMS_NoC_error_message1_Company</name>
+    </customLabels>
+    <customLabels>
         <label>Confirme que los datos de ubicación de la agencia son correctos o avise a la IATA de cualquier cambio.</label>
         <name>ISSP_AMS_NoC_error_message2</name>
     </customLabels>
@@ -15606,12 +15646,20 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_NoC_error_message2_CNS</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_NoC_error_message2_company --></label>
+        <name>ISSP_AMS_NoC_error_message2_company</name>
+    </customLabels>
+    <customLabels>
         <label>Confirme que los datos de propiedad de la agencia son correctos o avise a la IATA de cualquier cambio.</label>
         <name>ISSP_AMS_NoC_error_message3</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_NoC_error_message3_CNS --></label>
         <name>ISSP_AMS_NoC_error_message3_CNS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_error_message3_company --></label>
+        <name>ISSP_AMS_NoC_error_message3_company</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_NoC_error_message4 --></label>
@@ -16202,6 +16250,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_Step0_Minor_Changes</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Step0 Minor Changes --></label>
+        <name>ISSP_AMS_Step0_Minor_Changes_Company</name>
+    </customLabels>
+    <customLabels>
         <label>Nueva solicitud de acreditación</label>
         <name>ISSP_AMS_Step0_New_Application</name>
     </customLabels>
@@ -16224,6 +16276,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label>Para cambios de dirección, nombre legal, estado legal o &lt;br/&gt;de propiedad o accionariado.</label>
         <name>ISSP_AMS_Step0_Other_Changes_Msg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Step0 Other Changes Msg PostalOperator --></label>
+        <name>ISSP_AMS_Step0_Other_Changes_Msg_PostalOperator</name>
     </customLabels>
     <customLabels>
         <label>Otros formularios de utilidad</label>
@@ -17228,6 +17284,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_eBulletin_Clear_All</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_CompanyChanges --></label>
+        <name>ISSP_AMS_eBulletin_CompanyChanges</name>
+    </customLabels>
+    <customLabels>
         <label>Países</label>
         <name>ISSP_AMS_eBulletin_Countries</name>
     </customLabels>
@@ -18006,6 +18066,10 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
     <customLabels>
         <label>&quot;Solicite el cambio de modelo de acreditación y/o notifique de los cambios a la IATA en lo relativo a ubicación, nombre de la empresa, condición legal, propiedad/accionariado.&quot;</label>
         <name>ISSP_ANG_Step0_Other_Changes_Msg_NamPaxAgent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Step0 Other Changes Msg for Nam Pax Agents PostalOperator --></label>
+        <name>ISSP_ANG_Step0_Other_Changes_Msg_NamPaxAgent_PostalOperator</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP ANG Step0 Other Changes Msg RevCaseOpen --></label>

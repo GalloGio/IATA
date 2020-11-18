@@ -226,7 +226,16 @@
 			if($j(this).prop('checked')) $form.show();
 			else $form.hide();
 		});
+		showCoporateDetails();
 	} 
+
+	function showCoporateDetails() {
+		if ($j('[id	$=UpdatedLegalStatus]').is(":visible") && $j('[id $=UpdatedLegalStatus]').val() == 'Corporation') {
+			$j('[id$=currcorporatedetails]').show();
+		} else {
+			$j('[id$=currcorporatedetails]').hide();
+		}
+	}
 
 	function closeModal() {
 		$j(function() {
@@ -447,14 +456,10 @@
                 $j('[id$=updated-owner-summary]').hide();
             }
             
-			if(theValue=='Corporation')
-				$j('[id$=currcorporatedetails]').show();
-			else
-				$j('[id$=currcorporatedetails]').hide();
 		} else {
             $j('[id$=addCompany]').hide();
 		}	
-		
+		showCoporateDetails();
         setHeaderLabelsAfterChange(theValue.toLowerCase());
 	}
 
@@ -636,13 +641,13 @@
 		</apex:outputText>
 		<apex:outputText rendered="{!newform.Is_change_bank_account_details__c==false}">
 			<p><a href="#nav_four">
-				<apex:outputText rendered="{!!isAccreditationModelNotNullOrLegacy}">{!IF(newlabels, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding_New, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding)}</apex:outputText>
+				<apex:outputText rendered="{!!isAccreditationModelNotNullOrLegacy}">{!IF(IsPostalOperator, $Label.ISSP_AMS_NoC_Change_Ownership_Legal_Status, IF(newlabels, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding_New, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding))}</apex:outputText>
 				<apex:outputText rendered="{!isAccreditationModelNotNullOrLegacy}">
-					{!SUBSTITUTE(IF(newlabels, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding_New, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding), '3', '4')}
+					{!SUBSTITUTE(IF(IsPostalOperator, $Label.ISSP_AMS_NoC_Change_Ownership_Legal_Status, IF(newlabels, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding_New, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding)), '3', '4')}
 				</apex:outputText>
 			</a></p>
 		</apex:outputText>
-		<apex:outputText rendered="{!NOT(newform.Is_change_bank_account_details__c)}">
+		<apex:outputText rendered="{!NOT(newform.Is_change_bank_account_details__c) && !isPostalOperator}">
 			<p><a href="#nav_five">
 				<apex:outputText rendered="{!!isAccreditationModelNotNullOrLegacy}">{!$Label.ISSP_AMS_NoC_Additional_Information}</apex:outputText>
 				<apex:outputText rendered="{!isAccreditationModelNotNullOrLegacy}">
@@ -663,7 +668,7 @@
 		</div>
 	<div class="panel-body" id="body-enquiries">
 		<apex:form id="AMSForm">
-		<div class="progress iata-tabs">
+		<apex:outputPanel layout="block" styleclass="progress iata-tabs" rendered="{! !isPostalOperator}">
 			<div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 22%;">
 				<apex:commandLink styleclass="link-white" action="{!saveAMSFormAndGoToStep1}" id="Prev1">
 					<apex:outputText value="{!lblNoCStepA}" escape="false"/>
@@ -687,7 +692,27 @@
 					<apex:outputText value="{!IF(isNoticeOfChange && newForm.Is_change_ownership_or_shareholding__c, lblNocStepD, lblStepE)}" escape="false"/>
 				</apex:commandLink>
 			</div>
-		</div>
+		</apex:outputPanel>
+		<apex:outputPanel layout="block" styleclass="progress iata-tabs" rendered="{! isPostalOperator}">
+			<div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 33%;">
+				<apex:commandLink styleclass="link-white" action="{!saveAMSFormAndGoToStep1}" >
+					<apex:outputText value="{!lblNoCStepA}" escape="false"/>
+				</apex:commandLink>
+			</div>
+			<div class="progress-bar iata-tab tabl-active" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 33%;">
+				<apex:outputText value="{!lblNocStepC}" escape="false"/>
+			</div>
+			<div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 22%;display:{!IF(isNoticeOfChange && newForm.Is_change_ownership_or_shareholding__c, 'none', '')}">
+				<apex:commandLink styleclass="link-white" action="{!saveAMSFormAndGoForward}" >
+					<apex:outputText value="{!lblStepD}" escape="false"/>
+				</apex:commandLink>
+			</div>
+			<div class="progress-bar iata-tab progress-bar-off" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 33%">
+				<apex:commandLink styleclass="link-white" action="{!saveAMSFormAndGoToStep5}" >
+					<apex:outputText value="{!IF(isNoticeOfChange && newForm.Is_change_ownership_or_shareholding__c, lblNocStepD, lblStepE)}" escape="false"/>
+				</apex:commandLink>
+			</div>
+		</apex:outputPanel>
 		
 			<apex:actionFunction name="showOwnershipSec" action="{!NULL}" status="WaitingStatus" reRender="updated-person-owners"/>
 			<apex:actionFunction name="cancelAgentUpdate" action="{!cancelAgentUpdate}" status="WaitingStatus" reRender="newContact"/>
@@ -1158,9 +1183,9 @@
 				<apex:pageBlockSection columns="2" id="LegalStatusSection" collapsible="false" rendered="{!newform.Is_change_bank_account_details__c==false}">
 					<apex:facet name="header">
 						<apex:outputpanel >
-							<apex:outputText rendered="{!!isAccreditationModelNotNullOrLegacy}">{!IF(newlabels, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding_New, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding)}</apex:outputText>
+							<apex:outputText rendered="{!!isAccreditationModelNotNullOrLegacy}">{!IF(IsPostalOperator, $Label.ISSP_AMS_NoC_Change_Ownership_Legal_Status, IF(newlabels, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding_New, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding))}</apex:outputText>
 							<apex:outputText rendered="{!isAccreditationModelNotNullOrLegacy}">
-								{!SUBSTITUTE(IF(newlabels, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding_New, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding), '3', '4')}
+								{!SUBSTITUTE(IF(IsPostalOperator, $Label.ISSP_AMS_NoC_Change_Ownership_Legal_Status, IF(newlabels, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding_New, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding)), '3', '4')}
 							</apex:outputText>
 						</apex:outputpanel>
 					</apex:facet>
@@ -1171,7 +1196,7 @@
 					<apex:outputPanel >
 						<apex:pageBlockSection columns="1">
 		                   	<apex:pageBlockSectionItem labelStyle="width:80%" dataStyle="width:10%;{!IF(AND(isValError, newForm.Confirm_Ownership_details_are_correct__c==false,newForm.Notify_Change_Ownership__c==false), 'border:2px red solid !important;margin-right:5px', 'margin-right:5px')}">
-								<apex:outputLabel value="{!$Label.ISSP_AMS_NoC_Confirm_Ownership_details}" style="color:black;font-size:110%"/> <!--{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Confirm_Ownership_details_are_correct__c.Label}"-->
+								<apex:outputLabel value="{!IF(IsPostalOperator,$Label.ISSP_AMS_NoC_Confirm_Type_of_Entity,$Label.ISSP_AMS_NoC_Confirm_Ownership_details)}" style="color:black;font-size:110%"/> <!--{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Confirm_Ownership_details_are_correct__c.Label}"-->
 								<apex:inputCheckbox html-data-group="agencyOwnership" onchange="resetLegalStatus();" value="{!newForm.Confirm_Ownership_details_are_correct__c}"/>
 							</apex:pageBlockSectionItem>
 						</apex:pageBlockSection>
@@ -1206,7 +1231,7 @@
                     
                     <apex:outputPanel style="display:{!IF(newForm.ISSP_AMS_Legal_Status__c=='Corporation', '', 'none')}"></apex:outputPanel>
                     
-                    <apex:outputPanel id="currcorporatedetails" layout="block" style="display:{!IF(newForm.ISSP_AMS_Legal_Status__c=='Corporation', '', 'none')}" styleClass="agencyOwnershipComponent">
+                    <apex:outputPanel id="currcorporatedetails" layout="block" style="display:'none'" styleClass="agencyOwnershipComponent">
 	                    
 						<apex:pageBlockSection columns="1">
 							<apex:pageblocksectionitem >
@@ -1236,7 +1261,7 @@
 					<apex:outputPanel >
 					</apex:outputPanel>
 
-					<apex:outputPanel id="onlineAgencyPanel" styleClass="agencyOwnershipComponent">
+					<apex:outputPanel id="onlineAgencyPanel" styleClass="agencyOwnershipComponent" rendered="{!!IsPostalOperator}">
 						<apex:pageBlockSection columns="1">
 							<apex:pageBlockSectionItem labelStyle="width:44%" rendered="{!NOT(isCNSAgency)}">
 								<apex:outputLabel value="{!$Label.ISSP_AMS_NoC_Online_Agency}"/>
@@ -1269,7 +1294,7 @@
 						</apex:pageBlockSection>-->
 					</apex:outputPanel>
 
-                    <apex:outputPanel id="current-owner-summary" style="display:{!IF(hqAccount.Company_Type__c!='S', '', 'none')}">
+                    <apex:outputPanel id="current-owner-summary" style="display:{!IF(hqAccount.Company_Type__c!='S', '', 'none')}" rendered="{!!IsPostalOperator}">
                     	<div class="bg-info col-md-12" style="margin-top:15px;"><strong>{!$Label.ISSP_AMS_NoC_Summary_Current_Ownership}</strong></div>
 						<div class="col-md-12">
 								<apex:outputText value="{!$Label.ISSP_AMS_Step3_4_Ownership}" escape="false"/>
@@ -1282,7 +1307,7 @@
 						</apex:pageBlockTable>
                     </apex:outputPanel>
                     
-                    <apex:outputPanel id="updated-owner-summary" style="display:{!IF(OR(newForm.ISSP_AMS_Legal_Status__c=='Sole Proprietorship', List_Curr_Ownership_Summary.size==0), 'none', '')}" styleClass="agencyOwnershipComponent" >
+                    <apex:outputPanel id="updated-owner-summary" style="display:{!IF(OR(newForm.ISSP_AMS_Legal_Status__c=='Sole Proprietorship', List_Curr_Ownership_Summary.size==0), 'none', '')}" styleClass="agencyOwnershipComponent" rendered="{!!IsPostalOperator}">
                        <div class="bg-info col-md-12" style="margin-top:15px;"><strong>{!$Label.ISSP_AMS_NoC_Summary_Updated_Ownership}</strong></div>
 							<div class="col-md-12">
 								<apex:outputText value="{!$Label.ISSP_AMS_Step3_4_Ownership}" escape="false"/>
@@ -1297,7 +1322,7 @@
 							</apex:pageBlockTable> 
                     </apex:outputPanel>
                     
-					<apex:outputPanel id="currentPersonOwners">
+					<apex:outputPanel id="currentPersonOwners" rendered="{!!IsPostalOperator}">
 						<div class="col-md-12 bg-info"><strong>{!$Label.ISSP_AMS_NoC_Current_Owners_Managers}</strong></div> 
 						 <br/><br/><br/>
 						<apex:pageBlockTable value="{!List_PreviousOwners}" var="agencycon"	id="contactList" styleClass="table-hover table table-condensed table-responsive">
@@ -1331,7 +1356,7 @@
 						</apex:pageBlockTable>
                     </apex:outputPanel>
                         
-                    <apex:outputPanel id="updated-person-owners" styleClass="agencyOwnershipComponent">
+                    <apex:outputPanel id="updated-person-owners" styleClass="agencyOwnershipComponent" rendered="{!!IsPostalOperator}">
 					
 						<div class="col-md-12 bg-info"><strong>{!$Label.ISSP_AMS_NoC_Updated_Owners_Managers}</strong></div>
 						<div id="currmsgshareholdersdetails" class="bg-warning" style="margin-top:3px; margin-bottom:5px;{!IF(newForm.ISSP_AMS_Curr_Entity_with_listed_shares__c == 'No', 'border: 0px !important;', 'display:none')}">
@@ -1383,7 +1408,7 @@
 						</apex:pageBlockTable>
                     </apex:outputPanel>
                     
-                    <apex:outputPanel layout="block" id="previous-owner-companies" style="display:{!IF(hqAccount.Company_Type__c!='S', '', 'none')}">
+                    <apex:outputPanel layout="block" id="previous-owner-companies" style="display:{!IF(hqAccount.Company_Type__c!='S', '', 'none')}" rendered="{!!IsPostalOperator}">
 						<div class="bg-info col-md-12" style="margin-top:15px;"><strong>{!$Label.ISSP_AMS_NoC_Current_Companies}</strong></div>
                         <div style="height:70px">&nbsp;</div>
                         <apex:outputText value="{!IF(newlabels, $Label.ISSP_AMS_NoC_No_Company_Owners_New, $Label.ISSP_AMS_NoC_No_Company_Owners)}" rendered="{!List_PreviousCompanies.size==0}"/>
@@ -1395,7 +1420,7 @@
 						</apex:pageBlockTable>
 					</apex:outputPanel>
 					
-                    <apex:outputPanel layout="block" id="updated-company-owners" style="display:{!IF(NOT(AND(newForm.ISSP_AMS_Legal_Status__c=='Sole Proprietorship', List_CurrentCompanies.size==0)), '', 'none')}" styleClass="agencyOwnershipComponent" >
+                    <apex:outputPanel layout="block" id="updated-company-owners" style="display:{!IF(NOT(AND(newForm.ISSP_AMS_Legal_Status__c=='Sole Proprietorship', List_CurrentCompanies.size==0)), '', 'none')}" styleClass="agencyOwnershipComponent" rendered="{!!IsPostalOperator}">
 				
 						<div class="bg-info col-md-12" style="margin-top:15px;"><strong>{!$Label.ISSP_AMS_NOC_Updated_Companies}</strong></div>
 						
@@ -1420,7 +1445,7 @@
 							</apex:column>
 						</apex:pageBlockTable>
 
-						<apex:outputPanel rendered="{!NOT(isCNSAgency)}">
+						<apex:outputPanel rendered="{!NOT(isCNSAgency) && NOT(IsPostalOperator)}">
 							<div class="col-md-12 bg-info"><strong>{!$Label.ISSP_AMS_NoC_Other_Owner}</strong></div>
 
 							<apex:pageBlockSection columns="1">								
@@ -1523,7 +1548,7 @@
 				<span id="nav_five"></span>	
                 </apex:pageBlockSection>
                 
-						<apex:pageBlockSection collapsible="false" columns="1" id="section4_1" rendered="{!newform.Is_change_bank_account_details__c==false}">
+						<apex:pageBlockSection collapsible="false" columns="1" id="section4_1" rendered="{!newform.Is_change_bank_account_details__c==false && !isPostalOperator}">
 							<apex:facet name="header">
 								<apex:outputpanel >
 									<apex:outputText rendered="{!!isAccreditationModelNotNullOrLegacy}">{!$Label.ISSP_AMS_NoC_Additional_Information}</apex:outputText>
@@ -1534,7 +1559,7 @@
 							</apex:facet>
 
 
-							<apex:pageBlockSectionItem rendered="{!newForm.Is_change_ownership_or_shareholding__c==true}">
+							<apex:pageBlockSectionItem rendered="{!newForm.Is_change_ownership_or_shareholding__c==true && NOT(newForm.Scope_of_Change__c == 'Selected Branches Only')}">
 								<apex:outputLabel value="{!IF(isAccreditationModelNotNullOrLegacy, $Label.ISSP_NoC_Head_Entity_Becoming_a_AE, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.Is_this_Head_Office_becoming_a_Branch__c.Label)}"/>
 								<apex:selectRadio style="width:100px;{!IF(AND(isValError, newForm.Is_this_Head_Office_becoming_a_Branch__c==null), 'border:2px red solid;', '')}" value="{!newForm.Is_this_Head_Office_becoming_a_Branch__c}" onchange="togglePageItem(this.value, '{!$Component.AMSForm.AMSBlock.section4_1.r1c1}');" disabled="{!newForm.Scope_of_Change__c == 'Selected Branches Only'}">
 									<apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}" />
@@ -1670,7 +1695,7 @@
 							<apex:pageBlockSectionItem >
 								<apex:pageBlockSection columns="1">
 									<apex:pageBlockSectionItem labelStyle="width:50%">
-										<apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Trade_Reg_No__c.Label}"/>
+										<apex:outputLabel value="{!IF(newLabels, $Label.ISSP_AMS_Trade_Reg_Number_PASS, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Trade_Reg_No__c.Label)}"/>
 										<apex:inputfield value="{!newForm.ISSP_AMS_Trade_Reg_No__c}"/>
 									</apex:pageBlockSectionItem>
 									<apex:pageBlockSectionItem labelStyle="width:50%">
@@ -1678,7 +1703,7 @@
 										<apex:inputfield value="{!newForm.ISSP_AMS_Date_Registration_granted__c}"/>
 									</apex:pageBlockSectionItem>
 									<apex:pageBlockSectionItem labelStyle="width:50%">
-										<apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_License_No__c.Label}"/>
+										<apex:outputLabel value="{!IF(newLabels, $Label.ISSP_AMS_License_No_Company, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_License_No__c.Label)}"/>
 										<apex:inputfield value="{!newForm.ISSP_AMS_License_No__c}"/>
 									</apex:pageBlockSectionItem>
 									<apex:pageBlockSectionItem labelStyle="width:50%">
@@ -2206,12 +2231,6 @@
 	<c:ISSP_CustomFooter communityName="{!communityName}"/>
 	
 	<script>
-		//NEWGEN-1885
-		$j ( document ).ready(function() {
-			$j('[id$=UpdatedLegalStatus]').val() !== 'Corporation' && $j('[id$=currcorporatedetails]').hide();
-		});
-		//END - NEWGEN-1885
-		
 		//NoC Changes
 		var accreditationModel = '{!con.Account.ANG_Accreditation_Model__c}',
 				lScopeOfChange = '{!newForm.Scope_of_Change__c}',
