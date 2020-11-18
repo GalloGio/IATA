@@ -22,9 +22,8 @@ public class CaseIFAPHandler {
 		if(listIds != null && listIds.size() != 0){
 
 			switch on (String.valueOf(listIds[0].getSObjectType())) {
-  				when 'User' {
-					List<User> userList = new List<User>([SELECT ContactId FROM User WHERE Id IN: listIds AND ContactId != null]);
-					for(User us : userList){
+					when 'User' {
+					for(User us : [SELECT ContactId FROM User WHERE Id IN: listIds AND ContactId != null]){
 						contactIds.add(us.ContactId);
 					}
 
