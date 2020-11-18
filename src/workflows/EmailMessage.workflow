@@ -984,12 +984,7 @@ Request an agent to upload Financial Documents&apos; is sent</description>
         </actions>
         <active>true</active>
         <description>Reopen a closed case on email reception</description>
-        <formula>AND(
-				DATEVALUE(Parent.ClosedDate) &gt; TODAY()-14,
-				Incoming,
-				ISPICKVAL(Parent.Status, &apos;Closed&apos;),
-				Parent.RecordTypeDeveloperName__c == &apos;IATA_Financial_Review&apos;
-)</formula>
+        <formula>AND( 				DATEVALUE(Parent.ClosedDate) &gt; TODAY()-14, 				Incoming, 				ISPICKVAL(Parent.Status, &apos;Closed&apos;), 				Parent.RecordTypeDeveloperName__c == &apos;IATA_Financial_Review&apos; )</formula>
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
