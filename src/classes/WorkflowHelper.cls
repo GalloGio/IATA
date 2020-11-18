@@ -20,20 +20,17 @@ public without sharing class WorkflowHelper {
 
 	private static Map<Id,List<Account>> accountsToSearchParents = new Map<Id,List<Account>>();
 
-	private static Map<String,Account> accountPerContact = new Map<String,Account>();
+	private static Map<Id,Account> mapAccounts = new Map<Id,Account>();
 
-	private static Map<String,Account> getAccountPerContact() {
-		if(accountPerContact.isEmpty() || Test.isRunningTest()){
+	private static Map<Id,Account> getMapAccounts() {
+		if(mapAccounts.isEmpty() || Test.isRunningTest()){
 			Set<Id> acctIds = new Set<Id>();
 			for(Contact con : (List<Contact>)Trigger.new){
 				acctIds.add(con.AccountId);
 			}
-			Map<Id,Account> mapAccounts = new Map<Id,Account>([SELECT Id, CNS_Account__c FROM Account WHERE Id IN:acctIds]);
-			for(Contact con : (List<Contact>)Trigger.new){
-				accountPerContact.put(con.Email, mapAccounts.get(con.AccountId));
-			}
+			mapAccounts = new Map<Id,Account>([SELECT Id, CNS_Account__c, CNS_Agency__c FROM Account WHERE Id IN:acctIds]);
 		}
-		return accountPerContact;
+		return mapAccounts;
 	}
 
 	public static void performActions(String objectType){
@@ -117,7 +114,7 @@ public without sharing class WorkflowHelper {
 			updateRecordSharingCriteria(oldCon, newCon);
 			keyContactOptOut(oldCon, newCon);
 			updateIDCardContactCheckbox(oldCon, newCon);
-			updateCNSContactCheckbox(oldCon, newCon);
+			updateCNSContactCheckbox(newCon);
 		}
 	}
 
@@ -417,21 +414,21 @@ public without sharing class WorkflowHelper {
 			newContact.ID_Card_Holder__c = true;
 	}
 
-	public static void updateCNSContactCheckbox(Contact oldContact , Contact newContact){
+	public static void updateCNSContactCheckbox(Contact newContact){
 
-		Map<String,Account> newMap = new Map<String,Account>();
+		Map<Id,Account> newMap = new Map<Id,Account>();
 		
-		newMap = getAccountPerContact();
+		newMap = getMapAccounts();
 		
 		if(!newMap.isEmpty() 
 
-			&& newContact.Email != null
-			&& newMap.get(newContact.Email) != null
-			&& newMap.get(newContact.Email).CNS_Account__c
-			&& (oldContact == null || newContact.CNS_Contact__c != null
-			&& !newContact.CNS_Contact__c)
-			
-			)	newContact.CNS_Contact__c = true;
+			&& newContact.AccountId != null
+			&& newMap.get(newContact.AccountId) != null
+			&& (newMap.get(newContact.AccountId).CNS_Account__c
+			|| newMap.get(newContact.AccountId).CNS_Agency__c)
+			&& (!newContact.CNS_Contact__c
+			|| newContact.CNS_Contact__c == null)
+		) newContact.CNS_Contact__c = true;
 	}	
 
 	/*CONTACT ACTIONS END*/
