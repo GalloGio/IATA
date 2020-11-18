@@ -4,6 +4,8 @@
     <enableFeeds>false</enableFeeds>
     <fields>
         <fullName>Support_Email__c</fullName>
+        <description>[Deprecated] - This field is not to be used.
+To send emails use only - Support_User_Id__c</description>
         <externalId>false</externalId>
         <label>Support Email</label>
         <required>true</required>

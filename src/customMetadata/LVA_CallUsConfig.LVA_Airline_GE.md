@@ -16,7 +16,7 @@
     </values>
     <values>
         <field>PhoneNumber__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">902123755064</value>
     </values>
     <values>
         <field>Sector__c</field>

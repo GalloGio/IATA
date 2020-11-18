@@ -350,7 +350,7 @@ public class SCIMServProvManager {
 				}
 			}else if(System.Trigger.isInsert && System.Trigger.isBefore ) {
 				if(right.Right__c != null && right.Right__c.equals(IATA_STS_ACCESS_GRANTED)
-				   //&& right.Portal_Application__r.Provisioning_Type__c.equals(PROV_TYP_SCIM)
+					 //&& right.Portal_Application__r.Provisioning_Type__c.equals(PROV_TYP_SCIM)
 						&& servMap.get(right.Portal_Application__c).Provisioning_Type__c!=null
 						&& servMap.get(right.Portal_Application__c).Provisioning_Type__c.equals(PROV_TYP_SCIM)
 				  ) {
@@ -528,68 +528,6 @@ public class SCIMServProvManager {
 		}
 
 		if(!updateContactList.isEmpty()) update updateContactList.values();
-	}
-
-
-	@future
-	public static void reviewIFGAccountSharing(Set<Id> listOfAccounts){
-		Set<id> allContactsKeys = new Set<id>();
-
-		if(!SCIMServProvManager.PREVENT_TRIGGER_RUN) SCIMServProvManager.PREVENT_TRIGGER_RUN = true;
-
-		if(listOfAccounts != null && !listOfAccounts.isEmpty()){
-			Map<id, Account> uSharingList = new Map<id, Account>();
-			Map<String, Boolean> mapAccServiceFound=new Map<String, Boolean>();
-
-			List<Contact> contactsList = [select id, Record_Sharing_Criteria__c, IFG_PreProduction__c, IFG_Production__c, accountid, account.Record_Sharing_Criteria__c,
-			 (select id, Application_Name_Text_Field__c, Portal_Application__c, Right__c
-			 from Portal_Application_Rights__r
-			 where Right__c != :IATA_STS_ACCESS_DENIED)
-			 from contact
-			 where accountId in :listOfAccounts];
-
-			List<Portal_Application_Right__c> ServiceAccList = [select Id, Right__c, Contact__c, Portal_Application__c, Contact__r.Record_Sharing_Criteria__c
-					FROM Portal_Application_Right__c
-					where Contact__r.Account.Id in :listOfAccounts];
-			SCIMServProvManager.initIATAServAccessMapOfApps(ServiceAccList);
-
-			String recordSharingCriteriaAux;
-			String mapAccountServiceKey;
-			for(Contact con : contactsList){
-				Decimal totalIFGServices = 0;
-				recordSharingCriteriaAux='';
-				mapAccountServiceKey='';
-
-				for(Portal_Application_Right__c ri : con.Portal_Application_Rights__r){
-					if(isIFGServiceRow(ri)) totalIFGServices++;
-				}
-
-				mapAccountServiceKey=con.account.Id+'_'+RSC_IFG_ACTIVE_USERS;
-				if(totalIFGServices > 0
-						&& (mapAccServiceFound.get(mapAccountServiceKey)!=true)){
-
-					mapAccServiceFound.put(mapAccountServiceKey,true);
-					recordSharingCriteriaAux=multiSelectPickListAppendValue(con.account.Record_Sharing_Criteria__c,RSC_IFG_ACTIVE_USERS);
-
-					Account anAccount = new Account(id = con.accountId, Record_Sharing_Criteria__c = recordSharingCriteriaAux);
-					uSharingList.put(con.accountId, anAccount);
-
-				}
-				else if (mapAccServiceFound.get(mapAccountServiceKey)!=true
-						&& mapAccServiceFound.get(mapAccountServiceKey)!=false){
-					mapAccServiceFound.put(mapAccountServiceKey,false);
-
-					recordSharingCriteriaAux=multiSelectPickListDeleteValue(con.account.Record_Sharing_Criteria__c,RSC_IFG_ACTIVE_USERS);
-
-					Account anAccount = new Account(id = con.accountId, Record_Sharing_Criteria__c = recordSharingCriteriaAux);
-					uSharingList.put(con.accountId, anAccount);
-				}
-			}
-
-			//Update
-			if(!uSharingList.isEmpty()) update uSharingList.values();
-		}
-
 	}
 
 	public static String multiSelectPickListAppendValue(String PickListCurrentValues, String ValueToAppend){

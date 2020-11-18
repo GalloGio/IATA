@@ -277,6 +277,7 @@ public without sharing class AMS_Utils {
 	public static final String CHLOCTYPEBEHAVIOR_STANDARD = CHLOCTYPEBEHAVIOR_SWAP;
 	public static final String SECTOR_CARGO = 'Cargo Agent';
 	public static final String SECTOR_PASSENGER = 'Travel Agent';
+	public static final String SECTOR_POSTAL_SERVICE = 'Postal Service';
 	public static final String SECTOR_AIRLINE = 'Airline';
 	public static final String SECTOR_INFRASTRUCTURE = 'Infrastructure Partner';
 	public static final String SECTOR_IATA = 'IATA';
@@ -307,6 +308,9 @@ public without sharing class AMS_Utils {
 	public static final String CASE_REASON_PCI_DSS_COMPLIANT = 'PCI DSS Compliant';
 	public static final String CASE_REASON_EDS = 'EDS';
 	public static final String CASE_REASON_NONNEWGEN_RHC = 'NonNewGen RHC';
+
+	public static final String FINANCIAL_REVIEW_ANNUAL = 'Annual';
+	public static final String FINANCIAL_REVIEW_MAJOR_CHANGES = 'Major Changes';
 
 	public static final String FINANCIAL_REVIEW_MULTICOUNTRY_ANNUAL = 'Multicountry Annual';
 	public static final String FINANCIAL_REVIEW_MULTICOUNTRY_ADHOC = 'Multicountry Adhoc';
@@ -345,6 +349,7 @@ public without sharing class AMS_Utils {
 	public static final String CASE_STATUS_RE_OPENED = 'Re-open/ed';
 	public static final String CASE_STATUS_SUBMITTED = 'Submitted';
 	public static final String CASE_STATUS_ASSESSMENT_CANCELED = 'Assessment Cancelled';
+	public static final String CASE_STATUS_FINANCIAL_ASSESSMENT_CHALLENGED = 'Financial Assessment Challenged';
 
 	public static final Set<String> IFAP_CLOSED_STATUS = new Set<String>{
 		CASE_STATUS_CLOSED,
@@ -379,6 +384,7 @@ public without sharing class AMS_Utils {
 	public static final String CATEGORY_TOUR_OPERATOR = 'Tour Operator';
 	public static final String CATEGORY_IATA_HEAD_OFFICE = 'IATA Head Office';
 	public static final String CATEGORY_CNS_ENDORSEMENT = 'CNS Endorsement';
+	public static final String CATEGORY_POSTAL_OPERATOR = 'Postal Operator';
 
 	public static final String TYPECHANGE_OWNERIATA2IATA = 'Ownership to IATA Agent';
 	public static final String TYPECHANGE_OWNERIATA2NONIATA = 'Ownership to non-IATA Agent';
@@ -425,6 +431,7 @@ public without sharing class AMS_Utils {
 
 	//Account - Location_Class__c
 	public static final String LC_PASSENGER = 'P';
+	public static final String LC_POSTAL_OPERATOR = 'L';
 
 	//CNS new PROCESS Location Type requested
 	public static final String CNS_LOCATION_TYPE_REQUESTED_CNS_ENDORSEMENT_NEW_BRANCH = 'New BR / IP - CNS Endorsement';
@@ -1251,12 +1258,12 @@ public without sharing class AMS_Utils {
 				Shipping_State__c, Shipping_City__c, Branch_Office_Email__c, Website__c, Branch_Office_Phone__c, Branch_Office_FAX__c, ISSP_AMS_Premises_located_at_airport__c,
 				Abbreviated_name__c, Abbreviated_address__c, Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c
 				,Shipping_ISO_Country__c,Shipping_ISO_State__c, Shipping_ISO_Country__r.Name, Shipping_ISO_State__r.Name, IATA_ISO_State__r.Name, Link_agent_name__c, IATA_ISO_State__r.Valid_for_Address__c,
-				Geoname_Billing_City__c, Geoname_Shipping_City__c, Geoname_Billing_City__r.Name, Geoname_Shipping_City__r.Name, NDC_Transactions__c
+				Geoname_Billing_City__c, Geoname_Shipping_City__c, Geoname_Billing_City__r.Name, Geoname_Shipping_City__r.Name, NDC_Transactions__c, SAAM_Case__r.Origin
 				FROM AMS_Pax_Accreditation_Form__c
 				WHERE Id IN :oscarOnlineAccredIds]);
 
 		List<Ams_ChangeCodesHelper.ObjectChangesStruct> changes = new List<Ams_ChangeCodesHelper.ObjectChangesStruct>();
-
+		Map<ID,String> mapOscarOrigin = new Map<ID,String>();
 		for (AMS_OSCAR__c oscar : oscars) {
 
 			Boolean accountHasChanges = false;
@@ -1264,7 +1271,7 @@ public without sharing class AMS_Utils {
 			Account acc = accounts.get(oscar.Account__c);
 
 			AMS_Pax_Accreditation_Form__c onlineAcc = onlineAccreditations.get(oscar.AMS_Online_Accreditation__c);
-
+			mapOscarOrigin.put(oscar.ID, onlineAcc.SAAM_Case__r.Origin);
 			Map<Id, List<AMS_Agencies_relationhip__c>> accountHierarchyRelationships = AMS_HierarchyHelper.getAccountsHierarchies(new Set<Id>{acc.Id});
 
 			if (acc != null && onlineAcc != null) {
@@ -1377,8 +1384,7 @@ public without sharing class AMS_Utils {
 
 				for(AMS_OSCAR__c oscar : oscarsToCopy)
 					mapOscars.put(oscar.Id, oscar);
-
-				AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccount, true, false, mapOscars, locationTypeByOscar, topParentByOscar);
+				AMS_AccountRoleCreator.runRoleCreatorForOnlineAccreditations(stagingToAccount, true, false, mapOscars, locationTypeByOscar, topParentByOscar, mapOscarOrigin);
 			}
 
 			for(Id accountID : AMS_AccountRoleCreator.totalCoveredOwnershipByAccount.keySet()){
@@ -1430,22 +1436,6 @@ public without sharing class AMS_Utils {
 
 		return oldAccountValue;
 
-	}
-
-	private static boolean isEmptyAccountHierarchyRelationshipsMap(Map<Id, List<AMS_Agencies_relationhip__c>> accountHierarchyRelationships){
-
-		if(accountHierarchyRelationships.isEmpty())
-			return true;
-
-		if(accountHierarchyRelationships.values().isEmpty())
-			return true;
-
-		for(List<AMS_Agencies_relationhip__c> agency:accountHierarchyRelationships.values()){
-			if(!agency.isEmpty())
-				return false;
-		}
-
-		return true;
 	}
 
 	public static Boolean ownershipIsToBeMigrated(String typesOfChange){

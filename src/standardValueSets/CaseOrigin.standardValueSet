@@ -347,6 +347,11 @@
         <label>E-mail to Case - Central America</label>
     </standardValue>
     <standardValue>
+        <fullName>E-mail to Case - Central Direct Sales</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Central Direct Sales</label>
+    </standardValue>
+    <standardValue>
         <fullName>E-mail to Case - Central West Africa</fullName>
         <default>false</default>
         <label>E-mail to Case - Central West Africa</label>
@@ -735,6 +740,11 @@
         <fullName>E-mail to Case - North Korea</fullName>
         <default>false</default>
         <label>E-mail to Case - North Korea</label>
+    </standardValue>
+    <standardValue>
+        <fullName>E-mail to Case - Online Store Support</fullName>
+        <default>false</default>
+        <label>E-mail to Case - Online Store Support</label>
     </standardValue>
     <standardValue>
         <fullName>E-mail to Case - Pakistan</fullName>
@@ -1280,6 +1290,11 @@
         <fullName>Risk Monitoring Engine</fullName>
         <default>false</default>
         <label>Risk Monitoring Engine</label>
+    </standardValue>
+    <standardValue>
+        <fullName>TIDS Online Portal</fullName>
+        <default>false</default>
+        <label>TIDS Online Portal</label>
     </standardValue>
     <standardValue>
         <fullName>Voicemail</fullName>

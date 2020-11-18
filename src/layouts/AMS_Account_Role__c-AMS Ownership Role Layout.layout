@@ -25,7 +25,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Valid__c</field>
+                <field>Owner_Email__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>Owner_Category__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

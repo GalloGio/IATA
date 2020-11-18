@@ -4,12 +4,14 @@ public with sharing class clsCheckOutOfOfficeAndAutoReply {
 	public static Set<ID> IsFromAddressExcluded(List<Case> aCases, String applicationName){
 
 		Set<ID> setCaseIDAddressExcluded = new Set<ID>();
-		List <ExcludedEmailFromAddress__c> eList = [SELECT Name From ExcludedEmailFromAddress__c e WHERE e.ApplicationName__c ='ANY' OR e.ApplicationName__c = :applicationName];
+		if(!aCases.isEmpty()){
+			List <ExcludedEmailFromAddress__c> eList = [SELECT Name From ExcludedEmailFromAddress__c e WHERE e.ApplicationName__c ='ANY' OR e.ApplicationName__c = :applicationName];
 
-		for(Case aCase :aCases){
-			for (ExcludedEmailFromAddress__c excludedAddress : eList){
-				if (aCase.SuppliedEmail != null && aCase.SuppliedEmail.toUpperCase().contains(excludedAddress.Name.toUpperCase())){
-					setCaseIDAddressExcluded.add(aCase.ID);
+			for(Case aCase :aCases){
+				for (ExcludedEmailFromAddress__c excludedAddress : eList){
+					if (aCase.SuppliedEmail != null && aCase.SuppliedEmail.toUpperCase().contains(excludedAddress.Name.toUpperCase())){
+						setCaseIDAddressExcluded.add(aCase.ID);
+					}
 				}
 			}
 		}
@@ -20,16 +22,17 @@ public with sharing class clsCheckOutOfOfficeAndAutoReply {
 	public static Set<ID> IsSubjectExcluded(List<Case> aCases, String applicationName){
 
 		Set<ID> setCaseIDSujectExcluded = new Set<ID>();
-		List <ExcludedCaseSubject__c> eList = [SELECT e.Name From ExcludedCaseSubject__c e WHERE e.Application_Name__c ='ANY' OR e.Application_Name__c   = :applicationName];
+		if(!aCases.isEmpty()){
+			List <ExcludedCaseSubject__c> eList = [SELECT e.Name From ExcludedCaseSubject__c e WHERE e.Application_Name__c ='ANY' OR e.Application_Name__c   = :applicationName];
 
-		for(Case aCase :aCases){
-			for (ExcludedCaseSubject__c excludedSubject : eList){
-				if (aCase.Subject.toUpperCase().contains(excludedSubject.Name.toUpperCase())){
-					setCaseIDSujectExcluded.add(aCase.ID);
+			for(Case aCase :aCases){
+				for (ExcludedCaseSubject__c excludedSubject : eList){
+					if (aCase.Subject.toUpperCase().contains(excludedSubject.Name.toUpperCase())){
+						setCaseIDSujectExcluded.add(aCase.ID);
+					}
 				}
 			}
 		}
-
 		return setCaseIDSujectExcluded;
 	}
 }

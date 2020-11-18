@@ -1,0 +1,32 @@
+<template>
+    <div  class="slds-form-element__label slds-no-flex">
+    <template if:true={rules.required}>* </template>{rules.name}&nbsp;
+    <template if:true={displayed} >
+        <span class="slds-icon_container slds-icon-utility-info slds-current-color slds-form-element__icon" onmouseover={openpop} onmouseout={closepop} title="Other Languages">
+            <svg class="slds-icon slds-icon slds-icon_x-small" aria-hidden="true">
+            <use xlink:href="/apexpages/slds/latest/assets/icons/utility-sprite/svg/symbols.svg#info"></use>
+            </svg>
+            <span class="slds-assistive-text">Other Languages</span>
+        </span>
+
+        <template if:true={visible} >
+            <div class="slds-popover slds-popover_tooltip slds-nubbin_bottom-left" role="tooltip" id="help">
+                <div class="slds-popover__body">
+                    <template for:each={languages} for:item="lang">
+                        <template if:true={lang.visible}>
+                            <div key={lang.language}>
+                                <template if:false={lang.islabel}>
+                                    <span class="tids-tooltip-flag">
+                                        <img src={lang.language} alt={lang.language}/>
+                                    </span>
+                                </template>
+                                <span class="slds-p-left_x-small">{lang.text}</span>
+                            </div>
+                        </template>
+                    </template>
+                </div>
+            </div>
+        </template>
+    </template>
+    </div>
+</template>

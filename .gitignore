@@ -39,9 +39,6 @@ src/staticresources/IEC_carrousel03.resource
 src/staticresources/IEC_windows.resource
 src/staticresources/IEC_carrousel01.resource
 src/staticresources/eBroadcastAssets.resource
-src/applications/standard__Platform.app
-src/applications/standard__LightningSalesConsole.app
-src/applications/standard__LightningService.app
 
 
 .project
@@ -52,9 +49,17 @@ salesforce.schema
 src/workflows/SocialPersona.workflow
 src/workflows/SocialPost.workflow
 src/layouts/EmailMessage-Email Message Layout.layout
+
+#Apps
 src/applications/standard__DataAssessment.app
 src/applications/standard__LightningSales.app
 src/applications/standard__LightningInstrumentation.app
+src/applications/standard__Platform.app
+src/applications/standard__LightningSalesConsole.app
+src/applications/standard__LightningService.app
+src/applications/standard__TrustCard.app
+
+#Queues
 src/queues/CasesAmericasemails.queue
 src/queues/E_F_Airline_Services.queue
 src/queues/E_F_Client_Services.queue
@@ -114,7 +119,7 @@ src/queues/AgencyManagementChinaNAsia.queue
 src/queues/CustomerServiceChinaNAsia.queue
 src/queues/Weblinkheadoffice.queue
 
-
+#CustomMetadata
 src/customMetadata/Fobidden_Disposal_Email_Domain.yopmail_com.md
 src/customMetadata/Fobidden_Disposal_Email_Domain.yopmail_fr.md
 src/customMetadata/Fobidden_Disposal_Email_Domain.yopmail_gq.md
@@ -129,6 +134,12 @@ src/reportTypes/Accounts_with_or_without_activities.reportType
 
 src/layouts/EntityMilestone-Object Milestone Layout.layout
 src/layouts/ListEmail-List Email Layout.layout
+
+#Sharing Rules
+src/sharingRules/ActiveScratchOrg.sharingRules
+src/sharingRules/ScratchOrgInfo.sharingRules
+src/sharingRules/ConversationBroadcast.sharingRules
+
 
 *.sublime-project
 *.sublime-settings

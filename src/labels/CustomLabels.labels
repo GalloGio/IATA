@@ -2590,7 +2590,8 @@ IATA Easy Pay 계좌 개설을 희망하시는 여행사는 아래 우리은행 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG RHC Risk Status Tooltip</shortDescription>
-        <value>Determined by the agents’ ongoing risk history and the outcome of their financial reviews</value>
+        <value>Your risk status is based on the results of both the last financial assessment and the risk history assessment.
+            For more details, please refer to Resolution 812 (sections 5.2 and 5.3) which can be accessed by searching &apos;Resolution 812&apos; in the Customer Portal.</value>
     </labels>
     <labels>
         <fullName>ANG_VR_SELECTED_CODES</fullName>
@@ -4465,6 +4466,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>here</value>
     </labels>
     <labels>
+        <fullName>CSP_Email_Link_Button_Image</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Email Link button Image</shortDescription>
+        <value>CSP Email Btn Image</value>
+    </labels>
+    <labels>
         <fullName>CSP_Email_Password_Reset_Body_Part_1</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -4941,7 +4950,7 @@ If you are already CNS Endorsed, you can use this service to update information 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Frozen User Message</shortDescription>
-        <value>Since you have not logged in the last 90 days, we’ve sent you an email with a new password.</value>
+        <value>For security reasons, we have sent you an email to set a new password.</value>
     </labels>
     <labels>
         <fullName>CSP_Give_Feedback_ButtonLabel</fullName>
@@ -4974,6 +4983,22 @@ If you are already CNS Endorsed, you can use this service to update information 
         <protected>false</protected>
         <shortDescription>Give Feedback Type title</shortDescription>
         <value>This is a</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Go_to_FAQ</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Go to Iata org</shortDescription>
+        <value>Go to FAQ</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Go_to_IataOrg</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Go to Iata org</shortDescription>
+        <value>Go to iata.org</value>
     </labels>
     <labels>
         <fullName>CSP_Go_to_Webstar</fullName>
@@ -6583,6 +6608,14 @@ You can easily create a company account in two steps</value>
         <value>Log Out</value>
     </labels>
     <labels>
+        <fullName>CSP_Login</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Login</shortDescription>
+        <value>Login</value>
+    </labels>
+    <labels>
         <fullName>CSP_Login_Now</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -7121,6 +7154,14 @@ You can easily create a company account in two steps</value>
         <protected>false</protected>
         <shortDescription>CSP Record Deleted</shortDescription>
         <value>Account Domain is Deleted</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Registration</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Registration</shortDescription>
+        <value>Registration</value>
     </labels>
     <labels>
         <fullName>CSP_Registration_Complete</fullName>
@@ -7875,6 +7916,14 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <value>Direct link to FAQ copied</value>
     </labels>
     <labels>
+        <fullName>CSP_Sign_Up</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Sign Up Header label</shortDescription>
+        <value>Sign up</value>
+    </labels>
+    <labels>
         <fullName>CSP_Skip</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -7889,6 +7938,14 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <protected>false</protected>
         <shortDescription>CSP_Status</shortDescription>
         <value>Status</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Store</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Store Button Label</shortDescription>
+        <value>Store</value>
     </labels>
     <labels>
         <fullName>CSP_SubjectSubtitleCC</fullName>
@@ -8069,6 +8126,54 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <protected>false</protected>
         <shortDescription>CSP Troubleshooting</shortDescription>
         <value>troubleshooting</value>
+    </labels>
+    <labels>
+        <fullName>CSP_TroubleshootingDesc</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Troubleshooting Issue description label</shortDescription>
+        <value>Description of the issue:</value>
+    </labels>
+    <labels>
+        <fullName>CSP_TroubleshootingForm</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Troubleshooting Form</shortDescription>
+        <value>Troubleshooting Form</value>
+    </labels>
+    <labels>
+        <fullName>CSP_TroubleshootingMSG</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Troubleshooting message</shortDescription>
+        <value>If the above steps do not fix the problem, click below to contact us:</value>
+    </labels>
+    <labels>
+        <fullName>CSP_TroubleshootingSbtitle</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Troubleshooting subtitle</shortDescription>
+        <value>Complete the form and we will contact you to help you access our platform.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_TroubleshootingTitle</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Troubleshooting</shortDescription>
+        <value>Login &amp; Registration Troubleshooting</value>
+    </labels>
+    <labels>
+        <fullName>CSP_TroubleshootingType</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Troubleshooting Type label</shortDescription>
+        <value>I need help with:</value>
     </labels>
     <labels>
         <fullName>CSP_Troubleshooting_Info</fullName>
@@ -8469,7 +8574,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - Area</shortDescription>
-        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,iiNet,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration, TASF, E&amp;F Services,E&amp;F Operations,Easy Pay,NewGen ISS,E&amp;F,SIS,ICH,iiNet,AirportIS,SIS Dispute/Correspondence,SIS e-Invoicing,SIS Fees,SIS File Submission,SIS Invoice Creation,SIS ISPG,SIS Receive invoices/Files,SIS Release Notes,SIS Reports,SIS User Guide,CargoIS,Direct Data Solutions (DDS),GAP,MarketIS,PaxIS,Airline Joining,Airline Leaving,New application - forms, procedures, fees,Agency Risk Management,Airline and Location Coding,ICCS</value>
+        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,iiNet,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration, TASF, E&amp;F Services,E&amp;F Operations,Easy Pay,NewGen ISS,E&amp;F,SIS,ICH,iiNet,AirportIS,SIS Dispute/Correspondence,SIS e-Invoicing,SIS Fees,SIS File Submission,SIS Invoice Creation,SIS ISPG,SIS Receive invoices/Files,SIS Release Notes,SIS Reports,SIS User Guide,CargoIS,Direct Data Solutions (DDS),GAP,MarketIS,PaxIS,Airline Joining,Airline Leaving,New application - forms, procedures, fees,Agency Risk Management,Airline and Location Coding,ICCS,IMX</value>
     </labels>
     <labels>
         <fullName>CaseValidation_Area2</fullName>
@@ -8724,6 +8829,41 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <protected>false</protected>
         <shortDescription>Case Defect/Issue</shortDescription>
         <value>Case Defect/Issue</value>
+    </labels>
+    <labels>
+        <fullName>Case_KPI_AirlineManagement</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_KPI_AirlineManagement</shortDescription>
+        <value>&quot;Airline joining,Airline leaving,Airline suspension&quot;</value>
+    </labels>
+    <labels>
+        <fullName>Case_KPI_Long50d</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_KPI_Long50d</shortDescription>
+        <value>CHC – Change of Shareholding,CHO / CHS – Change of Ownership / Legal Status,CHN - Change of Name,New HO,New BR Abroad,Financial RVW intermediaries,New EAA - Application process for European Accredited Agent,New HE standard,IATAN Re-certification</value>
+    </labels>
+    <labels>
+        <fullName>Case_KPI_Medium20d</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_KPI_Medium20d</shortDescription>
+        <value>CHG – Data Maintenance,CHL - Change of Location,New SA / CHV – New Code,CLO - Closure,VMFR Setup/Update,New AE</value>
+    </labels>
+    <labels>
+        <fullName>Case_KPI_Risk</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_KPI_Risk</shortDescription>
+        <value>&quot;financial security request,Financial security release,financial security update,financial security renewal,Yearly Review,Ad hoc Review&quot;</value>
+    </labels>
+    <labels>
+        <fullName>Case_KPI_Short24</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case_KPI_Short24</shortDescription>
+        <value>&quot;CHG – Data Maintenance,CHL - Change of Location,New SA / CHV – New Code,CLO - Closure,VMFR Setup/Update,New AE&quot;</value>
     </labels>
     <labels>
         <fullName>Case_Type</fullName>
@@ -23002,6 +23142,14 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>8. Sales &amp; Promotion</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_License_No_Company</fullName>
+        <categories>ISSP, AMs</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_License_No_Company</shortDescription>
+        <value>* License Number of the Company</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Link_Add_Office</fullName>
         <categories>ISSP, AMs</categories>
         <language>en_US</language>
@@ -24016,6 +24164,14 @@ For each section below either:&lt;br/&gt;
 You will be required to upload a scanned copy of this document in the next step (STEP D).</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_NoC_Change_Ownership_Legal_Status</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Change_Ownership_Legal_Status</shortDescription>
+        <value>3. Legal Status</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_NoC_Change_Ownership_Shareholding</fullName>
         <categories>ISSP AMS NoC</categories>
         <language>en_US</language>
@@ -24117,6 +24273,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_Confirm_Ownership_details</shortDescription>
         <value>Confirm Type of entity and Ownership details are correct</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_Confirm_Type_of_Entity</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_Confirm_Type_of_Entity</shortDescription>
+        <value>Confirm Type of entity is correct</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_Confirm_details</fullName>
@@ -24249,6 +24413,14 @@ You will be required to upload a scanned copy of this document in the next step 
         <protected>false</protected>
         <shortDescription>ISSP AMS NoC IATA Admin</shortDescription>
         <value>IATA Agency Administrator</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_IATA_Admin_Company</fullName>
+        <categories>ISSP, Portal, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS NoC IATA Admin Company</shortDescription>
+        <value>IATA Administrator</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_IATA_Only</fullName>
@@ -24859,6 +25031,14 @@ I certify that the preceding statements are true and correct to the best of my k
         <value>Please confirm the agency details below are correct</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_NoC_error_message1_Company</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_error_message1_company</shortDescription>
+        <value>Please confirm the company details below are correct</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_NoC_error_message2</fullName>
         <categories>ISSP AMS NoC</categories>
         <language>en_US</language>
@@ -24875,6 +25055,14 @@ I certify that the preceding statements are true and correct to the best of my k
         <value>Please either confirm that the Agency Location details are correct or notify CNS of any changes.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_NoC_error_message2_company</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_error_message2_company</shortDescription>
+        <value>Please either confirm that the Company Location details are correct or notify IATA of any changes.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_NoC_error_message3</fullName>
         <categories>ISSP AMS NoC</categories>
         <language>en_US</language>
@@ -24889,6 +25077,14 @@ I certify that the preceding statements are true and correct to the best of my k
         <protected>false</protected>
         <shortDescription>ISSP_AMS_NoC_error_message3_CNS</shortDescription>
         <value>Please either confirm that the Agency Ownership details are correct or notify CNS of any changes.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_NoC_error_message3_company</fullName>
+        <categories>ISSP AMS NoC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_NoC_error_message3_company</shortDescription>
+        <value>Please either confirm that the Company Ownership details are correct or notify IATA of any changes.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_NoC_error_message4</fullName>
@@ -26034,6 +26230,14 @@ It is hereby agreed that this application shall become a part of every Passenger
         <value>Minor changes to your Agency details e.g. Phone number, email address etc.  can be made directly from your &lt;span class=&quot;customlink&quot; onClick=&quot;redirectToCompanyInformationJs();&quot;&gt;Company Information&lt;/span&gt; page.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Step0_Minor_Changes_Company</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step0 Minor Changes</shortDescription>
+        <value>Minor changes to your Company details e.g. Phone number, email address etc.  can be made directly from your &lt;span class=&quot;customlink&quot; onClick=&quot;redirectToCompanyInformationJs();&quot;&gt;Company Information&lt;/span&gt; page.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Step0_New_Application</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -26080,6 +26284,14 @@ It is hereby agreed that this application shall become a part of every Passenger
         <protected>false</protected>
         <shortDescription>ISSP AMS Step0 Other Changes Msg</shortDescription>
         <value>For changes to your Location, Company Name, Legal Status or Ownership / Shareholding.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step0_Other_Changes_Msg_PostalOperator</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step0 Other Changes Msg PostalOperator</shortDescription>
+        <value>For changes to your Location, Company Name or Legal Status</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step0_Other_Forms</fullName>
@@ -28026,6 +28238,13 @@ The applicant understands and agrees to pay the application, entry and annual fe
         <value>Clear All Criteria</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_eBulletin_CompanyChanges</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_eBulletin_CompanyChanges</shortDescription>
+        <value>Company Changes</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_eBulletin_Countries</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -29501,6 +29720,14 @@ This service is free of charge.</value>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step0 Other Changes Msg for Nam Pax Agents</shortDescription>
         <value>Request Change of Accreditation Type and/or notify IATA of changes to your Location, Company Name, Legal Status, Ownership / Shareholding.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_Step0_Other_Changes_Msg_NamPaxAgent_PostalOperator</fullName>
+        <categories>ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step0 Other Changes Msg for Nam Pax Agents PostalOperator</shortDescription>
+        <value>Request Change of Accreditation Type and/or notify IATA of changes to your Location, Company Name or Legal Status.</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_Step0_Other_Changes_Msg_RevCaseOpen</fullName>
@@ -36576,6 +36803,13 @@ If the product is an Agent&apos;s multi-use VANs, then it is an Agent&apos;s uni
         <protected>false</protected>
         <shortDescription>ISSP Public</shortDescription>
         <value>Public</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PwC_Managerial_Accounts</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PwC_Managerial_Accounts</shortDescription>
+        <value>PwC Managerial Accounts</value>
     </labels>
     <labels>
         <fullName>ISSP_Quantity</fullName>
@@ -48084,9 +48318,9 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
     <labels>
         <fullName>pkb2_lang_tr</fullName>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>Turkish</shortDescription>
-        <value>Türk</value>
+        <value>Türkçe</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_ur</fullName>

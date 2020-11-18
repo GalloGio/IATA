@@ -218,10 +218,11 @@ public class AMS_OSCARTriggerHandler {
 		//if(test.IsRunningTest())
 			performBackupANG((Map<Id, AMS_OSCAR__c>) Trigger.oldMap, (Map<Id, AMS_OSCAR__c>) Trigger.newMap);
 
+		updateAccreditationProcessType(oscars, (Map<Id,AMS_OSCAR__c>)Trigger.oldMap);
+
 	}
 
 	public static void handleBeforeInsert() {
-		//assignOSCARToRegionalQueues();
 		prepopulateValues();
 
 		AMS_AccreditationContactHelper.mirrorAccrediationContactsFromAccountRole((List<AMS_OSCAR__c>)Trigger.New, null);
@@ -1042,18 +1043,6 @@ public class AMS_OSCARTriggerHandler {
 			}
 
 		}
-	}
-
-	private static void assignOSCARToRegionalQueues(){
-
-		List<AMS_OSCAR__c> certificationOscars = new List<AMS_OSCAR__c>();
-
-		for(AMS_OSCAR__c oscar : (List<AMS_OSCAR__c>)Trigger.New)
-			if(oscar.RecordTypeId == AMS_Utils.RECTYPE_CERT)
-				certificationOscars.add(oscar);
-
-		/*if(!certificationOscars.isEmpty())
-			AMS_OscarCaseTriggerHelper.assignOscarToRegionQueue(certificationOscars);*/
 	}
 
 	public static void handleChangesProcess(List<AMS_OSCAR__c> oscars) {
@@ -5069,6 +5058,85 @@ public class AMS_OSCARTriggerHandler {
 		List<Account> acctLst = getAccounts(accountId);
 		if(!acctLst.isEmpty()){
 			return (acctLst.get(0).Status__c == targetStatus);
+		}
+		return false;
+	}
+
+	/*
+	 * Updates the accreditation process type field based on the custom metadata Case_Process_Type__mdt
+	 * if any relevant field in this oscar is being updated
+	 */
+	public static void updateAccreditationProcessType(list<AMS_OSCAR__c> listNew, Map<Id, AMS_OSCAR__c> mapOld) {
+		for (AMS_OSCAR__c newOscar: listNew) {
+			AMS_OSCAR__c oldOscar = mapOld.get(newOscar.Id);
+
+			// fields to verify if are changing
+			set<String> setCheckFields = CaseProcessTypeHelper.getRelevantFields(newOscar);
+			if (isUpdated(newOscar, oldOscar, setCheckFields)) {
+				// add extra fields from Accreditation related object
+				setAccreditationFields(listNew, newOscar);
+				//call helper function to set the value for Accreditation_Process_Type__c
+				CaseProcessTypeHelper.populateOSCARAccProcess(newOscar);
+			}
+		}
+	}
+
+
+	/**
+	 * get a map of releated AMS_Pax_Accreditation_Form__c records for the incoming Oscars
+	 * to be used in the setAccreditationFields method
+	 * 
+	 * Note:
+	 * If another releated object is used in the custom meta AMS_Pax_Accreditation_Form__c besides AMS_Online_Accreditation__r
+	 * then must be added too
+	 */
+	private static map<Id,AMS_Pax_Accreditation_Form__c> MAP_ACCREDITATION = null;
+	private static map<Id,AMS_Pax_Accreditation_Form__c> getMapAccreditation(list<AMS_OSCAR__c> listTrigger) {
+		if (MAP_ACCREDITATION==null) {
+			MAP_ACCREDITATION = new map<Id,AMS_Pax_Accreditation_Form__c>();
+			//get all accreditation Ids
+			list<Id> listAccreditationId = new list<Id>();
+			for (AMS_OSCAR__c newOscar: listTrigger) {
+				if (newOscar.AMS_Online_Accreditation__c!=null) {
+					listAccreditationId.add(newOscar.AMS_Online_Accreditation__c);
+				}
+			}
+			// find Accreditation fields used in the custom meta Case_Process_Type__mdt, in the other condition field
+			set<String> setFields = new set<String>{'Id'};
+			for (Case_Process_Type__mdt process: [SELECT Other_Conditions__c FROM Case_Process_Type__mdt WHERE Other_Conditions__c != null]) {
+				for (String elem: process.Other_Conditions__c.split(' ')) {
+					if (elem.startsWithIgnoreCase('OSCAR__r.AMS_Online_Accreditation__r.')) {
+						setFields.add(elem.replace('OSCAR__r.AMS_Online_Accreditation__r.',''));
+					}
+				}
+			}
+			// prepare the query and store it into a map for later use in setAccreditationFields()
+			String query = 'SELECT ' +  String.join(new list<String>(setFields),',') + ' FROM AMS_Pax_Accreditation_Form__c WHERE Id IN :listAccreditationId';
+			MAP_ACCREDITATION = new map<Id,AMS_Pax_Accreditation_Form__c>(
+				(list<AMS_Pax_Accreditation_Form__c>)Database.query(query)
+			);
+		}
+		return MAP_ACCREDITATION;
+	}
+
+	/**
+	 * Use the MAP_ACCREDITATION map to set the related object 'AMS_Pax_Accreditation_Form__c' into the input oscar record
+	 */
+	private static void setAccreditationFields(list<AMS_OSCAR__c> listTrigger, AMS_Oscar__c oscar) {
+		AMS_Pax_Accreditation_Form__c accreditation = getMapAccreditation(listTrigger).get(oscar.AMS_Online_Accreditation__c);
+		if (accreditation!=null) {
+			oscar.AMS_Online_Accreditation__r = accreditation;
+		}
+	}
+
+	/*
+	 * True if any of the input field names is updated
+	 */
+	private static Boolean isUpdated(AMS_OSCAR__c newOscar, AMS_OSCAR__c oldOscar, set<String> setFieldNames) {
+		for (String fieldname: setFieldNames) {
+			if (fieldname.containsNone('.') && newOscar.get(fieldName) != oldOscar.get(fieldName)) {
+				return true;
+			}
 		}
 		return false;
 	}

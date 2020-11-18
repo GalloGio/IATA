@@ -11,6 +11,10 @@
         <value xsi:type="xsd:double">63.0</value>
     </values>
     <values>
+        <field>Other_Conditions__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>Reason__c</field>
         <value xsi:type="xsd:string">Direct Debit Setup/Update</value>
     </values>

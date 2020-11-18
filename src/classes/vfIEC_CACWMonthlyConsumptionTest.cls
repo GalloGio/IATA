@@ -82,7 +82,7 @@ private class vfIEC_CACWMonthlyConsumptionTest {
 
 	// SL Note-20160420: temporary disabled as this fails
 	//static testMethod
-	void testHistoryFall2015() {
+	static testMethod void testHistoryFall2015() {
 		//Set current page to GSSDetail File
 		PageReference pgRef = Page.IEC_CACWHistory;
 		pgRef.getParameters().put(IECConstants.PARAM_SUBSCRIPTION_NAME, IECUtil.EncryptEncodeParameter('Subs 01'));
@@ -108,13 +108,12 @@ private class vfIEC_CACWMonthlyConsumptionTest {
 			};
 
 			insert compiled;
-
+			CAC_Process.CACCreditProcess=true;
 			List<CAC_Subscription_Credit__c> credits = new List<CAC_Subscription_Credit__c>{
 				new CAC_Subscription_Credit__c(CAC_Subscription_Detail__c = CAC_SubscriptionDetail.Id, Credit__c = 1000, Date__c = Date.newInstance(2015, 09, 13))
-			};
-
+			};			
 			insert credits;
-
+			CAC_Process.CACCreditProcess=false; 
 			Test.stopTest();
 
 			//Instantiate Controller

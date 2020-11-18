@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataCategoryGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>true</active>
+    <dataCategory>
+        <dataCategory>
+            <label>Big Data</label>
+            <name>Big_Data</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Common-use Infrastructure</label>
+            <name>Common_use_Infrastructure</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Internet of Things</label>
+            <name>Internet_of_Things</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Paperless Operations</label>
+            <name>Paperless_Operations</name>
+        </dataCategory>
+        <dataCategory>
+            <label>The New Digital Organisations</label>
+            <name>The_New_Digital_Organisations</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Cyber Security</label>
+            <name>Cyber_Security</name>
+        </dataCategory>
+        <label>All</label>
+        <name>All</name>
+    </dataCategory>
+    <description>Categories from the CIO Forum.</description>
+    <label>CIO Forum</label>
+    <objectUsage>
+        <object>KnowledgeArticleVersion</object>
+    </objectUsage>
+</DataCategoryGroup>
