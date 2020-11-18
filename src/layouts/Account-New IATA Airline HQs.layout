@@ -395,6 +395,10 @@
                 <behavior>Edit</behavior>
                 <field>Service_Model__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>HQ_Service_Model__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns/>
         <style>TwoColumnsLeftToRight</style>
