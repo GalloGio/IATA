@@ -487,7 +487,7 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
     </fields>
     <fields>
         <fullName>ANG_Restrict_internal_selection__c</fullName>
-        <defaultValue>false</defaultValue>
+        <defaultValue>true</defaultValue>
         <description>When checked prevents portal services from being subscribed from Salesforce.</description>
         <externalId>false</externalId>
         <inlineHelpText>Enabling this option prevents internal users from granting this portal service to contacts.</inlineHelpText>
@@ -595,7 +595,7 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
     </fields>
     <fields>
         <fullName>Cannot_be_managed_by_portal_admin__c</fullName>
-        <defaultValue>false</defaultValue>
+        <defaultValue>true</defaultValue>
         <description>If true do not allow portal admin to manage service</description>
         <externalId>false</externalId>
         <inlineHelpText>If ticked the portal admin user will not have visible options to manage this service.</inlineHelpText>
@@ -848,6 +848,16 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
         <description>Indicates if L2 registration is necessary to request access to this service</description>
         <externalId>false</externalId>
         <label>Requires Level2 Registration</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Requires_Service_Admin_Approval__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>Indicates if User&apos;s requesting to use this portal service require an approval from a service administrator or not.</description>
+        <externalId>false</externalId>
+        <label>Requires Service Admin Approval</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -1693,6 +1703,19 @@ TEXT(ANG_Restrict_by_Agency_Sector__c) != &quot;&quot;
         <errorConditionFormula>AND(ISPICKVAL(Provisioning_Type__c , &apos;SCIM&apos;),  ISBLANK(SCIM_App_Name__c))</errorConditionFormula>
         <errorDisplayField>SCIM_App_Name__c</errorDisplayField>
         <errorMessage>SCIM APP Name field must be provided when Provisioning Type is SCIM</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Service_Access_Approval_Bypass</fullName>
+        <active>true</active>
+        <description>If User requests for accessing a Service do not require approval from a Service Administrator, then the Portal Service cannot be Granted Internally nor Managed By a Portal Administrator.</description>
+        <errorConditionFormula>AND(
+ Requires_Service_Admin_Approval__c = FALSE,
+ OR (
+  ANG_Restrict_internal_selection__c  = FALSE, 
+  Cannot_be_managed_by_portal_admin__c = FALSE
+ )
+)</errorConditionFormula>
+        <errorMessage>Please check &quot;Cannot be granted internally&quot; and &quot;Cannot be managed by portal admin&quot;. User access requests that do not require approval from a Service Administrator are auto-granted.</errorMessage>
     </validationRules>
     <visibility>Public</visibility>
 </CustomObject>

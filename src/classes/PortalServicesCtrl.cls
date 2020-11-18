@@ -158,6 +158,14 @@ public with sharing class PortalServicesCtrl {
 		}
 	}
 
+	/*
+	* Method used to retrieve the old link when redirecting the users to the old Portals
+	*/
+	@AuraEnabled
+	public static String goToOldPortalService(String myurl){
+		return OneIdUtils.getCommunityRedirection (OneIdUtils.Mode.ISSP, myurl);
+	}
+
 	private static Map<String,ISSPServiceListView__c> getMapSrevicesListViews() {
 		//get all values from custom settings object
 		List<ISSPServiceListView__c> csServiceListViews = ISSPServiceListView__c.getAll().values();
@@ -236,7 +244,7 @@ public with sharing class PortalServicesCtrl {
 		String conditionStr = PortalServicesCtrl.getConditionFromSelectedView(selectedView);
 
 		String extraQueryFields = ' CreatedDate, Application_URL__c, Cannot_be_managed_by_portal_admin__c, New_Window__c,ServiceName__c, Service_Description_Label__c, '+
-									'ANG_Restrict_by_Agency_Sector__c, ANG_Accredited_Agents_Only__c, Application_icon_URL__c, Requestable__c, Requires_Level2_Registration__c';
+									'ANG_Restrict_by_Agency_Sector__c, ANG_Accredited_Agents_Only__c, Application_icon_URL__c, Requestable__c, Requires_Level2_Registration__c, Requires_Service_Admin_Approval__c';
 		String finalQuery = 'SELECT '+ extraQueryFields + fieldsStr+ ' FROM Portal_Applications__c ' + conditionStr + ' ORDER BY Name ASC ';
 
 		List<Portal_Applications__c> portalAppList = Database.query(finalQuery);
