@@ -259,7 +259,7 @@ global with sharing class ISSP_CaseList {
 			if(userIds.endsWith(',')) userIds = userIds.substring(0,userIds.length()-1);
 			if(userIds != '') queryConditions += ' AND OwnerId IN (' + userIds + ') ';
 		}
-
+		queryConditions += ' AND Visible_on_ISS_Portal__c = true';
 		return String.isNotBlank(queryConditions) ? queryConditions : '';
 	}
 
@@ -314,7 +314,7 @@ global with sharing class ISSP_CaseList {
 					queryString = 'select '+query.substring(1) +', Description, (SELECT Id, CreatedDate, CommentBody, CreatedById, CreatedBy.Name FROM CaseComments order by CreatedDate ASC limit 200) from Case  '+getQueryConditions()+' order by CreatedDate DESC limit 200';
 				}
 				else{
-					 queryString = 'select '+query.substring(1) +' from Case  '+getQueryConditions()+' order by CreatedDate '+ sortDirection +' limit 5';
+					queryString = 'select '+query.substring(1) +' from Case  '+getQueryConditions()+' order by CreatedDate '+ sortDirection +' limit 5';
 				}
 				ISSP_Utilities.log('SQL String: ' + queryString);
 				setCon = new ApexPages.StandardSetController(Database.getQueryLocator(queryString));
