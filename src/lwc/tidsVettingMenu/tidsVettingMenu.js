@@ -32,7 +32,6 @@ export default class TidsVettingMenu extends LightningElement {
 	}
 
 	handleOnErrors() {
-		console.log('vetting errors');
 		this.errors = !this.errors;
 		fireEvent(this.pageRef, 'vettingMenuListener',this.errors);
 	}
@@ -42,7 +41,6 @@ export default class TidsVettingMenu extends LightningElement {
 	}
 
 	handleSectionApprove(props) {
-		console.log(props);
 	}
 
 }

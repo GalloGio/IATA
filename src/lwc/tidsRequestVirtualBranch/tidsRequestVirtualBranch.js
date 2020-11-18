@@ -48,7 +48,7 @@ export default class TidsRequestVirtualBranch extends LightningElement {
 			fireEvent(this.pageRef,'spinnerListener', {payload:{show:false}});
 			this.showConfimationModal=true;
 		}).catch(error => {
-			console.log(error);
+			console.log('error',JSON.stringify(error));
 			fireEvent(this.pageRef,'spinnerListener', {payload:{show:false}});
 		})
 	}

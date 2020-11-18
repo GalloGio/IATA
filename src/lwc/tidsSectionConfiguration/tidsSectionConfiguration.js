@@ -59,7 +59,7 @@ export default class TidsSectionConfiguration extends LightningElement {
 				this.loadingSpinner = false;
 			})
 			.catch(error => {
-				console.log(error);
+				console.log('error',JSON.stringify(error));
 			})
 	}
 	extractlistofapplicationforms(){
@@ -68,7 +68,6 @@ export default class TidsSectionConfiguration extends LightningElement {
 			 newforms.push({label:item.name, value:item.apiName});
 		});
 		this.forms=newforms;
-		//"name":"New Application - Head Office (HO)","apiName":"new-applicant-ho"
 	}
 	handleChangeFormSectionDisplay(event) {
 		event.preventDefault();
@@ -243,7 +242,7 @@ export default class TidsSectionConfiguration extends LightningElement {
 			this.loadingSpinner = false;
 		})
 		.catch(error => {
-			console.log('Error',error);
+			console.log('error',JSON.stringify(error));
 		});
 
 	}

@@ -58,7 +58,7 @@ export default class TidsSupportingDocuments extends LightningElement {
 	@track fileContents;
 	@track fileReader;
 	@track content;
-	@track MAX_FILE_SIZE = 1500000;
+	@track MAX_FILE_SIZE = 25000000;
 	@track showSpinner = false;
 	@track totalDocuments = 0;
 	// New branch
@@ -193,6 +193,14 @@ export default class TidsSupportingDocuments extends LightningElement {
 		}
 		this.file = this.documentsView[this.documentindex].document;
 		if (this.file.size > this.MAX_FILE_SIZE) {
+			this.dispatchEvent(
+				new ShowToastEvent({
+					title: "File size error",
+					message: "File size exceeds 25mb for file name:"+this.file.name,
+					variant: "error"
+				})
+			);
+			this.showSpinner = false;
 			return;
 		}
 		this.showLoadingSpinner = true;
@@ -211,7 +219,6 @@ export default class TidsSupportingDocuments extends LightningElement {
 		this.fileReader.addEventListener('progress', (event) => {
 			if (event.loaded && event.total) {
 				const percent = (event.loaded / event.total) * 100;
-				console.log(`Progress: ${Math.round(percent)}`);
 			}
 		});
 		this.fileReader.readAsDataURL(this.file);
@@ -275,10 +282,9 @@ export default class TidsSupportingDocuments extends LightningElement {
 			filename: this.file.name,
 			fileType: this.file.type,
 			base64data: this.fileContents,
-			isUnique: false
+			isUnique: true
 		})
 			.then(result => {
-				console.log('result',JSON.stringify(result));
 				this.documentindex++;
 				// Showing Success message after file insert
 				this.dispatchEvent(
@@ -298,7 +304,8 @@ export default class TidsSupportingDocuments extends LightningElement {
 				}        
 			})
 			.catch(error => {
-				console.log('error', JSON.stringify(error));
+				this.showSpinner = false;
+				console.log('error', JSON.stringify(error.body));
 				// Showing errors if any while inserting the files
 				this.dispatchEvent(
 					new ShowToastEvent({
@@ -312,7 +319,6 @@ export default class TidsSupportingDocuments extends LightningElement {
 	upsertSupportingDocs() {
 		let documentsValues;
 		let option= this.transactiontype;
-		console.log('option', this.transactiontype);
 		if (option === "next-section" || option === "save-quit") {
 			documentsValues = this.infoToBeSave();
 			if(this.isSaveAndQuit){
@@ -334,11 +340,9 @@ export default class TidsSupportingDocuments extends LightningElement {
 	getRelatedFiles() {
 		relatedFiles({ parentid: this.tidsCase.Id })
 			.then(data => {
-				console.log('relatedfiles:',JSON.stringify(data));
 				let sfAttachments = JSON.parse(JSON.stringify(data));
 				if(sfAttachments !== undefined){
 					if (sfAttachments.isError===0){
-						console.log('relatedfiles:',sfAttachments.isError);
 						sfAttachments.documents.forEach(item => {
 							this.filedocuments.push(this.mappingFileFromSF(item));
 						});

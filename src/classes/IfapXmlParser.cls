@@ -126,6 +126,11 @@ public with sharing class IfapXmlParser {
 																				 ifapResult.FinancialCriteriaTotalScore=reader.getText();
 												}
 
+						}else if('Status' == localName){
+							reader.next();
+							if(reader.getEventType() == XmlTag.CHARACTERS && reader.HasText()){
+								ifapResult.Status=reader.getText();
+							}
 										}
 
 								}
@@ -291,7 +296,7 @@ public with sharing class IfapXmlParser {
 
 				private FinancialSecurity FinancialSecurity;
 
-			private String FinancialCriteriaTotalScore;
+				private String FinancialCriteriaTotalScore;
 
 				private String GFAStatus;
 
@@ -300,6 +305,8 @@ public with sharing class IfapXmlParser {
 				private String SalesforceCaseNumber;
 
 				private Error Error;
+
+				private String Status;
 
 				public FinancialSecurity getFinancialSecurity (){
 						return FinancialSecurity;
@@ -349,6 +356,9 @@ public with sharing class IfapXmlParser {
 						this.Error = Error;
 				}
 
+				public String getStatus (){
+					return Status;
+				}
 
 		}
 
