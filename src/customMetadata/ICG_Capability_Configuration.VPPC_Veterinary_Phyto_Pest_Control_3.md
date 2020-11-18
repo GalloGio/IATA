@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>Data__c</field>
-        <value xsi:type="xsd:string">Equipment__c;VPPC_Number_Sch_Inspections_Year__c</value>
+        <value xsi:type="xsd:string">Equipment__c;Availability__c;VPPC_Number_Sch_Inspections_Year__c</value>
     </values>
     <values>
         <field>Extra_Data__c</field>
