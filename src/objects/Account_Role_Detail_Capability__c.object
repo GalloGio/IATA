@@ -695,7 +695,7 @@ FALSE
         <fullName>DPI_Explain_Delivery_Pickup_Procedure__c</fullName>
         <description>Discribe the procedure of delivery/pickup</description>
         <externalId>false</externalId>
-        <label>Explain delivery/pickup procedure</label>
+        <label>Delivery / Pickup Procedure</label>
         <length>255</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -743,7 +743,7 @@ FALSE
         <fullName>DPI_Number_Parking_Slots__c</fullName>
         <description>Describes the number of parking slots</description>
         <externalId>false</externalId>
-        <label>Number of Parking slots</label>
+        <label>Number of Parking Slots</label>
         <precision>10</precision>
         <required>false</required>
         <scale>0</scale>
@@ -2245,7 +2245,7 @@ url: url where is stored the photo</inlineHelpText>
         <fullName>TSWA_Storage_Volume__c</fullName>
         <description>Describe the Storage Volume in m3</description>
         <externalId>false</externalId>
-        <label>Storage Volume</label>
+        <label>Storage Volume (in m3)</label>
         <precision>10</precision>
         <required>false</required>
         <scale>0</scale>
