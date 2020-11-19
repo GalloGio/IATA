@@ -8863,7 +8863,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Case_KPI_Short24</shortDescription>
-        <value>&quot;CHG – Data Maintenance,CHL - Change of Location,New SA / CHV – New Code,CLO - Closure,VMFR Setup/Update,New AE&quot;</value>
+        <value>AIMS Data Entry,CAD – Data Maintenance,Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irregularity withdrawal,Reinstatement,GSA / MSO / Handling Agent,Minor Database Changes</value>
     </labels>
     <labels>
         <fullName>Case_Type</fullName>

@@ -8329,6 +8329,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>Go_to_IATA_corporate_site</name>
     </customLabels>
     <customLabels>
+        <label><!-- GxA Link Label --></label>
+        <name>GxA_Link_Label</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Handling --></label>
         <name>Handling</name>
     </customLabels>
@@ -26739,6 +26743,10 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
     <customLabels>
         <label>Tải Lên Tài Liệu Tài Chính</label>
         <name>Upload_Financial_Documents</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Upload GxA --></label>
+        <name>Upload_GxA</name>
     </customLabels>
     <customLabels>
         <label>{0} yêu cầu quyền truy cập vào Cổng thông tin.</label>
