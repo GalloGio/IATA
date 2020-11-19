@@ -223,7 +223,7 @@ public with sharing class PortalCasesCtrl {
 			fieldPathSet.add(f.getFieldPath());
 		}
 
-		String query = 'BSP_CASS__c, IATA_Code__c, Remittance_period__c, CaseArea__c, Contact.Name, Reason1__c, CNSCase__c, Origin, IsClosed, Classification_SIS__c, TIP_Partner_Product__c, RecordType.Name, RecordType.DeveloperName, Owner.Name, LastModifiedDate, CreatedBy.Name, (SELECT Id FROM Participation_Online_Applications__r) ';
+		String query = 'BSP_CASS__c, IATA_Code__c, Remittance_period__c, CaseArea__c, Contact.Name, Reason1__c, CNSCase__c, Origin, IsClosed, Classification_SIS__c, TIP_Partner_Product__c, Verification__c, RecordType.Name, RecordType.DeveloperName, Owner.Name, LastModifiedDate, CreatedBy.Name, (SELECT Id FROM Participation_Online_Applications__r) ';
 		Boolean hasStatus = false;
 
 		for(String fieldPath : fieldPathSet) {
@@ -599,10 +599,17 @@ public with sharing class PortalCasesCtrl {
 			} else if((record.Status == TIP_Utils.CASE_STATUS_DRAFT || record.Status == 'Open - EDMC' || record.Status == 'Return application to customer') &&
 					apListForm != null && apListForm.contains(record.Id) &&
 					airlineRightList != null && !airlineRightList.isEmpty()) {
-						return new Map<Id, String>{
-							record.Id =>
-							OneIdUtils.getOrgUrl() +  '/ISSP_APProcess2?caseId=' + record.Id + '&step=2'
-						};
+						if (record.Verification__c == 'PASS') {
+							return new Map<Id, String>{
+								record.Id =>
+								OneIdUtils.getOrgUrl() +  '/ISSP_APProcess4?caseId=' + record.Id + '&step=4&airline=PASS'
+							};
+						} else {
+							return new Map<Id, String>{
+								record.Id =>
+								OneIdUtils.getOrgUrl() +  '/ISSP_APProcess2?caseId=' + record.Id + '&step=2'
+							};
+						}
 			}
 		}
 
