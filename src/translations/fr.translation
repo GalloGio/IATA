@@ -8332,6 +8332,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>Go_to_IATA_corporate_site</name>
     </customLabels>
     <customLabels>
+        <label><!-- GxA Link Label --></label>
+        <name>GxA_Link_Label</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Handling --></label>
         <name>Handling</name>
     </customLabels>
@@ -26784,6 +26788,10 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
     <customLabels>
         <label>Téléchargement des documents financiers</label>
         <name>Upload_Financial_Documents</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Upload GxA --></label>
+        <name>Upload_GxA</name>
     </customLabels>
     <customLabels>
         <label>{0} a demandé l&apos;accès au portail.</label>

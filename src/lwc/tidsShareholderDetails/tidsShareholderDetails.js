@@ -540,7 +540,6 @@ export default class TidsShareholderDetails extends LightningElement {
 			event.target.dataset.name === "percentage-number"
 				? "percentage"
 				: event.target.dataset.name;
-		//console.log('handleShareholderChanges:event.target.dataset.name',event.target.dataset.name);
 		this.isSpecialCharacters = specialCharsValidation(event.target.value);
 		switch (option){
 			case "name":
@@ -552,14 +551,12 @@ export default class TidsShareholderDetails extends LightningElement {
 					 this.actualShareholder.name='';
 					 this.actualShareholder.email='';
 					 this.percentageChanges.display=false;
-					 //this.handlePercentageLogic(0);
 					 this.previoustypeChecked=typeChecked;
 				}
 				this.sectionFieldRules(typeChecked);
 				this.handleCompanyTypeLogic(typeChecked);
 				break;
 			case "percentage":
-				//console.log('handleShareholderChanges:event.target.value',event.target.value);
 				this.handlePercentageLogic(event.target.value);
 				break;
 			case "email":
@@ -572,7 +569,6 @@ export default class TidsShareholderDetails extends LightningElement {
 		this.fieldsCounter();
 
 		if (this.isSpecialCharacters){
-			//this.resetValues(option);
 			this.disableNextSectionButton = true;
 		}
 
@@ -612,7 +608,6 @@ export default class TidsShareholderDetails extends LightningElement {
 		this.actualShareholder.type = value;
 		this.hideEmail = false;
 		this.readOnlyName = false;
-		//console.log('value',value);
 		if (value === "Publicly Traded"){
 			this.actualShareholder.name = "Publicly Traded";
 			this.readOnlyName = true;
@@ -627,7 +622,6 @@ export default class TidsShareholderDetails extends LightningElement {
 			this.actualShareholder.publiclyTraded === undefined
 				? false
 				: !this.actualShareholder.publiclyTraded;
-		//console.log('this.actualShareholder.publiclyTraded ',this.actualShareholder.publiclyTraded );
 		this.readOnlyName = this.actualShareholder.publiclyTraded ? true : false;
 		this.hideEmail = this.actualShareholder.publiclyTraded ? true : false;
 		this.actualShareholder.name = this.actualShareholder.publiclyTraded
@@ -693,7 +687,6 @@ export default class TidsShareholderDetails extends LightningElement {
 
 	updateShareholder(event){
 		event.preventDefault();
-		//console.log('this.fieldsValidation()',this.fieldsValidation());
 		if (this.fieldsValidation()){
 			let shareholderId = event.target.dataset.id;
 			this.edit = false;
@@ -818,35 +811,21 @@ export default class TidsShareholderDetails extends LightningElement {
 			});
 			actualTotal += this.actualShareholder.percentage;
 		}
-		console.log('actualTotal1',actualTotal);
 		if (this.isSoleOwnership){
 			actualTotal = 100;
-			console.log('actualTotal0',actualTotal);
 		} else if (this.edit){
-			/*
-			this.shareholders.forEach((item) => {
-				if (item.id !== this.actualShareholder.id){
-					actualTotal += item.percentage;
-				}
-			});
-			actualTotal += this.actualShareholder.percentage;
-			*/
-			//console.log('actualTotal1',actualTotal);
 		} else {
 			if (this.shareholders.length > 0){
 				this.totalCalculation(this.shareholders);
 				actualTotal = this.total + this.actualShareholder.percentage;
-				console.log('actualTotal2',actualTotal);
 			}
 		}
 		if (Number(actualTotal) > Number(this.MAX)){
 			this.totalError = true;
 			this.addShareholderDisabled = true;
-			//console.log('this.addShareholderDisabled',this.addShareholderDisabled);
 		} else {
 			this.totalError = false;
 			this.addShareholderDisabled = false;
-			//console.log('this.addShareholderDisabled',this.addShareholderDisabled);
 		}
 	}
 
@@ -888,11 +867,9 @@ export default class TidsShareholderDetails extends LightningElement {
 
 	// Shareholder total calculation
 	totalCalculation(props){
-		//console.log('props',JSON.stringify(props));
 		this.total = 0;
 		let attlist = JSON.parse(JSON.stringify(props));
 		attlist.forEach((item) => {
-			//console.log('item',JSON.stringify(item));
 			let percent = item.percentage;
 			percent = Math.round((percent + Number.EPSILON) * 100) / 100;
 			item.percentage=percent;
@@ -903,9 +880,7 @@ export default class TidsShareholderDetails extends LightningElement {
 		this.total = total;
 		let delta = (total -100.00);
 		delta=Math.round((delta + Number.EPSILON) * 100);
-		console.log('total',this.total,total,delta);
 		this.cmpClass = delta===0 ? this.blueClass : this.defaultClass;
-		console.log('this.cmpClass',this.cmpClass);
 	}
 
 	rangeTotalValidation(){
@@ -961,10 +936,8 @@ export default class TidsShareholderDetails extends LightningElement {
 				this.disableNextSectionButton = true;
 			}
 		}
-		//this.addButtonDisabled = this.total === 100 ? true : false;
 		this.addButtonDisabledRules();
 		this.openmodel = false;
-		//this.showButtons = true;
 	}
 
 	handleModalClose(event){
@@ -1092,24 +1065,19 @@ export default class TidsShareholderDetails extends LightningElement {
 		let isValid = false;
 		let cmpField = this.template.querySelector("[data-name='" + this.PERCENTAGE + "']");
 		let cmpNumberField = this.template.querySelector("[data-name='" + this.PERCENTAGE_NUMBER + "']");
-		console.log('cmpNumberField',cmpNumberField);
-		console.log(' cmpField', cmpField);
 		this.addShareholderDisabled = true;
 		if (Number(this.actualShareholder.percentage) <= 0){
 			cmpField.setCustomValidity(this.ERROR_MESSAGE_PERCENTAGE_VALUE);
 			cmpNumberField.setCustomValidity("");
 			cmpField.reportValidity();
 			cmpNumberField.reportValidity();
-			console.log('isValid0', isValid);
 		} else if (this.percentageRules.required && cmpField && cmpNumberField){
 			cmpField.setCustomValidity("");
 			isValid = cmpField.validity.valid && cmpNumberField.validity.valid;
 			cmpField.reportValidity();
-			console.log('isValid1', isValid);
 		} else if (this.percentageRules.required &&
 			Number(this.actualShareholder.percentage) > 0){
 			isValid = true;
-			console.log('isValid2', isValid);
 		}
 		this.disableSaveOrUpdateButton();
 		return isValid;
@@ -1118,7 +1086,6 @@ export default class TidsShareholderDetails extends LightningElement {
 	disableSaveOrUpdateButton(){
 		if (this.actualShareholder.percentage <= 0){
 			this.addShareholderDisabled = true;
-			console.log('this.addShareholderDisabled', this.addShareholderDisabled);
 		} else {
 			this.actualTotalCalculation();
 		}
