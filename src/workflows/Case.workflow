@@ -18448,10 +18448,6 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
     <rules>
         <fullName>SIS Help Desk - New Case Except Web</fullName>
         <actions>
-            <name>SIS_Assign_Case_Record_Type</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
             <name>SIS_Assign_Case_to_SIS_Help_Desk_queue</name>
             <type>FieldUpdate</type>
         </actions>

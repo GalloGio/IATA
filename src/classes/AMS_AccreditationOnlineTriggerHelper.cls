@@ -290,4 +290,15 @@ public class AMS_AccreditationOnlineTriggerHelper {
 			}
 		}
 	}
+
+	/**
+	 * Apply validation to AMS_Pax_Accreditation_Form__c
+	 * When updating the record
+	 */
+	public static void applyValidations(List<AMS_Pax_Accreditation_Form__c> aaots, Map<Id,AMS_Pax_Accreditation_Form__c> oldMap){
+
+		for(AMS_Pax_Accreditation_Form__c pax : aaots){
+			if(oldMap.get(pax.Id).CASS_Number__c != pax.CASS_Number__c && pax.IATACode__c != null) pax.addError('CASS Number cannot be changed if IATA Code is already filled');
+		}
+	}
 }
