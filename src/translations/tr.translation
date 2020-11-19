@@ -8326,6 +8326,10 @@ Daha fazla ayrıntı için, Müşteri Portalı&apos;nda &quot;Resolution 812&quo
         <name>Go_to_IATA_corporate_site</name>
     </customLabels>
     <customLabels>
+        <label><!-- GxA Link Label --></label>
+        <name>GxA_Link_Label</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Handling --></label>
         <name>Handling</name>
     </customLabels>
@@ -26746,6 +26750,10 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
     <customLabels>
         <label>Mali Belgeleri Yükle</label>
         <name>Upload_Financial_Documents</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Upload GxA --></label>
+        <name>Upload_GxA</name>
     </customLabels>
     <customLabels>
         <label>&quot;{0}, Portala Erişim istedi.&quot;</label>

@@ -51,7 +51,6 @@ export default class TidsReportChanges extends LightningElement {
 
 	changeReportCasesOpen(change) {
 		this.spinner = true;
-		//fireEvent(this.pageRef,'spinnerListener', {payload:{show:true}});
 		updateTidsUserInfo(this.tidsAccount);
 		accountHasChangeReportCase({
 			accountId: this.tidsAccount.Id,
@@ -62,11 +61,9 @@ export default class TidsReportChanges extends LightningElement {
 			this.displayMessage = true;
 			this.caseInProgress = result;
 			this.disabledProceedButton = result;
-			//fireEvent(this.pageRef,'spinnerListener', {payload:{show:false}});
 		})
 		.catch(error => {
-			console.log(error);
-			//fireEvent(this.pageRef,'spinnerListener', {payload:{show:false}});
+			console.log('error',JSON.stringify(error));
 		});
 	}
 	handleProceed(event) {

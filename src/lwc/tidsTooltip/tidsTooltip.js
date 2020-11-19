@@ -56,8 +56,6 @@ export default class tidsTooltip extends LightningElement {
 				});
 				this.displayed=vdisplayed;
 				this.languages =this.data;
-				
-				//console.log('getLanguages:',JSON.stringify(this.languages));
 				return this.languages;
 		}
 		
@@ -65,12 +63,10 @@ export default class tidsTooltip extends LightningElement {
 				event.preventDefault();
 				this.getLanguages();
 				this.visible = true;
-				//console.log('getLanguages:this.visible',this.visible);
 		}
 		closepop(event) {
 				event.preventDefault();
 				this.visible = false;
-				//console.log('getLanguages:this.visible',this.visible);
 		}
 		connectedCallback() {
 			this.getLanguages();
