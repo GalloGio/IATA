@@ -50,7 +50,6 @@ export default class TidsReinstate extends LightningElement {
 				accountId=this.accountInfo.Id;
 			 }
 		}
-		console.log('this.accountInfo',JSON.stringify(this.accountInfo));
 		this.msgpayload = {
 				accountId: accountId,
 				reason: this.reason
@@ -59,7 +58,6 @@ export default class TidsReinstate extends LightningElement {
 	}
 
 	reinstateNow(props){
-		console.log('props',JSON.stringify(props));
 		fireEvent(this.pageRef,'spinnerListener', {payload:{show:true}});
 		let applicationtp='ho';
 		if (this.branchSelected){
@@ -67,19 +65,17 @@ export default class TidsReinstate extends LightningElement {
 			if (this.vbSelected){applicationtp='vb';}
 		}
 		this.showConfimationModal=false;
-		console.log('applicationtp',applicationtp);
 		createTidsRequestReinstate({
 				accountId: props.payload.accountId,
 				reason: props.payload.reason,
 				applicationType:applicationtp
 			}).then(result => {
-				console.log('reinstatement ok');
 				fireEvent(this.pageRef,'spinnerListener', {payload:{show:false}});
 				this.modalDefaultMessage='Thank you! Your request has been posted and will need to be approved by IATA Staff.';
 				this.showConfimationModal=true;
 				this.modalAction = "OK_CANCEL";
 			}).catch(error => {
-				console.log(error);
+				console.log('error',JSON.stringify(error));
 				fireEvent(this.pageRef,'spinnerListener', {payload:{show:false}});
 				this.modalDefaultMessage='Sorry we have not been able to post your request, try later.';
 				this.showConfimationModal=true;
@@ -89,7 +85,6 @@ export default class TidsReinstate extends LightningElement {
 	handleCancel(event){
 		// Prevents the anchor element from navigating to a URL and return to dashboard.
 		event.preventDefault();
-		console.log('this.branchSelected',this.branchSelected);
 		fireEvent(this.pageRef,'manageMenuListener', {type:'SELECT_CANCEL',payload:null});
 	}
 	setinputmsg(){

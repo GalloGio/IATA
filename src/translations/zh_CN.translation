@@ -8326,6 +8326,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>Go_to_IATA_corporate_site</name>
     </customLabels>
     <customLabels>
+        <label><!-- GxA Link Label --></label>
+        <name>GxA_Link_Label</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Handling --></label>
         <name>Handling</name>
     </customLabels>
@@ -26734,6 +26738,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label>上传财务文件</label>
         <name>Upload_Financial_Documents</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Upload GxA --></label>
+        <name>Upload_GxA</name>
     </customLabels>
     <customLabels>
         <label>{0}请求访问门户网站。</label>

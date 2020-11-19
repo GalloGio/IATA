@@ -2737,6 +2737,12 @@ IF({!Type_of_OSCAR_process_man} = {!NewProcessMulticountryAEValue}  , &apos;Trav
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>CASS_Number__c</field>
+            <value>
+                <elementReference>AccountToProcess.CASS_Number__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>IATACode__c</field>
             <value>
                 <elementReference>AccountToProcess.IATACode__c</elementReference>
