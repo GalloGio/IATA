@@ -8,6 +8,7 @@ import deleteAccountContactRole from "@salesforce/apex/CW_StationManagers.delete
 import getContactsToAdd from "@salesforce/apex/CW_StationManagers.getContactsToAdd";
 import becomeFacilityAdmin from '@salesforce/apex/CW_Utilities.becomeFacilityAdmin';
 import ICG_RESOURCES from "@salesforce/resourceUrl/ICG_Resources";
+import getOpsHierarchyGroupNameFromAccountId from '@salesforce/apex/CW_Utilities.getOpsHierarchyGroupNameFromAccountId';
 
 import {
     checkIconType
@@ -42,13 +43,15 @@ export default class CwStationManagers extends LightningElement {
     @track isboxfocus;
     @track searchValue = "";
     @track searchValueId;
-
+    @track opsHierarchyGroupUser = "";
     @track openCreateAccountContactRole = false;
     @track openConfirm = false;
     @track openCreateContactRoleDetail = false;
     @track showStationManagers = false;
     availableContacts = [];
     @track isLoading = true;
+
+    @track listAux = [];
 
     _facility = null;
     removeMessage = '';
@@ -72,13 +75,15 @@ export default class CwStationManagers extends LightningElement {
     }
 
     init() {    
-        this.getAllAccountContactRolesJS(this.facility.Id);
-        this.getContactsToAddJS(this.facility.Id);
-        this.showStationManagers = true;
-        this.openCreateAccountContactRole = false;
-        this.openCreateContactRoleDetail = false;
-        this.isboxfocus = false;
-        this.openConfirm = false;
+        if(this.userInfo){
+            this.getAllAccountContactRolesJS(this.facility.Id);
+            this.getContactsToAddJS(this.facility.Id);   
+            this.showStationManagers = true;
+            this.openCreateAccountContactRole = false;
+            this.openCreateContactRoleDetail = false;
+            this.isboxfocus = false;
+            this.openConfirm = false;
+        }
     }
 
     getContactsToAddJS(facilityId) {
@@ -114,6 +119,7 @@ export default class CwStationManagers extends LightningElement {
 
     getAllAccountContactRolesJS(facId) {
         this.isLoading = true;
+        this.opsHierarchyGroupFromAccountId(this.userInfo.AccountId);  
         getAllAccountContactRoles({ accountRoleDetailId: facId }).then(data => {
             this.accountContactRoles = [];
             this.totalAccountContactRoles = [];
@@ -147,16 +153,33 @@ export default class CwStationManagers extends LightningElement {
             });
             
             let counter = 0;
-            let listAux = [];
+            
             this.totalAccountContactRoles.forEach(itemAux =>{
-                if (counter < this.itemsByPage) {
-                    listAux.push(itemAux);
-                    counter++;
-                }
-                
+                if (counter < this.itemsByPage) {    
+                    if(itemAux.companyId){
+                        getOpsHierarchyGroupNameFromAccountId({ accountId: itemAux.companyId }).then(data => {
+                            if (data) {
+                                if(this.opsHierarchyGroupUser == data){
+                                    this.listAux.push(itemAux);
+                                    counter++;
+                                }
+                            }
+                        })
+                        .catch(err => {
+                            this.dispatchEvent(
+                                new ShowToastEvent({
+                                    title: 'Error',
+                                    message: err,
+                                    variant: 'error'
+                                })
+                            );
+                        });
+                    }  
+                }  
             });
-            listAux = JSON.parse(JSON.stringify(listAux));
-            this.accountContactRoles = listAux; 
+
+            this.listAux = JSON.parse(JSON.stringify(this.listAux));
+            this.accountContactRoles = this.listAux; 
             this.seeMoreLabel = '';
             if (this.totalAccountContactRoles.length) {
                 if (this.totalAccountContactRoles.length < this.itemsByPage || this.totalAccountContactRoles.length === this.itemsByPage) {
@@ -166,6 +189,8 @@ export default class CwStationManagers extends LightningElement {
                 }
                 
             }
+            
+            
             this.isLoading = false;
         }).catch(err => {
             console.error('Error getting all contacts', err);
@@ -448,6 +473,25 @@ export default class CwStationManagers extends LightningElement {
 
     get noAccountContactRoles(){
         return !this.accountContactRoles || this.accountContactRoles.length < 1;
+    }
+
+    opsHierarchyGroupFromAccountId(AccountId){
+        if(AccountId){
+            getOpsHierarchyGroupNameFromAccountId({ accountId: AccountId }).then(data => {
+                if (data) {
+                    this.opsHierarchyGroupUser = data;
+                }
+            })
+            .catch(err => {
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Error',
+                        message: err,
+                        variant: 'error'
+                    })
+                );
+            });
+        }
     }
 
 }

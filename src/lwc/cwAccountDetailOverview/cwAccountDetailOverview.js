@@ -8,6 +8,7 @@ export default class CwAccountDetailOverview extends LightningElement {
 	isLoading = false;
 	mainCssCapability = "facility-overview-item-container p-1-5 col-md-12 col-lg-3 col-xl-3";
 	facilityAirportCssCapability = "facility-overview-item-container p-1-5 col-md-12 col-lg-4 col-xl-4";
+	facilityTruckCssCapability = "facility-overview-item-container p-1-5 col-md-12 col-lg-4 col-xl-4";
 	//The darker filter version
 	disabledFilter = " disabled-filter-dark";
 	textInformationHover = "Information not verified by IATA";
@@ -190,7 +191,7 @@ export default class CwAccountDetailOverview extends LightningElement {
 		return this.genericfacilityAirportCSS(this.facility.overallAirportSize);
 	}
 	get trucksCss() {
-		return this.genericCSS(this.facility.fleet);
+		return this.genericfacilityTruckCSS(this.facility.fleet);
 	}
 
 	get numberEmployeesCss() {
@@ -205,8 +206,11 @@ export default class CwAccountDetailOverview extends LightningElement {
 	genericfacilityAirportCSS(capability) {
 		return capability ? this.facilityAirportCssCapability : this.facilityAirportCssCapability + this.disabledFilter;
 	}
-	
 
+	genericfacilityTruckCSS(capability) {
+		return capability ? this.facilityTruckCssCapability : this.facilityTruckCssCapability + this.disabledFilter;
+	}
+	
 	updateDataValid(validated) {
 		let customEvent = new CustomEvent("updatedatavalidoverview", { detail: validated });
 		this.dispatchEvent(customEvent);

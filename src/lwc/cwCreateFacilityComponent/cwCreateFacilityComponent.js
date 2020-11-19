@@ -326,8 +326,8 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 			true
 		);
 		
-        let validNearestAirpot = this.step === 3 ? false : true;
-        validNearestAirpot = isNextCall ? validNearestAirpot : true;
+		let validNearestAirpot = this.step === 3 ? false : true;
+		validNearestAirpot = isNextCall ? validNearestAirpot : true;
 		
 		if (this.selectedAirport){
 			validNearestAirpot = true;
@@ -814,11 +814,11 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 
 	get websiteValue(){
 		return this.additionalData && this.additionalData.website ? this.additionalData.website : this.label.icg_https_default_value;
-    }
+	}
 
 	get pilotInfoValue(){
 		return this.additionalData && this.additionalData.pilotinfo ? this.additionalData.pilotinfo : this.label.icg_https_default_value;
-    }
+	}
 	
 	get onlinePlatformSummaryValue(){
 		if (this.additionalData && this.additionalData.website){
@@ -1262,6 +1262,18 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 				station.originallySelected = station.selected;
 				this.populateOperatingStations(station);
 			})
+			
+			let cmpCHF = this.template.querySelector(".cmpOperatingCHF");
+			if (cmpCHF){
+				cmpCHF.rawData = this.onAirportOperatingCHF;
+				cmpCHF.RefreshData();
+			}
+			
+			let cmpRamp = this.template.querySelector(".cmpRampHandlers");
+			if (cmpRamp){
+				cmpRamp.rawData = this.onAirportRampH;
+				cmpRamp.RefreshData();
+			}
 
 		})
 	}

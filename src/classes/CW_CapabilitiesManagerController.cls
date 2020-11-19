@@ -599,14 +599,14 @@ public without sharing class CW_CapabilitiesManagerController {
 
 						if (!fieldSObject.getDescribe().isCalculated()) {
 							if (fldType == Schema.DisplayType.DATE) {
-								if (capfield.value != '') {
+								if (capfield.value != null) {
 									Date dateField = Date.valueOf(capfield.value);
 									sObj.put(capfield.field, dateField);
 								} else {
 									sObj.put(capfield.field, null);
 								}
 							} else if (fldType == Schema.DisplayType.DOUBLE) {
-								if (capfield.value != '') {
+								if (capfield.value != null) {
 									Double decimalFiel = Double.valueOf(capfield.value);
 									sObj.put(capfield.field, decimalFiel);
 								} else {
@@ -741,20 +741,27 @@ public without sharing class CW_CapabilitiesManagerController {
 	@AuraEnabled
 	public static String getPublicLinkToFiles(List<Object> listPhoto) {
 		ResponseBody res = new ResponseBody();
-		List<CapabilityPhoto> capabWraperList = new List<CapabilityPhoto>();
+		List<CW_FacilityCapabilitiesController.CapabilityPhoto> capabWraperList = new List<CW_FacilityCapabilitiesController.CapabilityPhoto>();
 		Set<Id> listContentDocumentId = new Set<Id>();
 		List<ContentDocumentLink> listContentDocumentLink;
 		List<ContentVersion> listContentVersion;
 		List<ContentDistribution> listContentDistribution = new List<ContentDistribution>();
+		List<String> acceptFormats = new List<String>{'pdf'};
 
 		if (listPhoto.size() > 0) {
 			try {
 				for (Object capabObj : listPhoto) {
-					capabWraperList.add((CapabilityPhoto) JSON.deserialize(JSON.serializePretty(capabObj), CapabilityPhoto.class));
+					capabWraperList.add((CW_FacilityCapabilitiesController.CapabilityPhoto) JSON.deserialize(JSON.serializePretty(capabObj), CW_FacilityCapabilitiesController.CapabilityPhoto.class));
 				}
 
-				for (CapabilityPhoto c : capabWraperList) {
+				String internalExtension;
+				for (CW_FacilityCapabilitiesController.CapabilityPhoto c : capabWraperList) {
 					listContentDocumentId.add(c.id); //id contains ContentDocumentId
+					internalExtension = c.internalExtension.substringAfterLast('.');
+					if(acceptFormats.contains(internalExtension)){
+						c.label = c.internalExtension;
+					}
+					c.internalExtension = internalExtension;
 				}
 
 				//Change Visibility
@@ -789,7 +796,7 @@ public without sharing class CW_CapabilitiesManagerController {
 				}
 
 				//Read DistributionPublicUrl
-				for (CapabilityPhoto c : capabWraperList) {
+				for (CW_FacilityCapabilitiesController.CapabilityPhoto c : capabWraperList) {
 					c.url = mapContentDocumentAndUrlPublic.get(c.id);
 				}
 				res.success = true;
@@ -865,17 +872,6 @@ public without sharing class CW_CapabilitiesManagerController {
 			}
 			return returnValue;
 		}
-	}
-
-	public class CapabilityPhoto {
-		@AuraEnabled
-		public Boolean visible { get; set; }
-		@AuraEnabled
-		public String url { get; set; }
-		@AuraEnabled
-		public String label { get; set; }
-		@AuraEnabled
-		public String id { get; set; }
 	}
 
 	public class ResponseBody {

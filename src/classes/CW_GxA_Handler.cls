@@ -29,7 +29,7 @@ global without sharing class CW_GxA_Handler {
 			// First loop required to get: correct mappings, visibility pictures, ...
 			for (CW_GxA_Wrappers.SurveyAnswers currentAnswer : currentItem.SurveyAnswers) {
 				ICG_GxA_Integration_Mapping__c mapFound = integrationMapping.get(currentAnswer.QuestionID);
-				if (mapFound != null && currentAnswer.Question.toLowerCase() == 'availability') {
+				if (mapFound != null && (currentAnswer.Question.toLowerCase() == 'availability' || currentAnswer.Question.toLowerCase() == 'handled')) {
 					if (!availabilityEquipment.containsKey(mapFound.SF_Equipment__c)) {
 						availabilityEquipment.put(mapFound.SF_Equipment__c, (currentAnswer.Response.toLowerCase() == 'yes'));
 					}

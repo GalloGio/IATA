@@ -447,12 +447,12 @@
 											alternative-text="delete" variant="destructive" size="large" class="delete-img-carousel">
 										</lightning-button-icon>
 										<template if:true={editMode}>
-											<lightning-carousel-image  key={photo.id}
+											<lightning-carousel-image onclick={evaluatePhotoAction} data-url={photo.downloadDocument} data-extension={photo.extension} key={photo.id}
 												src={photo.url} header={photo.label}>
 											</lightning-carousel-image>
 										</template>
 										<template if:false={editMode}>
-											<lightning-carousel-image if:true={photo.visible} key={photo.id}
+											<lightning-carousel-image if:true={photo.visible} onclick={evaluatePhotoAction} data-url={photo.downloadDocument} data-extension={photo.extension} key={photo.id}
 												src={photo.url} header={photo.label}>
 											</lightning-carousel-image>
 										</template>

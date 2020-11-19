@@ -153,8 +153,9 @@
                                                                 class="width-100 slds-align_absolute-center border-none"
                                                                 tabindex={indicator.tabindex} data-item={indicator.id}>
                                                                 <div class="swipedivpopup slds-carousel__image slds-grid_align-center">
-                                                                    <img src={indicator.url} alt={indicator.name} class="max-height-600"/>
-                                                                    <label class="slds-col display-block text-center" if:true={indicator.isDocument}>{indicator.name}</label>
+                                                                    <img if:false={indicator.isDocument} src={indicator.url} alt={indicator.name} class="max-height-600"/>
+                                                                    <img if:true={indicator.isDocument} src={indicator.url} alt={indicator.name} class="max-height-600" style="cursor: pointer;" data-item={indicator.id} onclick={openModal}/>
+                                                                    <label if:true={indicator.isDocument} class="slds-col display-block text-center">{indicator.name}</label>
                                                                 </div>
                                                             </div>
                                                         </div>

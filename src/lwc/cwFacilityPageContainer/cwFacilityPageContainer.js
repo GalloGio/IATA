@@ -224,13 +224,13 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 		}
 		
 		this.addEventListeners();
-            
-        if(this.availableAirports.length === 0 && !this.airportsFetched){
-            fetchAirports().then(data =>{
-                this.availableAirports = data;
-                this.airportsFetched = true;
-            })
-        }
+			
+		if(this.availableAirports.length === 0 && !this.airportsFetched){
+			fetchAirports().then(data =>{
+				this.availableAirports = data;
+				this.airportsFetched = true;
+			})
+		}
 	}
 
 	get getStyleListAir() {
@@ -345,14 +345,14 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 				if (this.results && this.results.length > 0) {
 					this.facility = this.results[0].facility;
 					this.facility.lstAvailableCertifications = this.results[0].lstAvailableCertifications;
-                    this.detailCertFacility = this.results[0].lstAvailableCertifications;
-                    
-                    if (this.facility.nearestAirport.name != null && this.facility.nearestAirport.city != null){
-                         this.selectedAirport = {value: this.facility.nearestAirport.name, label: this.facility.nearestAirport.city + ' ' +this.facility.nearestAirport.name};
-                    }
-                    
-                    this.onAirportOperatingCHF = [];
-                    this.onAirportRampH = [];
+					this.detailCertFacility = this.results[0].lstAvailableCertifications;
+					
+					if (this.facility.nearestAirport.name != null && this.facility.nearestAirport.city != null){
+						 this.selectedAirport = {value: this.facility.nearestAirport.name, label: this.facility.nearestAirport.city + ' ' +this.facility.nearestAirport.name};
+					}
+					
+					this.onAirportOperatingCHF = [];
+					this.onAirportRampH = [];
 					this.selectedAirlines = this.facility.handledAirlines;
 					if(this.facility.recordTypeDevName === "Airport_Operator" || this.facility.recordTypeDevName === "Airline"){
 						this.facility.onAirportStations.forEach(facility => {
@@ -691,7 +691,7 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 	updateHiddenOperatingStations(){
 		let hiddenOperatingStations = this.hiddenCargoStations && this.hiddenCargoStations.length > 0 ? 'OperatingCargo:'+this.hiddenCargoStations.join(',')+'|': '';
 		hiddenOperatingStations += this.hiddenRampHandlers && this.hiddenRampHandlers.length > 0 ? 'OperatingRamp:'+this.hiddenRampHandlers.join(',')+'|':'';
-        saveHiddenOperatingStations({hiddenOperatingStations : hiddenOperatingStations,facilityId : this.facility.Id}).then(result => {
+		saveHiddenOperatingStations({hiddenOperatingStations : hiddenOperatingStations,facilityId : this.facility.Id}).then(result => {
 			if(!result){
 				this.showToast("Error", this.label.icg_error_update_facility, "error");
 			}
@@ -998,13 +998,13 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 			Secondary_Address__c: this.facility.secondAddress,
 			name: this.facility.name,
 			Id: this.facility.Id,
-            Pilot_Information__c: this.facility.pilotInformation
-        }
-               
-        if (this.facility.nearestAirportObj != null){
-            this.facility.Nearest_Airport__c = this.facility.nearestAirportObj;
-        }
-        
+			Pilot_Information__c: this.facility.pilotInformation
+		}
+			   
+		if (this.facility.nearestAirportObj != null){
+			this.facility.Nearest_Airport__c = this.facility.nearestAirportObj;
+		}
+		
 		let jsonInput = JSON.stringify(objToSave);
 
 		this.loaded = false;
@@ -1037,8 +1037,8 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 		this.saveRampHandlers();
 		this.editOn = false;
 		this.editOnAirline = false;
-        this.editOnCargoHandling = false;
-        this.editOnAirport = false;
+		this.editOnCargoHandling = false;
+		this.editOnAirport = false;
 		this.editOnRampHandlers = false;
 		this.template.querySelectorAll('.cmpEditable').forEach(elem =>{
 			elem.editOff();
@@ -1243,47 +1243,51 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 
 	get addressGeo(){
 		return this.facility && this.facility.location && this.facility.location.location ? this.facility.location.location : null;
-    }
+	}
 
 	setNearestAirport(event){
 		event.preventDefault();
 		this.selectedAirport = {value: event.detail.item, label: event.detail.value}
-        this.getOnAirportStationsJS();
+		this.getOnAirportStationsJS();
 
-        getNearestAirportForFacility({ nearestAirportCode: event.detail.item}).then(response => {
-            this.setFacilityInfo(this.facility.Id, 'nearestAirportObj', response);
-        })
-        .catch(error => {
-            this.showToast("Error", this.label.icg_error_update_facility, "error");
-        });
-        
-        this.airportSearchValue = '';
-        this.isairportboxfocus = false;
-    }
+		getNearestAirportForFacility({ nearestAirportCode: event.detail.item}).then(response => {
+			this.setFacilityInfo(this.facility.Id, 'nearestAirportObj', response);
+		})
+		.catch(error => {
+			this.showToast("Error", this.label.icg_error_update_facility, "error");
+		});
+		
+		this.airportSearchValue = '';
+		this.isairportboxfocus = false;
+	}
 
 	getOnAirportStationsJS(){
 		this.onAirportOperatingCHF = [];
-        this.onAirportRampH = [];
+		this.onAirportRampH = [];
 
-        getOnAirportStations({
-            rtype : this.facility.recordTypeDevName, 
-            accountName : this.facility.accountName, 
-            airportId : this.selectedAirport.value, 
-            accountId : null 
-        }).then(res => {
-            let parsedRes = JSON.parse(res);
+		getOnAirportStations({
+			rtype : this.facility.recordTypeDevName, 
+			accountName : this.facility.accountName, 
+			airportId : this.selectedAirport.value, 
+			accountId : null 
+		}).then(res => {
+			let parsedRes = JSON.parse(res);
 			parsedRes.forEach(station => {
 				station.originallySelected = station.selected;
 				this.populateOperatingStations(station);
-            })
-            
-            let cmpCHF = this.template.querySelector(".cmpOperatingCHF");
-            cmpCHF.rawData = this.onAirportOperatingCHF;
-            cmpCHF.RefreshData();
-            
-            let cmpRamp = this.template.querySelector(".cmpRampHandlers");
-            cmpRamp.rawData = this.onAirportRampH;
-            cmpRamp.RefreshData();
+			})
+			
+			let cmpCHF = this.template.querySelector(".cmpOperatingCHF");
+			if (cmpCHF){
+				cmpCHF.rawData = this.onAirportOperatingCHF;
+				cmpCHF.RefreshData();
+			}
+			
+			let cmpRamp = this.template.querySelector(".cmpRampHandlers");
+			if (cmpRamp){
+				cmpRamp.rawData = this.onAirportRampH;
+				cmpRamp.RefreshData();
+			}
 		})
 	}
 
@@ -1293,8 +1297,8 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 		this.onAirportOperatingCHF = [];
 		this.onAirportRampH = [];
 	}
-    
-    airportPredictiveSearch(event) {
+	
+	airportPredictiveSearch(event) {
 		this.isairportboxfocus = true;
 		this.predictiveValues = [];
 		this.airportSearchValue = this.generateValueFromEvent(event, this.airportSearchValue);
@@ -1320,13 +1324,13 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 
 	generateValueFromEvent(event, value){
 		return event && event.target ? event.target.value : value ? value : "";
-    }
-    
+	}
+	
 	get showNearestAirport() {
 		return true;
-    }
-    
-    addEventListeners() {
+	}
+	
+	addEventListeners() {
 		//PredictiveBox NearestAiroprt Listener
 		let airportbox = this.template.querySelector('[data-tosca="nearestairportinput"]');
 		if (airportbox && !this.airportSelectorEventListenersAdded) {

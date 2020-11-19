@@ -2,13 +2,21 @@
     <apex:attribute name="stationData" type="String" description="Station ID" assignTo="{!stationId}" access="global" />
     <apex:attribute name="contactRoleDetailData" type="String" description="Contact Role Detail ID" assignTo="{!contactRoleDetailId}" access="global" />
     <apex:attribute name="isRemoveData" type="Boolean" description="Buttons to approve or remove record" assignTo="{!isRemove}" access="global" default="false"/>
-
+    <apex:attribute name="isIATAAdmin" type="Boolean" description="Is the template sent to an IATA Admin" access="global" default="false"/>
+   
     <table border="0" cellpadding="10" cellspacing="10">
         <tr>            
             <td>
-                <a href="{!approvalUrl}" target="_blank" style="cursor: pointer;">
-                    <img alt="APPROVE" src="{!communityUrlForResources}resource/ICG_Resources/img/managerequest.png"/>
-                </a>
+                <apex:outputPanel rendered="{!NOT(isIATAAdmin)}">
+                    <a href="{!approvalUrl}" target="_blank" style="cursor: pointer;">
+                        <img alt="APPROVE" src="{!communityUrlForResources}resource/ICG_Resources/img/managerequest.png"/>
+                    </a>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!isIATAAdmin}">
+                    <a href="{!iataManageRequest}" target="_blank" style="cursor: pointer;">
+                        <img alt="APPROVE" src="{!communityUrlForResources}resource/ICG_Resources/img/managerequest.png"/>
+                    </a>
+                </apex:outputPanel>
             </td>
         </tr>        
         <tr>
