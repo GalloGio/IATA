@@ -381,7 +381,7 @@
           <table style="border:1px solid #000;" cellpadding="4" width="100%">
                 <tr style="border:none;font-weight:bold;color:red"><td>{!$Label.ISSP_AMS_NoC_IATA_Only}</td></tr>
                 <tr style="border:none"><th>{!$Label.ISSP_AMS_NoC_IATA_Acknowledged}</th></tr>
-                <tr style="border:none"><td>____________________<br/>{!$Label.ISSP_AMS_NoC_IATA_Admin}</td></tr>
+                <tr style="border:none"><td>____________________<br/>{!IF(newLabels,$Label.ISSP_AMS_NoC_IATA_Admin_Company,$Label.ISSP_AMS_NoC_IATA_Admin)}</td></tr>
                 <tr style="border:none"><td>____________________<br/>{!$Label.ISSP_Date}<br/></td></tr>
                 <tr style="border:none"><td><br/></td></tr>
           </table>

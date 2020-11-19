@@ -5533,6 +5533,26 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>Case_Defect_Issue</name>
     </customLabels>
     <customLabels>
+        <label><!-- Case_KPI_AirlineManagement --></label>
+        <name>Case_KPI_AirlineManagement</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_KPI_Long50d --></label>
+        <name>Case_KPI_Long50d</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_KPI_Medium20d --></label>
+        <name>Case_KPI_Medium20d</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_KPI_Risk --></label>
+        <name>Case_KPI_Risk</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_KPI_Short24 --></label>
+        <name>Case_KPI_Short24</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Case Type --></label>
         <name>Case_Type</name>
     </customLabels>
@@ -14613,6 +14633,10 @@ and
         <name>ISSP_AMS_LeftNav_Section8_Cargo</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_License_No_Company --></label>
+        <name>ISSP_AMS_License_No_Company</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_Link_Add_Office --></label>
         <name>ISSP_AMS_Link_Add_Office</name>
     </customLabels>
@@ -15145,6 +15169,10 @@ and
         <name>ISSP_AMS_NoC_Change_Bank_Details_message1</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_NoC_Change_Ownership_Legal_Status --></label>
+        <name>ISSP_AMS_NoC_Change_Ownership_Legal_Status</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_NoC_Change_Ownership_Shareholding --></label>
         <name>ISSP_AMS_NoC_Change_Ownership_Shareholding</name>
     </customLabels>
@@ -15195,6 +15223,10 @@ and
     <customLabels>
         <label>Confirmar se os dados de Tipo de entidade e Propriedade estão corretos</label>
         <name>ISSP_AMS_NoC_Confirm_Ownership_details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Confirm_Type_of_Entity --></label>
+        <name>ISSP_AMS_NoC_Confirm_Type_of_Entity</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_NoC_Confirm_details --></label>
@@ -15263,6 +15295,10 @@ and
     <customLabels>
         <label><!-- ISSP AMS NoC IATA Admin --></label>
         <name>ISSP_AMS_NoC_IATA_Admin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS NoC IATA Admin Company --></label>
+        <name>ISSP_AMS_NoC_IATA_Admin_Company</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS NoC IATA Only --></label>
@@ -15573,6 +15609,10 @@ and
         <name>ISSP_AMS_NoC_error_message1</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_NoC_error_message1_company --></label>
+        <name>ISSP_AMS_NoC_error_message1_Company</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_NoC_error_message2 --></label>
         <name>ISSP_AMS_NoC_error_message2</name>
     </customLabels>
@@ -15581,12 +15621,20 @@ and
         <name>ISSP_AMS_NoC_error_message2_CNS</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_NoC_error_message2_company --></label>
+        <name>ISSP_AMS_NoC_error_message2_company</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_NoC_error_message3 --></label>
         <name>ISSP_AMS_NoC_error_message3</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_NoC_error_message3_CNS --></label>
         <name>ISSP_AMS_NoC_error_message3_CNS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_error_message3_company --></label>
+        <name>ISSP_AMS_NoC_error_message3_company</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_NoC_error_message4 --></label>
@@ -16177,6 +16225,10 @@ and
         <name>ISSP_AMS_Step0_Minor_Changes</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Step0 Minor Changes --></label>
+        <name>ISSP_AMS_Step0_Minor_Changes_Company</name>
+    </customLabels>
+    <customLabels>
         <label>Esta área se destina ao credenciamento de novas agências na IATA .</label>
         <name>ISSP_AMS_Step0_New_Application</name>
     </customLabels>
@@ -16199,6 +16251,10 @@ and
     <customLabels>
         <label>Para alterações em sua localização, razão social, situação jurídica ou &lt;br/&gt;propriedade/participação acionária.</label>
         <name>ISSP_AMS_Step0_Other_Changes_Msg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Step0 Other Changes Msg PostalOperator --></label>
+        <name>ISSP_AMS_Step0_Other_Changes_Msg_PostalOperator</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Step0 Other Forms --></label>
@@ -17201,6 +17257,10 @@ and
         <name>ISSP_AMS_eBulletin_Clear_All</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_CompanyChanges --></label>
+        <name>ISSP_AMS_eBulletin_CompanyChanges</name>
+    </customLabels>
+    <customLabels>
         <label>Países</label>
         <name>ISSP_AMS_eBulletin_Countries</name>
     </customLabels>
@@ -17979,6 +18039,10 @@ and
     <customLabels>
         <label>Solicitar alteração de Tipo de credenciamento e/ou notificar a IATA de alterações em sua Localização, Nome da empresa, Situação jurídica, Propriedade/Participação acionária.</label>
         <name>ISSP_ANG_Step0_Other_Changes_Msg_NamPaxAgent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Step0 Other Changes Msg for Nam Pax Agents PostalOperator --></label>
+        <name>ISSP_ANG_Step0_Other_Changes_Msg_NamPaxAgent_PostalOperator</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP ANG Step0 Other Changes Msg RevCaseOpen --></label>
