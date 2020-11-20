@@ -18177,6 +18177,10 @@ Pour chaque rubrique ci-dessous, veuillez soit :&lt;br/&gt;
         <name>ISSP_AN_Step1_AE_Full_Address</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AP_Authorization_Form_Description --></label>
+        <name>ISSP_AP_Authorization_Form_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AP_Bank_Details_Change --></label>
         <name>ISSP_AP_Bank_Details_Change</name>
     </customLabels>
@@ -21254,12 +21258,28 @@ Si vous continuez à avoir des difficultées d&apos;enregistrement au Portail Cl
         <name>ISSP_PASS_Airline_Checklist</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_PASS_Authorized_Signatories_Header_Text --></label>
+        <name>ISSP_PASS_Authorized_Signatories_Header_Text</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP PASS BankMandate --></label>
         <name>ISSP_PASS_BankMandate</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_PASS_BankMandate_Changes_Description --></label>
+        <name>ISSP_PASS_BankMandate_Changes_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_PASS_BankMandate_Not_Required --></label>
+        <name>ISSP_PASS_BankMandate_Not_Required</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_PASS_Checklist --></label>
         <name>ISSP_PASS_Checklist</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_PASS_Click_Here --></label>
+        <name>ISSP_PASS_Click_Here</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_PASS_Download_Documents --></label>
@@ -22861,6 +22881,10 @@ Si vous souhaitez réinitialiser votre mot de passe, retournez à l&apos;écran 
     <customLabels>
         <label><!-- ISSP Submitted --></label>
         <name>ISSP_Submitted</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Supporting_Documents --></label>
+        <name>ISSP_Supporting_Documents</name>
     </customLabels>
     <customLabels>
         <label>Êtes-vous sûr que vous souhaitez continuer?</label>
