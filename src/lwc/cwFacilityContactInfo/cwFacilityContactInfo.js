@@ -108,10 +108,10 @@ export default class CwFacilityContactInfo extends LightningElement {
 		let langbox = this.template.querySelector('[data-tosca="languagesinput"]');
 		if (langbox && !this.languageSelectorEventListenersAdded) {
 
-            this.initialized = true;
-            let inputs = this.template.querySelectorAll(".input");
-            let validated = checkInputValidation(inputs);
-            this.updateDataValid(validated);
+			this.initialized = true;
+			let inputs = this.template.querySelectorAll(".input");
+			let validated = checkInputValidation(inputs);
+			this.updateDataValid(validated);
 
 			langbox.addEventListener("focus", event => {
 				this.langPredictiveSearch();
@@ -123,8 +123,9 @@ export default class CwFacilityContactInfo extends LightningElement {
 			this.languageSelectorEventListenersAdded = true;
 		}
 
-
-
+		if (this.facility.pilotInformation == null || this.facility.pilotInformation == ''){
+			this.facility.pilotInformation = this.label.icg_https_default_value;
+		}
 	}
 
 	updateDataValid(validated) {

@@ -931,6 +931,22 @@ public without sharing class CW_FacilityCapabilitiesController {
 
 	public class CapabilityPhoto {
 		@AuraEnabled
+		public String internalExtension { get; set; }
+		@AuraEnabled
+		public String extension{
+			get {
+				if(String.isNotBlank(internalExtension)){
+					return internalExtension;
+				}
+				else if(url.indexOf('.') > -1){
+					return url.substringAfterLast('.');
+				}
+				else{
+					return null;
+				}
+			 }		
+		}
+		@AuraEnabled
 		public Boolean visible { get; set; }
 		@AuraEnabled
 		public String url { get; set; }

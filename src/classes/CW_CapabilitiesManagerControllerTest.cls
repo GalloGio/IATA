@@ -145,7 +145,7 @@ public class CW_CapabilitiesManagerControllerTest {
 		insert cDe;
 
 		List<Object> listPhoto = new List<Object>();
-		CW_CapabilitiesManagerController.CapabilityPhoto item = new CW_CapabilitiesManagerController.CapabilityPhoto();
+		CW_FacilityCapabilitiesController.CapabilityPhoto item = new CW_FacilityCapabilitiesController.CapabilityPhoto();
 		item.visible = true;
 		item.url = conDoc;
 		item.Id = conDoc;

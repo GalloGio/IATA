@@ -206,8 +206,10 @@ public class CW_UtilitiesTest {
 
 		test.startTest();
 		String result = CW_Utilities.getOpsHierarchyGroupFromAccountId(acct[0].Id);
+		String resultName = CW_Utilities.getOpsHierarchyGroupNameFromAccountId(acct[0].Id);
 		test.stopTest();
 		System.assertEquals(result, 'Test');
+		System.assertEquals(resultName, 'Test');
 
 	}
 	/**@description Validates the "submitted == true " section of the BecomeCompanyAdmin Method

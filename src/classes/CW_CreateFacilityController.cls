@@ -1,5 +1,11 @@
 public without sharing class CW_CreateFacilityController {
 	final static String ONESOURCE = 'One Source';
+	final static String APPROVAL_IATA_AFTER_ADMIN_APPROVAL_NEW_ACCOUNT = 'Approval_IATA_After_appr_new_account';
+	final static String APPROVE_REJECT_IATA_ADMIN_NO_COMPANY_ADMIN = 'Approve_Reject_to_IATA_Admin_no_Comp_adm';
+	final static String APPROVE_REJECT_TO_COMPANY_ADMIN = 'Approve_Reject_to_company_admin';
+	final static String STATION_CREATION_REQ_CONF_NEW_ACCOUNT = 'Station_Creation_Req_Conf_Req_new_acc';
+	final static String STATION_CREATION_REQ_CONF_TO_REQUESTOR = 'Station_Creation_Req_Conf_to_Requestor';
+
 	@AuraEnabled
 	public static string createFacility(String accountId, String station, String logoInfo, String geoLocationInfo, String ardRelIds, String nearestAirportCode, Boolean isCompanyAdmin, Boolean isInternalUser, Boolean isNewAccount, String stationsToAdd, String stationsToRemove) {
 		CW_Utilities.ResponseBody res = new CW_Utilities.ResponseBody();
@@ -76,16 +82,16 @@ public without sharing class CW_CreateFacilityController {
 		}
 		if(hasNoCompanyAdminsOrNotNeeded(companyAdmins, isCompanyAdmin)){
 			whoIdsAdmins = CW_EmailManager.getIataAdminsIds();
-			templateName = (isNewAccount || !accountAlreadyApproved) ? 'Approve_Reject_to_IATA_Admin_account' : 'Approve_Reject_to_IATA_Admin_no_Comp_adm';
+			templateName = (isNewAccount || !accountAlreadyApproved) ? APPROVAL_IATA_AFTER_ADMIN_APPROVAL_NEW_ACCOUNT : APPROVE_REJECT_IATA_ADMIN_NO_COMPANY_ADMIN;
 		}else{
-			templateName = 'Approve_Reject_to_company_admin';
+			templateName = APPROVE_REJECT_TO_COMPANY_ADMIN;
 		}
 
 		List<Messaging.SingleEmailMessage> emailsToBeSent = new List<Messaging.SingleEmailMessage>();
 		List<ICG_Notification__c> notifications = new List<ICG_Notification__c>();
 
 		emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails(templateName, facility.Id, whoIdsAdmins));
-		templateName = (isNewAccount || !accountAlreadyApproved) ? 'Station_Creation_Req_Conf_Req_new_acc' : 'Station_Creation_Req_Conf_to_Requestor';
+		templateName = (isNewAccount || !accountAlreadyApproved) ? STATION_CREATION_REQ_CONF_NEW_ACCOUNT : STATION_CREATION_REQ_CONF_TO_REQUESTOR;
 		emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails(templateName, facility.Id, whoIdsRequestor));
 		
 		String subject = 'Station Creation request submitted';

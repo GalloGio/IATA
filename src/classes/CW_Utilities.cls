@@ -834,6 +834,23 @@ public without sharing class CW_Utilities {
 		return opsHierarchy;
 	}
 
+	@AuraEnabled
+	public static String getOpsHierarchyGroupNameFromAccountId (String accountId) {
+		String opsHierarchyName;
+		List<Account_Role__c> accRole = [Select Id, Account__c, Account__r.Name, (Select Id, Relationship_Name__c, Ops_Hierarchy_Group__c from From_Relationships__r) from Account_Role__c Where Account__c = :accountId AND Functional_Role__c = 'One Source'];
+		if (!accRole.isEmpty()) {
+			if(!accRole[0].From_Relationships__r.isEmpty()) {
+				if(accRole[0].From_Relationships__r[0].Ops_Hierarchy_Group__c != null) {	
+					opsHierarchyName = accRole[0].From_Relationships__r[0].Ops_Hierarchy_Group__c;						
+				}else{
+					opsHierarchyName = accRole[0].Account__r.Name;
+				}
+			}
+		}		
+		
+		return opsHierarchyName;
+	}
+
 	public static String getOpsHierarchyNameFromUserId (String userId) {
 		String opsHierarchy;
 		List<User> u = [Select id, AccountId from User where id=:userId];

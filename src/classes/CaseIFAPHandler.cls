@@ -22,9 +22,8 @@ public class CaseIFAPHandler {
 		if(listIds != null && listIds.size() != 0){
 
 			switch on (String.valueOf(listIds[0].getSObjectType())) {
-  				when 'User' {
-					List<User> userList = new List<User>([SELECT ContactId FROM User WHERE Id IN: listIds AND ContactId != null]);
-					for(User us : userList){
+				when 'User' {
+					for(User us : [SELECT ContactId FROM User WHERE Id IN: listIds AND ContactId != null]){
 						contactIds.add(us.ContactId);
 					}
 					isUser = true;
@@ -96,7 +95,7 @@ public class CaseIFAPHandler {
 
 			if(caseList == null){
 
-				Id recordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByName().get('IATA Financial Review').getRecordTypeId();
+				Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
 
 				caseList = new List<Case>([SELECT ContactId, Account.Name, Account.Global_ID__c, Account.Agent_Type_Code__c, Account.Airline_Code__c, Account.Status__c,
 										Account.BillingStreet, Account.BillingCity, Account.BillingState, Account.BillingPostalCode, Account.IATA_ISO_Country__r.Name,

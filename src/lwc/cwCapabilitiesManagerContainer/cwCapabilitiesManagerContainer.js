@@ -24,6 +24,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 	detailIcon = this.icons + "ic-detail.svg";
 	infoIcon = this.icons + "ic-info.svg";
 	rotate = this.icons + "rotate-black.gif";
+	download = this.icons + "icg-document-download.png";
 
 	chevrondown = this.icons + "chevrondown.svg";
 	chevronup = this.icons + "chevronup.svg";
@@ -90,6 +91,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 		action: "",
 		result: false
 	};
+	@track downloadImage = this.download;
 
 	@track showFileUploadCarousel = false;
 	@track labelButtonAddRowsToList = "Maintain previous capabilities";
@@ -267,6 +269,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 					visible: true,
 					url: "",
 					label: fileName + indexFileName,
+					internalExtension: file.name,
 					id: file.documentId
 				};
 				listPhoto.push(photo);
@@ -461,6 +464,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 			.then(result => {
 				this.data = result;
 				this.existsRows = this.getexistsRows();
+				this.getURLDownload();
 				if (this.isRenewMode) {
 					this.addPreviuosCapabilities();
 				}
@@ -486,21 +490,50 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 			});
 	}
 
+	getURLDownload(){
+		this.data.superCategories.forEach(function(superCategory, i) {
+			superCategory.sections.forEach(function(section, j) {
+				section.capabilities.forEach(function(capability, k) {
+					capability.categories.forEach(function(category, l) {
+						category.rows.forEach(function(row, m) {
+							row.photos.forEach(function(pht, n) {
+								pht.downloadDocument = pht.url;
+							});
+						});
+					});
+				});
+			});
+		});
+	}
+
 	openModalEditPhotos(event) {
 		let superCategoriesIndex = event.target.dataset.superCategoriesIndex;
 		let sectionIndex = event.target.dataset.sectionIndex;
 		let capabilityIndex = event.target.dataset.capabilityIndex;
 		let categoryIndex = event.target.dataset.categoryIndex;
 		let rowIndex = event.target.dataset.rowIndex;
-		let currentEquipmentPhoto = this.data.superCategories[superCategoriesIndex].sections[sectionIndex].capabilities[capabilityIndex].categories[categoryIndex].rows[rowIndex].equipment__c
+		let currentEquipmentPhoto = this.data.superCategories[superCategoriesIndex].sections[sectionIndex].capabilities[capabilityIndex].categories[categoryIndex].rows[rowIndex].equipment__c;
 		this.photosRow = this.data.superCategories[superCategoriesIndex].sections[sectionIndex].capabilities[capabilityIndex].categories[categoryIndex].rows[rowIndex];
 
 		let indexFileName = 1;
 		this.photosRow.photos.forEach(element => {
-			element.label = currentEquipmentPhoto + "-" + indexFileName;
+			if(element.extension.includes("pdf")){
+				element.url = this.download;
+			}
+			else{
+				element.label = currentEquipmentPhoto + "-" + indexFileName;
+			}
 			indexFileName++;
 		});
 		this.modalEditPhotos = true;
+	}
+
+	evaluatePhotoAction(event){
+		let urlImage = event.target.dataset.url;
+		let extension = event.target.dataset.extension;
+		if(extension === "pdf"){
+			window.open(urlImage,'_blank');
+		}
 	}
 
 	showHideStampHover(event) {
@@ -654,7 +687,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 				fieldsByColumns.forEach(element => {
 					let newField = {
 						field: element.name,
-						value: row[element.name] != "" && row[element.name] != null && row[element.name] != undefined ? (element.type === "MULTIPICKLIST" ? row[element.name].join(";") : row[element.name]) : "",
+						value: isNaN(row[element.name]) ? (element.type === "MULTIPICKLIST" ? row[element.name].join(";") : (row[element.name] != null && row[element.name] != undefined) ? row[element.name] : "") : Number(row[element.name] != null ? Number(row[element.name]) : ""),
 						label: element.label,
 						required: row.requiredFields.includes(element.name)
 					};

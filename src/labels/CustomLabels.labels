@@ -48529,7 +48529,7 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>icg_capab_magmnt_mantain_prev</shortDescription>
-        <value>Maintain previous capabilities</value>
+        <value>Edit Capabilities</value>
     </labels>
     <labels>
         <fullName>icg_capab_message_to_show</fullName>

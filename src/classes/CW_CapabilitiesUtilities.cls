@@ -465,7 +465,7 @@ public with sharing class CW_CapabilitiesUtilities {
 
 	public static List<CW_AccountDetailCarousel.Carousel> getCapabilitiesPhotosFromStation(String recordId){
 		List<String> acceptFormats = new List<String>{'pdf'};
-		Map<String,CW_CapabilitiesManagerController.CapabilityPhoto> photosCapab = new Map<String,CW_CapabilitiesManagerController.CapabilityPhoto>();
+		Map<String,CW_FacilityCapabilitiesController.CapabilityPhoto> photosCapab = new Map<String,CW_FacilityCapabilitiesController.CapabilityPhoto>();
 		List<CW_AccountDetailCarousel.Carousel> photosCarousel = new List<CW_AccountDetailCarousel.Carousel>();
 
 		for(ICG_Account_Role_Capability_Assignment__c assigment : [SELECT Account_Role_Detail_Capability__r.Photos__c 
@@ -473,7 +473,7 @@ public with sharing class CW_CapabilitiesUtilities {
 		AND ICG_Capability_Assignment_Group__r.Status__c =: CW_CapabilitiesUtilities.ACTIVE])
 		{
 			if(String.isNotEmpty(assigment.Account_Role_Detail_Capability__r.Photos__c)){
-				CW_CapabilitiesManagerController.CapabilityPhoto photo = (CW_CapabilitiesManagerController.CapabilityPhoto)JSON.deserialize(assigment.Account_Role_Detail_Capability__r.Photos__c.replace('[', '').replace(']', ''),CW_CapabilitiesManagerController.CapabilityPhoto.class);
+				CW_FacilityCapabilitiesController.CapabilityPhoto photo = (CW_FacilityCapabilitiesController.CapabilityPhoto)JSON.deserialize(assigment.Account_Role_Detail_Capability__r.Photos__c.replace('[', '').replace(']', ''),CW_FacilityCapabilitiesController.CapabilityPhoto.class);
 				if(!photosCapab.containsKey(photo.id)){
 					photosCapab.put(photo.id, photo);
 				}	
@@ -482,7 +482,7 @@ public with sharing class CW_CapabilitiesUtilities {
 		}
 
 		Integer index = 0;
-		for(CW_CapabilitiesManagerController.CapabilityPhoto photoParse : photosCapab.values()){
+		for(CW_FacilityCapabilitiesController.CapabilityPhoto photoParse : photosCapab.values()){
 			CW_AccountDetailCarousel.Carousel car = new CW_AccountDetailCarousel.Carousel();
 			car.id = photoParse.id;
 			car.name = photoParse.label;
@@ -495,7 +495,7 @@ public with sharing class CW_CapabilitiesUtilities {
 			String panelClass = 'slds-carousel__panel carousel-size';
 			panelClass = index == 0 ? panelClass + ' panelSelected' : panelClass;
 			car.panelClass = panelClass;
-			String fileExtension = photoParse.url.substringAfter('.');
+			String fileExtension = photoParse.extension;
 			car.fileExtension = fileExtension;
 			car.urlImage = photoParse.url;
 			car.isInternal = false;

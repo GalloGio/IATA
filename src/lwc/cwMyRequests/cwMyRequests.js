@@ -228,7 +228,6 @@ export default class CwMyRequests extends LightningElement {
 
 	handleMoreInfo(event) {
 		var type = event.currentTarget.getAttribute("data-type");
-		console.log('type station=' + type)
 		var pending = (type === 'Station Manager Requests') ? '#' : '?pending=true#';
 
         let url =  window.location.pathname + pending + 'ID:' + event.currentTarget.getAttribute("data-id");

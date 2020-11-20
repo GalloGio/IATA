@@ -29,6 +29,7 @@ export default class CwFacilityCapabilities extends LightningElement {
 	rotate = this.icons + "rotate-black.gif";
 	warning = this.icons + "warning.svg";
 	plus = this.icons  + "icon-plus.svg";
+	download = this.icons + "icg-document-download.png";
 
 	chevrondown = this.icons + "chevrondown.svg";
 	chevronup = this.icons + "chevronup.svg";
@@ -183,12 +184,12 @@ export default class CwFacilityCapabilities extends LightningElement {
 				let document = {
 					visible: true,
 					url: file.documentId,
+					internalExtension: file.name,
 					label: file.name
 				}
 				listDocument.push(document);
 			
 			});
-
 			this.getPublicLinkToFiles(listDocument, 'more_info_document__c');
 		}
 		
@@ -289,6 +290,8 @@ export default class CwFacilityCapabilities extends LightningElement {
 				if(this.isStationManager){
 					this.executeToggleContent(this.data.superCategories[0].sections[0].capabilities[0].name,'detail');
 				}
+				//Get URL to download pdf documnt if exists
+				this.getURLDownload();
 				// Creates the event with the data and dispatches.
 				const newEvent = new CustomEvent("dataloaded", {
 					detail: {
@@ -300,6 +303,22 @@ export default class CwFacilityCapabilities extends LightningElement {
 			.finally(() => {
 				this.isLoading = false;
 			});
+	}
+
+	getURLDownload(){
+		this.data.superCategories.forEach(function(superCategory, i) {
+			superCategory.sections.forEach(function(section, j) {
+				section.capabilities.forEach(function(capability, k) {
+					capability.categories.forEach(function(category, l) {
+						category.rows.forEach(function(row, m) {
+							row.photos.forEach(function(pht, n) {
+								pht.downloadDocument = pht.url;
+							});
+						});
+					});
+				});
+			});
+		});
 	}
 
 	setSummaryDetailCheckJSON(icgAccountRoleDetailId, jsonData) {
@@ -352,10 +371,23 @@ export default class CwFacilityCapabilities extends LightningElement {
 
 		let indexFileName = 1;
 		this.photosRow.photos.forEach(element => {
-			element.label = currentEquipmentPhoto + "-" + indexFileName;
+			if(element.extension.toLowerCase().includes("pdf")){
+				element.url = this.download;
+			}
+			else{
+				element.label = currentEquipmentPhoto + "-" + indexFileName;
+			}
 			indexFileName++;
 		});
 		this.modalEditPhotos = true;
+	}
+
+	evaluatePhotoAction(event){
+		let urlImage = event.target.dataset.url;
+		let extension = event.target.dataset.extension;
+		if(extension === "pdf"){
+			window.open(urlImage,'_blank');
+		}
 	}
 
 	closeModalEditPhotos() {
