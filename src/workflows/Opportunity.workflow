@@ -27,15 +27,15 @@
             <type>owner</type>
         </recipients>
         <recipients>
-            <recipient>acostam@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>agouzoulm@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
             <recipient>alicia@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>apeshm@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>

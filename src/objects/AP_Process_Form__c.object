@@ -4043,6 +4043,63 @@ If(LEN(Case__r.Account.BillingCountry) &gt;0, Case__r.Account.BillingCountry,&qu
         </valueSet>
     </fields>
     <fields>
+        <fullName>SIS_Contact_Email__c</fullName>
+        <description>SIS Contact Email</description>
+        <externalId>false</externalId>
+        <label>SIS Contact Email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SIS_Contact_F_Name__c</fullName>
+        <description>SIS Contact First Name</description>
+        <externalId>false</externalId>
+        <label>SIS Contact F Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SIS_Contact_Job_Title__c</fullName>
+        <description>SIS Contact Job Title</description>
+        <externalId>false</externalId>
+        <label>SIS Contact Job Title</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SIS_Contact_L_Name__c</fullName>
+        <description>SIS Contact Last Name</description>
+        <externalId>false</externalId>
+        <label>SIS Contact L Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SIS_Contact_Number__c</fullName>
+        <description>SIS Contact phone number</description>
+        <externalId>false</externalId>
+        <label>SIS Contact Number</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Phone</type>
+    </fields>
+    <fields>
         <fullName>Select_Bank_Account__c</fullName>
         <description>Used for SIS Recordtypes</description>
         <externalId>false</externalId>

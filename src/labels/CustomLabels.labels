@@ -29912,7 +29912,7 @@ This service is free of charge.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AP_Authorization_Form_Description</shortDescription>
-        <value>Please download and sign the Authorization Form</value>
+        <value>Please download and sign the &lt;a href=&quot;https://iata--c.documentforce.com/servlet/servlet.FileDownload?file=0155J000000l2nn&quot;&gt;Authorization Form&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_AP_Bank_Details_Change</fullName>
@@ -39146,6 +39146,13 @@ If you are not sure if your company based in {0} is subject to the EU laws on da
         <protected>false</protected>
         <shortDescription>ISSP Submitted</shortDescription>
         <value>Submitted</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Supporting_Documents</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Supporting_Documents</shortDescription>
+        <value>Supporting Documents - Settlement Instructions</value>
     </labels>
     <labels>
         <fullName>ISSP_SureToContinue</fullName>
