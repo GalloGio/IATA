@@ -18142,6 +18142,10 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_AN_Step1_AE_Full_Address</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AP_Authorization_Form_Description --></label>
+        <name>ISSP_AP_Authorization_Form_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AP_Bank_Details_Change --></label>
         <name>ISSP_AP_Bank_Details_Change</name>
     </customLabels>
@@ -21218,12 +21222,28 @@ Se continua ad aver problemi con la registrazione nel portale clienti IATA allor
         <name>ISSP_PASS_Airline_Checklist</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_PASS_Authorized_Signatories_Header_Text --></label>
+        <name>ISSP_PASS_Authorized_Signatories_Header_Text</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP PASS BankMandate --></label>
         <name>ISSP_PASS_BankMandate</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_PASS_BankMandate_Changes_Description --></label>
+        <name>ISSP_PASS_BankMandate_Changes_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_PASS_BankMandate_Not_Required --></label>
+        <name>ISSP_PASS_BankMandate_Not_Required</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_PASS_Checklist --></label>
         <name>ISSP_PASS_Checklist</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_PASS_Click_Here --></label>
+        <name>ISSP_PASS_Click_Here</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_PASS_Download_Documents --></label>
@@ -22825,6 +22845,10 @@ Se desiderate ripristinare la password, tornate alla schermata di accesso e util
     <customLabels>
         <label><!-- ISSP Submitted --></label>
         <name>ISSP_Submitted</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Supporting_Documents --></label>
+        <name>ISSP_Supporting_Documents</name>
     </customLabels>
     <customLabels>
         <label>Sicuro di voler continuare?</label>
