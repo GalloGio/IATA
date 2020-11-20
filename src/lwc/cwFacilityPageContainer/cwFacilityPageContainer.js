@@ -76,13 +76,6 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 	@track facilityManagers = [];
 	@track userInfo;
 	@track showModal = false;
-	@track selectedAirlines = [];
-	@track cargoHandlers = [];
-	@track rampHandlers = [];
-	@track filterTextAirlines;
-	@track filterTextOperatingAirlines;
-	@track cargoHandlersFilterText;
-	@track rampHandlersFilterText;
 	@track modalMessage = "When you perform an action, this modal appears with extra info.";
 	@track modalImage = this.CHECKED_IMAGE;
 	@track editAirlines = true;
@@ -99,14 +92,24 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 	@track editOnRampHandlers = false;
 	@track editOnAirport = false;
 
-	//Handled Airlines tracks
-	@track toDeleteSelectedAirlines = [];
-	@track toAddSelectedAirlines = [];
-	@track eventSelectedAirlines = [];
-	@track toAddCargoStation = [];
-	@track toDeleteCargoStation = [];
-	@track toAddRampHandlers = [];
-	@track toDeleteRampHandlers = [];
+	// Airlines Handlers
+	@track airlineHandlers = [];
+	@track airlineHandlerSelectedEvent = [];
+	@track airlineHandlersToAdd = [];
+	@track airlineHandlersToDel = [];
+	@track airlineHandlersFilterText;
+
+	// Cargo Handlers
+	@track cargoHandlers = [];
+	@track cargoHandlerToAdd = [];
+	@track cargoHandlerToDel = [];
+	@track cargoHandlersFilterText;
+
+	// Ramp Handlers
+	@track rampHandlers = [];
+	@track rampHandlerToAdd = [];
+	@track rampHandlerToDel = [];
+	@track rampHandlersFilterText;
 	
 	@track airportSearchValue = '';
 	@track predictiveValues;
@@ -352,12 +355,12 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 					
 					this.cargoHandlers = [];
 					this.rampHandlers = [];
-					this.selectedAirlines = this.facility.handledAirlines;
+					this.airlineHandlers = this.facility.handledAirlines;
 					if(this.facility.recordTypeDevName === "Airport_Operator" || this.facility.recordTypeDevName === "Airline"){
 						this.facility.onAirportStations.forEach(facility => {
 							this.populateOperatingStations(facility);
 						});
-					}				
+					}
 					this.updateLocationValid();
 					this.getCompanyAdminsFromDB(this.facility.companyId);
 					this.getFacilityManagersFromDB(this.facility.Id);
@@ -576,34 +579,37 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 		this.showModal = false;
 	}
 
-	setSelectedAirlines(event) {
-		if (this.selectedAirlines && event.detail) {
-			this.selectedAirlines.forEach(airline => {
-				if (!event.detail.find(val => val.value === airline.value)){
-					this.toDeleteSelectedAirlines.push(airline.value);
+	setSelectedAirlineHadnlers(event) {
+		if (this.airlineHandlers && event.detail) {
+			this.airlineHandlersToDel = [];
+			this.airlineHandlersToAdd = [];
+
+			this.airlineHandlers.forEach(airline => {
+				if (!event.detail.find(val => val.value === airline.value)) {
+					this.airlineHandlersToDel.push(airline.value);
 				}
 			});
 			event.detail.forEach(airline => {
-				if (!this.selectedAirlines.find(val => val.value === airline.value)){
-					this.toAddSelectedAirlines.push(airline.value);
+				if (!this.airlineHandlers.find(val => val.value === airline.value)) {
+					this.airlineHandlersToAdd.push(airline.value);
 				}
 			});
-			this.eventSelectedAirlines = event.detail;
-			this.setFacilityInfo(this.facility.Id, 'handledAirlines', 'newSelectedAirlines');
+			this.airlineHandlerSelectedEvent = JSON.parse(JSON.stringify(event.detail));
+			this.setFacilityInfo(this.facility.Id, "handledAirlines", "newSelectedAirlines");
 		}
 	}
-	saveSelectedAirlines(){
-		if(this.toAddSelectedAirlines.length > 0 || this.toDeleteSelectedAirlines> 0){
+	saveSelectedAirlines() {
+		if (this.airlineHandlersToAdd.length > 0 || this.airlineHandlersToDel.length > 0) {
 			saveAirlinesHandled({
-				addList: JSON.stringify(this.toAddSelectedAirlines),
-				deleteList: JSON.stringify(this.toDeleteSelectedAirlines),
+				addList: JSON.stringify(this.airlineHandlersToAdd),
+				deleteList: JSON.stringify(this.airlineHandlersToDel),
 				facilityId: this.facility.Id
 			})
 				.then(result => {
-					this.selectedAirlines = this.eventSelectedAirlines;
+					this.airlineHandlers = this.airlineHandlerSelectedEvent;
 				})
 				.catch(err => {
-					this.showToast('Save',"Something went wrong", "error");
+					this.showToast("Save", "Something went wrong", "error");
 				});
 		}
 	}
@@ -706,10 +712,7 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 	}
 
 	filterAirlinesHandled(event) {
-		this.filterTextAirlines = event.detail;
-	}
-	filterOperatingAirlines(event) {
-		this.filterTextOperatingAirlines = event.detail;
+		this.airlineHandlersFilterText = event.detail;
 	}
 	filterOperatingCHF(event) {
 		this.cargoHandlersFilterText = event.detail;
