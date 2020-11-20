@@ -73,25 +73,18 @@ export default class TidsSubmitApplication extends NavigationMixin(LightningElem
 		event.preventDefault();
 		this.spinner = true;
 		this.showConfimationModal=false;
-		console.log('applicationData', JSON.stringify(this.tidsInfo));
 		let appType = this.tidsInfo.applicationType;
 		let appSections='';
 		if (appType === 'chg-business-profile-specialization'){appSections = JSON.stringify(this.tidsInfo);}
-		console.log('appSections', appSections);
-		console.log('appType', appType);
 		applicationSubmitted({caseId: this.tidsCase.Id, applicationData:appSections, applicationType:appType})
 		.then(result => {
 			this.spinner = false;
-			console.log('handleSendApplication result',JSON.stringify(result));
 			if (result.hasAnError){
-				console.log('handleSendApplication error',result.reason);
 				this.modalDefaultMessage='Oops! something happened, please retry.'
 				this.modalAction='OK';
 				this.showConfimationModal=true;
 			}else{
-					console.log('setSectionsDone4');
 					setSectionsDone([]);
-					console.log('setSectionsDone4');
 					this.dispatchEvent(
 						new ShowToastEvent({
 								title: 'Thank you',
@@ -99,10 +92,6 @@ export default class TidsSubmitApplication extends NavigationMixin(LightningElem
 								variant: 'success'
 						})
 					);
-					//this.spinner = false;
-					//let action = {type: 'Submitted'};
-					//fireEvent(this.pageRef, "applicationDecisionListener", action);
-					console.log('setSectionsDone4');
 					this[NavigationMixin.Navigate]({
 						type: 'standard__namedPage',
 						attributes: {
@@ -118,7 +107,6 @@ export default class TidsSubmitApplication extends NavigationMixin(LightningElem
 	}
 	oops(error){
 		this.spinner = false;
-		console.log('submit application error',error);
 		this.modalDefaultMessage='Oops! something happened, please retry.'
 		this.modalAction='OK';
 		this.showConfimationModal=true;

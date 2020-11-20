@@ -3,6 +3,8 @@ import { NavigationMixin } from "lightning/navigation";
 import Id from "@salesforce/user/Id";
 import allMyTidsCases from "@salesforce/apex/TIDSHelper.allMyTidsCases";
 import actionApplication from "@salesforce/apex/TIDSHelper.actionApplication";
+import verifyRole from "@salesforce/apex/TIDSHelper.verifyRole";
+import createRole from "@salesforce/apex/TIDSHelper.createRole";
 import assignToCaseOwner from "@salesforce/apex/TIDSHelper.assignToCaseOwner";
 import USER_ID from "@salesforce/user/Id";
 
@@ -14,6 +16,15 @@ export default class TidsVetting extends NavigationMixin(LightningElement) {
 	@track selectedTab;
 	@track url = "/c/tids.app?caseId=";
 	@track tidsCase;
+	@track reasoncreaterole;
+	@track infocreaterole={accountname:'',firstname:'', lastname:''};
+	@track verifybutton=true;
+	@track createbutton=true;
+	@track accountid;
+	@track contactid;
+	@track isissue=false;
+	@track issucess=false;
+	@track isverification=false;
 
 	//Modal Window
 	@track modalAction;
@@ -29,6 +40,7 @@ export default class TidsVetting extends NavigationMixin(LightningElement) {
 	//Pagination Code
 
 	connectedCallback() {
+		this.resetValues();
 		this.init();
 	}
 
@@ -41,7 +53,6 @@ export default class TidsVetting extends NavigationMixin(LightningElement) {
 		//let caseid = event.currentTarget.key;
 		event.preventDefault();
 		let caseid = event.target.dataset.targetId;
-		console.log("case Id", caseid);
 		this[NavigationMixin.Navigate]({
 			type: "standard__recordPage",
 			attributes: {
@@ -55,7 +66,6 @@ export default class TidsVetting extends NavigationMixin(LightningElement) {
 		//let caseid = event.currentTarget.key;
 		event.preventDefault();
 		let caseid = event.target.dataset.targetId;
-		console.log("case Id", caseid);
 		this[NavigationMixin.Navigate]({
 			type: "standard__recordPage",
 			attributes: {
@@ -68,7 +78,6 @@ export default class TidsVetting extends NavigationMixin(LightningElement) {
 	pickVetting(event) {
 		event.preventDefault();
 		this.spinner = true;
-		console.log("My");
 		this.showConfimationModal = false;
 		let caseid = event.target.dataset.targetId;
 		assignToCaseOwner({ caseId: caseid })
@@ -92,7 +101,6 @@ export default class TidsVetting extends NavigationMixin(LightningElement) {
 	//Select the tab and do the rest
 	tabselect(evt) {
 		this.selectedTab = evt.target.label;
-		console.log(this.selectedTab);
 		this.page = 1;
 		this.perpage = 50;
 		this.pages = [];
@@ -104,7 +112,6 @@ export default class TidsVetting extends NavigationMixin(LightningElement) {
 	getFilteredTidsCases(myfilter) {
 		this.showConfimationModal = false;
 		this.spinner = true;
-		console.log("My");
 		allMyTidsCases({ filter: myfilter })
 			.then((results) => {
 				this.cases = this.mappingCases(results);
@@ -122,7 +129,6 @@ export default class TidsVetting extends NavigationMixin(LightningElement) {
 		let caseid = event.target.dataset.targetId;
 		actionApplication({ caseId: caseid, action: "vetting" })
 			.then((result) => {
-				console.log("result", JSON.stringify(result));
 				this.spinner = false;
 				if (result.hasAnError) {
 					this.oops(result.reason);
@@ -136,7 +142,7 @@ export default class TidsVetting extends NavigationMixin(LightningElement) {
 			})
 			.catch((error) => {
 				this.oops(error);
-			});
+		});
 	}
 	runVetting(caseid) {
 		this.spinner = true;
@@ -184,10 +190,7 @@ export default class TidsVetting extends NavigationMixin(LightningElement) {
 				caseStatus === "pending customer"
 			) {
 				item.startvetting = false;
-				//console.log('item.Status',item.Status);
 			} else {
-				//console.log('USER_ID',USER_ID,item.OwnerId);
-				//console.log('item',JSON.stringify(item));
 				//make sure it is the same ownerid
 				if (caseStatus === "review in progress") {
 					item.startvetting = false;
@@ -206,7 +209,6 @@ export default class TidsVetting extends NavigationMixin(LightningElement) {
 
 	oops(error) {
 		this.spinner = false;
-		console.log(" fetchRoles error", error);
 		this.modalDefaultMessage = "Oops! something happened, please retry.";
 		this.modalAction = "OK";
 		this.showConfimationModal = true;
@@ -266,5 +268,88 @@ export default class TidsVetting extends NavigationMixin(LightningElement) {
 
 	get currentPageData() {
 		return this.pageData();
+	}
+
+	//Assign Admin HO Role
+	changeField(event){
+		if (event.target.name === "accountid"){
+			this.accountid = event.target.value;
+		} else if (event.target.name === "contactid"){
+			this.contactid  = event.target.value;
+		}
+		if (this.accountid==='' || this.contactid===''){
+			this.verifybuttonDisabled();
+		} else {
+			this.verifybuttonEnabled();
+		}
+	}
+	handleVerifcationClick(event){
+		//get info
+		this.isissue=false;
+		this.isverification=false;
+		this.issucess=false;
+		this.spinner = true;
+		verifyRole({ accountId: this.accountid, contactId: this.contactid })
+			.then((result) => {
+				this.spinner = false;
+				if (result.hasAnError) {
+					this.isissue=true;
+					this.reasoncreaterole=result.reason;
+				} else {
+					this.isverification=true;
+					this.reasoncreaterole=result.reason;
+					this.infocreaterole=JSON.parse(result.info);
+					this.verifybuttonDisabled();
+					this.createbuttonEnabled();
+				}
+			})
+			.catch((error) => {
+				this.oops(error);
+		});
+	}
+	handleCreateClick(event){
+		this.spinner = true;
+		this.isissue=false;
+		this.issucess=false;
+		this.isverification=false;
+		createRole({ accountId: this.accountid, contactId: this.contactid })
+			.then((result) => {
+				this.spinner = false;
+				if (result.hasAnError) {
+					this.isissue=true;
+					this.reasoncreaterole=result.reason;
+				} else {
+					this.issucess=true;
+					this.isverification=true;
+					this.reasoncreaterole=result.reason;
+					this.infocreaterole=JSON.parse(result.info);
+					this.resetValues();
+					this.createbuttonDisabled();
+				}
+			})
+			.catch((error) => {
+				this.oops(error);
+		});		
+	}
+	handleResetClick(event){
+		this.resetValues();
+		this.createbuttonDisabled();
+		this.verifybuttonDisabled();
+	}
+	verifybuttonDisabled(){
+		this.verifybutton=true;
+	}
+	verifybuttonEnabled(){
+		this.verifybutton=false;
+	}
+	createbuttonDisabled(){
+		this.createbutton=true;
+	}
+	createbuttonEnabled(){
+		this.createbutton=false;
+	}
+	resetValues(){
+		this.accountid='';
+		this.contactid='';
 	}
 }

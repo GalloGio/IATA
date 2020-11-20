@@ -458,8 +458,8 @@ The Account Role record should be named after the functional capability for whic
     </fields>
     <fields>
         <fullName>UniqueKey__c</fullName>
-        <caseSensitive>false</caseSensitive>
-        <description>used to uniquely identify a record in upsert. For TIP, is the concatenation of Account__c and RecordTypeID</description>
+        <description>used to uniquely identify a record in upsert. For TIP, is the concatenation of Account__c and RecordTypeID
+DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREATED FOR DIFFERENT ACCOUNTS OF SAME RECORD TYPES</description>
         <externalId>true</externalId>
         <label>UniqueKey</label>
         <length>80</length>
@@ -467,7 +467,7 @@ The Account Role record should be named after the functional capability for whic
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
-        <unique>true</unique>
+        <unique>false</unique>
     </fields>
     <label>Account Role</label>
     <listViews>

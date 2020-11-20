@@ -23,7 +23,6 @@ export default class TidsCases extends LightningElement {
 				item.visible=true;
 			});
 			this.cases = result;
-			console.log(JSON.stringify(result));
 		}
 		// the above is how you would link the javascript to the html
 		caseValues() {
