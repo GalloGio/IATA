@@ -5,6 +5,12 @@ public without sharing class CW_EmailTemplateData {
 	public String orderItemId {get; set;}
 	public Boolean isRemove {get;set;}
 	public Boolean isToIata {get;set;}
+	public Boolean isCompanyAdmin {
+		get{
+			return stationId != null ? CW_Utilities.getUserRole(stationId) == CW_Utilities.COMPANY_ADMIN : false;
+		}
+		set;
+	}
 	List<ICG_Account_Role_Detail__c> station;
 	List<ICG_Notification__c> notifications;
 	List<ICG_Contact_Role_Detail__c> contactRoleDetail;
@@ -23,7 +29,7 @@ public without sharing class CW_EmailTemplateData {
 
 	public ICG_Account_Role_Detail__c getStationDetails(){
 		if(station == null && stationId != null){
-			station = [SELECT Id, Name, Company_FOR__c, Country_FOR__c, City_FOR__c, CreatedById, Account_Role__c, Account_Role__r.Account__c, RecordType.DeveloperName, RecordType.Name, Company_Admin_Approver_Rejector__c, LastModifiedById, Reject_Reason__c FROM ICG_Account_Role_Detail__c WHERE Id = :stationId LIMIT 1];
+			station = [SELECT Id, Name, Company_FOR__c, Country_FOR__c, City_FOR__c, Street_Nr_FOR__c, CreatedById, Account_Role__c, Account_Role__r.Account__c, RecordType.DeveloperName, RecordType.Name, Company_Admin_Approver_Rejector__c, LastModifiedById, Reject_Reason__c FROM ICG_Account_Role_Detail__c WHERE Id = :stationId LIMIT 1];
 		} 
 		return listHasValues(station) ? station[0] : null;
 	}

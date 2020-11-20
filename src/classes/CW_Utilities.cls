@@ -5,7 +5,7 @@
 public without sharing class CW_Utilities {
 
 	final static string FACILITY_MANAGER = 'Facility Manager';
-	final static string COMPANY_ADMIN = 'Company Admin';
+	public final static string COMPANY_ADMIN = 'Company Admin';
 	final static string FIELD_CUSTOM_VALIDATION_EXCEPTION = 'FIELD_CUSTOM_VALIDATION_EXCEPTION';
 
 	//Retrieve metadata related to Portal

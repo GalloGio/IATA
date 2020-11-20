@@ -449,7 +449,12 @@ import icg_error_update_facility from "@salesforce/label/c.icg_error_update_faci
 import icg_successful_save_facility from "@salesforce/label/c.icg_successful_save_facility";
 import icg_facility_invalid_info from "@salesforce/label/c.icg_facility_invalid_info";
 import icg_https_default_value from "@salesforce/label/c.icg_https_default_value";
-
+import icg_join_now_popup_message01 from "@salesforce/label/c.icg_join_now_popup_message01";
+import icg_join_now_popup_message02 from "@salesforce/label/c.icg_join_now_popup_message02";
+import icg_join_now_popup_message41 from "@salesforce/label/c.icg_join_now_popup_message41";
+import icg_join_now_popup_message42 from "@salesforce/label/c.icg_join_now_popup_message42";
+import icg_join_now_popup_message51 from "@salesforce/label/c.icg_join_now_popup_message51";
+import icg_join_now_popup_message52 from "@salesforce/label/c.icg_join_now_popup_message52";
 
 export function labels() {
 	let labels = {
@@ -904,7 +909,13 @@ export function labels() {
         icg_error_update_facility,
         icg_successful_save_facility,
         icg_facility_invalid_info,
-        icg_https_default_value
+		icg_https_default_value,
+		icg_join_now_popup_message01,
+		icg_join_now_popup_message02,
+		icg_join_now_popup_message41,
+		icg_join_now_popup_message42,
+		icg_join_now_popup_message51,
+		icg_join_now_popup_message52
 	};
 
 	return labels;
