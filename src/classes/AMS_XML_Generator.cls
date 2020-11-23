@@ -188,11 +188,11 @@ public with sharing class AMS_XML_Generator {
 		}
 
 		for (Case c : [SELECT Id, OSCAR__c
-					   FROM Case
-					   WHERE RecordTypeId = :AMS_Utils.RECTYPE_OSCARCOMM
-						   AND OSCAR__c IN :changeCodeOscarMap.keySet()
-						   AND (ParentId = null
-								OR Parent.RecordTypeId != :AMS_Utils.RECTYPE_OSCARCOMM)]) {
+					FROM Case
+					WHERE RecordTypeId = :AMS_Utils.RECTYPE_OSCARCOMM
+					AND OSCAR__c IN :changeCodeOscarMap.keySet()
+					AND (ParentId = null
+						OR Parent.RecordTypeId != :AMS_Utils.RECTYPE_OSCARCOMM)]) {
 			changeCodeCaseNumber.put(changeCodeOscarMap.get(c.OSCAR__c), c.Id);
 		}
 
@@ -1278,7 +1278,6 @@ public with sharing class AMS_XML_Generator {
 						}
 					}
 					if(lEmployee.size() > 0){
-
 						List<AMS_Account_Role__c> lEmpXML = mAg_VS_Employees.get(ag.Id);
 
 						if(lEmpXML == Null){    //to avoid Null value
@@ -2131,9 +2130,7 @@ public with sharing class AMS_XML_Generator {
 			lOrdered.addAll(M.keySet());
 
 			lOrdered.sort(); //Order fields in order to be consisted on all environments and to match the order of the XSD
-
 			for (String f : lOrdered){
-
 				displayFieldName = f;
 
 
@@ -2142,7 +2139,6 @@ public with sharing class AMS_XML_Generator {
 
 				String sToExclude = f;
 				sToExclude = sToExclude.toLowerCase();
-
 
 				//validate if the field is on the exclude list and also on the include list
 				if(!sFieldsToExclude.contains(sToExclude) && sFieldsToInclude.contains(sToInclude)){
@@ -2232,7 +2228,13 @@ public with sharing class AMS_XML_Generator {
 										auxNode.addTextNode(getPersonLanguageOfCorrespondence(String.valueOf(obj.get(f) ) ) );
 
 									}else{
-										auxNode.addTextNode(String.valueOf(obj.get(f) ) );
+										if(sObjectName == 'AMS_Account_Role__c' && displayFieldName.equalsIgnoreCase('percentage')){
+											Decimal auxPercentage = (Decimal)obj.get(f);
+											auxPercentage = auxPercentage.SetScale(2);
+											auxNode.addTextNode(String.valueOf(String.valueOf(auxPercentage)));
+										}else{
+											auxNode.addTextNode(String.valueOf(obj.get(f) ) );
+										}
 									}
 								}
 
