@@ -1422,12 +1422,21 @@ private class WorkflowHelperTest {
 	
 	@isTest static void isCnsContact() {
 
-		IATA_ISO_Country__c ctry = [SELECT Id from IATA_ISO_Country__c];
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (
+			Name='Portugal',
+			ISO_Code__c='PT',
+			CNS_Country__c = true);
+		insert ctry ;
 		
-		Account account = [SELECT Id, CNS_Account__c FROM Account];
+		Id standardAccountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+
+		Account account = new Account();
+		account.Name = 'Update Record Sharing Criteria Test';
 		account.IATA_ISO_Country__c = ctry.Id;
+		account.RecordTypeId = standardAccountRT;
 		account.CNS_Account__c = true;
-		update account;
+		insert account;
+
 		
 		Contact c1 = new Contact();
 		c1.LastName = 'test.test';
@@ -1445,12 +1454,20 @@ private class WorkflowHelperTest {
 
 	@isTest static void isNotCnsContact() {
 
-		IATA_ISO_Country__c ctry = [SELECT Id from IATA_ISO_Country__c];
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (
+			Name='Portugal',
+			ISO_Code__c='PT',
+			CNS_Country__c = false);
+		insert ctry ;
 		
-		Account account = [SELECT Id, CNS_Account__c FROM Account];
+		Id standardAccountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+
+		Account account = new Account();
+		account.Name = 'Update Record Sharing Criteria Test';
 		account.IATA_ISO_Country__c = ctry.Id;
+		account.RecordTypeId = standardAccountRT;
 		account.CNS_Account__c = false;
-		update account;
+		insert account;
 		
 		Contact c1 = new Contact();
 		c1.LastName = 'test.test';

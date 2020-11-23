@@ -28,7 +28,7 @@ public without sharing class WorkflowHelper {
 			for(Contact con : (List<Contact>)Trigger.new){
 				acctIds.add(con.AccountId);
 			}
-			mapAcc = new Map<Id,Account>([SELECT Id, CNS_Account__c, CNS_Agency__c FROM Account WHERE Id IN:acctIds]);
+			mapAcc = new Map<Id,Account>([SELECT Id, IATA_ISO_Country__r.CNS_Country__c FROM Account WHERE Id IN:acctIds]);
 		}
 		return mapAcc;
 	}
@@ -424,8 +424,7 @@ public without sharing class WorkflowHelper {
 
 			&& newContact.AccountId != null
 			&& newMap.get(newContact.AccountId) != null
-			&& (newMap.get(newContact.AccountId).CNS_Account__c
-			|| newMap.get(newContact.AccountId).CNS_Agency__c)
+			&& newMap.get(newContact.AccountId).IATA_ISO_Country__r.CNS_Country__c
 			&& (!newContact.CNS_Contact__c
 			|| newContact.CNS_Contact__c == null)
 		) newContact.CNS_Contact__c = true;
