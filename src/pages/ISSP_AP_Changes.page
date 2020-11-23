@@ -52,6 +52,8 @@
             operationType="{!strOperationType}"
             areaType="{!strAreaType}"
             changeType="{!strChangeType}"
+            isPassAirline="{!isPassAirline}"
+            managePASS="{!managePASS}"
             isSIS="{!isSISMember}" />
         
         <apex:form id="APChangesForm" styleClass="inline">
@@ -68,7 +70,7 @@
                             <apex:facet name="start">
                                     <apex:outputPanel layout="none">
                                             <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-right" disabled="true" value="Next"/>
-                                            <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-topMargin iatabtn-left" disabled="true" value="Previous"/>
+                                            <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-topMargin iatabtn-left" disabled="true" value="Previous" rendered="{! NOT(isPASS)}"/>
                                             <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-save" style="margin-left:25%;" disabled="true" value="Save Draft and Leave"/>
                                         </apex:outputPanel>
                             </apex:facet>
@@ -76,7 +78,7 @@
                             <apex:facet name="stop">
                                 <apex:outputPanel layout="none">  
                                     <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-right" action="{!saveBSPFormAndGoForward}" status="WaitingStatus" value="Next"/>
-                                    <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-topMargin iatabtn-left" action="{!saveBSPFormAndGoBack}" status="blockButtons" value="Previous"/> 
+                                    <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-topMargin iatabtn-left" action="{!saveBSPFormAndGoBack}" status="blockButtons" value="Previous" rendered="{! NOT(isPASS)}"/> 
                                     <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-save" style="margin-left:25%;" action="{!saveBSPFormAndLeave}" status="blockButtons" value="Save Draft and Leave"/>                
                                 </apex:outputPanel>
                             </apex:facet>
@@ -118,13 +120,12 @@
                         <apex:inputField value="{!newForm.Desired_commencment_date__c}" />
                     </apex:pageBlockSectionItem>
 
-                    <tr><td colspan="4" class="aplabel">Contact person responsible for this {!strLoB} {!IF(strChangeType='Minor database changes','change request application','change of bank account details.')}</td></tr>
+                    <tr><td colspan="4" class="aplabel">Contact person responsible for this {!IF(strChangeType='Minor database changes','change request application','change of bank account details.')}</td></tr>
                      
                     <apex:pageBlockSectionItem >
                         <apex:outputLabel value="* Social Title" style="color:#a31717; font-weight: bold !important;"/>
                         <apex:inputField required="{!isMandatory}" value="{!newForm.Contact_Resp_Salutation__c}" />
                     </apex:pageBlockSectionItem>
-                    <apex:outputText ><!--empty: move following field to next row --></apex:outputText> 
                     <apex:pageBlockSectionItem >
                         <apex:outputLabel value="* First Name" style="color:#a31717; font-weight: bold !important;"/>
                         <apex:inputField value="{!newForm.Contact_Resp_F_Name__c}" />
@@ -148,7 +149,7 @@
                 </apex:pageBlockSection>
                 <br/>
 
-                <apex:pageBlockSection id="TypeOfChangeSection" columns="1" rendered="{!strChangeType='Minor database changes'}">
+                <apex:pageBlockSection id="TypeOfChangeSection" columns="1" rendered="{! !isPassAirline && strChangeType='Minor database changes'}">
                     <apex:pageBlockSectionItem >
                         <apex:outputLabel value="Type of change requested" styleclass="ap-required"/>
                         <apex:selectCheckboxes value="{!typeOfChangeRequested}" onchange="refreshForm();" style="width:80%;" styleClass="makeRows">
