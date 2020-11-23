@@ -280,6 +280,11 @@
         <columns>Code__c</columns>
         <columns>Description__c</columns>
         <filterScope>Everything</filterScope>
+        <filters>
+            <field>Airport_Name__c</field>
+            <operation>contains</operation>
+            <value>bas</value>
+        </filters>
         <label>All</label>
     </listViews>
     <nameField>

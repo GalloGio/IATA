@@ -24,6 +24,8 @@
         <members>OpportunityCompetitor</members>
         <members>OpportunityContactRole</members>
         <members>OpportunityLineItem</members>
+        <members>Order</members>
+        <members>OrderItem</members>
         <members>PartnerRole</members>
         <members>Pricebook2</members>
         <members>PricebookEntry</members>
@@ -32,8 +34,6 @@
         <members>Solution</members>
         <members>Task</members>
         <members>User</members>
-        <members>Order</members>
-        <members>OrderItem</members>
         <name>CustomObject</name>
     </types>
     <types>
