@@ -1,4 +1,6 @@
 <apex:page controller="ISSP_APProcess" showHeader="false" sidebar="false" standardStylesheets="true">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
     <c:iss_ap_css />
 
     <div class="pageNav" style="display:{!IF(isStep3&&isCASS,'inline-block','none')}">
@@ -38,21 +40,22 @@
                 <apex:actionFunction name="showHidePdfReportsPreferenceMethod" action="{!showHidePdfReportsPreferenceMethod}" reRender="pdfReportsSection"/>
                 <apex:pageBlock mode="edit">
 
+                    <style>.pbTitle{display:none;}</style>
                     <apex:pageBlockButtons location="bottom">
                         <apex:actionStatus id="blockButtons">
                             <apex:facet name="start">
                                 <apex:outputPanel layout="none">
-                                    <apex:commandButton disabled="true" value="Previous"/>
-                                    <apex:commandButton disabled="true" value="Next"/>
-                                    <apex:commandButton disabled="true" value="Save Draft and Leave"/>
+                                    <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-right" disabled="true" value="Next"/>
+                                    <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-topMargin iatabtn-left" disabled="true" value="Previous"/>
+                                    <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-save" style="margin-left:25%;" disabled="true" value="Save Draft and Leave"/>
                                 </apex:outputPanel>
                             </apex:facet>
 
                             <apex:facet name="stop">
                                 <apex:outputPanel layout="none">
-                                    <apex:commandButton action="{!saveBSPFormAndGoBack}" status="blockButtons" value="Previous"/>
-                                    <apex:commandButton action="{!saveBSPFormAndGoForward}" status="blockButtons" value="Next"/>
-                                    <apex:commandButton action="{!saveBSPFormAndLeave}" status="blockButtons" value="Save Draft and Leave"/>
+                                    <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-right" action="{!saveBSPFormAndGoForward}" status="WaitingStatus" value="Next"/>
+                                    <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-topMargin iatabtn-left" action="{!saveBSPFormAndGoBack}" status="blockButtons" value="Previous"/> 
+                                    <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-save" style="margin-left:25%;" action="{!saveBSPFormAndLeave}" status="blockButtons" value="Save Draft and Leave"/>
                                 </apex:outputPanel>
                             </apex:facet>
                         </apex:actionStatus>
@@ -188,128 +191,263 @@
                                 <apex:outputLabel value="* Phone number" style="color:#a31717; font-weight: bold !important;"/>
                                 <apex:inputField value="{!newForm.CASSLink_Contact_Phone__c}" label=""/>
                             </apex:pageBlockSectionItem>
-                            <apex:inputField label="Fax number" value="{!newForm.CASSLink_Contact_Fax__c}" style="color:#a31717; font-weight: bold !important;" />
+                            <apex:inputField label="Fax number" value="{!newForm.CASSLink_Contact_Fax__c}"/>
                             <apex:outputText ><!--empty: move following field to next row --></apex:outputText>
                         </apex:pageBlockSection>
+
                         <span id="nav_four"></span>
-                        <apex:pageBlockSection rendered="{!isGSSAUser}" title="4. Participant Information (GSSA)" columns="1" >
+                        <apex:pageBlockSection rendered="{!isGSSAUser && ShowInputGSSAFields}" columns="2" >
                             <apex:facet name="header">
                                 <apex:outputpanel >
                                     <apex:outputText style="font-weight:bold;font-size:15px;float:left;" value="4. Participant Information (GSSA)"/>
                                 </apex:outputpanel>
                             </apex:facet>
 
-                            <apex:pageBlockSection columns="2" >
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Legal Name of GSSA" style="color:#a31717; font-weight: bold !important;"/>
+                                <apex:inputField value="{!newForm.GSSA_Legal_Name__c}" />
+                            </apex:pageBlockSectionItem>
 
-                                <apex:pageBlockSectionItem >
-                                    <apex:outputLabel value="Legal Name of GSSA" style="color:#a31717; font-weight: bold !important;"/>
-                                    <apex:inputField value="{!newForm.GSSA_Legal_Name__c}" />
-                                </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Code of GSSA"/>
+                                <apex:outputField value="{!newForm.GSSA_Code__c}" />
+                            </apex:pageBlockSectionItem>
 
-                                <apex:pageBlockSectionItem >
-                                    <apex:outputLabel value="Code of GSSA" style="color:#a31717; font-weight: bold !important;"/>
-                                    <apex:outputField value="{!newForm.GSSA_Code__c}" />
-                                </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="HQ Address of GSSA" style="color:#a31717; font-weight: bold !important;"/>
+                                <apex:inputField value="{!newForm.GSSA_HQ_Address__c}" />
+                            </apex:pageBlockSectionItem>
 
-                                <apex:pageBlockSectionItem >
-                                    <apex:outputLabel value="HQ Address of GSSA" style="color:#a31717; font-weight: bold !important;"/>
-                                    <apex:inputField value="{!newForm.GSSA_HQ_Address__c}" />
-                                </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="HQ Office City" style="color:#a31717; font-weight: bold !important;"/>
+                                <apex:inputField value="{!newForm.GSSA_HQ_City__c}" />
+                            </apex:pageBlockSectionItem>
 
-                                <apex:pageBlockSectionItem >
-                                    <apex:outputLabel value="HQ Office City" style="color:#a31717; font-weight: bold !important;"/>
-                                    <apex:inputField value="{!newForm.GSSA_HQ_City__c}" />
-                                </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="HQ Office State"/>  
+                                <apex:inputField value="{!newForm.GSSA_HQ_State__c}" />
+                            </apex:pageBlockSectionItem>
 
-                                <apex:pageBlockSectionItem >
-                                    <apex:outputLabel value="HQ Office State"/>  
-                                    <apex:inputField value="{!newForm.GSSA_HQ_State__c}" />
-                                </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="HQ Office Post Code" style="color:#a31717; font-weight: bold !important;"/>
+                                <apex:inputField value="{!newForm.GSSA_HQ_Post_Code__c}" />
+                            </apex:pageBlockSectionItem>
 
-                                <apex:pageBlockSectionItem >
-                                    <apex:outputLabel value="HQ Office Post Code" style="color:#a31717; font-weight: bold !important;"/>
-                                    <apex:inputField value="{!newForm.GSSA_HQ_Post_Code__c}" />
-                                </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="HQ Office Country" style="color:#a31717; font-weight: bold !important;"/>
+                                <apex:inputField value="{!newForm.GSSA_HQ_Country__c}" />
+                            </apex:pageBlockSectionItem>
+                        </apex:pageBlockSection>
 
-                                <apex:pageBlockSectionItem >
-                                    <apex:outputLabel value="HQ Office Country" style="color:#a31717; font-weight: bold !important;"/>
-                                    <apex:inputField value="{!newForm.GSSA_HQ_Country__c}" />
-                                </apex:pageBlockSectionItem>
+                        <apex:pageBlockSection rendered="{!isGSSAUser && ShowInputGSSAFields}" columns="2" >
+                            <div class="aplabel">
+                                GSSA Contact details
+                            </div>
+                            <apex:outputText ></apex:outputText>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="* Social Title" style="color:#a31717; font-weight: bold !important;"/>
+                                <apex:inputField value="{!newForm.GSSA_Contact_Salutation__c}" label=""/>
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="* First Name" style="color:#a31717; font-weight: bold !important;"/>
+                                <apex:inputField value="{!newForm.GSSA_Contact_F_Name__c}" label=""/>
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="* Last Name" style="color:#a31717; font-weight: bold !important;"/>
+                                <apex:inputField value="{!newForm.GSSA_Contact_L_Name__c}" label=""/>
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="* Job Title" style="color:#a31717; font-weight: bold !important;"/>
+                                <apex:inputField value="{!newForm.GSSA_Contact_JobTitle__c}" label=""/>
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="* Email Address" style="color:#a31717; font-weight: bold !important;"/>
+                                <apex:inputField value="{!newForm.GSSA_Contact_Email__c}" label=""/>
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="* Phone Number" style="color:#a31717; font-weight: bold !important;"/>
+                                <apex:inputField value="{!newForm.GSSA_Contact_Phone__c}" label=""/>
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Fax Number"/>
+                                <apex:inputField value="{!newForm.GSSA_Contact_FAX__c}" label=""/>
+                            </apex:pageBlockSectionItem>
+                            <apex:outputText ><!--empty: move following field to next row --></apex:outputText>
 
-                                <apex:pageBlockSectionItem >
-                                    <apex:outputLabel value="VAT Id"/>  
-                                    <apex:inputField value="{!newForm.GSSA_VAT_Id__c}" />
-                                </apex:pageBlockSectionItem>
+                            <div class="aplabel">
+                                General Contact Person (To appear in the master table.)
+                            </div>
+                            <apex:outputText ><!--empty: move following field to next row --></apex:outputText>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="* Social Title" style="color:#a31717; font-weight: bold !important;"/>
+                                <apex:inputField value="{!newForm.CASSLink_Contact_Salutation__c}" label=""/>
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="* First Name" style="color:#a31717; font-weight: bold !important;"/>
+                                <apex:inputField value="{!newForm.CASSLink_Contact_F_Name__c}" label=""/>
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="* Last Name" style="color:#a31717; font-weight: bold !important;"/>
+                                <apex:inputField value="{!newForm.CASSLink_Contact_L_Name__c}" label=""/>
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="* Job Title" style="color:#a31717; font-weight: bold !important;"/>
+                                <apex:inputField value="{!newForm.CASSLink_Contact_Job_Title__c}" label=""/>
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="* Email Address" style="color:#a31717; font-weight: bold !important;"/>
+                                <apex:inputField value="{!newForm.CASSLink_Contact_Email__c}" label=""/>
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem helpText="Including country code">
+                                <apex:outputLabel value="* Phone number" style="color:#a31717; font-weight: bold !important;"/>
+                                <apex:inputField value="{!newForm.CASSLink_Contact_Phone__c}" label=""/>
+                            </apex:pageBlockSectionItem>
+                            <apex:inputField label="Fax number" value="{!newForm.CASSLink_Contact_Fax__c}" />
+                            <apex:outputText ><!--empty: move following field to next row --></apex:outputText>
+                        </apex:pageBlockSection>
 
-                                <div class="aplabel">
-                                    GSSA Contact details
-                                </div>
-                                <apex:outputText ></apex:outputText>
-                                <apex:pageBlockSectionItem >
-                                    <apex:outputLabel value="* Social Title" style="color:#a31717; font-weight: bold !important;"/>
-                                    <apex:inputField value="{!newForm.GSSA_Contact_Salutation__c}" label=""/>
-                                </apex:pageBlockSectionItem>
-                                <apex:pageBlockSectionItem >
-                                    <apex:outputLabel value="* First Name" style="color:#a31717; font-weight: bold !important;"/>
-                                    <apex:inputField value="{!newForm.GSSA_Contact_F_Name__c}" label=""/>
-                                </apex:pageBlockSectionItem>
-                                <apex:pageBlockSectionItem >
-                                    <apex:outputLabel value="* Last Name" style="color:#a31717; font-weight: bold !important;"/>
-                                    <apex:inputField value="{!newForm.GSSA_Contact_L_Name__c}" label=""/>
-                                </apex:pageBlockSectionItem>
-                                <apex:pageBlockSectionItem >
-                                    <apex:outputLabel value="* Job Title" style="color:#a31717; font-weight: bold !important;"/>
-                                    <apex:inputField value="{!newForm.GSSA_Contact_JobTitle__c}" label=""/>
-                                </apex:pageBlockSectionItem>
-                                <apex:pageBlockSectionItem >
-                                    <apex:outputLabel value="* Email Address" style="color:#a31717; font-weight: bold !important;"/>
-                                    <apex:inputField value="{!newForm.GSSA_Contact_Email__c}" label=""/>
-                                </apex:pageBlockSectionItem>
-                                <apex:pageBlockSectionItem >
-                                    <apex:outputLabel value="* Phone Number" style="color:#a31717; font-weight: bold !important;"/>
-                                    <apex:inputField value="{!newForm.GSSA_Contact_Phone__c}" label=""/>
-                                </apex:pageBlockSectionItem>
-                                <apex:pageBlockSectionItem >
-                                    <apex:outputLabel value="Fax Number"/>
-                                    <apex:inputField value="{!newForm.GSSA_Contact_FAX__c}" label=""/>
-                                </apex:pageBlockSectionItem>
-                                <apex:outputText ><!--empty: move following field to next row --></apex:outputText>
+                        <apex:pageBlockSection rendered="{!isGSSAUser && !ShowInputGSSAFields}" columns="2" >
+                            <apex:facet name="header">
+                                <apex:outputpanel >
+                                    <apex:outputText style="font-weight:bold;font-size:15px;float:left;" value="4. Participant Information (GSSA)"/>
+                                </apex:outputpanel>
+                            </apex:facet>
 
-                                <div class="aplabel">
-                                    General Contact Person (To appear in the master table.)
-                                </div>
-                                <apex:outputText ><!--empty: move following field to next row --></apex:outputText>
-                                <apex:pageBlockSectionItem >
-                                    <apex:outputLabel value="* Social Title" style="color:#a31717; font-weight: bold !important;"/>
-                                    <apex:inputField value="{!newForm.CASSLink_Contact_Salutation__c}" label=""/>
-                                </apex:pageBlockSectionItem>
-                                <apex:pageBlockSectionItem >
-                                    <apex:outputLabel value="* First Name" style="color:#a31717; font-weight: bold !important;"/>
-                                    <apex:inputField value="{!newForm.CASSLink_Contact_F_Name__c}" label=""/>
-                                </apex:pageBlockSectionItem>
-                                <apex:pageBlockSectionItem >
-                                    <apex:outputLabel value="* Last Name" style="color:#a31717; font-weight: bold !important;"/>
-                                    <apex:inputField value="{!newForm.CASSLink_Contact_L_Name__c}" label=""/>
-                                </apex:pageBlockSectionItem>
-                                <apex:pageBlockSectionItem >
-                                    <apex:outputLabel value="* Job Title" style="color:#a31717; font-weight: bold !important;"/>
-                                    <apex:inputField value="{!newForm.CASSLink_Contact_Job_Title__c}" label=""/>
-                                </apex:pageBlockSectionItem>
-                                <apex:pageBlockSectionItem >
-                                    <apex:outputLabel value="* Email Address" style="color:#a31717; font-weight: bold !important;"/>
-                                    <apex:inputField value="{!newForm.CASSLink_Contact_Email__c}" label=""/>
-                                </apex:pageBlockSectionItem>
-                                <apex:pageBlockSectionItem helpText="Including country code">
-                                    <apex:outputLabel value="* Phone number" style="color:#a31717; font-weight: bold !important;"/>
-                                    <apex:inputField value="{!newForm.CASSLink_Contact_Phone__c}" label=""/>
-                                </apex:pageBlockSectionItem>
-                                <apex:inputField label="Fax number" value="{!newForm.CASSLink_Contact_Fax__c}" />
-                                <apex:outputText ><!--empty: move following field to next row --></apex:outputText>
-                            </apex:pageBlockSection>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Legal Name of GSSA"/>
+                                <apex:outputField value="{!newForm.GSSA_Legal_Name__c}" />
+                            </apex:pageBlockSectionItem>
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="Code of GSSA"/>
+                                <apex:outputField value="{!newForm.GSSA_Code__c}" />
+                            </apex:pageBlockSectionItem>
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="HQ Address of GSSA"/>
+                                <apex:outputField value="{!newForm.GSSA_HQ_Address__c}" />
+                            </apex:pageBlockSectionItem>
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="HQ Office City"/>
+                                <apex:outputField value="{!newForm.GSSA_HQ_City__c}" />
+                            </apex:pageBlockSectionItem>
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="HQ Office State"/>  
+                                <apex:outputField value="{!newForm.GSSA_HQ_State__c}" />
+                            </apex:pageBlockSectionItem>
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="HQ Office Post Code"/>
+                                <apex:outputField value="{!newForm.GSSA_HQ_Post_Code__c}" />
+                            </apex:pageBlockSectionItem>
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="HQ Office Country"/>
+                                <apex:outputField value="{!newForm.GSSA_HQ_Country__c}" />
+                            </apex:pageBlockSectionItem>
+
+                        </apex:pageBlockSection>
+
+                        <apex:pageBlockSection columns="2" rendered="{! isGSSAUser && !isSISActive}">
+                            <div class="aplabel">
+                                SIS Company Information
+                            </div>
+                            <apex:pageBlockSectionItem ></apex:pageBlockSectionItem>
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel styleclass="ap-required" value="{!$ObjectType.AP_Process_Form__c.fields.Legal_Name_of_company__c.label}"/>
+                                <apex:inputField value="{!newForm.Legal_Name_of_company__c}"/>
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel styleclass="ap-required" value="{!$Label.ISSP_SIS_Membership_Trade_Name}" />
+                                <apex:inputField value="{!newForm.Airline_trade_name__c}"/>
+                            </apex:pageBlockSectionItem>
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel styleclass="ap-required" value="{!$ObjectType.AP_Process_Form__c.fields.Company_Registration_ID__c.label}"/>
+                                <apex:inputField value="{!newForm.Company_Registration_ID__c}"/>
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel styleclass="ap-required" value="{!$ObjectType.AP_Process_Form__c.fields.TAX_VAT_Registration_Number__c.label}"/>
+                                <apex:inputField value="{!newForm.TAX_VAT_Registration_Number__c}"/>
+                            </apex:pageBlockSectionItem>
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel styleclass="ap-required" value="{!$Label.ISSP_Address}" />
+                                <apex:inputField value="{!newForm.Company_address__c}"/>
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel styleclass="ap-required" value="{!$Label.ISSP_SIS_Membership_City_Name}" />
+                                <apex:inputField value="{!newForm.Company_city__c}"/>
+                            </apex:pageBlockSectionItem>
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel styleclass="ap-required" value="{!$Label.Postal_code}" />
+                                <apex:inputField value="{!newForm.Postal_code__c}"/>
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel styleclass="ap-required" value="{!$Label.ISSP_SIS_Membership_State_Name}" />
+                                <apex:inputField value="{!newForm.Company_State__c}"/>
+                            </apex:pageBlockSectionItem>
+
+                            <apex:pageBlockSectionItem >
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel styleclass="ap-required" value="{!$Label.Country}" />
+                                <apex:selectList value="{!newForm.Company_Country__c}" styleclass="form-country select2 required" style="border-radius: 0px; border-color: grey;">
+                                    <apex:selectOptions value="{!ListCountryOptions}"/>
+                                </apex:selectList>
+                            </apex:pageBlockSectionItem>
+
+                            <script>
+                                $(".select2").select2();
+                            </script>
+                        </apex:pageBlockSection>
+
+                        <apex:pageBlockSection columns="2" rendered="{! isGSSAUser && !isSISActive}">
+                            <div class="aplabel">
+                                SIS Contact Person
+                            </div>
+
+                            <tr><td colspan="4"><div class="strong-label">
+                                {!$Label.ISSP_SIS_Membership_TOU_Section2_Subtitle1}<br/>
+                                {!$Label.ISSP_SIS_Membership_TOU_Section2_Subtitle2}<br/>
+                            </div></td></tr>
+                            <apex:outputText ></apex:outputText>
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel styleclass="ap-required" value="{!$Label.First_name}"/>
+                                <apex:inputField value="{!newForm.SIS_Contact_F_Name__c}"/>
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel styleclass="ap-required" value="{!$Label.Email}"/>
+                                <apex:inputField value="{!newForm.SIS_Contact_Email__c}" html-placeholder="{!$Label.ISSP_SIS_Membership_Put_a_valid_email}"/>
+                            </apex:pageBlockSectionItem>
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel styleclass="ap-required" value="{!$Label.Last_name}"/>
+                                <apex:inputField value="{!newForm.SIS_Contact_L_Name__c}"/>
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel styleclass="ap-required" value="{!$Label.Phone}"/>
+                                <apex:inputField value="{!newForm.SIS_Contact_Number__c}"/>
+                            </apex:pageBlockSectionItem>
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel styleclass="ap-required" value="{!$Label.ISSP_Title}"/>
+                                <apex:inputField value="{!newForm.SIS_Contact_Job_Title__c}"/>
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel styleclass="ap-required" value="{!$Label.ISSP_SIS_Membership_Who_requested_to_join_TOU}"/>
+                                <apex:inputField value="{!newForm.Who_requested_to_join_TOU__c}"/>
+                            </apex:pageBlockSectionItem>
+
                         </apex:pageBlockSection>
 
                         <span id="nav_five"></span>
-                        <apex:pageBlockSection title="4. Sales Reporting / Billing Details" columns="1" >
+                        <apex:pageBlockSection title="4. Sales Reporting / Billing Details" rendered="{! !isGSSAUser || ShowInputGSSAFields}" columns="1" >
                             <apex:facet name="header">
                                 <apex:outputpanel >
                                     <apex:outputText style="font-weight:bold;font-size:15px;float:left;" value="{!IF(isGSSAUser,'5','4')}.  Sales Reporting / Billing Details"/>
@@ -339,6 +477,7 @@
                                 <apex:inputField value="{!newForm.Billing_File_Emrgcy_Contact_Email__c}" label=""/>
                             </apex:pageBlockSectionItem>
                         </apex:pageBlockSection>
+
                         <span id="nav_six"></span>   
 
                         <span id="nav_seven"></span>
@@ -348,63 +487,53 @@
                                     <apex:outputText style="font-weight:bold;font-size:15px;float:left;" value="{!IF(isGSSAUser,'6','5')}.  Usernames and System functionality required"/>
                                 </apex:outputpanel>
                             </apex:facet>
+
+                            <tr><td colspan="4">
+                                <div class="aplabel">{!$Label.ISSP_AP_PASS_CompanyActivities}</div><br/>
+                                <div class="aplabel" style="font-size: 120%;">New Administrators</div>
+                                <div class="aplabel">{!$Label.ISSP_AP_PASS_CompanyAdmin}</div>
+                            </td></tr>
+                            <apex:outputText ></apex:outputText>
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="* Social Title 1" style="color:#a31717; font-weight: bold !important;"/>
+                                <apex:inputField value="{!newForm.CASSLink_New_User_1_Salutation__c}" label=""/>
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem/>
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="* First Name 1" style="color:#a31717; font-weight: bold !important;"/>
+                                <apex:inputField value="{!newForm.CASSLink_New_User_1_F_Name__c}" label=""/>
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem/>
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="* Last Name 1" style="color:#a31717; font-weight: bold !important;"/>
+                                <apex:inputField value="{!newForm.CASSLink_New_User_1_L_Name__c}" label=""/>
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem/>
+
+                            <apex:pageBlockSectionItem >
+                                <apex:outputLabel value="* Email Address 1" style="color:#a31717; font-weight: bold !important;"/>
+                                <apex:inputField value="{!newForm.CASSLink_New_User_1_Email__c}" label=""/>
+                            </apex:pageBlockSectionItem>
+                            <apex:pageBlockSectionItem/>
+
+                            <apex:pageBlockSectionItem/>
+                            <apex:pageBlockSectionItem/>
+
+                            <apex:inputField label="Social Title 2" value="{!newForm.CASSLink_New_User_2_Salutation__c}"/>
+                            <apex:pageBlockSectionItem/>
+
+                            <apex:inputField label="First Name 2" value="{!newForm.CASSLink_New_User_2_F_Name__c}"/>
+                            <apex:pageBlockSectionItem/>
+
+                            <apex:inputField label="Last Name 2" value="{!newForm.CASSLink_New_User_2_L_Name__c}"/>
+                            <apex:pageBlockSectionItem/>
+
+                            <apex:inputField label="Email address 2" value="{!newForm.CASSLink_New_User_2_Email__c}"/>
+                            <apex:pageBlockSectionItem/>
                         </apex:pageBlockSection>
-
-                        <apex:outputText value="{!$Label.ISSP_AP_PASS_CompanyActivities}" style="font-weight:bold"/>
-
-                        <table style="margin-top:30px; border-collapse: collapse">
-                            <tr class="aplabel">
-                                <td style="font-size: 120%;" colspan="2">New Administrators</td>
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    <apex:outputText value="{!$Label.ISSP_AP_PASS_CompanyAdmin}" style="font-weight:bold"/> 
-                                </td>
-                            </tr>
-                            <apex:outputText value="{!$Label.ISSP_AP_PASS_CompanyActivities}" style="font-weight:bold"/>
-                            <tr>
-                                <td style="padding-bottom:15px">
-                                    <apex:pageBlockSection columns="1">
-                                        <apex:pageBlockSectionItem >
-                                        <apex:outputLabel value="* Social Title 1" style="color:#a31717; font-weight: bold !important;"/>
-                                        <apex:inputField value="{!newForm.CASSLink_New_User_1_Salutation__c}" label=""/>
-                                    </apex:pageBlockSectionItem>
-                                    <apex:pageBlockSectionItem >
-                                        <apex:outputLabel value="* First Name 1" style="color:#a31717; font-weight: bold !important;"/>
-                                        <apex:inputField value="{!newForm.CASSLink_New_User_1_F_Name__c}" label=""/>
-                                    </apex:pageBlockSectionItem>
-                                    <apex:pageBlockSectionItem >
-                                        <apex:outputLabel value="* Last Name 1" style="color:#a31717; font-weight: bold !important;"/>
-                                        <apex:inputField value="{!newForm.CASSLink_New_User_1_L_Name__c}" label=""/>
-                                    </apex:pageBlockSectionItem>
-                                    <apex:pageBlockSectionItem >
-                                        <apex:outputLabel value="* Email Address 1" style="color:#a31717; font-weight: bold !important;"/>
-                                        <apex:inputField value="{!newForm.CASSLink_New_User_1_Email__c}" label=""/>
-                                    </apex:pageBlockSectionItem>
-                                    </apex:pageBlockSection>
-                                </td>
-                                <td valign="top">
-                                    <apex:pageBlockSection columns="1">
-                                        <!--<apex:inputField label="System functions required (New administrator 1)" value="{!newForm.CASSLink_New_User_1_System_Functions__c}"/>-->
-                                    </apex:pageBlockSection>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding-bottom:15px">
-                                    <apex:pageBlockSection columns="1">
-                                        <apex:inputField label="Social Title 2" value="{!newForm.CASSLink_New_User_2_Salutation__c}"/>
-                                        <apex:inputField label="First Name 2" value="{!newForm.CASSLink_New_User_2_F_Name__c}"/>
-                                        <apex:inputField label="Last Name 2" value="{!newForm.CASSLink_New_User_2_L_Name__c}"/>
-                                        <apex:inputField label="Email address 2" value="{!newForm.CASSLink_New_User_2_Email__c}"/>
-                                    </apex:pageBlockSection>
-                                </td>
-                                <td valign="top">
-                                    <apex:pageBlockSection columns="1">
-                                        <!--<apex:inputField label="System functions required (New administrator 2)" value="{!newForm.CASSLink_New_User_2_System_Functions__c}"/>-->
-                                    </apex:pageBlockSection>
-                                </td>
-                            </tr>
-                        </table>
 
                         <apex:pageBlockSection columns="1">
                             <tr class="aplabel">
