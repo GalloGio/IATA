@@ -470,6 +470,11 @@
                     <label>UK_MNY_LNDRNG_LG_FRM</label>
                 </value>
                 <value>
+                    <fullName>ULD_CER</fullName>
+                    <default>false</default>
+                    <label>ULD_CER</label>
+                </value>
+                <value>
                     <fullName>VAT_REG</fullName>
                     <default>false</default>
                     <label>VAT_REG</label>
@@ -997,6 +1002,10 @@
             </values>
             <values>
                 <fullName>UK_MNY_LNDRNG_LG_FRM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ULD_CER</fullName>
                 <default>false</default>
             </values>
             <values>
