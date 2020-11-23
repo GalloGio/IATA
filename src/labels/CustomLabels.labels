@@ -36067,13 +36067,6 @@ Please download, sign and upload the PASS agreement.</value>
         <value>Link of participation checklist</value>
     </labels>
     <labels>
-        <fullName>ISSP_Supporting_Documents</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP_Supporting_Documents</shortDescription>
-        <value>Supporting Documents - Settlement Instructions</value>
-    </labels>
-    <labels>
         <fullName>ISSP_PASS_Terms_And_Conditions</fullName>
         <language>en_US</language>
         <protected>false</protected>
