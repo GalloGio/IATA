@@ -32,6 +32,8 @@
         <members>Solution</members>
         <members>Task</members>
         <members>User</members>
+        <members>Order</members>
+        <members>OrderItem</members>
         <name>CustomObject</name>
     </types>
     <types>
