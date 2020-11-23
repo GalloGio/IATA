@@ -20,17 +20,17 @@ public without sharing class WorkflowHelper {
 
 	private static Map<Id,List<Account>> accountsToSearchParents = new Map<Id,List<Account>>();
 
-	private static Map<Id,Account> mapAccounts = new Map<Id,Account>();
+	private static Map<Id,Account> mapAcc = new Map<Id,Account>();
 
 	private static Map<Id,Account> getMapAccounts() {
-		if(mapAccounts.isEmpty() || Test.isRunningTest()){
+		if(mapAcc.isEmpty() || Test.isRunningTest()){
 			Set<Id> acctIds = new Set<Id>();
 			for(Contact con : (List<Contact>)Trigger.new){
 				acctIds.add(con.AccountId);
 			}
-			mapAccounts = new Map<Id,Account>([SELECT Id, CNS_Account__c, CNS_Agency__c FROM Account WHERE Id IN:acctIds]);
+			mapAcc = new Map<Id,Account>([SELECT Id, CNS_Account__c, CNS_Agency__c FROM Account WHERE Id IN:acctIds]);
 		}
-		return mapAccounts;
+		return mapAcc;
 	}
 
 	public static void performActions(String objectType){
