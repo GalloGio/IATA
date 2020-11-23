@@ -600,7 +600,6 @@ public without sharing class CW_CapabilitiesManagerController {
 						if (!fieldSObject.getDescribe().isCalculated()) {
 							if (fldType == Schema.DisplayType.DATE) {
 								if (capfield.value != null && capfield.value != '') {
-									System.debug('capfield.value ' + capfield.value);
 									Date dateField = Date.valueOf(capfield.value);
 									sObj.put(capfield.field, dateField);
 								} else {
