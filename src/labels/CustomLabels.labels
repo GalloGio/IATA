@@ -52095,6 +52095,14 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <value>Some information is missing or invalid</value>
     </labels>
     <labels>
+        <fullName>icg_https_default_value</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg https default value</shortDescription>
+        <value>https://</value>
+    </labels>
+    <labels>
         <fullName>icg_documents</fullName>
         <categories>ICG One Source</categories>
         <language>en_US</language>
