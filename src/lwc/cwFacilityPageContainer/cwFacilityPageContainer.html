@@ -296,13 +296,15 @@
                                 </div>
 
                                 <!-- not Is Guest-->
-                                <template if:false={isGuest}>                                                              
-                                    <div class="row-home">
-                                        <div class="col-12">
-                                            <c-cw-station-managers label={label}  title={label.station_manager} facility={facility} user-info={userInfo} user-role={userRole} edit-mode={editMode}>
-                                        </c-cw-station-managers>
+                                <template if:false={isGuest}>
+                                    <template if:true={isPrivateArea}>
+                                        <div class="row-home">
+                                            <div class="col-12">
+                                                <c-cw-station-managers label={label}  title={label.station_manager} facility={facility} user-info={userInfo} user-role={userRole} edit-mode={editMode}>
+                                                </c-cw-station-managers>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </template>
                                 </template>
 
                                 <!--VISIBLE RESPONSIVE VERSION-->
@@ -350,7 +352,7 @@
                                     </div>
                                 </div>
 
-                                <!-- SHOW IF RT = RAMP HANDLER || CARGO || AIRPORT-->
+                                <!-- Airlines Handlers -->
                                 <template if:true={showAirlines}>
                                     <div class="row-home">
                                         <div class="col-12">
@@ -374,16 +376,16 @@
                                             <br />
                                             <div class="form-row">
                                                 <div class="col">
-                                                    <c-cw-handled-airlines label={label} preselected-airlines={selectedAirlines}
-                                                        isreadonly={editAirlines} filter-text={filterTextAirlines}
-                                                        onselectairlines={setSelectedAirlines}></c-cw-handled-airlines>
+                                                    <c-cw-handled-airlines label={label} preselected-airlines={airlineHandlers} 
+                                                        isreadonly={editAirlines} filter-text={airlineHandlersFilterText} data-target="airline" 
+                                                        onselectairlines={setSelectedAirlineHadnlers}></c-cw-handled-airlines>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </template>
 
-                                <!-- SHOW IF RT = AIRLINES || AIRPORT -->
+                                <!-- Cargo Handlers -->
                                 <template if:true={showOperatingCHFandRampH}>
                                     <div class="row-home">
                                         <div class="col-12">
@@ -406,7 +408,9 @@
                                             <br />
                                             <div class="form-row">
                                                 <div class="col">
-                                                    <c-cw-handled-airlines class="cmpOperatingCHF" label={label}  filter-text={filterTextOperatingCHF} isreadonly={editCargoHandling} raw-data={onAirportOperatingCHF} onselectairlines={hideCargoStations}></c-cw-handled-airlines>
+                                                    <c-cw-handled-airlines label={label} raw-data={cargoHandlers} isreadonly={editCargoHandling}
+                                                        filter-text={cargoHandlersFilterText} data-target="cargo" onselectairlines={setSelectedHandlers} 
+                                                        class="cmpOperatingCHF"></c-cw-handled-airlines>
                                                 
                                                 </div>
                                             </div>
@@ -414,7 +418,7 @@
                                     </div>
                                 </template>
 
-                                <!-- SHOW IF RT = AIRLINES || AIRPORT -->
+                                <!-- Ramp Handlers -->
                                 <template if:true={showOperatingCHFandRampH}>
                                     <div class="row-home">
                                         <div class="col-12">
@@ -437,8 +441,9 @@
                                             <br />
                                             <div class="form-row">
                                                 <div class="col">
-                                                    <c-cw-handled-airlines class="cmpRampHandlers" label={label} isreadonly={editRampHandlers} raw-data={onAirportRampH}
-                                                        filter-text={filterTextRampH} onselectairlines={hideRampHandlers}></c-cw-handled-airlines>
+                                                    <c-cw-handled-airlines label={label} raw-data={rampHandlers} isreadonly={editRampHandlers}
+                                                        filter-text={rampHandlersFilterText} data-target="ramp" onselectairlines={setSelectedHandlers} 
+                                                        class="cmpRampHandlers"></c-cw-handled-airlines>
                                                 </div>
                                             </div>
                                         </div>

@@ -33,8 +33,9 @@ public without sharing class CW_CreateFacilityController {
 			}
 
 			List<Contact> companyAdmins = CW_Utilities.getCompanyAdminContactsFromAccountId(accountId);
-
-			ard.Status__c = 'Pending for IATA Approval';
+			if(!isInternalUser && hasNoCompanyAdminsOrNotNeeded(companyAdmins, isCompanyAdmin)){
+				ard.Status__c = 'Pending for IATA Approval';
+			}
 
 			update ard;
 

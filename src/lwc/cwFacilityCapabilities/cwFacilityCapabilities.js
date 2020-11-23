@@ -328,6 +328,11 @@ export default class CwFacilityCapabilities extends LightningElement {
 	setVisibilityPhotos(id, photos) {
 		setVisibilityPhotos_({ id, photos })
 			.then(result => {
+				result.forEach(element => {
+					if(element.extension.includes("pdf")){
+						element.url = this.download;
+					}
+				});
 				this.photosRow.photos = result;
 			})
 			.finally(() => {
@@ -485,6 +490,9 @@ export default class CwFacilityCapabilities extends LightningElement {
 				element.visible = !element.visible;	
 				if (element.visible) {
 					photosAvailable = true;
+				}
+				if(element.extension.includes('pdf')){
+					element.url = element.downloadDocument;
 				}
 			}
 		});

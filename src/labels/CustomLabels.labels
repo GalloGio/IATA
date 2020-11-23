@@ -49396,6 +49396,22 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <value>Join Now pop-up message</value>
     </labels>
     <labels>
+        <fullName>icg_join_now_popup_message01</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg join now popup message01</shortDescription>
+        <value>Download the User Guide and follow the steps to set up your profiles</value>
+    </labels>
+    <labels>
+        <fullName>icg_join_now_popup_message02</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg join now popup message02</shortDescription>
+        <value>Click here to download</value>
+    </labels>
+    <labels>
         <fullName>icg_join_now_popup_message11</fullName>
         <categories>ICG One Source</categories>
         <language>en_US</language>
@@ -49409,7 +49425,7 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>icg join now pop-up message</shortDescription>
-        <value>Follow the links at the bottom of this page to log in or register.</value>
+        <value>Follow the links at the bottom to log in or register.</value>
     </labels>
     <labels>
         <fullName>icg_join_now_popup_message21</fullName>
@@ -49425,7 +49441,7 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>icg join now pop-up message</shortDescription>
-        <value>Once you are registered, you will be prompted to request that your User account is connected to an existing company account. If your company doesn’t have one yet, you will need to request its creation in the IATA Customer Portal.</value>
+        <value>Once you are registered, you will be prompted to complete your profile and connect it to an existing company account. If your company doesn’t have an account yet (in general or for a specific address), you can request its creation during the process.</value>
     </labels>
     <labels>
         <fullName>icg_join_now_popup_message31</fullName>
@@ -49433,7 +49449,7 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>icg join now pop-up message</shortDescription>
-        <value>Welcome to ONE Source!</value>
+        <value>Is your IATA Customer Portal profile linked to your company’s account?</value>
     </labels>
     <labels>
         <fullName>icg_join_now_popup_message32</fullName>
@@ -49441,7 +49457,39 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>icg join now pop-up message</shortDescription>
-        <value>Once your request has been approved, you will be able to log in and access the ONE Source Private Area. You can now see all the station profiles belonging to your company. Get started by creating a new station profile or becoming a station manager for existing station profiles.</value>
+        <value>Once you are registered, you will be prompted to complete your profile and connect it to an existing company account. If your company doesn’t have an account yet (in general or for a specific address), you can request its creation during the process.</value>
+    </labels>
+    <labels>
+        <fullName>icg_join_now_popup_message41</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg join now popup message41</shortDescription>
+        <value>Request access to the ONE Source Application!</value>
+    </labels>
+    <labels>
+        <fullName>icg_join_now_popup_message42</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg join now popup message42</shortDescription>
+        <value>You can find the ONE Source app using the Customer Portal search bar. Simply click on “Request Service” to add the application to your Favorite Services. You can now access the ONE Source Private Area by clicking on “Go to Service”.</value>
+    </labels>
+    <labels>
+        <fullName>icg_join_now_popup_message51</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg join now popup message51</shortDescription>
+        <value>Welcome to ONE Source!</value>
+    </labels>
+    <labels>
+        <fullName>icg_join_now_popup_message52</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg join now popup message52</shortDescription>
+        <value>Get started by creating a new station profile or becoming a station manager for existing station profiles.</value>
     </labels>
     <labels>
         <fullName>icg_join_now_popup_ok_button</fullName>
@@ -49457,7 +49505,7 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>icg join now title</shortDescription>
-        <value>Create your ONE Source profile in &lt;span class=&quot;big-label&quot;&gt;3&lt;/span&gt; steps</value>
+        <value>Create your ONE Source profile in &lt;span class=&quot;big-label&quot;&gt;5&lt;/span&gt; steps</value>
     </labels>
     <labels>
         <fullName>icg_languages_spoken</fullName>

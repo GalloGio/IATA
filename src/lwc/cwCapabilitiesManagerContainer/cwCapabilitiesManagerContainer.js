@@ -687,7 +687,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 				fieldsByColumns.forEach(element => {
 					let newField = {
 						field: element.name,
-						value: isNaN(row[element.name]) ? (element.type === "MULTIPICKLIST" ? row[element.name].join(";") : (row[element.name] != null && row[element.name] != undefined) ? row[element.name] : "") : Number(row[element.name] != null ? Number(row[element.name]) : ""),
+						value: row[element.name] != null ? (element.type === "MULTIPICKLIST" ? row[element.name].join(";") : (element.type === "DOUBLE") ? Number(row[element.name]) : row[element.name]): "",
 						label: element.label,
 						required: row.requiredFields.includes(element.name)
 					};
