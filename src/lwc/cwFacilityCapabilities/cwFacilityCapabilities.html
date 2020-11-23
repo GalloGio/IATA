@@ -213,17 +213,6 @@
 												</template>
 
 											</div>		
-											<template if:true={isPrivateArea}>
-												<template if:true={isStationManager}>								
-													<div if:true={currentcapability.value.isEditableRecordType} class="col-2 col-no-padding-right text-right">
-														<button title={label.icg_capab_magmnt_enable} class="btn btn-primary-yellow"
-															onclick={enableOptions} if:true={disableOptions}
-															data-section={currentcapability.value.name} data-action="detail"
-															data-tosca="enable-button-summary">{label.icg_capab_magmnt_enable}
-														</button>
-													</div>
-												</template>
-											</template>
 											</div>
 										</div>
 									</template>
@@ -409,16 +398,24 @@
 																		</template>
 
 																		<template if:true={currentheader.last}>
-
-																			<th if:false={editMode}
-																				key={currentheader.value.name} scope="col"
-																				class="photo-colum-head">
-																				{label.photos}</th>
-																			<th if:false={editMode} key={currentheader.value.name} scope="col"
-																				class="certifications-stamp"></th>
+																			<template if:false={editMode}>
+																				<th if:false={currentcapability.value.isEditableRecordType}
+																					key={currentheader.value.name} scope="col"
+																					class="photo-colum-head">
+																					{label.photos}</th>
+																				<th if:true={currentcapability.value.isEditableRecordType}
+																					key={currentheader.value.name} scope="col"
+																					class="photo-colum-head">
+																					{label.documents}</th>
+																				<th key={currentheader.value.name} scope="col"
+																					class="certifications-stamp"></th>
+																			</template>
 
 																			<template if:true={editMode}>
-																				<th key={currentheader.value.name} scope="col" class="photo-colum-head"> {label.manage_photos}</th>
+																				<template if:false={isPrivateArea}>
+																					<th if:false={currentcapability.value.isEditableRecordType} key={currentheader.value.name} scope="col" class="photo-colum-head"> {label.manage_photos}</th>
+																					<th if:true={currentcapability.value.isEditableRecordType} key={currentheader.value.name} scope="col" class="photo-colum-head"> {label.manage_documents}</th>
+																				</template>
 																				<template if:true={isPrivateArea}>
 																					<template if:true={isStationManager}>
 																						<th if:true={currentcapability.value.isEditableRecordType}
@@ -574,14 +571,14 @@
 																		<template if:true={editMode}>
 																			<template if:true={isPrivateArea}>
 																				<template if:true={isStationManager}>
-																					<td if:true={currentCategory.isEditableRecordType} class="row-separator"
+																					<td class="row-separator"
 																						data-super-categories-index={currentsupercategory.index}
 																						data-section-index={currentsection.index}
 																						data-capability-index={currentcapability.index}
 																						data-category-index={categoryIndex}
 																						data-row-index={rowIndex}
 																						onclick={setRowClicked}>
-																					<lightning-file-upload 
+																					<lightning-file-upload if:true={currentCategory.isEditableRecordType}
 																							label=""
 																							name="fileUploader"
 																							accept={acceptedDocumentsFormats}
@@ -590,32 +587,33 @@
 																							disabled={row.isNotEditable}
 																							multiple>
 																						</lightning-file-upload>
-																					</td>
-																					<td if:false={currentCategory.isEditableRecordType} class="row-separator photo-colum" 
-																					data-super-categories-index={currentsupercategory.index}
-																					data-section-index={currentsection.index}
-																					data-capability-index={currentcapability.index}
-																					data-category-index={categoryIndex}
-																					data-row-index={rowIndex}
-																					onclick={setRowClicked}>
+																						<template if:false={disablePhotoIcon}>
+																							<button if:true={row.photosAvailableEdit}
+																							class="p-0 bg-transp border-0"
+																							data-tosca="edit_photos">
+																							<img src={infoIcon} width="20px"
+																								data-super-category-index={currentsupercategory.index}
+																								data-section-index={currentsection.index}
+																								data-capability-index={currentcapability.index}
+																								data-category-index={categoryIndex}
+																								data-row-index={rowIndex}
+																								onclick={openModalEditPhotos} />
+																							</button>
+																					
+																							<button if:false={row.photosAvailableEdit}
+																								disabled
+																								class="p-0 bg-transp border-0 disabled-filter">
+																								<img src={infoIcon} width="20px" />
+																							</button>
+																						</template>
+																						<template if:true={disablePhotoIcon}>
+																							<button if:false={row.photosAvailableEdit}
+																							disabled
+																							class="p-0 bg-transp border-0 disabled-filter">
+																							<img src={infoIcon} width="20px" />
+																						</button>
+																						</template>
 
-																					<button if:true={row.photosAvailableEdit}
-																						class="p-0 bg-transp border-0"
-																						data-tosca="edit_photos">
-																						<img src={infoIcon} width="20px"
-																							data-super-category-index={currentsupercategory.index}
-																							data-section-index={currentsection.index}
-																							data-capability-index={currentcapability.index}
-																							data-category-index={categoryIndex}
-																							data-row-index={rowIndex}
-																							onclick={openModalEditPhotos} />
-																					</button>
-																			
-																					<button if:false={row.photosAvailableEdit}
-																						disabled
-																						class="p-0 bg-transp border-0 disabled-filter">
-																						<img src={infoIcon} width="20px" />
-																					</button>
 																					</td>
 																				</template>
 																				<template if:false={isStationManager}>

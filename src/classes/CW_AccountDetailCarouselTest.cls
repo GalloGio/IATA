@@ -105,7 +105,7 @@ public class CW_AccountDetailCarouselTest {
 		);
 		System.assertEquals(
 			currentCarMap.get('fileExtension'),
-			'documentforce.com/sfc/dist/version/download/?oid=00D1X000000278m&ids=0681X000000EdCq&d=%2Fa%2F1X000000Ckhe%2FezuTbdb14gd0yv_y8ApOdMKVbXBrylSNamQCPl2L.QM&asPdf=false',
+			'QM&asPdf=false',
 			'fileExtension expected: .txt'
 		);
 		

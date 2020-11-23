@@ -150,6 +150,7 @@ public class CW_CapabilitiesManagerControllerTest {
 		item.url = conDoc;
 		item.Id = conDoc;
 		item.label = 'label';
+		item.internalExtension = 'pdf';
 		listPhoto.add(item);
 
 		Test.startTest();

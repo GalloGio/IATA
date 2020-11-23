@@ -79,6 +79,7 @@ export default class CwFacilityCapabilities extends LightningElement {
 		let saveListRow = JSON.parse(JSON.stringify(data));
 		this._actionSave = saveListRow.isSave;
 		if(this._actionSave === true){
+			this.listAddedRows = saveListRow.listRow;
 			this.handleSaveChanges(saveListRow.listRow);
 		}	
 		
@@ -148,6 +149,15 @@ export default class CwFacilityCapabilities extends LightningElement {
 	get isPrivateArea(){
 		return this.areatype === "private";
 	}
+
+	get disablePhotoIcon(){
+		if(this.isPrivateArea && this.disableOptions){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
 	
 	showToast(title, message, variant) {
 		const event = new ShowToastEvent({
@@ -173,7 +183,7 @@ export default class CwFacilityCapabilities extends LightningElement {
 	}
 
 	handleUploadDocumentFinished(event) {
-		this.isLoading=true;
+		//this.isLoading=true;
 		// Get the list of uploaded files
 		const uploadedFiles = event.detail.files;
 
@@ -183,20 +193,20 @@ export default class CwFacilityCapabilities extends LightningElement {
 			uploadedFiles.forEach(file => {				
 				let document = {
 					visible: true,
-					url: file.documentId,
+					url: '',
 					internalExtension: file.name,
-					label: file.name
+					label: file.name,
+					id: file.documentId
 				}
 				listDocument.push(document);
 			
 			});
-			this.getPublicLinkToFiles(listDocument, 'more_info_document__c');
+			this.getPublicLinkToFiles(listDocument, 'photos__c');
 		}
 		
 	}
 
 	handleUploadPhotoFinished(event) {
-		this.isLoading=true;
 		// Get the list of uploaded files
 		const uploadedFiles = event.detail.files;
 
@@ -206,8 +216,9 @@ export default class CwFacilityCapabilities extends LightningElement {
 			uploadedFiles.forEach(file => {				
 				let photo = {
 					visible: true,
-					url: file.documentId,
-					label: file.name
+					url: '',
+					label: file.name,
+					id: file.documentId
 				}
 				listPhoto.push(photo);
 			
@@ -329,10 +340,10 @@ export default class CwFacilityCapabilities extends LightningElement {
 		setVisibilityPhotos_({ id, photos })
 			.then(result => {
 				result.forEach(element => {
-					if(element.extension.includes("pdf")){
-						element.url = this.download;
-					}
-				});
+                    if(element.extension.includes("pdf")){
+                        element.url = this.download;
+                    }
+                });
 				this.photosRow.photos = result;
 			})
 			.finally(() => {
@@ -492,8 +503,9 @@ export default class CwFacilityCapabilities extends LightningElement {
 					photosAvailable = true;
 				}
 				if(element.extension.includes('pdf')){
-					element.url = element.downloadDocument;
-				}
+                    element.url = element.downloadDocument;
+                }
+
 			}
 		});
 		if(this.editMode && this.photosRow.photos.length > 0){
@@ -626,37 +638,48 @@ export default class CwFacilityCapabilities extends LightningElement {
 						section.capabilities.forEach(capability=>{
 							capability.categories.forEach(category=>{
 									category.rows.forEach(function(row,m){
-										if(row.isAssigned){
-											row.isNotEditable = isDisabled;
+										if(isDisabled){
+											row.isNotEditable=true;
 										}
-										if(row.isAssigned && !isDisabled){
-											
-											let newCapabilityRow = {
-												position: m.toString(),
-												rtypeId: capability.rtypeId,
-												category: category.value,
-												equipment: row.equipment_value,
-												fields:[]
-											};
+										else{
+											if(row.isAssigned && row.isNotCertiRequired){
+												let newCapabilityRow = {
+													position: m.toString(),
+													rtypeId: capability.rtypeId,
+													category: category.value,
+													equipment: row.equipment_value,
+													fields:[]
+												};
+									
+												row.isAssigned=true;				
+												row.isNotEditable=false;
+									
+												let columns = category.columns;
+												let fieldsByColumns = columns[columns.length-1];
 								
-											row.isAssigned=true;				
-											row.isNotEditable=false;
+												fieldsByColumns.forEach(element => {
 								
-											let columns = category.columns;
-											let fieldsByColumns = columns[columns.length-1];
-							
-											fieldsByColumns.forEach(element => {
-							
+													let newField = {
+														field: element.name,
+														value: (row[element.name] != '' && row[element.name] != null && row[element.name] != undefined) ? row[element.name] : '',
+														required: row.requiredFields.includes(element.name)
+													}
+													newCapabilityRow.fields.push(newField);
+												});
+
+												//For photo__c field
 												let newField = {
-													field: element.name,
-													value: (row[element.name] != '' && row[element.name] != null && row[element.name] != undefined) ? row[element.name] : '',
-													required: row.requiredFields.includes(element.name)
+													field: 'photos__c',
+													value: JSON.stringify(row.photos),
+													required: false
 												}
 												newCapabilityRow.fields.push(newField);
-											});
-							
-											tempAddedRows.push(newCapabilityRow);		
-												
+								
+												tempAddedRows.push(newCapabilityRow);
+											}
+											else{
+												row.isAssigned=false;
+											}
 										}																			
 									});
 							});
@@ -670,7 +693,6 @@ export default class CwFacilityCapabilities extends LightningElement {
 			else{
 				this.listAddedRows = tempAddedRows;
 			}
-			
 			// Show or not save and cancel bar.
 			const newEvent = new CustomEvent("saveaction", {
 				detail: {
@@ -679,6 +701,16 @@ export default class CwFacilityCapabilities extends LightningElement {
 			});
 			this.dispatchEvent(newEvent);
 			
+	}
+
+	sendParamToParent(){
+		// Send list to parent.
+		const newEvent = new CustomEvent("sendlistrows", {
+			detail: {
+				data: this.listAddedRows
+			}
+		});
+		this.dispatchEvent(newEvent);
 	}
 
 	addFieldToList(event){
@@ -707,13 +739,7 @@ export default class CwFacilityCapabilities extends LightningElement {
 			}			
 		});
 
-		// Show or not save and cancel bar.
-		const newEvent = new CustomEvent("sendlistrows", {
-			detail: {
-				data: this.listAddedRows
-			}
-		});
-		this.dispatchEvent(newEvent);
+		this.sendParamToParent();
 	}
 
 	actionsCapability(event){
@@ -807,6 +833,7 @@ export default class CwFacilityCapabilities extends LightningElement {
 				}
 			}
 		}
+		this.sendParamToParent();
 	}
 
 	get checkRequiredFields(){
@@ -814,7 +841,7 @@ export default class CwFacilityCapabilities extends LightningElement {
 		this.listAddedRows.forEach(element => {
 			element.fields.forEach(field => {
 				if(field.required.toString() === "true" ){
-					if(field.value === ''){
+					if(field.value === ""){
 						returnValue = false;
 					}					
 				}
@@ -825,17 +852,25 @@ export default class CwFacilityCapabilities extends LightningElement {
 	}
 
 	handleSaveChanges(listAddedRows){
-		if(listAddedRows.length > 0){
-			if(this.checkRequiredFields === true){
-				this.isLoading = true;
-				this.createRelationshipsForNewCapabilities(this.recordId,listAddedRows);
-			}
-			else{
-				this.showToast("Error", "Complete required fields", "error");
-				this._actionSave=false;
-			}
-			
+		this.sendACKSaveAction();
+		if(this.checkRequiredFields){
+			this.isLoading = true;
+			this.createRelationshipsForNewCapabilities(this.recordId,listAddedRows);
 		}
+		else{
+			this.showToast("Error", "Complete required fields", "error");
+			this._actionSave=false;
+		}
+	}
+
+	sendACKSaveAction(){
+		// Set to false save action.
+		const newEvent = new CustomEvent("savesuccessful", {
+			detail: {
+				data: false
+			}
+		});
+		this.dispatchEvent(newEvent);
 	}
 
 	createRelationshipsForNewCapabilities(accRoleDet, listAddedRows)
@@ -845,13 +880,7 @@ export default class CwFacilityCapabilities extends LightningElement {
 			let result = JSON.parse(res);
 			if(result.success)
 			{				
-				// Set to false save action.
-				const newEvent = new CustomEvent("savesuccessful", {
-					detail: {
-						data: false
-					}
-				});
-				this.dispatchEvent(newEvent);
+				this.sendACKSaveAction();
 			}
 			else
 			{

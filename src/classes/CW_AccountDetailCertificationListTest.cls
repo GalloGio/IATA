@@ -43,11 +43,12 @@ private class CW_AccountDetailCertificationListTest {
 	 */
 	@IsTest
 	static void testCertificationList() {
-		ICG_Account_Role_Detail__c acc = [SELECT Id, Name, Recordtype.Name FROM ICG_Account_Role_Detail__c WHERE Name = 'Test testersen'];
-		Map<Boolean, List<CW_AccountDetailCertificationList.wrapperCert>> resultMap = CW_AccountDetailCertificationList.getCertificationList(acc.Id, acc.RecordType.Name);
+		ICG_Account_Role_Detail__c acc = [SELECT Id, Name, RecordType.DeveloperName FROM ICG_Account_Role_Detail__c WHERE Name = 'Test testersen'];
+		Map<Boolean, List<CW_AccountDetailCertificationList.wrapperCert>> resultMap = CW_AccountDetailCertificationList.getCertificationList(acc.Id, acc.RecordType.DeveloperName);
 		List<CW_AccountDetailCertificationList.wrapperCert> certList = resultMap.get(false);
-		System.assertEquals(1, resultMap.keyset().size(), 'The amount of keys in the map is incorrect' + resultMap.keySet().size());
-		System.assertEquals('TestCert', certList[0].Name, 'The certification is incorrect' + certList[0].Name);
+		System.assertEquals('Airline', acc.RecordType.DeveloperName, 'Account rt incorrect');
+		System.assertEquals(2, resultMap.keyset().size(), 'The amount of keys in the map is incorrect' + resultMap.keySet().size());
+		System.assertEquals('TestCert2', certList[0].Name, 'The certification is incorrect' + certList[0].Name);
 	}
 
 	/*
@@ -56,12 +57,11 @@ private class CW_AccountDetailCertificationListTest {
 	 */
 	@IsTest
 	static void testCertificationListShouldBeAllFalse() {
-		ICG_Account_Role_Detail__c acc = [SELECT Id, Name, Recordtype.Name FROM ICG_Account_Role_Detail__c WHERE Name = 'Test testersen'];
-		Map<Boolean, List<CW_AccountDetailCertificationList.wrapperCert>> resultMap = CW_AccountDetailCertificationList.getCertificationList(acc.Id, acc.RecordType.Name);
+		ICG_Account_Role_Detail__c acc = [SELECT Id, Name, Recordtype.DeveloperName FROM ICG_Account_Role_Detail__c WHERE Name = 'Test testersen 2'];
+		Map<Boolean, List<CW_AccountDetailCertificationList.wrapperCert>> resultMap = CW_AccountDetailCertificationList.getCertificationList(acc.Id, acc.RecordType.DeveloperName);
 		List<CW_AccountDetailCertificationList.wrapperCert> certList = resultMap.get(false);
 
 		System.assertEquals(1, resultMap.keySet().size(), 'The amount of keys in the map is incorrect' + resultMap.keySet().size());
 		System.assertEquals(2, certList.size(), 'The amount of false certifications is incorrect' + certList.size());
-		System.assertEquals('TestCert', certList[0].Name, 'The certification is incorrect' + certList[0].Name);
 	}
 }

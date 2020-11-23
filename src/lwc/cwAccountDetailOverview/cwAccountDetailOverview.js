@@ -37,7 +37,7 @@ export default class CwAccountDetailOverview extends LightningElement {
 	numberEmployeesRT = ["Cargo_Handling_Facility", "Freight_Forwarder", "Airline", "Airport_Operator", "Trucker", "Ramp_Handler", "Shipper"];
 	roadFeederRT = ["Airline"];
 	facilitySpaceRT = ["Cargo_Handling_Facility"];
-	onAirportRT = ["Cargo_Handling_Facility"];
+	onAirportRT = ["Cargo_Handling_Facility", "Ramp_Handler"];
 	trucksRT = ["Trucker", "Freight_Forwarder"];
 	directRampAccessRT = ["Airline"];
 	overallAirportSizeRT = ["Airport_Operator"];

@@ -1807,7 +1807,7 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 		return resources + "/icons/company_type/cargo_com_airline.jpg";
 	}
 	get showOnAiport() {
-		return this.companyType === "Cargo_Handling_Facility";
+		return this.companyType === "Cargo_Handling_Facility" || this.companyType === "Ramp_Handler";
 	}
 	get showNearestAirport() {
 		return true;

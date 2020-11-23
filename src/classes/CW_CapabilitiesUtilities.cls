@@ -27,6 +27,7 @@ public with sharing class CW_CapabilitiesUtilities {
 	public static final String SFRV_MANAGERS = 'SFRV_MANAGERS';
 	
 	public final static String RT_REMOTE_VALIDATION = RecordTypeSingleton.getInstance().getRecordTypeId('ICG_Capability_Assignment_Group__c', 'Remote_Validation');
+	public final static String RT_NOT_CERTI_REQUIRED = RecordTypeSingleton.getInstance().getRecordTypeId('ICG_Capability_Assignment_Group__c', 'No_Certification_Required');
 
 	/**
 	 * @description		Generate a map containing record type information
@@ -424,6 +425,7 @@ public with sharing class CW_CapabilitiesUtilities {
 		currentObject.put('isAditional', false);
 		currentObject.put('isMultirecord', isMultiRecordCapabilities);
 		currentObject.put('isEditableRecordType', CW_FacilityCapabilitiesController.EDITABLE_RECORDTYPES.get('Editable_RecordTypes').contains(rtDevNameLC));
+		currentObject.put('isNotCertiRequired', currentAssignmentRT == RT_NOT_CERTI_REQUIRED);
 		return currentObject;
 	}
 

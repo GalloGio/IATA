@@ -797,6 +797,9 @@ public without sharing class CW_FacilityCapabilitiesController {
 				//creation records union AccRoleCapabAssigment for Capability
 				res.success = assignCapabilityAndGroup(accRoleDet, addCapabAssgmGroup, listAccRoleCapabInserted);
 
+				//delete files to sf backend
+				res.success = deleteFileAssigmentPrevious(accRoleDet, listAddedRows);
+				
 				res.message = addCapabAssgmGroup.Id;
 			} catch (Exception e) {
 				res.success = false;
@@ -906,6 +909,54 @@ public without sharing class CW_FacilityCapabilitiesController {
 			}
 
 			insert assigment;
+		}
+
+		return result;
+	}
+
+	/**
+	 * @description		delete assigment previous of the group
+	 * @param			accRoleDet - Account Role Detail Id, capabAssigmenGroup - Capab Assigment Group
+	 * @return			Boolean true or false
+	 */
+	private static Boolean deleteFileAssigmentPrevious(String accRoleDet, List<Object> capabilitiesList) {
+		Boolean result = true;
+		Map<String, Schema.SObjectField> fieldMapCap = Schema.getGlobalDescribe().get('Account_Role_Detail_Capability__c').getDescribe().fields.getMap();
+		List<CapabilityWrapper> listCapWrapper = new List<CapabilityWrapper>();
+		Set<Id> currentListId = new Set<Id>();
+
+		//Extract all capabilities from input
+		for (Object capability : capabilitiesList) {
+			CW_CapabilitiesManagerController.CapabilityWrapper c = (CW_CapabilitiesManagerController.CapabilityWrapper) JSON.deserialize(JSON.serializePretty(capability), CW_CapabilitiesManagerController.CapabilityWrapper.class);
+			if(String.isNotBlank(c.id) && String.isNotEmpty(c.id)){
+				currentListId.add(c.id);
+			}	
+		}
+
+		List<ICG_Account_Role_Capability_Assignment__c> assigmentList = [SELECT Account_Role_Detail_Capability__r.Photos__c 
+			FROM ICG_Account_Role_Capability_Assignment__c 
+				WHERE ICG_Capability_Assignment_Group__r.RecordTypeId =: RT_NO_CERTIFICATION_REQUIRED 
+					AND ICG_Account_Role_Detail__c =: accRoleDet AND ICG_Capability_Assignment_Group__r.Is_Active__c = false
+						AND Account_Role_Detail_Capability__c NOT IN : currentListId];
+		try {
+			if(assigmentList.size() > 0){
+				Set<Id> filesToDeleteId = new Set<Id>();
+				for(ICG_Account_Role_Capability_Assignment__c assigment : assigmentList){
+					if(String.isNotEmpty(assigment.Account_Role_Detail_Capability__r.Photos__c)){
+						CW_FacilityCapabilitiesController.CapabilityPhoto photo = (CW_FacilityCapabilitiesController.CapabilityPhoto)JSON.deserialize(assigment.Account_Role_Detail_Capability__r.Photos__c.replace('[', '').replace(']', ''),CW_FacilityCapabilitiesController.CapabilityPhoto.class);
+							filesToDeleteId.add(photo.id);
+					}
+				}
+				if(filesToDeleteId.size()>0){
+					List<ContentDocument> docList = [SELECT Id FROM ContentDocument WHERE Id in :filesToDeleteId];
+					if(docList.size()>0){
+						delete docList;
+					}
+				}
+			}
+
+		} catch (Exception e) {
+			result = false;
 		}
 
 		return result;

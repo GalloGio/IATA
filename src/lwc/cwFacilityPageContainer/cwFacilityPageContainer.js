@@ -967,6 +967,21 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 		return this.areatype === "private";
 	}
 
+	checkRequiredFields(){
+		let returnValue=true;
+		this.listCapabilitiesRow.forEach(element => {
+			element.fields.forEach(field => {
+				if(field.required.toString() === "true" ){
+					if(field.value === ""){
+						returnValue = false;
+					}					
+				}
+			});
+						
+		});	
+		return returnValue;
+	}
+
 	handleSaveChanges() {
 
 		let saveBtn = this.template.querySelector('[data-tosca="saveBtn"]');
@@ -978,7 +993,12 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 			}
 		}
 
+		if(!this.checkRequiredFields()){
+			this.showToast("Error", "Complete required fields", "error");
+			return;
+		}
 		this.sendActionToSave = true;
+
 		if (Array.isArray(this.facility.supportedLanguages)) {
 			this.facility.supportedLanguages = JSON.parse(JSON.stringify(this.facility.supportedLanguages))
 				.sort()

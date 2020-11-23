@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>Data__c</field>
-        <value xsi:type="xsd:string">Gse_In_Facility;Gse_In_Facility_2;Heavy_Vehicle;Forklift;Elevated_Transfer_Vehicle;Crane;Automated_Through_Units_Lane;</value>
+        <value xsi:type="xsd:string">Gse_In_Facility;Heavy_Vehicle;Forklift;Elevated_Transfer_Vehicle;Crane;Automated_Through_Units_Lane;</value>
     </values>
     <values>
         <field>Extra_Data__c</field>

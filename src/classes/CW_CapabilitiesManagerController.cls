@@ -599,14 +599,15 @@ public without sharing class CW_CapabilitiesManagerController {
 
 						if (!fieldSObject.getDescribe().isCalculated()) {
 							if (fldType == Schema.DisplayType.DATE) {
-								if (capfield.value != null) {
+								if (capfield.value != null && capfield.value != '') {
+									System.debug('capfield.value ' + capfield.value);
 									Date dateField = Date.valueOf(capfield.value);
 									sObj.put(capfield.field, dateField);
 								} else {
 									sObj.put(capfield.field, null);
 								}
 							} else if (fldType == Schema.DisplayType.DOUBLE) {
-								if (capfield.value != null) {
+								if (capfield.value != null && capfield.value != '') {
 									Double decimalFiel = Double.valueOf(capfield.value);
 									sObj.put(capfield.field, decimalFiel);
 								} else {
