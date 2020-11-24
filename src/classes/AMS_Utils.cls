@@ -195,6 +195,7 @@ public without sharing class AMS_Utils {
 	public static final String CERT_DGA         = 'DGA';
 	public static final String CERT_CATA        = 'CATA';
 	public static final String CERT_TSA         = 'TSA';
+	public static final String CERT_ULD         = 'ULD';
 
 	//Record Types
 	public static final String RECTYPE_NEW          = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
@@ -277,6 +278,7 @@ public without sharing class AMS_Utils {
 	public static final String CHLOCTYPEBEHAVIOR_STANDARD = CHLOCTYPEBEHAVIOR_SWAP;
 	public static final String SECTOR_CARGO = 'Cargo Agent';
 	public static final String SECTOR_PASSENGER = 'Travel Agent';
+	public static final String SECTOR_POSTAL_SERVICE = 'Postal Service';
 	public static final String SECTOR_AIRLINE = 'Airline';
 	public static final String SECTOR_INFRASTRUCTURE = 'Infrastructure Partner';
 	public static final String SECTOR_IATA = 'IATA';
@@ -383,6 +385,7 @@ public without sharing class AMS_Utils {
 	public static final String CATEGORY_TOUR_OPERATOR = 'Tour Operator';
 	public static final String CATEGORY_IATA_HEAD_OFFICE = 'IATA Head Office';
 	public static final String CATEGORY_CNS_ENDORSEMENT = 'CNS Endorsement';
+	public static final String CATEGORY_POSTAL_OPERATOR = 'Postal Operator';
 
 	public static final String TYPECHANGE_OWNERIATA2IATA = 'Ownership to IATA Agent';
 	public static final String TYPECHANGE_OWNERIATA2NONIATA = 'Ownership to non-IATA Agent';
@@ -429,6 +432,7 @@ public without sharing class AMS_Utils {
 
 	//Account - Location_Class__c
 	public static final String LC_PASSENGER = 'P';
+	public static final String LC_POSTAL_OPERATOR = 'L';
 
 	//CNS new PROCESS Location Type requested
 	public static final String CNS_LOCATION_TYPE_REQUESTED_CNS_ENDORSEMENT_NEW_BRANCH = 'New BR / IP - CNS Endorsement';
@@ -1433,22 +1437,6 @@ public without sharing class AMS_Utils {
 
 		return oldAccountValue;
 
-	}
-
-	private static boolean isEmptyAccountHierarchyRelationshipsMap(Map<Id, List<AMS_Agencies_relationhip__c>> accountHierarchyRelationships){
-
-		if(accountHierarchyRelationships.isEmpty())
-			return true;
-
-		if(accountHierarchyRelationships.values().isEmpty())
-			return true;
-
-		for(List<AMS_Agencies_relationhip__c> agency:accountHierarchyRelationships.values()){
-			if(!agency.isEmpty())
-				return false;
-		}
-
-		return true;
 	}
 
 	public static Boolean ownershipIsToBeMigrated(String typesOfChange){

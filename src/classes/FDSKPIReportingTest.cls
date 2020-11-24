@@ -565,7 +565,7 @@ private class FDSKPIReportingTest {
 		List<KPI_Value__c> kpiValues = [SELECT ID, CaseNumber__c, FDS_KPI_Reporting__c, Responsible__c, KPI_Value__c FROM KPI_Value__c];
 
 		//verify child
-		System.assertEquals(2, kpiValues.size());
+		System.assertEquals(4, kpiValues.size());
 		System.assertEquals(kpiValues.get(0).Responsible__c, UserInfo.getUserId());
 		System.assertEquals(kpiValues.get(0).FDS_KPI_Reporting__c, kpiReportings.get(0).Id);
 		System.assertEquals(true, kpiValues.get(0).KPI_Value__c != null );
