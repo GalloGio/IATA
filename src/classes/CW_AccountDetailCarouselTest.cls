@@ -38,7 +38,7 @@ public class CW_AccountDetailCarouselTest {
 		insert accRoleDetail;
 
 		Account_Role_Detail_Capability__c ardCap = CW_TestDataFactory.createAccountRoleDetailCapability('Beneficial_Insects_Bees', 'Live_Animals_Capacities_1', null);
-		ardCap.Photos__c = '[{"visible":true,"url":"https://iata--nextlink6--c.documentforce.com/sfc/dist/version/download/?oid=00D1X000000278m&ids=0681X000000EdCq&d=%2Fa%2F1X000000Ckhe%2FezuTbdb14gd0yv_y8ApOdMKVbXBrylSNamQCPl2L.QM&asPdf=false","label":"Dollies / Tub Carts-1","id":"0691X000000EXIpQAO"}]';
+		ardCap.Photos__c = '[{"visible":true,"url":"https://iata--nextlink6--c.documentforce.com/sfc/dist/version/download/?oid=00D1X000000278m&ids=0681X000000EdCq&d=%2Fa%2F1X000000Ckhe%2FezuTbdb14gd0yv_y8ApOdMKVbXBrylSNamQCPl2L.QM&asPdf=false","internalExtension":"txt", "label":"Dollies / Tub Carts-1","id":"0691X000000EXIpQAO"}]';
 		insert ardCap;
 
 		ICG_Capability_Assignment_Group__c capvalcert = new ICG_Capability_Assignment_Group__c();
@@ -92,26 +92,26 @@ public class CW_AccountDetailCarouselTest {
 		);
 
 		System.assertEquals(
-			currentCarMap.containsKey('id'),
 			true,
+			currentCarMap.containsKey('id'),
 			'id property not present'
 		);
 		System.assertNotEquals(currentCarMap.get('id'), cv1.id, 'id not expected');
 
 		System.assertEquals(
-			currentCarMap.containsKey('fileExtension'),
 			true,
+			currentCarMap.containsKey('fileExtension'),
 			'fileExtension property not present'
 		);
 		System.assertEquals(
+			'txt',
 			currentCarMap.get('fileExtension'),
-			'QM&asPdf=false',
 			'fileExtension expected: .txt'
 		);
 		
 		String jsonValue = CW_AccountDetailCarousel.hideImageSelected(testContent.Id);
 		CW_AccountDetailCarousel.Result response = (CW_AccountDetailCarousel.Result) JSON.deserialize(jsonValue,CW_AccountDetailCarousel.Result.class);
-		System.assertEquals(response.success, false, 'error hideImageSelected =' + response.message);
+		System.assertEquals(false, response.success, 'error hideImageSelected =' + response.message);
 
 		Test.stopTest();
 	}
