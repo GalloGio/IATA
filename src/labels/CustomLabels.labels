@@ -48019,7 +48019,425 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <shortDescription>doubleHash</shortDescription>
         <value>##</value>
     </labels>
-	<labels>
+    <labels>
+        <fullName>idcard_replacementHeadText</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IDCard_replacementHeadText</shortDescription>
+        <value>Request a change of agency</value>
+    </labels>
+    <labels>
+        <fullName>issp_apppicker_new_application</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>new application</shortDescription>
+        <value>New Service</value>
+    </labels>
+    <labels>
+        <fullName>issp_apppicker_request_new_application</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>request new application</shortDescription>
+        <value>Request a New Service</value>
+    </labels>
+    <labels>
+        <fullName>issp_apppicker_select_role</fullName>
+        <categories>OneId</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>select role</shortDescription>
+        <value>Select your role</value>
+    </labels>
+    <labels>
+        <fullName>issue_with_iata</fullName>
+        <categories>Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>issue with iata help text</shortDescription>
+        <value>Tick this box if the issue described by the account is related to an issue caused by IATA</value>
+    </labels>
+    <labels>
+        <fullName>label_custom_price</fullName>
+        <categories>Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label custom price</shortDescription>
+        <value>{0} price</value>
+    </labels>
+    <labels>
+        <fullName>label_direct_sales_price</fullName>
+        <categories>Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label direct sales price</shortDescription>
+        <value>direct sales</value>
+    </labels>
+    <labels>
+        <fullName>label_regular_price</fullName>
+        <categories>Label</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>label regular price</shortDescription>
+        <value>regular price</value>
+    </labels>
+    <labels>
+        <fullName>n</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ANG_ISSP_IEP_AuthorisedSignatory_AO_auth_msg</shortDescription>
+        <value>Your Agency currently does not have an open IATA EasyPay Account.&lt;br/&gt;&lt;br/&gt;Please contact your Head Office&apos;s Authorized Signatory to request them to open an IATA EasyPay Account. {0}
+&lt;br/&gt;
+&lt;br/&gt;
+Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M1S1&quot;&gt;contact support&lt;/a&gt; if you need help.</value>
+    </labels>
+    <labels>
+        <fullName>noreplyEmail</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>noreplyEmail</shortDescription>
+        <value>noreply@iata.org</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_ar</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Arabic</shortDescription>
+        <value>Arabic</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_bs</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Bosnian</shortDescription>
+        <value>босански</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_cy</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Welsh</shortDescription>
+        <value>Cymraeg</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_da</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Danish</shortDescription>
+        <value>Dansk</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_de</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>German</shortDescription>
+        <value>Deutsch</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_en_US</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>English</shortDescription>
+        <value>English</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_es</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Español</shortDescription>
+        <value>Español</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_et</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Estonian</shortDescription>
+        <value>Eesti Keel</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_eu</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Basque</shortDescription>
+        <value>Euskara</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_fi</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Finnish</shortDescription>
+        <value>Suomalainen</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_fr</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Francais</shortDescription>
+        <value>Francais</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_ga</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Irish (Gaelic)</shortDescription>
+        <value>Gaeilge</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_hi</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Hindi</shortDescription>
+        <value>हिन्दी</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_hr</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Croatian</shortDescription>
+        <value>Hrvatski</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_hy</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Armenian</shortDescription>
+        <value>Հայերէն</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_in</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Indonesian</shortDescription>
+        <value>Bahasa Indonesia</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_is</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Icelandic</shortDescription>
+        <value>Íslenska</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_it</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Italian</shortDescription>
+        <value>Italiano</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_ja</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Japanese</shortDescription>
+        <value>日本の</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_ka</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Georgian</shortDescription>
+        <value>ქართული</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_ko</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Korean</shortDescription>
+        <value>한국어</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_lb</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Luxembourgish</shortDescription>
+        <value>Lëtzebuergesch</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_lt</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Lithuanian</shortDescription>
+        <value>Lietuvių Kalba</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_lv</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Latvian</shortDescription>
+        <value>Latviešu Valoda</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_mk</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Macedonian</shortDescription>
+        <value>македонски</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_mt</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Maltese</shortDescription>
+        <value>Malti</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_nl_NL</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Dutch</shortDescription>
+        <value>Nederlands</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_pt_BR</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Portuguese (Brazilian)</shortDescription>
+        <value>Português</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_pt_PT</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Portuguese</shortDescription>
+        <value>Português</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_ro_MD</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Moldovan</shortDescription>
+        <value>лимба молдовеняскэ</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_ru</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Russian</shortDescription>
+        <value>русский</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_sh</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Serbian latin</shortDescription>
+        <value>Srpski</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_sk</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Slovak</shortDescription>
+        <value>Slovenčina</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_sl</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Slovenian</shortDescription>
+        <value>Slovenščina</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_sq</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Albanian</shortDescription>
+        <value>Shqiptar</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_sr</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Serbian Cyrillic</shortDescription>
+        <value>српски</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_sv</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Swedish</shortDescription>
+        <value>Svenska</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_th</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Thai</shortDescription>
+        <value>ภาษาไทย</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_tl</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Tagalog</shortDescription>
+        <value>Tagalog</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_tr</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Turkish</shortDescription>
+        <value>Türkçe</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_ur</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Urdu</shortDescription>
+        <value>اردو</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_vi</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Vietnamese</shortDescription>
+        <value>Tiếng Việt</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_zh_CN</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Chinese (Simplified)</shortDescription>
+        <value>中国的</value>
+    </labels>
+    <labels>
+        <fullName>pkb2_lang_zh_TW</fullName>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>Chinese (Traditional)</shortDescription>
+        <value>中國的</value>
+    </labels>
+    <labels>
+        <fullName>regular_price</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>regular price</shortDescription>
+        <value>Regular Price</value>
+    </labels>
+    <labels>
+        <fullName>resetPasswordConfirmMessage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>resetPasswordConfirmMessage</shortDescription>
+        <value>Reset password for this user for the selected community?</value>
+    </labels>
+    <labels>
+        <fullName>select_all</fullName>
+        <categories>IEC</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>select all</shortDescription>
+        <value>select all</value>
+    </labels>
+    <labels>
+        <fullName>wire_transfer_payment_msg</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>wire transfer payment msg</shortDescription>
+        <value>Your wire transfer payment has been received.</value>
+    </labels>
+    <labels>
         <fullName>icg_IATA_Validation_Programs</fullName>
         <categories>ICG One Source</categories>
         <language>en_US</language>
@@ -48932,7 +49350,7 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <value>Customer Website</value>
     </labels>
     <labels>
-        <fullName>ICG_Data_Submission_no_access</fullName>
+        <fullName>icg_data_submission_no_access</fullName>
         <categories>ICG One Source</categories>
         <language>en_US</language>
         <protected>false</protected>
@@ -49082,14 +49500,6 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <protected>false</protected>
         <shortDescription>icg employees</shortDescription>
         <value>Employees</value>
-    </labels>
-    <labels>
-        <fullName>icg_enabled_ids</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg enabled ids for demo</shortDescription>
-        <value>aDA3N0000004CkVWAU;aDA3N0000004CkaWAE;aDA3N0000004CkfWAE;aDA3N0000004CkuWAE;aDA9E00000000efWAA;aDA3N0000004CkpWAE;aDA3N0000004CkkWAE</value>
     </labels>
     <labels>
         <fullName>icg_enter_station_name</fullName>
@@ -51186,425 +51596,6 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <protected>false</protected>
         <shortDescription>icg zip code</shortDescription>
         <value>Zip Code</value>
-    </labels>
-	
-    <labels>
-        <fullName>idcard_replacementHeadText</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>IDCard_replacementHeadText</shortDescription>
-        <value>Request a change of agency</value>
-    </labels>
-    <labels>
-        <fullName>issp_apppicker_new_application</fullName>
-        <categories>OneId</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>new application</shortDescription>
-        <value>New Service</value>
-    </labels>
-    <labels>
-        <fullName>issp_apppicker_request_new_application</fullName>
-        <categories>OneId</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>request new application</shortDescription>
-        <value>Request a New Service</value>
-    </labels>
-    <labels>
-        <fullName>issp_apppicker_select_role</fullName>
-        <categories>OneId</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>select role</shortDescription>
-        <value>Select your role</value>
-    </labels>
-    <labels>
-        <fullName>issue_with_iata</fullName>
-        <categories>Label</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>issue with iata help text</shortDescription>
-        <value>Tick this box if the issue described by the account is related to an issue caused by IATA</value>
-    </labels>
-    <labels>
-        <fullName>label_custom_price</fullName>
-        <categories>Label</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>label custom price</shortDescription>
-        <value>{0} price</value>
-    </labels>
-    <labels>
-        <fullName>label_direct_sales_price</fullName>
-        <categories>Label</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>label direct sales price</shortDescription>
-        <value>direct sales</value>
-    </labels>
-    <labels>
-        <fullName>label_regular_price</fullName>
-        <categories>Label</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>label regular price</shortDescription>
-        <value>regular price</value>
-    </labels>
-    <labels>
-        <fullName>n</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ANG_ISSP_IEP_AuthorisedSignatory_AO_auth_msg</shortDescription>
-        <value>Your Agency currently does not have an open IATA EasyPay Account.&lt;br/&gt;&lt;br/&gt;Please contact your Head Office&apos;s Authorized Signatory to request them to open an IATA EasyPay Account. {0}
-&lt;br/&gt;
-&lt;br/&gt;
-Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M1S1&quot;&gt;contact support&lt;/a&gt; if you need help.</value>
-    </labels>
-    <labels>
-        <fullName>noreplyEmail</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>noreplyEmail</shortDescription>
-        <value>noreply@iata.org</value>
-    </labels>
-    <labels>
-        <fullName>pkb2_lang_ar</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Arabic</shortDescription>
-        <value>Arabic</value>
-    </labels>
-    <labels>
-        <fullName>pkb2_lang_bs</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Bosnian</shortDescription>
-        <value>босански</value>
-    </labels>
-    <labels>
-        <fullName>pkb2_lang_cy</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Welsh</shortDescription>
-        <value>Cymraeg</value>
-    </labels>
-    <labels>
-        <fullName>pkb2_lang_da</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Danish</shortDescription>
-        <value>Dansk</value>
-    </labels>
-    <labels>
-        <fullName>pkb2_lang_de</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>German</shortDescription>
-        <value>Deutsch</value>
-    </labels>
-    <labels>
-        <fullName>pkb2_lang_en_US</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>English</shortDescription>
-        <value>English</value>
-    </labels>
-    <labels>
-        <fullName>pkb2_lang_es</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Español</shortDescription>
-        <value>Español</value>
-    </labels>
-    <labels>
-        <fullName>pkb2_lang_et</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Estonian</shortDescription>
-        <value>Eesti Keel</value>
-    </labels>
-    <labels>
-        <fullName>pkb2_lang_eu</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Basque</shortDescription>
-        <value>Euskara</value>
-    </labels>
-    <labels>
-        <fullName>pkb2_lang_fi</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Finnish</shortDescription>
-        <value>Suomalainen</value>
-    </labels>
-    <labels>
-        <fullName>pkb2_lang_fr</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Francais</shortDescription>
-        <value>Francais</value>
-    </labels>
-    <labels>
-        <fullName>pkb2_lang_ga</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Irish (Gaelic)</shortDescription>
-        <value>Gaeilge</value>
-    </labels>
-    <labels>
-        <fullName>pkb2_lang_hi</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Hindi</shortDescription>
-        <value>हिन्दी</value>
-    </labels>
-    <labels>
-        <fullName>pkb2_lang_hr</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Croatian</shortDescription>
-        <value>Hrvatski</value>
-    </labels>
-    <labels>
-        <fullName>pkb2_lang_hy</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Armenian</shortDescription>
-        <value>Հայերէն</value>
-    </labels>
-    <labels>
-        <fullName>pkb2_lang_in</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Indonesian</shortDescription>
-        <value>Bahasa Indonesia</value>
-    </labels>
-    <labels>
-        <fullName>pkb2_lang_is</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Icelandic</shortDescription>
-        <value>Íslenska</value>
-    </labels>
-    <labels>
-        <fullName>pkb2_lang_it</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Italian</shortDescription>
-        <value>Italiano</value>
-    </labels>
-    <labels>
-        <fullName>pkb2_lang_ja</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Japanese</shortDescription>
-        <value>日本の</value>
-    </labels>
-    <labels>
-        <fullName>pkb2_lang_ka</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Georgian</shortDescription>
-        <value>ქართული</value>
-    </labels>
-    <labels>
-        <fullName>pkb2_lang_ko</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Korean</shortDescription>
-        <value>한국어</value>
-    </labels>
-    <labels>
-        <fullName>pkb2_lang_lb</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Luxembourgish</shortDescription>
-        <value>Lëtzebuergesch</value>
-    </labels>
-    <labels>
-        <fullName>pkb2_lang_lt</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Lithuanian</shortDescription>
-        <value>Lietuvių Kalba</value>
-    </labels>
-    <labels>
-        <fullName>pkb2_lang_lv</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Latvian</shortDescription>
-        <value>Latviešu Valoda</value>
-    </labels>
-    <labels>
-        <fullName>pkb2_lang_mk</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Macedonian</shortDescription>
-        <value>македонски</value>
-    </labels>
-    <labels>
-        <fullName>pkb2_lang_mt</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Maltese</shortDescription>
-        <value>Malti</value>
-    </labels>
-    <labels>
-        <fullName>pkb2_lang_nl_NL</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Dutch</shortDescription>
-        <value>Nederlands</value>
-    </labels>
-    <labels>
-        <fullName>pkb2_lang_pt_BR</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Portuguese (Brazilian)</shortDescription>
-        <value>Português</value>
-    </labels>
-    <labels>
-        <fullName>pkb2_lang_pt_PT</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Portuguese</shortDescription>
-        <value>Português</value>
-    </labels>
-    <labels>
-        <fullName>pkb2_lang_ro_MD</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Moldovan</shortDescription>
-        <value>лимба молдовеняскэ</value>
-    </labels>
-    <labels>
-        <fullName>pkb2_lang_ru</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Russian</shortDescription>
-        <value>русский</value>
-    </labels>
-    <labels>
-        <fullName>pkb2_lang_sh</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Serbian latin</shortDescription>
-        <value>Srpski</value>
-    </labels>
-    <labels>
-        <fullName>pkb2_lang_sk</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Slovak</shortDescription>
-        <value>Slovenčina</value>
-    </labels>
-    <labels>
-        <fullName>pkb2_lang_sl</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Slovenian</shortDescription>
-        <value>Slovenščina</value>
-    </labels>
-    <labels>
-        <fullName>pkb2_lang_sq</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Albanian</shortDescription>
-        <value>Shqiptar</value>
-    </labels>
-    <labels>
-        <fullName>pkb2_lang_sr</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Serbian Cyrillic</shortDescription>
-        <value>српски</value>
-    </labels>
-    <labels>
-        <fullName>pkb2_lang_sv</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Swedish</shortDescription>
-        <value>Svenska</value>
-    </labels>
-    <labels>
-        <fullName>pkb2_lang_th</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Thai</shortDescription>
-        <value>ภาษาไทย</value>
-    </labels>
-    <labels>
-        <fullName>pkb2_lang_tl</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Tagalog</shortDescription>
-        <value>Tagalog</value>
-    </labels>
-    <labels>
-        <fullName>pkb2_lang_tr</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Turkish</shortDescription>
-        <value>Türkçe</value>
-    </labels>
-    <labels>
-        <fullName>pkb2_lang_ur</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Urdu</shortDescription>
-        <value>اردو</value>
-    </labels>
-    <labels>
-        <fullName>pkb2_lang_vi</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Vietnamese</shortDescription>
-        <value>Tiếng Việt</value>
-    </labels>
-    <labels>
-        <fullName>pkb2_lang_zh_CN</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Chinese (Simplified)</shortDescription>
-        <value>中国的</value>
-    </labels>
-    <labels>
-        <fullName>pkb2_lang_zh_TW</fullName>
-        <language>en_US</language>
-        <protected>true</protected>
-        <shortDescription>Chinese (Traditional)</shortDescription>
-        <value>中國的</value>
-    </labels>
-    <labels>
-        <fullName>regular_price</fullName>
-        <categories>IEC</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>regular price</shortDescription>
-        <value>Regular Price</value>
-    </labels>
-    <labels>
-        <fullName>resetPasswordConfirmMessage</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>resetPasswordConfirmMessage</shortDescription>
-        <value>Reset password for this user for the selected community?</value>
-    </labels>
-    <labels>
-        <fullName>select_all</fullName>
-        <categories>IEC</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>select all</shortDescription>
-        <value>select all</value>
-    </labels>
-    <labels>
-        <fullName>wire_transfer_payment_msg</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>wire transfer payment msg</shortDescription>
-        <value>Your wire transfer payment has been received.</value>
     </labels>
     <labels>
         <fullName>icg_watch_video</fullName>

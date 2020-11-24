@@ -378,7 +378,7 @@ import remove_logo from "@salesforce/label/c.icg_remove_logo";
 import no_conflict_to_handle from "@salesforce/label/c.icg_no_conflict_to_handle";
 import watch_video from "@salesforce/label/c.icg_watch_video";
 import limit_filters_reached from "@salesforce/label/c.icg_limit_filters_reached";
-import icg_Data_Submission_no_access from "@salesforce/label/c.ICG_Data_Submission_no_access";
+import icg_Data_Submission_no_access from "@salesforce/label/c.icg_data_submission_no_access";
 import icg_capab_magmnt_mantain_prev from "@salesforce/label/c.icg_capab_magmnt_mantain_prev";
 import icg_display_table_in_public_site from "@salesforce/label/c.icg_display_table_in_public_site";
 import all_rights_reserved from "@salesforce/label/c.icg_all_rights_reserved";
