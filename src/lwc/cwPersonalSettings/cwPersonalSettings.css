@@ -1,0 +1,45 @@
+.mainPicture {
+    border-radius: 50%;
+    border: 2px solid grey;
+    width: 35px;
+    height: 35px;
+}
+
+.detailPicture {
+    width: 55px;
+    height: 55px;
+    border: 2px solid grey;
+}
+
+.cardContent {
+    padding: 10px 5px !important;
+    background-color: #ffc90d;
+    position: absolute;
+    right: 15px;
+    top: 45px;
+}
+
+.wrapperSettings {
+    margin-top: 10px;
+}
+
+@media (max-width: 1025px) {
+    .wrapperSettings {
+        margin-top: 00px;
+    }
+}
+
+
+
+.detailSettings {
+    padding: 5px !important;
+}
+
+.underline{
+    text-decoration: underline !important;
+}
+
+.inverted{
+    transition: transform 1s;
+    transform: rotate(-180deg);
+}

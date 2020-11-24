@@ -1,0 +1,24 @@
+.expandButtonInnerDiv {
+    color: rgb(25, 25, 25); 
+    font-size: 16px; 
+    line-height: 38px; 
+    padding-left: 5px; 
+    padding-right: 5px;
+}
+.expandButtonOuterDiv {
+    background-color: #fac832de;
+    cursor: pointer;
+    margin-bottom: 0px;
+    z-index: 10;
+    text-align: center;
+    width: 80px;
+    height: 39px;
+    position: absolute;
+    margin-top: -40px;
+}
+.expandButtonInnerDiv img {
+    filter: grayscale(1);
+}
+iframe {
+    transition:0.8s;
+}

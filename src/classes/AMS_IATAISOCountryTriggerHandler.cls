@@ -2,7 +2,7 @@ public class AMS_IATAISOCountryTriggerHandler {
 	public List<IATA_ISO_Country__c> triggerNew = (List<IATA_ISO_Country__c>) Trigger.new;
 	//public List<IATA_ISO_Country__c> triggerOld = (List<IATA_ISO_Country__c>) Trigger.old;
 
-	//public Map<Id, IATA_ISO_Country__c> newMap = (Map<Id,IATA_ISO_Country__c>) Trigger.newMap;
+	public Map<Id, IATA_ISO_Country__c> newMap = (Map<Id,IATA_ISO_Country__c>) Trigger.newMap;
 	public Map<Id, IATA_ISO_Country__c> oldMap = (Map<Id,IATA_ISO_Country__c>) Trigger.oldMap;
 
 	// ************************************************************
@@ -16,6 +16,7 @@ public class AMS_IATAISOCountryTriggerHandler {
 
 	public void onAfterUpdate() {
 		handlePortalApplication(true);
+		CW_ICGAccountRoleDetail_Handler.checkFacilityFields(newMap, oldMap);
 	}
 
 	private void handleAMSSegmentCountry() {

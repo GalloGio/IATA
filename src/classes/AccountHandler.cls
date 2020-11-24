@@ -28,6 +28,7 @@ public class AccountHandler{
 		CODE AFTER UPDATE
 	**/
 	public static void afterUpdate( list<Account> listNews, list<Account> listOlds) {
+		CW_ICGAccountRoleDetail_Handler.checkFacilityFields((Map<Id, Account>) Trigger.newMap, (Map<Id, Account>) Trigger.oldMap);
 		findParentAcountsToUpdate(listNews, listOlds);
 		terminateMSOAppointments(listNews, (Map<Id, Account>) Trigger.oldMap);
 	}

@@ -1,0 +1,45 @@
+<template>
+    <div class="hidden-md">
+        <div class={backGroundImage}>
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h2 class="text-center py-3" ><b>{title}</b></h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 flex-inline-row">
+                    <div class="col-md-6 pr-4 pl-4">
+                        <c-cw-certification-section title={label.certification_of_excellence}
+                            certification-type="Certifications of Excellency"
+                            certification-empty-text={label.icg_certification_of_excellence_description}
+                            back-ground-style="bg-white section-cert" should-be-open={excellencyOpen}
+                            oncertificationclicked={handleCertificationClicked} label={label}></c-cw-certification-section>
+                    </div>
+                    <div class="col-md-6">
+                        <c-cw-certification-section title={label.certifications_of_compliance}
+                            certification-type={label.certifications_of_compliance}
+                            certification-empty-text={label.icg_certifications_of_compliance_description}
+                            back-ground-style="bg-white section-cert" should-be-open={operationalOpen}
+                            oncertificationclicked={handleCertificationClicked} label={label}></c-cw-certification-section>
+                    </div>
+                </div>
+            </div>            
+ 
+        </div>
+
+        <div class="hidden-md">
+                <c-cw-latest-i-c-g-updates-container label={label} title={label.latest_validation_updates}></c-cw-latest-i-c-g-updates-container>
+            </div>
+
+    </div>
+    <div class="visible-md text-center">
+        <div class="bg-yellow col-12 mt-4">
+            <h2 class="p-4">{title}</h2>
+            <div class="row">
+                <div class="col-md-12">
+                    <c-cw-certification-carousel label={label}></c-cw-certification-carousel>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
