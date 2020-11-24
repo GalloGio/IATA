@@ -149,7 +149,7 @@ global class AMS_OSCAR_Webservice {
 				insert ifapCase;
 
 				if(AMS_Utils.oscarNewProcesses.contains(oscar.Process__c) || AMS_Utils.oscarNewGenNewAppProcesses.contains(oscar.Process__c)){
-					ifapCase.Financial_Review_Type__c = AMS_Utils.FINANCIAL_REVIEW_ANNUAL;
+					ifapCase.Financial_Review_Type__c = AMS_Utils.FINANCIAL_REVIEW_NEW_APPLICATION;
 				}
 
 				if(oscar.Process__c.contains(AMS_Utils.AGENCYCHANGES)){
