@@ -80,6 +80,7 @@ public without sharing class Order_Dom {
 	}
 
 	private void onAfterUpdate() {
+
 		//This is a custom setting for order max upload
 		//Avoid the order triggers to fire when mass upload Orders
 		if (Utility.getNumericSetting('Execute Order Trigger for mass upload') != 1) return;
@@ -112,7 +113,7 @@ public without sharing class Order_Dom {
 
 		//Update iec sap invoice status (Zuora Ready) when order is Payment Confirmed INC295559
 		Order_Svc.sapInvoiceStatusUpdate(newMap, oldMap);
-
+		
 		// GxA Remote Validation Integration
 		Order_Svc.remoteValidationStatusHandler(newMap, oldMap);
 	}
