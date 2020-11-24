@@ -113,7 +113,7 @@ public without sharing class Order_Dom {
 
 		//Update iec sap invoice status (Zuora Ready) when order is Payment Confirmed INC295559
 		Order_Svc.sapInvoiceStatusUpdate(newMap, oldMap);
-		
+
 		// GxA Remote Validation Integration
 		Order_Svc.remoteValidationStatusHandler(newMap, oldMap);
 	}
