@@ -4,10 +4,12 @@ public without sharing class ISSP_SISMembershipApplicationForm_Ctrl{
 	public static final Id AP_RT_ISPA = RecordTypeSingleton.getInstance().getRecordTypeId('AP_Process_Form__c','SIS_Application_ISPA');
 	public static final Id AP_RT_ISUA = RecordTypeSingleton.getInstance().getRecordTypeId('AP_Process_Form__c','SIS_Application_ISUA');
 	public static final Id AP_RT_TOU  = RecordTypeSingleton.getInstance().getRecordTypeId('AP_Process_Form__c','SIS_Application_TOU');
+	public static final Id AP_RT_PASS_JOINING  = RecordTypeSingleton.getInstance().getRecordTypeId('AP_Process_Form__c','PASS_Joining');
 	public static final Map<Id,String> MAP_RECORDTYPE_FORMS = new Map<Id,String>{
 		AP_RT_ISPA => 'ISPA',
 		AP_RT_ISUA => 'ISUA',
-		AP_RT_TOU  => 'TOU'
+		AP_RT_TOU  => 'TOU',
+		AP_RT_PASS_JOINING => 'TOU'
 	};
 	public static final Map<String,list<String>> MAP_STEPS = new Map<String,list<String>>{
 		AP_RT_ISPA => new list<String>{'A. ' + Label.ISSP_SIS_Membership_Review_Country_Req,'B. ' + Label.ISSP_SIS_Membership_Fill_The_Form,'C. ' + Label.ISSP_SIS_Membership_Submit_To_IATA},
@@ -17,6 +19,7 @@ public without sharing class ISSP_SISMembershipApplicationForm_Ctrl{
 	public Boolean getisISPA() {return this.newForm.RecordTypeId==AP_RT_ISPA || Apexpages.CurrentPage().getParameters().get('sistype')=='ISPA';}
 	public Boolean getisISUA() {return this.newForm.RecordTypeId==AP_RT_ISUA || Apexpages.CurrentPage().getParameters().get('sistype')=='ISUA';}
 	public Boolean getisTOU()  {return this.newForm.RecordTypeId==AP_RT_TOU || Apexpages.CurrentPage().getParameters().get('sistype')=='TOU';}
+	public Boolean getisPASS()  {return this.newForm.RecordTypeId==AP_RT_PASS_JOINING || Apexpages.CurrentPage().getParameters().get('sistype')=='PASS';}
 	public list<String> getSteps()  {
 		return MAP_STEPS.get(this.newForm.RecordTypeId);
 	}
@@ -113,7 +116,7 @@ public without sharing class ISSP_SISMembershipApplicationForm_Ctrl{
 			Company_Registration_ID__c,TAX_VAT_Registration_Number__c,Billing_File_Emrgcy_Contact_Number__c,Who_requested_to_join_TOU__c,Legal_Name_of_account__c,
 			RecordTypeId, RecordType.DeveloperName, Do_you_want_to_add_Bank_Details__c, Data_Exporting_Organization_Name__c,Data_Exporting_Organization_Address__c,
 			Data_Exporting_Organization_Phone__c,Data_Exporting_Organization_Fax__c,Data_Exporter_Name__c,Data_Exporter_Signatory_Name__c,Data_Exporter_Signatory_Position__c,
-			Data_Exporting_Organization_Email__c,
+			Data_Exporting_Organization_Email__c, GSSA_HQ_State__c,SIS_Contact_F_Name__c,SIS_Contact_L_Name__c,SIS_Contact_Email__c,SIS_Contact_Number__c,SIS_Contact_Job_Title__c,
 			Contact_Title__c,Contact_First_name__c,Contact_Last_name__c,Contact_email__c,Contact_number__c,
 			Case__c, Case__r.CaseNumber, Case__r.BSPCountry__c, Case__r.Id, Case__r.RecordtypeId, Case__r.AccountId, Case__r.CaseArea__c, Case__r.Reason1__c, Case__r.Status, Case__r.Type,
 			Case__r.Visible_on_ISS_Portal__c

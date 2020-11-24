@@ -5534,6 +5534,26 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>Case_Defect_Issue</name>
     </customLabels>
     <customLabels>
+        <label><!-- Case_KPI_AirlineManagement --></label>
+        <name>Case_KPI_AirlineManagement</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_KPI_Long50d --></label>
+        <name>Case_KPI_Long50d</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_KPI_Medium20d --></label>
+        <name>Case_KPI_Medium20d</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_KPI_Risk --></label>
+        <name>Case_KPI_Risk</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_KPI_Short24 --></label>
+        <name>Case_KPI_Short24</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Case Type --></label>
         <name>Case_Type</name>
     </customLabels>
@@ -8308,6 +8328,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- Go to IATA corporate site --></label>
         <name>Go_to_IATA_corporate_site</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GxA Link Label --></label>
+        <name>GxA_Link_Label</name>
     </customLabels>
     <customLabels>
         <label><!-- Handling --></label>
@@ -14615,6 +14639,10 @@ and
         <name>ISSP_AMS_LeftNav_Section8_Cargo</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_License_No_Company --></label>
+        <name>ISSP_AMS_License_No_Company</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_Link_Add_Office --></label>
         <name>ISSP_AMS_Link_Add_Office</name>
     </customLabels>
@@ -15147,6 +15175,10 @@ and
         <name>ISSP_AMS_NoC_Change_Bank_Details_message1</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_NoC_Change_Ownership_Legal_Status --></label>
+        <name>ISSP_AMS_NoC_Change_Ownership_Legal_Status</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_NoC_Change_Ownership_Shareholding --></label>
         <name>ISSP_AMS_NoC_Change_Ownership_Shareholding</name>
     </customLabels>
@@ -15197,6 +15229,10 @@ and
     <customLabels>
         <label>組織タイプと所有権の詳細が正しいことを確認します</label>
         <name>ISSP_AMS_NoC_Confirm_Ownership_details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Confirm_Type_of_Entity --></label>
+        <name>ISSP_AMS_NoC_Confirm_Type_of_Entity</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_NoC_Confirm_details --></label>
@@ -15265,6 +15301,10 @@ and
     <customLabels>
         <label><!-- ISSP AMS NoC IATA Admin --></label>
         <name>ISSP_AMS_NoC_IATA_Admin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS NoC IATA Admin Company --></label>
+        <name>ISSP_AMS_NoC_IATA_Admin_Company</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS NoC IATA Only --></label>
@@ -15575,6 +15615,10 @@ and
         <name>ISSP_AMS_NoC_error_message1</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_NoC_error_message1_company --></label>
+        <name>ISSP_AMS_NoC_error_message1_Company</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_NoC_error_message2 --></label>
         <name>ISSP_AMS_NoC_error_message2</name>
     </customLabels>
@@ -15583,12 +15627,20 @@ and
         <name>ISSP_AMS_NoC_error_message2_CNS</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_NoC_error_message2_company --></label>
+        <name>ISSP_AMS_NoC_error_message2_company</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_NoC_error_message3 --></label>
         <name>ISSP_AMS_NoC_error_message3</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_NoC_error_message3_CNS --></label>
         <name>ISSP_AMS_NoC_error_message3_CNS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_error_message3_company --></label>
+        <name>ISSP_AMS_NoC_error_message3_company</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_NoC_error_message4 --></label>
@@ -16179,6 +16231,10 @@ and
         <name>ISSP_AMS_Step0_Minor_Changes</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Step0 Minor Changes --></label>
+        <name>ISSP_AMS_Step0_Minor_Changes_Company</name>
+    </customLabels>
+    <customLabels>
         <label>新規の公認申請</label>
         <name>ISSP_AMS_Step0_New_Application</name>
     </customLabels>
@@ -16201,6 +16257,10 @@ and
     <customLabels>
         <label>変更内容、所在地、法的名称、法的地位または  &lt;br/&gt;所有権/株主の状況。</label>
         <name>ISSP_AMS_Step0_Other_Changes_Msg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Step0 Other Changes Msg PostalOperator --></label>
+        <name>ISSP_AMS_Step0_Other_Changes_Msg_PostalOperator</name>
     </customLabels>
     <customLabels>
         <label>その他の申請書</label>
@@ -17203,6 +17263,10 @@ and
         <name>ISSP_AMS_eBulletin_Clear_All</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_CompanyChanges --></label>
+        <name>ISSP_AMS_eBulletin_CompanyChanges</name>
+    </customLabels>
+    <customLabels>
         <label>国</label>
         <name>ISSP_AMS_eBulletin_Countries</name>
     </customLabels>
@@ -17983,6 +18047,10 @@ and
         <name>ISSP_ANG_Step0_Other_Changes_Msg_NamPaxAgent</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Step0 Other Changes Msg for Nam Pax Agents PostalOperator --></label>
+        <name>ISSP_ANG_Step0_Other_Changes_Msg_NamPaxAgent_PostalOperator</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP ANG Step0 Other Changes Msg RevCaseOpen --></label>
         <name>ISSP_ANG_Step0_Other_Changes_Msg_RevCaseOpen</name>
     </customLabels>
@@ -18069,6 +18137,10 @@ and
     <customLabels>
         <label><!-- ISSP_AN_Step1_AE_Full_Address --></label>
         <name>ISSP_AN_Step1_AE_Full_Address</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Authorization_Form_Description --></label>
+        <name>ISSP_AP_Authorization_Form_Description</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AP_Bank_Details_Change --></label>
@@ -21147,12 +21219,28 @@ IATA Customer Portalの登録へ継続的に不具合が生じている場合は
         <name>ISSP_PASS_Airline_Checklist</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_PASS_Authorized_Signatories_Header_Text --></label>
+        <name>ISSP_PASS_Authorized_Signatories_Header_Text</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP PASS BankMandate --></label>
         <name>ISSP_PASS_BankMandate</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_PASS_BankMandate_Changes_Description --></label>
+        <name>ISSP_PASS_BankMandate_Changes_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_PASS_BankMandate_Not_Required --></label>
+        <name>ISSP_PASS_BankMandate_Not_Required</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_PASS_Checklist --></label>
         <name>ISSP_PASS_Checklist</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_PASS_Click_Here --></label>
+        <name>ISSP_PASS_Click_Here</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_PASS_Download_Documents --></label>
@@ -22753,6 +22841,10 @@ IATAコードをお持ちでない場合は、［顧客タイプ］に［その�
     <customLabels>
         <label><!-- ISSP Submitted --></label>
         <name>ISSP_Submitted</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_Supporting_Documents --></label>
+        <name>ISSP_Supporting_Documents</name>
     </customLabels>
     <customLabels>
         <label>本当に続けますか？</label>
@@ -26679,6 +26771,10 @@ IATAコードをお持ちでない場合は、［顧客タイプ］に［その�
     <customLabels>
         <label>財務書類をアップロードする</label>
         <name>Upload_Financial_Documents</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Upload GxA --></label>
+        <name>Upload_GxA</name>
     </customLabels>
     <customLabels>
         <label>{0}がポータルへのアクセスを要求しました。</label>

@@ -172,7 +172,8 @@ public class IfapToolManagerTest {
 		IfapToolManager.mergeAndSubmitParameters( 'caseNumber', 'mergedFileName', 'xmlString');
 		IfapToolManager.submitCaseQualityIssuesToMFT( 'caseNumber', 'mergedFileName', 'xmlString');
 		IfapToolManager.submitCaseCancellationToMFT( 'caseNumber', 'mergedFileName', 'xmlString');
-		IfapToolManager.submitPWCResultDeletions( 'json');
+		IfapToolManager.submitPWCResultDeletions( 'json', false);
+		IfapToolManager.submitPWCResultDeletions( 'json', true);
 		IfapToolManager.submitPWCRejectionDeletions( 'json');
 		Test.stopTest();
 	}
@@ -189,6 +190,7 @@ public class IfapToolManagerTest {
 		Test.startTest();
 		//IfapToolManager.testJsonResults = '{"success":false,"ErrorMessage":"errorMessage", "responses": []}';
 		IfapToolManager.testJsonResults = null;
+		IfapToolManager.testJsonResultsGxA = null;
 		IfapToolManager.PWCResponses result = IfapToolManager.processPWCResults();
 		System.assert( true, result.success == false );
 		System.assert( true, result.ErrorMessage = 'errorMessage');
@@ -198,7 +200,8 @@ public class IfapToolManagerTest {
 	static testMethod void processPWCResultsTest_Ok() {
 		beforeTest();
 		Test.startTest();
-		IfapToolManager.testJsonResults = '{"success":true,"ErrorMessage":"", "responses": [{"success":true,"caseNumber":"","originalFileName":"","xml":"","message":""}]}';
+		IfapToolManager.testJsonResults = '{"success":true,"ErrorMessage":"", "responses": [{"success":true,"caseNumber":"111","originalFileName":"FileName","xml":"asdsd","message":"asdd"}]}';
+		IfapToolManager.testJsonResultsGxA = '{"success":true,"ErrorMessage":"", "responses": [{"success":true,"caseNumber":"123","originalFileNames":["MT-P-1099993-09991185.pdf","MT-P-1099993-09991186.pdf"],"xml":"tyu","message":"tyu"}]}';
 		IfapToolManager.PWCResponses result = IfapToolManager.processPWCResults();
 		System.assert( true, result.success );
 		System.assert( true, result.responses.size() == 1);

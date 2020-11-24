@@ -106,7 +106,6 @@ export default class TidsMenu extends LightningElement {
 			});
 			this.displayMenuOptionSelected(selected);
 		}
-		console.log('items',JSON.stringify(this.items));
 	}
 
 	vetting() {

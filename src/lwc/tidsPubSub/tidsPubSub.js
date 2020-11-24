@@ -95,7 +95,7 @@ const fireEvent = (pageRef, eventName, payload) => {
                     listener.callback.call(listener.thisArg, payload);
                 } catch (error) {
                     // fail silently
-                    console.log('error fireEvent',error);
+                    console.log('error',JSON.stringify(error));
                 }
             //}
         });
