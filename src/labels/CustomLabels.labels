@@ -29907,12 +29907,20 @@ This service is free of charge.</value>
         <value>Full Address of the Associate Entity for which Application for Approval is made</value>
     </labels>
     <labels>
+        <fullName>ISSP_AP_Authorization_Form_Description</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AP_Authorization_Form_Description</shortDescription>
+        <value>Please download and sign the &lt;a href=&quot;https://iata--c.documentforce.com/servlet/servlet.FileDownload?file=0155J000000l2nn&quot;&gt;Authorization Form&lt;/a&gt;</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AP_Bank_Details_Change</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AP_Bank_Details_Change</shortDescription>
-        <value>Bank Detail Changes</value>
+        <value>Joining Change of Bank details</value>
     </labels>
     <labels>
         <fullName>ISSP_AP_Bank_Details_Change_Description</fullName>
@@ -31348,7 +31356,7 @@ Can you please confirm which country you&apos;ve previously received support for
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Change_Request</shortDescription>
-        <value>BSP / CASS Changes</value>
+        <value>Settlement Joining Changes</value>
     </labels>
     <labels>
         <fullName>ISSP_Change_Request_Description</fullName>
@@ -35954,11 +35962,32 @@ Please download, sign and upload the PASS agreement.</value>
         <value>Link of Airline Joining Checklist</value>
     </labels>
     <labels>
+        <fullName>ISSP_PASS_Authorized_Signatories_Header_Text</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_Authorized_Signatories_Header_Text</shortDescription>
+        <value>As per our records your company does not have a valid Authorize Signatory Package in place; therefore in order to activate your Participation please download, complete, sign and upload the package in the link below, once validated by us, you will be requested to send the originals to our office.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_PASS_BankMandate</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP PASS BankMandate</shortDescription>
-        <value>The participant needs to provide a Bank Account Mandate to IATA, so that the PASS proceedings can be settled. Please upload Bank Account Mandate of the local bank account and in the ISS country and currency of settlement as a scanned document.</value>
+        <value>The Participant needs to provide a valid local Bank Account to IATA, per each country whether the company participates, so that the PASS funds can be settled. Please upload Local Bank Account Beneficiary forms. These instructions must indicate a local bank account in the PASS Country, in the currency of settlement established by IATA and the signed of two of the latest approved Authorized Signatories.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_BankMandate_Changes_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_BankMandate_Changes_Description</shortDescription>
+        <value>Please upload the completed Bank Mandates.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_BankMandate_Not_Required</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_BankMandate_Not_Required</shortDescription>
+        <value>According to our records, we already have your bank account information to use for PASS in {0}, if you want to update the bank account information, please go to portal service Bank Detail Changes.</value>
     </labels>
     <labels>
         <fullName>ISSP_PASS_Checklist</fullName>
@@ -35966,6 +35995,13 @@ Please download, sign and upload the PASS agreement.</value>
         <protected>false</protected>
         <shortDescription>ISSP_PASS_Checklist</shortDescription>
         <value>While completing your application, please refer to the Checklist for the details:</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_PASS_Click_Here</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_PASS_Click_Here</shortDescription>
+        <value>Click here to continue with your PASS process</value>
     </labels>
     <labels>
         <fullName>ISSP_PASS_Download_Documents</fullName>
@@ -36014,7 +36050,7 @@ Please download, sign and upload the PASS agreement.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_PASS_Participation_Agreement</shortDescription>
-        <value>Link of Participation Agreement</value>
+        <value>Link of PASS Participation Agreement</value>
     </labels>
     <labels>
         <fullName>ISSP_PASS_Participation_AgreementTerms</fullName>
@@ -36038,7 +36074,7 @@ Please download, sign and upload the PASS agreement.</value>
         <value>By submitting the present Application and pressing &quot;Accept terms and conditions&quot; below, the undersigned hereby confirms on behalf o the PASS Participant that all the information provided herein is correct and complete, that I have read and hereby acknowledge the terms and conditions contained in the Participation Agreement and the Terms of Use, and that I have enquired and am aware of the local laws and regulations as may apply to the operations of the PASS Participant in the applicable jurisdictions in regard to mail and postal activities.
 &lt;/br&gt;
 &lt;/br&gt;
-I, undersigned, hereby represents and declare that I am duty authorized to submit this application on behalfand in the name of the PASS Participant, and that I am duly authorized to submit this Application on behalf and in the name of the PASS Participant, and that I am duly authorized to bind the PASS Participant and enter on its behalf into the Participation Agreement and abide by the Terms of Use.</value>
+I, undersigned, hereby represents and declare that I am duty authorized to submit this application on behalf and in the name of the PASS Participant, and that I am duly authorized to submit this Application on behalf and in the name of the PASS Participant, and that I am duly authorized to bind the PASS Participant and enter on its behalf into the Participation Agreement and abide by the Terms of Use.</value>
     </labels>
     <labels>
         <fullName>ISSP_PASS_Terms_Conditions</fullName>
@@ -38029,7 +38065,7 @@ SIS allows billed entities to configure the application of Digital Signature on 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_SIS_Membership_Download_PDF</shortDescription>
-        <value>download a PDF version of the Participation Agreement</value>
+        <value>Link of SIS Participation Agreement</value>
     </labels>
     <labels>
         <fullName>ISSP_SIS_Membership_EU_Data_Privacy_Laws_Helptext</fullName>
@@ -39103,6 +39139,13 @@ If you are not sure if your company based in {0} is subject to the EU laws on da
         <protected>false</protected>
         <shortDescription>ISSP Submitted</shortDescription>
         <value>Submitted</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Supporting_Documents</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Supporting_Documents</shortDescription>
+        <value>Supporting Documents - Settlement Instructions</value>
     </labels>
     <labels>
         <fullName>ISSP_SureToContinue</fullName>

@@ -312,8 +312,8 @@ public class AMS_OSCAR_TestDataFactory
 	public static void createCargoAgencyOSCARtestData()
 	{
 
-		IATA_ISO_Country__c ctry1 = new IATA_ISO_Country__c (Name='FR',ISO_Code__c='FR',AMS_Default_State__c = 'FR');
-		IATA_ISO_Country__c ctry2 = new IATA_ISO_Country__c (Name='AR',ISO_Code__c='AR',AMS_Default_State__c = 'AR');
+		IATA_ISO_Country__c ctry1 = new IATA_ISO_Country__c (Name='FR',ISO_Code__c='FR',AMS_Default_State__c = 'FR', Region__c = 'Americas');
+		IATA_ISO_Country__c ctry2 = new IATA_ISO_Country__c (Name='AR',ISO_Code__c='AR',AMS_Default_State__c = 'AR', Region__c = 'Europe');
 		insert new List<IATA_ISO_Country__c>{ctry1, ctry2};
 
 		AMS_Country_Specific_Attribute__c csa1 = new AMS_Country_Specific_Attribute__c(RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c', 'DGR_Minimum_Requirements'), Location_Class__c='R', Minimum_DGR_BR__c=1, Minimum_DGR_HO__c=1, IATA_ISO_Country__c=ctry1.Id);

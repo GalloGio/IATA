@@ -4,6 +4,14 @@
 		<c:ISSP_Header ></c:ISSP_Header>
 
 		<apex:includeScript value="{!$Resource.jQuery_min_1_11_0}"/>
+		<script>
+			window.jQuery || document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"/>')
+		</script>
+
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+		<script>
+			window.jQuery.ui || document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"/>')
+		</script>
 
 		<link rel="stylesheet" href="{!URLFOR($Resource.CurrencyCenter_Style, '/home_page.css')}" />
 

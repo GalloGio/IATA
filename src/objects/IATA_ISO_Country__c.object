@@ -1740,6 +1740,11 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
                     <label>Greece</label>
                 </value>
                 <value>
+                    <fullName>Greenland</fullName>
+                    <default>false</default>
+                    <label>Greenland</label>
+                </value>
+                <value>
                     <fullName>Grenada</fullName>
                     <default>false</default>
                     <label>Grenada</label>
