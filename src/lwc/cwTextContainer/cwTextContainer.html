@@ -1,0 +1,64 @@
+<template>
+    <div class={getMainStyle}>
+        <div class="row">
+            <div class="col-11">
+                <h2 class={getTitleColor}>{title}</h2>
+                <template if:true={showUnderline}>
+                    <hr class="yellow-underline-percent">
+                </template>
+            </div>
+
+            <template if:true={showCloseButton}>
+                <div class="col-1">
+                    <div>
+                        <a onclick={closeTextContainer}><img class="width-15" src={icons.close} /></a>
+                    </div>
+                </div>
+            </template>
+        </div>
+
+        </br>
+        <div class={getTextColor}>
+            <template if:true={showp1}>
+                <p class={textSpecialPadding}>{text}</p><br />
+            </template>
+            <template if:true={showp2}>
+                <p>{text2}</p><br />
+            </template>
+            <template if:true={showp3}>
+                <p>{text3}</p><br />
+            </template>
+        </div>
+
+
+        <template if:true={showButtonTwo}>
+            <div class="row">
+                <template if:true={showButton}>
+                    <div class="col-5">
+                        <div class={buttonPosition}>
+                            <a class={getButtonColor} onclick={navigateToUrl} target={buttonTarget}>{buttonText}</a>
+                        </div>
+                    </div>
+                </template>
+                <template if:true={showButtonTwo}>
+                    <div class="col-7 text-right">
+                        <div class={buttonPosition}>
+                            <a class={getButtonColor} onclick={showCertifiedEntities}>{buttonTextTwo}</a>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </template>
+        <template if:false={showButtonTwo}>
+            <template if:true={showButton}>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class={buttonPosition}>
+                            <a class={getButtonColor} onclick={navigateToUrl} target={buttonTarget}>{buttonText}</a>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </template>
+    </div>
+</template>

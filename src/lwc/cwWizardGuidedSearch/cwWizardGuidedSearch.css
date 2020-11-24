@@ -1,0 +1,139 @@
+.icgBlueAction {
+    color: blue !important;
+    margin-top: 0px;
+    /* background-color: red; */
+    padding: 0px 20px;
+}
+
+.cardTitle {
+    color: black;
+    text-align: center;
+    font-size: 1.5rem !important;
+    margin-bottom: 20px;
+}
+
+.blueText {
+    color: blue !important;
+}
+
+a.blueText:hover {
+    color: darkblue !important;
+}
+
+.itemBase {
+    z-index: 10;
+    padding: 5px;
+}
+
+.itemUnselected:hover {
+    font-size: 1.03rem;
+    cursor: pointer;
+    transition: all 0.5s ease;
+}
+
+.itemSelected:hover {
+    cursor: pointer;
+}
+
+.itemSelected {
+    -webkit-filter: grayscale(0%);
+    font-size: 1.03rem;
+    -moz-filter: grayscale(0%);
+    filter: grayscale(0%);
+    transition: all 0.5s ease;
+}
+
+.itemSelected .company-type-content{
+    border: 1px solid #eeeeee;
+}
+
+.itemUnselected {
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    filter: grayscale(100%);
+}
+
+.itemUnselected .certiImage{
+    -webkit-filter: opacity(.2);
+    filter: opacity(.2);
+}
+
+.itemUnselected .imgtxtfil{
+    -webkit-filter: opacity(.2) grayscale(100%);
+    filter: opacity(.2) grayscale(100%);
+}
+
+.itemUnselected .certiTick{
+    display:none;
+}
+
+.itemUnselected .certiLabel{
+    color: #cccccc;
+}
+
+.certiCard {
+    min-height: 150px;
+}
+
+.certiTick {
+    position: absolute;
+    right: 10px;
+}
+
+.certiImage {
+    width: 85%;
+    margin-top: -10px !important;
+}
+
+.certiLabel {
+    margin-top: 5px;
+    font-size: 1rem;
+    color: blue;
+    text-align: center !important;
+    white-space: normal;
+}
+
+.content-item-cert{
+    min-height: 173px;
+}
+
+.company-item{
+    
+}
+.company-type-content{
+    background-color: white;
+    color: blue;
+    font-weight: bold;
+}
+
+.itemUnselected .company-type-content{
+    background-color: #cac6c6;;
+}
+
+.special-width-locations{
+    min-width: 550px;
+}
+
+@media (max-width: 680px) {
+    .special-width-locations{
+        min-width: 375px !important;
+    }
+}
+
+@media (max-width: 430px) {
+    .special-width-locations{
+        min-width: 317px !important;
+    }
+}
+
+.min-height-140{
+    min-height: 140px;
+}
+
+.margin-top--60{
+    margin-top: -60px;
+}
+
+.fill-blue{
+    fill: blue;
+}
