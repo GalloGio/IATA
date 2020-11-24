@@ -27,7 +27,7 @@ public with sharing class CW_CapabilitiesUtilities {
 	public static final String SFRV_MANAGERS = 'SFRV_MANAGERS';
 	
 	public final static String RT_REMOTE_VALIDATION = RecordTypeSingleton.getInstance().getRecordTypeId('ICG_Capability_Assignment_Group__c', 'Remote_Validation');
-	public final static String RT_NOT_CERTI_REQUIRED = RecordTypeSingleton.getInstance().getRecordTypeId('ICG_Capability_Assignment_Group__c', 'No_Certification_Required');
+	public final static String RT_NO_CERTIFICATION_REQUIRED = RecordTypeSingleton.getInstance().getRecordTypeId('ICG_Capability_Assignment_Group__c', 'No_Certification_Required');
 
 	/**
 	 * @description		Generate a map containing record type information
@@ -408,13 +408,13 @@ public with sharing class CW_CapabilitiesUtilities {
 
 		if (String.isBlank(currentDetail.Photos__c)) {
 			emptyPhotos = true;
-			currentDetail.Photos__c = JSON.serialize(new List<Map<String, Object>>());
+			currentDetail.Photos__c = JSON.serialize(new List<CW_FacilityCapabilitiesController.CapabilityPhoto>());
 		}
 		try {
-			currentObject.put('photos', JSON.deserializeUntyped(currentDetail.Photos__c));
+			currentObject.put('photos', JSON.deserialize(currentDetail.Photos__c, List<CW_FacilityCapabilitiesController.CapabilityPhoto>.class));
 		} catch (Exception e_photos) {
-			currentDetail.Photos__c = JSON.serialize(new List<Map<String, Object>>());
-			currentObject.put('photos', JSON.deserializeUntyped(currentDetail.Photos__c));
+			currentDetail.Photos__c = JSON.serialize(new List<CW_FacilityCapabilitiesController.CapabilityPhoto>());
+			currentObject.put('photos', JSON.deserialize(currentDetail.Photos__c, List<CW_FacilityCapabilitiesController.CapabilityPhoto>.class));
 		}
 		currentObject.put('remotevalidation', currentAssignmentRT == RT_REMOTE_VALIDATION);
 		currentObject.put('photosAvailable', ((String) currentDetail.Photos__c).remove(' ').toLowerCase().countMatches('"visible":true') > 0);
@@ -425,7 +425,7 @@ public with sharing class CW_CapabilitiesUtilities {
 		currentObject.put('isAditional', false);
 		currentObject.put('isMultirecord', isMultiRecordCapabilities);
 		currentObject.put('isEditableRecordType', CW_FacilityCapabilitiesController.EDITABLE_RECORDTYPES.get('Editable_RecordTypes').contains(rtDevNameLC));
-		currentObject.put('isNotCertiRequired', currentAssignmentRT == RT_NOT_CERTI_REQUIRED);
+		currentObject.put('isNotCertiRequired', currentAssignmentRT == RT_NO_CERTIFICATION_REQUIRED);
 		return currentObject;
 	}
 

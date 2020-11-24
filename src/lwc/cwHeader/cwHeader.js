@@ -15,9 +15,6 @@ export default class CwHeader extends LightningElement {
     images = resources + "/img/";
     docs = resources + "/docs/";
 
-
-    
-
     //icons
     menuresponsive = this.icons + "responsive/ic-menu--open.svg";
     menuresponsiveitem = this.icons + "responsive/ic-responsive-menu.png";
@@ -29,7 +26,6 @@ export default class CwHeader extends LightningElement {
 
     //docs
     userguide = this.docs + "onesource-user-guide.pdf";
-
 
     @track loadedCss = false;
 
@@ -161,11 +157,6 @@ export default class CwHeader extends LightningElement {
     
     setJoinLabels(){       
         this.template.querySelector('.join_now_title').innerHTML = this.label.icg_join_now_title;
-        /*this.template.querySelector('.popup_message02').innerHTML = this.label.icg_join_now_popup_message02;
-        this.template.querySelector('.popup_message12').innerHTML = this.label.icg_join_now_popup_message12;
-        this.template.querySelector('.popup_message22').innerHTML = this.label.icg_join_now_popup_message22;
-        this.template.querySelector('.popup_message42').innerHTML = this.label.icg_join_now_popup_message42;
-        this.template.querySelector('.popup_message52').innerHTML = this.label.icg_join_now_popup_message52;*/
     }
 
     closeModal() {

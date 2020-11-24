@@ -788,6 +788,9 @@ public without sharing class CW_FacilityCapabilitiesController {
 
 		if (!String.isBlank(accRoleDet)) {
 			try {
+				//delete files to sf backend
+				res.success = deleteFileAssigmentPrevious(accRoleDet, listAddedRows);
+
 				//creation record capability assigment group
 				addCapabAssgmGroup = createCapabAssigmentGroup(accRoleDet);
 
@@ -796,10 +799,6 @@ public without sharing class CW_FacilityCapabilitiesController {
 
 				//creation records union AccRoleCapabAssigment for Capability
 				res.success = assignCapabilityAndGroup(accRoleDet, addCapabAssgmGroup, listAccRoleCapabInserted);
-
-				//delete files to sf backend
-				res.success = deleteFileAssigmentPrevious(accRoleDet, listAddedRows);
-				
 				res.message = addCapabAssgmGroup.Id;
 			} catch (Exception e) {
 				res.success = false;
@@ -821,12 +820,20 @@ public without sharing class CW_FacilityCapabilitiesController {
 	private static ICG_Capability_Assignment_Group__c createCapabAssigmentGroup(String accRoleDet) {
 		ICG_Capability_Assignment_Group__c addCapabAssgmGroup = new ICG_Capability_Assignment_Group__c();
 
+		List<ICG_Capability_Assignment_Group__c> groupNC = [SELECT Id FROM ICG_Capability_Assignment_Group__c WHERE RecordTypeId =:RT_NO_CERTIFICATION_REQUIRED
+		 AND ICG_Account_Role_Detail__c =:accRoleDet];
+
+		 if(groupNC.size()>0){
+			delete groupNC;
+		 }
+		 
 		addCapabAssgmGroup.Expiration_Date__c = Date.today().addYears(3);
 		addCapabAssgmGroup.Issue_Date__c = Date.today();
 		addCapabAssgmGroup.RecordTypeId = RT_NO_CERTIFICATION_REQUIRED;
 		addCapabAssgmGroup.ICG_Account_Role_Detail__c = accRoleDet;
 
 		insert addCapabAssgmGroup;
+		 
 
 		return addCapabAssgmGroup;
 	}
@@ -904,6 +911,7 @@ public without sharing class CW_FacilityCapabilitiesController {
 		List<ICG_Account_Role_Capability_Assignment__c> assigment = new List<ICG_Account_Role_Capability_Assignment__c>();
 
 		if (listAccRoleCapabId.size() > 0 && capabAssigmenGroup != null && !String.isBlank(accRoleDet)) {
+
 			for (Account_Role_Detail_Capability__c capabToInsert : listAccRoleCapabId) {
 				assigment.add(new ICG_Account_Role_Capability_Assignment__c(Account_Role_Detail_Capability__c = capabToInsert.Id, ICG_Capability_Assignment_Group__c = capabAssigmenGroup.Id, ICG_Account_Role_Detail__c = accRoleDet));
 			}
@@ -936,8 +944,9 @@ public without sharing class CW_FacilityCapabilitiesController {
 		List<ICG_Account_Role_Capability_Assignment__c> assigmentList = [SELECT Account_Role_Detail_Capability__r.Photos__c 
 			FROM ICG_Account_Role_Capability_Assignment__c 
 				WHERE ICG_Capability_Assignment_Group__r.RecordTypeId =: RT_NO_CERTIFICATION_REQUIRED 
-					AND ICG_Account_Role_Detail__c =: accRoleDet AND ICG_Capability_Assignment_Group__r.Is_Active__c = false
+					AND ICG_Account_Role_Detail__c =: accRoleDet 
 						AND Account_Role_Detail_Capability__c NOT IN : currentListId];
+
 		try {
 			if(assigmentList.size() > 0){
 				Set<Id> filesToDeleteId = new Set<Id>();
@@ -989,13 +998,16 @@ public without sharing class CW_FacilityCapabilitiesController {
 				if(String.isNotBlank(internalExtension)){
 					return internalExtension;
 				}
-				else if(url.indexOf('.') > -1){
+				else if(url.indexOf('.') > -1 && url.substringAfterLast('.').length() < 5){
 					return url.substringAfterLast('.');
+				}
+				else if(label.indexOf('.') > -1){
+					return label.substringAfterLast('.');
 				}
 				else{
 					return null;
 				}
-			 }		
+			}
 		}
 		@AuraEnabled
 		public Boolean visible { get; set; }
@@ -1008,6 +1020,7 @@ public without sharing class CW_FacilityCapabilitiesController {
 	}
 
 	public class CapabilityWrapper {
+		public String id;
 		public String position;
 		public String rtypeId;
 		public String category;

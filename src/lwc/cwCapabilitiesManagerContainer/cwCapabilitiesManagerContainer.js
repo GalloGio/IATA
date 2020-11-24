@@ -919,6 +919,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 			});
 			if (returnValue === false) {
 				listFieldByEquipments.push(fieldByEquipmentRequired);
+				returnValue=true;
 			}
 		});
 

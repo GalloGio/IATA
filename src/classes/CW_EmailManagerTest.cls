@@ -50,6 +50,14 @@ public class CW_EmailManagerTest {
 			member.UserOrGroupId = uu.Id;
 			member.GroupId = gro.Id;
 			insert member;
+			
+			Group groStakeholders = new Group(Name = 'ICG_Stakeholders');
+			insert groStakeholders;
+			
+			GroupMember stakeholderMember = new GroupMember();
+			stakeholderMember.UserOrGroupId = uu.Id;
+			stakeholderMember.GroupId = groStakeholders.Id;
+			insert stakeholderMember;
 
 			EmailTemplate template = new EmailTemplate();
 			template.DeveloperName = 'Approve_Reject_to_company_admin';

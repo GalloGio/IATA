@@ -999,7 +999,7 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 		}
 		this.sendActionToSave = true;
 
-		if (Array.isArray(this.facility.supportedLanguages)) {
+		if (this.facility.supportedLanguages && Array.isArray(this.facility.supportedLanguages)) {
 			this.facility.supportedLanguages = JSON.parse(JSON.stringify(this.facility.supportedLanguages))
 				.sort()
 				.join(";");

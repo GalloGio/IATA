@@ -31,10 +31,12 @@ export default class CwFacilityContactInfo extends LightningElement {
 			this._facility.supportedLanguages = this._facility.supportedLanguages.split(';');
 		}
 
-		this._facility.supportedLanguages.forEach(lang => {
-			let picklistValue = (this._facility.availableLanguages.filter(elem => {return elem.value === lang}));
-			if(picklistValue.length > 0 && lang && lang !== '') this.langCalculator(lang, picklistValue[0].label);
-		})
+		if (this._facility.supportedLanguages) {
+			this._facility.supportedLanguages.forEach(lang => {
+				let picklistValue = (this._facility.availableLanguages.filter(elem => {return elem.value === lang}));
+				if(picklistValue.length > 0 && lang && lang !== '') this.langCalculator(lang, picklistValue[0].label);
+			})
+		}
 	}
 	@api editMode = false;
 	@api saveOnTheFly = false;

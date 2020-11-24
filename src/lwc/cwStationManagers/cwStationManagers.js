@@ -153,7 +153,7 @@ export default class CwStationManagers extends LightningElement {
             });
             
             let counter = 0;
-            
+            this.listAux = [];
             this.totalAccountContactRoles.forEach(itemAux =>{
                 if (counter < this.itemsByPage) {    
                     if(itemAux.companyId){
