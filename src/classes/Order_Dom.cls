@@ -80,6 +80,7 @@ public without sharing class Order_Dom {
 	}
 
 	private void onAfterUpdate() {
+
 		//This is a custom setting for order max upload
 		//Avoid the order triggers to fire when mass upload Orders
 		if (Utility.getNumericSetting('Execute Order Trigger for mass upload') != 1) return;
