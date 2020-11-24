@@ -14544,7 +14544,7 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_Covid</shortDescription>
-        <value>Due to the COVID-19 outbreak and measures being imposed by local governments, service interruptions &amp; temporary service suspensions are unavoidable and transit times will be longer than usual.</value>
+        <value>Agents who have ordered and paid for a printed ID Card, please be advised that due to the COVID-19 outbreak including other restrictive measures imposed by local governments, delivery times may be longer than usually anticipated. Delivery service is not available for agents outside of Canada. The digital ID Card is accessible to all cardholders on IATA AgentExperience app. Visit iata.org/idcard-digital for more details.</value>
     </labels>
     <labels>
         <fullName>IDCard_Create_Application</fullName>
