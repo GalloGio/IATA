@@ -163,9 +163,10 @@ public with sharing class CaseTriggerHelper {
 			// sprint6 if a case is close as part of same query
 			// substract from original user while awarding the new one
 			Integer points = configsMap.get(CASE_ACTION_CASE_CLOSURE).get(cRTDevName).Points__c.intValue();
-			if(String.isNotBlank(newMap.get(cId).Reopening_reason__c) && !reopening_reasons.contains(newMap.get(cId).Reopening_Reason__c) && newMap.get(cId).Status=='Closed' && oldMap.get(cId).Status=='Reopen'){
+			if(String.isNotBlank(newMap.get(cId).Reopening_reason__c) && newMap.get(cId).Status=='Closed' && oldMap.get(cId).Status=='Reopen' && 
+				!reopening_reasons.isEmpty() !reopening_reasons.contains(newMap.get(cId).Reopening_Reason__c)){
 				points = 0;
-			} else if(newMap.get(cId).Status=='Closed' && oldMap.get(cId).Status!='Reopen' && typeOfActionClosureMap.get(cId) != null){
+			} else if(newMap.get(cId).Status == 'Closed' && oldMap.get(cId).Status != 'Reopen' && typeOfActionClosureMap.get(cId) != null){
 				points = 0;
 			}
 
