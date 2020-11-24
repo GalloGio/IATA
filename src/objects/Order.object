@@ -931,15 +931,6 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Remote_Validation_Link__c</fullName>
-        <externalId>false</externalId>
-        <label>Remote Validation Link</label>
-        <length>500</length>
-        <trackHistory>false</trackHistory>
-        <type>LongTextArea</type>
-        <visibleLines>3</visibleLines>
-    </fields>
-    <fields>
         <fullName>SAP_Invoice__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
