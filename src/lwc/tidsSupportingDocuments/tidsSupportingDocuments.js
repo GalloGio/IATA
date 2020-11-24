@@ -83,8 +83,8 @@ export default class TidsSupportingDocuments extends LightningElement {
 		let userType = getUserType();
 		this.vettingMode = userType === "vetting" ? true : false;
 		let savedInfo = getSectionInfo(this.cmpName);
+		this.getRelatedFiles();
 		if (savedInfo) {
-			this.getRelatedFiles();
 			if (
 				this.vettingMode &&
 				savedInfo.errors !== undefined &&
@@ -173,8 +173,7 @@ export default class TidsSupportingDocuments extends LightningElement {
 			this.documentsView.push(this.mappingFile(file));
 		});
 		this.totalDocuments = this.documentsView.length;
-		this.disableButton = this.documentsView.length > 0 ? false : true;
-
+		this.nextButtonDisabled();
 	}
 
 	handleSave() {
@@ -187,6 +186,7 @@ export default class TidsSupportingDocuments extends LightningElement {
 	}
 
 	uploadHelper() {
+		this.nextButtonDisabled();
 		if (this.documentindex === this.documentsView.length) {
 			this.documents = [];
 			return;
@@ -347,7 +347,7 @@ export default class TidsSupportingDocuments extends LightningElement {
 							this.filedocuments.push(this.mappingFileFromSF(item));
 						});
 					}
-					this.disableButton = false;
+					this.nextButtonDisabled();
 				}
 			})
 			.catch(error => {
@@ -367,6 +367,7 @@ export default class TidsSupportingDocuments extends LightningElement {
 		let fileselected = event.target.dataset.name;
 		let index = this.documentsView.findIndex(x => x.name === fileselected);
 		this.documentsView.splice(index,1);
+		this.nextButtonDisabled();
 	}
 
 	handleUploadFileRemove(event) {
@@ -376,6 +377,7 @@ export default class TidsSupportingDocuments extends LightningElement {
 		currentDocument = this.filedocuments[index];
 		this.filedocuments.splice(index,1);
 		this.showSpinner = true;
+		this.nextButtonDisabled();
 		deleteFiles({ attachmentid: fileselected })
 		.then(result => {
 			this.showSpinner = false;
@@ -386,8 +388,7 @@ export default class TidsSupportingDocuments extends LightningElement {
 					message: currentDocument.name + " - deleted Successfully!!!",
 					variant: "success"
 				})
-			);
-			
+			);			
 		})
 		.catch(error => {
 			this.dispatchEvent(
@@ -402,8 +403,9 @@ export default class TidsSupportingDocuments extends LightningElement {
 
 	// Next button disabled
 	nextButtonDisabled() {
-		let documentsValid = this.documents.length > 0 ? true : false;
-		if (documentsValid) {
+		let documentsValid = this.documentsView.length > 0 ? true : false;
+		let filesValid = this.filedocuments.length > 0 ? true : false;
+		if (documentsValid || filesValid) {
 			this.disableButton = false;
 		} else {
 			this.disableButton = true;

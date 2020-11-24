@@ -22,7 +22,7 @@ export default class TidsConditions extends NavigationMixin(LightningElement) {
   homeEligibilityOpenCase =
     tidsAssetsPath + "/images/home/home-eligibility-open-case.png";
 
-  @track portalUrl = "/csportal/s/tids";
+  @track portalUrl = "/tids";
 
   /*label = {
     tidsTitle,
