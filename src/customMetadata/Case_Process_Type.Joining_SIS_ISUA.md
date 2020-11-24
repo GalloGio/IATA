@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>Other_Conditions__c</field>
-        <value xsi:type="xsd:string">Case_Type__c IN (&apos;ISUA&apos;) AND CaseArea__c IN (&apos;Airline Joining&apos;)</value>
+        <value xsi:type="xsd:string">Type IN (&apos;ISUA&apos;) AND CaseArea__c IN (&apos;Airline Joining&apos;)</value>
     </values>
     <values>
         <field>Reason__c</field>
