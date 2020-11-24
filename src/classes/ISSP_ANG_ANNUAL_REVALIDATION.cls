@@ -1092,7 +1092,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		List<AMS_Account_Role__c> amsOwners = [Select Account__c, Active__c, Employee_Name__c,Employee_type__c, Id,
 													Owner_Account__c, Owner_Account__r.Name, Owner_Account__r.IATACode__c,
 													Owner_Account__r.Email__c, Owner_Name__c,Percentage__c, Position__c,
-													ecordTypeId, Title__c, Valid__c, Person__c, Person__r.First_Name__c,
+													RecordTypeId, Title__c, Valid__c, Person__c, Person__r.First_Name__c,
 													Person__r.Lastname__c, Person__r.Email__c, Contact__c, Contact__r.FirstName,
 													Contact__r.LastName, Contact__r.Email, Contact__r.Phone, Contact__r.OtherStreet,
 													Contact__r.OtherCity, Contact__r.OtherPostalCode, Contact__r.OtherCountry, Legacy_External_ID__c,
