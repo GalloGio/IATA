@@ -911,7 +911,6 @@ export default class CwFacilityCapabilities extends LightningElement {
 
 	handleSaveChanges(listAddedRows){
 		this.sendACKSaveAction();
-		console.log(JSON.parse(JSON.stringify(listAddedRows)));
 		if(this.checkRequiredFields){
 			this.isLoading = true;
 			this.createRelationshipsForNewCapabilities(this.recordId,listAddedRows);
