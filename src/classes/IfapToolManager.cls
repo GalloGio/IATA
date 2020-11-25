@@ -98,12 +98,12 @@ global class IfapToolManager {
 									testJsonResults :
 									app.processPWCResults(AmazonCredentials.getCredentials(IFAPCONFIGARATIONNAME).IAS_configurationName,BATCHSIZEFROMFT);
 				PWCResponses r = (PWCResponses) JSON.deserialize(result, PWCResponses.class);
-				String result_GxA = Test.isRunningTest() ?
+				/*String result_GxA = Test.isRunningTest() ?
 									testJsonResultsGxA :
 									app.processPWCdocumentsGXA(AmazonCredentials.getCredentials(IFAPCONFIGARATIONNAME).IAS_configurationName,BATCHSIZEFROMFT);
 
 				PWCResponses gxa_response = (PWCResponses) JSON.deserialize(result_GxA, PWCResponses.class);
-				r.responses.addAll(gxa_response.responses);
+				r.responses.addAll(gxa_response.responses);*/ // Functionality temporarily removed until Java tool is updated 
 
 				r.success = true;
 				System.debug(LoggingLevel.ERROR, '################# (WS) PWC RESULT RESTITUISCE '+result);

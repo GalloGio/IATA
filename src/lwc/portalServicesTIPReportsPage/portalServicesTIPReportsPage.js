@@ -11,6 +11,7 @@ import CSP_Service_TIPReports_TextFileName from '@salesforce/label/c.CSP_Service
 import CSP_Service_TIPReports_TextAction from '@salesforce/label/c.CSP_Service_TIPReports_TextAction';
 import CSP_Service_TIPReports_TextOpen from '@salesforce/label/c.CSP_Service_TIPReports_TextOpen';
 import CSP_Service_AirlineDailySales_NoAccess from '@salesforce/label/c.CSP_Service_AirlineDailySales_NoAccess';
+import CSP_Service_SmartLite_NoAccess from '@salesforce/label/c.CSP_Service_SmartLite_NoAccess';
 
 //import controller methods
 import getTIPReportPageWrapper from '@salesforce/apex/PortalServiceTIPReportsCtrl.getTIPReportPageWrapper';
@@ -28,8 +29,9 @@ export default class PortalServicesTIPReportsPage extends LightningElement {
 		CSP_Service_TIPReports_TextFileName,
 		CSP_Service_TIPReports_TextAction,
 		CSP_Service_TIPReports_TextOpen,
-		CSP_Service_AirlineDailySales_NoAccess
-    };
+		CSP_Service_AirlineDailySales_NoAccess,
+		CSP_Service_SmartLite_NoAccess
+	};
 
 	@track loading = true;
 	@track viewResults = false;
@@ -47,6 +49,9 @@ export default class PortalServicesTIPReportsPage extends LightningElement {
 		}
 		if (this.pageName==='airline-daily-sales') {
 			return this.label.CSP_Service_AirlineDailySales_NoAccess;
+		}
+		if (this.pageName==='smart-lite') {
+			return this.label.CSP_Service_SmartLite_NoAccess;
 		}
 		return '';
 	}
