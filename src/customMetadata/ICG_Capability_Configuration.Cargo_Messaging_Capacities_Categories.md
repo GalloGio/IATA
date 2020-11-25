@@ -7,6 +7,10 @@
         <value xsi:type="xsd:string">Cargo_Handling_Warehouse_Management_System;Cargo_Handling_System_Capacities;Cargo_Handling_System_Audit_Trail_Capacities;Cargo_Handling_System_Interface_Capacities;IATA_XML_messages_Cargo_Handling_System_capabilities</value>
     </values>
     <values>
+        <field>Extra_Data__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>Key__c</field>
         <value xsi:type="xsd:string">Cargo_Messaging_Capacities</value>
     </values>
