@@ -49161,7 +49161,7 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Title for documents section</shortDescription>
-        <value>Documents</value>
+        <value>Obligation Documentation</value>
     </labels>
     <labels>
         <fullName>icg_dolly_truck</fullName>
@@ -51690,6 +51690,14 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <protected>false</protected>
         <shortDescription>icg zip code</shortDescription>
         <value>Zip Code</value>
+    </labels>
+    <labels>
+        <fullName>icg_user_guide_pdf_link</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg user guide pdf link</shortDescription>
+        <value>https://www.iata.org/contentassets/039eafb82888488b8c507c72cf3fca4c/onesource-user-guide.pdf</value>
     </labels>
     <labels>
         <fullName>idcard_replacementHeadText</fullName>
