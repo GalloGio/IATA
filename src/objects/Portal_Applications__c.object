@@ -1550,6 +1550,14 @@ IF(OR(
                 <fullName>MedAire</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>One Source</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Training</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Provisioning_Type__c</picklist>

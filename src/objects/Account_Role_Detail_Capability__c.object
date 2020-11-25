@@ -976,14 +976,6 @@ FALSE
                 <valueName>Emissions_Obligations</valueName>
             </valueSettings>
             <valueSettings>
-                <controllingFieldValue>Gse_In_Facility</controllingFieldValue>
-                <valueName>Live_Animals_Vehicles</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>Gse_In_Facility</controllingFieldValue>
-                <valueName>Valuable_Vehicles</valueName>
-            </valueSettings>
-            <valueSettings>
                 <controllingFieldValue>K9_Dogs</controllingFieldValue>
                 <valueName>K9_Dogs</valueName>
             </valueSettings>
@@ -1102,6 +1094,14 @@ FALSE
             <valueSettings>
                 <controllingFieldValue>Gse_In_Facility</controllingFieldValue>
                 <valueName>Dollies_Tub_Carts</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Gse_In_Facility</controllingFieldValue>
+                <valueName>Live_Animals_Vehicles</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Gse_In_Facility</controllingFieldValue>
+                <valueName>Valuable_Vehicles</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Heavy_Vehicle</controllingFieldValue>
