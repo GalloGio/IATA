@@ -1,0 +1,24 @@
+<template>
+	<template if:false={loading}>
+		<template if:false={success}>
+			<template if:false={creationAvailable}>
+				<p><lightning-formatted-text value={label.icg_already_open_remote_validations} ></lightning-formatted-text></p>
+			</template>
+			<template if:true={creationAvailable}>
+				<lightning-button variant="brand" label={label.icg_request_remote_valdation} title={label.icg_request_remote_valdation} onclick={createRemVal} class="slds-m-left_x-small"></lightning-button>
+			</template>
+			<template if:true={errorMessage}>
+				<lightning-formatted-text value={errorMessage} ></lightning-formatted-text>
+			</template>
+		</template>
+		<template if:true={success}>
+			{label.icg_already_requested_remote_validations}
+		</template>
+	</template>
+	<template if:true={loading}>
+		<div class="spinnerdiv">
+			<lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+		</div>
+	</template>
+
+</template>

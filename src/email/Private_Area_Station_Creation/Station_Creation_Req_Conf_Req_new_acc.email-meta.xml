@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>48.0</apiVersion>
+    <available>true</available>
+    <description>Confirmation to Requestor in case a new Account Creation was used for new station: Station Request sent.</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Station Creation Req - Conf to Req if new acc used</name>
+    <style>none</style>
+    <subject>A request to create the below Account and Station profile has been sent</subject>
+    <type>visualforce</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
