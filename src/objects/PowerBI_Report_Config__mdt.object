@@ -80,6 +80,11 @@
                     <default>false</default>
                     <label>Airline Daily Sales</label>
                 </value>
+                <value>
+                    <fullName>SMART_Lite</fullName>
+                    <default>false</default>
+                    <label>SMART Lite</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
