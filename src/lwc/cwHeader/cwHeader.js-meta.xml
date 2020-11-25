@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata" fqn="cwHeader">
+    <apiVersion>46.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightningCommunity__Default">
+            <property name="smallContainer" type="Boolean" default="false" label="Small size header"/>
+            <property name="showMenu" type="Boolean" default="true" label="Show Menu Links" description="In private page, in example, links has to be hidden. Default is true."/>
+            <property name="relativeLinks" type="Boolean" default="false" label="Relative Links" description="In home page only anchors are needed. In the rest of the pages with links, the whole path is needed. Default is false."/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

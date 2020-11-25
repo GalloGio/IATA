@@ -1,0 +1,12 @@
+<template>
+    <div class="row selector-fac">
+        <div class="col-6">
+            <select class={selectStyle} name="managedFacilities" onchange={changeHandler} >
+                <option value="">{label.select_station}</option>
+                <template for:each={userManagedFacilities} for:item="facility">
+                    <option if:true={facility.isApproved__c} key={facility.Id} value={facility.Id}>{facility.Name}</option>
+                </template>
+            </select>
+        </div>
+    </div>
+</template>

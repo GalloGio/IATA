@@ -51,6 +51,10 @@ public without sharing class PortalCreatePasswordController {
 			urlParams.put('firstLogin', ''+result.isGeneralPublicAccount);
 
 			String startUrl = Label.CSP_PortalPath;
+			if(params.sourceService != null && params.sourceService != '') { 
+				startUrl +='manage-service';
+			}
+
 			if(String.isNotBlank(landingPage)){
 				startUrl = EncodingUtil.urlDecode(landingPage, 'UTF-8');
 			}
@@ -66,7 +70,24 @@ public without sharing class PortalCreatePasswordController {
 			String s = startUrl.contains('?') ? '&' : '?';
 			startUrl += s + CSP_Utils.assembleParams(urlParams);
 
+			if(params.sourceService != null && params.sourceService != ''){
+				if(startUrl.containsIgnoreCase('?')) {
+					startUrl += '&serviceId='+params.sourceService+'%26startService=true';
+				}
+				else {
+					startUrl += '?serviceId='+params.sourceService+'%26startService=true';
+				}
+			} 
+
 			try{
+				if(result.isGeneralPublicAccount) {
+					startUrl += '?firstLogin=true';
+				}
+
+				if(params.sourceService != null && params.sourceService != ''){
+					startUrl += (startUrl.containsIgnoreCase('?')) ? '&' : '?';
+					startUrl += 'serviceId='+params.sourceService+'%26startService=true';
+				}
 				System.PageReference pageRef = Site.login(result.username, password, startUrl);
 				result.message = pageRef.getUrl();
 			}

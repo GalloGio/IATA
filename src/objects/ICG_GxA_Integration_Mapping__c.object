@@ -541,7 +541,7 @@ It must be in the same order and the same number of items than the field &apos;G
                 <value>
                     <fullName>DPI_Explain_Delivery_Pickup_Procedure__c</fullName>
                     <default>false</default>
-                    <label>Explain delivery/pickup procedure</label>
+                    <label>Delivery / Pickup Procedure</label>
                 </value>
                 <value>
                     <fullName>VPPC_Export__c</fullName>
@@ -646,7 +646,7 @@ It must be in the same order and the same number of items than the field &apos;G
                 <value>
                     <fullName>DPI_Number_Parking_Slots__c</fullName>
                     <default>false</default>
-                    <label>Number of Parking slots</label>
+                    <label>Number of Parking Slots</label>
                 </value>
                 <value>
                     <fullName>AULD_Number_Plug_in_Points__c</fullName>
@@ -716,7 +716,7 @@ It must be in the same order and the same number of items than the field &apos;G
                 <value>
                     <fullName>TSWA_Storage_Volume__c</fullName>
                     <default>false</default>
-                    <label>Storage Volume</label>
+                    <label>Storage Volume (in m3)</label>
                 </value>
                 <value>
                     <fullName>TSWA_Surface_Space__c</fullName>

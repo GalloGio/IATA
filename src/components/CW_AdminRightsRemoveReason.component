@@ -1,0 +1,5 @@
+<apex:component controller="CW_EmailTemplateData" access="global">
+    <apex:attribute name="stationData" type="String" description="Station ID" assignTo="{!stationId}" access="global" />
+    <p style="margin-top: 25px; line-height: 1.8rem;">Reason :</p>
+    <p style="line-height: 1.8rem;">Test reason for remove admin rights.</p>
+</apex:component>

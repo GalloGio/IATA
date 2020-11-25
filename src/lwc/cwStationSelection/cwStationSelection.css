@@ -1,0 +1,28 @@
+.facility-select {
+    padding: 5px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    font-size: 16px;
+    border: 1px solid #1E32FA;
+}
+.facility-select option:first-child {
+    color: #aaa
+}
+
+.title {
+	font-size: 1.4rem;
+}
+
+.bg-light-yellow {
+	background-color: #ece1be;
+}
+
+.type {
+    width: fit-content;
+    padding: 5px;
+}
+
+.max-h-110{
+    max-height: 110px;
+}

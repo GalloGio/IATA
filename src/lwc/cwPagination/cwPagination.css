@@ -1,0 +1,15 @@
+.next,.previous,.pagenumber {
+    color: blue;
+    cursor: pointer;
+    padding:5px;
+}
+
+.selected {
+    font-weight:900;
+}
+
+@media (max-width: 768px) {
+    .next,.previous,.pagenumber {
+        color: white !important;
+    }
+}
