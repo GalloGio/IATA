@@ -3,7 +3,7 @@
 		if({!(ISPICKVAL($User.UserType,'Guest'))}){
 			window.location.href = "{!portalUrl}/login/?startURL={!($Label.CSP_PortalPath+'manage-service?serviceId='+serviceId+'%26startService=true')}";
 		}else{
-			window.location.href = "{!portalUrl}/{!('manage-service?serviceId='+serviceId+'&startService=true')}";
+			window.location.href = "{!portalUrl}/login/SelfRegister?startURL={!($Label.CSP_PortalPath+'manage-service?serviceId='+serviceId+'%26startService=true')}";
 		}
 	</script>
 </apex:page>
