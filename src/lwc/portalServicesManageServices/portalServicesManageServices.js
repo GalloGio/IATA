@@ -424,6 +424,10 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 				.then(result => {
 
 					this.serviceRecord = JSON.parse(JSON.stringify(result));
+                    if (this.pageParams.startService) {
+                        this.handleTopAction();
+                    }
+                    this.isAdmin = this.serviceRecord.isAdmin;
 					this.loadReady = true;
 					this.serviceName = this.serviceRecord.recordService.ServiceName__c;
 					this.serviceFullName = this.serviceRecord.recordService.Name;

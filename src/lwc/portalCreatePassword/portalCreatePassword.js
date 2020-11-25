@@ -16,6 +16,7 @@ import changePasswordInfo2Label              from '@salesforce/label/c.CSP_Reset
 import errorMessageLabel                     from '@salesforce/label/c.CSP_Create_Password_Error';
 import getParameters                         from '@salesforce/apex/PortalCreatePasswordController.getParameters';
 import createUser                            from '@salesforce/apex/PortalCreatePasswordController.createUserAndSetPassword';
+import { getQueryParameters } 		         from "c/cwUtilities";
 
 export default class PortalCreatePassword extends LightningElement {
 	@track email             = "";
@@ -197,7 +198,9 @@ export default class PortalCreatePassword extends LightningElement {
 			this._startUrl = this.pageParams.startURL;
 			//delete the param because, in case of sucess we redirect without this param.
 			delete this.pageParams.startURL;
-			}
+            }
+            let sourceService = getQueryParameters().sourceService;
+            if(sourceService) this.registrationParams.sourceService = sourceService;
 			createUser({
 				paramStr : JSON.stringify(this.registrationParams),
 				password : this.password,

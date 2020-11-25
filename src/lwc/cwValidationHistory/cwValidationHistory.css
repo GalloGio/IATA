@@ -1,0 +1,99 @@
+.itemBase {
+    z-index: 10;
+    padding: 5px;
+}
+
+.itemUnselected:hover {
+    font-size: 1.03rem;
+    cursor: pointer;
+    transition: all 0.5s ease;
+}
+
+.facility-select {
+    padding: 5px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    font-size: 16px;
+    border: 1px solid #1E32FA;
+}
+.facility-select option:first-child {
+    color: #aaa
+}
+
+.itemUnselected {
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    filter: grayscale(100%);
+}
+
+.itemUnselected .certiImage{
+    -webkit-filter: opacity(.2);
+    filter: opacity(.2);
+}
+
+.itemUnselected .imgtxtfil{
+    -webkit-filter: opacity(.2) grayscale(100%);
+    filter: opacity(.2) grayscale(100%);
+}
+
+.itemUnselected .certiTick{
+    display:none;
+}
+
+.itemUnselected .certiLabel{
+    color: #cccccc;
+}
+
+.certiTick {
+    position: absolute;
+    right: 10px;
+}
+
+.certiImage {
+    padding-top: 5px;
+    width: 55%;
+}
+
+.certiLabel {
+    margin-top: 3px;
+    line-height: 0.9rem;
+    font-size: 0.6rem;
+    color: blue;
+    text-align: center !important;
+    white-space: normal;
+}
+.bg-light-yellow {
+	background-color: #ece1be;
+}
+.title {
+	font-size: 1.4rem;
+}
+.type {
+	background-color: #ece1be;
+	width: fit-content;
+	padding: 5px;
+}
+.formatedText{
+    background-color: transparent !important;
+    font-size: 100%;
+    border : 0px !important;
+    margin: 0px 0 0px 0px !important;
+    padding: 0px 0 0px 0px !important;
+    font-family: aktiv-grotesk, sans-serif !important;
+  }
+
+.tableCell{
+    vertical-align: middle !important;
+}
+
+@media (min-width: 768px){
+    .col-md-2 {
+        flex: 0 0 16.6666666667%;
+        max-width: 13.666667% !important;
+    }
+}
+
+.btn {
+    min-height: 35px !important;
+}
