@@ -3,6 +3,7 @@ import getProductSmartFacilityRemoteValidation from "@salesforce/apex/CW_RemoteV
 import availablerecordtypes from "@salesforce/label/c.icg_available_rv_recordtypes";
 import resources from "@salesforce/resourceUrl/ICG_Resources";
 import getIECSettingVariables from '@salesforce/apex/CW_Utilities.getIECSettingVariables';
+import getEcommerceUrlBase from '@salesforce/apex/CW_Utilities.getEcommerceUrlBase';
 
 export default class CwPurchaseRemoteValidation extends LightningElement {
 	initialized = false;
@@ -19,8 +20,6 @@ export default class CwPurchaseRemoteValidation extends LightningElement {
 	@track facilitiesToPurchase;
 	@api textFilter = '';
 	
-	@track prodOrg;
-	preprodOrg = 'https://preprod-customer-portal-iata.cs109.force.com/iec/';
 	@track lstProductsRemoteVal;
 	@api isProduction;
 	@api label;
@@ -89,11 +88,6 @@ export default class CwPurchaseRemoteValidation extends LightningElement {
 	}
 
 	renderedCallback() {
-		if(this.IECSettingVariables != null && this.IECSettingVariables.data != null && this.IECSettingVariables.data.IEC_User_Portal_URL__c != null){
-			this.prodOrg = this.IECSettingVariables.data.IEC_User_Portal_URL__c;
-		}else{
-			this.prodOrg = 'https://store.iata.org/IEC_ProductDetails';
-		}
 		this.exportExcel = this.icons + this.label.xlsx_icon;
 		if(this.initialized) {
 			return;
@@ -107,18 +101,19 @@ export default class CwPurchaseRemoteValidation extends LightningElement {
 
 			this._userManagedFacilities.forEach(potPurchase => {
 				if(potPurchase.isApproved__c === true && !this.mapRemValAlreadyPurchased.has(potPurchase.Id) && availablerecordtypes && availablerecordtypes.split(',').includes(potPurchase.RecordType.DeveloperName) && this.lstProductsRemoteVal[0]) {
-					const domain = this.isProdsandbox ? this.prodOrg : this.preprodOrg;
-					let potPur = JSON.parse(JSON.stringify(potPurchase));
-					if (this.stationsWithOpenRemoteValidations.indexOf(potPurchase.Id) > -1) {
-						potPur.openRemoteValidations = true;
-					} else {
-						potPur.linkToPurchase = this.lstProductsRemoteVal[0].SAP_Material_Number__c
-												? domain 
-													+ 'IEC_ProductDetails?id=' + this.lstProductsRemoteVal[0].SAP_Material_Number__c
-													+ '&fid=' + potPurchase.Id
-												: 'Product not available';
-					}
-					this.facilitiesToPurchase.push(potPur);
+					getEcommerceUrlBase({})
+					.then(res => {
+						const ecommerceUrlBase = res;
+						let potPur = JSON.parse(JSON.stringify(potPurchase));
+						if (this.stationsWithOpenRemoteValidations.indexOf(potPurchase.Id) > -1) {
+							potPur.openRemoteValidations = true;
+						} else {
+							potPur.linkToPurchase = this.lstProductsRemoteVal[0].SAP_Material_Number__c
+								? ecommerceUrlBase + '/IEC_ProductDetails?id=' + this.lstProductsRemoteVal[0].SAP_Material_Number__c + '&fid=' + potPurchase.Id
+								: 'Product not available';
+						}
+						this.facilitiesToPurchase.push(potPur);
+					});
 				}
 			})
 			this.initialized = true;

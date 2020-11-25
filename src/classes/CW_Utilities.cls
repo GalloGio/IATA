@@ -33,6 +33,29 @@ public without sharing class CW_Utilities {
 		return ISSP_CS__c.getValues('ICG_URL_Base').Value__c;
 	}
 
+	//Retrieve eCommerce Url
+	@AuraEnabled (cacheable = true)
+	public static String getEcommerceUrlBase() {
+		Boolean isProductionEnvironment = CW_PrivateAreaController.isProductionEnvironment();
+		String url;
+		if (isProductionEnvironment) {
+			// To Ruben Nunes: this could be a temporal solution. 
+			// We think in the future the value could be 'https://store.iata.org/' and could be stored in IEC_Settings__c.IEC_User_Portal_URL__c
+			url = ISSP_CS__c.getValues('HostIEC').Value__c + '/iec';
+		} else {
+			// getCommunityUrlBase() expected => https://preprod-customer-portal-iata.cs109.force.com/onesource/s/
+			url = getCommunityUrlBase();
+			if (String.isNotBlank(url)) {
+				url = url.removeStart('https://').split('/')[0] + '/iec';
+			}
+		}
+		if (!url.startsWithIgnoreCase('https://')){
+			url = 'https://' + url;
+		}
+		url = url.removeEnd('/');
+		return url;
+	}
+
 	//Retrieve Environment Variables
 	@AuraEnabled (cacheable = true)
 	public static ICG_Environment_Variables__c getEnvironmentVariables() {
