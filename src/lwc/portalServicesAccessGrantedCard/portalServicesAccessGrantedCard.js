@@ -1,11 +1,14 @@
 import { LightningElement, api, track } from 'lwc';
 
+import goToOldPortalService from '@salesforce/apex/PortalServicesCtrl.goToOldPortalService';
 import updateLastModifiedService from '@salesforce/apex/PortalServicesCtrl.updateLastModifiedService';
 import paymentLinkRedirect from '@salesforce/apex/PortalServicesCtrl.paymentLinkRedirect';
 import changeIsFavoriteStatus from '@salesforce/apex/PortalServicesCtrl.changeIsFavoriteStatus';
 import verifyCompleteL3Data from '@salesforce/apex/PortalServicesCtrl.verifyCompleteL3Data';
 import getPortalServiceId from '@salesforce/apex/PortalServicesCtrl.getPortalServiceId';
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
+import checkLatestTermsAndConditionsAccepted from '@salesforce/apex/ServiceTermsAndConditionsUtils.checkLatestTermsAndConditionsAccepted';
+import getContactInfo from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getContactInfo';
 
 //navigation
 import { NavigationMixin } from 'lightning/navigation';
@@ -26,6 +29,9 @@ export default class PortalServicesAccessGrantedCard extends NavigationMixin(Lig
 	@api showOnlyFavorites;
 
 	@track isLoading = false;
+	@track contactId;
+    @track isLatestAccepted = false;
+    @track displayAcceptTerms = false;
 
 	label = {
 		CSP_Services_ManageService,
@@ -38,6 +44,28 @@ export default class PortalServicesAccessGrantedCard extends NavigationMixin(Lig
 		return this.service.recordService.Application_icon_URL__c !== undefined;
 	}
 
+	connectedCallback(){
+        getContactInfo().then(result => {
+            let userInfo = JSON.parse(JSON.stringify(result));
+            this.contactId = userInfo.Id;
+
+            checkLatestTermsAndConditionsAccepted({portalServiceId: this.service.recordService.Id, contactId: userInfo.Id}).then(result2 => {
+                let isLatestAccepted = JSON.parse(JSON.stringify(result2));
+
+                this.isLatestAccepted = isLatestAccepted;
+            });
+        });
+    }
+
+    cancelTermsAcceptance(){
+        this.displayAcceptTerms = false;
+    }
+
+    acceptTerms(){
+        this.displayAcceptTerms = false;
+        this.goToService();
+	}
+	
 	goToManageServiceButtonClick(event) {
 		let serviceAux = JSON.parse(JSON.stringify(this.service));
 
@@ -55,6 +83,16 @@ export default class PortalServicesAccessGrantedCard extends NavigationMixin(Lig
 	}
 
 	goToServiceButtonClick() {
+        // check if service has terms and conditions and that they're all accepted
+        if(!this.isLatestAccepted){
+            this.displayAcceptTerms = true;
+        }
+        else{
+            this.goToService();
+        }
+    }
+
+	goToService() {
 		//because proxy.......
 		let serviceAux = JSON.parse(JSON.stringify(this.service)).recordService;
 
@@ -83,16 +121,21 @@ export default class PortalServicesAccessGrantedCard extends NavigationMixin(Lig
 		}
 		if (flag) {
 			//verifies if the event target contains all data for correct redirection
-
 			if (openWindowData !== null && openWindowData !== undefined) {
 				//determines if the link is to be opened on a new window or on the current
 				if (openWindowData) {
 					//open new tab with the redirection
-
                     if (myUrl.startsWith('/')) {
-                                //open new tab with the redirection
-                                window.open(myUrl);
-                                this.toggleSpinner();       
+						goToOldPortalService({ myurl: myUrl })
+						.then(result => {
+							//open new tab with the redirection
+							window.open(result);
+							this.toggleSpinner();
+						})
+						.catch(error => {
+							//throws error
+							this.error = error;
+						});
                     } else {
                         if (appName === 'Payment Link' || appName === 'Paypal') {
                             paymentLinkRedirect()
@@ -108,8 +151,8 @@ export default class PortalServicesAccessGrantedCard extends NavigationMixin(Lig
                                 });
 
                         } 
-                        else if(serviceAux.ServiceName__c === 'Training Platform (LMS)'){
-							getPortalServiceId({ serviceName: serviceAux.ServiceName__c })
+                        else if(appName === 'Training Platform (LMS)'){
+							getPortalServiceId({ serviceName: appName })
 								.then(serviceId => {
 									verifyCompleteL3Data({serviceId: recordId})
 									.then(result => {
@@ -128,7 +171,6 @@ export default class PortalServicesAccessGrantedCard extends NavigationMixin(Lig
 								.catch(error => {
 									this.error = error;
 							});
-
 						}
                         else {
                             if (!myUrl.startsWith('http')) {
@@ -138,24 +180,22 @@ export default class PortalServicesAccessGrantedCard extends NavigationMixin(Lig
                             this.toggleSpinner();
                         }
                     }
-
-
                 } else if (myUrl !== '') {
                     //redirects on the same page
                     //method that redirects the user to the old portal maintaing the same loginId
- 
-                    //open with the redirection
-                    window.open(myUrl,"_self");
-                    this.toggleSpinner();
-                        
-
+                    goToOldPortalService({ myurl: myUrl })
+                        .then(result => {
+                            //open new tab with the redirection
+                            window.location.href = result;
+                            this.toggleSpinner();
+                        })
+                        .catch(error => {
+                            //throws error
+                            this.error = error;
+                        });
 				}
 			}
-		} else {
-			console.info('No link to the service has been set.')
 		}
-
-
 	}
 
 	changeIsFavoriteStatus(){
