@@ -123,10 +123,10 @@ public with sharing class CaseProcessTypeHelper {
 			if (oscar!=null) {
 				cse.OSCAR__r = oscar;
 				cse.Account = oscar.Account__r;
-				Case_Process_Type__mdt process = getRightProcess(cse);
-				if (process!=null) {
-					calculateKPI(cse, oscar, process);
-				}
+			}
+			Case_Process_Type__mdt process = getRightProcess(cse);
+			if (process!=null) {
+				calculateKPI(cse, oscar, process);
 			}
 		}
 	}
