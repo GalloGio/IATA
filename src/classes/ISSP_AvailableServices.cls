@@ -756,8 +756,8 @@ public with sharing class ISSP_AvailableServices{
 		}
 
 		Boolean isAdmin = isPortalAdminUser();
-		Portal_Applications__c parentApp = [SELECT Id, Cannot_be_managed_by_portal_admin__c, Auto_approved_for__c FROM Portal_Applications__c WHERE Id=:applicationId];
-		if(isRequestableWithoutApproval(isAdmin,parentApp,currentPortalUser.Profile)) {
+		Portal_Applications__c parentApp = [SELECT Id, Cannot_be_managed_by_portal_admin__c, Auto_approved_for__c, Requires_Service_Admin_Approval__c FROM Portal_Applications__c WHERE Id=:applicationId];
+		if(isRequestableWithoutApproval(isAdmin,parentApp,currentPortalUser.Profile) || !parentApp.Requires_Service_Admin_Approval__c) {
 			appRight = 'Access Granted';
 			res = 'okauto';
 		}

@@ -85,6 +85,7 @@ import getServiceDetails from '@salesforce/apex/PortalServicesCtrl.getServiceDet
 import getContacts from '@salesforce/apex/PortalServicesCtrl.getContactsAndStatusRelatedToServiceList';
 import getEFContacts from '@salesforce/apex/EF_Helper.getContacts';
 import searchContacts from '@salesforce/apex/PortalServicesCtrl.searchContactsInService';
+import goToOldPortalService from '@salesforce/apex/PortalServicesCtrl.goToOldPortalService';
 import updateLastModifiedService from '@salesforce/apex/PortalServicesCtrl.updateLastModifiedService';
 import grantUserAccess from '@salesforce/apex/PortalServicesCtrl.grantAccess';
 import massGrantUserAccess from '@salesforce/apex/PortalServicesCtrl.massGrantAccess';
@@ -101,6 +102,8 @@ import CreateNewPortalAccess from '@salesforce/apex/PortalServicesCtrl.CreateNew
 import isAirlineUser from '@salesforce/apex/CSP_Utils.isAirlineUser';
 import getCountryList from '@salesforce/apex/PortalSupportReachUsCtrl.getCountryList';
 import getContactInfo from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getContactInfo';
+import paymentLinkRedirect from '@salesforce/apex/PortalServicesCtrl.paymentLinkRedirect';
+import checkLatestTermsAndConditionsAccepted from '@salesforce/apex/ServiceTermsAndConditionsUtils.checkLatestTermsAndConditionsAccepted';
 
 
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
@@ -180,6 +183,9 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
 	@track category = '';
 
+	//terms and conditions variables
+	@track isLatestAccepted = false;
+	@track displayAcceptTerms = false;
 
 	@track serviceId;
 	@track serviceRecord = { //initialize record to avoid crashing with undefined access to recordService
@@ -203,7 +209,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 	searchIconNoResultsUrl = CSP_PortalPath + 'CSPortal/Images/Icons/searchNoResult.svg';
 
 
-	//Variables to trak
+	//Variables to track
 	@track showConfirm = false; // controls visibility on displaying confirm to request Access to portal sercice
 	@track showPopUp = true;
 	@track showSpinner = false;
@@ -248,7 +254,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
 	//user id from import
 	userID = Id;
-	contactId;
+	@track contactId;
 
 	serviceDetailsResult; // wire result holder
 
@@ -393,6 +399,20 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 				this.isFirstLevelUser = result.Account.Is_General_Public_Account__c;
 			})
 
+		checkLatestTermsAndConditionsAccepted({portalServiceId: this.serviceId, contactId: this.contactId}).then(result2 => {
+			let isLatestAccepted = JSON.parse(JSON.stringify(result2));
+			this.isLatestAccepted = isLatestAccepted;
+		});
+	}
+
+	cancelTermsAcceptance(){
+        this.displayAcceptTerms = false;
+	}
+	
+	acceptTerms(){
+		this.displayAcceptTerms = false;
+		this.isLatestAccepted = true;
+        this.handleTopAction();
 	}
 
 	resetComponent() {
@@ -410,10 +430,8 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 		this.selectedStatus = '';
 		this.selectedCountry = '';
 		this.selectedIataCode = '';
-	this.selectedRecords = [];
-
+		this.selectedRecords = [];
 		this.clearURL();
-
 		this.getServiceDetailsJS();
 	}
 
@@ -781,15 +799,17 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
 	//Action on the top button ( request access or navigate to service)
 	handleTopAction() {
-		let serviceRec = JSON.parse(JSON.stringify(this.serviceRecord));
-
-		if (serviceRec.accessGranted) {
-			//goes to service
-			let appInfo = serviceRec.recordService
-			this.goToService(appInfo);
+		if (this.serviceRecord.accessGranted) {
+			//check if T&Cs are accepted
+			if(!this.isLatestAccepted){
+				this.displayAcceptTerms = true;
+			}
+			else{
+				this.goToService(this.serviceRecord.recordService);
+			}
 		} else {
 			// check if user is Level 1 and if service requests L2
-			if(serviceRec.recordService.Requires_Level2_Registration__c && this.isFirstLevelUser){
+			if(this.serviceRecord.recordService.Requires_Level2_Registration__c && this.isFirstLevelUser){
 				this.displaySecondLevelRegistrationPopup = true;
 			}
 			else{
@@ -825,63 +845,105 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 	goToService(serviceAux) {
 
 		//attributes stored on element that is related to the event
+		let appUrlData = serviceAux.Application_URL__c
 		let appFullUrlData = serviceAux.Application_URL__c;
 		let openWindowData = serviceAux.New_Window__c;
 		let requestable = serviceAux.Requestable__c
 		let recordId = serviceAux.Id;
+		let appName = serviceAux.ServiceName__c;
 
 		// update Last Visit Date on record
 		if (requestable === "true") {
 			updateLastModifiedService({ serviceId: recordId })
 		}
 
-		let myUrl = appFullUrlData;
+		let myUrl;
+		let flag = false;
+		if (appUrlData !== '') {
+			myUrl = appUrlData;
+			flag = true;
+		} else if (appFullUrlData !== '') {
+			myUrl = appFullUrlData;
+			flag = true;
+		} else if (appName === 'Payment Link' || appName === 'Paypal') {
+			myUrl = '';
+			flag = true;
+		}
+		if (flag) {
+			//verifies if the event target contains all data for correct redirection
+			if (openWindowData !== null && openWindowData !== undefined) {
+				//determines if the link is to be opened on a new window or on the current
+				if (openWindowData) {
+					//open new tab with the redirection
+                    if (myUrl.startsWith('/')) {
+						goToOldPortalService({ myurl: myUrl })
+						.then(result => {
+							//open new tab with the redirection
+							window.open(result);
+							this.toggleSpinner();
+						})
+						.catch(error => {
+							//throws error
+							this.error = error;
+						});
+                    } else {
+                        if (appName === 'Payment Link' || appName === 'Paypal') {
+                            paymentLinkRedirect()
+                                .then(result => {
+                                    if (result !== undefined && result !== '') {
+                                        myUrl = result;
+                                        if (!myUrl.startsWith('http')) {
+                                            myUrl = window.location.protocol + '//' + myUrl;
+                                        }
+                                    }
+                                    window.open(myUrl);
+                                    this.toggleSpinner();
+                                });
 
-		//verifies if the event target contains all data for correct redirection
-		if (openWindowData !== undefined) {
-			//determines if the link is to be opened on a new window or on the current
-			if (openWindowData) {
-
-				if (!myUrl.startsWith('/')) {
-					if(serviceAux.ServiceName__c === 'Training Platform (LMS)'){
-						getPortalServiceId({ serviceName: serviceAux.ServiceName__c })
-							.then(serviceId => {
-								verifyCompleteL3Data({serviceId: recordId})
-								.then(result => {
-									if(result !== 'not_complete'){
-										window.open(result);
-									}
-									else{
-										navigateToPage(CSP_PortalPath+'?firstLogin=true&lms=yas');
-									}
-									this.toggleSpinner();
+                        } 
+                        else if(appName === 'Training Platform (LMS)'){
+							getPortalServiceId({ serviceName: appName })
+								.then(serviceId => {
+									verifyCompleteL3Data({serviceId: recordId})
+									.then(result => {
+										if(result !== 'not_complete'){
+											window.open(result);
+										}
+										else{
+											navigateToPage(CSP_PortalPath+'?firstLogin=true&lms=yas');
+										}
+										this.toggleSpinner();
+									})
+									.catch(error => {
+										this.error = error;
+									});
 								})
 								.catch(error => {
 									this.error = error;
-								});
-							})
-							.catch(error => {
-								this.error = error;
-						});
-
-					}
-				}else{
-					if (appFullUrlData !== 'undefined') {
-						myUrl = appFullUrlData;
-					}
-					//is this link a requestable Service?
-					if (requestable === "true") {
-						//stop the spinner
-						this.toggleSpinner();
-						//open new tab with the redirection
-						window.open(myUrl);
-					} else {
-						myUrl = window.location.protocol + '//' + window.location.hostname + myUrl;
-						window.open(myUrl);
-					}
+							});
+						}
+                        else {
+                            if (!myUrl.startsWith('http')) {
+                                myUrl = window.location.protocol + '//' + myUrl;
+                            }
+                            window.open(myUrl);
+                            this.toggleSpinner();
+                        }
+                    }
+                } else if (myUrl !== '') {
+                    //redirects on the same page
+                    //method that redirects the user to the old portal maintaing the same loginId
+                    goToOldPortalService({ myurl: myUrl })
+                        .then(result => {
+                            //open new tab with the redirection
+                            window.location.href = result;
+                            this.toggleSpinner();
+                        })
+                        .catch(error => {
+                            //throws error
+                            this.error = error;
+                        });
 				}
-			} else {
-				window.open(myUrl,"_self");
 			}
 		}
 	}
