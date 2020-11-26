@@ -25,6 +25,7 @@ public with sharing class CaseTriggerHelper {
 	public static final List<String> PORTAL_PENDING_CLOSURE_RECORD_TYPES = new List<String> {
 		'CasesMENA', 'CasesAmericas', 'Cases_China_North_Asia', 'CasesEurope', 'Cases_Global', 'ExternalCasesIDFSglobal'
 	};
+	public static final List<String> reopening_reasons = new List<String> {'same query', 'new query'};
 	private static List<Id> portalPendingClosureRecordTypes;
 
 	public static void publishPlatformEvent(Map<Id,sObject> sObjectMap, string platformEventName, string objectSource, boolean isInsert, boolean isUpdate, boolean isDelete, boolean isUndelete){
@@ -79,7 +80,6 @@ public with sharing class CaseTriggerHelper {
 		List<String> escalation_toStatus;
 		List<String> reopening_fromStatus;
 		List<String> reopening_toStatus;
-		List<String> reopening_reasons;
 		List<String> noi_fromStatus;
 		List<String> noi_toStatus;
 
@@ -112,7 +112,6 @@ public with sharing class CaseTriggerHelper {
 			if(configsMap.get(CASE_ACTION_CASE_REOPENING).keySet().contains(cRTDevName)) {
 				reopening_fromStatus = configsMap.get(CASE_ACTION_CASE_REOPENING).get(cRTDevName).Status_From__c.split(',');
 				reopening_toStatus = configsMap.get(CASE_ACTION_CASE_REOPENING).get(cRTDevName).Status_To__c.split(',');
-				reopening_reasons = configsMap.get(CASE_ACTION_CASE_REOPENING).get(cRTDevName).Reopening_Reason__c.split(',');
 			}
 			
 			// case closure
@@ -163,9 +162,10 @@ public with sharing class CaseTriggerHelper {
 			// sprint6 if a case is close as part of same query
 			// substract from original user while awarding the new one
 			Integer points = configsMap.get(CASE_ACTION_CASE_CLOSURE).get(cRTDevName).Points__c.intValue();
-			if(String.isNotBlank(newMap.get(cId).Reopening_reason__c) && !reopening_reasons.contains(newMap.get(cId).Reopening_Reason__c) && newMap.get(cId).Status=='Closed' && oldMap.get(cId).Status=='Reopen'){
+			if(String.isNotBlank(newMap.get(cId).Reopening_reason__c) && newMap.get(cId).Status=='Closed' && oldMap.get(cId).Status=='Reopen' && 
+				!reopening_reasons.isEmpty() && !reopening_reasons.contains(newMap.get(cId).Reopening_Reason__c)){
 				points = 0;
-			} else if(newMap.get(cId).Status=='Closed' && oldMap.get(cId).Status!='Reopen' && typeOfActionClosureMap.get(cId) != null){
+			} else if(newMap.get(cId).Status == 'Closed' && oldMap.get(cId).Status != 'Reopen' && typeOfActionClosureMap.get(cId) != null){
 				points = 0;
 			}
 

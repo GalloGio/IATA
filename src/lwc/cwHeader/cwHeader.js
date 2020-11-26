@@ -13,7 +13,6 @@ export default class CwHeader extends LightningElement {
     label = labels.labels();
     icons = resources + "/icons/";
     images = resources + "/img/";
-    docs = resources + "/docs/";
 
     //icons
     menuresponsive = this.icons + "responsive/ic-menu--open.svg";
@@ -24,8 +23,6 @@ export default class CwHeader extends LightningElement {
     logo = this.images + "iata-logo.svg";
     logoprint = this.images + "one-source-visual-blue.svg";
 
-    //docs
-    userguide = this.docs + "onesource-user-guide.pdf";
 
     @track loadedCss = false;
 
