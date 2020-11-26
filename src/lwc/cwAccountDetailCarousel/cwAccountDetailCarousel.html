@@ -73,7 +73,7 @@
                                                         tabindex={indicator.tabindex} data-item={indicator.id} onclick={openModal}>
                                                         <div class="swipediv slds-carousel__image">
                                                             <img src={indicator.url} alt={indicator.name} class="maximum-size-panel" />
-                                                            <label if:true={indicator.isDocument} class="display-block text-center">{indicator.name}</label>
+                                                            <label if:true={indicator.isDocument} class="display-block text-center text-truncate m-w-260" title={indicator.name} >{indicator.name}</label>
                                                         </div>
                                                     </a>                                               
                                                 </div> 
