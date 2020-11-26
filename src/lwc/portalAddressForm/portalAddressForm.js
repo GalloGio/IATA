@@ -179,10 +179,7 @@ export default class PortalAddressForm extends LightningElement {
     }
 
     connectedCallback(){
-        loadStyle(this, cspStylesheet)
-        .then(() => {
-            console.log('CSP Stylesheet loaded.');
-        });
+        loadStyle(this, cspStylesheet);
 
         getCSPortalPath().then(result=>{
             let path = JSON.parse(JSON.stringify(result));
@@ -212,7 +209,7 @@ export default class PortalAddressForm extends LightningElement {
 
                 // ensure that localAddress.inputModified has the original value
                 this.localAddress.inputModified = address.inputModified;
-                this.setValidationStatus(this.localAddress.validationStatus);
+                this.setValidationStatus(this.localAddress.validationStatus, false);
             }
         });
     }
@@ -239,7 +236,7 @@ export default class PortalAddressForm extends LightningElement {
         switch(fieldname){
             case 'IsPoBox':
                 this.localAddress.inputModified = true;
-                this.setValidationStatus(this.localAddress.validationStatus);
+                this.setValidationStatus(this.localAddress.validationStatus, false);
                 this.localAddress.isPoBox = event.target.checked;
                 this.localAddress.cityName = '';
                 this.localAddress.cityId = '';
@@ -248,18 +245,18 @@ export default class PortalAddressForm extends LightningElement {
                 break;
             case 'Country':
                 this.localAddress.inputModified = true;
-                this.setValidationStatus(this.localAddress.validationStatus);
+                this.setValidationStatus(this.localAddress.validationStatus, false);
                 this.handleCountryChange(value,true);
                 break;
             case 'StateId':
                 this.localAddress.inputModified = true;
-                this.setValidationStatus(this.localAddress.validationStatus);
+                this.setValidationStatus(this.localAddress.validationStatus, false);
                 this.handleStateChange(value,true);
                 break;
             case 'StateName':
                 if(this.localAddress.stateName !== value){
                     this.localAddress.inputModified = true;
-                    this.setValidationStatus(this.localAddress.validationStatus);
+                    this.setValidationStatus(this.localAddress.validationStatus, false);
                     this.localAddress.stateName = value;
                 }
                 break;
@@ -267,7 +264,7 @@ export default class PortalAddressForm extends LightningElement {
                 if(value.length <= 64 && this.localAddress.street !== value){
                     this.localAddress.street = value;
                     this.localAddress.inputModified = true;
-                    this.setValidationStatus(this.localAddress.validationStatus);
+                    this.setValidationStatus(this.localAddress.validationStatus, false);
                 }
                 else{
                     this.localAddress.street = this.localAddress.street;
@@ -276,14 +273,14 @@ export default class PortalAddressForm extends LightningElement {
             case 'City':
                 if(this.localAddress.cityName !== value){
                     this.localAddress.inputModified = true;
-                    this.setValidationStatus(this.localAddress.validationStatus);
+                    this.setValidationStatus(this.localAddress.validationStatus, false);
                     this.localAddress.cityName = value;
                 }
                 break;
             case 'Zip':
                 if(this.localAddress.zip !== value){
                     this.localAddress.inputModified = true;
-                    this.setValidationStatus(this.localAddress.validationStatus);
+                    this.setValidationStatus(this.localAddress.validationStatus, false);
                     this.localAddress.zip = value;
                 }
                 break;
@@ -385,7 +382,7 @@ export default class PortalAddressForm extends LightningElement {
 
 
         this.localAddress.inputModified = true;
-        this.setValidationStatus(this.localAddress.validationStatus);
+        this.setValidationStatus(this.localAddress.validationStatus, false);
         this.handleStateChange(stateid,false);
     }
 
@@ -401,7 +398,7 @@ export default class PortalAddressForm extends LightningElement {
         this.localAddress.cityId = '';
         this.localAddress.cityName = value;
         this.localAddress.inputModified = true;
-        this.setValidationStatus(this.localAddress.validationStatus);
+        this.setValidationStatus(this.localAddress.validationStatus, false);
 
         let isPoBox = this.localAddress.isPoBox;
         
@@ -489,7 +486,7 @@ export default class PortalAddressForm extends LightningElement {
         this.localAddress.checkPerformed = true;
 
         this.localAddress.inputModified = false;
-        this.setValidationStatus(this.localAddress.validationStatus);
+        this.setValidationStatus(this.localAddress.validationStatus, false);
 
         // If province and cities is enabled for the selected country, check if the selected values match existing ones
         // Display warning messages if not
@@ -531,7 +528,7 @@ export default class PortalAddressForm extends LightningElement {
                 this.localAddress.geonameWarning1 = firstWarningLabel.replace('{0}', this.localAddress.cityName);
                 this.localAddress.geonameWarning2 = AMS_DQ_Review_City;
 
-                this.setValidationStatus(4);
+                this.setValidationStatus(4, false);
 
                 // we don't call address doctor
                 this.performingSearch = true;
@@ -542,7 +539,7 @@ export default class PortalAddressForm extends LightningElement {
                 this.localAddress.geonameWarning1 = firstWarningLabel.replace('{0}', this.localAddress.cityName);
                 this.localAddress.geonameWarning2 = AMS_DQ_Review_State_or_City;
 
-                this.setValidationStatus(4);
+                this.setValidationStatus(4, false);
 
                 // we don't call address doctor
                 this.performingSearch = true;
@@ -579,13 +576,13 @@ export default class PortalAddressForm extends LightningElement {
                 });
     
                 if(suggestions.length === 0){
-                    this.setValidationStatus(3);
+                    this.setValidationStatus(3, false);
                 }
                 else if(suggestions.length > 1){
-                    this.setValidationStatus(2);
+                    this.setValidationStatus(2, false);
                 }
                 else{
-                    this.setValidationStatus(1);
+                    this.setValidationStatus(1, false);
                 }
 
                 this.currentPage = 1;
@@ -605,7 +602,7 @@ export default class PortalAddressForm extends LightningElement {
             this.localAddress.addressSuggestions[i].isSelected = (i === index);
         }
 
-        this.setValidationStatus(this.localAddress.validationStatus);
+        this.setValidationStatus(this.localAddress.validationStatus, true);
     }
 
 
@@ -627,7 +624,7 @@ export default class PortalAddressForm extends LightningElement {
         return this.hasCitySuggestion && this.citiesListbox;
     }
 
-    setValidationStatus(validationStatus){
+    setValidationStatus(validationStatus, activateBtn){
         this.localAddress.validationStatus = validationStatus;
 
         // we should send 
@@ -651,7 +648,7 @@ export default class PortalAddressForm extends LightningElement {
         let status = (this.localAddress.validationStatus !== 0 && !this.localAddress.inputModified)
                                 || addressSelected;
 
-        this.dispatchEvent(new CustomEvent('setvalidationstatus', {detail:status}));
+        this.dispatchEvent(new CustomEvent('setvalidationstatus', {detail: {status: status, activateBtn: activateBtn}}));
     }
     
     /* Pagination methods and flags */

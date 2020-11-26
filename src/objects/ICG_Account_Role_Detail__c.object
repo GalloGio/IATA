@@ -903,7 +903,7 @@ IF(Pharmaceuticals__c, 1, 0)</formula>
         <fullName>Fleet__c</fullName>
         <description>Number of fleets</description>
         <externalId>false</externalId>
-        <label>Fleet</label>
+        <label>Fleet (Number of Trucks)</label>
         <precision>18</precision>
         <required>false</required>
         <scale>0</scale>
