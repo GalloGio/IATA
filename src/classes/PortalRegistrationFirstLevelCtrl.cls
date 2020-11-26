@@ -68,6 +68,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		public Boolean isNewAccount{get;set;}
 		public String selectedCustomerType {get;set;}
 		public String registrationTime {get;set;}
+		public String sourceService {get;set;}
 		public String termsAndUsageIds {get;set;}
 
 		/*YAS info for matching contact based on additional email temporary*/
@@ -480,6 +481,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			params.phone     = (inputMap.get('phone') != null) ? String.valueOf(inputMap.get('phone')) : '';
 			params.country   = (inputMap.get('country') != null) ? String.valueOf(inputMap.get('country')) : '';
 			params.language  = (inputMap.get('language') != null) ? String.valueOf(inputMap.get('language')) : '';
+			params.sourceService = (inputMap.get('sourceService') != null) ? String.valueOf(inputMap.get('sourceService')) : '';
 			params.contactId = contactId != null ? contactId : '';
 			params.accountId = accountId != null ? accountId : '';
 			params.selectedCustomerType = (inputMap.get('selectedCustomerType') != null) ? String.valueOf(inputMap.get('selectedCustomerType')) : '';
@@ -984,6 +986,10 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 	public static String generateOneTimeUrl(RegistrationParameters params, String lang, Map<String,String> urlParams){
 		String paramsJson = JSON.serialize(params);
 		paramsJson = paramsJson.replace('+', PortalPasswordHandler.plusReplacer);
+		if(params.sourceService != null && params.sourceService != '') {
+			if(urlParams == null) urlParams = new Map<String,String>();
+			urlParams.put('sourceService',params.sourceService);
+		}
 
 		return CSP_Utils.generateURl('createPassword', paramsJson, lang, urlParams);
 	}

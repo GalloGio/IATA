@@ -22,11 +22,14 @@ public class CaseIFAPHandler {
 		if(listIds != null && listIds.size() != 0){
 
 			switch on (String.valueOf(listIds[0].getSObjectType())) {
-					when 'User' {
+				when 'User' {
 					for(User us : [SELECT ContactId FROM User WHERE Id IN: listIds AND ContactId != null]){
 						contactIds.add(us.ContactId);
 					}
-
+					isUser = true;
+				}
+  				when 'Contact' {
+					contactIds = new Set<Id>(listIds);
 					isUser = true;
 				}
 				when 'Case'{
@@ -114,7 +117,6 @@ public class CaseIFAPHandler {
 
 		// only execute if the imput parameter is a case
 		if(caseList != null && caseList.size() > 0 && userList.size() > 0){
-
 			for(Case cs : caseList){
 				// for each case
 				wrapperListCompany.add(new WrapperCompanyForJSON(cs));
@@ -202,7 +204,7 @@ public class CaseIFAPHandler {
 	}
 
 	@future(callout=true)
-	private static void sendJSONFuture(String JSONString, String endpoint){
+	public static void sendJSONFuture(String JSONString, String endpoint){
 		Http http = new Http();
 		HttpRequest request = new HttpRequest();
 		String responseString;
@@ -233,7 +235,7 @@ public class CaseIFAPHandler {
 		}
 	}
 
-	private static String sendJSON(String JSONString, String endpoint){
+	public static String sendJSON(String JSONString, String endpoint){
 
 		Http http = new Http();
 		HttpRequest request = new HttpRequest();
@@ -339,6 +341,7 @@ public class CaseIFAPHandler {
 			// used substring because getOrganizationId returns 18 digits and the SSO uses 15 for the Company Id
 			salesForceUserEmailId = UserInfo.getOrganizationId().substring(0, 15) + '@' + protectNullValues(user.Username);
 		}
+		public WrapperUserForJSON(){}
 	}
 
 	public class WrapperCompanyForJSON{
@@ -364,6 +367,17 @@ public class CaseIFAPHandler {
 			city = protectNullValues(cs.Account.BillingCity);
 			zip = protectNullValues(cs.Account.BillingPostalCode);
 			country = protectNullValues(cs.Account.IATA_ISO_Country__r.Name);
+		}
+		public WrapperCompanyForJSON(ICG_Account_Role_Detail__c station, String status){
+			salesForceClientName = station.Name;
+			salesForceClientNumber = station.Global_ID__c;
+			clientStatus = protectNullValues(status);
+			street = protectNullValues(station.Street_Nr_FOR__c);
+			city = protectNullValues(station.City_FOR__c);
+			country = protectNullValues(station.Country_FOR__c);
+			zip = protectNullValues(station.Postal_Code_FOR__c);
+			agentType='';
+			agentCode='';
 		}
 	}
 
@@ -403,6 +417,13 @@ public class CaseIFAPHandler {
 			emailId = protectNullValues(us.Contact.Email);
 			salesForceClientNumber = isUser ? protectNullValues(cs.Account.Global_ID__c) : protectNullValues(cs.Account.IATACode__c);
 			roleStatus = protectNullValues('Active');
+		}
+		public WrapperUserRoleForJSON(String salesForceUserEmailId, String emailId, String salesforceClientNumber, String status){
+			this.salesForceUserEmailId = protectNullValues(salesForceUserEmailId);
+			this.roleName = '';
+			this.emailId = protectNullValues(emailId);
+			this.salesforceClientNumber = protectNullValues(salesforceClientNumber);
+			this.roleStatus = protectNullValues(status);
 		}
 	}
 
