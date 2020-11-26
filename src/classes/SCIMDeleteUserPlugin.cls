@@ -10,7 +10,8 @@ global class SCIMDeleteUserPlugin extends UserProvisioning.UserProvisioningPlugi
 		describeResult.Name = 'SCIM: Delete User';
 
 		describeResult.inputParameters = new List<Process.PluginDescribeResult.InputParameter>{
-			new Process.PluginDescribeResult.InputParameter(UserProvisioningUtils.PARAM_CALLPARAMS, Process.PluginDescribeResult.ParameterType.STRING, false)
+			new Process.PluginDescribeResult.InputParameter(UserProvisioningUtils.PARAM_CALLPARAMS, Process.PluginDescribeResult.ParameterType.STRING, false),
+			new Process.PluginDescribeResult.InputParameter(UserProvisioningUtils.PARAM_EXTERNAL_SYSTEM, Process.PluginDescribeResult.ParameterType.STRING, false)
 		};
 
 		return describeResult;
@@ -30,7 +31,7 @@ global class SCIMDeleteUserPlugin extends UserProvisioning.UserProvisioningPlugi
 
 		try {
 			userProvUtils.init(uprId);
-			SCIMUsersUtility.endPoint = userProvUtils.getNamedCredential();
+			SCIMUsersUtility.endPoint = userProvUtils.getNamedCredential((String)request.inputParameters.get(UserProvisioningUtils.PARAM_EXTERNAL_SYSTEM), 'UserProvisioning_Delete');
 
 			UserProvAccount upa = userProvUtils.getLinkedUserProvAccount();
 
