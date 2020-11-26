@@ -85,7 +85,6 @@ import getServiceDetails from '@salesforce/apex/PortalServicesCtrl.getServiceDet
 import getContacts from '@salesforce/apex/PortalServicesCtrl.getContactsAndStatusRelatedToServiceList';
 import getEFContacts from '@salesforce/apex/EF_Helper.getContacts';
 import searchContacts from '@salesforce/apex/PortalServicesCtrl.searchContactsInService';
-import goToOldPortalService from '@salesforce/apex/PortalServicesCtrl.goToOldPortalService';
 import updateLastModifiedService from '@salesforce/apex/PortalServicesCtrl.updateLastModifiedService';
 import grantUserAccess from '@salesforce/apex/PortalServicesCtrl.grantAccess';
 import massGrantUserAccess from '@salesforce/apex/PortalServicesCtrl.massGrantAccess';
@@ -102,7 +101,6 @@ import CreateNewPortalAccess from '@salesforce/apex/PortalServicesCtrl.CreateNew
 import isAirlineUser from '@salesforce/apex/CSP_Utils.isAirlineUser';
 import getCountryList from '@salesforce/apex/PortalSupportReachUsCtrl.getCountryList';
 import getContactInfo from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getContactInfo';
-import paymentLinkRedirect from '@salesforce/apex/PortalServicesCtrl.paymentLinkRedirect';
 import checkLatestTermsAndConditionsAccepted from '@salesforce/apex/ServiceTermsAndConditionsUtils.checkLatestTermsAndConditionsAccepted';
 
 
@@ -845,108 +843,67 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 	goToService(serviceAux) {
 
 		//attributes stored on element that is related to the event
-		let appUrlData = serviceAux.Application_URL__c
 		let appFullUrlData = serviceAux.Application_URL__c;
 		let openWindowData = serviceAux.New_Window__c;
 		let requestable = serviceAux.Requestable__c
 		let recordId = serviceAux.Id;
-		let appName = serviceAux.ServiceName__c;
 
 		// update Last Visit Date on record
 		if (requestable === "true") {
 			updateLastModifiedService({ serviceId: recordId })
 		}
 
-		let myUrl;
-		let flag = false;
-		if (appUrlData !== '') {
-			myUrl = appUrlData;
-			flag = true;
-		} else if (appFullUrlData !== '') {
-			myUrl = appFullUrlData;
-			flag = true;
-		} else if (appName === 'Payment Link' || appName === 'Paypal') {
-			myUrl = '';
-			flag = true;
-		}
-		if (flag) {
-			//verifies if the event target contains all data for correct redirection
-			if (openWindowData !== null && openWindowData !== undefined) {
-				//determines if the link is to be opened on a new window or on the current
-				if (openWindowData) {
-					//open new tab with the redirection
-                    if (myUrl.startsWith('/')) {
-						goToOldPortalService({ myurl: myUrl })
-						.then(result => {
-							//open new tab with the redirection
-							window.open(result);
-							this.toggleSpinner();
-						})
-						.catch(error => {
-							//throws error
-							this.error = error;
-						});
-                    } else {
-                        if (appName === 'Payment Link' || appName === 'Paypal') {
-                            paymentLinkRedirect()
-                                .then(result => {
-                                    if (result !== undefined && result !== '') {
-                                        myUrl = result;
-                                        if (!myUrl.startsWith('http')) {
-                                            myUrl = window.location.protocol + '//' + myUrl;
-                                        }
-                                    }
-                                    window.open(myUrl);
-                                    this.toggleSpinner();
-                                });
+		let myUrl = appFullUrlData;
 
-                        } 
-                        else if(appName === 'Training Platform (LMS)'){
-							getPortalServiceId({ serviceName: appName })
-								.then(serviceId => {
-									verifyCompleteL3Data({serviceId: recordId})
-									.then(result => {
-										if(result !== 'not_complete'){
-											window.open(result);
-										}
-										else{
-											navigateToPage(CSP_PortalPath+'?firstLogin=true&lms=yas');
-										}
-										this.toggleSpinner();
-									})
-									.catch(error => {
-										this.error = error;
-									});
+		//verifies if the event target contains all data for correct redirection
+		if (openWindowData !== undefined) {
+			//determines if the link is to be opened on a new window or on the current
+			if (openWindowData) {
+
+				if (!myUrl.startsWith('/')) {
+					if(serviceAux.ServiceName__c === 'Training Platform (LMS)'){
+						getPortalServiceId({ serviceName: serviceAux.ServiceName__c })
+							.then(serviceId => {
+								verifyCompleteL3Data({serviceId: recordId})
+								.then(result => {
+									if(result !== 'not_complete'){
+										window.open(result);
+									}
+									else{
+										navigateToPage(CSP_PortalPath+'?firstLogin=true&lms=yas');
+									}
+									this.toggleSpinner();
 								})
 								.catch(error => {
 									this.error = error;
-							});
-						}
-                        else {
-                            if (!myUrl.startsWith('http')) {
-                                myUrl = window.location.protocol + '//' + myUrl;
-                            }
-                            window.open(myUrl);
-                            this.toggleSpinner();
-                        }
-                    }
-                } else if (myUrl !== '') {
-                    //redirects on the same page
-                    //method that redirects the user to the old portal maintaing the same loginId
-                    goToOldPortalService({ myurl: myUrl })
-                        .then(result => {
-                            //open new tab with the redirection
-                            window.location.href = result;
-                            this.toggleSpinner();
-                        })
-                        .catch(error => {
-                            //throws error
-                            this.error = error;
-                        });
+								});
+							})
+							.catch(error => {
+								this.error = error;
+						});
+
+					}
+				}else{
+					if (appFullUrlData !== 'undefined') {
+						myUrl = appFullUrlData;
+					}
+					//is this link a requestable Service?
+					if (requestable === "true") {
+						//stop the spinner
+						this.toggleSpinner();
+						//open new tab with the redirection
+						window.open(myUrl);
+					} else {
+						myUrl = window.location.protocol + '//' + window.location.hostname + myUrl;
+						window.open(myUrl);
+					}
 				}
+			} else {
+				window.open(myUrl,"_self");
 			}
 		}
 	}
+
 
 
 	navigateToServicesPage() {

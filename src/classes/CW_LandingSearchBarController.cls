@@ -159,7 +159,7 @@ public without sharing class CW_LandingSearchBarController {
 	@AuraEnabled (cacheable=true)
 	public static String getCertificationsList() {
 		final Map<String, RowInfo> mapUpdated = new Map<String, RowInfo> ();
-		final List<ICG_Certification__c> certDetails = [SELECT name, Certification_Type__c, Alias__c,
+		final List<ICG_Certification__c> certDetails = [SELECT name, Label__c, Certification_Type__c, Alias__c,
 															(SELECT id FROM ICG_Capability_Assignment_Groups__r 
 																WHERE Is_Expired__c = false 
 																AND ICG_Account_Role_Detail__r.isApproved__c = true
@@ -175,7 +175,7 @@ public without sharing class CW_LandingSearchBarController {
 			loc.value = cert.ICG_Capability_Assignment_Groups__r.size();
 			loc.uniqueId = (cert.name).toLowerCase();
 			loc.description = '';
-			loc.alias = cert.Alias__c;
+			loc.alias = String.isNotBlank(cert.Alias__c) ? cert.Alias__c : cert.Label__c;
 			mapUpdated.put(loc.uniqueId, loc);
 		}
 
