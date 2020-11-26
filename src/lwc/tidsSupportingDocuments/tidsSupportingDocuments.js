@@ -58,7 +58,7 @@ export default class TidsSupportingDocuments extends LightningElement {
 	@track fileContents;
 	@track fileReader;
 	@track content;
-	@track MAX_FILE_SIZE = 25000000;
+	@track MAX_FILE_SIZE = 3100000;
 	@track showSpinner = false;
 	@track totalDocuments = 0;
 	// New branch
@@ -195,8 +195,8 @@ export default class TidsSupportingDocuments extends LightningElement {
 		if (this.file.size > this.MAX_FILE_SIZE) {
 			this.dispatchEvent(
 				new ShowToastEvent({
-					title: "File size error",
-					message: "File size exceeds 25mb for file name:"+this.file.name,
+					title: "Maximum file size exceeded",
+					message: 'File '+this.file.name +' exceeds the 3mb maximum file size.',
 					variant: "error"
 				})
 			);
@@ -300,17 +300,16 @@ export default class TidsSupportingDocuments extends LightningElement {
 					this.showSpinner = false;
 					setTimeout(()=>{
 						this.upsertSupportingDocs();
-					},1000, this);
+					},6000, this);
 				}        
 			})
 			.catch(error => {
 				this.showSpinner = false;
-				console.log('error', JSON.stringify(error.body));
 				// Showing errors if any while inserting the files
 				this.dispatchEvent(
 					new ShowToastEvent({
-						title: "Error while uploading File",
-						message: error.body.message,
+						title: "Maximum file size exceeded",
+						message: 'File '+this.file.name +' exceeds the 3mb maximum file size.',
 						variant: "error"
 					})
 				);
