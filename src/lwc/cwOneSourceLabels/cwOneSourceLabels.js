@@ -920,7 +920,6 @@ export function labels() {
 		icg_join_now_popup_message51,
 		icg_join_now_popup_message52,
 		obligation_documents,
-		documents,
 		manage_documents,
 		icg_user_guide_pdf_link
 
