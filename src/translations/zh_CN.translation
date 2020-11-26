@@ -4930,6 +4930,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Service_AirlineDailySales_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Service_SmartLite_NoAccess --></label>
+        <name>CSP_Service_SmartLite_NoAccess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_SmartLite_Title --></label>
+        <name>CSP_Service_SmartLite_Title</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Service_TIPReports_AmazonType --></label>
         <name>CSP_Service_TIPReports_AmazonType</name>
     </customLabels>
@@ -28138,6 +28146,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- icg IATA Validation Programs --></label>
         <name>icg_IATA_Validation_Programs</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg_Service_Description --></label>
+        <name>icg_Service_Description</name>
     </customLabels>
     <customLabels>
         <label><!-- icg about IATA --></label>
