@@ -6,7 +6,7 @@ import resources from "@salesforce/resourceUrl/ICG_Resources";
 import getUserInfo from "@salesforce/apex/CW_PrivateAreaController.getUserInfo";
 import getUserRole from "@salesforce/apex/CW_Utilities.getUserRole";
 import labels from 'c/cwOneSourceLabels';
-import getOneSourceServiceId from '@salesforce/apex/CW_LoginController.getOneSourceServiceId';
+import getSelfRegisterUrl from '@salesforce/apex/CW_LoginController.getSelfRegisterUrl';
 import getEnvironmentVariables from '@salesforce/apex/CW_Utilities.getEnvironmentVariables';
 
 export default class CwHeader extends LightningElement {
@@ -132,16 +132,10 @@ export default class CwHeader extends LightningElement {
 
     goToJoinNow() {
         this.closeModal();
-
-        getOneSourceServiceId().then(serviceId => {
-            if (serviceId) {
-                let csportalPath = (this.label.CSP_PortalPath.indexOf('/csportal') === -1) 
-                    ? '/csportal' + this.label.CSP_PortalPath 
-                    : this.label.CSP_PortalPath;
-
-                let loginUrl = csportalPath +'login/SelfRegister' + '?sourceService=' + serviceId;
-                location.href = loginUrl;
-            }
+        getSelfRegisterUrl().then(selfRegisterUrl => {
+            // To Ruben Nunes: This is the right url in production for the Self-Register, uncomment to fast fix
+            // selfRegisterUrl = 'https://portal.iata.org/s/login/SelfRegister?language=en_US&startURL=%2Fs%2Fmanage-service%3FserviceId%3Da2w5J000000kTPTQA2';
+            location.href = selfRegisterUrl;
         });
     }
 
