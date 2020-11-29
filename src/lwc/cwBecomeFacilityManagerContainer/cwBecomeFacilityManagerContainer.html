@@ -1,0 +1,35 @@
+<template>
+    <c-cw-spinner width="25%" if:true={requesting} overlay="true" position="position-fixed"></c-cw-spinner>
+    <div class="formcontainer p-0 col-lg-8 col-xl-8 col-md-12">
+        <div class="padding">
+            <div class="col-6 text-left">
+                <c-cw-search-in-list label={label} search-value={filterTextFacilities} onfilterinlist={filterFacilities}></c-cw-search-in-list>
+            </div>
+            <br />
+            <c-cw-become-manager-facility-list label={label} facilities={facilitiesList} user-info={userInfo}
+                filter-text={filterTextFacilities} onselectfacilities={setSelectedFacilities} ontoomanyfacilities={handleTooManyFacilities}>
+            </c-cw-become-manager-facility-list>
+        </div>
+
+        <div class="text-left yellowbanner">
+            <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-12 my-auto"><span>{label.do_you_want_to_request_manager_rights}
+                        &nbsp;&nbsp;</span></div>
+                <div class="col-xl-6 col-lg-6 btn-become col-md-12"><a class="btn btn-primary link-button no-margin-top"
+                        data-tosca="nextaction" href="javascript:{}" onclick={becomeFacilityManager}>{label.become_station_manager}</a></div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="text-left">
+        <p>{label.if_facility_no_list} <a class="newfacilitylink"
+                data-tosca="createnewfacility" data-action="New Facility" href="javascript:{}"
+                onclick={createNewFacility}>{label.create_a_new_one}</a></p>
+
+    </div>
+
+    <template if:true={showModal}>
+        <c-cw-basic-modal label={label} modal-message={modalMessage} modal-image={modalImage} onclosemodal={closeModal}>
+        </c-cw-basic-modal>
+    </template>
+</template>

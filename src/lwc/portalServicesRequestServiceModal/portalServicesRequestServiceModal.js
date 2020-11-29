@@ -159,7 +159,8 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             this.isAdmin = this.trackedServiceRecord.isAdmin;
             this.addUsersEnable = this.trackedServiceRecord.addUsersEnable;
             this.serviceFullName = this.trackedServiceRecord.recordService.Name;
-            this.serviceName = this.trackedServiceRecord.recordService.ServiceName__c;
+			this.serviceName = this.trackedServiceRecord.recordService.ServiceName__c;
+			this.isServiceAdminApproved = this.trackedServiceRecord.recordService.Requires_Service_Admin_Approval__c;
             if(this.serviceName == 'E&F APPS'){
                 this.submitMessage = this.label.confirmedRequestEFAppsMsglb;
             } else {
@@ -747,9 +748,12 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                     this.showPopUp = true; // for e&f success box
                     this.dispatchEvent(new CustomEvent('requestcompleted', { detail: { success: true } }));// sends to parent the nr of records
                 } else {
-                    if (this.isAdmin) {
-                        this.showPopUp = false; // for admins no success box
-                        this.dispatchEvent(new CustomEvent('requestcompleted', { detail: { success: true } }));// sends to parent the nr of records
+                   // for admins or if service admin approval not required
+					// don't send approval email nor show user the pending approval popup
+					if (this.isAdmin || !this.isServiceAdminApproved) {
+                        this.showPopUp = false; 
+						this.dispatchEvent(new CustomEvent('requestcompleted', { detail: { success: true } }));// sends to parent the nr of records
+						this.navigateToServicesPage();
                     } else {
                         this.showSpinner = false;
                     }

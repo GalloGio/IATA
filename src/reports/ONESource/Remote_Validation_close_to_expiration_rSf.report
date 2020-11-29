@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Report xmlns="http://soap.sforce.com/2006/04/metadata">
+    <columns>
+        <field>ICG_Account_Role_Detail__c$RecordType</field>
+    </columns>
+    <columns>
+        <field>ICG_Account_Role_Detail__c$City_FOR__c</field>
+    </columns>
+    <columns>
+        <field>ICG_Account_Role_Detail__c$Country_FOR__c</field>
+    </columns>
+    <currency>USD</currency>
+    <format>Summary</format>
+    <groupingsDown>
+        <dateGranularity>Day</dateGranularity>
+        <field>ICG_Account_Role_Detail__c$Name</field>
+        <sortOrder>Asc</sortOrder>
+    </groupingsDown>
+    <name>Remote Validations close to expiration</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
+    <reportType>ARD_Certification_by_type__c</reportType>
+    <scope>organization</scope>
+    <showDetails>true</showDetails>
+    <showGrandTotal>false</showGrandTotal>
+    <showSubTotals>false</showSubTotals>
+    <timeFrameFilter>
+        <dateColumn>ICG_Account_Role_Detail__c$CreatedDate</dateColumn>
+        <interval>INTERVAL_CUSTOM</interval>
+    </timeFrameFilter>
+</Report>

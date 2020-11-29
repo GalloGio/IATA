@@ -1,0 +1,140 @@
+p {
+    font-size: 14px !important;
+    display: inline-block;
+}
+
+.bluelane {
+    position: absolute;
+    height: 100%;
+    width: 85%;
+    border-right: 6px solid #1e32fa;
+}
+
+.overView {
+    background-color: #1e32fa;
+    padding: 7px !important;
+    display: inline-block;
+}
+
+.overViewText {
+    width: 100%;
+    padding-top: 3px;
+    color: #ffc90d;
+    text-align: right;
+    font-size: 1.4rem !important;
+}
+
+@media (min-width: 992px) {
+    .ovrow {
+        margin-right: -14px;
+    }
+}
+
+.arrow {
+    background-color: #ffc90d;
+    display: inline-block;
+    padding: 7px !important;
+    vertical-align: bottom;
+    font-weight: bolder;
+}
+
+.arrow-resp {
+    background-color: #ffc90d;
+    display: inline-block;
+    vertical-align: bottom;
+    font-weight: bolder;
+    margin: auto;
+    padding: 6px 0px 6px 7px;
+}
+
+.sectionIcon {
+    display: inline-block;
+    padding: 7px;
+    cursor: default;
+}
+
+.sectionTitle {
+    color: #1e32fa !important;
+    padding: 13px 0px;
+    display: inline-block;
+}
+
+.separator {
+    width: 80%;
+    margin-top: 10px;
+    height: 1.5px;
+    background-color: rgb(203, 203, 203);
+    margin-left: 35px;
+}
+
+.sectionText {
+    padding: 5px 0px;
+    color: grey;
+}
+
+.sectionText p {
+    cursor: pointer;
+    border-bottom: 0.5px solid #f3f3f3;
+}
+
+p.pItem.active {
+    cursor: pointer;
+    border-bottom: 0.5px solid #1e32fa;
+}
+
+p.pItem:hover {
+    border-bottom: 0.5px solid #5e6ef9;
+}
+
+.sidebar-private-menu {
+    border-right: 6px transparent;
+    padding: 10px 0px;
+}
+
+.sectionTitle2 {
+    color: #1e32fa;
+}
+
+.cwGris {
+    background-color: #f3f3f3 !important;
+    height: 100%;
+}
+
+div.collapsed.col-md-12.sidebar-private-menu div.sectionTitle {
+    display: none;
+}
+
+div.collapsed.col-md-12.sidebar-private-menu div {
+    padding-left: 41.78px;
+    display: none;
+    margin: auto;
+}
+
+div.collapsed.col-md-12.sidebar-private-menu div.sectionIcon {
+    cursor: pointer;
+    padding-left: 7px;
+    display: block;
+}
+
+div.collapsed.col-md-12.sidebar-private-menu div.separator {
+    margin-left: 0px;
+    height: auto;
+}
+
+.collapse-arrow {
+    width: 18px;
+}
+
+.collapse-arrow-resp {
+    width: 16px;
+    transform: rotate(90deg);
+    margin-left: 3px;
+}
+
+.rotate-180 {
+    transform: rotate(180deg);
+}
+
+.pl-special {
+    padding-left: 41.78px;
+}

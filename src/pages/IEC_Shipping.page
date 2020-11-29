@@ -1145,7 +1145,7 @@
                                                     <!-- </apex:variable> -->
         
                                                     <li>
-                                                        <apex:actionFunction name="processPayment" reRender="errorBloc,paymentProcessJs,hiddenFields, displayButton" action="{!processPayment}" status="payStatus" oncomplete="$(window).scrollTop(0);" />
+                                                        <apex:actionFunction name="processPayment" reRender="errorBloc,paymentProcessJs,hiddenFields, displayButton" action="{!processPayment}" status="payStatus" oncomplete="$(window).scrollTop(0);j$.unblockUI();" />
 
                                                         <apex:outputPanel id="buttonJs">
                                                         <button class="button wide" type="button" onclick="jsProcessPayment();blockme();" oncomplete="j$.unblockUI();">
