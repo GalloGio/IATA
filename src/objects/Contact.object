@@ -12876,7 +12876,9 @@ IF(S_ICE__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000004IwcT&
 &amp;&quot; &quot;&amp; 
 IF(S_Standards_Setting_Workspace__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000005xvJ2&quot; ,&quot;&quot;,40,40),&quot;&quot;)
 &amp;&quot; &quot;&amp; 
-IF(S_Risk_RHC__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000006MxBK&quot; ,&quot;&quot;,40,40),&quot;&quot;)</formula>
+IF(S_Risk_RHC__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000006MxBK&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp; 
+IF(S_TIDS__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=0154E0000016ywI&quot; ,&quot;&quot;,40,40),&quot;&quot;)</formula>
         <label>Services</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -13891,6 +13893,20 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>S_TIDS__c</fullName>
+        <externalId>false</externalId>
+        <label>Service TIDS</label>
+        <summaryFilterItems>
+            <field>Portal_Application_Right__c.Portal_Application__c</field>
+            <operation>startsWith</operation>
+            <value>a2w5J000000kP35</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Portal_Application_Right__c.Contact__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <type>Summary</type>
     </fields>
     <fields>
         <fullName>segment_lifecycle__c</fullName>
