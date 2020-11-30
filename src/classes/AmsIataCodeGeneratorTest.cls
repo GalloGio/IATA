@@ -1782,7 +1782,7 @@ public class  AmsIataCodeGeneratorTest
 
 
 				System.assertEquals(resultUpdated.isFaulty,true);
-				System.assertEquals(resultUpdated.errorMessage,'C, I, R, Q and G Location Types must have a CASS number defined before generating the IATA code.');
+				System.assertEquals(resultUpdated.errorMessage,'C, I, R, Q, G and L Location Types must have a CASS number defined before generating the IATA code.');
 
 				System.assertEquals(resultUpdated2.isFaulty,true);
 				System.assertEquals(resultUpdated2.errorMessage.contains('This account has already an existing IATA code.'),true);
