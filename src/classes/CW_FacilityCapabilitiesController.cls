@@ -858,6 +858,11 @@ public without sharing class CW_FacilityCapabilitiesController {
 		//Read all capabilities wrapper
 		for (CapabilityWrapper c : listCapWrapper) {
 			SObject sObj = new Account_Role_Detail_Capability__c();
+
+			if(String.isNotBlank(c.id) && String.isNotEmpty(c.id)){
+				sObj.put('Id', c.id);
+			}
+
 			sObj.put('RecordTypeId', c.rtypeId);
 			sObj.put('Category__c', c.category);
 			sObj.put('Equipment__c', c.equipment);
@@ -896,7 +901,7 @@ public without sharing class CW_FacilityCapabilitiesController {
 			Account_Role_Detail_Capability__c parseCapability = (Account_Role_Detail_Capability__c) sObj;
 			listToInsert.add(parseCapability);
 		}
-		insert listToInsert;
+		upsert listToInsert;
 
 		return listToInsert;
 	}
