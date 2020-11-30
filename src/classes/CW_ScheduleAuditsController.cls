@@ -180,7 +180,8 @@ public without sharing class CW_ScheduleAuditsController {
 	@AuraEnabled
 	public static string getUserRequestedAudits(List<String> managedFacilitiesIds) {
 		Set<String> managedFacilitiesSet = managedFacilitiesIds != null ? new Set<String>(managedFacilitiesIds) : new Set<String>();
-		return JSON.serialize([SELECT id, name, Station__r.Name, Station__c, CreatedDate, ICG_certification__c, ICG_certification__r.Name, ICG_certification__r.Label__c, Station__r.Formatted_Address__c, Preferable_Audit_Date__c, Contact_Email__c, Contact_Name__c, Contact_Phone__c, Target_Contact__c, Short_Description__c, Status__c FROM ICG_Notification__c WHERE Station__c IN :managedFacilitiesSet AND Station__c != null ORDER BY CreatedDate DESC]);
+		Id auditRT = Schema.SObjectType.ICG_Notification__c.getRecordTypeInfosByDeveloperName().get('Audit').getRecordTypeId();
+		return JSON.serialize([SELECT id, name, Station__r.Name, Station__c, CreatedDate, ICG_certification__c, ICG_certification__r.Name, ICG_certification__r.Label__c, Station__r.Formatted_Address__c, Preferable_Audit_Date__c, Contact_Email__c, Contact_Name__c, Contact_Phone__c, Target_Contact__c, Short_Description__c, Status__c FROM ICG_Notification__c WHERE Station__c IN :managedFacilitiesSet AND Station__c != null AND RecordTypeId = :auditRT ORDER BY CreatedDate DESC]);
 	}
 
 	public class CertData {
