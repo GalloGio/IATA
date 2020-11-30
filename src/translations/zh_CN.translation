@@ -26304,6 +26304,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>SIS_Operations</name>
     </customLabels>
     <customLabels>
+        <label><!-- SMART_Lite_Service_Description --></label>
+        <name>SMART_Lite_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- SSP AMS Step5 ReviewBeforeSubmit CNS --></label>
         <name>SSP_AMS_Step5_ReviewBeforeSubmit_CNS</name>
     </customLabels>
@@ -29902,6 +29906,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- icg upload image --></label>
         <name>icg_upload_image</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg user guide pdf link --></label>
+        <name>icg_user_guide_pdf_link</name>
     </customLabels>
     <customLabels>
         <label><!-- icg validation history --></label>

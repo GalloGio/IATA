@@ -1462,7 +1462,14 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
         <fullName>All</fullName>
         <columns>NAME</columns>
         <columns>RECORDTYPE</columns>
+        <columns>City_FOR__c</columns>
+        <columns>Country_FOR__c</columns>
         <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>ICG_Account_Role_Detail__c.Airline</value>
+        </filters>
         <label>All</label>
     </listViews>
     <listViews>
