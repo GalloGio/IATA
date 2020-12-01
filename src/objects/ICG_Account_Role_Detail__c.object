@@ -367,6 +367,11 @@
                     <label>English</label>
                 </value>
                 <value>
+                    <fullName>Finnish</fullName>
+                    <default>false</default>
+                    <label>Finnish</label>
+                </value>
+                <value>
                     <fullName>Flemish</fullName>
                     <default>false</default>
                     <label>Flemish</label>
@@ -570,6 +575,11 @@
                     <fullName>Northern Min</fullName>
                     <default>false</default>
                     <label>Northern Min</label>
+                </value>
+                <value>
+                    <fullName>Norwegian</fullName>
+                    <default>false</default>
+                    <label>Norwegian</label>
                 </value>
                 <value>
                     <fullName>Odia</fullName>
@@ -1452,7 +1462,14 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
         <fullName>All</fullName>
         <columns>NAME</columns>
         <columns>RECORDTYPE</columns>
+        <columns>City_FOR__c</columns>
+        <columns>Country_FOR__c</columns>
         <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>ICG_Account_Role_Detail__c.Airline</value>
+        </filters>
         <label>All</label>
     </listViews>
     <listViews>
@@ -1939,6 +1956,10 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
                 <default>false</default>
             </values>
             <values>
+                <fullName>Norwegian</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Odia</fullName>
                 <default>false</default>
             </values>
@@ -2387,6 +2408,10 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
             </values>
             <values>
                 <fullName>Northern Min</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Norwegian</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2841,6 +2866,10 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
                 <default>false</default>
             </values>
             <values>
+                <fullName>Norwegian</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Odia</fullName>
                 <default>false</default>
             </values>
@@ -3289,6 +3318,10 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
             </values>
             <values>
                 <fullName>Northern Min</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Norwegian</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -3743,6 +3776,10 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
                 <default>false</default>
             </values>
             <values>
+                <fullName>Norwegian</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Odia</fullName>
                 <default>false</default>
             </values>
@@ -4194,6 +4231,10 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
                 <default>false</default>
             </values>
             <values>
+                <fullName>Norwegian</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Odia</fullName>
                 <default>false</default>
             </values>
@@ -4642,6 +4683,10 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
             </values>
             <values>
                 <fullName>Northern Min</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Norwegian</fullName>
                 <default>false</default>
             </values>
             <values>

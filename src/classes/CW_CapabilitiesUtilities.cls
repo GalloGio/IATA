@@ -25,7 +25,7 @@ public with sharing class CW_CapabilitiesUtilities {
 	public static final String SYSTEM_ADMINISTRADOR = 'System Administrator';
 	public static final String SMART_FACILITY_REMOTE_VALIDATION = 'Smart Facility Remote Validation';
 	public static final String SFRV_MANAGERS = 'SFRV_MANAGERS';
-	
+
 	public final static String RT_REMOTE_VALIDATION = RecordTypeSingleton.getInstance().getRecordTypeId('ICG_Capability_Assignment_Group__c', 'Remote_Validation');
 	public final static String RT_NO_CERTIFICATION_REQUIRED = RecordTypeSingleton.getInstance().getRecordTypeId('ICG_Capability_Assignment_Group__c', 'No_Certification_Required');
 
@@ -434,63 +434,64 @@ public with sharing class CW_CapabilitiesUtilities {
 		List<String> lstCertiAllowed = new List<String>();
 		List<ICG_Certification__c> lstCerti;
 		Boolean result;
-		
-		String profileName=[Select Id,Name from Profile where Id =: UserInfo.getProfileId()].Name;
 
-		AggregateResult[] exist = [SELECT count(Id) FROM PermissionSetAssignment WHERE AssigneeId =: UserInfo.getUserId() AND (PermissionSet.Name = 'One_Source_Backend_Admin')];
+		String profileName = [SELECT Id, Name FROM Profile WHERE Id = :UserInfo.getProfileId()].Name;
+
+		AggregateResult[] exist = [SELECT count(Id) FROM PermissionSetAssignment WHERE AssigneeId = :UserInfo.getUserId() AND PermissionSet.Name = 'One_Source_Backend_Admin'];
 		result = (!exist.isEmpty() && (Integer.valueOf(exist[0].get('expr0')) > 0));
 
-		if(result || profileName == CW_CapabilitiesUtilities.SYSTEM_ADMINISTRADOR){
-			lstCerti = [SELECT Name, Label__c FROM ICG_Certification__c WHERE Applicable_to__c includes (:stationRT)];
+		if (result || profileName == CW_CapabilitiesUtilities.SYSTEM_ADMINISTRADOR) {
+			lstCerti = [SELECT Name, Label__c FROM ICG_Certification__c WHERE Applicable_to__c INCLUDES (:stationRT)];
 			lstCerti.add(new ICG_Certification__c(Name = SMART_FACILITY_REMOTE_VALIDATION, Label__c = SMART_FACILITY_REMOTE_VALIDATION));
-		}
-		else{
+		} else {
 			List<Group> lstGroup = [SELECT Name FROM Group WHERE Id IN (SELECT GroupId FROM GroupMember WHERE UserOrGroupId = :UserInfo.getUserId())];
 			Boolean existSFRM = false;
 			for (Group g : lstGroup) {
 				lstDepts.add(g.Name);
-				if(g.Name == SFRV_MANAGERS){
-					existSFRM=true;
+				if (g.Name == SFRV_MANAGERS) {
+					existSFRM = true;
 				}
 			}
 			lstCerti = [SELECT Name FROM ICG_Certification__c WHERE Department__c IN :lstDepts];
-			if(existSFRM){
+			if (existSFRM) {
 				lstCerti.add(new ICG_Certification__c(Name = SMART_FACILITY_REMOTE_VALIDATION, Label__c = SMART_FACILITY_REMOTE_VALIDATION));
 			}
 		}
-		
+
 		for (ICG_Certification__c c : lstCerti) {
 			lstCertiAllowed.add(c.Name);
 		}
 		return lstCertiAllowed;
 	}
 
-	public static List<CW_AccountDetailCarousel.Carousel> getCapabilitiesPhotosFromStation(String recordId){
-		List<String> acceptFormats = new List<String>{'pdf'};
-		Map<String,CW_FacilityCapabilitiesController.CapabilityPhoto> photosCapab = new Map<String,CW_FacilityCapabilitiesController.CapabilityPhoto>();
+	public static List<CW_AccountDetailCarousel.Carousel> getCapabilitiesPhotosFromStation(String recordId) {
+		List<String> acceptFormats = new List<String>{ 'pdf' };
+		Map<String, CW_FacilityCapabilitiesController.CapabilityPhoto> photosCapab = new Map<String, CW_FacilityCapabilitiesController.CapabilityPhoto>();
 		List<CW_AccountDetailCarousel.Carousel> photosCarousel = new List<CW_AccountDetailCarousel.Carousel>();
 
-		for(ICG_Account_Role_Capability_Assignment__c assigment : [SELECT Account_Role_Detail_Capability__r.Photos__c 
-		FROM ICG_Account_Role_Capability_Assignment__c WHERE ICG_Account_Role_Detail__c = : recordId
-		AND ICG_Capability_Assignment_Group__r.Status__c =: CW_CapabilitiesUtilities.ACTIVE])
-		{
-			if(String.isNotEmpty(assigment.Account_Role_Detail_Capability__r.Photos__c)){
-				CW_FacilityCapabilitiesController.CapabilityPhoto photo = (CW_FacilityCapabilitiesController.CapabilityPhoto)JSON.deserialize(assigment.Account_Role_Detail_Capability__r.Photos__c.replace('[', '').replace(']', ''),CW_FacilityCapabilitiesController.CapabilityPhoto.class);
-				if(!photosCapab.containsKey(photo.id)){
-					photosCapab.put(photo.id, photo);
-				}	
+		for (ICG_Account_Role_Capability_Assignment__c assigment : [SELECT Account_Role_Detail_Capability__r.Photos__c,ICG_Capability_Assignment_Group__r.RecordTypeId FROM ICG_Account_Role_Capability_Assignment__c WHERE ICG_Account_Role_Detail__c = :recordId AND ICG_Capability_Assignment_Group__r.Status__c = :CW_CapabilitiesUtilities.ACTIVE]) {
+			if (String.isNotEmpty(assigment.Account_Role_Detail_Capability__r.Photos__c)) {
+				List<CW_FacilityCapabilitiesController.CapabilityPhoto> photoList = (List<CW_FacilityCapabilitiesController.CapabilityPhoto>) JSON.deserialize(assigment.Account_Role_Detail_Capability__r.Photos__c, List<CW_FacilityCapabilitiesController.CapabilityPhoto>.class);
+				for (CW_FacilityCapabilitiesController.CapabilityPhoto photo : photoList) {
+					if(assigment.ICG_Capability_Assignment_Group__r.RecordTypeId == RT_NO_CERTIFICATION_REQUIRED){
+						photo.visible = false;
+					}
+					
+					if (!photosCapab.containsKey(photo.id)) {
+						photosCapab.put(photo.id, photo);
+					}
+				}
 			}
-			
 		}
 
 		Integer index = 0;
-		for(CW_FacilityCapabilitiesController.CapabilityPhoto photoParse : photosCapab.values()){
+		for (CW_FacilityCapabilitiesController.CapabilityPhoto photoParse : photosCapab.values()) {
 			CW_AccountDetailCarousel.Carousel car = new CW_AccountDetailCarousel.Carousel();
 			car.id = photoParse.id;
 			car.name = photoParse.label;
 			car.tabindex = index == 0 ? '0' : '-1';
-			car.position = 'slds-carousel__panels translate-x'+String.valueOf(index)+'00';
-			car.hidden =  index == 0 ? true : false;
+			car.position = 'slds-carousel__panels translate-x' + String.valueOf(index) + '00';
+			car.hidden = index == 0 ? true : false;
 			String indicatorClass = 'slds-carousel__indicator-action';
 			indicatorClass = index == 0 ? indicatorClass + ' slds-is-active' : indicatorClass;
 			car.indicatorClass = indicatorClass;

@@ -455,8 +455,9 @@ import icg_join_now_popup_message41 from "@salesforce/label/c.icg_join_now_popup
 import icg_join_now_popup_message42 from "@salesforce/label/c.icg_join_now_popup_message42";
 import icg_join_now_popup_message51 from "@salesforce/label/c.icg_join_now_popup_message51";
 import icg_join_now_popup_message52 from "@salesforce/label/c.icg_join_now_popup_message52";
-import documents from "@salesforce/label/c.icg_documents";
+import obligation_documents from "@salesforce/label/c.icg_documents";
 import manage_documents from "@salesforce/label/c.icg_manage_documents";
+import icg_user_guide_pdf_link from "@salesforce/label/c.icg_user_guide_pdf_link";
 
 export function labels() {
 	let labels = {
@@ -918,8 +919,10 @@ export function labels() {
 		icg_join_now_popup_message42,
 		icg_join_now_popup_message51,
 		icg_join_now_popup_message52,
-		documents,
-		manage_documents
+		obligation_documents,
+		manage_documents,
+		icg_user_guide_pdf_link
+
 	};
 
 	return labels;
