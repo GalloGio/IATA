@@ -61,7 +61,7 @@ export default class GoogleMapContainer extends LightningElement {
 			"mapOptions": this.mapOptions,  
 			"isCollapsed" : this.collapsed,
 			"initMap" : initMap,
-			"companyTypeFilter" : this.companyTypeFilter && this.companyTypeFilter !== 'All' ? this.companyTypeFilter.replace(" ", "_") : null
+			"companyTypeFilter" : this.companyTypeFilter && this.companyTypeFilter !== 'All' ? this.companyTypeFilter.replaceAll(" ", "_") : null
 		} ;
 		//Send message to VF
 		this.sendMessage(message);
