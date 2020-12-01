@@ -145,7 +145,8 @@ public class AMS_InspectionHelper {
 
 		set<Id> accountIdsToCheckAssignments = new set<Id>();
 		for(Account acc : accountsToProcess){
-			acc.Expiry_Date__c = statusCodeChanged.get(acc.Id).Date_Organisation_Status_attained__c;
+			if (acc.Location_Class__c != 'G')
+				acc.Expiry_Date__c = statusCodeChanged.get(acc.Id).Date_Organisation_Status_attained__c;
 
 			if (acc.Location_Class__c == 'G' || acc.Location_Class__c == 'X')
 				accountIdsToCheckAssignments.add(acc.Id);
