@@ -294,13 +294,13 @@ export default class TidsSupportingDocuments extends LightningElement {
 						variant: "success"
 					})
 				);
-				if(this.documentindex < this.totalDocuments) {
+				if(this.documentindex < this.documentsView.length) {
 					this.uploadHelper();
 				} else {
 					this.showSpinner = false;
 					setTimeout(()=>{
 						this.upsertSupportingDocs();
-					},6000, this);
+					},1000, this);
 				}        
 			})
 			.catch(error => {
