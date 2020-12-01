@@ -1,4 +1,8 @@
 import { LightningElement, track, wire, api } from 'lwc';
+import { loadStyle } from "lightning/platformResourceLoader";
+
+/* STATIC RESOURCES */
+import cspStylesheet    from '@salesforce/resourceUrl/CSP_Stylesheet';
 
 // language
 import userId from '@salesforce/user/Id';
@@ -308,7 +312,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     }
 
     connectedCallback() {
-
+        loadStyle(this, cspStylesheet);
         isGuestUser().then(results => {
             
             this.internalUser = !results;
@@ -513,9 +517,9 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
     // Check if we are in the Old/New Portal
     navigationCheck(pageNameToNavigate, currentService) {
-
+        let oneSourceCommunity = window.location.href.includes('onesource');
         this.closeSideMenu();
-        if (this.trackedIsInOldPortal || !this.internalUser) {
+        if (this.trackedIsInOldPortal || !this.internalUser || oneSourceCommunity) {
             redirectfromPortalHeader({ pageName: currentService }).then(result => {
                 window.location.href = result;
             });
