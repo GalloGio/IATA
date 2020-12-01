@@ -74,6 +74,10 @@
   height: 60px; 
 }
 
+.cursorPointer {
+  cursor: pointer;
+}
+
 .stickyHeader{
   position: fixed;
   width: 100%;
@@ -211,9 +215,11 @@
 }
 
 
-.headerButtonNotificationsContainer:hover {
+.headerButtonNotificationsContainer:hover,
+.headerButtonSearchContainer:hover {
   cursor: pointer;
 }
+
 .headerButtonSearchContainer {
   padding-right: 6px;
   padding-left: 6px;

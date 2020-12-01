@@ -30,13 +30,6 @@ public with sharing class CaseCommentHandler {
 		
 		if(fullCaseComments.isEmpty()) return;
 
-		Map<Id,Id> caseCommentIdToCaseIdMap = getCaseCommentsForCases(fullCaseComments);
-		//get case item records with a case that has an inserted comment
-		Map<Id,Case_Item__c> caseItemsWithCaseComments = new Map<Id,Case_Item__c> ([SELECT Id, RecordTypeId FROM Case_Item__c WHERE Case__c IN :caseCommentIdToCaseIdMap.values()]);
-		//call update on related case items to fire integration
-		CaseItems caseItems = new CaseItems(caseItemsWithCaseComments);
-		caseItems.onAfterUpdate();
-
 		List<ISSP_KPI_Reporting__mdt> config = new List<ISSP_KPI_Reporting__mdt>();
 		Map<String, ISSP_KPI_Reporting__mdt> rtToConfigMap = new Map<String, ISSP_KPI_Reporting__mdt>();
 		Set<Id> recordTypesToProcess = new Set<Id>();
@@ -55,12 +48,6 @@ public with sharing class CaseCommentHandler {
 			recordTypesToProcess.add(RecordTypeSingleton.getInstance().getRecordType('Case', cfg.Case_Record_Type__c).Id);
 			rtToConfigMap.put(cfg.Case_Record_Type__c, cfg);
 		}
-
-		List<CaseComment> publishedCaseComments = new List<CaseComment>();
-		for(CaseComment cc : fullCaseComments) {
-			if(cc.isPublished && recordTypesToProcess.contains(cc.Parent.RecordTypeId))
-				publishedCaseComments.add(cc);
-		}
 		
 		Id kpiReportingId = kpiReporting.get(0).Id;
 		
@@ -73,6 +60,16 @@ public with sharing class CaseCommentHandler {
 		if(kpiValuesToInsert.size() > 0 ) {
 			insert kpiValuesToInsert;
 		}
+	}
+	public void processCaseItems(List<CaseComment> listOfComments){
+		//only fire integration if user making the insert is not integration user
+		////1. if case comment is for a case with a case item then fire platform event
+		Map<Id,Id> caseCommentIdToCaseIdMap = getCaseCommentsForCases(listOfComments);
+		//get case item records with a case that has an inserted comment
+		Map<Id,Case_Item__c> caseItemsWithCaseComments = new Map<Id,Case_Item__c> ([SELECT Id, RecordTypeId FROM Case_Item__c WHERE Case__c IN :caseCommentIdToCaseIdMap.values()]);
+		//call update on related case items to fire integration
+		CaseItems caseItems = new CaseItems(caseItemsWithCaseComments);
+		caseItems.onAfterUpdate();
 	}
 
 	public void doAfterUpdate(Map<Id, CaseComment> updatedCaseCommentMap, Map<Id, CaseComment> originalCaseCommentMap){
