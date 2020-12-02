@@ -99,10 +99,6 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Required</behavior>
-                <field>Complaint_Entity_Originator__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Required</behavior>
                 <field>Root_Cause__c</field>
             </layoutItems>
             <layoutItems>
