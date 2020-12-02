@@ -170,6 +170,11 @@
                 <field>Root_Cause__c</field>
                 <uiBehavior>Required</uiBehavior>
             </quickActionLayoutItems>
+            <quickActionLayoutItems>
+                <emptySpace>false</emptySpace>
+                <field>Area_of_Concern__c</field>
+                <uiBehavior>Edit</uiBehavior>
+            </quickActionLayoutItems>
         </quickActionLayoutColumns>
     </quickActionLayout>
     <type>Update</type>

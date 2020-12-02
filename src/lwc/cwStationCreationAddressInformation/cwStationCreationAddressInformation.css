@@ -13,19 +13,6 @@
 
 .customPopupInteriorHalfScreenCentered::-webkit-scrollbar-thumb{
      width: 68px;
-      background-image: url("/csportal/s/cat.gif"),
-        linear-gradient(
-          90deg,
-          transparent,
-          magenta,
-          red,
-          yellow,
-          limegreen,
-          turquoise,
-          blue,
-          magenta,
-          transparent
-        );
       background-position: center bottom, center -20px;
       background-repeat: no-repeat, no-repeat;
       background-size: contain, contain;

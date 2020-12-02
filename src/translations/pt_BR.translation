@@ -4933,6 +4933,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Service_AirlineDailySales_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Service_SmartLite_NoAccess --></label>
+        <name>CSP_Service_SmartLite_NoAccess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_SmartLite_Title --></label>
+        <name>CSP_Service_SmartLite_Title</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Service_TIPReports_AmazonType --></label>
         <name>CSP_Service_TIPReports_AmazonType</name>
     </customLabels>
@@ -26303,6 +26311,10 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
         <name>SIS_Operations</name>
     </customLabels>
     <customLabels>
+        <label><!-- SMART_Lite_Service_Description --></label>
+        <name>SMART_Lite_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- SSP AMS Step5 ReviewBeforeSubmit CNS --></label>
         <name>SSP_AMS_Step5_ReviewBeforeSubmit_CNS</name>
     </customLabels>
@@ -28147,6 +28159,10 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
         <name>icg_IATA_Validation_Programs</name>
     </customLabels>
     <customLabels>
+        <label><!-- icg_Service_Description --></label>
+        <name>icg_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- icg about IATA --></label>
         <name>icg_about_IATA</name>
     </customLabels>
@@ -29897,6 +29913,10 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
     <customLabels>
         <label><!-- icg upload image --></label>
         <name>icg_upload_image</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg user guide pdf link --></label>
+        <name>icg_user_guide_pdf_link</name>
     </customLabels>
     <customLabels>
         <label><!-- icg validation history --></label>

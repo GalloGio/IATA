@@ -45833,6 +45833,13 @@ Country {8}</value>
         <value>SIS Operations</value>
     </labels>
     <labels>
+        <fullName>SMART_Lite_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SMART_Lite_Service_Description</shortDescription>
+        <value>The SMART Lite solution provides the Distribution Risk Leader and Expert with more visibility on the Agent’s risk profile, allowing Airlines to react faster with this additional information.</value>
+    </labels>
+    <labels>
         <fullName>SSP_AMS_Step5_ReviewBeforeSubmit_CNS</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -48044,6 +48051,17 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <value>IATA Validation Programs</value>
     </labels>
     <labels>
+        <fullName>icg_Service_Description</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg_Service_Description</shortDescription>
+        <value>ONE Source Station Management -
+ONE Source is the industry platform for validated aviation capability and infrastructure information. It allows your customers to find you by bringing the modern search platform experience into aviation services. ONE Source
+ lists aviation service station profiles for all company types along the transportation chain such as shippers, freight forwarders, truckers, cargo handling facilities, ground handlers and airlines. All business-critical information is verified through the
+ different IATA validation programs. It guarantees that all the data is accurate, enabling potential customers to easily find your company as the right business partner to meet their needs.</value>
+    </labels>
+    <labels>
         <fullName>icg_about_IATA</fullName>
         <categories>ICG One Source</categories>
         <language>en_US</language>
@@ -49177,7 +49195,7 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Title for documents section</shortDescription>
-        <value>Documents</value>
+        <value>Obligation Documentation</value>
     </labels>
     <labels>
         <fullName>icg_dolly_truck</fullName>
@@ -51546,6 +51564,14 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <protected>false</protected>
         <shortDescription>icg upload image</shortDescription>
         <value>Upload Image</value>
+    </labels>
+    <labels>
+        <fullName>icg_user_guide_pdf_link</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg user guide pdf link</shortDescription>
+        <value>https://www.iata.org/contentassets/039eafb82888488b8c507c72cf3fca4c/onesource-user-guide.pdf</value>
     </labels>
     <labels>
         <fullName>icg_validation_history</fullName>
