@@ -6783,7 +6783,7 @@ ISPICKVAL(BSPCountry__c,&quot;Russian Federation&quot;)
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>Weblinkheadoffice</assignedTo>
+            <assignedTo>WEBLink_Business</assignedTo>
             <assignedToType>Queue</assignedToType>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
