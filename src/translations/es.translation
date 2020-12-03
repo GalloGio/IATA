@@ -9973,8 +9973,7 @@ Por favor, si es la primera vez que usted solicita una tarjeta de identificació
         <name>IDCard_Course2</name>
     </customLabels>
     <customLabels>
-        <label>Los agentes que hayan pedido y pagado una tarjeta de identificación impresa, deben tener en cuenta que debido al brote de COVID-19, y las medidas impuestas por los gobiernos locales, los tiempos de entrega pueden ser más largos de lo habitual.&lt;br&gt;
-        El servicio de entrega no está disponible para agentes fuera de Canadá. La tarjeta Digital permanece accesible para todos los titulares de las tarjetas ID Card en la aplicación AgentExperience de IATA. Visite &lt;a href=&quot;https://www.iata.org/idcard-digital/&quot; style=&quot;color: blue;&quot;&gt;iata.org/idcard-digital&lt;/a&gt; para obtener más detalles.</label>
+        <label>Los agentes que hayan pedido y pagado una tarjeta de identificación impresa, deben tener en cuenta que debido al brote de COVID-19, y las medidas impuestas por los gobiernos locales, los tiempos de entrega pueden ser más largos de lo habitual. El servicio de entrega no está disponible para agentes fuera de Canadá. La tarjeta Digital permanece accesible para todos los titulares de las tarjetas ID Card en la aplicación AgentExperience de IATA. Visite &lt;a href=&quot;https://www.iata.org/idcard-digital/&quot; style=&quot;color: blue;&quot;&gt;iata.org/idcard-digital&lt;/a&gt; para obtener más detalles.</label>
         <name>IDCard_Covid</name>
     </customLabels>
     <customLabels>
