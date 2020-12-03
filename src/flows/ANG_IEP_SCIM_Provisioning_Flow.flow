@@ -316,7 +316,7 @@
         <name>ExternalSystem</name>
         <dataType>String</dataType>
         <value>
-            <stringValue>&apos;IEP&apos;</stringValue>
+            <stringValue>IEP</stringValue>
         </value>
     </constants>
     <decisions>
@@ -426,7 +426,7 @@
         <name>CallParams</name>
         <dataType>String</dataType>
         <expression>&apos;{&apos;+
-&apos; &quot;externalSystems&quot; : &quot;&apos; + {!UserFields.Contact.Account.IATA_ISO_Country__r.ANG_Portal_Service__r.Name}  + &apos;&quot;, &apos; +
+&apos; &quot;externalSystems&quot; : &quot;&apos; + {!UserFields.Contact.Account.IATA_ISO_Country__r.ANG_Portal_Service__r.Name}  + &apos;&quot;&apos; +
 &apos;}&apos;</expression>
     </formulas>
     <formulas>

@@ -316,7 +316,7 @@
         <name>ExternalSystem</name>
         <dataType>String</dataType>
         <value>
-            <stringValue>&apos;PASS&apos;</stringValue>
+            <stringValue>PASS</stringValue>
         </value>
     </constants>
     <decisions>
@@ -418,9 +418,7 @@
     <formulas>
         <name>CallParams</name>
         <dataType>String</dataType>
-        <expression>&apos;{&apos;+
-&apos; &quot;externalSystems&quot; : &quot;Postal Accounts Settlement System (PASS)&quot;, &apos; +
-&apos;}&apos;</expression>
+        <expression>&apos;{&quot;externalSystems&quot; : &quot;Postal Accounts Settlement System (PASS)&quot;}&apos;</expression>
     </formulas>
     <formulas>
         <name>EnableUser</name>

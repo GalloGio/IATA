@@ -316,7 +316,7 @@
         <name>ExternalSystem</name>
         <dataType>String</dataType>
         <value>
-            <stringValue>&apos;FRED+&apos;</stringValue>
+            <stringValue>FRED+</stringValue>
         </value>
     </constants>
     <decisions>
@@ -418,9 +418,7 @@
     <formulas>
         <name>CallParams</name>
         <dataType>String</dataType>
-        <expression>&apos;{&apos;+
-&apos; &quot;externalSystems&quot; : &quot;FRED&quot;, &apos; +
-&apos;}&apos;</expression>
+        <expression>&apos;{&quot;externalSystems&quot; : &quot;FRED&quot;}&apos;</expression>
     </formulas>
     <formulas>
         <description>Formula to determine if a UserProvisioningRequest indicates enabling a user.</description>
