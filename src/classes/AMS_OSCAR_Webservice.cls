@@ -146,8 +146,6 @@ global class AMS_OSCAR_Webservice {
 					ifapCase.Financial_Review_Type__c = AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ADHOC;
 				}
 
-				insert ifapCase;
-
 				if(AMS_Utils.oscarNewProcesses.contains(oscar.Process__c) || AMS_Utils.oscarNewGenNewAppProcesses.contains(oscar.Process__c)){
 					ifapCase.Financial_Review_Type__c = AMS_Utils.FINANCIAL_REVIEW_NEW_APPLICATION;
 				}
@@ -156,7 +154,7 @@ global class AMS_OSCAR_Webservice {
 					ifapCase.Financial_Review_Type__c = AMS_Utils.FINANCIAL_REVIEW_MAJOR_CHANGES;
 				}
 
-				update ifapCase;
+				insert ifapCase;
 
 				oscar.STEP11__c = AMS_Utils.IN_PROGRESS;
 				update oscar;
