@@ -53,7 +53,6 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 	};
 
 	private static final List<String> ON_GOING_MAJOR_CHANGES_STATUS = new List<String>{
-		AMS_Utils.OSCAR_CLOSED, 
 		AMS_Utils.OSCAR_ACCEPTED_FUTURE, 
 		AMS_Utils.OSCAR_ACCEPTED_PENDING_AGREEMENT, 
 		AMS_Utils.OSCAR_ACCEPTED_PENDING_BG, 

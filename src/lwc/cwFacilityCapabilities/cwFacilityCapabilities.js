@@ -179,7 +179,7 @@ export default class CwFacilityCapabilities extends LightningElement {
 		this.rowSelected = this.data.superCategories[superCategoriesIndex].sections[sectionIndex].capabilities[capabilityIndex].categories[categoryIndex].rows[rowIndex];
 
 		this.rowIndexPhotoSelected = rowIndex;
-		this.equipmentPhotoSelected = this.rowSelected.equipment_value;
+		this.equipmentPhotoSelected = this.rowSelected.equipment_value.toLowerCase();
 	}
 
 	handleUploadDocumentFinished(event) {
@@ -201,7 +201,7 @@ export default class CwFacilityCapabilities extends LightningElement {
 				listDocument.push(document);
 			
 			});
-			this.getPublicLinkToFiles(listDocument, 'photos__c');
+			this.getPublicLinkToFiles(listDocument);
 		}
 		
 	}
@@ -217,6 +217,7 @@ export default class CwFacilityCapabilities extends LightningElement {
 				let photo = {
 					visible: true,
 					url: '',
+					internalExtension: file.name,
 					label: file.name,
 					id: file.documentId
 				}
@@ -224,31 +225,47 @@ export default class CwFacilityCapabilities extends LightningElement {
 			
 			});
 
-			this.getPublicLinkToFiles(listPhoto, 'photos__c');
+			this.getPublicLinkToFiles(listPhoto);
 		}
 		
 	}
 
-	getPublicLinkToFiles(listPhoto, fieldToInsert){
+	getPublicLinkToFiles(listPhoto){
 		
 		getPublicLinkToFiles_({listPhoto})
 			.then(res => {				
 					let result = JSON.parse(res);
 					if(result.success)
 					{
-						let auxField = {
-							field: fieldToInsert,
-							value: result.message,
-							required: false
-						}
+						let photosToUpsert = result.message;
 
-						this.listAddedRows.forEach(element => {
-							if(element.position === this.rowIndexPhotoSelected && element.equipment === this.equipmentPhotoSelected){
-								element.fields.push(auxField);
-							}
+						let currentPhotoList = JSON.parse(JSON.stringify(result.message));
+						let currentPhotoListParse = JSON.parse(currentPhotoList);
+						this.rowSelected.newphotos = currentPhotoListParse;
+
+						currentPhotoListParse.forEach(photo => {
+							photo.downloadDocument = photo.url;
 						});
-		
-						this.rowSelected.photos = result.message;
+
+						this.rowSelected.photos.forEach(photo => {
+							photo.url = photo.downloadDocument;
+						});
+
+						let previousPhotoList = this.rowSelected.photos;
+
+						if (previousPhotoList.length > 0) {
+							currentPhotoListParse.forEach(photo => {
+								photo.url = photo.downloadDocument;
+								previousPhotoList.push(photo);
+							});
+							photosToUpsert = JSON.stringify(previousPhotoList);
+
+						} else {
+							previousPhotoList = currentPhotoListParse;
+						}
+						this.rowSelected.photos = previousPhotoList;
+						
+						this.setPhotosValue(photosToUpsert);
 					}	
 					else{
 						this.showToast("Error", result.message, "error");
@@ -259,6 +276,30 @@ export default class CwFacilityCapabilities extends LightningElement {
 				this.isLoading = false;
 			});
 		
+	}
+
+	setPhotosValue(value) {
+		this.listAddedRows.forEach(element => {		
+			if (element.position === this.rowIndexPhotoSelected && element.equipment === this.equipmentPhotoSelected) {
+				let photoFound = false;
+				element.fields.forEach(f => {
+					if (f.field === "photos__c") {
+						f.value = value;
+						photoFound = true;
+					}
+				});
+				if (!photoFound) {
+					let newField = {
+						field: "photos__c",
+						value: value,
+						label: "Photos",
+						required: false
+					};
+					element.fields.push(newField);
+				}
+			}
+		});
+		this.sendParamToParent();
 	}
 
 	getCapabilitiesFromAccountRoleDetailId(id) {
@@ -339,15 +380,28 @@ export default class CwFacilityCapabilities extends LightningElement {
 	setVisibilityPhotos(id, photos) {
 		setVisibilityPhotos_({ id, photos })
 			.then(result => {
+				this.listAddedRows.forEach(element => {
+					if(element.position === this.rowIndexPhotoSelected && element.equipment === this.equipmentPhotoSelected){
+						element.fields.forEach(photo => {
+							if(photo.field.includes('photos__c')){
+								photo.value = JSON.stringify(result);
+							}
+						});
+					}
+				});
+
 				result.forEach(element => {
                     if(element.extension.includes("pdf")){
                         element.url = this.download;
                     }
-                });
+				});
+				
 				this.photosRow.photos = result;
 			})
 			.finally(() => {
 				this.isLoading = false;
+
+				this.sendParamToParent();
 
 				let p1 = new Promise(function(resolve, reject) {
 					resolve(pubsub.fire("photosequipmentupdate"));
@@ -502,10 +556,9 @@ export default class CwFacilityCapabilities extends LightningElement {
 				if (element.visible) {
 					photosAvailable = true;
 				}
-				if(element.extension.includes('pdf')){
-                    element.url = element.downloadDocument;
-                }
-
+			}
+			if(element.extension.includes('pdf')){
+				element.url = element.downloadDocument;
 			}
 		});
 		if(this.editMode && this.photosRow.photos.length > 0){
@@ -644,10 +697,11 @@ export default class CwFacilityCapabilities extends LightningElement {
 										else{
 											if(row.isAssigned && row.isNotCertiRequired){
 												let newCapabilityRow = {
+													id: row.id,
 													position: m.toString(),
 													rtypeId: capability.rtypeId,
 													category: category.value,
-													equipment: row.equipment_value,
+													equipment: row.equipment_value.toLowerCase(),
 													fields:[]
 												};
 									
@@ -693,6 +747,9 @@ export default class CwFacilityCapabilities extends LightningElement {
 			else{
 				this.listAddedRows = tempAddedRows;
 			}
+
+			this.sendParamToParent();
+
 			// Show or not save and cancel bar.
 			const newEvent = new CustomEvent("saveaction", {
 				detail: {
@@ -781,10 +838,11 @@ export default class CwFacilityCapabilities extends LightningElement {
 			this.rowSelected = listDataRow[rowIndex];
 
 			let newCapabilityRow = {
+				id: this.rowSelected.id,
 				position: rowIndex,
 				rtypeId: this.data.superCategories[superCategoriesIndex].sections[sectionIndex].capabilities[capabilityIndex].rtypeId,
 				category: this.data.superCategories[superCategoriesIndex].sections[sectionIndex].capabilities[capabilityIndex].categories[categoryIndex].value,
-				equipment: this.data.superCategories[superCategoriesIndex].sections[sectionIndex].capabilities[capabilityIndex].categories[categoryIndex].rows[rowIndex].equipment_value,
+				equipment: this.data.superCategories[superCategoriesIndex].sections[sectionIndex].capabilities[capabilityIndex].categories[categoryIndex].rows[rowIndex].equipment_value.toLowerCase(),
 				fields:[]
 			};
 
@@ -881,6 +939,10 @@ export default class CwFacilityCapabilities extends LightningElement {
 			if(result.success)
 			{				
 				this.sendACKSaveAction();
+
+				let p1 = new Promise(function(resolve, reject) {
+					resolve(pubsub.fire("photosequipmentupdate"));
+				});
 			}
 			else
 			{
