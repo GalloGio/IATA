@@ -379,7 +379,8 @@ public without sharing class WorkflowHelper {
 
 	public static void updateCNSAccountCheckbox(Account newAccount){
 		
-		if(IATAIsoCountryDAO.getIsoCountriesByIds(new Set<Id>{newAccount.IATA_ISO_Country__c}).get(0).CNS_Country__c
+		if(newAccount.IATA_ISO_Country__c != null
+			&& IATAIsoCountryDAO.getIsoCountriesByIds(new Set<Id>{newAccount.IATA_ISO_Country__c}).get(0).CNS_Country__c
 			&& (!newAccount.CNS_Account__c
 			|| newAccount.CNS_Account__c == null)
 		) newAccount.CNS_Account__c = true;
