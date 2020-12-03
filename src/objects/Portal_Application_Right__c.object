@@ -886,16 +886,6 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
         <columns>Right__c</columns>
         <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
-        <filters>
-            <field>Restricted_App__c</field>
-            <operation>equals</operation>
-            <value>0</value>
-        </filters>
-        <filters>
-            <field>Portal_Application__c</field>
-            <operation>contains</operation>
-            <value>AVSEC</value>
-        </filters>
         <label>All</label>
         <sharedTo>
             <allPartnerUsers></allPartnerUsers>
