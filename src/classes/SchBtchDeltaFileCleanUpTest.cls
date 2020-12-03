@@ -24,9 +24,7 @@ private class SchBtchDeltaFileCleanUpTest {
 		string cronvalue = second + ' ' + minute + ' * * * ?' ;
 		string jobName = 'SchBtchDeltaFileCleanup TEST ' + nextScheduleTime.format('hh:mm');
 
-		Test.startTest();
 		SchBtchDeltaFileCleanup.schedule();
-		Test.stopTest();
 	} // testSchBtchDeltaFileCleanUp
 
 
