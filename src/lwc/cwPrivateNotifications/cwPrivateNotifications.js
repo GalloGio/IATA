@@ -109,11 +109,8 @@ export default class CwPrivateNotifications extends LightningElement {
 
 		let destiny; 
 		if(description.includes(PENDING_APPROVAL) && this.notificationStationIsDefined(elem) || description.includes(STATION_CREATION)){
-			if (elem.CreatedById === this.userInfo.Id){
+			if (elem.CreatedById === this.userInfo.Id || description.includes(STATION)){
 				destiny = MY_REQUESTS;
-			}
-			else if(description.includes(STATION)){
-				destiny = PENDING_STATION_APPROVAL;
 			}
 			else{
 				destiny = PENDING_USER_APPROVAL;
@@ -132,10 +129,10 @@ export default class CwPrivateNotifications extends LightningElement {
 			destiny = STATION_MANAGERS;
 		}
 		else if(description.includes(COMPANY_ADMIN)){
-			destiny = COMPANY_ADMIN;
+			destiny = MY_REQUESTS;
 		}                
 		else if(description.includes(REMOTE) || description.includes(VALIDATION)){
-			destiny = REMOTE;
+			destiny = STATION;
 		}
 		else if(this.notificationStationIsDefined(elem)){
 			destiny = STATION;
