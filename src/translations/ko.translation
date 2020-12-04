@@ -1792,12 +1792,44 @@
         <name>BSPLink_Description</name>
     </customLabels>
     <customLabels>
+        <label><!-- BSP Participation Disable --></label>
+        <name>BSPParticipationDisable</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- BSP Participation Enable --></label>
+        <name>BSPParticipationEnable</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- BSP Participation Popup Alert --></label>
+        <name>BSPParticipationPopupAlert</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- BSP Participation Popup Alert Active GSA Only --></label>
+        <name>BSPParticipationPopupAlertActiveGSAOnly</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- BSP Participation Popup Title --></label>
+        <name>BSPParticipationPopupTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- BSP Participation User Access Error --></label>
+        <name>BSPParticipationUserAccess</name>
+    </customLabels>
+    <customLabels>
         <label><!-- BSP/CASS Ch Bank Service Description --></label>
         <name>BSP_CASS_Ch_Bank_Service_Description</name>
     </customLabels>
     <customLabels>
         <label><!-- BSP/CASS Ch Request Service Description --></label>
         <name>BSP_CASS_Ch_Request_Service_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- BSP Participation Button Disable --></label>
+        <name>BSP_Participation_Button_Disable</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- BSP Participation Button Enable --></label>
+        <name>BSP_Participation_Button_Enable</name>
     </customLabels>
     <customLabels>
         <label><!-- BSPlink Service Description --></label>
