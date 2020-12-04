@@ -710,6 +710,17 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
+            <assignedTo>L3_OneSource</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>AND(
+RecordType.Name = &quot;Process&quot;,
+OR(
+ISPICKVAL(Topic__c, &quot;OneSource&quot;),
+ISPICKVAL(CaseArea__c, &quot;OneSource&quot;)
+)
+)</formula>
+        </ruleEntry>
+        <ruleEntry>
             <assignedTo>GCS_DDS_DataQuality_L3</assignedTo>
             <assignedToType>Queue</assignedToType>
             <formula>AND(
