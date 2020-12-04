@@ -1109,10 +1109,6 @@
                     <name>Technical_Issue_FFP</name>
                 </dataCategory>
                 <dataCategory>
-                    <label>Other</label>
-                    <name>Other_FFP</name>
-                </dataCategory>
-                <dataCategory>
                     <label>Events</label>
                     <name>Events_FFP</name>
                 </dataCategory>
@@ -1582,6 +1578,14 @@
             <dataCategory>
                 <dataCategory>
                     <label>General Information</label>
+                    <name>General_Information_OS</name>
+                </dataCategory>
+                <label>OneSource</label>
+                <name>OneSource</name>
+            </dataCategory>
+            <dataCategory>
+                <dataCategory>
+                    <label>General Information</label>
                     <name>General_Information_CheckACode</name>
                 </dataCategory>
                 <dataCategory>
@@ -1826,10 +1830,6 @@
                 </dataCategory>
                 <label>Weblink</label>
                 <name>Weblink</name>
-            </dataCategory>
-            <dataCategory>
-                <label>Video FAQs</label>
-                <name>Video_FAQs</name>
             </dataCategory>
             <label>Platforms</label>
             <name>Platforms</name>
