@@ -219,7 +219,6 @@ export default class TidsVetting extends NavigationMixin(LightningElement) {
 	}
 
 	oops(error) {
-		console.log('error',JSON.stringify(error));
 		this.spinner = false;
 		this.modalDefaultMessage = "Oops! something happened, please retry.";
 		this.modalAction = "OK";
