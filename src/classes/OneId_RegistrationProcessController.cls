@@ -512,7 +512,7 @@ public without sharing class OneId_RegistrationProcessController {
 	//Probably the way to set this IDs should be reviewed.
 	@AuraEnabled
 	public static boolean registrationAux(Account acc, Contact con, String serviceName, Map<String, String> cityAndStateIds){
-		if(GDPR_Helper.isDisposalEmail(con.email)) return false;
+		if(!string.isBlank(con.email) && GDPR_Helper.isDisposalEmail(con.email)) return false;
 		if(cityAndStateIds != null){
 			String billingCityId = (String) cityAndStateIds.get('billingCityId');
 			String billingStateId = (String) cityAndStateIds.get('billingStateId');
