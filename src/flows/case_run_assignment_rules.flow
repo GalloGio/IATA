@@ -494,7 +494,7 @@
                 <stringValue>AND
 (
 ISPICKVAL([Case].Status, &quot;Reopen&quot;) || ISPICKVAL([Case].Status, &quot;Re-opened&quot;),
-[Case].OwnerId = &quot;0050Q00000475XvQAI&quot;
+[Case].OwnerId = &quot;0055J000001eifDQAQ&quot;
 )</stringValue>
             </value>
         </processMetadataValues>
@@ -503,7 +503,7 @@ ISPICKVAL([Case].Status, &quot;Reopen&quot;) || ISPICKVAL([Case].Status, &quot;R
         <expression>AND
 (
 ISPICKVAL({!myVariable_current.Status}, &quot;Reopen&quot;) || ISPICKVAL({!myVariable_current.Status}, &quot;Re-opened&quot;),
-{!myVariable_current.OwnerId} = &quot;0050Q00000475XvQAI&quot;
+{!myVariable_current.OwnerId} = &quot;0055J000001eifDQAQ&quot;
 )</expression>
     </formulas>
     <formulas>
@@ -513,7 +513,7 @@ ISPICKVAL({!myVariable_current.Status}, &quot;Reopen&quot;) || ISPICKVAL({!myVar
                 <stringValue>AND
 (
 ISPICKVAL([Case].Status, &quot;Reopen&quot;) || ISPICKVAL([Case].Status, &quot;Re-opened&quot;),
-[Case].OwnerId = &quot;0050Q00000475XvQAI&quot;
+[Case].OwnerId = &quot;0055J000001eifDQAQ&quot;
 )</stringValue>
             </value>
         </processMetadataValues>
@@ -522,7 +522,7 @@ ISPICKVAL([Case].Status, &quot;Reopen&quot;) || ISPICKVAL([Case].Status, &quot;R
         <expression>AND
 (
 ISPICKVAL({!myVariable_old.Status}, &quot;Reopen&quot;) || ISPICKVAL({!myVariable_old.Status}, &quot;Re-opened&quot;),
-{!myVariable_old.OwnerId} = &quot;0050Q00000475XvQAI&quot;
+{!myVariable_old.OwnerId} = &quot;0055J000001eifDQAQ&quot;
 )</expression>
     </formulas>
     <interviewLabel>case_run_assignment_rules-19_InterviewLabel</interviewLabel>
