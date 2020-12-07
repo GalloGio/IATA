@@ -20,7 +20,6 @@ public with sharing class CaseCommentHandler {
 		return caseCommentIdToCaseIdMap;
 	}
 
-	@future
 	public static void doAfterInsert(Set<Id> CaseCommentIds) {
 		//only fire integration if user making the insert is not integration user
 		//1. if case comment is for a case with a case item then fire platform event
@@ -61,6 +60,12 @@ public with sharing class CaseCommentHandler {
 			insert kpiValuesToInsert;
 		}
 	}
+
+	@future
+	public static void doAfterInsertFuture(Set<Id> CaseCommentIds){
+		doAfterInsert(CaseCommentIds);
+	}
+
 	public void processCaseItems(List<CaseComment> listOfComments){
 		//only fire integration if user making the insert is not integration user
 		////1. if case comment is for a case with a case item then fire platform event
