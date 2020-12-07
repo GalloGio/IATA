@@ -372,10 +372,12 @@ private class AMS_XML_GeneratorTest {
 		List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
 
 		ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c', 'FormOfPayment');
+		ID BSPLinkRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c', 'BSPLink');
 
 		authorizations.add(new Agency_Authorization__c(Account__c = ag1.Id, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
 		authorizations.add(new Agency_Authorization__c(Account__c = ag1.Id, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
 		authorizations.add(new Agency_Authorization__c(Account__c = ag1.Id, ANG_FormOfPayment_ID__c = 'EP', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+		authorizations.add(new Agency_Authorization__c(Account__c = ag1.Id, Email_Used_for_BSP_Creation__c = 'test@test.test', Status__c = 'Active', RecordTypeId = BSPLinkRT));
 
 		insert authorizations;
 

@@ -3079,6 +3079,50 @@ SF Workflow Process</value>
         <value>This service facilitates interaction and exchange of information between travel agents and airlines participating in IATA Billing and Settlement Plan (BSP).</value>
     </labels>
     <labels>
+        <fullName>BSPParticipationDisable</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BSP Participation Disable</shortDescription>
+        <value>Are you sure you want to disable BSP Participation?</value>
+    </labels>
+    <labels>
+        <fullName>BSPParticipationEnable</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BSP Participation Enable</shortDescription>
+        <value>Are you sure you want to enable BSP Participation?</value>
+    </labels>
+    <labels>
+        <fullName>BSPParticipationPopupAlert</fullName>
+        <categories>Error Message</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BSP Participation Popup Alert</shortDescription>
+        <value>You can choose this change code with Agency of location class G and category GSA only!</value>
+    </labels>
+    <labels>
+        <fullName>BSPParticipationPopupAlertActiveGSAOnly</fullName>
+        <categories>Error Message</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BSP Participation Popup Alert Active GSA Only</shortDescription>
+        <value>You can choose this change code on active GSA only</value>
+    </labels>
+    <labels>
+        <fullName>BSPParticipationPopupTitle</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BSP Participation Popup Title</shortDescription>
+        <value>BSP participation</value>
+    </labels>
+    <labels>
+        <fullName>BSPParticipationUserAccess</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BSP Participation User Access Error</shortDescription>
+        <value>Your user has no access to this action. Please review your permissions with support.</value>
+    </labels>
+    <labels>
         <fullName>BSP_CASS_Ch_Bank_Service_Description</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -3095,6 +3139,20 @@ This service is free of charge.</value>
         <value>You can use the BSP/CASS Change Request to modify your airline&apos;s BSP/CASS Participation details. These details include your airline&apos;s local address, the tax number or the Financial/Admin contact. You can also opt-in for IATA EasyPay. Directly online, this service simplifies processing the BSP/CASS changes to keep your data always up to date.
 
 This service is free of charge.</value>
+    </labels>
+    <labels>
+        <fullName>BSP_Participation_Button_Disable</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BSP Participation Button Disable</shortDescription>
+        <value>Disable BSP Participation</value>
+    </labels>
+    <labels>
+        <fullName>BSP_Participation_Button_Enable</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>BSP Participation Button Enable</shortDescription>
+        <value>Enable BSP Participation</value>
     </labels>
     <labels>
         <fullName>BSPlink_Service_Description</fullName>
@@ -14560,7 +14618,7 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_Covid</shortDescription>
-        <value>Due to the COVID-19 outbreak and measures being imposed by local governments, service interruptions &amp; temporary service suspensions are unavoidable and transit times will be longer than usual.</value>
+        <value>Agents who have ordered and paid for a printed ID Card, please be advised that due to the COVID-19 outbreak including other restrictive measures imposed by local governments, delivery times may be longer than usually anticipated. Delivery service is not available for agents outside of Canada. The digital ID Card is accessible to all cardholders on IATA AgentExperience app. Visit &lt;a href=&quot;https://www.iata.org/idcard-digital/&quot; style=&quot;color: blue;&quot;&gt;iata.org/idcard-digital&lt;/a&gt; for more details.</value>
     </labels>
     <labels>
         <fullName>IDCard_Create_Application</fullName>
@@ -40524,7 +40582,7 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Important_Delivery_Information</shortDescription>
-        <value>IMPORTANT DELIVERY INFORMATION:</value>
+        <value>IMPORTANT INFORMATION:</value>
     </labels>
     <labels>
         <fullName>Industry_Activities</fullName>

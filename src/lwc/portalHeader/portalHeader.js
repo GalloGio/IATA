@@ -1,9 +1,6 @@
 import { LightningElement, track, wire, api } from 'lwc';
 import { loadStyle } from "lightning/platformResourceLoader";
 
-/* STATIC RESOURCES */
-import cspStylesheet    from '@salesforce/resourceUrl/CSP_Stylesheet';
-
 // language
 import userId from '@salesforce/user/Id';
 import changeUserLanguage from '@salesforce/apex/CSP_Utils.changeUserLanguage';
@@ -65,6 +62,7 @@ import CSP_Store from '@salesforce/label/c.CSP_Store';
 import CSP_Sign_Up from '@salesforce/label/c.CSP_Sign_Up';
 import CSP_Login from '@salesforce/label/c.CSP_Login';
 import CSP_Go_to_IataOrg from '@salesforce/label/c.CSP_Go_to_IataOrg';
+
 
 // Accept Terms
 import { updateRecord } from 'lightning/uiRecordApi';
@@ -312,7 +310,6 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     }
 
     connectedCallback() {
-        loadStyle(this, cspStylesheet);
         isGuestUser().then(results => {
             
             this.internalUser = !results;
