@@ -31,11 +31,8 @@ public static List<PortalLookupSearchResult> searchAccounts(String searchTerm) {
 
 	return results;
 }
-
-//Dynamic Query to perform searches on the Account.
-private static List<Account> searchRelatedAccounts(String searchTerm) {
-//prepare query
-
+private static Account getAccount(){
+	
 	Account currentAccount = [
 		Select id, Name, IATAcode__c,
 		ParentId,
@@ -46,22 +43,37 @@ private static List<Account> searchRelatedAccounts(String searchTerm) {
 		From Account
 		Where id = :USER.Contact.AccountId
 	];
+	return currentAccount;
+}
 
-// find the top parent
-	string parentId = null;
-	if (currentAccount.ParentId == null ) {
-		parentId = currentAccount.Id;
-	} else if (currentAccount.Parent.ParentId == null) {
-		parentId = currentAccount.ParentId;
-	} else if (currentAccount.Parent.Parent.ParentId == null) {
-		parentId = currentAccount.Parent.ParentId;
-	} else if (currentAccount.Parent.Parent.Parent.ParentId == null ) {
-		parentId = currentAccount.Parent.Parent.ParentId;
-	} else if (currentAccount.Parent.Parent.Parent.Parent.ParentId == null ) {
-		parentId = currentAccount.Parent.Parent.Parent.ParentId;
-	} else {
-		parentId = currentAccount.Parent.Parent.Parent.Parent.ParentId;
-	}
+
+private static String getParentId(){
+	Account currentAccount = getAccount();
+
+	// find the top parent
+		string parentId = null;
+		if (currentAccount.ParentId == null ) {
+			parentId = currentAccount.Id;
+		} else if (currentAccount.Parent.ParentId == null) {
+			parentId = currentAccount.ParentId;
+		} else if (currentAccount.Parent.Parent.ParentId == null) {
+			parentId = currentAccount.Parent.ParentId;
+		} else if (currentAccount.Parent.Parent.Parent.ParentId == null ) {
+			parentId = currentAccount.Parent.Parent.ParentId;
+		} else if (currentAccount.Parent.Parent.Parent.Parent.ParentId == null ) {
+			parentId = currentAccount.Parent.Parent.Parent.ParentId;
+		} else {
+			parentId = currentAccount.Parent.Parent.Parent.Parent.ParentId;
+		}
+	return parentId;
+
+}
+//Dynamic Query to perform searches on the Account.
+private static List<Account> searchRelatedAccounts(String searchTerm) {
+//prepare query
+
+	String parentId = getParentId();
+	Account currentAccount = getAccount();
 
 
 	String finalQuery = 'SELECT ID, IATAcode__c, Name, Site, BillingCity FROM Account '
@@ -120,7 +132,8 @@ public static List<PortalLookupSearchResult> searchContacts(String searchTerm) {
 
 //Dynamic Query to perform searches on the Contact.
 private static List<Contact> searchRelatedContacts(String searchTerm) {
-
+	String parentId = getParentId();
+	Account currentAccount = getAccount();
 	//prepare query
 	String finalQuery = 'SELECT Id, Name, Email FROM Contact WHERE Email != \'' + CONTACT.Email + '\' AND User_Portal_Status__c in (\'Approved Admin\',\'Approved User\') ';
 
@@ -129,7 +142,7 @@ private static List<Contact> searchRelatedContacts(String searchTerm) {
 	} else {
 		finalQuery += 'AND Status__c = \'Active\' AND (NOT Email LIKE \'%.inactive%\')';
 	}
-
+	finalQuery += ' AND (AccountId = \'' + currentAccount.Id + '\' OR AccountId = \'' + parentId + '\')';
 	finalQuery += ' LIMIT ' + MAX_RESULTS;
 	
 	List<Contact> allContacts = DAL_WithoutSharing.getRelatedContacts(finalQuery);
