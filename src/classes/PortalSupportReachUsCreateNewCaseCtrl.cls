@@ -131,8 +131,9 @@ private static List<Contact> searchRelatedContacts(String searchTerm) {
 	}
 
 	finalQuery += ' LIMIT ' + MAX_RESULTS;
-
-	return Database.query(finalQuery);
+	
+	List<Contact> allContacts = DAL_WithoutSharing.getRelatedContacts(finalQuery);
+	return allContacts;
 
 }
 
