@@ -597,7 +597,7 @@ public without sharing class TIDS_Controller {
 		}
 		
 		public void getRoles(Id accountId){
-			List<AMS_Account_Role__c> amsroles = TIDSUtil.tidsShareholders(accountId);
+			List<AMS_Account_Role__c> amsroles = TIDSUtil.tidsShareholders(accountId,true,true);
 			List<vShareholderDetails> values = new List<vShareholderDetails>();
 			for (AMS_Account_Role__c item : amsroles){
 				vShareholderDetails vitem = new vShareholderDetails();
@@ -1049,7 +1049,7 @@ public without sharing class TIDS_Controller {
 			
 			set<String> itemtypes = new Set<String>();
 			List<vShareholderDetails> values = this.sections.ShareholderDetails.values;
-			List<AMS_Account_Role__c> amsroles = TIDSUtil.tidsShareholders(accountId);
+			List<AMS_Account_Role__c> amsroles = TIDSUtil.tidsShareholders(accountId,false,false);
 			List<AMS_Account_Role__c> newroles = new List<AMS_Account_Role__c>();
 			List<AMS_Account_Role__c> delroles = new List<AMS_Account_Role__c>();
 			Set<Id> delset = new Set<Id>();
@@ -1070,8 +1070,10 @@ public without sharing class TIDS_Controller {
 					if (o.Owner_Category__c==n.Owner_Category__c && 
 						o.Owner_Email__c==n.Owner_Email__c &&
 						o.Owner_Name__c==n.Owner_Name__c){
-						n=o;
-						n.Percentage__c = Decimal.ValueOf(item.percentage);
+						if (o.Active__c){
+							n=o;
+							n.Percentage__c = Decimal.ValueOf(item.percentage);
+						}
 						delset.add(o.Id);
 					}
 				}
@@ -1088,7 +1090,6 @@ public without sharing class TIDS_Controller {
 			if (newroles.size() > 0){
 				upsert newroles;
 			}
-
 		}
 		private Id currentAccountId;
 		private Map<String, AMS_Agency_Profile__c> businessProfiles {get;set;}

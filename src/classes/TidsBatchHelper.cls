@@ -117,6 +117,26 @@ public without sharing class TidsBatchHelper {
 		}
 	}
 	//Executes the account list
+	public static void finishBuilderAccount(Database.BatchableContext bc, Id caseId){
+		AsyncApexJob a = [SELECT Id, Status
+								,NumberOfErrors
+								,JobItemsProcessed
+								,TotalJobItems
+								,ExtendedStatus
+								,CreatedById 
+							FROM AsyncApexJob WHERE Id = :bc.getJobId()];
+		final String mailbody = 'The Cascading batch processed ' + a.TotalJobItems +
+							' Jobs with '+ a.NumberOfErrors + ' failures.\n\nExtended status:\n' + a.ExtendedStatus;
+
+		// Send an email to the Apex job's submitter notifying of job completion.
+		final string subject = 'Cascading Batch Job for '+caseId;
+		TIDSUtil.postNotification(null
+			,null
+			,null
+			,new List<String> {subject, mailbody}
+			,TIDSUtil.getTIDSMetadataError(TIDS_Constant.TIDS_ADM_EMAIL));
+	}
+	//Executes the account list
 	public static void executeBuilderAccount(Id caseId,List<Account> scope){
 		boolean isProcessAll=false;
 		boolean isname=false;
@@ -234,11 +254,7 @@ public without sharing class TidsBatchHelper {
 	}
 	//create the AMS Roles
 	private static void createAMSRoles(){
-		List<AMS_Account_Role__c> hoAMSRoles = new List<AMS_Account_Role__c>();
-		hoAMSRoles = [SELECT Id,Percentage__c,Owner_Category__c,Owner_Name__c,Owner_Email__c
-			FROM AMS_Account_Role__c
-			WHERE Account__c=:headoffice];
-			
+		List<AMS_Account_Role__c> hoAMSRoles =TIDSUtil.tidsShareholders(headoffice,true,true);
 		Id ownershipId=RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
 		List<AMS_Account_Role__c> amsroles = [SELECT Id
 			FROM AMS_Account_Role__c

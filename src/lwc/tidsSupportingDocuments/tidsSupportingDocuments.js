@@ -58,7 +58,7 @@ export default class TidsSupportingDocuments extends LightningElement {
 	@track fileContents;
 	@track fileReader;
 	@track content;
-	@track MAX_FILE_SIZE = 25000000;
+	@track MAX_FILE_SIZE = 3100000;
 	@track showSpinner = false;
 	@track totalDocuments = 0;
 	// New branch
@@ -83,8 +83,8 @@ export default class TidsSupportingDocuments extends LightningElement {
 		let userType = getUserType();
 		this.vettingMode = userType === "vetting" ? true : false;
 		let savedInfo = getSectionInfo(this.cmpName);
+		this.getRelatedFiles();
 		if (savedInfo) {
-			this.getRelatedFiles();
 			if (
 				this.vettingMode &&
 				savedInfo.errors !== undefined &&
@@ -173,8 +173,7 @@ export default class TidsSupportingDocuments extends LightningElement {
 			this.documentsView.push(this.mappingFile(file));
 		});
 		this.totalDocuments = this.documentsView.length;
-		this.disableButton = this.documentsView.length > 0 ? false : true;
-
+		this.nextButtonDisabled();
 	}
 
 	handleSave() {
@@ -187,6 +186,7 @@ export default class TidsSupportingDocuments extends LightningElement {
 	}
 
 	uploadHelper() {
+		this.nextButtonDisabled();
 		if (this.documentindex === this.documentsView.length) {
 			this.documents = [];
 			return;
@@ -195,8 +195,8 @@ export default class TidsSupportingDocuments extends LightningElement {
 		if (this.file.size > this.MAX_FILE_SIZE) {
 			this.dispatchEvent(
 				new ShowToastEvent({
-					title: "File size error",
-					message: "File size exceeds 25mb for file name:"+this.file.name,
+					title: "Maximum file size exceeded",
+					message: 'File '+this.file.name +' exceeds the 3mb maximum file size.',
 					variant: "error"
 				})
 			);
@@ -294,7 +294,7 @@ export default class TidsSupportingDocuments extends LightningElement {
 						variant: "success"
 					})
 				);
-				if(this.documentindex < this.totalDocuments) {
+				if(this.documentindex < this.documentsView.length) {
 					this.uploadHelper();
 				} else {
 					this.showSpinner = false;
@@ -305,12 +305,11 @@ export default class TidsSupportingDocuments extends LightningElement {
 			})
 			.catch(error => {
 				this.showSpinner = false;
-				console.log('error', JSON.stringify(error.body));
 				// Showing errors if any while inserting the files
 				this.dispatchEvent(
 					new ShowToastEvent({
-						title: "Error while uploading File",
-						message: error.body.message,
+						title: "Maximum file size exceeded",
+						message: 'File '+this.file.name +' exceeds the 3mb maximum file size.',
 						variant: "error"
 					})
 				);
@@ -347,7 +346,7 @@ export default class TidsSupportingDocuments extends LightningElement {
 							this.filedocuments.push(this.mappingFileFromSF(item));
 						});
 					}
-					this.disableButton = false;
+					this.nextButtonDisabled();
 				}
 			})
 			.catch(error => {
@@ -367,6 +366,7 @@ export default class TidsSupportingDocuments extends LightningElement {
 		let fileselected = event.target.dataset.name;
 		let index = this.documentsView.findIndex(x => x.name === fileselected);
 		this.documentsView.splice(index,1);
+		this.nextButtonDisabled();
 	}
 
 	handleUploadFileRemove(event) {
@@ -376,6 +376,7 @@ export default class TidsSupportingDocuments extends LightningElement {
 		currentDocument = this.filedocuments[index];
 		this.filedocuments.splice(index,1);
 		this.showSpinner = true;
+		this.nextButtonDisabled();
 		deleteFiles({ attachmentid: fileselected })
 		.then(result => {
 			this.showSpinner = false;
@@ -386,8 +387,7 @@ export default class TidsSupportingDocuments extends LightningElement {
 					message: currentDocument.name + " - deleted Successfully!!!",
 					variant: "success"
 				})
-			);
-			
+			);			
 		})
 		.catch(error => {
 			this.dispatchEvent(
@@ -402,8 +402,9 @@ export default class TidsSupportingDocuments extends LightningElement {
 
 	// Next button disabled
 	nextButtonDisabled() {
-		let documentsValid = this.documents.length > 0 ? true : false;
-		if (documentsValid) {
+		let documentsValid = this.documentsView.length > 0 ? true : false;
+		let filesValid = this.filedocuments.length > 0 ? true : false;
+		if (documentsValid || filesValid) {
 			this.disableButton = false;
 		} else {
 			this.disableButton = true;
