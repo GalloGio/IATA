@@ -15,8 +15,8 @@ private class PortalHeaderCtrlTest {
 
 		User newUser = ISSP_ObjectFactory.createPortalUser(newCon1);
 
-		Portal_Applications__c pa1 = new Portal_Applications__c(Name = 'Portal Service 1', Cannot_be_managed_by_portal_admin__c = false);
-		Portal_Applications__c pa2 = new Portal_Applications__c(Name = 'Portal Service 2', Cannot_be_managed_by_portal_admin__c = true);
+		Portal_Applications__c pa1 = new Portal_Applications__c(Name = 'Portal Service 1', Cannot_be_managed_by_portal_admin__c = false, Requires_Service_Admin_Approval__c = false);
+		Portal_Applications__c pa2 = new Portal_Applications__c(Name = 'Portal Service 2', Cannot_be_managed_by_portal_admin__c = true, Requires_Service_Admin_Approval__c = false);
 		insert new List<Portal_Applications__c>{pa1, pa2};
 
 		Portal_Application_Right__c par1 = new Portal_Application_Right__c(Contact__c = newCon2.Id, Portal_Application__c = pa1.Id, Right__c = 'Access Requested');
