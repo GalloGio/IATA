@@ -292,7 +292,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 
 									getGCSServiceId({portalServiceName:'Login T&C Checker'}).then(result => {
 										var gcsPortalServiceId = JSON.parse(JSON.stringify(result));
-										this.gcsPortalServiceId = gcsPortalServiceId;
+										this.registrationForm.gcsPortalServiceId = gcsPortalServiceId;
 
 										getWrappedTermsAndConditions({portalServiceId: gcsPortalServiceId, language: this.registrationForm.language}).then(result2 => {
 											var tcs = JSON.parse(JSON.stringify(result2));

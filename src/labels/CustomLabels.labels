@@ -4561,7 +4561,7 @@ If you are already CNS Endorsed, you can use this service to update information 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Email Password Reset Body Part 4</shortDescription>
-        <value>For security reasons, this link is valid for 8 hours. After the time limis has expired, you will have to resubmit your request.</value>
+        <value>For security reasons, this link is valid for 8 hours. After the time limits has expired, you will have to resubmit your request.</value>
     </labels>
     <labels>
         <fullName>CSP_Email_Signature_Part_1</fullName>
@@ -51790,6 +51790,14 @@ ONE Source is the industry platform for validated aviation capability and infras
         <protected>false</protected>
         <shortDescription>icg zip code</shortDescription>
         <value>Zip Code</value>
+    </labels>
+    <labels>
+        <fullName>icg_station_has_been_created</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg station has been created</shortDescription>
+        <value>Station has been created</value>
     </labels>
     <labels>
         <fullName>idcard_replacementHeadText</fullName>
