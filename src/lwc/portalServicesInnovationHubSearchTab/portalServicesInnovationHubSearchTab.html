@@ -1,0 +1,22 @@
+<template>
+
+
+
+    <div if:true={componentLoading} class="spinnerContainer">
+        <lightning-spinner class="background-superLightGray" alternative-text="Loading"></lightning-spinner>
+    </div>
+
+    <div if:false={componentLoading} class="slds-grid slds-wrap">
+
+        <template for:each={lstAllProviders} for:item="provider">
+            <div class="slds-col slds-size_1-of-1 slds-m-vertical_small" key={provider.Id}>
+                <c-portal-services-innovation-hub-provider-card 
+                    provider={provider} 
+                    onstartloading={startLoading}>
+                </c-portal-services-innovation-hub-provider-card>
+            </div>
+        </template>
+
+    </div>
+
+</template>
