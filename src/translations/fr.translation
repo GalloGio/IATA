@@ -10024,7 +10024,7 @@ Veuillez, si c&apos;est la première fois que vous faites une demande de carte d
         <name>IDCard_Course2</name>
     </customLabels>
     <customLabels>
-        <label><!-- IDCard_Covid --></label>
+        <label>Pour les agents qui ont commandé et payé une carte d&apos;identité imprimée, veuillez noter qu&apos;en raison de l&apos;épidémie de COVID-19,  y compris d&apos;autres mesures restrictives imposées par les gouvernements locaux, les délais de livraison peuvent être plus longs que la normale. Le service de livraison n&apos;est pas disponible pour les agents à l&apos;extérieur du Canada. La carte d&apos;identité digitale est accessible à tous les titulaires de carte sur l&apos;application IATA AgentExperience. Visitez &lt;a href=&quot;https://www.iata.org/idcard-digital/&quot; style=&quot;color: blue;&quot;&gt;iata.org/idcard-digital&lt;/a&gt; pour plus de détails.</label>
         <name>IDCard_Covid</name>
     </customLabels>
     <customLabels>
@@ -23654,7 +23654,7 @@ Si vous souhaitez réinitialiser votre mot de passe, retournez à l&apos;écran 
         <name>IfapSubmissionOfDocsOK</name>
     </customLabels>
     <customLabels>
-        <label><!-- Important_Delivery_Information --></label>
+        <label>INFORMATIONS IMPORTANTES:</label>
         <name>Important_Delivery_Information</name>
     </customLabels>
     <customLabels>
@@ -38829,7 +38829,7 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         <label><!-- Opportunities with Accounts and Contracts --></label>
         <name>Opportunities_with_Accounts_and_Contracts</name>
         <sections>
-            <label><!-- Accounts --></label>
+            <label>Fichiers</label>
             <name>Accounts</name>
         </sections>
         <sections>
