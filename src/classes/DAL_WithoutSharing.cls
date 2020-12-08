@@ -133,6 +133,12 @@ public static Map<String, String> getUserOptions(String portalUser){
 			return Database.query(finalQuery);
 		}
 
+	@AuraEnabled
+		public static List<Contact> getRelatedContacts(String finalQuery){
+
+			return Database.query(finalQuery);
+		}
+
 	//returns user Information wihtout visibility control
 	@AuraEnabled
 	public static user getUserDetails(Id userId){
