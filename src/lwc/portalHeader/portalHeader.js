@@ -553,8 +553,9 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     //WMO-627 - ACAMBAS: End
 
     navigateToHomePage() {
+        let oneSourceCommunity = window.location.href.includes('onesource');
         this.closeSideMenu();
-        if(this.trackedIsInOldPortal)
+        if(this.trackedIsInOldPortal || oneSourceCommunity)
             this.navigationCheck("home", "");
         else
             this.navigateToOtherPage("home");

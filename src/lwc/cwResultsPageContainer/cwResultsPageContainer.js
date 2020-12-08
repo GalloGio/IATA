@@ -134,7 +134,7 @@ export default class CwResultsPageContainer extends LightningElement {
 				}
 				if(this.initialSearch){
 					this.initialSearch.forEach(elem => {			
-						let values = elem.value ? elem.value.split(";") : null;
+						let values = elem.value ? String(elem.value).split(";") : null;
 						if (values) {
 							this.filtercount = values.length;
 							this.titlefilter = "Filters (" + this.filtercount + ")";

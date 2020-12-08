@@ -57,31 +57,31 @@ export default class CwBody extends LightningElement {
             if (hash && hash != '#') {
                 setTimeout(() => {
                     this.scrollToSectionCallback(hash.replace('#',''));
-                  }, 300);
-                
-            }               
-       
+                  }, 300);            
+            }                
         }
         this.initializeSwipe();
         this.setEpecialLabels();
     }
+    
     scrollToSectionCallback;
     scrollToSection(sectionId) {
         let elem = this.template.querySelector('[id*="'+sectionId+'"]');
         let hashPosition = location.href.indexOf('#');
         if (hashPosition > -1){
-            location.href = location.href.substring(0,hashPosition) + '#' + elem.id;
+            location.href = location.href.substring(0,hashPosition) + '#' + elem.id;           
         }else{
             location.href = location.href+'#'+elem.id;
         }
-        
-        window.scrollBy(0,-110);
+        setTimeout(function(){ window.scrollBy(0,-110); }, 800);        
     }
+
     connectedCallback(){
         if (window.LZString === undefined) {
             Promise.all([loadScript(this, resources + "/js/lz-string.js")]);
         }
         this.scrollToSectionCallback = this.scrollToSection.bind(this); 
+        
         this.register();
     }
     @api
