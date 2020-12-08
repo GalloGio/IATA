@@ -71,6 +71,7 @@ private class EF_HelperTest {
 		Portal_Applications__c pa = new Portal_Applications__c();
 		pa.name = 'E&F APPS';
 		pa.Cannot_be_managed_by_portal_admin__c = false;
+		pa.Requires_Service_Admin_Approval__c = false;
 		pa.Auto_approved_for__c = null;
 		insert pa;
 

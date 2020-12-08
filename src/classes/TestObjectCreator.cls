@@ -25,7 +25,8 @@ public without sharing class TestObjectCreator {
 					ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.CARGO_AGENT,
 					ANG_Accredited_Agents_Only__c = false,
 					Agency__c = true,
-					Cannot_be_managed_by_portal_admin__c = false
+					Cannot_be_managed_by_portal_admin__c = false,
+					Requires_Service_Admin_Approval__c = false
 				);
 	}
 }
