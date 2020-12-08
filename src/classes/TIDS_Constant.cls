@@ -23,6 +23,7 @@ public without sharing class TIDS_Constant {
 	public final static String ERROR_CON7_3 = 'TIDS_ACCES_COND7_3';
 	public final static String VETTING_DONE = 'TIDS_VETTING_DONE';
 	public final static String TIDS_ADM_EMAIL='TIDS_ADM_EMAIL';
+	public final static String CASCADE_PASSWORD='TIDS_CASCADE_PASSWORD';
 
 	public final static String NEW_AGENT='New agent';
 	// Case subjects
@@ -142,5 +143,6 @@ public without sharing class TIDS_Constant {
 	public final static String MSG41='TIDS_MSG41';
 	public final static String MSG42='TIDS_MSG42';
 	public final static String MSG43='TIDS_MSG43'; 
-	public final static String MSG44='TIDS_MSG44'; 
+	public final static String MSG44='TIDS_MSG44';
+	public final static String MSG45='TIDS_MSG45';
 }

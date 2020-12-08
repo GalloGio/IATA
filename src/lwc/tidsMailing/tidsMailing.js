@@ -294,7 +294,7 @@ export default class TidsMailing extends LightningElement {
 				this.statesValues(this.country,false);
 				this.postalCode = mailingAddressSectionValues.values.postalCode;
 				this.state = undefined;
-				if (this.state = mailingAddressSectionValues.values.state!=undefined){
+				if (mailingAddressSectionValues.values.state!=undefined){
 					this.state = mailingAddressSectionValues.values.state.value;
 				}
 				this.reportChanges();
@@ -909,13 +909,15 @@ export default class TidsMailing extends LightningElement {
 	getLocationPlace(fieldtype, searchvalue){
 		this.isPostalCodesAvailable = false;
 		this.citysearch = false;
-		if (fieldtype == "city"){
-			searchvalue = searchvalue.toLowerCase();
-			searchvalue = searchvalue.replace(/(^\w|\s\w)/g, (m) => m.toUpperCase());
+		if (fieldtype === "city"){
+			if (searchvalue != undefined && searchvalue != ""){
+				searchvalue = searchvalue.toLowerCase();
+				searchvalue=searchvalue.replace(/(^\w|\s\w)/g, m => m.toUpperCase());
+			}
 			//searchvalue= searchvalue.replace(/^\w/, c => c.toUpperCase());
 			this.city = searchvalue;
 		}
-		if (searchvalue == undefined || searchvalue == ""){
+		if (searchvalue === undefined || searchvalue === ""){
 			this.postalcodes = [];
 			return;
 		}
@@ -954,13 +956,13 @@ export default class TidsMailing extends LightningElement {
 				let isstateselected = false;
 				let isstateselecteable = false;
 				let selectedstate = this.state;
-				if (selectedstate != undefined){
+				if (selectedstate!=undefined && selectedstate!=null){
 					if (this.stateSelected(selectedstate) != undefined){
 						selectedstate = this.stateSelected(selectedstate).label;
 						isstateselected = true;
 					}
 				}
-				if (selectedstate!=undefined){selectedstate=selectedstate.toUpperCase();}
+				if (selectedstate!=undefined && selectedstate!=null){selectedstate=selectedstate.toUpperCase();}
 				if (!isstateselected){
 					if (this.states != undefined && this.states.length > 0){
 						isstateselecteable = true;
