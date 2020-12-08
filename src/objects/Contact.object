@@ -13909,20 +13909,6 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>S_TIDS__c</fullName>
-        <externalId>false</externalId>
-        <label>Service TIDS</label>
-        <summaryFilterItems>
-            <field>Portal_Application_Right__c.Portal_Application__c</field>
-            <operation>startsWith</operation>
-            <value>a2w5J000000kP35</value>
-        </summaryFilterItems>
-        <summaryForeignKey>Portal_Application_Right__c.Contact__c</summaryForeignKey>
-        <summaryOperation>count</summaryOperation>
-        <trackHistory>false</trackHistory>
-        <type>Summary</type>
-    </fields>
-    <fields>
         <fullName>segment_lifecycle__c</fullName>
         <externalId>false</externalId>
         <label>segment  lifecycle</label>

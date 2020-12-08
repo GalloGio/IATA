@@ -17249,6 +17249,10 @@ url: url where is stored the photo</inlineHelpText>
                 <fullName>Temperature_Controlled_Dollies_Trucks</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Temperature_Controlled_Transport_Trucks</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>ESC_System_Self_Carrier_Owned__c</picklist>
@@ -17644,6 +17648,10 @@ url: url where is stored the photo</inlineHelpText>
             </values>
             <values>
                 <fullName>Temperature_Controlled_Dollies_Trucks</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Temperature_Controlled_Transport_Trucks</fullName>
                 <default>false</default>
             </values>
             <values>

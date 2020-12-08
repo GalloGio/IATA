@@ -130,7 +130,7 @@ export default class CwStationManagers extends LightningElement {
                 let phoneLinkAux = contactRoleDetail.Account_Contact_Role__r.Contact__r.Phone ? "tel:" + contactRoleDetail.Account_Contact_Role__r.Contact__r.Phone : '';
                 let emailAux = contactRoleDetail.Account_Contact_Role__r.Contact__r.Email ? contactRoleDetail.Account_Contact_Role__r.Contact__r.Email : '';
                 let emailLinkAux = contactRoleDetail.Account_Contact_Role__r.Contact__r.Email ? "mailto:" + contactRoleDetail.Account_Contact_Role__r.Contact__r.Email : '';
-                let functionTitle = contactRoleDetail.Account_Contact_Role__r.Contact__r.Membership_Function__c ? contactRoleDetail.Account_Contact_Role__r.Contact__r.Membership_Function__c : '';
+                let functionTitle = contactRoleDetail.Account_Contact_Role__r.Contact__r.Title ? contactRoleDetail.Account_Contact_Role__r.Contact__r.Title : '';
 
                 let accountContactRoleInfo = {
                     id : contactRoleDetail.Id,
