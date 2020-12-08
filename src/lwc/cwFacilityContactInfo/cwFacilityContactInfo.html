@@ -43,7 +43,7 @@
                         if:false={editOn}
                         value={facility.website}
                         label={facility.website} 
-                        target="_blank" ></lightning-formatted-url>
+                        target="_blank" class="text-truncate display-block width-100"></lightning-formatted-url>
                     <template if:true={editMode}>
                         <lightning-input class="input width-100" if:true={editOn} name="website" value={facility.website} variant="label-hidden" onblur={handleContactInfoValueChange}></lightning-input>
                     </template>
@@ -53,24 +53,21 @@
 
         <!-- Pilot Information -->
         <template if:true={showPilotInformation}>
-            <div class="row detail-section">
-                <div class="col-12">
+        <div class="row detail-section">
+            <div class="col-12">
+                <p><b>{label.icg_pilotInformation}</b></p>
+                <div class="slds-grid">
+                    <lightning-formatted-url 
+                        if:false={editOn}
+                        value={facility.pilotInformation}
+                        label={facility.pilotInformation} 
+                        target="_blank" class="text-truncate display-block width-100" ></lightning-formatted-url>
                     <template if:true={editMode}>
-                        <p><b>{label.icg_pilotInformation}</b></p>
-                        <div class="slds-grid">
-                            <template if:false={isPilotInformationBlank}>
-                                <a href={facility.pilotInformation} class="link-blue slds-truncate" if:false={editOn} target="_blank">{facility.pilotInformation}</a>
-                            </template>
-                        </div>
                         <lightning-input class="input width-100" if:true={editOn} name="pilotInformation" value={facility.pilotInformation} variant="label-hidden" onblur={handleContactInfoValueChange}></lightning-input>
-                    </template>
-                    <template if:false={editMode}>
-                        <template if:false={isPilotInformationBlank}>
-                            <div class="slds-grid"><a href={facility.pilotInformation} class="link-blue slds-truncate" target="_blank">{label.icg_pilotInformation}</a></div>
-                        </template>
                     </template>
                 </div>
             </div>
+        </div>
         </template>
 
         <!-- Online Booking -->

@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>Key__c</field>
-        <value xsi:type="xsd:string">Transport_Vehicles#Temperature_Controlled_Transport_Trucks</value>
+        <value xsi:type="xsd:string">Temperature_Controlled_Dollies_Trucks#Temperature_Controlled_Transport_Trucks</value>
     </values>
     <values>
         <field>Order__c</field>

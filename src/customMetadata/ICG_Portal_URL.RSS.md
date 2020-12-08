@@ -4,10 +4,10 @@
     <protected>false</protected>
     <values>
         <field>Description__c</field>
-        <value xsi:type="xsd:string">https://www.rss.com</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>Link__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">https://www.iata.org/api/rss/pressrelease</value>
     </values>
 </CustomMetadata>
