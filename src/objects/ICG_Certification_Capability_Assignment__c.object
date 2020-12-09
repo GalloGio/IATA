@@ -416,7 +416,7 @@
                 <value>
                     <fullName>Cold_Rooms_Freezer</fullName>
                     <default>false</default>
-                    <label>Cold Rooms Freezer</label>
+                    <label>Cold Rooms / Freezers</label>
                 </value>
                 <value>
                     <fullName>Temperature_Controlled_Transport_Trucks</fullName>

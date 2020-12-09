@@ -37,18 +37,6 @@
                 <behavior>Edit</behavior>
                 <field>ParentId</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Business_Street__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Business_City__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Business_Postal_Code__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -235,6 +223,25 @@
         <customLabel>true</customLabel>
         <detailHeading>true</detailHeading>
         <editHeading>true</editHeading>
+        <label>GeoNames Details</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Geoname_Billing_City__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Geoname_Shipping_City__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
         <label>Communication Profile</label>
         <layoutColumns>
             <layoutItems>
@@ -262,6 +269,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Solicitation_Flag__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Preferred_Language__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -573,15 +584,15 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Source_System__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
                 <field>Is_AIMS_Account__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Purge_Flag__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Source_System__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -665,34 +676,16 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>Active__c</fields>
-        <fields>RECORDTYPE</fields>
-        <fields>Unified_Owner_Name__c</fields>
-        <fields>Owner_Name__c</fields>
-        <fields>Owner_Account__c</fields>
-        <fields>Contact__c</fields>
-        <fields>Percentage__c</fields>
-        <fields>Termination_Date__c</fields>
-        <relatedList>AMS_Account_Role__c.Account__c</relatedList>
-        <sortField>Active__c</sortField>
-        <sortOrder>Desc</sortOrder>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>Authority__c</fields>
-        <fields>Status__c</fields>
-        <fields>LAST_UPDATE</fields>
-        <relatedList>Agency_Authorization__c.Account__c</relatedList>
-        <sortField>Authority__c</sortField>
+        <fields>Zuora__BillToCountry__c</fields>
+        <fields>Zuora__Balance__c</fields>
+        <fields>Zuora__LastInvoiceDate__c</fields>
+        <fields>Zuora__MRR__c</fields>
+        <fields>Zuora__AutoPay__c</fields>
+        <fields>Zuora__DefaultPaymentMethod__c</fields>
+        <fields>Zuora__SalesRepName__c</fields>
+        <relatedList>Zuora__CustomerAccount__c.Zuora__Account__c</relatedList>
+        <sortField>NAME</sortField>
         <sortOrder>Asc</sortOrder>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>ANG_RHC_Amount__c</fields>
-        <fields>ANG_ConsumedRHC__c</fields>
-        <fields>ANG_ConsumedRHC_Percent__c</fields>
-        <fields>ANG_ConsumedRHC_Last_Update__c</fields>
-        <relatedList>ANG_RHC_Information__c.ANG_AccountId__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>OPPORTUNITY.NAME</fields>
@@ -705,19 +698,6 @@
         <relatedList>RelatedOpportunityList</relatedList>
         <sortField>OPPORTUNITY.CLOSE_DATE</sortField>
         <sortOrder>Desc</sortOrder>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>Zuora__BillToCountry__c</fields>
-        <fields>Zuora__Balance__c</fields>
-        <fields>Zuora__LastInvoiceDate__c</fields>
-        <fields>Zuora__MRR__c</fields>
-        <fields>Zuora__AutoPay__c</fields>
-        <fields>Zuora__DefaultPaymentMethod__c</fields>
-        <fields>Zuora__SalesRepName__c</fields>
-        <relatedList>Zuora__CustomerAccount__c.Zuora__Account__c</relatedList>
-        <sortField>NAME</sortField>
-        <sortOrder>Asc</sortOrder>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
@@ -754,6 +734,46 @@
     <relatedLists>
         <fields>NAME</fields>
         <relatedList>Account_Domain__c.Account__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Active__c</fields>
+        <fields>RECORDTYPE</fields>
+        <fields>Unified_Owner_Name__c</fields>
+        <fields>Owner_Name__c</fields>
+        <fields>Owner_Account__c</fields>
+        <fields>Contact__c</fields>
+        <fields>Percentage__c</fields>
+        <fields>Termination_Date__c</fields>
+        <relatedList>AMS_Account_Role__c.Account__c</relatedList>
+        <sortField>Active__c</sortField>
+        <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Owner_Name__c</fields>
+        <fields>Percentage__c</fields>
+        <fields>Active__c</fields>
+        <relatedList>AMS_Account_Role__c.Owner_Account__c</relatedList>
+        <sortField>NAME</sortField>
+        <sortOrder>Asc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Authority__c</fields>
+        <fields>Status__c</fields>
+        <fields>LAST_UPDATE</fields>
+        <relatedList>Agency_Authorization__c.Account__c</relatedList>
+        <sortField>Authority__c</sortField>
+        <sortOrder>Asc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>ANG_RHC_Amount__c</fields>
+        <fields>ANG_ConsumedRHC__c</fields>
+        <fields>ANG_ConsumedRHC_Percent__c</fields>
+        <fields>ANG_ConsumedRHC_Last_Update__c</fields>
+        <relatedList>ANG_RHC_Information__c.ANG_AccountId__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
@@ -795,26 +815,6 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>Owner_Name__c</fields>
-        <fields>Percentage__c</fields>
-        <fields>Active__c</fields>
-        <relatedList>AMS_Account_Role__c.Owner_Account__c</relatedList>
-        <sortField>NAME</sortField>
-        <sortOrder>Asc</sortOrder>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>Agency_Applied_Change_code__c</fields>
-        <fields>Change_Code__c</fields>
-        <fields>Status__c</fields>
-        <fields>Update_Type__c</fields>
-        <fields>LAST_UPDATE</fields>
-        <relatedList>AMS_Agency_Updates__c.Account__c</relatedList>
-        <sortField>LAST_UPDATE</sortField>
-        <sortOrder>Desc</sortOrder>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
         <fields>CREATED_DATE</fields>
         <fields>LAST_UPDATE</fields>
         <relatedList>AMS_Agency_Affiliation__c.Account__c</relatedList>
@@ -837,18 +837,6 @@
         <relatedList>AMS_Agency_Airport__c.Account__c</relatedList>
         <sortField>NAME</sortField>
         <sortOrder>Asc</sortOrder>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>Hierarchy__c</fields>
-        <fields>Is_Newgen_Relation__c</fields>
-        <relatedList>AMS_Agencies_relationhip__c.Child_Account__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>Child_Account__c</fields>
-        <fields>Relationship_details__c</fields>
-        <relatedList>AMS_Agencies_relationhip__c.Parent_Account__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
@@ -981,6 +969,9 @@
         <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>
+        <relatedList>RelatedNoteList</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>TASK.SUBJECT</fields>
         <fields>TASK.WHO_NAME</fields>
         <fields>TASK.WHAT_NAME</fields>
@@ -992,9 +983,6 @@
         <relatedList>RelatedActivityList</relatedList>
     </relatedLists>
     <relatedLists>
-        <relatedList>RelatedNoteList</relatedList>
-    </relatedLists>
-    <relatedLists>
         <fields>TASK.SUBJECT</fields>
         <fields>TASK.WHO_NAME</fields>
         <fields>TASK.WHAT_NAME</fields>
@@ -1003,6 +991,40 @@
         <fields>CORE.USERS.FULL_NAME</fields>
         <fields>TASK.LAST_UPDATE</fields>
         <relatedList>RelatedHistoryList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Agency_Applied_Change_code__c</fields>
+        <fields>Change_Code__c</fields>
+        <fields>Status__c</fields>
+        <fields>Update_Type__c</fields>
+        <fields>LAST_UPDATE</fields>
+        <relatedList>AMS_Agency_Updates__c.Account__c</relatedList>
+        <sortField>LAST_UPDATE</sortField>
+        <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>Change_Code__c</fields>
+        <fields>Active__c</fields>
+        <fields>Bulletin_Information__c</fields>
+        <fields>Reason_Code__c</fields>
+        <fields>Reason_Description__c</fields>
+        <fields>CREATED_DATE</fields>
+        <relatedList>Agency_Applied_Change_code__c.Account__c</relatedList>
+        <sortField>CREATED_DATE</sortField>
+        <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Hierarchy__c</fields>
+        <fields>Is_Newgen_Relation__c</fields>
+        <relatedList>AMS_Agencies_relationhip__c.Child_Account__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Child_Account__c</fields>
+        <fields>Relationship_details__c</fields>
+        <relatedList>AMS_Agencies_relationhip__c.Parent_Account__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
@@ -1018,17 +1040,6 @@
         <fields>NAME</fields>
         <fields>Delegate__c</fields>
         <relatedList>Managed_agency__c.Account__c</relatedList>
-    </relatedLists>
-    <relatedLists>
-        <fields>Change_Code__c</fields>
-        <fields>Active__c</fields>
-        <fields>Bulletin_Information__c</fields>
-        <fields>Reason_Code__c</fields>
-        <fields>Reason_Description__c</fields>
-        <fields>CREATED_DATE</fields>
-        <relatedList>Agency_Applied_Change_code__c.Account__c</relatedList>
-        <sortField>CREATED_DATE</sortField>
-        <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedObjects>ParentId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>

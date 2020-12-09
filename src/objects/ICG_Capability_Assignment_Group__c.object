@@ -615,6 +615,8 @@
     <label>OS Capability Assignment Group</label>
     <listViews>
         <fullName>All</fullName>
+        <columns>Certification_Id__c</columns>
+        <columns>NAME</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
     </listViews>

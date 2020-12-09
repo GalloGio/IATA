@@ -1,0 +1,4 @@
+<apex:component controller="CW_EmailTemplateData" access="global">
+    <apex:attribute name="contactRoleDetailData" type="String" description="Contact Role Detail ID" assignTo="{!contactRoleDetailId}" access="global" />
+    <p style="line-height: 1.8rem;">To manage Company Admins for {!operationalHierarchyFromCrd}, click on the <a style="color: #1e32fa;" href="{!manageCompanyAdminsUrl}">LINK</a></p>                   
+</apex:component>

@@ -1,0 +1,29 @@
+.formcontainer {
+    border: 1px solid blue;
+}
+.yellowbanner {
+    background-color: rgb(250, 200, 50);
+    padding:20px;
+}
+.padding {
+    padding:25px 15px 15px 15px;
+}
+.newfacilitylink, .newfacilitylink:hover, .newfacilitylink:active, .newfacilitylink:focus{
+    color: blue !important;
+    text-decoration: underline !important;  
+}
+
+
+@media (max-width: 992px) {
+    .btn-become{
+        text-align: left !important;
+        margin-top: 1.5rem;
+    }
+}
+
+
+@media (min-width: 992px) {
+    .btn-become{
+        text-align: right !important;
+    }
+}

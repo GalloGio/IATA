@@ -1,0 +1,126 @@
+.bg-latest-news {
+	background-color: #fac832;
+	border-bottom: 15px solid #1e32fa;
+}
+.latest-new-title-resp {
+	padding: 30px 10px 30px 10px;
+	font-weight: 600;
+}
+.carrusel-item-resp {
+	color: black;
+	padding: 25px 15px 50px 5px;
+	text-align: left;
+	font-weight: bold;
+}
+
+.carrusel-item {
+	color: black;
+	padding: 25px 15px 50px 5px;
+	text-align: left;
+	font-weight: bold;
+	font-size: 1.9rem;
+	line-height: 1.2;
+}
+
+.special-height {
+	height: 400px;
+}
+
+.left-arrow-yllw-sctn {
+	position: absolute;
+	left: 10px;
+	top: 45%;
+}
+
+.right-arrow-yllw-sctn {
+	position: absolute;
+	right: 10px;
+	top: 45%;
+}
+
+.memberAirlines {
+	background-color: #1e32fa;
+	color: white;
+	padding: 10px;
+	text-align: left;
+    height: 47.5%;
+    min-height: 50px;
+}
+.strategicPartners {
+	background-color: #fac832;
+	color: black;
+	padding: 10px;
+	text-align: left;
+	height: 47.5%;
+    margin-top: 10%;
+    min-height: 50px;
+}
+
+.text-banner {
+	margin-top: 1.1rem;
+	padding-left: 0.4rem;
+}
+
+.text-banner-title {
+	text-align: left;
+	margin-top: -6px;
+	margin-left: 7px;
+}
+
+.banner-col {
+	text-align: -webkit-right;
+}
+.modaldiv {
+	max-width: 500px;
+	margin-bottom: 10px;
+	text-align: justify;
+}
+
+@media (max-width: 768px) {
+	.memberAirlines {
+		margin: auto;
+	}
+	.strategicPartners {
+		margin: auto;
+	}
+}
+
+@media (min-width: 1920px) {
+	.strategicPartners {
+		margin-top: 10%;
+	}
+}
+
+.padding-25 {
+	padding: 25px;
+}
+
+.padding-buttons {
+	padding-top: 1.2rem;
+}
+
+.memberAirlinesModal {
+	background-color: #1e32fa;
+}
+
+.buttonRegistration {
+	padding-left: 0 !important;
+	padding-right: 5.2rem !important;
+}
+
+.buttonListed {
+	padding-right: 0 !important;
+}
+
+
+@media (min-width: 768px) {
+	.col-3-5 {
+		flex: 0 0 30%;
+		max-width: 30%;
+    }
+    .col-6-5 {
+        flex: 0 0 53.3333333333%;
+        max-width: 53.3333333333%;
+    }
+    
+}

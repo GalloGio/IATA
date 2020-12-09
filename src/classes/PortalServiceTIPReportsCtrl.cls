@@ -18,20 +18,24 @@ public with sharing class PortalServiceTIPReportsCtrl {
 
 	public static final String SERVICE_TIP_REPORTS = 'service-tipreports';
 	public static final String SERVICE_AIRLINE_DAILY_SALES = 'airline-daily-sales';
+	public static final String SERVICE_SMART_LITE = 'smart-lite';
 
 	public static final Map<String,String> MAP_SERVICENAMES_PER_PAGENAME = new Map<String,String>{
 		SERVICE_TIP_REPORTS => 'TIP Reports%',
-		SERVICE_AIRLINE_DAILY_SALES => 'Airline Daily Sales'
+		SERVICE_AIRLINE_DAILY_SALES => 'Airline Daily Sales',
+		SERVICE_SMART_LITE => 'SMART Lite'
 	};
 
 	public static final Map<String,String> MAP_REPORTYPE_PER_PAGENAME = new Map<String,String>{
 		SERVICE_TIP_REPORTS => 'TIP_report',
-		SERVICE_AIRLINE_DAILY_SALES => 'Airline Daily Sales'
+		SERVICE_AIRLINE_DAILY_SALES => 'Airline Daily Sales',
+		SERVICE_SMART_LITE => 'SMART_Lite'
 	};
 
 	public static final Map<String,String> MAP_TRACKERTYPE_PER_PAGENAME = new Map<String,String>{
 		SERVICE_TIP_REPORTS => 'TIP Report',
-		SERVICE_AIRLINE_DAILY_SALES => 'Airline Daily Sales'
+		SERVICE_AIRLINE_DAILY_SALES => 'Airline Daily Sales',
+		SERVICE_SMART_LITE => 'SMART Lite'
 	};
 
 	@AuraEnabled(cacheable=false)

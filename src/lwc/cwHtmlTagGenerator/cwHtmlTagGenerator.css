@@ -1,0 +1,36 @@
+:host {
+  /* display: table-cell; */
+  /* display: table-row; */
+  display: contents;
+}
+
+.capitalize {
+  text-transform: capitalize;
+}
+
+.bold span {
+  font-weight: bold;
+}
+
+.blue {
+  width: max-content;
+}
+.blue span {
+  background: blue;
+  color: white;
+  padding: 3px;
+  text-transform: capitalize;
+}
+.yellow {
+  width: max-content;
+}
+.yellow span {
+  background: #ffc000;
+  color: black;
+  padding: 3px;
+}
+
+.conflict-options {
+  width: max-content;
+  text-align: left;
+}

@@ -5,6 +5,8 @@ import tidsAssetsPath from "@salesforce/resourceUrl/tidsAssets";
 import actionApplication from "@salesforce/apex/TIDSHelper.actionApplication";
 import discardApplication from "@salesforce/apex/TIDSHelper.discardApplication";
 import getcountryISOCode from "@salesforce/apex/TIDSHelper.getcountryISOCode";
+import getPortalServiceDetails from '@salesforce/apex/PortalServicesCtrl.getPortalServiceDetails';
+
 
 // User Info
 import { getCase, resetUserInfo } from "c/tidsUserInfo";
@@ -22,7 +24,7 @@ export default class TidsConditions extends NavigationMixin(LightningElement) {
   homeEligibilityOpenCase =
     tidsAssetsPath + "/images/home/home-eligibility-open-case.png";
 
-  @track portalUrl = "/csportal/s/tids";
+  @track portalUrl = "/tids";
 
   /*label = {
     tidsTitle,
@@ -59,6 +61,13 @@ export default class TidsConditions extends NavigationMixin(LightningElement) {
         this.apologizeMessage = this.message.apologizeMessage;
       }
     }
+    let TIDSportalService = 'TIDS';
+    getPortalServiceDetails({ serviceName: TIDSportalService }).then(result => {
+        let portalService = JSON.parse(JSON.stringify(result));
+        if (portalService !== undefined && portalService !== '' && portalService.recordService !== undefined && portalService.recordService !== '') {
+            this.portalUrl  = portalService.recordService.Application_URL__c;
+        }
+    });
     this.tidsCase = getCase();
   }
 
@@ -178,7 +187,6 @@ export default class TidsConditions extends NavigationMixin(LightningElement) {
         this.spinner = false;
       })
       .catch((error) => {
-        console.log("error", JSON.stringify(error));
         this.oops(error);
       });
   }
@@ -224,7 +232,6 @@ export default class TidsConditions extends NavigationMixin(LightningElement) {
     window.close();
   }
   oops(error){
-		console.log('error',JSON.stringify(error));
 		this.modalDefaultMessage='Oops! something happened, please retry.'
 		this.modalAction='OK';
 		this.showConfimationModal=true;

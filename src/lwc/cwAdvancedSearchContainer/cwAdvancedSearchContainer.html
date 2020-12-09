@@ -1,0 +1,62 @@
+<template>
+    <div class="container container-search fullheight"> 
+       
+        <div class="header-search-advance bg-white row-no-margin pt-5 pb-3">     
+            <div class="col-6">
+                <h2>{label.advanced_search}</h2>
+                <hr class="yellow-underline">
+            </div>  
+            <div class="col-6 text-right ">
+                <button disabled={shouldDisableSearchBtn} class="btn btn-primary no-margin-top" data-tosca="searchbutton"
+                onclick={onSearch} type="button">{label.search}</button>
+
+                <div if:false={allowSearch} class="pt-2 pb-2">
+                    <div class="col-12 text-red">
+                        <p>{label.limit_filters_reached}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+      
+        <div class={mainBoxesClass}>
+            <div class="col-xl-4 col-lg-4 col-md-12">
+                <div class="col-12 bg-grey p-3 height-100">
+                    <c-cw-add-location-search environment-variables={environmentVariables} filters-applied={filtersApplied} label={label} onselectlocations={setSelectedLocations} applied-filters-count={filtersAppliedLength}>
+                    </c-cw-add-location-search>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-12 ">
+                <div class="col-12 bg-grey p-3 height-100">
+                    <c-cw-cargo-commodities environment-variables={environmentVariables} label={label} onselectcommodities={setCommodities} applied-filters-count={filtersAppliedLength}>
+                    </c-cw-cargo-commodities>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-12 ">
+                <div class="col-12 bg-grey p-3 height-100">
+                    <c-cw-company-types label={label} environment-variables={environmentVariables} onselectcompanytype={setCompanyTypes} applied-filters-count={filtersAppliedLength}>
+                    </c-cw-company-types>
+                </div>
+            </div>
+        </div> 
+
+        <div class="col-12 mt-3">
+            <div class="col-12 bg-grey p-3 height-100">
+                <c-cw-validation-programs label={label} environment-variables={environmentVariables} onselectvalidationprograms={setSelectedPrograms} applied-filters-count={filtersAppliedLength}>
+                </c-cw-validation-programs>
+            </div>
+        </div>
+        
+        <div class="col-12 big-section">
+            <div class="col-12 componentStyleBase-full p-3 mt-3">
+                <c-cw-facility-equipment-infraestructure-wrapper environment-variables={environmentVariables} label={label} onselectcategory={setSelectedCategory} applied-filters-count={filtersAppliedLength}>
+                </c-cw-facility-equipment-infraestructure-wrapper>
+            </div>
+        </div>
+            
+        <!--<div class="col-12 text-right mb-3">
+            <button class="btn btn-primary " data-tosca="searchbutton"
+                onclick={onSearch} type="button">Search</button>
+        </div>-->
+        
+    </div>
+</template>

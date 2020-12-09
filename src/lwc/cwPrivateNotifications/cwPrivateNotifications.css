@@ -1,0 +1,52 @@
+.padding-header {
+    padding-left: 2%;
+    padding-right: 2%;
+}
+
+.notification-header-container {
+    margin-right: -10px;
+    margin-left: -10px;
+    padding: 0px !important;
+    height: 50px;
+}
+
+.notification-body-container {
+    border: 2px solid red;
+}
+
+.restrict-height-body {
+    max-height: 600px;       /* Just for the demo          */
+    overflow-y: auto;    /* Trigger vertical scroll    */
+    overflow-x: hidden;  /* Hide the horizontal scroll */
+}
+
+.align-cell-start {
+    text-align: start;
+}
+
+.row{
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+}
+
+.background-cell-not-read{
+    background-color: rgb(188, 212, 243);
+}
+
+.btn{
+    min-height: 29px!important;
+}
+.btn-primary-blue:after, .btn-primary:after {
+    border-width: 0 0 12px 12px;
+}
+
+.w-80p{
+    width: 80%;
+}
+.w-10p{
+    width: 10%;
+}
+
+.pl-1p{
+    padding-left: 1%;
+}
