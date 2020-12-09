@@ -5,6 +5,8 @@ import allMyTidsCases from "@salesforce/apex/TIDSHelper.allMyTidsCases";
 import actionApplication from "@salesforce/apex/TIDSHelper.actionApplication";
 import verifyRole from "@salesforce/apex/TIDSHelper.verifyRole";
 import createRole from "@salesforce/apex/TIDSHelper.createRole";
+import verifyCascading from "@salesforce/apex/TIDSHelper.verifyCascading";
+import createCascading from "@salesforce/apex/TIDSHelper.createCascading";
 import assignToCaseOwner from "@salesforce/apex/TIDSHelper.assignToCaseOwner";
 import USER_ID from "@salesforce/user/Id";
 
@@ -25,6 +27,15 @@ export default class TidsVetting extends NavigationMixin(LightningElement) {
 	@track isissue=false;
 	@track issucess=false;
 	@track isverification=false;
+
+	@track reasoncascading;
+	@track verifycascadingbutton=true;
+	@track createcascadingbutton=true;
+	@track accountlist;
+	@track cascadingkey;
+	@track isissuecascading=false;
+	@track issucesscascading=false;
+	@track isverificationcascading=false;
 
 	//Modal Window
 	@track modalAction;
@@ -351,5 +362,86 @@ export default class TidsVetting extends NavigationMixin(LightningElement) {
 	resetValues(){
 		this.accountid='';
 		this.contactid='';
+	}
+
+	//Assign Admin HO Role
+	changeCascadingField(event){
+		if (event.target.name === "accountlist"){
+			this.accountlist = event.target.value;
+		} else if (event.target.name === "cascadingkey"){
+			this.cascadingkey  = event.target.value;
+		}
+		if (this.accountlist==='' || this.cascadingkey===''){
+			this.verifybuttonCascadingDisabled();
+		} else {
+			this.verifybuttonCascadingEnabled();
+		}
+	}
+	handleVerifcationCascadingClick(event){
+		//get info
+		this.isissuecascading=false;
+		this.isverificationcascading=false;
+		this.issucesscascading=false;
+		this.spinner = true;
+		verifyCascading({ accountList: this.accountlist, cascadingkey: this.cascadingkey })
+			.then((result) => {
+				this.spinner = false;
+				if (result.hasAnError) {
+					this.isissuecascading=true;
+					this.reasoncascading=result.reason;
+				} else {
+					this.isverificationcascading=true;
+					this.reasoncascading=result.reason;
+					this.verifybuttonCascadingDisabled();
+					this.createbuttonCascadingEnabled();
+				}
+			})
+			.catch((error) => {
+				this.oops(error);
+		});
+	}
+	handleCreateCascadingClick(event){
+		this.spinner = true;
+		this.isissuecascading=false;
+		this.issucesscascading=false;
+		this.isverificationcascading=false;
+		createCascading({ accountList: this.accountlist, cascadingkey: this.cascadingkey })
+			.then((result) => {
+				this.spinner = false;
+				if (result.hasAnError) {
+					this.isissuecascading=true;
+					this.reasoncascading=result.reason;
+				} else {
+					this.issucesscascading=true;
+					this.isverificationcascading=true;
+					this.reasoncascading=result.reason;
+					this.resetCascadingValues();
+					this.createbuttonCascadingDisabled();
+				}
+			})
+			.catch((error) => {
+				this.oops(error);
+		});		
+	}
+	handleResetCascadingClick(event){
+		this.resetCascadingValues();
+		this.createbuttonCascadingDisabled();
+		this.verifybuttonCascadingDisabled();
+	}
+	verifybuttonCascadingDisabled(){
+		this.verifycascadingbutton=true;
+	}
+	verifybuttonCascadingEnabled(){
+		this.verifycascadingbutton=false;
+	}
+	createbuttonCascadingDisabled(){
+		this.createcascadingbutton=true;
+	}
+	createbuttonCascadingEnabled(){
+		this.createcascadingbutton=false;
+	}
+	resetCascadingValues(){
+		this.accountlist='';
+		this.cascadingkey='';
 	}
 }

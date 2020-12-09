@@ -29775,6 +29775,10 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>icg_station_details</name>
     </customLabels>
     <customLabels>
+        <label><!-- icg station has been created --></label>
+        <name>icg_station_has_been_created</name>
+    </customLabels>
+    <customLabels>
         <label><!-- icg station information --></label>
         <name>icg_station_information</name>
     </customLabels>

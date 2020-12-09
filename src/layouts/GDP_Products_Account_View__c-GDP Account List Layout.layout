@@ -590,6 +590,10 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>IDCard_Key_Account__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>CreatedById</field>
             </layoutItems>
@@ -751,10 +755,13 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>VER_Number__c</fields>
+        <fields>Agency_IATA_Code__c</fields>
+        <fields>Name_on_ID_Card__c</fields>
+        <fields>Date_of_Birth__c</fields>
+        <fields>Card_Status__c</fields>
         <fields>Json_Is_Active__c</fields>
         <fields>Valid_To_Date__c</fields>
-        <fields>FirstName__c</fields>
-        <fields>LastName__c</fields>
+        <fields>Cancellation_Date__c</fields>
         <relatedList>ID_Card__c.GDP_Products_Account_View__c</relatedList>
         <sortField>Valid_To_Date__c</sortField>
         <sortOrder>Desc</sortOrder>
