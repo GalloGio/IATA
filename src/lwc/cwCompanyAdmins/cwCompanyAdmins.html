@@ -1,0 +1,45 @@
+<template>
+    <div id="allfacilities" class="tabcontent display-block">
+        <template for:each={groupsAndAdmins} for:item="opsGroup">
+            
+            <div class="row" key={opsGroup.groupName}>
+                <div class="col-8 pl-3 pt-3" >
+                    <h3 class="capitalize" key={opsGroup.groupName}>{label.all} {opsGroup.groupName} {label.company_admins} ({opsGroup.companyAdmins.length})</h3>
+                    <hr class="yellow-underline">
+                </div>
+                <div class="col-4 text-right pr-3" >
+                    <template if:true={opsGroup.hasItem}>
+                        <a href="javascript:{}" key={opsGroup.Id} data-name={opsGroup.groupName} title={label.icg_export_to_excel} onclick={excelFormat}><img src={exportExcel} class="filter-grey-100 width-40 mb--15 pt-1" /></a>
+                    </template>
+                </div>
+            </div>
+        
+            <table class="table table-striped" key={opsGroup.groupName}>
+                <thead>
+                    <tr>
+                        <th scope="col">{label.firstname}</th>
+                        <th scope="col">{label.lastname}</th>
+                        <th scope="col">{label.email}</th>
+                        <th scope="col">{label.phone}</th>
+                        <th scope="col">{label.title}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={opsGroup.companyAdmins} for:item="cadmin">
+                        <tr key={cadmin.Id}>
+                            <td>{cadmin.FirstName}</td>
+                            <td>{cadmin.LastName}</td>
+                            <td>{cadmin.Email}</td>
+                            <td><span if:true={cadmin.Phone}>{cadmin.Phone}</span></td>
+                            <td><span if:true={cadmin.Title}>{cadmin.Title}</span></td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+            <template if:false={opsGroup.hasItem}>
+                <c-cw-grid-empty-message  key={opsGroup.Id}></c-cw-grid-empty-message>
+            </template>
+        </template>
+        <c-cw-xlsx-main header-list={xlsHeader} filename={filename} sheet-data={xlsData}></c-cw-xlsx-main>
+    </div>
+</template>

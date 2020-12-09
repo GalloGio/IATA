@@ -195,6 +195,7 @@ public without sharing class AMS_Utils {
 	public static final String CERT_DGA         = 'DGA';
 	public static final String CERT_CATA        = 'CATA';
 	public static final String CERT_TSA         = 'TSA';
+	public static final String CERT_ULD         = 'ULD';
 
 	//Record Types
 	public static final String RECTYPE_NEW          = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
@@ -2816,7 +2817,7 @@ public static String getChangeCodeMemoText(String process,String changeCodeId, A
 		public static final List<Schema.FieldSetMember> ACCOUNT_FIELDS_TO_VALIDATE = SObjectType.Account.FieldSets.AMS_ACCOUNT_FIELDS_TO_VALIDATE.getFields();
 
 	/*** AMSU-173 ***/
-	public static final Set<String> CLASS_REQ_CASS_NUMBER = new Set<String> {'C', 'I', 'R', 'Q', 'G'};
+	public static final Set<String> CLASS_REQ_CASS_NUMBER = new Set<String> {'C', 'I', 'R', 'Q', 'G', 'L'};
 
 
 	/*** AMSU-195 Start ***/

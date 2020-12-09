@@ -178,7 +178,12 @@
                 <field>ANG_Cannot_move_contact_between_Agencies__c</field>
             </layoutItems>
         </layoutColumns>
-        <layoutColumns/>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Functional_Role__c</field>
+            </layoutItems>
+        </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <layoutSections>

@@ -46,11 +46,16 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <emptySpace>true</emptySpace>
+                <behavior>Edit</behavior>
+                <field>Date_Legal_REJECTED_the_agenda__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Date_Legal_REJECTED_the_agenda__c</field>
+                <field>Reason_for_Rejection_Agenda__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Legal_Remarks_Agenda__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -72,6 +77,14 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>VMFR__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Other__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Comments__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -99,21 +112,16 @@
                 <behavior>Edit</behavior>
                 <field>Date_Legal_REJECTED_the_minutes__c</field>
             </layoutItems>
-        </layoutColumns>
-        <style>TwoColumnsTopToBottom</style>
-    </layoutSections>
-    <layoutSections>
-        <customLabel>true</customLabel>
-        <detailHeading>false</detailHeading>
-        <editHeading>false</editHeading>
-        <label>New Section</label>
-        <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Comments__c</field>
+                <field>Reason_for_Rejection_Minutes__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Legal_Remarks_Minutes__c</field>
             </layoutItems>
         </layoutColumns>
-        <style>OneColumn</style>
+        <style>TwoColumnsTopToBottom</style>
     </layoutSections>
     <layoutSections>
         <customLabel>false</customLabel>

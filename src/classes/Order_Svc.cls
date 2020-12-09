@@ -3359,7 +3359,7 @@ public without sharing class Order_Svc
 		}
 
 		//*** save changes
-		Savepoint sp = Database.setSavepoint();
+		Savepoint sp = CW_DBTransactionHandler.setSavepoint();
 		try
 		{
 			upsert lstOrderItem;
@@ -3375,7 +3375,7 @@ public without sharing class Order_Svc
 		} catch (Exception e)
 		{
 			system.debug('Exception ' + e.getStackTraceString());
-			Database.rollback(sp);
+			CW_DBTransactionHandler.doRollback(sp);
 			return String.valueOf(e);
 		}
 	} //*** end of "setPriceToOrder"
@@ -4292,4 +4292,147 @@ public without sharing class Order_Svc
 
 	}
 
+	/*
+	* @Description: remoteValidationStatusHandler
+						Actions to be done depending on the Remote Validation´s status
+ 
+	* @Params: Map<Id, Order> newMap, Map<Id, Order> oldMap
+	* @Returns: void - update
+
+	*/
+	public static void remoteValidationStatusHandler(Map<Id, Order> newMap, Map<Id, Order> oldMap) {
+		List<ICG_Notification__c> notifications = new List<ICG_Notification__c>();
+		List<Messaging.SingleEmailMessage> emailsToBeSent = new List<Messaging.SingleEmailMessage>();
+
+		ICG_GxA_Integration_Settings__c gxaSettings = ICG_GxA_Integration_Settings__c.getOrgDefaults();
+		String startProcessStatus = gxaSettings.Order_Status_To_Start_Process__c != null ? gxaSettings.Order_Status_To_Start_Process__c : 'RV_Complete';
+		String readyForUserFulfillmentStatus = gxaSettings.Order_Status_Pending_Fulfillment__c != null ? gxaSettings.Order_Status_Pending_Fulfillment__c : 'RV_Created';
+		String rvSubmittedStatus = gxaSettings.Order_Status_Submitted__c != null ? gxaSettings.Order_Status_Submitted__c : 'RV_WIP';
+		String needsCorrectionStatus = gxaSettings.Order_Status_Needs_Correction__c != null ? gxaSettings.Order_Status_Needs_Correction__c : 'RV_NeedsCorrection';
+		if (String.isNotBlank(gxaSettings.Order_Status_To_Start_Process__c)) {
+			List<Id> gxaOrderIds = new List<Id>();
+			List<Id> pendingToFulfillOrderIds = new List<Id>();
+			List<Id> submittedOrderIds = new List<Id>();
+			List<Id> needsCorrectionOrderIds = new List<Id>();
+			for (Order currentOrder : newMap.values()) {
+				if(String.isNotBlank(currentOrder.Remote_Validation_Status__c) && (oldMap == null || oldMap.get(currentOrder.Id).Remote_Validation_Status__c != currentOrder.Remote_Validation_Status__c)){
+					if (currentOrder.Remote_Validation_Status__c == startProcessStatus) {
+						gxaOrderIds.add(currentOrder.Id);
+					}
+					else if (currentOrder.Remote_Validation_Status__c == readyForUserFulfillmentStatus) {
+						pendingToFulfillOrderIds.add(currentOrder.Id);
+					}
+					else if (currentOrder.Remote_Validation_Status__c == rvSubmittedStatus) {
+						submittedOrderIds.add(currentOrder.Id);
+					}
+					else if (currentOrder.Remote_Validation_Status__c == needsCorrectionStatus) {
+						needsCorrectionOrderIds.add(currentOrder.Id);
+					}
+				}
+            }
+            
+			notifications.addAll(AddNotifications(gxaOrderIds, emailsToBeSent));
+			
+
+			if (pendingToFulfillOrderIds.size() > 0) {
+				List<OrderItem> orderItems = [Select Id, Product2.Name, Station__r.Name, Station__r.Account_Role__r.Account__c, Station__r.RecordType.Name, Station__r.Formatted_Address__c, CreatedById, CreatedBy.Email, CreatedBy.ContactId from OrderItem where Product2.Smart_Facility_Remote_Validation__c = true and OrderId IN : pendingToFulfillOrderIds];
+				for(OrderItem orditem : orderItems){
+					//Insert System Notification
+					if(ordItem.CreatedBy.ContactId != null && ordItem.Station__r != null){
+						String subject = orditem.Product2.Name + ' for ' + ordItem.Station__r.Name+ ' now ready to be completed';
+						String body = orditem.Product2.Name + ' for ' + ordItem.Station__r.Name + ', ' + ordItem.Station__r.Formatted_Address__c  + ' now ready to be completed';
+						notifications.addAll(CW_NotificationsController.setNotificationCustom(subject, body, 'Requested', new List<String>{orditem.CreatedBy.ContactId}, ordItem.Station__r, CW_NotificationsController.RT_NOTIFICATION_PRIVATE_AREA, false));
+					}
+
+					//Send email to who purchased and all managers
+					Set<Id> setUserAndAllAdmisIds = new Set<Id>();
+					setUserAndAllAdmisIds.add(orditem.createdById);
+					setUserAndAllAdmisIds.addAll(getAllStationManagersAndCompanyAdmins(orditem.Station__r));
+					emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails('Completion_to_User_link_ready', orditem.Id, setUserAndAllAdmisIds));
+					//Send email to IATA
+					emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails('Completion_to_IATA_link_ready', orditem.Id, CW_EmailManager.getIataAdminsIds()));
+				}
+			}
+			if (submittedOrderIds.size() > 0) {
+				List<OrderItem> orderItems = [Select Id, Station__r.Name, Station__r.RecordType.Name, Station__r.Account_Role__r.Account__c, Station__r.Formatted_Address__c, CreatedById, CreatedBy.Email from OrderItem where Product2.Smart_Facility_Remote_Validation__c = true and OrderId IN :submittedOrderIds];
+				for(OrderItem orditem : orderItems){
+					//Send email to who purchased
+					Set<Id> setUserAndAllAdmisIds = new Set<Id>();
+					setUserAndAllAdmisIds.add(orditem.createdById);
+					setUserAndAllAdmisIds.addAll(getAllStationManagersAndCompanyAdmins(orditem.Station__r));
+					emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails('Completion_to_User_questionnaire_sub', orditem.Id, setUserAndAllAdmisIds));
+					//Send email to IATA
+					emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails('Completion_to_IATA_when_is_subm', orditem.Id, CW_EmailManager.getIataAdminsIds()));
+				}
+            }
+            
+			notifications.addAll(AddCorrectionNotifications(needsCorrectionOrderIds, emailsToBeSent));
+		}
+
+		if(notifications.size() > 0){
+			Database.insert(notifications);
+		}
+
+		CW_EmailManager.sendInternalEmails(emailsToBeSent);
+    }
+
+    private static List<ICG_Notification__c> AddNotifications(List<Id> gxaOrderIds, List<Messaging.SingleEmailMessage> emailsToBeSent){
+		List<ICG_Notification__c> notifications = new List<ICG_Notification__c>();
+        if (gxaOrderIds.size() > 0) {
+            System.enqueueJob(new CW_GxA_Integration_Queueable(gxaOrderIds));
+            List<OrderItem> orderItems = [Select Id, Product2.Name, Station__r.Account_Role__r.Account__c, Station__r.Name, Station__r.RecordType.Name, Station__r.Formatted_Address__c, CreatedById, CreatedBy.Email, CreatedBy.ContactId from OrderItem where Product2.Smart_Facility_Remote_Validation__c = true and OrderId IN :gxaOrderIds];
+            for(OrderItem orditem : orderItems){
+                //Insert System Notification
+                if(ordItem.CreatedBy.ContactId != null && ordItem.Station__r != null){
+                    String subject = orditem.Product2.Name + ' results for ' + ordItem.Station__r.Name + ', ' + ordItem.Station__r.RecordType.Name + ' ready';
+                    String body = orditem.Product2.Name + ' results for ' + ordItem.Station__r.Name + ', ' + ordItem.Station__r.RecordType.Name + ', ' + ordItem.Station__r.Formatted_Address__c + ' ready';
+                    notifications.addAll(CW_NotificationsController.setNotificationCustom(subject, body, 'Requested', new List<String>{orditem.CreatedBy.ContactId}, ordItem.Station__r, CW_NotificationsController.RT_NOTIFICATION_PRIVATE_AREA, false));
+                }
+                
+				//Send email to who purchased, all station managers and company admin related to the station
+				Set<Id> setUserAndAllAdmisIds = new Set<Id>();
+				setUserAndAllAdmisIds.add(orditem.createdById);
+				setUserAndAllAdmisIds.addAll(getAllStationManagersAndCompanyAdmins(orditem.Station__r));
+				emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails('Results_to_User_appro_by_IATA', orditem.Id, setUserAndAllAdmisIds));
+            }
+        }
+        return notifications;
+    }
+
+    private static List<ICG_Notification__c> AddCorrectionNotifications(List<Id> needsCorrectionOrderIds, List<Messaging.SingleEmailMessage> emailsToBeSent){
+		List<ICG_Notification__c> notifications = new List<ICG_Notification__c>();
+        if (needsCorrectionOrderIds.size() > 0) {
+            List<OrderItem> orderItems = [Select Id, Product2.Name, Station__r.Account_Role__r.Account__c, Station__r.Name, Station__r.RecordType.Name, Station__r.Formatted_Address__c, CreatedById, CreatedBy.ContactId, CreatedBy.Email from OrderItem where Product2.Smart_Facility_Remote_Validation__c = true and OrderId IN :needsCorrectionOrderIds];
+            for(OrderItem orditem : orderItems){
+                //Insert System Notification
+                if(ordItem.CreatedBy.ContactId != null && ordItem.Station__r != null){
+                    String subject = orditem.Product2.Name + ' results for ' + ordItem.Station__r.Name + ', ' + ordItem.Station__r.RecordType.Name + ' ready';
+                    String body = orditem.Product2.Name + ' results for ' + ordItem.Station__r.Name + ', ' + ordItem.Station__r.RecordType.Name + ', ' + ordItem.Station__r.Formatted_Address__c + ' ready';
+                    notifications.addAll(CW_NotificationsController.setNotificationCustom(subject, body, 'Requested', new List<String>{orditem.CreatedBy.ContactId}, ordItem.Station__r, CW_NotificationsController.RT_NOTIFICATION_PRIVATE_AREA, false));
+                }
+				//Send email to who purchased, all station managers and company admin related to the station
+				Set<Id> setUserAndAllAdmisIds = new Set<Id>();
+				setUserAndAllAdmisIds.add(orditem.createdById);
+				setUserAndAllAdmisIds.addAll(getAllStationManagersAndCompanyAdmins(orditem.Station__r));
+				emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails('Results_to_User_rejec_by_IATA', orditem.Id, setUserAndAllAdmisIds));
+            }
+        }
+        return notifications;
+	}
+	
+	private static Set<Id> getAllStationManagersAndCompanyAdmins(ICG_Account_Role_Detail__c station){
+		Set<Id> setManagersIds = new Set<Id>();
+		
+		//Add all related station managers
+		for (ICG_Contact_Role_Detail__c crd : CW_Utilities.getStationManagersContactRoleDetails(station.Id)) {
+			setManagersIds.add(crd.Account_Contact_Role__r.Contact__c);
+		}
+		//Add all related company admins
+		for (Contact cadmn : CW_Utilities.getCompanyAdminContactsFromAccountId(station.Account_Role__r.Account__c)) {
+			setManagersIds.add(cadmn.Id);
+		}
+		
+		return setManagersIds;
+	}
+	
 }

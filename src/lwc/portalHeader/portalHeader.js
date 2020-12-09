@@ -1,4 +1,5 @@
 import { LightningElement, track, wire, api } from 'lwc';
+import { loadStyle } from "lightning/platformResourceLoader";
 
 // language
 import userId from '@salesforce/user/Id';
@@ -61,6 +62,7 @@ import CSP_Store from '@salesforce/label/c.CSP_Store';
 import CSP_Sign_Up from '@salesforce/label/c.CSP_Sign_Up';
 import CSP_Login from '@salesforce/label/c.CSP_Login';
 import CSP_Go_to_IataOrg from '@salesforce/label/c.CSP_Go_to_IataOrg';
+
 
 // Accept Terms
 import { updateRecord } from 'lightning/uiRecordApi';
@@ -308,7 +310,6 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     }
 
     connectedCallback() {
-
         isGuestUser().then(results => {
             
             this.internalUser = !results;
@@ -513,9 +514,9 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
     // Check if we are in the Old/New Portal
     navigationCheck(pageNameToNavigate, currentService) {
-
+        let oneSourceCommunity = window.location.href.includes('onesource');
         this.closeSideMenu();
-        if (this.trackedIsInOldPortal || !this.internalUser) {
+        if (this.trackedIsInOldPortal || !this.internalUser || oneSourceCommunity) {
             redirectfromPortalHeader({ pageName: currentService }).then(result => {
                 window.location.href = result;
             });
@@ -552,8 +553,9 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     //WMO-627 - ACAMBAS: End
 
     navigateToHomePage() {
+        let oneSourceCommunity = window.location.href.includes('onesource');
         this.closeSideMenu();
-        if(this.trackedIsInOldPortal)
+        if(this.trackedIsInOldPortal || oneSourceCommunity)
             this.navigationCheck("home", "");
         else
             this.navigateToOtherPage("home");

@@ -3,7 +3,7 @@
     <description>One Source Capability Configuration</description>
     <fields>
         <fullName>Data__c</fullName>
-        <description>Capabilities&apos; data separated by ;.</description>
+        <description>Capabilities data separated by ;.</description>
         <externalId>false</externalId>
         <fieldManageability>DeveloperControlled</fieldManageability>
         <label>Data</label>

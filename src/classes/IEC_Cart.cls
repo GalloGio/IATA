@@ -157,13 +157,23 @@ public without sharing virtual class IEC_Cart {
 		public Decimal	quantity 		{ get; set; }
 
 		public String	coupon 			{ get; set; }
+		//If a product is related with a facility, store the id in this field.
+		public Id relatedFacility		{get;set;}			
 
 		public CartItem(Id id, String productNumber, Decimal quantity, String coupon) {
-			this.id = id;
+			initializeFields(id, productNumber, quantity, coupon, null);
+		}
+        public CartItem(Id id, String productNumber, Decimal quantity, String coupon, Id facilityId) {
+			initializeFields(id, productNumber, quantity, coupon, facilityId);
+		}
+        
+        public void initializeFields(Id id, String productNumber, Decimal quantity, String coupon, Id facilityId){
+            this.id = id;
 			this.productNumber = productNumber;
 			this.quantity = quantity;
 			this.coupon = coupon;
-		}
+            this.relatedFacility = facilityId;
+        }
 	}
 
 	public class CartException extends Exception { }
@@ -222,7 +232,7 @@ public without sharing virtual class IEC_Cart {
 	*/
 	@testVisible
 	private static String serializeCartItem(CartItem cartItem) {
-		return serializeString(cartItem.productNumber) + ';' + serializeDecimal(cartItem.quantity) + ';' + serializeString(cartItem.coupon);
+		return serializeString(cartItem.productNumber) + ';' + serializeDecimal(cartItem.quantity) + ';' + serializeString(cartItem.coupon)+ ';' + serializeString(cartItem.relatedFacility);
 	}
 
 	@testVisible
@@ -260,11 +270,15 @@ public without sharing virtual class IEC_Cart {
 		if (serializedString != null && serializedString.length() != 0) {
 			fields = serializedString.split(';');
 
-			if (fields.size() == 3) {
+			if (fields.size() >= 3) {
 				String productNumber = fields[0];
 				String quantity = fields[1];
 				String coupon = fields[2];
-
+                String facilityId;
+				if (fields.size() == 4){
+                	facilityId = fields[3];
+            	}
+                
 				if (productNumber == 'null' || productNumber == '') {
 					productNumber = null;
 				}
@@ -276,12 +290,16 @@ public without sharing virtual class IEC_Cart {
 				if (coupon == 'null' || coupon == '') {
 					coupon = null;
 				}
+                if (facilityId == 'null' || facilityId == '') {
+					facilityId = null;
+				}
 
 				cartItem = new CartItem(
 					null,
 					productNumber,
 					quantity != null ? Decimal.valueOf(quantity) : null,
-					coupon
+					coupon,
+                    facilityId
 				);
 			} else {
 				//throw new CartException('Error deserializing CartItem \'' + serializedString + '\'');
@@ -549,6 +567,16 @@ public without sharing virtual class IEC_Cart {
 
 	*/
 	public void addItem(String productNumber, Decimal quantity, String coupon) {
+		addItem(productNumber, quantity, coupon, null);
+	}
+
+	/**
+		Add a new Item to the Cart, indexed by productNumber. If product already exists
+		then update the product with existing quantity + new quantity. If new product,
+		just add it. Include the station id for remote validation product
+
+	*/
+	public void addItem(String productNumber, Decimal quantity, String coupon, String facilityId) {
 		CartItem cartItem;
 
 		System.debug('addItem start');
@@ -557,7 +585,7 @@ public without sharing virtual class IEC_Cart {
 			cartItemMap.remove(productNumber);
 		}
 
-		cartItem = new CartItem(null, productNumber, quantity, coupon);
+		cartItem = new CartItem(null, productNumber, quantity, coupon, facilityId);
 
 		cartItemMap.put(productNumber, cartItem);
 
@@ -846,6 +874,7 @@ public without sharing virtual class IEC_Cart {
 						orderItem.UnitPrice = ecomProduct.UnitPrice;
 						orderItem.Source__c = 'Ecommerce';
 						orderItem.Coupon__c = cartItem.coupon;
+                        orderItem.Station__c = cartItem.relatedFacility;
 
 						orderItemList.add(orderItem);
 

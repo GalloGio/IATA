@@ -26,6 +26,7 @@ import CSP_Treasury_Dashboard_Report from '@salesforce/label/c.CSP_Treasury_Dash
 import CSP_Breadcrumb_Service_TIPReports from '@salesforce/label/c.CSP_Breadcrumb_Service_TIPReports';
 import CSP_Breadcrumb_Service_InnovationHub from '@salesforce/label/c.CSP_Breadcrumb_Service_InnovationHub';
 import CSP_Breadcrumb_AirlineDailySales from '@salesforce/label/c.CSP_Service_AirlineDailySales_Title';
+import CSP_Breadcrumb_SmartLite from '@salesforce/label/c.CSP_Service_SmartLite_Title';
 
 export default class PortalBreadcrumbs extends NavigationMixin(LightningElement) {
 
@@ -47,6 +48,7 @@ export default class PortalBreadcrumbs extends NavigationMixin(LightningElement)
         CSP_Breadcrumb_Service_TIPReports,
         CSP_Breadcrumb_Service_InnovationHub,
         CSP_Breadcrumb_AirlineDailySales,
+        CSP_Breadcrumb_SmartLite,
 		CSP_Deduction_Notice,
         CSP_Treasury_Dashboard_Report
     };

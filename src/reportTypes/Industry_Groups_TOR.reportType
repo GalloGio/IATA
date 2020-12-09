@@ -234,6 +234,11 @@
             <field>Cluster__c.Sub_Region__c</field>
             <table>LocalGovernance__c</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Group_Administrator__c</field>
+            <table>LocalGovernance__c</table>
+        </columns>
         <masterLabel>Industry Groups</masterLabel>
     </sections>
 </ReportType>

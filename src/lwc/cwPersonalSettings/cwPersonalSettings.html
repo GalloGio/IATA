@@ -1,0 +1,23 @@
+<template>
+    <div class="wrapperSettings" if:true={UserInfo}>
+        <div class="row align-items-center justify-content-end cursor-pt m-0 pr-2" onclick={displayMenu}>
+            <lightning-icon icon-name="utility:user" variant="inverse" size="small" ></lightning-icon>
+            <p class="pl-2 text-white">{UserInfo.name}</p>
+            <lightning-icon icon-name="utility:chevrondown" variant="inverse" size="x-small" class="pl-2 pr-2 chevron"></lightning-icon>
+        </div>
+        <div if:true={showMenu}
+            class="row slds-popover align-items-center justify-content-center cardContent">
+            <div class="col-md-12 p-0 row detailSettings text-left">
+                <div class="col-md-12">
+                    <h3 class="text-black">{UserInfo.name}</h3>
+                </div>
+                <div class="col-md-12 text-black">
+                    {UserInfo.accountname}                  
+                </div>
+                <div class="col-md-6">
+                    <a onclick={goToPrivateArea} class="underline text-blue"><span class="text-blue">{label.private_area}</span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

@@ -1,17 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
-        <fullName>AME_Complaint_out_of_Complaint_team_notification</fullName>
-        <description>AME: Complaint out of Complaint team notification</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>suwal@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <senderType>CurrentUser</senderType>
-        <template>All/AME_Complaint_out_of_Complaint_Team</template>
-    </alerts>
-    <alerts>
         <fullName>BJS_Complaint_Notification_email_to_Complaint_Owner</fullName>
         <description>BJS: Complaint_Notification email to Complaint Owner</description>
         <protected>false</protected>
@@ -105,30 +94,6 @@
         <criteriaItems>
             <field>Complaint__c.OwnerId</field>
             <operation>notEqual</operation>
-        </criteriaItems>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
-        <fullName>AME%3A Complaint not assigned to Complaint Team</fullName>
-        <actions>
-            <name>AME_Complaint_out_of_Complaint_team_notification</name>
-            <type>Alert</type>
-        </actions>
-        <active>true</active>
-        <criteriaItems>
-            <field>Complaint__c.CreatedById</field>
-            <operation>notEqual</operation>
-            <value>Motaz Nofal,Luma Arafat,Fayez Shalbak</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Complaint__c.Object_type__c</field>
-            <operation>equals</operation>
-            <value>Complaint</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Complaint__c.ComplaintRegion__c</field>
-            <operation>equals</operation>
-            <value>Africa &amp; Middle East</value>
         </criteriaItems>
         <triggerType>onCreateOnly</triggerType>
     </rules>
