@@ -103,7 +103,7 @@ global class IfapToolManager {
 									app.processPWCdocumentsGXA(AmazonCredentials.getCredentials(IFAPCONFIGARATIONNAME).IAS_configurationName,BATCHSIZEFROMFT);
 
 				PWCResponses gxa_response = (PWCResponses) JSON.deserialize(result_GxA, PWCResponses.class);
-				r.responses.addAll(gxa_response.responses);
+				r.responses.addAll(gxa_response.responses); 
 
 				r.success = true;
 				System.debug(LoggingLevel.ERROR, '################# (WS) PWC RESULT RESTITUISCE '+result);

@@ -39,8 +39,7 @@
             isPassAirline="{!isPassAirline}"
             managePASS="{!managePASS}"
             strAreaType="{!strAreaType}"
-            strChangeType="{!strChangeType}" />
-
+            strChangeType="{!strChangeType}" rendered="{! NOT(newCase.Verification__c=='PASS' && newCase.Reason1__c=='PASS Country Aggregator')}"/>
 
     <apex:outputPanel layout="block" styleclass="alert alert-info" html-role="alert" rendered="{!DocumentGuide!=null}">
         Any doubts? Please check out our&nbsp;
@@ -58,7 +57,7 @@
             </style>
             <apex:pageBlockButtons location="bottom">
                 <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-right" action="{!goToFinalStep}" value="Submit to IATA" disabled="{!NOT(allfieldsfilled)}" status="WaitingStatus" />
-                <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-topMargin iatabtn-left" action="{!goToStep3}" value="Previous" html-novalidate="" html-formnovalidate="" />
+                <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-topMargin iatabtn-left" action="{!goToStep3}" value="Previous" html-novalidate="" html-formnovalidate="" rendered="{! NOT(newCase.Verification__c=='PASS' && newCase.Reason1__c=='PASS Country Aggregator')}"/>
                 <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-topMargin iatabtn-left" style="margin-left:25%;" action="{!saveBSPFormAndLeave}" value="Save Draft and Leave" html-novalidate="" html-formnovalidate="" />
             </apex:pageBlockButtons>
             
@@ -67,7 +66,7 @@
             <!-- BASP/CASS Submit section -->
             <apex:outputPanel rendered="{!OR(isBSP,isCASS,isPassAirline,managePASS)}">
                 <apex:outputPanel id="mainPanel" layout="block" styleclass="apcontainer">
-                    <apex:pageBlockSection title="Application Status" columns="1" collapsible="false">
+                    <apex:pageBlockSection title="Application Status" columns="1" collapsible="false" rendered="{! NOT(newCase.Verification__c=='PASS' && newCase.Reason1__c=='PASS Country Aggregator')}">
                         <apex:outputtext styleclass="{!IF(allfieldsfilled,'ap-green','ap-red')}" value="{!IF(allfieldsfilled,$Label.ISSP_AP_PASS_FieldsFilled,'You cannot submit your application until you go back and fill all the required fields, and agree to the Terms and Conditions below')}"/>
                     </apex:pageBlockSection>
                     <apex:pageBlockSection title="Settlement instructions & Bank Accounts information" columns="1" rendered="{!OR(strAreaType=='Airline Joining', strChangeType=='Bank Account Instructions') && !isPassAirline}" collapsible="false">
@@ -92,6 +91,8 @@
                         <apex:outputPanel layout="block" styleclass="red-box" rendered="{! !isGSSAUser && AuthorizedSignatories.size=0}">
                             As per our records your company does not have a valid Authorize Signatory Package in place; therefore in order activate your Participation please complete the package in the link below, once validated by us, you will be requested to send the originals to our office.<br/>
                         </apex:outputPanel>
+                        <apex:iframe scrolling="false" height="180px" rendered="{! !isGSSAUser && AuthorizedSignatories.size=0}"
+                            src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=3&reqRequired=Mandatory&reqName=Authorized Signatory Package (ASP)&reqDescription=Scanned copy of signed bank detail.&reqIdentifier=ASP"/>
                         <apex:outputPanel layout="block" styleclass="red-box" rendered="{! !isGSSAUser && AuthorizedSignatories.size>0}">
                             <p>
                                 Kindly note the bank mandate must be issued from your Company's Head Office and signed by two (2) officers that are authorized as per your company's IATA FDS Authorized Signatories Package (ASP).
@@ -104,71 +105,105 @@
                             </ul>
                         </apex:outputPanel>
                         <apex:iframe scrolling="false" height="180px"
-                        src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=3&reqRequired=Mandatory&reqName=Bank Mandate&reqDescription=Please upload the completed Bank Mandates.&reqIdentifier=Bank_Mandate"/>
+                        src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=1&reqRequired=Mandatory&reqName=Bank Mandate&reqDescription=Please upload the completed Bank Mandates.&reqIdentifier=Bank_Mandate"/>
                     </apex:outputPanel>
 
-                    <apex:pageBlockSection title="{!$Label.ISSP_PASS_Participation_AgreementTerms}" columns="1" collapsible="false" rendered="{!isPassAirline || managePASS}">
+                    <apex:pageBlockSection title="{!$Label.ISSP_PASS_Participation_AgreementTerms}" columns="1" collapsible="false" rendered="{! (isPassAirline || managePASS) && strAreaType=='Airline Joining'}">
                         <div class="aplabel" style="font-weight:bold;"> {!$Label.ISSP_PASS_Download_Documents}</div>
                         <div id="bankmandatelink_p2">
                             <ul style="display:lock;list-style-type: disc;">
                                 <li><a href="{!URLFOR($Resource.PASS_Airline_Joining_Checklist)}" target="_blank">{!$Label.ISSP_PASS_Airline_Checklist}</a></li>
                                 <li><a href="{!URLFOR($Resource.PASS_Participation_Aggrement)}" target="_blank">{!$Label.ISSP_PASS_Participation_Agreement}</a></li>
                                 <li><a href="{!URLFOR($Resource.PASS_TermsOfUse)}" target="_blank">{!$Label.ISSP_PASS_Terms_Use}</a></li>
+                                <li style="{!IF(isGSSAUser && !isSISActive, '', 'display: none')}">
+                                    <a href="/ISSP_SISMembershipApplicationFormPDF?id={!newForm.Id}" target="_blank" download="SIS_Membership_Application_Form.pdf">{!$Label.ISSP_SIS_Membership_Download_PDF}</a>
+                                </li>
                             </ul>
                         </div>
                         
                         <!-- Agreements PASS -->
-                        <div class="aplabel">
-                            <apex:outputText value="{!$Label.ISSP_PASS_Agreement}" escape="false" styleclass="aplabel"/>
-                        </div>
-                        <apex:iframe src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=4&reqRequired=Mandatory&reqName=Signed Participation Agreement&reqDescription=Scanned copy of Signed Participation Agreement&reqIdentifier=FormOfAuthorization"
-                            height="190px" width="100%" scrolling="false" rendered="true"/>
+                        <apex:outputPanel rendered="{!showPASSAgreement}">
+                            <div class="aplabel">
+                                <apex:outputText value="{!$Label.ISSP_PASS_Agreement}" escape="false" styleclass="aplabel"/>
+                            </div>
+                            <apex:iframe src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=2&reqRequired=Mandatory&reqName=Signed Participation Agreement&reqDescription=Scanned copy of Signed Participation Agreement&reqIdentifier=PASSAgreement"
+                                height="190px" width="100%" scrolling="false" rendered="true"/>
+                        </apex:outputPanel>
                     </apex:pageBlockSection>
-                    <apex:pageBlockSection title="Bank Mandate" columns="1" rendered="{!isPassAirline && OR(strAreaType=='Airline Joining', strChangeType=='Bank Account Instructions')}" collapsible="false">
+                    <apex:pageBlockSection title="Bank Mandate" columns="1" rendered="{!isPassAirline && strAreaType=='Airline Joining'}" collapsible="false">
                         <!-- Upload Bank Mandate section (Without ICCS) -->
                         <apex:outputPanel layout="block">
-                            <div class="aplabel">
-                                <apex:outputText value="{!$Label.ISSP_PASS_BankMandate}" escape="false" styleclass="aplabel"/>
-                            </div>
                             <p>
+                                <apex:outputText value="{!$Label.ISSP_PASS_BankMandate}" escape="false"/>
+                            </p>
+                            <br/>
+                            <apex:outputPanel layout="block" rendered="{! !isGSSAUser || WrapperPassCountriesRequired.size>0}">
                                 <b>Please download the Bank Mandate form using the link below:</b>
                                 <div id="bankmandatelink_p">
                                     <u><a href="{!URLFOR($Resource.Airline_PASS_Local_Account_Beneficiary)}" target="_blank">BSP / CASS  / PASS Local Bank Account Beneficiary</a></u>
                                 </div>
-                            </p>
+                            </apex:outputPanel>
+                            <apex:repeat value="{!wrapperPassCountries}" var="passCountry" rendered="{! isGSSAUser && WrapperPassCountriesRequired.size=0}">
+                                <apex:outputPanel layout="block" styleclass="alert alert-warning" rendered="{! !passCountry.requiredFile}">
+                                    <apex:outputText value="{!$Label.ISSP_PASS_BankMandate_Not_Required}" >
+                                        <apex:param value="{!passCountry.countryName}"/>
+                                    </apex:outputText>
+                                </apex:outputPanel>
+                            </apex:repeat>
 
                             <apex:outputPanel layout="block" styleclass="red-box" rendered="{! !isGSSAUser && AuthorizedSignatories.size=0}">
-                                As per our records your company does not have a valid Authorize Signatory Package in place; therefore in order activate your Participation please complete the package in the link below, once validated by us, you will be requested to send the originals to our office.<br/>
-                                <ul style="display:lock;list-style-type: disc;">
-                                    <li>Chief Financial Officer (CFO) or</li>
-                                    <li>Head of Treasury or Cash Management Department</li>
-                                </ul>
-                                <div class="progress" style="display:{!IF(managePASS=true, 'block','none')};height:5%">
-                                    <apex:outputPanel rendered="{!(strChangeType!='Bank Account Instructions')}">
-                                        <div style="padding-bottom:5px">1) A scanned version of the local bank mandate shall be attached to this process to proceed with its validation prior the original being sent to IATA. The result of the validation will be communicated to you. Additional banking information may be requested according to the existing banking requirements in the country concerned.</div>
-                                        <div style="padding-bottom:5px">2) The original local bank mandate should be sent to IATA Geneva at the following address (the reception of the original document is mandatory to finalize the process):</div>
-                                    </apex:outputPanel>
-                                    <apex:outputPanel rendered="{!(strChangeType=='Bank Account Instructions')}">
-                                        <div style="padding-bottom:5px">1) A scanned version of the local bank mandate shall be attached to this process to proceed with its validation prior the original being sent to IATA. The result of the validation will be communicated to you. Additional banking information may be requested according to the existing banking requirements in the country concerned.</div>
-                                        <div style="padding-bottom:5px">2) Kindly note any change in the bank account instructions must be requested by the participant at least 15 days in advance. The implementation of such instructions can only be considered as valid by the participant when acknowledged by IATA, including the settlement date in which the new instructions will be effective. Until such confirmation, please ensure that you current account remains active.</div>
-                                        <div style="padding-bottom:5px">3) The original local bank mandate should be sent to IATA Geneva at the following address (the reception of the original document is mandatory to finalize the process). Please follow the instructions to fill in the bank information. If the document does not comply with IATA requirements it can delay the process.</div>
-                                    </apex:outputPanel>
-                                    <br/>
-                                        <div style="font-weight:bold;margin-left:100px;display:block">
-                                            <apex:outputText value="{!$Label.IATA_Global_Delivery_Center_Address}" escape="false" />
-                                        </div>
-                                    <br/>
+                                {!$Label.ISSP_PASS_Authorized_Signatories_Header_Text}<br/>
+                                <br/>
+                                <div style="display:{!IF(managePASS=true, 'block','none')};height:5%">
                                     <div style="padding-bottom:5px"><b>NOTE:</b>&nbsp;For countries / operations with dual currencies, please submit separate bank mandates for each currency.</div>
-                                        <apex:outputPanel rendered="{!(strChangeType=='Bank Account Instructions')}">
-                                            <div style="padding-bottom:5px"><b>NOTE II:</b>&nbsp;In case you are applying for a change from ICCS to a Local Bank Account in the concerned operation, you are requested to coordinate with ICCS team (ICCSO@iata.org) in order to take the necessary adjustments in regards to your ICCS participation.</div>
-                                        </apex:outputPanel>
-                                        <apex:outputText rendered="{!apCountryISOCode='BO'}">
-                                            <br/><br/><b>NOTE:</b>&nbsp;If you choose only one currency that travel agents may use to issue tickets, please inform your travel agents accordingly.  However, please note that GDSs do not have the capability to restrict ticketing to only one currency.
-                                        </apex:outputText>
                                 </div>
+                            </apex:outputPanel>
+
+                            <apex:outputPanel layout="block" rendered="{! !isGSSAUser && AuthorizedSignatories.size=0 && PASSAuthorizedSignatoriesPackageUrl!=null}">
+                                <apex:outputLink value="{!PASSAuthorizedSignatoriesPackageUrl}" style="color:#31708f; text-decoration: underline;" target="_blank">{!PASSAuthorizedSignatoriesPackageName}</apex:outputLink>
                             </apex:outputPanel>
                         </apex:outputPanel>
 
+                        <apex:outputPanel layout="block" styleclass="red-box" rendered="{! !isGSSAUser && AuthorizedSignatories.size>0}">
+                            <p>
+                                Kindly note the bank mandate must be issued from your Company's Head Office and signed by two (2) officers that are authorized as per your company's IATA FDS Authorized Signatories Package (ASP).
+                                The following authorized officers can sign:
+                            </p>
+                            <ul style="display:lock;list-style-type: disc;">
+                                <apex:repeat value="{!AuthorizedSignatories}" var="signatory" >
+                                    <li>{!signatory.Contact__r.Name}</li>
+                                </apex:repeat>
+                            </ul>
+                        </apex:outputPanel>
+
+                    </apex:pageBlockSection>
+
+                    <apex:pageBlockSection title="{!$Label.ISSP_Supporting_Documents}" columns="1" rendered="{!isPassAirline && strAreaType=='Airline Joining'}" collapsible="false">
+                        <apex:outputPanel layout="block" rendered="{!showUploadASPForPASS}">
+                            <apex:iframe scrolling="false" height="180px"
+                                src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=3&reqRequired=Mandatory&reqName=Authorized Signatory Package (ASP)&reqDescription=Scanned copy of signed bank detail.&reqIdentifier=ASP"/>
+                        </apex:outputPanel>
+
+                        <apex:outputPanel layout="block" rendered="{!showUploadPASSAuthorizationForm}">
+                            <apex:iframe scrolling="false" height="180px"
+                                src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=16&reqRequired=Mandatory&reqName=PASS Authorization Form&reqDescription={!$Label.ISSP_AP_Authorization_Form_Description}&reqIdentifier=PASSAuthorizationForm"/>
+                        </apex:outputPanel>
+
+                        <apex:repeat value="{!wrapperPassCountries}" var="passCountry" >
+                            <apex:iframe scrolling="false" height="180px" rendered="{! passCountry.requiredFile}"
+                                src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt={!passCountry.counter}&reqRequired=Mandatory&reqName={!passCountry.reqName}&reqDescription=&reqIdentifier={!passCountry.identifier}"/>
+                        </apex:repeat>
+                    </apex:pageBlockSection>
+
+                    <apex:pageBlockSection title="{!$Label.ISSP_Supporting_Documents}" columns="1" rendered="{!isPassAirline && strChangeType=='Bank Account Instructions'}" collapsible="false">
+                        <apex:outputPanel layout="block" rendered="{!showUploadASPForPASS}">
+                            <apex:iframe scrolling="false" height="180px"
+                                src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=3&reqRequired=Mandatory&reqName=Authorized Signatory Package (ASP)&reqDescription=Scanned copy of signed bank detail.&reqIdentifier=ASP"/>
+                        </apex:outputPanel>
+                        <apex:outputPanel layout="block">
+                            <apex:iframe scrolling="false" height="180px"
+                                src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=1&reqRequired=Mandatory&reqName=Bank Mandate&reqDescription={!$Label.ISSP_PASS_BankMandate_Changes_Description}.&reqIdentifier=Bank_Mandate"/>
+                        </apex:outputPanel>
                     </apex:pageBlockSection>
 
                     <!-- With ICCS and is not a Member -->
@@ -188,26 +223,7 @@
                             Once validated by us, you will be requested to send the originals to our office.
                         </p>
                         <apex:iframe scrolling="true" height="190px"
-                            src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=1&reqRequired=Mandatory&reqName=Information required to join ICCS&reqDescription=&reqIdentifier=ICCS_Join&onlyOne=false"/>
-                    </apex:pageBlockSection>
-
-                    <apex:pageBlockSection title="Upload Bank Mandate" columns="1" rendered="{!isPassAirline}">
-                        <apex:outputpanel >
-                            <c:Loading />
-                            Please upload the completed Bank Mandates, for each selected country (and currency, if applicable):
-                            <apex:dataTable value="{!wrapperPassCountries}" var="country" style="width:100%">
-                                <apex:column style="width:25%">{!country.countryName}</apex:column>
-                                <apex:column style="width:75%">
-                                    <apex:commandButton value="Upload file" id="uploadFilesButton" onclick="uploadFileFunction('{!newCase.id}', '012w0000000YcHdAAK', '{!OTHERS}', '{!country.countryIsoCode}','{!credentialName}');return false;"/>
-                                </apex:column>
-                            </apex:dataTable>
-                        </apex:outputpanel>
-                    </apex:pageBlockSection>
-                    <!-- Attachment List -->
-                    <apex:pageBlockSection id="AttachmentTable" title="Attachments" columns="1"  rendered="{!isPassAirline}">
-                        <apex:pageBlockTable value="{!attachList}" var="attach" style="width:100%">
-                            <apex:column style="width:100%" value="{!attach.Name}"/>
-                        </apex:pageBlockTable>
+                            src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=5&reqRequired=Mandatory&reqName=Information required to join ICCS&reqDescription=&reqIdentifier=ICCS_Join&onlyOne=false"/>
                     </apex:pageBlockSection>
 
                     <!-- for settlement a la carte and ICCS Member -->
@@ -219,7 +235,7 @@
                             </apex:outputPanel>
                         </p>
                         <apex:iframe scrolling="true" height="190px" rendered="{!ICCSSettlementALaCarteUrl!=null}"
-                            src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=1&reqRequired=Mandatory&reqName={!ICCSSettlementALaCarteName}&reqDescription=&reqIdentifier=ICCS_Settlement_alacarte&onlyOne=false"/>
+                            src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=6&reqRequired=Mandatory&reqName={!ICCSSettlementALaCarteName}&reqDescription=&reqIdentifier=ICCS_Settlement_alacarte&onlyOne=false"/>
                     </apex:pageBlockSection>
 
                     <!-- With ICCS and is Member -->
@@ -229,7 +245,7 @@
                             <apex:outputLink value="{!ICCSJoiningThisMarketUrl}" style="color:#31708f; text-decoration: underline;" target="_blank">{!ICCSJoiningThisMarketName}</apex:outputLink>
                         </apex:outputPanel>
                         <apex:iframe scrolling="false" height="160px"
-                            src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=2&reqRequired=Mandatory&reqName=Information required to join ICCS in this market&reqDescription=&reqIdentifier=ICCS_Join_market"/>
+                            src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=7&reqRequired=Mandatory&reqName=Information required to join ICCS in this market&reqDescription=&reqIdentifier=ICCS_Join_market"/>
                     </apex:pageBlockSection>
 
                     <apex:pageBlockSection title="{!CASE(apcountryisocode, 'PE', 'Disclaimer', 'Additional Requirements')} for {!strLoB} {!apcountry}" columns="1" rendered="{!OR(apcountryisocode='EC', AND(apcountryisocode='UA', strLOB='BSP'),AND(apcountryisocode='KR', strLOB='BSP'),apcountryisocode='PE',AND(apcountryisocode='RU', strLOB='BSP'),AND(apcountryisocode='IL', strLOB='BSP'))}" collapsible="false">
@@ -354,19 +370,19 @@
                         <apex:outputPanel layout="block" rendered="{!AND(BSPCounterIndemnityAgreementUrl!=null,ShowCounterIndemnity)}">
                             <apex:outputLink value="{!BSPCounterIndemnityAgreementUrl}" style="color:#31708f; text-decoration: underline;" target="_blank">{!BSPCounterIndemnityAgreementName}</apex:outputLink>
                         </apex:outputPanel>
-                        <apex:iframe src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=4&reqRequired=Mandatory&reqName=Counter Indemnity Agreement&reqDescription=This agreement must be signed once for all BSPs by IATA and Non-IATA Members&reqIdentifier=CounterIndemnityAgreement"
+                        <apex:iframe src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=9&reqRequired=Mandatory&reqName=Counter Indemnity Agreement&reqDescription=This agreement must be signed once for all BSPs by IATA and Non-IATA Members&reqIdentifier=CounterIndemnityAgreement"
                             height="190px" width="100%" scrolling="false" rendered="{!ShowCounterIndemnity}"/>
 
                         <apex:outputPanel layout="block" rendered="{!AND(BSPFormOfConcurrenceUrl!=null,ShowFormOfConcurrence)}">
                             <apex:outputLink value="{!BSPFormOfConcurrenceUrl}" style="color:#31708f; text-decoration: underline;" target="_blank">{!BSPFormOfConcurrenceName}</apex:outputLink>
                         </apex:outputPanel>
-                        <apex:iframe src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=5&reqRequired=Mandatory&reqName=Form of Concurrence&reqDescription=This agreement must be signed once for all BSPs only by Non- IATA Members&reqIdentifier=FormOfAuthorization"
+                        <apex:iframe src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=10&reqRequired=Mandatory&reqName=Form of Concurrence&reqDescription=This agreement must be signed once for all BSPs only by Non- IATA Members&reqIdentifier=FormOfAuthorization"
                             height="190px" width="100%" scrolling="false" rendered="{!ShowFormOfConcurrence}"/>
 
                         <apex:outputPanel layout="block" rendered="{!AND(BSPFormOfApplicationUrl!=null,ShowFormOfApplication)}">
                             <apex:outputLink value="{!BSPFormOfApplicationUrl}" style="color:#31708f; text-decoration: underline;" target="_blank">{!BSPFormOfApplicationName}</apex:outputLink>
                         </apex:outputPanel>
-                        <apex:iframe src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=6&reqRequired=Mandatory&reqName=Form of Application&reqDescription=This agreement must be signed per each BSP only by Non-IATA Members&reqIdentifier=FormOfApplication"
+                        <apex:iframe src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=11&reqRequired=Mandatory&reqName=Form of Application&reqDescription=This agreement must be signed per each BSP only by Non-IATA Members&reqIdentifier=FormOfApplication"
                             height="190px" width="100%" scrolling="false" rendered="{!ShowFormOfApplication}"/>
                     </apex:pageBlockSection>
 
@@ -384,13 +400,13 @@
                         <apex:outputPanel layout="block" rendered="{!AND(CASSCounterIndemnityAgreementUrl!=null,ShowCounterIndemnity)}">
                             <apex:outputLink value="{!CASSCounterIndemnityAgreementUrl}" style="color:#31708f; text-decoration: underline;" target="_blank">{!CASSCounterIndemnityAgreementName}</apex:outputLink>
                         </apex:outputPanel>
-                        <apex:iframe src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=4&reqRequired=Mandatory&reqName=Counter Indemnity Agreement&reqDescription=This agreement must be signed once for all CASS by IATA and Non-IATA Members&reqIdentifier=CounterIndemnityAgreement"
+                        <apex:iframe src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=12&reqRequired=Mandatory&reqName=Counter Indemnity Agreement&reqDescription=This agreement must be signed once for all CASS by IATA and Non-IATA Members&reqIdentifier=CounterIndemnityAgreement"
                             height="190px" width="100%" scrolling="false" rendered="{!ShowCounterIndemnity}"/>
 
                         <apex:outputPanel layout="block" rendered="{!AND(CASSFormOfApplicacionConcurrenceUrl!=null,ShowFormOfApplicationAndConcurrence)}">
                             <apex:outputLink value="{!CASSFormOfApplicacionConcurrenceUrl}" style="color:#31708f; text-decoration: underline;" target="_blank">{!CASSFormOfApplicacionConcurrenceName}</apex:outputLink>
                         </apex:outputPanel>
-                        <apex:iframe src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=7&reqRequired=Mandatory&reqName=Form of Application and Concurrence&reqDescription=This agreement must be signed per each CASS only by Non-IATA Members&reqIdentifier=FormOfApplicationAndConcurrence"
+                        <apex:iframe src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=13&reqRequired=Mandatory&reqName=Form of Application and Concurrence&reqDescription=This agreement must be signed per each CASS only by Non-IATA Members&reqIdentifier=FormOfApplicationAndConcurrence"
                             height="190px" width="100%" scrolling="false" rendered="{!ShowFormOfApplicationAndConcurrence}"/>
                     </apex:pageBlockSection>
 
@@ -399,8 +415,8 @@
                 <!-- Accept terms and conditions -->
                 <apex:pageBlockSection title="Terms and conditions" columns="1" collapsible="false">
                     <div class="aplabel">
-                            <apex:outputText value="{!$Label.ISSP_PASS_Terms_And_Conditions}" escape="false" styleclass="aplabel" rendered="{!(isPassAirline || managePASS)}"/>
-                            <apex:outputPanel rendered="{!!(isPassAirline || managePASS)}">
+                        <apex:outputText value="{!$Label.ISSP_PASS_Terms_And_Conditions}" escape="false" styleclass="aplabel" rendered="{!(isPassAirline || managePASS)}"/>
+                        <apex:outputPanel rendered="{!!(isPassAirline || managePASS)}">
                             <p>By submitting the present application form to IATA,  I hereby confirm that all information is correct; that I am aware of the local laws and regulations governing the operations of air carriers in <b>{!apcountry}</b>
                                 and that the ISS Participant on whose behalf I am executing the present form, will hold IATA, its directors, officers, employees and agents free from any liability, costs and expenses in case of non-compliance with these laws, including without limitations, any reasonable legal expenses.</p><br/>
                             <p>
@@ -410,18 +426,19 @@
                                 I also confirm that said participation in the ISS system is not to be construed as an admission of any liability and acceptance of assumption of any responsibility whatsoever by IATA regarding any default or non- compliance by the ISS Participant with respect to the applicable laws and governmental regulations.
                             </p>
                         </apex:outputPanel>
-                    <apex:outputText rendered="{!AND(apcountryisocode='PE', strLOB='BSP')}">
-                        <div style="line-height: 20px;font-weight:bold">
-                        In addition I confirm that my airline fulfills the following legal requirements to operate in PERU:<br/>
-                        <div style="margin-left:20px">
-                        a)  Authorization issued by SUNAT for the Airline to issue E-tickets<br/>
-                        b)  Registration with SUNARP of the Airline's branch office legal entity<br/>
-                        c)  Registration with SUNAT Tax regulator for the RUC number of the Airline<br/>
-                        d)  Operating Authorization permit granted by Civil Aviation -- applicable to ONLINE carriers<br/>
-                        e)  DGAC government resolution authorizing an Airline to operate sales in Peru -- applicable to OFFLINE carriers<p/>
-                        </div>
-                        </div>
-                     </apex:outputText>
+
+                        <apex:outputText rendered="{!AND(apcountryisocode='PE', strLOB='BSP')}">
+                            <div style="line-height: 20px;font-weight:bold">
+                            In addition I confirm that my airline fulfills the following legal requirements to operate in PERU:<br/>
+                            <div style="margin-left:20px">
+                            a)  Authorization issued by SUNAT for the Airline to issue E-tickets<br/>
+                            b)  Registration with SUNARP of the Airline's branch office legal entity<br/>
+                            c)  Registration with SUNAT Tax regulator for the RUC number of the Airline<br/>
+                            d)  Operating Authorization permit granted by Civil Aviation -- applicable to ONLINE carriers<br/>
+                            e)  DGAC government resolution authorizing an Airline to operate sales in Peru -- applicable to OFFLINE carriers<p/>
+                            </div>
+                            </div>
+                        </apex:outputText>
                     </div>
                     <div class="aplabel">
                         <apex:outputPanel rendered="{!!(isPassAirline || managePASS)}">
@@ -450,7 +467,7 @@
                                 {!ICHTermsAndConditionsName}
                             </apex:outputLink>
                             <apex:iframe scrolling="false" height="150px"
-                            src="/ISSP_FormUpload?caseId={!newform.Case__c}&reqCnt=1&reqRequired=Mandatory&reqName={!URLENCODE('Upload signed ICH participation form')}&reqDescription=&reqIdentifier=SignedICHForm&onlyOne=true"/>
+                            src="/ISSP_FormUpload?caseId={!newform.Case__c}&reqCnt=14&reqRequired=Mandatory&reqName={!URLENCODE('Upload signed ICH participation form')}&reqDescription=&reqIdentifier=SignedICHForm&onlyOne=true"/>
                         </apex:outputPanel>
                         <apex:outputPanel rendered="{!ICHTermsAndConditionsUrl=null}">
                             PDF form not available
@@ -473,7 +490,7 @@
                         </apex:outputLink>
                         <apex:outputText value="  (please download and sign this agreement if you are applying to the ICH as an Airline)"/>
                         <apex:iframe scrolling="false" height="180px"
-                            src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=4&reqRequired=Mandatory&reqName=Upload signed SIS participation form (ISPA)&reqDescription=&reqIdentifier=SignedSISISPAForm"/>
+                            src="/ISSP_FormUpload?caseId={!newCase.Id}&reqCnt=15&reqRequired=Mandatory&reqName=Upload signed SIS participation form (ISPA)&reqDescription=&reqIdentifier=SignedSISISPAForm"/>
                     </apex:outputPanel>
 
                     <!-- ISUA form -->

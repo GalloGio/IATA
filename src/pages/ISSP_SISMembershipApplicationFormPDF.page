@@ -197,7 +197,7 @@
         <div style="float: left; width: 80%;">
             <apex:outputText value="Standard Agreement for SIS Participation" rendered="{!isISPA}"/>
             <apex:outputText value="Standard Participation Agreement for SIS e-Invoicing Services – Non Transportation" rendered="{!isISUA}"/>
-            <apex:outputText value="Standard Participation Agreement for SIS e-Invoicing Services – Invoice Receiver (October 2018)" rendered="{!isTOU}"/>
+            <apex:outputText value="Standard Participation Agreement for SIS e-Invoicing Services – Invoice Receiver (October 2018)" rendered="{!isTOU || isPASS}"/>
         </div>
         <div style="float: right; width: 20%; text-align: right;">
             <apex:outputText value="{!$Label.ISSP_AMS_PDF_Page}"/> <span class="pagenumber"/> OF <span class="pagecount"/>
@@ -208,7 +208,7 @@
         <apex:form >
             <c:ISSP_SISMembershipApplicationISPA_PDF newForm="{!newform}" account="{!account}" rendered="{!isISPA}"/>
             <c:ISSP_SISMembershipApplicationISUA_PDF newForm="{!newform}" account="{!account}" rendered="{!isISUA}"/>
-            <c:ISSP_SISMembershipApplicationTOU_PDF newForm="{!newform}" account="{!account}" rendered="{!isTOU}"/>
+            <c:ISSP_SISMembershipApplicationTOU_PDF newForm="{!newform}" account="{!account}" rendered="{!isTOU || isPASS}"/>
         </apex:form>
     </apex:pageBlock>
 

@@ -174,6 +174,18 @@
             <type>user</type>
         </recipients>
         <recipients>
+            <recipient>enriquezj@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>gonzalezce@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>matepiner@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>mohananb@iata.org</recipient>
             <type>user</type>
         </recipients>

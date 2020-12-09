@@ -8,7 +8,7 @@ var dyn_functions = {
         
         var argList = args.split(", ");
 
-        var resultOscarData = sforce.connection.query("SELECT Id, AMS_Online_Accreditation__r.Location_Class__c, Account__r.Reason__c, Account__r.Sector__c,AMS_Online_Accreditation__r.Link_agent_name__c, Account__c FROM AMS_OSCAR__C WHERE Id ='" + argList[2] + "'");
+        var resultOscarData = sforce.connection.query("SELECT Id, AMS_Online_Accreditation__r.Location_Class__c, Account__r.Reason__c, Account__r.Sector__c,Account__r.Location_Type__c,AMS_Online_Accreditation__r.Link_agent_name__c, Account__c FROM AMS_OSCAR__C WHERE Id ='" + argList[2] + "'");
 
         var records = resultOscarData.getArray("records");
 
@@ -19,6 +19,12 @@ var dyn_functions = {
                 sResult = 'Please fill the Link Agent Name before proceding';
                 return 'false';
             }
+        }
+
+        if(records[0].AMS_Online_Accreditation__r.Location_Class__c == 'L' && records[0].Account__r.Sector__c == 'Postal Service' && records[0].Account__r.Location_Type__c != 'HO' && records[0].AMS_Online_Accreditation__r.Link_agent_name__c == null ){
+            alert("The “Link Agent Name” field must be filled.");
+            sResult = 'Please fill the Link Agent Name before proceding';
+            return 'false';
         }
 
         resultExecution = sforce.apex.execute("ANG_OscarProcessHelper", "processIATACodeGeneration", {accountId: argList[0], onlineAccreditationId: argList[1],oscarId :argList[2]});

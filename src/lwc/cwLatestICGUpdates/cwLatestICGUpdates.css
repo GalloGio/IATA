@@ -1,0 +1,98 @@
+.btn-latest-icg-updates-custom{
+    text-transform: uppercase;
+    background: #F04632;
+    position: relative;
+    padding: 10 30px 0 15px;
+    padding-top: 10px !important;
+    padding-right: 30px;
+    padding-bottom: 0px;
+    padding-left: 15px;
+    border-color: #F04632;
+    color: #FFFFFF;
+}
+
+.certification-title{
+    height: 20px;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.bg-blue{
+    background-color: #1E32FA !important;
+
+}
+
+.arrow-section{
+    width: auto;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+
+.animation-previous{
+  margin: auto;
+	overflow: hidden;
+}
+
+.animation-previous div{
+  display: flex;
+	padding: 0;
+/*	width: 200%;*/
+	
+	animation: cambio-previous 10s infinite linear;
+}
+
+@keyframes cambio-previous {
+
+	0% {margin-left: 0;}
+	20% {margin-left: 0;}
+	
+	75% {margin-left: -150%;}
+	100% {margin-left: -150%;}
+}
+
+.animation-next{
+  margin: auto;
+	overflow: hidden;
+}
+
+.animation-next div{
+  display: flex;
+	padding: 0;
+/*	width: 200%;*/
+	
+	animation: cambio-next 10s infinite linear;
+}
+
+@keyframes cambio-next {
+
+	0% {margin-right: 0;}
+	20% {margin-right: 0;}
+	
+	75% {margin-right: -150%;}
+	100% {margin-right: -150%;}
+}
+
+.width-30{
+  width: 30px;
+}
+
+.padding-t-25{
+  padding-top: 25px;
+}
+
+.width-83{
+  width: 83px;
+}
+
+.m-t-20{
+  margin-top: 20px;
+}
+
+.m-b-20{
+  margin-bottom: 20px;
+}
+
+.line-height-32{
+  line-height: 32px;
+}

@@ -1,0 +1,52 @@
+<template>
+    <div class="col-lg-8 col-md-12 p-0">
+        <c-cw-spinner width="25%" if:true={requesting} overlay="true" position="position-fixed"></c-cw-spinner>
+        <c-cw-station-selection 
+            label={label} 
+            user-managed-facilities={userManagedFacilities} 
+            pre-selected-facility={preSelectedFacility}
+            onselectfacility={selectFacility}>
+        </c-cw-station-selection>
+        <!--
+        <template if:false={selectedFacility}>
+            <div class="form-group">
+                <label for="facilitySelector">{label.select_your_station_service}</label>
+                <select class="facility-select form-control" id="facilitySelector" name="managedFacilities" required>
+                    <option value=""></option>
+                    <template for:each={userManagedFacilities} for:item="facility">
+                        <option if:true={facility.isApproved__c} key={facility.Id} value={facility.Id}>{facility.Name}</option>
+                    </template>
+                </select>
+            </div>
+            <div class="col-12 text-right">
+                <a class="btn btn-primary link-button no-margin-top" data-tosca="nextaction" href="javascript:{}"
+                    onclick={selectFacility} data-substep="yes">{label.next}</a>
+            </div>
+        </template>-->
+        <template if:true={selectedFacility}>
+            <!--
+            <div class="companyinfo row">
+                <div class="col-1 align-middle">
+                    <img src={getLogoUrl} alt="Logo" title="" />
+                </div>
+                <div class="companydata col-8 align-middle">
+                    <lightning-formatted-rich-text value={companyData}></lightning-formatted-rich-text>
+                </div>
+                <div class="ctype col-3 align-middle text-center">
+                    <img class="typeButton width-20" src={selectedFacilityRecord.ctypeimage} alt="type" />&nbsp;&nbsp;
+                    <strong>{selectedFacilityRecord.RecordType.Name}</strong>
+                </div>
+			</div>-->
+			<div class="row-no-margin">
+				<c-cw-station-managers class="width-100" label={label} facility={selectedFacilityRecord} user-info={userInfo} user-role={userRole} edit-mode={editMode}>
+				</c-cw-station-managers>
+			</div>
+            
+            <div class="row">
+                <div class="col-6 text-left mt-3">
+                    <span class="backbutton" onclick={removeFacility} if:false={saving}><b>{label.back}</b></span>
+                </div>
+            </div>
+        </template>
+    </div>
+</template>

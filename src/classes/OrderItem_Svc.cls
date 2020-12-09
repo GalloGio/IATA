@@ -119,17 +119,16 @@ public without sharing class OrderItem_Svc {
 				mail.orgWideEmailAddressId = Utility.getTextSetting('Ecom OrgWideEmailAddressId for notif');
 				mail.templateId = Utility.getTextSetting('Product shipped template Id');
 				mail.recipients = new List<String>();
-				//mail.recipients.add(oi.Order.ShipToContact_Email__c);
 				mail.recipients.add(oi.Order.ShipToContact_Email__c);
-				if(oi.Order.ShipToContact_Email__c != null && !oi.Order.ShipToContact_Email__c.endsWithIgnoreCase('.inactive'))
+				if(oi.Order.ShipToContact_Email__c != null && !oi.Order.ShipToContact_Email__c.endsWithIgnoreCase('.inactive')) {
 					lstMails.add(mail);
+				}
 			}
 
 			try{
 				if(lstMails.size() > 0)
 					Utility.sendBulkEmails(lstMails);
 			}catch(Exception ex){
-				system.debug('Error sendToCustomerShippedNotification() ' + ex.getMessage());
 			}
 		}
 
@@ -276,5 +275,44 @@ public without sharing class OrderItem_Svc {
 
 		update orderUpdateList;
 	}
+    
+    //Smart Facilities Remote Validations methods
+
+    /****************************************************************************************************
+	Created by Luis Manuel Rodríguez 2020-04-28
+		Send platform event when a remote validation order item is paid
+	****************************************************************************************************/
+	public static void sendRemoteValidationPlatformEvents(List<OrderItem> newList, Map<Id,OrderItem> oldMap) {
+		Set<Id> paidRemoteValidations = new Set<Id>();
+        for (OrderItem oit : newList){
+            if(oit.IEC_Is_Paid__c == true && (oldMap == null || oldMap.get(oit.Id).IEC_Is_Paid__c != true) && oit.Is_Remote_Validation__c == true){
+				paidRemoteValidations.add(oit.OrderId);
+				sendRemoteValidationConfirmationEmails(oit.Id, oit.CreatedById);
+            }
+        }
+        
+        if(!paidRemoteValidations.isEmpty()){
+            List<Remote_Validation__e> remValEvents = new List<Remote_Validation__e>();
+            for(Id orderid : paidRemoteValidations){
+                remValEvents.add(new Remote_Validation__e(EventType__c = 'Insert', RecordId__c = orderid));
+            }
+            EventBus.publish(remValEvents);
+        }
+        
+	}
+
+	@future
+	public static void sendRemoteValidationConfirmationEmails(String orderItemId, String whoId){
+			List<Messaging.SingleEmailMessage> emailsToBeSent = new List<Messaging.SingleEmailMessage>();
+			
+			//Send email to who purchased
+			emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails('Purchase_to_User_purchase_comp', orderItemId, new Set<Id>{whoId}));
+			
+			//Send email to IATA
+			emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails('Purchase_to_IATA', orderItemId, CW_EmailManager.getIataAdminsIds()));
+
+			CW_EmailManager.sendInternalEmails(emailsToBeSent);
+	}
+	// End of Smart Facilities Remote Validations methods
 
 }

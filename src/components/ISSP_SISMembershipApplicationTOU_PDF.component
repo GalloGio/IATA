@@ -10,7 +10,7 @@
     </center>
     
     <p>
-        This Standard Participation Agreement for SIS e-Invoicing Services – Invoice Receiver (“<span class="bold">Agreement</span>”) is entered into by and between <span class="bold">{!newForm.Legal_Name_of_company__c}</span> a company incorporated under the laws of <span class="bold">{!newForm.Company_Country__r.Name}/{!newForm.Company_State__c}</span> with its head office located at <span class="bold">{!newForm.Company_address__c}, {!newForm.Company_city__c}, {!newForm.Company_State__c}, {!newForm.Company_Country__r.Name}, {!newForm.Postal_code__c}</span> and the <span class="bold">INTERNATIONAL AIR TRANSPORT ASSOCIATION</span>, an association incorporated by Special Act of the Parliament of Canada, with its head office at 800 Place Victoria. P.O. Box 113, Montreal, Quebec, Canada, H4Z 1M1 (“<span class="bold">IATA</span>”) (each a <span class="bold">Party</span>” and collectively, the “<span class="bold">Parties</span>”).
+        This Standard Participation Agreement for SIS e-Invoicing Services – Invoice Receiver (“<span class="bold">Agreement</span>”) is entered into by and between <span class="bold">{!newForm.Legal_Name_of_company__c}</span> a company incorporated under the laws of <span class="bold">{!newForm.Company_Country__r.Name}/{!IF(isTOU,newForm.Company_State__c,newForm.GSSA_HQ_State__c)}</span> with its head office located at <span class="bold">{!newForm.Company_address__c}, {!newForm.Company_city__c}, {!IF(isTOU,newForm.Company_State__c,newForm.GSSA_HQ_State__c)}, {!newForm.Company_Country__r.Name}, {!newForm.Postal_code__c}</span> and the <span class="bold">INTERNATIONAL AIR TRANSPORT ASSOCIATION</span>, an association incorporated by Special Act of the Parliament of Canada, with its head office at 800 Place Victoria. P.O. Box 113, Montreal, Quebec, Canada, H4Z 1M1 (“<span class="bold">IATA</span>”) (each a <span class="bold">Party</span>” and collectively, the “<span class="bold">Parties</span>”).
     </p>
 
     <p>
@@ -283,13 +283,13 @@
         <p class="margin-3 indent-3">
             <span class="bold">Address:</span><br/>
             {!newForm.Company_address__c}<br/>
-            {!newForm.Company_city__c}, {!newForm.Company_State__c}<br/>
+            {!newForm.Company_city__c}, {!IF(isTOU,newForm.Company_State__c,newForm.GSSA_HQ_State__c)}<br/>
             {!newForm.Company_Country__r.Name}<br/>
             {!newForm.Postal_code__c}
         </p>
         <p>
-            <span class="bold">Attn:</span> {!newForm.Billing_File_Emrgcy_Contact_F_Name__c} {!newForm.Billing_File_Emrgcy_Contact_L_Name__c}<br/>
-            <span class="bold">E-mail:</span> {!newForm.Billing_File_Emrgcy_Contact_Email__c}
+            <span class="bold">Attn:</span> {!IF(isTOU,newForm.Billing_File_Emrgcy_Contact_F_Name__c,newForm.SIS_Contact_F_Name__c)} {!IF(isTOU,newForm.Billing_File_Emrgcy_Contact_L_Name__c,newForm.SIS_Contact_L_Name__c)}<br/>
+            <span class="bold">E-mail:</span> {!IF(isTOU,newForm.Billing_File_Emrgcy_Contact_Email__c,newForm.SIS_Contact_Email__c)}
         </p>
     </div>
     <div class="align-left margin-6 no-page-break">

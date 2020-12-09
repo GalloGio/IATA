@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>48.0</apiVersion>
+    <available>true</available>
+    <description>Station Manager Rejected: Notification to User</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Notification rejected to User</name>
+    <style>none</style>
+    <subject>Your Station Manager Request for the below station has been rejected</subject>
+    <type>visualforce</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

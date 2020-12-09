@@ -33,7 +33,7 @@ public without sharing class TIDSReportChanges {
 		Map<String,String> agencyProfile = getMapAgencyProfile(accountId);
 		nameCompany.mappingAccount(account, isLabel);
 		nameCompany.mappingAgencyProfile(agencyProfile);
-		nameCompany.accountRoles = TIDSUtil.tidsShareholders(accountId);
+		nameCompany.accountRoles = TIDSUtil.tidsShareholders(accountId,true,true);
 		return nameCompany;
 	}
 

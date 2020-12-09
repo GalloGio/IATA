@@ -1,0 +1,14 @@
+.cw-search-result {
+  width: 100%;
+  font-size: 0.85rem;
+  min-height: 35px;
+}
+.cw-facility-page-container {
+  width: 135px;
+  margin-top: 10px;
+  margin-right: 15px;
+}
+
+.disabled-btn {
+  opacity: 0.6;
+}

@@ -282,7 +282,6 @@ private class ISSP_APProcess_Test
 
 
 			ctrl.getAPTypes();
-			ctrl.APQueue('Airline Participation - Head Office');
 
 			PageReference prSteps = ctrl.saveBSPFormAndGoForward();
 			System.assert(prSteps.getUrl().endsWith('step=4'));
@@ -402,7 +401,6 @@ private class ISSP_APProcess_Test
 
 
 			ctrl.getAPTypes();
-			ctrl.APQueue('Airline Participation - Head Office');
 
 			PageReference prSteps = ctrl.saveBSPFormAndGoForward();
 			System.assert(prSteps.getUrl().endsWith('step=4'));
@@ -515,7 +513,77 @@ private class ISSP_APProcess_Test
 			ctrl = new ISSP_APProcess();
 			pr.getParameters().put('step', '3');
 			ctrl = new ISSP_APProcess();
+
+			ctrl.fileBody = Blob.toPDF('test');
+			ctrl.fileName = 'testName';
+			Test.stopTest();
+		}
+
+
+	}
+
+	@isTest static void test_method_c_step4()
+	{
+		IATA_ISO_Country__c country = [SELECT Airline_EasyPay_Opt_Out_Date__c,ANG_Portal_Service__c,Case_BSP_Country__c,ISO_Code__c
+										  FROM IATA_ISO_Country__c
+										  WHERE ISO_Code__c ='PT'
+										 LIMIT 1];
+		Account parent = ISSP_ObjectFactory.createNewAccount();
+		parent.BillingCity = 'test';
+		parent.Name = 'test';
+		insert parent;
+		Account child = ISSP_ObjectFactory.createNewAccount();
+		child.ParentId = parent.Id;
+		child.BillingCity = 'test2';
+		child.Name = 'test2';
+		child.Site = 'headSite';
+		insert child;
+		child.Top_Parent__c = null;
+		update child;
+		Contact con = ISSP_ObjectFactory.createNewContact();
+		con.AccountId= child.Id;
+		insert con;
+		User newUser = ISSP_ObjectFactory.createPortalUser(con);
+		con.OwnerId = newUser.Id;
+		update con;
+
+		System.runAs(newUser)
+		{
+			Case testCase = ISSP_ObjectFactory.createNewCase();
+			testCase.BSPCountry__c = 'China';
+			testCase.Reason1__c = 'BSP HOT';
+			testCase.Customer_recovery__c = false;
+			testCase.BounceEmailCounter__c = 0.0;
+			testCase.Case_Language__c = 'English';
+			testCase.Subject = 'Test 006';
+			testCase.Reopened_case__c = 0.0;
+			testCase.Status = 'Action Needed';
+			testCase.Account_Concerned__c = child.Id;
+			testCase.Verification__c = 'BSP';
+			testCase.IFAP_Country_ISO__c = 'PT';
+			insert testCase;
+			Test.startTest();
+			AP_Process_Form__c ap = new AP_Process_Form__c();
+			ap.Case__c = testCase.Id;
+			ap.Accept_payment_Cards_for_BSP_ticket__c = 'Yes';
+			ap.Accept_terms_and_conditions__c = true;
+			ap.Colombia_City_selection__c = 'test1;test2';
+			ap.Colombia_City_percentage__c = '20;30';
+			insert ap;
+
+			PageReference pr = Page.ISSP_APCases;
+			pr.getParameters().put('step', 'Final');
+			pr.getParameters().put('caseId', testCase.Id);
+			Test.setCurrentPage(pr);
+			ISSP_APProcess ctrl = new ISSP_APProcess();
+
+			ISSP_AP_Cities inlinepage = new ISSP_AP_Cities(new Apexpages.Standardcontroller(ap));
+
+			pr.getParameters().put('cdupetype', 'test');
+			pr.getParameters().put('isMandatory', 'test');
+			pr.getParameters().put('ctryreq', 'false');
 			pr.getParameters().put('step', '4');
+			Test.setCurrentPage(pr);
 			ctrl = new ISSP_APProcess();
 
 			ctrl.fileBody = Blob.toPDF('test');
@@ -592,7 +660,77 @@ private class ISSP_APProcess_Test
 			ctrl = new ISSP_APProcess();
 			pr.getParameters().put('step', '3');
 			ctrl = new ISSP_APProcess();
+
+			ctrl.fileBody = Blob.toPDF('test');
+			ctrl.fileName = 'testName';
+			Test.stopTest();
+		}
+
+
+
+
+	}
+
+	@isTest static void test_method_d_step4()
+	{
+		IATA_ISO_Country__c country = [SELECT Airline_EasyPay_Opt_Out_Date__c,ANG_Portal_Service__c,Case_BSP_Country__c,ISO_Code__c
+										  FROM IATA_ISO_Country__c
+										  WHERE ISO_Code__c ='PT'
+										 LIMIT 1];
+		Account parent = ISSP_ObjectFactory.createNewAccount();
+		parent.BillingCity = 'test';
+		parent.Name = 'test';
+		insert parent;
+		Account child = ISSP_ObjectFactory.createNewAccount();
+		child.ParentId = parent.Id;
+		child.BillingCity = 'test2';
+		child.Name = 'test2';
+		child.Site = 'headSite';
+		insert child;
+		child.Top_Parent__c = null;
+		update child;
+		Contact con = ISSP_ObjectFactory.createNewContact();
+		con.AccountId= child.Id;
+		insert con;
+		User newUser = ISSP_ObjectFactory.createPortalUser(con);
+		con.OwnerId = newUser.Id;
+		update con;
+
+		System.runAs(newUser)
+		{
+			Case testCase = ISSP_ObjectFactory.createNewCase();
+			testCase.BSPCountry__c = 'China';
+			testCase.Reason1__c = 'CASS HOT';
+			testCase.Customer_recovery__c = false;
+			testCase.BounceEmailCounter__c = 0.0;
+			testCase.Case_Language__c = 'English';
+			testCase.Subject = 'Test 006';
+			testCase.Reopened_case__c = 0.0;
+			testCase.Status = 'Action Needed';
+			testCase.Account_Concerned__c = child.Id;
+			testCase.Verification__c = 'BSP';
+			testCase.IFAP_Country_ISO__c = 'PT';
+			insert testCase;
+			Test.startTest();
+			AP_Process_Form__c ap = new AP_Process_Form__c();
+			ap.Case__c = testCase.Id;
+			ap.Accept_payment_Cards_for_BSP_ticket__c = 'Yes';
+			ap.Accept_terms_and_conditions__c = true;
+			insert ap;
+
+			PageReference pr = Page.ISSP_APCases;
+			pr.getParameters().put('step', 'Final');
+			pr.getParameters().put('caseId', testCase.Id);
+			Test.setCurrentPage(pr);
+			ISSP_APProcess ctrl = new ISSP_APProcess();
+
+			ISSP_AP_Cities inlinepage = new ISSP_AP_Cities(new Apexpages.Standardcontroller(ap));
+
+			pr.getParameters().put('cdupetype', 'test');
+			pr.getParameters().put('isMandatory', 'test');
+			pr.getParameters().put('ctryreq', 'false');
 			pr.getParameters().put('step', '4');
+			Test.setCurrentPage(pr);
 			ctrl = new ISSP_APProcess();
 
 			ctrl.fileBody = Blob.toPDF('test');
@@ -752,7 +890,88 @@ private class ISSP_APProcess_Test
 			ctrl = new ISSP_APProcess();
 			pr.getParameters().put('step', '3');
 			ctrl = new ISSP_APProcess();
+
+			ctrl.fileBody = Blob.toPDF('test');
+			ctrl.fileName = 'testName';
+			Test.stopTest();
+		}
+
+
+
+
+	}
+
+	@isTest static void test_method_f_step4()
+	{
+		IATA_ISO_Country__c country = [SELECT Id, Name, Case_BSP_Country__c, ISO_Code__c
+			FROM IATA_ISO_Country__c
+			WHERE ISO_Code__c ='AA'
+			LIMIT 1];
+
+		IATA_ISO_Country__c countryPT = [SELECT Airline_EasyPay_Opt_Out_Date__c,ANG_Portal_Service__c,Case_BSP_Country__c,ISO_Code__c
+			FROM IATA_ISO_Country__c
+			WHERE ISO_Code__c ='PT'
+			LIMIT 1];
+
+		Account parent = ISSP_ObjectFactory.createNewAccount();
+		parent.BillingCity = 'test';
+		parent.Name = 'test';
+		insert parent;
+		Account child = ISSP_ObjectFactory.createNewAccount();
+		child.ParentId = parent.Id;
+		child.BillingCity = 'test2';
+		child.Name = 'test2';
+		child.Site = 'headSite';
+		child.IATA_ISO_Country__c = country.Id;
+		insert child;
+		child.Top_Parent__c = null;
+		update child;
+		Contact con = ISSP_ObjectFactory.createNewContact();
+		con.AccountId= child.Id;
+		insert con;
+		User newUser = ISSP_ObjectFactory.createPortalUser(con);
+		con.OwnerId = newUser.Id;
+		update con;
+
+		System.runAs(newUser)
+		{
+			Case testCase = ISSP_ObjectFactory.createNewCase();
+			testCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IDFS_Airline_Participation_Process');
+			testCase.BSPCountry__c = 'China';
+			testCase.Reason1__c = 'CASS HOT';
+			testCase.Customer_recovery__c = false;
+			testCase.BounceEmailCounter__c = 0.0;
+			testCase.Case_Language__c = 'English';
+			testCase.Subject = 'Test 006';
+			testCase.Reopened_case__c = 0.0;
+			testCase.Status = 'Action Needed';
+			testCase.Account_Concerned__c = child.Id;
+			testCase.Verification__c = 'BSP';
+			testCase.CaseArea__c = 'Airline Joining';
+			testCase.IFAP_Country_ISO__c = 'PT';
+			insert testCase;
+
+			Test.startTest();
+			AP_Process_Form__c ap = new AP_Process_Form__c();
+			ap.Case__c = testCase.Id;
+			ap.Accept_payment_Cards_for_BSP_ticket__c = 'Yes';
+			ap.Accept_terms_and_conditions__c = true;
+			ap.Participate_in_any_Commission_Control__c = 'Yes';
+			insert ap;
+
+			PageReference pr = Page.ISSP_APCases;
+			pr.getParameters().put('step', 'Final');
+			pr.getParameters().put('caseId', testCase.Id);
+			Test.setCurrentPage(pr);
+			ISSP_APProcess ctrl = new ISSP_APProcess();
+
+			ISSP_AP_Cities inlinepage = new ISSP_AP_Cities(new Apexpages.Standardcontroller(ap));
+
+			pr.getParameters().put('cdupetype', 'test');
+			pr.getParameters().put('isMandatory', 'test');
+			pr.getParameters().put('ctryreq', 'false');
 			pr.getParameters().put('step', '4');
+			Test.setCurrentPage(pr);
 			ctrl = new ISSP_APProcess();
 
 			ctrl.fileBody = Blob.toPDF('test');
@@ -836,7 +1055,82 @@ private class ISSP_APProcess_Test
 			ctrl = new ISSP_APProcess();
 			pr.getParameters().put('step', '3');
 			ctrl = new ISSP_APProcess();
+
+			ctrl.fileBody = Blob.toPDF('test');
+			ctrl.fileName = 'testName';
+			Test.stopTest();
+		}
+
+
+
+
+	}
+
+	@isTest static void test_method_g_Step4()
+	{
+		IATA_ISO_Country__c country = [SELECT Id, Name, Case_BSP_Country__c, ISO_Code__c
+			FROM IATA_ISO_Country__c
+			WHERE ISO_Code__c ='AA'
+			LIMIT 1];
+
+		Account parent = ISSP_ObjectFactory.createNewAccount();
+		parent.BillingCity = 'test';
+		parent.Name = 'test';
+		insert parent;
+		Account child = ISSP_ObjectFactory.createNewAccount();
+		child.ParentId = parent.Id;
+		child.BillingCity = 'test2';
+		child.Name = 'test2';
+		child.Site = 'headSite';
+		child.IATA_ISO_Country__c = country.Id;
+		insert child;
+		child.Top_Parent__c = null;
+		update child;
+		Contact con = ISSP_ObjectFactory.createNewContact();
+		con.AccountId= child.Id;
+		insert con;
+		User newUser = ISSP_ObjectFactory.createPortalUser(con);
+		con.OwnerId = newUser.Id;
+		update con;
+
+		System.runAs(newUser)
+		{
+			Case testCase = ISSP_ObjectFactory.createNewCase();
+			testCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IDFS_Airline_Participation_Process');
+			testCase.BSPCountry__c = 'China';
+			testCase.Reason1__c = 'CASS HOT';
+			testCase.Customer_recovery__c = false;
+			testCase.BounceEmailCounter__c = 0.0;
+			testCase.Case_Language__c = 'English';
+			testCase.Subject = 'Test 006';
+			testCase.Reopened_case__c = 0.0;
+			testCase.Status = 'Action Needed';
+			testCase.Account_Concerned__c = child.Id;
+			testCase.Verification__c = 'CASS';
+			testCase.CaseArea__c = 'Airline Joining';
+			testCase.IFAP_Country_ISO__c = country.ISO_Code__c;
+			insert testCase;
+			Test.startTest();
+			AP_Process_Form__c ap = new AP_Process_Form__c();
+			ap.Case__c = testCase.Id;
+			ap.Accept_payment_Cards_for_BSP_ticket__c = 'Yes';
+			ap.Accept_terms_and_conditions__c = true;
+			ap.Participate_in_any_Commission_Control__c = 'Yes';
+			insert ap;
+
+			PageReference pr = Page.ISSP_APCases;
+			pr.getParameters().put('step', 'Final');
+			pr.getParameters().put('caseId', testCase.Id);
+			Test.setCurrentPage(pr);
+			ISSP_APProcess ctrl = new ISSP_APProcess();
+
+			ISSP_AP_Cities inlinepage = new ISSP_AP_Cities(new Apexpages.Standardcontroller(ap));
+
+			pr.getParameters().put('cdupetype', 'test');
+			pr.getParameters().put('isMandatory', 'test');
+			pr.getParameters().put('ctryreq', 'false');
 			pr.getParameters().put('step', '4');
+			Test.setCurrentPage(pr);
 			ctrl = new ISSP_APProcess();
 
 			ctrl.fileBody = Blob.toPDF('test');
@@ -921,7 +1215,80 @@ private class ISSP_APProcess_Test
 			ctrl = new ISSP_APProcess();
 			pr.getParameters().put('step', '3');
 			ctrl = new ISSP_APProcess();
+
+			ctrl.fileBody = Blob.toPDF('test');
+			ctrl.fileName = 'testName';
+			Test.stopTest();
+		}
+
+	}
+
+	@isTest static void test_method_h_step4()
+	{
+		IATA_ISO_Country__c country = [SELECT Id, Name, Case_BSP_Country__c, ISO_Code__c
+			FROM IATA_ISO_Country__c
+			WHERE ISO_Code__c ='AA'
+			LIMIT 1];
+
+		Account parent = ISSP_ObjectFactory.createNewAccount();
+		parent.BillingCity = 'test';
+		parent.Name = 'test';
+		insert parent;
+		Account child = ISSP_ObjectFactory.createNewAccount();
+		child.ParentId = parent.Id;
+		child.BillingCity = 'test2';
+		child.Name = 'test2';
+		child.Site = 'headSite';
+		child.IATA_ISO_Country__c = country.Id;
+		insert child;
+		child.Top_Parent__c = null;
+		update child;
+		Contact con = ISSP_ObjectFactory.createNewContact();
+		con.AccountId= child.Id;
+		insert con;
+		User newUser = ISSP_ObjectFactory.createPortalUser(con);
+		con.OwnerId = newUser.Id;
+		update con;
+
+		System.runAs(newUser)
+		{
+			Case testCase = ISSP_ObjectFactory.createNewCase();
+			testCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IDFS_Airline_Participation_Process');
+			testCase.BSPCountry__c = 'China';
+			testCase.Reason1__c = 'Minor database changes';
+			testCase.Customer_recovery__c = false;
+			testCase.BounceEmailCounter__c = 0.0;
+			testCase.Case_Language__c = 'English';
+			testCase.Subject = 'Test 006';
+			testCase.Reopened_case__c = 0.0;
+			testCase.Status = 'Action Needed';
+			testCase.Account_Concerned__c = child.Id;
+			testCase.Verification__c = 'BSP';
+			testCase.CaseArea__c = 'Airline Change';
+			testCase.IFAP_Country_ISO__c = country.ISO_Code__c;
+			insert testCase;
+			Test.startTest();
+			AP_Process_Form__c ap = new AP_Process_Form__c();
+			ap.Case__c = testCase.Id;
+			ap.Accept_payment_Cards_for_BSP_ticket__c = 'Yes';
+			ap.Accept_terms_and_conditions__c = true;
+			ap.Participate_in_any_Commission_Control__c = 'Yes';
+			insert ap;
+
+			PageReference pr = Page.ISSP_APCases;
+			pr.getParameters().put('step', 'Final');
+			pr.getParameters().put('caseId', testCase.Id);
+			Test.setCurrentPage(pr);
+			ISSP_APProcess ctrl = new ISSP_APProcess();
+
+			ISSP_AP_Cities inlinepage = new ISSP_AP_Cities(new Apexpages.Standardcontroller(ap));
+
+			pr.getParameters().put('cdupetype', 'test');
+			pr.getParameters().put('isMandatory', 'test');
+			pr.getParameters().put('ctryreq', 'false');
+			pr.getParameters().put('proc', 'chg');
 			pr.getParameters().put('step', '4');
+			Test.setCurrentPage(pr);
 			ctrl = new ISSP_APProcess();
 
 			ctrl.fileBody = Blob.toPDF('test');
@@ -1003,7 +1370,80 @@ private class ISSP_APProcess_Test
 			ctrl = new ISSP_APProcess();
 			pr.getParameters().put('step', '3');
 			ctrl = new ISSP_APProcess();
+
+			ctrl.fileBody = Blob.toPDF('test');
+			ctrl.fileName = 'testName';
+			Test.stopTest();
+		}
+
+	}
+
+	@isTest static void test_method_i_step4()
+	{
+		IATA_ISO_Country__c country = [SELECT Id, Name, Case_BSP_Country__c, ISO_Code__c
+			FROM IATA_ISO_Country__c
+			WHERE ISO_Code__c ='AA'
+			LIMIT 1];
+
+		Account parent = ISSP_ObjectFactory.createNewAccount();
+		parent.BillingCity = 'test';
+		parent.Name = 'test';
+		insert parent;
+		Account child = ISSP_ObjectFactory.createNewAccount();
+		child.ParentId = parent.Id;
+		child.BillingCity = 'test2';
+		child.Name = 'test2';
+		child.Site = 'headSite';
+		child.IATA_ISO_Country__c = country.Id;
+		insert child;
+		child.Top_Parent__c = null;
+		update child;
+		Contact con = ISSP_ObjectFactory.createNewContact();
+		con.AccountId= child.Id;
+		insert con;
+		User newUser = ISSP_ObjectFactory.createPortalUser(con);
+		con.OwnerId = newUser.Id;
+		update con;
+
+		System.runAs(newUser)
+		{
+			Case testCase = ISSP_ObjectFactory.createNewCase();
+			testCase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IDFS_Airline_Participation_Process');
+			testCase.BSPCountry__c = 'China';
+			testCase.Reason1__c = 'Bank Account Instructions';
+			testCase.Customer_recovery__c = false;
+			testCase.BounceEmailCounter__c = 0.0;
+			testCase.Case_Language__c = 'English';
+			testCase.Subject = 'Test 006';
+			testCase.Reopened_case__c = 0.0;
+			testCase.Status = 'Action Needed';
+			testCase.Account_Concerned__c = child.Id;
+			testCase.Verification__c = 'BSP';
+			testCase.CaseArea__c = 'Airline Change';
+			testCase.IFAP_Country_ISO__c = country.ISO_Code__c;
+			insert testCase;
+			Test.startTest();
+			AP_Process_Form__c ap = new AP_Process_Form__c();
+			ap.Case__c = testCase.Id;
+			ap.Accept_payment_Cards_for_BSP_ticket__c = 'Yes';
+			ap.Accept_terms_and_conditions__c = true;
+			ap.Participate_in_any_Commission_Control__c = 'Yes';
+			insert ap;
+
+			PageReference pr = Page.ISSP_APCases;
+			pr.getParameters().put('step', 'Final');
+			pr.getParameters().put('caseId', testCase.Id);
+			Test.setCurrentPage(pr);
+			ISSP_APProcess ctrl = new ISSP_APProcess();
+
+			ISSP_AP_Cities inlinepage = new ISSP_AP_Cities(new Apexpages.Standardcontroller(ap));
+
+			pr.getParameters().put('cdupetype', 'test');
+			pr.getParameters().put('isMandatory', 'test');
+			pr.getParameters().put('ctryreq', 'false');
+			pr.getParameters().put('proc', 'chg');
 			pr.getParameters().put('step', '4');
+			Test.setCurrentPage(pr);
 			ctrl = new ISSP_APProcess();
 
 			ctrl.fileBody = Blob.toPDF('test');
@@ -1539,7 +1979,6 @@ private class ISSP_APProcess_Test
 			ctrl.countryNameList = null;
 			ctrl.getCassAirlines();
 			ctrl.getAPDraftCases();
-			ctrl.APQueue('Airline Participation - Drafts');
 			ctrl.goToFinalStep();
 			ctrl.getChangeItems();
 			ctrl.retrieveAccountToShowSections();
@@ -1851,6 +2290,7 @@ private class ISSP_APProcess_Test
 			ctrl.getBSPVoluntaryWithdrawalName();
 			ctrl.getCASSVoluntaryWithdrawalUrl();
 			ctrl.getCASSVoluntaryWithdrawalName();
+			ctrl.getShowUploadASPForPASS();
 			ctrl.isBSP=true;
 			ctrl.isCASS=false;
 			ctrl.getShowCounterIndemnity();
@@ -1859,6 +2299,7 @@ private class ISSP_APProcess_Test
 			ctrl.isCASS=true;
 			ctrl.getShowCounterIndemnity();
 			ctrl.getDocumentGuide();
+			ctrl.getShowPASSAgreement();
 			ISSP_APProcess.updateGuideCounter(ctrl.newCase.Id);
 
 			System.assert(ctrl.thisController!=null);
@@ -1911,7 +2352,6 @@ private class ISSP_APProcess_Test
 			ctrl.getIsICHType_AssociateAggregator();
 
 			ctrl.UploadFile();
-			ctrl.getAttachList();
 
 			ctrl.newCase.Classification_SIS__c = ISSP_APProcess.ICH_TYPE_IATA_MEMBER;
 
@@ -1923,6 +2363,8 @@ private class ISSP_APProcess_Test
 			ctrl.getAssociateAggregatorMemberApplicationName();
 			ctrl.getSponsorshipLetterUrl();
 			ctrl.getSponsorshipLetterName();
+			ctrl.getPASSAuthorizedSignatoriesPackageUrl();
+			ctrl.getPASSAuthorizedSignatoriesPackageName();
 			ctrl.getICHCurrencyClearanceOptions();
 			ctrl.getIsSISMember();
 			ctrl.getIsValidDueDiligence();
@@ -2008,7 +2450,7 @@ private class ISSP_APProcess_Test
 						WHERE Email =: 'Test@test1122.com'
 						LIMIT 1];
 
-		Case testCase = [SELECT Account_Concerned__c, Verification__c,Country_concerned__c, CaseArea__c, BSPCountry__c, IFAP_Country_ISO__c
+		Case testCase = [SELECT Account_Concerned__c, Verification__c,Country_concerned__c, CaseArea__c, BSPCountry__c, IFAP_Country_ISO__c, OwnerId, Contact.Id
 						 FROM Case
 						 LIMIT 1];
 
@@ -2049,7 +2491,7 @@ private class ISSP_APProcess_Test
 						WHERE Email =: 'Test@test1122.com'
 						LIMIT 1];
 
-		Case testCase = [SELECT Account_Concerned__c, Verification__c,Country_concerned__c, CaseArea__c, BSPCountry__c, IFAP_Country_ISO__c
+		Case testCase = [SELECT Account_Concerned__c, Verification__c,Country_concerned__c, CaseArea__c, BSPCountry__c, IFAP_Country_ISO__c, OwnerId, Contact.Id
 						 FROM Case
 						 LIMIT 1];
 
@@ -2057,7 +2499,9 @@ private class ISSP_APProcess_Test
 						FROM Contact
 						LIMIT 1];
 
-		
+		Services_Rendered__c sr = new Services_Rendered__c(Name='PASS Participation', Services_Rendered_Type__c = AMS_Utils.passCountryCaseReason, Services_Rendered_By__c = cont.AccountId,
+			Services_Rendered_to_Airline__c = cont.AccountId, Services_Rendered_Status__c = AMS_Utils.ACTIVE);
+		insert sr;
 
 		Test.startTest();
 
@@ -2065,7 +2509,6 @@ private class ISSP_APProcess_Test
 			PageReference pr = Page.ISSP_APProcess;
 			Test.setCurrentPage(pr);
 			ApexPages.currentPage().getParameters().put('caseId' ,testCase.id);
-			ApexPages.currentPage().getParameters().put('managePASS' ,'true');
 			ApexPages.currentPage().getParameters().put('step' ,'4');
 
 			ISSP_APProcess ctrl = new ISSP_APProcess();
@@ -2094,8 +2537,9 @@ private class ISSP_APProcess_Test
 			ctrl.getHOTandPDFFilesEmails();
 			ctrl.getExcelSelected();
 			ctrl.getExcelSelectedYes();
+			ctrl.getWrapperPassCountriesRequired();
+			ctrl.getListCountryOptions();
 
-			System.assertEquals('&airline=PASS',ctrl.passParam);
 		}
 
 		Test.stopTest();
@@ -2108,13 +2552,17 @@ private class ISSP_APProcess_Test
 						WHERE Email =: 'Test@test1122.com'
 						LIMIT 1];
 
-		Case testCase = [SELECT Account_Concerned__c, Verification__c, Country_concerned__c,CaseArea__c, BSPCountry__c, IFAP_Country_ISO__c
+		Case testCase = [SELECT Account_Concerned__c, Verification__c, Country_concerned__c,CaseArea__c, BSPCountry__c, IFAP_Country_ISO__c, OwnerId, Contact.Id
 						 FROM Case
 						 LIMIT 1];
 
 		Contact cont = [SELECT AccountId, Email, OwnerId
 						FROM Contact
 						LIMIT 1];
+
+		Services_Rendered__c sr = new Services_Rendered__c(Name='PASS Participation', Services_Rendered_Type__c = AMS_Utils.passCountryCaseReason, Services_Rendered_By__c = cont.AccountId,
+		Services_Rendered_to_Airline__c = cont.AccountId, Services_Rendered_Status__c = AMS_Utils.ACTIVE);
+					insert sr;
 
 		Test.startTest();
 
@@ -2124,7 +2572,6 @@ private class ISSP_APProcess_Test
 			PageReference pageRef = Page.ISSP_APProcess;
 			Test.setCurrentPage(pageRef);
 			ApexPages.currentPage().getParameters().put('caseId' ,testCase.id);
-			ApexPages.currentPage().getParameters().put('managePASS' ,'true');
 			ApexPages.currentPage().getParameters().put('step' ,'4');
 
 			ISSP_APProcess ctrl = new ISSP_APProcess();
@@ -2189,7 +2636,7 @@ private class ISSP_APProcess_Test
 						WHERE Email =: 'Test75656656565@test112233.com'
 						LIMIT 1];
 
-		Case testCase = [SELECT Account_Concerned__c, Verification__c, CaseArea__c, BSPCountry__c, IFAP_Country_ISO__c, Country_concerned__c
+		Case testCase = [SELECT Account_Concerned__c, Verification__c, CaseArea__c, BSPCountry__c, IFAP_Country_ISO__c, Country_concerned__c, OwnerId, Contact.Id
 						 FROM Case
 						 LIMIT 1];
 
@@ -2203,7 +2650,7 @@ private class ISSP_APProcess_Test
 										  WHERE ISO_Code__c =:testCase.IFAP_Country_ISO__c
 										 LIMIT 1];
 
-		AP_Process_Form__c apProcessForm = [SELECT Case__c, Accept_payment_Cards_for_BSP_ticket__c, Receive_HOT_files__c, Receive_PDF_Reports__c
+		AP_Process_Form__c apProcessForm = [SELECT Case__c, Accept_payment_Cards_for_BSP_ticket__c, Receive_HOT_files__c, Receive_PDF_Reports__c, Accept_terms_and_conditions__c
 											FROM AP_Process_Form__c
 											WHERE Case__c =:  testCase.Id
 											LIMIT 1];
@@ -2243,7 +2690,7 @@ private class ISSP_APProcess_Test
 						WHERE Email =: 'Test@test1122.com'
 						LIMIT 1];
 
-		Case testCase = [SELECT Account_Concerned__c, Verification__c,Country_concerned__c, CaseArea__c, BSPCountry__c, IFAP_Country_ISO__c
+		Case testCase = [SELECT Account_Concerned__c, Verification__c,Country_concerned__c, CaseArea__c, BSPCountry__c, IFAP_Country_ISO__c, OwnerId, Contact.Id
 						 FROM Case
 						 LIMIT 1];
 
@@ -2259,17 +2706,19 @@ private class ISSP_APProcess_Test
 
 
 
-		AP_Process_Form__c apProcessForm = [SELECT Case__c, Accept_payment_Cards_for_BSP_ticket__c, Receive_HOT_files__c, Receive_PDF_Reports__c
+		AP_Process_Form__c apProcessForm = [SELECT Case__c, Accept_payment_Cards_for_BSP_ticket__c, Receive_HOT_files__c, Receive_PDF_Reports__c, Accept_terms_and_conditions__c
 											FROM AP_Process_Form__c
 											WHERE Case__c =:  testCase.Id
 											LIMIT 1];
 
+		Services_Rendered__c sr = new Services_Rendered__c(Name='PASS Participation', Services_Rendered_Type__c = AMS_Utils.passCountryCaseReason, Services_Rendered_By__c = cont.AccountId,
+			Services_Rendered_to_Airline__c = cont.AccountId, Services_Rendered_Status__c = AMS_Utils.ACTIVE);
+		insert sr;
 
 		System.runAs(newUser) {
 			PageReference pr = Page.ISSP_APProcess;
 			Test.setCurrentPage(pr);
 			ApexPages.currentPage().getParameters().put('caseId' ,testCase.id);
-			ApexPages.currentPage().getParameters().put('managePASS' ,'true');
 			ApexPages.currentPage().getParameters().put('airline' ,'PASS');
 			ApexPages.currentPage().getParameters().put('step' ,'4');
 
@@ -2416,14 +2865,12 @@ private class ISSP_APProcess_Test
 			ISSP_APProcess ctrl = new ISSP_APProcess();
 			ApexPages.currentPage().getParameters().put('airline' ,AMS_Utils.passParticipation);
 			ApexPages.currentPage().getParameters().put('caseId' ,testCase.id);
-			ApexPages.currentPage().getParameters().put('managePASS' ,'true');
 			ApexPages.currentPage().getParameters().put('step' ,'3');
 
 			ctrl = new ISSP_APProcess();
 			ctrl.goToStep2();
 			ApexPages.currentPage().getParameters().put('airline' ,AMS_Utils.passParticipation);
 			ApexPages.currentPage().getParameters().put('caseId' ,testCase.id);
-			ApexPages.currentPage().getParameters().put('managePASS' ,'true');
 			ApexPages.currentPage().getParameters().put('step' ,'1');
 			ctrl = new ISSP_APProcess();
 			ctrl.goToStep2();
@@ -2561,6 +3008,7 @@ private class ISSP_APProcess_Test
 			
 			//CounterIndemnityAgreement
 			ctrl.isGSSAUser = false;
+			ctrl.retrieveAccountToShowSections();
 			ctrl.accountToShowSections.Sector__c='Airline';
 			ctrl.accountToShowSections.BSP_CI_Valid__c=false;
 			result = new set<String>(ctrl.getMandatoryFileList());
@@ -2590,6 +3038,84 @@ private class ISSP_APProcess_Test
 			ctrl.newCase.Classification_SIS__c=ISSP_APProcess.ICH_TYPE_IATA_MEMBER;
 			result = new set<String>(ctrl.getMandatoryFileList());
 			System.assert( result.contains('SignedSISISPAForm'), 'wrong result ' + result );
+
+			Test.StopTest();
+		}
+	}
+
+	@isTest static void testGetPage3() {
+		IATA_ISO_Country__c countryUS = [SELECT Id, Name, Case_BSP_Country__c, ISO_Code__c
+			FROM IATA_ISO_Country__c
+			WHERE ISO_Code__c ='US'
+			LIMIT 1];
+
+		Account headquarter = new Account(
+			Name = 'Emirates hq',
+			Field_Head_Office__c = 'Headquarter',
+			Airline_Designator__c = 'LH',
+			IATACode__c = '220',
+			Airline_Prefix__c = '220',
+			Sector__c = 'Airline',
+			Category__c = 'Passenger and Cargo',
+			Key_Customer_Reason__c = 'Volume',
+			TradeName__c = 'Emirates',
+			Legal_name__c = 'Stuff',
+			Name_on_AOC__c = 'Stuff',
+			IATA_ISO_Country__c = countryUS.Id,
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline'));
+		insert headquarter;
+
+		// Create a new Product
+		Product2 p = new Product2(Name = 'BSP', Family = 'ICCS');
+		insert p;
+
+		// Create a new ICCS Product Country for this product
+		ICCS_Product_Country__c pct = new ICCS_Product_Country__c(Product__c = p.Id, Country__c = countryUS.Id);
+		insert pct;
+
+		Contact con = ISSP_ObjectFactory.createNewContact();
+		con.AccountId = headquarter.Id;
+		insert con;
+
+		User newUser = ISSP_ObjectFactory.createPortalUser(con);
+		con.OwnerId = newUser.Id;
+		update con;
+
+		System.runAs(newUser) {
+			PageReference pr = Page.ISSP_APProcess;
+			Test.setCurrentPage(pr);
+			ISSP_APProcess ctrl = new ISSP_APProcess();
+
+			Test.StartTest();
+			ctrl.isICH =true;
+			ctrl.getStep3Page();
+
+			ctrl.strAreaType='Airline Joining';
+			ctrl.isICH =false;
+			ctrl.isBSP =true;
+			ctrl.isCASS =false;
+			ctrl.isPassAirline = false;
+			ctrl.getStep3Page();
+
+			ctrl.strAreaType='Airline Joining';
+			ctrl.isICH =false;
+			ctrl.isBSP =false;
+			ctrl.isCASS =true;
+			ctrl.isPassAirline = false;
+			ctrl.getStep3Page();
+
+			ctrl.strAreaType='Airline Joining';
+			ctrl.isICH =false;
+			ctrl.isBSP =false;
+			ctrl.isCASS =false;
+			ctrl.isPassAirline = true;
+			ctrl.getStep3Page();
+
+			ctrl.strAreaType='Airline Change';
+			ctrl.getStep3Page();
+
+			ctrl.strAreaType='';
+			ctrl.getStep3Page();
 
 			Test.StopTest();
 		}
