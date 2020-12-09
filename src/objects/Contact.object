@@ -12892,7 +12892,7 @@ IF(S_Standards_Setting_Workspace__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownlo
 &amp;&quot; &quot;&amp; 
 IF(S_Risk_RHC__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000006MxBK&quot; ,&quot;&quot;,40,40),&quot;&quot;)
 &amp;&quot; &quot;&amp; 
-IF(S_TIDS__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=0154E0000016ywI&quot; ,&quot;&quot;,40,40),&quot;&quot;)</formula>
+IF(S_TIDS__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=0155J000000l6ic&quot; ,&quot;&quot;,40,40),&quot;&quot;)</formula>
         <label>Services</label>
         <required>false</required>
         <trackHistory>false</trackHistory>

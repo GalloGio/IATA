@@ -51280,6 +51280,14 @@ ONE Source is the industry platform for validated aviation capability and infras
         <value>Station Details</value>
     </labels>
     <labels>
+        <fullName>icg_station_has_been_created</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg station has been created</shortDescription>
+        <value>Station has been created</value>
+    </labels>
+    <labels>
         <fullName>icg_station_information</fullName>
         <categories>ICG One Source</categories>
         <language>en_US</language>
@@ -51790,14 +51798,6 @@ ONE Source is the industry platform for validated aviation capability and infras
         <protected>false</protected>
         <shortDescription>icg zip code</shortDescription>
         <value>Zip Code</value>
-    </labels>
-    <labels>
-        <fullName>icg_station_has_been_created</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg station has been created</shortDescription>
-        <value>Station has been created</value>
     </labels>
     <labels>
         <fullName>idcard_replacementHeadText</fullName>
