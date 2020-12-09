@@ -4,13 +4,17 @@ trigger CaseComment on CaseComment (before insert, before update, before delete,
 
 	if (Trigger.isAfter) {
 		if (Trigger.isInsert) {
-			if(!System.isFuture()){
-				Set<Id> ccIds = new Set<Id>();
-				for(CaseComment cc : Trigger.new){
-					ccIds.add(cc.Id);
+			Set<Id> ccIds = new Set<Id>();
+			for(CaseComment cc : Trigger.new){
+				ccIds.add(cc.Id);
+			}
+			if(!ccIds.isEmpty()){
+				if(!(System.isFuture() || System.isBatch())){
+					CaseCommentHandler.doAfterInsertFuture(ccIds);
 				}
-				if(!ccIds.isEmpty())
+				else {
 					CaseCommentHandler.doAfterInsert(ccIds);
+				}
 			}
 			handler.processCaseItems(Trigger.new);
 			Unbabel_CaseCommentRequestTranslation.requestTranslation(Trigger.new);
