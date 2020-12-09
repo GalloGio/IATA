@@ -3773,6 +3773,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>Home</value>
     </labels>
     <labels>
+        <fullName>CSP_Breadcrumb_Service_InnovationHub</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Breadcrumb_Service_InnovationHub</shortDescription>
+        <value>Innovation Hub</value>
+    </labels>
+    <labels>
         <fullName>CSP_Breadcrumb_Service_TIPReports</fullName>
         <categories>CSPortal</categories>
         <language>en_US</language>
@@ -7708,6 +7716,37 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <protected>false</protected>
         <shortDescription>CSP_Service_AirlineDailySales_Title</shortDescription>
         <value>Airline Daily Sales Dashboard</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Service_InnovationHub_HomeTab</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Service_InnovationHub_HomeTab</shortDescription>
+        <value>Home</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Service_InnovationHub_ProviderProfileTab</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Service_InnovationHub_ProviderProfileTab</shortDescription>
+        <value>Provider Profile</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Service_InnovationHub_SearchTab</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Service_InnovationHub_SearchTab</shortDescription>
+        <value>Search</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Service_InnovationHub_Title</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Service_InnovationHub_Title</shortDescription>
+        <value>Innovation Hub</value>
     </labels>
     <labels>
         <fullName>CSP_Service_SmartLite_NoAccess</fullName>
@@ -40590,6 +40629,22 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <protected>false</protected>
         <shortDescription>Industry_Activities</shortDescription>
         <value>Industry Activities</value>
+    </labels>
+    <labels>
+        <fullName>InnovationHub_ServiceName</fullName>
+        <categories>Global</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>InnovationHub_ServiceName</shortDescription>
+        <value>Innovation Hub</value>
+    </labels>
+    <labels>
+        <fullName>Innovation_Hub_Service_Description</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Innovation_Hub_Service_Description</shortDescription>
+        <value>The Startup Hotlist enables airlines to search and find startups that are currently, or are interested, in supporting airlines through the development of innovative solutions in areas such as distribution, payment and digitalization. &lt;br /&gt;&lt;br /&gt;The 150+ startups listed in the tool are vetted by IATA, ensuring the relevance of their solutions with current industry initiatives.</value>
     </labels>
     <labels>
         <fullName>InputRequiredMessage</fullName>

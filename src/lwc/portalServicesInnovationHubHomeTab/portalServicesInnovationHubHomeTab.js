@@ -1,7 +1,7 @@
 import { LightningElement,track } from 'lwc';
 
 //import apex methods
-import getPortalServiceDetails from '@salesforce/apex/PortalServicesCtrl.getPortalServiceDetails';
+import getInnovationHubServiceDetails from '@salesforce/apex/PortalServicesInnovationHubCtrl.getInnovationHubServiceDetails';
 
 export default class PortalServicesInnovationHubHomeTab extends LightningElement {
 
@@ -10,7 +10,7 @@ export default class PortalServicesInnovationHubHomeTab extends LightningElement
     
     connectedCallback(){
 
-        getPortalServiceDetails({"serviceName" : "Innovation Hub"})
+        getInnovationHubServiceDetails({})
         .then(result => {
             this.serviceRecord = JSON.parse(JSON.stringify(result));
             this.componentLoading = false;
