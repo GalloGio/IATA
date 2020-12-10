@@ -11,7 +11,7 @@ private class CalloutHelperTest{
 	@isTest
 	private static void testgetResourceFromConfig() {
 		CalloutHelper cHelp = new CalloutHelper();
-		system.assertEquals(null, cHelp.getResourceFromConfig('nothingFound'));
+		system.assertEquals('', cHelp.getResourceFromConfig('nothingFound'));
 		system.assertNotEquals('', cHelp.getResourceFromConfig('UserProvisioning_Create'));
 	}
 }
