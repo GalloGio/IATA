@@ -792,7 +792,7 @@ public without sharing class CW_CapabilitiesManagerController {
 				//key = ContentDocumentId, value = PublicUrl
 				Map<String, String> mapContentDocumentAndUrlPublic = new Map<String, String>();
 				for (ContentDistribution cd : contentDistributionInserted) {
-					mapContentDocumentAndUrlPublic.put(mapContentVersionAndDocument.get(cd.ContentVersionId), cd.ContentDownloadURL);
+					mapContentDocumentAndUrlPublic.put(mapContentVersionAndDocument.get(cd.ContentVersionId), cd.DistributionPublicUrl);
 				}
 
 				//Read DistributionPublicUrl

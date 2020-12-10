@@ -8,6 +8,6 @@
     </values>
     <values>
         <field>Link__c</field>
-        <value xsi:type="xsd:string">https://www.Twitter.com</value>
+        <value xsi:type="xsd:string">https://twitter.com/iata</value>
     </values>
 </CustomMetadata>
