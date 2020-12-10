@@ -8655,7 +8655,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - Area2</shortDescription>
-        <value>Instructor-led Training (individual),	Instructor-led Training (groups),IATAN,ID Card,CheckACode,eBroadcast,Global Agency Directory,Travel Agency Data Products,Digital ID Card (Mobile App),IATA AgentExperience,Global System Solution,Weblink,NDClink,Treasury Dashboard,TIMATIC,Publications,TACT, YMQ Publications,Distance Learning,Agency Management,Transparency in Payments (TIP), New BSPlink</value>
+        <value>Instructor-led Training (individual),	Instructor-led Training (groups),IATAN,ID Card,CheckACode,eBroadcast,Global Agency Directory,Travel Agency Data Products,Digital ID Card (Mobile App),IATA AgentExperience,Global System Solution,Weblink,NDClink,Treasury Dashboard,TIMATIC,Publications,TACT, YMQ Publications,Distance Learning,Agency Management,Transparency in Payments (TIP), New BSPlink,IDX - Incident Data Exchange</value>
     </labels>
     <labels>
         <fullName>CaseValidation_InDepthArea</fullName>
@@ -8930,7 +8930,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Case_KPI_Risk</shortDescription>
-        <value>&quot;financial security request,Financial security release,financial security update,financial security renewal,Yearly Review,Ad hoc Review&quot;</value>
+        <value>&quot;Financial Security Request,Financial Security Release,Financial Security Update,Financial Security Renewal,Yearly review,Adhoc review&quot;</value>
     </labels>
     <labels>
         <fullName>Case_KPI_Short24</fullName>
@@ -39867,7 +39867,7 @@ CNS Customer Services</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Topics To Exclude Country PL</shortDescription>
-        <value>AirSat__c,AirportIS__c,CargoIS__c,DDS__c,Flight_Data_Connect__c,IMX__c,IINet__c,ICH_Helpdesk__c,I_ASC__c,GAP__c,MarketIS__c,PaxIS__c,SIS_Helpdesk__c,SIS_Membership__c,CheckACode_Online_WebService__c,eBroadcast__c,FFP_Frequent_Flyer_Program__c,Flight_Data_Connect__c,Agency_Database_Files__c,Global_Agency_Directory__c,Agency_Data_Products__c,I_ASC_IATA_Safety_Culture_Survey__c,IATA_AgentExperience__c,IATA_net_rates__c,IATA_Store__c,Accreditation_IATAN_US__c,ID_Card_Print_Digital__c,IMX_Integrated_Management_Solutions__c,Instructor_led_training__c,IATA_Publications__c,Self_study_courses__c,Weblink__c,NDClink__c,TACT__c,IATA_Financial_Gateway_IFG__c,Timatic_Solutions__c</value>
+        <value>AirSat__c,AirportIS__c,CargoIS__c,DDS__c,Flight_Data_Connect__c,IMX__c,IINet__c,ICH_Helpdesk__c,I_ASC__c,GAP__c,MarketIS__c,PaxIS__c,SIS_Helpdesk__c,SIS_Membership__c,CheckACode_Online_WebService__c,eBroadcast__c,FFP_Frequent_Flyer_Program__c,Flight_Data_Connect__c,Agency_Database_Files__c,Global_Agency_Directory__c,Agency_Data_Products__c,I_ASC_IATA_Safety_Culture_Survey__c,IATA_AgentExperience__c,IATA_net_rates__c,IATA_Store__c,Accreditation_IATAN_US__c,ID_Card_Print_Digital__c,IMX_Integrated_Management_Solutions__c,Instructor_led_training__c,IATA_Publications__c,Self_study_courses__c,Weblink__c,NDClink__c,TACT__c,IATA_Financial_Gateway_IFG__c,Timatic_Solutions__c, IDX_Incident_Data_Exchange__c</value>
     </labels>
     <labels>
         <fullName>ISSP_Tracking_ID</fullName>
@@ -51280,6 +51280,14 @@ ONE Source is the industry platform for validated aviation capability and infras
         <value>Station Details</value>
     </labels>
     <labels>
+        <fullName>icg_station_has_been_created</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg station has been created</shortDescription>
+        <value>Station has been created</value>
+    </labels>
+    <labels>
         <fullName>icg_station_information</fullName>
         <categories>ICG One Source</categories>
         <language>en_US</language>
@@ -51790,14 +51798,6 @@ ONE Source is the industry platform for validated aviation capability and infras
         <protected>false</protected>
         <shortDescription>icg zip code</shortDescription>
         <value>Zip Code</value>
-    </labels>
-    <labels>
-        <fullName>icg_station_has_been_created</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg station has been created</shortDescription>
-        <value>Station has been created</value>
     </labels>
     <labels>
         <fullName>idcard_replacementHeadText</fullName>
