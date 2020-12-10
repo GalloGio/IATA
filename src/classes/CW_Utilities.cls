@@ -1109,7 +1109,7 @@ public without sharing class CW_Utilities {
 			templateNameContact = 'Remove_notification_to_removed_stat_man';
 			templateNameIata = 'Remove_notification_to_IATA';
 			templateNameCompAdmStationManagers = 'Remove_notif_to_Stat_Man_Comp_Adm';
-			subject = 'Contact role removed';
+			subject = 'Station Manager rights removed';
 		}
 
 		Set<Id> whoEmailsCompAdmStationManagersCombined = new Set<Id>();

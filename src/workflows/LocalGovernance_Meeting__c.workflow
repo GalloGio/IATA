@@ -280,7 +280,7 @@
         <description>APJC - send request to Legal for them to sign off APJC agenda</description>
         <protected>false</protected>
         <recipients>
-            <recipient>lugol@iata.org</recipient>
+            <recipient>middletonj@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -295,7 +295,7 @@
         <description>APJC - send request to Legal for them to sign off APJC minutes</description>
         <protected>false</protected>
         <recipients>
-            <recipient>lugol@iata.org</recipient>
+            <recipient>middletonj@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>

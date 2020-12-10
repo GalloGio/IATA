@@ -305,14 +305,13 @@
         <columns>NAME</columns>
         <columns>Region__c</columns>
         <columns>Active__c</columns>
-        <columns>Queue_ID__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Region__c</field>
             <operation>equals</operation>
             <value>China &amp; North Asia</value>
         </filters>
-        <label>China &amp; N. Asia Auto Queues</label>
+        <label>China &amp; N.Asia Auto Queues</label>
         <language>en_US</language>
     </listViews>
     <listViews>

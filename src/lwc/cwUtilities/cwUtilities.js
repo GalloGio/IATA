@@ -409,11 +409,11 @@ export function getImageString(recordTypeDevName) {
 		return "airline.svg";
 	} else if (recordTypeDevName === "Airport_Operator" || recordTypeDevName === "Airport Operator" ||recordTypeDevName === "Airport") {
 		return "airport-operator.svg";
-	} else if (recordTypeDevName === "Cargo_Handling_Facility") {
+	} else if (recordTypeDevName === "Cargo_Handling_Facility" || recordTypeDevName === "Cargo Handling Facility") {
 		return "cargo-handling-facility.svg";
-	} else if (recordTypeDevName === "Freight_Forwarder") {
+	} else if (recordTypeDevName === "Freight_Forwarder" || recordTypeDevName === "Freight Forwarder") {
 		return "freight-forwarder.svg";
-	} else if (recordTypeDevName === "Ramp_Handler") {
+	} else if (recordTypeDevName === "Ramp_Handler" || recordTypeDevName === "Ramp Handler") {
 		return "ramp-handler.svg";
 	} else if (recordTypeDevName === "Shipper") {
 		return "shipper.svg";

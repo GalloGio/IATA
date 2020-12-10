@@ -1639,6 +1639,10 @@
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <pageAccesses>
+        <apexPage>CW_AddressSelectorMap</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>CW_GoogleMap</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
