@@ -44,6 +44,12 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>ExternalSystem</name>
+            <value>
+                <elementReference>ExternalSystem</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>userPayload</name>
             <value>
                 <elementReference>UserPayload</elementReference>
@@ -159,6 +165,12 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>ExternalSystem</name>
+            <value>
+                <elementReference>ExternalSystem</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>userProvisioningRequestId</name>
             <value>
                 <elementReference>UserProvisioningRequest.Id</elementReference>
@@ -217,6 +229,12 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>ExternalSystem</name>
+            <value>
+                <elementReference>ExternalSystem</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>userPayload</name>
             <value>
                 <elementReference>UserPayload</elementReference>
@@ -241,7 +259,7 @@
         <name>SCIM_Update_User_Generator</name>
         <label>SCIM Update User Generator</label>
         <locationX>715</locationX>
-        <locationY>538</locationY>
+        <locationY>537</locationY>
         <apexClass>SCIMUserAttributeGeneratorPlugin</apexClass>
         <connector>
             <targetReference>SCIM_Update_User</targetReference>
@@ -293,6 +311,14 @@
             <name>userPayload</name>
         </outputParameters>
     </apexPluginCalls>
+    <constants>
+        <description>contains the name of the external system to invoke. Used while getting resource for named credential</description>
+        <name>ExternalSystem</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>PASS</stringValue>
+        </value>
+    </constants>
     <decisions>
         <name>Operation</name>
         <label>Operation</label>
@@ -392,21 +418,7 @@
     <formulas>
         <name>CallParams</name>
         <dataType>String</dataType>
-        <expression>&apos;{&apos;+
-&apos; &quot;externalSystems&quot; : &quot;Postal Accounts Settlement System (PASS)&quot;, &apos; +
-&apos; &quot;client_secret&quot; : &quot;&apos; + {!client_secret}  + &apos;&quot;, &apos; +
-&apos; &quot;client_id&quot; : &quot;&apos; + {!client_id}  + &apos;&quot; &apos; +
-&apos;}&apos;</expression>
-    </formulas>
-    <formulas>
-        <name>client_id</name>
-        <dataType>String</dataType>
-        <expression>&apos;691343569caf4c80aa09d835fc3b700e&apos;</expression>
-    </formulas>
-    <formulas>
-        <name>client_secret</name>
-        <dataType>String</dataType>
-        <expression>&apos;3787a2F55B8c4c39aEA11a36ad69d66e&apos;</expression>
+        <expression>&apos;{&quot;externalSystems&quot; : &quot;Postal Accounts Settlement System (PASS)&quot;}&apos;</expression>
     </formulas>
     <formulas>
         <name>EnableUser</name>
@@ -439,6 +451,12 @@
         <name>BuilderType</name>
         <value>
             <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
