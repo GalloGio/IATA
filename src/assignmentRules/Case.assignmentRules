@@ -11961,15 +11961,6 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>ivancans@iata.org</assignedTo>
-            <assignedToType>User</assignedToType>
-            <criteriaItems>
-                <field>Case.Origin</field>
-                <operation>equals</operation>
-                <value>Exact Target commercial TEST</value>
-            </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
             <assignedTo>Cases_China</assignedTo>
             <assignedToType>Queue</assignedToType>
             <booleanFilter>(1 OR 2) AND (3 AND 4)</booleanFilter>
