@@ -8,6 +8,8 @@
 // are not treated by this class. The intention is not to conflict with previously
 // implemented functionalities
 global class AutoAssignmentAgentToQueue implements Database.Batchable<sObject> {
+	
+	public static string TestType;
 
 	global Iterable<sObject> start(Database.BatchableContext bc) {
 		Iterable<sObject> cases = getPendingCasesWithOfflineOwner();
@@ -82,6 +84,17 @@ global class AutoAssignmentAgentToQueue implements Database.Batchable<sObject> {
 			recordTypes.add(RecordTypeSingleton.getInstance().getRecordTypeId('Case','Cases_Global'));
 			//recordTypes.add(RecordTypeSingleton.getInstance().getRecordTypeId('Case','ComplaintIDFS'));
 			
+			//In test classes there is no way to create record in UserServicePresence table nor to simulate user logging in/off omnichannel
+			//Hence, we simulate it
+			if(test.isRunningTest()){
+				if(TestType=='reassign')
+					setUserToConsider.add(UserInfo.getUserId());
+				else{
+					if(setUserToConsider.contains(UserInfo.getUserId()))
+						setUserToConsider.remove(UserInfo.getUserId());
+				}
+			}
+
 			// get all the cases that these agents / users own
 			// limited by case status, record type and case area
 			casesToReturn = [SELECT Id FROM Case
