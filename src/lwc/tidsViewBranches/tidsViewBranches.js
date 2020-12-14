@@ -36,7 +36,13 @@ export default class TidsViewBranches extends LightningElement {
 		// <template for:each={branches} for:item="branch">
 		// the above is how you would link the javascript to the html
 		branchValues() {
-			getSortedBranches({accountIds:this.accountInfo.Id, name:this.sortCode,order:this.sortDirection,search:this.newsearch}).then(result => {this.viewBranchList(result);});
+			getSortedBranches({
+				accountIds:this.accountInfo.Id
+				,name:this.sortCode
+				,order:this.sortDirection
+				,search:this.newsearch
+				,allrecords:this.allRecords
+			}).then(result => {this.viewBranchList(result);});
 		}
 		viewBranchList(result){
 			this.morethanzero=false;
@@ -75,7 +81,12 @@ export default class TidsViewBranches extends LightningElement {
 			var idx = event.currentTarget.id;
 			this.sortCode = this.categorize(idx);
 			this.sortDirection = this.determineSortDirection(idx);
-			getSortedBranches({accountIds:this.accountInfo.Id,name:sortCode,order:sortDirection, search:this.newsearch}).then(result => {
+			getSortedBranches({
+				accountIds:this.accountInfo.Id
+				,name:sortCode,order:sortDirection
+				,search:this.newsearch
+				,allrecords:this.allRecords
+			}).then(result => {
 				this.viewBranchList(result);
 			});
 		}
@@ -119,7 +130,13 @@ export default class TidsViewBranches extends LightningElement {
 		handlegetBranches(event){
 			event.preventDefault();
 			fireEvent(this.pageRef,'spinnerListener', {payload:{show:true}});
-			getSortedBranches({accountIds:this.accountInfo.Id,name:this.sortCode,order:this.sortDirection, search:this.newsearch}).then(result => {
+			getSortedBranches({
+				accountIds:this.accountInfo.Id
+				,name:this.sortCode
+				,order:this.sortDirection
+				,search:this.newsearch
+				,allrecords:this.allRecords
+			}).then(result => {
 				this.isSearchOn=true;
 				fireEvent(this.pageRef,'spinnerListener', {payload:{show:false}});
 				this.viewBranchList(result);
@@ -129,7 +146,13 @@ export default class TidsViewBranches extends LightningElement {
 			event.preventDefault();
 			fireEvent(this.pageRef,'spinnerListener', {payload:{show:true}});
 			this.newsearch='';
-			getSortedBranches({accountIds:this.accountInfo.Id,name:this.sortCode,order:this.sortDirection, search:this.newsearch}).then(result => {
+			getSortedBranches({
+				accountIds:this.accountInfo.Id
+				,name:this.sortCode
+				,order:this.sortDirection
+				,search:this.newsearch
+				,allrecords:this.allRecords
+			}).then(result => {
 				this.isSearchOn=false;
 				fireEvent(this.pageRef,'spinnerListener', {payload:{show:false}});
 				this.viewBranchList(result);

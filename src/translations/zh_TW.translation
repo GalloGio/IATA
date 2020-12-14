@@ -29729,6 +29729,10 @@
         <name>icg_station_details</name>
     </customLabels>
     <customLabels>
+        <label><!-- icg station has been created --></label>
+        <name>icg_station_has_been_created</name>
+    </customLabels>
+    <customLabels>
         <label><!-- icg station information --></label>
         <name>icg_station_information</name>
     </customLabels>

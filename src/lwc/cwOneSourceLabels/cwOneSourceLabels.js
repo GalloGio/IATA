@@ -458,6 +458,7 @@ import icg_join_now_popup_message52 from "@salesforce/label/c.icg_join_now_popup
 import obligation_documents from "@salesforce/label/c.icg_documents";
 import manage_documents from "@salesforce/label/c.icg_manage_documents";
 import icg_user_guide_pdf_link from "@salesforce/label/c.icg_user_guide_pdf_link";
+import icg_station_has_been_created from "@salesforce/label/c.icg_station_has_been_created";
 
 export function labels() {
 	let labels = {
@@ -921,7 +922,8 @@ export function labels() {
 		icg_join_now_popup_message52,
 		obligation_documents,
 		manage_documents,
-		icg_user_guide_pdf_link
+		icg_user_guide_pdf_link,
+		icg_station_has_been_created
 
 	};
 

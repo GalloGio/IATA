@@ -1,7 +1,8 @@
 public with sharing class CaseCommentHandler {
 	public static final String CASE_COMMENT_ACTION = 'Public Case Comment';
 	
-	public static List<KPI_Value__c> kpiValuesToInsert = new List<KPI_Value__c>();	
+	public static List<KPI_Value__c> kpiValuesToInsert = new List<KPI_Value__c>();
+	public static Boolean caseCommentKPI = false;
 	public CaseCommentHandler(){}
 
 	public static void doBeforeInsert(list<CaseComment> listComments) {
@@ -58,6 +59,7 @@ public with sharing class CaseCommentHandler {
 		
 		if(kpiValuesToInsert.size() > 0 ) {
 			insert kpiValuesToInsert;
+			caseCommentKPI = true;
 		}
 	}
 

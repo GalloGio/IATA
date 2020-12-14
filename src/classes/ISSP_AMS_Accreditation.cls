@@ -4174,7 +4174,7 @@ public without sharing class ISSP_AMS_Accreditation {
 				'BillingStreet' => 'Branch_Office_Street_name_number__c', 'BillingPostalCode' => 'Branch_Office_Postal_code__c', 'BillingState' => 'Billing_State__c', 'BillingCity' => 'Branch_Office_City__c',
 				'IATA_ISO_Country__c' => 'ISO_Country__c', 'IATA_ISO_Country__c' => 'Branch_Office_Country__c', 'Iso_State__c' => 'IATA_ISO_State__c', 'ShippingCountry' => 'Shipping_Country__c', 'ShippingStreet' => 'Shipping_Street__c',
 				'ShippingPostalCode' => 'Shipping_Postal_Code__c', 'ShippingState' => 'Shipping_State__c', 'ShippingCity' => 'Shipping_City__c', 'Email__c' => 'Branch_Office_Email__c',
-				'Website' => 'Website__c', 'Phone' => 'Branch_Office_Phone__c', 'Fax' => 'Branch_Office_FAX__c', 'Mobile__c' => 'Mobile__c'};
+				'Website' => 'Website__c', 'Phone' => 'Branch_Office_Phone__c', 'Fax' => 'Branch_Office_FAX__c', 'Mobile__c' => 'Mobile__c', 'CASS_Number__c' => 'CASS_Number__c'};
 		} else if (strReason == AMS_Utils.CASE_REASON_BR_ABROAD || strReason == AMS_Utils.CASE_REASON_BR_INDEPENDENT)  {
 			mapAccountToAccrFormFields = new Map<String, String> {'Location_Class__c' => 'Location_Class__c',
 				'IATA_ISO_Country__c' => 'ISO_Country__c', 'Iso_State__c' => 'IATA_ISO_State__c'};

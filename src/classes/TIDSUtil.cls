@@ -109,21 +109,21 @@ public without sharing class TIDSUtil{
 		return businessProfile;
 	}
 	//Gets all the sholderholders with the percentage and Owners
-	public static List<AMS_Account_Role__c> tidsShareholders(String accountId){
-		final Id ownershipId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
-		List<AMS_Account_Role__c> shareholders = [SELECT Id, 
-				Percentage__c, 
-				Owner_Category__c, 
-				Owner_Name__c, 
-				Owner_Email__c,
-				Account__c, 
-				RecordTypeId, 
-				Owner_Account__c 
-		  FROM AMS_Account_Role__c
-		  WHERE Account__r.Id=:accountId 
-		  AND Active__c=true 
-		  AND RecordTypeId=:ownershipId];
-		  
+	//Active=true will be displayed only and kept
+	//Active=false will be deleted
+	public static List<AMS_Account_Role__c> tidsShareholders(String accountId, boolean isActiveOnly, boolean isOnlyOwnership){
+		boolean isActive=true;
+		boolean isDeactivated=false;
+		String query='Select Id, Percentage__c,Owner_Category__c,Owner_Name__c,Owner_Email__c,Account__c,RecordTypeId,Active__c, Owner_Account__c '+
+					' From AMS_Account_Role__c Where Account__c=:accountId';
+		if (isActiveOnly){
+			query +=' and Active__c=true';
+		}
+		if (isOnlyOwnership){
+			final Id ownershipId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
+			query +=' and RecordTypeId=\''+ownershipId+'\'';
+		}
+		List<AMS_Account_Role__c> shareholders = Database.query(query);
 		return shareholders;
 	  }
 	//composes the returned error message  
@@ -501,31 +501,46 @@ public without sharing class TIDSUtil{
 			return;
 		}
 
-		final string tidsadminemail = getTIDSMetadataError(TIDS_Constant.TIDS_ADM_EMAIL);
 		sendNotification(whatId,
 						refId, 
-						template,  
-						tidsadminemail );
-	}	
-	//Sends notifications to the client
-	public static void sendNotification(Id whatId, Id refId, String emailTemplate, String tidsadminemail ){
+						getEmailTemplateId(template),  
+						getTIDSMetadataError(TIDS_Constant.TIDS_ADM_EMAIL));
+	}
+
+	//Return the email Template Id
+	public static Id getEmailTemplateId(string emailTemplate){
 		List<EmailTemplate> emailtemp = [SELECT Id
 		  FROM EmailTemplate
 		  WHERE DeveloperName =:emailTemplate LIMIT 1];
 		if (emailtemp.size()==0) {
-			return;
+			return null;
 		}
-
+		return emailtemp[0].Id;
+	}	
+	//Sends notifications to the client
+	public static void sendNotification(Id whatId, Id refId, Id templateId, String tidsadminemail ){
+		if (!String.isBlank(templateId)) {
+			postNotification(whatId, refId, templateId, null, tidsadminemail);
+		}
+	}
+	//Physically post the email using template or body content
+	//If the refId is not informed the email goes to the Tids admin
+	public static void postNotification(Id whatId, Id refId, Id templateId, List<String> bodyContent, String tidsadminemail){
 		Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
 		List<OrgWideEmailAddress> owea = new List<OrgWideEmailAddress>();
 		owea = [select Id from OrgWideEmailAddress where Address =:tidsadminemail Or DisplayName=:tidsadminemail Limit 1];
 		if (owea.size() > 0){
 			email.setOrgWideEmailAddressId(owea[0].Id);
-		}  
-	
-		email.setTemplateId(emailtemp[0].Id);
-		email.setTargetObjectId(refId);
-		email.setWhatId(whatId);
+		}
+		if (!String.isBlank(templateId)){
+			email.setTemplateId(templateId);
+			email.setTargetObjectId(refId);
+			email.setWhatId(whatId);
+		}else{
+			email.setSubject(bodyContent[0]);
+			email.setPlainTextBody(bodyContent[1]);
+			email.setToAddresses(new List<String>{tidsadminemail});
+		}
 		Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{ email });
 	}
 	

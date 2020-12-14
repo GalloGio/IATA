@@ -922,10 +922,11 @@ public with sharing class PortalServicesCtrl {
 			}
 		}
 
-		Id oneSourceServiceId = CW_LoginController.getOneSourceServiceId();
-		Cache.SessionPartition sessionPart = Cache.Session.getPartition('local.ServiceAccess');
-		if (sessionPart != null && oneSourceServiceId != null) {
-			sessionPart.put(oneSourceServiceId,sw.accessGranted);
+		if (sw.recordService.Name == 'ONE Source') {
+			Cache.SessionPartition sessionPart = Cache.Session.getPartition('local.ServiceAccess');
+			if (sessionPart != null && sw.recordService.Id != null) {
+				sessionPart.put(sw.recordService.Id, sw.accessGranted);
+			}
 		}
 
 	}
