@@ -13,6 +13,8 @@ global class ANG_RME_Alert_Service {
 	private static final String EDS_ALERT_EVENT_TYPE = 'EDSAlert';
 	@TestVisible
 	private static final String BALANCE_UPDATE_EVENT_TYPE = 'BalanceUpdate';
+	
+	public static final string PROVISIONAL_NOT_ALLOWED_BY_BSP = 'Agency\'s BSP does not allow to request new provisional';
 
 	public class RHCMessage{
 		//Basic info
@@ -464,46 +466,58 @@ global class ANG_RME_Alert_Service {
 
 	webservice static WebserviceResult requestProvisionalRHC(String accountId){
 		list<ANG_RHC_Information__c> rhcInfo = [SELECT id, ANG_AccountId__r.IATACode__c, ANG_AccountId__r.Location_Type__c,
+												ANG_AccountId__r.IATA_ISO_Country__r.AMS_Settlement_System__r.Enable_Provisional_RHC_Request__c,
 										  ANG_RHC_Amount_Provisional__c, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c, ANG_Provisional_RHC_Last_Update__c
 										  FROM ANG_RHC_Information__c WHERE ANG_AccountId__c=:accountId];
-
-		return requestProvisionalRHC(rhcInfo[0], true);
-		//Account acc = [SELECT Id, IATACode__c, Location_Type__c, (SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c FROM RHC_Informations__r) FROM Account where Id = :accountId];
+		if(rhcInfo[0].ANG_AccountId__r.IATA_ISO_Country__r.AMS_Settlement_System__r.Enable_Provisional_RHC_Request__c)
+			return requestProvisionalRHC(rhcInfo[0], true);
+		else{
+			WebserviceResult result = new WebserviceResult();
+			result.isSuccess = false;
+			result.description = PROVISIONAL_NOT_ALLOWED_BY_BSP;
+			return result;
+		}
 	}
 
 	public static WebserviceResult requestProvisionalRHC(ANG_RHC_Information__c rhcInfo, boolean ProvisionalIsAppliedImmediately){
-		WebserviceResult result = doRequest(rhcInfo.ANG_AccountId__r.IATACode__c, 'BTN_Prov', rhcInfo.ANG_AccountId__r.Location_Type__c); //results are saved on the private varible "result"
+		if(rhcInfo.ANG_AccountId__r.IATA_ISO_Country__r.AMS_Settlement_System__r.Enable_Provisional_RHC_Request__c){
+			WebserviceResult result = doRequest(rhcInfo.ANG_AccountId__r.IATACode__c, 'BTN_Prov', rhcInfo.ANG_AccountId__r.Location_Type__c); //results are saved on the private varible "result"
 
-		if(result.isSuccess){
+			if(result.isSuccess){
 
-			if(result.res.iataCode != rhcInfo.ANG_AccountId__r.IATACode__c){
-				if(ProvisionalIsAppliedImmediately){
-					log.Error_Code__c = 'Iata Code Mismatch';
-					ServiceNow_Helper.sendRequestToSNOWRME('JSD6', rhcInfo.ANG_AccountId__r.IATACode__c, log, result);
+				if(result.res.iataCode != rhcInfo.ANG_AccountId__r.IATACode__c){
+					if(ProvisionalIsAppliedImmediately){
+						log.Error_Code__c = 'Iata Code Mismatch';
+						ServiceNow_Helper.sendRequestToSNOWRME('JSD6', rhcInfo.ANG_AccountId__r.IATACode__c, log, result);
+					}
 				}
-			}
-			else if (result.res.storedBaseCurrency != rhcInfo.CurrencyIsoCode){
-				if(ProvisionalIsAppliedImmediately){
-					log.Error_Code__c = 'Currency Mismatch';
-					ServiceNow_Helper.sendRequestToSNOWRME('JSD7', rhcInfo.ANG_AccountId__r.IATACode__c, log, result);
+				else if (result.res.storedBaseCurrency != rhcInfo.CurrencyIsoCode){
+					if(ProvisionalIsAppliedImmediately){
+						log.Error_Code__c = 'Currency Mismatch';
+						ServiceNow_Helper.sendRequestToSNOWRME('JSD7', rhcInfo.ANG_AccountId__r.IATACode__c, log, result);
+					}
 				}
-			}
-			else{
-				rhcInfo.ANG_RHC_Amount_Provisional__c = result.res.provisionalRHC;
-				rhcInfo.ANG_Provisional_RHC_Last_Update__c = System.today();
+				else{
+					rhcInfo.ANG_RHC_Amount_Provisional__c = result.res.provisionalRHC;
+					rhcInfo.ANG_Provisional_RHC_Last_Update__c = System.today();
 
-				if(ProvisionalIsAppliedImmediately)
-					update rhcInfo;
+					if(ProvisionalIsAppliedImmediately)
+						update rhcInfo;
+				}
+				if(String.isNotEmpty(log.Error_Code__c)) update log;
 			}
-			if(String.isNotEmpty(log.Error_Code__c)) update log;
+
+			//
+			// To reset the singleton for future calls
+			//
+			log = null;
+			return result;
+		}else{
+			WebserviceResult result = new WebserviceResult();
+			result.isSuccess = false;
+			result.description = PROVISIONAL_NOT_ALLOWED_BY_BSP;
+			return result;
 		}
-
-		//
-		// To reset the singleton for future calls
-		//
-		log = null;
-
-		return result;
 	}
 
 	//called from the oscar trigger when Endorsement_Requested__c is set to true

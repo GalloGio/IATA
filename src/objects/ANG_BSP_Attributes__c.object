@@ -155,6 +155,47 @@
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ReadWrite</externalSharingModel>
     <fields>
+        <fullName>Amount_At_Risk_From_USD__c</fullName>
+        <description>Amount at risk: FROM threshold. Used to determine in which tier the agency fall</description>
+        <externalId>false</externalId>
+        <label>Amount At Risk - From (USD)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Amount_At_Risk_Multiplier__c</fullName>
+        <defaultValue>1</defaultValue>
+        <description>In the formula used to calculate RHC, it indicates How many time the Amount At Risk should be multiplied</description>
+        <externalId>false</externalId>
+        <inlineHelpText>In the formula used to calculate RHC, it indicates How many time the Amount At Risk should be multiplied. Default value: 1</inlineHelpText>
+        <label>Amount At Risk Multiplier</label>
+        <precision>10</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Amount_At_Risk_To_USD__c</fullName>
+        <description>Amount at risk: TO threshold. Used to determine in which tier the agency fall</description>
+        <externalId>false</externalId>
+        <label>Amount At Risk - To (USD)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>BSP__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
@@ -187,7 +228,7 @@ X-Handling Agents and Shipping Lines
 J-Joint Vent</inlineHelpText>
         <label>Class Type</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -313,7 +354,7 @@ J-Joint Vent</inlineHelpText>
         <relationshipLabel>BSP Attributes</relationshipLabel>
         <relationshipName>BSP_Attributes</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -362,7 +403,7 @@ J-Joint Vent</inlineHelpText>
         <relationshipLabel>BSP Attributes</relationshipLabel>
         <relationshipName>BSP_Attributes</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -389,6 +430,11 @@ J-Joint Vent</inlineHelpText>
                     <default>false</default>
                     <label>Fixed Percentage</label>
                 </value>
+                <value>
+                    <fullName>Tier</fullName>
+                    <default>false</default>
+                    <label>Tier</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -398,7 +444,7 @@ J-Joint Vent</inlineHelpText>
         <externalId>false</externalId>
         <label>Remittance Frequency</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -458,6 +504,85 @@ CASE( (TEXT(Remittance_Frequency__c)) ,
         <valueSet>
             <restricted>true</restricted>
             <valueSetName>ANG_Risk_Status</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Tier_RHC_Formula_Deduct_USD__c</fullName>
+        <defaultValue>0</defaultValue>
+        <description>Used in Tier RHC: Indicates the amount to deduct from the formula</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Used in Tier RHC: Indicates the amount to deduct from the formula. Default value: 0</inlineHelpText>
+        <label>Tier RHC Formula. Deduct (USD)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Tier_RHC_Formula_TopUp_USD__c</fullName>
+        <defaultValue>0</defaultValue>
+        <description>Used in Tier RHC: Indicates the amount to add to the formula</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Used in Tier RHC: Indicates the amount to add to the formula. Default value: 0</inlineHelpText>
+        <label>Tier RHC Formula TopUp (USD)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Tier_RHC_Formula__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(text(RHC_Amnt_Calc_Type__c)=&apos;Tier&apos;,
+  IF(Tier_RHC_Formula_TopUp_USD__c&gt;0, text(Tier_RHC_Formula_TopUp_USD__c) &amp; &apos; + &apos;, &apos;&apos;)
+  &amp; text(Amount_At_Risk_Multiplier__c)
+  &amp; &apos; x ( [Amount At Risk]&apos; 
+  &amp; IF(Tier_RHC_Formula_Deduct_USD__c &gt;0, &apos; - &apos; &amp; text(Tier_RHC_Formula_Deduct_USD__c), &apos;&apos;)
+  &amp; &apos; )&apos;
+,&apos;&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Tier RHC Formula</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Tier__c</fullName>
+        <description>The tier used in tiered RHC calculation</description>
+        <externalId>false</externalId>
+        <label>Tier</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>1</fullName>
+                    <default>false</default>
+                    <label>1</label>
+                </value>
+                <value>
+                    <fullName>2</fullName>
+                    <default>false</default>
+                    <label>2</label>
+                </value>
+                <value>
+                    <fullName>3</fullName>
+                    <default>false</default>
+                    <label>3</label>
+                </value>
+            </valueSetDefinition>
         </valueSet>
     </fields>
     <fields>
@@ -630,6 +755,21 @@ CASE( (TEXT(Remittance_Frequency__c)) ,
                 <default>false</default>
             </values>
         </picklistValues>
+        <picklistValues>
+            <picklist>Tier__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
     </recordTypes>
     <recordTypes>
         <fullName>RHC_Amount_Conf</fullName>
@@ -724,6 +864,10 @@ CASE( (TEXT(Remittance_Frequency__c)) ,
                 <fullName>Formula</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Tier</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>Remittance_Frequency__c</picklist>
@@ -776,6 +920,21 @@ CASE( (TEXT(Remittance_Frequency__c)) ,
             </values>
             <values>
                 <fullName>C</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Tier__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -933,6 +1092,21 @@ CASE( (TEXT(Remittance_Frequency__c)) ,
             </values>
             <values>
                 <fullName>Not Applicable</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Tier__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

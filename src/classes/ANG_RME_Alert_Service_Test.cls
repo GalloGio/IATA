@@ -37,6 +37,12 @@ public class ANG_RME_Alert_Service_Test {
 		);
 
 		insert bspRU;
+		
+		List<ANG_BSP_Attributes__c> bspAttrLst = new List<ANG_BSP_Attributes__c>();
+		for(AMS_Settlement_System__c iss:[select id, name from AMS_Settlement_System__c]){
+			bspAttrLst.addAll(AMS_OSCAR_TestDataFactory.createOperationAttributes(iss));
+		}
+		insert bspAttrLst;
 
 		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c(Name = 'USA', ISO_Code__c = 'US', CurrencyIsoCode = 'USD');
 		

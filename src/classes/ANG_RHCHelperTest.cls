@@ -12,6 +12,12 @@ private class ANG_RHCHelperTest {
 		bspList.add(settlement2);
 		insert bspList;
 
+		List<ANG_BSP_Attributes__c> bspAttrLst = new List<ANG_BSP_Attributes__c>();
+		for(AMS_Settlement_System__c iss:[select id, name from AMS_Settlement_System__c]){
+			bspAttrLst.addAll(AMS_OSCAR_TestDataFactory.createOperationAttributes(iss));
+		}
+		insert bspAttrLst;
+
 		list<String> listAirlineId = new list<String>();
 		for (Profile profile: [SELECT Id FROM Profile WHERE Name LIKE 'ISS Portal Airline%']) {
 			listAirlineId.add(profile.Id);
@@ -115,7 +121,8 @@ private class ANG_RHCHelperTest {
 		List<ANG_RHC_Information__c> rhcinformationList =
 				[SELECT id, ANG_CashCondition__c, ANG_AccountId__c,ANG_RHC_Amount_Equals_FS__c, ANG_Financial_Security__c,
 					ANG_RME_Amount__c, ANG_RHC_Amount_Provisional__c, ANG_Exceeding_Financial_Security__c,ANG_RHC_Amount_Forecasted__c,
-					CurrencyIsoCode, RHC_Amount_Equals_FS_Percent__c, ANG_Minimum_Financial_Security__c
+					CurrencyIsoCode, RHC_Amount_Equals_FS_Percent__c, ANG_Minimum_Financial_Security__c, 
+					Amount_At_Risk_USD__c, Forecasted_Tier__c, RHC_Amount_USD__c, Tier__c, Tiered_Provisional_Amount__c
 				FROM ANG_RHC_Information__c];
 
 		ANG_RHCHelper.calculateRHCAmount(rhcinformationList);
