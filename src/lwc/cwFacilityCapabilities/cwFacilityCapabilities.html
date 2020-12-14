@@ -269,8 +269,7 @@
 																			
 																			<template if:false={currentheader.last}>
 																				
-																				<template
-																					if:false={currentfield.value.label.length}>
+																				<template if:false={currentfield.value.label.length}>
 
 
 																					<th if:true={currentfield.first}
@@ -298,7 +297,7 @@
 																				</template>
 																			</template>
 																			<template if:true={currentheader.last}>
-																				<template if:false={currentCategory.isEditableRecordType}>
+																				
 																					<th if:true={currentfield.first}
 																						key={currentfield.value.name}
 																						scope="col"
@@ -313,14 +312,10 @@
 																							</c-cw-html-tag-generator>
 																						</p>
 																					</th>
-																				</template>
+																				
 																				<template if:true={editMode}>
 																					<template if:true={isPrivateArea}>													
 																						<template if:true={currentCategory.isEditableRecordType}>
-																							<th if:true={currentfield.first}
-																								key={currentfield.value.name}
-																								class="first-column">													
-																							</th>
 																							<template if:true={isStationManager}>
 																								<template if:false={currentfield.value.isformula}>
 																									<th if:false={currentfield.first}
@@ -356,32 +351,12 @@
 																							colspan={currentfield.value.colspan}>
 																							{currentfield.value.label}
 																						</th>
-																						<th if:true={currentfield.first}
-																							key={currentfield.value.name}
-																							class="first-column">													
-																						</th>
 																					</template>	
 																																								
 																				</template>
 																				<template if:false={editMode}>
 																					
-																					<template if:true={currentCategory.isEditableRecordType}>
-																						<th if:true={currentfield.first}
-																							key={currentfield.value.name}
-																							scope="col"
-																							colspan={currentfield.value.colspan}
-																							class="first-column">
-																							<p>
-																								<c-cw-html-tag-generator
-																									label={label} is-header="true"
-																									item={currentCategory}
-																									property-name="label"
-																									aux-type={currentCategory.auxType}>
-																								</c-cw-html-tag-generator>
-																								
-																							</p>
-																						</th>
-																					</template>
+									
 
 
 																					<th if:false={currentfield.first}
@@ -418,6 +393,7 @@
 																				</template>
 																				<template if:true={isPrivateArea}>
 																					<template if:true={isStationManager}>
+																						<th if:false={currentcapability.value.isEditableRecordType} key={currentheader.value.name} scope="col" class="photo-colum-head"> {label.manage_photos}</th>
 																						<th if:true={currentcapability.value.isEditableRecordType}
 																							key={currentheader.value.name} scope="col" class="photo-colum-head">
 																							Upload obligation documentation</th>
@@ -578,7 +554,7 @@
 																						data-category-index={categoryIndex}
 																						data-row-index={rowIndex}
 																						onclick={setRowClicked}>
-																					<lightning-file-upload if:true={currentCategory.isEditableRecordType}
+																						<lightning-file-upload if:true={currentCategory.isEditableRecordType}
 																							label=""
 																							name="fileUploader"
 																							accept={acceptedDocumentsFormats}
@@ -588,7 +564,8 @@
 																							multiple>
 																						</lightning-file-upload>
 																						<template if:false={disablePhotoIcon}>
-																							<button if:true={row.photosAvailableEdit}
+																							
+																							<button if:true={row.photosAvailable}
 																							class="p-0 bg-transp border-0"
 																							data-tosca="edit_photos">
 																							<img src={infoIcon} width="20px"
@@ -600,7 +577,7 @@
 																								onclick={openModalEditPhotos} />
 																							</button>
 																					
-																							<button if:false={row.photosAvailableEdit}
+																							<button if:false={row.photosAvailable}
 																								disabled
 																								class="p-0 bg-transp border-0 disabled-filter">
 																								<img src={infoIcon} width="20px" />
@@ -608,10 +585,21 @@
 																						</template>
 																						<template if:true={disablePhotoIcon}>
 																							<button if:false={row.photosAvailableEdit}
-																							disabled
-																							class="p-0 bg-transp border-0 disabled-filter">
-																							<img src={infoIcon} width="20px" />
-																						</button>
+																								disabled
+																								class="p-0 bg-transp border-0 disabled-filter">
+																								<img src={infoIcon} width="20px" />
+																							</button>
+																							<button if:true={row.photosAvailable}
+																								class="p-0 bg-transp border-0"
+																								data-tosca="edit_photos">
+																								<img src={infoIcon} width="20px"
+																									data-super-category-index={currentsupercategory.index}
+																									data-section-index={currentsection.index}
+																									data-capability-index={currentcapability.index}
+																									data-category-index={categoryIndex}
+																									data-row-index={rowIndex}
+																									onclick={openModalEditPhotos} />
+																							</button>
 																						</template>
 
 																					</td>
@@ -624,7 +612,6 @@
 																						data-category-index={categoryIndex}
 																						data-row-index={rowIndex}
 																						onclick={setRowClicked}>
-
 																						<button if:true={row.photosAvailable}
 																							class="p-0 bg-transp border-0"
 																							data-tosca="edit_photos">

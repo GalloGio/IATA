@@ -902,7 +902,11 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 				this.creatingAccount = this.stationCreated ? false : this.creatingAccount;
 
 				this.errorCreatingStation = !parsedRes.success;
-				this.modalMessage = parsedRes.message;
+				if(this.isInternalUser){
+					this.modalMessage = this.label.icg_station_has_been_created;
+				}else{
+					this.modalMessage = parsedRes.message;
+				}				
 				if (parsedRes.success) {
 					this.goToHome = true;
 					this.dispatchEvent(new CustomEvent("refresh"));
@@ -1460,19 +1464,19 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 						comp.shippercount = 0;
 						comp.ramphandlercount = 0;
 						comp.stations.forEach(fac => {
-							if (fac.RecordType.Name === "Airline")
+							if (fac.RecordType.DeveloperName === "Airline")
 								comp.airlinecount++;
-							else if (fac.RecordType.Name === "Airport_Operator")
+							else if (fac.RecordType.DeveloperName === "Airport_Operator")
 								comp.airportcount++;
-							else if (fac.RecordType.Name === "Cargo_Handling_Facility")
+							else if (fac.RecordType.DeveloperName === "Cargo_Handling_Facility")
 								comp.cargocount++;
-							else if (fac.RecordType.Name === "Freight_Forwarder")
+							else if (fac.RecordType.DeveloperName === "Freight_Forwarder")
 								comp.ffcount++;
-							else if (fac.RecordType.Name === "Ramp_Handler")
+							else if (fac.RecordType.DeveloperName === "Ramp_Handler")
 								comp.ramphandlercount++;
-							else if (fac.RecordType.Name === "Shipper")
+							else if (fac.RecordType.DeveloperName === "Shipper")
 								comp.shippercount++;
-							else if (fac.RecordType.Name === "Trucker")
+							else if (fac.RecordType.DeveloperName === "Trucker")
 								comp.truckercount++;
 						});
 					}
@@ -1892,6 +1896,7 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 	getUserFacilitiesFromAccount(){
 		getUserFacilities({fromAccId : this.recordId}).then(result => {
 			if (result) {
+				
 				this.facilityList = [];
 				let objEntries = Object.entries(JSON.parse(result));
 				objEntries.forEach(opsHierarchyGroup => {

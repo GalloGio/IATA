@@ -13,18 +13,19 @@
 	<form>
 		<p>
 			<template if:true={istext1}>
-				To complete your TIDS application, please provide the following documents:
+				To complete your TIDS application, please provide the documents listed below.
 			</template>
 			<template if:true={istext2}>
-				To complete your TIDS Branch application, please provide the following documents:
+				To complete your TIDS Branch application, please provide the documents listed below.
 			</template>
 			<template if:true={istext3}>
-				To complete your TIDS Virtual Branch application, please provide the following documents:
+				To complete your TIDS Virtual Branch application, please provide the documents listed below.
 			</template>	
 			<template if:true={istext4}>
 				Please provide supporting documentation as evidence of the changes reported
-				<br/>In the case of a change of Ownership or Company Legal Type, we ask that you attach all the following documents:		
-			</template>	
+				<br/>In the case of a change of Ownership or Company Legal Type, we ask that you attach all the documents listed below.
+			</template>
+			<br/>Maximum file size per document is 3MB. Accepted file formats are PDF, GIF, JPEG and PNG	
 		</p>
 		<template if:true={vettingErrorOptions}>
 			<lightning-textarea

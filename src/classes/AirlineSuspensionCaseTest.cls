@@ -58,9 +58,6 @@ private class AirlineSuspensionCaseTest {
 		ApexPages.StandardController std = new ApexPages.StandardController(cs);
 		AirlineSuspensionCaseController controller = new AirlineSuspensionCaseController(std);
 		controller.asrecord.SVP_FDS_Approval__c = Datetime.now();
-		system.debug(controller.GDSTemplateId);
-		system.debug(controller.InternalTemplateId);
-		system.debug(controller.AirlineSuspensionDocFolderId);
 
 		// save the presuspension part and check the locked values are correctly in place afterwards
 		controller.EditSuspension();
@@ -86,12 +83,35 @@ private class AirlineSuspensionCaseTest {
 		controller.CreateCountrySuspensionCases();
 		controller.CloseAllChildSuspensionCases();
 		controller.getGroupNamesOptions();
+		
+		User u1 = new User(FirstName='Update', 
+					Division='UnitTest',
+					License_Cost_Center__c='AAA000AA00',
+					Username='test1@iata.org.amsdev1',
+					LastName='Airline', Email='test1@iata.org',
+					Alias='Test1', CommunityNickname='Test1',
+					TimeZoneSidKey='Europe/Brussels', LocaleSidKey='en_US',
+					EmailEncodingKey='UTF-8', ProfileId='00e20000000h0gFAAQ',
+					LanguageLocaleKey='en_US');
 
+		insert u1;
+
+ 		System.runAs(u1) {
+			PermissionSetAssignment psa = new PermissionSetAssignment
+			(PermissionSetId = [Select Id From PermissionSet where name = 'Airline_HQ_MER_Membership'].id, AssigneeId = u1.id);
+			insert psa;
+		}
+		
+		System.runAs(u1) {
 		// change parent account to IATA Member and save the presuspension
 		acct_hq.Membership_status__c = 'IATA member';
 		update acct_hq;
+		
+		
 		asrecord.SVP_FDS_Approval__c = null;
 		update asrecord;
+		}
+		
 		std = new ApexPages.StandardController(cs);
 		controller = new AirlineSuspensionCaseController(std);
 		controller.EditSuspension();
