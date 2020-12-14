@@ -15,7 +15,8 @@ global class SCIMUpdateUserPlugin extends UserProvisioning.UserProvisioningPlugi
 
 		describeResult.inputParameters = new List<Process.PluginDescribeResult.InputParameter>{
 			new Process.PluginDescribeResult.InputParameter(UserProvisioningUtils.PARAM_USERPAYLOAD, Process.PluginDescribeResult.ParameterType.STRING, true),
-			new Process.PluginDescribeResult.InputParameter(UserProvisioningUtils.PARAM_CALLPARAMS, Process.PluginDescribeResult.ParameterType.STRING, false)
+			new Process.PluginDescribeResult.InputParameter(UserProvisioningUtils.PARAM_CALLPARAMS, Process.PluginDescribeResult.ParameterType.STRING, false),
+			new Process.PluginDescribeResult.InputParameter(UserProvisioningUtils.PARAM_EXTERNAL_SYSTEM, Process.PluginDescribeResult.ParameterType.STRING, false)
 		};
 
 		return describeResult;
@@ -43,7 +44,7 @@ global class SCIMUpdateUserPlugin extends UserProvisioning.UserProvisioningPlugi
 
 		try {
 			userProvUtils.init(uprId);
-			SCIMUsersUtility.endPoint = userProvUtils.getNamedCredential();
+			SCIMUsersUtility.endPoint = userProvUtils.getNamedCredential((String)request.inputParameters.get(UserProvisioningUtils.PARAM_EXTERNAL_SYSTEM), 'UserProvisioning_Update');
 
 			UserProvAccount upa = userProvUtils.getLinkedUserProvAccount();
 			if (upa != null && !String.isBlank(upa.externalUserId)) {
