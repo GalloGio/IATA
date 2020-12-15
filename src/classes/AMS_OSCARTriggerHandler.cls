@@ -2795,7 +2795,8 @@ public class AMS_OSCARTriggerHandler {
 		Id volRelRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'VOLUNTARY_RELINQUISHMENT');
 		List<AMS_Oscar__c> oscars = filterOSCARbyRT(volRelRT, triggerNew);
 
-		if(oscars.isEmpty()) return;
+		if(oscars.isEmpty()|| (oldMap.get(oscar.Id).Status__c != oscar.Status__c AND oscar.Status__c == 'Closed'))
+			return;
 
 		Set<Id> oscarOnlineAccredIds = new Set<Id>();
 		Map<Id, Set<Id>> accountsInvolved = new Map<Id, Set<Id>>();
