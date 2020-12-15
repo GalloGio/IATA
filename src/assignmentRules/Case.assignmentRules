@@ -756,7 +756,7 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
             <criteriaItems>
                 <field>Case.BSPCountry__c</field>
                 <operation>equals</operation>
-                <value>France,Lebanon,Switzerland &amp; Liechtenstein</value>
+                <value>France,Switzerland &amp; Liechtenstein</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Account.HQ_Service_Model__c</field>
@@ -1021,7 +1021,7 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
             <criteriaItems>
                 <field>Case.BSPCountry__c</field>
                 <operation>equals</operation>
-                <value>Oman,Palestinian Territories,Qatar,Reunion,Rwanda,Sao Tome,Seychelles,South Africa,Swaziland,Tanzania,Tchad,Turkmenistan,Uganda,United Arab Emirates,Zambia,Zimbabwe</value>
+                <value>Oman,Palestinian Territories,Qatar,Reunion,Rwanda,Sao Tome,Seychelles,South Africa,Swaziland,Tanzania,Tchad,Turkmenistan,Uganda,United Arab Emirates,Zambia,Zimbabwe,Lebanon</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Account.HQ_Service_Model__c</field>
