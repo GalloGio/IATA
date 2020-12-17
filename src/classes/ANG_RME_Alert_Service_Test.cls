@@ -24,7 +24,8 @@ public class ANG_RME_Alert_Service_Test {
 			CurrencyIsoCode = 'EUR',
 			RecordTypeId = AMS_Utils.RECTYPE_BSP,
 			RHC_Exceptional_Monitoring__c = true,
-			Exc_RHC_Monitoring_Alert__c = '100%UP'
+			Exc_RHC_Monitoring_Alert__c = '100%UP',
+			Enable_Provisional_RHC_Request__c=true
 		);
 		insert bspKZ;
 
@@ -33,7 +34,8 @@ public class ANG_RME_Alert_Service_Test {
 			CurrencyIsoCode = 'EUR',
 			RecordTypeId = AMS_Utils.RECTYPE_BSP,
 			RHC_Exceptional_Monitoring__c = true,
-			Exc_RHC_Monitoring_Alert__c = '100%UP;75%UP;50%UP;100%DOWN;75%DOWN;50%DOWN'
+			Exc_RHC_Monitoring_Alert__c = '100%UP;75%UP;50%UP;100%DOWN;75%DOWN;50%DOWN',
+			Enable_Provisional_RHC_Request__c=true
 		);
 
 		insert bspRU;
@@ -44,7 +46,13 @@ public class ANG_RME_Alert_Service_Test {
 		}
 		insert bspAttrLst;
 
-		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c(Name = 'USA', ISO_Code__c = 'US', CurrencyIsoCode = 'USD');
+		AMS_Settlement_System__c bspUS = new AMS_Settlement_System__c(
+			Name = 'BSP-US',
+			CurrencyIsoCode = 'USD',
+			RecordTypeId = AMS_Utils.RECTYPE_BSP);
+		insert bspUS;
+
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c(Name = 'USA', ISO_Code__c = 'US', CurrencyIsoCode = 'USD', AMS_Settlement_System__c = bspUS.Id);
 		
 		IATA_ISO_Country__c countryKZ = new IATA_ISO_Country__c (
 			Name = 'Kazakhstan',
@@ -119,6 +127,11 @@ public class ANG_RME_Alert_Service_Test {
 		ANG_RHCHelper.createRHCInfo(new Set<Id>{a.Id}, false);
 
 		List<ANG_RHC_Information__c> rhcLst = [SELECT Id FROM ANG_RHC_Information__c WHERE ANG_AccountId__c = :a.Id];
+
+		for(ANG_RHC_Information__c rhc:rhcLst)
+			rhc.ANG_RHC_Amount__c = 1000;
+		
+		update rhcLst;
 
 		createRMEMappings();
 	}
@@ -284,6 +297,31 @@ public class ANG_RME_Alert_Service_Test {
 
 	@isTest
 	static void webservice_sucess() {
+		Account accnt = [SELECT id, IATACode__c,IATA_ISO_Country__r.AMS_Settlement_System__r.Enable_Provisional_RHC_Request__c FROM account WHERE Name='Test2 Agency OK' limit 1];
+		AMS_Settlement_System__c bsp = [select id, Enable_Provisional_RHC_Request__c from AMS_Settlement_System__c where id=:accnt.IATA_ISO_Country__r.AMS_Settlement_System__c];
+		bsp.Enable_Provisional_RHC_Request__c = true;
+		update bsp;
+
+		ANG_RME_Alert_Service.RHCMessage message = new ANG_RME_Alert_Service.RHCMessage();
+		message.iataCode = '1234562';
+		message.eventTime = System.now();
+		message.storedRHCValue = 200;
+		message.storedBaseCurrency = 'USD';
+
+		Test.setMock(HttpCalloutMock.class, new HttpResponseGenerator(200, JSON.serialize(message)));
+
+		Test.startTest();
+		
+
+		ANG_RME_Alert_Service.WebserviceResult result = ANG_RME_Alert_Service.requestProvisionalRHC([SELECT IATACode__c FROM Account WHERE Name='Test2 Agency OK'][0].Id);
+
+		Test.stopTest();
+		System.assertEquals(message.iataCode, result.iataCode);
+		System.assert(result.isSuccess);
+	}
+
+	@isTest
+	static void provisional_not_enabled() {
 		ANG_RME_Alert_Service.RHCMessage message = new ANG_RME_Alert_Service.RHCMessage();
 		message.iataCode = '1234562';
 		message.eventTime = System.now();
@@ -292,13 +330,17 @@ public class ANG_RME_Alert_Service_Test {
 		Test.setMock(HttpCalloutMock.class, new HttpResponseGenerator(200, JSON.serialize(message)));
 
 		Test.startTest();
+		Account accnt = [SELECT id, IATACode__c,IATA_ISO_Country__r.AMS_Settlement_System__r.Enable_Provisional_RHC_Request__c FROM account limit 1];
+		AMS_Settlement_System__c bsp = [select id, Enable_Provisional_RHC_Request__c from AMS_Settlement_System__c where id=:accnt.IATA_ISO_Country__r.AMS_Settlement_System__c];
+		bsp.Enable_Provisional_RHC_Request__c = false;
+		update bsp;
 
 		ANG_RME_Alert_Service.WebserviceResult result = ANG_RME_Alert_Service.requestProvisionalRHC([SELECT IATACode__c FROM Account][0].Id);
 
 		Test.stopTest();
 
-		System.assertEquals(message.iataCode, result.iataCode);
-		System.assert(result.isSuccess);
+		System.assertEquals(ANG_RME_Alert_Service.PROVISIONAL_NOT_ALLOWED_BY_BSP, result.description);
+		System.assert(!result.isSuccess);
 	}
 
 	@isTest
@@ -439,7 +481,7 @@ public class ANG_RME_Alert_Service_Test {
 
 	@isTest
 	static void testDoPost() {
-		List <Account> accountList = new List <Account> ([SELECT Id FROM Account LIMIT 1]);
+		List <Account> accountList = new List <Account> ([SELECT Id FROM Account WHERE Name='Test2 Agency OK' LIMIT 1]);
 		ANG_RME_Alert_Service.RHCMessage message = new ANG_RME_Alert_Service.RHCMessage();
 		message.iataCode = '1234562';
 		message.eventId = 'AlertRequest';
@@ -449,7 +491,7 @@ public class ANG_RME_Alert_Service_Test {
 
 		message.storedBaseCurrency = 'USD';
 
-		message.storedRHCValue = 0;
+		message.storedRHCValue = 0.0;
 		message.consumedRHCAmount = 200;
 		message.consumedRHCPercentage = 0.5;
 

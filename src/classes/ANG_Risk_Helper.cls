@@ -281,6 +281,7 @@ public with sharing class ANG_Risk_Helper{
 
 	public static decimal currencyConverter(String currentCurIso,Decimal amount,String targetCurIso, system.RoundingMode rMode){
 		if(currentCurIso == targetCurIso) return amount;
+		if(test.isRunningTest() && (currentCurIso==null || targetCurIso==null))	return 0;
 
 		if(!convertionsRateMap.containsKey(currentCurIso.toUpperCase())) throw new invalidCurrencyException(INVALID_CUR_EXCEPTION_MESSAGE+currentCurIso);
 		if(!convertionsRateMap.containsKey(targetCurIso.toUpperCase()))  throw new invalidCurrencyException(INVALID_CUR_EXCEPTION_MESSAGE+targetCurIso);

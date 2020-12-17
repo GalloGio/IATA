@@ -6,8 +6,8 @@ public class ANG_AgencyChangesHelperTest {
 		Test.startTest();
 
 		List<AMS_Settlement_System__c> settlementSystemList = new List<AMS_Settlement_System__c>();
-		settlementSystemList.add(new AMS_Settlement_System__c(name = 'BSP-01'));
-		settlementSystemList.add(new AMS_Settlement_System__c(name = 'BSP-02'));
+		settlementSystemList.add(new AMS_Settlement_System__c(name = 'BSP-01', Enable_Provisional_RHC_Request__c=true, currencyIsoCode='EUR'));
+		settlementSystemList.add(new AMS_Settlement_System__c(name = 'BSP-02', Enable_Provisional_RHC_Request__c=true, currencyIsoCode='USD'));
 		insert settlementSystemList;
 
 		List<ANG_BSP_Attributes__c> bspAttrLst = new List<ANG_BSP_Attributes__c>();

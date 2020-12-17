@@ -587,7 +587,7 @@ public class ANG_RHCAlertTriggerHandler{
 		Map<String,AMS_Country_Specific_Attribute__c> GDSAlertConfigMap= new Map<String,AMS_Country_Specific_Attribute__c>();//iso_countr_isoCode__c =>AMS_Country_Specific_Attribute__c
 		for(AMS_Country_Specific_Attribute__c csa: [
 			SELECT IATA_ISO_Country__r.ISO_Code__c,ANG_Send_Email_Agent__c,ANG_Create_Sidra_Lite__c,ANG_Remove_Ticketing_Authority__c
-					, GDS_Alert_Type__c, Create_SAAM_Case__c, Email_Template_Internal_Stakeholders__c, Stakeholders_email_list__c
+					, GDS_Alert_Type__c, Create_SAAM_Case__c, Email_Template_Internal_Stakeholders__c, Stakeholders_email_list__c, recordtypeId
 			FROM AMS_Country_Specific_Attribute__c
 			WHERE recordtypeId=: RTSAlertSpecificAttr OR recordtypeId=:GDSAlertSpecificAttr]){
 				if(csa.recordtypeId == RTSAlertSpecificAttr)
@@ -1681,7 +1681,7 @@ public class ANG_RHCAlertTriggerHandler{
 			if(!string.isBlank(htmlBody)){
 				htmlBody = htmlBody.replace('##AGENT_NAME##', acct.Name);
 				htmlBody = htmlBody.replace('##IATA_CODE##', acct.IATACode__c);
-				htmlBody = htmlBody.replace('##ACCREDITATION_TYPE##', acct.ANG_Accreditation_Model__c);
+				htmlBody = htmlBody.replace('##ACCREDITATION_TYPE##', (acct.ANG_Accreditation_Model__c==null?'':acct.ANG_Accreditation_Model__c));
 				htmlBody = htmlBody.replace('##COUNTRY##', acct.IATA_ISO_Country__r.Name);
 				htmlBody = htmlBody.replace('##RHC_AMOUNT##', rhcAmount.format());
 				htmlBody = htmlBody.replace('##RHC_CURRENCY##', bspCurrency);
