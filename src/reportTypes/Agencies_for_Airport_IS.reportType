@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ReportType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <baseObject>Account</baseObject>
+    <category>accounts</category>
+    <deployed>true</deployed>
+    <description>Pull agencies information needed to generate report for Airport IS</description>
+    <label>Agencies for Airport IS</label>
+    <sections>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <field>Id</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <field>IATACode__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <field>Global_ID__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <field>Status__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <field>Location_Class__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <field>Location_Type__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <field>BillingCity</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <field>BillingPostalCode</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <field>Name</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <field>Expiry_Date__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <displayNameOverride>ISO Country: ISO Code</displayNameOverride>
+            <field>IATA_ISO_Country__c.ISO_Code__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>RecordType</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Purge_Flag__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Sector__c</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CreatedDate</field>
+            <table>Account</table>
+        </columns>
+        <masterLabel>Accounts</masterLabel>
+    </sections>
+    <sections>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <displayNameOverride>Geoname Billing City: Id</displayNameOverride>
+            <field>Geoname_Billing_City__c.Id</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <displayNameOverride>Geoname Billing City: Name</displayNameOverride>
+            <field>Geoname_Billing_City__c.Name</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <displayNameOverride>Geoname Billing City: Location (Longitude)</displayNameOverride>
+            <field>Geoname_Billing_City__c.Location__Longitude__s</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <displayNameOverride>Geoname Billing City: Location (Latitude)</displayNameOverride>
+            <field>Geoname_Billing_City__c.Location__Latitude__s</field>
+            <table>Account</table>
+        </columns>
+        <masterLabel>Geoname billing city</masterLabel>
+    </sections>
+    <sections>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <displayNameOverride>Top Parent: Account ID</displayNameOverride>
+            <field>Top_Parent__c.Id</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <displayNameOverride>Top Parent: Account Name</displayNameOverride>
+            <field>Top_Parent__c.Name</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <displayNameOverride>Top Parent: IATA Code</displayNameOverride>
+            <field>Top_Parent__c.IATACode__c</field>
+            <table>Account</table>
+        </columns>
+        <masterLabel>Top Parent</masterLabel>
+    </sections>
+    <sections>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <displayNameOverride>Parent Account: Account ID</displayNameOverride>
+            <field>Parent.Id</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <displayNameOverride>Parent Account: Account Name</displayNameOverride>
+            <field>Parent.Name</field>
+            <table>Account</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <displayNameOverride>Parent Account: IATA Code</displayNameOverride>
+            <field>Parent.IATACode__c</field>
+            <table>Account</table>
+        </columns>
+        <masterLabel>Parent</masterLabel>
+    </sections>
+</ReportType>
