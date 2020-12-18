@@ -1481,6 +1481,7 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
         <columns>Country_FOR__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>Cargo_Handling_Facility_Stations</fullName>
