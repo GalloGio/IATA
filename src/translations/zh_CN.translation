@@ -15398,7 +15398,7 @@ and
         <name>ISSP_AMS_NoC_Message_Accredited_Agent_CNS</name>
     </customLabels>
     <customLabels>
-        <label>新分公司申请</label>
+        <label>变更申请</label>
         <name>ISSP_AMS_NoC_Multiple_Changes</name>
     </customLabels>
     <customLabels>
