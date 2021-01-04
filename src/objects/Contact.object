@@ -20698,16 +20698,6 @@ ISCHANGED(ID_Card_Holder__c)
         <errorMessage>A contact can be a &quot;Financial Assessment Contact&quot; only if the Account types is HO, AO or BR .</errorMessage>
     </validationRules>
     <validationRules>
-        <fullName>Identity_No_QQ_email_domain</fullName>
-        <active>true</active>
-        <description>block QQ emails from registration in Identity</description>
-        <errorConditionFormula>AND(
-ISNEW(),
-CONTAINS(Email , &quot;@qq.com&quot;)
-)</errorConditionFormula>
-        <errorMessage>Please contact IATA Customer Service.</errorMessage>
-    </validationRules>
-    <validationRules>
         <fullName>Key_Contacts_Data_Quality</fullName>
         <active>true</active>
         <description>Put in place for the Account Management Project, this rule is meant to ensure data quality for the key contacts.</description>

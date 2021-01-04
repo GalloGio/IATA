@@ -309,7 +309,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 	@track displaySecondLevelRegistration = false;
 
 	connectedCallback() {
-
 		//get the parameters for this page
 		this.pageParams = getParamsFromPage();
 		if (this.pageParams) {
@@ -395,12 +394,12 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 		getContactInfo()
 			.then(result => {
 				this.isFirstLevelUser = result.Account.Is_General_Public_Account__c;
-			})
 
 		checkLatestTermsAndConditionsAccepted({portalServiceId: this.serviceId, contactId: this.contactId}).then(result2 => {
 			let isLatestAccepted = JSON.parse(JSON.stringify(result2));
 			this.isLatestAccepted = isLatestAccepted;
 		});
+			})
 	}
 
 	cancelTermsAcceptance(){
@@ -841,7 +840,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
 	//navigates to service
 	goToService(serviceAux) {
-
 		//attributes stored on element that is related to the event
 		let appFullUrlData = serviceAux.Application_URL__c;
 		let openWindowData = serviceAux.New_Window__c;
@@ -854,12 +852,10 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 		}
 
 		let myUrl = appFullUrlData;
-
 		//verifies if the event target contains all data for correct redirection
 		if (openWindowData !== undefined) {
 			//determines if the link is to be opened on a new window or on the current
 			if (openWindowData) {
-
 				if (!myUrl.startsWith('/')) {
 					if(serviceAux.ServiceName__c === 'Training Platform (LMS)'){
 						getPortalServiceId({ serviceName: serviceAux.ServiceName__c })
@@ -882,6 +878,9 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 								this.error = error;
 						});
 
+					} else{
+						myUrl = window.location.protocol + '//' + myUrl;
+						window.open(myUrl);
 					}
 				}else{
 					if (appFullUrlData !== 'undefined') {

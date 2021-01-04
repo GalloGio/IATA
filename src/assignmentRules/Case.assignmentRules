@@ -756,7 +756,7 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
             <criteriaItems>
                 <field>Case.BSPCountry__c</field>
                 <operation>equals</operation>
-                <value>France,Lebanon,Switzerland &amp; Liechtenstein</value>
+                <value>France,Switzerland &amp; Liechtenstein</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Account.HQ_Service_Model__c</field>
@@ -1021,7 +1021,7 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
             <criteriaItems>
                 <field>Case.BSPCountry__c</field>
                 <operation>equals</operation>
-                <value>Oman,Palestinian Territories,Qatar,Reunion,Rwanda,Sao Tome,Seychelles,South Africa,Swaziland,Tanzania,Tchad,Turkmenistan,Uganda,United Arab Emirates,Zambia,Zimbabwe</value>
+                <value>Oman,Palestinian Territories,Qatar,Reunion,Rwanda,Sao Tome,Seychelles,South Africa,Swaziland,Tanzania,Tchad,Turkmenistan,Uganda,United Arab Emirates,Zambia,Zimbabwe,Lebanon</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Account.HQ_Service_Model__c</field>
@@ -1278,6 +1278,36 @@ ISPICKVAL(Topic__c, &quot;IATA Codes (not applicable to Agents)&quot;)
 RecordType.Name = &quot;Cases - Global&quot;,
 ISPICKVAL(Topic__c, &quot;IATA Codes (not applicable to Agents)&quot;)
 
+)</formula>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>GCS_Incident_Data_Exchange_L2</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>And(
+ISPICKVAL(Service_Level__c, &quot;2&quot;),
+RecordType.Name = &quot;Cases - Global&quot;,
+ISPICKVAL(Topic__c, &quot;IDX - Incident Data Exchange&quot;)
+
+)</formula>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>GCS_Incident_Data_Exchange</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>And(
+RecordType.Name = &quot;Cases - Global&quot;,
+ISPICKVAL(Topic__c, &quot;IDX - Incident Data Exchange&quot;)
+)</formula>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>L3_Incident_Data_Exchange</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>AND(
+OR(
+RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,
+RecordType.Name = &quot;Complaint (IDFS ISS)&quot;,
+RecordType.Name = &quot;Process&quot;
+),
+ISPICKVAL(CaseArea__c, &quot;IDX - Incident Data Exchange&quot;)
 )</formula>
         </ruleEntry>
         <ruleEntry>
@@ -11928,15 +11958,6 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
                 <field>Case.Origin</field>
                 <operation>equals</operation>
                 <value>Email to Case - BG noreply</value>
-            </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>ivancans@iata.org</assignedTo>
-            <assignedToType>User</assignedToType>
-            <criteriaItems>
-                <field>Case.Origin</field>
-                <operation>equals</operation>
-                <value>Exact Target commercial TEST</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
