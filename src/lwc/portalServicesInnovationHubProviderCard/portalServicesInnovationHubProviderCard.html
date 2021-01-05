@@ -2,8 +2,8 @@
 
     <c-portal-services-card-container background-variant="white">
 
-        <div slot="serviceImage" class="fullHeight fullWidth customCardBorder">
-            <template if:true={hasIcon} class="fullHeight fullWidth">
+        <div slot="serviceImage" class="fullHeight fullWidth">
+            <template if:true={hasIcon}>
                 <div class="fullHeight fullWidth cardImageProperties" style={provider.imageCSS}>&nbsp;</div>
             </template>
         </div>
@@ -17,8 +17,8 @@
         </span>
 
         <span slot="rightButton">
-            <lightning-button label={label.CSP_Services_GoToService} class="containedButtonSlim"
-                onclick={openProviderDetailsPopup}>
+            <lightning-button label="View Detail" class="containedButtonSlim"
+                onclick={openProviderDetails}>
             </lightning-button>
         </span>
 

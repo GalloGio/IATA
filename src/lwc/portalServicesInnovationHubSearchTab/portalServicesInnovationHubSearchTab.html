@@ -1,22 +1,204 @@
 <template>
 
+    <div class="slds-grid slds-wrap slds-gutters_x-small">
+        <div class="slds-col slds-size_1-of-4">
 
-
-    <div if:true={componentLoading} class="spinnerContainer">
-        <lightning-spinner class="background-superLightGray" alternative-text="Loading"></lightning-spinner>
-    </div>
-
-    <div if:false={componentLoading} class="slds-grid slds-wrap">
-
-        <template for:each={lstAllProviders} for:item="provider">
-            <div class="slds-col slds-size_1-of-1 slds-m-vertical_small" key={provider.Id}>
-                <c-portal-services-innovation-hub-provider-card 
-                    provider={provider} 
-                    onstartloading={startLoading}>
-                </c-portal-services-innovation-hub-provider-card>
+            <div class="slds-m-vertical_x-small customLightShadow">
+                <div class="slds-p-around_medium">
+                    <span class="slds-p-left_small text-bold">{labels.CSP_FilterBy}:</span>
+                </div>
             </div>
-        </template>
 
+        <div class="slds-m-vertical_small customLightShadow background-white">
+
+                    <lightning-button label={labels.CSP_ResetFilters} class="containedButtonSlim cursorPointer" style="display:block"
+                    onclick={resetFilters}>
+                    </lightning-button>
+
+                    <div class="slds-p-around_medium cursorPointer" onclick={handleFundingStageToggle} >
+                        <lightning-icon if:true={fsToggle}  class="darkBlueIcon" icon-name="utility:chevrondown" size="xx-small"></lightning-icon>
+                        <lightning-icon if:false={fsToggle} class="darkBlueIcon" icon-name="utility:chevronright" size="xx-small"></lightning-icon>
+                        <span class="slds-p-left_small text-bold">{labels.CSP_FundingStage}
+                        </span>
+                    </div>
+
+                    <div class="slds-m-bottom_small" if:true={fsToggle}>
+                        <span class="smallSearchSpinner" if:true={fsLoading}>
+                            <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+                        </span>
+                        <div class="slds-m-left_medium" if:false={fsLoading}>
+                        <lightning-radio-group name="fundingStage"
+                          options={lstAllFS}
+                          id="fs"
+                          value={filteringObject.fundingStage}
+                          onchange={selectionFS}
+                          type="radio"></lightning-radio-group>
+                        </div>
+                    </div>
+
+                    <div class="slds-p-around_medium cursorPointer" onclick={handleTechToggle} >
+                        <lightning-icon if:true={techToggle}  class="darkBlueIcon" icon-name="utility:chevrondown" size="xx-small"></lightning-icon>
+                        <lightning-icon if:false={techToggle} class="darkBlueIcon" icon-name="utility:chevronright" size="xx-small"></lightning-icon>
+                        <span class="slds-p-left_small text-bold">{labels.CSP_Technology}
+                        </span>
+                    </div>
+
+                    <div if:true={techToggle}>
+
+                        <span class="smallSearchSpinner" if:true={techLoading}>
+                            <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+                        </span>
+
+                        <div if:false={techLoading}>
+                            <template for:each={lstAllTech} for:item="item">
+                                
+                                <div key={item.label}
+                                    class="slds-size_1-of-1">
+
+                                    <div class="slds-m-left_medium">
+                                        <label class="checkbox-button cursorPointer">
+                                            <input data-item={item.value} data-type="Technology__c"
+                                                type="checkbox" class="checkbox-button__input slds-m-top_small alignCheckboxes cursorPointer"
+                                                onchange={selectionTech} name={item.value}
+                                                checked={item.checked}>
+                                            <span data-item={item.label} data-type="Technology__c"
+                                                class="checkbox-button__control"
+                                                onchange={selectionTech}></span>
+                                            <span data-item={item.value} data-type="Technology__c"
+                                                class="checkbox-button__label slds-p-left_small text-bold slds-text-body_small"
+                                                onchange={selectionTech}>{item.value}</span>
+                                        </label>
+                                    </div>
+
+                                </div>
+                            </template>
+
+                        </div>
+                    </div>
+
+                    <div class="slds-p-around_medium cursorPointer" onclick={handleFAToggle} >
+                        <lightning-icon if:true={faToggle}  class="darkBlueIcon" icon-name="utility:chevrondown" size="xx-small"></lightning-icon>
+                        <lightning-icon if:false={faToggle} class="darkBlueIcon" icon-name="utility:chevronright" size="xx-small"></lightning-icon>
+                        <span class="slds-p-left_small text-bold">{labels.CSP_FocusAreas}</span>
+                    </div>
+
+                    <div if:true={faToggle}>
+                        <span class="smallSearchSpinner" if:true={faLoading}>
+                            <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+                        </span>
+
+                        <template for:each={lstAllFocusAreas} for:item="item">
+                            <div key={item.label}
+                                class="slds-size_1-of-1">
+
+                                <div class="slds-m-left_medium">
+                                    <label class="checkbox-button cursorPointer">
+                                        <input data-item={item.value} data-type="Focus_Areas__c"
+                                            type="checkbox" class="checkbox-button__input slds-m-top_small alignCheckboxes cursorPointer"
+                                            onchange={selectionFA} name={item.value}
+                                            checked={item.checked}>
+                                        <span data-item={item.label} data-type="Focus_Areas__c"
+                                            class="checkbox-button__control"
+                                            onchange={selectionFA}></span>
+                                        <span data-item={item.value} data-type="Focus_Areas__c"
+                                            class="checkbox-button__label slds-p-left_small text-bold slds-text-body_small"
+                                            onchange={selectionFA}>{item.value}</span>
+                                    </label>
+                                </div>
+
+                            </div>
+                        </template>
+                    </div>
+
+                    <div class="slds-p-around_medium cursorPointer" onclick={handleCategoriesToggle} >
+                        <lightning-icon if:true={csToggle}  class="darkBlueIcon" icon-name="utility:chevrondown" size="xx-small"></lightning-icon>
+                        <lightning-icon if:false={csToggle} class="darkBlueIcon" icon-name="utility:chevronright" size="xx-small"></lightning-icon>
+                        <span class="slds-p-left_small text-bold">{labels.CSP_Categories}</span>
+                    </div>
+
+                    <div if:true={csToggle} class="slds-p-bottom_x-small">
+                        <span class="smallSearchSpinner" if:true={catLoading}>
+                            <lightning-spinner alternative-text="Loading" size="small"></lightning-spinner>
+                        </span>
+
+                        <template for:each={lstAllCategories} for:item="item">
+                            <div key={item.label}
+                                class="slds-size_1-of-1">
+
+                                <div class="slds-m-left_medium">
+                                    <label class="checkbox-button cursorPointer">
+                                        <input data-item={item.value} data-type="Categories"
+                                            type="checkbox" class="checkbox-button__input slds-m-top_small alignCheckboxes cursorPointer"
+                                            onchange={selectionCAT} name={item.value}
+                                            checked={item.checked}> 
+                                        <span data-item={item.label} data-type="Categories"
+                                            class="checkbox-button__control"
+                                            onchange={selectionCAT}></span>
+                                        <span data-item={item.value} data-type="Categories"
+                                            class="checkbox-button__label slds-p-left_small text-bold slds-text-body_small"
+                                            onchange={selectionCAT}>{item.value}</span>
+                                    </label>
+                                </div>
+
+                            </div>
+                        </template>
+                    </div>
+
+        </div>
+        </div>
+
+        <div class="slds-col slds-size_3-of-4 slds-wrap">
+
+        <!-- SEARCH -->
+        <div class="fullWidth slds-p-top_x-small">
+            <div class="aroundLightGrayBorder inputFilter borderlessInput searchInputContainer slds-p-horizontal_small text-xsmall">
+                <img src={searchColored}>
+                <lightning-input data-name="contact-search" type="text" value={searchText}
+                    placeholder={labels.CSP_SearchByName}
+                    onchange={searchProviders}
+                    class="hideInputLabel grayInputPlaceholder titleTruncation">
+                </lightning-input>
+                <div if:true={showCross} class="searchBarIcon slds-m-right--large">
+                    <lightning-icon class="cursorPointer rotateIcon" icon-name="utility:add" size="small" alternative-text="" onclick={removeTextSearch}></lightning-icon>
+                </div>
+            </div>
+        </div>
+
+        <div>
+
+        <div if:true={providerLoading} class="spinnerContainer">
+            <lightning-spinner class="background-superLightGray" alternative-text="Loading"></lightning-spinner>
+        </div>
+
+        <div if:false={providerLoading}>
+
+            <div if:false={hasProviders}>
+                <div class="text-medium text-bold slds-p-top_xx-large text-darkGray centered">
+                    <div class="slds-p-vertical_medium slds-text-align_center">
+                            <img src={searchIconNoResultsUrl} />
+                            <div class="text-small text-bold text-linkBlue">
+                                {labels.CSP_Contacts_NoResults_text1}</div>
+                            <div class="text-xxsmall text-gray">{labels.CSP_Contacts_NoResults_text2} <span
+                                    class="text-bold text-darkGray">"{searchText}"</span></div>
+                        </div>
+                </div>
+            </div>
+
+            <template for:each={pageRecords} for:item="provider">
+                <div class="fullWidth slds-m-vertical_small" key={provider.Id}>
+                    <c-portal-services-innovation-hub-provider-card 
+                        provider={provider} 
+                        onstartloading={startLoading}>
+                    </c-portal-services-innovation-hub-provider-card>
+                </div>
+            </template>
+
+        <c-portal-paginator pagination-object-parent={paginationObject} onselectedpage={handleSelectedPage}></c-portal-paginator>
+        
+        </div>
+        </div>
+
+        </div>
     </div>
 
 </template>

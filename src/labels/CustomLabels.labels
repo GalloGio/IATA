@@ -3963,6 +3963,13 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>Cases</value>
     </labels>
     <labels>
+        <fullName>CSP_Categories</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Categories</shortDescription>
+        <value>Categories</value>
+    </labels>
+    <labels>
         <fullName>CSP_Change_Email</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -4955,6 +4962,13 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>Improve Your Experience</value>
     </labels>
     <labels>
+        <fullName>CSP_FocusAreas</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_FocusAreas</shortDescription>
+        <value>Focus Areas</value>
+    </labels>
+    <labels>
         <fullName>CSP_ForYou</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -5017,6 +5031,13 @@ If you are already CNS Endorsed, you can use this service to update information 
         <protected>false</protected>
         <shortDescription>CSP Frozen User Message</shortDescription>
         <value>For security reasons, we have sent you an email to set a new password.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_FundingStage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_FundingStage</shortDescription>
+        <value>Funding Stage</value>
     </labels>
     <labels>
         <fullName>CSP_Give_Feedback_ButtonLabel</fullName>
@@ -7395,6 +7416,13 @@ You can easily create a company account in two steps</value>
         <value>Resend Verification Mail</value>
     </labels>
     <labels>
+        <fullName>CSP_ResetFilters</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_ResetFilters</shortDescription>
+        <value>Reset Filters</value>
+    </labels>
+    <labels>
         <fullName>CSP_Reset_Password</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -7475,6 +7503,13 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <protected>false</protected>
         <shortDescription>CSP Save Login</shortDescription>
         <value>Save &amp; Login</value>
+    </labels>
+    <labels>
+        <fullName>CSP_SearchByName</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_SearchByName</shortDescription>
+        <value>Search By Name</value>
     </labels>
     <labels>
         <fullName>CSP_SearchDocuments</fullName>
@@ -8147,6 +8182,13 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <protected>false</protected>
         <shortDescription>CSP_Task</shortDescription>
         <value>Task</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Technology</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Technology</shortDescription>
+        <value>Technology</value>
     </labels>
     <labels>
         <fullName>CSP_Terms_Updated_Message</fullName>

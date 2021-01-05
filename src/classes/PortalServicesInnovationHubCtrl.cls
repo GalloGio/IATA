@@ -1,4 +1,4 @@
-public with sharing class PortalServicesInnovationHubCtrl {
+public without sharing class PortalServicesInnovationHubCtrl {
 
 	private static String ACCOUNT_ROLE_INNOVATIONHUB_RTYPE_DEVNAME = 'Innovation_Hub';
 	private static String ACCOUNT_ROLE_DETAIL_CONSUMER_RTYPE_DEVNAME = 'Consumer';
@@ -34,6 +34,19 @@ public with sharing class PortalServicesInnovationHubCtrl {
 			return accountRoleDetailProviderRecordTypeId;
 		}
 		set;
+	}
+
+	@AuraEnabled(cacheable = false)
+	public static ProviderInfoWrapper getInnovationHubProviderDetails(String providerId){
+		IH_Account_Role_Detail__c provider = [SELECT Id,Name,Description__c,Logo__c,Logo_File_Id__c,Legal_Name__c,Founding_Date__c,
+								Company_name__c,Funding_Stage__c,Focus_Areas__c,Tags_of_categories__c,Also_known_as__c,	Location__r.Name,
+								Solution__c,Technology__c,IATA_touchpoints__c,Number_of_employees__c,Case_Studies_Pilots__c,Recent_News__c,
+								Website__c,Link_to_Social_Media_accounts__c,Company_Description__c
+								FROM IH_Account_Role_Detail__c WHERE Id =: providerId LIMIT 1];
+
+								ProviderInfoWrapper providerWp = new PortalServicesInnovationHubCtrl.ProviderInfoWrapper(provider);
+		
+		return providerWp;
 	}
 
 	@AuraEnabled(cacheable = false)
@@ -125,22 +138,54 @@ public with sharing class PortalServicesInnovationHubCtrl {
 	}
 
 	@AuraEnabled(cacheable = false)
-	public static List<ProviderWrapper> getLstProviders(){
+	public static List<ProviderWrapper> getLstProviders(String searchText, String filteringObject){
 		List<ProviderWrapper> lstProviders = new List<ProviderWrapper>();
-		
-		lstProviders.add(new PortalServicesInnovationHubCtrl.ProviderWrapper('0', 'Provider 0', '0 provider description', ''));
-		lstProviders.add(new PortalServicesInnovationHubCtrl.ProviderWrapper('1', 'Provider 1', '1 provider description', ''));
-		lstProviders.add(new PortalServicesInnovationHubCtrl.ProviderWrapper('2', 'Provider 2', '2 provider description', ''));
-		lstProviders.add(new PortalServicesInnovationHubCtrl.ProviderWrapper('3', 'Provider 3', '3 provider description', ''));
-		lstProviders.add(new PortalServicesInnovationHubCtrl.ProviderWrapper('4', 'Provider 4', '4 provider description', ''));
-		lstProviders.add(new PortalServicesInnovationHubCtrl.ProviderWrapper('5', 'Provider 5', '5 provider description', ''));
-		lstProviders.add(new PortalServicesInnovationHubCtrl.ProviderWrapper('6', 'Provider 6', '6 provider description', ''));
-		lstProviders.add(new PortalServicesInnovationHubCtrl.ProviderWrapper('7', 'Provider 7', '7 provider description', ''));
-		lstProviders.add(new PortalServicesInnovationHubCtrl.ProviderWrapper('8', 'Provider 9', '8 provider description', ''));
 
+		filterWrapper filterWrapperAux = (filterWrapper) JSON.deserialize(filteringObject, filterWrapper.class);
+		List<String> technologies = filterWrapperAux.technologies;
+		List<String> focusAreas = filterWrapperAux.focusAreas;
+		List<String> categories = filterWrapperAux.categories;
+
+		String query = 'SELECT Id,Name,Description__c,Company_Description__c,RecordType.DeveloperName,Logo__c,Logo_File_Id__c,Company_name__c,Funding_Stage__c,Focus_Areas__c,Tags_of_categories__c FROM IH_Account_Role_Detail__c ';
+		query+= 'WHERE (RecordType.DeveloperName = :ACCOUNT_ROLE_DETAIL_PROVIDER_RTYPE_DEVNAME OR RecordType.DeveloperName = :ACCOUNT_ROLE_DETAIL_CONSUMERANDPROVIDER_RTYPE_DEVNAME) AND Published__c = true';
+
+		if(searchText.length()>0){
+			String aux = '%' + String.escapeSingleQuotes(searchText) + '%';
+			query+= ' AND Company_name__c LIKE \'' + aux + '\'';	
+		}
+
+		if(filterWrapperAux.fundingStage.length()>0){
+			String fs = String.escapeSingleQuotes(filterWrapperAux.fundingStage);
+			query+= ' AND Funding_Stage__c = \'' + fs + '\'';	
+		}
+
+		if(technologies.size()>0){
+			query+= ' AND Technology__c IN :technologies';	
+		}
+
+		if(focusAreas.size()>0){
+			query+= ' AND Focus_Areas__c IN :focusAreas';	
+		}
+
+		if(categories.size()>0){
+			query+= ' AND Tags_of_categories__c IN :categories';	
+		}
+
+
+		query+= ' ORDER BY Company_name__c ASC';
+
+		List<IH_Account_Role_Detail__c> lstProvidersAux = Database.query(query);	
+		
+		for(IH_Account_Role_Detail__c provider : lstProvidersAux){
+			lstProviders.add(new PortalServicesInnovationHubCtrl.ProviderWrapper(provider.id, provider.company_name__c, provider.Company_Description__c,getProviderImgURL(provider.Logo_File_Id__c), provider.Logo_File_Id__c));
+		}	
+		
 		return lstProviders;
 	}
 
+	public static String getProviderImgURL(String logoId) {
+		return URL.getOrgDomainUrl().toExternalForm() + '/sfc/servlet.shepherd/version/download/' + logoId;
+	}
 
 	public class TabWrapper {
 		@AuraEnabled
@@ -172,13 +217,88 @@ public with sharing class PortalServicesInnovationHubCtrl {
 		public String description {get; set;}
 		@AuraEnabled
 		public String imageUrl {get; set;}
+		@AuraEnabled
+		public String logoId {get; set;}
 		
-		public ProviderWrapper(String idAux, String nameAux, String descriptionAux, String imageUrlAux){
+		public ProviderWrapper(String idAux, String nameAux, String descriptionAux, String imageUrlAux, String logoIdAux){
 			id = idAux;
 			name = nameAux;
 			description = descriptionAux;
 			imageUrl = imageUrlAux;
+			logoId = logoIdAux;
 		}
+
+	}
+
+	public class ProviderInfoWrapper {
+		@AuraEnabled
+		public String id {get; set;}
+		@AuraEnabled
+		public String imageUrl {get; set;}
+		@AuraEnabled
+		public String legalName {get; set;}
+		@AuraEnabled
+		public String alsoKnownAs {get; set;}
+		@AuraEnabled
+		public String companyDescription {get; set;}
+		@AuraEnabled
+		public Decimal foundingDate {get; set;}
+		@AuraEnabled
+		public String location {get; set;}
+		@AuraEnabled
+		public String solution {get; set;}
+		@AuraEnabled
+		public List<String> technologies {get; set;}
+		@AuraEnabled
+		public List<String> focusAreas {get; set;}
+		@AuraEnabled
+		public List<String> categories {get; set;}
+		@AuraEnabled
+		public List<String> iataTouchPoints {get; set;}
+		@AuraEnabled
+		public String numEmployees {get; set;}
+		@AuraEnabled
+		public String pilots {get; set;}
+		@AuraEnabled
+		public String recentNews {get; set;}
+		@AuraEnabled
+		public String website {get; set;}
+		@AuraEnabled
+		public String socialMedia {get; set;}
+
+		public ProviderInfoWrapper(IH_Account_Role_Detail__c providerAux){
+			id = providerAux.id;
+			imageUrl = getProviderImgURL(providerAux.Logo_File_Id__c);
+			legalName = providerAux.Legal_Name__c;
+			alsoKnownAs = providerAux.Also_known_as__c;
+			companyDescription = providerAux.Company_Description__c;
+			foundingDate = providerAux.Founding_Date__c;
+			location = providerAux.Location__r.Name;
+			solution = providerAux.Solution__c;
+			solution = solution.replaceAll('<[^>]+>',' ');
+			technologies = providerAux.Technology__c.split(';');
+			focusAreas = providerAux.Focus_Areas__c.split(';');
+			categories = providerAux.Tags_of_categories__c.split(';');
+			iataTouchPoints = providerAux.IATA_touchpoints__c.split(';');
+			numEmployees = providerAux.Number_of_employees__c;
+			pilots = providerAux.Case_Studies_Pilots__c;
+			recentNews = providerAux.Recent_News__c;
+			website = providerAux.Website__c;
+			socialMedia = providerAux.Link_to_Social_Media_accounts__c;
+
+		}
+
+	}
+
+	public class filterWrapper {
+		@AuraEnabled
+		public String fundingStage {get; set;}
+		@AuraEnabled
+		public List<String> technologies {get; set;}
+		@AuraEnabled
+		public List<String> focusAreas {get; set;}
+		@AuraEnabled
+		public List<String> categories {get; set;}
 
 	}
 }

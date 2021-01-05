@@ -28,10 +28,20 @@ export default class PortalServicesInnovationHubProviderCard extends NavigationM
 		return this.provider.imageUrl !== undefined && this.provider.imageUrl !== '';
 	}
 
-	openProviderDetailsPopup(event) {
-		let providerAux = JSON.parse(JSON.stringify(this.provider));
-
-        //then open popup
+	openProviderDetails(event) {
+		event.preventDefault();
+        event.stopPropagation();
+        this[NavigationMixin.GenerateUrl]({
+            type: "standard__namedPage",
+            attributes: {
+                pageName: "innovation-hub-provider-info"
+			},
+			state: {
+                providerId: this.provider.id
+			}
+		
+		})
+        .then(url => window.open(url));
 	}
 
 	startLoading(){
