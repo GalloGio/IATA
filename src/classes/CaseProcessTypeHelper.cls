@@ -92,9 +92,7 @@ public with sharing class CaseProcessTypeHelper {
 	 *  - Case is being closed
 	 *  - Subject cannot contain 'PROCOM'
 	 *  - ClosedDate must be 2019 or bigger
-	 *  - Case Region cannot be empty
 	 *  - Closed By Role cannot be empty
-	 *  - Account IATA ISO Country cannot be United States
 	 */
 	public static void processKPI(List<Case> cases, Map<Id,Case> oldMap) {
 		Datetime x1stDate = Datetime.newInstance(2019, 1, 1);
@@ -106,7 +104,7 @@ public with sharing class CaseProcessTypeHelper {
 			Boolean beingClosed = cse.IsClosed && !oldRecord.IsClosed;
 			Boolean hasConfig = getMapRTsToReasons().get(cse.RecordTypeId) != null && getMapRTsToReasons().get(cse.RecordTypeId).get(cse.Reason1__c) != null;
 			Boolean validSubject = String.isNotBlank(cse.Subject) && !cse.Subject.contains('PROCOM');
-			if(hasConfig && beingClosed && cse.ClosedDate >= x1stDate && String.isNotBlank(cse.Closed_by_Role__c) && String.isNotBlank(cse.Region__c) && validSubject) {
+			if(hasConfig && beingClosed && cse.ClosedDate >= x1stDate && String.isNotBlank(cse.Closed_by_Role__c) && validSubject) {
 				casesToProcess.add(cse);
 				oscarIds.add(cse.OSCAR__c); //WMO-564 - ACAMBAS
 			}
@@ -123,10 +121,10 @@ public with sharing class CaseProcessTypeHelper {
 			if (oscar!=null) {
 				cse.OSCAR__r = oscar;
 				cse.Account = oscar.Account__r;
-				Case_Process_Type__mdt process = getRightProcess(cse);
-				if (process!=null) {
-					calculateKPI(cse, oscar, process);
-				}
+			}
+			Case_Process_Type__mdt process = getRightProcess(cse);
+			if (process!=null) {
+				calculateKPI(cse, oscar, process);
 			}
 		}
 	}
