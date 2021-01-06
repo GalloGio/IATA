@@ -422,6 +422,11 @@
     <label>OS Certification</label>
     <listViews>
         <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Applicable_to__c</columns>
+        <columns>Department__c</columns>
+        <columns>Expiration_Period__c</columns>
+        <columns>Is_Visible__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
     </listViews>
