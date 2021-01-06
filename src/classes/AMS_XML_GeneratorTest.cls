@@ -108,7 +108,7 @@ private class AMS_XML_GeneratorTest {
 		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name = 'US', ISO_Code__c = 'US', AMS_Settlement_System__c = sett_dpc.Id, AMS_Settlement_System_CASS__c = sett_cass.Id);
 		insert ctry ;
 
-		Account ag1 = new Account(Name = 'Test1 Account', IATA_ISO_Country__c = ctr1.id, Sector__c = 'Travel Agent', IATACode__c = '1234567', Phone = '+351000000000', Abbreviated_address__c = 'Abbreviated_address__c', BillingStreet = 'BillingStreet', ShippingStreet = 'ShippingStreet', ShippingState = 'Test1 state', ShippingCountry = 'Test1 country', Accreditation_date__c = Date.newInstance(2016, 11, 11), Original_Approval_DAte__c = Date.newInstance(2016, 11, 11), Status__c = 'Approved', TradeName__c = 'TradeName', Location_Category__c = 'A;B', GDS__c = 'A;B', Location_Type__c = 'HO', Type = 'IATA Passenger Sales Agent', GDP_Opt_In__c = True);
+		Account ag1 = new Account(Name = 'Test1 Account', IATA_ISO_Country__c = ctr1.id, Sector__c = 'Travel Agent', IATACode__c = 'P1909_0000000', Phone = '+351000000000', Abbreviated_address__c = 'Abbreviated_address__c', BillingStreet = 'BillingStreet', ShippingStreet = 'ShippingStreet', ShippingState = 'Test1 state', ShippingCountry = 'Test1 country', Accreditation_date__c = Date.newInstance(2016, 11, 11), Original_Approval_DAte__c = Date.newInstance(2016, 11, 11), Status__c = 'Approved', TradeName__c = 'TradeName', Location_Category__c = 'A;B', GDS__c = 'A;B', Location_Type__c = 'HO', Type = 'IATA Passenger Sales Agent', GDP_Opt_In__c = True, Purge_Flag__c = true, Old_IATA_Code__c='P1909_1');
 		Account ag2 = new Account(Name = 'Test2 Account', IATA_ISO_Country__c = ctr1.id, Sector__c = 'Travel Agent', IATACode__c = '1234567', Phone = '+351000000000000', Abbreviated_address__c = 'Abbreviated_address__c', BillingStreet = 'BillingStreet', ShippingStreet = 'ShippingStreet', ShippingState = 'Test1 state', ShippingCountry = 'Test1 country', Original_Approval_DAte__c = Date.newInstance(2016, 11, 11), Status__c = 'Approved', Fax = '+351911234567' );
 		Account ag3 = new Account(Name = 'Test3 Account', IATA_ISO_Country__c = ctr2.id, Sector__c = 'Travel Agent', IATACode__c = '12345678', Phone = '+351000000000000000000000', Abbreviated_address__c = 'Abbreviated_address__c', BillingStreet = 'BillingStreet', ShippingStreet = 'ShippingStreet', ShippingState = 'Test1 state', ShippingCountry = 'Test1 country', Accreditation_date__c = Date.newInstance(2016, 11, 11), Original_Approval_DAte__c = Date.newInstance(2016, 11, 11), Status__c = 'Terminated' );
 		Account ag4 = new Account(Name = 'Test4 Account', IATA_ISO_Country__c = ctr1.id, Sector__c = 'Cargo Agent', IATACode__c = '12345678', Abbreviated_address__c = 'Abbreviated_address__c', BillingStreet = 'BillingStreet', ShippingStreet = 'ShippingStreet', ShippingState = 'Test1 state', ShippingCountry = 'Test1 country', Status__c = 'Approved', CASS_Number__c = '02' );
@@ -390,7 +390,7 @@ private class AMS_XML_GeneratorTest {
 
 		insert rhcInfo;
 
-		Account agTest1 = (Account)[SELECT Airline_Code__c, A_Code__c,
+		Account agTest1 = (Account)[SELECT Airline_Code__c, A_Code__c, Old_IATA_Code__c,
 									CASS_Number__c, Check_Digit__c, GDS__c,
 									BillingCity, BillingCountry, BillingPostalCode, BillingState, BillingStreet, Iso_State__c,
 									ShippingCity, ShippingCountry, ShippingPostalCode, ShippingState, ShippingStreet,
@@ -422,7 +422,7 @@ private class AMS_XML_GeneratorTest {
 		r[5] = ag1.Id + ',' + ag2.Id + ',' + ag3.Id + ',' + ag4.Id + ',' + ag5.Id;
 
 
-		List<Account> agTestN = [SELECT Airline_Code__c, A_Code__c,
+		List<Account> agTestN = [SELECT Airline_Code__c, A_Code__c, Old_IATA_Code__c,
 								 CASS_Number__c, Check_Digit__c, GDS__c,
 								 BillingCity, BillingCountry, BillingPostalCode, BillingState, BillingStreet, Iso_State__c,
 								 ShippingCity, ShippingCountry, ShippingPostalCode, ShippingState, ShippingStreet,
