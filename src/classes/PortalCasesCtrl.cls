@@ -818,9 +818,9 @@ public with sharing class PortalCasesCtrl {
 		String surveyLink = 'http://survey.clicktools.com/go?iv='
 				+System.Label.ISSP_SurveyClosedCase
 				+'&q1='+newCase.Id
-				+'&q2='+newCase.CaseNumber+
+				+'&q2='+newCase.CaseNumber
 				+'&q3='+newCase.ContactId
-				+'&q9='+fName+'|'+lName+'|'+email+'|'+phone
+				+'&q9='+EncodingUtil.urlEncode(fName+'|'+lName+'|'+email+'|'+phone,'UTF-8')
 				+'&language='+surveyLanguage;
 
 		return surveyLink;
