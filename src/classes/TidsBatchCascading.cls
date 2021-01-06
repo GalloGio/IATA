@@ -14,5 +14,6 @@ public without sharing class TidsBatchCascading implements database.batchable<sO
 
 	public void finish(Database.BatchableContext bc) {
 		//When completed update End Date
+		TidsBatchHelper.finishBuilderAccount(bc, this.caseId);
 	}
 }

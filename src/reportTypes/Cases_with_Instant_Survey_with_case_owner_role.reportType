@@ -367,6 +367,11 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>Exception__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>Root_Cause__c</field>
             <table>Case</table>
         </columns>

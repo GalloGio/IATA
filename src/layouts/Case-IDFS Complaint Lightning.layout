@@ -212,15 +212,15 @@
         <label>Complaint Classification</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>Complaint_Category__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>Complaint_Sub_Category__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>Root_Cause__c</field>
             </layoutItems>
             <layoutItems>
@@ -238,11 +238,11 @@
                 <field>Complaint_Analysis__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>Complaint_Recommendations__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>Correct_Resolution__c</field>
             </layoutItems>
         </layoutColumns>
@@ -397,9 +397,44 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
+            <actionName>E2CP__New_Comment_Lightning</actionName>
+            <actionType>CustomButton</actionType>
+            <sortOrder>4</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>unbabelsc__Unbabel_Translate_Case</actionName>
+            <actionType>CustomButton</actionType>
+            <sortOrder>5</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>Translate_Last_Customer_Comment</actionName>
             <actionType>CustomButton</actionType>
             <sortOrder>6</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Case.Escalate_within_IATA_lightning</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>7</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Case.New_Copy_Parent_Details_Complaint</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>8</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Case.Send_to_Recycle_Bin</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>9</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Case.dgec__SendEmail</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>10</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Case.Log_a_call_lightning</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>11</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>Edit</actionName>
@@ -420,41 +455,6 @@
             <actionName>MassAccept</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>3</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>E2CP__New_Comment_Lightning</actionName>
-            <actionType>CustomButton</actionType>
-            <sortOrder>4</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Case.Send_to_Recycle_Bin</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>9</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Case.dgec__SendEmail</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>10</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Case.Log_a_call_lightning</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>11</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>unbabelsc__Unbabel_Translate_Case</actionName>
-            <actionType>CustomButton</actionType>
-            <sortOrder>5</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Case.Escalate_within_IATA_lightning</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>7</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Case.New_Copy_Parent_Details_Complaint</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>8</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <relatedContent>

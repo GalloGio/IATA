@@ -29782,6 +29782,10 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
         <name>icg_station_details</name>
     </customLabels>
     <customLabels>
+        <label><!-- icg station has been created --></label>
+        <name>icg_station_has_been_created</name>
+    </customLabels>
+    <customLabels>
         <label><!-- icg station information --></label>
         <name>icg_station_information</name>
     </customLabels>
@@ -36398,6 +36402,71 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
         <sections>
             <label><!-- Agencies (AMS) --></label>
             <name>Agencies (AMS)</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Agencies for Airport IS --></description>
+        <label><!-- Agencies for Airport IS --></label>
+        <name>Agencies_for_Airport_IS</name>
+        <sections>
+            <columns>
+                <label><!-- ISO Country: ISO Code --></label>
+                <name>ISO Country: ISO Code</name>
+            </columns>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <columns>
+                <label><!-- Geoname Billing City: Id --></label>
+                <name>Geoname Billing City: Id</name>
+            </columns>
+            <columns>
+                <label><!-- Geoname Billing City: Location (Latitude) --></label>
+                <name>Geoname Billing City: Location (Latitude)</name>
+            </columns>
+            <columns>
+                <label><!-- Geoname Billing City: Location (Longitude) --></label>
+                <name>Geoname Billing City: Location (Longitude)</name>
+            </columns>
+            <columns>
+                <label><!-- Geoname Billing City: Name --></label>
+                <name>Geoname Billing City: Name</name>
+            </columns>
+            <label><!-- Geoname billing city --></label>
+            <name>Geoname billing city</name>
+        </sections>
+        <sections>
+            <columns>
+                <label><!-- Parent Account: Account ID --></label>
+                <name>Parent Account: Account ID</name>
+            </columns>
+            <columns>
+                <label><!-- Parent Account: Account Name --></label>
+                <name>Parent Account: Account Name</name>
+            </columns>
+            <columns>
+                <label><!-- Parent Account: IATA Code --></label>
+                <name>Parent Account: IATA Code</name>
+            </columns>
+            <label><!-- Parent --></label>
+            <name>Parent</name>
+        </sections>
+        <sections>
+            <columns>
+                <label><!-- Top Parent: Account ID --></label>
+                <name>Top Parent: Account ID</name>
+            </columns>
+            <columns>
+                <label><!-- Top Parent: Account Name --></label>
+                <name>Top Parent: Account Name</name>
+            </columns>
+            <columns>
+                <label><!-- Top Parent: IATA Code --></label>
+                <name>Top Parent: IATA Code</name>
+            </columns>
+            <label><!-- Top Parent --></label>
+            <name>Top Parent</name>
         </sections>
     </reportTypes>
     <reportTypes>

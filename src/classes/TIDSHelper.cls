@@ -5,6 +5,7 @@ public without sharing class TIDSHelper {
 	private static List<IATAISOStateDTO> isoStateDto {get;set;}
 	private static Portal_Applications__c tidsConfiguration {get;set;}
 	private static Id agencyRecordTypeId {get;set;}
+	public static boolean bypass=false;
 
 	//Verify if the account exists and is valid, if the contact exists and is contact under the account
 	//Verify if there is or not a valid HO Administrator
@@ -62,6 +63,52 @@ public without sharing class TIDSHelper {
 		return TIDSUtil.iataCodeError;
 	}
 
+	//Verify if the list of accounts (string semi-comma separated) is valid
+	//Account must a set of valid HO Accounts
+	//The cascading key is incorrect
+	//One or All of the Account ids is not compliant with the selection criteria
+	@AuraEnabled(cacheable=false)
+	public static TIDSUtil.ErrorWrapper verifyCascading(String accountList, String cascadingkey){
+		//Account and Contact verification
+		TIDSUtil.iataCodeError = new TIDSUtil.ErrorWrapper();
+		if (!bypass && cascadingkey!=TIDSUtil.getTIDSMetadataError(TIDS_Constant.CASCADE_PASSWORD)){
+			TIDSUtil.setError(TIDS_Constant.MSG45,false);
+			return TIDSUtil.iataCodeError;
+		}
+		List<String> accountIds = accountList.split(';');
+		List<Account> accounts = new List<Account>();
+		accounts = [SELECT Id
+					FROM Account 
+					WHERE id=:accountIds
+						AND (Location_Type__c=:TIDS_Constant.TIDS_HO 
+							and RecordType.DeveloperName=:TIDS_Constant.RT_AGENCY
+							and Status__c=:TIDS_Constant.IS_APPROVED
+							and Location_Class__c=:TIDS_Constant.TIDS_T)
+					Limit 20];
+		if (accounts.size()!=accountIds.size()){
+			TIDSUtil.setError(TIDS_Constant.MSG40,false);
+		}
+		return TIDSUtil.iataCodeError;
+	}
+
+	// Creates the Cascading bacth Process to replicate HO Administrator Information
+	// function will be called multiple times by the interface depending on the number of accounts listed
+	@AuraEnabled(cacheable=false)
+	public static TIDSUtil.ErrorWrapper createCascading(String accountList, String cascadingkey){
+		//Account and Contact verification again in case something happen in between
+		List<String> accountIds = accountList.split(';');
+		TIDSUtil.iataCodeError = verifyCascading(accountList, cascadingkey);
+		if (TIDSUtil.iataCodeError.hasAnError){
+			return TIDSUtil.iataCodeError;
+		}
+		for(String a:accountIds){
+			TidsBatchCascading nb = new TidsBatchCascading();
+			nb.caseId=a;
+			Database.executeBatch(nb,100);	
+		}
+		return TIDSUtil.iataCodeError;
+	}
+
 	//Checks if the vetting has been completed if true then redirects to the condition page
 	//with merged fields
 	@AuraEnabled
@@ -95,7 +142,7 @@ public without sharing class TIDSHelper {
 	
 
 	@AuraEnabled
-	public static List<Account> getSortedBranches(String accountIds, String name, String order, String search){
+	public static List<Account> getSortedBranches(String accountIds, String name, String order, String search, Boolean allrecords){
 		List<Account> listvalues = new List<Account>();
 		List<Account> listreturned = new List<Account>();
 		if (accountIds==null){ return listvalues;}
@@ -125,6 +172,7 @@ public without sharing class TIDSHelper {
 		+ 'Company_Type__c,'      
 		+ 'Geoname_Shipping_City__c,'
 		+ 'Location_Class__c ';
+
 		if (!String.isEmpty(search)){
 			search = '%' +search +'%';
 			queryWhere += ' And (Name Like :search or TradeName__c like :search or IATACode__c Like :search or BillingCity Like :search)';
@@ -135,8 +183,10 @@ public without sharing class TIDSHelper {
 						'\' and Contact__r.AccountId=:accountIds Limit 2) ';
 		string query ='SELECT  ' +queryFields +accred +' FROM Account' +
 				queryWhere +' Order By ' +
-				name +' ' +order +
-				' Limit 100';
+				name +' ' +order;
+		if (String.isEmpty(search) && !allrecords){
+			query +=' Limit 10';
+		}
 
 		listvalues = Database.query(query);
 		if (listvalues.size()>0){
@@ -166,7 +216,7 @@ public without sharing class TIDSHelper {
 		return null;     
 	}
 	@AuraEnabled
-	public static List<Case> getSortedCases(String accountIds,String name, String order, String search){
+	public static List<Case> getSortedCases(String accountIds,String name, String order, String search, Boolean allrecords){
 		List<Case> caseValues = new List<Case>();
 		final string recordtype=TIDSUtil.getTidsRecordTypeId();
 		final string caseorigin = TIDS_Constant.CASE_ORIGIN;
@@ -177,7 +227,10 @@ public without sharing class TIDSHelper {
 			query += ' And (CaseNumber Like :search or Subject like :search)';
 		}
 		query +=' and Status in (\'Pending Review\', \'Review in Progress\', \'Pending customer\', \'Closed\')';
-		query +=' Order By ' +name +' ' +order +' Limit 100';
+		query +=' Order By ' +name +' ' +order;
+		if (String.isEmpty(search) && !allrecords){
+			query +=' Limit 5';
+		} 
 		caseValues = Database.query(query);
 		
 		return caseValues;
@@ -985,7 +1038,7 @@ public without sharing class TIDSHelper {
 			return tids;
 		}
 		tids.tidsAccount = accounts.get(0);
-		tids.shareholders = TIDSUtil.tidsShareholders(tids.tidsAccount.Id);
+		tids.shareholders = TIDSUtil.tidsShareholders(tids.tidsAccount.Id,true,true);
 		tids.businessProfile = TIDSUtil.tidsBusinessProfile(tids.tidsAccount.Id);
 		return tids;
 	}

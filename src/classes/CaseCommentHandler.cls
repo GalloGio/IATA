@@ -1,7 +1,8 @@
 public with sharing class CaseCommentHandler {
 	public static final String CASE_COMMENT_ACTION = 'Public Case Comment';
 	
-	public static List<KPI_Value__c> kpiValuesToInsert = new List<KPI_Value__c>();	
+	public static List<KPI_Value__c> kpiValuesToInsert = new List<KPI_Value__c>();
+	public static Boolean caseCommentKPI = false;
 	public CaseCommentHandler(){}
 
 	public static void doBeforeInsert(list<CaseComment> listComments) {
@@ -20,7 +21,6 @@ public with sharing class CaseCommentHandler {
 		return caseCommentIdToCaseIdMap;
 	}
 
-	@future
 	public static void doAfterInsert(Set<Id> CaseCommentIds) {
 		//only fire integration if user making the insert is not integration user
 		//1. if case comment is for a case with a case item then fire platform event
@@ -59,8 +59,15 @@ public with sharing class CaseCommentHandler {
 		
 		if(kpiValuesToInsert.size() > 0 ) {
 			insert kpiValuesToInsert;
+			caseCommentKPI = true;
 		}
 	}
+
+	@future
+	public static void doAfterInsertFuture(Set<Id> CaseCommentIds){
+		doAfterInsert(CaseCommentIds);
+	}
+
 	public void processCaseItems(List<CaseComment> listOfComments){
 		//only fire integration if user making the insert is not integration user
 		////1. if case comment is for a case with a case item then fire platform event

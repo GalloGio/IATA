@@ -10021,7 +10021,7 @@ Por favor, si es la primera vez que usted solicita una tarjeta de identificació
         <name>IDCard_Course2</name>
     </customLabels>
     <customLabels>
-        <label><!-- IDCard_Covid --></label>
+        <label>Los agentes que hayan pedido y pagado una tarjeta de identificación impresa, deben tener en cuenta que debido al brote de COVID-19, y las medidas impuestas por los gobiernos locales, los tiempos de entrega pueden ser más largos de lo habitual. El servicio de entrega no está disponible para agentes fuera de Canadá. La tarjeta Digital permanece accesible para todos los titulares de las tarjetas ID Card en la aplicación AgentExperience de IATA. Visite &lt;a href=&quot;https://www.iata.org/idcard-digital/&quot; style=&quot;color: blue;&quot;&gt;iata.org/idcard-digital&lt;/a&gt; para obtener más detalles.</label>
         <name>IDCard_Covid</name>
     </customLabels>
     <customLabels>
@@ -23642,7 +23642,7 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <name>IfapSubmissionOfDocsOK</name>
     </customLabels>
     <customLabels>
-        <label><!-- Important_Delivery_Information --></label>
+        <label>INFORMACIÓN IMPORTANTE:</label>
         <name>Important_Delivery_Information</name>
     </customLabels>
     <customLabels>
@@ -29805,6 +29805,10 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
     <customLabels>
         <label><!-- icg station details --></label>
         <name>icg_station_details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg station has been created --></label>
+        <name>icg_station_has_been_created</name>
     </customLabels>
     <customLabels>
         <label><!-- icg station information --></label>
@@ -36426,6 +36430,71 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Agencies for Airport IS --></description>
+        <label><!-- Agencies for Airport IS --></label>
+        <name>Agencies_for_Airport_IS</name>
+        <sections>
+            <columns>
+                <label><!-- ISO Country: ISO Code --></label>
+                <name>ISO Country: ISO Code</name>
+            </columns>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <columns>
+                <label><!-- Geoname Billing City: Id --></label>
+                <name>Geoname Billing City: Id</name>
+            </columns>
+            <columns>
+                <label><!-- Geoname Billing City: Location (Latitude) --></label>
+                <name>Geoname Billing City: Location (Latitude)</name>
+            </columns>
+            <columns>
+                <label><!-- Geoname Billing City: Location (Longitude) --></label>
+                <name>Geoname Billing City: Location (Longitude)</name>
+            </columns>
+            <columns>
+                <label><!-- Geoname Billing City: Name --></label>
+                <name>Geoname Billing City: Name</name>
+            </columns>
+            <label><!-- Geoname billing city --></label>
+            <name>Geoname billing city</name>
+        </sections>
+        <sections>
+            <columns>
+                <label><!-- Parent Account: Account ID --></label>
+                <name>Parent Account: Account ID</name>
+            </columns>
+            <columns>
+                <label><!-- Parent Account: Account Name --></label>
+                <name>Parent Account: Account Name</name>
+            </columns>
+            <columns>
+                <label><!-- Parent Account: IATA Code --></label>
+                <name>Parent Account: IATA Code</name>
+            </columns>
+            <label><!-- Parent --></label>
+            <name>Parent</name>
+        </sections>
+        <sections>
+            <columns>
+                <label><!-- Top Parent: Account ID --></label>
+                <name>Top Parent: Account ID</name>
+            </columns>
+            <columns>
+                <label><!-- Top Parent: Account Name --></label>
+                <name>Top Parent: Account Name</name>
+            </columns>
+            <columns>
+                <label><!-- Top Parent: IATA Code --></label>
+                <name>Top Parent: IATA Code</name>
+            </columns>
+            <label><!-- Top Parent --></label>
+            <name>Top Parent</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Agency Hierarchy --></description>
         <label><!-- Agency Hierarchy --></label>
         <name>Agency_Hierarchy</name>
@@ -38818,7 +38887,7 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <label><!-- Opportunities with Accounts and Contracts --></label>
         <name>Opportunities_with_Accounts_and_Contracts</name>
         <sections>
-            <label><!-- Accounts --></label>
+            <label>Informes</label>
             <name>Accounts</name>
         </sections>
         <sections>

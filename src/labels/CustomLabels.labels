@@ -4561,7 +4561,7 @@ If you are already CNS Endorsed, you can use this service to update information 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Email Password Reset Body Part 4</shortDescription>
-        <value>For security reasons, this link is valid for 8 hours. After the time limis has expired, you will have to resubmit your request.</value>
+        <value>For security reasons, this link is valid for 8 hours. After the time limits has expired, you will have to resubmit your request.</value>
     </labels>
     <labels>
         <fullName>CSP_Email_Signature_Part_1</fullName>
@@ -8655,7 +8655,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - Area2</shortDescription>
-        <value>Instructor-led Training (individual),	Instructor-led Training (groups),IATAN,ID Card,CheckACode,eBroadcast,Global Agency Directory,Travel Agency Data Products,Digital ID Card (Mobile App),IATA AgentExperience,Global System Solution,Weblink,NDClink,Treasury Dashboard,TIMATIC,Publications,TACT, YMQ Publications,Distance Learning,Agency Management,Transparency in Payments (TIP), New BSPlink</value>
+        <value>Instructor-led Training (individual),	Instructor-led Training (groups),IATAN,ID Card,CheckACode,eBroadcast,Global Agency Directory,Travel Agency Data Products,Digital ID Card (Mobile App),IATA AgentExperience,Global System Solution,Weblink,NDClink,Treasury Dashboard,TIMATIC,Publications,TACT, YMQ Publications,Distance Learning,Agency Management,Transparency in Payments (TIP), New BSPlink,IDX - Incident Data Exchange</value>
     </labels>
     <labels>
         <fullName>CaseValidation_InDepthArea</fullName>
@@ -8930,7 +8930,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Case_KPI_Risk</shortDescription>
-        <value>&quot;financial security request,Financial security release,financial security update,financial security renewal,Yearly Review,Ad hoc Review&quot;</value>
+        <value>&quot;Financial Security Request,Financial Security Release,Financial Security Update,Financial Security Renewal,Yearly review,Adhoc review&quot;</value>
     </labels>
     <labels>
         <fullName>Case_KPI_Short24</fullName>
@@ -14618,7 +14618,7 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IDCard_Covid</shortDescription>
-        <value>Due to the COVID-19 outbreak and measures being imposed by local governments, service interruptions &amp; temporary service suspensions are unavoidable and transit times will be longer than usual.</value>
+        <value>Agents who have ordered and paid for a printed ID Card, please be advised that due to the COVID-19 outbreak including other restrictive measures imposed by local governments, delivery times may be longer than usually anticipated. Delivery service is not available for agents outside of Canada. The digital ID Card is accessible to all cardholders on IATA AgentExperience app. Visit &lt;a href=&quot;https://www.iata.org/idcard-digital/&quot; style=&quot;color: blue;&quot;&gt;iata.org/idcard-digital&lt;/a&gt; for more details.</value>
     </labels>
     <labels>
         <fullName>IDCard_Create_Application</fullName>
@@ -39867,7 +39867,7 @@ CNS Customer Services</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Topics To Exclude Country PL</shortDescription>
-        <value>AirSat__c,AirportIS__c,CargoIS__c,DDS__c,Flight_Data_Connect__c,IMX__c,IINet__c,ICH_Helpdesk__c,I_ASC__c,GAP__c,MarketIS__c,PaxIS__c,SIS_Helpdesk__c,SIS_Membership__c,CheckACode_Online_WebService__c,eBroadcast__c,FFP_Frequent_Flyer_Program__c,Flight_Data_Connect__c,Agency_Database_Files__c,Global_Agency_Directory__c,Agency_Data_Products__c,I_ASC_IATA_Safety_Culture_Survey__c,IATA_AgentExperience__c,IATA_net_rates__c,IATA_Store__c,Accreditation_IATAN_US__c,ID_Card_Print_Digital__c,IMX_Integrated_Management_Solutions__c,Instructor_led_training__c,IATA_Publications__c,Self_study_courses__c,Weblink__c,NDClink__c,TACT__c,IATA_Financial_Gateway_IFG__c,Timatic_Solutions__c</value>
+        <value>AirSat__c,AirportIS__c,CargoIS__c,DDS__c,Flight_Data_Connect__c,IMX__c,IINet__c,ICH_Helpdesk__c,I_ASC__c,GAP__c,MarketIS__c,PaxIS__c,SIS_Helpdesk__c,SIS_Membership__c,CheckACode_Online_WebService__c,eBroadcast__c,FFP_Frequent_Flyer_Program__c,Flight_Data_Connect__c,Agency_Database_Files__c,Global_Agency_Directory__c,Agency_Data_Products__c,I_ASC_IATA_Safety_Culture_Survey__c,IATA_AgentExperience__c,IATA_net_rates__c,IATA_Store__c,Accreditation_IATAN_US__c,ID_Card_Print_Digital__c,IMX_Integrated_Management_Solutions__c,Instructor_led_training__c,IATA_Publications__c,Self_study_courses__c,Weblink__c,NDClink__c,TACT__c,IATA_Financial_Gateway_IFG__c,Timatic_Solutions__c, IDX_Incident_Data_Exchange__c</value>
     </labels>
     <labels>
         <fullName>ISSP_Tracking_ID</fullName>
@@ -40582,7 +40582,7 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Important_Delivery_Information</shortDescription>
-        <value>IMPORTANT DELIVERY INFORMATION:</value>
+        <value>IMPORTANT INFORMATION:</value>
     </labels>
     <labels>
         <fullName>Industry_Activities</fullName>
@@ -51280,6 +51280,14 @@ ONE Source is the industry platform for validated aviation capability and infras
         <value>Station Details</value>
     </labels>
     <labels>
+        <fullName>icg_station_has_been_created</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg station has been created</shortDescription>
+        <value>Station has been created</value>
+    </labels>
+    <labels>
         <fullName>icg_station_information</fullName>
         <categories>ICG One Source</categories>
         <language>en_US</language>
@@ -52168,16 +52176,16 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
     <labels>
         <fullName>pkb2_lang_zh_CN</fullName>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>Chinese (Simplified)</shortDescription>
-        <value>中国的</value>
+        <value>中文</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_zh_TW</fullName>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>Chinese (Traditional)</shortDescription>
-        <value>中國的</value>
+        <value>中文</value>
     </labels>
     <labels>
         <fullName>regular_price</fullName>

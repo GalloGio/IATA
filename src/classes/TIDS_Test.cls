@@ -722,8 +722,8 @@ public with sharing class TIDS_Test {
 		update mycase;
 						
 		TIDSHelper.getVettingDoneCondition(String.ValueOf(caseId));
-		TIDSHelper.getSortedBranches(String.ValueOf(accountId), 'Id', 'Desc', 'T');
-		TIDSHelper.getSortedCases(String.ValueOf(accountId),'Id', 'Desc', '0');
+		TIDSHelper.getSortedBranches(String.ValueOf(accountId), 'Id', 'Desc', 'T',false);
+		TIDSHelper.getSortedCases(String.ValueOf(accountId),'Id', 'Desc', '0',false);
 		
 		System.assertEquals(true,caseId!=null,false);
 		Test.stopTest();
@@ -1373,6 +1373,21 @@ public with sharing class TIDS_Test {
 		TIDSUtil.ErrorWrapper t2 = TIDSHelper.createRole(accountId,contactId);
 
 		System.assertEquals(false,t1.hasAnError);
+		Test.stopTest();
+	}
+	@IsTest
+	private static void TIDSHelperFunctionPart5() {
+		Test.startTest();
+
+		
+		readObjectsId();	
+		TIDSUtil.ErrorWrapper t0 = TIDSHelper.verifyCascading(String.ValueOf(accountId),'cascadingkey');
+		TIDSHelper.bypass=true;
+		TIDSUtil.ErrorWrapper t1 = TIDSHelper.verifyCascading(String.ValueOf(accountId)+';'+String.ValueOf(accountId),null);
+		TIDSUtil.ErrorWrapper t2 = TIDSHelper.verifyCascading(String.ValueOf(accountId),null);
+		TIDSUtil.ErrorWrapper t3 = TIDSHelper.createCascading(String.ValueOf(accountId),null);
+
+		System.assertEquals(false,t2.hasAnError);
 		Test.stopTest();
 	}
 

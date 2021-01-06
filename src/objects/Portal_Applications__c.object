@@ -1718,7 +1718,7 @@ TEXT(ANG_Restrict_by_Agency_Sector__c) != &quot;&quot;
         <active>true</active>
         <description>If User requests for accessing a Service do not require approval from a Service Administrator, then the Portal Service cannot be Granted Internally nor Managed By a Portal Administrator.</description>
         <errorConditionFormula>AND(
- Requires_Service_Admin_Approval__c = FALSE,
+ Requires_Service_Admin_Approval__c = TRUE,
  OR (
   ANG_Restrict_internal_selection__c  = FALSE, 
   Cannot_be_managed_by_portal_admin__c = FALSE
