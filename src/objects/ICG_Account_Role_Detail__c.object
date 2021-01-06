@@ -1480,11 +1480,6 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
         <columns>City_FOR__c</columns>
         <columns>Country_FOR__c</columns>
         <filterScope>Everything</filterScope>
-        <filters>
-            <field>City_FOR__c</field>
-            <operation>equals</operation>
-            <value>London</value>
-        </filters>
         <label>All</label>
     </listViews>
     <listViews>
