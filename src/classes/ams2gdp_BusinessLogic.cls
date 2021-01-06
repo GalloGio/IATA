@@ -1098,7 +1098,7 @@ public class ams2gdp_BusinessLogic {
 		if (newvalues.size()!=2){return null;}
 		decimal minv=decimal.ValueOf(newvalues[0]);
 		decimal maxv=decimal.ValueOf(newvalues[1]);
-		decimal retv = (maxv-minv)/2;
+		decimal retv = (maxv+minv)/2;
 		return retv;
 	}
 	public static List<GDP_Agency_Profile_Specialization__c> formatAgencyProfile2GDPAgencyProfile(List<AMS_Agency_Profile__c> profiles) {
