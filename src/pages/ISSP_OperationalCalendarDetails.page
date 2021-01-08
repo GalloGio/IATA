@@ -456,36 +456,37 @@
     }
     
     function addExportButtons() {
-        var table = $('.table-pagination').DataTable();
-        var colCount = 0;
-        for (var i=0; i<table.columns().count(); i++) {
-            if(table.column(i).visible()) colCount++;
-        }
-        //PDF Button
-        pdfButton.orientation = colCount>7? "landscape": "portrait";
-        var isDisabled = $(".buttons-pdf").prop("disabled");
-        $(".buttons-pdf").remove();
-        $("#advanced-filters").empty();
-        var table =  $('.table-pagination').dataTable();
-        new $.fn.dataTable.Buttons(table, {
-            buttons: [pdfButton]
-        }).container().appendTo($('#exportPDF'));
-        $(".buttons-pdf")
-            .prepend( "<span class='glyphicon glyphicon-th' style='padding-right:2px;'></span>")
-            .toggleClass('btn-default btn-primary')
-            .prop("disabled", isDisabled);
-        $(".buttons-pdf").attr('onclick','alert("{!$Label.ISSP_OperationalCalendar_Export_Disclaimer}")');
-        // CSV Button
-        $(".buttons-csv").remove();
-        new $.fn.dataTable.Buttons(table, {
-            buttons: [csvButton]
-        }).container().appendTo($('#exportCSV'));
-        $(".buttons-csv")
-            .prepend( "<span class='glyphicon glyphicon-th' style='padding-right:2px;'></span>")
-            .toggleClass('btn-default btn-primary')
-            .prop("disabled", isDisabled);
-        $(".buttons-csv").attr('onclick','alert("{!$Label.ISSP_OperationalCalendar_Export_Disclaimer}")');
-        /*** WMO-388 ***/
+        try {
+            var table = $('.table-pagination').DataTable();
+            var colCount = 0;
+            for (var i=0; i<table.columns().count(); i++) {
+                if(table.column(i).visible()) colCount++;
+            }
+            //PDF Button
+            pdfButton.orientation = colCount>7? "landscape": "portrait";
+            var isDisabled = $(".buttons-pdf").prop("disabled");
+            $(".buttons-pdf").remove();
+            $("#advanced-filters").empty();
+            var table =  $('.table-pagination').dataTable();
+            new $.fn.dataTable.Buttons(table, {
+                buttons: [pdfButton]
+            }).container().appendTo($('#exportPDF'));
+            $(".buttons-pdf")
+                .prepend( "<span class='glyphicon glyphicon-th' style='padding-right:2px;'></span>")
+                .toggleClass('btn-default btn-primary')
+                .prop("disabled", isDisabled);
+            $(".buttons-pdf").attr('onclick','alert("{!$Label.ISSP_OperationalCalendar_Export_Disclaimer}")');
+            // CSV Button
+            $(".buttons-csv").remove();
+            new $.fn.dataTable.Buttons(table, {
+                buttons: [csvButton]
+            }).container().appendTo($('#exportCSV'));
+            $(".buttons-csv")
+                .prepend( "<span class='glyphicon glyphicon-th' style='padding-right:2px;'></span>")
+                .toggleClass('btn-default btn-primary')
+                .prop("disabled", isDisabled);
+            $(".buttons-csv").attr('onclick','alert("{!$Label.ISSP_OperationalCalendar_Export_Disclaimer}")');
+        } catch (e) {}
         //Multi-Download Button
         var operationType = nvl($("#typeFilter").val());
         if(isMultiButtonVisible && operationType != "SIS" && operationType != "ICCS") {
@@ -664,6 +665,7 @@
                 } else if (event.type === 'exception') {
                     if (!ignoreError) showError(event.message);
                     $("div#table-container").hide();
+                    addExportButtons();
                 } else {
                     console.log('Unknown error in refreshDetails result: ' + unescape(result));
                     $("div#table-container").hide();
