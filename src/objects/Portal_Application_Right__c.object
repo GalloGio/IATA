@@ -912,6 +912,26 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>IFTP</fullName>
+        <columns>NAME</columns>
+        <columns>Right__c</columns>
+        <columns>Account__c</columns>
+        <columns>Application_Name__c</columns>
+        <columns>Contact__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Application_Name__c</field>
+            <operation>contains</operation>
+            <value>IFTP</value>
+        </filters>
+        <filters>
+            <field>Right__c</field>
+            <operation>equals</operation>
+            <value>Access Granted</value>
+        </filters>
+        <label>IFTP</label>
+    </listViews>
+    <listViews>
         <fullName>Pending_approvals</fullName>
         <columns>Contact__c</columns>
         <columns>Portal_Application__c</columns>
