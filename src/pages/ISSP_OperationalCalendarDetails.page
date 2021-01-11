@@ -1223,7 +1223,7 @@
                 <div class="col-sm-2 hidden">
                     <div class="form-group">
                         <label for="countryFilterInput">{!$Label.ISSP_OperationalCalendar_CountryFilter}</label>
-                        <select id="countryFilter" class="form-control"></select>
+                        <select id="countryFilter" class="form-control required"></select>
                     </div>
                 </div>
                 <div class="col-sm-2 hidden">
