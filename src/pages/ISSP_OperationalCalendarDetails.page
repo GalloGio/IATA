@@ -990,7 +990,8 @@
                         r += val +',';  
                     });
 
-                    r += (index2 == 0 ? '{!$Label.ISSP_FDS_CountryName}' : safeValueForCSV(file.countryName)) + '\n';
+                    r += (index2 == 0 ? '{!$Label.ISSP_FDS_CountryName}' : safeValueForCSV(file.countryName)) + ',';
+                    r += (index2 == 0 ? 'ISO' : safeValueForCSV(file.countryISO)) + '\n';
                     fileBody +=  r;
                 }
             });
