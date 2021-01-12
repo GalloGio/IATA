@@ -618,7 +618,9 @@
             inputSelect.append(option);
         }
         // Add options
-        $.each(listUniqueValues, function (i, item) {
+        var options = [];
+        for (i=0; i<listUniqueValues.length; i++) {
+            var item = listUniqueValues[i];
             var label = item;
             if (inputSelect.attr("id")=="frequencyFilter") {
                 label = MAP_FREQUENCIES[item];
@@ -626,10 +628,14 @@
             if (inputSelect.attr("id")=="countryFilter") {
                 label = MAP_COUNTRIES[item];
             }
+            options.push([label,item]);
+        }
+        for (i=0; i<options.sort().length; i++) {
+            var [label,item] = options[i];
             var option = $('<option>', {value: item,text: label});
             if (defValue==item) option.attr("selected",true);
             inputSelect.append(option);
-        });
+        }
     }
 
     function updatePicklistWithMap(inputSelect, mapValues, defValue) {
