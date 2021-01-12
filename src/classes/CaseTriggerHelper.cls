@@ -26,6 +26,7 @@ public with sharing class CaseTriggerHelper {
 		'CasesMENA', 'CasesAmericas', 'Cases_China_North_Asia', 'CasesEurope', 'Cases_Global', 'ExternalCasesIDFSglobal'
 	};
 	public static final List<String> reopening_reasons = new List<String> {'same query', 'new query'};
+	private static final string complaintRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ComplaintIDFS');
 	private static List<Id> portalPendingClosureRecordTypes;
 
 	public static void publishPlatformEvent(Map<Id,sObject> sObjectMap, string platformEventName, string objectSource, boolean isInsert, boolean isUpdate, boolean isDelete, boolean isUndelete){
@@ -144,14 +145,19 @@ public with sharing class CaseTriggerHelper {
 			return;
 		}
 
-		Map<Id, KPI_Value__c> typeOfActionClosureMap = new Map<Id, KPI_Value__c>();
+		Map<Id, List<KPI_Value__c>> typeOfActionClosureMap = new Map<Id, List<KPI_Value__c>>();
 
 		if(!consideredForClosure.isEmpty()) {
 			// find registered case closures from past
-			List<KPI_Value__c> claimingClosures = [SELECT Id, Responsible__c, CaseNumber__c, FDS_KPI_Reporting__c, FDS_KPI_Reporting__r.Type_Of_Action__c FROM KPI_Value__c WHERE CaseNumber__c IN :consideredForClosure AND FDS_KPI_Reporting__r.Type_Of_Action__c=:CASE_ACTION_CASE_CLOSURE];
+			List<KPI_Value__c> claimingClosures = [SELECT Id, Responsible__c, CaseNumber__c,CaseNumber__r.RecordTypeId, FDS_KPI_Reporting__c, FDS_KPI_Reporting__r.Type_Of_Action__c, CreatedById, KPI_Value__c FROM KPI_Value__c WHERE CaseNumber__c IN :consideredForClosure AND FDS_KPI_Reporting__r.Type_Of_Action__c=:CASE_ACTION_CASE_CLOSURE];
 			
 			for(KPI_Value__c cc: claimingClosures) {
-				typeOfActionClosureMap.put(cc.CaseNumber__c, cc);
+				if(typeOfActionClosureMap.get(cc.CaseNumber__c) == null){
+					typeOfActionClosureMap.put(cc.CaseNumber__c, new List<KPI_Value__c>());
+					typeOfActionClosureMap.get(cc.CaseNumber__c).add(cc);
+				} else {
+					typeOfActionClosureMap.get(cc.CaseNumber__c).add(cc);
+				}
 			}
 		}
 
@@ -162,13 +168,18 @@ public with sharing class CaseTriggerHelper {
 			// sprint6 if a case is close as part of same query
 			// substract from original user while awarding the new one
 			Integer points = configsMap.get(CASE_ACTION_CASE_CLOSURE).get(cRTDevName).Points__c.intValue();
-			if(String.isNotBlank(newMap.get(cId).Reopening_reason__c) && newMap.get(cId).Status=='Closed' && oldMap.get(cId).Status=='Reopen' && 
-				!reopening_reasons.isEmpty() && !reopening_reasons.contains(newMap.get(cId).Reopening_Reason__c)){
+			if(String.isNotBlank(newMap.get(cId).Reopening_reason__c) && newMap.get(cId).Status=='Closed' && oldMap.get(cId).Status=='Reopen' && !reopening_reasons.contains(newMap.get(cId).Reopening_Reason__c)){
 				points = 0;
-			} else if(newMap.get(cId).Status == 'Closed' && oldMap.get(cId).Status != 'Reopen' && typeOfActionClosureMap.get(cId) != null){
-				points = 0;
+			} else if(newMap.get(cId).Status=='Closed' && oldMap.get(cId).Status!='Reopen' && typeOfActionClosureMap.get(cId) != null){
+				List<KPI_Value__c> caseKpiValues = typeOfActionClosureMap.get(cId);
+				Boolean flagKPI = false;
+				for(KPI_Value__c kpiValue : caseKpiValues) {
+					if((kpiValue.CreatedById == UserInfo.getUserId() && kpiValue.CaseNumber__r.RecordTypeId == complaintRT && kpiValue.KPI_Value__c == points))
+						flagKPI = true;
+				}
+				if(flagKPI)
+					points = 0;
 			}
-
 			if(points != 0) {
 				KPI_Value__c valueToInsert = createKPIReportingValue(newMap.get(cId), points, kpiReportingClosureId);
 				kpiValuesToInsert.add(valueToInsert);
