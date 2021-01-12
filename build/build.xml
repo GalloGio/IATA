@@ -239,6 +239,7 @@
 
   <target name="deployFlowStep">
     <antcall target="deployFlows" />
+    <antcall target="deployProfileStep" />
   </target>
 
   <target name="deployProfileStep">
