@@ -351,7 +351,8 @@
             doc.content.splice( 0, 0, {
                 margin: [ 0, 0, 0, 0 ],
                 alignment: 'center',
-                image: getLogo(nvl($("#typeFilter").val()))
+                image: getLogo(nvl($("#typeFilter").val())),
+                width: 140
             });
             
             var language = "{!UserLanguage}";
@@ -1117,6 +1118,7 @@
                 {
                     alignment: "center",
                     image: getLogo(data.operationType),
+                    width: 140,
                     margin: [0,0,0,0]
                 },
                 {
