@@ -161,7 +161,7 @@
             refreshDetails();
         });
         $("#countryFilter").change(function() {
-            //updatePicklistsFromCountry();
+            updatePicklistsFromCountry();
             refreshDetails();
         });
         $("#frequencyFilter").change(function() {
@@ -580,6 +580,9 @@
             //populate visible picklists for BSP/CASS
             var listValues = containsInArray(LIST_FILTERS, operationType + ',' + operationSubtype + ',');
             updatePicklist($("#countryFilter"), listValues, 2, '');
+            if ($("#countryFilter").val()>"") {
+                listValues = containsInArray(listValues, $("#countryFilter").val());
+            }
             updatePicklist($("#frequencyFilter"), listValues, 3, '');
             updatePicklist($("#currencyFilter"), listValues, 4, '');
         }
@@ -595,11 +598,25 @@
         }
     }
 
+    function updatePicklistsFromCountry() {
+        var operationType = nvl($("#typeFilter").val());
+        var operationSubtype = nvl($("#subtypeFilter").val());
+        var country = nvl($("#countryFilter").val());
+        if (operationType=='BSP/CASS' || operationType.includes('CNS')) {
+            var listValues = containsInArray(LIST_FILTERS, operationType + ',' + operationSubtype + ',' + country + ',');
+            updatePicklist($("#frequencyFilter"), listValues, 3, '');
+            updatePicklist($("#currencyFilter"), listValues, 4, '');
+        }
+    }
+
     function updatePicklist(inputSelect, listValues, position, defValue) {
         inputSelect.find('option').remove();
         var listUniqueValues = [];
+        if (inputSelect.attr("id")=="frequencyFilter") console.log("listValues " + listValues);
         // get only the part required
         $.each(listValues, function (i, item) {
+            if (inputSelect.attr("id")=="frequencyFilter") console.log("item " + item);
+            if (inputSelect.attr("id")=="frequencyFilter") console.log("item split  " + item.split(",")[position]);
             listUniqueValues.push(item.split(",")[position]);
         });
         // remove duplicates
