@@ -5105,6 +5105,25 @@ Product__r.Product_Section__c = &quot;TRQ003&quot;
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
+            <assignedTo>L3_T_T_TIDS</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>And(
+	or(
+		RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,
+		RecordType.Name = &quot;Process&quot;
+		),
+		ISPICKVAL(CaseArea__c, &quot;TIDS&quot;),
+		or(
+		ISPICKVAL(Reason1__c, &quot;Changes / Updates&quot;),
+		ISPICKVAL(Reason1__c, &quot;Closure / Cancellation&quot;),
+		ISPICKVAL(Reason1__c, &quot;General information&quot;),
+		ISPICKVAL(Reason1__c, &quot;New application - forms, procedures, fees&quot;),
+		ISPICKVAL(Reason1__c, &quot;Report issue / Technical Issue&quot;),
+		ISPICKVAL(Reason1__c, &quot;Status of Application&quot;)
+	)
+)</formula>
+        </ruleEntry>
+        <ruleEntry>
             <assignedTo>L3_Training_ProductMgmt_Distribution</assignedTo>
             <assignedToType>Queue</assignedToType>
             <formula>AND(		
