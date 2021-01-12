@@ -241,6 +241,10 @@
     <antcall target="deployFlows" />
   </target>
 
+  <target name="deployProfileStep">
+    <antcall target="deployProfiles" />
+  </target>
+
 
   <target name="deployLabels">
     <printlist list="${labelsTranslation}" message="Deploying Labels" />
@@ -305,6 +309,15 @@
     <deployCodeLocal deleteDirectories="true" />
   </target>
 
+  <target name="deployProfiles">
+    <printlist list="${profile}" message="Deploying Profiles" />
+
+    <createDirectories folderList="${profile}" />
+    <fecthFiles folderList="${profile}" packageName="profilePackage" />
+
+    <deployCodeLocal deleteDirectories="true" />
+  </target>
+
 
   <!-- RETRIEVES -->
 
@@ -312,6 +325,7 @@
     <antcallback target="getObjects" />
     <antcallback target="getStaticResourceAndLayouts" />
     <antcallback target="getLabelsAndTranslations" />
+    <antcallback target="getProfiles" />
   </target>
 
   <target name="completeRetrieve">
@@ -404,6 +418,16 @@
     <mkdir dir="${basedir}/${sfdc.retrieveTarget}" />
     <sf:retrieve retrieveTarget="${basedir}/${sfdc.retrieveTarget}" username="${sfdc.username}" password="${sfdc.password}" serverurl="${sfdc.serverurl}" unpackaged="src/retrieveLabelPackage.xml" />
     <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/retrieveLabelPackage.xml" />
+    <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src" />
+  </target>
+
+  <target name="getProfiles">
+    <echo level="info">
+      Retrieving the server's version of Profiles
+    </echo>
+    <mkdir dir="${basedir}/${sfdc.retrieveTarget}" />
+    <sf:retrieve retrieveTarget="${basedir}/${sfdc.retrieveTarget}" username="${sfdc.username}" password="${sfdc.password}" serverurl="${sfdc.serverurl}" unpackaged="src/retrieveProfiles.xml" />
+    <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/retrieveProfiles.xml" />
     <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src" />
   </target>
 
