@@ -239,6 +239,7 @@
 
   <target name="deployFlowStep">
     <antcall target="deployFlows" />
+    <antcall target="deployProfileStep" />
   </target>
 
   <target name="deployProfileStep">
@@ -325,7 +326,6 @@
     <antcallback target="getObjects" />
     <antcallback target="getStaticResourceAndLayouts" />
     <antcallback target="getLabelsAndTranslations" />
-    <antcallback target="getProfiles" />
   </target>
 
   <target name="completeRetrieve">
