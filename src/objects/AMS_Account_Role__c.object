@@ -740,6 +740,7 @@ TEXT(Owner_Account__r.Membership_status__c)
     </fields>
     <fields>
         <fullName>Percentage_Formated__c</fullName>
+        <description>Percentage field value in a text format</description>
         <externalId>false</externalId>
         <formula>IF(LEFT(Text(Percentage__c * 100 ),1) == &apos;.&apos;,&apos;0&apos;+Text(Percentage__c * 100 ), Text(Percentage__c * 100 )) + &apos;%&apos;</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
