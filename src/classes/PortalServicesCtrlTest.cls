@@ -923,4 +923,3 @@ public static void PortalServicesCtrlTest_getAvailableServicesForNewContact(){
 		}
 	}
 }
-

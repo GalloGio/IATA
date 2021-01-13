@@ -113,7 +113,7 @@
                                             			<apex:selectOptions value="{!cardTypeList}"/>
                                                 			<apex:actionSupport event="onchange"  status="Loading"  action="{!calculateAllPrices}"  reRender="appFee, pageHeader, appDiscount"/>
                                         				</apex:selectList>
-													</apex:actionRegion >
+													</apex:actionRegion>
                                                     </p>
                                                   </td>
 		                                          <td>

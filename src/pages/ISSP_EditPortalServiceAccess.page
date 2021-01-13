@@ -431,8 +431,7 @@
                                 <br/>
                               </div>
                               <div class="modal-footer">
-                                <apex:commandButton 
-                                  action="{!activateUsers}"
+                                <apex:commandButton action="{!activateUsers}"
                                   onclick="closeIataIepRequestAccessModal();" value="{!$Label.LAQ_Close}" 
                                   oncomplete="onComplete();"
                                   status="loadStatusSpinner"

@@ -280,7 +280,6 @@ private class ANG_RHCAlertTriggerHandler_test {
 
 		insert changeCodeList;
 
-		
 		List<ISSP_CS__c> isspcs = new List<ISSP_CS__c>();
 		isspcs.add(new ISSP_CS__c(Name= 'ISS OperationalCalendar Airline Profil', Value__c = '00ew0000001QRzE'));
 		isspcs.add(new ISSP_CS__c(Name= 'ISS OperationalCalendar Agency Profile', Value__c = '00ew0000001QRzC,00ew0000001QoBp'));

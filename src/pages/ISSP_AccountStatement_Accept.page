@@ -62,7 +62,7 @@
 	</style>
 
 <html>
-	<c:ISSP_Header/>
+	<c:ISSP_Header />
 
 	<style>
 		:root {
@@ -126,7 +126,7 @@
 			</div>
 			<apex:actionStatus id="loadingStatus" onStart="startLoading();" onStop="stopLoading();" />
 
-			<apex:pageBlock>
+			<apex:pageBlock >
 				<apex:pagemessages />
 
 				<div class="container ICE-TableContainer" style="padding: 30px 40px 30px 40px;">

@@ -10,7 +10,7 @@
 	id="page">
 
 <html>
-	<c:ISSP_Header/>
+	<c:ISSP_Header />
 
 	<style>
 		:root {
@@ -139,7 +139,7 @@
 			<!-- MODAL Attachments -->
 			<apex:outputPanel id="modalAttachments" styleclass="ICE-modalAttach">
 				<apex:outputPanel rendered="{!showAttachPopup}">
-					<apex:form>
+					<apex:form >
 						<apex:actionFunction name="closeAttachModal" action="{!closeAttachModalPopup}" rerender="modalAttachments" oncomplete="modalOnComplete('auto');" status="loadingStatus"/>
 
 						<div class="modal showModal modalBackgound">
@@ -154,8 +154,7 @@
 									<!-- Attachments body -->
 									<div class="modal-body">
 										<div style="margin-bottom: 40px;">{!$Label.ISSP_Account_Statement_Add_Proof_Payment_Description}</div>
-										<c:DragAndDropFile
-											sobjectId="{!selectedWrapperStatement.parent.Account__c}"
+										<c:DragAndDropFile sobjectId="{!selectedWrapperStatement.parent.Account__c}"
 											amazonFileName="{!selectedWrapperStatement.amazonFileName}"/>
 									</div>
 									<!-- /Attachments body -->
@@ -228,7 +227,7 @@
 									<!-- Summary Tab -->
 									<div id="tab-summary" class="modal-body" style="padding-top: 0px; display: block;">
 										<div class="row ICE-TabDetail">
-											<apex:outputPanel>
+											<apex:outputPanel >
 												<div class="table" style="padding-left: 15px; padding-right: 15px;">
 													<table id="table-summary" class="table table-hover table-condensed">
 														<thead>
@@ -280,7 +279,7 @@
 																				<apex:repeat var="transaction" value="{!wrapperSummary.listTransaction}">
 																					<tr>
 																						<td class="ICE-TableBody">
-																							<apex:outputText value="{!transaction.Parent__r.Account__r.IATAcode__c}"/>
+																							<apex:outputText value="{!transaction.Parent__r.Account__r.IATACode__c}"/>
 																						</td>
 																						<td class="ICE-TableBody">
 																							<apex:outputText value="{0,date,dd MMM yyyy}">
@@ -404,7 +403,7 @@
 													<span id="searchIATACodesDetailClean" class="ICE-SearchInputClean"/>
 												</div>
 											</div>
-											<apex:outputPanel>
+											<apex:outputPanel >
 												<div class="table" style="padding-left: 15px; padding-right: 15px;">
 													<table id="table-location" class="table table-hover table-condensed">
 														<thead>

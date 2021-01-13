@@ -132,12 +132,12 @@
 						</apex:selectList> 
 					</apex:pageBlockSectionItem>
 					
-					<apex:pageBlockSectionItem>
+					<apex:pageBlockSectionItem >
 						<!-- empty for spacing -->
 					</apex:pageBlockSectionItem>
 
-					<apex:pageBlockSectionItem>
-						<apex:outputLabel>Country</apex:outputLabel>
+					<apex:pageBlockSectionItem >
+						<apex:outputLabel >Country</apex:outputLabel>
 						<apex:selectList value="{!country}" size="1" multiselect="false" disabled="{!!validRegion || validDays}">
 							<apex:actionSupport event="onchange" reRender="searchForm"/>
 							<apex:selectOptions value="{!countries}"/>
@@ -145,7 +145,7 @@
 					</apex:pageBlockSectionItem>
 
 					<apex:pageBlockSectionItem >
-						<apex:outputLabel>Agents with IFAP closed whitin X days</apex:outputLabel>
+						<apex:outputLabel >Agents with IFAP closed whitin X days</apex:outputLabel>
 						<apex:input type="number" value="{!days}" html-min="0" html-step="1" disabled="{!!validRegion || validCountry}">
 							<apex:actionSupport event="onblur" reRender="searchForm"/>
 						</apex:input>
@@ -186,13 +186,13 @@
 					
 					<apex:column value="{!agents[mapKey].rhcInfo.ANG_RHC_Effective_Date__c}" headerValue="{!$ObjectType.ANG_RHC_Information__c.Fields.ANG_RHC_Effective_Date__c.Label}"/>
 					
-					<apex:column  headerValue="{!$ObjectType.ANG_RHC_Information__c.Fields.ANG_RHC_Amount_Provisional__c.Label}">
+					<apex:column headerValue="{!$ObjectType.ANG_RHC_Information__c.Fields.ANG_RHC_Amount_Provisional__c.Label}">
 						<apex:outputText value="{!agents[mapKey].rhcInfo.CurrencyIsoCode} {0, number, ###,###,###,##0.00}" rendered="{!NOT(ISBLANK(agents[mapKey].ANG_RHC_Amount_Provisional))}">
 							<apex:param value="{!agents[mapKey].ANG_RHC_Amount_Provisional}"/>
 						</apex:outputText>
 					</apex:column>
 
-					<apex:column  headerValue="{!$ObjectType.ANG_RHC_Information__c.Fields.ANG_RHC_Amount_Forecasted__c.Label}">
+					<apex:column headerValue="{!$ObjectType.ANG_RHC_Information__c.Fields.ANG_RHC_Amount_Forecasted__c.Label}">
 						<apex:outputText value="{!agents[mapKey].rhcInfo.CurrencyIsoCode} {0, number, ###,###,###,##0.00}" rendered="{!NOT(ISBLANK(agents[mapKey].ANG_RHC_Amount_Forecasted))}">
 							<apex:param value="{!agents[mapKey].ANG_RHC_Amount_Forecasted}"/>
 						</apex:outputText>

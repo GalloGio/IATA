@@ -1048,7 +1048,7 @@
 								</div>
 							</apex:outputPanel-->
 							<!--apex:outputPanel rendered="{! isSignatoryUser || isLevel1User || isReadOnlyUser}"-->
-							<apex:outputPanel>
+							<apex:outputPanel >
 								<div class="row">
 									<div class="logo"> <!-- new class -->
 										<apex:image url="{! URLFOR($Resource.IATA_ICCS_icons_new, 'logo-white.png')}" height="32"/> <!-- change to iata iccs logo -->
@@ -1061,7 +1061,7 @@
 
 							<apex:outputPanel rendered="{! (isMembershipMember || isMembershipSuspended) && (isSignatoryUser || isLevel1User || isReadOnlyUser)}">
 								<div>
-									<apex:form>
+									<apex:form >
 										<div class="header-box-text-wrapper">
 											<apex:commandLink styleCLass="col-md-2 col-sm-4 header-box watch-list home" reRender="pageMainPanel" action="{! navigateToHomepage}" status="processActStatusId">
 												<apex:outputText styleClass="tab-text" value="{! $Label.ICCS_Homepage}"/>

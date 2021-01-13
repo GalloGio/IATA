@@ -800,7 +800,7 @@
                                                 <tbody>
                                                         <tr class="slds-hint-parent">
                                                         <td class="slds-size--1-of-12">
-                                                            <apex:outputPanel>
+                                                            <apex:outputPanel >
                                                             <img onclick="if(confirm('Are you sure?')){removeFromTsListServer({!trainedStaffIndex});}return false;" alt="remove" class="pointer" style="max-width: 22px; max-height: 22px;" src="{!$Resource.remove_icon}"/>
                                                              </apex:outputPanel>
                                                         </td>

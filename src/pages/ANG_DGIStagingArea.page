@@ -132,9 +132,9 @@
 
                 <apex:pageBlockSection rendered="{!!waitingForEndorsement && (stagingFs = null || stagingFs.Id = null)}">
 
-                    <apex:actionRegion>
+                    <apex:actionRegion >
 
-                        <apex:pageBlockSectionItem>
+                        <apex:pageBlockSectionItem >
                             <apex:outputLabel value="Add Certificate of Endorsement" />
                             <apex:inputCheckbox value="{!addCertificate}" id="addCertificateId"> 
                                 <apex:actionsupport event="onchange" rerender="stagingAreaForm" action="{!createStagingAreaDefault}" />
@@ -150,7 +150,7 @@
 
                 <apex:pageBlock mode="edit" tabStyle="Account" id="createStagingForm" rendered="{!addCertificate && (stagingFs = null || stagingFs.Id = null)}">
 
-                    <apex:pageBlockSection>
+                    <apex:pageBlockSection >
 
                         <apex:inputField value="{!stagingFs.Amount__c}" required="true" />
                         <apex:inputField value="{!stagingFs.Validity_Start_Date__c}" required="true"/>
@@ -178,7 +178,7 @@
                     refreshTab();
                 </script>
             </apex:pageBlockSection>
-            <apex:pageBlockSection columns="2" rendered="{!oscarObj.step50__c == 'Failed'}" collapsible="false">
+            <apex:pageBlockSection columns="2" rendered="{!oscarObj.STEP50__c == 'Failed'}" collapsible="false">
                 <script type="text/javascript">
                     refreshTab();
                 </script>
@@ -212,7 +212,7 @@
                 </div>
 
                 <apex:repeat value="{!stagingAreaFields}" var="field">
-                    <apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
                         <apex:outputLabel value="{!$ObjectType.Opportunitylineitem.fields[field].Label}" />
                         <apex:outputField value="{!stagingFs[field]}" />
                     </apex:pageBlockSectionItem>
@@ -220,12 +220,12 @@
 
                 <apex:pageBlockSectionItem rendered="{!!oscarProcessed}">
                     <apex:outputLabel value="Reason" />
-                    <apex:inputField value="{!stagingFs.reason__c}" required="true"/>
+                    <apex:inputField value="{!stagingFs.Reason__c}" required="true"/>
                 </apex:pageBlockSectionItem>
 
                 <apex:pageBlockSectionItem rendered="{!oscarProcessed}">
                     <apex:outputLabel value="Reason" />
-                    <apex:outputField value="{!stagingFs.reason__c}" />
+                    <apex:outputField value="{!stagingFs.Reason__c}" />
                 </apex:pageBlockSectionItem>
 
                 <apex:pageBlockSectionItem rendered="{!amazonFileEId <> null}">
@@ -240,13 +240,13 @@
                 
             </apex:pageBlockSection>
         
-            <apex:actionRegion>
+            <apex:actionRegion >
 
                 <apex:outputpanel id="AddendumDetails" rendered="{!!oscarProcessed}">
 
                     <apex:pageBlockSection id="AddendumCheck" title="Addendum Details" collapsible="true">
 
-                        <apex:pageBlockSectionItem>
+                        <apex:pageBlockSectionItem >
                             <apex:outputLabel value="Add Addendum" />
                             <apex:inputCheckbox value="{!hasAdendum}" id="AdendumCheckbox">
                                 <apex:actionsupport event="onchange" rerender="AddendumDetails" />

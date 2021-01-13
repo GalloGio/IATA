@@ -4,7 +4,7 @@ By selecting the topic(s) you wish to follow and the frequency of digests, you w
 
 Please select the topic(s) that you would like to follow:
 
-	<apex:form>
+	<apex:form >
 
 	<table>
 		<apex:repeat value="{!TopicWrappers}" var="t">

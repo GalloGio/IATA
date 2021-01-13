@@ -294,7 +294,7 @@
                         <a title="view" escape="false" target="_blank" onclick="getS3LInk('{!attach.fullName}');" class="actionLink" >{!$Label.View}</a>
                     </apex:outputPanel>
 
-                    <apex:outputPanel  rendered="{!NOT(isReadOnly)}" >
+                    <apex:outputPanel rendered="{!NOT(isReadOnly)}" >
                     &nbsp;|&nbsp;
                     </apex:outputPanel>
 

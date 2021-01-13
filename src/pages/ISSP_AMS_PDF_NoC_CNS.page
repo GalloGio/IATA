@@ -135,7 +135,7 @@
                     </p>
                 </div>
 
-                <apex:outputPanel>
+                <apex:outputPanel >
                     <table border="0" cellpadding="4">
                         <tr>
                             <td style="width:10%">&nbsp;</td>

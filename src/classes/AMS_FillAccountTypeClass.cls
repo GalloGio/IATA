@@ -1,17 +1,17 @@
 global Class AMS_FillAccountTypeClass{
+    
+    
+        @InvocableMethod(label='Get value for Account Type given its agency location class' description='Returns the value for Account Type given its agency location class')
+        public static List<String> fillType(List<String> locationClassLst){
 
+           String type = AMS_AgencyHelper.fillType(locationClassLst.get(0));
 
-				@InvocableMethod(label='Get value for Account Type given its agency location class' description='Returns the value for Account Type given its agency location class')
-				public static List<String> fillType(List<String> locationClassLst){
+           List<String> output = new List<String>();
 
-					 String type = AMS_AgencyHelper.fillType(locationClassLst.get(0));
+           output.add(type);
 
-					 List<String> output = new List<String>();
+           return output;
 
-					 output.add(type);
-
-					 return output;
-
-		}
-
-		}
+    }
+    
+    }

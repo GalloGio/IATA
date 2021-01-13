@@ -5,8 +5,8 @@
     <confirmationTokenRequired>false</confirmationTokenRequired>
     <label>IECQuote</label>
     <packageVersions>
-        <majorNumber>6</majorNumber>
-        <minorNumber>0</minorNumber>
+        <majorNumber>9</majorNumber>
+        <minorNumber>5</minorNumber>
         <namespace>zqu</namespace>
     </packageVersions>
 </ApexPage>

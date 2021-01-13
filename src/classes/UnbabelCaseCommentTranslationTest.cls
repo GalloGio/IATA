@@ -1,352 +1,352 @@
 @isTest
 private class UnbabelCaseCommentTranslationTest {
 
-	@testSetup static void testSetup() {
+    @testSetup static void testSetup() {
+    	
+        unbabelapi.UnbabelTestDataFactory.createConfigs();
 
-		unbabelapi.UnbabelTestDataFactory.createConfigs();
+        IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test',
+                IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
+                IATA_Country_IT__c = 'testIT' , IATA_Country_JP__c = 'testJP' , ISO_Code__c = 'tq',
+                IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test' );
+        
+        insert country;
+        
+        Id rtIdBr = [ SELECT Id FROM RecordType
+                      WHERE SobjectType = 'Account'
+                                          AND DeveloperName = 'IATA_Agency'][0].Id;
 
-		IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test',
-				IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
-				IATA_Country_IT__c = 'testIT' , IATA_Country_JP__c = 'testJP' , ISO_Code__c = 'tq',
-				IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test' );
 
-		insert country;
+        Account parent = ISSP_ObjectFactory.createNewAccount();
+        parent.BillingCity = 'test';
+        parent.Name = 'test';
+        parent.sector__c = 'airline';
+        parent.Location_Type__c = 'HO';
+        parent.RecordTypeId = rtIdBr ;
+        parent.IATACode__c = '100';
 
-		Id rtIdBr = [ SELECT Id FROM RecordType
-					  WHERE SobjectType = 'Account'
-										  AND DeveloperName = 'IATA_Agency'][0].Id;
+        insert parent;
 
+        System.debug('parent Id: ' + parent.Id);
 
-		Account parent = ISSP_ObjectFactory.createNewAccount();
-		parent.BillingCity = 'test';
-		parent.Name = 'test';
-		parent.sector__c = 'airline';
-		parent.Location_Type__c = 'HO';
-		parent.RecordTypeId = rtIdBr ;
-		parent.IATACode__c = '100';
+        Account child = ISSP_ObjectFactory.createNewAccount();
+        child.BillingCity = 'test2';
+        child.Name = 'test2';
+        child.Site = 'headSite';
+        child.sector__c = 'airline';
+        child.Top_Parent__c = null;
+        child.IATA_ISO_Country__c = country.Id;
+        child.RecordTypeId = rtIdBr ;
+        insert child;      
 
-		insert parent;
+        Contact con = ISSP_ObjectFactory.createNewContact();
+        con.AccountId = child.Id;
+        con.Email = 'UnbabelTest1234IATA@unbabel.com';
 
-		System.debug('parent Id: ' + parent.Id);
+        insert con;
 
-		Account child = ISSP_ObjectFactory.createNewAccount();
-		child.BillingCity = 'test2';
-		child.Name = 'test2';
-		child.Site = 'headSite';
-		child.sector__c = 'airline';
-		child.Top_Parent__c = null;
-		child.IATA_ISO_Country__c = country.Id;
-		child.RecordTypeId = rtIdBr ;
-		insert child;
+        User portalUser = ISSP_ObjectFactory.createPortalUser(con);
+        insert new ISSP_CS__c(Name = 'DefaultNewAccountOwnerId', Value__c = portalUser.Id);
+        
+        con.OwnerId = portalUser.Id;
+        update con;
 
-		Contact con = ISSP_ObjectFactory.createNewContact();
-		con.AccountId = child.Id;
-		con.Email = 'UnbabelTest1234IATA@unbabel.com';
+        Case_excluded_w_status_action_needed__c cs = new Case_excluded_w_status_action_needed__c(Name = 'RT to Exclude', Record_Type_Name__c = 'CasesEurope');
+        insert cs;
 
-		insert con;
+            
+        ID casesEurope = Schema.SObjectType.Case.RecordTypeInfosByName.get('Cases - Europe').RecordTypeId ;
 
-		User portalUser = ISSP_ObjectFactory.createPortalUser(con);
-		insert new ISSP_CS__c(Name = 'DefaultNewAccountOwnerId', Value__c = portalUser.Id);
+        Case newCase = ISSP_ObjectFactory.createNewCase();
+        newcase.recordtypeid = casesEurope;
+        newCase.Status = 'Action Needed';
+        newCase.AccountId = parent.Id;
+        newCase.ContactId = con.Id;
 
-		con.OwnerId = portalUser.Id;
-		update con;
+        insert newcase;
 
-		Case_excluded_w_status_action_needed__c cs = new Case_excluded_w_status_action_needed__c(Name = 'RT to Exclude', Record_Type_Name__c = 'CasesEurope');
-		insert cs;
+        System.runAs(portalUser){            
+            //create Comment as Public in PT
+            CaseComment cc = new CaseComment(
+                ParentId = newcase.Id, 
+                IsPublished = true, 
+                CommentBody = 'Isto é um teste'
+            );
 
+            insert cc;
+    
+        }
 
-		ID casesEurope = Schema.SObjectType.Case.RecordTypeInfosByName.get('Cases - Europe').RecordTypeId ;
+    }
 
-		Case newCase = ISSP_ObjectFactory.createNewCase();
-		newcase.recordtypeid = casesEurope;
-		newCase.Status = 'Action Needed';
-		newCase.AccountId = parent.Id;
-		newCase.ContactId = con.Id;
+    @isTest static void testTranslateCustomerFirstComment_Success() {
+        
+        UnbabelTranslationUtils unbabelTU = new UnbabelTranslationUtils();
+        
+        List<User> users = createUsers(true);
+        //Salesforce User
+        User agentUser = users.get(0);
 
-		insert newcase;
+        //get Case
+        Case cas = getCase(true,false);
 
-		System.runAs(portalUser){
-			//create Comment as Public in PT
-			CaseComment cc = new CaseComment(
-				ParentId = newcase.Id,
-				IsPublished = true,
-				CommentBody = 'Isto é um teste'
-			);
 
-			insert cc;
+        test.startTest();
 
-		}
+        System.runAs(agentUser){
 
-	}
+            UnbabelTranslateCaseCommentController  testTransCaseComment = initializeUnbabelPage(cas);
 
-	@isTest static void testTranslateCustomerFirstComment_Success() {
+            testTransCaseComment.requestTranslation();
 
-		UnbabelTranslationUtils unbabelTU = new UnbabelTranslationUtils();
+            System.assertEquals(new Apexpages.Message(ApexPages.Severity.Info,unbabelTU.SUCCESSREQUEST), ApexPages.getMessages().get(0));
 
-		List<User> users = createUsers(true);
-		//Salesforce User
-		User agentUser = users.get(0);
+            testTransCaseComment.goToCase();
 
-		//get Case
-		Case cas = getCase(true,false);
+        }
+        
+        test.stopTest();
 
+    }
 
-		test.startTest();
+    @isTest static void testTranslateCustomerFirstComment_Success2() {
 
-		System.runAs(agentUser){
+        UnbabelTranslationUtils unbabelTU = new UnbabelTranslationUtils();
 
-			UnbabelTranslateCaseCommentController  testTransCaseComment = initializeUnbabelPage(cas);
+        List<User> users = createUsers(false);
 
-			testTransCaseComment.requestTranslation();
+        //Salesforce User
+        User agentUser = users.get(0);
 
-			System.assertEquals(new Apexpages.Message(ApexPages.Severity.Info,unbabelTU.SUCCESSREQUEST), ApexPages.getMessages().get(0));
+        //get Case
+        Case cas = getCase(false,false);
+     
+        test.startTest();
 
-			testTransCaseComment.goToCase();
+        System.runAs(agentUser){            
 
-		}
+            UnbabelTranslateCaseCommentController  testTransCaseComment = initializeUnbabelPage(cas);
 
-		test.stopTest();
+            testTransCaseComment.requestTranslation();
 
-	}
+            System.assertEquals(new Apexpages.Message(ApexPages.Severity.Info,unbabelTU.SUCCESSREQUEST), ApexPages.getMessages().get(0));
 
-	@isTest static void testTranslateCustomerFirstComment_Success2() {
+            testTransCaseComment.goToCase();
 
-		UnbabelTranslationUtils unbabelTU = new UnbabelTranslationUtils();
+        }
 
-		List<User> users = createUsers(false);
+        test.stopTest();
 
-		//Salesforce User
-		User agentUser = users.get(0);
+    }
 
-		//get Case
-		Case cas = getCase(false,false);
 
-		test.startTest();
+    @isTest static void testCreateAgentCommentPrivateWithUnbabel_Success() {
 
-		System.runAs(agentUser){
+        List<User> users = createUsers(true);
 
-			UnbabelTranslateCaseCommentController  testTransCaseComment = initializeUnbabelPage(cas);
+        //Salesforce User
+        User agentUser = users.get(0);
 
-			testTransCaseComment.requestTranslation();
+        //get Case
+        Case cas = getCase(true,true);
 
-			System.assertEquals(new Apexpages.Message(ApexPages.Severity.Info,unbabelTU.SUCCESSREQUEST), ApexPages.getMessages().get(0));
+        
+        test.startTest();
 
-			testTransCaseComment.goToCase();
+        System.runAs(agentUser){
+            //create Comment as Private in EN
+            insert new CaseComment( ParentId = cas.Id, IsPublished = false, CommentBody = 'This is a comment from the agent for Unbabel');
 
-		}
 
-		test.stopTest();
+            //System.assertEquals(unbabelTU.ERRORPUBLICC,e.getMessage());
 
-	}
+        }
+        
+        test.stopTest();
 
+    }
 
-	@isTest static void testCreateAgentCommentPrivateWithUnbabel_Success() {
 
-		List<User> users = createUsers(true);
+    @isTest static void testCreateAgentCommentPublicWithUnbabel_Error() {
 
-		//Salesforce User
-		User agentUser = users.get(0);
+        UnbabelTranslationUtils unbabelTU = new UnbabelTranslationUtils();
 
-		//get Case
-		Case cas = getCase(true,true);
+        List<User> users = createUsers(true);
 
+        //Salesforce User
+        User agentUser = users.get(0);
 
-		test.startTest();
+        //get Case
+        Case cas = getCase(true,true);
+            
+        test.startTest();
 
-		System.runAs(agentUser){
-			//create Comment as Private in EN
-			insert new CaseComment( ParentId = cas.Id, IsPublished = false, CommentBody = 'This is a comment from the agent for Unbabel');
+        System.runAs(agentUser){
 
+            //create Comment as Private in EN
 
-			//System.assertEquals(unbabelTU.ERRORPUBLICC,e.getMessage());
+            try{
+                insert new CaseComment( ParentId = cas.Id, IsPublished = true, CommentBody = 'This is a comment from the agent for Unbabel');
+            }catch(Exception e){
+                System.assert(e.getMessage().contains(unbabelTU.ERRORPUBLICC));
+            }
+            
+        }
 
-		}
+        test.stopTest();
 
-		test.stopTest();
+    }
 
-	}
 
+    @isTest static void testCreateAgentCommentPublicWithoutUnbabel_Success() {
 
-	@isTest static void testCreateAgentCommentPublicWithUnbabel_Error() {
 
-		UnbabelTranslationUtils unbabelTU = new UnbabelTranslationUtils();
+        List<User> users = createUsers(true);
 
-		List<User> users = createUsers(true);
+        //Salesforce User
+        User agentUser = users.get(0);
 
-		//Salesforce User
-		User agentUser = users.get(0);
+        //get Case
+        Case cas = getCase(true,false);
 
-		//get Case
-		Case cas = getCase(true,true);
+        test.startTest();
 
-		test.startTest();
+        System.runAs(agentUser){
+            //create Comment as Private in EN
+            insert new CaseComment( ParentId = cas.Id, IsPublished = true, CommentBody = 'This is a comment from the agent for Unbabel');
+        }
 
-		System.runAs(agentUser){
+        test.stopTest();
 
-			//create Comment as Private in EN
+    }
 
-			try{
-				insert new CaseComment( ParentId = cas.Id, IsPublished = true, CommentBody = 'This is a comment from the agent for Unbabel');
-			}catch(Exception e){
-				System.assert(e.getMessage().contains(unbabelTU.ERRORPUBLICC));
-			}
 
-		}
 
-		test.stopTest();
+     @isTest static void testCommentTranslationHandling_Success() {
 
-	}
+         CaseComment cc = [select Id, ParentId, CommentBody,IsPublished from CaseComment limit 1];
 
-
-	@isTest static void testCreateAgentCommentPublicWithoutUnbabel_Success() {
-
-
-		List<User> users = createUsers(true);
-
-		//Salesforce User
-		User agentUser = users.get(0);
-
-		//get Case
-		Case cas = getCase(true,false);
-
-		test.startTest();
-
-		System.runAs(agentUser){
-			//create Comment as Private in EN
-			insert new CaseComment( ParentId = cas.Id, IsPublished = true, CommentBody = 'This is a comment from the agent for Unbabel');
-		}
-
-		test.stopTest();
-
-	}
-
-
-
-	 @isTest static void testCommentTranslationHandling_Success() {
-
-		 CaseComment cc = [select Id, ParentId, CommentBody,IsPublished from CaseComment limit 1];
-
-		unbabelapi__Unbabel_Translation_Request__c tr = new unbabelapi__Unbabel_Translation_Request__c();
-
-		tr.unbabelapi__Unbabel_Class__c = 'Unbabel_CaseCommentTranslationHandler';
-		tr.unbabelapi__Unbabel_Status__c = 'Translation Requested';
-		tr.unbabelapi__Unbabel_Translation_Requested_Datetime__c = System.now();
-		tr.unbabelapi__Unbabel_From_Language__c = 'en' ;
-		tr.unbabelapi__Unbabel_To_Language__c = 'pt' ;
-		tr.unbabelapi__Unbabel_Translation_Type__c = 'Machine';
-		tr.unbabelapi__Unbabel_sObject_Id__c = cc.Id;
-		tr.unbabelapi__Unbabel_sObject__c = 'CaseComment';
-
-
-		insert tr;
-
-
+    	unbabelapi__Unbabel_Translation_Request__c tr = new unbabelapi__Unbabel_Translation_Request__c();
+                      
+        tr.unbabelapi__Unbabel_Class__c = 'Unbabel_CaseCommentTranslationHandler';
+        tr.unbabelapi__Unbabel_Status__c = 'Translation Requested';
+        tr.unbabelapi__Unbabel_Translation_Requested_Datetime__c = System.now();    	
+	    tr.unbabelapi__Unbabel_From_Language__c = 'en' ; 
+	    tr.unbabelapi__Unbabel_To_Language__c = 'pt' ;                                
+	    tr.unbabelapi__Unbabel_Translation_Type__c = 'Machine';
+	    tr.unbabelapi__Unbabel_sObject_Id__c = cc.Id;
+	    tr.unbabelapi__Unbabel_sObject__c = 'CaseComment';
+	        	
+    	
+    	insert tr;
+        
+	
 		unbabelapi.UnbabelRestEnvelope env = new unbabelapi.UnbabelRestEnvelope(true,'',cc);
-
-		unbabelapi.UnbabelRestEnvelope envError = new unbabelapi.UnbabelRestEnvelope(false,'error',cc);
-
-
-		Unbabel_CaseCommentTranslationHandler ccTh = new Unbabel_CaseCommentTranslationHandler();
-
-		test.startTest();
-
-		unbabelapi.UnbabelRestEnvelope  result = ccTh.execute(env,tr);
-
-		system.assert(result.isSuccess);
-
-
+		
+    	unbabelapi.UnbabelRestEnvelope envError = new unbabelapi.UnbabelRestEnvelope(false,'error',cc);
+		
+		
+    	Unbabel_CaseCommentTranslationHandler ccTh = new Unbabel_CaseCommentTranslationHandler();
+       	
+    	test.startTest();
+    	
+    	unbabelapi.UnbabelRestEnvelope  result = ccTh.execute(env,tr);
+    	 
+    	system.assert(result.isSuccess);
+    	
+    	
    		unbabelapi.UnbabelRestEnvelope  resultError = ccTh.execute(envError,tr);
-
-		system.assert(!resultError.isSuccess);
-
-		test.stopTest();
-
-
-
-	 }
+    	 
+    	system.assert(!resultError.isSuccess);
+    	
+    	test.stopTest();
 
 
-	 @isTest static void testCommentTranslationHandling_Error() {
+         
+     }
 
 
-		unbabelapi.UnbabelRestEnvelope env = new unbabelapi.UnbabelRestEnvelope();
-
-		Unbabel_CaseCommentTranslationHandler ccTh = new Unbabel_CaseCommentTranslationHandler();
-
-		unbabelapi__Unbabel_Translation_Request__c tr = new unbabelapi__Unbabel_Translation_Request__c();
+     @isTest static void testCommentTranslationHandling_Error() {
 
 
-		test.startTest();
+    	unbabelapi.UnbabelRestEnvelope env = new unbabelapi.UnbabelRestEnvelope();
+    	
+    	Unbabel_CaseCommentTranslationHandler ccTh = new Unbabel_CaseCommentTranslationHandler();
+    	
+    	unbabelapi__Unbabel_Translation_Request__c tr = new unbabelapi__Unbabel_Translation_Request__c();
+    	
+    	
+    	test.startTest();
+    	
 
-
-		unbabelapi.UnbabelRestEnvelope  resultNull = ccTh.execute(null,tr);
-
+    	unbabelapi.UnbabelRestEnvelope  resultNull = ccTh.execute(null,tr);
+		
 		system.assert(!resultNull.isSuccess);
-
-		unbabelapi.UnbabelRestEnvelope  resultInvalid = ccTh.execute(env,tr);
-
+		
+    	unbabelapi.UnbabelRestEnvelope  resultInvalid = ccTh.execute(env,tr);
+		
 		system.assert(!resultInvalid.isSuccess);
+		
+    	
+    	test.stopTest();
+
+         
+     }
 
 
-		test.stopTest();
+
+    /**
+     * 
+     *     Helper Methods
+     * 
+     */
+
+    private static List<User> createUsers(Boolean setLang){
+
+        //create Salesforce User
+        User agentUser = ISSP_ObjectFactory.createAdminUser();
+        if(setLang) agentUser.unbabelapi__Unbabel_Language__c = 'en:English';
+
+        update agentUser;
+
+        //get Portal User
+        List<User> userList = new List<User>([Select id from user where email = 'UnbabelTest1234IATA@unbabel.com' limit 1]);
+        User portalUser = userList[0];
+
+        return new List<User>{agentUser,portalUser};
+
+    }
+
+    private static Case getCase(Boolean removeUnbabelLanguage, Boolean setUnbabelFlag){
+
+        List<Case> caseList = [select Id,status,unbabelsc__Unbabel_Language__c from Case limit 1]; 
+
+        Case cas = caseList[0];
+
+        if(removeUnbabelLanguage) cas.unbabelsc__Unbabel_Language__c = null;
+
+        if(setUnbabelFlag) cas.Publish_with_Unbabel__c = true;
+
+        if(removeUnbabelLanguage || setUnbabelFlag) update cas;
+ 
+
+        return cas;
+    }
 
 
-	 }
+    private static UnbabelTranslateCaseCommentController initializeUnbabelPage(Case cas){
 
+        ApexPages.StandardController sc = new ApexPages.StandardController(cas);
+        
+        UnbabelTranslateCaseCommentController  testTransCaseComment = new UnbabelTranslateCaseCommentController(sc);
+        
+        PageReference pageRef = Page.UnbabelTranslateCaseComment;
 
+        pageRef.getParameters().put('id', String.valueOf(cas.Id));
+        
+        Test.setCurrentPage(pageRef);
 
-	/**
-	 *
-	 *     Helper Methods
-	 *
-	 */
-
-	private static List<User> createUsers(Boolean setLang){
-
-		//create Salesforce User
-		User agentUser = ISSP_ObjectFactory.createAdminUser();
-		if(setLang) agentUser.unbabelapi__Unbabel_Language__c = 'en:English';
-
-		update agentUser;
-
-		//get Portal User
-		List<User> userList = new List<User>([Select id from user where email = 'UnbabelTest1234IATA@unbabel.com' limit 1]);
-		User portalUser = userList[0];
-
-		return new List<User>{agentUser,portalUser};
-
-	}
-
-	private static Case getCase(Boolean removeUnbabelLanguage, Boolean setUnbabelFlag){
-
-		List<Case> caseList = [select Id,status,unbabelsc__Unbabel_Language__c from Case limit 1];
-
-		Case cas = caseList[0];
-
-		if(removeUnbabelLanguage) cas.unbabelsc__Unbabel_Language__c = null;
-
-		if(setUnbabelFlag) cas.Publish_with_Unbabel__c = true;
-
-		if(removeUnbabelLanguage || setUnbabelFlag) update cas;
-
-
-		return cas;
-	}
-
-
-	private static UnbabelTranslateCaseCommentController initializeUnbabelPage(Case cas){
-
-		ApexPages.StandardController sc = new ApexPages.StandardController(cas);
-
-		UnbabelTranslateCaseCommentController  testTransCaseComment = new UnbabelTranslateCaseCommentController(sc);
-
-		PageReference pageRef = Page.UnbabelTranslateCaseComment;
-
-		pageRef.getParameters().put('id', String.valueOf(cas.Id));
-
-		Test.setCurrentPage(pageRef);
-
-		return testTransCaseComment;
-	}
+        return testTransCaseComment;
+    }
 
 }

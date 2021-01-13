@@ -5,8 +5,8 @@
     <confirmationTokenRequired>false</confirmationTokenRequired>
     <label>IEC_MyInvoices</label>
     <packageVersions>
-        <majorNumber>2</majorNumber>
-        <minorNumber>70</minorNumber>
+        <majorNumber>4</majorNumber>
+        <minorNumber>16</minorNumber>
         <namespace>Zuora</namespace>
     </packageVersions>
 </ApexPage>

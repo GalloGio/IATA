@@ -185,8 +185,7 @@
                 <h3 class="panel-title">Airline Participation Joining Process</h3>
             </div>
     <div class="panel-body" id="body-enquiries">
-        <c:ISSP_APProcess_Progress 
-            step="{!stepNumber}"
+        <c:ISSP_APProcess_Progress step="{!stepNumber}"
             operationType="{!strOperationType}"
             areaType="{!strAreaType}"
             changeType="{!strChangeType}"

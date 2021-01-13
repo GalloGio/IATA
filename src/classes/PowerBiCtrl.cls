@@ -1,4 +1,3 @@
-
 public without sharing class PowerBiCtrl {
 
 	private static final Boolean IS_PROD = !([SELECT IsSandbox FROM Organization LIMIT 1].IsSandbox);
@@ -513,4 +512,3 @@ public without sharing class PowerBiCtrl {
 
 
 }
-

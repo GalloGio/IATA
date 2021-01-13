@@ -107,7 +107,7 @@
 
                         </apex:pageBlockTable>
                     </apex:pageBlockSection>
-                    <apex:pageBlockSection>
+                    <apex:pageBlockSection >
                         <apex:pageblockSectionItem id="percentageFS" rendered="{!modeValue != '' || actionValue == 'Apply_RHC_per_RS' || actionValue == 'Revert_RHC_per_RS'}">
                             <apex:outputLabel value="% of FS Cash Condition"/>
                             <apex:outputPanel >

@@ -110,4 +110,3 @@ public with sharing class PowerBICalloutMockProvider implements HttpCalloutMock{
 		}
 	}
 }
-

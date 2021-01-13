@@ -49,8 +49,7 @@
 
                 <apex:pageBlockSectionItem rendered="{!mode=='edit'}">
                     <apex:outputlabel value="{!$ObjectType.Airline_Suspension__c.fields.Participates_in_IATA_Governance_Groups__c.label}"/>
-                    <c:MultiselectPicklist
-                        leftLabel="Available Groups"
+                    <c:MultiselectPicklist leftLabel="Available Groups"
                         rightLabel="Selected Groups"
                         size="10"
                         width="260px"

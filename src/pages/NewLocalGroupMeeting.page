@@ -18,10 +18,10 @@
             <apex:outputField value="{!lm.Local_Governance__c}"/>
 
             <apex:inputField value="{!lm.Date_of_Meeting__c}" required="true"/>
-            <apex:pageBlockSectionItem/>
+            <apex:pageBlockSectionItem />
 
             <apex:inputField id="responsible" value="{!lm.Meeting_Responsible__c}"/>
-            <apex:pageBlockSectionItem/>
+            <apex:pageBlockSectionItem />
         </apex:pageBlockSection>
         
         
@@ -32,26 +32,26 @@
             <apex:inputField value="{!lm.Date_Legal_Signed_off_Agenda__c}"/>
             <apex:inputField value="{!lm.Reason_for_Rejection_Agenda__c}"/>
 
-            <apex:pageBlockSectionItem/>
+            <apex:pageBlockSectionItem />
             <apex:inputField value="{!lm.Legal_Remarks_Agenda__c}"/>
         </apex:pageBlockSection>
         
         
         <apex:pageBlockSection title="Checklist to be completed after the Local Group Meeting" columns="2">
             <apex:inputField value="{!lm.Criteria_Reviewed__c}"/>
-            <apex:pageBlockSectionItem/>
+            <apex:pageBlockSectionItem />
 
             <apex:inputField value="{!lm.Remittance_Frequency_Reviewed__c}"/>
-            <apex:pageBlockSectionItem/>
+            <apex:pageBlockSectionItem />
 
             <apex:inputField value="{!lm.VMFR__c}"/>
-            <apex:pageBlockSectionItem/>
+            <apex:pageBlockSectionItem />
 
             <apex:inputField value="{!lm.Other__c}"/>
-            <apex:pageBlockSectionItem/>
+            <apex:pageBlockSectionItem />
 
             <apex:inputField value="{!lm.Proposal_to_Conference__c}"/>
-            <apex:pageBlockSectionItem/>
+            <apex:pageBlockSectionItem />
 
             <apex:inputField value="{!lm.Comments__c}"/>
             <apex:inputField value="{!lm.Date_Legal_REJECTED_the_minutes__c}"/>

@@ -47,7 +47,7 @@
 
 	<div id="processSpinner" class="LockOff"/>
 
-	<apex:form  id="main">
+	<apex:form id="main">
 		<apex:pageBlock >
 			<apex:outputPanel id="OwnersTable">
 				<h2>Owners</h2>

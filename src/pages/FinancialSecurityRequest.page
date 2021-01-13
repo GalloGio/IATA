@@ -1,4 +1,4 @@
-    <apex:page controller="clsFinancialSecurityRequestController" sidebar="false" id="FinancialSecurityRequest">
+<apex:page controller="clsFinancialSecurityRequestController" sidebar="false" id="FinancialSecurityRequest">
  
  
  
@@ -180,7 +180,7 @@
            
             </apex:pageBlockButtons> 
         
-         <apex:PageBlock>
+         <apex:PageBlock >
                 <input type="hidden" id="hiddenCountry" value="{!batchCountry}" />
      </apex:PageBlock> 
      

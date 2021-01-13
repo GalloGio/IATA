@@ -190,7 +190,7 @@
 
   			<c:ISSP_CustomNavigation />
 
-  			<apex:outputText>
+  			<apex:outputText >
   			<div class="panel-primary">
 	    	<div class="panel-heading head_panel_green">
 	    		<h3 class="panel-title">{!$Label.ISSP_ANG_MODEL_A_ONBOARDING_TITLE}</h3>

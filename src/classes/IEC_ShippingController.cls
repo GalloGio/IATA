@@ -195,10 +195,7 @@ global without sharing class IEC_ShippingController extends IEC_PageController
 			addErrorMessage(Label.IEC_SAP_Customer_Issue);
 			return;
 		}
-		else if (String.isBlank(sfOrder.ShipToContact_Partner_Number__c))
-		{
-			isShipToError = true;
-			addErrorMessage(Label.IEC_SAP_Customer_Shipping_Address_Issue);
+		else if (String.isBlank(sfOrder.ShipToContact_Partner_Number__c)){isShipToError = true;	addErrorMessage(Label.IEC_SAP_Customer_Shipping_Address_Issue);
 		}
 
 		OrderItem_Sel oiSelector = new OrderItem_Sel();
@@ -484,17 +481,12 @@ global without sharing class IEC_ShippingController extends IEC_PageController
 
 			system.debug('errorFieldValue ' + errorFieldValue);
 
-			if ( errorFieldValue != null && errorFieldValue.trim().length() > 0 ) {
-				addErrorMessage( IECErrorCodeMapping.ERROR_FIELD_MAPPING.get( errorField ) + ': ' + IECErrorCodeMapping.VALUES.get( errorFieldValue ) );
-				validationError = true;
+			if ( errorFieldValue != null && errorFieldValue.trim().length() > 0 ) {	addErrorMessage( IECErrorCodeMapping.ERROR_FIELD_MAPPING.get( errorField ) + ': ' + IECErrorCodeMapping.VALUES.get( errorFieldValue ) );				validationError = true;
 			}
 		}
 
 		//if No validation Error verified if they are some Transactions errors
-		if(!validationError){
-			String errorMessage = curPage.getParameters().get('errorMessage');
-			if(errorMessage != null && errorMessage != ''){
-				addErrorMessage(errorMessage);
+		if(!validationError){String errorMessage = curPage.getParameters().get('errorMessage');	if(errorMessage != null && errorMessage != ''){	addErrorMessage(errorMessage);
 			}
 		}
 
@@ -664,15 +656,11 @@ global without sharing class IEC_ShippingController extends IEC_PageController
 			for (String accepted : orderAcceptedPaymentMethods) {
 				String pm = uiToPaymentMethodMap.get(accepted);
 
-				if (pm != null) {
-					acceptedPaymentMethodSet.add(pm);
-				}
+				if (pm != null) {acceptedPaymentMethodSet.add(pm);				}
 			}
 
-			if (acceptedPaymentMethodSet.isEmpty() == false) {
-				setPaymentMethods.retainAll(acceptedPaymentMethodSet);
-			} else {
-				setPaymentMethods.clear();
+			if (acceptedPaymentMethodSet.isEmpty() == false) {setPaymentMethods.retainAll(acceptedPaymentMethodSet);
+			} else {setPaymentMethods.clear();
 			}
 		} else {
 			setPaymentMethods.clear();
@@ -701,12 +689,7 @@ global without sharing class IEC_ShippingController extends IEC_PageController
 		addresses.add(new SelectOption('', '-Select an address-'));
 		Map<Id,Location__c> contactLocations = new Location_Sel().getContactsLocations(new Set<Id>{loggedCustomer.sfContact.Id});
 
-		for (Id locationId : contactLocations.keySet())
-		{
-			Location__c location = contactLocations.get(locationId);
-			if (location.Type__c == IECConstants.SHIPTO && location.Active__c && isNotOneTimeAddress(location))
-			{
-				String label = (String.isNotBlank(location.Address_Name__c))? location.Address_Name__c + ' - ' +location.Full_Address__c : location.Full_Address__c;
+		for (Id locationId : contactLocations.keySet())	{Location__c location = contactLocations.get(locationId);if (location.Type__c == IECConstants.SHIPTO && location.Active__c && isNotOneTimeAddress(location)){String label = (String.isNotBlank(location.Address_Name__c))? location.Address_Name__c + ' - ' +location.Full_Address__c : location.Full_Address__c;
 				addresses.add(new SelectOption(locationId, label));
 			}
 		}
@@ -783,22 +766,16 @@ global without sharing class IEC_ShippingController extends IEC_PageController
 		showNewAddress = true;
 		Boolean hError = false;
 		//-- Validate Address
-		if(!validateAddress(newShipToAddress)) {
-			addErrorMessage('You must specify all the required fields for the new address');
-			hError = true;
+		if(!validateAddress(newShipToAddress)) {addErrorMessage('You must specify all the required fields for the new address');hError = true;
 		   // return null;
 		}
 
 		//TC 2017-05-16
-		if(!String.isBlank(newShipToAddress.street1) && newShipToAddress.street1.length() > 70) {
-			addErrorMessage(Label.IEC_ShippingAddressLimit);
-			hError = true;
+		if(!String.isBlank(newShipToAddress.street1) && newShipToAddress.street1.length() > 70) {addErrorMessage(Label.IEC_ShippingAddressLimit);hError = true;
 			//return null;
 		}
 
-		if(newShipToAddress != null && !String.isBlank(newShipToAddress.street1) && IECUtil.isPostOfficeBox(newShipToAddress.street1)) {
-			addErrorMessage(Label.IEC_PO_BOX_ERROR);
-			hError = true;
+		if(newShipToAddress != null && !String.isBlank(newShipToAddress.street1) && IECUtil.isPostOfficeBox(newShipToAddress.street1)) {addErrorMessage(Label.IEC_PO_BOX_ERROR);hError = true;
 			//return null;
 		}
 
@@ -811,14 +788,7 @@ global without sharing class IEC_ShippingController extends IEC_PageController
 			//-- Validate inputs
 			if(String.isBlank(newShipToAddress.attention)) newShipToAddress.attention = loggedCustomer.sfContact.Name;
 
-			if(String.isNotBlank(newShipToAddress.vatNumber))
-			{
-				String validation = IECVATUtil.Validate_VAT(newShipToAddress.countryCode, newShipToAddress.vatNumber);
-
-				if(String.isNotBlank(validation))
-				{
-					addErrorMessage(validation);return null;
-				}
+			if(String.isNotBlank(newShipToAddress.vatNumber)){String validation = IECVATUtil.Validate_VAT(newShipToAddress.countryCode, newShipToAddress.vatNumber);if(String.isNotBlank(validation)){addErrorMessage(validation);return null;}
 			}
 
 			//-- Find IECAddress if exist or create new IECAddress
@@ -831,10 +801,7 @@ global without sharing class IEC_ShippingController extends IEC_PageController
 			Location__c shippingLocation;
 			for(Location__c loc : shippingLocations)
 			{
-				if(loc.Address__c == adr.Id)
-				{
-					addErrorMessage(labels.get('msgAddrExist'));
-					return null;
+				if(loc.Address__c == adr.Id){addErrorMessage(labels.get('msgAddrExist'));return null;
 					//shippingLocation = loc;
 					//break;
 				}
@@ -965,31 +932,15 @@ global without sharing class IEC_ShippingController extends IEC_PageController
 						OrderItem sfdcOrderItem = orderItemId_OrderItem.get(updateItemId);
 						Map<String, PriceInfo_DTO> mapProductNumber_Price = new Map<String, PriceInfo_DTO>();
 
-						if(sfdcOrderItem != null)
-						{
-							mapProductNumber_Price.put(item.productCode, item.PriceInfo);
-							sfdcOrderItem.Quantity = item.quantity;
-							sfdcOrderItem.Freight_Charge__c = item.shippingAmount;
-							sfdcOrderItem.Tax__c = item.taxAmount;
-							sfdcOrderItem.Coupon__c = item.couponCode;
-							orderItemToUpdate.add(sfdcOrderItem);
-
-							Order_Svc.setPriceToOrderItem(orderItemToUpdate, mapProductNumber_Price, sfOrder.ShipToContactId, false);
+						if(sfdcOrderItem != null)	{	mapProductNumber_Price.put(item.productCode, item.PriceInfo);	sfdcOrderItem.Quantity = item.quantity;	sfdcOrderItem.Freight_Charge__c = item.shippingAmount;	sfdcOrderItem.Tax__c = item.taxAmount;	sfdcOrderItem.Coupon__c = item.couponCode;	orderItemToUpdate.add(sfdcOrderItem);	Order_Svc.setPriceToOrderItem(orderItemToUpdate, mapProductNumber_Price, sfOrder.ShipToContactId, false);
 						}
 
 						//Get the broken down discount
 						if(orderItemId_OrderItem.size() > 0)
 						{
 							Map<Id, List<Order_Item_Charge__c>> orderItemChargeByOi = new OrderItemCharge_Sel().getChargesByOrerItem(orderItemId_OrderItem.keySet());
-							for(OrderItem_DTO oid : vfOrder.orderItems){
-								if(orderItemChargeByOi != null && orderItemChargeByOi.size() > 0){
-									List<Order_Item_Charge__c> orderItemCharges = orderItemChargeByOi.get(oid.orderItemId);
-									if(orderItemCharges != null && orderItemCharges.size() > 0){
-										List<OrderItemCharge_DTO> oicDto = OrderItemCharge_DTO.format2DTO(orderItemCharges);
-										oid.charges = oicDto;
-									}
-								}else{
-									oid.charges = new List<OrderItemCharge_DTO>();
+							for(OrderItem_DTO oid : vfOrder.orderItems){if(orderItemChargeByOi != null && orderItemChargeByOi.size() > 0){	List<Order_Item_Charge__c> orderItemCharges = orderItemChargeByOi.get(oid.orderItemId);	if(orderItemCharges != null && orderItemCharges.size() > 0){List<OrderItemCharge_DTO> oicDto = OrderItemCharge_DTO.format2DTO(orderItemCharges);	oid.charges = oicDto;}
+								}else{	oid.charges = new List<OrderItemCharge_DTO>();
 								}
 							}
 						}
@@ -1030,10 +981,7 @@ global without sharing class IEC_ShippingController extends IEC_PageController
 						sfOrder.BillToContact_Partner_Number__c, sfOrder.ShipToContact_Partner_Number__c, vfOrder.orderItems);
 
 					taxFreightCalculateWithError = false;
-					if(taxShi != null)
-					{
-						addErrorMessage(labels.get('errTax') + taxShi);
-						taxFreightCalculateWithError = true;
+					if(taxShi != null){	addErrorMessage(labels.get('errTax') + taxShi);	taxFreightCalculateWithError = true;
 					}
 
 					//Save in SFDC
@@ -1189,10 +1137,7 @@ global without sharing class IEC_ShippingController extends IEC_PageController
 
 	public PageReference processPayment()
 	{
-		if(String.isBlank(orderPaymentType))
-		{
-		  addErrorMessage('You must select a Payment method');
-		  return null;
+		if(String.isBlank(orderPaymentType)){  addErrorMessage('You must select a Payment method');  return null;
 		}
 
 		//Verified that the shipping instruction mandatory field are filled in
@@ -1201,14 +1146,10 @@ global without sharing class IEC_ShippingController extends IEC_PageController
 			String.isBlank(vfOrder.shipToContact.phone) || String.isBlank(vfOrder.shipToContact.email)){
 			shipInstructionMandatoryField = false;
 		}
-		if(!shipInstructionMandatoryField){
-			addErrorMessage('Make sure all shipping instruction mandatory fields are filled in');
-			return null;
+		if(!shipInstructionMandatoryField){	addErrorMessage('Make sure all shipping instruction mandatory fields are filled in');return null;
 		}
 		//Verified if the shipToContact email is a valid email.
-		if(!isEmailValid(vfOrder.shipToContact.email)){
-			addErrorMessage('Please enter a valid email address');
-			return null;
+		if(!isEmailValid(vfOrder.shipToContact.email)){	addErrorMessage('Please enter a valid email address');return null;
 		}
 		//-- Update sfOrder(SFDC) from vfOrder(DTO)
 		sfOrder.Payment_Type__c = orderPaymentType;
@@ -1281,21 +1222,7 @@ global without sharing class IEC_ShippingController extends IEC_PageController
 			return null;
 		}
 
-	if(sfOrder.Payment_Type__c == IECConstants.PaymentThresholdType_BankTransfer)
-	{
-	  Boolean isAutorenewable = false;
-		for(OrderItem oi : orderItems)
-		{
-		  if(oi.Auto_Renew__c)
-		  {
-			isAutorenewable = true;
-			break;
-		  }
-		}
-		if(isAutorenewable)
-		{
-		  addErrorMessage(Label.Bank_transfer_validation_for_auto_renew);
-		  return null;
+	if(sfOrder.Payment_Type__c == IECConstants.PaymentThresholdType_BankTransfer){ Boolean isAutorenewable = false;for(OrderItem oi : orderItems){ if(oi.Auto_Renew__c)  {	isAutorenewable = true;	break;  }}if(isAutorenewable){  addErrorMessage(Label.Bank_transfer_validation_for_auto_renew);  return null;
 		}
 	}
 
@@ -1356,15 +1283,7 @@ global without sharing class IEC_ShippingController extends IEC_PageController
 			locationShipTo = Location_Sel.getLocationToSyncSAP(new List<Id>{sfOrder.ShipTo_Location__c}, null, null, null, null).values()[0];
 
 			//*** try to get SAP Id if necessary
-			if (String.isBlank(locationShipTo.SAP_Id__c))
-			{
-				lstSyncResult = IECAddress_Svc.syncCustomerWithSAP(new List<Location__c>{locationShipTo}, null, false);
-				isShipToError = (lstSyncResult[0] != null);
-			}
-			if (isShipToError)
-				addErrorMessage(Label.IEC_SAP_Customer_Shipping_Address_Issue);
-			else
-			{
+			if (String.isBlank(locationShipTo.SAP_Id__c)){	lstSyncResult = IECAddress_Svc.syncCustomerWithSAP(new List<Location__c>{locationShipTo}, null, false);	isShipToError = (lstSyncResult[0] != null);	}if (isShipToError)	addErrorMessage(Label.IEC_SAP_Customer_Shipping_Address_Issue);	else{
 				//*** recalculate shipping & taxes
 				recalculateFreightTax = true;
 				currentShipToPartner = locationShipTo.SAP_Id__c;
@@ -1542,10 +1461,7 @@ global without sharing class IEC_ShippingController extends IEC_PageController
 		String returnMsg = Order_Svc.getSAP_Freight_Tax_for_DTO(sfOrder.Type, sfOrder.Source__c, sfOrder.Order_Channel__c, sfOrder.SoldToAccount_Partner_Number__c, sfOrder.BillToContact_Partner_Number__c
 															  , (String.isBlank(currentShipToPartner) ? sfOrder.ShipToContact_Partner_Number__c : currentShipToPartner) , vfOrder.orderItems);
 		taxFreightCalculateWithError = false;
-		if(returnMsg != null){
-			addErrorMessage(labels.get('errTax') + returnMsg);
-			taxFreightCalculateWithError = true;
-		}
+		if(returnMsg != null){addErrorMessage(labels.get('errTax') + returnMsg);taxFreightCalculateWithError = true;}
 
 		//*** save to database
 		List<OrderItem> orderItemToUpdate = new List<OrderItem>();
@@ -1560,8 +1476,7 @@ global without sharing class IEC_ShippingController extends IEC_PageController
 			totalTaxes += ((oi.taxAmount == null) ? 0 : oi.taxAmount);
 			totalAmount += oi.totalAmount;
 		}
-		if (orderItemToUpdate.size() > 0)
-			update orderItemToUpdate;
+		if (orderItemToUpdate.size() > 0)update orderItemToUpdate;
 
 		//*** refresh totals
 		vfOrder.totalFreightCharge   = totalFreight;

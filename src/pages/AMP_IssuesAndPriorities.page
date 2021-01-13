@@ -13,7 +13,7 @@
         <apex:outputPanel id="issueTable">
     <apex:pageMessages />
             <apex:pageBlockTable value="{!lsIssuesAndPriorities}" var="i" >
-                <apex:column>
+                <apex:column >
                     <div style="width: 80px;">
                         <apex:facet name="header">Actions</apex:facet>
                     </div>                    

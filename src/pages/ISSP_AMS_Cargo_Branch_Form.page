@@ -485,9 +485,9 @@
                 <apex:pageBlockSection columns="1" id="LegalStatusSection">
                     <apex:facet name="header">
                         <apex:outputpanel >
-							{!IF(AND(isCNSAgency, newCase.Reason1__c!='New Commercial BR'), $Label.ISSP_AMS_STEP_3_1_Branch_Title_CNS,
-								IF(AND(isCNSAgency, newCase.Reason1__c=='New Commercial BR'), $Label.ISSP_AMS_STEP_3_1_Branch_Title_CASS_Commercial,
-                                	IF(newlabels,$Label.ISSP_AMS_STEP_3_1_Branch_Title_New,$Label.ISSP_AMS_STEP_3_1_Branch_Title)))}
+                            {!IF(AND(isCNSAgency, newCase.Reason1__c!='New Commercial BR'), $Label.ISSP_AMS_STEP_3_1_Branch_Title_CNS,
+                                IF(AND(isCNSAgency, newCase.Reason1__c=='New Commercial BR'), $Label.ISSP_AMS_STEP_3_1_Branch_Title_CASS_Commercial,
+                                    IF(newlabels,$Label.ISSP_AMS_STEP_3_1_Branch_Title_New,$Label.ISSP_AMS_STEP_3_1_Branch_Title)))}
                         </apex:outputpanel>
                         </apex:facet>
                         <apex:outputText escape="false" value="{!$Label.ISSP_AMS_Step1_Approval_Sought}: {!IF(AND(isCNSAgency, newCase.Reason1__c!='New Commercial BR'), $Label.ISSP_AMS_Step3_Branch_Location_CNS, IF(AND(isCNSAgency, newCase.Reason1__c=='New Commercial BR'), $Label.ISSP_AMS_Step3_Branch_Location_CASS_Commercial ,$Label.ISSP_AMS_Step3_Branch_Location))}"/>
@@ -516,7 +516,7 @@
                         <apex:outputField value="{!hqAccount.Mobile__c}"/>
                         <apex:outputField value="{!hqAccount.Fax}"/>
                         <apex:outputField value="{!hqAccount.IATACode__c}"/>
-                        <apex:pageblocksectionitem>
+                        <apex:pageblocksectionitem >
                             <apex:outputlabel value="{!IF(isCNSAgency, $Label.ISSP_PAX_Federal_EIN, IF(isocountry.Tax_Number_label__c == null, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_number__c.Label, isocountry.Tax_Number_label__c))}" />
                             <apex:outputField value="{!hqAccount.VAT_Number__c}"/>
                         </apex:pageblocksectionitem>
@@ -633,9 +633,9 @@
                    <apex:pageBlockSectionItem labelStyle="width:10%;text-align:left" dataStyle="width:20%">
                        <apex:outputLabel value="{!txtLocalAgencyDetailsLegalName}"/>
                        <apex:outputPanel >
-                       		<apex:inputField value="{!newForm.Local_Legally_Registered_Name__c}" />
+                            <apex:inputField value="{!newForm.Local_Legally_Registered_Name__c}" />
                             <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!txtLocalAgencyDetailsNoCompany}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
-                   		</apex:outputPanel>
+                        </apex:outputPanel>
                    </apex:pageBlockSectionItem>                   
                    <apex:outputtext ><!--empty: move following field to next row --></apex:outputtext>
                    <apex:outputtext ><!--empty: move following field to next row --></apex:outputtext>
@@ -677,7 +677,7 @@
                     </apex:facet>
                         <div class="col-md-12 bg-info"><strong>{!$Label.ISSP_AMS_Cargo_Branch_Form_SECTION3_1}</strong></div>
                        <div class="col-md-12">
-                       	{!IF(newlabels, $Label.ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line1_New, $Label.ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line1)}<br/><br/>
+                        {!IF(newlabels, $Label.ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line1_New, $Label.ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line1)}<br/><br/>
                         {!IF(newlabels, $Label.ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line2_New, $Label.ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line2)}<br/><br/>
                         {!IF(isCNSAgency, $Label.ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line3_CNS, $Label.ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line3)}<br/>
                        </div>
@@ -692,7 +692,7 @@
                             <apex:column headerValue="{!$ObjectType.Contact.fields.LastName.Label}" value="{!agencycon.Last_name__c}"/>
                             <apex:column headerValue="{!$ObjectType.Contact.fields.Phone.Label}" value="{!agencycon.Phone__c}"/>
                             <apex:column headerValue="{!$ObjectType.Contact.fields.Email.Label}" value="{!agencycon.Email__c}"/>   
-                     		<apex:column headerValue="{!CASE(ownerLabelType, 'shareholder', $Label.ISSP_AMS_Shareholder, 'partner', $Label.ISSP_AMS_Partner, $Label.ISSP_AMS_Owner)}" value="{!agencycon.Agency_owner__c}" id="ownerTitle" style="text-align:center"/>
+                            <apex:column headerValue="{!CASE(ownerLabelType, 'shareholder', $Label.ISSP_AMS_Shareholder, 'partner', $Label.ISSP_AMS_Partner, $Label.ISSP_AMS_Owner)}" value="{!agencycon.Agency_owner__c}" id="ownerTitle" style="text-align:center"/>
                             <apex:column value="{!agencycon.CASS_contact__c}" style="text-align:center">
                                 <apex:facet name="header"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_CASS_Contact}"/></apex:facet>
                             </apex:column>                      
@@ -733,8 +733,8 @@
                             </apex:column>
                         </apex:pageBlockTable>
                          <apex:actionFunction name="deleteContact" action="{!deleteAgencyContact}" rerender="contactList"> 
-                            	<apex:param value="" name="recordId" assignTo="{!editContactId}" />
-                        	</apex:actionFunction>
+                                <apex:param value="" name="recordId" assignTo="{!editContactId}" />
+                            </apex:actionFunction>
                         </apex:pageBlockSection>
                 
                 <div id="multi-owners" style="{!IF(AND(newForm.ISSP_AMS_Legal_Status__c != 'Sole Proprietorship', newForm.ISSP_AMS_Legal_Status__c !=null), 'border: 0px !important;', 'display:none')}">
@@ -1061,8 +1061,8 @@
                             <apex:outputText rendered="{!isocountry.Local_language_Agency_details_required__c}">
                             <tr><td class="modalrow">
                                 <apex:outputPanel >
-                                	<apex:outputText value="{!txtLocalAgencyDetailsFirstNameLocal}" />&nbsp;
-                                	<apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!txtLocalAgencyDetailsNoLocalFirstName}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
+                                    <apex:outputText value="{!txtLocalAgencyDetailsFirstNameLocal}" />&nbsp;
+                                    <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!txtLocalAgencyDetailsNoLocalFirstName}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
                                   </apex:outputPanel>
                                 <apex:inputField value="{!newContact.Local_First_name__c}" required="true"/>
                                 </td></tr>
@@ -1074,7 +1074,7 @@
                             <apex:outputText rendered="{!isocountry.Local_language_Agency_details_required__c}">
                             <tr><td class="modalrow">
                                 <apex:outputPanel >
-                                	<apex:outputText value="{!txtLocalAgencyDetailsLastNameLocal}" />&nbsp;
+                                    <apex:outputText value="{!txtLocalAgencyDetailsLastNameLocal}" />&nbsp;
                                     <apex:image value="/img/msg_icons/info16.png" style="margin-left:3px;" title="{!txtLocalAgencyDetailsNoLocalLastName}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" />
                                 </apex:outputPanel>
                                 <apex:inputField value="{!newContact.Local_Last_Name__c}" required="true"/>

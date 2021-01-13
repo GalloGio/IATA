@@ -300,7 +300,7 @@
                 <apex:outputText rendered="{!agencycon.id == newForm.ISSP_AMS_Portal_admin__c}"><img src="/img/checkbox_checked.gif"/></apex:outputText>
             </apex:column>                        
             -->
-            <apex:column  styleClass="checkbox-td">
+            <apex:column styleClass="checkbox-td">
                 <apex:facet name="header"><apex:outputText escape="false" value="{!$Label.ISSP_AMS_Roles_and_Responsibilities}"/></apex:facet>
                 <table>
                     <tr>

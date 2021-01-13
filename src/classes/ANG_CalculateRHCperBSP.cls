@@ -1,6 +1,4 @@
-
-
-	global class ANG_CalculateRHCperBSP implements Database.Batchable<ANG_RHC_Information__c>, Database.Stateful {
+global class ANG_CalculateRHCperBSP implements Database.Batchable<ANG_RHC_Information__c>, Database.Stateful {
 
 		Set<String> ACTIVEAGENCYSTATUS = AMS_Utils.ACTIVEAGENCYSTATUS;
 

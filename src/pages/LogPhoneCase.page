@@ -12,7 +12,7 @@
 			<apex:pageBlockSection columns="2" collapsible="false">
 			
 				<apex:inputField value="{!newcase.CaseArea__c}" required="true" />
-				<apex:pageBlockSectionItem>
+				<apex:pageBlockSectionItem >
 					<apex:outputLabel value="Case Type"/>
 					<apex:outputPanel layout="block" styleClass="requiredInput">
 					<apex:outputPanel layout="block" styleClass="requiredBlock"/>
@@ -23,7 +23,7 @@
 				</apex:pageBlockSectionItem>
 				
 				<apex:inputField value="{!newcase.Reason1__c}" required="true" />
-				<apex:pageBlockSectionItem>
+				<apex:pageBlockSectionItem >
 					<apex:outputLabel value="{!$ObjectType.Case.fields.Case_Language__c.label}"/>
 					<apex:outputPanel layout="block" styleClass="requiredInput">
 					<apex:outputPanel layout="block" styleClass="requiredBlock"/>
@@ -55,7 +55,7 @@
 				<apex:inputField value="{!newcase.Visible_on_ISS_Portal__c}" />
 				<apex:inputField value="{!newcase.SuppliedPhone}" />
 				
-				<apex:pageBlockSectionItem>
+				<apex:pageBlockSectionItem >
 					<apex:outputLabel value="Case Record Type"/>
 					<apex:outputPanel layout="block" styleClass="requiredInput">
 					<apex:outputPanel layout="block" styleClass="requiredBlock"/>

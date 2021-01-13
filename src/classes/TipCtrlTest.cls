@@ -382,7 +382,7 @@ public class TipCtrlTest {
 	@IsTest
 	private static void getEmbedTokenTest() {
 
-		User testUser = [SELECT Id FROM User WHERE Email = 'petr.novak.test.xyz@somedomain.xyz.com'];
+		User testUser = [SELECT Id  FROM User WHERE Email = 'petr.novak.test.xyz@somedomain.xyz.com'];
 
 		PowerBiCtrl.EmbedTokenResult result = null;
 
@@ -392,7 +392,7 @@ public class TipCtrlTest {
 
 			Test.setMock(HttpCalloutMock.class, new PowerBICalloutMockProvider());
 			PowerBI_Config__c config = TipCtrl.getPowerBICredentials('TipReports');
-			result = TipCtrl.getEmbedToken('access_token', testUser.Id, 'groupId', 'reportId', 'datasetId',config);
+			result = TipCtrl.getEmbedToken('access_token', testUser.id, 'groupId', 'reportId', 'datasetId',config);
 		}
 
 		Test.stopTest();
@@ -429,7 +429,7 @@ public class TipCtrlTest {
 			}
 
 
-			result = TipCtrl.getEmbedToken('access_token', testUser.Id, 'groupId', 'reportid', 'datasetId',config);
+			result = TipCtrl.getEmbedToken('access_token', testUser.id, 'groupId', 'reportid', 'datasetId',config);
 		}
 
 		Test.stopTest();
@@ -466,7 +466,7 @@ public class TipCtrlTest {
 			}
 
 
-			result = TipCtrl.getEmbedToken('access_token', testUser.Id, 'groupId', 'reportid', 'datasetId',config);
+			result = TipCtrl.getEmbedToken('access_token', testUser.id, 'groupId', 'reportid', 'datasetId',config);
 		}
 
 		Test.stopTest();
@@ -499,7 +499,7 @@ public class TipCtrlTest {
 			}
 
 
-			result = TipCtrl.getEmbedToken('access_token', testUser.Id, 'groupId', 'reportid', 'datasetId',config);
+			result = TipCtrl.getEmbedToken('access_token', testUser.id, 'groupId', 'reportid', 'datasetId',config);
 		}
 
 		Test.stopTest();
@@ -526,7 +526,7 @@ public class TipCtrlTest {
 			PowerBI_Config__c config = TipCtrl.getPowerBICredentials('TipReports');
 
 			try{
-				result = TipCtrl.getEmbedToken('access_token', testUser.Id, 'groupId', 'reportId', 'datasetId',config);
+				result = TipCtrl.getEmbedToken('access_token', testUser.id, 'groupId', 'reportId', 'datasetId',config);
 			}catch(Exception e) {
 				testException = e;
 			}

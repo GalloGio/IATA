@@ -57,7 +57,7 @@
                 <apex:pageBlockSection id="filters" title="Filters" columns="1">
                     
                     <apex:pageBlockSectionItem labelTitle="Operation Type">
-                    	<apex:actionRegion>
+                    	<apex:actionRegion >
 	                        <apex:outputLabel value="Operation Type"/>
 	                        <apex:outputPanel styleClass="requiredInput" layout="block">
 	                            <apex:outputPanel styleClass="requiredBlock" layout="block"/>

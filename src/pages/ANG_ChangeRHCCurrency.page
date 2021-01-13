@@ -51,7 +51,7 @@
 
     </script>
 
-   <apex:form>
+   <apex:form >
       <apex:pageBlock id="infoBlock" mode="edit" tabStyle="ANG_RHC_Information__c" title="Current RHC" rendered="{!rhc != null}">
 			<apex:pageMessages />
          <apex:pageBlockSection title="RHC Information" columns="2">

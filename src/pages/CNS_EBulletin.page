@@ -1350,7 +1350,7 @@
                                                     <br/>
                                         
                                                      <apex:actionFunction name="planeStartDaily" action="{!isGettingReportStartDaily}" reRender="waitingPlaneDaily,btnDailyDownload"/>
-                                                    <apex:outputPanel id='waitingPlaneDaily'>
+                                                    <apex:outputPanel id="waitingPlaneDaily">
                                                         <apex:pageBlockSectionItem rendered="{!isGettingReportDaily}">
                                                             <div class="title">
                                                                 <img src="{!URLFOR($Resource.IataLoadingImage)}"/><br/>
@@ -1581,7 +1581,7 @@
                                                             <br/>
                                                                 
                                                                 <apex:actionFunction name="planeStartWeekly" action="{!isGettingReportStartWeekly}" reRender="waitingPlaneWeekly,btnWeeklyDownload"/>
-                                                                <apex:outputPanel id='waitingPlaneWeekly'>
+                                                                <apex:outputPanel id="waitingPlaneWeekly">
                                                                     <apex:pageBlockSectionItem rendered="{!isGettingReportWeekly}">
                                                                         <div class="title">
                                                                             <img src="{!URLFOR($Resource.IataLoadingImage)}"/><br/>

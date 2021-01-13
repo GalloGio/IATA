@@ -50,9 +50,9 @@
 						<apex:outputField value="{!actionPlan.Due_Date__c}" rendered="{! NOT(isEditMode) }" />
 						<apex:inputField value="{!actionPlan.Due_Date__c}" rendered="{! isEditMode }" />
 					</apex:column--> 
-					<apex:column>
+					<apex:column >
 		            	<apex:facet name="header"> 
-		            		<apex:outputPanel>     			
+		            		<apex:outputPanel >     			
 			                	<apex:commandLink value="{!$ObjectType.OI_Action_Plan__c.fields.Due_Date__c.label}" action="{!SortTable}" rendered="{! NOT(isEditMode) }">
 			                		<apex:param name="sortField" value="Due_Date__c" assignTo="{!strSortField}"/>
 			                	</apex:commandLink>
@@ -67,9 +67,9 @@
 						<apex:outputField value="{!actionPlan.Closure_Date__c}" rendered="{! NOT(isEditMode) }" />
 						<apex:inputField value="{!actionPlan.Closure_Date__c}" rendered="{! isEditMode }" />
 					</apex:column-->
-					<apex:column>
+					<apex:column >
 		            	<apex:facet name="header">
-		                	<apex:outputPanel>     			
+		                	<apex:outputPanel >     			
 			                	<apex:commandLink value="{!$ObjectType.OI_Action_Plan__c.fields.Closure_Date__c.label}" action="{!SortTable}" rendered="{! NOT(isEditMode) }">
 			                		<apex:param name="sortField" value="Closure_Date__c" assignTo="{!strSortField}"/>
 			                	</apex:commandLink>
@@ -84,9 +84,9 @@
 						<apex:outputField value="{!actionPlan.Action_Owner__c}" rendered="{! NOT(isEditMode) }" />
 						<apex:inputField value="{!actionPlan.Action_Owner__c}" rendered="{! isEditMode }" />
 					</apex:column-->
-					<apex:column>
+					<apex:column >
 		            	<apex:facet name="header">
-		                	<apex:outputPanel>     			
+		                	<apex:outputPanel >     			
 			                	<apex:commandLink value="{!$ObjectType.OI_Action_Plan__c.fields.Action_Owner__c.label}" action="{!SortTable}" rendered="{! NOT(isEditMode) }">
 			                		<apex:param name="sortField" value="Action_Owner__c" assignTo="{!strSortField}"/>
 			                	</apex:commandLink>
@@ -106,9 +106,9 @@
 						<apex:outputField value="{!actionPlan.Met_Due_Date__c}" rendered="{! NOT(isEditMode) }" />
 						<apex:inputField value="{!actionPlan.Met_Due_Date__c}" rendered="{! isEditMode }" />
 					</apex:column-->
-					<apex:column>
+					<apex:column >
 		            	<apex:facet name="header">
-		                	<apex:outputPanel>     			
+		                	<apex:outputPanel >     			
 			                	<apex:commandLink value="{!$ObjectType.OI_Action_Plan__c.fields.Met_Due_Date__c.label}" action="{!SortTable}" rendered="{! NOT(isEditMode) }">
 			                		<apex:param name="sortField" value="Met_Due_Date__c" assignTo="{!strSortField}"/>
 			                	</apex:commandLink>

@@ -9,7 +9,7 @@
 
 <c:ISSP_Header ></c:ISSP_Header>
 
-<c:ISSP_WaitingStatus/>
+<c:ISSP_WaitingStatus />
 
 <style>
     div.messageText {
@@ -94,7 +94,7 @@
                                     <div class="type-text">
                                         <p class="text-justify">
                                             <small class="text-muted">
-                                                <apex:outputText escape="false" value="{!$Label[wrapper.sisType.Description_Label__c]}"/>
+                                                <apex:outputText escape="false" value="{!$Label[wrapper.sisType.Description_label__c]}"/>
                                             </small>
                                         </p>
                                     </div>

@@ -47,8 +47,7 @@
                 <h3 class="panel-title">{!IF(strChangeType=='Minor database changes', 'Airline Participation Change Request', 'Change of Bank Account details')}</h3>
             </div>
     <div class="panel-body" id="body-enquiries">
-        <c:ISSP_APProcess_Progress 
-            step="{!stepNumber}"
+        <c:ISSP_APProcess_Progress step="{!stepNumber}"
             operationType="{!strOperationType}"
             areaType="{!strAreaType}"
             changeType="{!strChangeType}"
@@ -525,7 +524,7 @@
                     </apex:pageBlockSection>
                     <apex:pageBlockSection collapsible="false" columns="1" rendered="{!newForm.Participate_in_AWB_Stock_Management__c='Yes'}">
                         <apex:outputText value="{!$Label.ISSP_AP_Stock_Management_Add_Emails}"/>
-                        <apex:pageBlockSectionItem>
+                        <apex:pageBlockSectionItem >
                             <apex:outputLabel value="Email 1" styleclass="ap-required"/>
                             <apex:inputField value="{!newform.Stock_Management_Email_1__c}"/>
                         </apex:pageBlockSectionItem>

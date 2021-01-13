@@ -307,7 +307,7 @@
         </apex:form>
     </div>
     </div>
-    <c:ISSP_CustomFooter/>
+    <c:ISSP_CustomFooter />
 </body>
 </html>
 </apex:page>

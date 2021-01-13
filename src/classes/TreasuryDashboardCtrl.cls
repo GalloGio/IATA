@@ -1,4 +1,3 @@
-
 public without sharing class TreasuryDashboardCtrl {
 
 	public static String POWERBI_ACCESS_TOKEN = 'PowerBIaccessToken';

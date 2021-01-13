@@ -160,8 +160,7 @@
                 <h3 class="panel-title">Airline Participation Joining Process</h3>
             </div>
     <div class="panel-body" id="body-enquiries">
-        <c:ISSP_APProcess_Progress 
-            step="{!stepNumber}"
+        <c:ISSP_APProcess_Progress step="{!stepNumber}"
             operationType="{!strOperationType}"
             areaType="{!strAreaType}"
             changeType="{!strChangeType}"
@@ -492,31 +491,31 @@
                         GSSA Contact details
                     </div>
                     <apex:outputText ><!--empty: move following field to next row --></apex:outputText> 
-                    <apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
                         <apex:outputLabel value="Social title" styleclass="ap-required"/>
                         <apex:inputField value="{!newForm.GSSA_Contact_Salutation__c}"/>
                     </apex:pageBlockSectionItem>
-                    <apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
                         <apex:outputLabel value="First name" styleclass="ap-required"/>
                         <apex:inputField value="{!newForm.GSSA_Contact_F_Name__c}"/>
                     </apex:pageBlockSectionItem>
-                    <apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
                         <apex:outputLabel value="Last name" styleclass="ap-required"/>
                         <apex:inputField value="{!newForm.GSSA_Contact_L_Name__c}"/>
                     </apex:pageBlockSectionItem>
-                    <apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
                         <apex:outputLabel value="Job title" styleclass="ap-required"/>
                         <apex:inputField value="{!newForm.GSSA_Contact_JobTitle__c}"/>
                     </apex:pageBlockSectionItem>
-                    <apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
                         <apex:outputLabel value="Email address" styleclass="ap-required"/>
                         <apex:inputField value="{!newForm.GSSA_Contact_Email__c}"/>
                     </apex:pageBlockSectionItem>
-                    <apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
                         <apex:outputLabel value="Phone number" styleclass="ap-required"/>
                         <apex:inputField value="{!newForm.GSSA_Contact_Phone__c}"/>
                     </apex:pageBlockSectionItem>
-                    <apex:pageBlockSectionItem>
+                    <apex:pageBlockSectionItem >
                         <apex:outputLabel value="Fax number"/>
                         <apex:inputField value="{!newForm.GSSA_Contact_FAX__c}"/>
                     </apex:pageBlockSectionItem>

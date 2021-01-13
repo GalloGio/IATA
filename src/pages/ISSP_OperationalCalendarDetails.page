@@ -1279,7 +1279,7 @@
                 </div>
                 <div class="col-sm-1"></div>
             </div>
-        </apex:form >
+        </apex:form>
         <!-- DATA TABLE -->
         <div id="table-container"></div>
 
@@ -1320,8 +1320,7 @@
                                 <div class="row">
                                     <div class="col-sm-1"></div>
                                     <div class="col-sm-10">
-                                        <c:ISSP_MultipicklistCmp
-                                            leftLabel="{!$Label.ISSP_FDS_Operations}" 
+                                        <c:ISSP_MultipicklistCmp leftLabel="{!$Label.ISSP_FDS_Operations}" 
                                             rightLabel="{!$Label.ISSP_FDS_OperationsSelected}"
                                             leftOptions="{!operationsOpts}"
                                             rightOptions="{!selectedOperations}"
@@ -1335,8 +1334,7 @@
                                 <div class="row">
                                     <div class="col-sm-1"></div>
                                     <div class="col-sm-10">
-                                        <c:ISSP_MultipicklistCmp
-                                            leftLabel="{!$Label.ISSP_FDS_Remittance}" 
+                                        <c:ISSP_MultipicklistCmp leftLabel="{!$Label.ISSP_FDS_Remittance}" 
                                             rightLabel="{!$Label.ISSP_FDS_RemittanceSelected}"
                                             leftOptions="{!remittancesOpts}"
                                             rightOptions="{!selectedFrenquencies}"
@@ -1350,8 +1348,7 @@
                                 <div id="countrySelector" class="row">
                                     <div class="col-sm-1"></div>
                                     <div class="col-sm-10">
-                                        <c:ISSP_MultipicklistCmp
-                                            leftLabel="{!$Label.ISSP_FDS_Countries}" 
+                                        <c:ISSP_MultipicklistCmp leftLabel="{!$Label.ISSP_FDS_Countries}" 
                                             rightLabel="{!$Label.ISSP_FDS_CountriesSelected}"
                                             leftOptions="{!countriesOpts}"
                                             rightOptions="{!selectedCountries}"

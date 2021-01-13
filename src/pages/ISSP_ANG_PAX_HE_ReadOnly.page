@@ -123,19 +123,19 @@
 
     <apex:pageBlockSection rendered="{!OR(isTerminatedAgent, isNewHOforAccredAgent)}"> <!-- IF ACCOUNT IS TERMINATED AND IS ACCREDITED  -->
         <apex:outputField label="{!$ObjectType.Account.fields.BillingStreet.Label}" value="{!newForm.Branch_Office_Street_name_number__c}"/>
-        <apex:outputField label="{!$ObjectType.Account.fields.ShippingStreet.Label}" value="{!newForm.shipping_street__c}"/>
+        <apex:outputField label="{!$ObjectType.Account.fields.ShippingStreet.Label}" value="{!newForm.Shipping_Street__c}"/>
 
         <apex:outputField label="{!$ObjectType.Account.fields.billingcity.Label}" value="{!newForm.Branch_Office_City__c}"/>
-        <apex:outputField label="{!$ObjectType.Account.fields.Shippingcity.Label}" value="{!newForm.shipping_city__c}"/>
+        <apex:outputField label="{!$ObjectType.Account.fields.Shippingcity.Label}" value="{!newForm.Shipping_City__c}"/>
 
         <apex:outputField label="{!$ObjectType.Account.fields.billingstate.Label}" value="{!newForm.State_Province__c}"/>
-        <apex:outputField label="{!$ObjectType.Account.fields.Shippingstate.Label}" value="{!newForm.shipping_state__c}"/>
+        <apex:outputField label="{!$ObjectType.Account.fields.Shippingstate.Label}" value="{!newForm.Shipping_State__c}"/>
 
         <apex:outputField label="{!$ObjectType.Account.fields.billingpostalcode.Label}" value="{!newForm.Branch_Office_Postal_code__c}"/>
-        <apex:outputField label="{!$ObjectType.Account.fields.Shippingpostalcode.Label}" value="{!newForm.shipping_postal_code__c}"/>
+        <apex:outputField label="{!$ObjectType.Account.fields.Shippingpostalcode.Label}" value="{!newForm.Shipping_Postal_Code__c}"/>
 
         <apex:outputField label="{!$ObjectType.Account.fields.billingcountry.Label}" value="{!newForm.Branch_Office_Country__r.name}"/>
-        <apex:outputField label="{!$ObjectType.Account.fields.Shippingcountry.Label}" value="{!newForm.shipping_country__c}"/>
+        <apex:outputField label="{!$ObjectType.Account.fields.Shippingcountry.Label}" value="{!newForm.Shipping_Country__c}"/>
     </apex:pageBlockSection>        
     
 

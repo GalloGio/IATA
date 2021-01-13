@@ -61,7 +61,6 @@ public AccountContactOrder_Ext(ApexPages.StandardController controller) {
 		returnURL = '&retURL=%2F' + String.valueOf(objId).left(15);
 } //*** end of "AccountContactOrder_Ext"
 
-
 /****************************************************************************************************
 	Created by CGI, Thai 2015-10-04
 		Delete an order
