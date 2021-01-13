@@ -327,7 +327,7 @@ public class ContactHandler{
 
 		map<Id,Contact> mapContactsRights = new map<Id,Contact>([
 			SELECT Id,
-				(SELECT Id, Application_Name__c
+				(SELECT Id, Application_Name__c,  Application_uniqueness_for_contact__c
 				FROM Portal_Application_Rights__r
 				WHERE Right__c = 'Access Granted'
 				)
