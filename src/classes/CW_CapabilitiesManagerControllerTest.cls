@@ -292,7 +292,7 @@ public class CW_CapabilitiesManagerControllerTest {
 		CW_CapabilitiesManagerController.ResponseBody respUpdate = (CW_CapabilitiesManagerController.ResponseBody) System.JSON.deserialize(response, CW_CapabilitiesManagerController.ResponseBody.class);
 		system.assertEquals(true, respUpdate.success, 'updateCapabilitiesEditedTest');
 		
-		String responseEditAllCapab = CW_CapabilitiesManagerController.editAllCapabilitiesFromStation(listCap,new List<Object>{assignment});
+		String responseEditAllCapab = CW_CapabilitiesManagerController.editAllCapabilitiesFromStation(ardid,listCap,new List<Object>{assignment});
 		CW_CapabilitiesManagerController.ResponseBody respEditAllCapab = (CW_CapabilitiesManagerController.ResponseBody) System.JSON.deserialize(response, CW_CapabilitiesManagerController.ResponseBody.class);
 		system.assertEquals(true, respEditAllCapab.success, 'updateCapabilitiesEditedAllCapabTest');
 		
@@ -317,7 +317,7 @@ public class CW_CapabilitiesManagerControllerTest {
 
 		Test.startTest();
 		
-		String response = CW_CapabilitiesManagerController.editAllCapabilitiesFromStation(null,null);
+		String response = CW_CapabilitiesManagerController.editAllCapabilitiesFromStation(null,null,null);
 		CW_CapabilitiesManagerController.ResponseBody resp = (CW_CapabilitiesManagerController.ResponseBody) System.JSON.deserialize(response, CW_CapabilitiesManagerController.ResponseBody.class);
 		system.assertEquals(false, resp.success, 'editAllCapabilitiesFromStationCatchTest error');
 		

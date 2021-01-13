@@ -269,6 +269,10 @@ export default class CwPrivateAreaContainer extends LightningElement {
 		this.menuItemSelected = event.detail;
 	}
 
+	preSelectStation(event) {
+		this.selectedFacility = event.detail;
+	}
+
 	refreshData() {
 		this.stationsInitialized = false;
 		refreshApex(this.rawUserInfo);

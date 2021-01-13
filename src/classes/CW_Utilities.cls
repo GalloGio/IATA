@@ -4,9 +4,16 @@
  */
 public without sharing class CW_Utilities {
 
-	final static string FACILITY_MANAGER = 'Facility Manager';
+	public final static string FACILITY_MANAGER = 'Facility Manager';
 	public final static string COMPANY_ADMIN = 'Company Admin';
 	final static string FIELD_CUSTOM_VALIDATION_EXCEPTION = 'FIELD_CUSTOM_VALIDATION_EXCEPTION';
+	final static string STATION_CREATION_REQUEST = 'Station Creation Requests';
+	public final static string STATION_MANAGER_REQUEST = 'Station Manager Requests';
+	public final static string ADMIN_REQUEST = 'Admin Requests';
+	final static string HISTORY_STATUS_APPROVED = 'Approved';
+	final static string HISTORY_STATUS_REJECTED = 'Rejected';
+	final static string HISTORY_STATUS_PENDINGIATA = 'Pending for IATA Approval';
+	final static string HISTORY_STATUS_PENDING = 'Pending for Approval';
 
 	//Retrieve metadata related to Portal
 	@AuraEnabled (cacheable=true)
@@ -203,6 +210,53 @@ public without sharing class CW_Utilities {
 
 		}catch (Exception ex) {
 			throw new AuraHandledException('exception: ' + ex);
+		}
+	}
+
+	/*
+	 * @description		Save a list of the history related to ICG_Account_Role_Detail__c
+	 * @param			List<ICG_Contact_Role_Detail__c>
+	 */
+	public static void generateAccountRoleDetailHistory(List<ICG_Account_Role_Detail__c> newItems, Map<Id, ICG_Account_Role_Detail__c> oldMap){
+		List<ICG_Contact_Account_Role_Detail_History__c> historyItemsToInsert = new List<ICG_Contact_Account_Role_Detail_History__c>();
+		List<String> allowedStatus = new List<String> { HISTORY_STATUS_APPROVED, HISTORY_STATUS_REJECTED, HISTORY_STATUS_PENDING, HISTORY_STATUS_PENDINGIATA };
+
+		for (ICG_Account_Role_Detail__c newItem : newItems) {
+			if (allowedStatus.indexOf(newItem.Status__c) > -1 && (oldMap == null || newItem.Status__c != oldMap.get(newItem.Id).Status__c)) {
+				historyItemsToInsert.add(
+					new ICG_Contact_Account_Role_Detail_History__c(
+						ICG_Account_Role_Detail__c = newItem.Id, 
+						Status__c = newItem.Status__c, 
+						Type__c = STATION_CREATION_REQUEST));
+			}
+		}
+
+		if (historyItemsToInsert.size() > 0){
+			insert historyItemsToInsert;
+		}
+	}
+	
+	/*
+	 * @description		Save a list of the history related to ICG_Contact_Role_Detail__c
+	 * @param			List<ICG_Contact_Role_Detail__c>
+	 */
+	public static void generateContactRoleDetailHistory(List<ICG_Contact_Role_Detail__c> newItems, Map<Id, ICG_Contact_Role_Detail__c> oldMap) {
+		List<ICG_Contact_Account_Role_Detail_History__c> historyItemsToInsert = new List<ICG_Contact_Account_Role_Detail_History__c>();
+		List<String> allowedRoles = new List<String> { CW_Utilities.FACILITY_MANAGER, CW_Utilities.COMPANY_ADMIN };
+		List<String> allowedStatus = new List<String> { HISTORY_STATUS_APPROVED, HISTORY_STATUS_REJECTED, HISTORY_STATUS_PENDING, HISTORY_STATUS_PENDINGIATA };
+
+		for (ICG_Contact_Role_Detail__c newItem : newItems) {
+			if (allowedRoles.indexOf(newItem.ICG_Role__c) > -1 && allowedStatus.indexOf(newItem.Status__c) > -1 && (oldMap == null || newItem.Status__c != oldMap.get(newItem.Id).Status__c )) {
+				historyItemsToInsert.add(
+					new ICG_Contact_Account_Role_Detail_History__c(
+						ICG_Contact_Role_Detail__c = newItem.Id, 
+						Status__c = newItem.Status__c, 
+						Type__c = (newItem.ICG_Role__c == CW_Utilities.COMPANY_ADMIN) ? CW_Utilities.ADMIN_REQUEST : CW_Utilities.STATION_MANAGER_REQUEST));
+			}
+		}
+
+		if (historyItemsToInsert.size() > 0) {
+			insert historyItemsToInsert;
 		}
 	}
 
@@ -635,7 +689,7 @@ public without sharing class CW_Utilities {
 				lstCompanyAdminIds.add(cadmn.Id);
 			}
 			if(!companyAdminIds.isEmpty()) {
-				subject = 'Company Admin request sent';
+				subject = 'New Company Admin request pending approval';
 				emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails('Approve_Reject_to_existing_Comp_Adm', crd.Id, companyAdminIds));
 				CW_NotificationsController.setNotificationCustom(subject, subject, 'Requested', lstCompanyAdminIds, cRd.ICG_Account_Role_Detail__r, CW_NotificationsController.RT_NOTIFICATION_PRIVATE_AREA);
 			}
@@ -756,6 +810,61 @@ public without sharing class CW_Utilities {
 		Account_Contact_Role__r.Contact__r.Phone, Account_Contact_Role__r.Contact__r.Title 
 		from ICG_Contact_Role_Detail__c 
 		where ICG_Role__c =: FACILITY_MANAGER and (createdById = :userId or LastModifiedById =: userId)];
+	}
+
+	@AuraEnabled
+	public static List<ICG_Contact_Account_Role_Detail_History__c> getFacilityHistoryByUser(String userId) {
+		User user = [SELECT Id, ContactId FROM User WHERE id = :userId LIMIT 1];
+		String userContactId = user.ContactId;
+
+		List<ICG_Contact_Account_Role_Detail_History__c> listMyRequest = [Select Id, Type__c, Status__c, LastModifiedById, CreatedDate, LastModifiedDate, 
+		ICG_Contact_Role_Detail__r.Account_Contact_Role__c,
+		ICG_Contact_Role_Detail__r.Account_Contact_Role__r.Account__r.Name,
+		ICG_Contact_Role_Detail__r.Account_Contact_Role__r.Contact__r.OtherState, 
+		ICG_Contact_Role_Detail__r.Account_Contact_Role__r.Contact__r.Name,
+		ICG_Contact_Role_Detail__r.Account_Contact_Role__r.Contact__r.OtherCountry,
+		ICG_Contact_Role_Detail__r.Account_Contact_Role__r.Contact__r.FirstName,
+		ICG_Contact_Role_Detail__r.ICG_Account_Role_Detail__c,
+		ICG_Contact_Role_Detail__r.ICG_Account_Role_Detail__r.Id,
+		ICG_Contact_Role_Detail__r.ICG_Account_Role_Detail__r.Name,
+		ICG_Contact_Role_Detail__r.ICG_Account_Role_Detail__r.RecordType.Name,
+		ICG_Account_Role_Detail__c,
+		ICG_Account_Role_Detail__r.Account_Role__r.Account__c, 
+		ICG_Account_Role_Detail__r.Id,
+		ICG_Account_Role_Detail__r.Name,
+		ICG_Account_Role_Detail__r.RecordType.Name
+		from ICG_Contact_Account_Role_Detail_History__c 
+		where (
+		((Type__C =: ADMIN_REQUEST  OR Type__C =: STATION_MANAGER_REQUEST) and (ICG_Contact_Role_Detail__r.Account_Contact_Role__r.Contact__c = :userContactId))
+		OR 
+		((Type__C =: STATION_CREATION_REQUEST) and (ICG_Account_Role_Detail__r.createdById = :userId))
+		)];
+
+		Map<String, String> hierarchyByStation = new Map<String, String>();	
+		for (ICG_Contact_Account_Role_Detail_History__c item : listMyRequest) {
+			if (item.Type__c == STATION_MANAGER_REQUEST){
+				String  company = (item.ICG_Contact_Role_Detail__r.Account_Contact_Role__r.Account__r != null) ? item.ICG_Contact_Role_Detail__r.Account_Contact_Role__r.Account__r.Name : '';
+				String station = (item.ICG_Contact_Role_Detail__r.ICG_Account_Role_Detail__r != null) ? item.ICG_Contact_Role_Detail__r.ICG_Account_Role_Detail__r.Name : '';
+				
+				if (company != '' && station != ''){
+					hierarchyByStation.put(station, company);
+				}
+			}
+		}
+
+		for (ICG_Contact_Account_Role_Detail_History__c item : listMyRequest) {
+			if (item.Type__c == STATION_CREATION_REQUEST){
+
+				String station = (item.ICG_Account_Role_Detail__r != null) ? item.ICG_Account_Role_Detail__r.Name : '';
+                        
+				if (station != '' && hierarchyByStation.containsKey(station)){
+					String company = hierarchyByStation.get(station);
+					item.ICG_Account_Role_Detail__r.Name += ';' + company;	
+				}    
+			}
+		}
+
+		return listMyRequest;
 	}
 
 	@AuraEnabled
@@ -1018,7 +1127,7 @@ public without sharing class CW_Utilities {
 			subject +=  ' rejected';
 			body +=  ' rejected';
 			notifications.addAll(CW_NotificationsController.setNotificationCustom(subject, body, 'Requested', contactIds, newStation, CW_NotificationsController.RT_NOTIFICATION_PRIVATE_AREA, false));
-			shouldCleanup = true;
+			shouldCleanup = false;
 		}
 
 		CW_EmailManager.sendInternalEmails(emailsToBeSent);
@@ -1041,6 +1150,10 @@ public without sharing class CW_Utilities {
 			try{
 				Account acc = new Account();
 				acc.Id = ard.Account_Role__r.Account__c;
+				
+				List<ICG_Contact_Account_Role_Detail_History__c> listHistory = [Select Id from ICG_Contact_Account_Role_Detail_History__c where ICG_Account_Role_Detail__r.Id = :ard.Id];
+				delete listHistory;
+
 				delete ard;
 				delete acc;
 			}
@@ -1055,90 +1168,88 @@ public without sharing class CW_Utilities {
 	 * @param			newContactRole <new version of the station>
 	 * @param			oldContactRole <old version of the station>
 	*/
-	public static void sendApproveOrRejectMailsContactRole (ICG_Contact_Role_Detail__c newContactRole, ICG_Contact_Role_Detail__c oldContactRole) {
-		String whoId = newContactRole.ContactId__c;
-		ICG_Contact_Role_Detail__c crd = [Select id, ICG_Account_Role_Detail__r.Account_Role__r.Account__c, Account_Role__r.Account__c, Account_Contact_Role__r.Contact__c, Account_Contact_Role__r.Contact__r.Email from ICG_Contact_Role_Detail__c where Id = :newContactRole.Id];
+	public static void sendApproveOrRejectMailsContactRole (ICG_Contact_Role_Detail__c newContactRole, ICG_Contact_Role_Detail__c oldContactRole){
+		Set<Id> whoIdsCompAdminStationManagersContacts = new Set<Id>();
+		Set<Id> whoIdsCompAdmStationManagersCRDs = new Set<Id>();
+		Set<String> notificationReceivers = new Set<String>();
+		List<String> companyAdminNotificationIds = new List<String>();
 		String templateNameContact;
 		String templateNameCompAdmStationManagers;
 		String templateNameIata;
 		String subject;
+		String adminSubject;
 
-		Set<Id> whoIds = new Set<Id>{crd.Account_Contact_Role__r.Contact__c};
-		Set<Id> whoIdsCompAdminStationManagersContacts = new Set<Id>();
-		Set<Id> whoIdsCompAdmStationManagersCRDs = new Set<Id>();
-		Set<String> notificationReceivers = new Set<String>();
+		ICG_Contact_Role_Detail__c crd = [Select id, ICG_Account_Role_Detail__r.Account_Role__r.Account__c, Account_Role__r.Account__c, Account_Contact_Role__r.Contact__c, Account_Contact_Role__r.Contact__r.Email from ICG_Contact_Role_Detail__c where Id = :newContactRole.Id];
+		Set<Id> whoIds = new Set<Id>{crd.Account_Contact_Role__r.Contact__c};		
 		notificationReceivers.add(crd.Account_Contact_Role__r.Contact__c);
+
 		for (Contact cadmn : getCompanyAdminContactsFromAccountId(crd.ICG_Account_Role_Detail__r.Account_Role__r.Account__c)) {
 			whoIdsCompAdminStationManagersContacts.add(cadmn.Id);
 			notificationReceivers.add(cadmn.Id);
 		}
-
-		if (newContactRole.Status__c == 'Approved' && oldContactRole.Status__c != 'Approved') {
-			if(newContactRole.ICG_Role__c == FACILITY_MANAGER) {
+		
+		if(newContactRole.ICG_Role__c == FACILITY_MANAGER) {
+			for (ICG_Contact_Role_Detail__c mngr : getStationManagersContactRoleDetails(newContactRole.ICG_Account_Role_Detail__c)) {
+				whoIdsCompAdmStationManagersCRDs.add(mngr.Account_Contact_Role__r.Contact__c);
+				notificationReceivers.add(mngr.Account_Contact_Role__r.Contact__c);
+			}
+			if (newContactRole.Status__c == 'Approved' && oldContactRole.Status__c != 'Approved'){
 				templateNameIata = 'Notification_approved_to_IATA';
 				templateNameContact = 'Notification_approved_to_User';
 				templateNameCompAdmStationManagers = 'Notification_appr_to_Sta_Man_Comp_Adm';
-				subject = 'Station Manager request approved';
-				for (ICG_Contact_Role_Detail__c mngr : getStationManagersContactRoleDetails(newContactRole.ICG_Account_Role_Detail__c)) {
-					whoIdsCompAdmStationManagersCRDs.add(mngr.Account_Contact_Role__r.Contact__c);
-					notificationReceivers.add(mngr.Account_Contact_Role__r.Contact__c);
-				}
-
-			} else if(newContactRole.ICG_Role__c == COMPANY_ADMIN) {
+				subject = 'Station Manager request approved';					
+			}else if(newContactRole.Status__c == 'Rejected' && oldContactRole.Status__c != 'Rejected'){
+				templateNameContact = 'Notification_rejected_to_User';
+				subject = 'Station manager request rejected';
+			}else if (newContactRole.Status__c == 'Removed' && oldContactRole.Status__c != 'Removed') {
+				templateNameContact = 'Remove_notification_to_removed_stat_man';
+				templateNameIata = 'Remove_notification_to_IATA';
+				templateNameCompAdmStationManagers = 'Remove_notif_to_Stat_Man_Comp_Adm';
+				subject = 'Station Manager rights removed';
+			}	
+		} else if(newContactRole.ICG_Role__c == COMPANY_ADMIN) {
+			for (Contact cadmn : getCompanyAdminContactsFromAccountId(crd.Account_Role__r.Account__c)) {
+				if(!notificationReceivers.contains(cadmn.Id)){
+					companyAdminNotificationIds.add(cadmn.Id);
+				}					
+			}
+			if (newContactRole.Status__c == 'Approved' && oldContactRole.Status__c != 'Approved'){
 				templateNameIata = 'Notification_Com_Adm_Req_appr_to_IATA';
 				templateNameContact = 'Notification_CA_Approv_to_Requestor';
 				templateNameCompAdmStationManagers = 'Notification_CA_Appro_to_Comp_Adm';
 				subject = 'Company admin request approved';
-
-			}
-		} else if (newContactRole.Status__c == 'Rejected' && oldContactRole.Status__c != 'Rejected') {
-			if(newContactRole.ICG_Role__c == FACILITY_MANAGER) {
-				templateNameContact = 'Notification_rejected_to_User';
-				subject = 'Station manager request rejected';
-				for (ICG_Contact_Role_Detail__c mngr : getStationManagersContactRoleDetails(newContactRole.ICG_Account_Role_Detail__c)) {
-					whoIdsCompAdmStationManagersCRDs.add(mngr.Account_Contact_Role__r.Contact__c);
-					notificationReceivers.add(mngr.Account_Contact_Role__r.Contact__c);
-				}
-			} else if(newContactRole.ICG_Role__c == COMPANY_ADMIN) {
+				adminSubject = 'New Company Admin request approved';
+			}else if(newContactRole.Status__c == 'Rejected' && oldContactRole.Status__c != 'Rejected'){
 				templateNameIata = 'Notification_CA_Rejected_to_IATA';
 				templateNameContact = 'Notification_CA_Rejected_to_Requestor';
 				templateNameCompAdmStationManagers = 'Notification_CA_Rejected_to_Comp_Adm';
 				subject = 'Company admin request rejected';
-			}
-		} else if (newContactRole.Status__c == 'Removed' && oldContactRole.Status__c != 'Removed') {
-			templateNameContact = 'Remove_notification_to_removed_stat_man';
-			templateNameIata = 'Remove_notification_to_IATA';
-			templateNameCompAdmStationManagers = 'Remove_notif_to_Stat_Man_Comp_Adm';
-			subject = 'Station Manager rights removed';
-		}
+			}				
+		}			 
 
 		Set<Id> whoEmailsCompAdmStationManagersCombined = new Set<Id>();
 		whoEmailsCompAdmStationManagersCombined.addAll(whoIdsCompAdminStationManagersContacts);
 		whoEmailsCompAdmStationManagersCombined.addAll(whoIdsCompAdmStationManagersCRDs);
 
 		//Send emails 
-
 		List<Messaging.SingleEmailMessage> emailsToBeSent = new List<Messaging.SingleEmailMessage>();
-
 		if(templateNameIata != null) {
 			emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails(templateNameIata, newContactRole.Id, CW_EmailManager.getIataAdminsIds()));
-		}
-		
+		}		
 		if(templateNameCompAdmStationManagers != null) {
 			emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails(templateNameCompAdmStationManagers, newContactRole.Id, whoEmailsCompAdmStationManagersCombined));
 		}
-
 		if (newContactRole.contactId__c != null && templateNameContact != null) {
 			emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails(templateNameContact, newContactRole.Id, whoIds));
 		}
-
 		CW_EmailManager.sendInternalEmails(emailsToBeSent);
-
 
 		//Create notifications
 		if(subject != null) {
-			String body = subject;
-			CW_NotificationsController.setNotificationCustom(subject, body, 'Requested', new List<String>(notificationReceivers), newContactRole.ICG_Account_Role_Detail__r, CW_NotificationsController.RT_NOTIFICATION_PRIVATE_AREA);
+			CW_NotificationsController.setNotificationCustom(subject, subject, 'Requested', new List<String>(notificationReceivers), newContactRole.ICG_Account_Role_Detail__r, CW_NotificationsController.RT_NOTIFICATION_PRIVATE_AREA);
+		}
+		if(String.isNotBlank(adminSubject)){
+			CW_NotificationsController.setNotificationCustom(adminSubject, adminSubject, 'Requested', companyAdminNotificationIds, newContactRole.ICG_Account_Role_Detail__r, CW_NotificationsController.RT_NOTIFICATION_PRIVATE_AREA);
 		}
 	}
 	/*
@@ -1203,6 +1314,123 @@ public without sharing class CW_Utilities {
 		}
 
 		return JSON.serialize(new Map<String, Object>{ 'sectors' => sectors.values()});
+	}
+
+	/*********************************************************************************************************
+	 * @name			getUserIdsFromGroup
+	 * @author			Beatriz <beatriz.menendez@next-lin.ch>
+	 * @created			09 / 12 / 2020
+	 * @description		Generates a map for all the requested groups and its related users (and subordinates)
+	 * @param			String param : groupIds -> set of all parent groups to be taken into account.
+	 * @return			Map<QueueId, Set<MemmberUsersIds>>
+	**********************************************************************************************************/
+	public static Map<Id, Set<Id>> getUserIdsFromGroup(Set<Id> groupIds){
+		// store the results in a set so we don't get duplicates
+		Map<Id, Set<Id>> result					= new Map<Id, Set<Id>>();
+		String userType 						= Schema.SObjectType.User.getKeyPrefix(); //005
+		String groupType 						= Schema.SObjectType.Group.getKeyPrefix(); //00G
+		Map<Id, Set<Id>> groupIdProxysInverse	= new Map<Id, Set<Id>>();
+		
+		for(GroupMember currentGroupMember : [SELECT Id, UserOrGroupId, Group.Type, Group.RelatedId, GroupId FROM GroupMember WHERE GroupId in :groupIds]){
+			// If the user or group id is a user
+			if(((String)currentGroupMember.UserOrGroupId).startsWith(userType)){
+				addMapMember(result, currentGroupMember.GroupId, currentGroupMember.UserOrGroupId);
+			}
+			// If the user or group id is a group            
+			else if(((String)currentGroupMember.UserOrGroupId).startsWith(groupType)){   
+				addMapMember(groupIdProxysInverse, currentGroupMember.userOrGroupId, currentGroupMember.GroupId);
+			}
+		}
+		
+		if(!groupIdProxysInverse.isEmpty()){
+			Map<Id, Set<Id>> groupIdsMap 			= new Map<Id, Set<Id>>();
+			Map<Id, Set<Id>> roleIdInverse			= new Map<Id, Set<Id>>();
+			Map<Id, Set<Id>> roleAndSubIdInverse	= new Map<Id, Set<Id>>();		
+			for(Group g2 : [SELECT Id, Type, relatedId FROM Group WHERE Id = :groupIdProxysInverse.keySet()]){
+				for(Id parentGroup :groupIdProxysInverse.get(g2.Id)){
+					if(g2.Type == 'Role'){
+						addMapMember(roleIdInverse, g2.relatedId, parentGroup);
+					}else if(g2.Type == 'RoleAndSubordinates'){
+						addMapMember(roleAndSubIdInverse, g2.relatedId, parentGroup);
+					}else if(g2.Type == 'PRMOrganization'){
+						addMapMember(roleIdInverse, g2.relatedId, parentGroup);
+					}else if(g2.Type == 'Regular'){
+						addMapMember(groupIdsMap, g2.Id, parentGroup);						                    
+					}					
+				}
+			}
+			//Subordinate roles
+			if(!roleAndSubIdInverse.isEmpty()){
+				getAllSubRoleIds(roleIdInverse, roleAndSubIdInverse);
+			}
+			//Roles' users
+			if(!roleIdInverse.isEmpty()){
+				for(User u: [SELECT id, UserRoleId FROM user WHERE UserRoleId IN: roleIdInverse.keySet()]){
+					for(Id groupId:roleIdInverse.get(u.UserRoleId)){
+						addMapMember(result, groupId, u.Id);
+					}
+				}
+			}    
+			//Subgroup members        
+			if(!groupIdsMap.isEmpty()){
+				for(GroupMember gm : [SELECT id, UserOrGroupId, GroupId FROM GroupMember WHERE GroupId IN: groupIdsMap.keySet()]){	
+					for(Id parentGroupId :groupIdsMap.get(gm.GroupId)){
+						addMapMember(result, parentGroupId, gm.UserOrGroupId);
+					}					
+				}
+			}
+		}
+		return result;
+	}
+
+	/******************************************************************************************************
+	* @name				getAllSubRoleIds
+	* @author			Beatriz <beatriz.menendez@next-lin.ch>
+	* @created			09 / 12 / 2020
+	* @description		Returns all the depending roles from a set of roles ids
+	* @param			Parent users roles ids
+	* @return			Returns a set with all the sub-roles depending on the param id roles set.
+	******************************************************************************************************/
+	private static void getAllSubRoleIds(Map<Id, Set<Id>> roleIds, Map<Id, Set<Id>> roleIdsSubordinates){
+		Map<Id, Set<Id>> currentRoleIds = new Map<Id, Set<Id>>();
+
+		for(UserRole userRole :[SELECT Id, ParentRoleId FROM UserRole WHERE ParentRoleId IN :roleIdsSubordinates.KeySet() AND ParentRoleID != null]){
+			for(Id parentGroup :roleIdsSubordinates.get(userRole.ParentRoleId)){
+				addMapMember(roleIds, userRole.Id, parentGroup);
+				addMapMember(currentRoleIds, userRole.Id, parentGroup);
+			}
+		}
+		// go fetch some more rolls!
+		if(!currentRoleIds.isEmpty()){
+	  		getAllSubRoleIds(roleIds, currentRoleIds);
+		}
+	}
+	  
+	  /*********************************************************************************************************
+	   * @name			addMapMember
+	   * @author		Beatriz <beatriz.menendez@next-lin.ch>
+	   * @created		09 / 12 / 2020
+	   * @description	Adds new map elements (map structure: Map<Id, Set<Id>>)
+	   * @param			Map<Id,Set<Id>> mapValuesBykey 	: Map to add the values 
+	   * 				Id key : Map key
+	   * 				Id value: Map value to add in the key set
+	   * @return		No return needed as map is referenced (no new map allowed in the method call process)
+	  **********************************************************************************************************/
+	  public static void addMapMember(Map<Id,Set<Id>> mapValuesBykey, Id key, Id value){
+		if(mapValuesBykey != null){
+			if(mapValuesBykey.containsKey(key)){
+				mapValuesBykey.get(key).add(value);
+			}else{
+				Set<Id> setValues = new Set<Id>();
+				setValues.add(value);
+				mapValuesBykey.put(key, setValues);
+			}
+		}else{
+			mapValuesBykey = new Map<Id,Set<Id>>();
+			Set<Id> setValues = new Set<Id>();
+			setValues.add(value);
+			mapValuesBykey.put(key, setValues);
+		}
 	}
 
 	public class ResponseBody {

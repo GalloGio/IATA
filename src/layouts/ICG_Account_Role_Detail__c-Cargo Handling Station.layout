@@ -115,6 +115,10 @@
                 <behavior>Edit</behavior>
                 <field>Is_On_Airport__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Is_Direct_Ramp_Access__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -149,6 +153,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>IATA_ISO_Country__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Nearest_Airport_Name__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

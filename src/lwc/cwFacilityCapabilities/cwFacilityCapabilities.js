@@ -102,7 +102,7 @@ export default class CwFacilityCapabilities extends LightningElement {
 	}
 
 	get cargoHandlingCapabilitiesCss() {
-		return "ml-1 alert text-truncate";
+		return "ml-0 pl-0 alert text-truncate";
 	}
 
 	get isRecordTypeEditable(){
@@ -910,7 +910,6 @@ export default class CwFacilityCapabilities extends LightningElement {
 	}
 
 	handleSaveChanges(listAddedRows){
-		this.sendACKSaveAction();
 		if(this.checkRequiredFields){
 			this.isLoading = true;
 			this.createRelationshipsForNewCapabilities(this.recordId,listAddedRows);

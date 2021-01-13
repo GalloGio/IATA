@@ -510,9 +510,12 @@ public without sharing class CW_CapabilitiesManagerController {
 	 * @return			String
 	 */
 	@AuraEnabled
-	public static String editAllCapabilitiesFromStation(List<Object> listAddedRows, List<Object> listDeleteRows){
+	public static String editAllCapabilitiesFromStation(String accRoleDet, List<Object> listAddedRows, List<Object> listDeleteRows){
 		ResponseBody res = new ResponseBody();
 		try{
+			//delete files to sf backend
+			res.success = CW_FacilityCapabilitiesController.deleteFileAssigmentPrevious(accRoleDet, listAddedRows);
+
 			if(listDeleteRows.size()>0){
 				res.success = removeCapabilities(listDeleteRows);
 			}
@@ -787,12 +790,12 @@ public without sharing class CW_CapabilitiesManagerController {
 					contentDistributionIds.add(c.Id);
 				}
 
-				List<ContentDistribution> contentDistributionInserted = [SELECT Id, ContentVersionId, DistributionPublicUrl, ContentDownloadURL FROM ContentDistribution WHERE Id IN :contentDistributionIds];
+				List<ContentDistribution> contentDistributionInserted = [SELECT Id, ContentVersionId,ContentVersion.ContentDocument.FileExtension, DistributionPublicUrl, ContentDownloadURL FROM ContentDistribution WHERE Id IN :contentDistributionIds];
 
 				//key = ContentDocumentId, value = PublicUrl
 				Map<String, String> mapContentDocumentAndUrlPublic = new Map<String, String>();
 				for (ContentDistribution cd : contentDistributionInserted) {
-					mapContentDocumentAndUrlPublic.put(mapContentVersionAndDocument.get(cd.ContentVersionId), cd.DistributionPublicUrl);
+					mapContentDocumentAndUrlPublic.put(mapContentVersionAndDocument.get(cd.ContentVersionId), acceptFormats.contains(cd.ContentVersion.ContentDocument.FileExtension) ? cd.DistributionPublicUrl : cd.ContentDownloadURL);
 				}
 
 				//Read DistributionPublicUrl

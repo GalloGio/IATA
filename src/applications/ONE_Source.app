@@ -47,14 +47,6 @@
     <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
     <label>ONE Source</label>
     <navType>Standard</navType>
-    <profileActionOverrides>
-        <actionName>Tab</actionName>
-        <content>One_Source_Home_Page</content>
-        <formFactor>Large</formFactor>
-        <pageOrSobjectType>standard-home</pageOrSobjectType>
-        <type>Flexipage</type>
-        <profile>L3 Global CS</profile>
-    </profileActionOverrides>
     <tabs>standard-home</tabs>
     <tabs>standard-Account</tabs>
     <tabs>ICG_Account_Role_Detail__c</tabs>

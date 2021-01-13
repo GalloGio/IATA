@@ -19,6 +19,8 @@ const MY_REQUESTS = 'my requests';
 const PENDING_STATION_APPROVAL = 'pending station approval';
 const CONFLICT = 'conflict';
 const STATION_CREATION = 'creation';
+const APPROVED = 'approved';
+const REJECTED = 'rejected';
 export default class CwPrivateNotifications extends LightningElement {
 	initialized = false;
 
@@ -108,12 +110,20 @@ export default class CwPrivateNotifications extends LightningElement {
 	generateNotificationDestiny(elem, description) {
 
 		let destiny; 
-		if(description.includes(PENDING_APPROVAL) && this.notificationStationIsDefined(elem) || description.includes(STATION_CREATION)){
+		if(description.includes(PENDING_APPROVAL) && this.notificationStationIsDefined(elem)){
 			if (elem.CreatedById === this.userInfo.Id || description.includes(STATION)){
 				destiny = MY_REQUESTS;
 			}
 			else{
 				destiny = PENDING_USER_APPROVAL;
+			}
+		}
+		else if(description.includes(STATION_CREATION)){
+			if (description.includes(APPROVED)){
+				destiny = STATION;
+			}
+			else{
+				destiny = MY_REQUESTS;
 			}
 		}
 		else if(description.includes(CONFLICT)){
@@ -125,10 +135,7 @@ export default class CwPrivateNotifications extends LightningElement {
 		else if(description.includes(AUDIT_SCHEDULE)){
 			destiny = AUDIT_SCHEDULE;
 		}
-		else if(description.includes(STATION_MANAGER) || description.includes(FACILITY_MANAGER)){
-			destiny = STATION_MANAGERS;
-		}
-		else if(description.includes(COMPANY_ADMIN)){
+		else if(description.includes(COMPANY_ADMIN) || description.includes(STATION_MANAGER) || description.includes(FACILITY_MANAGER)){
 			destiny = MY_REQUESTS;
 		}                
 		else if(description.includes(REMOTE) || description.includes(VALIDATION)){
@@ -226,6 +233,15 @@ export default class CwPrivateNotifications extends LightningElement {
 			window.location.reload();
 		}
 		else{
+			if(destiny === CONFLICT){
+				const selectedItemEvent = new CustomEvent("preselectedstation", {
+					detail: event.currentTarget.getAttribute("data-id")
+				});
+		
+				// Dispatches the event.
+				this.dispatchEvent(selectedItemEvent);	
+			}
+			
 			const selectedItemEvent = new CustomEvent("menuitemselection", {
 				detail: url.replace('#','')
 			});

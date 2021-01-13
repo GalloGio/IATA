@@ -86,7 +86,7 @@
 												<template if:true={currentcapability.value.first_load_check}>
 													<template if:false={currentcapability.value.check_summary}>
 														<template if:true={currentcapability.value.check_detail}>
-															<div class="ml-1 alert text-truncate" role="alert">
+															<div class="ml-0 pl-0 alert text-truncate" role="alert">
 																<img src={warning} class='width-15 pb-1' />
 																&nbsp;{label.summary_no_display_public}
 															</div>
@@ -94,7 +94,7 @@
 													</template>
 													<template if:true={currentcapability.value.check_summary}>
 														<template if:false={currentcapability.value.check_detail}>
-															<div class="ml-1 alert text-truncate" role="alert">
+															<div class="ml-0 pl-0 alert text-truncate" role="alert">
 																<img src={warning} class='width-15 pb-1' />
 																&nbsp;{label.detail_no_display_public}
 															</div>
@@ -102,7 +102,7 @@
 													</template>
 													<template if:false={currentcapability.value.check_detail}>
 														<template if:false={currentcapability.value.check_summary}>
-															<div class="ml-1 alert text-truncate" role="alert">
+															<div class="ml-0 pl-0 alert text-truncate" role="alert">
 																<img src={warning} class='width-15 pb-1' />
 																<b>&nbsp;{label.entire_section_no_display_public}</b>
 															</div>
@@ -114,7 +114,7 @@
 										<!-- Edit Mode End -->
 
 										<div class="col-3 text-right fontw-inherit">
-											<div class="hidden-sm">
+											<div class="hidden-md">
 
 												<template if:true={currentcapability.first}>
 													<button class="collapsible-button no-collapsed-button capitalize"
@@ -144,7 +144,7 @@
 												</button>
 											</div>
 
-											<div class="visible-sm ">
+											<div class="visible-md">
 												<div>
 													<template if:true={currentcapability.first}>
 														<button
@@ -564,32 +564,8 @@
 																							multiple>
 																						</lightning-file-upload>
 																						<template if:false={disablePhotoIcon}>
-																							
-																							<button if:true={row.photosAvailable}
-																							class="p-0 bg-transp border-0"
-																							data-tosca="edit_photos">
-																							<img src={infoIcon} width="20px"
-																								data-super-category-index={currentsupercategory.index}
-																								data-section-index={currentsection.index}
-																								data-capability-index={currentcapability.index}
-																								data-category-index={categoryIndex}
-																								data-row-index={rowIndex}
-																								onclick={openModalEditPhotos} />
-																							</button>
-																					
-																							<button if:false={row.photosAvailable}
-																								disabled
-																								class="p-0 bg-transp border-0 disabled-filter">
-																								<img src={infoIcon} width="20px" />
-																							</button>
-																						</template>
-																						<template if:true={disablePhotoIcon}>
-																							<button if:false={row.photosAvailableEdit}
-																								disabled
-																								class="p-0 bg-transp border-0 disabled-filter">
-																								<img src={infoIcon} width="20px" />
-																							</button>
-																							<button if:true={row.photosAvailable}
+																						
+																								<button if:true={row.photosAvailableEdit}
 																								class="p-0 bg-transp border-0"
 																								data-tosca="edit_photos">
 																								<img src={infoIcon} width="20px"
@@ -599,7 +575,40 @@
 																									data-category-index={categoryIndex}
 																									data-row-index={rowIndex}
 																									onclick={openModalEditPhotos} />
+																								</button>
+																						
+																								<button if:false={row.photosAvailableEdit}
+																									disabled
+																									class="p-0 bg-transp border-0 disabled-filter">
+																									<img src={infoIcon} width="20px" />
+																								</button>
+																						</template>
+																						<template if:true={disablePhotoIcon}>
+																							<template if:true={currentCategory.isEditableRecordType}>
+																								<button
+																								disabled
+																								class="p-0 bg-transp border-0 disabled-filter">
+																								<img src={infoIcon} width="20px" />
 																							</button>
+																							</template>
+																							<template if:false={currentCategory.isEditableRecordType}>
+																								<button if:false={row.photosAvailableEdit}
+																									disabled
+																									class="p-0 bg-transp border-0 disabled-filter">
+																									<img src={infoIcon} width="20px" />
+																								</button>
+																								<button if:true={row.photosAvailable}
+																									class="p-0 bg-transp border-0"
+																									data-tosca="edit_photos">
+																									<img src={infoIcon} width="20px"
+																										data-super-category-index={currentsupercategory.index}
+																										data-section-index={currentsection.index}
+																										data-capability-index={currentcapability.index}
+																										data-category-index={categoryIndex}
+																										data-row-index={rowIndex}
+																										onclick={openModalEditPhotos} />
+																								</button>
+																							</template>
 																						</template>
 
 																					</td>

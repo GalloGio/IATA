@@ -278,6 +278,7 @@ export function concatinateFacilityAddress(facility) {
 }
 
 export function removeLastCommaAddress(address) {
+	address = address.replaceAll(',,', ',');
 	return address.replace(/,\s*$/, "");
 }
 

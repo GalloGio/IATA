@@ -3,6 +3,7 @@ public class CW_UtilitiesTest {
 	@testSetup
 	public static void setupTestData() {
 		Profile pf = [SELECT Id FROM profile WHERE Name LIKE '%IATA Customer Community User%' LIMIT 1];
+		Profile pf2 = [Select Id from profile where Name = 'System Administrator' limit 1]; 
 		String orgId = UserInfo.getOrganizationId();
 		String dateString = String.valueof(Datetime.now()).replace(' ', '').replace(':', '').replace('-', '');
 		Integer RandomId = Integer.valueOf(Math.rint(Math.random() * 1000000));
@@ -51,12 +52,66 @@ public class CW_UtilitiesTest {
 		User uu = CW_TestDataFactory.testUser('IATAICGACB', 'IATAICGXYZ', uniqueName, orgId, pf.Id, con1.id);
 		insert uu;
 
+		User uu2 =new User(firstname = 'IATATESTQUEUE', 
+						   lastName = 'IATAQUEUETEST', 
+						   email = uniqueName + '2@test' + orgId + '.org', 
+						   Username = uniqueName + '2@test' + orgId + '.org', 
+						   EmailEncodingKey = 'ISO-8859-1', 
+						   Alias = uniqueName.substring(18, 23), 
+						   TimeZoneSidKey = 'America/Los_Angeles', 
+						   LocaleSidKey = 'en_US', 
+						   LanguageLocaleKey = 'en_US', 
+						   ProfileId = pf2.Id,
+						   License_Cost_Center__c = 'XSMW01JO01'
+						);
+		insert uu2;
+		System.runAs(uu2) {
+			List<Group> groupLst = new List<Group>();
+			Group testQueue = new Group(Name = 'Fresh_Test_Queue', Type = 'Queue');
+			Group testPublicGroup = new Group(Name = 'Fresh_Test_PublicGroup', Type = 'Regular');
+			groupLst.add(testQueue);
+			groupLst.add(testPublicGroup);
+			insert groupLst;
+
+			List<GroupMember> groupMembership = new List<GroupMember>();
+			groupMembership.add(new GroupMember(UserOrGroupId = uu2.Id, GroupId = testPublicGroup.Id));			
+			groupMembership.add(new GroupMember(UserOrGroupId = uu2.Id, GroupId = testQueue.Id));
+			groupMembership.add(new GroupMember(UserOrGroupId = testPublicGroup.Id, GroupId = testQueue.Id));
+			insert groupMembership;		
+
+			insert new GroupMember(UserOrGroupId = testPublicGroup.Id, GroupId = testQueue.Id);
+		}
+
 		Account_Contact_Role__c acr = CW_TestDataFactory.testAccountContactRole(accRole.Id, acc.Id, con1.Id);
 		insert acr;
 		System.debug(LoggingLevel.FINE, 'AB:: SETUP Account_Contact_Role__c = >' + acr.Id);
 
 		ISSP_CS__c icgUralBase = new ISSP_CS__c(Name = 'ICG_URL_Base', Value__c = 'https://theurl.com/s/');
 		insert icgUralBase;
+
+		IEC_Settings__c iecSettings = new IEC_Settings__c(Name = 'Test', Account_Owner_Id__c = '', CAC_Web_Service_API_Gateway__c = '0000000',
+														CAC_Web_Service_Usage_Url__c = 'https://test.saelsforce.com', Cart_cookie_session_timeout__c = -1,
+														Contact_Owner_Id__c = '', Customer_Permission_Set_Id__c = '00000000',
+														EBC_ExactTarget_Password__c = '', EBC_ExactTarget_Username__c = '',
+														EBC_Send_From_Email__c = '', eBroadcast_Counter_AWS_API_KEY__c = '',
+														eBroadcast_Counter_AWS_URL__c = '', eBroadcast_Counter_Switch__c = false,
+														Encryption_Algorythm__c = 'AES128', Encryption_Key__c = 'Kg0m2vAj4VmBBviGAUehrw',
+														Error_Log_Keep_Duration__c = 2, IEC_Contact_Us_Email__c = 'settingstext@test.com',
+														IEC_Contact_Us_Subject__c = '', IEC_User_Portal_URL__c = 'https://iec-customer-portal-iata.cs17.force.com/iec',
+														IEC_Web_Service_Endpoint__c = 'https://test.salesforce.com/services/Soap/u/30.0', 
+														IEC_Web_Service_Password__c = 'blahblahgOTfA5SIlgvzVsjEKmfPoEPSW',
+														IEC_Web_Service_Username__c = 'systemintegrations@iata.org.ecom', 
+														InvoiceTemplate_Bank_Transfer_Zuora_ID__c = '',
+														InvoiceTemplate_Check_Zuora_ID__c = '00000000', InvoiceTemplate_Credit_Card_Zuora_ID__c = '00000000',
+														InvoiceTemplate_Other_Zuora_ID__c = '', PaymentMethod_Bank_Transfer_Zuora_ID__c = '00000000',
+														PaymentMethod_Check_Zuora_ID__c = '', PaymentMethod_ICH_Zuora_ID__c = '4028e6992e836e4a012e914e1dd85e22',
+														PaymentMethod_Other_Zuora_ID__c = '00000000', Prod_CACPro__c = '',
+														Prod_CACWeb__c = '', Prod_EBro__c = '', Prod_GAD__c = '', Prod_GSS__c = '',
+														Prod_MDP__c = '', Quote_Template_ID_New_Subscription__c = '00000000',
+														Quote_Template_Zuora_ID_New_Subscription__c = '000000', SchdlCACWSUsageUpdate_Class_ID__c = '0000000',
+														SchdlIECCompileUsage_Class_ID__c = '000000', Server_API_URL__c = 'https://iata--ecom.cs18.my.salesforce.com/services/Soap/u/10.0/00D110000005PWM',
+														SF_Partner_Web_Service_endpoint__c = '', Zuora_Generate_Quote_PDF_URL__c = '');
+		insert iecSettings;
 
 		List<Account_Role_Relationship__c> lstARR = new List<Account_Role_Relationship__c>();
 		Account_Role_Relationship__c arr = new Account_Role_Relationship__c(From__c = accRole.Id, To__c = accRole2.Id, Ops_Hierarchy_Group__c = 'Test');
@@ -381,6 +436,20 @@ public class CW_UtilitiesTest {
 	}
 
 	@IsTest
+	public static void handleContactRoleDetailRemovalProcessStationManagerWrong() {
+		List<User> urs = [SELECT id, accountid, contactid FROM user WHERE firstname = 'IATAICGACB' AND lastname = 'IATAICGXYZ'];
+		
+		System.runAs(urs[0]) {
+			test.startTest();
+				String resultApprovedJSON = CW_Utilities.handleContactRoleDetailRemovalProcess('', true);						
+			test.stopTest();
+			CW_Utilities.HandledContactRole resultApproved = (CW_Utilities.HandledContactRole) JSON.deserialize(resultApprovedJSON, CW_Utilities.HandledContactRole.class);
+			System.assertEquals('No matching contact found', resultApproved.message, 'No matching contact found');	
+		}
+
+	}
+	
+	@IsTest
 	public static void rejectContactRoleDetailAutomaticProcessTest() {
 		List<User> urs = [SELECT id, accountid, contactid FROM user WHERE firstname = 'IATAICGACB' AND lastname = 'IATAICGXYZ'];
 		List<ICG_Account_Role_Detail__c> ard = [SELECT id FROM ICG_Account_Role_Detail__c];
@@ -696,12 +765,12 @@ public class CW_UtilitiesTest {
 	}
 
 	/*********************************************************************************************************
-	 * @name			The name of your class or method
-	 * @author			Bea <beatriz.menendez@adesso.es>
+	 * @name			getArdTypesBySectorAndCategoryTest
+	 * @author			Bea <beatriz.menendez@next-link.ch>
 	 * @created			07 / 10 / 2020
 	 * @description		Description of your code
-	 * @param			String param : Explanation
-	 * @return			Explanation of the return value
+	 * @param			-
+	 * @return			-
 	**********************************************************************************************************/
 	@isTest
 	static void getArdTypesBySectorAndCategoryTest(){
@@ -710,5 +779,134 @@ public class CW_UtilitiesTest {
 		Test.stopTest();
 
 		System.assert(String.isNotEmpty(ardTypes), 'ERROR: getArdTypesBySectorAndCategory should not be null');
+	}
+
+	/*********************************************************************************************************
+	 * @name			getAllGroupsMembersTest
+	 * @author			Beatriz <beatriz.menendez@next-link.ch>
+	 * @created			10 / 12 / 2020
+	 * @description		Test generic method that pbtains a map with all group members.
+	 * @param			-
+	 * @return			-
+	**********************************************************************************************************/
+	@isTest
+	static void getAllGroupsMembersTest(){
+		User testUser = [SELECT Id FROM User WHERE firstname = 'IATATESTQUEUE' AND lastName = 'IATAQUEUETEST' LIMIT 1];
+		System.runAs(testUser){
+			Group testQueue = [SELECT Id FROM Group WHERE Name = 'Fresh_Test_Queue' AND Type = 'Queue'];
+
+			Test.startTest();
+				Set<Id> queuesSet = new Set<Id>();
+				queuesSet.add(testQueue.Id);
+				Map<Id, Set<Id>> queueUsersMap = CW_Utilities.getUserIdsFromGroup(queuesSet);
+			Test.stopTest();
+
+			System.assertEquals(1, queueUsersMap.get(testQueue.Id).size(), 'ERROR: just one user added to the queue list');
+		}
+	}
+
+	/*********************************************************************************************************
+	 * @name			getEcommerceUrlBaseTest
+	 * @author			Beatriz <beatriz.menendez@next-link.ch>
+	 * @created			10 / 12 / 2020
+	 * @description		Description of your code
+	 * @param			String param : Explanation
+	 * @return			Explanation of the return value
+	**********************************************************************************************************/
+	@isTest
+	static void getEcommerceUrlBaseTest(){
+		Test.startTest();
+			String url = CW_Utilities.getEcommerceUrlBase();
+		Test.stopTest();
+
+		System.assert(String.isNotEmpty(url), 'ERROR: getEcommerceUrlBase should not be null');
+	}
+
+	/*********************************************************************************************************
+	 * @name			getIECSettingVariablesTest
+	 * @author			Beatriz <beatriz.menendez@next-link.ch>
+	 * @created			10 / 12 / 2020
+	 * @description		Description of your code
+	 * @param			String param : Explanation
+	 * @return			Explanation of the return value
+	**********************************************************************************************************/
+	@isTest
+	static void getIECSettingVariablesTest(){
+		Test.startTest();
+			IEC_Settings__c settings = CW_Utilities.getIECSettingVariables();
+		Test.stopTest();
+
+		System.assert(settings != null, 'ERROR: getEcommerceUrlBase should not be null');
+	}
+
+	/*********************************************************************************************************
+	 * @name			getFacilityManagerApprovedOrRemovedByUserTest
+	 * @author			Beatriz <beatriz.menendez@next-link.ch>
+	 * @created			10 / 12 / 2020
+	 * @description		Description of your code
+	 * @param			String param : Explanation
+	 * @return			Explanation of the return value
+	**********************************************************************************************************/
+	@isTest
+	static void getFacilityManagerApprovedOrRemovedByUserTest(){
+		User testUser = [SELECT Id FROM User WHERE firstname = 'IATATESTQUEUE' AND lastName = 'IATAQUEUETEST' LIMIT 1];
+		Test.startTest();
+			List<ICG_Contact_Role_Detail__c> settings = CW_Utilities.getFacilityManagerApprovedOrRemovedByUser(testUser.Id);
+		Test.stopTest();
+
+		System.assert(settings != null, 'ERROR: getEcommerceUrlBase should Not be null');
+	}
+
+	/*********************************************************************************************************
+	 * @name			becomeCompanyAdminFromStationTest
+	 * @author			Beatriz <beatriz.menendez@next-link.ch>
+	 * @created			10 / 12 / 2020
+	 * @description		Description of your code
+	 * @param			String param : Explanation
+	 * @return			Explanation of the return value
+	**********************************************************************************************************/
+	@isTest
+	static void becomeCompanyAdminFromStationTest(){
+		List<ICG_Account_Role_Detail__c> ard = [SELECT id FROM ICG_Account_Role_Detail__c];
+		ICG_Account_Role_Detail__c station = [SELECT id FROM ICG_Account_Role_Detail__c].get(0);
+		Account company = [SELECT Id, Name FROM Account WHERE Name = 'Account01'].get(0);
+		Contact contact = [SELECT Id FROM Contact WHERE FirstName = 'Test'].get(0);
+		Test.startTest();
+			String settings = CW_Utilities.becomeCompanyAdminFromStation(String.ValueOf(station.Id), String.valueOf(company.Id), String.ValueOf(contact.Id));
+		Test.stopTest();
+
+		System.assert(String.isNotEmpty(settings), 'ERROR: getEcommerceUrlBase should be null');
+	}
+
+	/*********************************************************************************************************
+	 * @name			getFacilityHistoryByUserTest
+	 * @author			Beatriz <beatriz.menendez@next-link.ch>
+	 * @created			18 / 12 / 2020
+	 * @description		Test method for getFacilityHistoryByUser CW_Utilities method
+	 * @param			-
+	 * @return			-
+	**********************************************************************************************************/
+	@isTest
+	static void getFacilityHistoryByUserTest(){
+		User testUser 		= [SELECT id FROM User WHERE firstname = 'IATAICGACB' AND lastName = 'IATAICGXYZ' LIMIT 1];
+		Contact testContact = [SELECT Id FROM Contact WHERE FirstName = 'Test' LIMIT 1];
+		System.runAs(testUser){
+			Account acc 				= [SELECT Id FROM Account WHERE Name = 'Account01' LIMIT 1];
+			Airport_Detail__c airport 	= [SELECT Id FROM Airport_Detail__c LIMIT 1];
+			Account_Role__c accRole 	= CW_TestDataFactory.testAccountRole(acc.Id, 'Test');
+			insert accRole;
+
+			ICG_Account_Role_Detail__c station = CW_TestDataFactory.testICGAccountRoleDetail(accRole.Id, airport);
+			station.Status__c = 'Pending for Approval';
+			insert station;
+						
+			Test.startTest();
+				station.Status__c = 'Approved';
+				update station;
+				List<ICG_Contact_Account_Role_Detail_History__c> historyLst = CW_Utilities.getFacilityHistoryByUser(String.ValueOf(testUser.Id));
+			Test.stopTest();
+
+			System.assert(!historyLst.isEmpty(), 'ERROR: historyLst should not be null');
+		}
 	}
 }

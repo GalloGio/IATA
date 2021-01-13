@@ -83,24 +83,27 @@
                                                 <template for:each={resultsList} for:item="indicator">
                                                     <div data-item={indicator.Id} key={indicator.Id} role="tabpanel"
                                                         class={indicator.panelClass} aria-hidden={indicator.hidden}>
-                                                        <div class="slds-carousel__panel-action slds-text-link_reset without-border cursor-txt" tabindex={indicator.tabindex}>
+                                                        <div class="slds-carousel__panel-action slds-text-link_reset without-border cursor-txt swipediv" tabindex={indicator.tabindex}>
                                                             <div class="row-no-margin col-12 text-center">
                                                                 <img src={indicator.image} class="m-auto width-55p">
                                                             </div>
                                                             </br>
-                                                            <div class="row-no-margin col-12 text-center">
-                                                                <p class="h5"><font color="black"><b>{indicator.accName} </b></font> {label.in_validation} <span><b>{indicator.city} </b></span> {label.received}: </p>
-                                                                <p class="h5 m-auto"><span><b> {indicator.certName}</b></span></p>
+                                                            <div class="row-no-margin col-12 text-center m-auto">
+                                                                <h5 class="m-auto"><font color="black"><b>{indicator.accName} </b></font> {label.in_validation} <span><b>{indicator.city} </b></span> {label.received}: 
+                                                                </br><span><b> {indicator.certLabel}</b></span></h5>
                                                             </div>
-                                                            </br>
-                                                            <div data-item={indicator.Id}  class="row-no-margin col-12 text-center h5 ">
-                                                                <a data-item={indicator.Id}
-                                                                    class="btn btn-primary btn-latest-icg-updates-custom link-button slds-align_absolute-center text-white mt-0 cursot-pt mr-28 m-auto"
-                                                                    onclick={handleMoreClicked}>{label.btn_go_to_station_profile}</a>
-                                                            </div>
-                                                            </br>
+                                                            
                                                         </div>
+                                                    </br>
+                                                    <div data-item={indicator.Id}  class="row-no-margin col-12 text-center h5 ">
+                                                        <a data-item={indicator.Id}
+                                                            class="btn btn-primary btn-latest-icg-updates-custom link-button slds-align_absolute-center text-white mt-0 cursot-pt mr-28 m-auto"
+                                                            onclick={handleMoreClicked}>{label.btn_go_to_station_profile}</a>
                                                     </div>
+                                                    </br>
+                                                    </div>
+
+                                                    
                                                 </template>
                                             </template>
                                         </div>

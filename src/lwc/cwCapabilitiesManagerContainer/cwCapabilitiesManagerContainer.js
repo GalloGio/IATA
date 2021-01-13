@@ -106,7 +106,6 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 	rowIndexSelected;
 	equipmentSelected;
 	@track equipmentSelectedLabel;
-	isKeepPhotos = false;
 	listDeleteRows = [];
 	listDataRow = [];
 
@@ -209,7 +208,6 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 		this.rowIndexSelected = rowIndex;
 		this.equipmentSelected = this.rowSelected.equipment_value;
 		this.equipmentSelectedLabel = this.data.superCategories[superCategoriesIndex].sections[sectionIndex].capabilities[capabilityIndex].categories[categoryIndex].rows[rowIndex].equipment__c;
-		this.rowSelected.isKeepPhotos = this.rowSelected.photosAvailable;
 	}
 
 	photoToDelete;
@@ -226,14 +224,14 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 			if (element.position.toString() === this.rowIndexSelected && element.equipment_value === this.equipmentSelected) {
 				let photoFound = false;
 				element.fields.forEach(f => {
-					if (f.field === "Photos__c") {
+					if (f.field === "photos__c") {
 						f.value = value;
 						photoFound = true;
 					}
 				});
 				if (!photoFound) {
 					let newField = {
-						field: "Photos__c",
+						field: "photos__c",
 						value: value,
 						label: "Photos",
 						required: false
@@ -693,6 +691,18 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 					};
 					newCapabilityRow.fields.push(newField);
 				});
+
+				//For photo__c field
+				if(row.photos.length>0){
+					let newField = {
+						field: 'photos__c',
+						value: JSON.stringify(row.photos),
+						label: "Photos",
+						required: false
+					}
+					newCapabilityRow.fields.push(newField);
+				}
+
 				this.listAddedRows.push(newCapabilityRow);
 			});
 			this.listPreviuosRows = this.listAddedRows.map(x => x);
@@ -771,7 +781,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 				fieldsByColumns.forEach(element => {
 					let newField = {
 						field: element.name,
-						value: this.rowSelected[element.name] != "" && this.rowSelected[element.name] != null && this.rowSelected[element.name] != undefined ? this.rowSelected[element.name] : "",
+						value: this.rowSelected[element.name] != null ? (element.type === "MULTIPICKLIST" ? this.rowSelected[element.name].join(";") : (element.type === "DOUBLE") ? Number(this.rowSelected[element.name]) : this.rowSelected[element.name]): "",
 						label: element.label,
 						required: this.rowSelected.requiredFields.includes(element.name)
 					};
@@ -1024,9 +1034,9 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 			});
 	}
 
-	editAllCapabilitiesFromStation(listAddedRows,listDeleteRows)
+	editAllCapabilitiesFromStation(accRoleDet,listAddedRows,listDeleteRows)
 	{
-		editAllCapabilitiesFromStation_({listAddedRows,listDeleteRows})
+		editAllCapabilitiesFromStation_({accRoleDet,listAddedRows,listDeleteRows})
 		.then(res => {
 			let result = JSON.parse(res);
 			if(result.success)
@@ -1057,7 +1067,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 			//Option Edit Capabilities in Capabilities Tab
 			if (!this.getCertificationMode) {
 				// this.updateCapabilitiesEdited(this.recordId, null, this.listAddedRows);
-				this.editAllCapabilitiesFromStation(this.listAddedRows,this.listDeleteRows);
+				this.editAllCapabilitiesFromStation(this.recordId,this.listAddedRows,this.listDeleteRows);
 			} else {
 				//Option Edit Capabilities
 				if (this.getisCapabCertiMode) {

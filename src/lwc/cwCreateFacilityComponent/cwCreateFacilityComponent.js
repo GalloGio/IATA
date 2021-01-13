@@ -53,6 +53,7 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 	@track openingHours;
 	@track activeInfoWindow;
 	@track setFacilityNameAndType;
+	create = true;
 	logoInfoObject;
 	geoLocationInfoObject;
 	@track logoImage;
@@ -1817,6 +1818,10 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 		return true;
 	}
 
+	get companyTypeInput(){
+		return this.companyType.replaceAll('_', ' ');
+	}
+
 	registerNewAccount(){
 		// The event data needs to indicate if the creation form is fine. Let's say that if data is null, it means the form is invalid
 		// otherwise it should contain the account information
@@ -1996,7 +2001,12 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 	}
 
 	get showDirectRampAccess(){
-		return this.companyType === "Airline";
+		if (this.isInternalUser){
+			return this.companyType === "Cargo_Handling_Facility" || this.companyType === "Trucker" || this.companyType === "Freight_Forwarder";
+		}
+		else{
+			return false;
+		}
 	}
 
 	get addressGeo(){

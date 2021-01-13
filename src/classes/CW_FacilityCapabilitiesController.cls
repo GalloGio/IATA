@@ -932,35 +932,81 @@ public without sharing class CW_FacilityCapabilitiesController {
 	 * @param			accRoleDet - Account Role Detail Id, capabAssigmenGroup - Capab Assigment Group
 	 * @return			Boolean true or false
 	 */
-	private static Boolean deleteFileAssigmentPrevious(String accRoleDet, List<Object> capabilitiesList) {
+	public static Boolean deleteFileAssigmentPrevious(String accRoleDet, List<Object> capabilitiesList) {
 		Boolean result = true;
 		Map<String, Schema.SObjectField> fieldMapCap = Schema.getGlobalDescribe().get('Account_Role_Detail_Capability__c').getDescribe().fields.getMap();
 		List<CapabilityWrapper> listCapWrapper = new List<CapabilityWrapper>();
 		Set<Id> currentListId = new Set<Id>();
+		Set<Id> currentFilesId = new Set<Id>();
 
 		//Extract all capabilities from input
 		for (Object capability : capabilitiesList) {
 			CW_CapabilitiesManagerController.CapabilityWrapper c = (CW_CapabilitiesManagerController.CapabilityWrapper) JSON.deserialize(JSON.serializePretty(capability), CW_CapabilitiesManagerController.CapabilityWrapper.class);
 			if(String.isNotBlank(c.id) && String.isNotEmpty(c.id)){
 				currentListId.add(c.id);
+
+				//Read all file Id in photos__c field input
+				for(CW_CapabilitiesManagerController.CapabilityFieldsWrapper capfield : c.fields){
+					if (capfield.field.equals('photos__c')){
+						if(String.isNotEmpty(capfield.value)){
+							List<CapabilityPhoto> photoList = (List<CapabilityPhoto>) JSON.deserialize(capfield.value, List<CapabilityPhoto>.class);
+							for(CapabilityPhoto photo : photoList){
+								currentFilesId.add(photo.id);
+							}
+						}
+					}
+				}
 			}	
 		}
-
+		//Read files to capabilities removed
 		List<ICG_Account_Role_Capability_Assignment__c> assigmentList = [SELECT Account_Role_Detail_Capability__r.Photos__c 
 			FROM ICG_Account_Role_Capability_Assignment__c 
-				WHERE ICG_Capability_Assignment_Group__r.RecordTypeId =: RT_NO_CERTIFICATION_REQUIRED 
-					AND ICG_Account_Role_Detail__c =: accRoleDet 
+				WHERE ICG_Account_Role_Detail__c =: accRoleDet 
 						AND Account_Role_Detail_Capability__c NOT IN : currentListId];
+
+		Set<Id> filesToDeleteId = new Set<Id>();
+		try {
+			if(assigmentList.size() > 0){
+				for(ICG_Account_Role_Capability_Assignment__c assigment : assigmentList){
+					if(String.isNotEmpty(assigment.Account_Role_Detail_Capability__r.Photos__c)){
+						List<CapabilityPhoto> photoList = (List<CapabilityPhoto>) JSON.deserialize(assigment.Account_Role_Detail_Capability__r.Photos__c, List<CapabilityPhoto>.class);
+						for(CapabilityPhoto photo : photoList){
+							filesToDeleteId.add(photo.id);
+						}
+					}
+				}
+				if(filesToDeleteId.size()>0){
+					List<ContentDocument> docList = [SELECT Id FROM ContentDocument WHERE Id in :filesToDeleteId];
+					if(docList.size()>0){
+						delete docList;
+					}
+				}
+			}
+
+		} catch (Exception e) {
+			result = false;
+		}
+
+		filesToDeleteId = new Set<Id>();
+		//Read files deleted in process
+		assigmentList = [SELECT Account_Role_Detail_Capability__r.Photos__c 
+			FROM ICG_Account_Role_Capability_Assignment__c 
+				WHERE ICG_Account_Role_Detail__c =: accRoleDet 
+						AND Account_Role_Detail_Capability__c IN : currentListId];
 
 		try {
 			if(assigmentList.size() > 0){
-				Set<Id> filesToDeleteId = new Set<Id>();
 				for(ICG_Account_Role_Capability_Assignment__c assigment : assigmentList){
 					if(String.isNotEmpty(assigment.Account_Role_Detail_Capability__r.Photos__c)){
-						CW_FacilityCapabilitiesController.CapabilityPhoto photo = (CW_FacilityCapabilitiesController.CapabilityPhoto)JSON.deserialize(assigment.Account_Role_Detail_Capability__r.Photos__c.replace('[', '').replace(']', ''),CW_FacilityCapabilitiesController.CapabilityPhoto.class);
-							filesToDeleteId.add(photo.id);
+						List<CapabilityPhoto> photoList = (List<CapabilityPhoto>) JSON.deserialize(assigment.Account_Role_Detail_Capability__r.Photos__c, List<CapabilityPhoto>.class);
+						for(CapabilityPhoto photo : photoList){
+							if(!currentFilesId.contains(photo.id)){
+								filesToDeleteId.add(photo.id);
+							}
+						}
 					}
 				}
+
 				if(filesToDeleteId.size()>0){
 					List<ContentDocument> docList = [SELECT Id FROM ContentDocument WHERE Id in :filesToDeleteId];
 					if(docList.size()>0){

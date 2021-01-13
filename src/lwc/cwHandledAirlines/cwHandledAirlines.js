@@ -16,6 +16,7 @@ export default class CwHandledAirlines extends LightningElement {
 	@api facilityId;
 	@track offSetNum = 0;
 	@track airlines = [];
+	@api create = false;
 
 	filter;
 	@api
@@ -192,7 +193,6 @@ export default class CwHandledAirlines extends LightningElement {
 
 	generateAirlinesToShow(numberAirlineSum, numberAirlineLoopSum) {
 		let airlinesToLoop = this.showOnlySelected ? this.selectedAirlines : this.filteredAirlines;
-
 		if (airlinesToLoop && airlinesToLoop.length >= this.pageSelected + numberAirlineSum) {
 			return airlinesToLoop.slice((this.pageSelected - 1) * 15 + numberAirlineSum, (this.pageSelected - 1) * 15 + numberAirlineLoopSum);
 		}
@@ -200,6 +200,7 @@ export default class CwHandledAirlines extends LightningElement {
 	}
 
 	get selectedAirlines() {
+		
 		let selectedAirlines = [];
 		let prevIsHeader = true;
 		this.filteredAirlines.forEach(airline => {
@@ -334,6 +335,8 @@ export default class CwHandledAirlines extends LightningElement {
 			this.airlines.push(...airlinesAndHeaders);
 			if (this.preselectedAirlines) {
 				this.airlines = this.manageSelected();
+			}else if(this.create){
+				this.airlines = this.unSelectedAirlines();
 			}
 		});
 	}
@@ -341,6 +344,13 @@ export default class CwHandledAirlines extends LightningElement {
 	manageSelected() {
 		return this.airlines.map(airline => {
 			airline.selected = this.preselectedAirlines.some(preselected => airline.value === preselected.value);
+			return airline;
+		});
+	}
+
+	unSelectedAirlines() {
+		return this.airlines.map(airline => {
+			airline.selected = false;
 			return airline;
 		});
 	}

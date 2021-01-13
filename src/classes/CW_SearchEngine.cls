@@ -17,9 +17,8 @@ public without sharing class CW_SearchEngine {
 	private static final String STRINGOR = ' OR ';
 	/* Conditional operatorANDOR depending on one input param */
 	private static String operatorANDOR = ' OR ';
-	
-	private static List<Param> lstAfterQueryFilters = new List<Param>();
-
+	/* Filter search ids to take into account for main query purposes */
+	private static Set<Id> filteredStationIds = new Set<Id>();
 	/*Available Languages*/
 	private static final List<CW_Utilities.PicklistValue> AVAILABLE_LANGUAGES = (List<CW_Utilities.PicklistValue>) JSON.deserialize(CW_Utilities.getFacilityLanguages(), List<CW_Utilities.PicklistValue>.class);
 	/*
@@ -34,22 +33,25 @@ public without sharing class CW_SearchEngine {
 	@auraEnabled
 	public static String getInfo(String attributes, Boolean isMapQuery, Boolean getOpeningHours, Boolean getHandledAirlines, Boolean orderByOnAirport, Boolean isPendingApproval, Integer limitRecords, Integer offset, Boolean isStrongFilter) {
 		try {
+			String response;
+			List<OutputRow> lstARD = new List<OutputRow>();
+			List<ICG_Account_Role_Detail_Relationship__c> operatingStations = new List<ICG_Account_Role_Detail_Relationship__c>();
+			List<ICG_Account_Role_Detail__c> onAirportStations = new List<ICG_Account_Role_Detail__c>();
+			final List<Param> wrapperParams = (List<Param>) JSON.deserialize(attributes, List<Param>.class);			
+
 			if (isStrongFilter == true) {
 				operatorANDOR = ' AND ';
 			}
-			String response;
-			final List<Param> wrapperParams = (List<Param>) JSON.deserialize(attributes, List<Param>.class);
 			final String QUERY = generateQuery(wrapperParams, isMapQuery, getOpeningHours, getHandledAirlines, orderByOnAirport, isPendingApproval, limitRecords, offset);
 			final List<ICG_Account_Role_Detail__c> lstResults = Database.query(QUERY);
-			List<ICG_Account_Role_Detail_Relationship__c> operatingStations = new List<ICG_Account_Role_Detail_Relationship__c>();
-			List<ICG_Account_Role_Detail__c> onAirportStations = new List<ICG_Account_Role_Detail__c>();
+
 			if (getHandledAirlines == true) {
 				Set<String> airlineCodes = new Set<String>();
 				Set<String> setIATACodes = new Set<String>();
 				Set<String> setICAODesignators = new Set<String>();
 				Set<String> accountNames = new Set<String>();
 				Set<Id> nearestAirports = new Set<Id>();
-				for (ICG_Account_Role_Detail__c ard : lstResults) {
+				for (ICG_Account_Role_Detail__c ard : lstResults) {					
 					if (ard.Account_Role__r.Account__r.Airline_designator__c != null) {
 						airlineCodes.add(ard.Account_Role__r.Account__r.Airline_designator__c);
 					}
@@ -72,18 +74,14 @@ public without sharing class CW_SearchEngine {
 					onAirportStations.addAll([SELECT id, Name, RecordType.DeveloperName, Nearest_Airport__c FROM ICG_Account_Role_Detail__c WHERE Is_On_Airport__c = true AND Nearest_Airport__c IN :nearestAirports]);
 				}
 			}
-			List<OutputRow> lstARD = new List<OutputRow>();
+
 			List<ICG_Certification__c> allCertifications = [SELECT Id, Name, Label__c, Certification_Type__c, Expiration_Period__c, is_visible__C, Image__c, Order__c, Applicable_to__c FROM ICG_Certification__c WHERE is_visible__C = true ORDER BY Order__c ASC LIMIT 1000];
 			if (!lstResults.isEmpty()) {
 				/* lstARD - list account role detail == Facility rows */
-				for (ICG_Account_Role_Detail__c result : lstResults) {
+				for (ICG_Account_Role_Detail__c result : lstResults) {					
 					OutputRow row = new OutputRow(result, allCertifications, isMapQuery, getOpeningHours, getHandledAirlines, operatingStations, onAirportStations);
 					lstARD.add(row);
 				}
-			}
-
-			if (!lstAfterQueryFilters.isEmpty()) {
-				lstARD = filterResultsAfterQuery(lstARD, lstAfterQueryFilters);
 			}
 			return JSON.serialize(lstARD);
 		} catch (Exception exc) {
@@ -140,6 +138,8 @@ public without sharing class CW_SearchEngine {
 			v1 - 2019/08/07 - Initial version
 	*/
 	private static String getWhereClause(List<Param> wrapperParams, Boolean isPendingApproval) {
+		List<Param> lstAfterQueryFilters = new List<Param>();
+		List<ICG_Account_Role_Capability_Assignment__c> lstFilteredAssigments = new List<ICG_Account_Role_Capability_Assignment__c>();
 		String queryWhere = '';
 
 		queryWhere = isPendingApproval == true ? 'isPendingApproval__c = true' + STRINGAND : 'isApproved__c = true' + STRINGAND;
@@ -158,6 +158,12 @@ public without sharing class CW_SearchEngine {
 				} else {
 					minLong = Double.valueOf(param.value);
 				}
+			}else if((  param.field.equalsIgnoreCase('Account_Role_Detail_Capability__r.crstr_positions_ake__c')
+					 || param.field.equalsIgnoreCase('Account_Role_Detail_Capability__r.CRSTR_Positions_20ft_ULDs__c') 
+					 || param.field.equalsIgnoreCase('Account_Role_Detail_Capability__r.CRSTR_Positions_10ft_ULDs__c'))
+					 && param.value == 'true'){
+				param.operator = '>';
+				param.value = '0';
 			}
 		}
 		if (maxLong != null && minLong != null && maxLong < minLong) {
@@ -199,6 +205,18 @@ public without sharing class CW_SearchEngine {
 		queryWhere = booleanValues(queryWhere);
 
 		queryWhere = !String.isBlank(queryWhere) ? ' WHERE ' + queryWhere : '';
+
+		if (!lstAfterQueryFilters.isEmpty()) {
+			String query = getAdditionalQuery(lstAfterQueryFilters);
+			lstFilteredAssigments = Database.query(query);
+						
+			for(ICG_Account_Role_Capability_Assignment__c currentStation :lstFilteredAssigments){
+				filteredStationIds.add(currentStation.ICG_Account_Role_Detail__c);
+			}
+			queryWhere += !String.isBlank(queryWhere) ? ' AND ' : ' WHERE ';
+			queryWhere += ' Id IN : filteredStationIds ';
+		}
+
 		return queryWhere;
 	}
 
@@ -272,7 +290,7 @@ public without sharing class CW_SearchEngine {
 	private static List<OutputRow> filterResultsAfterQuery(List<OutputRow> lstARDinput, List<Param> lstAfterQueryFilters) {
 		List<OutputRow> lstARDoutput;
 
-		String query = getAdditionalQuery(lstARDinput, lstAfterQueryFilters);
+		String query = getAdditionalQuery(lstAfterQueryFilters);
 		List<ICG_Account_Role_Capability_Assignment__c> lstAssigments = Database.query(query);
 		if (!lstAssigments.isEmpty()) {
 			lstARDoutput = filterRowsByAssingments(lstARDinput, lstAssigments);
@@ -288,7 +306,7 @@ public without sharing class CW_SearchEngine {
 	*	@Param: List<Param> lstAfterQueryFilters - althought 
 	*   @Returns: String query to be launched
 	*/
-	private static String getAdditionalQuery(List<OutputRow> lstARDinput, List<Param> lstAfterQueryFilters) {
+	private static String getAdditionalQuery(List<Param> lstAfterQueryFilters) {
 		String querySelect = 'SELECT Id, ICG_Account_Role_Detail__c';
 		String queryFrom = ' FROM ICG_Account_Role_Capability_Assignment__c ';
 		String queryWhere = ' WHERE ';
