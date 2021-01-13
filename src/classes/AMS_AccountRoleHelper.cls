@@ -23,7 +23,7 @@ public class AMS_AccountRoleHelper {
 		List<AMS_Account_Role__c> ownersToCheck = new List<AMS_Account_Role__c>();
 		Id ownerRecType = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
 		for(AMS_Account_Role__c owner : triggerNew){
-		    if(owner.Percentage__c != null && owner.Owner_Sequence__c != null && owner.RecordTypeId == ownerRecTypeId) ownersToCheck.add(owner);
+				if(owner.Percentage__c != null && owner.Owner_Sequence__c != null && owner.RecordTypeId == ownerRecTypeId) ownersToCheck.add(owner);
 		}
 
 		System.debug(loggingLevel.Debug, '____ [cls AMS_AccountRoleHelper - aimsOwnerMerge] ownersToCheck - ' + ownersToCheck);
@@ -127,8 +127,8 @@ public class AMS_AccountRoleHelper {
 		}
 
 		List<Account> accounts = [SELECT Id, Covered_Ownership__c, (SELECT Percentage__c FROM AMS_Account_Roles1__r WHERE Active__c = true AND RecordTypeId = :ownerRecordTypeId)
-								  FROM Account
-								  WHERE Id IN :accountIds];
+									FROM Account
+									WHERE Id IN :accountIds];
 
 		List<Account> accountsToUpdate = new List<Account>();
 		for(Account acc : accounts) {

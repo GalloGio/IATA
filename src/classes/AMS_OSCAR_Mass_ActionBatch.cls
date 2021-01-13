@@ -2,14 +2,14 @@ global class AMS_OSCAR_Mass_ActionBatch implements Database.Batchable<sObject>, 
 
 	public static String PROCESS_PCI = 'PROCESS_PCI';
 	public static String CREATE_VR = 'CREATE_VR';
-    public static String CREATE_CERT = 'CREATE_CERT'; 
-	
+	public static String CREATE_CERT = 'CREATE_CERT';
+
 	global String operation {get;set;}
 	global String objectName {get;set;}
-	global Set<Id> recordIds {get;set;}	
+	global Set<Id> recordIds {get;set;}
 	global Map<Id,Map<String,Object>> params {get;set;}
 	global ExecutionResult results {get;set;}
-	
+
 	global AMS_OSCAR_Mass_ActionBatch(String operation, String objectName, Set<Id> recordIds, Map<Id,Map<String,Object>> params) {
 		this.operation = operation;
 		this.objectName = objectName;
@@ -30,7 +30,7 @@ global class AMS_OSCAR_Mass_ActionBatch implements Database.Batchable<sObject>, 
 
 		this.results = new ExecutionResult(column);
 	}
-	
+
 	global Database.QueryLocator start(Database.BatchableContext BC) {
 		Map<String,Schema.SObjectField> objectFields = Schema.getGlobalDescribe().get(objectName).getDescribe().fields.getMap();
 		List<String> fieldNames = new List<String>(objectFields.keySet());
@@ -55,10 +55,10 @@ global class AMS_OSCAR_Mass_ActionBatch implements Database.Batchable<sObject>, 
 					AMS_OSCAR_Mass_ActionHelper.create_VR(acc, caseParams);
 					row += 'true,';
 				} else if(operation == CREATE_CERT) {
-                    Account acc = (Account) record;
-                    row += acc.Id + ',';
-                    AMS_OSCAR_Mass_ActionHelper.create_Certificate(acc);
-                    row += 'true,';
+					Account acc = (Account) record;
+					row += acc.Id + ',';
+					AMS_OSCAR_Mass_ActionHelper.create_Certificate(acc);
+					row += 'true,';
 				}
 			} catch(Exception e) {
 				String errorMessage = e.getMessage() + ' -> ' + e.getStackTraceString();
@@ -67,32 +67,32 @@ global class AMS_OSCAR_Mass_ActionBatch implements Database.Batchable<sObject>, 
 			results.rows.add(row);
 		}
 	}
-	
+
 	global void finish(Database.BatchableContext BC) {
-        String subject;
-        if(operation == CREATE_VR) {
-            subject = 'Voluntary Relinquishment Mass Action report - ' + Datetime.now();
-        } else if(operation == PROCESS_PCI) {
-            subject = 'PCI Mass Action report - ' + Datetime.now();
-        } else if(operation == CREATE_CERT) {
-            subject = 'Certificate Mass Action report - ' + Datetime.now();
-        }
+		String subject;
+		if(operation == CREATE_VR) {
+			subject = 'Voluntary Relinquishment Mass Action report - ' + Datetime.now();
+		} else if(operation == PROCESS_PCI) {
+			subject = 'PCI Mass Action report - ' + Datetime.now();
+		} else if(operation == CREATE_CERT) {
+			subject = 'Certificate Mass Action report - ' + Datetime.now();
+		}
 
 		String body = results.columns + '\n';
 		body += String.join(results.rows, '\n');
 		Messaging.EmailFileAttachment csvAttc = new Messaging.EmailFileAttachment();
-        Blob csvReport = Blob.valueOf(body);
-        csvAttc.setFileName('Mass Action Report.csv');
-        csvAttc.setBody(csvReport);
+		Blob csvReport = Blob.valueOf(body);
+		csvAttc.setFileName('Mass Action Report.csv');
+		csvAttc.setBody(csvReport);
 
-        Messaging.SingleEmailMessage message = new Messaging.SingleEmailMessage();
-        message.subject = subject;
-        message.setTargetObjectId(UserInfo.getUserId());
-        message.saveAsActivity = false; //must be false when sending mail to users.
-        message.setPlainTextBody('Mass action report - Check attachment with execution results');
-        message.setFileAttachments(new Messaging.EmailFileAttachment[]{csvAttc});
-        Messaging.SingleEmailMessage[] messages =  new List<Messaging.SingleEmailMessage> {message};
-        Messaging.sendEmail(messages);
+		Messaging.SingleEmailMessage message = new Messaging.SingleEmailMessage();
+		message.subject = subject;
+		message.setTargetObjectId(UserInfo.getUserId());
+		message.saveAsActivity = false; //must be false when sending mail to users.
+		message.setPlainTextBody('Mass action report - Check attachment with execution results');
+		message.setFileAttachments(new Messaging.EmailFileAttachment[]{csvAttc});
+		Messaging.SingleEmailMessage[] messages =  new List<Messaging.SingleEmailMessage> {message};
+		Messaging.sendEmail(messages);
 	}
 
 	public class ExecutionResult {
@@ -103,6 +103,6 @@ global class AMS_OSCAR_Mass_ActionBatch implements Database.Batchable<sObject>, 
 			this.columns = columns;
 			this.rows = new List<String>();
 		}
-	}	
-	
+	}
+
 }

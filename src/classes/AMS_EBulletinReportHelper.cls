@@ -12,7 +12,7 @@ public without sharing class AMS_EBulletinReportHelper {
 
 	private static final Map <String,String>  TYPEEBULLETINMAP =
 					 new Map <String,String> { 'D' => 'Daily__c',
-					 						   'W' => 'Weekly__c' };
+					 							 'W' => 'Weekly__c' };
 
 	// Countries to override value with State Account__r.IATA_ISO_Country__c
 	//
@@ -294,11 +294,11 @@ public without sharing class AMS_EBulletinReportHelper {
 		String orderByFilter = ' order by Account__r.IATA_ISO_Country__r.Name,Created_Date_To_Show__c';
 
 		String filterCC  = filter1 +
-						   filter2 +
-						   filter3 +
-						   filter4 +
-						   filter5 +
-						   orderByFilter;
+							 filter2 +
+							 filter3 +
+							 filter4 +
+							 filter5 +
+							 orderByFilter;
 
 		//system.debug('filterCC: ' + filterCC);
 
@@ -629,7 +629,7 @@ public without sharing class AMS_EBulletinReportHelper {
 
 
 	/**
-		  Get Record Value from change Codes
+			Get Record Value from change Codes
 	*/
 /*
 	private List<String> getRecordsFromAACC(Agency_Applied_Change_code__c cc)
@@ -664,7 +664,7 @@ public without sharing class AMS_EBulletinReportHelper {
 */
 
 	/**
-		  Get Record Value
+			Get Record Value
 	*/
 	private static List<String> getRecordsFromAACCHist(String ccRecordSection, Agency_Applied_Change_code__c cc, List<AMS_ChangeCodesHelper.ObjectChange> ccHistChangesList)
 	{
@@ -1032,7 +1032,7 @@ public without sharing class AMS_EBulletinReportHelper {
 
 
 			try {
-  				ownersTotalPercentage = ownersTotalPercentage + Decimal.valueOf(financialInterest);
+					ownersTotalPercentage = ownersTotalPercentage + Decimal.valueOf(financialInterest);
 			}
 			catch (exception e) {
  			 	// it's not an Dounble, try something else
@@ -1178,11 +1178,11 @@ public without sharing class AMS_EBulletinReportHelper {
 
 		private String sObjName{get;set;}
 		private String fieldName{get;set;}
-  		private String fieldLabel{get;set;}
+			private String fieldLabel{get;set;}
 
 		private wrapperLabel(String sObjParentName, String field, Map<String, Schema.SObjectField> fieldMap){
 
-		   	List <String> strList = field.split('\\.');
+			 	List <String> strList = field.split('\\.');
 			integer lastPos = strList.size() -1;
 
 			String sObjName = sObjParentName;
@@ -1262,11 +1262,11 @@ public without sharing class AMS_EBulletinReportHelper {
 
 		public String typeEBulletin;
 		public List <String> areaList = new List <String>();
-  		public List <String> programsList = new List <String>();
-  		public List <String> countriesList = new List <String>();
-  		public Datetime fromCCDate;
+			public List <String> programsList = new List <String>();
+			public List <String> countriesList = new List <String>();
+			public Datetime fromCCDate;
 		public Datetime toCCDate;
-	   	public AMS_eBulletin_Profile__c eBulletinProfile;
+		 	public AMS_eBulletin_Profile__c eBulletinProfile;
 
 		public AMSEBulletinFilters(AMS_eBulletin_Profile__c eBulletinProfile, Datetime fromCCDate, Datetime toCCDate){
 				//Daily or Weekly by record type

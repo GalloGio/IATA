@@ -25,7 +25,7 @@ public class AMS_VoucherProcessManager {
 		update process;
 
 		return batchCountryAverageId;
-	
+
 	}
 
 

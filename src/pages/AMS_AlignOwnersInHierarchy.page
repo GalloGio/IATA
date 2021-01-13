@@ -60,7 +60,7 @@
 					<apex:column value="{!a.Percentage__c}"/>
 				</apex:pageBlockTable>
 			</apex:pageBlockSection>
-		</apex:pageBlock>
+		</apex:pageBlock >
 	</apex:form>
 
    

@@ -2,33 +2,33 @@
 private class ISSP_Ctrl_BannertestpageTest {
 	@testSetup static void methodName() {
 		IATA_ISO_Country__c isoCountry = new IATA_ISO_Country__c(ISO_Code__c='12',Name='Italy',Region__c='Europe');
-        insert isoCountry;
+		insert isoCountry;
 
 		Account parent = ISSP_ObjectFactory.createNewAccount();
-        parent.BillingCity = 'test';
-        parent.Name = 'test';
-        insert parent;
+		parent.BillingCity = 'test';
+		parent.Name = 'test';
+		insert parent;
 
-        Account child = ISSP_ObjectFactory.createNewAccount();
-        child.ParentId = parent.Id;
+		Account child = ISSP_ObjectFactory.createNewAccount();
+		child.ParentId = parent.Id;
 		child.IATA_ISO_Country__c = isoCountry.Id ;
-        child.BillingCity = 'test2';
-        child.Name = 'test2';
-        child.Site = 'headSite';
-        child.Top_Parent__c = parent.Id;
+		child.BillingCity = 'test2';
+		child.Name = 'test2';
+		child.Site = 'headSite';
+		child.Top_Parent__c = parent.Id;
 		child.Sector__c = 'Airline';
 		child.Category__c = 'Passenger only';
 		child.BillingCountry = 'Italy';
-        insert child;
-        Contact con = ISSP_ObjectFactory.createNewContact();
- 
-        con.AccountId= child.Id;
+		insert child;
+		Contact con = ISSP_ObjectFactory.createNewContact();
+
+		con.AccountId= child.Id;
 		con.Email = 'Test@test11.com';
 		con.User_Portal_Status__c = 'Approved Admin';
-        insert con;
-        User newUser = ISSP_ObjectFactory.createPortalUser(con);
-        con.OwnerId = newUser.Id;
-        update con;
+		insert con;
+		User newUser = ISSP_ObjectFactory.createPortalUser(con);
+		con.OwnerId = newUser.Id;
+		update con;
 	}
 
 	static testMethod void testISSP_Ctrl_BannertestpageTest()
@@ -68,9 +68,9 @@ private class ISSP_Ctrl_BannertestpageTest {
 		bannerVsb1.category__c = 'Passenger only';
 		insert bannerVsb1;
 
-        Test.startTest();
-        System.runAs(newUser)
-        {
+		Test.startTest();
+		System.runAs(newUser)
+		{
 			ISSP_Ctrl_Bannertestpage controller = new ISSP_Ctrl_Bannertestpage();
 			controller.getDefaultBanner();
 

@@ -1,11 +1,11 @@
 @isTest
 private class RecordTypeSingletonTest {
-	
-	@isTest 
+
+	@isTest
 	private static void getRecordTypesTest() {
 		//Id retrieved using Schema class
 		Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
-		
+
 		RecordType rtAccountStdd = RecordTypeSingleton.getInstance().getRecordType('Account', 'Standard_Account');
 		Id rtAccountStddId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
@@ -21,7 +21,7 @@ private class RecordTypeSingletonTest {
 	private static void getRecordTypeObjIdListTest(){
 		//Map of RecordTypeInfo retrieved using Schema class
 		Map<String, Schema.RecordTypeInfo> recordTypesMap = Schema.Participant__c.sObjectType.getDescribe().getRecordTypeInfosByDeveloperName();
-		
+
 		List<Id> rtIdsList = RecordTypeSingleton.getInstance().getRecordTypeObjIdListForSpecfifiedNames('Participant__c', new List<String>{'Local_Group_Participants'});
 		// assertions to test RecordTypeSingleton.getInstance().getRecordTypeObjIdListForSpecfifiedNames(...)
 		System.assertEquals(recordTypesMap.get('Local_Group_Participants').getRecordTypeId(), rtIdsList.get(0), 'The returned List of Ids retrieved a wrong Id for Local_Group_Participants: ' +  rtIdsList.get(0));
@@ -33,12 +33,12 @@ private class RecordTypeSingletonTest {
 	private static void getRecordTypeObjIdListExceptPassedNamesTest(){
 		// Map of RecordTypeInfo retrieved using Schema class
 		Map<String, Schema.RecordTypeInfo> recordTypesMap = Schema.Account.sObjectType.getDescribe().getRecordTypeInfosByDeveloperName();
-		
+
 		List<Id> rtIdsExceptList = RecordTypeSingleton.getInstance().getRecordTypeObjIdListExceptPassedNames('Account', new List<String>{'IATA_Agency'});
 		// assertion to test RecordTypeSingleton.getInstance().getRecordTypeObjIdListExceptPassedNames()
 		System.assert(!rtIdsExceptList.contains(recordTypesMap.get('IATA_Agency').getRecordTypeId()), 'The returned List of Ids retrieved a Id for IATA_Agency: ' +  rtIdsExceptList.get(0));
 	}
-	
+
 
 	@isTest
 	private static void getRecordTypesBySObjectTest(){
@@ -50,7 +50,7 @@ private class RecordTypeSingletonTest {
 		for(RecordType recType : participantRecTypeList){
 
 			System.assert(recordTypesMap.keySet().contains(recType.DeveloperName), 'The returned list contains an invalid record type: ' + recType.Id);
-			
+
 		}
 
 	}

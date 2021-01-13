@@ -10,7 +10,7 @@
  	1.0		  	DAVID BENTO		07-12-2018   		  INITIAL DEVELOPMENT
 */
 public without sharing class ISSP_AMC_LocationAreaData {
-	
+
 	public String cityName {get; set;}
 	public String locationName {get;set;}
 	public String stateName {get;set;}
@@ -23,9 +23,9 @@ public without sharing class ISSP_AMC_LocationAreaData {
 	}
 
 	@TestVisible
-	public String mapKey { 
-        get { return ISSP_CS__c.getInstance('googleMapsKey').value__c; }
-    } 
+	public String mapKey {
+		get { return ISSP_CS__c.getInstance('googleMapsKey').value__c; }
+	}
 
 	public Participation_Online_Application__c controllerParticipation {
 		get {

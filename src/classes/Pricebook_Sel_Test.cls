@@ -1,7 +1,7 @@
 /**
 
 	Project: eCommerce Enhancements
-	   File: Pricebook_Sel_Test.cls
+		 File: Pricebook_Sel_Test.cls
 	Subject: Test Class for Pricebook_Sel Class.
 	History: 2017-06-26, asantos, Initial Release.
 
@@ -71,7 +71,7 @@ private class Pricebook_Sel_Test {
 
 		System.runAs(user) {
 			Pricebook_Sel pricebookSel = new Pricebook_Sel();
-			
+
 			List<Schema.SObjectField> sobjectFieldList = pricebookSel.getSObjectFieldList();
 			Schema.SObjectType sobjectType = pricebookSel.getSObjectType();
 			Pricebook2 pricebook2 = pricebookSel.getStandardPricebook();

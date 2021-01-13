@@ -23,7 +23,7 @@ public with sharing class EF_RelatedRecordsHandler
 		Map<Id, EF_Billing_Agreement__c> baMap = new Map<Id, EF_Billing_Agreement__c>([select Id, EF_History__c from EF_Billing_Agreement__c where Id in :baIds]);
 		Map<Id, Contract> contractMap = new Map<Id, Contract>([select Id, EF_History__c from Contract where Id in :contractIds]);
 		List<sObject> toUpdateList = new List<sObject>();
-		
+
 		for(EF_Related_Records__c rr : newMap.values())
 		{
 			if(rr.Contract__c != null)
@@ -36,7 +36,7 @@ public with sharing class EF_RelatedRecordsHandler
 				toUpdateList.add(writeHistoryLine(baMap.get(rr.EF_Billing_Agreement__c), rr));
 			}
 		}
-		
+
 		update toUpdateList;
 	}
 
@@ -49,11 +49,11 @@ public with sharing class EF_RelatedRecordsHandler
 			comments = comments + ' [Case: ' + rr.Case_Name__c + '] ';
 		if(rr.Contact__c != null)
 			comments = comments + ' [Contact: ' + rr.Contact_Name__c + '] ';
-	
+
 		String commentsHistory = (String) recordToUpdate.get('EF_History__c');
 		if(commentsHistory == null)
 			commentsHistory = '';
-		
+
 		String oldHistory = commentsHistory;
 		commentsHistory = currentTime + ' by ' + currentUser + ': ' + comments.trim() + '\n';
 		commentsHistory = commentsHistory + oldHistory.trim();

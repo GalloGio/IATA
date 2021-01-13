@@ -1,60 +1,60 @@
-@isTest                       
+@isTest
 private class SCIMUpdateUserPluginTest {
-    
-    // Tests     
-    @isTest static void testUpdate() {
-        // arrange
-        HttpResponseGenerator generator = new HttpResponseGenerator();
-        generator.nextBody = '{"schemas":["urn:scim:schemas:core:1.0"],"id":"005B0000001SFMhIAO","name":{"givenName":"Bob"}}';
-        System.Test.setMock(HttpCalloutMock.class, generator);
 
-        // act
-        Process.PluginResult response = callPlugin();
+	// Tests
+	@isTest static void testUpdate() {
+		// arrange
+		HttpResponseGenerator generator = new HttpResponseGenerator();
+		generator.nextBody = '{"schemas":["urn:scim:schemas:core:1.0"],"id":"005B0000001SFMhIAO","name":{"givenName":"Bob"}}';
+		System.Test.setMock(HttpCalloutMock.class, generator);
 
-        // assert
-        System.assertEquals('Completed', response.outputParameters.get(UserProvisioningUtils.PARAM_STATUS));
-    }
+		// act
+		Process.PluginResult response = callPlugin();
 
-    @isTest static void testIncompleteInputParams() {
-        // arrange
-        System.Test.setMock(HttpCalloutMock.class, new HttpResponseGenerator());
+		// assert
+		System.assertEquals('Completed', response.outputParameters.get(UserProvisioningUtils.PARAM_STATUS));
+	}
 
-        // act
-        Process.PluginResult response = callPlugin(false);
+	@isTest static void testIncompleteInputParams() {
+		// arrange
+		System.Test.setMock(HttpCalloutMock.class, new HttpResponseGenerator());
 
-        // assert
-        System.assertEquals('Failed', response.outputParameters.get(UserProvisioningUtils.PARAM_STATUS), 'Status Not As Expected');
-    }
-    
-    @isTest static void test403HttpResponse() {
-        // arrange
-        System.Test.setMock(HttpCalloutMock.class, new HttpResponseGenerator(403));
+		// act
+		Process.PluginResult response = callPlugin(false);
 
-        // act
-        Process.PluginResult response = callPlugin();
-       
-        // assert
-        System.assertEquals('Failed', response.outputParameters.get(UserProvisioningUtils.PARAM_STATUS));       
-    }
+		// assert
+		System.assertEquals('Failed', response.outputParameters.get(UserProvisioningUtils.PARAM_STATUS), 'Status Not As Expected');
+	}
 
-    // Helper methods
-    private static Process.PluginResult callPlugin() {
-        return callPlugin(true);
-    }
+	@isTest static void test403HttpResponse() {
+		// arrange
+		System.Test.setMock(HttpCalloutMock.class, new HttpResponseGenerator(403));
 
-    private static Process.PluginResult callPlugin(Boolean validInput) {
-        // Create a UserProvisioningRequest for testing
-        UserProvisioningRequest upr = UserProvisioningTestUtils.createUserProvisioningRequest('SCIM', 'Update');
+		// act
+		Process.PluginResult response = callPlugin();
 
-        // Build input params
-        Map<String,Object> inputParams = new Map<String,Object>();
-        inputParams.put(UserProvisioningUtils.PARAM_UPR_ID, upr.id);
+		// assert
+		System.assertEquals('Failed', response.outputParameters.get(UserProvisioningUtils.PARAM_STATUS));
+	}
 
-        // Define user account to create - we mock the request & response
-        if (validInput) {
-            inputParams.put(UserProvisioningUtils.PARAM_USERPAYLOAD, '{\n  "name" : {\n    "familyName" : "Jensen",\n    "givenName" : "Daisy"\n  },\n  "emails" : [ {\n    "value" : "daisypop89@gmail.com"\n  } ],\n  "schemas" : [ "urn:scim:schemas:core:1.0" ]\n}');
-        }
+	// Helper methods
+	private static Process.PluginResult callPlugin() {
+		return callPlugin(true);
+	}
 
-        return UserProvisioningTestUtils.runPlugin(new SCIMUpdateUserPlugin(), inputParams);
-    }
+	private static Process.PluginResult callPlugin(Boolean validInput) {
+		// Create a UserProvisioningRequest for testing
+		UserProvisioningRequest upr = UserProvisioningTestUtils.createUserProvisioningRequest('SCIM', 'Update');
+
+		// Build input params
+		Map<String,Object> inputParams = new Map<String,Object>();
+		inputParams.put(UserProvisioningUtils.PARAM_UPR_ID, upr.id);
+
+		// Define user account to create - we mock the request & response
+		if (validInput) {
+			inputParams.put(UserProvisioningUtils.PARAM_USERPAYLOAD, '{\n  "name" : {\n    "familyName" : "Jensen",\n    "givenName" : "Daisy"\n  },\n  "emails" : [ {\n    "value" : "daisypop89@gmail.com"\n  } ],\n  "schemas" : [ "urn:scim:schemas:core:1.0" ]\n}');
+		}
+
+		return UserProvisioningTestUtils.runPlugin(new SCIMUpdateUserPlugin(), inputParams);
+	}
 }

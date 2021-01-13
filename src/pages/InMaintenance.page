@@ -1,7 +1,7 @@
 <apex:page showHeader="false" title="{!$Label.site.in_maintenance}">
 
   <div id="logo" style="text-align:center; margin: 5px; margin-top:10px">
-                    <h1><img src="http://www.iata.org/_layouts/iata/images/toplogo.png" alt="IATA logo" style="height: 200px;"/></h1>
+                    <h1><img src="http://www.iata.org/_layouts/iata/images/toplogo.png" alt="IATA logo" /></h1>
                     
                 </div>
                 <div style="text-align:center">
@@ -13,37 +13,15 @@
       <apex:image url="{!$Site.Prefix}{!$Label.site.img_path}/warning.gif"/>
     </apex:define>
     <apex:define name="error">
-    <apex:outputText escape="false" style="font-size: 25px; font-weight: bold;" value="Our site is temporarily unavailable.">
+      <apex:outputText escape="false" style="font-size: larger; font-weight: bold;" value="This site is down for maintenance.">
         
       </apex:outputText>
       <br/>
       <br/>
-      <apex:outputText escape="false" style="font-size: 35px; text-align:center; font-weight: bold;" value="We'll be back online shortly."/>     
-      <br/>
-      <br/>
-      <apex:outputText escape="false" style="font-size: 35px; text-align:center; font-weight: bold;" value="_________________________________________________"/>     
-      <br/>
-      <br/>
-      <br/>
-      <br/>
-      <apex:outputText escape="false" style="font-size: 20px; font-weight: bold;" value="Dear customer,">
-        
-      </apex:outputText>
-      <br/>
-      <br/>
-      <apex:outputText escape="false" style="font-size: 20px; text-align:center; font-weight: bold;" value="We are currently experiencing a technical outage from one of our main supplier which is causing system unavailability."/>     
-      <br/>
-      <apex:outputText escape="false" style="font-size: 20px; text-align:center; font-weight: bold;" value="Our technical teams are working with the provider to solve the issue with the shortest possible delay."/>
-      <br/>
-      <br/>
-      <apex:outputText escape="false" style="font-size: 20px; text-align:center; font-weight: bold;" value="We apologize for the inconvenience this may cause you. "/>
-      <apex:outputText escape="false" style="font-size: 20px; text-align:center; font-weight: bold;" value="Should you require any urgent support, please do not hesitate to reach us via phone."/>
-      <br/>
-      <br/>
-      <apex:outputText escape="false" style="font-size: 20px; text-align:center; font-weight: bold;" value="You can find your dedicated phone number on "/>
+      <apex:outputText value="Sorry for the inconvenience. Please try again later."/>     
       
    
-    <a href="#" onclick="javascript:window.open('https://www.iata.org/about/Pages/offices.aspx', 500, 600);" style="font-size: 20px; color: blue; font-weight:bold;">www.iata.org/offices</a>
+    If you have any questions please contact us at <a href="#" onclick="javascript:window.open('mailto:globaldata@iata.org', 500, 600);">globaldata@iata.org</a>
    </apex:define>
  </center>
 </apex:page>

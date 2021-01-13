@@ -329,12 +329,12 @@
                 document.getElementById(id).setAttribute('maxlength',maxValue);
             }
     
-            /**
-             * Function called when cropper tool has finished uploaded the image
-             */ 
-            function receiveFilenameFromCropperTool(fileFullUri) {
-                document.getElementById('{!$Component.idcardForm.pb3.hdnFilename}').value = fileFullUri;
-            }
+		    /**
+		     * Function called when cropper tool has finished uploaded the image
+		     */ 
+		    function receiveFilenameFromCropperTool(fileFullUri) {
+		        document.getElementById('{!$Component.idcardForm.pb3.hdnFilename}').value = fileFullUri;
+		    }
             
             function scrollToTop() {
                 window.scrollTo(0,0);
@@ -612,7 +612,7 @@
 
 
 <body onload="calculateDisplayedName();">
-    <c:IDCardToolsComponent />    
+	<c:IDCardToolsComponent />    
     <div id="page_wrapper">
         <apex:form forceSSL="true" id="idcardForm" enctype="multipart/form-data">
             <apex:actionFunction name="ShowHideIFrames" action="{!ShowHideIFrames}"></apex:actionFunction>

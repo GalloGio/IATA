@@ -8,7 +8,7 @@ public with sharing class ISSP_CurrencyCenterReportListingCtrl {
 	public Map<String, List<ccReport>> mapOfYearsSection {get; set;}
 	public Map<String, Map<String, List<ccReport>>> reportsMap {get; set;}
 
-	public Map<String, List<ccReport>> reportsMapRBF {get; set;}	
+	public Map<String, List<ccReport>> reportsMapRBF {get; set;}
 	public Map<String, List<ccReport>> reportsMapMisc {get; set;}
 
 	public class ccReport implements Comparable{
@@ -36,7 +36,7 @@ public with sharing class ISSP_CurrencyCenterReportListingCtrl {
 		this.listOfSections = new List<String>(this.reportsMap.keyset());
 		this.listOfSections.sort();
 		this.listOfSections = reverse(this.listOfSections);
-		
+
 		this.listOfYearsSection = new List<String>(this.reportsMap.get('Currency Repatriation - Monthly Reports').keyset());
 		this.listOfYearsSection.sort();
 		this.listOfYearsSection = reverse(this.listOfYearsSection);
@@ -58,92 +58,92 @@ public with sharing class ISSP_CurrencyCenterReportListingCtrl {
 	}
 
 
-    public Map<String, List<ccReport>> getCurrencyRepatriationReports() {
+		public Map<String, List<ccReport>> getCurrencyRepatriationReports() {
 
-        List<ContentVersion> tmp  = [SELECT Id, Title, Description, FileType, Owner.Name, VersionNumber FROM ContentVersion WHERE Title LIKE 'CurrencyCenterCurrencyRepatriation_%' AND IsLatest=True ORDER BY Title];
-         
+				List<ContentVersion> tmp  = [SELECT Id, Title, Description, FileType, Owner.Name, VersionNumber FROM ContentVersion WHERE Title LIKE 'CurrencyCenterCurrencyRepatriation_%' AND IsLatest=True ORDER BY Title];
+
 		Map<String, List<ccReport>> returnMap = new Map<String, List<ccReport>>();
-		
+
 		for (ContentVersion s: tmp) {
-			
+
 			String yearName = s.Title.substringAfter('_').left(4);
 			if (returnMap.get(yearName) == null)
 				returnMap.put(yearName, new List<ccReport>());
 		}
 
-        for (ContentVersion s: tmp) {
+				for (ContentVersion s: tmp) {
 
-        	List<ccReport> ccrList  = new List<ccReport>();
+					List<ccReport> ccrList  = new List<ccReport>();
 
-         	ccReport ccr = new ccReport();
-         	ccr.Id = s.Id;
-         	ccr.Title = s.Title;
-         	ccr.YearName = s.Title.substringAfter('_').left(4);
+				 	ccReport ccr = new ccReport();
+				 	ccr.Id = s.Id;
+				 	ccr.Title = s.Title;
+				 	ccr.YearName = s.Title.substringAfter('_').left(4);
 			ccr.Month = Integer.ValueOf(s.Title.right(2));
 
-         	switch on s.Title.right(2) {
-			    when '01' { ccr.MonthName = 'January'; 		}
-			    when '02' { ccr.MonthName = 'February'; 	}
-			    when '03' { ccr.MonthName = 'March'; 		}
-			    when '04' { ccr.MonthName = 'April'; 		}
-			    when '05' { ccr.MonthName = 'May'; 			}
-			    when '06' { ccr.MonthName = 'June'; 		}
-			    when '07' { ccr.MonthName = 'July'; 		}
-			    when '08' { ccr.MonthName = 'August'; 		}
-			    when '09' { ccr.MonthName = 'September';	}
-			    when '10' { ccr.MonthName = 'October'; 		}
-			    when '11' { ccr.MonthName = 'November'; 	}
-			    when '12' { ccr.MonthName = 'December'; 	}
-			    when else {}
+				 	switch on s.Title.right(2) {
+					when '01' { ccr.MonthName = 'January'; 		}
+					when '02' { ccr.MonthName = 'February'; 	}
+					when '03' { ccr.MonthName = 'March'; 		}
+					when '04' { ccr.MonthName = 'April'; 		}
+					when '05' { ccr.MonthName = 'May'; 			}
+					when '06' { ccr.MonthName = 'June'; 		}
+					when '07' { ccr.MonthName = 'July'; 		}
+					when '08' { ccr.MonthName = 'August'; 		}
+					when '09' { ccr.MonthName = 'September';	}
+					when '10' { ccr.MonthName = 'October'; 		}
+					when '11' { ccr.MonthName = 'November'; 	}
+					when '12' { ccr.MonthName = 'December'; 	}
+					when else {}
 			}
 
 			returnMap.get(ccr.YearName).add(ccr);
 
-         }
+				 }
 
-         return returnMap;
-    }
+				 return returnMap;
+		}
 
-    public List<ccReport> getCurrencyRBFReports() {
+		public List<ccReport> getCurrencyRBFReports() {
 
-        List<ContentVersion> tmp  = [SELECT Id, Title, Description, FileType, Owner.Name, VersionNumber FROM ContentVersion WHERE Title LIKE 'CurrencyCenterAnnualRBF_%' AND IsLatest=True ORDER BY Title];
+				List<ContentVersion> tmp  = [SELECT Id, Title, Description, FileType, Owner.Name, VersionNumber FROM ContentVersion WHERE Title LIKE 'CurrencyCenterAnnualRBF_%' AND IsLatest=True ORDER BY Title];
 
-        System.debug('Luis ' + tmp);
-        List<ccReport> ccrList = new List<ccReport>();
+				System.debug('Luis ' + tmp);
+				List<ccReport> ccrList = new List<ccReport>();
 
-        for (ContentVersion s: tmp) {
+				for (ContentVersion s: tmp) {
 
-         	ccReport ccr = new ccReport();
-         	ccr.Id = s.Id;
-         	ccr.Title = s.Title;
-         	ccr.YearName = s.Title.substringAfter('_').left(4);
-
-			ccrList.add(ccr);
-
-         }
-
-         return ccrList;
-    }
-
-    public List<ccReport> getCurrencyMiscReports() {
-
-        List<ContentVersion> tmp  = [SELECT Id, Title, Description, FileType, Owner.Name, VersionNumber FROM ContentVersion WHERE Title LIKE 'CurrencyCenterMiscelaneous_%' AND IsLatest=True ORDER BY Title];
-
-        List<ccReport> ccrList = new List<ccReport>();
-
-        for (ContentVersion s: tmp) {
-
-         	ccReport ccr = new ccReport();
-         	ccr.Id = s.Id;
-         	ccr.Title = s.Title;
-         	ccr.YearName = s.Title.substringAfter('_').left(4);
+				 	ccReport ccr = new ccReport();
+				 	ccr.Id = s.Id;
+				 	ccr.Title = s.Title;
+				 	ccr.YearName = s.Title.substringAfter('_').left(4);
 
 			ccrList.add(ccr);
 
-         }
+				 }
 
-         return ccrList;
-    }
+				 return ccrList;
+		}
+
+		public List<ccReport> getCurrencyMiscReports() {
+
+				List<ContentVersion> tmp  = [SELECT Id, Title, Description, FileType, Owner.Name, VersionNumber FROM ContentVersion WHERE Title LIKE 'CurrencyCenterMiscelaneous_%' AND IsLatest=True ORDER BY Title];
+
+				List<ccReport> ccrList = new List<ccReport>();
+
+				for (ContentVersion s: tmp) {
+
+				 	ccReport ccr = new ccReport();
+				 	ccr.Id = s.Id;
+				 	ccr.Title = s.Title;
+				 	ccr.YearName = s.Title.substringAfter('_').left(4);
+
+			ccrList.add(ccr);
+
+				 }
+
+				 return ccrList;
+		}
 
 	public static List<String> reverse(List<String> listString) {
 		List<String> listResult = new List<String>();

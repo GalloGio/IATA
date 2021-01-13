@@ -8,7 +8,7 @@ public class IfapXmlGeneratorTest {
 		new IfapXmlGenerator.SubmittedDate(Date.Today())
 */
 	private static testMethod void caseXMLTest() {
-		
+
 		Test.startTest();
 		try {
 			IfapXmlGenerator.Casexml casexml = new IfapXmlGenerator.Casexml(null);

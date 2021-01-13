@@ -1,13 +1,13 @@
 /*
-    Class Name: ISSP_AMC_Constants_Test
-    Related Classes: ISSP_AMC_Constants
+	Class Name: ISSP_AMC_Constants_Test
+	Related Classes: ISSP_AMC_Constants
 
-    Copyright @Right IT Services
+	Copyright @Right IT Services
 
-    Purpose: 
+	Purpose:
 
-    VERSION     AUTHOR                          DATE                DETAIL/CHANGE REFERENCE
-    1.0         DAVID BENTO & TIAGO MENDES    07-02-2018              INITIAL DEVELOPMENT
+	VERSION     AUTHOR                          DATE                DETAIL/CHANGE REFERENCE
+	1.0         DAVID BENTO & TIAGO MENDES    07-02-2018              INITIAL DEVELOPMENT
 */
 @isTest
 public class ISSP_AMC_Constants_Test {

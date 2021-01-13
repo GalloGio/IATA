@@ -1,13 +1,13 @@
 @isTest
 public class PortalBreadcrumbCtrlTest {
 
-    @isTest
-    public static void testController_getBreadcrumbsTest() {
-        Test.StartTest();
+	@isTest
+	public static void testController_getBreadcrumbsTest() {
+		Test.StartTest();
 
-        PortalBreadcrumbCtrl.getBreadcrumbs('support');
+		PortalBreadcrumbCtrl.getBreadcrumbs('support');
 
-        Test.StopTest();
-    }
+		Test.StopTest();
+	}
 
 }

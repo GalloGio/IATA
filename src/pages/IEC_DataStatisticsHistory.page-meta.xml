@@ -5,8 +5,8 @@
     <confirmationTokenRequired>false</confirmationTokenRequired>
     <label>IEC_DataStatisticsHistory</label>
     <packageVersions>
-        <majorNumber>4</majorNumber>
-        <minorNumber>16</minorNumber>
+        <majorNumber>2</majorNumber>
+        <minorNumber>70</minorNumber>
         <namespace>Zuora</namespace>
     </packageVersions>
 </ApexPage>

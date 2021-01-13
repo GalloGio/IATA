@@ -18,13 +18,13 @@ private class FinancialSecurityRenewalCaseTest {
 
 		// create a reception case
 		Case c = new Case(Subject = 'rception case', AccountId = a.Id, Status = 'Open',
-		                  RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'InternalCasesEuropeSCE') );
+						  RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'InternalCasesEuropeSCE') );
 		insert c;
 
 		// Create a new Financial Security
 		Financial_Security__c fs = new Financial_Security__c(Region__c = 'Americas', Security_status__c = 'Active', Account__c = a.Id, CurrencyIsoCode = 'USD', Amount__c = 100,
-		        Expiry_date__c = Date.today().addDays(50), Financial_Institution__c = fi.Id, Security_Type__c = 'Cross Border Guarantee',
-		        Validity_Start_Date__c = Date.today().addDays(-2), Reception_Case__c = c.Id, Reception_Date__c = Date.today(), Reasonforrequest__c = 'New Application');
+				Expiry_date__c = Date.today().addDays(50), Financial_Institution__c = fi.Id, Security_Type__c = 'Cross Border Guarantee',
+				Validity_Start_Date__c = Date.today().addDays(-2), Reception_Case__c = c.Id, Reception_Date__c = Date.today(), Reasonforrequest__c = 'New Application');
 		insert fs;
 
 		FSBatch_Alert__c fsb = new FSBatch_Alert__c();
@@ -37,8 +37,8 @@ private class FinancialSecurityRenewalCaseTest {
 		//Database.executeBatch(batch, 25);
 
 		FinancialSecurityRenewalCase sh1 = new FinancialSecurityRenewalCase();
-		String sch = '0 0 23 * * ?'; 
-		system.schedule('Test FinancialSecurityRenewalCase', sch, sh1);	
+		String sch = '0 0 23 * * ?';
+		system.schedule('Test FinancialSecurityRenewalCase', sch, sh1);
 
 		test.stopTest();
 	}

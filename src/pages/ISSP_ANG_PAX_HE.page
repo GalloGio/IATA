@@ -9,7 +9,7 @@
            action="{!securityCheck}">
 
     <html> 
-        <c:ISSP_Header />
+        <c:ISSP_Header/>
         <c:iss_ap_css />
         <c:ISSP_WaitingStatus />    
         <body>
@@ -888,7 +888,7 @@
                             <apex:pageBlockSectionItem labelStyle="display: none;">
                                 <apex:outputLabel style="display: none;"/>
                             </apex:pageBlockSectionItem>
-                            <apex:pageBlockSectionItem >  
+                            <apex:pageBlockSectionItem>  
                                 <apex:outputPanel styleClass="agencyLocationComponent" id="copyAddressToShipping" layout="none">
                                     <div class="row">
                                         <apex:outputLabel style="color:black; font-size:110%; margin-right: 10px;" value="{!$Label.ISSP_ANG_Local_Details_Copy_Address2}" />
@@ -901,7 +901,7 @@
                         </apex:pageBlockSection>         
                         
                         <apex:pageBlockSection columns="2" id="addressBlockSection">
-                            <apex:pageBlockSectionItem >    
+                            <apex:pageBlockSectionItem>    
                                 <DSE:DS_DataQuality id="BillingAddress"
                                     RecordRef="{!hqAccount}"
                                     FieldGroupName="Billing Address"
@@ -917,7 +917,7 @@
 
                             <apex:pageBlockSectionItem >  
                                 
-                                <apex:outputPanel >
+                                <apex:outputPanel>
                                     <DSE:DS_DataQuality id="ShippingAddress"
                                         RecordRef="{!hqAccount}"
                                         FieldGroupName="Shipping Address"
@@ -1183,7 +1183,7 @@
                 
                 <apex:pageblock >                
                     <apex:pageBlockSection columns="2" id="companySection">
-                        <apex:pageBlockSectionItem >  
+                        <apex:pageBlockSectionItem>  
                             <DSE:DS_DataQuality id="BranchAddress"
                                 RecordRef="{!newForm}"
                                 FieldGroupName="Branch Address"
@@ -1197,13 +1197,13 @@
                             </DSE:DS_DataQuality>
                         </apex:pageBlockSectionItem>
 
-                        <apex:pageBlockSectionItem >
+                        <apex:pageBlockSectionItem>
                             <apex:outputPanel styleClass="agencyLocationComponent" id="copyAddressToShipping" layout="block">
                                 <apex:outputLabel style="color:black;font-size:110%" value="{!$Label.ISSP_ANG_Local_Details_Copy_Address2}" />
                                 <input type="checkbox" id="copyCheckBoxBranch" onChange="copyBranchAddress();" />
                                 <br/>
                             </apex:outputPanel>
-                            <apex:outputPanel >
+                            <apex:outputPanel>
                                 <DSE:DS_DataQuality id="ShippingAddress"
                                     RecordRef="{!newForm}"
                                     FieldGroupName="Shipping Address"

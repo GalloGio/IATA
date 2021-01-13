@@ -1,8 +1,8 @@
 global with sharing class GenericAttachmentListController {
 
-    public String uploader {get;set;}
-    public String source {get;set;}
-    public Boolean scroll {get;set;}
+	public String uploader {get;set;}
+	public String source {get;set;}
+	public Boolean scroll {get;set;}
 	public String amazonURL  {
 		get { return WrapperAttach.CREDENTIAL.EndpointBaseURL + WrapperAttach.CREDENTIAL.Bucket; }
 	}
@@ -25,26 +25,26 @@ global with sharing class GenericAttachmentListController {
 	public Boolean isAdminUser {get; set;}
 	public Boolean showFileIdentifier {get; set;}
 	Boolean canAttachFiles;
-    private Case cse;
+	private Case cse;
 
-    public Boolean hasOscar{
-        get{
-            if(hasOscar == null) hasOscar = false;
-            return hasOscar;
-        }
-        private set;
-    }
+	public Boolean hasOscar{
+		get{
+			if(hasOscar == null) hasOscar = false;
+			return hasOscar;
+		}
+		private set;
+	}
 
-    public Case relatedCase {
-        get; 
-        set{
-            relatedCase = value;
-            hasOscar = String.isNotEmpty(relatedCase.parent.OSCAR__c);
-        }
-    }
-    
-    public string sObjectType	{get; set;}	//stores the API name of the object we are looking the attachments for
-	
+	public Case relatedCase {
+		get;
+		set{
+			relatedCase = value;
+			hasOscar = String.isNotEmpty(relatedCase.parent.OSCAR__c);
+		}
+	}
+
+	public string sObjectType	{get; set;}	//stores the API name of the object we are looking the attachments for
+
 	// assgnTo variable
 	private static Boolean isForPortalStatic = false; // used only for Remote actions
 	public Boolean isForPortal {
@@ -80,23 +80,23 @@ global with sharing class GenericAttachmentListController {
 		if (this.id == null ) return;
 
 		// check if current user is Admin
-        Profile profile = [Select id, Name from Profile where Id = :UserInfo.getProfileId()];
-        this.isAdminUser = profile.Name.startsWithIgnoreCase('System Administrator') || profile.Name.startsWithIgnoreCase('Developer');
-        if(sObjectType=='Case')
-	        relatedCase = [Select CaseNumber, Id, parent.OSCAR__c, parent.RecordType__c, parent.RecordTypeId from Case where id = :this.id];
+		Profile profile = [Select id, Name from Profile where Id = :UserInfo.getProfileId()];
+		this.isAdminUser = profile.Name.startsWithIgnoreCase('System Administrator') || profile.Name.startsWithIgnoreCase('Developer');
+		if(sObjectType=='Case')
+			relatedCase = [Select CaseNumber, Id, parent.OSCAR__c, parent.RecordType__c, parent.RecordTypeId from Case where id = :this.id];
 
-        if (this.isForPortal) {
-            this.showFileIdentifier = false;
-            if(sObjectType=='Case')
-           		cse = [Select Recordtype.DeveloperName, Status, Reason1__c FROM Case where id = :this.id];
-        } else {
-        	if(sObjectType=='Case'){
-	            // check if case is in recordtypes SAAM (ProcessEuropeSCE) or Oscar Communication
-	            cse = [Select Recordtype.DeveloperName, Status, Reason1__c FROM Case where id = :this.id];
-	            set<String> setRecordTypes = new set<String>{'ProcessEuropeSCE','OSCAR_Communication'};
-	            this.showFileIdentifier = setRecordTypes.contains(cse.Recordtype.DeveloperName);
-        	}
-        }
+		if (this.isForPortal) {
+			this.showFileIdentifier = false;
+			if(sObjectType=='Case')
+		   		cse = [Select Recordtype.DeveloperName, Status, Reason1__c FROM Case where id = :this.id];
+		} else {
+			if(sObjectType=='Case'){
+				// check if case is in recordtypes SAAM (ProcessEuropeSCE) or Oscar Communication
+				cse = [Select Recordtype.DeveloperName, Status, Reason1__c FROM Case where id = :this.id];
+				set<String> setRecordTypes = new set<String>{'ProcessEuropeSCE','OSCAR_Communication'};
+				this.showFileIdentifier = setRecordTypes.contains(cse.Recordtype.DeveloperName);
+			}
+		}
 
 		refreshList();
 	}
@@ -257,68 +257,68 @@ global with sharing class GenericAttachmentListController {
 
 	public Boolean getCanAttachFilesToCase() {
 		if(sObjectType!='Case') return false;
-		
-        if((cse.Status != 'Draft' && cse.Status != 'Open - EDMC') || ((cse.Reason1__c == 'New SA / CHV – New Code' || cse.Reason1__c == 'CLO - Closure') && cse.Status == 'Draft')) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
-    public Boolean getParentIsOscar() {
-    	if(sObjectType!='Case') return false;
-    	
-        if(relatedCase.parent.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication')) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    
-    public PageReference goToAttachmentPage() {
-        return new Pagereference('/ISSP_AddAttachment?caseId=' + id + '&CommunityName=' + CommunityName + '&retURL=%2F' + id);
-    }
+		if((cse.Status != 'Draft' && cse.Status != 'Open - EDMC') || ((cse.Reason1__c == 'New SA / CHV – New Code' || cse.Reason1__c == 'CLO - Closure') && cse.Status == 'Draft')) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
-    /**
-        get a list of files with valid links to download them from Amazon
-        this funcion needs a isportal variable to know what files can retrieve
-    **/
-    @RemoteAction
-    global static list<FileDef> getAllExpiringLink(String objectId) {
-        list<WrapperAttach> listAttach = new list<WrapperAttach>();
-        if (isforPortalStatic) {
-            listAttach = WrapperAttach.getListAttachmentsForPortal(objectId);
-        } else {
-            listAttach = WrapperAttach.getListAttachments(objectId);
-        }
-        list<FileDef> listFileDef = new list<FileDef>();
-        for (WrapperAttach attach: listAttach) {
-            FileDef filedef = new FileDef();
-            filedef.name = attach.name;
-            filedef.url = getExpiringLink(attach.fullName);
-            filedef.data = '';
-            listFileDef.add(filedef);
-        }
-        return listFileDef;
-    }
+	public Boolean getParentIsOscar() {
+		if(sObjectType!='Case') return false;
 
-        global class FileDef {
-        String name;
-        String url;
-        String data;
-    }
-    
-    //Return the API Name of the object of the ID received in input
-    public static string getObjectAPIName(id theObjId){
-    	if(theObjId == null){
-    		return '';
-    	}else{
-    		try{
-	    		return theObjId.getSObjectType().getDescribe().getName();
-    		}catch(exception e){
-    			return '';
-    		}
-    	}
-    }
-    
+		if(relatedCase.parent.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication')) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public PageReference goToAttachmentPage() {
+		return new Pagereference('/ISSP_AddAttachment?caseId=' + id + '&CommunityName=' + CommunityName + '&retURL=%2F' + id);
+	}
+
+	/**
+		get a list of files with valid links to download them from Amazon
+		this funcion needs a isportal variable to know what files can retrieve
+	**/
+	@RemoteAction
+	global static list<FileDef> getAllExpiringLink(String objectId) {
+		list<WrapperAttach> listAttach = new list<WrapperAttach>();
+		if (isforPortalStatic) {
+			listAttach = WrapperAttach.getListAttachmentsForPortal(objectId);
+		} else {
+			listAttach = WrapperAttach.getListAttachments(objectId);
+		}
+		list<FileDef> listFileDef = new list<FileDef>();
+		for (WrapperAttach attach: listAttach) {
+			FileDef filedef = new FileDef();
+			filedef.name = attach.name;
+			filedef.url = getExpiringLink(attach.fullName);
+			filedef.data = '';
+			listFileDef.add(filedef);
+		}
+		return listFileDef;
+	}
+
+		global class FileDef {
+		String name;
+		String url;
+		String data;
+	}
+
+	//Return the API Name of the object of the ID received in input
+	public static string getObjectAPIName(id theObjId){
+		if(theObjId == null){
+			return '';
+		}else{
+			try{
+				return theObjId.getSObjectType().getDescribe().getName();
+			}catch(exception e){
+				return '';
+			}
+		}
+	}
+
 }

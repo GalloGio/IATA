@@ -499,40 +499,40 @@
                                 <apex:outputLabel value="* Social Title 1" style="color:#a31717; font-weight: bold !important;"/>
                                 <apex:inputField value="{!newForm.CASSLink_New_User_1_Salutation__c}" label=""/>
                             </apex:pageBlockSectionItem>
-                            <apex:pageBlockSectionItem />
+                            <apex:pageBlockSectionItem/>
 
                             <apex:pageBlockSectionItem >
                                 <apex:outputLabel value="* First Name 1" style="color:#a31717; font-weight: bold !important;"/>
                                 <apex:inputField value="{!newForm.CASSLink_New_User_1_F_Name__c}" label=""/>
                             </apex:pageBlockSectionItem>
-                            <apex:pageBlockSectionItem />
+                            <apex:pageBlockSectionItem/>
 
                             <apex:pageBlockSectionItem >
                                 <apex:outputLabel value="* Last Name 1" style="color:#a31717; font-weight: bold !important;"/>
                                 <apex:inputField value="{!newForm.CASSLink_New_User_1_L_Name__c}" label=""/>
                             </apex:pageBlockSectionItem>
-                            <apex:pageBlockSectionItem />
+                            <apex:pageBlockSectionItem/>
 
                             <apex:pageBlockSectionItem >
                                 <apex:outputLabel value="* Email Address 1" style="color:#a31717; font-weight: bold !important;"/>
                                 <apex:inputField value="{!newForm.CASSLink_New_User_1_Email__c}" label=""/>
                             </apex:pageBlockSectionItem>
-                            <apex:pageBlockSectionItem />
+                            <apex:pageBlockSectionItem/>
 
-                            <apex:pageBlockSectionItem />
-                            <apex:pageBlockSectionItem />
+                            <apex:pageBlockSectionItem/>
+                            <apex:pageBlockSectionItem/>
 
                             <apex:inputField label="Social Title 2" value="{!newForm.CASSLink_New_User_2_Salutation__c}"/>
-                            <apex:pageBlockSectionItem />
+                            <apex:pageBlockSectionItem/>
 
                             <apex:inputField label="First Name 2" value="{!newForm.CASSLink_New_User_2_F_Name__c}"/>
-                            <apex:pageBlockSectionItem />
+                            <apex:pageBlockSectionItem/>
 
                             <apex:inputField label="Last Name 2" value="{!newForm.CASSLink_New_User_2_L_Name__c}"/>
-                            <apex:pageBlockSectionItem />
+                            <apex:pageBlockSectionItem/>
 
                             <apex:inputField label="Email address 2" value="{!newForm.CASSLink_New_User_2_Email__c}"/>
-                            <apex:pageBlockSectionItem />
+                            <apex:pageBlockSectionItem/>
                         </apex:pageBlockSection>
 
                         <apex:pageBlockSection columns="1">

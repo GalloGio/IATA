@@ -4,7 +4,7 @@ private class NotificationCenterControllerTest {
 	@TestSetup
 	static void makeData(){
 		 Notification_template__c template = new Notification_template__c(
-			   Identifier__c = 'test notification template',
+				 Identifier__c = 'test notification template',
 				Message__c = 'this is a dummy test message',
 				Alert_Contact_By_Email__c = false,
 				Alert_Contact_By_Push_Notification__c = true,

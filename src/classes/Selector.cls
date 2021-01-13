@@ -1,16 +1,16 @@
-public abstract with sharing class Selector 
+public abstract with sharing class Selector
 {
 
 	abstract List<Schema.SObjectField> getSObjectFieldList();
-	abstract Schema.SObjectType getSObjectType(); 
+	abstract Schema.SObjectType getSObjectType();
 
 	public Set<String> IdToString(Set<Id> ids)
 	{
 		Set<String> ret = new Set<String>();
-		
-		for(Id i: ids)  
+
+		for(Id i: ids)
 			ret.add((String)i);
-		
+
 		return ret;
 	}
 
@@ -27,7 +27,7 @@ public abstract with sharing class Selector
 			ret.add(f.getDescribe().getName());
 		}
 
-		return ret; 
+		return ret;
 	}
 
 	public List<SObject> selectSObjectByField(String field, Set<String> idSet)
@@ -44,7 +44,7 @@ public abstract with sharing class Selector
 
 			if(String.isBlank(field))
 			{
-				field = 'Id'; //Default fields to query from 
+				field = 'Id'; //Default fields to query from
 			}
 
 			if(fields.isEmpty())
@@ -52,10 +52,10 @@ public abstract with sharing class Selector
 				fields = getDefaultFields();
 			}
 
-			String idSetString = SetToString(idSet); 
+			String idSetString = SetToString(idSet);
 
 
-			String query = String.format('SELECT {0}  FROM {1} WHERE {2} IN :idSet ', 
+			String query = String.format('SELECT {0}  FROM {1} WHERE {2} IN :idSet ',
 				new List<String>{
 					String.join(fields, ', '),
 					getSObjectType().getDescribe().getName(),

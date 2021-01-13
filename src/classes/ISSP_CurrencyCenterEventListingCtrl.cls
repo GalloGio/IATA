@@ -28,7 +28,7 @@ global without sharing class ISSP_CurrencyCenterEventListingCtrl {
 						n.typo = 'Task';
 						n.start = t.ActivityDate;
 						lstOfItems.add(n);
-				} 
+				}
 			}
 			/*else if (t.OwnerId != NULL) {
 				if (t.ownerId == currentUser.Id) {
@@ -63,7 +63,7 @@ global without sharing class ISSP_CurrencyCenterEventListingCtrl {
 						n.typo = 'Event';
 						n.start = e.StartDateTime;
 						lstOfItems.add(n);
-				} 
+				}
 			}
 			/*else if (e.OwnerId != NULL) {
 				if (e.ownerId == currentUser.Id) {

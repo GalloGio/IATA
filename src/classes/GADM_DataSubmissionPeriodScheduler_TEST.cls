@@ -1,17 +1,17 @@
 @IsTest
 public with sharing class GADM_DataSubmissionPeriodScheduler_TEST {
 
-    @IsTest
-    private static void scheduleTest() {
+	@IsTest
+	private static void scheduleTest() {
 
-        Test.startTest();
+		Test.startTest();
 
-        GADM_DataSubmissionPeriodScheduler scheduler = new GADM_DataSubmissionPeriodScheduler();
-        scheduler.execute(null);
+		GADM_DataSubmissionPeriodScheduler scheduler = new GADM_DataSubmissionPeriodScheduler();
+		scheduler.execute(null);
 
-        Test.stopTest();
+		Test.stopTest();
 
 
-    }
+	}
 
 }

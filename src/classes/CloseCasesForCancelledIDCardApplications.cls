@@ -1,5 +1,5 @@
 public class CloseCasesForCancelledIDCardApplications extends TriggerAction {
-	
+
 	/**
 	 * Method that checks if the mass application was cancelled
 	 * @param s the affected record
@@ -9,7 +9,7 @@ public class CloseCasesForCancelledIDCardApplications extends TriggerAction {
 
 		ID_Card_Application__c idCardAppRecord = (ID_Card_Application__c) s;
 
-		if(idCardAppRecord.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Mass_Order_Application') 
+		if(idCardAppRecord.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Mass_Order_Application')
 			&& idCardAppRecord.Application_Status__c == 'Cancelled')
 			return true;
 
@@ -38,7 +38,7 @@ public class CloseCasesForCancelledIDCardApplications extends TriggerAction {
 		}
 
 		if(!casesToClose.isEmpty()){
-			
+
 			Map<String, SObjectField> sObjectFieldMap = Schema.getGlobalDescribe().get('Case').getDescribe().fields.getMap();
 
 			uw.registerDirty(casesToClose, new List<SObjectField>{sObjectFieldMap.get('Status'),sObjectFieldMap.get('ID_Card_Status__c')});

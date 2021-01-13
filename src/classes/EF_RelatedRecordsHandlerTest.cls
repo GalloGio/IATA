@@ -8,14 +8,14 @@ public with sharing class EF_RelatedRecordsHandlerTest {
 			EF_TestDataFactory.createCustomSettings();
 			EF_TestDataFactory.skipContractCreationValidationRule();
 			EF_TestDataFactory.createBaseDataWithAllowedWithApproval();
-			
+
 			Contract contract = [select Id, AccountId, Account.Name, EF_History__c from Contract where Account.Name = 'Test Account Client'];
 			System.assertEquals(null, contract.EF_History__c);
 			Contact c = new Contact(AccountId = contract.AccountId, FirstName = 'FirstName', LastName = 'LastName', Email = 'cont@act.com');
-	        insert c;
-	        
-	        Case cs = new Case(AccountId = c.AccountId, ContactId = c.Id, Subject = 'TEST Case');
-			insert cs;   
+			insert c;
+
+			Case cs = new Case(AccountId = c.AccountId, ContactId = c.Id, Subject = 'TEST Case');
+			insert cs;
 
 			EF_Related_Records__c rr = new EF_Related_Records__c();
 			rr.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('EF_Related_Records__c', 'Relationship');

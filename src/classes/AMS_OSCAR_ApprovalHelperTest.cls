@@ -1,7 +1,7 @@
 @isTest
 private class AMS_OSCAR_ApprovalHelperTest {
-	
-	
+
+
 
 	static testMethod void AMS_OSCAR_ApprovalHelper() {
 		AMS_OSCAR_TestDataFactory.createOSCARtestData();
@@ -30,9 +30,9 @@ private class AMS_OSCAR_ApprovalHelperTest {
 			System.assertNotEquals('Failed Process', approvalSteps.get(oscar.Id).Comments);
 		}
 
-		
+
 
 		Test.stopTest();
 	}
-		
+
 }

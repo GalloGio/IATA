@@ -4,16 +4,16 @@ private class Cleanup_Batch_Test {
 	static testMethod void testCleanupBatch_Campaign() {
 		// Setup data
 		TestDataGenerator.generateApexSetting();
-		
+
 		Account sfAccount = TestDataGenerator.generateAccounts(1, true)[0];
-        List<Contact> lstContactToDelete = TestDataGenerator.generateContacts(sfAccount.Id, 50, true);
-        Contact sfContactToSave = TestDataGenerator.generateContacts(sfAccount.Id, 1, true)[0];
-        Campaign sfCampaign = TestDataGenerator.generateCampaigns(1, true)[0];
+		List<Contact> lstContactToDelete = TestDataGenerator.generateContacts(sfAccount.Id, 50, true);
+		Contact sfContactToSave = TestDataGenerator.generateContacts(sfAccount.Id, 1, true)[0];
+		Campaign sfCampaign = TestDataGenerator.generateCampaigns(1, true)[0];
 
 		List<CampaignMember> lstCampMem = new List<CampaignMember>();
 		for (Contact cont : lstContactToDelete)
 			lstCampMem.add(new CampaignMember(CampaignId = sfCampaign.Id, ContactId = cont.Id, Status = 'Not Reached'));
-        insert lstCampMem;
+		insert lstCampMem;
 
 		Test.startTest();
 
@@ -21,9 +21,9 @@ private class Cleanup_Batch_Test {
 			b.idCampaign = sfCampaign.Id;
 			b.idsToProcess = new List<Id> { sfContactToSave.Id };
 			Database.executeBatch(b);
-		
+
 		Test.stopTest();
-		
+
 		// Validate no records exist after the cleanup except for the newly created member
 		lstCampMem.clear();
 		lstCampMem = [SELECT ContactId FROM CampaignMember WHERE CampaignId = :sfCampaign.Id];

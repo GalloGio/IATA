@@ -196,7 +196,7 @@
         <apex:outputLink value="{!URLFOR($Action.Account.View,Account.Id)}" rendered="{!NOT(isLigthning)}">Go back to parent Account</apex:outputLink>
         <apex:sectionHeader title="Contact List for Account" subtitle="{!Account.Name}" rendered="{!NOT(isLigthning)}"/>
   
-        <apex:pageBlock >
+        <apex:pageBlock>
             <!-- Header for Salesforce Classic style -->
             <apex:outputPanel styleclass="container full-width" rendered="{!NOT(isLigthning)}">
                 <div class="row">

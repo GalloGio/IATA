@@ -2,11 +2,6 @@
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <name>FDS Agency Assistant Managers</name>
-    <queueMembers>
-        <users>
-            <user>zhangxl@iata.org</user>
-        </users>
-    </queueMembers>
     <queueSobject>
         <sobjectType>AMS_OSCAR__c</sobjectType>
     </queueSobject>

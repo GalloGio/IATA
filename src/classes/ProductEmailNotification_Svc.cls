@@ -1,5 +1,5 @@
 public with sharing class ProductEmailNotification_Svc {
-	
+
 	//Prevent Internal and External emails entry at the same time
 	public static void preventInternalAndExternalEntry(List<Product_Email_Notification__c> lstEmailNotif){
 		for(Product_Email_Notification__c en : lstEmailNotif){

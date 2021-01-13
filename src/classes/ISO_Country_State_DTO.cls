@@ -1,6 +1,6 @@
 /****************************************************************************************************
-    Created by CGI, Thai 2015-10-20
-        Data Transfer Object for country-state structure
+	Created by CGI, Thai 2015-10-20
+		Data Transfer Object for country-state structure
 ****************************************************************************************************/
 public class ISO_Country_State_DTO {
 

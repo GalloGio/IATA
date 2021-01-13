@@ -28,7 +28,7 @@ public with sharing class VfIECLogin extends IECPageController {
 			if (!String.isEmpty(sWarningMsgParam)) {
 				addWarningMessage(IECUtil.DecodeDecryptParameter(sWarningMsgParam));
 			}
-			
+
 			if (Test.isRunningTest()) throw new IECApplicationException('Test');
 		}
 		catch (Exception ex) {

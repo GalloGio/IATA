@@ -1,6 +1,6 @@
 @isTest
 private class IECConstantsTest {
-	
+
 	@isTest static void test_IECConstants() {
 
 		String str = IECConstants.mapSFProductCategoryToZuora('GAD');
@@ -15,9 +15,9 @@ private class IECConstantsTest {
 		IECConstants.GADAgencyNameSearchBy gansb = IECConstants.parseGADAgencyNameSearchByToEnum('both');
 		List<SelectOption> lst = IECConstants.getCanadaProvinces();
 		lst = IECConstants.getUSAStates();
-		
+
 		//IECTestUtil.fakecoverage();
 
 	}
-	
+
 }

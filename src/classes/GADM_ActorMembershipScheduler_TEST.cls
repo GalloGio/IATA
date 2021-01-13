@@ -1,16 +1,16 @@
 @IsTest
 public class GADM_ActorMembershipScheduler_TEST {
 
-    @IsTest
-    private static void scheduleTest() {
+	@IsTest
+	private static void scheduleTest() {
 
-        Test.startTest();
+		Test.startTest();
 
-        GADM_ActorMembershipScheduler scheduler = new GADM_ActorMembershipScheduler();
-        scheduler.execute(null);
+		GADM_ActorMembershipScheduler scheduler = new GADM_ActorMembershipScheduler();
+		scheduler.execute(null);
 
-        Test.stopTest();
+		Test.stopTest();
 
-    }
+	}
 
 }

@@ -170,14 +170,14 @@ public with sharing class PortalProfileCtrlTest {
 		User usr = [SELECT Id,ContactId FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
 		Contact con = [SELECT Id,AccountId FROM Contact WHERE Id = :usr.ContactId];
 		Account acc = [SELECT Id,IsPartner FROM Account WHERE Id = :con.AccountId];
-		
+
 		System.runAs(usr){
 
 			Boolean hasAnnualRevalidation = PortalProfileCtrl.hasAnnualRevalidation();
 
 			Boolean hasRevCases = PortalProfileCtrl.hasRevCases();
 
-			Boolean checkCanEdit = PortalProfileCtrl.checkCanEdit();	
+			Boolean checkCanEdit = PortalProfileCtrl.checkCanEdit();
 
 			String goToOldIFAPWithContact = PortalProfileCtrl.goToOldIFAP(true, usr.ContactId, 'TestContact');
 			String goToOldIFAPWithoutContact = PortalProfileCtrl.goToOldIFAP(false, null, '');
@@ -187,18 +187,18 @@ public with sharing class PortalProfileCtrlTest {
 			String goToPrivacyPortal = PortalProfileCtrl.goToPrivacyPortal();
 
 			List<Account_Domain__c> lstAccountDomains = PortalProfileCtrl.getAccountDomains(con.Id);
-			
+
 			Boolean isAccountDomain = PortalProfileCtrl.isAccountDomain();
 
 			List<Account> getMapHierarchyAccountsWithContact = PortalProfileCtrl.getMapHierarchyAccounts(usr.ContactId);
 			List<Account> getMapHierarchyAccountsWithoutContact = PortalProfileCtrl.getMapHierarchyAccounts(null);
-		
+
 			PortalProfileCtrl.relocateContact(acc,usr.ContactId);
 
 
 			PortalProfileCtrl.ProfileWrapper portalProfileAux = new PortalProfileCtrl.ProfileWrapper(con.Id, 'ProfileName', 'Active', 'Some Country', 'Contact');
 			PortalProfileCtrl.ProfileWrapper portalProfileAux2 = new PortalProfileCtrl.ProfileWrapper(acc.Id, 'ProfileName', 'Active', 'Some Country', 'Account');
-			
+
 
 			List<CSP_Utils.PickListWrapper> lsttypeOfProfilePortalCustomPicklist = PortalProfileCtrl.typeOfProfilePortalCustomPicklist();
 			List<CSP_Utils.PickListWrapper> lstuserPortalStatusCustomPicklist = PortalProfileCtrl.userPortalStatusCustomPicklist();
@@ -247,7 +247,7 @@ public with sharing class PortalProfileCtrlTest {
 		);
 		insert appRight;
 
-		
+
 		System.runAs(usr){
 			PortalProfileCtrl.CompanyInformationContactsFiltersWrapper cfw = new PortalProfileCtrl.CompanyInformationContactsFiltersWrapper();
 			cfw.searchInput = '';
@@ -284,7 +284,7 @@ public with sharing class PortalProfileCtrlTest {
 		}
 		Test.stopTest();
 	}
-	
+
 	@IsTest
 	static void testGetPhotoFromAPI(){
 		Amazon_Cred__c amc = new Amazon_Cred__c(Name = 'IdCard', Dev_Configuration__c = 'IdCardDev', Prod_Configuration__c = 'IdCardProd');
@@ -299,41 +299,41 @@ public with sharing class PortalProfileCtrlTest {
 		PortalProfileCtrl.getPhotoFromAPI(photoName);
 	}
 
-    //WMO-699 - ACAMBAS: Begin
-    @IsTest
-    static void testInvoiceTabInfo() {
+	//WMO-699 - ACAMBAS: Begin
+	@IsTest
+	static void testInvoiceTabInfo() {
 
-        Account MyAgency = new Account(
-                RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency'),
-                Name='MyAgency',
-                SIS_ID__c='12345',
-                ACLI_Status__c = 'Active Company',
-                MITA_Member__c = true,
-                BIETA_Member__c = true,
-                Airline_designator__c = 'AA',
-                IATACode__c = '123',
-                Airline_Prefix__c = '456');
-        insert MyAgency;
+		Account MyAgency = new Account(
+				RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency'),
+				Name='MyAgency',
+				SIS_ID__c='12345',
+				ACLI_Status__c = 'Active Company',
+				MITA_Member__c = true,
+				BIETA_Member__c = true,
+				Airline_designator__c = 'AA',
+				IATACode__c = '123',
+				Airline_Prefix__c = '456');
+		insert MyAgency;
 
-        Contact con = ISSP_ObjectFactory.createNewContact();
-        con.AccountId = MyAgency.Id;
-        con.Email='contact@MyAgency.com';
-        insert con;
+		Contact con = ISSP_ObjectFactory.createNewContact();
+		con.AccountId = MyAgency.Id;
+		con.Email='contact@MyAgency.com';
+		insert con;
 
-        portalUser = ISSP_ObjectFactory.createPortalUser(con);
+		portalUser = ISSP_ObjectFactory.createPortalUser(con);
 
-        Customer_Invoice__c newInv = new Customer_Invoice__c(Invoice_ID__c = 'id-123', Billed_Member_Id__c = '12345',
-                                                             Billing_Member_IS_Sub_Status__c = 'IATA OFFICE', Invoice_Status__c = 'Unpaid Invoice');
-        insert newInv;
+		Customer_Invoice__c newInv = new Customer_Invoice__c(Invoice_ID__c = 'id-123', Billed_Member_Id__c = '12345',
+															 Billing_Member_IS_Sub_Status__c = 'IATA OFFICE', Invoice_Status__c = 'Unpaid Invoice');
+		insert newInv;
 
-        System.runAs(portalUser) {
-            Map<String, List<PortalProfileCtrl.FieldWrapper>> branchFields = PortalProfileCtrl.getInvoicesListFields(PortalProfileCtrl.IATA_INVOICE_TYPE);
-            List<Customer_Invoice__c> invoices = PortalProfileCtrl.getCustomerInvoices();
-            PortalProfileCtrl.isCountryEligibleForPaymentLink();
+		System.runAs(portalUser) {
+			Map<String, List<PortalProfileCtrl.FieldWrapper>> branchFields = PortalProfileCtrl.getInvoicesListFields(PortalProfileCtrl.IATA_INVOICE_TYPE);
+			List<Customer_Invoice__c> invoices = PortalProfileCtrl.getCustomerInvoices();
+			PortalProfileCtrl.isCountryEligibleForPaymentLink();
 
-            System.assert(!invoices.isEmpty());
-        }
-    }
-    //WMO-699 - ACAMBAS: End
+			System.assert(!invoices.isEmpty());
+		}
+	}
+	//WMO-699 - ACAMBAS: End
 
 }

@@ -1,5 +1,5 @@
 /**
-	   File: AMS_UpdateCertificateCampaign.cls
+		 File: AMS_UpdateCertificateCampaign.cls
 	Subject: Test Class for AMS_UpdateCertificateCampaign class.
 	History: amtosantos, 2017-04-13, Initial Release.
 
@@ -24,7 +24,7 @@ private class AMS_UpdateCertificateCampaign_Test {
 		setupTestContext();
 
 		Test.startTest();
-        Account campaignAccount;
+				Account campaignAccount;
 		campaignAccount = ISSP_ObjectFactory.createNewAccount();
 		campaignAccount.BillingCity = 'testCampaign';
 		campaignAccount.Name = 'testCampaign';
@@ -47,7 +47,7 @@ private class AMS_UpdateCertificateCampaign_Test {
 			updateCertificationCampaign.start(null);
 
 			updateCertificationCampaign.execute(null, [SELECT Id, Certificate_Generated_Current_Year__c FROM Account WHERE Id IN :accountIdSet]);
-			
+
 			updateCertificationCampaign.finish(null);
 		}
 

@@ -102,7 +102,7 @@ public class ANG_AgencyChangesConfigHelper{
 			if(fieldSet!=null){
 				//System.debug('AGENCY CHANGES: field set for migration: ' + fieldSet.getName());
 				fieldsToMigrate.addAll(getFieldSetFieldsApiName(fieldSet));
-			}
+			} 
 		}
 
 		return fieldsToMigrate;

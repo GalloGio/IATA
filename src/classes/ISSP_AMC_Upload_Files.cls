@@ -107,8 +107,8 @@ public class ISSP_AMC_Upload_Files {
 					continue;
 				}
 				tempAmazonFile = new AmazonFile__c(
-					id = eachAmazonFileInForm.AmazonFile__c, 
-					Name = eachAmazonFileInForm.AmazonFile__r.Name, 
+					id = eachAmazonFileInForm.AmazonFile__c,
+					Name = eachAmazonFileInForm.AmazonFile__r.Name,
 					Full_Name_Unique__c = eachAmazonFileInForm.AmazonFile__r.Full_Name_Unique__c
 					);
 
@@ -123,7 +123,7 @@ public class ISSP_AMC_Upload_Files {
 				 	//tempAmazonFile.File_Identifier_picklist__c = 'Official copy of Certificate of Incorporation/Registration (COI/COR)';
 				 	certificateIncorporationRegistration = tempAmazonFile;
 				 }
-					
+
 
 				else if(eachAmazonFileInForm.Participation_Application_Requirement__r.Component_Key__c == ISSP_AMC_Constants.AMC_PAR_COMPONENT_KEY_ISSP_AMC_BREAKDOWNOFSHAREHOLDERS){
 					//tempAmazonFile.File_Identifier_picklist__c = 'Official copy of Breakdown of shareholders and percentages';
@@ -134,8 +134,8 @@ public class ISSP_AMC_Upload_Files {
 					//tempAmazonFile.File_Identifier_picklist__c = 'Copy of the Certificate of IATA Strategic Partnership';
 					uld = tempAmazonFile;
 				}
-					
-				
+
+
 				else if(eachAmazonFileInForm.Participation_Application_Requirement__r.Component_Key__c == ISSP_AMC_Constants.AMC_PAR_COMPONENT_KEY_ISSP_AMC_NON_SCHEDULED){
 					//tempAmazonFile.File_Identifier_picklist__c = 'Non-scheduled airlines documents';
 					nonScheduled = tempAmazonFile;
@@ -175,7 +175,7 @@ public class ISSP_AMC_Upload_Files {
 					//tempAmazonFile.File_Identifier_picklist__c = 'Letter from the CAA informing the official opening date of the location';
 					caaLetterOpeningDate = tempAmazonFile;
 				}
-					
+
 				else if(eachAmazonFileInForm.Participation_Application_Requirement__r.Component_Key__c == ISSP_AMC_Constants.AMC_PAR_COMPONENT_KEY_ISSP_AMC_COMMERCIALSCHEDULEDOPERATIONS){
 					//tempAmazonFile.File_Identifier_picklist__c = 'Confirmation of the commercial scheduled operations that will be performed in the location';
 					commercialScheduledOperations = tempAmazonFile;
@@ -278,9 +278,9 @@ public class ISSP_AMC_Upload_Files {
 	}
 
 	/**
-        Delete a standard attachment in Salesforce
-    **/
-    @Future
+		Delete a standard attachment in Salesforce
+	**/
+	@Future
 	private static void deleteSalesforceAttachmentInFuture(String id) {
 		deleteSalesforceAttachment(id);
 	}
@@ -294,9 +294,9 @@ public class ISSP_AMC_Upload_Files {
 	}
 
 	/**
-        Delete a file in Amazon Bucket, including AmazonFile object in Amazon
-    **/
-    /*@Future
+		Delete a file in Amazon Bucket, including AmazonFile object in Amazon
+	**/
+	/*@Future
 	private static void deleteAmazonAttachmentInFuture(String strId, String fullName) {
 		deleteAmazonAttachment(strId, fullName);
 	}*/
@@ -304,10 +304,10 @@ public class ISSP_AMC_Upload_Files {
 	/**
 	Downlaod an attachment
 	**/
-    @RemoteAction
+	@RemoteAction
 	public static string getExpiringLink(string fileName ) {
-        Integer secondsValid = 300;
-        String link = AmazonRest.genPublicExpiringAWSLink( fileName, WrapperAttach.CREDENTIAL, secondsValid);
-        return link;
-    }
+		Integer secondsValid = 300;
+		String link = AmazonRest.genPublicExpiringAWSLink( fileName, WrapperAttach.CREDENTIAL, secondsValid);
+		return link;
+	}
 }

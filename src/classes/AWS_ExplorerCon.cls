@@ -49,7 +49,7 @@ public class AWS_ExplorerCon {
 			objectNames = new List<String>();
 			Datetime now = Datetime.now();
 			S3.ListAllMyBucketsEntry[] buckets =
-			    as3.ListAllMyBuckets(as3.key, now, as3.signature('ListAllMyBuckets', now)).Buckets.Bucket;
+				as3.ListAllMyBuckets(as3.key, now, as3.signature('ListAllMyBuckets', now)).Buckets.Bucket;
 
 			for (S3.ListAllMyBucketsEntry bucket : buckets) {
 				objectNames.add((' ' + bucket.Name).trim());
@@ -73,8 +73,8 @@ public class AWS_ExplorerCon {
 		String Delimiter = null; //Causes keys that contain the same string between the prefix and the first occurrence of the delimiter to be rolled up into a single result element in the CommonPrefixes collection. These rolled-up keys are not returned elsewhere in the response.
 
 		objectsForBucket =
-		    as3.ListBucket(selectedObjectName, Prefix, Marker , maxNumberToList,
-		                   Delimiter, as3.key, now, as3.signature('ListBucket', now), as3.secret);
+			as3.ListBucket(selectedObjectName, Prefix, Marker , maxNumberToList,
+						   Delimiter, as3.key, now, as3.signature('ListBucket', now), as3.secret);
 		//bucketList = objectsForBucket.Contents;
 		//  public S3.ListEntry[] bucketList {get;set;}
 

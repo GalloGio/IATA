@@ -22,16 +22,16 @@ private with sharing class EF_HistoryControllersTest
 
 			ApexPages.StandardController sc = new ApexPages.StandardController(ba);
 			EF_BaHistoryController ctrl = new EF_BaHistoryController(sc);
-	        
-	        PageReference pageRef = Page.EF_BaHistoryPage;
-	        Test.setCurrentPage(pageRef);
 
-	      Test.startTest();
-	      	ba.EF_Comments__c = 'Testing 123';
-	      	update ba;
-	      	EF_Billing_Agreement__c baUpdated = [select id, EF_History__c from EF_Billing_Agreement__c where Id = :ba.Id limit 1];
-	      	System.assert(baUpdated.EF_History__c.contains('Testing 123'));
-	      Test.stopTest();
+					PageReference pageRef = Page.EF_BaHistoryPage;
+					Test.setCurrentPage(pageRef);
+
+				Test.startTest();
+					ba.EF_Comments__c = 'Testing 123';
+					update ba;
+					EF_Billing_Agreement__c baUpdated = [select id, EF_History__c from EF_Billing_Agreement__c where Id = :ba.Id limit 1];
+					System.assert(baUpdated.EF_History__c.contains('Testing 123'));
+				Test.stopTest();
 		}
 	}
 
@@ -49,16 +49,16 @@ private with sharing class EF_HistoryControllersTest
 
 			ApexPages.StandardController sc = new ApexPages.StandardController(contract);
 			EF_ContractHistoryController ctrl = new EF_contractHistoryController(sc);
-		    
-		    PageReference pageRef = Page.EF_ContractHistoryPage;
-		    Test.setCurrentPage(pageRef);
 
-		  Test.startTest();
-		  	contract.EF_Comments__c = 'Testing 123';
-		  	update contract;
-		  	Contract cUpdated = [select id, EF_History__c from Contract where Id = :contract.Id limit 1];
-		  	System.assert(cUpdated.EF_History__c.contains('Testing 123'));
-		  Test.stopTest();
+				PageReference pageRef = Page.EF_ContractHistoryPage;
+				Test.setCurrentPage(pageRef);
+
+			Test.startTest();
+				contract.EF_Comments__c = 'Testing 123';
+				update contract;
+				Contract cUpdated = [select id, EF_History__c from Contract where Id = :contract.Id limit 1];
+				System.assert(cUpdated.EF_History__c.contains('Testing 123'));
+			Test.stopTest();
 		}
 	}
 }

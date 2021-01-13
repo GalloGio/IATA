@@ -1,6 +1,4 @@
 public with sharing class DevsTools {
-
-
 	 /**
 	 *
 	 * return information about curernt environment

@@ -16,7 +16,7 @@ private class AirlineSuspensionChildCasesControllerTst {
 
 		CaseComment comment = new CaseComment(ParentId = childCase1.Id, CommentBody = 'test CaseComment');
 		insert comment;
-		
+
 	}
 
 	@isTest static void testCaseList() {
@@ -35,7 +35,7 @@ private class AirlineSuspensionChildCasesControllerTst {
 
 
 	@isTest static void testCaseListNoCaseID() {
-		
+
 		PageReference pageRef = new PageReference('AirlineSuspensionChildCases');
 		Test.setCurrentPage(pageRef);
 
@@ -62,5 +62,5 @@ private class AirlineSuspensionChildCasesControllerTst {
 
 	}
 
-	
+
 }

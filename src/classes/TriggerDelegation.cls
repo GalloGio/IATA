@@ -34,7 +34,7 @@ public class TriggerDelegation implements Queueable{
 
 	public void enqueue(String handlerName){
 
-		/*as the register - method that increments the executeCheck variable - is executed in every trigger type of operation 
+		/*as the register - method that increments the executeCheck variable - is executed in every trigger type of operation
 		and this method is only executed for After Triggers, the executeCheck variable needs to be decremented twice
 		Example: first Before Trigger register - executeCheck = 1
 				 second Before Trigger register - executeCheck = 2
@@ -47,9 +47,9 @@ public class TriggerDelegation implements Queueable{
 		if(executeCheck > 0 || actions.isEmpty()) return;
 
 		/* !Test.isRunningTest() is needed because in test context, the method enqueueJob returns an empty value
-		   as the value returned is not exactly null, the test classe fails in the abortJob even with the validation
-		   This is a salesforce known issue:
-		   https://success.salesforce.com/issues_view?id=a1p300000008XJvAAM&title=system-enqueuejob-returns-null-in-apex-tests */
+			 as the value returned is not exactly null, the test classe fails in the abortJob even with the validation
+			 This is a salesforce known issue:
+			 https://success.salesforce.com/issues_view?id=a1p300000008XJvAAM&title=system-enqueuejob-returns-null-in-apex-tests */
 		if(jobId != null && !Test.isRunningTest()) System.abortJob(jobId);
 
 		jobId = System.enqueueJob(this);

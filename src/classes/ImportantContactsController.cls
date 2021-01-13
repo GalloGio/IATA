@@ -9,19 +9,19 @@ public with sharing class ImportantContactsController {
 						lstTmpContacts.add(c);
 					}
 				}
-				
+
 				return lstTmpContacts;
 			} else {
 				return new list<Contact>();
 			}
 		} set;}
-	
+
 	public ImportantContactsController (ApexPages.StandardController controller) {
-        if (controller.getRecord().Id != null ) {
-        	AccountId = controller.getRecord().Id;
-        } else {
-        	ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Invalid Account'));
-        	system.debug('Error: invalid account');
-        }
+		if (controller.getRecord().Id != null ) {
+			AccountId = controller.getRecord().Id;
+		} else {
+			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'Invalid Account'));
+			system.debug('Error: invalid account');
+		}
 	}
 }

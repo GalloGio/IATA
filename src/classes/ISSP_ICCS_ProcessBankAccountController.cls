@@ -2,7 +2,7 @@ public class ISSP_ICCS_ProcessBankAccountController extends ISSP_ICCS_CaseProces
 
 	/* PROCESS TYPE SPECIFIC VARIABLES */
 
-    public ISSP_ICCS_ProcessBankAccountController thisCtrl {get{ return this; }}
+	public ISSP_ICCS_ProcessBankAccountController thisCtrl {get{ return this; }}
 
 	public Integer bankAccountCodeId {get;set;}
 	public String bankAccountOperation {get;set;}
@@ -24,7 +24,7 @@ public class ISSP_ICCS_ProcessBankAccountController extends ISSP_ICCS_CaseProces
 
 	public List<SelectOption> reasons {get;set;}
 	public String selectedReason {get;set;}
-	
+
 
 	/* CONSTRUCTOR */
 
@@ -35,16 +35,16 @@ public class ISSP_ICCS_ProcessBankAccountController extends ISSP_ICCS_CaseProces
 		return ISSP_ICCS_Utils.CaseProcessType.BANK_ACCOUNT;
 	}
 
-    public override void resetController(ISSP_ICCS_CaseProcessesController caseProcessesController){
-    	ISSP_ICCS_ComponentController componentController = caseProcessesController.pageController.componentControllersMap.get(caseProcessesController.pageController.previousComponent);
-    	
-    	if(componentController instanceof ISSP_ICCS_ServiceMgmtController){
-	    	ISSP_ICCS_ServiceMgmtController serviceMgmtController = (ISSP_ICCS_ServiceMgmtController) componentController;
+	public override void resetController(ISSP_ICCS_CaseProcessesController caseProcessesController){
+		ISSP_ICCS_ComponentController componentController = caseProcessesController.pageController.componentControllersMap.get(caseProcessesController.pageController.previousComponent);
+
+		if(componentController instanceof ISSP_ICCS_ServiceMgmtController){
+			ISSP_ICCS_ServiceMgmtController serviceMgmtController = (ISSP_ICCS_ServiceMgmtController) componentController;
 
 			bankAccountOperation = serviceMgmtController.bankAccountOperationParameter;
 			bankAccountCodeId = serviceMgmtController.bankAccountCodeIdParameter;
-    	}
-    }
+		}
+	}
 
 	public override void cleanController(){
 		bankAccountCodeId = null;
@@ -56,7 +56,7 @@ public class ISSP_ICCS_ProcessBankAccountController extends ISSP_ICCS_CaseProces
 		bankNumber = null;
 		bankCurrency = null;
 		additionalBankAccountCodes = null;
-	
+
 		reasons = null;
 		selectedReason = null;
 	}
@@ -74,13 +74,13 @@ public class ISSP_ICCS_ProcessBankAccountController extends ISSP_ICCS_CaseProces
 	}
 
 	public override Map<Integer, ISSP_ICCS_CaseProcessesController.Step> getSteps(){
-        return new Map<Integer,ISSP_ICCS_CaseProcessesController.Step>{
-                1 => new ISSP_ICCS_CaseProcessesController.Step('Step 1 - Upload Bank Account File', 100, 100)};
+		return new Map<Integer,ISSP_ICCS_CaseProcessesController.Step>{
+				1 => new ISSP_ICCS_CaseProcessesController.Step('Step 1 - Upload Bank Account File', 100, 100)};
 	}
 
 	public override List<String> getCaseProcessDocuments(){
-	    return new List<String>{
-        	ISSP_ICCS_Utils.ICCS_DOCUMENT_BANK_ACCOUNTS};
+		return new List<String>{
+			ISSP_ICCS_Utils.ICCS_DOCUMENT_BANK_ACCOUNTS};
 	}
 
 	public override Map<String, ISSP_ICCS_CaseProcessController.TypedDocument> getCaseProcessTypedDocumentMap(){
@@ -88,15 +88,15 @@ public class ISSP_ICCS_ProcessBankAccountController extends ISSP_ICCS_CaseProces
 			ISSP_ICCS_Utils.ICCS_DOCUMENT_BANK_ACCOUNTS => new ISSP_ICCS_CaseProcessController.TypedDocument(this, ISSP_ICCS_Utils.ICCS_DOCUMENT_BANK_ACCOUNTS, true)
 		};
 	}
-    
-    public override void fillAdditionalMessages(){
-        // step 1
-        caseProcessesController.displayMessages.put('selectedReason', false);
-        caseProcessesController.displayMessages.put('codeNumberNull', false);
-        caseProcessesController.displayMessages.put('codeNumberNotAnInteger', false);
+
+	public override void fillAdditionalMessages(){
+		// step 1
+		caseProcessesController.displayMessages.put('selectedReason', false);
+		caseProcessesController.displayMessages.put('codeNumberNull', false);
+		caseProcessesController.displayMessages.put('codeNumberNotAnInteger', false);
 	}
-    
-    public override Case createCase(){    	
+
+	public override Case createCase(){
 		return new Case(
 			Subject = 'ICCS ' + bankAccountOperation + ' Bank Account - ' + caseProcessesController.pageController.topAccount.Name,
 			Origin = 'Portal',
@@ -109,22 +109,22 @@ public class ISSP_ICCS_ProcessBankAccountController extends ISSP_ICCS_CaseProces
 	}
 
 	public override Case retrieveCase(Id caseId){
-		return [select	
-					Id, 
-					CaseNumber, 
-					Subject, 
+		return [select
+					Id,
+					CaseNumber,
+					Subject,
 					Status,
 					Account.Name,
 					IATA_Code__c,
-					Contact.Name, 
-					Contact.Email, 
-					Contact.Phone, 
+					Contact.Name,
+					Contact.Email,
+					Contact.Phone,
 					Origin,
 					CaseArea__c,
 					Reason1__c,
 					Expected_Deadline__c,
 					Description
-				from Case 
+				from Case
 				where Id =: caseId];
 	}
 
@@ -138,12 +138,12 @@ public class ISSP_ICCS_ProcessBankAccountController extends ISSP_ICCS_CaseProces
 
 		// No case was created yet
 		if(caseProcessesController.cse.Id == null){
-		    caseProcessesController.cse.Expected_Deadline__c = Date.today() + 15;
+			caseProcessesController.cse.Expected_Deadline__c = Date.today() + 15;
 
 			// Creating a bank account, we'll just need the user to upload a file
 			if(bankAccountOperation == 'Create'){
 				caseProcessesController.cse.CaseArea__c = ISSP_ICCS_Utils.CASE_AREA_ADD_BANK_ACCOUNT;
-			    caseProcessesController.cse.Reason1__c = 'Create';
+				caseProcessesController.cse.Reason1__c = 'Create';
 			}
 			// Updating a bank account, the user will have to select the reason, add bank account codes or change bank information, and upload a file in the latter case
 			else{
@@ -182,7 +182,7 @@ public class ISSP_ICCS_ProcessBankAccountController extends ISSP_ICCS_CaseProces
 					caseProcessesController.pageController.setMessage(e.getMessage(), false);
 					return;
 				}
-				
+
 				if(!bankAcccountCodeRetrieved){
 					caseProcessesController.pageController.setMessage('The Bank Account to update could not be retrieved.', false);
 					return;
@@ -218,37 +218,37 @@ public class ISSP_ICCS_ProcessBankAccountController extends ISSP_ICCS_CaseProces
 					bankBic = caseData[2].remove(bankAccountBicLabel);
 					bankNumber = caseData[3].remove(bankAccountNumberLabel);
 					bankCurrency = caseData[4].remove(bankAccountCurrencyLabel);
-					
+
 					if(caseData.size() > 5){
 						additionalBankAccountCodes = caseData[5].remove(additionalBankAccountCodesLabel);
 					}
 				}
 
-				selectedReason = caseProcessesController.cse.Reason1__c;			
+				selectedReason = caseProcessesController.cse.Reason1__c;
 			}
 		}
 	}
 
-    public override Boolean validateStep(){
-        Boolean stepValid = true;
+	public override Boolean validateStep(){
+		Boolean stepValid = true;
 
 		if(bankAccountOperation == 'Create'){
-            caseProcessesController.displayMessages.put(ISSP_ICCS_Utils.ICCS_DOCUMENT_BANK_ACCOUNTS, !typedDocumentsMap.get(ISSP_ICCS_Utils.ICCS_DOCUMENT_BANK_ACCOUNTS).documentExists);
+			caseProcessesController.displayMessages.put(ISSP_ICCS_Utils.ICCS_DOCUMENT_BANK_ACCOUNTS, !typedDocumentsMap.get(ISSP_ICCS_Utils.ICCS_DOCUMENT_BANK_ACCOUNTS).documentExists);
 
-            return !caseProcessesController.displayMessages.get(ISSP_ICCS_Utils.ICCS_DOCUMENT_BANK_ACCOUNTS);
+			return !caseProcessesController.displayMessages.get(ISSP_ICCS_Utils.ICCS_DOCUMENT_BANK_ACCOUNTS);
 		}
 		else{
 			caseProcessesController.displayMessages.put('selectedReason', selectedReason == ISSP_ICCS_Utils.NONE);
 			if(selectedReason == ISSP_ICCS_Utils.NONE){
 				return false;
 			}
-            
+
 			if(selectedReason == 'Clone Bank Account'){
 				caseProcessesController.displayMessages.put('codeNumberNull', additionalBankAccountCodes == null || additionalBankAccountCodes == '');
 				if(additionalBankAccountCodes == null || additionalBankAccountCodes == ''){
 					return false;
 				}
-				
+
 				try{
 					Integer.valueOf(additionalBankAccountCodes);
 				}
@@ -258,13 +258,13 @@ public class ISSP_ICCS_ProcessBankAccountController extends ISSP_ICCS_CaseProces
 				}
 			}
 			else if(selectedReason == 'Change Request'){
-	            caseProcessesController.displayMessages.put(ISSP_ICCS_Utils.ICCS_DOCUMENT_BANK_ACCOUNTS, !typedDocumentsMap.get(ISSP_ICCS_Utils.ICCS_DOCUMENT_BANK_ACCOUNTS).documentExists);
+				caseProcessesController.displayMessages.put(ISSP_ICCS_Utils.ICCS_DOCUMENT_BANK_ACCOUNTS, !typedDocumentsMap.get(ISSP_ICCS_Utils.ICCS_DOCUMENT_BANK_ACCOUNTS).documentExists);
 
-	            return !caseProcessesController.displayMessages.get(ISSP_ICCS_Utils.ICCS_DOCUMENT_BANK_ACCOUNTS);
+				return !caseProcessesController.displayMessages.get(ISSP_ICCS_Utils.ICCS_DOCUMENT_BANK_ACCOUNTS);
 			}
 		}
-        return true;
-    }
+		return true;
+	}
 
 	public override void setCaseFieldValues(){
 		caseProcessesController.cse.Expected_Deadline__c = caseProcessesController.cse.Expected_Deadline__c != null ? caseProcessesController.cse.Expected_Deadline__c : Date.today() + 15;
@@ -272,7 +272,7 @@ public class ISSP_ICCS_ProcessBankAccountController extends ISSP_ICCS_CaseProces
 		// maybe we won't need to display the description when updating a bank account
 		// For the moment, we fill it with the id of the bank account in the core. This way, we can retrieve this information when:
 		// - Portal user comes back on an existing case
-		// - Custom Service views the case. A VF page will be embedded in the case layout in which we'll display 
+		// - Custom Service views the case. A VF page will be embedded in the case layout in which we'll display
 		//   information retrieved from the core bayed on that bank account id
 		// This field must be read-only in the case layout (will be for both update and create case areas)
 		if(bankAccountOperation == 'Update'){
@@ -281,7 +281,7 @@ public class ISSP_ICCS_ProcessBankAccountController extends ISSP_ICCS_CaseProces
 								bankAccountBicLabel + bankBic +  '\n' +
 								bankAccountNumberLabel + bankNumber +  '\n' +
 								bankAccountCurrencyLabel + bankCurrency;
-								
+
 			caseProcessesController.cse.Reason1__c = selectedReason;
 
 			if(selectedReason == 'Clone Bank Account'){

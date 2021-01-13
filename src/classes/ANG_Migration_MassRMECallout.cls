@@ -1,149 +1,149 @@
 global class ANG_Migration_MassRMECallout {
-    public string theSerializedResultFromRME			{get; set;}
-    public list<RMEResponseWrapper> lsRMEWrapperWSOK	{get; set;}
-    public list<RMEResponseWrapper> lsRMEWrapperWSErr	{get; set;}
-    public string selectedCnt 							{get; set;}
-    public boolean bQueryExecuted						{get; set;}
-    public boolean bHasError							{get; set;}
-    public boolean bHasSuccess							{get; set;}
-    public string sType 								{get; set;}
-    
-    public map<integer, list<RMEResponseWrapper>> mapRMEWrapperWSOk	{get; set;}
-    public map<integer, list<RMEResponseWrapper>> mapRMEWrapperWSErr	{get; set;}
-    
-    public list<selectOption> lsCountry	{get{
-    		lsCountry = new list<SelectOption>();
-    		lsCountry.add(new selectOption('-','None'));
-    		for(IATA_Iso_country__c cnt : IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name'))
-    			lsCountry.add(new selectOption(cnt.ISO_Code__c, cnt.Name));
-    		
-    		return lsCountry;
-    	} set;}
-    	
-    public list<selectOption> lsTypeOfCall	{get{
-    		lsTypeOfCall = new list<SelectOption>();
-    		lsTypeOfCall.add(new selectOption('Country','Search by country'));
-    		lsTypeOfCall.add(new selectOption('AccountID','Search by Account IDs'));
-    		lsTypeOfCall.add(new selectOption('IATACode','Search by IATA Codes'));
-    		return lsTypeOfCall;
-    	} set;}
-    
-    public string TypeOfCall	{get; set;}
-    public string lsCodeOrId	{get; set;}
-    
-    public ANG_Migration_MassRMECallout(){
-        selectedCnt = '-';
-        TypeOfCall = 'Country';
-        lsCodeOrId = '';
-        if(bHasError==null) bHasError = false;
-        if(lsRMEWrapperWSOK==null) lsRMEWrapperWSOK = new  list<RMEResponseWrapper>();
-        if(lsRMEWrapperWSErr==null) lsRMEWrapperWSErr = new  list<RMEResponseWrapper>();
-        if(mapRMEWrapperWSOk==null) mapRMEWrapperWSOk = new  map<integer, list<RMEResponseWrapper>>();
-        if(mapRMEWrapperWSErr==null) mapRMEWrapperWSErr = new  map<integer, list<RMEResponseWrapper>>();
-        if(bHasSuccess==null) bHasSuccess = false;
-        sType = '';
-    }
-    
-    public pageReference NewSearch(){
-        PageReference page = new PageReference('/apex/ANG_Migration_MassRMECallout');
-        page.setRedirect(true);
-        return page;
-    }
-    
-    public pageReference afterCallout(){
-    	list<RMEResponseWrapper> lsRMEWrapperTmp = new list<RMEResponseWrapper>();
-    	set<id> setRHCId = new set<id>();
-    	lsRMEWrapperTmp = (list<RMEResponseWrapper>)JSON.deserialize(theSerializedResultFromRME, list<RMEResponseWrapper>.class);
-    	
-    	for(RMEResponseWrapper rw:lsRMEWrapperTmp){
-    		if(rw.RHCId != null)	setRHCId.add(rw.RHCId);
-    		if(sType=='')	sType = rw.sType;
-    	}
-    	
-    	map<id, ANG_RHC_Information__c> mapRHC = new map<id, ANG_RHC_Information__c>();
-    	for(ANG_RHC_Information__c rhc:[select id, ANG_ConsumedRHC__c, ANG_ConsumedRHC_Last_Update__c, ANG_Provisional_RHC_Last_Update__c, ANG_ConsumedRHC_Percent__c, ANG_RHC_Amount_Provisional__c, CurrencyIsoCode from ANG_RHC_Information__c where id in:setRHCId])
-    		 mapRHC.put(rhc.Id,  rhc);
-    	integer IndexMap = 1;
-    	integer iCounter = 1;
-    	//Enrich wrapper with data just got from RME
-    	for(RMEResponseWrapper rw:lsRMEWrapperTmp){
-    		IndexMap = integer.valueOf(iCounter/1000);
-    		list<RMEResponseWrapper> tmpLSOk;
-    		list<RMEResponseWrapper> tmpLSErr;
-    		
-    		if(mapRMEWrapperWSErr.containsKey(IndexMap)) tmpLSErr = mapRMEWrapperWSErr.get(IndexMap);
-    		else tmpLSErr = new list<RMEResponseWrapper>();
-    		
-    		if(mapRMEWrapperWSOk.containsKey(IndexMap)) tmpLSOk = mapRMEWrapperWSOk.get(IndexMap);
-    		else tmpLSOk = new list<RMEResponseWrapper>();
-    		
-    		if(rw.RHCId != null){
-    			if(mapRHC.containsKey(rw.RHCId)){
-	    			rw.ProvAmnt = mapRHC.get(rw.RHCId).ANG_RHC_Amount_Provisional__c;
-	    			rw.sCurrency = mapRHC.get(rw.RHCId).CurrencyIsoCode;
-	    			rw.ConsumedRHC = mapRHC.get(rw.RHCId).ANG_ConsumedRHC__c;
-	    			rw.ConsumedRHCPerc = mapRHC.get(rw.RHCId).ANG_ConsumedRHC_Percent__c;
-	    			
-	    			if(rw.sType == 'ConsumedRHC')
-	    				rw.sLastUpd = string.ValueOf(mapRHC.get(rw.RHCId).ANG_ConsumedRHC_Last_Update__c);
-	    			else
-	    				rw.sLastUpd = string.ValueOf(mapRHC.get(rw.RHCId).ANG_Provisional_RHC_Last_Update__c);
-    			} 
-    		}
-    		
-    		if(rw.isSuccess){
-    			bHasSuccess = true;
-    			tmpLSOk.add(rw);
-    			mapRMEWrapperWSOk.put(IndexMap, tmpLSOk);
-    			lsRMEWrapperWSOK.add(rw);
-    		}else{
-    			bHasError = true;
-    			tmpLSErr.add(rw);
-    			mapRMEWrapperWSErr.put(IndexMap, tmpLSErr);
-    			
-    			lsRMEWrapperWSErr.add(rw);
-    		}
-    		
-    		iCounter++;
-    	}
-    	lsRMEWrapperTmp = null;
-    	setRHCId = null;
-    	theSerializedResultFromRME =  null;
+	public string theSerializedResultFromRME			{get; set;}
+	public list<RMEResponseWrapper> lsRMEWrapperWSOK	{get; set;}
+	public list<RMEResponseWrapper> lsRMEWrapperWSErr	{get; set;}
+	public string selectedCnt 							{get; set;}
+	public boolean bQueryExecuted						{get; set;}
+	public boolean bHasError							{get; set;}
+	public boolean bHasSuccess							{get; set;}
+	public string sType 								{get; set;}
+
+	public map<integer, list<RMEResponseWrapper>> mapRMEWrapperWSOk	{get; set;}
+	public map<integer, list<RMEResponseWrapper>> mapRMEWrapperWSErr	{get; set;}
+
+	public list<selectOption> lsCountry	{get{
+			lsCountry = new list<SelectOption>();
+			lsCountry.add(new selectOption('-','None'));
+			for(IATA_Iso_country__c cnt : IATAIsoCountryDAO.sortIATAIsoCountryList(IATAIsoCountryDAO.getIsoCountries(), 'Name'))
+				lsCountry.add(new selectOption(cnt.ISO_Code__c, cnt.Name));
+
+			return lsCountry;
+		} set;}
+
+	public list<selectOption> lsTypeOfCall	{get{
+			lsTypeOfCall = new list<SelectOption>();
+			lsTypeOfCall.add(new selectOption('Country','Search by country'));
+			lsTypeOfCall.add(new selectOption('AccountID','Search by Account IDs'));
+			lsTypeOfCall.add(new selectOption('IATACode','Search by IATA Codes'));
+			return lsTypeOfCall;
+		} set;}
+
+	public string TypeOfCall	{get; set;}
+	public string lsCodeOrId	{get; set;}
+
+	public ANG_Migration_MassRMECallout(){
+		selectedCnt = '-';
+		TypeOfCall = 'Country';
+		lsCodeOrId = '';
+		if(bHasError==null) bHasError = false;
+		if(lsRMEWrapperWSOK==null) lsRMEWrapperWSOK = new  list<RMEResponseWrapper>();
+		if(lsRMEWrapperWSErr==null) lsRMEWrapperWSErr = new  list<RMEResponseWrapper>();
+		if(mapRMEWrapperWSOk==null) mapRMEWrapperWSOk = new  map<integer, list<RMEResponseWrapper>>();
+		if(mapRMEWrapperWSErr==null) mapRMEWrapperWSErr = new  map<integer, list<RMEResponseWrapper>>();
+		if(bHasSuccess==null) bHasSuccess = false;
+		sType = '';
+	}
+
+	public pageReference NewSearch(){
+		PageReference page = new PageReference('/apex/ANG_Migration_MassRMECallout');
+		page.setRedirect(true);
+		return page;
+	}
+
+	public pageReference afterCallout(){
+		list<RMEResponseWrapper> lsRMEWrapperTmp = new list<RMEResponseWrapper>();
+		set<id> setRHCId = new set<id>();
+		lsRMEWrapperTmp = (list<RMEResponseWrapper>)JSON.deserialize(theSerializedResultFromRME, list<RMEResponseWrapper>.class);
+
+		for(RMEResponseWrapper rw:lsRMEWrapperTmp){
+			if(rw.RHCId != null)	setRHCId.add(rw.RHCId);
+			if(sType=='')	sType = rw.sType;
+		}
+
+		map<id, ANG_RHC_Information__c> mapRHC = new map<id, ANG_RHC_Information__c>();
+		for(ANG_RHC_Information__c rhc:[select id, ANG_ConsumedRHC__c, ANG_ConsumedRHC_Last_Update__c, ANG_Provisional_RHC_Last_Update__c, ANG_ConsumedRHC_Percent__c, ANG_RHC_Amount_Provisional__c, CurrencyIsoCode from ANG_RHC_Information__c where id in:setRHCId])
+			 mapRHC.put(rhc.Id,  rhc);
+		integer IndexMap = 1;
+		integer iCounter = 1;
+		//Enrich wrapper with data just got from RME
+		for(RMEResponseWrapper rw:lsRMEWrapperTmp){
+			IndexMap = integer.valueOf(iCounter/1000);
+			list<RMEResponseWrapper> tmpLSOk;
+			list<RMEResponseWrapper> tmpLSErr;
+
+			if(mapRMEWrapperWSErr.containsKey(IndexMap)) tmpLSErr = mapRMEWrapperWSErr.get(IndexMap);
+			else tmpLSErr = new list<RMEResponseWrapper>();
+
+			if(mapRMEWrapperWSOk.containsKey(IndexMap)) tmpLSOk = mapRMEWrapperWSOk.get(IndexMap);
+			else tmpLSOk = new list<RMEResponseWrapper>();
+
+			if(rw.RHCId != null){
+				if(mapRHC.containsKey(rw.RHCId)){
+					rw.ProvAmnt = mapRHC.get(rw.RHCId).ANG_RHC_Amount_Provisional__c;
+					rw.sCurrency = mapRHC.get(rw.RHCId).CurrencyIsoCode;
+					rw.ConsumedRHC = mapRHC.get(rw.RHCId).ANG_ConsumedRHC__c;
+					rw.ConsumedRHCPerc = mapRHC.get(rw.RHCId).ANG_ConsumedRHC_Percent__c;
+
+					if(rw.sType == 'ConsumedRHC')
+						rw.sLastUpd = string.ValueOf(mapRHC.get(rw.RHCId).ANG_ConsumedRHC_Last_Update__c);
+					else
+						rw.sLastUpd = string.ValueOf(mapRHC.get(rw.RHCId).ANG_Provisional_RHC_Last_Update__c);
+				}
+			}
+
+			if(rw.isSuccess){
+				bHasSuccess = true;
+				tmpLSOk.add(rw);
+				mapRMEWrapperWSOk.put(IndexMap, tmpLSOk);
+				lsRMEWrapperWSOK.add(rw);
+			}else{
+				bHasError = true;
+				tmpLSErr.add(rw);
+				mapRMEWrapperWSErr.put(IndexMap, tmpLSErr);
+
+				lsRMEWrapperWSErr.add(rw);
+			}
+
+			iCounter++;
+		}
+		lsRMEWrapperTmp = null;
+		setRHCId = null;
+		theSerializedResultFromRME =  null;
 		return null;
    	}
-    
-    public PageReference doNothing(){return null;}
-    public void SearchPerformed(){bQueryExecuted = true; }
-    
-    global class RMEResponseWrapper{
-    	public boolean isSuccess	{get; set;}
-    	public string description	{get; set;}
-    	public string iataCode		{get; set;}
-    	public string RHCId			{get; set;}
-    	public string AccntId		{get; set;}
-    	public string sCurrency		{get; set;}
-    	public decimal ProvAmnt		{get; set;}
-    	public decimal ConsumedRHC	{get; set;}
-    	public decimal ConsumedRHCPerc	{get; set;}
-    	public string sLastUpd		{get; set;}
-    	public string sType			{get; set;}
-    }
-    
-    
-    
-    @RemoteAction
-    global static WebserviceResult SendRequestToRME(string AccountID, string sType){
-    	if(sType=='ProvisionalRHC')
-    		return requestProvisionalRHC(AccountID);
-    	else
-    	if(sType=='ConsumedRHC')
-    		return requestBalanceUpdate(AccountID);
-    	else
-    		return null;//should never arrive here
-    }
-    
-    
-    global class WebserviceResult {
+
+	public PageReference doNothing(){return null;}
+	public void SearchPerformed(){bQueryExecuted = true; }
+
+	global class RMEResponseWrapper{
+		public boolean isSuccess	{get; set;}
+		public string description	{get; set;}
+		public string iataCode		{get; set;}
+		public string RHCId			{get; set;}
+		public string AccntId		{get; set;}
+		public string sCurrency		{get; set;}
+		public decimal ProvAmnt		{get; set;}
+		public decimal ConsumedRHC	{get; set;}
+		public decimal ConsumedRHCPerc	{get; set;}
+		public string sLastUpd		{get; set;}
+		public string sType			{get; set;}
+	}
+
+
+
+	@RemoteAction
+	global static WebserviceResult SendRequestToRME(string AccountID, string sType){
+		if(sType=='ProvisionalRHC')
+			return requestProvisionalRHC(AccountID);
+		else
+		if(sType=='ConsumedRHC')
+			return requestBalanceUpdate(AccountID);
+		else
+			return null;//should never arrive here
+	}
+
+
+	global class WebserviceResult {
 		webservice Boolean isSuccess;
 		webservice String description;
 		webservice String iataCode;
@@ -154,8 +154,8 @@ global class ANG_Migration_MassRMECallout {
 			isSuccess = true;
 		}
 	}
-	
-	
+
+
 	webservice static WebserviceResult requestBalanceUpdate(String accountId){
 		Account acc = [SELECT Id, IATACode__c, (SELECT Id, CurrencyIsoCode, ANG_ConsumedRHC__c, ANG_RHC_Amount__c, ANG_ConsumedRHC_Percent__c, ANG_ConsumedRHC_Last_Update__c, ANG_AccountId__c FROM RHC_Informations__r) FROM Account where Id = :accountId];
 		WebserviceResult result = doRequest(acc.IATACode__c, 'BTN_Bal'); //results are saved on the private varible "result"
@@ -188,8 +188,8 @@ global class ANG_Migration_MassRMECallout {
 
 		return result;
 	}
-	
-	
+
+
 	webservice static WebserviceResult requestProvisionalRHC(String accountId){
 		Account acc = [SELECT Id, IATACode__c, (SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_RME_Amount__c, ANG_RHC_Amount_Provisional__c, ANG_Provisional_RHC_Last_Update__c, ANG_AccountId__c FROM RHC_Informations__r) FROM Account where Id = :accountId];
 		WebserviceResult result = doRequest(acc.IATACode__c, 'BTN_Prov'); //results are saved on the private varible "result"
@@ -213,7 +213,7 @@ global class ANG_Migration_MassRMECallout {
 					rhcInfo.ANG_RHC_Amount_Provisional__c = result.res.provisionalRHC;
 					rhcInfo.ANG_Provisional_RHC_Last_Update__c = System.today();
 					update rhcInfo;
-					
+
 					//Second step: confirm RHC
 					ANG_RHC_Information__c rhcInfo2 = [select id, ANG_CashCondition__c, ANG_FINANCIAL_SECURITY__C, ANG_RHC_AMOUNT_FORECASTED__C, ANG_RME_Amount__c from ANG_RHC_Information__c where id=:acc.RHC_Informations__r[0].Id];
 					if(rhcInfo2.ANG_CashCondition__c){
@@ -224,7 +224,7 @@ global class ANG_Migration_MassRMECallout {
 						else
 							rhcInfo2.ANG_RME_Amount__c = rhcInfo2.ANG_FINANCIAL_SECURITY__C;
 					}
-					
+
 					update rhcInfo2;
 				}catch(Exception e) {
 					result.isSuccess = false;
@@ -234,7 +234,7 @@ global class ANG_Migration_MassRMECallout {
 		}
 		return result;
 	}
-	
+
 	private static WebserviceResult doRequest(String iataCode, String mappingName){
 		ANG_CalloutMapping__c params = ANG_CalloutMapping__c.getInstance(mappingName);
 
@@ -267,7 +267,7 @@ global class ANG_Migration_MassRMECallout {
 
 		return result;
 	}
-	
+
 	public class RHCMessage{
 		//Basic info
 		public String iataCode;

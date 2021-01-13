@@ -1,19 +1,19 @@
 /**
- * Controller associated with the IECEBC_SubsriptionRenewal 
+ * Controller associated with the IECEBC_SubsriptionRenewal
  * Change Log:
  *  - 20160920-sl: initial version
- *   
+ *
  **/
 
 
 public with sharing class vfIECEBC_SubscriptionRenewal extends vfIECEBC_Controller {
-	
+
 	public vfIECEBC_SubscriptionRenewal()
 	{
-	
+
 	}
-	
-	// ======================================================================== 
+
+	// ========================================================================
 	// link to the payment page (renewal)
 	// the information is passed on the billingAccount record
 	// use paymentToken as Url Parameter to ensure the communication integrity between pages.
@@ -30,7 +30,7 @@ public with sharing class vfIECEBC_SubscriptionRenewal extends vfIECEBC_Controll
 							);
 		return paymentPage;
 	} // end of goToPaymentPage
-	
-	
-	
+
+
+
 }

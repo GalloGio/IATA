@@ -1,13 +1,13 @@
 @isTest
 private class OneIdTermsAndConditionsTest {
-	
+
 	@isTest static void test_method_one() {
 		// Implement test code
 		OneIdTermsAndConditions.ToTranslate('fala chines');
 
 
 	}
-	
+
 	@isTest static void test_method_two() {
 		// Implement test code
 		Account acc = ISSP_ObjectFactory.createNewAccount();
@@ -29,5 +29,5 @@ private class OneIdTermsAndConditionsTest {
 
 		OneIdTermsAndConditions.getAppTerms(oi.id);
 	}
-	
+
 }

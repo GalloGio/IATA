@@ -29,13 +29,13 @@ public with sharing class vfIECHistInvoices extends IECPageController {
 			addErrorMessage(ex.getMessage());
 		}
 	}
-	
+
 	/**
 	 * Action called after the page has been loaded
 	 */
 	public Pagereference pageLoad() {
 		try {
-			
+
 			// first check if the user is logged in
 			if (IECUserManager.isUserLoggedIn() == false) {
 				Pagereference prLogin = Page.IECLogin;
@@ -47,12 +47,12 @@ public with sharing class vfIECHistInvoices extends IECPageController {
 			else {
 				// Validate Logged in user profile and ensure profile is complete
 				validUserProfile();
-				
+
 				// get the invoices (but not the ICH ones)(NEW CHANGE: INCLUDE ICH 2014-07-11)
 				lstInvoicesToDisplay = (loggedCustomer.RelatedBillingAccount != null)
 					? IECSubscriptionManager.getInvoicesByBillingAccount(loggedCustomer.RelatedBillingAccount.Id, true)
 					: null;
-				
+
 				iNbrRowsDisplayed = (lstInvoicesToDisplay != null) ? lstInvoicesToDisplay.size() : 0;
 				/*
 				if (lstInvoicesToDisplay.size() > 5)
@@ -60,11 +60,11 @@ public with sharing class vfIECHistInvoices extends IECPageController {
 				else
 					iNbrRowsDisplayed = lstInvoicesToDisplay.size();
 				*/
-					
+
 				// preselect invoice if one was specified in the parameters
 				if (iNbrRowsDisplayed > 0 && sSelectedInvoiceID != '' && sSelectedInvoiceID != null)
 					selectInvoice();
-					
+
 				return null;
 			}
 		}
@@ -73,7 +73,7 @@ public with sharing class vfIECHistInvoices extends IECPageController {
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Action when a user clicks on Show All
 	 */
@@ -81,7 +81,7 @@ public with sharing class vfIECHistInvoices extends IECPageController {
 		iNbrRowsDisplayed = lstInvoicesToDisplay.size();
 		return null;
 	}
-	
+
 	/**
 	 * Action when a user clicks on an invoice
 	 */
@@ -97,7 +97,7 @@ public with sharing class vfIECHistInvoices extends IECPageController {
 					break;
 				}
 			}
-			
+
 			// if an invoice was found
 			if (oSelectedInvoice != null) {
 				// get the related payment invoice
@@ -111,7 +111,7 @@ public with sharing class vfIECHistInvoices extends IECPageController {
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Action when a user clicks on a payment; redirects to the Payments page with a preselected payment
 	 */
@@ -130,7 +130,7 @@ public with sharing class vfIECHistInvoices extends IECPageController {
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Action when a user sort by a column
 	 */
@@ -138,9 +138,9 @@ public with sharing class vfIECHistInvoices extends IECPageController {
 		try {
 			if (sSortDirection == '' || sSortByColumn == '')
 				return null;
-			
+
 			lstInvoicesToDisplay = IECSubscriptionManager.getSortedInvoicesByBillingAccount((String)loggedCustomer.RelatedBillingAccount.Id, true, sSortByColumn, sSortDirection);
-			
+
 			return null;
 		}
 		catch(Exception ex) {

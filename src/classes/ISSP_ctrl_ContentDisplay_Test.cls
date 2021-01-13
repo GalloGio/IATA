@@ -17,17 +17,17 @@ private class ISSP_ctrl_ContentDisplay_Test {
 
 			//create Account
 			Account acc = createAccount(isoCountry);
-      		insert acc;
+					insert acc;
 
 			//Create Contact
 			Contact con2 = createContact(acc);
-      		insert con2;
+					insert con2;
 
 			//Create portal applications
-		    Portal_Applications__c app = new Portal_Applications__c(Name = 'test app');
-      		insert app;
-      		Portal_Application_Right__c appRight = new Portal_Application_Right__c(Contact__c = con2.Id, Portal_Application__c = app.Id, Right__c = 'Access Granted');
-      		insert appRight;
+				Portal_Applications__c app = new Portal_Applications__c(Name = 'test app');
+					insert app;
+					Portal_Application_Right__c appRight = new Portal_Application_Right__c(Contact__c = con2.Id, Portal_Application__c = app.Id, Right__c = 'Access Granted');
+					insert appRight;
 
 			//create ContentVersion
 			ContentVersion contentVersionInsert = new ContentVersion();
@@ -36,7 +36,7 @@ private class ISSP_ctrl_ContentDisplay_Test {
 			insert contentVersionInsert;
 
 			ContentVersion contentVersion = [SELECT Id, Title, Description, FileType, OwnerId, Owner.Name, VersionNumber, ContentUrl,
-	                       					ContentDocumentId, Country_of_publication__c, Document_Category__c, ContentSize, IsLatest
+												 					ContentDocumentId, Country_of_publication__c, Document_Category__c, ContentSize, IsLatest
 											FROM ContentVersion
 											WHERE Id = :contentVersionInsert.Id];
 			system.debug('xxxR contentVersion ==> '+contentVersion);
@@ -50,7 +50,7 @@ private class ISSP_ctrl_ContentDisplay_Test {
 
 			Apexpages.currentPage().getParameters().put('id',contentVersion.ContentDocumentId);
 			ISSP_CS__c cs = new ISSP_CS__c(Name = 'Host', Value__c = 'portal.iata.org');
-            database.insert(cs);
+						database.insert(cs);
 			ISSP_ctrl_ContentDisplay controller = new ISSP_ctrl_ContentDisplay();
 
 			System.assertEquals(true, Apexpages.currentPage().getParameters().get('id') != null);

@@ -32,7 +32,7 @@
 </style>
 </head>
 <body>
-  <apex:pageBlock >
+  <apex:pageBlock>
     <apex:pageBlockTable value="{!FilteredContactList}" var="item">
 
         <apex:repeat value="{!fields}" var="f">

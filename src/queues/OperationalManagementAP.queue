@@ -2,7 +2,7 @@
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>br_idfs@iata.org</email>
-    <name>Cases - Billing &amp; Reporting - Global</name>
+    <name>Operational Management - A&amp;P</name>
     <queueMembers>
         <publicGroups>
             <publicGroup>IDFSAllusersexcludingIWandACCA</publicGroup>

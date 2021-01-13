@@ -1,6 +1,6 @@
 @isTest
 private class ANG_RiskAlertPurgeTest {
-	
+
 	private static Boolean includeRTS = false;
 
 	static {
@@ -10,8 +10,8 @@ private class ANG_RiskAlertPurgeTest {
 	@testSetup static void createData() {
 
 		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US', ANG_Enable_NewGen__c = true)  ;
-        insert ctry ;
-				
+		insert ctry ;
+
 		// Create an Airline HQ account
 		Account a = new Account(
 			Name = 'acc1',
@@ -44,7 +44,7 @@ private class ANG_RiskAlertPurgeTest {
 		}
 		insert riskAlerts;
 	}
-	
+
 	static testMethod void test_batch() {
 		System.assertEquals((includeRTS ? 4 : 2), [SELECT Id FROM ANG_Risk_Alert__c].size());
 
@@ -58,5 +58,5 @@ private class ANG_RiskAlertPurgeTest {
 
 		System.assertEquals((includeRTS ? 3 : 1), [SELECT Id FROM ANG_Risk_Alert__c].size());
 	}
-	
+
 }

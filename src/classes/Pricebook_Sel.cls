@@ -2,12 +2,12 @@ public with sharing class Pricebook_Sel extends Selector
 {
 	public List<Schema.SObjectField> getSObjectFieldList()
 	{
-		return new List<Schema.SObjectField> 
+		return new List<Schema.SObjectField>
 		{
 			Pricebook2.Id,
 			Pricebook2.Name,
 			Pricebook2.IsActive,
-			Pricebook2.Description, 
+			Pricebook2.Description,
 			Pricebook2.IsStandard
 		};
 	}
@@ -18,17 +18,17 @@ public with sharing class Pricebook_Sel extends Selector
 	}
 
 	/****************************************************************************************************
-        Created by CGI - David
-            this function return the standard pricebook. 
-    ****************************************************************************************************/
+		Created by CGI - David
+			this function return the standard pricebook.
+	****************************************************************************************************/
 	public Pricebook2 getStandardPriceBook()
 	{
-		Pricebook2 ret; 
+		Pricebook2 ret;
 
 		String query = String.format(
-			'SELECT {0}  ' + 
-			'FROM {1} ' + 
-			'WHERE IsStandard=true LIMIT 1' , 
+			'SELECT {0}  ' +
+			'FROM {1} ' +
+			'WHERE IsStandard=true LIMIT 1' ,
 			new List<String>{
 				String.join(getDefaultFields(), ', '),
 				getSObjectType().getDescribe().getName()
@@ -37,7 +37,7 @@ public with sharing class Pricebook_Sel extends Selector
 
 		List<Pricebook2> pricebooks = Database.query(query);
 		if(!pricebooks.isEmpty()) ret = pricebooks[0];
-		
+
 		return (Test.isRunningTest()) ? new Pricebook2(Id=Test.getStandardPricebookId()) : ret;
 	}
 
@@ -49,21 +49,21 @@ public with sharing class Pricebook_Sel extends Selector
 	}
 
 	/****************************************************************************************************
-        Created by CGI - David
-            this function generate pricebook entries for given product/price and pricebook specified
-    ****************************************************************************************************/
+		Created by CGI - David
+			this function generate pricebook entries for given product/price and pricebook specified
+	****************************************************************************************************/
 	public List<PricebookEntry> generatePriceBokkEntries(Map<Id, zqu__ProductRatePlanCharge__c> chargeByProductId, Pricebook2 pricebook, Boolean doInsert)
 	{
-		// Use standard Pricebook for unit test 
-		Id pricebookId = (Test.isRunningTest()) ? Test.getStandardPricebookId() : pricebook.Id; 
+		// Use standard Pricebook for unit test
+		Id pricebookId = (Test.isRunningTest()) ? Test.getStandardPricebookId() : pricebook.Id;
 
 		String currencyCode = getCorporateCurrencyCode();
 
-		Map<String, PricebookEntry> existingEntries = new Map<String, PricebookEntry>(); 
+		Map<String, PricebookEntry> existingEntries = new Map<String, PricebookEntry>();
 		Set<Id> productIds = new Set<Id>();
 
 		for(Id productId : chargeByProductId.keySet()) productIds.add(productId);
-		
+
 
 		for(PricebookEntry pbe : [SELECT Id, Pricebook2Id, Product2Id FROM PricebookEntry WHERE Product2Id IN :productIds AND Pricebook2Id=:pricebookId])
 		{
@@ -86,7 +86,7 @@ public with sharing class Pricebook_Sel extends Selector
 			// Ecommerce Enhancements R2, aosantos, 2017-06-16, dont create pricebook entries for discounts, etc, just for prices
 			if (zCharge.zqu__ListPrice__c != null) {
 				//-- Validate PricebookEntry exist
-				PricebookEntry pbe; 
+				PricebookEntry pbe;
 				if(existingEntries.containsKey(pricebookId + '-' + productId))
 				{
 					//-- Update existing Entry
@@ -119,7 +119,7 @@ public with sharing class Pricebook_Sel extends Selector
 
 		if(!pbe2create.isEmpty())
 		{
-			insert pbe2create; 
+			insert pbe2create;
 			priceBookEntries.addAll(pbe2create);
 		}
 
@@ -130,5 +130,5 @@ public with sharing class Pricebook_Sel extends Selector
 		}
 
 		return priceBookEntries;
-	} 
+	}
 }

@@ -1,10 +1,10 @@
 public without sharing class AMS_OSCAR_Rollback {
 
-	private static final Set<String> HIERARCHY_CHANGES = new Set<String> {'Location type', 'Minor Shareholding', 'Major Shareholding', 'Ownership to non-IATA Agent', 
+	private static final Set<String> HIERARCHY_CHANGES = new Set<String> {'Location type', 'Minor Shareholding', 'Major Shareholding', 'Ownership to non-IATA Agent',
 																			'Ownership to IATA Agent'};
-	private static final Set<String> BRANCH_CHANGES = new Set<String> {'Name', 'Legal status', 'Location type', 'Minor Shareholding', 'Major Shareholding', 
+	private static final Set<String> BRANCH_CHANGES = new Set<String> {'Name', 'Legal status', 'Location type', 'Minor Shareholding', 'Major Shareholding',
 																			'Ownership to non-IATA Agent', 'Ownership to IATA Agent', 'VMFR'};
-	private static final Set<String> OWNERS_CHANGES = new Set<String> {'Minor Shareholding', 'Major Shareholding', 'Ownership to non-IATA Agent', 
+	private static final Set<String> OWNERS_CHANGES = new Set<String> {'Minor Shareholding', 'Major Shareholding', 'Ownership to non-IATA Agent',
 																			'Ownership to IATA Agent'};
 
 	private Map<Id,RollbackConfig> mapIdToOscar {get; set;}
@@ -26,7 +26,7 @@ public without sharing class AMS_OSCAR_Rollback {
 		this.contactOwners = new List<Contact>();
 		init(oscars);
 		retriveBackupData();
-	} 
+	}
 
 	private void init(List<AMS_OSCAR__c> oscars) {
 		for(AMS_OSCAR__c oscar : oscars) {
@@ -121,14 +121,14 @@ public without sharing class AMS_OSCAR_Rollback {
 				HierarchyWrapper hw = retrieveHierarchy(config.oscar.Id);
 				if(hw != null) {
 					hierarchyToUpdate.add(hw);
-				}				
+				}
 			}
 
 			if(config.needOwnersCheck) {
 				List<AMS_Account_Role__c> ows = mapOscarToOwners.get(config.oscar.Id);
 				if(ows != null) {
 					ownersToUpdate.addAll(ows);
-				}				
+				}
 			}
 		}
 
@@ -159,17 +159,17 @@ public without sharing class AMS_OSCAR_Rollback {
 		List<Case> casesToInsert = new List<Case>();
 
 		Database.DMLOptions dmo = new Database.DMLOptions();
-		dmo.assignmentRuleHeader.useDefaultRule= true;	
+		dmo.assignmentRuleHeader.useDefaultRule= true;
 
 		Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'InternalCasesEuropeSCE');
-		
+
 		for(AMS_ChangeCodes__c changeCode : [SELECT Change_Code__c FROM AMS_ChangeCodes__c where Billable__c = true]) {
 			billableChangeCodes.add(changeCode.Change_Code__c);
 		}
 
-		List<Agency_Applied_Change_code__c> appChangeCodes = [SELECT Id, Change_Code__c, OSCAR__c 
-															  FROM Agency_Applied_Change_code__c
-															  WHERE Change_Code__c IN :billableChangeCodes AND OSCAR__c IN :oscarIds];
+		List<Agency_Applied_Change_code__c> appChangeCodes = [SELECT Id, Change_Code__c, OSCAR__c
+																FROM Agency_Applied_Change_code__c
+																WHERE Change_Code__c IN :billableChangeCodes AND OSCAR__c IN :oscarIds];
 
 		if(!appChangeCodes.isEmpty()) {
 			Set<Id> oscarsToProcess = new Set<Id>();
@@ -177,14 +177,14 @@ public without sharing class AMS_OSCAR_Rollback {
 				oscarsToProcess.add(apcc.OSCAR__c);
 			}
 
-			List<AMS_OSCAR__c> oscars = [SELECT Id, 
-											(SELECT Id, Subject, AccountId, Region__c, BSPCountry__c, Type_of_customer__c, ContactId FROM Cases__r) 
-										 FROM AMS_OSCAR__c 
+			List<AMS_OSCAR__c> oscars = [SELECT Id,
+											(SELECT Id, Subject, AccountId, Region__c, BSPCountry__c, Type_of_customer__c, ContactId FROM Cases__r)
+										 FROM AMS_OSCAR__c
 										 WHERE Id IN :oscarsToProcess];
 
 			for(AMS_OSCAR__c oscar : oscars) {
 				Case pc = oscar.Cases__r[0];
-				Case cse = new Case(ParentId= pc.Id, AccountId= pc.AccountId, Region__c= pc.Region__c, BSPCountry__c= pc.BSPCountry__c, 
+				Case cse = new Case(ParentId= pc.Id, AccountId= pc.AccountId, Region__c= pc.Region__c, BSPCountry__c= pc.BSPCountry__c,
 					RecordTypeId= recordTypeId, Origin= 'Internal Case', CaseArea__c= 'Invoicing', Reason1__c= 'Credit Note request',
 					Type_of_customer__c= pc.Type_of_customer__c, ContactId= pc.ContactId, Subject= pc.Subject, Description= Label.AMS_RollbackCase_Description);
 				cse.setOptions(dmo);
@@ -201,11 +201,11 @@ public without sharing class AMS_OSCAR_Rollback {
 		List<Account> res = new List<Account>();
 
 		if(allHierarchy) {
-			res.addAll(mapOscarToAccounts.get(oscarId));			
+			res.addAll(mapOscarToAccounts.get(oscarId));
 		} else {
 			for(Id accountId : oscarAccountIds) {
 				res.add(mapAccounts.get(accountId));
-			}			
+			}
 		}
 
 		return res;
@@ -214,7 +214,7 @@ public without sharing class AMS_OSCAR_Rollback {
 	private HierarchyWrapper retrieveHierarchy(Id oscarId) {
 		HierarchyWrapper res;
 		List<AMS_Agencies_relationhip__c> relations = mapOscarToRelations.get(oscarId);
-		
+
 		if(relations != null) {
 			res = new HierarchyWrapper(relations[0].Hierarchy__c, null);
 			for(AMS_Agencies_relationhip__c relation : relations) {
@@ -236,8 +236,8 @@ public without sharing class AMS_OSCAR_Rollback {
 		for(HierarchyWrapper hierarchyW : hierarchies) {
 			System.debug('Hierarchy Wrapper: ' + hierarchyW);
 			if(hierarchyW.isEmptyHierarchy) {
-				accountIds.add(hierarchyW.accountId);	
-			} else {			
+				accountIds.add(hierarchyW.accountId);
+			} else {
 			oldHierarchyIds.add(hierarchyW.orginalHierarchyId);
 			hierarchiesToCreate.add(hierarchyW.hierarchy);
 			for(AMS_Agencies_relationhip__c relation : hierarchyW.relations) {
@@ -270,7 +270,7 @@ public without sharing class AMS_OSCAR_Rollback {
 		if(!hierarchiesToCreate.isEmpty()) {
 			insert hierarchiesToCreate;
 		}
-		
+
 		List<AMS_Agencies_relationhip__c> relationsToInsert = new List<AMS_Agencies_relationhip__c>();
 		for(HierarchyWrapper hierarchyW : hierarchies) {
 			for(AMS_Agencies_relationhip__c relation : hierarchyW.relations) {
@@ -297,10 +297,10 @@ public without sharing class AMS_OSCAR_Rollback {
 			mapIdToOwner.put(owner.Id, owner);
 		}
 
-		Id ownerRTId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');	
+		Id ownerRTId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
 
-		List<AMS_Account_Role__c> ownersToCheck = [SELECT Id, Account__c FROM AMS_Account_Role__c 
-												   WHERE Account__c IN :mapAccountToOwners.keySet() AND RecordTypeId = :ownerRTId AND Active__c = true];
+		List<AMS_Account_Role__c> ownersToCheck = [SELECT Id, Account__c FROM AMS_Account_Role__c
+													 WHERE Account__c IN :mapAccountToOwners.keySet() AND RecordTypeId = :ownerRTId AND Active__c = true];
 
 		List<AMS_Account_Role__c> ownersToDelete = new List<AMS_Account_Role__c>();
 		for(AMS_Account_Role__c owner : ownersToCheck) {
@@ -318,7 +318,7 @@ public without sharing class AMS_OSCAR_Rollback {
 		for(Map<Id,AMS_Account_Role__c> mapOwners : mapAccountToOwners.values()) {
 			for(AMS_Account_Role__c owner : mapOwners.values()) {
 				ownersToUpdate.add(owner);
-			}			
+			}
 		}
 
 		update ownersToUpdate;

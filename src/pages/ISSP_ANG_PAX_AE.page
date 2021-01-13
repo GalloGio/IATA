@@ -1,4 +1,4 @@
-<apex:page controller="ISSP_AMS_Accreditation" cache="false" sidebar="false" showHeader="false" language="{!displayLanguage}" standardStylesheets="true" applyBodyTag="false" applyHtmlTag="false" action="{!securityCheck}">
+	<apex:page controller="ISSP_AMS_Accreditation" cache="false" sidebar="false" showHeader="false" language="{!displayLanguage}" standardStylesheets="true" applyBodyTag="false" applyHtmlTag="false" action="{!securityCheck}">
   <html>
   <c:ISSP_Header ></c:ISSP_Header>
   <c:iss_ap_css />
@@ -694,7 +694,7 @@
         	}
       	}
     </script>
-    <c:MutationObserverPolyfill />
+    <c:MutationObserverPolyfill/>
 
     <c:ISSP_CustomNavigation />
     <div class="container">
@@ -900,7 +900,7 @@
 					                }
 	                			</style>
   
-	                  			<apex:pageblock >
+	                  			<apex:pageblock>
 				                    <apex:pageBlockSection columns="2" collapsible="false">
 				                      <apex:facet name="header">
 				                        <apex:outputpanel >
@@ -1000,13 +1000,13 @@
 
                       				<apex:pageBlockSection columns="2" id="branch">
                         				<apex:outputText value="{!$Label.ISSP_ANG_Branch_Office_address_details}" style="font-weight:bold" />
-                        				<apex:outputtext />
+                        				<apex:outputtext/>
                         
                          				<apex:pageBlockSection columns="1">
                          					<apex:outputPanel styleClass="agencyLocationComponent" id="billingAddressTitle" layout="block">
 							                    <apex:outputLabel style="color:black;font-size:110%" value="{!$Label.Billing_address}"/>
 							                </apex:outputPanel>
-                         					<apex:pageBlockSectionItem > 
+                         					<apex:pageBlockSectionItem> 
 			                              		<DSE:DS_DataQuality id="BranchAddress" RecordRef="{!newForm}" FieldGroupName="Branch Address" Edit="true" FormGroupStyle="form-group" RowStyle="row" LabelStyle="label labelCol test-label address-label" InputStyle="test-input" StatusStyle="test-status" FormControlStyle="apcontainer"/>
 			                              	</apex:pageBlockSectionItem>
                          				</apex:pageBlockSection>
@@ -1016,7 +1016,7 @@
 							                    <apex:outputLabel style="color:black; font-size:110%; margin-right: 10px;" value="{!$Label.ISSP_ANG_Local_Details_Copy_Address2}" />
 							                    <input type="checkbox" id="copyCheckBoxBranch" onChange="copyBranchAddress()" />
 							                </apex:outputPanel>
-                        					<apex:pageBlockSectionItem > 
+                        					<apex:pageBlockSectionItem> 
 	                    						<DSE:DS_DataQuality id="ShippingAddress" RecordRef="{!newForm}" FieldGroupName="Shipping Address" Edit="true" FormGroupStyle="form-group" RowStyle="row" LabelStyle="label labelCol test-label address-label" InputStyle="test-input" StatusStyle="test-status" FormControlStyle="apcontainer"/>
 	                    					</apex:pageBlockSectionItem>
 
@@ -1028,7 +1028,7 @@
 
                       				<apex:pageBlockSection columns="1" id="phonefax">
                       					<apex:outputText value="{!$Label.ISSP_ANG_Branch_Office_contact_details}" style="font-weight:bold"/>
-                        				<apex:outputtext />
+                        				<apex:outputtext/>
                       					<apex:pageBlockSectionItem id="branchphonefields">
                       						<apex:outputPanel >
                       							<div class="label labelCol" style="width: 173px;text-align: left;float: left;padding-left: 7px;">
@@ -1141,9 +1141,9 @@
 
                       				<apex:pageBlockSection id="legalregaddress" columns="2" rendered="{!IF(newForm.AE_separate_Legal_Entity__c == 'No',true,false)}">
                         				<apex:outputPanel >
-                         				 	<apex:outputText ><strong>{!$Label.ISSP_ANG_Step2_Owned_by_OtherOrg_Branch}</strong></apex:outputText>
+                         				 	<apex:outputText><strong>{!$Label.ISSP_ANG_Step2_Owned_by_OtherOrg_Branch}</strong></apex:outputText>
                         				</apex:outputPanel>
-                       					<apex:outputText />
+                       					<apex:outputText/>
                          
                         				<apex:inputField value="{!newForm.ISSP_AMS_Legal_Reg_Name_Address__c}" style="width: 250px; height: 80px;" />
                         				<apex:inputField value="{!newForm.ISSP_AMS_Principal_business_Org__c}" style="width: 250px;" />
@@ -1305,7 +1305,7 @@
                   <!-- ****************************************************************************** -->
 
                   				<span id="nav_four"/>
-                  				<apex:pageBlock >
+                  				<apex:pageBlock>
                   					<apex:pageBlockSection id="sectionFour" columns="1" collapsible="false">
 					                    <apex:facet name="header">
 					                      <apex:outputpanel >
@@ -1380,7 +1380,7 @@
 						                          	<apex:param value="{!agencycon.Id}" name="recordId" assignTo="{!editContactId}" />
 						                        </apex:commandLink>
                       						</apex:column>
-											<apex:column >
+											<apex:column>
                         						<apex:commandLink onfocus="confirmContactDelete('{!agencycon.Id}', '{!agencycon.Name}', 'contact')" styleClass="glyphicon glyphicon-trash" rendered="{!OR(newForm.AE_separate_Legal_Entity__c == 'Yes',AND(newForm.AE_separate_Legal_Entity__c == 'No',NOT(agencycon.Agency_owner__c)))}" />
                       						</apex:column>
                       						<apex:column breakBefore="true" colspan="12" style="display:none; background-color:RGB(236, 246, 249)" styleClass="tog{!agencycon.Id}" id="contactDetails">
@@ -1506,13 +1506,13 @@
 							                    <apex:column value="{!agencycon.Registration_number__c}" />
 							                    <apex:column value="{!agencycon.Agency_owner__c}" />
 							                    <apex:column value="{!agencycon.Financial_interest__c}" />
-							                    <apex:column >
+							                    <apex:column>
 													<!--rendered="{!NOT(AND(OR(AND(amsOfficeType='Branch', NOT(isMCAccredited)), newCase.Reason1__c=='New BR Abroad'), agencycon.Agency_owner__c))}"-->
 							                        <apex:commandLink action="{!editAgencyContact}" styleClass="glyphicon glyphicon-pencil" oncomplete="showNewCompanyDialog();" rerender="companyList, newCompany, multi-owners, noCompanyInfo">
 							                            <apex:param value="{!agencycon.Id}" name="recordId" assignTo="{!editContactId}" />
 							                        </apex:commandLink>
 							                    </apex:column>
-                        						<apex:column >
+                        						<apex:column>
                           							<apex:commandLink onfocus="confirmContactDelete('{!agencycon.Id}', '{!agencycon.Name}', 'company')" styleClass="glyphicon glyphicon-trash" rerender="companyList, multi-owners, noCompanyInfo" />
                         						</apex:column> 
                       						</apex:pageBlockTable>

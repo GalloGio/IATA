@@ -32,7 +32,7 @@
 		}
 	</script>
 
-	<apex:pageBlock >
+	<apex:pageBlock>
 		<apex:pageBlockTable value="{!owners}" var="owner" styleclass="result-table">
 			<apex:column headerValue="Name">
 				<apex:outputLink value="javascript:openRecord('{!owner.Id}')">{!owner.Name}</apex:outputLink>

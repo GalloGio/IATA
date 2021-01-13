@@ -1,10 +1,10 @@
 @isTest
-public class CampaignCustomers_Ctrl_Test 
+public class CampaignCustomers_Ctrl_Test
 {
-	@isTest(SeeAllData=true) 
-	static void test_CustomerFiltering() 
-	{	
-		//-- generate test data 
+	@isTest(SeeAllData=true)
+	static void test_CustomerFiltering()
+	{
+		//-- generate test data
 
 		//Custom settings
 		TestDataGenerator.generateApexSetting();
@@ -33,7 +33,7 @@ public class CampaignCustomers_Ctrl_Test
 		{
 			Product2 p = products[x];
 				p.Post_to_Ecommerce_Date__c = Date.today().addDays(-1);
-				p.Sell_through_eCommerce__c = true; 
+				p.Sell_through_eCommerce__c = true;
 				p.Recommended__c = true;
 				p.Inventory_Status__c = 'In stock';
 				p.Status__c = (Math.mod(x,2)==0) ? 'A' : 'Z4';
@@ -47,7 +47,7 @@ public class CampaignCustomers_Ctrl_Test
 		insert lstSubscriptions;
 
 		//Orders & OrderItems
-		List<Order> orders = TestDataGenerator.generateOrder(1, oContact.AccountId, usr.contactId, usr.contactId, false); 
+		List<Order> orders = TestDataGenerator.generateOrder(1, oContact.AccountId, usr.contactId, usr.contactId, false);
 		orders[0].Type = 'Order';
 		orders[0].Status = 'Order Created';
 		orders[0].SoldTo_Location__c = lstLocation[0].Id;
@@ -57,8 +57,8 @@ public class CampaignCustomers_Ctrl_Test
 		List<OrderItem> orderItems = TestDataGenerator.generateOrderItem(orders[0].Id, products, true);
 
 		List<Apex_Setting__c> listCS = new List<Apex_Setting__c>();
-        	listCS.add(new Apex_Setting__c(Name='ContactId to populate email Template', Text_1__c=usr.contactId));
-    	insert listCS;
+			listCS.add(new Apex_Setting__c(Name='ContactId to populate email Template', Text_1__c=usr.contactId));
+		insert listCS;
 
 		//Campaigns
 		List<Campaign> campaigns = TestDataGenerator.generateCampaigns(2, false);
@@ -70,11 +70,11 @@ public class CampaignCustomers_Ctrl_Test
 		insert campaigns;
 
 		Test.stopTest();
-		//-- Call controller methods 
+		//-- Call controller methods
 		Test.setCurrentPage(new PageReference('/apex/CampaignCustomers'));
-		CampaignCustomers_Ctrl ctrl = new CampaignCustomers_Ctrl(); 
-		
-		//-- Validate there is 5 available products 
+		CampaignCustomers_Ctrl ctrl = new CampaignCustomers_Ctrl();
+
+		//-- Validate there is 5 available products
 		System.assert(ctrl.availableProducts.size() >= 5);
 
 		//-- Validate there is 2 active campaign
@@ -93,24 +93,24 @@ public class CampaignCustomers_Ctrl_Test
 		System.assertEquals(null, ctrl.minVolume);
 		System.assertEquals(null, ctrl.maxVolume);
 
-		//-- Select first campaign 
-		ctrl.campaignId = campaigns[0].Id; 
-		
-		
-		//-- Select 3 products 
+		//-- Select first campaign
+		ctrl.campaignId = campaigns[0].Id;
+
+
+		//-- Select 3 products
 		ApexPages.currentPage().getParameters().put('productsNumbers',products[0].SAP_Material_Number__c + '_' + products[1].SAP_Material_Number__c+ '_' + products[2].SAP_Material_Number__c);
 		ctrl.selectProducts();
 		System.assertEquals(3, ctrl.selectedProducts.size());
 
-		//-- Remove 1 product 
+		//-- Remove 1 product
 		ApexPages.currentPage().getParameters().put('productsNumbers',products[2].SAP_Material_Number__c);
 		ctrl.removeProducts();
 		System.assertEquals(2, ctrl.selectedProducts.size());
 
-		//-- Generate Campaign Members & Campaign Products 
+		//-- Generate Campaign Members & Campaign Products
 		//Test.startTest();
 			ctrl.generateCampaignMembers();
-		
+
 		//Create Campaign Members
 		CampaignMember cm = new CampaignMember(
 			CampaignId = campaigns[0].Id,
@@ -122,49 +122,49 @@ public class CampaignCustomers_Ctrl_Test
 		for (Integer id : ctrl.selectedProducts.keySet())
 			lstSelectedProdId.add(ctrl.selectedProducts.get(Id).id);
 		orderItems = [select Id, PriceBookEntryId, OrderId, Quantity, UnitPrice, Charge_Shipping__c, ServiceDate, Product__c, Invoice_Date__c, Order.BillToContactId, Product_Number__c
-		              from OrderItem where OrderId = :orders[0].Id and PricebookEntry.Product2.Id in :lstSelectedProdId];
+					  from OrderItem where OrderId = :orders[0].Id and PricebookEntry.Product2.Id in :lstSelectedProdId];
 
 		insert new CampaignMember(CampaignId = campaigns[1].Id, ContactId = usr.ContactId );
 		CampaignMembers_Batch batch = new CampaignMembers_Batch('renewalNotice', campaigns[1].Id, campaigns[1].Campaign_AutoNumber__c);
 		Database.executeBatch(batch);
 
-		//-- Generate Campaign_Member_Product__c to validate no-duplicates 
-		//String key = ctrl.campaignId+'_'+contacts[0].Id+'_'+products[0].Id; 
-		String key = ctrl.campaignId+'_'+ usr.ContactId +'_'+products[0].Id; 
+		//-- Generate Campaign_Member_Product__c to validate no-duplicates
+		//String key = ctrl.campaignId+'_'+contacts[0].Id+'_'+products[0].Id;
+		String key = ctrl.campaignId+'_'+ usr.ContactId +'_'+products[0].Id;
 
 		Campaign_Member_Product__c cmp1 = new Campaign_Member_Product__c(
-            Campaign__c = ctrl.campaignId,
-            Contact__c  = usr.ContactId, //contacts[0].Id,
-            Product__c  = products[0].Id,
-            Quantity__c = 2,
-            Key__c = key,
-            Invoice_Date__c = Date.today().addDays(-7)
-        );
-        insert cmp1;
+			Campaign__c = ctrl.campaignId,
+			Contact__c  = usr.ContactId, //contacts[0].Id,
+			Product__c  = products[0].Id,
+			Quantity__c = 2,
+			Key__c = key,
+			Invoice_Date__c = Date.today().addDays(-7)
+		);
+		insert cmp1;
 
-        Campaign_Member_Product__c cmp2 = new Campaign_Member_Product__c(
-            Campaign__c = ctrl.campaignId,
-            Contact__c  = usr.ContactId, //contacts[0].Id,
-            Product__c  = products[0].Id,
-            Quantity__c = 4,
-            Key__c = key,
-            Invoice_Date__c = Date.today().addDays(-5)
-        );
-        insert cmp2;
+		Campaign_Member_Product__c cmp2 = new Campaign_Member_Product__c(
+			Campaign__c = ctrl.campaignId,
+			Contact__c  = usr.ContactId, //contacts[0].Id,
+			Product__c  = products[0].Id,
+			Quantity__c = 4,
+			Key__c = key,
+			Invoice_Date__c = Date.today().addDays(-5)
+		);
+		insert cmp2;
 
-        CampaignMemberProduct_Svc.removeDuplicates(new Set<String>{key});
-        for (Integer i1 = orderItems.size() - 1; i1 >= 0; i1--)
-        {
-            orderItems.add(orderItems[i1].clone(false, true));
-            orderItems[orderItems.size() - 1].Invoice_Date__c = Date.today().addDays(10);
-        }
-        cmp1.Id = null;
-        cmp1.Key__c = campaigns[0].Id+'_'+ usr.ContactId +'_'+orderItems[0].Product__c;
-        insert cmp1;
-        cmp2.Id = null;
-        cmp2.Key__c = campaigns[0].Id+'_'+ usr.ContactId +'_'+orderItems[0].Product__c;
-        insert cmp2;
-        CampaignMemberProduct_Svc.generateCampaignMemberProducts(campaigns[0].Id,orderItems);
+		CampaignMemberProduct_Svc.removeDuplicates(new Set<String>{key});
+		for (Integer i1 = orderItems.size() - 1; i1 >= 0; i1--)
+		{
+			orderItems.add(orderItems[i1].clone(false, true));
+			orderItems[orderItems.size() - 1].Invoice_Date__c = Date.today().addDays(10);
+		}
+		cmp1.Id = null;
+		cmp1.Key__c = campaigns[0].Id+'_'+ usr.ContactId +'_'+orderItems[0].Product__c;
+		insert cmp1;
+		cmp2.Id = null;
+		cmp2.Key__c = campaigns[0].Id+'_'+ usr.ContactId +'_'+orderItems[0].Product__c;
+		insert cmp2;
+		CampaignMemberProduct_Svc.generateCampaignMemberProducts(campaigns[0].Id,orderItems);
 
 
 		//System.assertEquals(1, [SELECT Id FROM CampaignMember WHERE CampaignId = :campaigns[0].Id].size());
@@ -191,12 +191,12 @@ public class CampaignCustomers_Ctrl_Test
 		update campaign;
 
 
-		
+
 		Campaign_Svc.generateRenewalNotice(campaign.Id, campaign.Campaign_AutoNumber__c);
 		CampaignMember_Svc.generateRenewalOrder(campaign.Id, new List<CampaignMember>{cm});
 
 		CampaignMember_Svc.generateCampaignMembers(campaign.Id, orderItems);
-		
+
 
 
 		////Cover the sendBatchFinishNotification Class in CampaignMember_Svc

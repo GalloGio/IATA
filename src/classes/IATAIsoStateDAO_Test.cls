@@ -2,11 +2,11 @@
 public class IATAIsoStateDAO_Test {
 
 
-   	/**
+	 	/**
 	 * Setup to prepare data testing.
 	 *
 	 */
-	@testSetup static void setup() {	
+	@testSetup static void setup() {
 
 		IATA_ISO_Country__c country1 = new IATA_ISO_Country__c(Name='Portugal', ISO_Code__c = 'PT');
 		insert country1;
@@ -73,9 +73,9 @@ public class IATAIsoStateDAO_Test {
 
 
 	@isTest static void testGetIsoStateByStateName(){
-		
+
 		Test.startTest();
-		
+
 		Set<String> stateNames = new Set<String>{'ABU DHABI', 'Rio de Janeiro', 'MADEIRA'};
 		List<IATA_ISO_State__c> stateList = IATAIsoStateDAO.getIsoStateByStateName(stateNames);
 
@@ -89,14 +89,14 @@ public class IATAIsoStateDAO_Test {
 
 
 	/**
-	 * 
+	 *
 	 *
 	 */
 	@isTest static void tesGetIsoStateByIsoCodes(){
-		
+
 		Test.startTest();
 
-		Set<String> stateIsoCodes = new Set<String>{'PT03', 'AE01'};	
+		Set<String> stateIsoCodes = new Set<String>{'PT03', 'AE01'};
 		List<IATA_ISO_State__c> stateList = IATAIsoStateDAO.getIsoStateByIsoCodes(stateIsoCodes);
 
 		System.assertEquals(stateList.size(), 2);
@@ -114,8 +114,8 @@ public class IATAIsoStateDAO_Test {
 
 		Test.startTest();
 
-		Set<String> stateNames = new Set<String>{'MADEIRA', 'Rio de Janeiro', 'ABU DHABI'};	
-		
+		Set<String> stateNames = new Set<String>{'MADEIRA', 'Rio de Janeiro', 'ABU DHABI'};
+
 		List<IATA_ISO_State__c> stateList = IATAIsoStateDAO.sortIATAIsoStateList(IATAIsoStateDAO.getIsoStateByStateName(stateNames), 'Name');
 
 		System.assertEquals(stateList.size(), 3);

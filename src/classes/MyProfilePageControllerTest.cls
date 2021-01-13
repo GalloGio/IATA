@@ -1,14 +1,14 @@
 @isTest
 private class MyProfilePageControllerTest {
 
-	@IsTest(SeeAllData = true) 
+	@IsTest(SeeAllData = true)
 	static void testSave() {
 		// Modify the test to query for a portal user that exists in your org
 		List<User> existingPortalUsers = [SELECT id, profileId, userRoleId FROM User WHERE UserRoleId <> null AND UserType = 'CustomerSuccess'];
 
 		if (existingPortalUsers.isEmpty()) {
 			User currentUser = [select id, title, firstname, lastname, email, phone, mobilephone, fax, street, city, state, postalcode, country
-			                    FROM User WHERE id = : UserInfo.getUserId()];
+								FROM User WHERE id = : UserInfo.getUserId()];
 			MyProfilePageController controller = new MyProfilePageController();
 			System.assertEquals(currentUser.Id, controller.getUser().Id, 'Did not successfully load the current user');
 			System.assert(controller.isEdit == false, 'isEdit should default to false');

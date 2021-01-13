@@ -12,7 +12,7 @@
  * coverage, and prevent regressions. All Apex classes are
  * required to have at least 75% code coverage in order to be deployed
  * to a production organization. In addition, all triggers must have some code coverage.
- * 
+ *
  * The @isTest class annotation indicates this class only contains test
  * methods. Classes defined with the @isTest annotation do not count against
  * the organization size limit for all Apex scripts.
@@ -22,11 +22,11 @@
 @isTest
 private class clsAccountAssmentTemplateAssignBatchTest {
 
-    static testMethod void myUnitTest() {
-        // TO DO: implement unit test
-        Id accountRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
-        
-        Account theAccount = new Account();
+	static testMethod void myUnitTest() {
+		// TO DO: implement unit test
+		Id accountRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
+
+		Account theAccount = new Account();
 		theAccount.RecordTypeId = accountRecordTypeId;
 		theAccount.Name = 'UnitTest Account';
 		theAccount.IATACode__c = '5553567';
@@ -36,11 +36,11 @@ private class clsAccountAssmentTemplateAssignBatchTest {
 		theAccount.BillingCountry = 'Canada';
 		theAccount.BillingPostalCode = 'H0H 0H0';
 		theAccount.Reason_for_creation__c = 'apex test';
-	
-		insert theAccount;       
-        test.startTest();
-        clsAccountAssessmentTemplateAssignBatch cBatch = new clsAccountAssessmentTemplateAssignBatch();        
-       	ID batchprocessid = Database.executeBatch(cBatch,200);
-    	test.stopTest();
-    }
+
+		insert theAccount;
+		test.startTest();
+		clsAccountAssessmentTemplateAssignBatch cBatch = new clsAccountAssessmentTemplateAssignBatch();
+	   	ID batchprocessid = Database.executeBatch(cBatch,200);
+		test.stopTest();
+	}
 }

@@ -65,7 +65,7 @@ public class ISSP_AMC_Change_Comp_Info {
 		if(accountRecord.IATACode__c == null || accountRecord.IATACode__c == ''){
 			hasAccountingCode = false;
 		}
-		
+
 		if(accountRecord.Airline_Prefix__c == null || accountRecord.Airline_Prefix__c == ''){
 			hasPrefixCode = false;
 		}

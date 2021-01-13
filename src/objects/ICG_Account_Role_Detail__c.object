@@ -185,6 +185,7 @@
         <externalId>false</externalId>
         <label>Link to Station Account</label>
         <referenceTo>Account_Role__c</referenceTo>
+        <relationshipLabel>ONE Source Stations</relationshipLabel>
         <relationshipName>ICG_Account_Role_Details</relationshipName>
         <required>true</required>
         <trackHistory>false</trackHistory>
@@ -994,6 +995,7 @@ IF( ISBLANK( Country_FOR__c ) ,NULL,  Country_FOR__c + &quot;, &quot;) + &quot;.
         <externalId>false</externalId>
         <label>IATA ISO Country</label>
         <referenceTo>IATA_ISO_Country__c</referenceTo>
+        <relationshipLabel>ONE Source Account Role Details</relationshipLabel>
         <relationshipName>ICG_Account_Role_Details</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -1070,6 +1072,7 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
         <externalId>false</externalId>
         <label>Nearest Airport</label>
         <referenceTo>Airport_Detail__c</referenceTo>
+        <relationshipLabel>ONE Source Account Role Details</relationshipLabel>
         <relationshipName>ICG_Account_Role_Details</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -1389,7 +1392,7 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
         <trackTrending>false</trackTrending>
         <type>Url</type>
     </fields>
-    <label>OS Station</label>
+    <label>OS Account Role Detail</label>
     <listViews>
         <fullName>Account_pending_for_IATA_approval</fullName>
         <columns>NAME</columns>
@@ -1686,7 +1689,7 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
         <trackHistory>false</trackHistory>
         <type>Text</type>
     </nameField>
-    <pluralLabel>OS Stations</pluralLabel>
+    <pluralLabel>OS Account Role Detail</pluralLabel>
     <recordTypeTrackHistory>false</recordTypeTrackHistory>
     <recordTypes>
         <fullName>Airline</fullName>

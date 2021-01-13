@@ -11,7 +11,7 @@ private class PortalIftEmployeeRecordsManagementTest {
 
 		Id contactToDelete = [SELECT id FROM contact WHERE LastName like 'Student'].id;
 		Account_Contact_Role__c employeeToInactivate = [SELECT id, Contact__c, name, Company_Code__c, First_Name__c, Last_Name__c  FROM Account_Contact_Role__c WHERE contact__c = :contactToDelete];
-		
+
 		PortalIftEmployeeRecordsManagement.EmployeeRecordWrapper employeeToAdd = new PortalIftEmployeeRecordsManagement.EmployeeRecordWrapper();
 		employeeToAdd.code = 'Abc';
 		employeeToAdd.first_name = 'Rita1';
@@ -160,13 +160,13 @@ private class PortalIftEmployeeRecordsManagementTest {
 			System.assert(res1.succeeded);
 			Id employeeToUpdateAccRolId = res1.accContRoleManaged.id;
 			Account_Contact_Role__c employeeToUpdate = [SELECT Id,
-															   Contact__c,
-															   Company_Code__c,
-															   First_Name__c,
-															   Last_Name__c,
-															   Title__c,
-															   Business_Phone__c,
-															   Details__c
+																 Contact__c,
+																 Company_Code__c,
+																 First_Name__c,
+																 Last_Name__c,
+																 Title__c,
+																 Business_Phone__c,
+																 Details__c
 														FROM Account_Contact_Role__c
 														WHERE Id = :employeeToUpdateAccRolId];
 
@@ -180,13 +180,13 @@ private class PortalIftEmployeeRecordsManagementTest {
 															Email = 'testtest@testmail.com');
 			update employeeToUpdateContact_2;
 			Account_Contact_Role__c employeeToUpdate_2 = [SELECT Id,
-															   Contact__c,
-															   Company_Code__c,
-															   First_Name__c,
-															   Last_Name__c,
-															   Title__c,
-															   Business_Phone__c,
-															   Details__c
+																 Contact__c,
+																 Company_Code__c,
+																 First_Name__c,
+																 Last_Name__c,
+																 Title__c,
+																 Business_Phone__c,
+																 Details__c
 														FROM Account_Contact_Role__c
 														WHERE Contact__c = :employeeToUpdateContact_2.id];
 

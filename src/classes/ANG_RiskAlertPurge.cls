@@ -9,7 +9,7 @@ public class ANG_RiskAlertPurge implements Database.Batchable<SObject>, Schedula
 	}
 
 	public void execute(SchedulableContext context){
-		
+
 		Boolean tooManyBatches = [SELECT count() FROM AsyncApexJob WHERE JobType='BatchApex' AND (Status = 'Processing' OR Status = 'Preparing')] >= 5;
 		//check if there are 5 active batch jobs
 		//In some cases, might need to add "Status='Queued' " to the criteria
@@ -24,7 +24,7 @@ public class ANG_RiskAlertPurge implements Database.Batchable<SObject>, Schedula
 	public void execute(Database.BatchableContext BC, List<ANG_Risk_Alert__c> scope) {
 		delete scope;
 	}
-	
+
 	public void finish(Database.BatchableContext BC) {
 		//no action needed
 	}

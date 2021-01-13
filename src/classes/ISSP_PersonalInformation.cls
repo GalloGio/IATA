@@ -336,24 +336,24 @@ public with sharing class ISSP_PersonalInformation {
 		return null;
 	}
 	public map<string,string> getPicklistValues(){
-	  map<string,string> options = new map<string,string>();
-	  map<String, Schema.SObjectField> fieldMap = Schema.SObjectType.Contact.fields.getMap();
-	  // Get the list of picklist values for this field.
-	  list<Schema.PicklistEntry> values =
+		map<string,string> options = new map<string,string>();
+		map<String, Schema.SObjectField> fieldMap = Schema.SObjectType.Contact.fields.getMap();
+		// Get the list of picklist values for this field.
+		list<Schema.PicklistEntry> values =
 		 fieldMap.get('Membership_Function__c').getDescribe().getPickListValues();
-	  // Add these values to the selectoption list.
-	  for (Schema.PicklistEntry a : values)
-	  {
+		// Add these values to the selectoption list.
+		for (Schema.PicklistEntry a : values)
+		{
 		 if(a.isActive() )options.put(a.getLabel(), a.getValue());
-	  }
-	  return options;
+		}
+		return options;
 	}
 
 	public Pagereference AssignIFAPContact(){
 		Pagereference p  = new Pagereference ('/ISSP_AssignFinancialContact?id='+ con.AccountId + '&MainNav=Services&subNav=Access&mid=M4S2' + commParam);
 		p.setredirect(true);
 		return p;
-	  return null;
+		return null;
 	}
 
 	private void setValidatedAirlineUser (){
@@ -400,10 +400,10 @@ public with sharing class ISSP_PersonalInformation {
 		List<SelectOption> options = new List<SelectOption>();
 
 		List <Account> accountList = [SELECT Id, Name, IATA_ISO_Country__r.Name, Sector__c, IATACode__c,Location_Type__c, BillingCity, BillingState, BillingCountry
-									  FROM Account
-									  WHERE Top_Parent__c = :vHQAccountId AND RecordType.DeveloperName IN ('IATA_Agency')
-									  AND (Status__c NOT IN ('Terminated','Not accredited', 'No longer a customer', 'New application pending'))
-											  ORDER BY Name, IATACode__c
+										FROM Account
+										WHERE Top_Parent__c = :vHQAccountId AND RecordType.DeveloperName IN ('IATA_Agency')
+										AND (Status__c NOT IN ('Terminated','Not accredited', 'No longer a customer', 'New application pending'))
+												ORDER BY Name, IATACode__c
 									 ];
 
 		SYSTEM.DEBUG('ALL Branch Size: ' + accountList.size());

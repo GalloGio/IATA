@@ -139,4 +139,4 @@ private class PermissionSetAssignmentsTest {
 		List<PermissionSetAssignment> permissionSetAssignmentList = [SELECT Id FROM PermissionSetAssignment WHERE AssigneeId = :user.Id AND PermissionSetId = :permissionSet.Id];
 		System.assertEquals(0, permissionSetAssignmentList.size(), 'Permission set not unassigned as expected.');
 	}
-}
+} 

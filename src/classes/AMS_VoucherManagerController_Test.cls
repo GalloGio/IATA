@@ -1,7 +1,7 @@
 /**
-           File: AMS_VoucherManagerController_Test.cls
-        Subject: Test Class for AMS_VoucherManagerController class.
-        History: amtosantos, 2017-04-17, Initial Release.
+		   File: AMS_VoucherManagerController_Test.cls
+		Subject: Test Class for AMS_VoucherManagerController class.
+		History: amtosantos, 2017-04-17, Initial Release.
 
 
 */
@@ -61,8 +61,8 @@ private class AMS_VoucherManagerController_Test {
 
 		controller.countriesLst = new List<String> { 'Select Country'};
 
-		aBoolean = controller.getcanExecuteBatch();		
-		
+		aBoolean = controller.getcanExecuteBatch();
+
 		Test.stopTest();
 	}
 }

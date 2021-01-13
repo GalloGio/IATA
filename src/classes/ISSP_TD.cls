@@ -11,18 +11,18 @@ public without sharing class ISSP_TD {
 	public Boolean dashboard_3_visible {get; set;}
 	public Boolean dashboard_4_visible {get; set;}
 	public Boolean dashboard_5_visible {get; set;}
-	
+
 	public Portal_Applications__c tdPremium {get; set;}
 	public String conId {get; set;}
 
 	public ISSP_TD(){
-		
+
 	}
-	
+
 	public PageReference pageLoad(){
-		
+
 		tdPremium = new Portal_Applications__c();
-		List <Portal_Applications__c> tdServiceList = 
+		List <Portal_Applications__c> tdServiceList =
 			[SELECT Id, Name, Agency__c, Aplication_Start_Icon__c, Application_icon__c,
 			Application_icon_URL__c, Application_URL__c, Case_creation_record_type__c, Confirm_Box__c,
 			Confirm_Text__c, Description__c, GSSA__c, Hide_on_Homepage__c,
@@ -34,13 +34,13 @@ public without sharing class ISSP_TD {
 			tdPremium = tdServiceList[0];
 		}
 		List <User> userList = [SELECT Id, ContactId
-    							FROM User WHERE Id = :UserInfo.getUserId()];
-    	if (!userList.isEmpty()){
-    		conId = userList[0].ContactId;
-    	}
-		
+								FROM User WHERE Id = :UserInfo.getUserId()];
+		if (!userList.isEmpty()){
+			conId = userList[0].ContactId;
+		}
+
 		List <ISSP_TD_Reports__c> allReportList = [SELECT Name, Label__c, URL__c, Order__c, Tab__c FROM ISSP_TD_Reports__c WHERE Active__c = true ORDER BY Order__c];
-		
+
 		recordTypeId = '';
 		ISSP_Record_Type_Mgmt__c rtMgmt =  ISSP_Record_Type_Mgmt__c.getValues('Treasury Dashboard');
 		if (rtMgmt != null){
@@ -57,7 +57,7 @@ public without sharing class ISSP_TD {
 														WHERE Contact__c = :myUser.ContactId
 														AND Portal_Application__r.Name LIKE 'Treasury Dashboard%'
 														AND Right__c = 'Access Granted'];
-		
+
 		if (accessList.isEmpty()){
 			PageReference pr = new PageReference('/ISSP_Homepage');
 			return pr;
@@ -91,7 +91,7 @@ public without sharing class ISSP_TD {
 					}
 				}
 			}
-			
+
 			if (accessList[0].Portal_Application__r.TD_Included_Reports__c != null){
 				List<String> reportAccess = accessList[0].Portal_Application__r.TD_Included_Reports__c.split(';');
 				Set<String> reportAccessSet = new Set<String>();
@@ -117,18 +117,18 @@ public without sharing class ISSP_TD {
 					}
 				}
 			}
-			
+
 			List<TwoFactorInfo> twoFactors = [SELECT UserId, Type FROM TwoFactorInfo where userID = :myUser.Id];
 			if (twoFactors.isEmpty()){ //TO UNCOMMENT
 				PageReference pr = new PageReference('/secur/logout.jsp');
 				return pr;
 			}
 		}
-		
+
 		return null;
-		
+
 	}
-	
+
 	public static PageReference toLogout_TD(){
 		// TO UNCOMMENT
 		User myUser = [SELECT Id, ContactId FROM User WHERE Id = :UserInfo.getUserId()];
@@ -147,18 +147,18 @@ public without sharing class ISSP_TD {
 				return pr;
 			}
 		}
-		
+
 		return null;
 	}
-	
+
 	public class reportWrapper {
 		public Boolean visible {get; set;}
 		public ISSP_TD_Reports__c reportRecord {get; set;}
-    }
-    
-    @RemoteAction
-    public static string newAppsRequest (string applicationId, string contactId){
-        insert new Portal_Application_Right__c(Contact__c = contactId,Portal_Application__c = applicationId,Right__c = 'Access Requested');
-        return 'ok';
-    }
+	}
+
+	@RemoteAction
+	public static string newAppsRequest (string applicationId, string contactId){
+		insert new Portal_Application_Right__c(Contact__c = contactId,Portal_Application__c = applicationId,Right__c = 'Access Requested');
+		return 'ok';
+	}
 }

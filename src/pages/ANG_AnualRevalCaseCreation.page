@@ -247,7 +247,7 @@
 			<apex:pageBlock rendered="{!Con != null}">
 
 				<apex:pageblocktable value="{!accountsToCreate}" var="a" id="pbTable" >
-					<apex:column >
+					<apex:column>
 						<apex:facet name="header">
 							<apex:inputCheckbox id="allSelected" onchange="selectAll();"/>
 						</apex:facet>

@@ -4,18 +4,18 @@ private class Order_Batch_Test
 	@isTest
 	static void test_CleanUpQuotes()
 	{
-		TestDataGenerator.generateApexSetting(); 
-		
+		TestDataGenerator.generateApexSetting();
+
 		// Setup Data
 		Account sfAccount = TestDataGenerator.generateAccounts(1, true)[0];
-		Contact sfContact = TestDataGenerator.generateContacts(sfAccount.Id, 1, true)[0]; 
+		Contact sfContact = TestDataGenerator.generateContacts(sfAccount.Id, 1, true)[0];
 
 		Date dt = Date.today().addMonths(-4);
 		Date today = Date.today();
 		//-- Create Quotes older than 3 months : 5 are older than 3 months
 		List<Order> quotes = TestDataGenerator.generateOrder(10, sfAccount.Id, sfContact.Id, sfContact.Id, false);
 		Integer counter=1;
-		
+
 		// Loop over the renewal notice and update some fields
 		for(Order quote : quotes)
 		{
@@ -28,29 +28,29 @@ private class Order_Batch_Test
 
 		insert quotes;
 
-		//-- Run Batch 
+		//-- Run Batch
 		Test.startTest();
 			Order_Batch b = new Order_Batch('CleanUpQuotes', quotes);
 			Database.ExecuteBatch(b);
 
-			//-- Schedule Batch to run in 1s 
+			//-- Schedule Batch to run in 1s
 			QuoteCleanUp_Scheduler.doSchedule('0 0 20 * * ?');
 		Test.stopTest();
 
 		// Confirm all data has been deleted
 		Integer i = [SELECT COUNT() FROM Order WHERE EffectiveDate <= :dt];
-       	System.assertEquals(i, 0);
+			 	System.assertEquals(i, 0);
 	}
-	
+
 	// Test cleaning up old renewal notifications
 	@isTest
 	static void test_CleanUpRenewalNotifications()
 	{
-		TestDataGenerator.generateApexSetting(); 
-		
+		TestDataGenerator.generateApexSetting();
+
 		// Setup data
 		Account sfAccount = TestDataGenerator.generateAccounts(1, true)[0];
-		Contact sfContact = TestDataGenerator.generateContacts(sfAccount.Id, 1, true)[0]; 
+		Contact sfContact = TestDataGenerator.generateContacts(sfAccount.Id, 1, true)[0];
 
 		Date dt = Date.today().addMonths(-7);
 		Date today = Date.today();
@@ -70,30 +70,30 @@ private class Order_Batch_Test
 
 		insert notices;
 
-		//-- Run Batch 
+		//-- Run Batch
 		Test.startTest();
 			Order_Batch b = new Order_Batch('CleanUpRenewalNotifications', notices);
 			Database.ExecuteBatch(b);
 
-			//-- Schedule Batch to run in 1s 
+			//-- Schedule Batch to run in 1s
 			RenewalNotificationCleanUp_Scheduler.doSchedule('0 0 20 * * ?');
 		Test.stopTest();
 
 		// Confirm all data has been deleted
 		Integer i = [SELECT COUNT() FROM Order WHERE EffectiveDate <= :dt];
-       	System.assertEquals(i, 0);
+			 	System.assertEquals(i, 0);
 	}
 
 
 	@isTest
 	static void test_CreateSalesOrders()
 	{
-		TestDataGenerator.generateApexSetting(); 
+		TestDataGenerator.generateApexSetting();
 		TestDataGenerator.generateISOCountryState();
 
 		// Setup Data
 		Account sfAccount = TestDataGenerator.generateAccounts(1, true)[0];
-		Contact sfContact = TestDataGenerator.generateContacts(sfAccount.Id, 1, true)[0]; 
+		Contact sfContact = TestDataGenerator.generateContacts(sfAccount.Id, 1, true)[0];
 
 		IECAddress__c address = TestDataGenerator.generateAddresses(1, true)[0];
 		Location__c soldToLocation = TestDataGenerator.generateLocations(IECConstants.SOLDTO, address.Id, sfAccount.Id, null);
@@ -116,9 +116,9 @@ private class Order_Batch_Test
 			ord.BillTo_Location__c = billToLocation.Id;
 		}
 		update orders;
-		
 
-		
+
+
 		Test.startTest();
 			// Test creation of SAP orders
 			Order_Batch b = new Order_Batch('CreateSalesOrders', orders);

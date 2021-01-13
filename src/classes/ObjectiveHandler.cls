@@ -152,7 +152,7 @@ public with sharing class ObjectiveHandler {
 	/**
 		gets a formatted name for the objective based on its recordtype
 	**/
-	private static String getObjectiveName(Objective__c objective) { 
+	private static String getObjectiveName(Objective__c objective) {
 		if (objective.RecordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('Objective__c', 'Division')) {
 			return nvl(objective.Division__c) + '-' + objective.Description__c + '-' + objective.Forecast_Deadline__c.year();
 

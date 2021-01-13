@@ -214,7 +214,7 @@ public with sharing class vfIECHistPayments extends IECPageController {
 		}
 
 		resultList.sort();
-		
+
 		return resultList;
 	}
 
@@ -226,7 +226,7 @@ public with sharing class vfIECHistPayments extends IECPageController {
 		Date dt = Date.valueOf(Utility.getTextSetting('Legacy Invoice Cutoff Date'));
 		if(dt != null)
 			legacyInvoiceDate = DateTime.newInstance(dt.year(), dt.month(), dt.day());
-			
+
 		try {
 
 			// check if a Payment ID was passed as a parameter
@@ -240,13 +240,13 @@ public with sharing class vfIECHistPayments extends IECPageController {
 			addErrorMessage(ex.getMessage());
 		}
 	}
-	
+
 	/**
 	 * Action called after the page has been loaded
 	 */
 	public Pagereference pageLoad() {
 		try {
-			
+
 			// first check if the user is logged in
 			if (IECUserManager.isUserLoggedIn() == false) {
 
@@ -258,15 +258,15 @@ public with sharing class vfIECHistPayments extends IECPageController {
 			else {
 				// Validate Logged in user profile and ensure profile is complete
 				validUserProfile();
-				
+
 				lstPaymentsToDisplay = getLoggedUserPayments();
-				
+
 				iNbrRowsDisplayed = (lstPaymentsToDisplay != null) ? lstPaymentsToDisplay.size() : 0;
 
 				// preselect payment if one was specified in the parameters
 				if (iNbrRowsDisplayed > 0 && sSelectedPaymentID != '' && sSelectedPaymentID != null)
 					selectPayment();
-					
+
 				return null;
 			}
 		}
@@ -275,7 +275,7 @@ public with sharing class vfIECHistPayments extends IECPageController {
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Action when a user clicks on Show All
 	 */
@@ -283,7 +283,7 @@ public with sharing class vfIECHistPayments extends IECPageController {
 		iNbrRowsDisplayed = (lstPaymentsToDisplay != null) ? lstPaymentsToDisplay.size() : 0;
 		return null;
 	}
-	
+
 	/**
 	 * Action when a user clicks on a Payment
 	 */
@@ -301,7 +301,7 @@ public with sharing class vfIECHistPayments extends IECPageController {
 					break;
 				}
 			}
-			
+
 			// if a Payment was found
 			if (oSelectedPayment != null) {
 				// get the related payment invoice
@@ -319,7 +319,7 @@ public with sharing class vfIECHistPayments extends IECPageController {
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Action when a user clicks on an invoice; redirects to the Invoice page with a preselected invoice
 	 */
@@ -338,7 +338,7 @@ public with sharing class vfIECHistPayments extends IECPageController {
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Action when a user sort by a column
 	 */
@@ -346,10 +346,10 @@ public with sharing class vfIECHistPayments extends IECPageController {
 		try {
 			if (String.isBlank(sSortDirection) || String.isBlank(sSortByColumn))
 				return null;
-			
+
 			//lstPaymentsToDisplay = IECSubscriptionManager.getSortedPaymentsByBillingAccount((String)loggedCustomer.RelatedBillingAccount.Id, sSortByColumn, sSortDirection);
 			lstPaymentsToDisplay = getLoggedUserPayments();
-			
+
 			return null;
 		}
 		catch(Exception ex) {

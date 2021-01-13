@@ -1,10 +1,10 @@
 @isTest
 private class AMS_AccountRoleHelperTest {
-	
+
 	@testSetup
 	private static void createData() {
 		Id agencyRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
-		
+
 		Account a = new Account(Name = 'Test Account', RecordTypeId = agencyRecTypeId);
 		insert a;
 
@@ -14,7 +14,7 @@ private class AMS_AccountRoleHelperTest {
 		AMS_Person__c p4 = new AMS_Person__c(Name = 'CCC', Legacy_System__c = 'AIMS');
 		insert new List<AMS_Person__c>{p1, p2, p3, p4};
 	}
-	
+
 	@isTest
 	private static void test_aimsOwnerMerge() {
 		Account a = [SELECT Id FROM Account];
@@ -45,5 +45,5 @@ private class AMS_AccountRoleHelperTest {
 		Test.stopTest();
 
 	}
-	
+
 }

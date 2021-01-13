@@ -1,27 +1,27 @@
 /**
 
 	Project: eCommerce Enhancements
-	   File: trgHndlrIECPayment.cls
+		 File: trgHndlrIECPayment.cls
 	Subject: Trigger Handler for Zuora Payments.
 	History: 2017-05-11, asantos, Initial Release.
 			 2017-05-14, asantos, Workflow for received credit card payments.
 			 2017-05-31, asantos, Included a field to bypass the trigger logic that
-                                  should be used when performing data fixes in the
-                                  Zuora__Payment__c object.
+																	should be used when performing data fixes in the
+																	Zuora__Payment__c object.
 			 2017-06-19, asantos, Reworked the way zuora data is rollback.
 			 2017-06-19, asantos, Only update order status to "Payment Failure" when current
-								  order status is "Pending Payment" to prevent out of order
-								  status changes due to payments.
+									order status is "Pending Payment" to prevent out of order
+									status changes due to payments.
 
-       Info: Purpose of this handler is to:
-              - populate the Order__c field on Zuora__Payment__c object to link the Payment with
-                the corresponding Order.
-			  - perform the credit card workflow payment reception from Zuora and update
-                order status with success payment or failure payment.
-			  - if payment fails, rollback Zuora subscription, invoice and payments.
-              - when payment deletion is received (due to payment failure and payment rollback)
-                log the payment details to IEC_Payment_Error__c.
-			 
+			 Info: Purpose of this handler is to:
+							- populate the Order__c field on Zuora__Payment__c object to link the Payment with
+								the corresponding Order.
+				- perform the credit card workflow payment reception from Zuora and update
+								order status with success payment or failure payment.
+				- if payment fails, rollback Zuora subscription, invoice and payments.
+							- when payment deletion is received (due to payment failure and payment rollback)
+								log the payment details to IEC_Payment_Error__c.
+
 
 */
 public with sharing class trgHndlrIECPayment {
@@ -179,7 +179,7 @@ public with sharing class trgHndlrIECPayment {
 			Set<Id> cancelOrderIdSet = new Set<Id>();
 
 			update orderUpdateList;
-			
+
 			for (Order order : orderUpdateList) {
 				Boolean orderStatus = orderStatusMap.get(order.Id);
 
@@ -220,7 +220,7 @@ public with sharing class trgHndlrIECPayment {
 				} else if (payment.Id == null && insertIgnoredSet.contains(seq)) {
 					continue;
 				}
-				
+
 				if (payment.Zuora__PaymentMethod__c != null && payment.Zuora__PaymentMethod__c.startsWith('Credit Card')) {
 					transactionNumberSet.add(payment.Zuora__ReferenceID__c);
 
@@ -538,7 +538,7 @@ public with sharing class trgHndlrIECPayment {
 
 		return queryResultList;
 	}
-	
+
 	@testVisible
 	private static String zoqlQueryString(String objectName, List<String> fieldList, String filterField, List<String> filterValueList) {
 		String zoql = 'SELECT ' + String.join(fieldList, ',') + ' FROM ' + objectName;
@@ -557,8 +557,8 @@ public with sharing class trgHndlrIECPayment {
 	}
 
 	/****************************************************************************************************
-	    Created by CGI, Thai 2017-01-25
-	        Send information to Pardot
+			Created by CGI, Thai 2017-01-25
+					Send information to Pardot
 	****************************************************************************************************/
 	@future (callout=true) static void sendFormHandlerToPardot(Id idOrder)
 	{
@@ -568,21 +568,21 @@ public with sharing class trgHndlrIECPayment {
 			{
 				//*** get data
 				Order oOrder = [select OrderNumber, BillToContact_Email__c, BillToContact.Email
-				                     , Discount_Amount__c, Total_Freight_Charge__c, Total_handling_charges__c, Taxes__c, SubTotal_Amount__c, Total_Amount__c
-				                     , (select SAP_Product_Number__c, Quantity, UnitPrice, Discount__c, SubTotal__c, Freight_Charge__c, Handling_charges__c, Tax__c, Total__c
-				                        from OrderItems)
-				                from Order where Id = :idOrder limit 1][0];
+														 , Discount_Amount__c, Total_Freight_Charge__c, Total_handling_charges__c, Taxes__c, SubTotal_Amount__c, Total_Amount__c
+														 , (select SAP_Product_Number__c, Quantity, UnitPrice, Discount__c, SubTotal__c, Freight_Charge__c, Handling_charges__c, Tax__c, Total__c
+																from OrderItems)
+												from Order where Id = :idOrder limit 1][0];
 
 				//*** build URL with all data to send
 				URL += '?order=' + EncodingUtil.urlEncode(oOrder.OrderNumber, 'UTF-8')
-				     + '&email=' + EncodingUtil.urlEncode(oOrder.BillToContact_Email__c == null ? (oOrder.BillToContact.Email == null ? '' : oOrder.BillToContact.Email) : oOrder.BillToContact_Email__c, 'UTF-8')
-				     + '&total_discount=' + EncodingUtil.urlEncode(String.valueOf(oOrder.Discount_Amount__c == null ? 0.00 : oOrder.Discount_Amount__c), 'UTF-8')
-				     + '&total_shipping=' + EncodingUtil.urlEncode(String.valueOf(oOrder.Total_Freight_Charge__c == null ? 0.00 : oOrder.Total_Freight_Charge__c), 'UTF-8')
-				     + '&total_tax=' + EncodingUtil.urlEncode(String.valueOf(oOrder.Taxes__c == null ? 0.00 : oOrder.Taxes__c), 'UTF-8')
-				     + '&total_amount=' + EncodingUtil.urlEncode(String.valueOf(oOrder.Total_Amount__c == null ? 0.00 : oOrder.Total_Amount__c), 'UTF-8');
+						 + '&email=' + EncodingUtil.urlEncode(oOrder.BillToContact_Email__c == null ? (oOrder.BillToContact.Email == null ? '' : oOrder.BillToContact.Email) : oOrder.BillToContact_Email__c, 'UTF-8')
+						 + '&total_discount=' + EncodingUtil.urlEncode(String.valueOf(oOrder.Discount_Amount__c == null ? 0.00 : oOrder.Discount_Amount__c), 'UTF-8')
+						 + '&total_shipping=' + EncodingUtil.urlEncode(String.valueOf(oOrder.Total_Freight_Charge__c == null ? 0.00 : oOrder.Total_Freight_Charge__c), 'UTF-8')
+						 + '&total_tax=' + EncodingUtil.urlEncode(String.valueOf(oOrder.Taxes__c == null ? 0.00 : oOrder.Taxes__c), 'UTF-8')
+						 + '&total_amount=' + EncodingUtil.urlEncode(String.valueOf(oOrder.Total_Amount__c == null ? 0.00 : oOrder.Total_Amount__c), 'UTF-8');
 				for (Integer i1 = 0; i1 < oOrder.OrderItems.size(); i1++)
 					URL += '&product' + (i1 + 1) + '=' + EncodingUtil.urlEncode(oOrder.OrderItems[i1].SAP_Product_Number__c, 'UTF-8')
-					     + '&quantity' + (i1 + 1) + '=' + EncodingUtil.urlEncode(String.valueOf(oOrder.OrderItems[i1].Quantity), 'UTF-8');
+							 + '&quantity' + (i1 + 1) + '=' + EncodingUtil.urlEncode(String.valueOf(oOrder.OrderItems[i1].Quantity), 'UTF-8');
 
 				//*** send to Pardot
 				HttpRequest httpReq = new HttpRequest();
@@ -598,26 +598,26 @@ public with sharing class trgHndlrIECPayment {
 	} //*** end of "sendFormHandlerToPardot"
 
 	/************************************************************************************************************************
-     *  updateCampaignMembers: method called when the order is generated from a campaign to update campaigneMember status 	*
-     *  Author: David Daboué                                                                                      			*  
-     ***********************************************************************************************************************/
+		 *  updateCampaignMembers: method called when the order is generated from a campaign to update campaigneMember status 	*
+		 *  Author: David Daboué                                                                                      			*
+		 ***********************************************************************************************************************/
 	@future
-    public static void updateCampaignMembers(String updatedOrderId)
-    {
-        try
-        {
-            Order updatedOrder = [SELECT Id, Campaign__c, BillToContactId FROM Order WHERE Id = :updatedOrderId LIMIT 1];   
+		public static void updateCampaignMembers(String updatedOrderId)
+		{
+				try
+				{
+						Order updatedOrder = [SELECT Id, Campaign__c, BillToContactId FROM Order WHERE Id = :updatedOrderId LIMIT 1];
 
-            if(updatedOrder.Campaign__c != null)
-            {
-                List<CampaignMember> cm = [SELECT Id, Status FROM CampaignMember WHERE CampaignId = :updatedOrder.Campaign__c AND ContactId = :updatedOrder.BillToContactId];
-                if(cm.size() > 0)
-                {
-                    cm[0].Status = 'Responded';
-                    update cm[0];
-                }
-            }
-        }
-        catch(Exception ex){System.debug('EXCPTION:: '+ex.getMessage());}
-    }
+						if(updatedOrder.Campaign__c != null)
+						{
+								List<CampaignMember> cm = [SELECT Id, Status FROM CampaignMember WHERE CampaignId = :updatedOrder.Campaign__c AND ContactId = :updatedOrder.BillToContactId];
+								if(cm.size() > 0)
+								{
+										cm[0].Status = 'Responded';
+										update cm[0];
+								}
+						}
+				}
+				catch(Exception ex){System.debug('EXCPTION:: '+ex.getMessage());}
+		}
 }

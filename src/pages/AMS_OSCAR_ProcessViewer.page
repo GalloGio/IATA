@@ -200,21 +200,21 @@ var __sfdcSessionId = '{!GETSESSIONID()}';
                     }
                 }
 
-                let showHierarchyConfirmationMessage = undefined;
+				let showHierarchyConfirmationMessage = undefined;
                 if ({!oscar.Process__c == NGCONVERSIONTOMULTICOUNTRY} && arrayContains(fieldValueToServer, "Passed")
                     && arrayContains(fieldsApiName, "STEP45__c")) {
-                    showHierarchyConfirmationMessage = "step to Confirm the hierarchy structure";
-                } else if ({!oscar.Process__c == NGVR} && {!oscar.Account__r.ANG_Accreditation_Model__c == MULTICOUNTRY}
-                    && arrayContains(fieldValueToServer, "Passed") && arrayContains(fieldsApiName, "STEP6__c")) {
-                    showHierarchyConfirmationMessage = 'agency locations on "Edit accounts involved page"';
-                }
-                
-                if (showHierarchyConfirmationMessage !== undefined) {
+					showHierarchyConfirmationMessage = "step to Confirm the hierarchy structure";
+				} else if ({!oscar.Process__c == NGVR} && {!oscar.Account__r.ANG_Accreditation_Model__c == MULTICOUNTRY}
+					&& arrayContains(fieldValueToServer, "Passed") && arrayContains(fieldsApiName, "STEP6__c")) {
+					showHierarchyConfirmationMessage = 'agency locations on "Edit accounts involved page"';
+				}
+				
+				if (showHierarchyConfirmationMessage !== undefined) {
                     if ({!oscar.MC_Hierarchy_Confirmation_Datetime__c == null}) {
                         alert('Please make sure that you review and Save the ' + showHierarchyConfirmationMessage + ' to ensure validations are enforced');
                         return 'false';
                     }
-                }
+				}
 
                 if ({!oscar.Process__c == NGCONVERSIONMCTOSTANDARD}) {
                     if (arrayContains(fieldValueToServer, "Passed") && arrayContains(fieldsApiName, "STEP51__c")) {

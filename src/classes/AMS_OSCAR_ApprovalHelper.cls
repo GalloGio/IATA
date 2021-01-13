@@ -7,18 +7,18 @@ public class AMS_OSCAR_ApprovalHelper
 	{
 		Map<Id,ProcessInstanceStep> processInstanceSteps = new Map<Id,ProcessInstanceStep>();
 		for(ProcessInstanceStep pis : [SELECT Id, ProcessInstance.TargetObjectId, ActorId, Comments, CreatedDate FROM ProcessInstanceStep where ProcessInstance.TargetObjectId IN: objectIds order by ProcessInstance.TargetObjectId, CreatedDate DESC]) {
-			
+
 			if(processInstanceSteps.containsKey(pis.ProcessInstance.TargetObjectId)) {
-				
+
 				ProcessInstanceStep pisAux = processInstanceSteps.get(pis.ProcessInstance.TargetObjectId);
-				
+
 				if(pisAux.CreatedDate < pis.CreatedDate) processInstanceSteps.put(pis.ProcessInstance.TargetObjectId, pis);
 			}else{
-				
+
 				processInstanceSteps.put(pis.ProcessInstance.TargetObjectId, pis);
 			}
 		}
-	
+
 		return processInstanceSteps;
 	}
 
@@ -37,19 +37,19 @@ public class AMS_OSCAR_ApprovalHelper
 		Approval.ProcessSubmitRequest req = new Approval.ProcessSubmitRequest();
 		req.setComments(comments);
 		req.setObjectId(recordId);
-		
+
 		// Submit on behalf of a specific submitter
-		req.setSubmitterId(userId); 
-		
+		req.setSubmitterId(userId);
+
 		// Submit the record to specific process and skip the criteria evaluation
 		if(String.isNotBlank(approvalNameOrId)) {
 			req.setProcessDefinitionNameOrId(approvalNameOrId);
-			req.setSkipEntryCriteria(true);        	
+			req.setSkipEntryCriteria(true);
 		}
-		
+
 		// Submit the approval request for the account
 		Approval.ProcessResult result = Approval.process(req);
-		
+
 		if(!result.isSuccess()) handleError(result);
 	}
 
@@ -63,14 +63,14 @@ public class AMS_OSCAR_ApprovalHelper
 	public static void process(String action, Id workItemId, Id[] userIds, String comments)
 	{
 		Approval.ProcessWorkitemRequest req = new Approval.ProcessWorkitemRequest();
-		
+
 		if(comments != null) req.setComments(comments);
 		if(action != null) req.setAction(action);
 		if(userIds != null) req.setNextApproverIds(userIds);
 		if(workItemId != null) req.setWorkitemId(workItemId);
 
 		System.debug(loggingLevel.FINE, '____ [cls AMS_OSCAR_ApprovalHelper - process] req - ' + req);
-		
+
 		Approval.ProcessResult result =  Approval.process(req, false);
 
 		System.debug(loggingLevel.FINE, '____ [cls AMS_OSCAR_ApprovalHelper - process] result - ' + result);

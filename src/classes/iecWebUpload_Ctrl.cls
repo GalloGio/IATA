@@ -1,12 +1,12 @@
 Global with sharing class iecWebUpload_Ctrl {
-	
+
 	public String productId{get;set;}
 	public String accessKeyId {get;set;}
 	public String secretAccessKey {get;set;}
 	public String awsRegion{get;set;}
 	public String folderHierachy{get;set;}
 	public String fileName{get;set;}
-	
+
 
 	Product2 product;
 
@@ -20,7 +20,7 @@ Global with sharing class iecWebUpload_Ctrl {
 			accessKeyId = IECUtil.DecryptParameter(Utility.getTextSetting('AWS accessKeyId'));
 			secretAccessKey = IECUtil.DecryptParameter(Utility.getTextSetting('AWS secretAccessKey'));
 		}
-		
+
 		//set the AWS account region
 		awsRegion =  Utility.getTextSetting('AWS Region');
 
@@ -61,6 +61,6 @@ Global with sharing class iecWebUpload_Ctrl {
 		}
 
 		return productId;
-	} 
+	}
 
 }

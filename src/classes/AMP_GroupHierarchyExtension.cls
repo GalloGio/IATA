@@ -4,14 +4,14 @@ public with sharing class AMP_GroupHierarchyExtension {
 		public Id recordId {get;set;}
 		public String JSONHierarchy {get;set;}
 
-    public AMP_GroupHierarchyExtension(ApexPages.StandardController stdController) {
+	public AMP_GroupHierarchyExtension(ApexPages.StandardController stdController) {
 			lg = (LocalGovernance__c)stdController.getRecord();
 			recordId = lg.Id;
 			System.debug(lg);
 			List<LocalGovernance__c> l =  getHierarchy(lg.Id);
 			l = reverse(l);
 			JSONHierarchy = JSON.serialize(l);
-    }
+	}
 
 		public List<LocalGovernance__c> reverse(List<LocalGovernance__c> inputList) {
 			List<LocalGovernance__c> tmpList = new List<LocalGovernance__c>();

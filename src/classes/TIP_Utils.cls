@@ -97,46 +97,46 @@ public class TIP_Utils{
 	//TIP-49 - validate IATA code is unique for payment providers
 	/*public static void validateUniqueIATACodeForTIP(List<Account> triggerNew,map<id, Account> triggerOld) {
 
-      Map<String,Account> mapIataCodeAccount = new Map<String,Account>(); //map of IATA Codes that should not exist already in the system
-      String queryString = 'SELECT ID, IATACode__c FROM Account WHERE ( recordtypeid = \''+TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID + '\' OR (recordtypeid = \''+TIP_Utils.STANDARD_ACCOUNT_RECORD_TYPE_ID+'\' AND Category__c = \''+TIP_Utils.ACCOUNT_CATEGORY_PAYMENT_PROVIDER+'\') )';
-      String queryStringWhereClause = '';
+			Map<String,Account> mapIataCodeAccount = new Map<String,Account>(); //map of IATA Codes that should not exist already in the system
+			String queryString = 'SELECT ID, IATACode__c FROM Account WHERE ( recordtypeid = \''+TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID + '\' OR (recordtypeid = \''+TIP_Utils.STANDARD_ACCOUNT_RECORD_TYPE_ID+'\' AND Category__c = \''+TIP_Utils.ACCOUNT_CATEGORY_PAYMENT_PROVIDER+'\') )';
+			String queryStringWhereClause = '';
 
-      if(trigger.isInsert){
-          for(Account acc : triggerNew){
-              if(!String.isBlank(acc.IATACode__c) && (acc.recordtypeid == TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID || (acc.recordtypeid == TIP_Utils.STANDARD_ACCOUNT_RECORD_TYPE_ID && acc.Category__c == TIP_Utils.ACCOUNT_CATEGORY_PAYMENT_PROVIDER)) ){
-                  mapIataCodeAccount.put(acc.IATACode__c,acc);
-                  //queryStringWhereClause += ', \''+ acc.IATACode__c + '\'';
-              }
-          }
-          if(!String.isEmpty(queryStringWhereClause)) queryString += 'AND IATACode__c NOT IN (\'\'' + queryStringWhereClause + ')' ;
+			if(trigger.isInsert){
+					for(Account acc : triggerNew){
+							if(!String.isBlank(acc.IATACode__c) && (acc.recordtypeid == TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID || (acc.recordtypeid == TIP_Utils.STANDARD_ACCOUNT_RECORD_TYPE_ID && acc.Category__c == TIP_Utils.ACCOUNT_CATEGORY_PAYMENT_PROVIDER)) ){
+									mapIataCodeAccount.put(acc.IATACode__c,acc);
+									//queryStringWhereClause += ', \''+ acc.IATACode__c + '\'';
+							}
+					}
+					if(!String.isEmpty(queryStringWhereClause)) queryString += 'AND IATACode__c NOT IN (\'\'' + queryStringWhereClause + ')' ;
 
-      }else{
+			}else{
 
-          for(Account accNew : triggerNew){
-              //if iata code changed
-              if(!String.isEmpty(accNew.IATACode__c) && triggerOld.get(accNew.id).IATACode__c != accNew.IATACode__c
-                   && (accNew.recordtypeid == TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID || (accNew.recordtypeid == TIP_Utils.STANDARD_ACCOUNT_RECORD_TYPE_ID && accNew.Category__c == TIP_Utils.ACCOUNT_CATEGORY_PAYMENT_PROVIDER))){
-                  mapIataCodeAccount.put(accNew.IATACode__c,accNew);
-                  queryStringWhereClause += (String.isEmpty(queryStringWhereClause) ? '' : ' OR ') +' (ID <> \''+ accNew.id +'\' AND IATACode__c = \''+ accNew.IATACode__c +'\')' ;
-              }
-          }
+					for(Account accNew : triggerNew){
+							//if iata code changed
+							if(!String.isEmpty(accNew.IATACode__c) && triggerOld.get(accNew.id).IATACode__c != accNew.IATACode__c
+									 && (accNew.recordtypeid == TIP_Utils.PAYMENT_PROVIDER_RECORD_TYPE_ID || (accNew.recordtypeid == TIP_Utils.STANDARD_ACCOUNT_RECORD_TYPE_ID && accNew.Category__c == TIP_Utils.ACCOUNT_CATEGORY_PAYMENT_PROVIDER))){
+									mapIataCodeAccount.put(accNew.IATACode__c,accNew);
+									queryStringWhereClause += (String.isEmpty(queryStringWhereClause) ? '' : ' OR ') +' (ID <> \''+ accNew.id +'\' AND IATACode__c = \''+ accNew.IATACode__c +'\')' ;
+							}
+					}
 
-          if(!String.isEmpty(queryStringWhereClause)) queryString += ' AND ('+ queryStringWhereClause +')';
-      }
+					if(!String.isEmpty(queryStringWhereClause)) queryString += ' AND ('+ queryStringWhereClause +')';
+			}
 
-      system.debug('##Query:'+ queryString) ;
-      List<Account> tempAccs;
-      if (!mapIataCodeAccount.isEmpty()) tempAccs = Database.query(queryString);
+			system.debug('##Query:'+ queryString) ;
+			List<Account> tempAccs;
+			if (!mapIataCodeAccount.isEmpty()) tempAccs = Database.query(queryString);
 
-      system.debug('##results:'+ tempAccs) ;
-      if(tempAccs!= null && !tempAccs.isEmpty() && !mapIataCodeAccount.isEmpty()){
-          for(Account accWithDuplicatedIATACode : tempAccs){
-              if(mapIataCodeAccount.get(accWithDuplicatedIATACode.IATACode__c) != null){
-              mapIataCodeAccount.get(accWithDuplicatedIATACode.IATACode__c).addError('Duplicated IATA Code: ' + accWithDuplicatedIATACode.IATACode__c + '. ID: ' + accWithDuplicatedIATACode.id);
-              }
-          }
-      }
-  }*/
+			system.debug('##results:'+ tempAccs) ;
+			if(tempAccs!= null && !tempAccs.isEmpty() && !mapIataCodeAccount.isEmpty()){
+					for(Account accWithDuplicatedIATACode : tempAccs){
+							if(mapIataCodeAccount.get(accWithDuplicatedIATACode.IATACode__c) != null){
+							mapIataCodeAccount.get(accWithDuplicatedIATACode.IATACode__c).addError('Duplicated IATA Code: ' + accWithDuplicatedIATACode.IATACode__c + '. ID: ' + accWithDuplicatedIATACode.id);
+							}
+					}
+			}
+	}*/
 
 	public static void setAssessmentDate(List<Account> triggerNew,map<id, Account> triggerOld) {
 		for(Account newAcc : triggerNew) {

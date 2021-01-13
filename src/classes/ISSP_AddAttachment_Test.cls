@@ -1,127 +1,127 @@
 @isTest
 private class ISSP_AddAttachment_Test {
 
-    @isTest static void test_method_one() {
-        WrapperAttachTest.loadTestCredentials();
+	@isTest static void test_method_one() {
+		WrapperAttachTest.loadTestCredentials();
 
-        insert new list <AWSKey__c>{
-            new AWSKey__c(
-                name = 'sandbox',
-                Key__c = 'asd',
-                Secret__c = 'asd',
-                IAS_configuration_name__c = 'asdas',
-                IAS_Access_Point__c = 'asd',
-                Bucket__c = 'asd',
-                AWS_ENDPOINT_URL__c = 'asd'
-          ),
-            new AWSKey__c(
-                name = 'production',
-                Key__c = 'asd',
-                Secret__c = 'asd',
-                IAS_configuration_name__c = 'asdas',
-                IAS_Access_Point__c = 'asd',
-                Bucket__c = 'asd',
-                AWS_ENDPOINT_URL__c = 'asd'
-            )};
+		insert new list <AWSKey__c>{
+			new AWSKey__c(
+				name = 'sandbox',
+				Key__c = 'asd',
+				Secret__c = 'asd',
+				IAS_configuration_name__c = 'asdas',
+				IAS_Access_Point__c = 'asd',
+				Bucket__c = 'asd',
+				AWS_ENDPOINT_URL__c = 'asd'
+		  ),
+			new AWSKey__c(
+				name = 'production',
+				Key__c = 'asd',
+				Secret__c = 'asd',
+				IAS_configuration_name__c = 'asdas',
+				IAS_Access_Point__c = 'asd',
+				Bucket__c = 'asd',
+				AWS_ENDPOINT_URL__c = 'asd'
+			)};
 
-        IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test',
-                IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
-                IATA_Country_IT__c = 'testIT' , IATA_Country_JP__c = 'testJP' , ISO_Code__c = 'tq',
-                IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test' );
-        insert country;
-        IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2');
-        insert country2;
+		IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', IATA_Contry_KR__c = 'test',
+				IATA_COUNTRY_EN__c = 'testEN' , IATA_Country_FR__c = 'testFR' , IATA_Country_ZH__c = 'testZH' ,
+				IATA_Country_IT__c = 'testIT' , IATA_Country_JP__c = 'testJP' , ISO_Code__c = 'tq',
+				IATA_Country_PT__c = 'testPT' , IATA_Country_SP__c = 'testSP' , Case_BSP_Country__c = 'test' );
+		insert country;
+		IATA_ISO_Country__c country2 = new IATA_ISO_Country__c(name = 'test2', ISO_Code__c = 't2', Case_BSP_Country__c = 'test2');
+		insert country2;
 
-        Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+		Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 
-        Account parent = ISSP_ObjectFactory.createNewAccount();
-        parent.BillingCity = 'test';
-        parent.Name = 'test';
-        parent.sector__c = 'airline';
-        parent.Location_Type__c = 'HO';
-        parent.RecordTypeId = rtIdBr ;
-        parent.IATACode__c = '100';
+		Account parent = ISSP_ObjectFactory.createNewAccount();
+		parent.BillingCity = 'test';
+		parent.Name = 'test';
+		parent.sector__c = 'airline';
+		parent.Location_Type__c = 'HO';
+		parent.RecordTypeId = rtIdBr ;
+		parent.IATACode__c = '100';
 
-        insert parent;
-        System.debug('parent Id: ' + parent.Id);
+		insert parent;
+		System.debug('parent Id: ' + parent.Id);
 
-        Account child = ISSP_ObjectFactory.createNewAccount();
-        child.BillingCity = 'test2';
-        child.Name = 'test2';
-        child.Site = 'headSite';
-        child.sector__c = 'airline';
-        child.Top_Parent__c = null;
-        child.IATA_ISO_Country__c = country.Id;
-        child.RecordTypeId = rtIdBr ;
-        insert child;      
+		Account child = ISSP_ObjectFactory.createNewAccount();
+		child.BillingCity = 'test2';
+		child.Name = 'test2';
+		child.Site = 'headSite';
+		child.sector__c = 'airline';
+		child.Top_Parent__c = null;
+		child.IATA_ISO_Country__c = country.Id;
+		child.RecordTypeId = rtIdBr ;
+		insert child;
 
-        Contact con = ISSP_ObjectFactory.createNewContact();
-        con.AccountId = child.Id;
-        con.Email = 'Test@test11.com';
+		Contact con = ISSP_ObjectFactory.createNewContact();
+		con.AccountId = child.Id;
+		con.Email = 'Test@test11.com';
 
-        insert con;
+		insert con;
 
-        System.debug('con Id: ' + con.Id);
-        User newUser = ISSP_ObjectFactory.createPortalUser(con);
-        insert new ISSP_CS__c(Name = 'DefaultNewAccountOwnerId', Value__c = newUser.Id);
-        System.debug('newUser Id: ' + newUser.Id);
-        con.OwnerId = newUser.Id;
-        update con;
+		System.debug('con Id: ' + con.Id);
+		User newUser = ISSP_ObjectFactory.createPortalUser(con);
+		insert new ISSP_CS__c(Name = 'DefaultNewAccountOwnerId', Value__c = newUser.Id);
+		System.debug('newUser Id: ' + newUser.Id);
+		con.OwnerId = newUser.Id;
+		update con;
 
-        Case_excluded_w_status_action_needed__c cs = new Case_excluded_w_status_action_needed__c(Name = 'RT to Exclude', Record_Type_Name__c = 'CasesEurope');
-        insert cs;
+		Case_excluded_w_status_action_needed__c cs = new Case_excluded_w_status_action_needed__c(Name = 'RT to Exclude', Record_Type_Name__c = 'CasesEurope');
+		insert cs;
 
-        Test.startTest();   
-            
-        ID casesEurope = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesEurope');
-        ID saam = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
+		Test.startTest();
 
-        Case newCase = ISSP_ObjectFactory.createNewCase();
-        newcase.recordtypeid = casesEurope;
-        newCase.Status = 'Closed';
-        newCase.AccountId = parent.Id;
-        newCase.ContactId = con.Id;
-        insert newcase;
-        
-        newCase.RecordTypeId = saam;       
-        newCase.AccountId = parent.Id;
-        newCase.ContactId = con.Id;       
-        newCase.Reason1__c = 'CLO - Closure';
-        newCase.Status = 'Draft';
-        
-        AmazonFile__c af = new AmazonFile__c();
-        af.Case__c = newcase.Id;
-        af.Name= 'Test';
-        af.Full_Name_Unique__c='Test_Record_Amazonfile';
+		ID casesEurope = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CasesEurope');
+		ID saam = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
-        //insert af;
-        System.runAs(newUser) {
-            Apexpages.currentPage().getParameters().put('Caseid', newcase.Id);
-            ISSP_AddAttachment controller = new ISSP_AddAttachment();
-            Attachment att= new Attachment(
-                name='attTest',
-                body=Blob.valueOf('Test')
-            );
-            controller.attachment=att;
-            controller.upload();
-            controller.vAccountConcerned = parent.Id;        
-            controller.getNoNSAOffices();
-            controller.submitToIATA();
-            controller.sendConfirmationEmail(newCase);
+		Case newCase = ISSP_ObjectFactory.createNewCase();
+		newcase.recordtypeid = casesEurope;
+		newCase.Status = 'Closed';
+		newCase.AccountId = parent.Id;
+		newCase.ContactId = con.Id;
+		insert newcase;
+
+		newCase.RecordTypeId = saam;
+		newCase.AccountId = parent.Id;
+		newCase.ContactId = con.Id;
+		newCase.Reason1__c = 'CLO - Closure';
+		newCase.Status = 'Draft';
+
+		AmazonFile__c af = new AmazonFile__c();
+		af.Case__c = newcase.Id;
+		af.Name= 'Test';
+		af.Full_Name_Unique__c='Test_Record_Amazonfile';
+
+		//insert af;
+		System.runAs(newUser) {
+			Apexpages.currentPage().getParameters().put('Caseid', newcase.Id);
+			ISSP_AddAttachment controller = new ISSP_AddAttachment();
+			Attachment att= new Attachment(
+				name='attTest',
+				body=Blob.valueOf('Test')
+			);
+			controller.attachment=att;
+			controller.upload();
+			controller.vAccountConcerned = parent.Id;
+			controller.getNoNSAOffices();
+			controller.submitToIATA();
+			controller.sendConfirmationEmail(newCase);
 
 
-            update newCase;            
-            controller.upload();
-            controller.vAccountConcerned = parent.Id;        
-            controller.getNoNSAOffices();
-            controller.submitToIATA();
-            controller.sendConfirmationEmail(newCase);
-            
-            ISSP_AddAttachment controller1 = new ISSP_AddAttachment();
-            controller1.upload();
-            controller1.submitToIATA();
-            controller1.sendConfirmationEmail(newCase);
-        }
-        Test.stopTest();
-    }
+			update newCase;
+			controller.upload();
+			controller.vAccountConcerned = parent.Id;
+			controller.getNoNSAOffices();
+			controller.submitToIATA();
+			controller.sendConfirmationEmail(newCase);
+
+			ISSP_AddAttachment controller1 = new ISSP_AddAttachment();
+			controller1.upload();
+			controller1.submitToIATA();
+			controller1.sendConfirmationEmail(newCase);
+		}
+		Test.stopTest();
+	}
 }

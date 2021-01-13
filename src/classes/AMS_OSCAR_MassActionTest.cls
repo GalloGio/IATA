@@ -27,11 +27,11 @@ private class AMS_OSCAR_MassActionTest {
 		con.AccountId = acc.Id;
 		insert con;
 	}
-	
+
 	@isTest static void test_process_pci() {
 		Account acc = [SELECT Id FROM Account];
 		Test.startTest();
-		
+
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c();
 		oscar.RecordTypeId = AMS_Utils.RECTYPE_CERT;
 		oscar.Account__c = acc.Id;
@@ -53,25 +53,25 @@ private class AMS_OSCAR_MassActionTest {
 		ctr.uploadFile();
 		Test.stopTest();
 	}
-	
+
 	@isTest static void test_create_vr() {
 		Account acc = [SELECT Id FROM Account];
-		Test.startTest();		
+		Test.startTest();
 		AMS_PCI_Compliant_Mass_OSCAR_CreationCtr ctr = new AMS_PCI_Compliant_Mass_OSCAR_CreationCtr();
 		ctr.operation = 'CVR';
 		ctr.csvFileContent = 'Record Id,Effective Date,Expiry Date\n' + acc.Id + ',' + Date.today() + ',' + Date.today().addDays(365);
-		ctr.uploadFile(); 
+		ctr.uploadFile();
 		Test.stopTest();
 	}
-	
+
 	@isTest static void test_create_certificate() {
 		Account acc = [SELECT Id FROM Account];
 		Test.startTest();
 		AMS_PCI_Compliant_Mass_OSCAR_CreationCtr ctr = new AMS_PCI_Compliant_Mass_OSCAR_CreationCtr();
 		ctr.operation = 'CER';
 		ctr.csvFileContent = 'RecordId\n' + acc.Id;
-		ctr.uploadFile(); 
+		ctr.uploadFile();
 		Test.stopTest();
 	}
-	
+
 }

@@ -1,6 +1,6 @@
 /****************************************************************************************************
-    Created by David D 2016/02
-        SOAP web service to be called by iata.org to get product catalog
+		Created by David D 2016/02
+				SOAP web service to be called by iata.org to get product catalog
 ****************************************************************************************************/
 @RestResource(urlMapping = '/ProductCatalog/*')
 global class SFDC_ProductCatalog {
@@ -120,8 +120,8 @@ global class SFDC_ProductCatalog {
 			for (Product2 p : products) {
 				String g = (p.IATA_ORG_Group__c != null) ? p.IATA_ORG_Group__c : '-';
 				List<Product2> tmp = (productsByGroup.containsKey(g))
-				                     ?	productsByGroup.get(g)
-				                     : 	new List<Product2>();
+														 ?	productsByGroup.get(g)
+														 : 	new List<Product2>();
 				tmp.add(p);
 				productsByGroup.put(g, tmp);
 			}

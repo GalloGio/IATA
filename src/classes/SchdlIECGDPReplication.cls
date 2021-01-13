@@ -1,11 +1,11 @@
 /**
-  * Description: This class contains schedulable class for starting the GDP Replication process
-  * Author: Samy Saied
-  * Version: 1.0
-  * History: 
-  *   20160129-sl: move the batch call to other method.
-  */
- 
+	* Description: This class contains schedulable class for starting the GDP Replication process
+	* Author: Samy Saied
+	* Version: 1.0
+	* History:
+	*   20160129-sl: move the batch call to other method.
+	*/
+
 global class SchdlIECGDPReplication implements Schedulable {
 	global void execute(SchedulableContext sc) {
 		try {
@@ -13,7 +13,7 @@ global class SchdlIECGDPReplication implements Schedulable {
 			if (IECConstants.GDPReplication_ScheduleActive) {
 				executeGdpReplicateAccountBatch();
 			}
-			
+
 			// This section of code will schedule the next execution X hours from now depending on the configured setting
 			datetime nextScheduleTime = system.now().addHours(IECConstants.GDPReplication_SchedulePeriod);
 			string month = string.valueof(nextScheduleTime.month());
@@ -23,9 +23,9 @@ global class SchdlIECGDPReplication implements Schedulable {
 			string second = string.valueof(nextScheduleTime.second ());
 			string cronvalue = second + ' ' + minute + ' ' + hour + ' ' + day + ' ' + month + ' ?';
 			string jobName = 'SchdlIECGDPReplication ' + nextScheduleTime.format('yyyy-MM-dd HH:mm:ss');
-			
+
 			system.schedule(jobName, cronvalue , new SchdlIECGDPReplication());
-			
+
 			// this section of code will abort the current schedule job
 			system.abortJob(sc.getTriggerId());
 		}
@@ -34,15 +34,15 @@ global class SchdlIECGDPReplication implements Schedulable {
 			throw e;
 		}
 	} // end of execute
-	
-	
+
+
 	// ========================================================================
 	// executeGdpReplicateAccountBatch()
 	// this is made public to ease the call in testing
 	public static void executeGdpReplicateAccountBatch()
 	{
 		IEC_Batch_Replication__c btchRep = IECUtil.GetBatchReplication('GDP Replicate: Account');
-			
+
 		BtchGDPReplicateAccount btchProc = new BtchGDPReplicateAccount();
 		btchProc.idRecordTypeGDP = IECUtil.GetRecordTypeId('GDP_Products_Account_View__c', 'GDP');
 		btchProc.query =
@@ -64,8 +64,8 @@ global class SchdlIECGDPReplication implements Schedulable {
 			+ '				AND Related_Account__r.Id != null'
 			+ '			)'
 			+ '		AND RecordTypeId = \'' + IECUtil.GetRecordTypeId('Account', 'IATA_Agency') + '\'';
-			
+
 		Database.executeBatch(btchProc);
 	} // executeGdpReplicateAccountBatch
-	
+
 } // end of SchdlIECGDPReplication class

@@ -1,23 +1,23 @@
-/**  
-  * Description: This class handles the cookie creation/deletion
-  * Author: Alexandre McGraw
-  * Version: 1.0
-  * History: 
-  */
+/**
+	* Description: This class handles the cookie creation/deletion
+	* Author: Alexandre McGraw
+	* Version: 1.0
+	* History:
+	*/
 public with sharing class IECCookieHelper {
-	
+
 	private static final String COOKIE_CART_GUID = 'ieccartguid';
 	public static final String COOKIE_GUID_TEST = 'a9999999-a999-9a9a-9a9a-9999a9999aaa';
 	private static final String COOKIE_QUOTE_RATEPLANID = 'iecqrpiid';
 	public static final String COOKIE_QUOTE_RATEPLANID_TEST = 'a3111000000Cb6y';
 	private static final String COOKIE_QUOTE_COMMENTS = 'iecqcom';
 	public static final String COOKIE_QUOTE_COMMENTS_TEST = 'some comments';
-	
+
 	// TODO: use custom settings
 	private static final Integer COOKIE_MAXAGE_SESSION_VALUE = -1;
 	private static final Integer TWENTYFOUR_HOUR = 24*60*60;
-	
-	/** 
+
+	/**
 	 * Store a shopping cart GUID in the shopping cart cookie
 	 * @param guid The GUID to store
 	 */
@@ -38,7 +38,7 @@ public with sharing class IECCookieHelper {
 		else
 			return cartCookie.getValue();
 	}
-	
+
 	/**
 	 * Deletes the shopping cart cookie
 	 */
@@ -46,8 +46,8 @@ public with sharing class IECCookieHelper {
 		Cookie shoppingCartCookie = new Cookie(COOKIE_CART_GUID, '', null, 0, false);
 		ApexPages.currentPage().setCookies(new Cookie[]{shoppingCartCookie});
 	}
-	
-	/** 
+
+	/**
 	 * Store a Rate Plan Info ID in a cookie for the quote page
 	 * @param sRatePlanInfoID The Rate Plan Info ID
 	 */
@@ -55,7 +55,7 @@ public with sharing class IECCookieHelper {
 		Cookie quoteCookie = new Cookie(COOKIE_QUOTE_RATEPLANID, sRatePlanInfoID, null, TWENTYFOUR_HOUR, false);
 		ApexPages.currentPage().setCookies(new Cookie[]{quoteCookie});
 	}
-	
+
 	/**
 	 * Returns the Rate Plan Info ID that is stored in the quote cookie
 	 * @return The Rate Plan Info ID
@@ -68,7 +68,7 @@ public with sharing class IECCookieHelper {
 		else
 			return quoteCookie.getValue();
 	}
-	
+
 	/**
 	 * Deletes the quote cookie
 	 */
@@ -76,8 +76,8 @@ public with sharing class IECCookieHelper {
 		Cookie quoteCookie = new Cookie(COOKIE_QUOTE_RATEPLANID, '', null, 0, false);
 		ApexPages.currentPage().setCookies(new Cookie[]{quoteCookie});
 	}
-	
-	/** 
+
+	/**
 	 * Store the comments in a cookie for the quote page
 	 * @param sComments The comments fo the quote
 	 */
@@ -85,7 +85,7 @@ public with sharing class IECCookieHelper {
 		Cookie quoteCommentsCookie = new Cookie(COOKIE_QUOTE_COMMENTS, sComments, null, TWENTYFOUR_HOUR, false);
 		ApexPages.currentPage().setCookies(new Cookie[]{quoteCommentsCookie});
 	}
-	
+
 	/**
 	 * Returns the Quote comments that is stored in the quote cookie
 	 * @return The Quote comments
@@ -98,7 +98,7 @@ public with sharing class IECCookieHelper {
 		else
 			return quoteCommentsCookie.getValue();
 	}
-	
+
 	/**
 	 * Deletes the quote comments cookie
 	 */

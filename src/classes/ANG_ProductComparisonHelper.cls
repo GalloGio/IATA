@@ -38,7 +38,7 @@ public with sharing class ANG_ProductComparisonHelper {
 			return String.valueOf(Date.today().year());
 		}
 		private set;
-   	}
+	 	}
 	public String prodCompAnnualFeesFormattedLabel {
 		get {
 			return Label.ISSP_ANG_ProdCompAnnualFees.replaceAll('YYYY', currentYear);
@@ -154,7 +154,7 @@ public with sharing class ANG_ProductComparisonHelper {
 							boolean bExists = false;
 							for(Product_Component__c pc : prod.Product_BOM__r) {
 
-	  							if(!mapTooltipLabels.containsKey(pc.ANG_Description__c)) {
+									if(!mapTooltipLabels.containsKey(pc.ANG_Description__c)) {
 									mapTooltipLabels.put(pc.ANG_Description__c, getCustomLabel(pc.ANG_Tooltip__c));
 								}
 
@@ -165,21 +165,21 @@ public with sharing class ANG_ProductComparisonHelper {
 								if(sf == pc.Related_Product__r.Name) bExists = true;
 							}
 							lsTmp.add(new ProdFeature(sf,
-													  bExists,
-													  new Fees(prod.ANG_HE_Annual_fees__c,
-															   prod.ANG_AE_Annual_fees__c,
-													  		   prod.ANG_HE_Application_Registration_Fees__c,
-															   prod.ANG_HE_AnnualFees_Small_Agents__c,
-															   prod.ANG_HE_AnnualFees_Medium_Agents__c,
-															   prod.ANG_HE_AnnualFees_Large_Agents__c,
-															   prod.ANG_AE_Application_Registration_Fees__c,
-															   prod.ANG_AE_Fees_First_10_locations__c,
-															   prod.ANG_AE_Fees_Next_15_Locations__c,
-															   prod.ANG_AE_Fees_Additional_Locations__c,
-															   prod.ANG_Fees_GoStandard_GoLite__c,
-															   prod.ANG_Fees_GoLite_GoStandard__c,
-															   prod.ANG_Fees_GoStandard_GoGlobal__c)
-													  ));
+														bExists,
+														new Fees(prod.ANG_HE_Annual_fees__c,
+																 prod.ANG_AE_Annual_fees__c,
+																	 prod.ANG_HE_Application_Registration_Fees__c,
+																 prod.ANG_HE_AnnualFees_Small_Agents__c,
+																 prod.ANG_HE_AnnualFees_Medium_Agents__c,
+																 prod.ANG_HE_AnnualFees_Large_Agents__c,
+																 prod.ANG_AE_Application_Registration_Fees__c,
+																 prod.ANG_AE_Fees_First_10_locations__c,
+																 prod.ANG_AE_Fees_Next_15_Locations__c,
+																 prod.ANG_AE_Fees_Additional_Locations__c,
+																 prod.ANG_Fees_GoStandard_GoLite__c,
+																 prod.ANG_Fees_GoLite_GoStandard__c,
+																 prod.ANG_Fees_GoStandard_GoGlobal__c)
+														));
 						}
 
 						if(!mapTooltipLabels.containsKey(prod.Name)) {
@@ -240,9 +240,9 @@ public with sharing class ANG_ProductComparisonHelper {
 					if(type == 'A') {
 						lst = new List<TableCell>();
 						lst.add(new TableCell(Label.ANG_ISSP_ProductComparisonCountrySpecificRequirements,
-											  '',
-											  Label.ANG_ISSP_ProductComparisonCountrySpecificRequirements,
-											  ''));
+												'',
+												Label.ANG_ISSP_ProductComparisonCountrySpecificRequirements,
+												''));
 
 						Integer i = 1;
 						for(TableCell tc : linesMap.get(key)) {
@@ -256,9 +256,9 @@ public with sharing class ANG_ProductComparisonHelper {
 					lst = new List<TableCell>();
 
 					lst.add(new TableCell('Cost',
-										  '',
-										  Label.ANG_ISSP_ProductComparisonCost,
-										  ''));
+											'',
+											Label.ANG_ISSP_ProductComparisonCost,
+											''));
 
 					for(TableCell tc : linesMap.get(key)) {
 						lst.add(new TableCell('Application Fee','',tc.fees, tc.sLabel, tc.tooltip));

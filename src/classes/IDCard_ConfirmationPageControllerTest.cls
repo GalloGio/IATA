@@ -4,7 +4,7 @@ private class IDCard_ConfirmationPageControllerTest {
 	@isTest static void testIDCard_ConfirmationPageController() {
 
 		Test.startTest();
-		
+
 		//selected language default is 'en_US'
 		IDCard_ConfirmationPageController pc = new IDCard_ConfirmationPageController();
 		System.assertEquals('en_US', pc.getSelectedLanguage());

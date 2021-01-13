@@ -1,15 +1,15 @@
-/**  
-  * Description: This class contains the controller for the Visualforce page (File Delivery - File Naming Convention) 
-  * Author: Samy Saied
-  * Version: 1.0
-  * History: 
-  */
+/**
+	* Description: This class contains the controller for the Visualforce page (File Delivery - File Naming Convention)
+	* Author: Samy Saied
+	* Version: 1.0
+	* History:
+	*/
 
-public without sharing class vfIECGSSFileName extends IECPageController { 
-	
+public without sharing class vfIECGSSFileName extends IECPageController {
+
 	//Controller to handle the subscription information
 	public vfIECSubscriptionInfo ctrSubsInfo {get; set;}
-	
+
 	//Display variables
 	public list<String> lstErrorMessage   {get; set;}
 	public Boolean bViewMode {get; set;}
@@ -54,9 +54,9 @@ public without sharing class vfIECGSSFileName extends IECPageController {
 			ctrSubsInfo.oFileSubscriptionDetail.File_Name_Custom_Suffix__c = value;
 		}
 	}
-	
+
 	public String sDate {get { return DateTime.now().format('yyyyMMdd'); }}
-	
+
 	public String sProductCode {get; set;}
 	public String sApplicationTitle {
 		get {
@@ -68,13 +68,13 @@ public without sharing class vfIECGSSFileName extends IECPageController {
 				return '';
 		}
 	}
-	
+
 	public String sApplicationTitleUpperCase {
 		get {
 			return sApplicationTitle.toUpperCase();
 		}
 	}
-	
+
 	/**
 	 * Constructor Method
 	 **/
@@ -82,17 +82,17 @@ public without sharing class vfIECGSSFileName extends IECPageController {
 		try {
 			lstErrorMessage = new list<string>();
 			bViewMode = true;
-			
+
 			// Retrieve page parameters
 			String sParamProductCode = ApexPages.currentPage().getParameters().get(IECConstants.PARAM_PRODUCT_CODE);
 			sProductCode = IECUtil.DecodeDecryptParameter(sParamProductCode);
-			
-			//Initilize subscription component		
+
+			//Initilize subscription component
 			ctrSubsInfo = new vfIECSubscriptionInfo();
 			ctrSubsInfo.loggedCustomer = loggedCustomer;
 			ctrSubsInfo.sSelectedSubscriptionName = null;
 			ctrSubsInfo.sApplicationName = sProductCode;
-			
+
 			// check if Subscription Name was passed as a parameter
 			String sParamSubscriptionName = ApexPages.currentPage().getParameters().get(IECConstants.PARAM_SUBSCRIPTION_NAME);
 			if (sParamSubscriptionName!=null && !String.isEmpty(sParamSubscriptionName))
@@ -104,7 +104,7 @@ public without sharing class vfIECGSSFileName extends IECPageController {
 			addErrorMessage(ex.getMessage());
 		}
 	}
-	
+
 	public Pagereference pageLoad() {
 		// first check if the user is logged in
 		try {
@@ -118,10 +118,10 @@ public without sharing class vfIECGSSFileName extends IECPageController {
 			else {
 				// Validate Logged in user profile and ensure profile is complete
 				validUserProfile();
-				
+
 				// Make sure to validate user access to application subscription
-				ctrSubsInfo.validateSubscriptionAccess();         
-				
+				ctrSubsInfo.validateSubscriptionAccess();
+
 				// if no access, redirect to the unauthorized page
 				if (!ctrSubsInfo.hasPageAccess)
 					return Page.IECUnauthorized;
@@ -132,11 +132,11 @@ public without sharing class vfIECGSSFileName extends IECPageController {
 		}
 		return null;
 	}
-	
+
 	public void onClickEdit() {
 		bViewMode = false;
 	}
-	
+
 	public PageReference onClickCancel() {
 		Pagereference pgRef = Page.IECFDFileName;
 		pgRef.getParameters().put(IECConstants.PARAM_SUBSCRIPTION_NAME, IECUtil.EncryptEncodeParameter(ctrSubsInfo.oSubscription.Name));
@@ -144,39 +144,39 @@ public without sharing class vfIECGSSFileName extends IECPageController {
 		pgRef.setRedirect(true);
 		return pgRef;
 	}
-	
+
 	public void onClickSave() {
-		try {	  
+		try {
 			// Reset showing the result sections
 			lstErrorMessage.clear();
-			
+
 			if (String.isBlank(sApplyOption))
 				lstErrorMessage.add(Label.IEC_Error_Required_field + ' Name Applies On');
-			
+
 			if (sNamePrefixOption == 'Custom' && String.isBlank(sNamePrefix))
 				lstErrorMessage.add(Label.IEC_Error_Required_field + ' Custom Prefix');
 			else if ((sNamePrefixOption == 'Date') || (sNamePrefix ==null))
 				sNamePrefix = '';
-				
+
 	 		if (sNameSuffixOption == 'Custom' && String.isBlank(sNameSuffix))
 				lstErrorMessage.add(Label.IEC_Error_Required_field + ' Custom Suffix');
 			else if ((sNameSuffixOption == 'Date') || (sNameSuffix ==null))
 				sNameSuffix = '';
-				
-			//Validate numerica values only  
+
+			//Validate numerica values only
 			Pattern isAlphanumericPlusDot = Pattern.Compile('^[a-zA-Z0-9.]*$');
 			Matcher matchPrefix = isAlphanumericPlusDot.matcher(sNamePrefix);
 			Matcher matchSuffix = isAlphanumericPlusDot.matcher(sNameSuffix);
-			
+
 			if(!matchPrefix.Matches())
 				lstErrorMessage.add(Label.IEC_Error_InvalidFileNameFormat.replace('{0}', 'Custom Prefix'));
-			
+
 			if(!matchSuffix.Matches())
 				lstErrorMessage.add(Label.IEC_Error_InvalidFileNameFormat.replace('{0}', 'Custom Suffix'));
-				
+
 			if (lstErrorMessage.isEmpty()) {
 				ctrSubsInfo.saveFileSubscriptionDetails();
-				
+
 				addConfirmMessage(Label.IEC_Confirm_SaveSuccessful);
 				bViewMode = true;
 			}
@@ -187,12 +187,12 @@ public without sharing class vfIECGSSFileName extends IECPageController {
 			addErrorMessage(ex.getMessage() + '<br />' + ex.getStackTraceString());
 		}
 	}
-    
+
 	// ========================================================================
-	// onClickReset 
-	//  - reset the File Naming convention, no prefix, no suffix, no date stamp 
+	// onClickReset
+	//  - reset the File Naming convention, no prefix, no suffix, no date stamp
 	public void onClickReset() {
-		try { 
+		try {
 			ctrSubsInfo.oFileSubscriptionDetail.File_Name_Custom_Prefix__c = null;
 			ctrSubsInfo.oFileSubscriptionDetail.File_Name_Custom_Suffix__c = null;
 			ctrSubsInfo.oFileSubscriptionDetail.File_Name_Prefix_Option__c = null;

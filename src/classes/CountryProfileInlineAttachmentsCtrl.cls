@@ -6,7 +6,7 @@ public with sharing class CountryProfileInlineAttachmentsCtrl {
 
 	public Boolean showUpload {get;set;}
 	public Blob file {get;set;}
-	public String fileName {get;set;}	
+	public String fileName {get;set;}
 	public String fileSection {get;set;}
 	public String fileDescription {get;set;}
 
@@ -37,46 +37,46 @@ public with sharing class CountryProfileInlineAttachmentsCtrl {
 				}
 			} else {
 				attWrapperList.add(new AttWrapper(a.Name,'','',a.id, false,false));
-			}			
+			}
 		}
-		
+
 	}
 
 	public List<SelectOption> getSections(){
-  		List<SelectOption> options = new List<SelectOption>();
-  		options.add(new SelectOption('General Information__###__', 'General Information'));
-  		options.add(new SelectOption('BSP Profile__###__', 'BSP Profile'));
-  		options.add(new SelectOption('CASS Profile__###__', 'CASS Profile'));
-  		options.add(new SelectOption('Economic Profile__###__', 'Economic Profile'));
-  		options.add(new SelectOption('Currency__###__', 'Currency'));
-  		options.add(new SelectOption('Repatriation Process__###__', 'Repatriation Process'));
-  		options.add(new SelectOption('Important Contacts__###__', 'Important Contacts'));
-  		options.add(new SelectOption('ICCS Content__###__', 'ICCS Content'));
-  		options.add(new SelectOption('Airlines Charges__###__', 'Airlines Charges'));
-   		return options;
+			List<SelectOption> options = new List<SelectOption>();
+			options.add(new SelectOption('General Information__###__', 'General Information'));
+			options.add(new SelectOption('BSP Profile__###__', 'BSP Profile'));
+			options.add(new SelectOption('CASS Profile__###__', 'CASS Profile'));
+			options.add(new SelectOption('Economic Profile__###__', 'Economic Profile'));
+			options.add(new SelectOption('Currency__###__', 'Currency'));
+			options.add(new SelectOption('Repatriation Process__###__', 'Repatriation Process'));
+			options.add(new SelectOption('Important Contacts__###__', 'Important Contacts'));
+			options.add(new SelectOption('ICCS Content__###__', 'ICCS Content'));
+			options.add(new SelectOption('Airlines Charges__###__', 'Airlines Charges'));
+	 		return options;
 	}
 
 	public PageReference disableAtt(){
-        Attachment att = [SELECT Id,Description
+				Attachment att = [SELECT Id,Description
 					FROM Attachment
 					WHERE Id =: toggleAttId];
 		att.Description = '0'+att.Description.substring(1);
 		update att;
-        PageReference pageRef = new PageReference('/apex/CountryProfileInlineAttachments?id='+cp.Id);
-        pageRef.setRedirect(true);
-        return pageRef;
-    }
+				PageReference pageRef = new PageReference('/apex/CountryProfileInlineAttachments?id='+cp.Id);
+				pageRef.setRedirect(true);
+				return pageRef;
+		}
 
-    public PageReference enableAtt(){
-        Attachment att = [SELECT Id,Description
+		public PageReference enableAtt(){
+				Attachment att = [SELECT Id,Description
 					FROM Attachment
 					WHERE Id =: toggleAttId];
 		att.Description = '1'+att.Description.substring(1);
 		update att;
-        PageReference pageRef = new PageReference('/apex/CountryProfileInlineAttachments?id='+cp.Id);
-        pageRef.setRedirect(true);
-        return pageRef;
-    }
+				PageReference pageRef = new PageReference('/apex/CountryProfileInlineAttachments?id='+cp.Id);
+				pageRef.setRedirect(true);
+				return pageRef;
+		}
 
 	public PageReference showUpload(){
 		showUpload=true;
@@ -86,19 +86,19 @@ public with sharing class CountryProfileInlineAttachmentsCtrl {
 	public PageReference uploadFile(){
 		showupload=false;
 		if(file == null){
-            return null;
-        }
+						return null;
+				}
 
-        //else upload....
-        Attachment newAtt = new Attachment();
-        newAtt.parentId = cp.Id;
-        newAtt.Name = fileName;
-        newAtt.Description = '1__###__'+fileSection+fileDescription;
-        newAtt.Body = file;
-        insert newAtt;
-        PageReference pageRef = new PageReference('/apex/CountryProfileInlineAttachments?id='+cp.Id);
-        pageRef.setRedirect(true);
-        return pageRef;
+				//else upload....
+				Attachment newAtt = new Attachment();
+				newAtt.parentId = cp.Id;
+				newAtt.Name = fileName;
+				newAtt.Description = '1__###__'+fileSection+fileDescription;
+				newAtt.Body = file;
+				insert newAtt;
+				PageReference pageRef = new PageReference('/apex/CountryProfileInlineAttachments?id='+cp.Id);
+				pageRef.setRedirect(true);
+				return pageRef;
 	}
 
 	public class AttWrapper{

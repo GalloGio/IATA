@@ -1,59 +1,59 @@
-/*  
-  * Controller for the IECEBC_AccountExtras page (eBroadcast Account Rate Plan Overview) 
-  * Initial Author: Sonny Leman
-  * 
-  * Description:
-  *  - For a given Billing Account (Zuora__CustomerAccount)/User display the selectable add ons
-  *  - Personalized add on selection 
-  *   
-  * History: 
-  *  - 20160729-sl: initial version
-  *  - 20160811-sl: move some methods and properties to vfIECEBC_Controller
-  *  - 20160926-sl: add payment link and hide submit payment if no Add On has been selected, split Zuora__CustomerAccount__c.eBroadcast_Payment_Target for addon
-  */
+/*
+	* Controller for the IECEBC_AccountExtras page (eBroadcast Account Rate Plan Overview)
+	* Initial Author: Sonny Leman
+	*
+	* Description:
+	*  - For a given Billing Account (Zuora__CustomerAccount)/User display the selectable add ons
+	*  - Personalized add on selection
+	*
+	* History:
+	*  - 20160729-sl: initial version
+	*  - 20160811-sl: move some methods and properties to vfIECEBC_Controller
+	*  - 20160926-sl: add payment link and hide submit payment if no Add On has been selected, split Zuora__CustomerAccount__c.eBroadcast_Payment_Target for addon
+	*/
 
 
 public with sharing class vfIECEBC_AccountExtras extends vfIECEBC_Controller
 {
-	// ======================================================================== 
+	// ========================================================================
 	// zqu_ProductRatePlanCharge__c.zqu__Type__c picklist options
 	private static final String RATE_PLAN_CHARGE_TYPE_ONE_TIME = 'One-Time';
 	private static final String RATE_PLAN_CHARGE_TYPE_RECURRING = 'Recurring';
 	private static final String RATE_PLAN_CHARGE_TYPE_USAGE = 'Usage';
-	
-	// ======================================================================== 
+
+	// ========================================================================
 	// selectedProductRatePlanCharge & newSubscriptionProductCharge will be the result of user interaction
 	//public zqu__ProductRatePlanCharge__c selectedProductRatePlanCharge {get;private set;}
 	public zqu__ProductRatePlan__c selectedProductRatePlan {get;private set;}
 	public Zuora__SubscriptionProductCharge__c newSubscriptionProductCharge {get;private set;}
-	
-	// ======================================================================== 
+
+	// ========================================================================
 	// constructor
 	public vfIECEBC_AccountExtras()
 	{
-		selectedProductRatePlan = null; // nothing is selected at the beginning 
+		selectedProductRatePlan = null; // nothing is selected at the beginning
 		newSubscriptionProductCharge = new Zuora__SubscriptionProductCharge__c( Name ='--none--'
 			, Zuora__EffectiveStartDate__c = Date.today()
 			, Zuora__EffectiveEndDate__c = Date.today().addYears(1)
 			, Zuora__Price__c = 0
 			, Product_Rate_Plan_Charge__c = null
 		);
-		
+
 		//newPurchasedRatePlanChargeList = new List<zqu__ProductRatePlanCharge__c>();
 		updateNewPurchasedRatePlanChargeList(null); // reset newPurchaseRatePlanChargeList and totalNewPurchaseAmount
 	} // vfIECEBC_AccountRatePlan constructor
-	
-	
+
+
 	// ========================================================================
 	// visualforce display flags below
 	// =======================================================================-
-	// showAddOnSelection flag is used to turn on/off the add on rate plan options 
+	// showAddOnSelection flag is used to turn on/off the add on rate plan options
 	public Boolean showAddOnSelection{
 		get {
 			return (productRatePlanWrapperAddonOptionList.size() > 0);
 		}
 	}
-	
+
 	// =======================================================================-
 	// showPaymentConfirmation flag is used to turn on/off the payment confirmation
 	public Boolean showPaymentConfirmation{
@@ -61,7 +61,7 @@ public with sharing class vfIECEBC_AccountExtras extends vfIECEBC_Controller
 			return (productRatePlanWrapperAddonOptionList.size() > 0);
 		}
 	}
-	
+
 	// =======================================================================-
 	// showPurchasedSelection flag is used to turn on/off the payment confirmation message
 	public Boolean showPurchasedSelectionMessage{
@@ -73,24 +73,24 @@ public with sharing class vfIECEBC_AccountExtras extends vfIECEBC_Controller
 
 	//
 	//
-    public boolean getisAllAddonSold() {
-        if (productRatePlanWrapperAddonCurrentList.size()>0 &&
-            productRatePlanWrapperAddonOptionList.size()==0) return true;
-        return false;
-    }
-    public boolean getisOneAddonLeftToBeSold(){
-        if (productRatePlanWrapperAddonOptionList.size()>0) return true;
-        return false;
-    }
-    public boolean getisNoneAddonSold(){
-        if (productRatePlanWrapperAddonCurrentList.size()==0 &&
-            productRatePlanWrapperAddonOptionList.size()>0) return true;
-        return false;
-    }
+		public boolean getisAllAddonSold() {
+				if (productRatePlanWrapperAddonCurrentList.size()>0 &&
+						productRatePlanWrapperAddonOptionList.size()==0) return true;
+				return false;
+		}
+		public boolean getisOneAddonLeftToBeSold(){
+				if (productRatePlanWrapperAddonOptionList.size()>0) return true;
+				return false;
+		}
+		public boolean getisNoneAddonSold(){
+				if (productRatePlanWrapperAddonCurrentList.size()==0 &&
+						productRatePlanWrapperAddonOptionList.size()>0) return true;
+				return false;
+		}
 	// ========================================================================
 	// Product Rate Plan Add On selection web interface
 	public Integer selectedRatePlanIndex {get;set;} // used as parameter for calling selectRatePlanAddon
-	
+
 	// ========================================================================
 	// selectRatePlanAddon updates the Rate Plan selection and flags, called from VfP
 	// input parameter: selectedRatePlanIndex
@@ -114,14 +114,14 @@ public with sharing class vfIECEBC_AccountExtras extends vfIECEBC_Controller
 			}
 		}
 	} // end of selectRatePlanAddon
-	
-	
+
+
 	// ========================================================================
 	// productRatePlanWrapperAddonList is used to display and select the product rate plan
-	// includes add from productRatePlanAddonList (all) minus subscribed add ons. 
+	// includes add from productRatePlanAddonList (all) minus subscribed add ons.
 	public List<ProductRatePlanWrapper> productRatePlanWrapperAddonOptionList {
 		get{
-			if (productRatePlanWrapperAddonOptionList == null) 
+			if (productRatePlanWrapperAddonOptionList == null)
 			{
 				List<ProductRatePlanWrapper> prpWrapperList = new List<ProductRatePlanWrapper>();
 				Set<Id> currentProductRatePlanIdSet = currentEbcAddOnProductRatePlanIdToSubscriptionMap.keyset();
@@ -141,14 +141,14 @@ public with sharing class vfIECEBC_AccountExtras extends vfIECEBC_Controller
 		}
 		private set;
 	} // end of productRatePlanWrapperAddonOptionList getter/setter
-	
-	
+
+
 	// ========================================================================
 	// productRatePlanWrapperAddonPurchasedList is used to display currently subscribed product rate plan
 	// ebcCurrentProductRatePlanList
 	public List<ProductRatePlanWrapper> productRatePlanWrapperAddonCurrentList{
 		get{
-			if (productRatePlanWrapperAddonCurrentList == null) 
+			if (productRatePlanWrapperAddonCurrentList == null)
 			{
 				List<ProductRatePlanWrapper> prpWrapperList = new List<ProductRatePlanWrapper>();
 				for (zqu__ProductRatePlan__c prp : currentEbcAddOnProductRatePlanList)
@@ -156,7 +156,7 @@ public with sharing class vfIECEBC_AccountExtras extends vfIECEBC_Controller
 					ProductRatePlanWrapper prpWrapper = new ProductRatePlanWrapper(prp);
 					prpWrapper.selected = true;
 					prpWrapper.index = prpWrapperList.size();
-					
+
 					prpWrapper.subscriptionEndDate = currentEbcAddOnProductRatePlanIdToSubscriptionMap.get(prp.Id).Zuora__TermEndDate__c;
 					prpWrapperList.add(prpWrapper);
  				}
@@ -166,14 +166,14 @@ public with sharing class vfIECEBC_AccountExtras extends vfIECEBC_Controller
 		}
 		private set;
 	} // end of productRatePlanWrapperAddonCurrentList getter/setter
-	
-	
+
+
 	// ========================================================================
 	// productRatePlanWrapperAddonNewPurchasedList is used to display and select the product rate plan charge
 	public List<SelectedProductRatePlanWrapper> productRatePlanWrapperAddonNewPurchaseList {
 		get{
 			List<SelectedProductRatePlanWrapper> prpWrapperList = new List<SelectedProductRatePlanWrapper>();
-			
+
 			for (zqu__ProductRatePlanCharge__c prpc : newPurchasedRatePlanChargeList)
 			{
 				SelectedProductRatePlanWrapper prpWrapper = new SelectedProductRatePlanWrapper(prpc);
@@ -185,8 +185,8 @@ public with sharing class vfIECEBC_AccountExtras extends vfIECEBC_Controller
 		}
 		private set;
 	} // end of productRatePlanWrapperAddonNewPurchaseList getter/setter
-	
-	
+
+
 	// ========================================================================
 	// go to the payment page, the information is passed on the billingAccount record
 	// use paymentToken as Url Parameter to ensure the communication integrity between pages.
@@ -207,15 +207,15 @@ public with sharing class vfIECEBC_AccountExtras extends vfIECEBC_Controller
 							, null // campaignId
 							, 0 // emailCreditAmount
 							);
-		
+
 		return paymentPage;
 	} // end of goToPaymentPage
-	
-	
+
+
 	// ========================================================================
 	// inner wrapper class definition below
 	// ------------------------------------------------------------------------
-	
+
 	// ========================================================================
 	// wrapper class for ProductRatePlan and related objects
 	// needed checking the selected flag and index.
@@ -225,26 +225,26 @@ public with sharing class vfIECEBC_AccountExtras extends vfIECEBC_Controller
 		public Boolean selected {get;set;}
 		public String name {get; private set;}
 		public String description {get; private set;}
-        public String billingPeriod {get;set;} // based on ProductRatePlanCharge recurring period (zqu__RecurringPeriod__c)
+				public String billingPeriod {get;set;} // based on ProductRatePlanCharge recurring period (zqu__RecurringPeriod__c)
 		public Decimal amount {get; set;} // amount
 		public Decimal amountOneTime  {get;set;}
 		public Decimal amountRecurring {get;set;}
-		
+
 		public Zuora__SubscriptionProductCharge__c subscriptionProductCharge {get; private set;}
 		public zqu__ProductRatePlan__c productRatePlan {get; private set;}
 		public Date subscriptionEndDate {get;set;}
-		
+
 		// this constructor is used for the rate plan selection to choose
 		// in case there is more than one zqu__ProductRatePlanCharge__c, the amount will be the sum
 		public ProductRatePlanWrapper(zqu__ProductRatePlan__c prp)
 		{
 			productRatePlan = prp;
-			
+
 			selected = false;
 			name = prp.Name;
 			billingPeriod = ''; // this will be overwritten
 			//description = prp.zqu__Description__c;
-			
+
 			// set the price amount based on ProductRatePlanCharge
 			amountOneTime = 0;
 			amountRecurring = 0;
@@ -253,15 +253,15 @@ public with sharing class vfIECEBC_AccountExtras extends vfIECEBC_Controller
 			{
 				if (prpc.zqu__Type__c!=null) billingPeriod = prpc.zqu__Type__c;
 				if ( prpc.zqu__Type__c == RATE_PLAN_CHARGE_TYPE_ONE_TIME) {
-					amountOneTime += prpc.zqu__ListPrice__c;    
+					amountOneTime += prpc.zqu__ListPrice__c;
 				} else if ( prpc.zqu__Type__c == RATE_PLAN_CHARGE_TYPE_RECURRING ) {
-					amountRecurring += prpc.zqu__ListPrice__c; 
-                    //if (prpc.zqu__RecurringPeriod__c != null) billingPeriod = prpc.zqu__RecurringPeriod__c;
-				} 
+					amountRecurring += prpc.zqu__ListPrice__c;
+										//if (prpc.zqu__RecurringPeriod__c != null) billingPeriod = prpc.zqu__RecurringPeriod__c;
+				}
 				//description += '(prpc: ' + prp.zqu__Description__c + ' )';
 				productRatePlanCharge = prpc;
 			}
-			
+
 			// collect the description from Product_Rate_Plan_Information__c
 			description = '';
 			for (Product_Rate_Plan_Information__c prpi : prp.Product_Rate_Plan_Informations__r)
@@ -270,13 +270,13 @@ public with sharing class vfIECEBC_AccountExtras extends vfIECEBC_Controller
 				if (prpi.Short_Description__c !=null) name=prpi.Short_Description__c;
 			}
 		} // ProductRatePlanWrapper
-		
-		
+
+
 	} // end class ProductRatePlanWrapper
-	
-	
+
+
 	// ========================================================================
-	// wrapper class for Purchased ProductRatePlan/ProductRatePlanCharge 
+	// wrapper class for Purchased ProductRatePlan/ProductRatePlanCharge
 	// this wrapper class was created for allowing to add more information
 	// the information here will be displayed on the payment confirmation section
 	// current model will display each product rate plan charge
@@ -288,11 +288,11 @@ public with sharing class vfIECEBC_AccountExtras extends vfIECEBC_Controller
 		public Decimal amount {get; set;} // amount
 		//public Decimal amountOneTime  {get;set;}
 		//public Decimal amountRecurring {get;set;}
-		
+
 		//public Zuora__SubscriptionProductCharge__c subscriptionProductCharge {get; private set;}
 		public zqu__ProductRatePlan__c productRatePlan {get; private set;}
 		//public Date subscriptionEndDate {get;set;}
-		
+
 		// this constructor is used for the rate plan selection to choose
 		// in case there is more than one zqu__ProductRatePlanCharge__c, the amount will be the sum
 		public SelectedProductRatePlanWrapper(zqu__ProductRatePlanCharge__c prpc)
@@ -307,6 +307,6 @@ public with sharing class vfIECEBC_AccountExtras extends vfIECEBC_Controller
 			}
 		} // end SelectedProductRatePlanWrapper constructor
 	} // end class SelectedProductRatePlanWrapper
-	
-	
+
+
 } // end of vfIECEBC_AccountExtras

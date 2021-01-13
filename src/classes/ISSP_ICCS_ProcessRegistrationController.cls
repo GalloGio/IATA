@@ -2,39 +2,39 @@ public class ISSP_ICCS_ProcessRegistrationController extends ISSP_ICCS_CaseProce
 
 	/* PROCESS TYPE SPECIFIC VARIABLES */
 
-    public ISSP_ICCS_ProcessRegistrationController thisCtrl {get{return this;}}
-    
+	public ISSP_ICCS_ProcessRegistrationController thisCtrl {get{return this;}}
 
-    /* CONSTRUCTOR */
 
-    public ISSP_ICCS_ProcessRegistrationController(){}
+	/* CONSTRUCTOR */
+
+	public ISSP_ICCS_ProcessRegistrationController(){}
 
 
 	public override ISSP_ICCS_Utils.CaseProcessType getCaseProcessType(){
 		return ISSP_ICCS_Utils.CaseProcessType.REGISTRATION;
 	}
 
-	
+
 	public override String getCaseProcessName(){
 		return 'Activate ICCS Membership';
 	}
 
 	public override Map<Integer, ISSP_ICCS_CaseProcessesController.Step> getSteps(){
-        return new Map<Integer,ISSP_ICCS_CaseProcessesController.Step>{
-                1 => new ISSP_ICCS_CaseProcessesController.Step('Step 1 - General Information', 33, 33),
-                2 => new ISSP_ICCS_CaseProcessesController.Step('Step 2 - Forms', 67, 34),
-                3 => new ISSP_ICCS_CaseProcessesController.Step('Step 3 - Registration', 100, 33)};
+		return new Map<Integer,ISSP_ICCS_CaseProcessesController.Step>{
+				1 => new ISSP_ICCS_CaseProcessesController.Step('Step 1 - General Information', 33, 33),
+				2 => new ISSP_ICCS_CaseProcessesController.Step('Step 2 - Forms', 67, 34),
+				3 => new ISSP_ICCS_CaseProcessesController.Step('Step 3 - Registration', 100, 33)};
 	}
-    
+
 	public override List<String> getCaseProcessDocuments(){
-	    return new List<String>{
-        	ISSP_ICCS_Utils.ICCS_DOCUMENT_AML,
-        	ISSP_ICCS_Utils.ICCS_DOCUMENT_FORM_A,
-	        ISSP_ICCS_Utils.ICCS_DOCUMENT_FORM_K,
-	        ISSP_ICCS_Utils.ICCS_DOCUMENT_MEMBERSHIP,
-	        ISSP_ICCS_Utils.ICCS_DOCUMENT_ASP,
-	        ISSP_ICCS_Utils.ICCS_DOCUMENT_BANK_ACCOUNTS,
-	        ISSP_ICCS_Utils.ICCS_DOCUMENT_JOIN_PARTICIPATION};
+		return new List<String>{
+			ISSP_ICCS_Utils.ICCS_DOCUMENT_AML,
+			ISSP_ICCS_Utils.ICCS_DOCUMENT_FORM_A,
+			ISSP_ICCS_Utils.ICCS_DOCUMENT_FORM_K,
+			ISSP_ICCS_Utils.ICCS_DOCUMENT_MEMBERSHIP,
+			ISSP_ICCS_Utils.ICCS_DOCUMENT_ASP,
+			ISSP_ICCS_Utils.ICCS_DOCUMENT_BANK_ACCOUNTS,
+			ISSP_ICCS_Utils.ICCS_DOCUMENT_JOIN_PARTICIPATION};
 	}
 
 
@@ -49,12 +49,12 @@ public class ISSP_ICCS_ProcessRegistrationController extends ISSP_ICCS_CaseProce
 			ISSP_ICCS_Utils.ICCS_DOCUMENT_JOIN_PARTICIPATION => new ISSP_ICCS_CaseProcessController.TypedDocument(this, ISSP_ICCS_Utils.ICCS_DOCUMENT_JOIN_PARTICIPATION, false)
 		};
 	}
-    
-    public override void resetController(ISSP_ICCS_CaseProcessesController caseProcessesController){}
+
+	public override void resetController(ISSP_ICCS_CaseProcessesController caseProcessesController){}
 
 	public override void cleanController(){}
 
-    public override Case createCase(){
+	public override Case createCase(){
 		return new Case(
 			Subject = 'ICCS Service Join Request - ' + caseProcessesController.pageController.topAccount.Name,
 			Status = 'Draft',
@@ -68,21 +68,21 @@ public class ISSP_ICCS_ProcessRegistrationController extends ISSP_ICCS_CaseProce
 	}
 
 	public override Case retrieveCase(Id caseId){
-		return [select 
-					Id, 
-					CaseNumber, 
-					Subject, 
+		return [select
+					Id,
+					CaseNumber,
+					Subject,
 					Status,
 					Account.Name,
 					IATA_Code__c,
-					Contact.Name, 
-					Contact.Email, 
+					Contact.Name,
+					Contact.Email,
 					Contact.Phone,
-					Expected_Deadline__c, 
+					Expected_Deadline__c,
 					Origin,
 					CaseArea__c,
 					Description
-				from Case 
+				from Case
 				where Id =: caseId];
 	}
 
@@ -90,34 +90,34 @@ public class ISSP_ICCS_ProcessRegistrationController extends ISSP_ICCS_CaseProce
 		caseProcessesController.cse.Expected_Deadline__c = caseProcessesController.cse.Expected_Deadline__c != null ? caseProcessesController.cse.Expected_Deadline__c : Date.today() + 15;
 	}
 
-    public override Boolean validateStep(){
-        if(caseProcessesController.currentStep != 3){
-            return true;
-        }
+	public override Boolean validateStep(){
+		if(caseProcessesController.currentStep != 3){
+			return true;
+		}
 
-        Boolean stepInvalid = false;
-                
-        Boolean isInvalid;
+		Boolean stepInvalid = false;
 
-        for(String docType : typedDocumentsMap.keySet()){
-            isInvalid = !typedDocumentsMap.get(docType).documentExists && typedDocumentsMap.get(docType).isMandatory;
-            caseProcessesController.displayMessages.put(docType, isInvalid);
+		Boolean isInvalid;
 
-            stepInvalid |= isInvalid;
-        }
-        
-        return !stepInvalid;
-    }
+		for(String docType : typedDocumentsMap.keySet()){
+			isInvalid = !typedDocumentsMap.get(docType).documentExists && typedDocumentsMap.get(docType).isMandatory;
+			caseProcessesController.displayMessages.put(docType, isInvalid);
+
+			stepInvalid |= isInvalid;
+		}
+
+		return !stepInvalid;
+	}
 
 	public override void setCaseFieldValues(){
 		caseProcessesController.cse.Expected_Deadline__c = caseProcessesController.cse.Expected_Deadline__c != null ? caseProcessesController.cse.Expected_Deadline__c : Date.today() + 15;
 	}
-	
+
 	public override void postSubmit(){
-        // Update the ICCS Membership Status of the case's related Account
-        Account acc = caseProcessesController.pageController.topAccount;
-        acc.ICCS_Membership_Status__c = ISSP_ICCS_Utils.ICCS_MEMBERSHIP_PROSPECT;
-        update acc;
+		// Update the ICCS Membership Status of the case's related Account
+		Account acc = caseProcessesController.pageController.topAccount;
+		acc.ICCS_Membership_Status__c = ISSP_ICCS_Utils.ICCS_MEMBERSHIP_PROSPECT;
+		update acc;
 	}
 
 	public override Boolean displaySaveAndLeave(){

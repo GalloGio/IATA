@@ -5,7 +5,7 @@ private class AMSHierarchyRoleComparatorTest
 	@testSetup static void setup(){
 
 		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US')  ;
-        insert ctry ;
+		insert ctry ;
 
 		Id accountRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
@@ -19,19 +19,19 @@ private class AMSHierarchyRoleComparatorTest
 		Contact co1 = new Contact(AccountId = a1.id, Firstname = 'teste1', Lastname='test1', Phone = '911111111', MobilePhone = '911111111', Email = 'test1@test.com', Financial_Assessment_Contact__c = false);
 		//Contact co2 = new Contact(AccountId = a2.id, Firstname = 'teste2', Lastname='test2', Phone = '911111111', MobilePhone = '911111111', Email = 'test2@test.com', Financial_Assessment_Contact__c = false);
 		//Contact co3 = new Contact(AccountId = a3.id, Firstname = 'teste3', Lastname='test3', Phone = '911111111', MobilePhone = '911111111', Email = 'test3@test.com', Financial_Assessment_Contact__c = false);
-		
+
 		List<Account> accountList = new List<Account>{a1,a2,a3,ownerAccount,ownerAccount2};
-		
+
 		insert accountList;
 
 		List<Contact> contactList = new List<Contact>{co1};
 
 		insert contactList;
-		
+
 
 		Id ownerRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
 		Id employeeRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Employee');
-		
+
 		AMS_Account_Role__c owner1Acct1 = new AMS_Account_Role__c(Account__c = a1.Id, Contact__c = co1.Id, Owner_Sequence__c = 1, Percentage__c = 1, recordTypeId = ownerRecTypeId);
 		AMS_Account_Role__c owner2Acct1 = new AMS_Account_Role__c(Account__c = a1.Id, Owner_Account__c = ownerAccount.Id, Owner_Sequence__c = 2, Percentage__c = 1, recordTypeId = ownerRecTypeId);
 
@@ -52,7 +52,7 @@ private class AMSHierarchyRoleComparatorTest
 		insert oscar;
 
 
-    }
+	}
 
 	@isTest
 	static void testCorrectHierarchy()
@@ -81,7 +81,7 @@ private class AMSHierarchyRoleComparatorTest
 		System.debug('Finished  test.');
 
 		Test.stopTest();
-		
+
 		System.assertEquals(result,true);
 
 	}
@@ -90,7 +90,7 @@ private class AMSHierarchyRoleComparatorTest
 	static void testIncorrectHierarchy1()
 	{
 		Id ownerRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
-		
+
 		Test.startTest();
 
 		List<AMS_OSCAR__c> oscars = [SELECT Id FROM AMS_OSCAR__c];
@@ -137,7 +137,7 @@ private class AMSHierarchyRoleComparatorTest
 		System.debug('Finished  test.');
 
 		Test.stopTest();
-		
+
 		System.assertEquals(result,false);
 
 	}
@@ -183,7 +183,7 @@ private class AMSHierarchyRoleComparatorTest
 			System.assertEquals(true,false);
 
 		Contact co2 = new Contact(AccountId = acct3.id, Firstname = 'teste2', Lastname='test2', Phone = '911111111', MobilePhone = '911111111', Email = 'test2@test.com', Financial_Assessment_Contact__c = false);
-		
+
 		insert co2;
 
 		List<AMS_Account_Role__c> roleLst = [SELECT Id, Contact__c from AMS_Account_Role__c where Account__r.Id = :acct3.Id and Contact__c != null];
@@ -202,8 +202,8 @@ private class AMSHierarchyRoleComparatorTest
 		System.debug('Finished  test.');
 
 		Test.stopTest();
-		
+
 		System.assertEquals(result,false);
 
-	}    
+	}
 }

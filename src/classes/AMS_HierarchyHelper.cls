@@ -13,8 +13,6 @@ global class AMS_HierarchyHelper {
 			for (AMS_Agencies_relationhip__c h : [SELECT Hierarchy__c, Hierarchy__r.Main_Account__c, Parent_Account__c, Parent_Account__r.IATACode__c, Child_Account__c, Child_Account__r.IATACode__c
 																						FROM AMS_Agencies_relationhip__c
 																						WHERE Parent_Account__c IN :accountsIds OR Child_Account__c IN :accountsIds ]) {
-
-				system.debug(LoggingLevel.ERROR, 'getAccountsHierarchies() --> trovo hierarchy ' + h.ID);
 				if (hierarchyToAccounts.get(h.Hierarchy__c) == null)
 					hierarchyToAccounts.put(h.Hierarchy__c, new Set<Id>());
 

@@ -32,8 +32,8 @@ global class ams2gdp_Batch_AMS_Agency_Authorization implements Database.Batchabl
 
 		List<String> conditions = new List<String> {'Account__r.RecordTypeId= \'' + RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') + '\''
 			, 'RecordType.DeveloperName = \'FormOfPayment\''};
-        conditions.addAll(ams2gdp_BusinessLogic.queryClauseAccountAndRelated(batchName));
-        
+				conditions.addAll(ams2gdp_BusinessLogic.queryClauseAccountAndRelated(batchName));
+
 		if (extraIds != null && extraIds.size() > 0) {
 			if (extraIds[0] == 'none') {
 				conditions.add('Id=null');
@@ -61,7 +61,7 @@ global class ams2gdp_Batch_AMS_Agency_Authorization implements Database.Batchabl
 			if (batchInfo != null) {
 				//Run only on the deltas
 				String deltaConditions = String.format('LastModifiedDate >= {0}'
-				                                       , new List<String> {batchInfo.Last_Sync_Start_Date__c.addDays(-2).format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'', 'GMT')});
+																							 , new List<String> {batchInfo.Last_Sync_Start_Date__c.addDays(-2).format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'', 'GMT')});
 				if (String.isNotBlank(batchInfo.Failed_Records__c)) {
 					// Reprocess failed records
 					List<String> failedRecordIds = new List<String>();
@@ -78,10 +78,10 @@ global class ams2gdp_Batch_AMS_Agency_Authorization implements Database.Batchabl
 		}
 
 		query = String.format('SELECT {0} '
-		                      +	'FROM Agency_Authorization__c '
-		                      + 	'WHERE {1} ',
-		                      new List<String> {fields, String.join(conditions, ' AND ')}
-		                     );
+													+	'FROM Agency_Authorization__c '
+													+ 	'WHERE {1} ',
+													new List<String> {fields, String.join(conditions, ' AND ')}
+												 );
 	}
 
 	global ams2gdp_Batch_AMS_Agency_Authorization() {

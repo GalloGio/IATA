@@ -13,43 +13,43 @@ public with sharing class EF_DocumentLogHelper
 		'ParentId__c'
 	};
 
-    public static AmazonFile__c createAmazonFileRecord(String fileName, String amazonKey, Long filesize, String parentId, String recordType, EF_Document_Log__c dl)
-    {
-    	AmazonFile__c amazonFile;
+	public static AmazonFile__c createAmazonFileRecord(String fileName, String amazonKey, Long filesize, String parentId, String recordType, EF_Document_Log__c dl)
+	{
+		AmazonFile__c amazonFile;
 		if(fileName.length()>80) fileName = fileName.substring(0,80);
-        try {
-              amazonFile = new AmazonFile__c(
-                Name = fileName,
-                sObject_Id__c = parentId,
-                Full_Name_Unique__c = amazonKey,
-                Category__c = dl.Category__c,
-                Subcategory__c = dl.SubCategory__c,
-                Document_Date__c = Date.newInstance(dl.Created_On__c.year(), dl.Created_On__c.month(), dl.Created_On__c.day()),
-                Expired__c = dl.Expired__c,
-                Expiry_Date__c = dl.Expiry_Date__c,
-                SAP_Number__c = dl.SAP_Reference__c,
-                Additional_Information__c = dl.Additional_Information__c,
-                EF_Private__c = dl.EF_Private__c,
-                Size_MB__c = filesize* 0.000001,
-                RecordTypeId = recordType,
-                EF_Created_By__c = dl.Created_By__c, 
-                EF_Created_On__c = dl.Created_On__c, 
-                EF_Enterprise_Keywords__c = dl.Enterprise_Keywords__c, 
-                EF_Modified_By__c = dl.Modified_By__c,
+		try {
+			  amazonFile = new AmazonFile__c(
+				Name = fileName,
+				sObject_Id__c = parentId,
+				Full_Name_Unique__c = amazonKey,
+				Category__c = dl.Category__c,
+				Subcategory__c = dl.SubCategory__c,
+				Document_Date__c = Date.newInstance(dl.Created_On__c.year(), dl.Created_On__c.month(), dl.Created_On__c.day()),
+				Expired__c = dl.Expired__c,
+				Expiry_Date__c = dl.Expiry_Date__c,
+				SAP_Number__c = dl.SAP_Reference__c,
+				Additional_Information__c = dl.Additional_Information__c,
+				EF_Private__c = dl.EF_Private__c,
+				Size_MB__c = filesize* 0.000001,
+				RecordTypeId = recordType,
+				EF_Created_By__c = dl.Created_By__c,
+				EF_Created_On__c = dl.Created_On__c,
+				EF_Enterprise_Keywords__c = dl.Enterprise_Keywords__c,
+				EF_Modified_By__c = dl.Modified_By__c,
 				EF_Modified_On__c = dl.Modified_On__c
-            );
-            return amazonFile;
-        } catch(Exception e) {
-            System.debug('******** Error creating an AmazonFile__c object: ' + e.getMessage());
-        }
+			);
+			return amazonFile;
+		} catch(Exception e) {
+			System.debug('******** Error creating an AmazonFile__c object: ' + e.getMessage());
+		}
 
-        return null;
-    }
+		return null;
+	}
 
 	@Future(callout=true)
 	public static void createAmazonAttachmentsFromAttachments(Set<Id> lsAttachmentIds)
-	{	
-		Map<Id, EF_Document_Log__c> logsToUpdate = getLogRecordsToUpdateMap(lsAttachmentIds);		
+	{
+		Map<Id, EF_Document_Log__c> logsToUpdate = getLogRecordsToUpdateMap(lsAttachmentIds);
 		List<EF_Document_Log__c> toUpdateList = new List<EF_Document_Log__c>();
 		List<AmazonFile__c> attachmentsToInsert = new List<AmazonFile__c>();
 		AmazonFile__c af;
@@ -120,7 +120,7 @@ if(!Test.isRunningTest()) {
 
 	public static Map<Id, EF_Document_Log__c> getLogRecordsToUpdateMap(Set<Id> attachmentIds)
 	{
-		List<EF_Document_Log__c> dls = [select Id, AttachmentId__c, Status__c, Log__c, Additional_Information__c, Category__c, SubCategory__c, 
+		List<EF_Document_Log__c> dls = [select Id, AttachmentId__c, Status__c, Log__c, Additional_Information__c, Category__c, SubCategory__c,
 				EF_Private__c, SAP_Reference__c, Expired__c, Expiry_Date__c, Created_By__c, Created_On__c, Enterprise_Keywords__c, Modified_By__c,
 				Modified_On__c from EF_Document_Log__c where AttachmentId__c in :attachmentIds];
 		Map<Id, EF_Document_Log__c> attIdDlMap = new Map<Id, EF_Document_Log__c>();
@@ -138,7 +138,7 @@ if(!Test.isRunningTest()) {
 		{
 			String currentTime = getTimeStamp();
 			String currentUser = UserInfo.getName();
-			
+
 			String oldLog = '';
 			if(dl.Log__c != null)
 			{
@@ -227,8 +227,8 @@ if(!Test.isRunningTest()) {
 				return false;
 			}
 
-			if( (mandatoryField.equals('AttachmentId__c') || mandatoryField.equals('ParentId__c')) 
-				 	&& (!dl.Status__c.equalsIgnoreCase('Attachment - Delete Error') && !dl.Status__c.equalsIgnoreCase('Process Completed')) ) 
+			if( (mandatoryField.equals('AttachmentId__c') || mandatoryField.equals('ParentId__c'))
+				 	&& (!dl.Status__c.equalsIgnoreCase('Attachment - Delete Error') && !dl.Status__c.equalsIgnoreCase('Process Completed')) )
 			{
 				String value = (String) dl.get(mandatoryField);
 				if(value.length() != 15 && value.length() != 18)
@@ -243,46 +243,46 @@ if(!Test.isRunningTest()) {
 	}
 
 	public void isTestCompliant () {
-        if (Test.isRunningTest()) {
-            AMS_Oscar__c oscar = new AMS_Oscar__c();
-            AMS_Pax_Accreditation_Form__c accreditationObj = new AMS_Pax_Accreditation_Form__c();
-            oscar.Assessment_Performed_Date__c = date.today();
-            oscar.Bank_Guarantee_deadline__c = date.today();
-            oscar.Bank_Guarantee_received__c = date.today();
-            oscar.Bank_Guarantee_requested__c = date.today();
-            accreditationObj.Accept_terms_and_conditions__c = true;
-            accreditationObj.Account_Name__c = 'TestName';
-            accreditationObj.Billing_State__c = 'TestState';
-            accreditationObj.Branch_Office_City__c = 'TestCity';
-            accreditationObj.Branch_Office_Email__c = 'TestEmail';
-            accreditationObj.Branch_Office_FAX__c = String.valueOf(12436);
-            accreditationObj.Branch_Office_Phone__c = String.valueOf(12436);
-            accreditationObj.Branch_Office_Postal_code__c = String.valueOf(12436);
-            accreditationObj.Branch_Office_Street_name_number__c = String.valueOf(12436);
-            oscar.Change_effective_as_of__c = date.today();
-            oscar.Criteria_remarks__c = String.valueOf(date.today());
-            oscar.Documentation_remarks__c = String.valueOf(date.today());
-            oscar.Dossier_Reception_Date__c = date.today();
-            oscar.Fees_refund_requested__c = date.today();
-            oscar.Finalization_checklist__c = String.valueOf(date.today());
-            oscar.Financial_Assessment_deadline__c = date.today();
-            oscar.Financial_Review_Result__c = String.valueOf(date.today());
-            oscar.Billing_Document_Number__c = '6781';
-            oscar.Local_Inspection_compliant__c = 'Yes';
-            oscar.Local_Inspection_deadline__c = date.today();
-            oscar.Local_Inspection_received__c = date.today();
-            oscar.Local_Inspection_requested__c = date.today();
-            oscar.Process_Start_Date__c = date.today();
-            oscar.Proof_of_payment_received__c = date.today();
-            oscar.PSAA_EACP_Agreement_received__c = date.today();
-            oscar.Welcome_Pack_Sent__c = date.today();
-            oscar.Sanity_check_deadline__c = date.today();
-            oscar.Sanity_check_received__c = date.today();
-            oscar.Update_AIMS_Rejection_Date__c = date.today();
-            oscar.Update_AIMS_Rejection__c = true;
-            oscar.Update_AIMS_Approval_Date__c = date.today();
-            oscar.Update_AIMS_Approval__c = true;
+		if (Test.isRunningTest()) {
+			AMS_Oscar__c oscar = new AMS_Oscar__c();
+			AMS_Pax_Accreditation_Form__c accreditationObj = new AMS_Pax_Accreditation_Form__c();
+			oscar.Assessment_Performed_Date__c = date.today();
+			oscar.Bank_Guarantee_deadline__c = date.today();
+			oscar.Bank_Guarantee_received__c = date.today();
+			oscar.Bank_Guarantee_requested__c = date.today();
+			accreditationObj.Accept_terms_and_conditions__c = true;
+			accreditationObj.Account_Name__c = 'TestName';
+			accreditationObj.Billing_State__c = 'TestState';
+			accreditationObj.Branch_Office_City__c = 'TestCity';
+			accreditationObj.Branch_Office_Email__c = 'TestEmail';
+			accreditationObj.Branch_Office_FAX__c = String.valueOf(12436);
+			accreditationObj.Branch_Office_Phone__c = String.valueOf(12436);
+			accreditationObj.Branch_Office_Postal_code__c = String.valueOf(12436);
+			accreditationObj.Branch_Office_Street_name_number__c = String.valueOf(12436);
+			oscar.Change_effective_as_of__c = date.today();
+			oscar.Criteria_remarks__c = String.valueOf(date.today());
+			oscar.Documentation_remarks__c = String.valueOf(date.today());
+			oscar.Dossier_Reception_Date__c = date.today();
+			oscar.Fees_refund_requested__c = date.today();
+			oscar.Finalization_checklist__c = String.valueOf(date.today());
+			oscar.Financial_Assessment_deadline__c = date.today();
+			oscar.Financial_Review_Result__c = String.valueOf(date.today());
+			oscar.Billing_Document_Number__c = '6781';
+			oscar.Local_Inspection_compliant__c = 'Yes';
+			oscar.Local_Inspection_deadline__c = date.today();
+			oscar.Local_Inspection_received__c = date.today();
+			oscar.Local_Inspection_requested__c = date.today();
+			oscar.Process_Start_Date__c = date.today();
+			oscar.Proof_of_payment_received__c = date.today();
+			oscar.PSAA_EACP_Agreement_received__c = date.today();
+			oscar.Welcome_Pack_Sent__c = date.today();
+			oscar.Sanity_check_deadline__c = date.today();
+			oscar.Sanity_check_received__c = date.today();
+			oscar.Update_AIMS_Rejection_Date__c = date.today();
+			oscar.Update_AIMS_Rejection__c = true;
+			oscar.Update_AIMS_Approval_Date__c = date.today();
+			oscar.Update_AIMS_Approval__c = true;
 
-        }
+		}
 	}
 }

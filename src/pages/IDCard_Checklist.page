@@ -239,7 +239,7 @@
                                      </td>
                                      <td >
                                          <!-- Show and hide popup is made by css because commandLink was not supporting language change with the popup open-->
-                                         <apex:commandLink onclick="showPopup(); return false;" id="btnNext2" styleClass="btn-BlueButtonWAR" style="position:relative; top:15px;">
+                                         <apex:commandLink  onclick="showPopup(); return false;" id="btnNext2" styleClass="btn-BlueButtonWAR" style="position:relative; top:15px;">
                                             <span>{!$Label.ID_Card_Next_button}</span>
                                         </apex:commandLink> 
                                      </td>

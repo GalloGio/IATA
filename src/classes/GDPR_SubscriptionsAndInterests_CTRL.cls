@@ -8,7 +8,7 @@ public without sharing class GDPR_SubscriptionsAndInterests_CTRL {
 
 		// Get all possible subscrptions
 		List<GDPR_Pardot_Subscription_List__mdt> allSubscriptions = [SELECT id, label, section__c, Help_text__c, Pardot_ID__c  FROM GDPR_Pardot_Subscription_List__mdt ORDER BY label];
-		
+
 		// Get subscription info from Pardot
 		Pardot_API.Pardot_Prospect prospect = new Pardot_API.Pardot_Prospect();
 		prospect = Pardot_API.getProspect(email);
@@ -50,10 +50,10 @@ public without sharing class GDPR_SubscriptionsAndInterests_CTRL {
 				}
 			}
 			sws.opted_out = isOptedOut;
-		} 
+		}
 		return JSON.serialize(sws);
 	}
-	
+
 	@AuraEnabled
 	public static boolean updateSubscriptionList(String prospect_id, String email, List<String> subscription_ids, List<String> unsubscription_ids) {
 		if( String.isBlank(prospect_id)) return false;
@@ -139,21 +139,21 @@ public without sharing class GDPR_SubscriptionsAndInterests_CTRL {
 	}
 
 	public class InterestsWrapper {
-		@AuraEnabled public String label {get;set;} 
-		@AuraEnabled public Boolean selected {get;set;} 
+		@AuraEnabled public String label {get;set;}
+		@AuraEnabled public Boolean selected {get;set;}
 		@AuraEnabled public Boolean opted_out {get;set;}
 	}
 
 	public class SubscriptionWrapper {
-		@AuraEnabled public String id {get;set;} 
-		@AuraEnabled public String label {get;set;} 
-		@AuraEnabled public String section {get;set;} 
-		@AuraEnabled public String helpText {get;set;} 
-		@AuraEnabled public Boolean selected {get;set;} 
+		@AuraEnabled public String id {get;set;}
+		@AuraEnabled public String label {get;set;}
+		@AuraEnabled public String section {get;set;}
+		@AuraEnabled public String helpText {get;set;}
+		@AuraEnabled public Boolean selected {get;set;}
 	}
 
 	public class SubWrapper {
-		@AuraEnabled public List<SubscriptionWrapper> newsletters {get;set;} 
+		@AuraEnabled public List<SubscriptionWrapper> newsletters {get;set;}
 		@AuraEnabled public List<SubscriptionWrapper> products {get;set;}
 		@AuraEnabled public List<String> initialSubscription {get;set;}
 		@AuraEnabled public Boolean opted_out {get;set;}

@@ -1,13 +1,13 @@
 public class ANG_PortalApplicationRightHelper {
 
 	public static List<Portal_Application_Right__c> getCheckMinimumUsersAllowedErrorList(Set<id> parSet) {
-		List<Portal_Application_Right__c> parList = [Select id, 
-		                                                    Application_Name__c, 
-		                                                    contact__r.account.Top_Parent__c, 
-		                                                    contact__r.accountId, 
-		                                                    ANG_Portal_Service_Role__c 
-		                                               From Portal_Application_Right__c		                                              
-		                                              Where id in :parSet];
+		List<Portal_Application_Right__c> parList = [Select id,
+																												Application_Name__c,
+																												contact__r.account.Top_Parent__c,
+																												contact__r.accountId,
+																												ANG_Portal_Service_Role__c
+																									 From Portal_Application_Right__c
+																									Where id in :parSet];
 
 		return checkMinimumUsersAllowed(parList);
 	}
@@ -28,7 +28,7 @@ public class ANG_PortalApplicationRightHelper {
 
 		public void sub() {
 			this.cnt++;
-		}		
+		}
 	}
 
 	private static List<Portal_Application_Right__c> checkMinimumUsersAllowed(List<Portal_Application_Right__c> parList) {
@@ -64,8 +64,8 @@ public class ANG_PortalApplicationRightHelper {
 			if(access.contact__r.account.Top_Parent__c != null) {
 				accountPivotId = access.contact__r.account.Top_Parent__c;
 				//accountsTP.add(access.contact__r.account.Top_Parent__c);
-			} else { 
-				accountPivotId = access.contact__r.accountId;				
+			} else {
+				accountPivotId = access.contact__r.accountId;
 			}
 			accounts.add(accountPivotId);
 
@@ -84,15 +84,15 @@ public class ANG_PortalApplicationRightHelper {
 		//
 		// GET the HO accounts
 		//
-		List<Portal_application_right__c> related = [Select id, 
+		List<Portal_application_right__c> related = [Select id,
 															ANG_Portal_Service_Role__c,
 															contact__r.account.Top_Parent__c,
 															contact__r.accountId,
 															contact__c
-													   From Portal_application_right__c
-													  where contact__r.accountId in :accounts
-													    and Portal_application_right__c.right__c = 'Access Granted'
-													    and contact__c not in : contacts];
+														 From Portal_application_right__c
+														where contact__r.accountId in :accounts
+															and Portal_application_right__c.right__c = 'Access Granted'
+															and contact__c not in : contacts];
 
 		System.debug('related--->' + related);
 
@@ -102,10 +102,10 @@ public class ANG_PortalApplicationRightHelper {
 			Id accountPivotId;
 			if(access.contact__r.account.Top_Parent__c != null) {
 				accountPivotId = access.contact__r.account.Top_Parent__c;
-			} else { 
-				accountPivotId = access.contact__r.accountId;				
+			} else {
+				accountPivotId = access.contact__r.accountId;
 			}
-			
+
 			if(!parTopAccount.containsKey(accountPivotId)) {
 				parTopAccount.put(accountPivotId, new List<String>());
 				parAccount.put(access.id, accountPivotId);
@@ -119,16 +119,16 @@ public class ANG_PortalApplicationRightHelper {
 		System.debug('accounts--->' + accounts);
 
 		//
-		// GET the BR accounts 
+		// GET the BR accounts
 		//
-		List<Portal_application_right__c> related2 = [Select id, 
+		List<Portal_application_right__c> related2 = [Select id,
 															 ANG_Portal_Service_Role__c,
 															 contact__r.account.Top_Parent__c,
 															 contact__r.accountId
-													    From Portal_application_right__c
-													   where contact__r.account.Top_Parent__c in :accounts
-													     and Portal_application_right__c.right__c = 'Access Granted'
-													     and contact__c not in : contacts];		
+															From Portal_application_right__c
+														 where contact__r.account.Top_Parent__c in :accounts
+															 and Portal_application_right__c.right__c = 'Access Granted'
+															 and contact__c not in : contacts];
 
 		System.debug('related2--->' + related2);
 
@@ -136,8 +136,8 @@ public class ANG_PortalApplicationRightHelper {
 			Id accountPivotId;
 			if(access.contact__r.account.Top_Parent__c != null) {
 				accountPivotId = access.contact__r.account.Top_Parent__c;
-			} else { 
-				accountPivotId = access.contact__r.accountId;				
+			} else {
+				accountPivotId = access.contact__r.accountId;
 			}
 
 			if(!parTopAccount.containsKey(accountPivotId)) {
@@ -161,7 +161,7 @@ public class ANG_PortalApplicationRightHelper {
 			Id accountPivotId;
 			if(access.contact__r.account.Top_Parent__c != null) {
 				accountPivotId = access.contact__r.account.Top_Parent__c;
-			} else { 
+			} else {
 				accountPivotId = access.contact__r.accountId;
 			}
 
@@ -213,7 +213,7 @@ public class ANG_PortalApplicationRightHelper {
 					System.debug('Found error---->' + access);
 					errorList.add(access);
 				} else {
-					System.debug('Ok');					
+					System.debug('Ok');
 					r.sub();
 				}
 			}

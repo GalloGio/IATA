@@ -1,303 +1,303 @@
 @isTest
 private class AMS_AlignOwnersInHierarchyTest {
-    
-    @testSetup static void setup(){
-    
-        Date myDate1 = Date.newInstance(2016, 2, 17);
 
-        Id ownerRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
+	@testSetup static void setup(){
 
-        ID rtAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+		Date myDate1 = Date.newInstance(2016, 2, 17);
 
-        IATA_ISO_Country__c portugal = new IATA_ISO_Country__c(Name='Portugal', ISO_Code__c='IT', Region__c='Europe', ISS_Office_Location__c='Portugal');
-        insert portugal;
+		Id ownerRecTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
 
-        // create test account1
-        Account account1 = new Account(
-                                Name = 'Test account 1',
-                                IATACode__c = '1234567',
-                                Type = 'IATA Travel Agent',
-                                Sector__c = AMS_Utils.SECTOR_PASSENGER,
-                                Category__c = AMS_Utils.CATEGORY_TOUR_OPERATOR,
-                                BillingCity = 'Lisboa',
-                                BillingCountry = 'Portugal',
-                                BillingStreet = 'some street',
-                                Location_Type__c = 'HO',
-                                Accreditation_date__c = myDate1,
-                                recordTypeId = rtAgency,
-                                IATA_ISO_Country__c = portugal.Id,
-                                Location_Class__c = 'P',
-                                Purge_Flag__c = false
+		ID rtAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+
+		IATA_ISO_Country__c portugal = new IATA_ISO_Country__c(Name='Portugal', ISO_Code__c='IT', Region__c='Europe', ISS_Office_Location__c='Portugal');
+		insert portugal;
+
+		// create test account1
+		Account account1 = new Account(
+								Name = 'Test account 1',
+								IATACode__c = '1234567',
+								Type = 'IATA Travel Agent',
+								Sector__c = AMS_Utils.SECTOR_PASSENGER,
+								Category__c = AMS_Utils.CATEGORY_TOUR_OPERATOR,
+								BillingCity = 'Lisboa',
+								BillingCountry = 'Portugal',
+								BillingStreet = 'some street',
+								Location_Type__c = 'HO',
+								Accreditation_date__c = myDate1,
+								recordTypeId = rtAgency,
+								IATA_ISO_Country__c = portugal.Id,
+								Location_Class__c = 'P',
+								Purge_Flag__c = false
 		);
-        insert account1;
+		insert account1;
 
-        AMS_Agencies_Hierarchy__c h1 = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'H1');
-        insert h1;
-        AMS_Agencies_Hierarchy__c h2 = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'H2');
-        insert h2;
+		AMS_Agencies_Hierarchy__c h1 = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'H1');
+		insert h1;
+		AMS_Agencies_Hierarchy__c h2 = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c = 'H2');
+		insert h2;
 
-        // create test account2
-        Account account2 = new Account(
-                                Name = 'Test account 2',
-                                IATACode__c = '1234789',
-                                Type = 'IATA Travel Agent',
-                                Sector__c = AMS_Utils.SECTOR_PASSENGER,
-                                Category__c = AMS_Utils.CATEGORY_TOUR_OPERATOR,
-                                BillingCity = 'Lisboa',
-                                BillingCountry = 'Portugal',
-                                BillingStreet = 'some street',
-                                Location_Type__c = 'HO',
-                                Accreditation_date__c = myDate1,
-                                recordTypeId = rtAgency,
-                                IATA_ISO_Country__c = portugal.Id,
-                                Location_Class__c = 'P',
-                                Purge_Flag__c = false
+		// create test account2
+		Account account2 = new Account(
+								Name = 'Test account 2',
+								IATACode__c = '1234789',
+								Type = 'IATA Travel Agent',
+								Sector__c = AMS_Utils.SECTOR_PASSENGER,
+								Category__c = AMS_Utils.CATEGORY_TOUR_OPERATOR,
+								BillingCity = 'Lisboa',
+								BillingCountry = 'Portugal',
+								BillingStreet = 'some street',
+								Location_Type__c = 'HO',
+								Accreditation_date__c = myDate1,
+								recordTypeId = rtAgency,
+								IATA_ISO_Country__c = portugal.Id,
+								Location_Class__c = 'P',
+								Purge_Flag__c = false
 		);
-        insert account2;
+		insert account2;
 
-        // create test account3
-        Account account3 = new Account(
-                                Name = 'Test account 3',
-                                IATACode__c = '12347890',
-                                Type = 'IATA Travel Agent',
-                                Sector__c = AMS_Utils.SECTOR_PASSENGER,
-                                Category__c = AMS_Utils.CATEGORY_TOUR_OPERATOR,
-                                BillingCity = 'Lisboa',
-                                BillingCountry = 'Portugal',
-                                BillingStreet = 'some street',
-                                Location_Type__c = 'HO',
-                                Accreditation_date__c = myDate1,
-                                recordTypeId = rtAgency,
-                                IATA_ISO_Country__c = portugal.Id,
-                                Location_Class__c = 'P',
-                                Purge_Flag__c = false
+		// create test account3
+		Account account3 = new Account(
+								Name = 'Test account 3',
+								IATACode__c = '12347890',
+								Type = 'IATA Travel Agent',
+								Sector__c = AMS_Utils.SECTOR_PASSENGER,
+								Category__c = AMS_Utils.CATEGORY_TOUR_OPERATOR,
+								BillingCity = 'Lisboa',
+								BillingCountry = 'Portugal',
+								BillingStreet = 'some street',
+								Location_Type__c = 'HO',
+								Accreditation_date__c = myDate1,
+								recordTypeId = rtAgency,
+								IATA_ISO_Country__c = portugal.Id,
+								Location_Class__c = 'P',
+								Purge_Flag__c = false
 		);
-        insert account3;
+		insert account3;
 
-        List<Account> brAccounts = new List<Account>();
+		List<Account> brAccounts = new List<Account>();
 
-        //List<AMS_Agencies_relationhip__c> relations = new List<AMS_Agencies_relationhip__c>();
+		//List<AMS_Agencies_relationhip__c> relations = new List<AMS_Agencies_relationhip__c>();
 
-        for(integer i=0 ; i < 4 ; i++){
+		for(integer i=0 ; i < 4 ; i++){
 
-            Account acct = new Account(
-                                Name = 'Test account 2',
-                                IATACode__c = '123478'+i,
-                                Type = 'IATA Travel Agent',
-                				Sector__c = AMS_Utils.SECTOR_PASSENGER,
-                                Category__c = AMS_Utils.CATEGORY_TOUR_OPERATOR,
-                                BillingCity = 'Lisboa',
-                                BillingCountry = 'Portugal',
-                                BillingStreet = 'some street',
-                                Location_Type__c = 'BR',
-                                ParentId = account1.Id,
-                                Accreditation_date__c = myDate1,
-                                RecordTypeId = rtAgency,
-                                IATA_ISO_Country__c = portugal.Id,
-                                Location_Class__c = 'P',
-                                Purge_Flag__c = false
+			Account acct = new Account(
+								Name = 'Test account 2',
+								IATACode__c = '123478'+i,
+								Type = 'IATA Travel Agent',
+								Sector__c = AMS_Utils.SECTOR_PASSENGER,
+								Category__c = AMS_Utils.CATEGORY_TOUR_OPERATOR,
+								BillingCity = 'Lisboa',
+								BillingCountry = 'Portugal',
+								BillingStreet = 'some street',
+								Location_Type__c = 'BR',
+								ParentId = account1.Id,
+								Accreditation_date__c = myDate1,
+								RecordTypeId = rtAgency,
+								IATA_ISO_Country__c = portugal.Id,
+								Location_Class__c = 'P',
+								Purge_Flag__c = false
 			);
 
 
-            brAccounts.add(acct);
-        }
+			brAccounts.add(acct);
+		}
 
-        for(integer i=0 ; i < 4 ; i++){
+		for(integer i=0 ; i < 4 ; i++){
 
-            Account acct = new Account(
-                                Name = 'Test account 2',
-                                IATACode__c = '12347'+i+i,
-                                Type = 'IATA Travel Agent',
-                				Sector__c = AMS_Utils.SECTOR_PASSENGER,
-                                Category__c = AMS_Utils.CATEGORY_TOUR_OPERATOR,
-                                BillingCity = 'Lisboa',
-                                BillingCountry = 'Portugal',
-                                BillingStreet = 'some street',
-                                Location_Type__c = 'BR',
-                                ParentId = account2.Id,
-                                Accreditation_date__c = myDate1,
-                                RecordTypeId = rtAgency,
-                                IATA_ISO_Country__c = portugal.Id,
-                                Location_Class__c = 'P',
-                                Purge_Flag__c = false
+			Account acct = new Account(
+								Name = 'Test account 2',
+								IATACode__c = '12347'+i+i,
+								Type = 'IATA Travel Agent',
+								Sector__c = AMS_Utils.SECTOR_PASSENGER,
+								Category__c = AMS_Utils.CATEGORY_TOUR_OPERATOR,
+								BillingCity = 'Lisboa',
+								BillingCountry = 'Portugal',
+								BillingStreet = 'some street',
+								Location_Type__c = 'BR',
+								ParentId = account2.Id,
+								Accreditation_date__c = myDate1,
+								RecordTypeId = rtAgency,
+								IATA_ISO_Country__c = portugal.Id,
+								Location_Class__c = 'P',
+								Purge_Flag__c = false
 			);
-            brAccounts.add(acct);
-        }
+			brAccounts.add(acct);
+		}
 
 
-        system.debug('Will insert this accounts:' +brAccounts);
+		system.debug('Will insert this accounts:' +brAccounts);
 
-        insert brAccounts;
+		insert brAccounts;
 
-        List<AMS_Agencies_relationhip__c> rels = new List<AMS_Agencies_relationhip__c>();
+		List<AMS_Agencies_relationhip__c> rels = new List<AMS_Agencies_relationhip__c>();
 
-        for(Account acct: brAccounts){
-            
-            AMS_Agencies_relationhip__c rel;
+		for(Account acct: brAccounts){
 
-            if(acct.ParentId == account1.Id)
-                rel = new AMS_Agencies_relationhip__c(Hierarchy__c = h1.Id, Parent_Account__c = account1.Id , Child_account__c = acct.Id);
-            else
-                rel = new AMS_Agencies_relationhip__c(Hierarchy__c = h2.Id, Parent_Account__c = account2.Id , Child_account__c = acct.Id);
+			AMS_Agencies_relationhip__c rel;
 
-                rels.add(rel);
-        }
+			if(acct.ParentId == account1.Id)
+				rel = new AMS_Agencies_relationhip__c(Hierarchy__c = h1.Id, Parent_Account__c = account1.Id , Child_account__c = acct.Id);
+			else
+				rel = new AMS_Agencies_relationhip__c(Hierarchy__c = h2.Id, Parent_Account__c = account2.Id , Child_account__c = acct.Id);
 
-        insert rels;
+				rels.add(rel);
+		}
 
-        List<AMS_Account_Role__c> rolesToInsert = new List<AMS_Account_Role__c>();
+		insert rels;
 
-        for(integer i=0 ; i < 4 ; i++){
+		List<AMS_Account_Role__c> rolesToInsert = new List<AMS_Account_Role__c>();
 
-            AMS_Account_Role__c acctRole = new AMS_Account_Role__c();
-            acctRole.RecordTypeId = ownerRecTypeId;
-            acctRole.Account__c = account1.Id;
-            acctRole.Legacy_External_ID__c = '12345678'+i;
-            acctRole.Owner_Name__c = 'NAME 12345678'+i;         
-            acctRole.Legacy_System__c = 'AIMS2';
-            acctRole.Percentage__c = 25;
-            rolesToInsert.add(acctRole);
-        
-        }
+		for(integer i=0 ; i < 4 ; i++){
 
-        for(integer i=0 ; i < 4 ; i++){
+			AMS_Account_Role__c acctRole = new AMS_Account_Role__c();
+			acctRole.RecordTypeId = ownerRecTypeId;
+			acctRole.Account__c = account1.Id;
+			acctRole.Legacy_External_ID__c = '12345678'+i;
+			acctRole.Owner_Name__c = 'NAME 12345678'+i;
+			acctRole.Legacy_System__c = 'AIMS2';
+			acctRole.Percentage__c = 25;
+			rolesToInsert.add(acctRole);
 
-            AMS_Account_Role__c acctRole = new AMS_Account_Role__c();
-            acctRole.RecordTypeId = ownerRecTypeId;
-            acctRole.Account__c = account2.Id;
-            acctRole.Owner_Name__c = 'NAME 1234567'+i+i;
-            acctRole.Legacy_External_ID__c = '1234567'+i+i;
-            acctRole.Legacy_System__c = 'AIMS2';
-            acctRole.Percentage__c = 25;
-            rolesToInsert.add(acctRole);
-        }
+		}
 
-        integer i = 0;
+		for(integer i=0 ; i < 4 ; i++){
 
-        for(Account acct : brAccounts){
+			AMS_Account_Role__c acctRole = new AMS_Account_Role__c();
+			acctRole.RecordTypeId = ownerRecTypeId;
+			acctRole.Account__c = account2.Id;
+			acctRole.Owner_Name__c = 'NAME 1234567'+i+i;
+			acctRole.Legacy_External_ID__c = '1234567'+i+i;
+			acctRole.Legacy_System__c = 'AIMS2';
+			acctRole.Percentage__c = 25;
+			rolesToInsert.add(acctRole);
+		}
 
-            i++;
-            AMS_Account_Role__c acctRole = new AMS_Account_Role__c();
-            acctRole.RecordTypeId = ownerRecTypeId;
-            acctRole.Account__c = acct.Id;
-            acctRole.Owner_Name__c = 'NAME 1234567'+i+i;
-            acctRole.Legacy_External_ID__c = '1234567'+i+i;
-            acctRole.Legacy_System__c = 'AIMS2';
-            acctRole.Percentage__c = 100;
-            rolesToInsert.add(acctRole);
+		integer i = 0;
 
-        }
+		for(Account acct : brAccounts){
 
-        insert rolesToInsert;
+			i++;
+			AMS_Account_Role__c acctRole = new AMS_Account_Role__c();
+			acctRole.RecordTypeId = ownerRecTypeId;
+			acctRole.Account__c = acct.Id;
+			acctRole.Owner_Name__c = 'NAME 1234567'+i+i;
+			acctRole.Legacy_External_ID__c = '1234567'+i+i;
+			acctRole.Legacy_System__c = 'AIMS2';
+			acctRole.Percentage__c = 100;
+			rolesToInsert.add(acctRole);
 
-        System.assertEquals(16,rolesToInsert.size());
-    }
+		}
 
-    @isTest static void test_method_one() {
+		insert rolesToInsert;
 
-        List<Account> acctsHO = [SELECT Id , Location_Type__c, ParentId from Account where Location_Type__c = 'HO'];
+		System.assertEquals(16,rolesToInsert.size());
+	}
 
-        Set<Id> accountsHoSet = new Set<Id>();
+	@isTest static void test_method_one() {
 
-        for(Account acct: acctsHO)
-            accountsHoSet.add(acct.Id);
+		List<Account> acctsHO = [SELECT Id , Location_Type__c, ParentId from Account where Location_Type__c = 'HO'];
 
-        AMS_OSCAR__C oscar = new AMS_OSCAR__C(Account__c = acctsHO.get(0).Id);
-        insert oscar;
+		Set<Id> accountsHoSet = new Set<Id>();
 
-        AMS_OSCAR__C oscar2 = new AMS_OSCAR__C(Account__c = acctsHO.get(1).Id);
-        insert oscar2;
+		for(Account acct: acctsHO)
+			accountsHoSet.add(acct.Id);
 
-        List<Account> acctsChilds1 = [SELECT Id from Account where ParentId = :acctsHO.get(0).Id];
+		AMS_OSCAR__C oscar = new AMS_OSCAR__C(Account__c = acctsHO.get(0).Id);
+		insert oscar;
 
-        Set<Id> acctsChilds1Set = new Set<Id>();
+		AMS_OSCAR__C oscar2 = new AMS_OSCAR__C(Account__c = acctsHO.get(1).Id);
+		insert oscar2;
 
-        for(Account acct: acctsChilds1)
-            acctsChilds1Set.add(acct.Id);
+		List<Account> acctsChilds1 = [SELECT Id from Account where ParentId = :acctsHO.get(0).Id];
 
-        acctsChilds1Set.add(acctsHO.get(0).Id);
+		Set<Id> acctsChilds1Set = new Set<Id>();
 
-        List<AMS_Account_Role__c> rolesTest1 = [SELECT Id from AMS_Account_Role__c where Account__C in:acctsChilds1 and active__c = true];
+		for(Account acct: acctsChilds1)
+			acctsChilds1Set.add(acct.Id);
 
-        System.assertEquals(4,rolesTest1.size());
+		acctsChilds1Set.add(acctsHO.get(0).Id);
 
+		List<AMS_Account_Role__c> rolesTest1 = [SELECT Id from AMS_Account_Role__c where Account__C in:acctsChilds1 and active__c = true];
 
-        List<Account> acctsChilds2 = [SELECT Id from Account where ParentId = :acctsHO.get(1).Id];
+		System.assertEquals(4,rolesTest1.size());
 
-        Set<Id> acctsChilds1Set2 = new Set<Id>();
 
-        List<AMS_Account_Role__c> rolesTest2 = [SELECT Id from AMS_Account_Role__c where Account__C in:acctsChilds2 and active__c = true];
+		List<Account> acctsChilds2 = [SELECT Id from Account where ParentId = :acctsHO.get(1).Id];
 
-        System.assertEquals(4,rolesTest2.size());
+		Set<Id> acctsChilds1Set2 = new Set<Id>();
 
-        for(Account acct: acctsChilds2)
-            acctsChilds1Set2.add(acct.Id);
+		List<AMS_Account_Role__c> rolesTest2 = [SELECT Id from AMS_Account_Role__c where Account__C in:acctsChilds2 and active__c = true];
 
-        acctsChilds1Set2.add(acctsHO.get(1).Id);
+		System.assertEquals(4,rolesTest2.size());
 
-        Map<Id, Set<Id>> oscarAccounts = new  Map<Id, Set<Id>>();
+		for(Account acct: acctsChilds2)
+			acctsChilds1Set2.add(acct.Id);
 
-        oscarAccounts.put(oscar.Id, acctsChilds1Set);
+		acctsChilds1Set2.add(acctsHO.get(1).Id);
 
+		Map<Id, Set<Id>> oscarAccounts = new  Map<Id, Set<Id>>();
 
-        System.assertEquals(false,AMS_HierarchyHelper.checkHierarchyIntegrity(oscarAccounts));
+		oscarAccounts.put(oscar.Id, acctsChilds1Set);
 
-        oscarAccounts = new  Map<Id, Set<Id>>();
-        oscarAccounts.put(oscar2.Id, acctsChilds1Set2);
 
-        System.assertEquals(false,AMS_HierarchyHelper.checkHierarchyIntegrity(oscarAccounts));
+		System.assertEquals(false,AMS_HierarchyHelper.checkHierarchyIntegrity(oscarAccounts));
 
-        Test.startTest();
+		oscarAccounts = new  Map<Id, Set<Id>>();
+		oscarAccounts.put(oscar2.Id, acctsChilds1Set2);
 
-        AMS_AlignOwnersInHierarchy auxOwners = new AMS_AlignOwnersInHierarchy();
+		System.assertEquals(false,AMS_HierarchyHelper.checkHierarchyIntegrity(oscarAccounts));
 
-        auxOwners.parentAccountId = acctsHO.get(0).Id;
+		Test.startTest();
 
-        auxOwners.alignOwnersInHierarchyByAccountId();
+		AMS_AlignOwnersInHierarchy auxOwners = new AMS_AlignOwnersInHierarchy();
 
-        auxOwners.checkBatchStatus();
+		auxOwners.parentAccountId = acctsHO.get(0).Id;
 
-        Test.stopTest();
+		auxOwners.alignOwnersInHierarchyByAccountId();
 
-        auxOwners.checkBatchStatus();
+		auxOwners.checkBatchStatus();
 
-        List<AMS_Account_role__c> rolesFromAllAccounts = [Select Id from AMS_Account_role__c]; // should be 10 ...
+		Test.stopTest();
 
-        // 4 for each HO (8) and 4 for each of the accounts BR's (4*4*2)
+		auxOwners.checkBatchStatus();
 
-        System.assertEquals(28,rolesFromAllAccounts.size());
+		List<AMS_Account_role__c> rolesFromAllAccounts = [Select Id from AMS_Account_role__c]; // should be 10 ...
 
-        oscarAccounts = new  Map<Id, Set<Id>>();
-        oscarAccounts.put(oscar.Id, acctsChilds1Set);
+		// 4 for each HO (8) and 4 for each of the accounts BR's (4*4*2)
 
+		System.assertEquals(28,rolesFromAllAccounts.size());
 
-        System.assertEquals(true,AMS_HierarchyHelper.checkHierarchyIntegrity(oscarAccounts));
+		oscarAccounts = new  Map<Id, Set<Id>>();
+		oscarAccounts.put(oscar.Id, acctsChilds1Set);
 
-        oscarAccounts = new  Map<Id, Set<Id>>();
-        oscarAccounts.put(oscar2.Id, acctsChilds1Set2);
 
-        System.assertEquals(false,AMS_HierarchyHelper.checkHierarchyIntegrity(oscarAccounts));
+		System.assertEquals(true,AMS_HierarchyHelper.checkHierarchyIntegrity(oscarAccounts));
 
-    }
+		oscarAccounts = new  Map<Id, Set<Id>>();
+		oscarAccounts.put(oscar2.Id, acctsChilds1Set2);
 
-    @isTest static void test_method_three() {
+		System.assertEquals(false,AMS_HierarchyHelper.checkHierarchyIntegrity(oscarAccounts));
 
-        Test.startTest();
+	}
 
-        AMS_AlignOwnersInHierarchy auxOwners = new AMS_AlignOwnersInHierarchy();
+	@isTest static void test_method_three() {
 
-        Account acc = [Select Id from Account Where IATACode__c = '1234567' Limit 1];
+		Test.startTest();
 
-        auxOwners.parentAccountId = acc.Id;
+		AMS_AlignOwnersInHierarchy auxOwners = new AMS_AlignOwnersInHierarchy();
 
-        auxOwners.alignOwnersInHierarchyByAccountId();
+		Account acc = [Select Id from Account Where IATACode__c = '1234567' Limit 1];
 
-        Test.stopTest();
+		auxOwners.parentAccountId = acc.Id;
 
-        List<AMS_Account_role__c> rolesFromAllAccounts = [Select Id from AMS_Account_role__c];
+		auxOwners.alignOwnersInHierarchyByAccountId();
 
-        // 4 for each HO (8) and 4 for each of the accounts BR's (4*4*2)
+		Test.stopTest();
 
-        System.assertEquals(28,rolesFromAllAccounts.size());
-    }  
+		List<AMS_Account_role__c> rolesFromAllAccounts = [Select Id from AMS_Account_role__c];
+
+		// 4 for each HO (8) and 4 for each of the accounts BR's (4*4*2)
+
+		System.assertEquals(28,rolesFromAllAccounts.size());
+	}
 }

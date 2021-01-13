@@ -1,5 +1,5 @@
 public class PriceTableAddErrorForDuplicates extends TriggerAction {
-	
+
 	/**
 	 * Method that checks if the relevant fields for this action were changed
 	 * @param s the affected record
@@ -13,7 +13,7 @@ public class PriceTableAddErrorForDuplicates extends TriggerAction {
 
 			Map<Id, Price_Table__c> oldMap = (Map<Id, Price_Table__c>) Trigger.oldMap;
 
-			if(ptRecord.ISO_Country__c == oldMap.get(ptRecord.Id).ISO_Country__c 
+			if(ptRecord.ISO_Country__c == oldMap.get(ptRecord.Id).ISO_Country__c
 				&& ptRecord.Type_Class_of_Agent__c == oldMap.get(ptRecord.Id).Type_Class_of_Agent__c) return false;
 		}
 

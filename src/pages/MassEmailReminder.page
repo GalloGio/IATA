@@ -201,7 +201,7 @@
                 <apex:commandButton value="Send Tracked Emails"  onclick="validateFA('tracked');"   rerender="results, errors" rendered="{!$Permission.Can_send_a_tracked_email}"/>                
             </apex:pageBlockButtons> 
         
-         <apex:PageBlock >
+         <apex:PageBlock>
                 <input type="hidden" id="hiddenCountry" value="{!batchCountry}" />
      </apex:PageBlock> 
         

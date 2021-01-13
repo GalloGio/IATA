@@ -1,6 +1,6 @@
-global class ams2gdp_Scheduler implements Schedulable 
+global class ams2gdp_Scheduler implements Schedulable
 {
-	global void execute(SchedulableContext sc) 
+	global void execute(SchedulableContext sc)
 	{
 		Boolean isActiveAMS2GDPSync = AMS_2_GDP_Settings__c.getOrgDefaults().Activate_Sync__c;
 		Integer schedule_periode = Integer.valueOf(AMS_2_GDP_Settings__c.getOrgDefaults().Schedule_Period__c);

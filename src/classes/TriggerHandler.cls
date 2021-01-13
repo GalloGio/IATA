@@ -18,7 +18,7 @@ public abstract class TriggerHandler {
 		delegator = TriggerDelegation.register(handlerName);
 
 		runTrigger(Trigger.operationType);
-		
+
 		uw.commitWork();
 		if(Trigger.isAfter) delegator.enqueue(handlerName);
 	}
@@ -36,13 +36,13 @@ public abstract class TriggerHandler {
 	private List<TriggerAction> getActions(System.TriggerOperation op){
 		List<Type> actions;
 		switch on op {
-		    when BEFORE_INSERT{ actions = getBeforeInsertActions(); }
-		    when BEFORE_UPDATE{ actions = getBeforeUpdateActions(); }
-		    when BEFORE_DELETE{ actions = getBeforeDeleteActions(); }
-		    when AFTER_INSERT{ actions = getAfterInsertActions(); }
-		    when AFTER_UPDATE{ actions = getAfterUpdateActions(); }
-		    when AFTER_DELETE{ actions = getAfterDeleteActions(); }
-		    when AFTER_UNDELETE{ actions = getAfterUndeleteActions(); }
+			when BEFORE_INSERT{ actions = getBeforeInsertActions(); }
+			when BEFORE_UPDATE{ actions = getBeforeUpdateActions(); }
+			when BEFORE_DELETE{ actions = getBeforeDeleteActions(); }
+			when AFTER_INSERT{ actions = getAfterInsertActions(); }
+			when AFTER_UPDATE{ actions = getAfterUpdateActions(); }
+			when AFTER_DELETE{ actions = getAfterDeleteActions(); }
+			when AFTER_UNDELETE{ actions = getAfterUndeleteActions(); }
 		}
 		return convertToActions(actions);
 	}

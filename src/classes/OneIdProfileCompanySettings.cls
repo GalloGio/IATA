@@ -2,7 +2,7 @@
 
 public without sharing class OneIdProfileCompanySettings {
 	public OneIdProfileCompanySettings() {
-		
+
 	}
 
 	@AuraEnabled
@@ -19,8 +19,8 @@ public without sharing class OneIdProfileCompanySettings {
 	public static Contact getUserContact(){
 		User user = DAL_ISSP.getUser(Userinfo.getUserId());
 		Contact con = DAL_ISSP.getContact(user.ContactId);
-       system.debug('aquiiiiiiiiiii' + user);
-        system.debug('aquiiiii2' + con);
+			 system.debug('aquiiiiiiiiiii' + user);
+				system.debug('aquiiiii2' + con);
 		return con;
 	}
 

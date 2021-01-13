@@ -42,17 +42,17 @@ public class ZProduct_Sel extends Selector
 
 	public String getProductQueryString(Set<String> zuoraIds)
 	{
-		List<String> whereItems = new List<String>(); 
+		List<String> whereItems = new List<String>();
 		for(String i: zuoraIds)
 			whereItems.add('Id = \'' + i + '\'');
-		
+
 		String zoql = 'SELECT Id, SAPProductMaterialNo__c FROM Product WHERE ' + String.join(whereItems, ' OR ');
-    	return zoql;
+		return zoql;
 	}
 
 	/****************************************************************************************************
-	    Created by CGI, David D 2015-09-22
-	        Method return Map of ratePlanId with corresponding ZProduct
+		Created by CGI, David D 2015-09-22
+			Method return Map of ratePlanId with corresponding ZProduct
 	****************************************************************************************************/
 	public Map<Id, zqu__ZProduct__c> getProductByPlan(List<zqu__ProductRatePlan__c> zRatePlans)
 	{
@@ -69,8 +69,8 @@ public class ZProduct_Sel extends Selector
 		Map<Id, zqu__ZProduct__c> productById = new Map<Id, zqu__ZProduct__c>((List<zqu__ZProduct__c>) selectSObjectById(zProductIds));
 
 		for(Id planId : productIdByPlanId.keySet())
-		{	
-			Id productId = productIdByPlanId.get(planId); 
+		{
+			Id productId = productIdByPlanId.get(planId);
 
 			if(productById.containsKey(productId))
 			{
@@ -83,18 +83,18 @@ public class ZProduct_Sel extends Selector
 	}
 
 	/****************************************************************************************************
-	    Created by CGI, David D 2015-09-22
-	        Method return Map of ratePlanId with corresponding Product
+		Created by CGI, David D 2015-09-22
+			Method return Map of ratePlanId with corresponding Product
 	****************************************************************************************************/
 	public Map<Id, Id> getProductIdByPlan(List<zqu__ProductRatePlan__c> zRatePlans)
 	{
 		Map<Id, Id> productIdByPlanId = new Map<Id, Id>(); //RATE_PLAN_ID => ZPRODUCT_ID
-		
+
 		for(zqu__ProductRatePlan__c zRatePlan : zRatePlans)
 		{
 			productIdByPlanId.put(zRatePlan.Id, zRatePlan.zqu__Product__c);
 		}
-		
+
 		return productIdByPlanId;
 	}
 }

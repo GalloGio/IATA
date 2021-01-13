@@ -1158,7 +1158,7 @@
 											<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
 										</apex:column>
 										<apex:column headerClass="info" headerValue="{!$Label.ISSP_AMS_Step2_Check_List + ' '} {!country} {!' - ' + $Label.ISSP_AMS_NoC_Request_for_Change}">
-											<apex:outputText >
+											<apex:outputText>
 												<strong>{!req.Name}</strong><br/>
 												<apex:outputField value="{!req.Requirement_text__c}"/>
 											</apex:outputText>

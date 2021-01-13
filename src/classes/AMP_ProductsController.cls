@@ -18,7 +18,7 @@ public with sharing class AMP_ProductsController {
 		for(Account_Service__c a : lsServices) {
 			ServiceWrapper sw = new ServiceWrapper();
 			sw.service = a;
-			
+
 			Integer rowspan = 1;
 			for(Account_Service__c b : lsServices) {
 				if(a.Id != b.Id) {
@@ -34,7 +34,7 @@ public with sharing class AMP_ProductsController {
 			lsServiceWrappers.add(sw);
 			index++;
 		}
-		
+
 		// Fill Industry Activities list
 		List<Account_Service__c> lsIndustryActivities = getIndustryActivities(acc.Id);
 		lsIndustryActivitiesWrappers = new List<ServiceWrapper>();
@@ -42,7 +42,7 @@ public with sharing class AMP_ProductsController {
 		for(Account_Service__c a : lsIndustryActivities) {
 			ServiceWrapper sw = new ServiceWrapper();
 			sw.service = a;
-			
+
 			Integer rowspan = 1;
 			for(Account_Service__c b : lsIndustryActivities) {
 				if(a.Id != b.Id) {

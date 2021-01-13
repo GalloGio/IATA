@@ -188,7 +188,7 @@ public class PortalIftpUtilsTest {
 		Database.SaveResult sr1 = EventBus.publish(are);
 		Database.SaveResult sr2 = EventBus.publish(acre);
 
-		String RECTYPE_Track_Response = RecordTypeSingleton.getInstance().getRecordTypeId('Integration_Log__c', 'Track_Response');
+		 String RECTYPE_Track_Response = RecordTypeSingleton.getInstance().getRecordTypeId('Integration_Log__c', 'Track_Response');
 		Integration_Log__c il1 = new Integration_Log__c();
 		il1 = IntegrationLogUtils.createAccountContactRoleIntegrationLog(null, RECTYPE_Track_Response, null);
 		IntegrationLogUtils.insertIntoIntegrationLog(il1);
@@ -309,3 +309,4 @@ public class PortalIftpUtilsTest {
 	}
 
 }
+

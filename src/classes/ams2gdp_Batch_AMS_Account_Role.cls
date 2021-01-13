@@ -27,9 +27,9 @@ global class ams2gdp_Batch_AMS_Account_Role implements Database.Batchable<sObjec
 		String fields = ' Id,Account__c ';
 
 		List<String> conditions = new List<String> {'Account__r.RecordTypeId= \'' + RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') + '\''
-		    ,'Active__c = true'
-            ,'RecordType.Name = \'Ownership\''}; 
-        conditions.addAll(ams2gdp_BusinessLogic.queryClauseAccountAndRelated(batchName));
+				,'Active__c = true'
+						,'RecordType.Name = \'Ownership\''};
+				conditions.addAll(ams2gdp_BusinessLogic.queryClauseAccountAndRelated(batchName));
 
 
 		if (extraIds != null && extraIds.size() > 0) {
@@ -60,7 +60,7 @@ global class ams2gdp_Batch_AMS_Account_Role implements Database.Batchable<sObjec
 			if (batchInfo != null) {
 				//Run only on the deltas
 				String deltaConditions = String.format('LastModifiedDate >= {0}'
-				                                       , new List<String> {batchInfo.Last_Sync_Start_Date__c.addDays(-2).format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'', 'GMT')});
+																							 , new List<String> {batchInfo.Last_Sync_Start_Date__c.addDays(-2).format('yyyy-MM-dd\'T\'hh:mm:ss\'Z\'', 'GMT')});
 
 				if (String.isNotBlank(batchInfo.Failed_Records__c)) {
 					// Reprocess failed records
@@ -78,11 +78,11 @@ global class ams2gdp_Batch_AMS_Account_Role implements Database.Batchable<sObjec
 		}
 
 		query = String.format('SELECT {0} '
-		                      +	'FROM AMS_Account_Role__c '
-		                      + 	'WHERE {1} '
-		                      +	'ORDER BY Account__c ASC, Percentage__c DESC',
-		                      new List<String> {fields, String.join(conditions, ' AND ')}
-		                     );
+													+	'FROM AMS_Account_Role__c '
+													+ 	'WHERE {1} '
+													+	'ORDER BY Account__c ASC, Percentage__c DESC',
+													new List<String> {fields, String.join(conditions, ' AND ')}
+												 );
 	}
 
 	global ams2gdp_Batch_AMS_Account_Role() {
@@ -109,40 +109,40 @@ global class ams2gdp_Batch_AMS_Account_Role implements Database.Batchable<sObjec
 
 	global void execute(Database.BatchableContext BC, List<AMS_Account_Role__c> scope) {
 
-   		//-- Total records to be processed
-   		totalRecords += scope.size();
+	 		//-- Total records to be processed
+	 		totalRecords += scope.size();
 
-   		// Process Errors 
+	 		// Process Errors
 		List<ams2gdp_Error> errors = new List<ams2gdp_Error>();
 
-   		List<Agency_Owner__c> records2Save = new List<Agency_Owner__c>();
-   		List<Agency_Owner__c> records2Delete = new List<Agency_Owner__c>();
+	 		List<Agency_Owner__c> records2Save = new List<Agency_Owner__c>();
+	 		List<Agency_Owner__c> records2Delete = new List<Agency_Owner__c>();
 
 
-        // delete the old ones
-   		Map<String,List<Agency_Owner__c>> CRUD_map = ams2gdp_BusinessLogic.getAgencyOwnersToDelete(scope);
+				// delete the old ones
+	 		Map<String,List<Agency_Owner__c>> CRUD_map = ams2gdp_BusinessLogic.getAgencyOwnersToDelete(scope);
 
-   		if (CRUD_map.ContainsKey('D')) records2Delete = CRUD_map.get('D');
-   		if (CRUD_map.ContainsKey('S')) records2Save= CRUD_map.get('S');
-   		//records2Save=ams2gdp_BusinessLogic.formatAccountRole2AgencyOwner(scope);
+	 		if (CRUD_map.ContainsKey('D')) records2Delete = CRUD_map.get('D');
+	 		if (CRUD_map.ContainsKey('S')) records2Save= CRUD_map.get('S');
+	 		//records2Save=ams2gdp_BusinessLogic.formatAccountRole2AgencyOwner(scope);
 
-        Savepoint sp = Database.setSavepoint();
+				Savepoint sp = Database.setSavepoint();
 
-   		try
-   		{
-            if (records2Delete.size()>0) delete records2Delete;
-   			//-- Raise exception for Unit Tests
-			if(Test.isRunningTest() &&   throwException) insert new Account();	
-   		}
-   		catch(Exception ex)
-   		{
-            Database.rollback(sp);
-   			errors.add(ams2gdp_Error.Exception2Error(batchName, ex));
-   		}
-   		List<Database.UpsertResult> save_results = new List<Database.UpsertResult>();
-        if (records2Save.size()>0) save_results = Database.upsert(records2Save,false);
+	 		try
+	 		{
+						if (records2Delete.size()>0) delete records2Delete;
+	 			//-- Raise exception for Unit Tests
+			if(Test.isRunningTest() &&   throwException) insert new Account();
+	 		}
+	 		catch(Exception ex)
+	 		{
+						Database.rollback(sp);
+	 			errors.add(ams2gdp_Error.Exception2Error(batchName, ex));
+	 		}
+	 		List<Database.UpsertResult> save_results = new List<Database.UpsertResult>();
+				if (records2Save.size()>0) save_results = Database.upsert(records2Save,false);
 
-		//--Check if there is orphan GDP records 
+		//--Check if there is orphan GDP records
 		for(Agency_Owner__c ao: records2Save)
 		{
 			if(ao.Related_GDP_Products_Account_View__c == null)
@@ -151,7 +151,7 @@ global class ams2gdp_Batch_AMS_Account_Role implements Database.Batchable<sObjec
 			}
 		}
 
-		// Process Errors 
+		// Process Errors
 		errors.addAll(ams2gdp_Error.formatUpsertResult(records2save, save_results, batchName, 'AMS_GDP_Key__c'));
 
 		//Log the current Errors
@@ -162,13 +162,13 @@ global class ams2gdp_Batch_AMS_Account_Role implements Database.Batchable<sObjec
 
 			//-- Save failed records
 			Set<String> set_failed_records = new Set<String>(failed_records);
-				
+
 			for(ams2gdp_Error failed_rec : errors)
 				if(failed_rec.amsRecordId != null){set_failed_records.add(failed_rec.amsRecordId.left(18));}
-			
+
 			failed_records =new List<String>(set_failed_records);
 		}
-						
+
 	}
 
 	global void finish(Database.BatchableContext BC) {

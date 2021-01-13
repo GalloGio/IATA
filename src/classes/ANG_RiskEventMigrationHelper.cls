@@ -1,5 +1,5 @@
 public with sharing class ANG_RiskEventMigrationHelper {
-	
+
 	//Set<string> risksToWithdraw;
 	Map<string,Agency_Applied_Change_code__c> risksToWithdraw;
 	Map<string, ANG_Agency_Risk_Event__c> risksToInsert;
@@ -45,81 +45,81 @@ public with sharing class ANG_RiskEventMigrationHelper {
 	}
 
 //============== ACTION METHODS =================================
-    public List<ANG_Agency_Risk_Event__c> convertChangeCodesToRiskEvents(){
-    	mapRiskEventTypes = new Map<String,ANG_Risk_Event_Type__c>();
-    	for(ANG_Risk_Event_Type__c ret: [SELECT Name, Id,ANG_Risk_ID__c,Limit_Cash_Conditions__c,ANG_Delay_Cash_Condition__c  from ANG_Risk_Event_Type__c]){
-    		mapRiskEventTypes.put(ret.Name,ret);
-    	}
-    	for(Agency_Applied_Change_code__c a : listChangeCodes){
-    		
-    		ANG_Agency_Risk_Event__c reToAdd = new ANG_Agency_Risk_Event__c(
-                                        ANG_Issued_Date__c  = a.Created_Date_To_Show__c.Date() , 
-                                        ANG_ChangeCode__c   = a.id, 
-                                        ANG_AccountId__c    = a.Account__c,
-                                        ANG_OscarId__c      = a.OSCAR__c,
-                                        ANG_CaseId__c       = a.SIDRA_Case__c,
-                                        ANG_Event_Status__c = ANG_Risk_Helper.STATUS_ACTIVE,
+	public List<ANG_Agency_Risk_Event__c> convertChangeCodesToRiskEvents(){
+		mapRiskEventTypes = new Map<String,ANG_Risk_Event_Type__c>();
+		for(ANG_Risk_Event_Type__c ret: [SELECT Name, Id,ANG_Risk_ID__c,Limit_Cash_Conditions__c,ANG_Delay_Cash_Condition__c  from ANG_Risk_Event_Type__c]){
+			mapRiskEventTypes.put(ret.Name,ret);
+		}
+		for(Agency_Applied_Change_code__c a : listChangeCodes){
+
+			ANG_Agency_Risk_Event__c reToAdd = new ANG_Agency_Risk_Event__c(
+										ANG_Issued_Date__c  = a.Created_Date_To_Show__c.Date() ,
+										ANG_ChangeCode__c   = a.id,
+										ANG_AccountId__c    = a.Account__c,
+										ANG_OscarId__c      = a.OSCAR__c,
+										ANG_CaseId__c       = a.SIDRA_Case__c,
+										ANG_Event_Status__c = ANG_Risk_Helper.STATUS_ACTIVE,
 										ANG_Created_from__c = 'Agency_Applied_Change_code__c',
 										ANG_UniqueKey__c    = (a.SIDRA_Case__c != null ? a.SIDRA_Case__c : (a.OSCAR__C != null ? a.OSCAR__c : a.id))
-                                    );
-    		
-			if(isAuthCashPayment(a)){	
+									);
+
+			if(isAuthCashPayment(a)){
 				reToAdd.ANG_UniqueKey__c   += mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_AUTH_CASH_PAYMENT).ANG_Risk_ID__c;
 				reToAdd.ANG_Risk_Type__c    = mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_AUTH_CASH_PAYMENT).id;
 				reToAdd.ANG_Limit_Cash_Conditions__c    = setCashConditions(ANG_Risk_Helper.RISK_TYPE_AUTH_CASH_PAYMENT,a);
-				risksToInsert.put( ANG_Risk_Helper.CHANGE_CODE_FIN + 'auth' +getKey(a), reToAdd.clone(false,false,false,false));  
+				risksToInsert.put( ANG_Risk_Helper.CHANGE_CODE_FIN + 'auth' +getKey(a), reToAdd.clone(false,false,false,false));
 			}
 			/*if(isLateShortPayment(a)){
 				reToAdd.ANG_UniqueKey__c   += mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_LATE_SHORT_PAYMENT).ANG_Risk_ID__c;
 				reToAdd.ANG_Risk_Type__c    = mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_LATE_SHORT_PAYMENT).id;
-			    risksToInsert.put(ANG_Risk_Helper.CHANGE_CODE_IRR +(a.Account__c != null ? String.valueOf(a.Account__c).substring(0, 15) : '')+(a.SIDRA_Case__c != null ? String.valueOf(a.SIDRA_Case__c).substring(0, 15) : '')+(a.OSCAR__c != null ? String.valueOf(a.OSCAR__c).substring(0, 15) : ''), reToAdd.clone(false,false,false,false));
+				risksToInsert.put(ANG_Risk_Helper.CHANGE_CODE_IRR +(a.Account__c != null ? String.valueOf(a.Account__c).substring(0, 15) : '')+(a.SIDRA_Case__c != null ? String.valueOf(a.SIDRA_Case__c).substring(0, 15) : '')+(a.OSCAR__c != null ? String.valueOf(a.OSCAR__c).substring(0, 15) : ''), reToAdd.clone(false,false,false,false));
 			}*/
 			string status=checkLateShortPayment(a);
 			if(status!=null){
 				reToAdd.ANG_UniqueKey__c   += mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_LATE_SHORT_PAYMENT).ANG_Risk_ID__c;
 				reToAdd.ANG_Risk_Type__c    = mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_LATE_SHORT_PAYMENT).id;
-				reToAdd.ANG_Event_Status__c    = status;				
+				reToAdd.ANG_Event_Status__c    = status;
 				reToAdd.ANG_Limit_Cash_Conditions__c    = setCashConditions(ANG_Risk_Helper.RISK_TYPE_LATE_SHORT_PAYMENT,a);
-			    risksToInsert.put(ANG_Risk_Helper.CHANGE_CODE_IRR +getKey(a), reToAdd.clone(false,false,false,false));
+				risksToInsert.put(ANG_Risk_Helper.CHANGE_CODE_IRR +getKey(a), reToAdd.clone(false,false,false,false));
 			}
-			
+
 			if(isCommonOwnershipDefault(a)){
 				reToAdd.ANG_UniqueKey__c   += mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_COMMON_OWNERSHIP_DEFAULT).ANG_Risk_ID__c;
-				reToAdd.ANG_Risk_Type__c    = mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_COMMON_OWNERSHIP_DEFAULT).id;				
+				reToAdd.ANG_Risk_Type__c    = mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_COMMON_OWNERSHIP_DEFAULT).id;
 				reToAdd.ANG_Limit_Cash_Conditions__c    = setCashConditions(ANG_Risk_Helper.RISK_TYPE_COMMON_OWNERSHIP_DEFAULT,a);
-			    risksToInsert.put(ANG_Risk_Helper.CHANGE_CODE_RCR+ 'commom' +getKey(a), reToAdd.clone(false,false,false,false));
+				risksToInsert.put(ANG_Risk_Helper.CHANGE_CODE_RCR+ 'commom' +getKey(a), reToAdd.clone(false,false,false,false));
 			}
 
 			if(isPaymentDefault(a)){
 				reToAdd.ANG_UniqueKey__c   += mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_PAYMENT_DEFAULT).ANG_Risk_ID__c;
-				reToAdd.ANG_Risk_Type__c    = mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_PAYMENT_DEFAULT).id;				
+				reToAdd.ANG_Risk_Type__c    = mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_PAYMENT_DEFAULT).id;
 				reToAdd.ANG_Limit_Cash_Conditions__c    = setCashConditions(ANG_Risk_Helper.RISK_TYPE_PAYMENT_DEFAULT,a);
-			    risksToInsert.put(ANG_Risk_Helper.CHANGE_CODE_RCR+ 'payment' +getKey(a), reToAdd.clone(false,false,false,false));
-			}  
+				risksToInsert.put(ANG_Risk_Helper.CHANGE_CODE_RCR+ 'payment' +getKey(a), reToAdd.clone(false,false,false,false));
+			}
 
-			status=checkFailFinancialStatements(a);			
+			status=checkFailFinancialStatements(a);
 			if(status!=null){
 				reToAdd.ANG_UniqueKey__c   += mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_FAIL_FINANCIAL_STATEMENTS).ANG_Risk_ID__c;
 				reToAdd.ANG_Risk_Type__c    = mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_FAIL_FINANCIAL_STATEMENTS).id;
-			    reToAdd.ANG_Event_Status__c = status;			    
-			    reToAdd.ANG_Limit_Cash_Conditions__c    = reToAdd.ANG_Issued_Date__c.addDays(Integer.valueOF(mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_FAIL_FINANCIAL_STATEMENTS).ANG_Delay_Cash_Condition__c))<=System.Today()? String.isBlank(a.SIDRA_Case__r.Parent.Financial_Review_Result__c) :false;
-			    risksToInsert.put(ANG_Risk_Helper.CHANGE_CODE_IRR +getKey(a), reToAdd.clone(false,false,false,false));
-			}  
-			
+				reToAdd.ANG_Event_Status__c = status;
+				reToAdd.ANG_Limit_Cash_Conditions__c    = reToAdd.ANG_Issued_Date__c.addDays(Integer.valueOF(mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_FAIL_FINANCIAL_STATEMENTS).ANG_Delay_Cash_Condition__c))<=System.Today()? String.isBlank(a.SIDRA_Case__r.Parent.Financial_Review_Result__c) :false;
+				risksToInsert.put(ANG_Risk_Helper.CHANGE_CODE_IRR +getKey(a), reToAdd.clone(false,false,false,false));
+			}
+
 			if(isMajorchange1(a)){
 				reToAdd.ANG_UniqueKey__c    = ''+ a.Created_Date_To_Show__c + a.Account__c + mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_MAJOR_CHANGE).ANG_Risk_ID__c;
 				reToAdd.ANG_Risk_Type__c    = mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_MAJOR_CHANGE).id;
 				reToAdd.ANG_Limit_Cash_Conditions__c    = setCashConditions(ANG_Risk_Helper.RISK_TYPE_MAJOR_CHANGE,a);
-			    risksToInsert.put(ANG_Risk_Helper.CHANGE_CODE_MCF + 'major1' +getKey(a), reToAdd.clone(false,false,false,false));
-			}  
-			
+				risksToInsert.put(ANG_Risk_Helper.CHANGE_CODE_MCF + 'major1' +getKey(a), reToAdd.clone(false,false,false,false));
+			}
+
 			if(isMajorchange2(a)){
 				reToAdd.ANG_UniqueKey__c    = ''+ a.Created_Date_To_Show__c + a.Account__c + mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_MAJOR_CHANGE).ANG_Risk_ID__c;
 				reToAdd.ANG_Risk_Type__c    = mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_MAJOR_CHANGE).id;
 				reToAdd.ANG_Limit_Cash_Conditions__c    = setCashConditions(ANG_Risk_Helper.RISK_TYPE_MAJOR_CHANGE,a);
-			    risksToInsert.put(ANG_Risk_Helper.CHANGE_CODE_MCF + 'major2' +getKey(a), reToAdd.clone(false,false,false,false));
+				risksToInsert.put(ANG_Risk_Helper.CHANGE_CODE_MCF + 'major2' +getKey(a), reToAdd.clone(false,false,false,false));
 			}
-			
+
 			status=checkUnreportedChange(a);
 			if(status!=null){
 			//if(isUnreportedChange(a)){
@@ -127,45 +127,45 @@ public with sharing class ANG_RiskEventMigrationHelper {
 				reToAdd.ANG_Risk_Type__c    = mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_UNREPORTED_CHANGE).id;
 				reToAdd.ANG_Event_Status__c    = status;
 				reToAdd.ANG_Limit_Cash_Conditions__c    = setCashConditions(ANG_Risk_Helper.RISK_TYPE_UNREPORTED_CHANGE,a);
-			    risksToInsert.put(ANG_Risk_Helper.CHANGE_CODE_NOT +getKey(a), reToAdd.clone(false,false,false,false));
+				risksToInsert.put(ANG_Risk_Helper.CHANGE_CODE_NOT +getKey(a), reToAdd.clone(false,false,false,false));
 			}
-			
+
 			status=checkFailFinancialSecurity(a);
 			if(status!=null){
 			//if(isFailFinancialSecurity1(a)){
 				reToAdd.ANG_UniqueKey__c   += mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_FAIL_FINANCIAL_SECURITY).ANG_Risk_ID__c;
-				reToAdd.ANG_Risk_Type__c    = mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_FAIL_FINANCIAL_SECURITY).id;				
+				reToAdd.ANG_Risk_Type__c    = mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_FAIL_FINANCIAL_SECURITY).id;
 				reToAdd.ANG_Event_Status__c    = status;
 				reToAdd.ANG_Limit_Cash_Conditions__c    = setCashConditions(ANG_Risk_Helper.RISK_TYPE_FAIL_FINANCIAL_SECURITY,a);
-			    risksToInsert.put(ANG_Risk_Helper.CHANGE_CODE_RVW+getKey(a), reToAdd.clone(false,false,false,false));
+				risksToInsert.put(ANG_Risk_Helper.CHANGE_CODE_RVW+getKey(a), reToAdd.clone(false,false,false,false));
 			}
-			
+
 			/*if(isFailFinancialSecurity2(a)){
 				reToAdd.ANG_UniqueKey__c   += mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_FAIL_FINANCIAL_SECURITY).ANG_Risk_ID__c;
 				reToAdd.ANG_Risk_Type__c    = mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_FAIL_FINANCIAL_SECURITY).id;
-			    risksToInsert.put(ANG_Risk_Helper.CHANGE_CODE_RVW + 'financial2' +(a.Account__c != null ? String.valueOf(a.Account__c).substring(0, 15) : '')+(a.SIDRA_Case__c != null ? String.valueOf(a.SIDRA_Case__c).substring(0, 15) : '')+(a.OSCAR__c != null ? String.valueOf(a.OSCAR__c).substring(0, 15) : ''), reToAdd.clone(false,false,false,false));
+				risksToInsert.put(ANG_Risk_Helper.CHANGE_CODE_RVW + 'financial2' +(a.Account__c != null ? String.valueOf(a.Account__c).substring(0, 15) : '')+(a.SIDRA_Case__c != null ? String.valueOf(a.SIDRA_Case__c).substring(0, 15) : '')+(a.OSCAR__c != null ? String.valueOf(a.OSCAR__c).substring(0, 15) : ''), reToAdd.clone(false,false,false,false));
 			}*/
-			
+
 			status=checkPrejudicedCollection(a);
 			if(status!=null){
 			//if(isPrejudicedCollection(a)){
-				reToAdd.ANG_UniqueKey__c   += mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_PREJUDICED_COLLECTION).ANG_Risk_ID__c; 
+				reToAdd.ANG_UniqueKey__c   += mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_PREJUDICED_COLLECTION).ANG_Risk_ID__c;
 				reToAdd.ANG_Risk_Type__c    = mapRiskEventTypes.get(ANG_Risk_Helper.RISK_TYPE_PREJUDICED_COLLECTION).id;
-			    reToAdd.ANG_Event_Status__c    = status;
-			    reToAdd.ANG_Limit_Cash_Conditions__c    = setCashConditions(ANG_Risk_Helper.RISK_TYPE_PREJUDICED_COLLECTION,a);
-			    risksToInsert.put(ANG_Risk_Helper.CHANGE_CODE_RVW +getKey(a), reToAdd.clone(false,false,false,false));
+				reToAdd.ANG_Event_Status__c    = status;
+				reToAdd.ANG_Limit_Cash_Conditions__c    = setCashConditions(ANG_Risk_Helper.RISK_TYPE_PREJUDICED_COLLECTION,a);
+				risksToInsert.put(ANG_Risk_Helper.CHANGE_CODE_RVW +getKey(a), reToAdd.clone(false,false,false,false));
 			}
-			
+
 			else //else, confirm if this is a reg to withdraw
-				removeWithdrawal(a); 
-	
-    	}
-    	return risksToInsert.values();
-    }
+				removeWithdrawal(a);
+
+		}
+		return risksToInsert.values();
+	}
 
 
 	public boolean isAuthCashPayment(Agency_Applied_Change_code__c aacc){
-		if (aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_FIN  
+		if (aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_FIN
 			&& locationTypeSet.contains(aacc.Account__r.Location_Type__c)
 			&& !(String.isNotBlank(aacc.Bulletin_Information__c) && aacc.Bulletin_Information__c.toLowerCase().contains('branch')))
 			return true;
@@ -174,13 +174,13 @@ public with sharing class ANG_RiskEventMigrationHelper {
 	}
 
 	public string checkLateShortPayment(Agency_Applied_Change_code__c aacc){
-		if (aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_IRR  
+		if (aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_IRR
 			&& locationTypeSet.contains(aacc.Account__r.Location_Type__c)
 			)
 			if(aacc.Irregularity_Type__c == ANG_Risk_Helper.CHANGE_CODE_IRR_OV1
 				|| aacc.Irregularity_Type__c == ANG_Risk_Helper.CHANGE_CODE_IRR_OV2
 			){
-				if(!risksToWithdraw.containsKey(ANG_Risk_Helper.CHANGE_CODE_IRW + getKey(aacc)))		 
+				if(!risksToWithdraw.containsKey(ANG_Risk_Helper.CHANGE_CODE_IRW + getKey(aacc)))
 					return ANG_Risk_Helper.STATUS_ACTIVE;
 				else
 					risksToWithdraw.remove(ANG_Risk_Helper.CHANGE_CODE_IRW + getKey(aacc));
@@ -191,10 +191,10 @@ public with sharing class ANG_RiskEventMigrationHelper {
 	}
 
 	public boolean isPaymentDefault(Agency_Applied_Change_code__c aacc){
-		if (aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_RCR  
+		if (aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_RCR
 			&& locationTypeSet.contains(aacc.Account__r.Location_Type__c)
-			&& (String.isBlank(aacc.PreviousReason__c) 
-				|| (!aacc.PreviousReason__c.contains('50') 
+			&& (String.isBlank(aacc.PreviousReason__c)
+				|| (!aacc.PreviousReason__c.contains('50')
 					&& !aacc.PreviousReason__c.contains('53')))
 			)
 				return true;
@@ -203,8 +203,8 @@ public with sharing class ANG_RiskEventMigrationHelper {
 	}
 
 	public string checkFailFinancialStatements(Agency_Applied_Change_code__c aacc){
-		
-		if (aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_IRR  
+
+		if (aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_IRR
 			&& locationTypeSet.contains(aacc.Account__r.Location_Type__c)
 			&& (aacc.Irregularity_Type__c == ANG_Risk_Helper.CHANGE_CODE_IRR_FC2
 				|| aacc.Irregularity_Type__c == ANG_Risk_Helper.CHANGE_CODE_IRR_SC2)
@@ -213,12 +213,12 @@ public with sharing class ANG_RiskEventMigrationHelper {
 					&& (risksToWithdraw.get(ANG_Risk_Helper.CHANGE_CODE_IRW  + getKey(aacc)).Irregularity_Type__c == ANG_Risk_Helper.CHANGE_CODE_IRR_FC2
 					||risksToWithdraw.get(ANG_Risk_Helper.CHANGE_CODE_IRW  + getKey(aacc)).Irregularity_Type__c == ANG_Risk_Helper.CHANGE_CODE_IRR_SC2)){
 						risksToWithdraw.remove(ANG_Risk_Helper.CHANGE_CODE_IRW  + getKey(aacc));
-						return ANG_Risk_Helper.STATUS_WITHDRAWN; 
+						return ANG_Risk_Helper.STATUS_WITHDRAWN;
 					}
 				else
 					return ANG_Risk_Helper.STATUS_ACTIVE;
 		}
-		
+
 		return null;
 	}
 
@@ -232,10 +232,10 @@ public with sharing class ANG_RiskEventMigrationHelper {
 				return true;
 
 		return false;
-	}	
+	}
 
 	public boolean isMajorchange2(Agency_Applied_Change_code__c aacc){
-		if (aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_MCF 
+		if (aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_MCF
 			&& String.isNotBlank(aacc.Bulletin_Information__c)
 			&& (aacc.Bulletin_Information__c.toUpperCase().contains('MAJOR')
 				|| aacc.Bulletin_Information__c.toUpperCase().contains('OWNERSHIP')
@@ -248,17 +248,17 @@ public with sharing class ANG_RiskEventMigrationHelper {
 	}
 
 	public string checkUnreportedChange(Agency_Applied_Change_code__c aacc){
-		if (aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_NOT  
-			&& aacc.Reason_Code__c == '60' 
+		if (aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_NOT
+			&& aacc.Reason_Code__c == '60'
 			&& aacc.Reason_Description__c == ANG_Risk_Helper.CHANGE_CODE_DESCRIPTION_NCAC
 			&& (aacc.SIDRA_Case__c==null || aacc.SIDRA_Case__r.SIDRA_Lite_Reason__c == ANG_Risk_Helper.SIDRA_LITE_REASON_LATE_ABSENCE_NOTIFICATION)
 			&& locationTypeSet.contains(aacc.Account__r.Location_Type__c)
 			&& !risksToWithdraw.containsKey(ANG_Risk_Helper.CHANGE_CODE_NTW  + getKey(aacc))
 			){
-				return ANG_Risk_Helper.STATUS_ACTIVE; 
+				return ANG_Risk_Helper.STATUS_ACTIVE;
 		}
 
-		else if (aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_NOT 
+		else if (aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_NOT
 			&& locationTypeSet.contains(aacc.Account__r.Location_Type__c)
 			&& risksToWithdraw.containsKey(ANG_Risk_Helper.CHANGE_CODE_NTW  + getKey(aacc))
 			&& String.isNotBlank(risksToWithdraw.get(ANG_Risk_Helper.CHANGE_CODE_NTW  + getKey(aacc)).PreviousReason__c)
@@ -271,14 +271,14 @@ public with sharing class ANG_RiskEventMigrationHelper {
 	}
 
 	public string checkFailFinancialSecurity(Agency_Applied_Change_code__c aacc){
-		if (aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_RVW 
+		if (aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_RVW
 			&&locationTypeSet.contains(aacc.Account__r.Location_Type__c)){
-			
+
 			if(aacc.Reason_Code__c == '61'
 				&& aacc.Reason_Description__c == ANG_Risk_Helper.CHANGE_CODE_DESCRIPTION_NCFC){
 				if(!risksToWithdraw.containsKey(ANG_Risk_Helper.CHANGE_CODE_RWD + getKey(aacc)))
 					return ANG_Risk_Helper.STATUS_ACTIVE;
-				else if(aacc.Reason_Code__c == '61' 
+				else if(aacc.Reason_Code__c == '61'
 						&& risksToWithdraw.containsKey(ANG_Risk_Helper.CHANGE_CODE_RWD + getKey(aacc))
 						&& String.isNotBlank(risksToWithdraw.get(ANG_Risk_Helper.CHANGE_CODE_RWD  + getKey(aacc)).PreviousReason__c)
 						&& risksToWithdraw.get(ANG_Risk_Helper.CHANGE_CODE_RWD  + getKey(aacc)).PreviousReason__c.contains('61')
@@ -287,7 +287,7 @@ public with sharing class ANG_RiskEventMigrationHelper {
 						return ANG_Risk_Helper.STATUS_WITHDRAWN;
 					}
 			}
-			else if(aacc.Reason_Code__c == 'Review'				
+			else if(aacc.Reason_Code__c == 'Review'
 				&& aacc.Reason_Description__c == ANG_Risk_Helper.CHANGE_CODE_DESCRIPTION_FINANCIAL_REVIEW
 				&& String.isNotBlank(aacc.Bulletin_Information__c)
 				&& aacc.Bulletin_Information__c.contains('bank')){
@@ -300,12 +300,12 @@ public with sharing class ANG_RiskEventMigrationHelper {
 				 		return ANG_Risk_Helper.STATUS_ACTIVE;
 			}
 		}
-			
+
 		return  null;
 	}
 
 	public boolean isCommonOwnershipDefault(Agency_Applied_Change_code__c aacc){
-		if (aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_RCR 
+		if (aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_RCR
 			&& locationTypeSet.contains(aacc.Account__r.Location_Type__c)
 			&& String.isNotBlank(aacc.PreviousReason__c)
 			&& aacc.PreviousReason__c.contains('54')
@@ -316,8 +316,8 @@ public with sharing class ANG_RiskEventMigrationHelper {
 	}
 
 	public string checkPrejudicedCollection(Agency_Applied_Change_code__c aacc){
-		if (aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_RVW 
-			&& aacc.Reason_Code__c == '63' 
+		if (aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_RVW
+			&& aacc.Reason_Code__c == '63'
 			&& aacc.Reason_Description__c == ANG_Risk_Helper.CHANGE_CODE_DESCRIPTION_PREJUDICED_COLLECTION
 			&& locationTypeSet.contains(aacc.Account__r.Location_Type__c)
 			){
@@ -359,27 +359,27 @@ public with sharing class ANG_RiskEventMigrationHelper {
 
 
 //-----------------------------FOR FAIL FINANCIAL  STATMENTS / Unreported Change---------------------
-		else if (aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_NTW){ 
+		else if (aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_NTW){
 			if (String.isNotBlank(aacc.PreviousReason__c)
 				&& (aacc.PreviousReason__c.contains('60') || aacc.PreviousReason__c.contains('61'))
 				&& locationTypeSet.contains(aacc.Account__r.Location_Type__c)
-				&& risksToInsert.containsKey(ANG_Risk_Helper.CHANGE_CODE_NOT +getKey(aacc)) 
+				&& risksToInsert.containsKey(ANG_Risk_Helper.CHANGE_CODE_NOT +getKey(aacc))
 				){
 					risksToInsert.get(ANG_Risk_Helper.CHANGE_CODE_NOT +getKey(aacc)).ANG_Event_Status__c = ANG_Risk_Helper.STATUS_WITHDRAWN;
 			}
 			else
 				risksToWithdraw.put(ANG_Risk_Helper.CHANGE_CODE_NTW + getKey(aacc),aacc);
 		}
-		
+
 
 		if (aacc.Change_Code__c == ANG_Risk_Helper.CHANGE_CODE_RVW){
-			if (risksToInsert.containsKey(ANG_Risk_Helper.CHANGE_CODE_NOT +getKey(aacc)) 
-				&& aacc.PreviousReason__c == '61' 
+			if (risksToInsert.containsKey(ANG_Risk_Helper.CHANGE_CODE_NOT +getKey(aacc))
+				&& aacc.PreviousReason__c == '61'
 				&& locationTypeSet.contains(aacc.Account__r.Location_Type__c)
-				){				
+				){
 					risksToInsert.get(ANG_Risk_Helper.CHANGE_CODE_NOT +getKey(aacc)).ANG_Event_Status__c = ANG_Risk_Helper.STATUS_WITHDRAWN;
 			}
-			else 
+			else
 				risksToWithdraw.put(ANG_Risk_Helper.CHANGE_CODE_RVW+ getKey(aacc),aacc);
 
 		}
@@ -429,8 +429,8 @@ public with sharing class ANG_RiskEventMigrationHelper {
 			//we need to discard inactive risk events, as they don't influence risk history
 			if(re.ANG_Event_Status__c != ANG_Risk_Helper.STATUS_ACTIVE) continue;
 
-			//risk events are to be reported under Head Entity (this works because 
-			//the only risk event generated under the AE is the Major Changes, which 
+			//risk events are to be reported under Head Entity (this works because
+			//the only risk event generated under the AE is the Major Changes, which
 			//fails the risk assessment history with only one ocurrence)
 			if(!riskEvents.containsKey(a)) riskEvents.put(a, new List<ANG_Agency_Risk_Event__c>{re});
 			else riskEvents.get(a).add(re);

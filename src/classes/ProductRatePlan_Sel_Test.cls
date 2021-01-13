@@ -17,7 +17,7 @@ private class ProductRatePlan_Sel_Test {
 		insert productRatePlanList;
 
 		// create dummy Zuora rate plan oProductRatePlanCharge
-        zqu__ProductRatePlanCharge__c oProductRatePlanCharge1 = IECTestUtil.CreateSampleProductRatePlanCharge(oProductRatePlan1, 'CHARGETEST', 42);
+		zqu__ProductRatePlanCharge__c oProductRatePlanCharge1 = IECTestUtil.CreateSampleProductRatePlanCharge(oProductRatePlan1, 'CHARGETEST', 42);
 		zqu__ProductRatePlanCharge__c oProductRatePlanCharge2 = IECTestUtil.CreateSampleProductRatePlanCharge(oProductRatePlan2, 'CHARGETEST', 84);
 		zqu__ProductRatePlanCharge__c oProductRatePlanCharge3 = IECTestUtil.CreateSampleProductRatePlanCharge(oProductRatePlan3, 'CHARGETEST', 0);
 		List<zqu__ProductRatePlanCharge__c> productRatePlanChargeList = new List<zqu__ProductRatePlanCharge__c> {oProductRatePlanCharge1,oProductRatePlanCharge2,oProductRatePlanCharge3};
@@ -33,5 +33,5 @@ private class ProductRatePlan_Sel_Test {
 
 		System.assertEquals(3, mapProductRatePlan.size());
 	}
-	
+
 }

@@ -592,8 +592,8 @@
 											</div>
 											<div class="modal-body">
 												<div id="modal_alert_placeholder"></div>
-												<apex:pageBlock >
-													<apex:pageBlockSection >
+												<apex:pageBlock>
+													<apex:pageBlockSection>
 														<apex:outputText value="{!ContactBeingEdited.email}" label="{!$ObjectType.Contact.fields.email.label}"/><br/><br/>
 														<apex:outputText value="{!ContactBeingEdited.phone}" label="{!$ObjectType.Contact.fields.phone.label}"/><br/><br/>
 														<apex:inputField value="{!ContactBeingEdited.MITA_Contact_Type__c}" label="{!$ObjectType.Contact.fields.MITA_Contact_Type__c.label}"/><br/><br/>
@@ -678,7 +678,7 @@
 														<!-- SECTION FOR MITA AGREEMENTS -->
 														<apex:inputHidden value="{!MITAagreementid}" id="MITAagreementid" />
 														<apex:pageBlockSection columns="1" id="MITAagreementSearchPanel">
-															<apex:outputPanel >
+															<apex:outputPanel>
 																<div style="float:left;padding-bottom: 20px; padding-top: 20px;">
 																	<apex:outputText value="{!MITAagreementTypes}" escape="false" />
 																</div>
@@ -723,7 +723,7 @@
 														<apex:inputHidden value="{!BIETAagreementid}" id="BIETAagreementid" />
 
 														<apex:pageBlockSection columns="1" id="BIETAagreementSearchPanel">
-															<apex:outputPanel >
+															<apex:outputPanel>
 																<div style="float:left;padding-bottom: 20px; padding-top: 20px;">
 																	<apex:outputText value="{!BIETAagreementTypes}" escape="false" />
 																</div>
@@ -779,7 +779,7 @@
 															<div style="float:left;padding-bottom: 20px; padding-top: 30px;">
 																<apex:outputText value="{!MITASuggestionTypes}" escape="false" />
 															</div>
-															<apex:pageBlockSection >
+															<apex:pageBlockSection>
 																<apex:outputPanel >
 																	<table id="MITAsuggestionsTable" class="suggestionsTable dataTable no-footer hover row-border compact">
 																		<thead>
@@ -814,7 +814,7 @@
 															</div>
 															
 															<br style="clear:both" />
-															<apex:pageBlockSection >
+															<apex:pageBlockSection>
 																<apex:outputPanel >
 																	<table id="BIETAsuggestionsTable" class="suggestionsTable dataTable no-footer hover row-border compact">
 																		<thead>
@@ -864,7 +864,7 @@
 																</apex:pageBlockSection>
 															</div>
 															<apex:pageBlockSection columns="1" id="pbsActiveContact">
-																<apex:outputPanel >
+																<apex:outputPanel>
 																	<table id="myActiveContactTable" class="contactsTable dataTable no-footer hover row-border compact">
 																		<thead>
 																			<tr>
@@ -942,11 +942,11 @@
 																<apex:pageBlockSection columns="1">
 																	<div class="alert alert-info" role="alert">{!$Label.ISSP_MITA_Search_Text01}</div>
 																</apex:pageBlockSection>
-																<apex:pageBlockSection >
+																<apex:pageBlockSection>
 																	<input type="search" id="searchCrit"/>
 																	<button type="submit" class="iatabtn iatabtn-default" onclick="checkInputs();return false;">{!$Label.ISSP_MITA_Search_Button}</button>
 																</apex:pageBlockSection>
-																<apex:pageBlockSection >
+																<apex:pageBlockSection>
 																	<div id="search_alert_placeholder"></div>
 																</apex:pageBlockSection>
 																<apex:pageBlockSection columns="1">

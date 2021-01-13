@@ -117,7 +117,7 @@
 
 
     <html>
-    <c:ISSP_Header ></c:ISSP_Header>
+    <c:ISSP_Header></c:ISSP_Header>
     <c:iss_ap_css />
     <c:ISSP_WaitingStatus />
 
@@ -312,7 +312,7 @@
                         <apex:pageblock id="pageblock">
                             <apex:PageMessages id="msgs" />
                             <apex:inputHidden id="inHid" />
-                            <apex:pageBlockButtons >
+                            <apex:pageBlockButtons>
                                 <apex:actionFunction name="submitProduct" action="{!submitProduct}" />
                                 <apex:commandButton onclick="if(confirmSubmit())return true;" styleClass="iatabtn" value="{!$Label.ISSP_TIP_SUBMIT_TO_IATA}" rendered="{!editMode}"
                                     reRender="inHid" />
@@ -341,7 +341,7 @@
                                 <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent">
                                     <apex:outputLabel html-class="mandFld" value="{!$ObjectType.Partner_products__c.fields.PP_Settlement_Terms__c.Label}" />
                                     <apex:outputPanel style="display: flex;">
-                                        <apex:outputPanel >
+                                        <apex:outputPanel>
                                             <apex:inputField html-class="mandFld" value="{!newpp.PP_Settlement_Terms__c}" rendered="{!editMode}" />
                                             <apex:outputField styleClass="readOnlyfld" value="{!newpp.PP_Settlement_Terms__c}" rendered="{!!editMode}" />
                                             <apex:image value="/img/msg_icons/info16.png" style="padding: 4px" styleClass="selector" title="{!$Label.ISSP_Portal_Product_Settlement_Terms_Label}"
@@ -361,13 +361,13 @@
                                 <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent">
                                     <apex:outputLabel html-class="mandFld" value="{!$ObjectType.Partner_products__c.fields.is_PCI_DSS_required__c.Label}" />
                                     <apex:outputPanel style="display: flex;justify-content: space-between;">
-                                        <apex:outputPanel >
+                                        <apex:outputPanel>
                                             <apex:selectRadio html-class="mandFldcb" style="width:100px;margin-left:20px;" value="{!newpp.is_PCI_DSS_required__c}" readonly="{!!editMode}">
                                                 <apex:selectOption itemValue="{!UPPER($Label.ISSP_Yes)}" itemLabel="{!$Label.ISSP_Yes}" itemDisabled="{!!editMode}" />
                                                 <apex:selectOption itemValue="NA" itemLabel="{!$Label.ISSP_Not_Applicable}" itemDisabled="{!!editMode}" />
                                             </apex:selectRadio>
                                         </apex:outputPanel>
-                                        <apex:outputPanel >
+                                        <apex:outputPanel>
                                             <apex:image value="/img/msg_icons/info16.png" style="padding: 4px;max-width: 26px;max-height: 25px;" styleClass="selector"
                                                 title="{!$Label.ISSP_Portal_Product_is_Subject_to_PCI_Label}" html-data-placement="top"
                                                 html-data-toggle="tooltip" rendered="{!editMode}" />
@@ -400,7 +400,7 @@
                                 <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent">
                                     <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Pay_in_Model__c.Label}" html-class="mandFld" />
                                     <apex:outputPanel style="display: -webkit-inline-box;">
-                                        <apex:outputPanel >
+                                        <apex:outputPanel>
                                             <apex:inputField value="{!newpp.PP_Pay_in_Model__c}" rendered="{!editMode}" html-class="mandFld" styleClass="sectionItem"
                                             />
                                             <apex:outputField value="{!newpp.PP_Pay_in_Model__c}" rendered="{!!editMode}" />
@@ -413,7 +413,7 @@
                                     <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Chargeback_airlines_duration__c.Label}" html-class="mandFld"
                                     />
                                     <apex:outputPanel style="display: flex;">
-                                        <apex:outputPanel >
+                                        <apex:outputPanel>
                                             <apex:inputField html-class="mandFld" value="{!newpp.PP_Chargeback_airlines_duration__c}" rendered="{!editMode}" id="chargbackdur"
                                             />
                                             <apex:outputField value="{!newpp.PP_Chargeback_airlines_duration__c}" rendered="{!!editMode}" />
@@ -425,7 +425,7 @@
                                 <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent">
                                     <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Category__c.Label}" html-class="mandFld" />
                                     <apex:outputPanel style="display: -webkit-inline-box;">
-                                        <apex:outputPanel >
+                                        <apex:outputPanel>
                                             <apex:inputField value="{!newpp.PP_Category__c}" html-class="mandFld" rendered="{!editMode}" styleClass="sectionItem" />
                                             <apex:outputField value="{!newpp.PP_Category__c}" rendered="{!!editMode}" />
                                             <apex:image value="/img/msg_icons/info16.png" style="padding: 4px" styleClass="selector" title="{!$Label.ISSP_Portal_Product_Category_Label}"
@@ -438,7 +438,7 @@
                                     <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Payment_Product_Network_type__c.Label}" html-class="mandFld"
                                     />
                                     <apex:outputPanel style="display: -webkit-inline-box;">
-                                        <apex:outputPanel >
+                                        <apex:outputPanel>
                                             <apex:inputField value="{!newpp.PP_Payment_Product_Network_type__c}" html-class="mandFld" rendered="{!editMode}" styleClass="sectionItem"
                                             />
                                             <apex:outputField value="{!newpp.PP_Payment_Product_Network_type__c}" rendered="{!!editMode}" />
@@ -453,7 +453,7 @@
                                     <apex:outputPanel style="display: -webkit-inline-box;">
                                         <apex:actionFunction name="paymentNetworkChange" oncomplete="enableBinRangeBtn();" action="{!changePaymentNetwork}" reRender="binTable"
                                         />
-                                        <apex:outputPanel >
+                                        <apex:outputPanel>
                                             <apex:selectList id="paymentNet" html-class="mandFld" value="{!newpp.PP_Payment_Network__c}" onchange="paymentNetworkChange();"
                                                 rendered="{!editMode}" styleClass="sectionItem" size="1">
                                                 <apex:selectOptions value="{!paymentNetworkOptList}" />
@@ -476,7 +476,7 @@
                                 <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent">
                                     <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_VAN_Type__c.Label}" />
                                     <apex:outputPanel style="display: -webkit-inline-box;">
-                                        <apex:outputPanel >
+                                        <apex:outputPanel>
                                             <apex:inputField value="{!newpp.PP_VAN_Type__c}" rendered="{!editMode}" styleClass="sectionItem" />
                                             <apex:outputField value="{!newpp.PP_VAN_Type__c}" rendered="{!!editMode}" />
                                             <apex:image value="/img/msg_icons/info16.png" style="padding: 4px" styleClass="selector" title="{!$Label.ISSP_Portal_Product_VAN_Type_Label}"
@@ -496,7 +496,7 @@
                                 <apex:pageBlockSectionItem labelStyle="width:26%" labelStyleClass="agencyLegalDetailsComponent" dataStyleClass="agencyLegalDetailsComponent">
                                     <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Payment_Guarantee__c.Label}" html-class="mandFld" />
                                     <apex:outputPanel style="display: -webkit-inline-box;">
-                                        <apex:outputPanel >
+                                        <apex:outputPanel>
                                             <apex:selectList title="{!$Label.ISSP_TIP_HOLD_TO_MULTISELECT}" value="{!paymentGuaranteeVal}" size="{!paymentGuaranteeOptList.size+1}"
                                                 multiselect="true" rendered="{!editMode}" styleClass="sectionItem mandFld">
                                                 <apex:selectOptions value="{!paymentGuaranteeOptList}" />
@@ -520,7 +520,7 @@
                                     <apex:outputLabel value="{!$ObjectType.Partner_products__c.fields.PP_Accepted_Transactions__c.Label}" html-class="mandFld"
                                     />
                                     <apex:outputPanel style="display: -webkit-inline-box;">
-                                        <apex:outputPanel >
+                                        <apex:outputPanel>
                                             <apex:selectList title="{!$Label.ISSP_TIP_HOLD_TO_MULTISELECT}" value="{!acceptedTransactionVal}" size="{!acceptedTransactionsOptList.size+1}"
                                                 multiselect="true" rendered="{!editMode}" styleClass="sectionItem mandFld">
                                                 <apex:selectOptions value="{!acceptedTransactionsOptList}" />
@@ -531,7 +531,7 @@
                                         </apex:outputPanel>
                                     </apex:outputPanel>
                                 </apex:pageBlockSectionItem>
-                                <apex:pageBlockSectionItem > </apex:pageBlockSectionItem>
+                                <apex:pageBlockSectionItem> </apex:pageBlockSectionItem>
                                 <apex:pageBlockSectionItem rendered="{!editMode}">
                                     <apex:outputLabel value="*{!$Label.ISSP_TIP_MANDATORY_ON_SUBMIT}" />
                                 </apex:pageBlockSectionItem>
@@ -551,7 +551,7 @@
                                 </apex:pageBlockSectionItem>
                             </apex:pageBlockSection>
                             <apex:pageBlockSection id="binRangeTableSection" columns="2">
-                                <apex:pageBlockSectionItem >
+                                <apex:pageBlockSectionItem>
                                     <apex:outputPanel id="binTable">
                                         <script>
                                             var startMask = new Array(parseInt("{!binRangeLen}") + 1).join("0");
@@ -732,19 +732,19 @@
 
                                         </script>
                                         <apex:pageBlockTable value="{!binRangeList}" var="brr" style="font-weight:'normal';" styleClass="table-hover table table-condensed table-responsive tabl">
-                                            <apex:column >
+                                            <apex:column>
                                                 <apex:facet name="header">
                                                     <apex:outputLabel styleClass="binRangeNumber" value="{!$ObjectType.TIP_BIN_Range__c.fields.TIP_Range_Start__c.label}" />
                                                 </apex:facet>
                                                 <apex:outputLabel styleClass="binRangeNumber" value="{!brr.binRange.TIP_Range_Start__c}" />
                                             </apex:column>
-                                            <apex:column >
+                                            <apex:column>
                                                 <apex:facet name="header">
                                                     <apex:outputLabel styleClass="binRangeNumber" value="{!$ObjectType.TIP_BIN_Range__c.fields.TIP_Range_End__c.label}" />
                                                 </apex:facet>
                                                 <apex:outputLabel styleClass="binRangeNumber" value="{!brr.binRange.TIP_Range_End__c}" />
                                             </apex:column>
-                                            <apex:column >
+                                            <apex:column>
                                                 <apex:facet name="header">
                                                     <apex:outputLabel styleClass="binRangeText" value="{!$ObjectType.TIP_BIN_Range__c.fields.TIP_Status__c.label}" />
                                                 </apex:facet>
@@ -770,7 +770,7 @@
                             <!-- PROVIDER PRODUCT CONFIGURATION-->
                             <apex:pageBlockSection columns="1" collapsible="false" title="{!$Label.ISSP_TIP_COUNTRY_CONFIG_SECTION}">
                                 <apex:pageBlockSectionItem rendered="{!editMode}">
-                                    <apex:outputPanel >
+                                    <apex:outputPanel>
                                         <apex:commandLink id="newCountrConfigbtn" styleClass="secBtn" style="margin-right:15px" oncomplete="toggleDialog();" action="{!newEditCountryConfig}"
                                             reRender="modalContentoutpanel">
                                             <span class="glyphicon glyphicon-plus"></span>{!$Label.ISSP_TIP_ADD_COUNTRY_CONFIG}
@@ -787,7 +787,7 @@
                                 <!-- </apex:pageBlockSectionItem> -->
                             </apex:pageBlockSection>
                             <apex:pageBlockSection columns="2">
-                                <apex:pageBlockSectionItem >
+                                <apex:pageBlockSectionItem>
                                     <apex:outputPanel id="countryConfigPanel">
                                         <div style="max-height: 400px; overflow-y: auto;overflow-x: hidden; font-weight:normal;">
                                             <script>
@@ -856,9 +856,9 @@
                                                         <apex:outputLabel value="" />
                                                         <input type="checkbox" class='cbMaster' />
                                                     </apex:facet>
-                                                    <apex:inputCheckbox html-class="cbSlave" value="{!ppc.isSelected}" />
+                                                    <apex:inputCheckbox html-class='cbSlave' value="{!ppc.isSelected}" />
                                                 </apex:column>
-                                                <apex:column >
+                                                <apex:column>
                                                     <apex:facet name="header">
                                                         <apex:outputLabel value="{!$ObjectType.TIP_Pay_Prov_Prod_Country_Config__c.fields.TIP_BSP_Country__c.label}" style="width:150px;"
                                                         />
@@ -866,7 +866,7 @@
                                                     <apex:outputLabel value="{!ppc.countryName}" />
                                                 </apex:column>
 
-                                                <apex:column >
+                                                <apex:column>
                                                     <apex:facet name="header">
                                                         <apex:outputLabel styleClass="pconfNumber" value="{!$ObjectType.TIP_Pay_Prov_Prod_Country_Config__c.fields.TIP_Interchange_Fee__c.label}"
                                                         />
@@ -874,7 +874,7 @@
                                                     <apex:outputLabel styleClass="pconfNumber" title="{!ppc.prodConfig.TIP_Interchange_Fee__c}" value="{!ppc.prodConfig.TIP_Interchange_Fee__c}"
                                                     />
                                                 </apex:column>
-                                                <apex:column >
+                                                <apex:column>
                                                     <apex:facet name="header">
                                                         <apex:outputLabel styleClass="pconfNumber" value="{!$ObjectType.TIP_Pay_Prov_Prod_Country_Config__c.fields.Network_Fee__c.label}"
                                                         />
@@ -882,7 +882,7 @@
                                                     <apex:outputLabel styleClass="pconfNumber" title="{!ppc.prodConfig.Network_Fee__c}" value="{!ppc.prodConfig.Network_Fee__c}"
                                                     />
                                                 </apex:column>
-                                                <apex:column >
+                                                <apex:column>
                                                     <apex:facet name="header">
                                                         <apex:outputLabel value="{!$ObjectType.TIP_Pay_Prov_Prod_Country_Config__c.fields.TIP_Status__c.label}" />
                                                     </apex:facet>
@@ -911,8 +911,8 @@
 
                         </apex:pageblock>
                     </apex:form>
-                    <apex:form >
-                        <apex:pageblock >
+                    <apex:form>
+                        <apex:pageblock>
                             <!-- ------------MODAL WIDOWN -------------------  -->
                             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                 <apex:outputPanel id="modalContentoutpanel">
@@ -924,13 +924,13 @@
                                             </div>
                                             <div class="modal-body" style="display:{!if(true,'','none')}">
                                                 <apex:pageBlockTable id="newBinTab" value="{!selectedBinRange}" var="nb" styleClass="table-hover  table table-condensed table-responsive tabl">
-                                                    <apex:column >
+                                                    <apex:column>
                                                         <apex:facet name="header">
                                                             <apex:outputLabel value="{!$ObjectType.TIP_BIN_Range__c.fields.TIP_Range_Start__c.label}" />
                                                         </apex:facet>
                                                         <apex:inputField id="rangeStart" style="width:'100%'" value="{!nb.binRange.TIP_Range_Start__c}" required="true" />
                                                     </apex:column>
-                                                    <apex:column >
+                                                    <apex:column>
                                                         <apex:facet name="header">
                                                             <apex:outputLabel value="{!$ObjectType.TIP_BIN_Range__c.fields.TIP_Range_End__c.label}" />
                                                         </apex:facet>
@@ -969,7 +969,7 @@
 
                                                         <apex:pageBlockSectionItem labelStyle="width:26%">
                                                             <apex:outputLabel value="{!$ObjectType.TIP_Pay_Prov_Prod_Country_Config__c.fields.TIP_BSP_Country__c.Label}" />
-                                                            <apex:outputPanel >
+                                                            <apex:outputPanel>
                                                                 <apex:selectList id="bspctrfld" value="{!selectProvConfigCountriesList}" size="10" multiselect="true" styleClass="sectionItem"
                                                                     rendered="{!selectedProvProdConf.action!='M'}">
                                                                     <apex:selectOptions value="{!bspCountrList}" />
@@ -1110,7 +1110,7 @@
             </div>
         </div>
     </div>
-    <c:ISSP_CustomFooter />
+    <c:ISSP_CustomFooter/>
 
     </html>
 

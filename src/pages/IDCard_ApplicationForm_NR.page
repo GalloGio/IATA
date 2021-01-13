@@ -917,7 +917,7 @@ rendered="{!isEmployee}" accept="application/pdf" />
                     <br/>
                     
                     <apex:pageMessages id="ErrorMsgs" escape="false" />
-                    <apex:actionRegion >
+                    <apex:actionRegion>
                         <apex:actionFunction name="rerenderRenewPageValues" reRender="panelIDCardFees"/>
                     </apex:actionRegion>
                     <center>

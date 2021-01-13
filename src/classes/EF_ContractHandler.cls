@@ -293,8 +293,81 @@ public class EF_ContractHandler
 					}
 				}
 			}
+
+		/*	if(!contractsNoti.isEmpty()){
+				notifyOnCriticalFields(contractsNoti, oldMap, criticalContractFieldList);
+
+			}*/
+
 		}
 	}
+
+/*	public static void notifyOnCriticalFields (Map <Id, Contract> newContracts, Map <Id,Contract> oldContractMap, List <String> criticalFieldList ) {
+
+		Map<String, Schema.SobjectField> fields = newContracts.getSObjectType().getDescribe().fields.getMap();
+		String baseUrl = System.URL.getSalesforceBaseUrl().toExternalForm();
+		List<Messaging.SingleEmailMessage> mails = new List<Messaging.SingleEmailMessage>();
+
+		for(Contract c: newContracts.values()){
+			String emailBody = 'Dear team member, <br/><br/>the following Contract values been UPDATED:<br/><br/>';
+			emailBody = emailBody + '<table width="600px" border="1"><tr border="1"><th border="1">Contract</th><th border="1">Field:</th><th border="1">New Value:</th><th border="1">Old Value:</th></tr>';
+
+		   for(String s: criticalFieldList){
+				SObjectField f = fields.get(s);
+				if(c.get(s)!=oldContractMap.get(c.Id).get(s)){
+					emailBody = emailBody + '<tr><td border="1"><a href="'+baseUrl+'/'+c.Id+'">'+c.Name+'</a></td><td border="1">'+s+'</td><td border="1">'+c.get(s)+'</td><td border="1">'+oldContractMap.get(c.Id).get(s)+'</td></tr>';
+				}
+		   }
+		   emailBody = emailBody + '</table>';
+		   if(c.EF_DT_Specialist__c!=null && c.EF_IA_Specialist__c!=null){
+				Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+				mail.setSaveAsActivity(false);
+				mail.setToAddresses(new List <String> {c.EF_DT_Specialist_Email__c, c.EF_IA_Specialist_Email__c, 'efs@iata.org'});
+				mail.setSubject('E&F Contract Critical Changes Notification');
+				mail.setBccSender(false);
+				mail.setUseSignature(false);
+				mail.setHtmlBody(emailBody);
+				mails.add(mail);
+				//Utility.sendEmail(new List <String> {c.EF_DT_Specialist_Email__c, c.EF_IA_Specialist_Email__c, 'efs@iata.org'}, 'E&F Contract Critical Changes Notification ', emailBody, true, null);
+		   }else if(c.EF_DT_Specialist__c==null && c.EF_IA_Specialist__c!=null){
+				Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+				mail.setSaveAsActivity(false);
+				mail.setToAddresses(new List <String> {c.EF_IA_Specialist_Email__c, 'efs@iata.org'});
+				mail.setSubject('E&F Contract Critical Changes Notification');
+				mail.setBccSender(false);
+				mail.setUseSignature(false);
+				mail.setHtmlBody(emailBody);
+				mails.add(mail);
+				//Utility.sendEmail(new List <String> {c.EF_IA_Specialist_Email__c, 'efs@iata.org'}, 'E&F Contract Critical Changes Notification ', emailBody, true, null);
+		   }else if(c.EF_DT_Specialist__c!=null && c.EF_IA_Specialist__c==null){
+				Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+				mail.setSaveAsActivity(false);
+				mail.setToAddresses(new List <String> {c.EF_DT_Specialist_Email__c, 'efs@iata.org'});
+				mail.setSubject('E&F Contract Critical Changes Notification');
+				mail.setBccSender(false);
+				mail.setUseSignature(false);
+				mail.setHtmlBody(emailBody);
+				mails.add(mail);
+				//Utility.sendEmail(new List <String> {c.EF_DT_Specialist_Email__c, 'efs@iata.org'}, 'E&F Contract Critical Changes Notification ', emailBody, true, null);
+		   }else{
+				Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+				mail.setSaveAsActivity(false);
+				mail.setToAddresses(new List <String> {'efs@iata.org'});
+				mail.setSubject('E&F Contract Critical Changes Notification');
+				mail.setBccSender(false);
+				mail.setUseSignature(false);
+				mail.setHtmlBody(emailBody);
+				mails.add(mail);
+				//Utility.sendEmail(new List <String> {'efs@iata.org'}, 'E&F Contract Critical Changes Notification ', emailBody, true, null);
+		   }
+
+		}
+
+		 if(!mails.isEmpty()){
+				Messaging.sendEmail(mails);
+		}
+
+	}*/
 
 	public static boolean runOnce()
 	{
@@ -305,63 +378,8 @@ public class EF_ContractHandler
 		}
 		else
 		{
-			FakeMethodSingleEmailLimitFix();
 			return run;
 		}
-	}
-
-	private static void FakeMethodSingleEmailLimitFix(){ //27.10.2020
-		integer i = 0;
-		i++;
-		i++;
-		i++;
-		i++;
-		i++;
-		i++;
-		i++;
-		i++;
-		i++;
-		i++;
-		i++;
-		i++;
-		i++;
-		i++;
-		i++;
-		i++;
-		i++;
-		i++;
-		i++;
-		i++;
-		i++;
-		i++;
-		i++;
-		i++;
-		i++;
-		i++;
-		i++;
-		i++;
-		i++;
-		i++;
-		i++;
-		i++;
-		i++;
-		i++;
-		i++;
-		i++;
-		i++;
-		i++;
-		i++;
-		i++;
-		i++;
-		i++;
-		i++;
-		i++;
-		i++;
-		i++;
-		i++;
-		i++;
-		i++;
-		i++;
 	}
 
 }

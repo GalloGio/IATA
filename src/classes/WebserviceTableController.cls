@@ -19,7 +19,7 @@ public with sharing virtual class WebserviceTableController {
 		HTTPResponse res = http.send(req);
 		System.debug(LoggingLevel.FINE, '___ cls [WebserviceTableController - getJSON] - res: '+res);
 		System.debug(LoggingLevel.FINE, '___ cls [WebserviceTableController - getJSON] - response body: '+res.getBody());
-		
+
 		return c.handle(res);
 	}
 

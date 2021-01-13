@@ -10,7 +10,7 @@ public without sharing class AMS_VoucherCalculationHelper {
 
 
 		//return Integer.Valueof(Math.Min(maxAmountVouchersCountry,Math.min ( (  2 * (totalAgencySales / Math.min(countryAverage, countryBenchmark) ).round(System.RoundingMode.FLOOR)) - 3 , 0 )));
-		
+
 		//return Integer.Valueof(Math.Min(maxAmountVouchersCountry,(  2 * (totalAgencySales / Math.min(countryAverage, countryBenchmark) ))));
 
 	}
@@ -53,7 +53,7 @@ public without sharing class AMS_VoucherCalculationHelper {
 			}
 		}
 
-		return toReturn; 
+		return toReturn;
 
 	}
 
@@ -74,10 +74,10 @@ public without sharing class AMS_VoucherCalculationHelper {
 	public static List<AMS_Voucher__c> createVouchersForAgencies(Map<Id,Integer> vouchersInfoVouchers, Id processId, Integer vouchersAlreadyCreated, Integer voucherPerPdf, String regionName){
 
 		Datetime nowDate = Datetime.now();
-		
+
 		String formattedDate = nowDate.format('yyyyMMddhmm');
 
-        String filename = '';
+		String filename = '';
 
 
 		List<AMS_Voucher__c> toReturn = new List<AMS_Voucher__c>();
@@ -101,7 +101,7 @@ public without sharing class AMS_VoucherCalculationHelper {
 
 				it++;
 			}
-			
+
 		}
 
 		return toReturn;

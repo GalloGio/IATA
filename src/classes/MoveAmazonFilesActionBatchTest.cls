@@ -17,7 +17,7 @@ public class MoveAmazonFilesActionBatchTest {
 			)
 		};
 		insert listAmazonCred;
-	
+
 		list<AWSKey__c> AWS_KEYs = new list<AWSKey__c>{
 			new AWSKey__c(
 				name = 'GenericAttach-dev' ,
@@ -61,7 +61,7 @@ public class MoveAmazonFilesActionBatchTest {
 		Case cse = new Case();
 		insert cse;
 	}
-	
+
 	@isTest static void moveAmazonFileSuccessTest(){
 
 		Case cse = [SELECT Id FROM Case LIMIT 1];
@@ -78,7 +78,7 @@ public class MoveAmazonFilesActionBatchTest {
 			filesToMoveMap.put(wa, newCase.Id);
 			insertFiles.add(wa.fileAmazon.amazonFile);
 		}
-		
+
 		//For testing purposes we force the insert
 		insert insertFiles;
 
@@ -87,7 +87,7 @@ public class MoveAmazonFilesActionBatchTest {
 		Database.executeBatch(new MoveAmazonFilesActionBatch(filesToMoveMap));
 
 		Test.stopTest();
-		
+
 		List<AmazonFile__c> deletedFiles = [SELECT Id, Full_Name_Unique__c FROM AmazonFile__c WHERE Case__c = :cse.Id];
 		System.assert(deletedFiles.size()==0, 'The files must be deleted from the original case ('+ cse.Id + ')');
 
@@ -145,9 +145,9 @@ public class MoveAmazonFilesActionBatchTest {
 		insert insertFiles;
 
 		Test.startTest();
-		
+
 		MoveAmazonFilesActionBatch mafab = new MoveAmazonFilesActionBatch(filesToMoveMap);
-		
+
 		//Force an error while trying to move the file on S3
 		AmazonRest.TESTRESULT = 'NOK';
 

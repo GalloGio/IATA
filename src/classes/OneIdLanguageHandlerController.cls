@@ -54,15 +54,15 @@ public class OneIdLanguageHandlerController {
 	}
 
 	/*******************************************************************************************************
-   * @description Returns Languages Handler tool list of support languages
-   *
-   * @return {List<LanguageHandlerCustMT__mdt>} languages - Returns list of languages.
-   *
-   * @example
-   * getLanguages();
-   */
+	 * @description Returns Languages Handler tool list of support languages
+	 *
+	 * @return {List<LanguageHandlerCustMT__mdt>} languages - Returns list of languages.
+	 *
+	 * @example
+	 * getLanguages();
+	 */
 	@AuraEnabled
-    //public static List<LanguageHandlerCustSet__c> getLanguages(){
+		//public static List<LanguageHandlerCustSet__c> getLanguages(){
 	public static String getLanguageInfo(){
 		initLanguageInfo();
 		return JSON.serialize(LanguageInfo);
@@ -70,15 +70,15 @@ public class OneIdLanguageHandlerController {
 
 
 	/*******************************************************************************************************
-    * @description Changes current language to the given one
-    *
-    * @param {string} newLanguage - New language code
-    *
-    * @return {string} currentLanguage - Return the new language set.
-    *
-    * @example
-    * changeLanguage('pt_BR');
-    */
+		* @description Changes current language to the given one
+		*
+		* @param {string} newLanguage - New language code
+		*
+		* @return {string} currentLanguage - Return the new language set.
+		*
+		* @example
+		* changeLanguage('pt_BR');
+		*/
 	@AuraEnabled
 	public static String changeLanguage(String newLanguage) {
 		initLanguageInfo();

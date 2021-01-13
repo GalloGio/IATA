@@ -6,7 +6,7 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
-        <c:ISSP_Header ></c:ISSP_Header>
+        <c:ISSP_Header></c:ISSP_Header>
         <c:iss_ap_css />
 
 
@@ -315,31 +315,31 @@
                                 </header>
                             </section>
 
-                            <apex:pageBlock >
-                                <apex:form >
+                            <apex:pageBlock>
+                                <apex:form>
                                     <apex:actionFunction action="{!startEnrolmentAccount}" name="navigateToEnrolmentPage"></apex:actionFunction>
                                     <apex:pageBlockTable value="{!cases}" var="item" styleClass="table-hover table table-condensed table-responsive">
-                                        <apex:column >
+                                        <apex:column>
                                             <apex:facet name="header">
                                                 {!$ObjectType.Case.fields.CaseNumber.label}
                                             </apex:facet>
                                             <apex:outputLink value="/apex/ISSP_Case?caseId={!item.Id}" target="_self">{!item.CaseNumber}</apex:outputLink>
                                         </apex:column>
-                                        <apex:column >
+                                        <apex:column>
                                             <apex:facet name="header">
                                                 {!$ObjectType.Case.fields.Subject.label}
                                             </apex:facet>
                                             {!item.subject}
                                         </apex:column>
 
-                                        <apex:column >
+                                        <apex:column>
                                             <apex:facet name="header">
                                                 {!$ObjectType.Case.fields.Status.label}
                                             </apex:facet>
                                             {!item.status}
                                         </apex:column>
 
-                                        <apex:column >
+                                        <apex:column>
                                             <apex:facet name="header">
                                                 {!$Label.ISSP_Home_Table_Date_Time_Opened}
                                             </apex:facet>
@@ -372,13 +372,13 @@
                                     <button id="newProductBtn" onclick="openProdDetailPage(null);return false;" class="iatabtn btn btn-block btn_iata_primary">Enroll New Product</button>
                                 </div>
 
-                                <apex:pageBlock >
-                                    <apex:form >
+                                <apex:pageBlock>
+                                    <apex:form>
                                         <apex:actionFunction action="{!NewEditProduct}" name="openProdDetailPage">
                                         </apex:actionFunction>
                                         <apex:pageBlockTable value="{!products}" var="item" styleClass="table-hover table table-condensed table-responsive">
 
-                                            <apex:column >
+                                            <apex:column>
                                                 <apex:outputPanel rendered="{!item.status != 'Draft'}">
                                                     <apex:commandLink style="margin-right:5px" title="View/Update" rendered="{!(isAdmin && isPaymentProvider)}" action="{!NewEditProduct}">
                                                         <span class="glyphicon glyphicon-eye-open " />
@@ -394,35 +394,35 @@
                                                 </apex:outputPanel>
                                             </apex:column>
 
-                                            <apex:column >
+                                            <apex:column>
                                                 <apex:facet name="header">
                                                     {!$ObjectType.Partner_products__c.fields.name.label}
                                                 </apex:facet>
                                                 {!item.name}
                                             </apex:column>
 
-                                            <apex:column >
+                                            <apex:column>
                                                 <apex:facet name="header">
                                                     {!$ObjectType.Partner_products__c.fields.PP_Payment_Network__c.label}
                                                 </apex:facet>
                                                 {!item.PaymentNetwork}
                                             </apex:column>
 
-                                            <apex:column >
+                                            <apex:column>
                                                 <apex:facet name="header">
                                                     {!$ObjectType.Partner_products__c.fields.PP_Effective_from_Date__c.label}
                                                 </apex:facet>
                                                 {!item.EffectiveFromDate}
                                             </apex:column>
 
-                                            <apex:column >
+                                            <apex:column>
                                                 <apex:facet name="header">
                                                     {!$ObjectType.Partner_products__c.fields.PP_Effective_to_Date__c.label}
                                                 </apex:facet>
                                                 {!item.EffectiveToDate}
                                             </apex:column>
 
-                                            <apex:column >
+                                            <apex:column>
                                                 <apex:facet name="header">
                                                     {!$ObjectType.Partner_products__c.fields.PP_Status__c.label}
                                                 </apex:facet>
@@ -443,7 +443,7 @@
                                         </div>
                                     </header>
                                 </section>
-                                <apex:pageBlock >
+                                <apex:pageBlock>
                                     <div>
                                         <label>{!$label.ISSP_TIP_PRIMARY_CONTACTS}</label>
                                     </div>
@@ -458,7 +458,7 @@
                                     <apex:outputText escape="false" value="{!$Label.ISSP_TIP_PRIMARY_CONTACTS_MSG}" />
                                 </apex:pageBlock>
                                 <!--ACAMBAS - TIP-313 Start -->
-                                <apex:pageBlock >
+                                <apex:pageBlock>
                                     <div style="margin-top: 20px;">
                                         <label>{!$label.ISSP_TIP_UPDATE_PROV_ACC_DETAILS}</label>
                                     </div>
@@ -477,9 +477,9 @@
             </div>
 
             <!-- ACAMBAS - TIP-241 Start -->
-            <apex:form >
+            <apex:form>
                 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                    <apex:pageblock >
+                    <apex:pageblock>
                     
                     <!-- ------------MODAL WIDOWN -------------------  -->
                     <div>
@@ -583,7 +583,7 @@
 
 
         </main>
-        <c:ISSP_CustomFooter />
+        <c:ISSP_CustomFooter/>
 
     </body>
 

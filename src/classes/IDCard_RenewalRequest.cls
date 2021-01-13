@@ -6,12 +6,12 @@ public class IDCard_RenewalRequest {
 
 	public class Payment {
 		public Double amount {get;set;}
-		public Double discount {get;set;} 
-		public String orderDate {get;set;} 
-		public String cur {get;set;} 
-		public String cardNumber {get;set;} 
-		public String promotionCode {get;set;} 
-		public String transactionNumber {get;set;} 
+		public Double discount {get;set;}
+		public String orderDate {get;set;}
+		public String cur {get;set;}
+		public String cardNumber {get;set;}
+		public String promotionCode {get;set;}
+		public String transactionNumber {get;set;}
 
 		public Payment(JSONParser parser) {
 			while (parser.nextToken() != System.JSONToken.END_OBJECT) {
@@ -41,13 +41,13 @@ public class IDCard_RenewalRequest {
 			}
 		}
 	}
-	
-	public String orderId {get;set;} 
-	public String created {get;set;} 
-	public String typeOfCard {get;set;} 
-	public List<Items> items {get;set;} 
-	public Payment payment {get;set;} 
-	public SpecializationFields specializationFields {get;set;} 
+
+	public String orderId {get;set;}
+	public String created {get;set;}
+	public String typeOfCard {get;set;}
+	public List<Items> items {get;set;}
+	public Payment payment {get;set;}
+	public SpecializationFields specializationFields {get;set;}
 
 	public IDCard_RenewalRequest(JSONParser parser) {
 		while (parser.nextToken() != System.JSONToken.END_OBJECT) {
@@ -74,13 +74,13 @@ public class IDCard_RenewalRequest {
 			}
 		}
 	}
-	
+
 	public class Items {
-		public String id {get;set;} 
-		public String description {get;set;} 
-		public Integer quantity {get;set;} 
-		public Double price {get;set;} 
-		public String training {get;set;} 
+		public String id {get;set;}
+		public String description {get;set;}
+		public Integer quantity {get;set;}
+		public Double price {get;set;}
+		public String training {get;set;}
 
 		public Items(JSONParser parser) {
 			while (parser.nextToken() != System.JSONToken.END_OBJECT) {
@@ -106,17 +106,17 @@ public class IDCard_RenewalRequest {
 			}
 		}
 	}
-	
+
 	public class SpecializationFields {
-		public String ASF_Current_Function {get;set;} 
-		public String ASF_Percentage_of_Annual_Booking {get;set;} 
-		public String ASF_Market_Specialization {get;set;} 
-		public String ASF_Market_Specialization_Comment {get;set;} 
-		public String ASF_Market_Focus {get;set;} 
-		public String ASF_Specializing_on_Destination {get;set;} 
-		public String ASF_Completed_Travel_Courses {get;set;} 
-		public String ASF_Last_Completed_Travel_Course {get;set;} 
-		public String ASF_FAM_Trips {get;set;} 
+		public String ASF_Current_Function {get;set;}
+		public String ASF_Percentage_of_Annual_Booking {get;set;}
+		public String ASF_Market_Specialization {get;set;}
+		public String ASF_Market_Specialization_Comment {get;set;}
+		public String ASF_Market_Focus {get;set;}
+		public String ASF_Specializing_on_Destination {get;set;}
+		public String ASF_Completed_Travel_Courses {get;set;}
+		public String ASF_Last_Completed_Travel_Course {get;set;}
+		public String ASF_FAM_Trips {get;set;}
 
 		public SpecializationFields(JSONParser parser) {
 			while (parser.nextToken() != System.JSONToken.END_OBJECT) {
@@ -150,18 +150,18 @@ public class IDCard_RenewalRequest {
 			}
 		}
 	}
-	
-	
+
+
 	public static IDCard_RenewalRequest parse(String json) {
 		System.JSONParser parser = System.JSON.createParser(json);
 		return new IDCard_RenewalRequest(parser);
 	}
-	
+
 	public static void consumeObject(System.JSONParser parser) {
 		Integer depth = 0;
 		do {
 			System.JSONToken curr = parser.getCurrentToken();
-			if (curr == System.JSONToken.START_OBJECT || 
+			if (curr == System.JSONToken.START_OBJECT ||
 				curr == System.JSONToken.START_ARRAY) {
 				depth++;
 			} else if (curr == System.JSONToken.END_OBJECT ||
@@ -170,21 +170,21 @@ public class IDCard_RenewalRequest {
 			}
 		} while (depth > 0 && parser.nextToken() != null);
 	}
-	
 
 
 
 
 
 
-    private static List<Items> arrayOfItems(System.JSONParser p) {
-        List<Items> res = new List<Items>();
-        if (p.getCurrentToken() == null) p.nextToken();
-        while (p.nextToken() != System.JSONToken.END_ARRAY) {
-            res.add(new Items(p));
-        }
-        return res;
-    }
+
+	private static List<Items> arrayOfItems(System.JSONParser p) {
+		List<Items> res = new List<Items>();
+		if (p.getCurrentToken() == null) p.nextToken();
+		while (p.nextToken() != System.JSONToken.END_ARRAY) {
+			res.add(new Items(p));
+		}
+		return res;
+	}
 
 
 

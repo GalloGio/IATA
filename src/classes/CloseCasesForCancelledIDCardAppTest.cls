@@ -6,22 +6,22 @@ private class CloseCasesForCancelledIDCardAppTest {
 
 		//create a country
 		IATA_ISO_Country__c country =  new IATA_ISO_Country__c();
-        country.Name = 'Portugal';
-        country.ISO_Code_Numeric__c = 620;
-        country.AIMS_Area_ID__c = '2';
-        country.ISO_Code__c = 'PT';
-        insert country;
+		country.Name = 'Portugal';
+		country.ISO_Code_Numeric__c = 620;
+		country.AIMS_Area_ID__c = '2';
+		country.ISO_Code__c = 'PT';
+		insert country;
 
 		//create an account
 		Account acc = new Account();
 		acc.Name = 'Account Test';
 		acc.IATACode__c = '1234567';
-        acc.Type = 'IATA Passenger Sales Agent';
+		acc.Type = 'IATA Passenger Sales Agent';
 		acc.IATA_ISO_Country__c = country.Id;
-        acc.Location_Type__c = 'HO';
-        acc.Location_Class__c = 'P';
-        acc.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
-        insert acc;
+		acc.Location_Type__c = 'HO';
+		acc.Location_Class__c = 'P';
+		acc.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+		insert acc;
 
 		//create a price table
 		Price_Table__c  p1 = new Price_Table__c();
@@ -34,25 +34,25 @@ private class CloseCasesForCancelledIDCardAppTest {
 		ID_Card_Application__c idCardApp = new ID_Card_Application__c();
 		idCardApp.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Mass_Order_Application');
 		idCardApp.Title__c = 'Mr';
-        idCardApp.First_Name__c = 'FIRSTNAME';
-        idCardApp.Last_Name__c = 'LASTNAME';
-        idCardApp.Approving_Manager_s_Email__c = 'managertest@admintest.test';
-        idCardApp.Approving_Manager_s_Name__c = 'Manager';
-        idCardApp.Date_of_Birth__c = Date.newInstance(1980,12,12);
-        idCardApp.Displayed_Name__c = 'FIRSTNAME LASTNAME';
-        idCardApp.Type_of_application__c = 'New';
-        idCardApp.Gender__c = 'M';
-        idCardApp.Solicitation_Flag__c = true;
-        idCardApp.IATA_Code__c = '1234567';
-        idCardApp.Start_Date_Agency_Year__c = '2001';
-        idCardApp.Start_Date_Agency_Month__c = 'January';
-        idCardApp.Start_Date_Industry__c = '2000';
-        idCardApp.Duties_in_Current_Agency__c = 'Sales';
-        idCardApp.Position_in_Current_Agency__c = 'Director';
-        idCardApp.Hours_worked__c = '35 h or more';
-        idCardApp.Email_admin__c = 'testidcard@testmassapp.test';
-        idCardApp.Application_Status__c = 'Pending';
-        insert idCardApp;
+		idCardApp.First_Name__c = 'FIRSTNAME';
+		idCardApp.Last_Name__c = 'LASTNAME';
+		idCardApp.Approving_Manager_s_Email__c = 'managertest@admintest.test';
+		idCardApp.Approving_Manager_s_Name__c = 'Manager';
+		idCardApp.Date_of_Birth__c = Date.newInstance(1980,12,12);
+		idCardApp.Displayed_Name__c = 'FIRSTNAME LASTNAME';
+		idCardApp.Type_of_application__c = 'New';
+		idCardApp.Gender__c = 'M';
+		idCardApp.Solicitation_Flag__c = true;
+		idCardApp.IATA_Code__c = '1234567';
+		idCardApp.Start_Date_Agency_Year__c = '2001';
+		idCardApp.Start_Date_Agency_Month__c = 'January';
+		idCardApp.Start_Date_Industry__c = '2000';
+		idCardApp.Duties_in_Current_Agency__c = 'Sales';
+		idCardApp.Position_in_Current_Agency__c = 'Director';
+		idCardApp.Hours_worked__c = '35 h or more';
+		idCardApp.Email_admin__c = 'testidcard@testmassapp.test';
+		idCardApp.Application_Status__c = 'Pending';
+		insert idCardApp;
 
 		//create a case
 		Case cs = new Case();

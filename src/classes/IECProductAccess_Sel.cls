@@ -2,7 +2,7 @@
 public with sharing class IECProductAccess_Sel extends Selector {
 	public List<Schema.SObjectField> getSObjectFieldList()
 	{
-		return new List<Schema.SObjectField> 
+		return new List<Schema.SObjectField>
 		{
 			IEC_Product_Access__c.Id,
 			IEC_Product_Access__c.Active__c,
@@ -21,15 +21,15 @@ public with sharing class IECProductAccess_Sel extends Selector {
 	public List<IEC_Product_Access__c> getInactiveProductAccessBySubscriptionNumber(Set<String> setSubscriptionNumber)
 	{
 		String query = String.format(
-            'SELECT {0}  ' + 
-            'FROM {1} ' + 
-            'WHERE Subscription_Number__c IN :setSubscriptionNumber AND Active__c = false ' , 
-            new List<String>{
-                String.join(getDefaultFields(), ', '),
-                getSObjectType().getDescribe().getName()
-            }
-        );
-		
+			'SELECT {0}  ' +
+			'FROM {1} ' +
+			'WHERE Subscription_Number__c IN :setSubscriptionNumber AND Active__c = false ' ,
+			new List<String>{
+				String.join(getDefaultFields(), ', '),
+				getSObjectType().getDescribe().getName()
+			}
+		);
+
 		return Database.query(query);
 	}
 }
