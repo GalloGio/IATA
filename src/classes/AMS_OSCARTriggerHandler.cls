@@ -2795,18 +2795,25 @@ public class AMS_OSCARTriggerHandler {
 		Id volRelRT = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'VOLUNTARY_RELINQUISHMENT');
 		List<AMS_Oscar__c> oscars = filterOSCARbyRT(volRelRT, triggerNew);
 
-		if(oscars.isEmpty()|| (oldMap.get(oscar.Id).Status__c != oscar.Status__c AND oscar.Status__c == 'Closed'))
-			return;
+		if(oscars.isEmpty()) return;
 
 		Set<Id> oscarOnlineAccredIds = new Set<Id>();
 		Map<Id, Set<Id>> accountsInvolved = new Map<Id, Set<Id>>();
+		
+		//If all oscar are just being closed, there is no need to run handleVRProcess method
+		Boolean noNeedForValidations = true;
 
 		for (AMS_OSCAR__c oscar : oscars) {
-			addAccountId(oscar.Account__c);
-			addAccountId(oscar.AMS_Target_Agency__c);
-			oscarOnlineAccredIds.add(oscar.AMS_Online_Accreditation__c);
-			accountsInvolved.put(oscar.Id, new Set<Id>{oscar.Account__c});
+			if(oscar.Status__c != AMS_Utils.OSCAR_CLOSED){
+				addAccountId(oscar.Account__c);
+				addAccountId(oscar.AMS_Target_Agency__c);
+				oscarOnlineAccredIds.add(oscar.AMS_Online_Accreditation__c);
+				accountsInvolved.put(oscar.Id, new Set<Id>{oscar.Account__c});
+				noNeedForValidations = false;
+			}
 		}
+
+		if(noNeedForValidations) return;
 
 		//find all agencies involved
 		//DTULLO: Added Record Type
