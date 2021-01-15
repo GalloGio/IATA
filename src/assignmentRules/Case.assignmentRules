@@ -8165,7 +8165,7 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>OperationalManagementAmericas</assignedTo>
+            <assignedTo>OperationalManagementAP</assignedTo>
             <assignedToType>Queue</assignedToType>
             <booleanFilter>(1 OR 2) AND 3 AND 4 AND 5</booleanFilter>
             <criteriaItems>
@@ -8194,7 +8194,7 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>OperationalManagementAfricaME</assignedTo>
+            <assignedTo>OperationalManagementAP</assignedTo>
             <assignedToType>Queue</assignedToType>
             <booleanFilter>(1 OR 2) AND 3 AND 4 AND 5</booleanFilter>
             <criteriaItems>
@@ -8223,7 +8223,7 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>CasesReportingBilling</assignedTo>
+            <assignedTo>OperationalManagementAP</assignedTo>
             <assignedToType>Queue</assignedToType>
             <booleanFilter>((1 OR 2) AND 3 AND 4 AND 5) OR (6)</booleanFilter>
             <criteriaItems>
@@ -9378,7 +9378,7 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>CasesReportingBilling</assignedTo>
+            <assignedTo>OperationalManagementAP</assignedTo>
             <assignedToType>Queue</assignedToType>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
@@ -11130,7 +11130,7 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>OperationalManagementAfricaME</assignedTo>
+            <assignedTo>OperationalManagementAP</assignedTo>
             <assignedToType>Queue</assignedToType>
             <booleanFilter>1 OR (2 AND 3 AND 4)</booleanFilter>
             <criteriaItems>
@@ -11405,7 +11405,7 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>OperationalManagementAmericas</assignedTo>
+            <assignedTo>OperationalManagementAP</assignedTo>
             <assignedToType>Queue</assignedToType>
             <booleanFilter>(1 AND 2 AND 3) OR 4 OR (5 AND 6)</booleanFilter>
             <criteriaItems>
@@ -13632,16 +13632,6 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
             <team>SIDRA AME HUB R&amp;S Team 1</team>
             <team>SIDRA AME LO EAC</team>
             <template>All/IDFS_Caseassignmentstaff</template>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>CasesAmericasemails</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.Origin</field>
-                <operation>equals</operation>
-                <value>E-mail to Case - Americas,E-mail to Case - Americas FAX,E-mail to Case - Agency Services</value>
-            </criteriaItems>
-            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>Cases_Armenia_Belarus_Turkmenistan</assignedTo>
