@@ -154,7 +154,40 @@
                                 </div>
                             </template>
 
+                            <template if:true={field.isLogo}>
+                                <div key={providerId} class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
+                                    <c-portal-record-view-edit-logo key={providerId} provider-id-api={providerId}></c-portal-record-view-edit-logo>
+                                </div>
+                            </template>
 
+                            <template if:true={field.isTech}>
+                                <div key={providerId} class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
+                                    <c-portal-record-view-list key={providerId} label-api={_labels.CSP_Technology} provider-id-api={providerId}
+                                    field-api="Technology__c">
+                                    </c-portal-record-view-list>
+                                </div>
+                            </template>
+
+                            <template if:true={field.isFocusArea}>
+                                <div key={providerId} class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
+                                    <c-portal-record-view-list key={providerId} label-api={_labels.CSP_FocusAreas} provider-id-api={providerId}
+                                    field-api="Focus_Areas__c"></c-portal-record-view-list>
+                                </div>
+                            </template>
+
+                            <template if:true={field.isCategory}>
+                                <div key={providerId} class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
+                                    <c-portal-record-view-list key={providerId} label-api={_labels.CSP_Categories} provider-id-api={providerId}
+                                    field-api="Tags_of_categories__c"></c-portal-record-view-list>
+                                </div>
+                            </template>
+
+                            <template if:true={field.isTouchPoint}>
+                                <div key={providerId} class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
+                                    <c-portal-record-view-list key={providerId} label-api={_labels.CSP_Touchpoints} provider-id-api={providerId}
+                                    field-api="IATA_touchpoints__c"></c-portal-record-view-list>
+                                </div>
+                            </template>
 
                             <template if:false={field.isAccessibility}>
                                 <template if:false={field.isContactServices}>
@@ -174,7 +207,7 @@
                                                                     onclick={opensRelocateAccount}>
                                                                 </lightning-icon>
                                                                 
-                                                                <lightning-output-field class="labelValue textValue removeLinks"
+                                                                <lightning-output-field class="cenas3 labelValue textValue removeLinks"
                                                                     field-name={field.fieldName}>
                                                                 </lightning-output-field>
                                                             </template>
@@ -185,7 +218,7 @@
                                                                     <b><lightning-output-field field-name={field.fieldName}></lightning-output-field></b>
                                                                 </template>
                                                                 <template if:false={isCustomerInvoice}>
-                                                                    <lightning-output-field class="labelValue textValue" field-name={field.fieldName}></lightning-output-field>      
+                                                                    <lightning-output-field class="cenas2 labelValue textValue" field-name={field.fieldName}></lightning-output-field>      
                                                                 </template>
                                                                 <!--WMO-699 - ACAMBAS: End -->
                                                             </template>
@@ -199,7 +232,7 @@
                                                                             onclick={openChangeUserPortalStatus}>
                                                                         </lightning-icon>
                                                                 </template>
-                                                            <lightning-output-field class="labelValue textValue removeLinks"
+                                                            <lightning-output-field class="cenas1 labelValue textValue removeLinks"
                                                                     field-name={field.fieldName}>
                                                             </lightning-output-field>
                                                         </template>
@@ -670,7 +703,7 @@
 
                                                                     <template if:true={field.outputOnly}>
                                                                         <lightning-output-field
-                                                                            class="labelValue textValue removeLinks"
+                                                                            class="cenas4 labelValue textValue removeLinks"
                                                                             field-name={field.fieldName}>
                                                                         </lightning-output-field>
                                                                     </template>
@@ -717,7 +750,7 @@
 
                                                     <template if:true={field.outputOnly}>
                                                         <lightning-output-field
-                                                            class="labelValue textValue removeLinks"
+                                                            class="cenas5 labelValue textValue removeLinks"
                                                             field-name={field.fieldName}>
                                                         </lightning-output-field>
                                                     </template>

@@ -6,6 +6,12 @@ public without sharing class PortalServicesInnovationHubCtrl {
 	private static String ACCOUNT_ROLE_DETAIL_CONSUMERANDPROVIDER_RTYPE_DEVNAME = 'Consumer_and_Provider';
 	private static String INNOVATION_HUB_SERVICE_NAME = Label.InnovationHub_ServiceName;
 
+	private static String IH_ACCOUNT_ROLE_DETAILS_STATUS_DRAFT = 'Draft';
+	private static String IH_ACCOUNT_ROLE_DETAILS_STATUS_SUBMITTED = 'Submitted';
+	private static String IH_ACCOUNT_ROLE_DETAILS_STATUS_APPROVED = 'Approved';
+	private static String IH_LOGO_PATH = '/sfc/servlet.shepherd/version/download/';
+
+
 	public static Id accountRoleRecordTypeId {
 		get {
 			if(accountRoleRecordTypeId == null) {
@@ -36,17 +42,181 @@ public without sharing class PortalServicesInnovationHubCtrl {
 		set;
 	}
 
-	@AuraEnabled(cacheable = false)
-	public static ProviderInfoWrapper getInnovationHubProviderDetails(String providerId){
-		IH_Account_Role_Detail__c provider = [SELECT Id,Name,Description__c,Logo__c,Logo_File_Id__c,Legal_Name__c,Founding_Date__c,
-								Company_name__c,Funding_Stage__c,Focus_Areas__c,Tags_of_categories__c,Also_known_as__c,	Location__r.Name,
-								Solution__c,Technology__c,IATA_touchpoints__c,Number_of_employees__c,Case_Studies_Pilots__c,Recent_News__c,
-								Website__c,Link_to_Social_Media_accounts__c,Company_Description__c
-								FROM IH_Account_Role_Detail__c WHERE Id =: providerId LIMIT 1];
+	@AuraEnabled (cacheable = false)
+	public static PortalWrapperClasses.ListCardsAndPropertiesWrapper getProviderPropertiesAndCardsList(){
+	
+		PortalWrapperClasses.ListCardsAndPropertiesWrapper propertiesAndLstCards = new PortalWrapperClasses.ListCardsAndPropertiesWrapper();
+		propertiesAndLstCards.objectAPIName = 'IH_Account_Role_Detail__c';
 
-								ProviderInfoWrapper providerWp = new PortalServicesInnovationHubCtrl.ProviderInfoWrapper(provider);
-		
-		return providerWp;
+		//get the last 
+		propertiesAndLstCards.recordId = PortalServicesInnovationHubCtrl.getUserIHAccountRoleDetailWithStatus(IH_ACCOUNT_ROLE_DETAILS_STATUS_APPROVED).Id;
+		propertiesAndLstCards.lstCards = PortalServicesInnovationHubCtrl.getProviderProfileCards();
+		propertiesAndLstCards.viewNavigation = true;
+
+		return propertiesAndLstCards;
+	}
+
+	private static List<PortalWrapperClasses.CardWrapper> getProviderProfileCards(){
+		//stores each card
+		List<PortalWrapperClasses.CardWrapper> lstCardWrapper = new List<PortalWrapperClasses.CardWrapper>();
+
+		//COMPANY INFORMATION
+		List<PortalWrapperClasses.FieldWrapper> lstfw1 = new List<PortalWrapperClasses.FieldWrapper>();
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Company_name__c',true,true));
+		PortalWrapperClasses.FieldWrapper logo = new PortalWrapperClasses.FieldWrapper('Logo_File_Id__c',true,false);
+		logo.isLogo = true;
+		lstfw1.add(logo);
+		PortalWrapperClasses.FieldWrapper fa = new PortalWrapperClasses.FieldWrapper('Focus_Areas__c',true,false);
+		fa.isFocusArea = true;
+		lstfw1.add(fa);
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Legal_Name__c',true,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Number_of_employees__c',true,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Also_known_as__c',true,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Company_Description__c',true,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Location__c',true,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Website__c',true,true));
+		lstCardWrapper.add(new PortalWrapperClasses.CardWrapper('Company Information', lstfw1, false,'Company Information'));
+
+		//SERVICE INFORMATION
+		List<PortalWrapperClasses.FieldWrapper> lstfw2 = new List<PortalWrapperClasses.FieldWrapper>();
+		lstfw2.add(new PortalWrapperClasses.FieldWrapper('Solution__c',false,true));
+		lstfw2.add(new PortalWrapperClasses.FieldWrapper('Case_Studies_Pilots__c',true,true));
+		PortalWrapperClasses.FieldWrapper tech = new PortalWrapperClasses.FieldWrapper('Technology__c',true,false);
+		tech.isTech = true;
+		lstfw2.add(tech);
+		PortalWrapperClasses.FieldWrapper cat = new PortalWrapperClasses.FieldWrapper('Tags_of_categories__c',true,false);
+		cat.isCategory = true;
+		lstfw2.add(cat);
+		lstfw2.add(new PortalWrapperClasses.FieldWrapper('Contact_info_of_startup__c',true,true));
+		lstfw2.add(new PortalWrapperClasses.FieldWrapper('Industry_Perspectives__c',true,true));
+		lstfw2.add(new PortalWrapperClasses.FieldWrapper('Competition_Competitors__c',true,true));
+		lstfw2.add(new PortalWrapperClasses.FieldWrapper('Competitive_Advantage__c',true,true));
+		lstfw2.add(new PortalWrapperClasses.FieldWrapper('Funding_Amount__c',true,true));
+		lstfw2.add(new PortalWrapperClasses.FieldWrapper('Funding_Rounds__c',true,true));
+		lstfw2.add(new PortalWrapperClasses.FieldWrapper('Funding_Stage__c',true,true));
+		PortalWrapperClasses.FieldWrapper tp = new PortalWrapperClasses.FieldWrapper('IATA_touchpoints__c',true,false);
+		tp.isTouchPoint = true;
+		lstfw2.add(tp);
+		lstfw2.add(new PortalWrapperClasses.FieldWrapper('Investors__c',true,true));
+		lstfw2.add(new PortalWrapperClasses.FieldWrapper('Link_to_Social_Media_accounts__c',true,true));
+		lstCardWrapper.add(new PortalWrapperClasses.CardWrapper('Service Information', lstfw2, false,'Service Information'));
+
+		return lstCardWrapper;
+	}
+
+	@AuraEnabled (cacheable = false)
+	public static PortalWrapperClasses.ListCardsAndPropertiesWrapper getProviderPropertiesAndEditCardsList(){
+	
+		PortalWrapperClasses.ListCardsAndPropertiesWrapper propertiesAndLstCards = new PortalWrapperClasses.ListCardsAndPropertiesWrapper();
+		propertiesAndLstCards.objectAPIName = 'IH_Account_Role_Detail__c';
+		propertiesAndLstCards.recordId = PortalServicesInnovationHubCtrl.getUserIHAccountRoleDetailWithStatus(IH_ACCOUNT_ROLE_DETAILS_STATUS_DRAFT).Id;
+		propertiesAndLstCards.lstCards = PortalServicesInnovationHubCtrl.getProviderProfileCardsForEdit();
+		propertiesAndLstCards.viewNavigation = true;
+
+		return propertiesAndLstCards;
+	}
+
+	private static List<PortalWrapperClasses.CardWrapper> getProviderProfileCardsForEdit(){
+		//stores each card
+		List<PortalWrapperClasses.CardWrapper> lstCardWrapper = new List<PortalWrapperClasses.CardWrapper>();
+
+		//COMPANY INFORMATION
+		List<PortalWrapperClasses.FieldWrapper> lstfw1 = new List<PortalWrapperClasses.FieldWrapper>();
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Company_name__c',true,true));
+		PortalWrapperClasses.FieldWrapper logo = new PortalWrapperClasses.FieldWrapper('Logo_File_Id__c',true,false);
+		logo.isLogo = true;
+		lstfw1.add(logo);
+		PortalWrapperClasses.FieldWrapper fa = new PortalWrapperClasses.FieldWrapper('Focus_Areas__c',true,false);
+		fa.isFocusArea = true;
+		lstfw1.add(fa);
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Legal_Name__c',true,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Number_of_employees__c',true,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Also_known_as__c',true,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Company_Description__c',true,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Location__c',true,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Website__c',true,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Solution__c',false,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Case_Studies_Pilots__c',true,true));
+		PortalWrapperClasses.FieldWrapper tech = new PortalWrapperClasses.FieldWrapper('Technology__c',true,false);
+		tech.isTech = true;
+		lstfw1.add(tech);
+		PortalWrapperClasses.FieldWrapper cat = new PortalWrapperClasses.FieldWrapper('Tags_of_categories__c',true,false);
+		cat.isCategory = true;
+		lstfw1.add(cat);
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Contact_info_of_startup__c',true,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Industry_Perspectives__c',true,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Competition_Competitors__c',true,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Competitive_Advantage__c',true,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Funding_Amount__c',true,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Funding_Rounds__c',true,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Funding_Stage__c',true,true));
+		PortalWrapperClasses.FieldWrapper tp = new PortalWrapperClasses.FieldWrapper('IATA_touchpoints__c',true,false);
+		tp.isTouchPoint = true;
+		lstfw1.add(tp);
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Investors__c',true,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Link_to_Social_Media_accounts__c',true,true));
+		lstCardWrapper.add(new PortalWrapperClasses.CardWrapper('New Details', lstfw1, false,'New Details'));
+
+		return lstCardWrapper;
+	}
+
+	@AuraEnabled (cacheable = false)
+	public static PortalWrapperClasses.ListCardsAndPropertiesWrapper getProviderDetailsPropertiesAndCardsList(String providerId){
+	
+		PortalWrapperClasses.ListCardsAndPropertiesWrapper propertiesAndLstCards = new PortalWrapperClasses.ListCardsAndPropertiesWrapper();
+		propertiesAndLstCards.objectAPIName = 'IH_Account_Role_Detail__c';
+		propertiesAndLstCards.recordId = providerId;
+		propertiesAndLstCards.lstCards = PortalServicesInnovationHubCtrl.getProviderDetailsPageCardDetails();
+		propertiesAndLstCards.viewNavigation = false;
+
+		return propertiesAndLstCards;
+	}
+
+	private static List<PortalWrapperClasses.CardWrapper> getProviderDetailsPageCardDetails(){
+		//stores each card
+		List<PortalWrapperClasses.CardWrapper> lstCardWrapper = new List<PortalWrapperClasses.CardWrapper>();
+
+		//COMPANY INFORMATION
+		List<PortalWrapperClasses.FieldWrapper> lstfw1 = new List<PortalWrapperClasses.FieldWrapper>();
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Company_name__c',false,true));
+		PortalWrapperClasses.FieldWrapper logo = new PortalWrapperClasses.FieldWrapper('Logo_File_Id__c',true,false);
+		logo.isLogo = true;
+		lstfw1.add(logo);
+		PortalWrapperClasses.FieldWrapper fa = new PortalWrapperClasses.FieldWrapper('Focus_Areas__c',true,false);
+		fa.isFocusArea = true;
+		lstfw1.add(fa);
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Legal_Name__c',false,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Number_of_employees__c',false,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Also_known_as__c',false,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Company_Description__c',false,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Location__c',false,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Website__c',false,true));
+
+		//SERVICE INFORMATION
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Solution__c',false,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Case_Studies_Pilots__c',false,true));
+		PortalWrapperClasses.FieldWrapper tech = new PortalWrapperClasses.FieldWrapper('Technology__c',true,false);
+		tech.isTech = true;
+		lstfw1.add(tech);
+		PortalWrapperClasses.FieldWrapper cat = new PortalWrapperClasses.FieldWrapper('Tags_of_categories__c',true,false);
+		cat.isCategory = true;
+		lstfw1.add(cat);
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Contact_info_of_startup__c',false,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Industry_Perspectives__c',false,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Competition_Competitors__c',false,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Competitive_Advantage__c',false,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Funding_Amount__c',false,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Funding_Rounds__c',false,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Funding_Stage__c',false,true));
+		PortalWrapperClasses.FieldWrapper tp = new PortalWrapperClasses.FieldWrapper('IATA_touchpoints__c',true,false);
+		tp.isTouchPoint = true;
+		lstfw1.add(tp);
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Investors__c',false,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Link_to_Social_Media_accounts__c',false,true));
+
+		lstCardWrapper.add(new PortalWrapperClasses.CardWrapper('Company Information', lstfw1, false,'Company Information'));
+
+		return lstCardWrapper;
 	}
 
 	@AuraEnabled(cacheable = false)
@@ -99,41 +269,33 @@ public without sharing class PortalServicesInnovationHubCtrl {
 	public static List<TabWrapper> getInnovationHubTabs(){
 		List<TabWrapper> lstTabs = new List<TabWrapper>();
 
-		//Home tab always visible
-		lstTabs.add(new TabWrapper(0, Label.CSP_Service_InnovationHub_HomeTab, true, '', true));
-		lstTabs.add(new TabWrapper(1, Label.CSP_Service_InnovationHub_SearchTab, false, '', true));
-		lstTabs.add(new TabWrapper(2, Label.CSP_Service_InnovationHub_ProviderProfileTab, false, '', true));
+		lstTabs.add(new TabWrapper(0, Label.CSP_Service_InnovationHub_SearchTab, false, '', true));
+		lstTabs.add(new TabWrapper(1, Label.CSP_Service_InnovationHub_ProviderProfileTab, false, '', true));
 
 		//get the users account role 
-		User currentUser = CSP_Utils.getLoggedUser();
-		List<IH_Account_Role_Detail__c> lstAccountRoles = [SELECT Id, RecordType.DeveloperName FROM IH_Account_Role_Detail__c 
-															WHERE Account_Role__r.Account__c = :currentUser.Contact.AccountId
-															AND Account_Role__r.RecordType.DeveloperName = :ACCOUNT_ROLE_INNOVATIONHUB_RTYPE_DEVNAME];
+		IH_Account_Role_Detail__c userAccountRole = PortalServicesInnovationHubCtrl.getUserIHAccountRoleDetailWithStatus(''); //ANY STATUS
 		
-		//no account role -> view just home
-		if(lstAccountRoles == null || lstAccountRoles.isEmpty()){
-			lstTabs.get(0).tabIsHidden = false;
+		//no account role -> no access to service
+		if(userAccountRole == null){
+			lstTabs = new List<TabWrapper>();
 		}else{
-
-			//Functional role = "provider" -> view home and provider profile tabs
-			if(lstAccountRoles.get(0).RecordType.DeveloperName == ACCOUNT_ROLE_DETAIL_PROVIDER_RTYPE_DEVNAME){
-				lstTabs.get(0).tabIsHidden = false;
-				lstTabs.get(2).tabIsHidden = false;
-			}
-			//Functional role = "consumer" -> view home and search tabs
-			if(lstAccountRoles.get(0).RecordType.DeveloperName == ACCOUNT_ROLE_DETAIL_CONSUMER_RTYPE_DEVNAME){
-				lstTabs.get(0).tabIsHidden = false;
+			//Functional role = "provider" -> provider profile tab
+			if(userAccountRole.RecordType.DeveloperName == ACCOUNT_ROLE_DETAIL_PROVIDER_RTYPE_DEVNAME){
 				lstTabs.get(1).tabIsHidden = false;
+				lstTabs.get(1).tabIsActive = true;
+			}
+			//Functional role = "consumer" -> view search tab
+			if(userAccountRole.RecordType.DeveloperName == ACCOUNT_ROLE_DETAIL_CONSUMER_RTYPE_DEVNAME){
+				lstTabs.get(0).tabIsHidden = false;
+				lstTabs.get(0).tabIsActive = true;
 			}
 			//Functional role = "provider & consumer" -> view all tabs
-			if(lstAccountRoles.get(0).RecordType.DeveloperName == ACCOUNT_ROLE_DETAIL_CONSUMERANDPROVIDER_RTYPE_DEVNAME){
+			if(userAccountRole.RecordType.DeveloperName == ACCOUNT_ROLE_DETAIL_CONSUMERANDPROVIDER_RTYPE_DEVNAME){
 				lstTabs.get(0).tabIsHidden = false;
 				lstTabs.get(1).tabIsHidden = false;
-				lstTabs.get(2).tabIsHidden = false;
+				lstTabs.get(0).tabIsActive = true;
 			}
-
 		}
-
 		return lstTabs;
 	}
 
@@ -160,17 +322,19 @@ public without sharing class PortalServicesInnovationHubCtrl {
 		}
 
 		if(technologies.size()>0){
-			query+= ' AND Technology__c IN :technologies';	
+			String techOptions = String.join(technologies,';');
+			query+= ' AND Technology__c includes ( \'' + techOptions + '\'' + ')';	
 		}
 
 		if(focusAreas.size()>0){
-			query+= ' AND Focus_Areas__c IN :focusAreas';	
+			String focusOptions = String.join(focusAreas,';');
+			query+= ' AND Focus_Areas__c includes ( \'' + focusOptions + '\'' + ')';
 		}
 
 		if(categories.size()>0){
-			query+= ' AND Tags_of_categories__c IN :categories';	
+			String categoriesOptions = String.join(categories,';');
+			query+= ' AND Tags_of_categories__c includes ( \'' + categoriesOptions + '\'' + ')';	
 		}
-
 
 		query+= ' ORDER BY Company_name__c ASC';
 
@@ -183,8 +347,80 @@ public without sharing class PortalServicesInnovationHubCtrl {
 		return lstProviders;
 	}
 
+	@AuraEnabled(cacheable = false)
 	public static String getProviderImgURL(String logoId) {
-		return URL.getOrgDomainUrl().toExternalForm() + '/sfc/servlet.shepherd/version/download/' + logoId;
+		if(logoId != null){
+			return URL.getOrgDomainUrl().toExternalForm() + IH_LOGO_PATH + logoId;
+		}
+
+		return null;
+	}
+
+	@AuraEnabled(cacheable = false)
+	public static String getProviderImgURLById(String providerId) {
+		String logoId = '';
+		if(providerId != null && providerId != ''){
+			logoId = [SELECT Logo_File_Id__c FROM IH_Account_Role_Detail__c 
+					 WHERE Id = :providerId LIMIT 1].Logo_File_Id__c;
+		}
+		else{
+			logoId = getUserIHAccountRoleDetailWithStatus('').Logo_File_Id__c;
+		}
+		
+		return getProviderImgURL(logoId);
+
+	}
+
+	@AuraEnabled(cacheable = false)
+	public static List<IH_Account_Role_Detail__c> getProviderFieldLists(String providerId,String field) {
+
+		if(providerId == null || providerId == '' ){
+			providerId = getUserIHAccountRoleDetailWithStatus('').Id;
+		}
+
+		String queryAux = 'SELECT ' + field + ' FROM IH_Account_Role_Detail__c WHERE Id = ';
+		queryAux += '\'' + providerId + '\'' + ' LIMIT 1';	
+
+		List<IH_Account_Role_Detail__c> detail = Database.query(queryAux); 	
+
+		return detail;
+
+	}
+
+	private static IH_Account_Role_Detail__c getUserIHAccountRoleDetailWithStatus(String status){
+		//get the users account role detail
+		User currentUser = CSP_Utils.getLoggedUser();
+		String statusAux = '%' + status + '%';
+		List<IH_Account_Role_Detail__c> lstAccountRoles = [SELECT Id, RecordType.DeveloperName,Logo_File_Id__c FROM IH_Account_Role_Detail__c 
+															WHERE Account_Role__r.Account__c = :currentUser.Contact.AccountId
+															AND Account_Role__r.RecordType.DeveloperName = :ACCOUNT_ROLE_INNOVATIONHUB_RTYPE_DEVNAME 
+															AND Status__c LIKE :statusAux LIMIT 1];
+		return lstAccountRoles != null && !lstAccountRoles.isEmpty() ? lstAccountRoles.get(0) : null;
+	}
+
+	public static IH_Account_Role_Detail__c getLastestPublishedProviderUserIHAccountRoleDetail(){
+		//get the users account role detail
+		User currentUser = CSP_Utils.getLoggedUser();
+		List<IH_Account_Role_Detail__c> lstAccountRoles = [SELECT Id, RecordType.DeveloperName FROM IH_Account_Role_Detail__c 
+															WHERE Account_Role__r.Account__c = :currentUser.Contact.AccountId
+															AND (RecordType.DeveloperName = :ACCOUNT_ROLE_DETAIL_PROVIDER_RTYPE_DEVNAME OR 
+															RecordType.DeveloperName = :ACCOUNT_ROLE_DETAIL_CONSUMERANDPROVIDER_RTYPE_DEVNAME) 
+															AND Published__c = true
+															AND Status__c = :IH_ACCOUNT_ROLE_DETAILS_STATUS_APPROVED 
+															ORDER BY LastModifiedDate DESC LIMIT 1];
+		return lstAccountRoles != null && !lstAccountRoles.isEmpty() ? lstAccountRoles.get(0) : null;
+	}
+
+	public static IH_Account_Role_Detail__c getLastestDraftProviderUserIHAccountRoleDetail(){
+		//get the users account role detail
+		User currentUser = CSP_Utils.getLoggedUser();
+		List<IH_Account_Role_Detail__c> lstAccountRoles = [SELECT Id, RecordType.DeveloperName FROM IH_Account_Role_Detail__c 
+															WHERE Account_Role__r.Account__c = :currentUser.Contact.AccountId
+															AND (RecordType.DeveloperName = :ACCOUNT_ROLE_DETAIL_PROVIDER_RTYPE_DEVNAME OR 
+															RecordType.DeveloperName = :ACCOUNT_ROLE_DETAIL_CONSUMERANDPROVIDER_RTYPE_DEVNAME) 
+															AND Status__c = :IH_ACCOUNT_ROLE_DETAILS_STATUS_DRAFT
+															ORDER BY LastModifiedDate DESC LIMIT 1];
+		return lstAccountRoles != null && !lstAccountRoles.isEmpty() ? lstAccountRoles.get(0) : null;
 	}
 
 	public class TabWrapper {
@@ -226,66 +462,6 @@ public without sharing class PortalServicesInnovationHubCtrl {
 			description = descriptionAux;
 			imageUrl = imageUrlAux;
 			logoId = logoIdAux;
-		}
-
-	}
-
-	public class ProviderInfoWrapper {
-		@AuraEnabled
-		public String id {get; set;}
-		@AuraEnabled
-		public String imageUrl {get; set;}
-		@AuraEnabled
-		public String legalName {get; set;}
-		@AuraEnabled
-		public String alsoKnownAs {get; set;}
-		@AuraEnabled
-		public String companyDescription {get; set;}
-		@AuraEnabled
-		public Decimal foundingDate {get; set;}
-		@AuraEnabled
-		public String location {get; set;}
-		@AuraEnabled
-		public String solution {get; set;}
-		@AuraEnabled
-		public List<String> technologies {get; set;}
-		@AuraEnabled
-		public List<String> focusAreas {get; set;}
-		@AuraEnabled
-		public List<String> categories {get; set;}
-		@AuraEnabled
-		public List<String> iataTouchPoints {get; set;}
-		@AuraEnabled
-		public String numEmployees {get; set;}
-		@AuraEnabled
-		public String pilots {get; set;}
-		@AuraEnabled
-		public String recentNews {get; set;}
-		@AuraEnabled
-		public String website {get; set;}
-		@AuraEnabled
-		public String socialMedia {get; set;}
-
-		public ProviderInfoWrapper(IH_Account_Role_Detail__c providerAux){
-			id = providerAux.id;
-			imageUrl = getProviderImgURL(providerAux.Logo_File_Id__c);
-			legalName = providerAux.Legal_Name__c;
-			alsoKnownAs = providerAux.Also_known_as__c;
-			companyDescription = providerAux.Company_Description__c;
-			foundingDate = providerAux.Founding_Date__c;
-			location = providerAux.Location__r.Name;
-			solution = providerAux.Solution__c;
-			solution = solution.replaceAll('<[^>]+>',' ');
-			technologies = providerAux.Technology__c.split(';');
-			focusAreas = providerAux.Focus_Areas__c.split(';');
-			categories = providerAux.Tags_of_categories__c.split(';');
-			iataTouchPoints = providerAux.IATA_touchpoints__c.split(';');
-			numEmployees = providerAux.Number_of_employees__c;
-			pilots = providerAux.Case_Studies_Pilots__c;
-			recentNews = providerAux.Recent_News__c;
-			website = providerAux.Website__c;
-			socialMedia = providerAux.Link_to_Social_Media_accounts__c;
-
 		}
 
 	}

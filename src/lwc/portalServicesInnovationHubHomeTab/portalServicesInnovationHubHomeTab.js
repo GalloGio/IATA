@@ -1,21 +1,16 @@
-import { LightningElement,track } from 'lwc';
+import { LightningElement, track } from 'lwc';
 
-//import apex methods
-import getInnovationHubServiceDetails from '@salesforce/apex/PortalServicesInnovationHubCtrl.getInnovationHubServiceDetails';
+//import labels
+import CSP_Service_InnovationHub_NoAccess from '@salesforce/label/c.CSP_Service_InnovationHub_NoAccess';
 
 export default class PortalServicesInnovationHubHomeTab extends LightningElement {
 
-    @track componentLoading = true;
-    @track serviceRecord = {};
-    
-    connectedCallback(){
-
-        getInnovationHubServiceDetails({})
-        .then(result => {
-            this.serviceRecord = JSON.parse(JSON.stringify(result));
-            this.componentLoading = false;
-        });
-    
+    @track labels = {
+        CSP_Service_InnovationHub_NoAccess
     }
+    @track componentLoading = true;
 
+    connectedCallback(){
+        this.componentLoading = false;
+    }
 }

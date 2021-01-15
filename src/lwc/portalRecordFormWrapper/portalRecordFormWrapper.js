@@ -3,6 +3,7 @@ import { LightningElement, api, track } from 'lwc';
 //navigation
 import { NavigationMixin } from 'lightning/navigation';
 import { navigateToPage } from 'c/navigationUtils';
+import { getParamsFromPage } from 'c/navigationUtils';
 
 import isAdmin from '@salesforce/apex/CSP_Utils.isAdmin';
 import getPickListValues from '@salesforce/apex/CSP_Utils.getPickListValues';
@@ -25,6 +26,10 @@ import ServicesTitle from '@salesforce/label/c.CSP_Services_Title';
 import InvalidValue from '@salesforce/label/c.csp_InvalidPhoneValue';
 import CompleteField from '@salesforce/label/c.csp_CompleteField';
 import RelocateAccount from '@salesforce/label/c.ISSP_Relocate_Contact';
+import CSP_Technology from '@salesforce/label/c.CSP_Technology';
+import CSP_FocusAreas from '@salesforce/label/c.CSP_FocusAreas';
+import CSP_Categories from '@salesforce/label/c.CSP_Categories';
+import CSP_Touchpoints from '@salesforce/label/c.CSP_IATA_Touchpoints';
 
 import IdCard from '@salesforce/label/c.CSP_Id_Card';
 import IdCardNumber from '@salesforce/label/c.CSP_IDCard_Ver_Number';
@@ -114,6 +119,9 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     @track sisPage;
     @track additionalEmail;
     @track otherPhone;
+    @track providerId;
+    @track logoId;
+    @track IHubListFields;
 
     timeout = null;
 
@@ -161,6 +169,10 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         CSP_Travel_Agent_Accreditation_Changes_Request,
         CSP_Airline_Changes_Access,
         CSP_CompanyAdministration_Link,
+        CSP_Technology,
+        CSP_FocusAreas,
+        CSP_Categories,
+        CSP_Touchpoints,
         IdCardName,
         IdCardPhoto,
         IdCardStatus,
@@ -221,6 +233,13 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     emptyServices = 'emptyServices';
 
     connectedCallback() {
+
+        let pageParams = getParamsFromPage();
+        if(pageParams !== undefined){
+            if(pageParams.providerId !== undefined){
+                this.providerId = pageParams.providerId;
+            }
+        }
 
         if (this.isContact) {
             getPickListValues({ sobj: 'Contact', field: 'Area__c' }).then(result => {

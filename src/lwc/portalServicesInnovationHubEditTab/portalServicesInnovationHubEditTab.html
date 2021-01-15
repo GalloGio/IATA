@@ -1,5 +1,135 @@
 <template>
 
-    <h1>Edit</h1>
-    It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).    
+    <!-- SHOW LOADING -->
+    <div if:true={componentLoading} class="spinnerContainer">
+        <lightning-spinner class="background-superLightGray" alternative-text="Loading"></lightning-spinner>
+    </div>
+
+    <div if:false={componentLoading}>
+
+        <div class="slds-grid slds-wrap slds-gutters_medium slds-grid--vertical-stretch">
+            <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1">    
+                <lightning-button class="baseButton newContainedButton buttonMinHeightMedium text-xsmall fullWidth" label="Edit" 
+                                    variant="neutral" onclick={handleOpenEditModalButtonClick}></lightning-button>
+            </div>
+
+            <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1">    
+                <c-portal-record-view-edit-cards-and-navigation properties-and-cards-list-api={propertiesAndAndCardsList}>
+                </c-portal-record-view-edit-cards-and-navigation>
+            </div>
+
+        </div>
+
+        <div if:true={showSuccessModal}>
+
+        </div>
+
+        <div if:true={showErrorModal}>
+
+        </div>
+
+        <!-- EDIT MODAL -->
+        <div if:true={showEditModal} >
+
+            <c-portal-popup-container size="half">
+                <span slot="modalHeader">
+                    <span>Edit Provider Details</span>
+                    <span class="slds-float_right slds-m-horizontal_x-small close-mark" onclick={handleCancelButtonEditModal}>
+                        <template if:false={isSaving}>
+                            <lightning-icon icon-name="utility:close" size="x-small" class="cursorPointer"
+                                onclick={handleCancelButtonEditModal}></lightning-icon>
+                        </template>
+                    </span>
+                </span>
+
+                <span slot="modalBody">
+                    <lightning-record-edit-form record-id={recordId} object-api-name={objectName}
+                        onload={loadedEdit} onsuccess={handleSucess} onsubmit={handleSubmit}
+                        onerror={handleError} density="comfy">
+
+                        <template if:true={isSaving}>
+                            <div class="modalSpinnerContainer">
+                                <lightning-spinner alternative-text="Loading" size="medium">
+                                </lightning-spinner>
+                            </div>
+                        </template>
+
+                        <template if:true={hasError}>
+                            <div class="whiteIcon text-xxsmall errorBox">
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-m-left_medium slds-size_12-of-13">
+                                        {labels.CSP_Error_Message_Mandatory_Fields_Contact}
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+
+                        <template if:false={isLoadingEdit}>
+                            <div class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_x-large">
+
+                                <lightning-messages class="toastMessage"></lightning-messages>
+
+                                <template for:each={editFields} for:item="field">
+                                    <div key={field.fieldName}
+                                    class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-m-bottom_medium">
+                                        <template if:true={field.visible}>
+                                            <template if:false={field.outputOnly}>
+                                                <template if:true={field.editable}>
+                                                    <lightning-input-field
+                                                        onchange={styleInputs}
+                                                        class="labelValue textValue"
+                                                        field-name={field.fieldName}>
+                                                    </lightning-input-field>
+                                                    <template if:true={field.invalid}>
+                                                        <div
+                                                            class="slds-form-element__help invalidValueLabel">
+                                                            {labels.InvalidValue}</div>
+                                                    </template>
+                                                    <template if:true={field.missing}>
+                                                        <div
+                                                            class="slds-form-element__help invalidValueLabel">
+                                                            {labels.CompleteField}</div>
+                                                    </template>
+                                                </template>
+                                                <template if:false={field.editable}>
+                                                    <lightning-input-field
+                                                        class="labelValue textValue disabledValue disabledInput"
+                                                        field-name={field.fieldName} disabled>
+                                                    </lightning-input-field>
+                                                </template>
+                                            </template>
+
+                                            <template if:true={field.outputOnly}>
+                                                <lightning-output-field
+                                                    class="labelValue textValue removeLinks"
+                                                    field-name={field.fieldName}>
+                                                </lightning-output-field>
+                                            </template>
+                                        </template>
+                                    </div>
+                                </template>
+                            </div>
+                        </template>
+
+                        <div class="slds-grid slds-wrap slds-gutters_medium slds-grid--vertical-stretch">
+                            <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-large-size_1-of-3">    
+                                <lightning-button class="baseButton newContainedButton buttonMinHeightMedium text-xsmall fullWidth" label="Cancel" 
+                                                    variant="neutral" onclick={handleCancelButtonEditModal}></lightning-button>
+                            </div>
+                            <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-large-size_1-of-3">    
+                                <lightning-button class="baseButton newContainedButton buttonMinHeightMedium text-xsmall fullWidth" label="Save" 
+                                                    variant="neutral" onclick={handleSaveButtonEditModal}></lightning-button>
+                            </div>
+                            <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-large-size_1-of-3">
+                                <lightning-button class="baseButton newContainedButton buttonMinHeightMedium text-xsmall fullWidth" label="Submit" 
+                                                    variant="neutral" onclick={handleSubmitButtonEditModal} type="submit" disabled={canSave}></lightning-button>
+                            </div>
+                        </div>
+                    </lightning-record-edit-form>
+                </span>
+            </c-portal-popup-container>
+        </div>
+
+    </div>
+
 </template>

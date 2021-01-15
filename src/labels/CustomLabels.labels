@@ -3781,6 +3781,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>Innovation Hub</value>
     </labels>
     <labels>
+        <fullName>CSP_Breadcrumb_Service_InnovationHub_Pro</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Breadcrumb_Service_InnovationHub_Pro</shortDescription>
+        <value>Provider</value>
+    </labels>
+    <labels>
         <fullName>CSP_Breadcrumb_Service_TIPReports</fullName>
         <categories>CSPortal</categories>
         <language>en_US</language>
@@ -5157,6 +5165,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <protected>false</protected>
         <shortDescription>IATA Invoices</shortDescription>
         <value>IATA Invoices</value>
+    </labels>
+    <labels>
+        <fullName>CSP_IATA_Touchpoints</fullName>
+        <categories>CSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP IATA Touchpoints</shortDescription>
+        <value>IATA Touchpoints</value>
     </labels>
     <labels>
         <fullName>CSP_IDCard_Name</fullName>
@@ -7759,6 +7775,14 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <protected>false</protected>
         <shortDescription>CSP_Service_InnovationHub_HomeTab</shortDescription>
         <value>Home</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Service_InnovationHub_NoAccess</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Service_InnovationHub_NoAccess</shortDescription>
+        <value>Sorry, you don&apos;t have access to service. Please contact administrator if you need to get access to this service.</value>
     </labels>
     <labels>
         <fullName>CSP_Service_InnovationHub_ProviderProfileTab</fullName>

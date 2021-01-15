@@ -7,6 +7,7 @@ export default class PortalServicesInnovationHubHomePage extends LightningElemen
 
     @track componentLoading = true;
     @track lstTabs = [];
+    @track viewTabs = false;
     
     connectedCallback(){
 
@@ -14,14 +15,16 @@ export default class PortalServicesInnovationHubHomePage extends LightningElemen
         getInnovationHubTabs({})
         .then(results => {
             let tabsAux = JSON.parse(JSON.stringify(results));
-            this.lstTabs = tabsAux;
-            this.componentLoading = false;
+            if(tabsAux !== undefined && tabsAux !== null && tabsAux.length > 0){
+                this.lstTabs = tabsAux;
+                this.componentLoading = false;
+                this.viewTabs = true;
+            }
         });
     }
 
     get tab0Active(){return this.lstTabs !== undefined && this.lstTabs.length > 0 && this.lstTabs[0].tabIsActive;}
     get tab1Active(){return this.lstTabs !== undefined && this.lstTabs.length > 0 && this.lstTabs[1].tabIsActive;}
-    get tab2Active(){return this.lstTabs !== undefined && this.lstTabs.length > 0 && this.lstTabs[2].tabIsActive;}
 
     onmouseenterTab(event){
         let clickedTab = event.target.dataset.item;

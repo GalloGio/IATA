@@ -1,0 +1,22 @@
+.displayImg{
+  width:200px;
+  height:85px;
+}
+
+.alignCenter{
+  text-align: center;
+}
+
+.stickyNavigation {
+  position:sticky;
+  top:5rem;
+}
+
+.boldText {
+  font-weight: bold;
+}
+
+.cardImagePropertiesDetail{
+  background-position: 50% 50% !important;
+  background-repeat: no-repeat !important;
+}

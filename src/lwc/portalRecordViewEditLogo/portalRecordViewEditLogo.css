@@ -1,0 +1,17 @@
+.displayImg{
+    width:200px;
+    height:70px;
+}
+  
+.cardImagePropertiesDetail{
+    background-position: 50% 50% !important;
+    background-repeat: no-repeat !important;
+}
+
+.logoMargin{
+    margin-top:-15px;
+}
+
+.noLogo{
+    margin-top:10px;
+}

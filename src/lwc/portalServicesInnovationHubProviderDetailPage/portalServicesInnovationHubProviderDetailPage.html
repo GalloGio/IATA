@@ -1,0 +1,22 @@
+<template>
+
+    <c-portal-page-container>
+        <span slot="componentContent">
+            
+            <div class="slds-p-vertical_x-large">
+
+                <!-- SHOW LOADING -->
+                <div if:true={componentLoading} class="spinnerContainer">
+                    <lightning-spinner class="background-superLightGray" alternative-text="Loading"></lightning-spinner>
+                </div>
+
+                <div if:false={componentLoading}>
+                    <c-portal-record-view-edit-cards-and-navigation properties-and-cards-list-api={propertiesAndCardsList}></c-portal-record-view-edit-cards-and-navigation>
+                </div>
+
+            </div>
+
+        </span>
+    </c-portal-page-container>
+                        
+</template>
