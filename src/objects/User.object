@@ -2645,8 +2645,8 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         <filterScope>Everything</filterScope>
         <filters>
             <field>CORE.USERS.EMAIL</field>
-            <operation>contains</operation>
-            <value>howj@iata.org</value>
+            <operation>equals</operation>
+            <value>huangjl@iata.org,dengww@iata.org,congzh@iata.org</value>
         </filters>
         <label>User with name</label>
         <language>en_US</language>
