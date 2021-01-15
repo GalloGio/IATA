@@ -152,7 +152,7 @@
     <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
-    <externalSharingModel>ControlledByParent</externalSharingModel>
+    <externalSharingModel>ReadWrite</externalSharingModel>
     <label>IH Account Role Detail</label>
     <nameField>
         <displayFormat>IHARD-{000000}</displayFormat>
@@ -163,21 +163,20 @@
     <pluralLabel>IH Account Role Details</pluralLabel>
     <recordTypeTrackHistory>false</recordTypeTrackHistory>
     <searchLayouts/>
-    <sharingModel>ControlledByParent</sharingModel>
+    <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
     <fields>
         <fullName>Account_Role__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
         <label>Account Role</label>
         <referenceTo>Account_Role__c</referenceTo>
         <relationshipLabel>IH Account Role Details</relationshipLabel>
         <relationshipName>IH_Account_Role_Details</relationshipName>
-        <relationshipOrder>0</relationshipOrder>
-        <reparentableMasterDetail>false</reparentableMasterDetail>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>MasterDetail</type>
-        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+        <type>Lookup</type>
     </fields>
     <fields>
         <fullName>Also_known_as__c</fullName>
@@ -379,13 +378,16 @@
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
-        <fullName>Founding_date__c</fullName>
+        <fullName>Founding_Date__c</fullName>
         <externalId>false</externalId>
-        <label>Founding date</label>
+        <label>Founding Date</label>
+        <precision>18</precision>
         <required>false</required>
+        <scale>0</scale>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>Date</type>
+        <type>Number</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Funding_Amount__c</fullName>
@@ -568,7 +570,7 @@
     <fields>
         <fullName>Logo__c</fullName>
         <externalId>false</externalId>
-        <formula>IMAGE(Logo_File_Id__c, &quot;&quot;)</formula>
+        <formula>IMAGE(&apos;/sfc/servlet.shepherd/version/download/&apos; + Logo_File_Id__c, &quot;&quot;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Logo</label>
         <required>false</required>
@@ -926,20 +928,1066 @@
         <fullName>Consumer</fullName>
         <active>true</active>
         <label>Consumer</label>
+        <picklistValues>
+            <picklist>Competition_Competitors__c</picklist>
+            <values>
+                <fullName>Samsung</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Focus_Areas__c</picklist>
+            <values>
+                <fullName>Airports</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Business Intelligence</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Distribution</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Environment and Sustainability</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finance %2F Payment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Flight Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fuel</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ground Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Health</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Marketing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Network Planning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger Experience</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Quality %2F Risk</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Revenue Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Safety and Security</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sanitation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Slots</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Funding_Stage__c</picklist>
+            <values>
+                <fullName>Pre-seed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Seed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Series A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Series B</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Series C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Series D</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>IATA_touchpoints__c</picklist>
+            <values>
+                <fullName>Accelerate%40IATA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hackathon</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Implementation Forum</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Strategic Partner</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Number_of_employees__c</picklist>
+            <values>
+                <fullName>1-10</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>11-20</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>20-50</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>50%2B</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Draft</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Submitted</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Tags_of_categories__c</picklist>
+            <values>
+                <fullName>Accelerate%40IATA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airports</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Business Intelligence</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Distribution</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Environment and Sustainability</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finance %2F Payment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Flight Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fuel</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ground Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hackathon</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Health</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Marketing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NDC Certified</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Network Planning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger Experience</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Quality %2F Risk</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Revenue Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Safety and Security</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sanitation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Slots</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Strategic Partner</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Technology__c</picklist>
+            <values>
+                <fullName>APIs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Analytics</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Artificial Intelligence</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Big Data</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Business Intelligence</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deep Learning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E-Commerce</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Health</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IOT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Information Technology</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Insurtech</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Machine Learning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Marketplace</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mobile</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Predictive Analytics</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reservations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SaaS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Software</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
     </recordTypes>
     <recordTypes>
         <fullName>Consumer_and_Provider</fullName>
         <active>true</active>
         <label>Consumer&amp;Provider</label>
+        <picklistValues>
+            <picklist>Competition_Competitors__c</picklist>
+            <values>
+                <fullName>Samsung</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Focus_Areas__c</picklist>
+            <values>
+                <fullName>Airports</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Business Intelligence</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Distribution</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Environment and Sustainability</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finance %2F Payment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Flight Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fuel</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ground Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Health</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Marketing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Network Planning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger Experience</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Quality %2F Risk</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Revenue Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Safety and Security</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sanitation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Slots</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Funding_Stage__c</picklist>
+            <values>
+                <fullName>Pre-seed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Seed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Series A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Series B</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Series C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Series D</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>IATA_touchpoints__c</picklist>
+            <values>
+                <fullName>Accelerate%40IATA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hackathon</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Implementation Forum</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Strategic Partner</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Number_of_employees__c</picklist>
+            <values>
+                <fullName>1-10</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>11-20</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>20-50</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>50%2B</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Draft</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Submitted</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Tags_of_categories__c</picklist>
+            <values>
+                <fullName>Accelerate%40IATA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airports</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Business Intelligence</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Distribution</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Environment and Sustainability</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finance %2F Payment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Flight Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fuel</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ground Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hackathon</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Health</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Marketing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NDC Certified</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Network Planning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger Experience</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Quality %2F Risk</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Revenue Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Safety and Security</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sanitation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Slots</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Strategic Partner</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Technology__c</picklist>
+            <values>
+                <fullName>APIs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Analytics</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Artificial Intelligence</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Big Data</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Business Intelligence</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deep Learning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E-Commerce</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Health</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IOT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Information Technology</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Insurtech</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Machine Learning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Marketplace</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mobile</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Predictive Analytics</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reservations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SaaS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Software</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
     </recordTypes>
     <recordTypes>
         <fullName>Provider</fullName>
         <active>true</active>
         <label>Provider</label>
+        <picklistValues>
+            <picklist>Competition_Competitors__c</picklist>
+            <values>
+                <fullName>Samsung</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Focus_Areas__c</picklist>
+            <values>
+                <fullName>Airports</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Business Intelligence</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Distribution</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Environment and Sustainability</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finance %2F Payment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Flight Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fuel</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ground Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Health</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Marketing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Network Planning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger Experience</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Quality %2F Risk</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Revenue Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Safety and Security</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sanitation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Slots</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Funding_Stage__c</picklist>
+            <values>
+                <fullName>Pre-seed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Seed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Series A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Series B</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Series C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Series D</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>IATA_touchpoints__c</picklist>
+            <values>
+                <fullName>Accelerate%40IATA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hackathon</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Implementation Forum</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Strategic Partner</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Number_of_employees__c</picklist>
+            <values>
+                <fullName>1-10</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>11-20</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>20-50</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>50%2B</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Status__c</picklist>
+            <values>
+                <fullName>Approved</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Draft</fullName>
+                <default>true</default>
+            </values>
+            <values>
+                <fullName>Submitted</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Tags_of_categories__c</picklist>
+            <values>
+                <fullName>Accelerate%40IATA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airports</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Business Intelligence</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Distribution</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Environment and Sustainability</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Finance %2F Payment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Flight Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fuel</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ground Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hackathon</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Health</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Marketing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>NDC Certified</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Network Planning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger Experience</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Quality %2F Risk</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Revenue Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Safety and Security</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Sanitation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Slots</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Strategic Partner</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Technology__c</picklist>
+            <values>
+                <fullName>APIs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Analytics</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Artificial Intelligence</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Big Data</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Business Intelligence</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deep Learning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E-Commerce</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Health</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IOT</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Information Technology</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Insurtech</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Machine Learning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Marketplace</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mobile</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Predictive Analytics</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Reservations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SaaS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Software</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
     </recordTypes>
     <listViews>
         <fullName>All</fullName>
         <filterScope>Everything</filterScope>
         <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>Consumers</fullName>
+        <columns>NAME</columns>
+        <columns>Company_name__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>IH_Account_Role_Detail__c.Consumer,IH_Account_Role_Detail__c.Consumer_and_Provider</value>
+        </filters>
+        <label>Consumers</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Providers</fullName>
+        <columns>NAME</columns>
+        <columns>Company_name__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>IH_Account_Role_Detail__c.Provider,IH_Account_Role_Detail__c.Consumer_and_Provider</value>
+        </filters>
+        <label>Providers</label>
+        <language>en_US</language>
     </listViews>
 </CustomObject>
