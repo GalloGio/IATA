@@ -44,7 +44,7 @@
         <members>*</members>
         <name>SharingRules</name>
     </types>
-    <types>        
+    <types>
         <members>AccountContactRole</members>
         <members>AccountOwnership</members>
         <members>AccountRating</members>
@@ -90,7 +90,7 @@
         <members>TaskSubject</members>
         <members>TaskType</members>
         <name>StandardValueSet</name>
-    </types>    
+    </types>
     <types>
         <members>*</members>
         <name>StaticResource</name>
