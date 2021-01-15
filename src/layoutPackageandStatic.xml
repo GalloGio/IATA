@@ -44,7 +44,7 @@
         <members>*</members>
         <name>SharingRules</name>
     </types>
-    <types>        
+    <types>
         <members>AccountContactRole</members>
         <members>AccountOwnership</members>
         <members>AccountRating</members>
@@ -62,7 +62,6 @@
         <members>ContactRole</members>
         <members>ContractContactRole</members>
         <!-- <members>ContractStatus</members> Remove the comment after sprint 21 release-->
-        <!-- <members>ContractStatus</members> Remove the comment after sprint 21 release--> 
         <members>EntitlementType</members>
         <members>EventSubject</members>
         <members>EventType</members>
@@ -91,7 +90,7 @@
         <members>TaskSubject</members>
         <members>TaskType</members>
         <name>StandardValueSet</name>
-    </types>    
+    </types>
     <types>
         <members>*</members>
         <name>StaticResource</name>
