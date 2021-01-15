@@ -61,7 +61,8 @@
         <members>CaseType</members>
         <members>ContactRole</members>
         <members>ContractContactRole</members>
-        <members>ContractStatus</members>
+        <!-- <members>ContractStatus</members> Remove the comment after sprint 21 release-->
+        <members>EntitlementType</members>
         <members>EventSubject</members>
         <members>EventType</members>
         <members>FiscalYearPeriodPrefix</members>
@@ -74,6 +75,7 @@
         <members>OpportunityCompetitor</members>
         <members>OpportunityStage</members>
         <members>OpportunityType</members>
+        <members>OrderStatus</members>
         <members>OrderType</members>
         <members>PartnerRole</members>
         <members>Product2Family</members>
@@ -81,6 +83,7 @@
         <members>QuickTextChannel</members>
         <members>SalesTeamRole</members>
         <members>Salutation</members>
+        <members>ServiceContractApprovalStatus</members>
         <members>SolutionStatus</members>
         <members>TaskPriority</members>
         <members>TaskStatus</members>
