@@ -132,6 +132,7 @@ public static List<PortalLookupSearchResult> searchContacts(String searchTerm) {
 //Dynamic Query to perform searches on the Contact.
 private static List<Contact> searchRelatedContacts(String searchTerm) {
 	Account currentAccount = getAccount();
+	String parentId = getParentId();
 	//prepare query
 	String finalQuery = 'SELECT Id, Name, Email FROM Contact WHERE Email != \'' + CONTACT.Email + '\' AND User_Portal_Status__c in (\'Approved Admin\',\'Approved User\') ';
 
@@ -140,19 +141,8 @@ private static List<Contact> searchRelatedContacts(String searchTerm) {
 	} else {
 		finalQuery += 'AND Status__c = \'Active\' AND (NOT Email LIKE \'%.inactive%\')';
 	}
-	finalQuery += ' AND (AccountId = \'' + currentAccount.Id + '\'';
-    if (currentAccount.ParentId != null) {
-        finalQuery += ' OR AccountId = \'' + currentAccount.ParentId + '\'';
-    } if (currentAccount.Parent.ParentId != null) {
-        finalQuery += ' OR AccountId = \'' + currentAccount.Parent.ParentId + '\'';
-    } if (currentAccount.Parent.Parent.ParentId != null) {
-        finalQuery += ' OR AccountId = \'' + currentAccount.Parent.Parent.ParentId + '\'';
-    } if (currentAccount.Parent.Parent.Parent.ParentId != null ) {
-        finalQuery += ' OR AccountId = \'' + currentAccount.Parent.Parent.Parent.ParentId + '\'';
-    } if (currentAccount.Parent.Parent.Parent.Parent.ParentId != null ) {
-        finalQuery += ' OR AccountId = \'' + currentAccount.Parent.Parent.Parent.Parent.ParentId + '\'';
-    }
-    finalQuery += ') LIMIT ' + MAX_RESULTS;
+	finalQuery += ' AND (AccountId = \'' + currentAccount.Id + '\' OR Account.ParentId = \'' + parentId + '\')';
+	finalQuery += ' LIMIT ' + MAX_RESULTS;
 	List<Contact> allContacts = DAL_WithoutSharing.getRelatedContacts(finalQuery);
 	return allContacts;
 
