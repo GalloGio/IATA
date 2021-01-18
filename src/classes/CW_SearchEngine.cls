@@ -85,7 +85,7 @@ public without sharing class CW_SearchEngine {
 			}
 			return JSON.serialize(lstARD);
 		} catch (Exception exc) {
-			throw new AuraHandledException('exception: ' + exc);
+			throw new AuraHandledException('exception: ' + exc.getMessage());
 		}
 	}
 	/*
@@ -152,13 +152,13 @@ public without sharing class CW_SearchEngine {
 		//and can end in the other side of the world at -140, so that we need to fix this maxLong and MinLong query
 		Boolean fixLongitudeQuery = false;
 		for (Param param : wrapperParams) {
-			if (param.field == 'Account_Role__r.Account__r.Business_Geo_Coordinates__Longitude__s') {
+			if (param.field != null && param.field == 'Account_Role__r.Account__r.Business_Geo_Coordinates__Longitude__s') {
 				if (param.operator == '<') {
 					maxLong = Double.valueOf(param.value);
 				} else {
 					minLong = Double.valueOf(param.value);
 				}
-			}else if((  param.field.equalsIgnoreCase('Account_Role_Detail_Capability__r.crstr_positions_ake__c')
+			}else if(param.field != null && (  param.field.equalsIgnoreCase('Account_Role_Detail_Capability__r.crstr_positions_ake__c')
 					 || param.field.equalsIgnoreCase('Account_Role_Detail_Capability__r.CRSTR_Positions_20ft_ULDs__c') 
 					 || param.field.equalsIgnoreCase('Account_Role_Detail_Capability__r.CRSTR_Positions_10ft_ULDs__c'))
 					 && param.value == 'true'){
