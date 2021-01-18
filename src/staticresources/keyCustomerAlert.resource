@@ -1,7 +1,7 @@
 dynamicallyLoadScript('//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js');
 dynamicallyLoadScript('//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js');
 
-function displayKeyCustomerAlert(targetURL, popupTitle, popupText) {	
+function displayKeyCustomerAlert(targetURL, popupTitle, popupText, newWindow) {	
 	jQuery(function() {
 		//Append the jQuery CSS CDN Link to the Head tag.
 		jQuery('head').append('<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>');
@@ -24,7 +24,7 @@ function displayKeyCustomerAlert(targetURL, popupTitle, popupText) {
 			buttons: {
 				"Ok": function() {
 					if(targetURL != null) {
-						goToURL(targetURL);
+						goToURL(targetURL, newWindow);
 					}
 					jQuery(this).dialog("close");
 				}
@@ -33,7 +33,7 @@ function displayKeyCustomerAlert(targetURL, popupTitle, popupText) {
 	});
 };
 
-function goToURL(redirectUrl) {
+function goToURL(redirectUrl, newWindow) {
     if (sforce.console.isInConsole()) {
         sforce.console.getEnclosingTabId(function(enclosingResult){
             sforce.console.getEnclosingPrimaryTabId(function(primaryResult){
@@ -41,7 +41,13 @@ function goToURL(redirectUrl) {
             });
         });
     } else {
-        window.top.location.href = redirectUrl;
+		if(newWindow == true) {
+			var win = window.open(redirectUrl, '_blank');
+			win.focus();
+		}
+		else {
+			window.top.location.href = redirectUrl;
+		} 
     }
 };
 
@@ -65,6 +71,3 @@ function dynamicallyLoadScript(url) {
     script.src = url;
     document.head.appendChild(script);
 }
-
-
-
