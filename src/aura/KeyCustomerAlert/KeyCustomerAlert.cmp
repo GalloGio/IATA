@@ -1,0 +1,38 @@
+<aura:component implements="force:hasSObjectName,flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader,force:hasRecordId" 
+controller="KeyCustomerAlertCtrl">    
+
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="urlVisualForcePage" type="String"/>
+    <aura:attribute name="showLoading" type="Boolean" default="true" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+
+    <aura:if isTrue="{!v.showLoading}">
+        <div class="exampleHolder">
+            <lightning:spinner alternativeText="Loading" size="large" />
+        </div>
+    </aura:if> 
+    
+    <aura:if isTrue="{!!v.showLoading}">
+        <lightning:layout verticalAlign="center" multipleRows="true">
+            <lightning:layoutItem padding="around-small" class="page-header" size="12">
+                <div class="page-section page-header">
+                    <h2>{!$Label.c.KEY_CUSTOMER_ALERT_TITLE}</h2>
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem flexibility="auto" size="4" class="right-align">
+                <div>
+                    <img src="{!$Resource.keyCustomerIcon}" class="img-size"/>
+                </div>
+            </lightning:layoutItem>
+            <lightning:layoutItem flexibility="auto" size="8">
+                <div>
+                    <aura:unescapedHtml value="{!$Label.c.KEY_CUSTOMER_ALERT}" />
+                </div>
+            </lightning:layoutItem>
+        </lightning:layout>
+        <hr style="margin-bottom: 3%;"></hr>
+        <div class="slds-float_right">
+            <lightning:button label="OK" onclick="{! c.gotoURL }" ></lightning:button>
+        </div>
+    </aura:if> 
+</aura:component>
