@@ -385,7 +385,13 @@
     </listViews>
     <listViews>
         <fullName>All1</fullName>
+        <columns>NAME</columns>
         <filterScope>Everything</filterScope>
+        <filters>
+            <field>NAME</field>
+            <operation>equals</operation>
+            <value>abdinasir</value>
+        </filters>
         <label>All</label>
     </listViews>
     <nameField>
