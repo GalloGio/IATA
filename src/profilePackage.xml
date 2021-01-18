@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <types>
+        <members>ACCA</members>
+        <members>ACCA ACR Assignment</members>
+        <members>Account management team</members>
+        <members>Account Manager - Company community</members>
+        <members>Account Managment - Company community</members>
+        <members>Admin</members>
+        <members>AIR Tech Zone Profile</members>
+        <members>Analytics Cloud Integration User</members>
+        <members>Analytics Cloud Security User</members>
+        <!--<members>B2BMA Integration User</members> Deployment Error: You may not turn off permission Read All ContactEncounter for this License Type -->
+        <members>Basic Integration</members>
+        <members>Basic User</members>
+        <members>Blank</members>
+        <members>Business Administrator</members>
+        <members>Chatter External User</members>
+        <members>Chatter Free User</members>
+        <members>Chatter Moderator User</members>
+        <members>CIO %28Partner%29</members>
+        <members>CIO forum Profile</members>
+        <members>Clarity Connect - Integration</members>
+        <members>Company Communities User</members>
+        <members>ContractManager</members>
+        <members>Corporate Compliance</members>
+        <members>CS - Corporate Planning and Control</members>
+        <members>CS Portal Profile</members>
+        <members>Customer Community Login User</members>
+        <members>Customer Community User</members>
+        <members>Customer Portal Manager Custom</members>
+        <members>Customer Portal Manager Standard</members>
+        <members>Customer Portal Manager Standard Cloned</members>
+        <members>Data Privacy Profile</members>
+        <members>Dev - Read only</members>
+        <members>Developer</members>
+        <members>DG - Corporate Communications</members>
+        <members>DG - Corporate Services</members>
+        <members>E%26F Management</members>
+        <members>E%26F staff</members>
+        <members>E-commerce Profile</members>
+        <members>Ecom Portal Integration Profile</members>
+        <members>Elastic Search - Integration</members>
+        <members>External Identity User</members>
+        <members>External Users</members>
+        <members>FDS %E2%80%93 Agency Management %E2%80%93 Hub Administrator</members>
+        <members>FDS %E2%80%93 Agency Management - Supervisor %28Approver%29</members>
+        <members>FDS - Read Only</members>
+        <members>FDS Hub Analyst ARM</members>
+        <members>FDS Hub Analyst ARM AI</members>
+        <members>FDS ICCS Administrator</members>
+        <members>FDS ICCS User</members>
+        <members>FDS Products</members>
+        <members>GADM Internal User</members>
+        <members>GADM Program Manager</members>
+        <members>GCS - Management</members>
+        <members>GCS - Management - AI</members>
+        <members>GCS - Staff</members>
+        <members>GCS - Staff - AI</members>
+        <members>GDP - Administrator</members>
+        <members>GDPR</members>
+        <members>Guest License User</members>
+        <members>IATA - Sales Director</members>
+        <members>IATA Central Billing</members>
+        <members>IATA Customer Community User</members>
+        <members>IATA IDCard Profile</members>
+        <members>IATA IDCard TEST Profile</members>
+        <members>IATA IW - Internal Super User</members>
+        <members>IATA IW - Sevice Provider User %28iPayables%29</members>
+        <members>IATAN Manager</members>
+        <members>IATAN Staff</members>
+        <members>IATA Portal1389712205152 Profile</members>
+        <members>IATA Portal Integration Profile</members>
+        <members>IATA Portal Profile</members>
+        <members>IATA Public KB Profile</members>
+        <members>IATA Public KB Profile1601972682602</members>
+        <members>IATA Training - Support Team</members>
+        <members>IDCard Portal Profile</members>
+        <members>Identity Portal</members>
+        <members>identity Profile</members>
+        <members>Identity User</members>
+        <members>IDFS A%26P - Country Office Staff</members>
+        <members>IDFS A%26P - Country Office Supervisor</members>
+        <members>IDFS Airline Coding and MITA</members>
+        <members>IDFS Airline Participation Staff - HO</members>
+        <members>IDFS Airline Participation Supervisor - HO</members>
+        <members>IDFS AME - Country Office Staff</members>
+        <members>IDFS AME - Country Office Supervisor</members>
+        <members>IDFS Americas - Country Office Staff</members>
+        <members>IDFS Americas - Country Office Supervisor</members>
+        <members>IDFS Americas - Hub Staff R%26S</members>
+        <members>IDFS Americas - Hub Supervisor</members>
+        <members>IDFS China %26 North Asia - Country Office Supervisor</members>
+        <members>IDFS China %26 North Asia - Country Staff</members>
+        <members>IDFS Distribution</members>
+        <members>IDFS Distribution - Business Delivery HO</members>
+        <members>IDFS Distribution - Business Delivery RQMs</members>
+        <members>IDFS Distribution - Operations</members>
+        <members>IDFS Europe - Country Office Management</members>
+        <members>IDFS Europe - Country Office Management %28hub countries%29</members>
+        <members>IDFS Europe - Country Office Staff</members>
+        <members>IDFS Europe - Country Office Staff %28hub countries%29</members>
+        <members>IDFS Europe - Country Office Staff %28hub countries - Italy%29</members>
+        <members>IDFS Europe - Country Office Supervisor %28hub countries%29</members>
+        <members>IDFS Europe - Country Office Supervisor %28R%26S only migrated countries%29</members>
+        <members>IDFS Passenger - Distribution Solutions</members>
+        <members>IDFS TIP</members>
+        <members>IEC Site Profile</members>
+        <members>IFAP Customer Portal User</members>
+        <members>IFAP forgot password Profile</members>
+        <members>IFAP login Profile</members>
+        <members>IFAP registration Profile</members>
+        <members>IFG Business Team</members>
+        <members>IFG Support Team</members>
+        <members>iiNet Business Team</members>
+        <members>Intellimail Profile</members>
+        <members>ISS Portal</members>
+        <members>ISS Portal %28Partner%29</members>
+        <members>ISS Portal Agency Delegated Admin User</members>
+        <members>ISS Portal Agency User</members>
+        <members>ISS Portal Agency User %28Partner%29</members>
+        <members>ISS Portal Airline Delegated Admin User</members>
+        <members>ISS Portal Airline User</members>
+        <members>ISS Portal Airline User %28Partner%29</members>
+        <members>ISS Portal Delegated Admin User</members>
+        <members>ISS Portal DPC</members>
+        <members>ISS Portal DPC Admin</members>
+        <members>ISS Portal GSA Delegated Admin User</members>
+        <members>ISS Portal GSA User %28Partner%29</members>
+        <members>ISS Portal PwC2</members>
+        <members>L3 Global CS</members>
+        <members>Log an Enquiry Profile</members>
+        <members>Log an Enquiry Profile1392839059511</members>
+        <members>MACS - Administrator</members>
+        <members>MACS - Customer Care</members>
+        <members>MACS - Direct Sales</members>
+        <members>MACS - Events - Worldtek</members>
+        <members>MACS - Field Sales</members>
+        <members>MACS - IATAN - TIESS</members>
+        <members>MACS - Marketing %26 Publishing</members>
+        <members>MACS - Product</members>
+        <members>MACS - Strategic Partnerships</members>
+        <members>MarketingProfile</members>
+        <members>MER Membership</members>
+        <members>Minimum Access - Salesforce</members>
+        <members>ONE Source Profile</members>
+        <members>Overage High Volume Customer Portal User</members>
+        <members>Partner Community User</members>
+        <members>Premier Support User</members>
+        <members>ReadOnly</members>
+        <members>Restricted Profile - automated process</members>
+        <members>SalesforceIQ Integration User</members>
+        <members>Sales Insights Integration User</members>
+        <members>Signaturit</members>
+        <members>SIS Help Desk %28Customer Support - Business%29</members>
+        <members>SIS Help Desk %28SIS Operations%29</members>
+        <members>SIS Help Desk Agent</members>
+        <members>SolutionManager</members>
+        <members>Splunk Integration</members>
+        <members>Standard</members>
+        <members>StandardAul</members>
+        <members>System Administrator - automated processes</members>
+        <members>System Administrator - Email2Case</members>
+        <members>System Administrator - Stakeholders</members>
+        <members>Timba Survey Profile</members>
+        <name>Profile</name>
+    </types>
+    <version>49.0</version>
+</Package>

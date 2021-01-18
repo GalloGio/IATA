@@ -52176,16 +52176,16 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
     <labels>
         <fullName>pkb2_lang_zh_CN</fullName>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>Chinese (Simplified)</shortDescription>
-        <value>中国的</value>
+        <value>中文</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_zh_TW</fullName>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>Chinese (Traditional)</shortDescription>
-        <value>中國的</value>
+        <value>中文</value>
     </labels>
     <labels>
         <fullName>regular_price</fullName>
