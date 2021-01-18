@@ -61835,6 +61835,10 @@
         <recordType>Case.Funds_Management</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Case-GCS SIDRA Lite</layout>
+        <recordType>Case.SIDRA_Lite</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Case-GDPR Request</layout>
         <recordType>Case.GDPR_Request</recordType>
     </layoutAssignments>
@@ -62012,10 +62016,6 @@
     <layoutAssignments>
         <layout>Case-SIDRA Global %28IDFS ISS%29 lightning</layout>
         <recordType>Case.SIDRA</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Case-SIDRA Lite</layout>
-        <recordType>Case.SIDRA_Lite</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-TTBS Case Layout</layout>
