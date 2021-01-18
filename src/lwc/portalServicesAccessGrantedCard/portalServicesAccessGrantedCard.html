@@ -1,12 +1,4 @@
 <template>
-	<template if:true={displayAcceptTerms}>
-        <c-portal-services-terms-and-conditions-modal 
-            portal-service-id={service.recordService.Id}
-            contact-id={contactId}
-            oncancel={cancelTermsAcceptance}
-            onaccept={acceptTerms}>
-        </c-portal-services-terms-and-conditions-modal>
-	</template>
 
     <c-portal-services-card-container background-variant="white">
 

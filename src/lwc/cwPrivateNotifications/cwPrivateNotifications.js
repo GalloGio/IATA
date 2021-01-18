@@ -136,7 +136,12 @@ export default class CwPrivateNotifications extends LightningElement {
 			destiny = AUDIT_SCHEDULE;
 		}
 		else if(description.includes(COMPANY_ADMIN) || description.includes(STATION_MANAGER) || description.includes(FACILITY_MANAGER)){
-			destiny = MY_REQUESTS;
+			if (description.includes(APPROVED)){
+				destiny = STATION;
+			}
+			else{
+				destiny = PENDING_USER_APPROVAL;
+			}
 		}                
 		else if(description.includes(REMOTE) || description.includes(VALIDATION)){
 			destiny = STATION;

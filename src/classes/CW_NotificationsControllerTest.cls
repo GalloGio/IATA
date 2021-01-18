@@ -43,6 +43,27 @@ public with sharing class CW_NotificationsControllerTest {
 	}
 
 	@IsTest
+	public static void testSetNotificationCustomBodyExceedLengthLimit(){
+		Test.startTest();
+		
+		List<String> listContactIdsString = new List<String>();
+		List<Contact> listContact = [SELECT Id FROM Contact];
+			
+		for(Contact item : listContact){
+			listContactIdsString.add(item.Id);
+		}
+		
+		String RT_NOTIFICATION_PRIVATE_AREA = CW_NotificationsController.RT_NOTIFICATION_PRIVATE_AREA;
+		String bodyOne = ''.leftPad(255, '#');
+		String bodyTwo = ''.leftPad(256, '#');
+		List<ICG_Notification__c> notificationsOne = CW_NotificationsController.setNotificationCustom('subject', bodyOne, 'Peending', listContactIdsString, null, RT_NOTIFICATION_PRIVATE_AREA);
+		List<ICG_Notification__c> notificationsTwo = CW_NotificationsController.setNotificationCustom('subject', bodyTwo, 'Peending', listContactIdsString, null, RT_NOTIFICATION_PRIVATE_AREA);
+		System.assertEquals(bodyOne, notificationsOne[0].Body__c);
+		System.assertEquals(''.leftPad(252, '#') + '...', notificationsTwo[0].Body__c);
+		Test.stopTest();
+	}
+
+	@IsTest
 	public static void testGetNotificationsFromUser(){
 		Test.startTest();
 		

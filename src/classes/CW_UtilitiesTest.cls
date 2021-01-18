@@ -888,22 +888,22 @@ public class CW_UtilitiesTest {
 	**********************************************************************************************************/
 	@isTest
 	static void getFacilityHistoryByUserTest(){
-		User testUser 		= [SELECT id FROM User WHERE firstname = 'IATAICGACB' AND lastName = 'IATAICGXYZ' LIMIT 1];
-		Contact testContact = [SELECT Id FROM Contact WHERE FirstName = 'Test' LIMIT 1];
+		User testUser 		= [SELECT id FROM User WHERE firstname = 'IATATESTQUEUE' AND lastName = 'IATAQUEUETEST' LIMIT 1];
 		System.runAs(testUser){
+			Test.startTest();
 			Account acc 				= [SELECT Id FROM Account WHERE Name = 'Account01' LIMIT 1];
-			Airport_Detail__c airport 	= [SELECT Id FROM Airport_Detail__c LIMIT 1];
+			Airport_Detail__c airport 	= [SELECT Id, IATA_ISO_Country__c FROM Airport_Detail__c LIMIT 1];
 			Account_Role__c accRole 	= CW_TestDataFactory.testAccountRole(acc.Id, 'Test');
 			insert accRole;
 
 			ICG_Account_Role_Detail__c station = CW_TestDataFactory.testICGAccountRoleDetail(accRole.Id, airport);
 			station.Status__c = 'Pending for Approval';
 			insert station;
-						
-			Test.startTest();
-				station.Status__c = 'Approved';
-				update station;
-				List<ICG_Contact_Account_Role_Detail_History__c> historyLst = CW_Utilities.getFacilityHistoryByUser(String.ValueOf(testUser.Id));
+			
+			station.Status__c = 'Approved';
+			update station;
+
+			List<CW_Utilities.HistoryDTO> historyLst = CW_Utilities.getFacilityHistoryByUser(String.ValueOf(testUser.Id));
 			Test.stopTest();
 
 			System.assert(!historyLst.isEmpty(), 'ERROR: historyLst should not be null');

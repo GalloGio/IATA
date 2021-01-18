@@ -101,7 +101,6 @@ import CreateNewPortalAccess from '@salesforce/apex/PortalServicesCtrl.CreateNew
 import isAirlineUser from '@salesforce/apex/CSP_Utils.isAirlineUser';
 import getCountryList from '@salesforce/apex/PortalSupportReachUsCtrl.getCountryList';
 import getContactInfo from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getContactInfo';
-import checkLatestTermsAndConditionsAccepted from '@salesforce/apex/ServiceTermsAndConditionsUtils.checkLatestTermsAndConditionsAccepted';
 
 
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
@@ -181,9 +180,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
 	@track category = '';
 
-	//terms and conditions variables
-	@track isLatestAccepted = false;
-	@track displayAcceptTerms = false;
 
 	@track serviceId;
 	@track serviceRecord = { //initialize record to avoid crashing with undefined access to recordService
@@ -207,7 +203,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 	searchIconNoResultsUrl = CSP_PortalPath + 'CSPortal/Images/Icons/searchNoResult.svg';
 
 
-	//Variables to track
+	//Variables to trak
 	@track showConfirm = false; // controls visibility on displaying confirm to request Access to portal sercice
 	@track showPopUp = true;
 	@track showSpinner = false;
@@ -252,7 +248,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
 	//user id from import
 	userID = Id;
-	@track contactId;
+	contactId;
 
 	serviceDetailsResult; // wire result holder
 
@@ -309,6 +305,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 	@track displaySecondLevelRegistration = false;
 
 	connectedCallback() {
+
 		//get the parameters for this page
 		this.pageParams = getParamsFromPage();
 		if (this.pageParams) {
@@ -394,22 +391,8 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 		getContactInfo()
 			.then(result => {
 				this.isFirstLevelUser = result.Account.Is_General_Public_Account__c;
-
-		checkLatestTermsAndConditionsAccepted({portalServiceId: this.serviceId, contactId: this.contactId}).then(result2 => {
-			let isLatestAccepted = JSON.parse(JSON.stringify(result2));
-			this.isLatestAccepted = isLatestAccepted;
-		});
 			})
-	}
 
-	cancelTermsAcceptance(){
-        this.displayAcceptTerms = false;
-	}
-	
-	acceptTerms(){
-		this.displayAcceptTerms = false;
-		this.isLatestAccepted = true;
-        this.handleTopAction();
 	}
 
 	resetComponent() {
@@ -427,8 +410,10 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 		this.selectedStatus = '';
 		this.selectedCountry = '';
 		this.selectedIataCode = '';
-		this.selectedRecords = [];
+	this.selectedRecords = [];
+
 		this.clearURL();
+
 		this.getServiceDetailsJS();
 	}
 
@@ -796,17 +781,15 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
 	//Action on the top button ( request access or navigate to service)
 	handleTopAction() {
-		if (this.serviceRecord.accessGranted) {
-			//check if T&Cs are accepted
-			if(!this.isLatestAccepted){
-				this.displayAcceptTerms = true;
-			}
-			else{
-				this.goToService(this.serviceRecord.recordService);
-			}
+		let serviceRec = JSON.parse(JSON.stringify(this.serviceRecord));
+
+		if (serviceRec.accessGranted) {
+			//goes to service
+			let appInfo = serviceRec.recordService
+			this.goToService(appInfo);
 		} else {
 			// check if user is Level 1 and if service requests L2
-			if(this.serviceRecord.recordService.Requires_Level2_Registration__c && this.isFirstLevelUser){
+			if(serviceRec.recordService.Requires_Level2_Registration__c && this.isFirstLevelUser){
 				this.displaySecondLevelRegistrationPopup = true;
 			}
 			else{
@@ -840,6 +823,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
 	//navigates to service
 	goToService(serviceAux) {
+
 		//attributes stored on element that is related to the event
 		let appFullUrlData = serviceAux.Application_URL__c;
 		let openWindowData = serviceAux.New_Window__c;
@@ -852,10 +836,12 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 		}
 
 		let myUrl = appFullUrlData;
+
 		//verifies if the event target contains all data for correct redirection
 		if (openWindowData !== undefined) {
 			//determines if the link is to be opened on a new window or on the current
 			if (openWindowData) {
+
 				if (!myUrl.startsWith('/')) {
 					if(serviceAux.ServiceName__c === 'Training Platform (LMS)'){
 						getPortalServiceId({ serviceName: serviceAux.ServiceName__c })
@@ -878,9 +864,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 								this.error = error;
 						});
 
-					} else{
-						myUrl = window.location.protocol + '//' + myUrl;
-						window.open(myUrl);
 					}
 				}else{
 					if (appFullUrlData !== 'undefined') {
@@ -902,7 +885,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 			}
 		}
 	}
-
 
 
 	navigateToServicesPage() {

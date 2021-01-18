@@ -16,7 +16,8 @@ export default class CwHandledAirlines extends LightningElement {
 	@api facilityId;
 	@track offSetNum = 0;
 	@track airlines = [];
-	@api create = false;
+	@api autoSelectItems = false;
+	@api stationType;
 
 	filter;
 	@api
@@ -333,11 +334,14 @@ export default class CwHandledAirlines extends LightningElement {
 		this.airlines = [];
 		this.addAirlineHandledHeaders(data).then(airlinesAndHeaders => {
 			this.airlines.push(...airlinesAndHeaders);
-			if (this.preselectedAirlines) {
-				this.airlines = this.manageSelected();
-			}else if(this.create){
-				this.airlines = this.unSelectedAirlines();
+			if(this.stationType === 'Airport_Operator'){
+				this.airlines = this.selectedAirlines();
 			}
+			else if (this.preselectedAirlines) {
+					this.airlines = this.manageSelected();
+			}else if(!this.autoSelectItems){
+				this.airlines = this.unSelectedAirlines();
+			}			
 		});
 	}
 
@@ -351,6 +355,13 @@ export default class CwHandledAirlines extends LightningElement {
 	unSelectedAirlines() {
 		return this.airlines.map(airline => {
 			airline.selected = false;
+			return airline;
+		});
+	}
+	
+	selectedAirlines() {
+		return this.airlines.map(airline => {
+			airline.selected = true;
 			return airline;
 		});
 	}

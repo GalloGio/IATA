@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
     <sharingGuestRules>
-        <fullName>OS_GxA_Integration_Mapping_OS_Guest_User</fullName>
+        <fullName>OS_Certification_Capability_Assignment_OS_Guest_User</fullName>
         <accessLevel>Read</accessLevel>
         <description>Give view all access to onesource guest user. (Needed after Spring21 release)</description>
-        <label>OS GxA Integration Mapping OS Guest User</label>
+        <label>OS Certification Capability Assignment OS Guest User</label>
         <sharedTo>
             <guestUser>ONE_Source</guestUser>
         </sharedTo>

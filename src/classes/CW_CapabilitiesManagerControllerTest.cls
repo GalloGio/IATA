@@ -39,13 +39,28 @@ public class CW_CapabilitiesManagerControllerTest {
 
 		Account_Role_Detail_Capability__c ardCap = CW_TestDataFactory.createAccountRoleDetailCapability('Beneficial_Insects_Bees', 'Live_Animals_Capacities_1', null);
 		insert ardCap;
+        
+        ICG_Certification__c cert = CW_TestDataFactory.newCertification();
+        cert.Name = 'cert';
+		insert cert;
+		ICG_Certification__c cert2 = CW_TestDataFactory.newCertification();
+		cert2.Name = 'cert2';
+		insert cert2;
 
 		ICG_Capability_Assignment_Group__c capvalcert = new ICG_Capability_Assignment_Group__c();
 		capvalcert.Issue_Date__c = Date.today().addDays(-1);
 		capvalcert.Expiration_Date__c = Date.today().addDays(1);
 		capvalcert.ICG_Account_Role_Detail__c = ard.Id;
+        capvalcert.ICG_Certification__c = cert.id;
 		capvalcert.RecordTypeId = RT_CERTIFICATION;
 		insert capvalcert;
+        
+        ICG_Capability_Assignment_Group__c capvalcertRV = new ICG_Capability_Assignment_Group__c();
+		capvalcertRV.Issue_Date__c = Date.today().addDays(-1);
+		capvalcertRV.Expiration_Date__c = Date.today().addDays(1);
+		capvalcertRV.ICG_Account_Role_Detail__c = ard.Id;
+		capvalcertRV.RecordTypeId = RT_REMOTE_VALIDATION;
+		insert capvalcertRV;
 
 		ICG_Account_Role_Capability_Assignment__c assignment = CW_TestDataFactory.createIcgAccountRoleCapabilityAssignment(ard.Id, ardCap.Id);
 		assignment.ICG_Capability_Assignment_Group__c = capvalcert.id;
@@ -61,19 +76,6 @@ public class CW_CapabilitiesManagerControllerTest {
 		Id rtId = [SELECT id FROM RecordType WHERE SObjectType = 'Account_Role_Detail_Capability__c' AND developername = 'System_For_Mail_Tracking_And_Reporting' LIMIT 1].id;
 		Id rtColdRoomsId = [SELECT id FROM RecordType WHERE SObjectType = 'Account_Role_Detail_Capability__c' AND developername = 'Cold_Room_Standard_Temperature_Ranges' LIMIT 1].id;
 
-		ICG_Certification__c cert = CW_TestDataFactory.newCertification();
-		insert cert;
-		ICG_Certification__c cert2 = CW_TestDataFactory.newCertification();
-		cert2.Name = 'cert2';
-		insert cert2;
-		ICG_Capability_Assignment_Group__c ardcert = new ICG_Capability_Assignment_Group__c();
-		ardcert.ICG_Certification__c = cert.id;
-		ardcert.ICG_Account_Role_Detail__c = ardid;
-		ardcert.Issue_Date__c = date.today().addDays(-1);
-		ardcert.Expiration_Date__c = date.today().addDays(1);
-		ardcert.RecordTypeId = RT_CERTIFICATION;
-		insert ardcert;
-
 		Account_Role_Detail_Capability__c cap = new Account_Role_Detail_Capability__c();
 		cap.GSE_ULD_Compatibility_Type_AKE__c = true;
 		cap.ESC_Name__c = 'whatever';
@@ -84,12 +86,11 @@ public class CW_CapabilitiesManagerControllerTest {
 		cap.Equipment__c = 'CARDIT';
 		insert cap;
 
-		ICG_Capability_Assignment_Group__c capvalcert = new ICG_Capability_Assignment_Group__c();
-		capvalcert.Issue_Date__c = Date.today().addDays(-1);
-		capvalcert.Expiration_Date__c = Date.today().addDays(1);
-		capvalcert.ICG_Account_Role_Detail__c = ardid;
-		capvalcert.RecordTypeId = RT_REMOTE_VALIDATION;
-		insert capvalcert;
+        ICG_Certification__c cert = [SELECT id FROM ICG_Certification__c WHERE Name ='cert'];
+        
+        ICG_Capability_Assignment_Group__c ardcert = [SELECT id,ICG_Certification__c FROM ICG_Capability_Assignment_Group__c WHERE RecordTypeId =: RT_CERTIFICATION];
+
+		ICG_Capability_Assignment_Group__c capvalcert = [SELECT id FROM ICG_Capability_Assignment_Group__c WHERE RecordTypeId =: RT_REMOTE_VALIDATION];
 
 		Account_Role_Detail_Capability__c capWithBadPhotos = new Account_Role_Detail_Capability__c();
 		capWithBadPhotos.GSE_ULD_Compatibility_Type_AKE__c = true;
@@ -171,20 +172,11 @@ public class CW_CapabilitiesManagerControllerTest {
 		Id rtId = [SELECT id FROM RecordType WHERE SObjectType = 'Account_Role_Detail_Capability__c' AND developername = 'System_For_Mail_Tracking_And_Reporting' LIMIT 1].id;
 		Id rtColdRoomsId = [SELECT id FROM RecordType WHERE SObjectType = 'Account_Role_Detail_Capability__c' AND developername = 'Cold_Room_Standard_Temperature_Ranges' LIMIT 1].id;
 
-		ICG_Certification__c cert = CW_TestDataFactory.newCertification();
-		insert cert;
+        ICG_Certification__c cert = [SELECT id FROM ICG_Certification__c WHERE Name ='cert'];
+        
+        ICG_Capability_Assignment_Group__c ardcert = [SELECT id,ICG_Certification__c FROM ICG_Capability_Assignment_Group__c WHERE RecordTypeId =: RT_CERTIFICATION];
 
-		ICG_Certification__c cert2 = CW_TestDataFactory.newCertification();
-		cert2.Name = 'cert2';
-		insert cert2;
-
-		ICG_Capability_Assignment_Group__c ardcert = new ICG_Capability_Assignment_Group__c();
-		ardcert.ICG_Certification__c = cert.id;
-		ardcert.ICG_Account_Role_Detail__c = ardid;
-		ardcert.Issue_Date__c = date.today().addDays(-1);
-		ardcert.Expiration_Date__c = date.today().addDays(1);
-		ardcert.RecordTypeId = RT_CERTIFICATION;
-		insert ardcert;
+		ICG_Capability_Assignment_Group__c capvalcert = [SELECT id FROM ICG_Capability_Assignment_Group__c WHERE RecordTypeId =: RT_REMOTE_VALIDATION];
 
 		Account_Role_Detail_Capability__c cap = new Account_Role_Detail_Capability__c();
 		cap.GSE_ULD_Compatibility_Type_AKE__c = true;
@@ -195,13 +187,6 @@ public class CW_CapabilitiesManagerControllerTest {
 		cap.Category__c = 'System_For_Mail_Tracking_And_Reporting';
 		cap.Equipment__c = 'CARDIT';
 		insert cap;
-
-		ICG_Capability_Assignment_Group__c capvalcert = new ICG_Capability_Assignment_Group__c();
-		capvalcert.Issue_Date__c = Date.today().addDays(-1);
-		capvalcert.Expiration_Date__c = Date.today().addDays(1);
-		capvalcert.ICG_Account_Role_Detail__c = ardid;
-		capvalcert.RecordTypeId = RT_REMOTE_VALIDATION;
-		insert capvalcert;
 
 		Account_Role_Detail_Capability__c capWithBadPhotos = new Account_Role_Detail_Capability__c();
 		capWithBadPhotos.GSE_ULD_Compatibility_Type_AKE__c = true;

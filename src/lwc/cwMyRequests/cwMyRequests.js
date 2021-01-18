@@ -86,22 +86,22 @@ export default class CwMyRequests extends LightningElement {
                         var stationId = ''; 
                         var recordTypeName = ''; 
 
-                        if (item.Type__c !== 'Station Creation Requests'){
-                            company = (item.ICG_Contact_Role_Detail__r.Account_Contact_Role__r.Account__r != null) ? item.ICG_Contact_Role_Detail__r.Account_Contact_Role__r.Account__r.Name : '';
-                            station = (item.ICG_Contact_Role_Detail__r.ICG_Account_Role_Detail__r != null) ? item.ICG_Contact_Role_Detail__r.ICG_Account_Role_Detail__r.Name : '';
-                            stationId = (item.ICG_Contact_Role_Detail__r.ICG_Account_Role_Detail__r != null) ? item.ICG_Contact_Role_Detail__r.ICG_Account_Role_Detail__r.Id : '';
-                            recordTypeName = (item.ICG_Contact_Role_Detail__r.ICG_Account_Role_Detail__r != null && item.ICG_Contact_Role_Detail__r.ICG_Account_Role_Detail__r.RecordType != null) ? item.ICG_Contact_Role_Detail__r.ICG_Account_Role_Detail__r.RecordType.Name : '';
+                        if (item.Type !== 'Station Creation Requests'){
+                            company = (item.ICG_Contact_Role_DetailR.Account_Contact_Role__r.Account__r != null) ? item.ICG_Contact_Role_DetailR.Account_Contact_Role__r.Account__r.Name : '';
+                            station = (item.ICG_Contact_Role_DetailR.ICG_Account_Role_Detail__r != null) ? item.ICG_Contact_Role_DetailR.ICG_Account_Role_Detail__r.Name : '';
+                            stationId = (item.ICG_Contact_Role_DetailR.ICG_Account_Role_Detail__r != null) ? item.ICG_Contact_Role_DetailR.ICG_Account_Role_Detail__r.Id : '';
+                            recordTypeName = (item.ICG_Contact_Role_DetailR.ICG_Account_Role_Detail__r != null && item.ICG_Contact_Role_DetailR.ICG_Account_Role_Detail__r.RecordType != null) ? item.ICG_Contact_Role_DetailR.ICG_Account_Role_Detail__r.RecordType.Name : '';
                         }
                         else {
-                            company = (item.ICG_Account_Role_Detail__r != null && item.ICG_Account_Role_Detail__r.Name.split(';').length > 0) ? item.ICG_Account_Role_Detail__r.Name.split(';')[1] : '';
-                            station = (item.ICG_Account_Role_Detail__r != null && item.ICG_Account_Role_Detail__r.Name.split(';').length > 0) ? item.ICG_Account_Role_Detail__r.Name.split(';')[0] : '';
-                            stationId = (item.ICG_Account_Role_Detail__r != null) ? item.ICG_Account_Role_Detail__r.Id : '';
-                            recordTypeName = (item.ICG_Account_Role_Detail__r != null && item.ICG_Account_Role_Detail__r.RecordType != null) ? item.ICG_Account_Role_Detail__r.RecordType.Name : '';
+                            company = (item.ICG_Account_Role_DetailR != null && item.ICG_Account_Role_DetailR.Name.split(';').length > 0) ? item.ICG_Account_Role_DetailR.Name.split(';')[1] : '';
+                            station = (item.ICG_Account_Role_DetailR != null && item.ICG_Account_Role_DetailR.Name.split(';').length > 0) ? item.ICG_Account_Role_DetailR.Name.split(';')[0] : '';
+                            stationId = (item.ICG_Account_Role_DetailR != null) ? item.ICG_Account_Role_DetailR.Id : '';
+                            recordTypeName = (item.ICG_Account_Role_DetailR != null && item.ICG_Account_Role_DetailR.RecordType != null) ? item.ICG_Account_Role_DetailR.RecordType.Name : '';
                         }
                     
 						let itemDTO = { 
-							Type: item.Type__c, 
-							Status: item.Status__c,
+							Type: item.Type, 
+							Status: item.Status,
 							Company: company,
 							Station: station, 
 							StationType: recordTypeName,

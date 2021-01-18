@@ -380,9 +380,16 @@ public with sharing class CW_CapabilitiesUtilities {
 		return categoryFound;
 	}
 
-	public static Map<String, Object> generateCurrentObject(Map<String, Object> currentObject, String currentDetailId, Account_Role_Detail_Capability__c currentDetail, List<Object> certifications, String currentAssignmentRT, Map<String, Object> capabilityFound, Map<String, List<String>> mapFieldsByRecordTypeAndCategory, String rtDevNameLC, Map<String, Schema.PicklistEntry> mapEquipments, Map<String, List<String>> mapTooltipFieldsByField, Map<String, Schema.SObjectField> fieldsMap, Boolean isMultiRecordCapabilities, Boolean isAssigned, Boolean contains) {
+	public static Map<String, Object> generateCurrentObject(Map<String, Object> currentObject, String currentDetailId,
+	 Account_Role_Detail_Capability__c currentDetail, List<Object> certifications, String currentAssignmentRT, 
+	 Map<String, Object> capabilityFound, Map<String, List<String>> mapFieldsByRecordTypeAndCategory, String rtDevNameLC,
+	  Map<String, Schema.PicklistEntry> mapEquipments, Map<String, List<String>> mapTooltipFieldsByField,
+	   Map<String, Schema.SObjectField> fieldsMap, Boolean isMultiRecordCapabilities, Boolean isAssigned, Boolean contains,String stationRT,
+	   List<String> CERTIFICATIONS_ALLOWED_USER, Boolean userHasPermissionToEdit) {
+
 		// Set data for summary
 		Boolean emptyPhotos = false;
+		Boolean emptyDocuments = false;
 		Map<String, Object> capabilitySummaryFound = (Map<String, Object>) CW_FacilityCapabilitiesController.getItemInMap((List<Map<String, Object>>) capabilityFound.get('summary'), 'value', currentDetail.Equipment__c.toLowerCase());
 		if (capabilitySummaryFound != null && (Boolean) capabilitySummaryFound.get('contains') == false) {
 			capabilitySummaryFound.put('contains', contains);
@@ -390,6 +397,8 @@ public with sharing class CW_CapabilitiesUtilities {
 
 		List<String> requiredFields = CW_CapabilitiesManagerController.getRequiredFieldsForCapability(currentDetail, mapFieldsByRecordTypeAndCategory.get(rtDevNameLC + '#' + currentDetail.Category__c.toLowerCase()), fieldsMap);
 		currentObject.put('requiredFields', requiredFields);
+
+		Boolean isEditableRecordType = CW_FacilityCapabilitiesController.EDITABLE_RECORDTYPES.get('Editable_RecordTypes').contains(rtDevNameLC);
 
 		// Set processed info.
 		currentObject.put('id', currentDetailId);
@@ -400,7 +409,7 @@ public with sharing class CW_CapabilitiesUtilities {
 		}
 		currentObject.put('equipment_value', currentDetail.Equipment__c);
 		currentObject.put('certifications', certifications);
-		currentObject.put('isPeviouslyCertified', !certifications.isEmpty());
+		currentObject.put('isPeviouslyCertified', !certifications.isEmpty() || isEditableRecordType);
 
 		// Set tooltips
 		Map<String, String> tooltips = CW_CapabilitiesUtilities.generateTooltips(mapTooltipFieldsByField, currentDetail, currentObject);
@@ -416,16 +425,46 @@ public with sharing class CW_CapabilitiesUtilities {
 			currentDetail.Photos__c = JSON.serialize(new List<CW_FacilityCapabilitiesController.CapabilityPhoto>());
 			currentObject.put('photos', JSON.deserialize(currentDetail.Photos__c, List<CW_FacilityCapabilitiesController.CapabilityPhoto>.class));
 		}
+
+		
+		if (String.isBlank(currentDetail.More_Info_Document__c)) {
+			emptyDocuments = true;
+			currentDetail.More_Info_Document__c = JSON.serialize(new List<CW_FacilityCapabilitiesController.CapabilityPhoto>());
+		}
+		try {
+			currentObject.put('documents', JSON.deserialize(currentDetail.More_Info_Document__c, List<CW_FacilityCapabilitiesController.CapabilityPhoto>.class));
+		} catch (Exception e_photos) {
+			currentDetail.More_Info_Document__c = JSON.serialize(new List<CW_FacilityCapabilitiesController.CapabilityPhoto>());
+			currentObject.put('documents', JSON.deserialize(currentDetail.More_Info_Document__c, List<CW_FacilityCapabilitiesController.CapabilityPhoto>.class));
+		}
+		
+
 		currentObject.put('remotevalidation', currentAssignmentRT == RT_REMOTE_VALIDATION);
 		currentObject.put('photosAvailable', ((String) currentDetail.Photos__c).remove(' ').toLowerCase().countMatches('"visible":true') > 0);
 		currentObject.put('photosAvailableEdit', !emptyPhotos);
+		currentObject.put('documentsAvailable', ((String) currentDetail.More_Info_Document__c).remove(' ').toLowerCase().countMatches('"visible":true') > 0);
+		currentObject.put('documentsAvailableEdit', !emptyDocuments);
 		currentObject.put('customClass', '');
 		currentObject.put('isAssigned', isAssigned);
 		currentObject.put('isNotEditable', true);
 		currentObject.put('isAditional', false);
 		currentObject.put('isMultirecord', isMultiRecordCapabilities);
-		currentObject.put('isEditableRecordType', CW_FacilityCapabilitiesController.EDITABLE_RECORDTYPES.get('Editable_RecordTypes').contains(rtDevNameLC));
+		currentObject.put('isEditableRecordType', isEditableRecordType);
 		currentObject.put('isNotCertiRequired', currentAssignmentRT == RT_NO_CERTIFICATION_REQUIRED);
+
+		Boolean isPermission=false;
+		if(userHasPermissionToEdit){
+			isPermission=true;
+		}
+		else{
+			for(CW_FacilityCapabilitiesController.AsgmtGroupWrapper cert : (List<CW_FacilityCapabilitiesController.AsgmtGroupWrapper>)certifications){
+				if(CERTIFICATIONS_ALLOWED_USER.contains(cert.name)){
+					isPermission=true;
+				}
+			}
+		}		
+		currentObject.put('isPermissionByDepartment',isPermission);
+
 		return currentObject;
 	}
 
@@ -433,14 +472,8 @@ public with sharing class CW_CapabilitiesUtilities {
 		List<String> lstDepts = new List<String>();
 		List<String> lstCertiAllowed = new List<String>();
 		List<ICG_Certification__c> lstCerti;
-		Boolean result;
 
-		String profileName = [SELECT Id, Name FROM Profile WHERE Id = :UserInfo.getProfileId()].Name;
-
-		AggregateResult[] exist = [SELECT count(Id) FROM PermissionSetAssignment WHERE AssigneeId = :UserInfo.getUserId() AND PermissionSet.Name = 'One_Source_Backend_Admin'];
-		result = (!exist.isEmpty() && (Integer.valueOf(exist[0].get('expr0')) > 0));
-
-		if (result || profileName == CW_CapabilitiesUtilities.SYSTEM_ADMINISTRADOR) {
+		if (CW_Utilities.hasSpecialPermissionsToEdit()) {
 			lstCerti = [SELECT Name, Label__c FROM ICG_Certification__c WHERE Applicable_to__c INCLUDES (:stationRT)];
 			lstCerti.add(new ICG_Certification__c(Name = SMART_FACILITY_REMOTE_VALIDATION, Label__c = SMART_FACILITY_REMOTE_VALIDATION));
 		} else {
@@ -469,7 +502,7 @@ public with sharing class CW_CapabilitiesUtilities {
 		Map<String, CW_FacilityCapabilitiesController.CapabilityPhoto> photosCapab = new Map<String, CW_FacilityCapabilitiesController.CapabilityPhoto>();
 		List<CW_AccountDetailCarousel.Carousel> photosCarousel = new List<CW_AccountDetailCarousel.Carousel>();
 
-		for (ICG_Account_Role_Capability_Assignment__c assigment : [SELECT Account_Role_Detail_Capability__r.Photos__c,ICG_Capability_Assignment_Group__r.RecordTypeId FROM ICG_Account_Role_Capability_Assignment__c WHERE ICG_Account_Role_Detail__c = :recordId AND ICG_Capability_Assignment_Group__r.Status__c = :CW_CapabilitiesUtilities.ACTIVE]) {
+		for (ICG_Account_Role_Capability_Assignment__c assigment : [SELECT Account_Role_Detail_Capability__r.Photos__c,Account_Role_Detail_Capability__r.More_Info_Document__c,ICG_Capability_Assignment_Group__r.RecordTypeId FROM ICG_Account_Role_Capability_Assignment__c WHERE ICG_Account_Role_Detail__c = :recordId AND ICG_Capability_Assignment_Group__r.Status__c = :CW_CapabilitiesUtilities.ACTIVE]) {
 			if (String.isNotEmpty(assigment.Account_Role_Detail_Capability__r.Photos__c)) {
 				List<CW_FacilityCapabilitiesController.CapabilityPhoto> photoList = (List<CW_FacilityCapabilitiesController.CapabilityPhoto>) JSON.deserialize(assigment.Account_Role_Detail_Capability__r.Photos__c, List<CW_FacilityCapabilitiesController.CapabilityPhoto>.class);
 				for (CW_FacilityCapabilitiesController.CapabilityPhoto photo : photoList) {
@@ -479,6 +512,18 @@ public with sharing class CW_CapabilitiesUtilities {
 					
 					if (!photosCapab.containsKey(photo.id)) {
 						photosCapab.put(photo.id, photo);
+					}
+				}
+			}
+			if (String.isNotEmpty(assigment.Account_Role_Detail_Capability__r.More_Info_Document__c)) {
+				List<CW_FacilityCapabilitiesController.CapabilityPhoto> docList = (List<CW_FacilityCapabilitiesController.CapabilityPhoto>) JSON.deserialize(assigment.Account_Role_Detail_Capability__r.More_Info_Document__c, List<CW_FacilityCapabilitiesController.CapabilityPhoto>.class);
+				for (CW_FacilityCapabilitiesController.CapabilityPhoto doc : docList) {
+					if(assigment.ICG_Capability_Assignment_Group__r.RecordTypeId == RT_NO_CERTIFICATION_REQUIRED){
+						doc.visible = false;
+					}
+					
+					if (!photosCapab.containsKey(doc.id)) {
+						photosCapab.put(doc.id, doc);
 					}
 				}
 			}
@@ -510,4 +555,66 @@ public with sharing class CW_CapabilitiesUtilities {
 
 		return photosCarousel;
 	}
+
+	
+	public static Set<String> getCapabilitiesByRecordTypeNotIncluded(Map<String, Object> rawData,ICG_Account_Role_Detail__c accountRoleDetailFound,
+	Map<String, List<String>> mapFieldsByRecordTypeAndCategory,
+	Map<String, String> mapRecordTypeIdByCategory,Map<Id, RecordType> mapAccountRoleDetailAssignmentRtsById,
+	Map<String, List<String>> mapCategoriesByRecordTypeDevName,Map<String, List<String>> mapFieldsByGroupField,
+	Map<String, String> columnsToHandle,
+	Map<String, Schema.PicklistEntry> mapEquipments,
+	Map<String, List<String>> mapTooltipFieldsByField,
+	Map<String, Schema.SObjectField> fieldsMap,
+	String stationRT,List<String> CERTIFICATIONS_ALLOWED_USER,Boolean userHasPermissionToEdit){
+
+		Set<String> listSectionsIncluded = new Set<String>();
+		CW_FacilityCapabilitiesController.SectionsWrapper checksMap;
+		Map<String, List<String>> capabilitiesByRecordTypeNotIncluded = new Map<String, List<String>>();
+
+		for (Map<String, Object> capability : (List<Map<String, Object>>) rawData.get(CAPABILITIES)) {
+			// if recordtype is editable in private area
+			if ((Boolean) capability.get('isEditableRecordType')) {
+				capabilitiesByRecordTypeNotIncluded.put((String) capability.get('name'), new List<String>());
+				for (Map<String, Object> sum : (List<Map<String, Object>>) capability.get('summary')) {
+					if (!(Boolean) sum.get('contains')) {
+						capabilitiesByRecordTypeNotIncluded.get((String) capability.get('name')).add((String) sum.get('value'));
+					}
+				}
+			}
+		}
+
+		if (capabilitiesByRecordTypeNotIncluded.size() > 0) {
+			//Read missing Capabilities by mapRecordTypeIdByCategory
+			List<Account_Role_Detail_Capability__c> accountCapabNotInluded = CW_FacilityCapabilitiesController.getCapabilitiesNotIncludedDetail(capabilitiesByRecordTypeNotIncluded, mapRecordTypeIdByCategory);
+			accountCapabNotInluded.sort();
+			for (Account_Role_Detail_Capability__c currentDetail : accountCapabNotInluded) {
+				listSectionsIncluded.add(mapAccountRoleDetailAssignmentRtsById.get(currentDetail.RecordTypeId).DeveloperName);
+				
+				String rtDevNameLC = mapAccountRoleDetailAssignmentRtsById.get(currentDetail.RecordTypeId).DeveloperName.toLowerCase();
+				if (mapCategoriesByRecordTypeDevName.containsKey(rtDevNameLC)) {
+					// We look for the Capability, Category to which it belongs
+					Map<String, Object> capabilityFound = (Map<String, Object>) CW_FacilityCapabilitiesController.getItemInMap((List<Map<String, Object>>) rawData.get(CAPABILITIES), 'name', rtDevNameLC);
+					capabilityFound = generateCapabilityFound(capabilityFound, currentDetail);
+					Map<String, Object> categoryFound = (Map<String, Object>) CW_FacilityCapabilitiesController.getItemInMap((List<Map<String, Object>>) capabilityFound.get(CATEGORIES), 'value', currentDetail.Category__c);
+					categoryFound = generateCategoryFound(categoryFound, capabilityFound, mapFieldsByRecordTypeAndCategory, rtDevNameLC, currentDetail, mapFieldsByGroupField, columnsToHandle, false);
+
+					if (!String.isBlank(accountRoleDetailFound.Summary_Detail_Check_JSON__c)) {
+						checksMap = (CW_FacilityCapabilitiesController.SectionsWrapper) JSON.deserialize(accountRoleDetailFound.Summary_Detail_Check_JSON__c, CW_FacilityCapabilitiesController.SectionsWrapper.class);
+					}
+
+					Map<String, Object> currentObject;
+					if (categoryFound != null && categoryFound.containsKey(ROWS)) {
+						List<Object> capabilityGroupRowsFound = (List<Object>) categoryFound.get(ROWS);
+						currentObject = CW_CapabilitiesManagerController.cleanCapabilitiesFieldsToObject(currentDetail, mapFieldsByRecordTypeAndCategory.get(rtDevNameLC + '#' + currentDetail.Category__c.toLowerCase()), fieldsMap);
+						currentObject = generateCurrentObject(currentObject, '', currentDetail, new List<CW_FacilityCapabilitiesController.AsgmtGroupWrapper>(), '', capabilityFound, mapFieldsByRecordTypeAndCategory, rtDevNameLC,
+						 mapEquipments, mapTooltipFieldsByField, fieldsMap, false, false, false,stationRT,CERTIFICATIONS_ALLOWED_USER,userHasPermissionToEdit);
+						capabilityGroupRowsFound.add(currentObject);
+					}
+					categoryFound.put('templateFields', currentObject);
+				}
+			}
+		}
+		return listSectionsIncluded;
+	}
+	
 }

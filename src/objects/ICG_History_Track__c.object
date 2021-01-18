@@ -143,7 +143,7 @@
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <deploymentStatus>Deployed</deploymentStatus>
-    <description>Historical of contact/account status</description>
+    <description>Generic object in order to store historical data</description>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
     <enableFeeds>false</enableFeeds>
@@ -154,82 +154,73 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>Private</externalSharingModel>
-    <label>OS Contact Account Role Detail History</label>
+    <label>OS History Track</label>
     <nameField>
-        <label>Contact Account Role Detail History</label>
+        <label>History Track Name</label>
         <type>Text</type>
     </nameField>
-    <pluralLabel>OS Contact t Account Role Detail History</pluralLabel>
+    <pluralLabel>OS History Track</pluralLabel>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
     <fields>
-        <fullName>ICG_Account_Role_Detail__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <description>Account related</description>
+        <fullName>Field__c</fullName>
+        <description>This field is to store the Api Name of the field that we want to track.</description>
         <externalId>false</externalId>
-        <label>OS Account Role Detail</label>
-        <referenceTo>ICG_Account_Role_Detail__c</referenceTo>
-        <relationshipName>OS_Contact_Role_Detail_History</relationshipName>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
-    <fields>
-        <fullName>ICG_Contact_Role_Detail__c</fullName>
-        <deleteConstraint>Restrict</deleteConstraint>
-        <description>Contact related</description>
-        <externalId>false</externalId>
-        <label>OS Contact Role Detail</label>
-        <referenceTo>ICG_Contact_Role_Detail__c</referenceTo>
-        <relationshipName>ICG_Contact_Role_Detail_History</relationshipName>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
-    <fields>
-        <fullName>Status__c</fullName>
-        <description>Status</description>
-        <externalId>false</externalId>
-        <label>Status</label>
+        <label>Field</label>
+        <length>255</length>
         <required>true</required>
         <trackTrending>false</trackTrending>
-        <type>Picklist</type>
-        <valueSet>
-            <restricted>true</restricted>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>Pending for Approval</fullName>
-                    <default>false</default>
-                    <label>Pending for Approval</label>
-                </value>
-                <value>
-                    <fullName>Approved</fullName>
-                    <default>false</default>
-                    <label>Approved</label>
-                </value>
-                <value>
-                    <fullName>Rejected</fullName>
-                    <default>false</default>
-                    <label>Rejected</label>
-                </value>
-                <value>
-                    <fullName>Pending for Removal</fullName>
-                    <default>false</default>
-                    <label>Pending for Removal</label>
-                </value>
-                <value>
-                    <fullName>Pending for IATA Approval</fullName>
-                    <default>false</default>
-                    <label>Pending for IATA Approval</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>New_Value__c</fullName>
+        <description>This field is used to store the new value</description>
+        <externalId>false</externalId>
+        <label>New Value</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Old_Value__c</fullName>
+        <description>This field is used to store the previous value</description>
+        <externalId>false</externalId>
+        <label>Old Value</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SObject__c</fullName>
+        <description>This field is to store the Api Name of the object that we want to track.</description>
+        <externalId>false</externalId>
+        <label>SObject</label>
+        <length>255</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Target_Id__c</fullName>
+        <description>This field is used to store the Id of the record that we are tracking</description>
+        <externalId>false</externalId>
+        <label>Target Id</label>
+        <length>18</length>
+        <required>true</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Type__c</fullName>
-        <description>History type</description>
+        <description>Field used in order to select one of the predefined allowed processes that may update the recorded field. (Picklist open for future new processes)</description>
         <externalId>false</externalId>
         <label>Type</label>
         <required>true</required>
@@ -257,4 +248,24 @@
             </valueSetDefinition>
         </valueSet>
     </fields>
+    <recordTypes>
+        <fullName>Changes_by_Type</fullName>
+        <active>true</active>
+        <label>Changes by Type</label>
+        <picklistValues>
+            <picklist>Type__c</picklist>
+            <values>
+                <fullName>Admin Requests</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Station Creation Requests</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Station Manager Requests</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
 </CustomObject>

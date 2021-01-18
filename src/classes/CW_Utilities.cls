@@ -46,11 +46,8 @@ public without sharing class CW_Utilities {
 		Boolean isProductionEnvironment = CW_PrivateAreaController.isProductionEnvironment();
 		String url;
 		if (isProductionEnvironment) {
-			// To Ruben Nunes: this could be a temporal solution. 
-			// We think in the future the value could be 'https://store.iata.org/' and could be stored in IEC_Settings__c.IEC_User_Portal_URL__c
 			url = ISSP_CS__c.getValues('HostIEC').Value__c + '/iec';
 		} else {
-			// getCommunityUrlBase() expected => https://preprod-customer-portal-iata.cs109.force.com/onesource/s/
 			url = getCommunityUrlBase();
 			if (String.isNotBlank(url)) {
 				url = url.removeStart('https://').split('/')[0] + '/iec';
@@ -132,9 +129,22 @@ public without sharing class CW_Utilities {
 	@AuraEnabled (cacheable = true)
 	public static Boolean getPermissionToEdit() {
 		Boolean result=false;
-		AggregateResult[] exist = [SELECT count(Id) FROM PermissionSetAssignment WHERE AssigneeId =: UserInfo.getUserId() AND (PermissionSet.Name = 'One_Source_Backend_Admin' OR PermissionSet.Name = 'One_Source_Certification_Manager')];
+
+		AggregateResult[] exist = [SELECT count(Id) FROM PermissionSetAssignment WHERE AssigneeId =: UserInfo.getUserId() AND (PermissionSet.Name = 'One_Source_Certification_Manager')];
 		result = (!exist.isEmpty() && (Integer.valueOf(exist[0].get('expr0')) > 0));
-		return result;
+
+		return (result || hasSpecialPermissionsToEdit());
+	}
+
+	public static Boolean hasSpecialPermissionsToEdit(){
+		Boolean result=false;
+		
+		String profileName = [SELECT Id, Name FROM Profile WHERE Id = :UserInfo.getProfileId()].Name;
+
+		AggregateResult[] exist = [SELECT count(Id) FROM PermissionSetAssignment WHERE AssigneeId =: UserInfo.getUserId() AND (PermissionSet.Name = 'One_Source_Backend_Admin')];
+		result = (!exist.isEmpty() && (Integer.valueOf(exist[0].get('expr0')) > 0));
+
+		return (result || profileName == CW_CapabilitiesUtilities.SYSTEM_ADMINISTRADOR);
 	}
 
 
@@ -216,50 +226,115 @@ public without sharing class CW_Utilities {
 	/*
 	 * @description		Save a list of the history related to ICG_Account_Role_Detail__c
 	 * @param			List<ICG_Contact_Role_Detail__c>
+	 * @param			Map<Id, ICG_Account_Role_Detail__c>
 	 */
 	public static void generateAccountRoleDetailHistory(List<ICG_Account_Role_Detail__c> newItems, Map<Id, ICG_Account_Role_Detail__c> oldMap){
-		List<ICG_Contact_Account_Role_Detail_History__c> historyItemsToInsert = new List<ICG_Contact_Account_Role_Detail_History__c>();
 		List<String> allowedStatus = new List<String> { HISTORY_STATUS_APPROVED, HISTORY_STATUS_REJECTED, HISTORY_STATUS_PENDING, HISTORY_STATUS_PENDINGIATA };
 
+		List<ICG_Account_Role_Detail__c> newItemsFiltered = new List<ICG_Account_Role_Detail__c>();
+		Map<Id, ICG_Account_Role_Detail__c> oldMapFiltered = new Map<Id, ICG_Account_Role_Detail__c>();
+		Map<Id, String> typesById = new Map<Id, String>();
 		for (ICG_Account_Role_Detail__c newItem : newItems) {
 			if (allowedStatus.indexOf(newItem.Status__c) > -1 && (oldMap == null || newItem.Status__c != oldMap.get(newItem.Id).Status__c)) {
-				historyItemsToInsert.add(
-					new ICG_Contact_Account_Role_Detail_History__c(
-						ICG_Account_Role_Detail__c = newItem.Id, 
-						Status__c = newItem.Status__c, 
-						Type__c = STATION_CREATION_REQUEST));
+				newItemsFiltered.add(newItem);
+				if (oldMap != null) {
+					oldMapFiltered.put(newItem.Id, oldMap.get(newItem.Id));
+				}
+				typesById.put(newItem.Id, STATION_CREATION_REQUEST);
 			}
 		}
 
-		if (historyItemsToInsert.size() > 0){
-			insert historyItemsToInsert;
+		if (newItemsFiltered.size() > 0) {
+			Id rtIdToUse = RecordTypeSingleton.getInstance().getRecordTypeId('ICG_History_Track__c', 'Changes_by_Type');
+			generateHistoryTrack(rtIdToUse, newItemsFiltered, oldMapFiltered, typesById, new List<String>{'Status__c'});
 		}
 	}
 	
 	/*
 	 * @description		Save a list of the history related to ICG_Contact_Role_Detail__c
 	 * @param			List<ICG_Contact_Role_Detail__c>
+	 * @param			Map<Id, ICG_Contact_Role_Detail__c>
 	 */
 	public static void generateContactRoleDetailHistory(List<ICG_Contact_Role_Detail__c> newItems, Map<Id, ICG_Contact_Role_Detail__c> oldMap) {
-		List<ICG_Contact_Account_Role_Detail_History__c> historyItemsToInsert = new List<ICG_Contact_Account_Role_Detail_History__c>();
 		List<String> allowedRoles = new List<String> { CW_Utilities.FACILITY_MANAGER, CW_Utilities.COMPANY_ADMIN };
 		List<String> allowedStatus = new List<String> { HISTORY_STATUS_APPROVED, HISTORY_STATUS_REJECTED, HISTORY_STATUS_PENDING, HISTORY_STATUS_PENDINGIATA };
 
+		List<ICG_Contact_Role_Detail__c> newItemsFiltered = new List<ICG_Contact_Role_Detail__c>();
+		Map<Id, ICG_Contact_Role_Detail__c> oldMapFiltered = new Map<Id, ICG_Contact_Role_Detail__c>();
+		Map<Id, String> typesById = new Map<Id, String>();
 		for (ICG_Contact_Role_Detail__c newItem : newItems) {
 			if (allowedRoles.indexOf(newItem.ICG_Role__c) > -1 && allowedStatus.indexOf(newItem.Status__c) > -1 && (oldMap == null || newItem.Status__c != oldMap.get(newItem.Id).Status__c )) {
-				historyItemsToInsert.add(
-					new ICG_Contact_Account_Role_Detail_History__c(
-						ICG_Contact_Role_Detail__c = newItem.Id, 
-						Status__c = newItem.Status__c, 
-						Type__c = (newItem.ICG_Role__c == CW_Utilities.COMPANY_ADMIN) ? CW_Utilities.ADMIN_REQUEST : CW_Utilities.STATION_MANAGER_REQUEST));
+				newItemsFiltered.add(newItem);
+				if (oldMap != null) {
+					oldMapFiltered.put(newItem.Id, oldMap.get(newItem.Id));
+				}
+				typesById.put(newItem.Id, (newItem.ICG_Role__c == CW_Utilities.COMPANY_ADMIN) ? CW_Utilities.ADMIN_REQUEST : CW_Utilities.STATION_MANAGER_REQUEST);
 			}
 		}
 
-		if (historyItemsToInsert.size() > 0) {
-			insert historyItemsToInsert;
+		if (newItemsFiltered.size() > 0) {
+			Id rtIdToUse = RecordTypeSingleton.getInstance().getRecordTypeId('ICG_History_Track__c', 'Changes_by_Type');
+			generateHistoryTrack(rtIdToUse, newItemsFiltered, oldMapFiltered, typesById, new List<String>{'Status__c'});
 		}
 	}
 
+	/*
+	 * @description		Generate history track for each record and field
+	 * @param			Id historyRtId - of Record Type to use for the object ICG_History_Track__c
+	 * @param			List<SObject> newItems - Current Values
+	 * @param			Map<Id, SObject> oldMap - Old Values
+	 * @param			Map<Id, String> historyTypeById - Type__c to use for each record to insert. The Id is linked to newItems Id field
+	 * @param			List<String> fieldsToTrack - Api Name of the fields to be tracked
+	 */
+	private static void generateHistoryTrack(
+		Id historyRtId, 
+		List<SObject> newItems, Map<Id, SObject> oldMap, Map<Id, String> historyTypeById, List<String> fieldsToTrack
+	) {
+		List<ICG_History_Track__c> itemsToInsert = new List<ICG_History_Track__c>();
+		Map<String, Map<String, Schema.SObjectField>> fieldsByObject = new Map<String, Map<String, Schema.SObjectField>>();
+
+		if (newItems != null && fieldsToTrack != null) {
+
+			for (SObject currentItem : newItems) {
+				if (historyTypeById.containsKey(currentItem.Id)) {
+
+					String objectName = currentItem.getSObjectType().getDescribe().getName();
+
+					if (!fieldsByObject.containsKey(objectName)) {
+						fieldsByObject.put(objectName, currentItem.getSObjectType().getDescribe().fields.getMap());
+					}
+					
+					for (String fieldToTrack : fieldsToTrack) {
+						if (fieldsByObject.get(objectName).containsKey(fieldToTrack)) {
+							ICG_History_Track__c itemToInsert = new ICG_History_Track__c(
+								RecordTypeId = historyRtId, 
+								Type__c = historyTypeById.get(currentItem.Id), 
+								SObject__c = objectName, 
+								Target_Id__c = currentItem.Id,
+								Field__c = fieldToTrack,
+								New_Value__c = (String) currentItem.get(fieldToTrack));
+							
+								if (oldMap != null && oldMap.containsKey(currentItem.Id)) {
+									String oldObjectName = oldMap.get(currentItem.Id).getSObjectType().getDescribe().getName();
+									if (!fieldsByObject.containsKey(oldObjectName)) {
+										fieldsByObject.put(oldObjectName, oldMap.get(currentItem.Id).getSObjectType().getDescribe().fields.getMap());
+									}
+
+									if (fieldsByObject.get(oldObjectName).containsKey(fieldToTrack)) {
+										itemToInsert.Old_Value__c = (String) oldMap.get(currentItem.Id).get(fieldToTrack);
+									}
+								}
+							itemsToInsert.add(itemToInsert);
+						}
+					}
+				}
+			}
+		}
+
+		if (itemsToInsert.size() > 0) {
+			insert itemsToInsert;
+		}
+	}
 	public class HandledContactRole {
 		public String message { get; set; }
 		public ICG_Contact_Role_Detail__c contactRole { get; set; }
@@ -812,39 +887,96 @@ public without sharing class CW_Utilities {
 		where ICG_Role__c =: FACILITY_MANAGER and (createdById = :userId or LastModifiedById =: userId)];
 	}
 
+	public class HistoryDTO {
+		@AuraEnabled
+		public Id Id { get; set; }
+
+		@AuraEnabled
+		public String Type { get; set; }
+
+		@AuraEnabled
+		public String Status { get; set; }
+
+		@AuraEnabled
+		public Id LastModifiedById { get; set; }
+
+		@AuraEnabled
+		public Datetime CreatedDate { get; set; }
+
+		@AuraEnabled
+		public Datetime LastModifiedDate { get; set; }
+
+		@AuraEnabled
+		public ICG_Contact_Role_Detail__c ICG_Contact_Role_DetailR { get; set; }
+
+		@AuraEnabled
+		public Id ICG_Contact_Role_Detail { get; set; }
+
+		@AuraEnabled
+		public ICG_Account_Role_Detail__c ICG_Account_Role_DetailR { get; set; }
+
+		@AuraEnabled
+		public Id ICG_Account_Role_Detail { get; set; }
+
+		public HistoryDTO () 
+		{
+		}
+	}
+
 	@AuraEnabled
-	public static List<ICG_Contact_Account_Role_Detail_History__c> getFacilityHistoryByUser(String userId) {
+	public static List<HistoryDTO> getFacilityHistoryByUser(String userId) {
 		User user = [SELECT Id, ContactId FROM User WHERE id = :userId LIMIT 1];
 		String userContactId = user.ContactId;
+		List<HistoryDTO> listMyRequest = new List<HistoryDTO>();
 
-		List<ICG_Contact_Account_Role_Detail_History__c> listMyRequest = [Select Id, Type__c, Status__c, LastModifiedById, CreatedDate, LastModifiedDate, 
-		ICG_Contact_Role_Detail__r.Account_Contact_Role__c,
-		ICG_Contact_Role_Detail__r.Account_Contact_Role__r.Account__r.Name,
-		ICG_Contact_Role_Detail__r.Account_Contact_Role__r.Contact__r.OtherState, 
-		ICG_Contact_Role_Detail__r.Account_Contact_Role__r.Contact__r.Name,
-		ICG_Contact_Role_Detail__r.Account_Contact_Role__r.Contact__r.OtherCountry,
-		ICG_Contact_Role_Detail__r.Account_Contact_Role__r.Contact__r.FirstName,
-		ICG_Contact_Role_Detail__r.ICG_Account_Role_Detail__c,
-		ICG_Contact_Role_Detail__r.ICG_Account_Role_Detail__r.Id,
-		ICG_Contact_Role_Detail__r.ICG_Account_Role_Detail__r.Name,
-		ICG_Contact_Role_Detail__r.ICG_Account_Role_Detail__r.RecordType.Name,
-		ICG_Account_Role_Detail__c,
-		ICG_Account_Role_Detail__r.Account_Role__r.Account__c, 
-		ICG_Account_Role_Detail__r.Id,
-		ICG_Account_Role_Detail__r.Name,
-		ICG_Account_Role_Detail__r.RecordType.Name
-		from ICG_Contact_Account_Role_Detail_History__c 
-		where (
-		((Type__C =: ADMIN_REQUEST  OR Type__C =: STATION_MANAGER_REQUEST) and (ICG_Contact_Role_Detail__r.Account_Contact_Role__r.Contact__c = :userContactId))
-		OR 
-		((Type__C =: STATION_CREATION_REQUEST) and (ICG_Account_Role_Detail__r.createdById = :userId))
-		)];
+		Map<Id, ICG_Contact_Role_Detail__c> crd = new Map<Id, ICG_Contact_Role_Detail__c>(
+			[SELECT
+				Account_Contact_Role__c, Account_Contact_Role__r.Account__r.Name, Account_Contact_Role__r.Contact__r.OtherState,  Account_Contact_Role__r.Contact__r.Name, 
+				Account_Contact_Role__r.Contact__r.OtherCountry, Account_Contact_Role__r.Contact__r.FirstName,
+				ICG_Account_Role_Detail__c, ICG_Account_Role_Detail__r.Id, ICG_Account_Role_Detail__r.Name, ICG_Account_Role_Detail__r.RecordType.Name
+			FROM ICG_Contact_Role_Detail__c WHERE Account_Contact_Role__r.Contact__c = :userContactId]);
+
+		Map<Id, ICG_Account_Role_Detail__c> ard = new Map<Id, ICG_Account_Role_Detail__c>(
+			[SELECT Id, Account_Role__r.Account__c, Name, RecordType.Name, createdById FROM ICG_Account_Role_Detail__c WHERE CreatedById = :userId]);
+
+		List<ICG_History_Track__c> historyTrack = [
+			SELECT Id, Type__c, Target_Id__c, Old_Value__c, LastModifiedById, CreatedDate, LastModifiedDate 
+			FROM ICG_History_Track__c 
+			WHERE  (Target_Id__c IN :crd.keySet() AND (Type__C =: ADMIN_REQUEST OR Type__C =: STATION_MANAGER_REQUEST)) 
+				OR (Target_Id__c IN :ard.keySet() AND Type__C =: STATION_CREATION_REQUEST)];
+
+		for (ICG_History_Track__c currentItem : historyTrack) {
+			if ((currentItem.Type__c == ADMIN_REQUEST || currentItem.Type__c == STATION_MANAGER_REQUEST) && crd.get(currentItem.Target_Id__c).Account_Contact_Role__r.Contact__c == userContactId) {
+				HistoryDTO itemToAdd = new HistoryDTO();
+				itemToAdd.Id = currentItem.Id;
+				itemToAdd.Type = currentItem.Type__c;
+				itemToAdd.Status = currentItem.Old_Value__c;
+				itemToAdd.LastModifiedById = currentItem.LastModifiedById;
+				itemToAdd.CreatedDate = currentItem.CreatedDate;
+				itemToAdd.LastModifiedDate = currentItem.LastModifiedDate;
+				itemToAdd.ICG_Contact_Role_Detail = crd.get(currentItem.Target_Id__c).Id;
+				itemToAdd.ICG_Contact_Role_DetailR = crd.get(currentItem.Target_Id__c);
+				listMyRequest.add(itemToAdd);
+
+			} else if (currentItem.Type__C == STATION_CREATION_REQUEST && ard.get(currentItem.Target_Id__c).createdById == userId) {
+				HistoryDTO itemToAdd = new HistoryDTO();
+				itemToAdd.Id = currentItem.Id;
+				itemToAdd.Type = currentItem.Type__c;
+				itemToAdd.Status = currentItem.Old_Value__c;
+				itemToAdd.LastModifiedById = currentItem.LastModifiedById;
+				itemToAdd.CreatedDate = currentItem.CreatedDate;
+				itemToAdd.LastModifiedDate = currentItem.LastModifiedDate;
+				itemToAdd.ICG_Account_Role_Detail = ard.get(currentItem.Target_Id__c).Id;
+				itemToAdd.ICG_Account_Role_DetailR = ard.get(currentItem.Target_Id__c);
+				listMyRequest.add(itemToAdd);
+			}
+		}
 
 		Map<String, String> hierarchyByStation = new Map<String, String>();	
-		for (ICG_Contact_Account_Role_Detail_History__c item : listMyRequest) {
-			if (item.Type__c == STATION_MANAGER_REQUEST){
-				String  company = (item.ICG_Contact_Role_Detail__r.Account_Contact_Role__r.Account__r != null) ? item.ICG_Contact_Role_Detail__r.Account_Contact_Role__r.Account__r.Name : '';
-				String station = (item.ICG_Contact_Role_Detail__r.ICG_Account_Role_Detail__r != null) ? item.ICG_Contact_Role_Detail__r.ICG_Account_Role_Detail__r.Name : '';
+		for (HistoryDTO item : listMyRequest) {
+			if (item.Type == STATION_MANAGER_REQUEST){
+				String  company = (item.ICG_Contact_Role_DetailR.Account_Contact_Role__r.Account__r != null) ? item.ICG_Contact_Role_DetailR.Account_Contact_Role__r.Account__r.Name : '';
+				String station = (item.ICG_Contact_Role_DetailR.ICG_Account_Role_Detail__r != null) ? item.ICG_Contact_Role_DetailR.ICG_Account_Role_Detail__r.Name : '';
 				
 				if (company != '' && station != ''){
 					hierarchyByStation.put(station, company);
@@ -852,18 +984,17 @@ public without sharing class CW_Utilities {
 			}
 		}
 
-		for (ICG_Contact_Account_Role_Detail_History__c item : listMyRequest) {
-			if (item.Type__c == STATION_CREATION_REQUEST){
+		for (HistoryDTO item : listMyRequest) {
+			if (item.Type == STATION_CREATION_REQUEST){
 
-				String station = (item.ICG_Account_Role_Detail__r != null) ? item.ICG_Account_Role_Detail__r.Name : '';
+				String station = (item.ICG_Account_Role_DetailR != null) ? item.ICG_Account_Role_DetailR.Name : '';
                         
 				if (station != '' && hierarchyByStation.containsKey(station)){
 					String company = hierarchyByStation.get(station);
-					item.ICG_Account_Role_Detail__r.Name += ';' + company;	
+					item.ICG_Account_Role_DetailR.Name += ';' + company;	
 				}    
 			}
 		}
-
 		return listMyRequest;
 	}
 
@@ -1151,7 +1282,7 @@ public without sharing class CW_Utilities {
 				Account acc = new Account();
 				acc.Id = ard.Account_Role__r.Account__c;
 				
-				List<ICG_Contact_Account_Role_Detail_History__c> listHistory = [Select Id from ICG_Contact_Account_Role_Detail_History__c where ICG_Account_Role_Detail__r.Id = :ard.Id];
+				List<ICG_History_Track__c> listHistory = [Select Id from ICG_History_Track__c where SObject__c = 'ICG_Account_Role_Detail__c' AND Target_Id__c = :ard.Id];
 				delete listHistory;
 
 				delete ard;
@@ -1246,10 +1377,10 @@ public without sharing class CW_Utilities {
 
 		//Create notifications
 		if(subject != null) {
-			CW_NotificationsController.setNotificationCustom(subject, subject, 'Requested', new List<String>(notificationReceivers), newContactRole.ICG_Account_Role_Detail__r, CW_NotificationsController.RT_NOTIFICATION_PRIVATE_AREA);
+			CW_NotificationsController.setNotificationCustom(subject, subject, 'Requested', new List<String>(notificationReceivers), crd.ICG_Account_Role_Detail__r, CW_NotificationsController.RT_NOTIFICATION_PRIVATE_AREA);
 		}
 		if(String.isNotBlank(adminSubject)){
-			CW_NotificationsController.setNotificationCustom(adminSubject, adminSubject, 'Requested', companyAdminNotificationIds, newContactRole.ICG_Account_Role_Detail__r, CW_NotificationsController.RT_NOTIFICATION_PRIVATE_AREA);
+			CW_NotificationsController.setNotificationCustom(adminSubject, adminSubject, 'Requested', companyAdminNotificationIds, crd.ICG_Account_Role_Detail__r, CW_NotificationsController.RT_NOTIFICATION_PRIVATE_AREA);
 		}
 	}
 	/*

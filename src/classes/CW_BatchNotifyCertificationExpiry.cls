@@ -18,6 +18,7 @@ public without sharing class CW_BatchNotifyCertificationExpiry implements Databa
 	public Database.QueryLocator start(Database.BatchableContext context) {
 		ICG_Environment_Variables__c environmentVariables = CW_Utilities.getEnvironmentVariables();
 		Decimal expiringValidationDays = environmentVariables.EXPIRING_VALIDATION_DAYS__c;
+
 		return Database.getQueryLocator([
 			SELECT 
 				Id, RecordTypeId, CreatedById, Days_Until_Expiration__c, Upcoming_Expiration_Notification_Sent__c, Expired_Notification_Sent__c, ICG_Account_Role_Detail__c, ICG_Account_Role_Detail__r.Name, ICG_Certification__r.Label__c,
@@ -70,7 +71,7 @@ public without sharing class CW_BatchNotifyCertificationExpiry implements Databa
 					} 
 				}
 			}
-		}
+		}	
 
 		for (ICG_Capability_Assignment_Group__c asgmtGroup : scope) {
 			List<SObject> contacts = generateStationManagerCompanyAdmins(asgmtGroup);
@@ -96,7 +97,7 @@ public without sharing class CW_BatchNotifyCertificationExpiry implements Databa
 			} else {
 				asgmtGroup.Expired_Notification_Sent__c = true;
 			}
-			asgmtGroupToUpdate.add(asgmtGroup);
+			asgmtGroupToUpdate.add(asgmtGroup);			
 		}
 		//Send emails
 		Boolean submitted = CW_EmailManager.sendInternalEmails(emailsToBeSent);

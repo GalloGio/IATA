@@ -71,6 +71,7 @@ public without sharing class CW_CapabilitiesManagerController {
 		//Get certifications allowed for user
 		String stationRT = [SELECT RecordType.DeveloperName FROM ICG_Account_Role_Detail__c WHERE Id =: id].RecordType.DeveloperName;
 		List<String> CERTIFICATIONS_ALLOWED_USER =  CW_CapabilitiesUtilities.getCertificationsAllowedByDepartments(stationRT);
+		Boolean userHasPermissionToEdit = CW_Utilities.hasSpecialPermissionsToEdit();
 
 		//Get recordtypes id for category
 		Map<String, String> mapRecordTypeIdByCategory = CW_FacilityCapabilitiesController.getRecordTypesIdByCategoryName();
@@ -94,6 +95,8 @@ public without sharing class CW_CapabilitiesManagerController {
 		List<ICG_Account_Role_Capability_Assignment__c> assignments = getAssignmentsByAccountRoleDetailAndRts(id, new List<Id>(mapAccountRoleDetailAssignmentRtsById.keySet()), categoriesToRetrieve, CW_FacilityCapabilitiesController.validateFieldsOfObject('Account_Role_Detail_Capability__c', fieldsToRetrieve, fieldsMap), certificationId);
 		// Map<Id, List<Map<String, Object>>> certificationsByCapabilityId = generateCertificationsByCapabilityId(assignments);
 		Map<Id, List<AsgmtGroupWrapper>> asgmtGroupByCapabilityId = generateAsgmtGroupByCapabilityId(assignments);
+
+		Map<String, String> columnsToHandle = new Map<String, String>();
 
 		// Loop assignments and fill the output data model
 		for (ICG_Account_Role_Capability_Assignment__c currentAssignment : assignments) {
@@ -136,17 +139,12 @@ public without sharing class CW_CapabilitiesManagerController {
 							mapTooltipFieldsByField, 
 							fieldsMap,
 							isMultiRecordCapabilities, 
-							false,
-							true
+							true,
+							true,
+							stationRT,
+							CERTIFICATIONS_ALLOWED_USER,
+							userHasPermissionToEdit
 						);
-						Boolean isPermission=false;
-						for(AsgmtGroupWrapper cert : certifications){
-							if(CERTIFICATIONS_ALLOWED_USER.contains(cert.name)){
-								isPermission=true;
-							}
-						}
-						currentObject.put('isPermissionByDepartment',isPermission);
-
 						capabilityGroupRowsFound.add(currentObject);
 					}
 				}
@@ -195,9 +193,11 @@ public without sharing class CW_CapabilitiesManagerController {
 							fieldsMap,
 							isMultiRecordCapabilities, 
 							false,
-							false
+							false,
+							stationRT,
+							CERTIFICATIONS_ALLOWED_USER,
+							userHasPermissionToEdit
 						);
-						currentObject.put('isPermissionByDepartment',true);
 						if(!capabilityGroupRowsFound.contains(currentObject)){
 							capabilityGroupRowsFound.add(currentObject);
 						}
@@ -207,6 +207,10 @@ public without sharing class CW_CapabilitiesManagerController {
 				}
 			}
 		}
+		// if recordtype is editable
+		listSectionsIncluded.addAll(CW_CapabilitiesUtilities.getCapabilitiesByRecordTypeNotIncluded(rawData,accountRoleDetailFound,mapFieldsByRecordTypeAndCategory,
+		mapRecordTypeIdByCategory, mapAccountRoleDetailAssignmentRtsById,mapCategoriesByRecordTypeDevName, mapFieldsByGroupField, columnsToHandle,
+		mapEquipments,mapTooltipFieldsByField,fieldsMap,stationRT,CERTIFICATIONS_ALLOWED_USER,userHasPermissionToEdit));
 
 		Map<String, Object> returnValue = new Map<String, Object>();
 		returnValue.put(CW_CapabilitiesUtilities.LIST_SECTIONS_INCLUDED, listSectionsIncluded);
@@ -481,18 +485,22 @@ public without sharing class CW_CapabilitiesManagerController {
 		ResponseBody res = new ResponseBody();
 		List<Account_Role_Detail_Capability__c> listAccRoleCapabInserted;
 			try {
+				//parse to capabilities wrapper
+				List<CapabilityWrapper> parseListAddedRows = parseToCapabilityWrapper(listAddedRows);
+
 				if(String.isNotBlank(groupId) && String.isNotEmpty(groupId)){
+
 					//delete all previous assigment
-					res.success = deleteAssigmentPrevious(accRoleDet, groupId,listAddedRows);
+					res.success = deleteAssigmentPrevious(accRoleDet, groupId,parseListAddedRows);
 	
 					//creation records capabilities
-					listAccRoleCapabInserted = createCapabilities(listAddedRows, false);
+					listAccRoleCapabInserted = createCapabilities(parseListAddedRows, false);
 					// Modify depreciation flow to allow editing and creation of new assignments
 					res.success = assignCapabilityAndGroup(accRoleDet, groupId, listAccRoleCapabInserted);
 				}
 				else{
 					//update records capabilities
-					listAccRoleCapabInserted = createCapabilities(listAddedRows, false);	
+					listAccRoleCapabInserted = createCapabilities(parseListAddedRows, false);	
 				}
 				res.success = true;
 
@@ -513,19 +521,25 @@ public without sharing class CW_CapabilitiesManagerController {
 	public static String editAllCapabilitiesFromStation(String accRoleDet, List<Object> listAddedRows, List<Object> listDeleteRows){
 		ResponseBody res = new ResponseBody();
 		try{
+			//parse to capabilities wrapper
+			List<CapabilityWrapper> parseListAddedRows = parseToCapabilityWrapper(listAddedRows);
+
 			//delete files to sf backend
 			res.success = CW_FacilityCapabilitiesController.deleteFileAssigmentPrevious(accRoleDet, listAddedRows);
 
-			if(listDeleteRows.size()>0){
-				res.success = removeCapabilities(listDeleteRows);
-			}
-			createCapabilities(listAddedRows, false);
-			res.success = true;
+			//delete old assigment 
+			res.success = removeCapabilities(parseListAddedRows,listDeleteRows,accRoleDet);
 
+			//update capabilities
+			List<Account_Role_Detail_Capability__c> listParseRows = createCapabilities(parseListAddedRows, false);
+
+			//check capabilities with record type editable
+			res.success = checkEditableRTCapabilities(accRoleDet,listParseRows);
+			
 		}
 		catch (Exception e) {
 			res.success = false;
-			res.message = e.getMessage();
+			res.message = e.getMessage() +' - '+  e.getStackTraceString();
 		}
 		return JSON.serialize(res);
 	}
@@ -543,11 +557,14 @@ public without sharing class CW_CapabilitiesManagerController {
 
 		if (!String.isBlank(certiId)) {
 			try {
+				//parse to capabilities wrapper
+				List<CapabilityWrapper> parseListAddedRows = parseToCapabilityWrapper(listAddedRows);
+
 				//create new group
 				groupId = CW_CertificationsManagerController.createCertification(jsonCertification);
 
 				//creation records capabilities
-				listAccRoleCapabInserted = createCapabilities(listAddedRows,false);
+				listAccRoleCapabInserted = createCapabilities(parseListAddedRows,false);
 
 				//creation records union AccRoleCapabAssigment for Capability
 				res.success = assignCapabilityAndGroup(accRoleDet, groupId.id, listAccRoleCapabInserted);
@@ -571,16 +588,9 @@ public without sharing class CW_CapabilitiesManagerController {
 	 * @return			Boolean with result
 	 */
 	@AuraEnabled
-	public static List<Account_Role_Detail_Capability__c> createCapabilities(List<Object> capabilitiesList, Boolean isEditCapabilities) {
+	public static List<Account_Role_Detail_Capability__c> createCapabilities(List<CapabilityWrapper> listCapWrapper, Boolean isEditCapabilities) {
 		Map<String, Schema.SObjectField> fieldMapCap = Schema.getGlobalDescribe().get('Account_Role_Detail_Capability__c').getDescribe().fields.getMap();
-		List<CapabilityWrapper> listCapWrapper = new List<CapabilityWrapper>();
 		List<Account_Role_Detail_Capability__c> listToInsert = new List<Account_Role_Detail_Capability__c>();
-
-		//Extract all capabilities from input
-		for (Object capability : capabilitiesList) {
-			CapabilityWrapper c = (CapabilityWrapper) JSON.deserialize(JSON.serializePretty(capability), CapabilityWrapper.class);
-			listCapWrapper.add(c);
-		}
 		
 		//Read all capabilities wrapper
 		for (CapabilityWrapper c : listCapWrapper) {
@@ -638,15 +648,13 @@ public without sharing class CW_CapabilitiesManagerController {
 	 * @param			accRoleDet - Account Role Detail Id, capabAssigmenGroup - Capab Assigment Group
 	 * @return			Boolean true or false
 	 */
-	private static Boolean deleteAssigmentPrevious(String accRoleDet, String capabAssigmenGroup, List<Object> capabilitiesList) {
+	private static Boolean deleteAssigmentPrevious(String accRoleDet, String capabAssigmenGroup, List<CapabilityWrapper> capabilitiesList) {
 		Boolean result = true;
 		Map<String, Schema.SObjectField> fieldMapCap = Schema.getGlobalDescribe().get('Account_Role_Detail_Capability__c').getDescribe().fields.getMap();
-		List<CapabilityWrapper> listCapWrapper = new List<CapabilityWrapper>();
 		Set<Id> currentListId = new Set<Id>();
 
 		//Extract all capabilities from input
-		for (Object capability : capabilitiesList) {
-			CapabilityWrapper c = (CapabilityWrapper) JSON.deserialize(JSON.serializePretty(capability), CapabilityWrapper.class);
+		for (CapabilityWrapper c : capabilitiesList) {
 			if(String.isNotBlank(c.id) && String.isNotEmpty(c.id)){
 				currentListId.add(c.id);
 			}	
@@ -671,21 +679,40 @@ public without sharing class CW_CapabilitiesManagerController {
 	 * @param			capabilitiesList - Json list of ICG_Account_Role_Capability_Assignment__c
 	 * @return			Boolean true or false
 	 */
-	private static Boolean removeCapabilities(List<Object> capabilitiesList) {
+	private static Boolean removeCapabilities(List<CapabilityWrapper> listToAdd,List<Object> listToDelete, String accRoleDet) {
 		Boolean result = true;
 		
 		List<ICG_Account_Role_Capability_Assignment__c> listCapWrapper = new List<ICG_Account_Role_Capability_Assignment__c>();
 		Set<Id> groupListId = new Set<Id>();
 		Set<Id> capabRoleListId = new Set<Id>();
+		Set<String> rowsEditableRT = new Set<String>();
 
-		//Extract all capabilities from input
-		for (Object capability : capabilitiesList) {
+		//Read all capabilities from listToDelete
+		for (Object capability : listToDelete) {
 			ICG_Account_Role_Capability_Assignment__c c = (ICG_Account_Role_Capability_Assignment__c) JSON.deserialize(JSON.serializePretty(capability), ICG_Account_Role_Capability_Assignment__c.class);
-			groupListId.add(c.ICG_Capability_Assignment_Group__c);
-			capabRoleListId.add(c.Account_Role_Detail_Capability__c);
+			if(c.ICG_Capability_Assignment_Group__c != null){
+				groupListId.add(c.ICG_Capability_Assignment_Group__c);
+				capabRoleListId.add(c.Account_Role_Detail_Capability__c);
+			}
+			else{
+				if(c.Account_Role_Detail_Capability__c != null){
+					rowsEditableRT.add(c.Account_Role_Detail_Capability__c);
+				}
+			}
+		}
+		
+		//Read all capabilities with editable record types
+		for(CapabilityWrapper capab : listToAdd){
+			if(CW_FacilityCapabilitiesController.EDITABLE_RECORDTYPES_ID.contains(capab.rtypeId)){
+				rowsEditableRT.add(capab.id);
+			}
 		}
 
 		List<ICG_Account_Role_Capability_Assignment__c> assigmentList = [SELECT Id FROM ICG_Account_Role_Capability_Assignment__c WHERE ICG_Capability_Assignment_Group__c IN : groupListId AND Account_Role_Detail_Capability__c IN : capabRoleListId];
+
+		if(rowsEditableRT.size()>0){
+			assigmentList.addAll([SELECT Id FROM ICG_Account_Role_Capability_Assignment__c WHERE ICG_Account_Role_Detail__c =:accRoleDet AND Account_Role_Detail_Capability__c IN : rowsEditableRT]);
+		}
 
 		try {
 			if(assigmentList.size() > 0){
@@ -811,6 +838,46 @@ public without sharing class CW_CapabilitiesManagerController {
 		}
 
 		return JSON.serialize(res);
+	}
+
+	/**
+	 * @description		check capabilities with record type editable and process them
+	 * @param			accRoleDet - Id Account Role Detail, listEditableRTRows - List capabilities to process
+	 * @return			Boolean result
+	 */
+	@AuraEnabled
+	public static Boolean checkEditableRTCapabilities(String accRoleDet, List<Account_Role_Detail_Capability__c> listAddedRows){
+		Boolean result = true;
+		List<Account_Role_Detail_Capability__c> listEditableRTRows = new List<Account_Role_Detail_Capability__c>();
+		for(Account_Role_Detail_Capability__c capab : listAddedRows){
+			if(CW_FacilityCapabilitiesController.EDITABLE_RECORDTYPES_ID.contains(capab.RecordTypeId)){
+				listEditableRTRows.add(capab);
+			}
+		}
+
+		if(listEditableRTRows.size()>0){
+				ICG_Capability_Assignment_Group__c newGroup = CW_FacilityCapabilitiesController.createCapabAssigmentGroup(accRoleDet);
+				result = CW_FacilityCapabilitiesController.assignCapabilityAndGroup(accRoleDet,newGroup,listEditableRTRows);
+		}
+		
+		return result;
+	}
+
+	/**
+	 * @description		parse object list to capabilities CapabilityWrapper
+	 * @param			listToParse - object list to parse
+	 * @return			List<CapabilityWrapper> result
+	 */
+	@AuraEnabled
+	public static List<CapabilityWrapper> parseToCapabilityWrapper(List<Object> listToParse){
+		List<CapabilityWrapper> listCapWrapper = new List<CapabilityWrapper>();
+
+		//Extract all capabilities from input
+		for (Object capability : listToParse) {
+			CapabilityWrapper c = (CapabilityWrapper) JSON.deserialize(JSON.serializePretty(capability), CapabilityWrapper.class);
+			listCapWrapper.add(c);
+		}
+		return listCapWrapper;
 	}
 
 	public class CapabilityWrapper {

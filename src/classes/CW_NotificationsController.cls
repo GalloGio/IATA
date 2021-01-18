@@ -22,6 +22,9 @@ public without sharing class CW_NotificationsController {
 
 		try
 		{
+			if (String.isNotEmpty(body) && body.length() > 255) {
+				body = body.left(252) + '...';
+			}
 			for(String contactId : handledContacts){
 				ICG_Notification__c notification = new ICG_Notification__c(Subject__c = subject, Body__c = body,Status__c = status, Short_Description__c = subject,Target_Contact__c = contactId, Station__c = station != null ? station.Id : null);
 				notification.RecordTypeId = recordType;

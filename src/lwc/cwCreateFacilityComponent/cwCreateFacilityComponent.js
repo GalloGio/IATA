@@ -53,7 +53,7 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 	@track openingHours;
 	@track activeInfoWindow;
 	@track setFacilityNameAndType;
-	create = true;
+	
 	logoInfoObject;
 	geoLocationInfoObject;
 	@track logoImage;
@@ -101,6 +101,10 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 	
 	get showCargoCommoditiesSection(){
 		return this.cargoCommodities.length >0;
+	}
+	
+	get autoSelectItems(){
+		return this.companyType === "Airport_Operator";
 	}
 
 	@track selectRt;

@@ -191,40 +191,47 @@
 																	</p>
 																</th>
 
-																<th if:false={currentfield.first}
-																	key={currentfield.value.name} scope="col"
-																	colspan={currentfield.value.colspan} title={currentfield.value.label}>
-																	{currentfield.value.label}
-																</th>
+																<template if:false={currentfield.value.isformula}>
+																	<th if:false={currentfield.first}
+																		key={currentfield.value.name} scope="col"
+																		colspan={currentfield.value.colspan} title={currentfield.value.label}>
+																		{currentfield.value.label}
+																	</th>
+																</template>
 
 															</template>
 
 														</template>
 
 														<template if:true={currentheader.last}>
-															<th key={currentheader.value.name}
-																scope="col" class="photo-colum-head">{label.photos}</th>
-															<th key={currentheader.value.name} scope="col"
-																class="certifications-stamp cert-colum-head">{label.capability_validated_by}</th>
-															<template if:true={addAllRowsPrevious}>
+															<template if:true={currentCategory.isEditableRecordType}>
 																<th key={currentheader.value.name}
-																scope="col" class="zui-sticky-col-right aa">
-																	<template if:true={getCertificationMode}>																
-																		<template if:true={currentCategory.isMultirecord}>
-																			<lightning-button-icon icon-name="utility:add"
-																			variant="brand" alternative-text="Add capability" title="Add item"
-																			data-action="Add"
-																				data-super-categories-index={superCategoryIndex}
-																				data-section-index={sectionIndex}
-																				data-capability-index={capabilityIndex}
-																				data-category-index={categoryIndex}
-																			onclick={assigntCapability}>
-																			</lightning-button-icon>
-																		</template>
-																	</template>
-																</th>
+																scope="col" class="photo-colum-head">{label.manage_photos}</th>
 															</template>
-
+															<template if:false={currentCategory.isEditableRecordType}>
+																<th key={currentheader.value.name}
+																	scope="col" class="photo-colum-head">{label.photos}</th>
+																<th key={currentheader.value.name} scope="col"
+																	class="certifications-stamp cert-colum-head">{label.capability_validated_by}</th>
+																<template if:true={addAllRowsPrevious}>
+																	<th key={currentheader.value.name}
+																	scope="col" class="zui-sticky-col-right aa">
+																		<template if:true={getCertificationMode}>																
+																			<template if:true={currentCategory.isMultirecord}>
+																				<lightning-button-icon icon-name="utility:add"
+																				variant="brand" alternative-text="Add capability" title="Add item"
+																				data-action="Add"
+																					data-super-categories-index={superCategoryIndex}
+																					data-section-index={sectionIndex}
+																					data-capability-index={capabilityIndex}
+																					data-category-index={categoryIndex}
+																				onclick={assigntCapability}>
+																				</lightning-button-icon>
+																			</template>
+																		</template>
+																	</th>
+																</template>
+															</template>
 																															
 														</template>
 													</tr>
@@ -257,16 +264,78 @@
 																		</b>
 																	</td>
 
-																	<td if:false={currentfield.first}
-																		key={currentfield.value.name}>
-																		<c-cw-capabilities-manager-inputs
-																			row-index={rowIndex} category-index={categoryIndex} item={row}
-																			property-name={currentfield.value.name}
-																			max-characters="20"
-																			type={currentfield.value.type} values={currentfield.value.values}
-																			edit-mode={row.isNotEditable} onfieldupdated={addFieldToList}>
-																		</c-cw-capabilities-manager-inputs>
-																	</td>
+																		<template if:false={currentfield.value.isformula}>
+																			<td if:false={currentfield.first}
+																				key={currentfield.value.name}
+																				class="row-separator photo-colum" 
+																				data-super-categories-index={superCategoryIndex}
+																				data-section-index={sectionIndex}
+																				data-capability-index={capabilityIndex}
+																				data-category-index={categoryIndex}
+																				data-row-index={rowIndex}
+																				onclick={setRowClicked}>
+
+																				<template if:true={currentfield.value.isfileupload}>
+																					<lightning-file-upload 
+																						variant="label-hidden"
+																						name="fileUploader"
+																						accept={acceptedFormats}
+																						record-id={recordId}
+																						onuploadfinished={handleUploadDocumentFinished}
+																						disabled={row.isNotEditable}
+																						multiple>
+																					</lightning-file-upload>
+
+																					<template if:true={editMode}>
+																						<button if:true={row.documentsAvailableEdit}
+																							class="p-0 bg-transp border-0 cursor-pt"
+																							data-tosca="edit_documents" title="Edit documents" disabled={row.isNotEditable}>
+																							<img src={infoIcon} width="20px" class="cursor-pt"
+																							data-super-categories-index={superCategoryIndex}
+																								data-section-index={sectionIndex}
+																								data-capability-index={capabilityIndex}
+																								data-category-index={categoryIndex}
+																								data-row-index={rowIndex}
+																								data-field="documents"
+																								onclick={openModalEditPhotos}/>
+																						</button>
+																						
+																						<button if:false={row.documentsAvailableEdit} disabled
+																							class="p-0 bg-transp border-0 disabled-filter">
+																							<img src={infoIcon} width="20px" />
+																						</button>
+																					</template>
+																					<template if:false={editMode}>
+																						<button if:true={row.documentsAvailable}
+																							class="p-0 bg-transp border-0 cursor-pt"
+																							data-tosca="edit_documents" title="Edit documents" disabled={row.isNotEditable}>
+																							<img src={infoIcon} width="20px" class="cursor-pt"
+																							data-super-categories-index={superCategoryIndex}
+																								data-section-index={sectionIndex}
+																								data-capability-index={capabilityIndex}
+																								data-category-index={categoryIndex}
+																								data-row-index={rowIndex}
+																								data-field="documents"
+																								onclick={openModalEditPhotos}/>
+																						</button>
+																						
+																						<button if:false={row.documentsAvailable} disabled
+																							class="p-0 bg-transp border-0 disabled-filter">
+																							<img src={infoIcon} width="20px" />
+																						</button>
+																					</template>
+																				</template>
+
+																				<c-cw-capabilities-manager-inputs if:false={currentfield.value.isfileupload}
+																					row-index={rowIndex} category-index={categoryIndex} item={row}
+																					property-name={currentfield.value.name}
+																					max-characters="20"
+																					type={currentfield.value.type} values={currentfield.value.values}
+																					edit-mode={row.isNotEditable} onfieldupdated={addFieldToList}>
+																				</c-cw-capabilities-manager-inputs>
+
+																			</td>
+																		</template>
 
 																</template>
 															</template>
@@ -300,6 +369,7 @@
 																		data-capability-index={capabilityIndex}
 																		data-category-index={categoryIndex}
 																		data-row-index={rowIndex}
+																		data-field="photos"
 																		onclick={openModalEditPhotos}/>
 																</button>
 																
@@ -318,6 +388,7 @@
 																		 data-capability-index={capabilityIndex}
 																		 data-category-index={categoryIndex}
 																		 data-row-index={rowIndex}
+																		 data-field="photos"
 																		 onclick={openModalEditPhotos}/>
 																 </button>
 																 
@@ -328,7 +399,7 @@
 															 </template>
 														</td>
 
-														<td class="certifications-stamp cert-colum">
+														<td if:false={currentCategory.isEditableRecordType} class="certifications-stamp cert-colum">
 															<div class="stamp-inline">
 																<template for:each={row.certifications}
 																	for:item="cert">
@@ -349,7 +420,6 @@
 																</template>
 															</div>
 														</td>
-
 														
 														<template if:true={getCertificationMode}>
 															<template if:false={isNotEditable}>
@@ -442,7 +512,7 @@
 
 							<div class="row">
 								<lightning-carousel disable-auto-scroll class="m-auto">
-									<template for:each={photosRow.photos} for:item="photo" for:index="photoIndex">
+									<template for:each={filesRow} for:item="photo" for:index="photoIndex">
 										<lightning-button-icon if:true={isSaveOption} key={photo.id} data-id={photo.id} data-position="photoIndex" icon-name="utility:delete" onclick={deletePhotoCarousel}
 											alternative-text="delete" variant="destructive" size="large" class="delete-img-carousel">
 										</lightning-button-icon>

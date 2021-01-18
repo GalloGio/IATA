@@ -6,8 +6,6 @@ import changeIsFavoriteStatus from '@salesforce/apex/PortalServicesCtrl.changeIs
 import verifyCompleteL3Data from '@salesforce/apex/PortalServicesCtrl.verifyCompleteL3Data';
 import getPortalServiceId from '@salesforce/apex/PortalServicesCtrl.getPortalServiceId';
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
-import checkLatestTermsAndConditionsAccepted from '@salesforce/apex/ServiceTermsAndConditionsUtils.checkLatestTermsAndConditionsAccepted';
-import getContactInfo from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getContactInfo';
 
 //navigation
 import { NavigationMixin } from 'lightning/navigation';
@@ -28,9 +26,6 @@ export default class PortalServicesAccessGrantedCard extends NavigationMixin(Lig
 	@api showOnlyFavorites;
 
 	@track isLoading = false;
-	@track contactId;
-	@track isLatestAccepted = false;
-	@track displayAcceptTerms = false;
 
 	label = {
 		CSP_Services_ManageService,
@@ -43,28 +38,6 @@ export default class PortalServicesAccessGrantedCard extends NavigationMixin(Lig
 		return this.service.recordService.Application_icon_URL__c !== undefined;
 	}
 
-	connectedCallback(){
-		getContactInfo().then(result => {
-			let userInfo = JSON.parse(JSON.stringify(result));
-			this.contactId = userInfo.Id;
-
-			checkLatestTermsAndConditionsAccepted({portalServiceId: this.service.recordService.Id, contactId: userInfo.Id}).then(result2 => {
-				let isLatestAccepted = JSON.parse(JSON.stringify(result2));
-
-				this.isLatestAccepted = isLatestAccepted;
-			});
-		});
-	}
-
-	cancelTermsAcceptance(){
-		this.displayAcceptTerms = false;
-	}
-
-	acceptTerms(){
-		this.displayAcceptTerms = false;
-		this.goToService();
-	}
-	
 	goToManageServiceButtonClick(event) {
 		let serviceAux = JSON.parse(JSON.stringify(this.service));
 
@@ -82,16 +55,6 @@ export default class PortalServicesAccessGrantedCard extends NavigationMixin(Lig
 	}
 
 	goToServiceButtonClick() {
-		// check if service has terms and conditions and that they're all accepted
-		if(!this.isLatestAccepted){
-			this.displayAcceptTerms = true;
-		}
-		else{
-			this.goToService();
-		}
-	}
-
-	goToService() {
 		//because proxy.......
 		let serviceAux = JSON.parse(JSON.stringify(this.service)).recordService;
 

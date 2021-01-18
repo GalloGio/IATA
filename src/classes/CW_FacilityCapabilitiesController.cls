@@ -15,6 +15,7 @@ public without sharing class CW_FacilityCapabilitiesController {
 	final static String RT_NO_CERTIFICATION_REQUIRED = RecordTypeSingleton.getInstance().getRecordTypeId('ICG_Capability_Assignment_Group__c', 'No_Certification_Required');
 	final static Map<String, List<String>> ESPECIAL_CATEGORIES = getMapConfig();
 	public final static Map<String, List<String>> EDITABLE_RECORDTYPES = getMapEditableRecordTypes();
+	public final static List<Id> EDITABLE_RECORDTYPES_ID = getListEditableRecordTypesID();
 
 	public static String generateCapabilitiesStructureCsv() {
 		List<String> output = new List<String>();
@@ -152,6 +153,17 @@ public without sharing class CW_FacilityCapabilitiesController {
 		return output;
 	}
 
+	public static List<Id> getListEditableRecordTypesID() {
+		List<Id> output = new List<Id>();
+		List<RecordType> rtEditables = [SELECT Id FROM RecordType WHERE DeveloperName IN : getMapEditableRecordTypes().get(MD_EDITABLE_RECORDTYPES)];
+		for(RecordType rt : rtEditables){
+			output.add(rt.id);
+		}
+
+		return output;
+	}
+	
+
 	public static List<ICG_capability_configuration__mdt> getCapabilityConfigurationMetadataByType(String type) {
 		return [SELECT Key__c, Data__c, Order__c FROM ICG_capability_configuration__mdt WHERE Type__c = :type ORDER BY Order__c ASC, Key__c ASC];
 	}
@@ -260,6 +272,11 @@ public without sharing class CW_FacilityCapabilitiesController {
 		Set<String> listSectionsIncluded = new Set<String>();
 		CW_FacilityCapabilitiesController.SectionsWrapper checksMap;
 
+		//Get certifications allowed for user
+		String stationRT = [SELECT RecordType.DeveloperName FROM ICG_Account_Role_Detail__c WHERE Id =: id].RecordType.DeveloperName;
+		List<String> CERTIFICATIONS_ALLOWED_USER =  CW_CapabilitiesUtilities.getCertificationsAllowedByDepartments(stationRT);
+		Boolean userHasPermissionToEdit = CW_Utilities.hasSpecialPermissionsToEdit();
+
 		//Get recordtypes id for category
 		Map<String, String> mapRecordTypeIdByCategory = CW_FacilityCapabilitiesController.getRecordTypesIdByCategoryName();
 
@@ -283,7 +300,6 @@ public without sharing class CW_FacilityCapabilitiesController {
 		Map<Id, List<AsgmtGroupWrapper>> asgmtGroupByCapabilityId = generateAsgmtGroupByCapabilityId(assignments);
 
 		Map<String, String> columnsToHandle = new Map<String, String>();
-		columnsToHandle.put('more_info_document__c', null);
 
 		// Loop assignments and fill the output data model
 		for (ICG_Account_Role_Capability_Assignment__c currentAssignment : assignments) {
@@ -312,57 +328,23 @@ public without sharing class CW_FacilityCapabilitiesController {
 						currentObject = convertCapabilityAssignmentToObject(currentDetail, mapFieldsByRecordTypeAndCategory.get(rtDevNameLC + '#' + currentDetail.Category__c.toLowerCase()), fieldsMap);
 						List<AsgmtGroupWrapper> certifications = asgmtGroupByCapabilityId.containsKey(currentDetail.Id) ? asgmtGroupByCapabilityId.get(currentDetail.Id) : new List<AsgmtGroupWrapper>();
 						certifications.sort();
-						currentObject = CW_CapabilitiesUtilities.generateCurrentObject(currentObject, currentDetail.Id, currentDetail, certifications, currentAssignment.ICG_Capability_Assignment_Group__r.RecordTypeId, capabilityFound, mapFieldsByRecordTypeAndCategory, rtDevNameLC, mapEquipments, mapTooltipFieldsByField, fieldsMap, false, true, true);
+						
+						currentObject = CW_CapabilitiesUtilities.generateCurrentObject(
+							currentObject, currentDetail.Id, currentDetail, certifications,
+							 currentAssignment.ICG_Capability_Assignment_Group__r.RecordTypeId,
+							  capabilityFound, mapFieldsByRecordTypeAndCategory, rtDevNameLC, mapEquipments,
+							   mapTooltipFieldsByField, fieldsMap, false, true, true,stationRT,
+							   CERTIFICATIONS_ALLOWED_USER,userHasPermissionToEdit);
 						capabilityGroupRowsFound.add(currentObject);
 					}
 				}
 				categoryFound.put('templateFields', currentObject);
 			}
 		}
-
-		Map<String, List<String>> capabilitiesByRecordTypeNotIncluded = new Map<String, List<String>>();
-		for (Map<String, Object> capability : (List<Map<String, Object>>) rawData.get(CW_CapabilitiesUtilities.CAPABILITIES)) {
-			// if recordtype is editable in private area
-			if ((Boolean) capability.get('isEditableRecordType')) {
-				capabilitiesByRecordTypeNotIncluded.put((String) capability.get('name'), new List<String>());
-				for (Map<String, Object> sum : (List<Map<String, Object>>) capability.get('summary')) {
-					if (!(Boolean) sum.get('contains')) {
-						capabilitiesByRecordTypeNotIncluded.get((String) capability.get('name')).add((String) sum.get('value'));
-					}
-				}
-			}
-		}
-
-		if (capabilitiesByRecordTypeNotIncluded.size() > 0) {
-			//Read missing Capabilities by mapRecordTypeIdByCategory
-			List<Account_Role_Detail_Capability__c> accountCapabNotInluded = getCapabilitiesNotIncludedDetail(capabilitiesByRecordTypeNotIncluded, mapRecordTypeIdByCategory);
-
-			for (Account_Role_Detail_Capability__c currentDetail : accountCapabNotInluded) {
-				listSectionsIncluded.add(mapAccountRoleDetailAssignmentRtsById.get(currentDetail.RecordTypeId).DeveloperName);
-
-				String rtDevNameLC = mapAccountRoleDetailAssignmentRtsById.get(currentDetail.RecordTypeId).DeveloperName.toLowerCase();
-				if (mapCategoriesByRecordTypeDevName.containsKey(rtDevNameLC)) {
-					// We look for the Capability, Category to which it belongs
-					Map<String, Object> capabilityFound = (Map<String, Object>) CW_FacilityCapabilitiesController.getItemInMap((List<Map<String, Object>>) rawData.get(CW_CapabilitiesUtilities.CAPABILITIES), 'name', rtDevNameLC);
-					capabilityFound = CW_CapabilitiesUtilities.generateCapabilityFound(capabilityFound, currentDetail);
-					Map<String, Object> categoryFound = (Map<String, Object>) CW_FacilityCapabilitiesController.getItemInMap((List<Map<String, Object>>) capabilityFound.get(CW_CapabilitiesUtilities.CATEGORIES), 'value', currentDetail.Category__c);
-					categoryFound = CW_CapabilitiesUtilities.generateCategoryFound(categoryFound, capabilityFound, mapFieldsByRecordTypeAndCategory, rtDevNameLC, currentDetail, mapFieldsByGroupField, columnsToHandle, false);
-
-					if (!String.isBlank(accountRoleDetailFound.Summary_Detail_Check_JSON__c)) {
-						checksMap = (CW_FacilityCapabilitiesController.SectionsWrapper) JSON.deserialize(accountRoleDetailFound.Summary_Detail_Check_JSON__c, CW_FacilityCapabilitiesController.SectionsWrapper.class);
-					}
-
-					Map<String, Object> currentObject;
-					if (categoryFound != null && categoryFound.containsKey(CW_CapabilitiesUtilities.ROWS)) {
-						List<Object> capabilityGroupRowsFound = (List<Object>) categoryFound.get(CW_CapabilitiesUtilities.ROWS);
-						currentObject = CW_CapabilitiesManagerController.cleanCapabilitiesFieldsToObject(currentDetail, mapFieldsByRecordTypeAndCategory.get(rtDevNameLC + '#' + currentDetail.Category__c.toLowerCase()), fieldsMap);
-						currentObject = CW_CapabilitiesUtilities.generateCurrentObject(currentObject, '', currentDetail, new List<AsgmtGroupWrapper>(), '', capabilityFound, mapFieldsByRecordTypeAndCategory, rtDevNameLC, mapEquipments, mapTooltipFieldsByField, fieldsMap, false, false, false);
-						capabilityGroupRowsFound.add(currentObject);
-					}
-					categoryFound.put('templateFields', currentObject);
-				}
-			}
-		}
+		// if recordtype is editable
+		listSectionsIncluded.addAll(CW_CapabilitiesUtilities.getCapabilitiesByRecordTypeNotIncluded(rawData,accountRoleDetailFound,mapFieldsByRecordTypeAndCategory,
+		 mapRecordTypeIdByCategory, mapAccountRoleDetailAssignmentRtsById,mapCategoriesByRecordTypeDevName, mapFieldsByGroupField, columnsToHandle,
+		 mapEquipments,mapTooltipFieldsByField,fieldsMap,stationRT,CERTIFICATIONS_ALLOWED_USER,userHasPermissionToEdit));
 
 		Map<String, Object> returnValue = new Map<String, Object>();
 		returnValue.put(CW_CapabilitiesUtilities.LIST_SECTIONS_INCLUDED, listSectionsIncluded);
@@ -407,7 +389,7 @@ public without sharing class CW_FacilityCapabilitiesController {
 	 * @param
 	 * @return			List<Account_Role_Detail_Capability__c> with las capabilities that are not in the categories of assigments registers
 	 */
-	private static List<Account_Role_Detail_Capability__c> getCapabilitiesNotIncludedDetail(Map<String, List<String>> mapCapabilitiesNotIncluded, Map<String, String> mapRecordTypeIdByCategory) {
+	public static List<Account_Role_Detail_Capability__c> getCapabilitiesNotIncludedDetail(Map<String, List<String>> mapCapabilitiesNotIncluded, Map<String, String> mapRecordTypeIdByCategory) {
 		List<Account_Role_Detail_Capability__c> returnValue = new List<Account_Role_Detail_Capability__c>();
 
 		if (mapCapabilitiesNotIncluded.Size() > 0) {
@@ -421,12 +403,15 @@ public without sharing class CW_FacilityCapabilitiesController {
 	}
 
 	@AuraEnabled
-	public static Object setVisibilityPhotos(String id, String photos) {
-		Account_Role_Detail_Capability__c dummyUpd = new Account_Role_Detail_Capability__c(Id = (Id) id, Photos__c = photos);
+	public static Object setVisibilityPhotos(String id,String field, String content) {		
+		SObject sObj = new Account_Role_Detail_Capability__c();
+		sObj.put('Id', id);
+		sObj.put(field, content);
 
 		try {
-			update dummyUpd;
-			return JSON.deserializeUntyped(dummyUpd.Photos__c);
+			Account_Role_Detail_Capability__c parseCapability = (Account_Role_Detail_Capability__c) sObj;
+			update parseCapability;
+			return JSON.deserializeUntyped((String)parseCapability.get(field));
 		} catch (Exception e) {
 			return e.getMessage();
 		}
@@ -730,10 +715,22 @@ public without sharing class CW_FacilityCapabilitiesController {
 					}
 				}
 
-				lastHeader.add(new Map<String, Object>{ 'colspan' => 1, 'name' => fieldName, 'label' => currentLabel, 'isformula' => fieldMap.get(fieldName).getDescribe().isCalculated(), 'type' => fieldMap.get(fieldName).getDescribe().getType().name(), 'values' => pickListValuesList });
+				lastHeader.add(new Map<String, Object>{ 
+					'colspan' => 1, 'name' => fieldName, 'label' => currentLabel,
+					 'isformula' => fieldMap.get(fieldName).getDescribe().isCalculated(),
+					  'type' => fieldMap.get(fieldName).getDescribe().getType().name(), 
+					  'values' => pickListValuesList,
+					  'isfileupload' => (fieldName == 'more_info_document__c')
+					 });
 
 				if (!foundGroup) {
-					firstHeader.add(new Map<String, Object>{ 'colspan' => 1, 'name' => fieldName, 'label' => '', 'isformula' => fieldMap.get(fieldName).getDescribe().isCalculated(), 'type' => fieldMap.get(fieldName).getDescribe().getType().name(), 'values' => pickListValuesList });
+					firstHeader.add(new Map<String, Object>{
+						 'colspan' => 1, 'name' => fieldName, 'label' => '', 
+						 'isformula' => fieldMap.get(fieldName).getDescribe().isCalculated(),
+						  'type' => fieldMap.get(fieldName).getDescribe().getType().name(),
+						   'values' => pickListValuesList,
+						   'isfileupload' => (fieldName == 'more_info_document__c')
+						 });
 				}
 			}
 		}
@@ -817,7 +814,7 @@ public without sharing class CW_FacilityCapabilitiesController {
 	 * @param
 	 * @return			ICG_Capability_Assignment_Group__c Id
 	 */
-	private static ICG_Capability_Assignment_Group__c createCapabAssigmentGroup(String accRoleDet) {
+	public static ICG_Capability_Assignment_Group__c createCapabAssigmentGroup(String accRoleDet) {
 		ICG_Capability_Assignment_Group__c addCapabAssgmGroup = new ICG_Capability_Assignment_Group__c();
 
 		List<ICG_Capability_Assignment_Group__c> groupNC = [SELECT Id FROM ICG_Capability_Assignment_Group__c WHERE RecordTypeId =:RT_NO_CERTIFICATION_REQUIRED
@@ -911,7 +908,7 @@ public without sharing class CW_FacilityCapabilitiesController {
 	 * @param			accRoleDet - Account Role Detail Id, accRoleCapabId - Account Role Capab Id, capabAssigmenGroup - Capab Assigment Group and ardCertId - Account Role Detail Certi Id
 	 * @return			Boolean true or false
 	 */
-	private static Boolean assignCapabilityAndGroup(String accRoleDet, ICG_Capability_Assignment_Group__c capabAssigmenGroup, List<Account_Role_Detail_Capability__c> listAccRoleCapabId) {
+	public static Boolean assignCapabilityAndGroup(String accRoleDet, ICG_Capability_Assignment_Group__c capabAssigmenGroup, List<Account_Role_Detail_Capability__c> listAccRoleCapabId) {
 		Boolean result = true;
 		List<ICG_Account_Role_Capability_Assignment__c> assigment = new List<ICG_Account_Role_Capability_Assignment__c>();
 
@@ -955,11 +952,19 @@ public without sharing class CW_FacilityCapabilitiesController {
 							}
 						}
 					}
+					if (capfield.field.equals('more_info_document__c')){
+						if(String.isNotEmpty(capfield.value)){
+							List<CapabilityPhoto> docList = (List<CapabilityPhoto>) JSON.deserialize(capfield.value, List<CapabilityPhoto>.class);
+							for(CapabilityPhoto doc : docList){
+								currentFilesId.add(doc.id);
+							}
+						}
+					}
 				}
 			}	
 		}
 		//Read files to capabilities removed
-		List<ICG_Account_Role_Capability_Assignment__c> assigmentList = [SELECT Account_Role_Detail_Capability__r.Photos__c 
+		List<ICG_Account_Role_Capability_Assignment__c> assigmentList = [SELECT Account_Role_Detail_Capability__r.Photos__c, Account_Role_Detail_Capability__r.More_Info_Document__c 
 			FROM ICG_Account_Role_Capability_Assignment__c 
 				WHERE ICG_Account_Role_Detail__c =: accRoleDet 
 						AND Account_Role_Detail_Capability__c NOT IN : currentListId];
@@ -972,6 +977,12 @@ public without sharing class CW_FacilityCapabilitiesController {
 						List<CapabilityPhoto> photoList = (List<CapabilityPhoto>) JSON.deserialize(assigment.Account_Role_Detail_Capability__r.Photos__c, List<CapabilityPhoto>.class);
 						for(CapabilityPhoto photo : photoList){
 							filesToDeleteId.add(photo.id);
+						}
+					}
+					if(String.isNotEmpty(assigment.Account_Role_Detail_Capability__r.More_Info_Document__c)){
+						List<CapabilityPhoto> docList = (List<CapabilityPhoto>) JSON.deserialize(assigment.Account_Role_Detail_Capability__r.More_Info_Document__c, List<CapabilityPhoto>.class);
+						for(CapabilityPhoto doc : docList){
+							filesToDeleteId.add(doc.id);
 						}
 					}
 				}
