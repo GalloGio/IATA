@@ -360,6 +360,11 @@
             <sortOrder>4</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
+            <actionName>Case.Close_Case</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>9</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>ChangeOwnerOne</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>5</sortOrder>
@@ -378,11 +383,6 @@
             <actionName>Case.Accept_Case</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>8</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Case.Close_Case</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>9</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <quickActionList>
