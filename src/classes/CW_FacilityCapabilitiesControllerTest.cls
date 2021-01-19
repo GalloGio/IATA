@@ -295,24 +295,24 @@ public class CW_FacilityCapabilitiesControllerTest {
 		assignment.ICG_Capability_Assignment_Group__c = capvalcert.id;
 		insert assignment;
 
-		List<CW_FacilityCapabilitiesController.CapabilityWrapper> listCap = new List<CW_FacilityCapabilitiesController.CapabilityWrapper>();
+		List<CW_Utilities.CapabilityWrapper> listCap = new List<CW_Utilities.CapabilityWrapper>();
 		List<Account_Role_Detail_Capability__c> listCapWrapper = new List<Account_Role_Detail_Capability__c>();
 		listCapWrapper.add(cap);
 		listCapWrapper.add(capWithBadPhotos);
 
 		for (Account_Role_Detail_Capability__c capItem : listCapWrapper) {
-			CW_FacilityCapabilitiesController.CapabilityWrapper convertItem = new CW_FacilityCapabilitiesController.CapabilityWrapper();
+			CW_Utilities.CapabilityWrapper convertItem = new CW_Utilities.CapabilityWrapper();
 			convertItem.rtypeId = capItem.RecordTypeId;
 			convertItem.category = capItem.Category__c;
 			convertItem.equipment = capItem.Equipment__c;
 
-			convertItem.fields = new List<CW_FacilityCapabilitiesController.CapabilityFieldsWrapper>();
-			CW_FacilityCapabilitiesController.CapabilityFieldsWrapper fieldDate = new CW_FacilityCapabilitiesController.CapabilityFieldsWrapper();
-			CW_FacilityCapabilitiesController.CapabilityFieldsWrapper fieldDateEmpty = new CW_FacilityCapabilitiesController.CapabilityFieldsWrapper();
-			CW_FacilityCapabilitiesController.CapabilityFieldsWrapper fieldDouble = new CW_FacilityCapabilitiesController.CapabilityFieldsWrapper();
-			CW_FacilityCapabilitiesController.CapabilityFieldsWrapper fieldDoubleEmpty = new CW_FacilityCapabilitiesController.CapabilityFieldsWrapper();
-			CW_FacilityCapabilitiesController.CapabilityFieldsWrapper fieldBoolena = new CW_FacilityCapabilitiesController.CapabilityFieldsWrapper();
-			CW_FacilityCapabilitiesController.CapabilityFieldsWrapper fieldElse = new CW_FacilityCapabilitiesController.CapabilityFieldsWrapper();
+			convertItem.fields = new List<CW_Utilities.CapabilityFieldsWrapper>();
+			CW_Utilities.CapabilityFieldsWrapper fieldDate = new CW_Utilities.CapabilityFieldsWrapper();
+			CW_Utilities.CapabilityFieldsWrapper fieldDateEmpty = new CW_Utilities.CapabilityFieldsWrapper();
+			CW_Utilities.CapabilityFieldsWrapper fieldDouble = new CW_Utilities.CapabilityFieldsWrapper();
+			CW_Utilities.CapabilityFieldsWrapper fieldDoubleEmpty = new CW_Utilities.CapabilityFieldsWrapper();
+			CW_Utilities.CapabilityFieldsWrapper fieldBoolena = new CW_Utilities.CapabilityFieldsWrapper();
+			CW_Utilities.CapabilityFieldsWrapper fieldElse = new CW_Utilities.CapabilityFieldsWrapper();
 
 			fieldDate.field = 'Expiry_Date__c';
 			fieldDate.Value = string.valueOf(Date.today().addDays(1));
@@ -345,8 +345,8 @@ public class CW_FacilityCapabilitiesControllerTest {
 		String jsonRes = CW_FacilityCapabilitiesController.createRelationshipsForNewCapabilities(ardid, listCap);
 		String jsonResError = CW_FacilityCapabilitiesController.createRelationshipsForNewCapabilities(ardid, null);
 		
-		CW_FacilityCapabilitiesController.ResponseBody res = (CW_FacilityCapabilitiesController.ResponseBody) JSON.deserialize(jsonRes, CW_FacilityCapabilitiesController.ResponseBody.class);
-		CW_FacilityCapabilitiesController.ResponseBody resError = (CW_FacilityCapabilitiesController.ResponseBody) JSON.deserialize(jsonResError, CW_FacilityCapabilitiesController.ResponseBody.class);
+		CW_Utilities.ResponseBody res = (CW_Utilities.ResponseBody) JSON.deserialize(jsonRes, CW_Utilities.ResponseBody.class);
+		CW_Utilities.ResponseBody resError = (CW_Utilities.ResponseBody) JSON.deserialize(jsonResError, CW_Utilities.ResponseBody.class);
 
 		system.assertEquals(res.success, true);
 		system.assertEquals(resError.success, false);
@@ -410,8 +410,8 @@ public class CW_FacilityCapabilitiesControllerTest {
 	public static void AsgmtGroupWrapperCompareTest() {
 		Test.startTest();
 		
-		CW_FacilityCapabilitiesController.AsgmtGroupWrapper asgmtGroupToAdd1 = new CW_FacilityCapabilitiesController.AsgmtGroupWrapper();
-		CW_FacilityCapabilitiesController.AsgmtGroupWrapper asgmtGroupToAdd2 = new CW_FacilityCapabilitiesController.AsgmtGroupWrapper();
+		CW_Utilities.AsgmtGroupWrapper asgmtGroupToAdd1 = new CW_Utilities.AsgmtGroupWrapper();
+		CW_Utilities.AsgmtGroupWrapper asgmtGroupToAdd2 = new CW_Utilities.AsgmtGroupWrapper();
 		
 		Integer result = asgmtGroupToAdd1.compareTo(asgmtGroupToAdd2);
 		system.assertEquals(result, 0);

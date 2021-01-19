@@ -208,7 +208,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 		this.rowSelected = this.data.superCategories[superCategoriesIndex].sections[sectionIndex].capabilities[capabilityIndex].categories[categoryIndex].rows[rowIndex];
 
 		this.rowIndexSelected = rowIndex;
-		this.equipmentSelected = this.rowSelected.equipment_value;
+		this.equipmentSelected = this.rowSelected.equipment;
 		this.equipmentSelectedLabel = this.data.superCategories[superCategoriesIndex].sections[sectionIndex].capabilities[capabilityIndex].categories[categoryIndex].rows[rowIndex].equipment__c;
 	}
 
@@ -223,7 +223,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 
 	setFilesValue(value,field) {
 		this.listAddedRows.forEach(element => {
-			if (element.position.toString() === this.rowIndexSelected && element.equipment_value === this.equipmentSelected) {
+			if (element.position.toString() === this.rowIndexSelected && element.equipment === this.equipmentSelected) {
 				let fileFound = false;
 				element.fields.forEach(f => {
 					if (f.field === field) {
@@ -630,7 +630,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 		let containField = false;
 		//update list to update
 		this.listAddedRows.forEach(function(element) {
-			if (element.equipment_value === data.equipment && element.position.toString() === data.rowIndex) {
+			if (element.equipment === data.equipment && element.position.toString() === data.rowIndex) {
 				element.fields.forEach(field => {
 					if (field.field === data.field) {
 						field.value = data.value;
@@ -720,7 +720,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 					if (element.type === "BOOLEAN") {
 						row[element.name] = false;
 					} else {
-						if (element.name !== "equipment__c" && element.name !== "equipment_value") {
+						if (element.name !== "equipment__c" && element.name !== "equipment") {
 							row[element.name] = null;
 						}
 					}
@@ -728,7 +728,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 
 				let index = 0;
 				this.listAddedRows.forEach(element => {
-					if (element.equipment_value === row.equipment_value) {
+					if (element.equipment === row.equipment) {
 						this.listAddedRows.splice(index, 1);
 					}
 					index++;
@@ -752,7 +752,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 					position: elem.rowIndex.toString(),
 					rtypeId: this.data.superCategories[elem.superCategoriesIndex].sections[elem.sectionIndex].capabilities[elem.capabilityIndex].rtypeId,
 					category: this.data.superCategories[elem.superCategoriesIndex].sections[elem.sectionIndex].capabilities[elem.capabilityIndex].categories[elem.categoryIndex].value,
-					equipment_value: row.equipment_value,
+					equipment: row.equipment,
 					equipment_label: row.equipment__c,
 					fields: []
 				};
@@ -796,7 +796,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 
 				let index = 0;
 				this.listAddedRows.forEach(element => {
-					if (element.equipment_value === row.equipment_value) {
+					if (element.equipment === row.equipment) {
 						this.listAddedRows.splice(index, 1);
 					}
 					index++;
@@ -844,7 +844,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 				id: this.rowSelected.id,
 				rtypeId: this.data.superCategories[superCategoriesIndex].sections[sectionIndex].capabilities[capabilityIndex].rtypeId,
 				category: this.data.superCategories[superCategoriesIndex].sections[sectionIndex].capabilities[capabilityIndex].categories[categoryIndex].value,
-				equipment_value: this.rowSelected.equipment_value,
+				equipment: this.rowSelected.equipment,
 				equipment_label: this.rowSelected.equipment__c,
 				fields: []
 			};
@@ -998,7 +998,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 		}
 		let index = 0;
 		this.listAddedRows.forEach(element => {
-			if (element.equipment_value === rowSelected.equipment_value && element.position === rowIndex){
+			if (element.equipment === rowSelected.equipment && element.position === rowIndex){
 				this.listAddedRows.splice(index, 1);
 			}
 			index++;

@@ -67,7 +67,7 @@ public without sharing class CW_NotificationsController {
   */
 	@AuraEnabled
 	public static String setDismissNotifications(List<String> notificationList){  
-		ResponseBody res = new ResponseBody();        
+		CW_Utilities.ResponseBody res = new CW_Utilities.ResponseBody();        
 		List<ICG_Notification__c> listToUpdate;
 		
 		try
@@ -87,11 +87,4 @@ public without sharing class CW_NotificationsController {
 		}
 		return JSON.serialize(res);
 	}
-	
-
-	public class ResponseBody {
-		public String message {get;set;}
-		public Boolean success {get;set;}
-	}
-	
 }

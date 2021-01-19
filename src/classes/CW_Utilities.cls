@@ -1623,4 +1623,68 @@ public without sharing class CW_Utilities {
 			this.allowedTypes = allowedTypes;
 		}
 	}
+
+	public class CapabilityWrapper {
+		public String id;
+		public String position;
+		public String rtypeId;
+		public String category;
+		public String equipment;
+		public String equipment_label;
+		public List<CapabilityFieldsWrapper> fields;
+
+		public CapabilityWrapper() {
+		}
+	}
+
+	public class CapabilityFieldsWrapper {
+		public String field;
+		public String value;
+		public String label;
+		public Boolean required;
+
+		public CapabilityFieldsWrapper() {
+		}
+	}
+
+	public class AsgmtGroupWrapper implements Comparable {
+		final Double defaultOrder = 9999;
+		@AuraEnabled
+		public Id id;
+		@AuraEnabled
+		public String type;
+		@AuraEnabled
+		public String name;
+		@AuraEnabled
+		public String label;
+		@AuraEnabled
+		public Date expirationDate;
+		@AuraEnabled
+		public Date issueDate;
+		@AuraEnabled
+		public String src;
+		@AuraEnabled
+		public Double order;
+
+		public AsgmtGroupWrapper() {
+		}
+
+		public Integer compareTo(Object compareTo) {
+			AsgmtGroupWrapper asgmtGroupToCompare = (AsgmtGroupWrapper) compareTo;
+			if (order == null) {
+				this.order = this.defaultOrder;
+			}
+			if (asgmtGroupToCompare.order == null) {
+				asgmtGroupToCompare.order = this.defaultOrder;
+			}
+
+			Integer returnValue = 0;
+			if (this.order > asgmtGroupToCompare.order) {
+				returnValue = 1;
+			} else if (this.order < asgmtGroupToCompare.order) {
+				returnValue = -1;
+			}
+			return returnValue;
+		}
+	}
 }

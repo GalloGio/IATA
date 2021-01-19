@@ -88,7 +88,7 @@ public with sharing class CW_NotificationsControllerTest {
 		}
 
 		String jsonRes = CW_NotificationsController.setDismissNotifications(listNotificationIdsString);
-		CW_NotificationsController.ResponseBody res = (CW_NotificationsController.ResponseBody) JSON.deserialize(jsonRes, CW_NotificationsController.ResponseBody.class);
+		CW_Utilities.ResponseBody res = (CW_Utilities.ResponseBody) JSON.deserialize(jsonRes, CW_Utilities.ResponseBody.class);
 		system.assertEquals(res.success, true);
 
 		Test.stopTest();

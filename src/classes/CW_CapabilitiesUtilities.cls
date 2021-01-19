@@ -407,7 +407,7 @@ public with sharing class CW_CapabilitiesUtilities {
 		} else {
 			currentObject.put('equipment__c', currentDetail.Equipment__c);
 		}
-		currentObject.put('equipment_value', currentDetail.Equipment__c);
+		currentObject.put('equipment', currentDetail.Equipment__c);
 		currentObject.put('certifications', certifications);
 		currentObject.put('isPeviouslyCertified', !certifications.isEmpty() || isEditableRecordType);
 
@@ -457,7 +457,7 @@ public with sharing class CW_CapabilitiesUtilities {
 			isPermission=true;
 		}
 		else{
-			for(CW_FacilityCapabilitiesController.AsgmtGroupWrapper cert : (List<CW_FacilityCapabilitiesController.AsgmtGroupWrapper>)certifications){
+			for(CW_Utilities.AsgmtGroupWrapper cert : (List<CW_Utilities.AsgmtGroupWrapper>)certifications){
 				if(CERTIFICATIONS_ALLOWED_USER.contains(cert.name)){
 					isPermission=true;
 				}
@@ -606,7 +606,7 @@ public with sharing class CW_CapabilitiesUtilities {
 					if (categoryFound != null && categoryFound.containsKey(ROWS)) {
 						List<Object> capabilityGroupRowsFound = (List<Object>) categoryFound.get(ROWS);
 						currentObject = CW_CapabilitiesManagerController.cleanCapabilitiesFieldsToObject(currentDetail, mapFieldsByRecordTypeAndCategory.get(rtDevNameLC + '#' + currentDetail.Category__c.toLowerCase()), fieldsMap);
-						currentObject = generateCurrentObject(currentObject, '', currentDetail, new List<CW_FacilityCapabilitiesController.AsgmtGroupWrapper>(), '', capabilityFound, mapFieldsByRecordTypeAndCategory, rtDevNameLC,
+						currentObject = generateCurrentObject(currentObject, '', currentDetail, new List<CW_Utilities.AsgmtGroupWrapper>(), '', capabilityFound, mapFieldsByRecordTypeAndCategory, rtDevNameLC,
 						 mapEquipments, mapTooltipFieldsByField, fieldsMap, false, false, false,stationRT,CERTIFICATIONS_ALLOWED_USER,userHasPermissionToEdit);
 						capabilityGroupRowsFound.add(currentObject);
 					}

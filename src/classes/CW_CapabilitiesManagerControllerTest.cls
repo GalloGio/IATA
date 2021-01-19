@@ -157,7 +157,7 @@ public class CW_CapabilitiesManagerControllerTest {
 		Test.startTest();
 		
 		String response = CW_CapabilitiesManagerController.getPublicLinkToFiles(listPhoto);
-		CW_CapabilitiesManagerController.ResponseBody resp = (CW_CapabilitiesManagerController.ResponseBody) System.JSON.deserialize(response, CW_CapabilitiesManagerController.ResponseBody.class);
+		CW_Utilities.ResponseBody resp = (CW_Utilities.ResponseBody) System.JSON.deserialize(response, CW_Utilities.ResponseBody.class);
 		system.assertEquals(true, resp.success, 'getPublicLinkToFiles error');
 		
 		Test.stopTest();
@@ -210,24 +210,24 @@ public class CW_CapabilitiesManagerControllerTest {
 		insert assignment;
 
 
-		List<CW_CapabilitiesManagerController.CapabilityWrapper> listCap = new List<CW_CapabilitiesManagerController.CapabilityWrapper>();
+		List<CW_Utilities.CapabilityWrapper> listCap = new List<CW_Utilities.CapabilityWrapper>();
 		List<Account_Role_Detail_Capability__c> listCapWrapper = new List<Account_Role_Detail_Capability__c>();
 		listCapWrapper.add(cap);
 		listCapWrapper.add(capWithBadPhotos);
 
 		for (Account_Role_Detail_Capability__c capItem : listCapWrapper) {
-			CW_CapabilitiesManagerController.CapabilityWrapper convertItem = new CW_CapabilitiesManagerController.CapabilityWrapper();
+			CW_Utilities.CapabilityWrapper convertItem = new CW_Utilities.CapabilityWrapper();
 			convertItem.rtypeId = capItem.RecordTypeId;
 			convertItem.category = capItem.Category__c;
-			convertItem.equipment_value = capItem.Equipment__c;
+			convertItem.equipment = capItem.Equipment__c;
 
-			convertItem.fields = new List<CW_CapabilitiesManagerController.CapabilityFieldsWrapper>();
-			CW_CapabilitiesManagerController.CapabilityFieldsWrapper fieldDate = new CW_CapabilitiesManagerController.CapabilityFieldsWrapper();
-			CW_CapabilitiesManagerController.CapabilityFieldsWrapper fieldDateEmpty = new CW_CapabilitiesManagerController.CapabilityFieldsWrapper();
-			CW_CapabilitiesManagerController.CapabilityFieldsWrapper fieldDouble = new CW_CapabilitiesManagerController.CapabilityFieldsWrapper();
-			CW_CapabilitiesManagerController.CapabilityFieldsWrapper fieldDoubleEmpty = new CW_CapabilitiesManagerController.CapabilityFieldsWrapper();
-			CW_CapabilitiesManagerController.CapabilityFieldsWrapper fieldBoolena = new CW_CapabilitiesManagerController.CapabilityFieldsWrapper();
-			CW_CapabilitiesManagerController.CapabilityFieldsWrapper fieldElse = new CW_CapabilitiesManagerController.CapabilityFieldsWrapper();
+			convertItem.fields = new List<CW_Utilities.CapabilityFieldsWrapper>();
+			CW_Utilities.CapabilityFieldsWrapper fieldDate = new CW_Utilities.CapabilityFieldsWrapper();
+			CW_Utilities.CapabilityFieldsWrapper fieldDateEmpty = new CW_Utilities.CapabilityFieldsWrapper();
+			CW_Utilities.CapabilityFieldsWrapper fieldDouble = new CW_Utilities.CapabilityFieldsWrapper();
+			CW_Utilities.CapabilityFieldsWrapper fieldDoubleEmpty = new CW_Utilities.CapabilityFieldsWrapper();
+			CW_Utilities.CapabilityFieldsWrapper fieldBoolena = new CW_Utilities.CapabilityFieldsWrapper();
+			CW_Utilities.CapabilityFieldsWrapper fieldElse = new CW_Utilities.CapabilityFieldsWrapper();
 
 			fieldDate.field = 'Expiry_Date__c';
 			fieldDate.Value = string.valueOf(Date.today().addDays(1));
@@ -270,15 +270,15 @@ public class CW_CapabilitiesManagerControllerTest {
 		CW_CapabilitiesManagerController.getCapabilitiesForFacilityCertificationId(ardid, String.valueOf(ardcert.id), capvalcert.id);
 		
 		String response = CW_CapabilitiesManagerController.createRelationshipsForNewCapabilities(ardid, cert.id, listCap, jsonCertificationToAdd);
-		CW_CapabilitiesManagerController.ResponseBody resp = (CW_CapabilitiesManagerController.ResponseBody) System.JSON.deserialize(response, CW_CapabilitiesManagerController.ResponseBody.class);
+		CW_Utilities.ResponseBody resp = (CW_Utilities.ResponseBody) System.JSON.deserialize(response, CW_Utilities.ResponseBody.class);
 		system.assertEquals(true, resp.success, 'createRelationshipsForNewCapabilities');
 
 		String responseUpdate = CW_CapabilitiesManagerController.updateCapabilitiesEdited(ardid,cert.Id,listCap);
-		CW_CapabilitiesManagerController.ResponseBody respUpdate = (CW_CapabilitiesManagerController.ResponseBody) System.JSON.deserialize(response, CW_CapabilitiesManagerController.ResponseBody.class);
+		CW_Utilities.ResponseBody respUpdate = (CW_Utilities.ResponseBody) System.JSON.deserialize(response, CW_Utilities.ResponseBody.class);
 		system.assertEquals(true, respUpdate.success, 'updateCapabilitiesEditedTest');
 		
 		String responseEditAllCapab = CW_CapabilitiesManagerController.editAllCapabilitiesFromStation(ardid,listCap,new List<Object>{assignment});
-		CW_CapabilitiesManagerController.ResponseBody respEditAllCapab = (CW_CapabilitiesManagerController.ResponseBody) System.JSON.deserialize(response, CW_CapabilitiesManagerController.ResponseBody.class);
+		CW_Utilities.ResponseBody respEditAllCapab = (CW_Utilities.ResponseBody) System.JSON.deserialize(response, CW_Utilities.ResponseBody.class);
 		system.assertEquals(true, respEditAllCapab.success, 'updateCapabilitiesEditedAllCapabTest');
 		
 		Test.stopTest();
@@ -290,7 +290,7 @@ public class CW_CapabilitiesManagerControllerTest {
 		Test.startTest();
 		
 		String response = CW_CapabilitiesManagerController.updateCapabilitiesEdited(null,null,null);
-		CW_CapabilitiesManagerController.ResponseBody resp = (CW_CapabilitiesManagerController.ResponseBody) System.JSON.deserialize(response, CW_CapabilitiesManagerController.ResponseBody.class);
+		CW_Utilities.ResponseBody resp = (CW_Utilities.ResponseBody) System.JSON.deserialize(response, CW_Utilities.ResponseBody.class);
 		system.assertEquals(false, resp.success, 'updateCapabilitiesEditedCatchTest error');
 		
 		
@@ -303,7 +303,7 @@ public class CW_CapabilitiesManagerControllerTest {
 		Test.startTest();
 		
 		String response = CW_CapabilitiesManagerController.editAllCapabilitiesFromStation(null,null,null);
-		CW_CapabilitiesManagerController.ResponseBody resp = (CW_CapabilitiesManagerController.ResponseBody) System.JSON.deserialize(response, CW_CapabilitiesManagerController.ResponseBody.class);
+		CW_Utilities.ResponseBody resp = (CW_Utilities.ResponseBody) System.JSON.deserialize(response, CW_Utilities.ResponseBody.class);
 		system.assertEquals(false, resp.success, 'editAllCapabilitiesFromStationCatchTest error');
 		
 		
@@ -314,8 +314,8 @@ public class CW_CapabilitiesManagerControllerTest {
 	public static void AsgmtGroupWrapperCompareTest() {
 		Test.startTest();
 		
-		CW_CapabilitiesManagerController.AsgmtGroupWrapper asgmtGroupToAdd1 = new CW_CapabilitiesManagerController.AsgmtGroupWrapper();
-		CW_CapabilitiesManagerController.AsgmtGroupWrapper asgmtGroupToAdd2 = new CW_CapabilitiesManagerController.AsgmtGroupWrapper();
+		CW_Utilities.AsgmtGroupWrapper asgmtGroupToAdd1 = new CW_Utilities.AsgmtGroupWrapper();
+		CW_Utilities.AsgmtGroupWrapper asgmtGroupToAdd2 = new CW_Utilities.AsgmtGroupWrapper();
 		
 		Integer result = asgmtGroupToAdd1.compareTo(asgmtGroupToAdd2);
 		system.assertEquals(result, 0);

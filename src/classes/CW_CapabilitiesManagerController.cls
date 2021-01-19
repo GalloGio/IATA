@@ -13,8 +13,8 @@ public without sharing class CW_CapabilitiesManagerController {
 		return [SELECT id, Category__c, Equipment__c FROM ICG_Certification_Capability_Assignment__c WHERE ICG_Certification__c = :certificationId];
 	}
 
-	private static Map<Id, List<AsgmtGroupWrapper>> generateAsgmtGroupByCapabilityId(List<ICG_Account_Role_Capability_Assignment__c> assignments) {
-		Map<Id, List<AsgmtGroupWrapper>> asgmtGroupByCapabilityId = new Map<Id, List<AsgmtGroupWrapper>>();
+	private static Map<Id, List<CW_Utilities.AsgmtGroupWrapper>> generateAsgmtGroupByCapabilityId(List<ICG_Account_Role_Capability_Assignment__c> assignments) {
+		Map<Id, List<CW_Utilities.AsgmtGroupWrapper>> asgmtGroupByCapabilityId = new Map<Id, List<CW_Utilities.AsgmtGroupWrapper>>();
 
 		// Loop assignments to get certifications
 		for (ICG_Account_Role_Capability_Assignment__c currentAssignment : assignments) {
@@ -22,9 +22,9 @@ public without sharing class CW_CapabilitiesManagerController {
 				ICG_Capability_Assignment_Group__c currentGroup = currentAssignment.ICG_Capability_Assignment_Group__r;
 
 				if (!asgmtGroupByCapabilityId.containsKey(currentAssignment.Account_Role_Detail_Capability__c)) {
-					asgmtGroupByCapabilityId.put(currentAssignment.Account_Role_Detail_Capability__c, new List<AsgmtGroupWrapper>());
+					asgmtGroupByCapabilityId.put(currentAssignment.Account_Role_Detail_Capability__c, new List<CW_Utilities.AsgmtGroupWrapper>());
 				}
-				AsgmtGroupWrapper asgmtGroupToAdd = new AsgmtGroupWrapper();
+				CW_Utilities.AsgmtGroupWrapper asgmtGroupToAdd = new CW_Utilities.AsgmtGroupWrapper();
 				asgmtGroupToAdd.id = currentGroup.Id;
 				asgmtGroupToAdd.type = currentGroup.RecordType.DeveloperName;
 				asgmtGroupToAdd.name = Label.icg_smart_facility_remote_validation;
@@ -93,8 +93,7 @@ public without sharing class CW_CapabilitiesManagerController {
 		Map<String, Schema.SObjectField> fieldsMap = Schema.SObjectType.Account_Role_Detail_Capability__c.fields.getMap();
 
 		List<ICG_Account_Role_Capability_Assignment__c> assignments = getAssignmentsByAccountRoleDetailAndRts(id, new List<Id>(mapAccountRoleDetailAssignmentRtsById.keySet()), categoriesToRetrieve, CW_FacilityCapabilitiesController.validateFieldsOfObject('Account_Role_Detail_Capability__c', fieldsToRetrieve, fieldsMap), certificationId);
-		// Map<Id, List<Map<String, Object>>> certificationsByCapabilityId = generateCertificationsByCapabilityId(assignments);
-		Map<Id, List<AsgmtGroupWrapper>> asgmtGroupByCapabilityId = generateAsgmtGroupByCapabilityId(assignments);
+		Map<Id, List<CW_Utilities.AsgmtGroupWrapper>> asgmtGroupByCapabilityId = generateAsgmtGroupByCapabilityId(assignments);
 
 		Map<String, String> columnsToHandle = new Map<String, String>();
 
@@ -123,8 +122,7 @@ public without sharing class CW_CapabilitiesManagerController {
 
 					if (!CW_CapabilitiesUtilities.isCapabilityAdded(capabilityGroupRowsFound, currentDetail.Id)) {
 						Map<String, Object> currentObject = convertCapabilityAssignmentToObject(currentDetail, mapFieldsByRecordTypeAndCategory.get(rtDevNameLC + '#' + currentDetail.Category__c.toLowerCase()), fieldsMap);
-						// List<Map<String,Object>> certifications = certificationsByCapabilityId.containsKey(currentDetail.Id) ? certificationsByCapabilityId.get(currentDetail.Id) : new List<Map<String,Object>>();
-						List<AsgmtGroupWrapper> certifications = asgmtGroupByCapabilityId.containsKey(currentDetail.Id) ? asgmtGroupByCapabilityId.get(currentDetail.Id) : new List<AsgmtGroupWrapper>();
+						List<CW_Utilities.AsgmtGroupWrapper> certifications = asgmtGroupByCapabilityId.containsKey(currentDetail.Id) ? asgmtGroupByCapabilityId.get(currentDetail.Id) : new List<CW_Utilities.AsgmtGroupWrapper>();
 						certifications.sort();
 						currentObject = CW_CapabilitiesUtilities.generateCurrentObject(
 							currentObject, 
@@ -183,7 +181,7 @@ public without sharing class CW_CapabilitiesManagerController {
 							currentObject, 
 							'', 
 							currentDetail, 
-							new List<AsgmtGroupWrapper>(), 
+							new List<CW_Utilities.AsgmtGroupWrapper>(), 
 							'', 
 							capabilityFound, 
 							mapFieldsByRecordTypeAndCategory, 
@@ -482,11 +480,11 @@ public without sharing class CW_CapabilitiesManagerController {
 	 */
 	@AuraEnabled
 	public static String updateCapabilitiesEdited(String accRoleDet, String groupId,List<Object> listAddedRows) {
-		ResponseBody res = new ResponseBody();
+		CW_Utilities.ResponseBody res = new CW_Utilities.ResponseBody();
 		List<Account_Role_Detail_Capability__c> listAccRoleCapabInserted;
 			try {
 				//parse to capabilities wrapper
-				List<CapabilityWrapper> parseListAddedRows = parseToCapabilityWrapper(listAddedRows);
+				List<CW_Utilities.CapabilityWrapper> parseListAddedRows = parseToCapabilityWrapper(listAddedRows);
 
 				if(String.isNotBlank(groupId) && String.isNotEmpty(groupId)){
 
@@ -519,10 +517,10 @@ public without sharing class CW_CapabilitiesManagerController {
 	 */
 	@AuraEnabled
 	public static String editAllCapabilitiesFromStation(String accRoleDet, List<Object> listAddedRows, List<Object> listDeleteRows){
-		ResponseBody res = new ResponseBody();
+		CW_Utilities.ResponseBody res = new CW_Utilities.ResponseBody();
 		try{
 			//parse to capabilities wrapper
-			List<CapabilityWrapper> parseListAddedRows = parseToCapabilityWrapper(listAddedRows);
+			List<CW_Utilities.CapabilityWrapper> parseListAddedRows = parseToCapabilityWrapper(listAddedRows);
 
 			//delete files to sf backend
 			res.success = CW_FacilityCapabilitiesController.deleteFileAssigmentPrevious(accRoleDet, listAddedRows);
@@ -551,14 +549,14 @@ public without sharing class CW_CapabilitiesManagerController {
 	 */
 	@AuraEnabled
 	public static String createRelationshipsForNewCapabilities(String accRoleDet, String certiId, List<Object> listAddedRows, String jsonCertification) {
-		ResponseBody res = new ResponseBody();
+		CW_Utilities.ResponseBody res = new CW_Utilities.ResponseBody();
 		List<Account_Role_Detail_Capability__c> listAccRoleCapabInserted;
 		ICG_Capability_Assignment_Group__c groupId;
 
 		if (!String.isBlank(certiId)) {
 			try {
 				//parse to capabilities wrapper
-				List<CapabilityWrapper> parseListAddedRows = parseToCapabilityWrapper(listAddedRows);
+				List<CW_Utilities.CapabilityWrapper> parseListAddedRows = parseToCapabilityWrapper(listAddedRows);
 
 				//create new group
 				groupId = CW_CertificationsManagerController.createCertification(jsonCertification);
@@ -588,12 +586,12 @@ public without sharing class CW_CapabilitiesManagerController {
 	 * @return			Boolean with result
 	 */
 	@AuraEnabled
-	public static List<Account_Role_Detail_Capability__c> createCapabilities(List<CapabilityWrapper> listCapWrapper, Boolean isEditCapabilities) {
+	public static List<Account_Role_Detail_Capability__c> createCapabilities(List<CW_Utilities.CapabilityWrapper> listCapWrapper, Boolean isEditCapabilities) {
 		Map<String, Schema.SObjectField> fieldMapCap = Schema.getGlobalDescribe().get('Account_Role_Detail_Capability__c').getDescribe().fields.getMap();
 		List<Account_Role_Detail_Capability__c> listToInsert = new List<Account_Role_Detail_Capability__c>();
 		
 		//Read all capabilities wrapper
-		for (CapabilityWrapper c : listCapWrapper) {
+		for (CW_Utilities.CapabilityWrapper c : listCapWrapper) {
 			SObject sObj = new Account_Role_Detail_Capability__c();
 			
 			if(String.isNotBlank(c.id) && String.isNotEmpty(c.id) && !isEditCapabilities){
@@ -602,9 +600,9 @@ public without sharing class CW_CapabilitiesManagerController {
 
 			sObj.put('RecordTypeId', c.rtypeId);
 			sObj.put('Category__c', c.category);
-			sObj.put('Equipment__c', c.equipment_value);						
+			sObj.put('Equipment__c', c.equipment);
 
-			for (CapabilityFieldsWrapper capfield : c.fields) {
+			for (CW_Utilities.CapabilityFieldsWrapper capfield : c.fields) {
 				if (!capfield.field.equals('equipment__c')) {
 					if (fieldMapCap.containsKey(capfield.field)) {
 						Schema.SObjectField fieldSObject = fieldMapCap.get(capfield.field);
@@ -648,13 +646,13 @@ public without sharing class CW_CapabilitiesManagerController {
 	 * @param			accRoleDet - Account Role Detail Id, capabAssigmenGroup - Capab Assigment Group
 	 * @return			Boolean true or false
 	 */
-	private static Boolean deleteAssigmentPrevious(String accRoleDet, String capabAssigmenGroup, List<CapabilityWrapper> capabilitiesList) {
+	private static Boolean deleteAssigmentPrevious(String accRoleDet, String capabAssigmenGroup, List<CW_Utilities.CapabilityWrapper> capabilitiesList) {
 		Boolean result = true;
 		Map<String, Schema.SObjectField> fieldMapCap = Schema.getGlobalDescribe().get('Account_Role_Detail_Capability__c').getDescribe().fields.getMap();
 		Set<Id> currentListId = new Set<Id>();
 
 		//Extract all capabilities from input
-		for (CapabilityWrapper c : capabilitiesList) {
+		for (CW_Utilities.CapabilityWrapper c : capabilitiesList) {
 			if(String.isNotBlank(c.id) && String.isNotEmpty(c.id)){
 				currentListId.add(c.id);
 			}	
@@ -679,7 +677,7 @@ public without sharing class CW_CapabilitiesManagerController {
 	 * @param			capabilitiesList - Json list of ICG_Account_Role_Capability_Assignment__c
 	 * @return			Boolean true or false
 	 */
-	private static Boolean removeCapabilities(List<CapabilityWrapper> listToAdd,List<Object> listToDelete, String accRoleDet) {
+	private static Boolean removeCapabilities(List<CW_Utilities.CapabilityWrapper> listToAdd,List<Object> listToDelete, String accRoleDet) {
 		Boolean result = true;
 		
 		List<ICG_Account_Role_Capability_Assignment__c> listCapWrapper = new List<ICG_Account_Role_Capability_Assignment__c>();
@@ -702,7 +700,7 @@ public without sharing class CW_CapabilitiesManagerController {
 		}
 		
 		//Read all capabilities with editable record types
-		for(CapabilityWrapper capab : listToAdd){
+		for(CW_Utilities.CapabilityWrapper capab : listToAdd){
 			if(CW_FacilityCapabilitiesController.EDITABLE_RECORDTYPES_ID.contains(capab.rtypeId)){
 				rowsEditableRT.add(capab.id);
 			}
@@ -770,7 +768,7 @@ public without sharing class CW_CapabilitiesManagerController {
 	 */
 	@AuraEnabled
 	public static String getPublicLinkToFiles(List<Object> listPhoto) {
-		ResponseBody res = new ResponseBody();
+		CW_Utilities.ResponseBody res = new CW_Utilities.ResponseBody();
 		List<CW_FacilityCapabilitiesController.CapabilityPhoto> capabWraperList = new List<CW_FacilityCapabilitiesController.CapabilityPhoto>();
 		Set<Id> listContentDocumentId = new Set<Id>();
 		List<ContentDocumentLink> listContentDocumentLink;
@@ -866,86 +864,17 @@ public without sharing class CW_CapabilitiesManagerController {
 	/**
 	 * @description		parse object list to capabilities CapabilityWrapper
 	 * @param			listToParse - object list to parse
-	 * @return			List<CapabilityWrapper> result
+	 * @return			List<CW_Utilities.CapabilityWrapper> result
 	 */
 	@AuraEnabled
-	public static List<CapabilityWrapper> parseToCapabilityWrapper(List<Object> listToParse){
-		List<CapabilityWrapper> listCapWrapper = new List<CapabilityWrapper>();
+	public static List<CW_Utilities.CapabilityWrapper> parseToCapabilityWrapper(List<Object> listToParse){
+		List<CW_Utilities.CapabilityWrapper> listCapWrapper = new List<CW_Utilities.CapabilityWrapper>();
 
 		//Extract all capabilities from input
 		for (Object capability : listToParse) {
-			CapabilityWrapper c = (CapabilityWrapper) JSON.deserialize(JSON.serializePretty(capability), CapabilityWrapper.class);
+			CW_Utilities.CapabilityWrapper c = (CW_Utilities.CapabilityWrapper) JSON.deserialize(JSON.serializePretty(capability), CW_Utilities.CapabilityWrapper.class);
 			listCapWrapper.add(c);
 		}
 		return listCapWrapper;
-	}
-
-	public class CapabilityWrapper {
-		public String id;
-		public String position;
-		public String rtypeId;
-		public String category;
-		public String equipment_value;
-		public String equipment_label;
-		public List<CapabilityFieldsWrapper> fields;
-
-		public CapabilityWrapper() {
-		}
-	}
-
-	public class CapabilityFieldsWrapper {
-		public String field;
-		public String label;
-		public String value;
-		public Boolean required;
-
-		public CapabilityFieldsWrapper() {
-		}
-	}
-
-	public class AsgmtGroupWrapper implements Comparable {
-		final Double defaultOrder = 9999;
-		@AuraEnabled
-		public Id id;
-		@AuraEnabled
-		public String type;
-		@AuraEnabled
-		public String name;
-		@AuraEnabled
-		public String label;
-		@AuraEnabled
-		public Date expirationDate;
-		@AuraEnabled
-		public Date issueDate;
-		@AuraEnabled
-		public String src;
-		@AuraEnabled
-		public Double order;
-
-		public AsgmtGroupWrapper() {
-		}
-
-		public Integer compareTo(Object compareTo) {
-			AsgmtGroupWrapper asgmtGroupToCompare = (AsgmtGroupWrapper) compareTo;
-			if (order == null) {
-				this.order = this.defaultOrder;
-			}
-			if (asgmtGroupToCompare.order == null) {
-				asgmtGroupToCompare.order = this.defaultOrder;
-			}
-
-			Integer returnValue = 0;
-			if (this.order > asgmtGroupToCompare.order) {
-				returnValue = 1;
-			} else if (this.order < asgmtGroupToCompare.order) {
-				returnValue = -1;
-			}
-			return returnValue;
-		}
-	}
-
-	public class ResponseBody {
-		public String message { get; set; }
-		public Boolean success { get; set; }
 	}
 }

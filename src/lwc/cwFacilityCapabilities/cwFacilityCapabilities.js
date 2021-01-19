@@ -180,7 +180,7 @@ export default class CwFacilityCapabilities extends LightningElement {
 		this.rowSelected = this.data.superCategories[superCategoriesIndex].sections[sectionIndex].capabilities[capabilityIndex].categories[categoryIndex].rows[rowIndex];
 
 		this.rowIndexSelected = rowIndex;
-		this.equipmentSelected = this.rowSelected.equipment_value.toLowerCase();
+		this.equipmentSelected = this.rowSelected.equipment.toLowerCase();
 	}
 
 	handleUploadDocumentFinished(event) {
@@ -744,7 +744,7 @@ export default class CwFacilityCapabilities extends LightningElement {
 													position: m.toString(),
 													rtypeId: capability.rtypeId,
 													category: category.value,
-													equipment: row.equipment_value.toLowerCase(),
+													equipment: row.equipment.toLowerCase(),
 													fields:[]
 												};
 									
@@ -885,7 +885,7 @@ export default class CwFacilityCapabilities extends LightningElement {
 				position: rowIndex,
 				rtypeId: this.data.superCategories[superCategoriesIndex].sections[sectionIndex].capabilities[capabilityIndex].rtypeId,
 				category: this.data.superCategories[superCategoriesIndex].sections[sectionIndex].capabilities[capabilityIndex].categories[categoryIndex].value,
-				equipment: this.data.superCategories[superCategoriesIndex].sections[sectionIndex].capabilities[capabilityIndex].categories[categoryIndex].rows[rowIndex].equipment_value.toLowerCase(),
+				equipment: this.data.superCategories[superCategoriesIndex].sections[sectionIndex].capabilities[capabilityIndex].categories[categoryIndex].rows[rowIndex].equipment.toLowerCase(),
 				fields:[]
 			};
 
