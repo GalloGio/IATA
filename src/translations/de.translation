@@ -23694,6 +23694,14 @@ Wenn Sie Ihr Passwort zurücksetzen möchten, gehen Sie bitte zum Log-in-Bildsch
         <name>KALE_SUPPORT_EMAIL</name>
     </customLabels>
     <customLabels>
+        <label><!-- Key Customer alert message --></label>
+        <name>KEY_CUSTOMER_ALERT</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Key Customer alert title --></label>
+        <name>KEY_CUSTOMER_ALERT_TITLE</name>
+    </customLabels>
+    <customLabels>
         <label><!-- KPI1RT --></label>
         <name>KPI1RT</name>
     </customLabels>
