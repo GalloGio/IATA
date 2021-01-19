@@ -23692,6 +23692,14 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>KALE_SUPPORT_EMAIL</name>
     </customLabels>
     <customLabels>
+        <label><!-- Key Customer alert message --></label>
+        <name>KEY_CUSTOMER_ALERT</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Key Customer alert title --></label>
+        <name>KEY_CUSTOMER_ALERT_TITLE</name>
+    </customLabels>
+    <customLabels>
         <label><!-- KPI1RT --></label>
         <name>KPI1RT</name>
     </customLabels>
