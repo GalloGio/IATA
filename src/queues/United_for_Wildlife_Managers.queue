@@ -2,6 +2,11 @@
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <name>United for Wildlife Managers</name>
+    <queueMembers>
+        <users>
+            <user>holderq@iata.org</user>
+        </users>
+    </queueMembers>
     <queueSobject>
         <sobjectType>ICG_Notification__c</sobjectType>
     </queueSobject>

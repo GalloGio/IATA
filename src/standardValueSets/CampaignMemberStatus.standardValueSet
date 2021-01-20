@@ -512,11 +512,6 @@
         <label>FS or DS followed up</label>
     </standardValue>
     <standardValue>
-        <fullName>Gave Feedback</fullName>
-        <default>false</default>
-        <label>Gave Feedback</label>
-    </standardValue>
-    <standardValue>
         <fullName>General Info. Sent</fullName>
         <default>false</default>
         <label>General Info. Sent</label>
@@ -1010,11 +1005,6 @@
         <fullName>No Answer, will follow up</fullName>
         <default>false</default>
         <label>No Answer, will follow up</label>
-    </standardValue>
-    <standardValue>
-        <fullName>No contact</fullName>
-        <default>false</default>
-        <label>No contact</label>
     </standardValue>
     <standardValue>
         <fullName>No Contact details</fullName>
@@ -1685,11 +1675,6 @@
         <fullName>Unrelated LOB</fullName>
         <default>false</default>
         <label>Unrelated LOB</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Usage does not justify cost</fullName>
-        <default>false</default>
-        <label>Usage does not justify cost</label>
     </standardValue>
     <standardValue>
         <fullName>Using DGM - DGOffice</fullName>

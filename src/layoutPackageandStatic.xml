@@ -61,7 +61,7 @@
         <members>CaseType</members>
         <members>ContactRole</members>
         <members>ContractContactRole</members>
-        <members>ContractStatus</members>
+        <members>EntitlementType</members>
         <members>EventSubject</members>
         <members>EventType</members>
         <members>FiscalYearPeriodPrefix</members>
@@ -74,6 +74,7 @@
         <members>OpportunityCompetitor</members>
         <members>OpportunityStage</members>
         <members>OpportunityType</members>
+        <members>OrderStatus</members>
         <members>OrderType</members>
         <members>PartnerRole</members>
         <members>Product2Family</members>
@@ -81,6 +82,7 @@
         <members>QuickTextChannel</members>
         <members>SalesTeamRole</members>
         <members>Salutation</members>
+        <members>ServiceContractApprovalStatus</members>
         <members>SolutionStatus</members>
         <members>TaskPriority</members>
         <members>TaskStatus</members>

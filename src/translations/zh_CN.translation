@@ -3078,7 +3078,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Change_Password_Info_2</name>
     </customLabels>
     <customLabels>
-        <label>$0元聊天</label>
+        <label>$0聊天</label>
         <name>CSP_Chat_base_Label</name>
     </customLabels>
     <customLabels>
@@ -7998,7 +7998,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>Error_SendEmail_Subject_Required</name>
     </customLabels>
     <customLabels>
-        <label>已升级</label>
+        <label>转至相关部门</label>
         <name>Escalated</name>
     </customLabels>
     <customLabels>
@@ -10182,7 +10182,7 @@ Please, if it&apos;s the first time you are applying for an ID Card, confirm tha
         <name>IDCard_IDCAType</name>
     </customLabels>
     <customLabels>
-        <label><!-- IDCard_IDCard --></label>
+        <label>ID 卡</label>
         <name>IDCard_IDCard</name>
     </customLabels>
     <customLabels>
@@ -15398,7 +15398,7 @@ and
         <name>ISSP_AMS_NoC_Message_Accredited_Agent_CNS</name>
     </customLabels>
     <customLabels>
-        <label>新分公司申请</label>
+        <label>变更申请</label>
         <name>ISSP_AMS_NoC_Multiple_Changes</name>
     </customLabels>
     <customLabels>
@@ -21165,7 +21165,7 @@ and
         <name>ISSP_OperationalCalendar_Header</name>
     </customLabels>
     <customLabels>
-        <label>最后编辑日期</label>
+        <label>最近一次操作</label>
         <name>ISSP_OperationalCalendar_LastModifiedDate</name>
     </customLabels>
     <customLabels>
@@ -21511,7 +21511,7 @@ and
         <name>ISSP_Pending_Closure</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP Pending Documents --></label>
+        <label>待提交文件</label>
         <name>ISSP_Pending_Documents</name>
     </customLabels>
     <customLabels>
@@ -23682,6 +23682,14 @@ and
         <name>KALE_SUPPORT_EMAIL</name>
     </customLabels>
     <customLabels>
+        <label><!-- Key Customer alert message --></label>
+        <name>KEY_CUSTOMER_ALERT</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Key Customer alert title --></label>
+        <name>KEY_CUSTOMER_ALERT_TITLE</name>
+    </customLabels>
+    <customLabels>
         <label><!-- KPI1RT --></label>
         <name>KPI1RT</name>
     </customLabels>
@@ -25280,7 +25288,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Only_one_subscription_can_be_purchased</name>
     </customLabels>
     <customLabels>
-        <label>未结清</label>
+        <label>待处理</label>
         <name>Open</name>
     </customLabels>
     <customLabels>
@@ -27264,7 +27272,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>csp_AccountRelocateSuccess</name>
     </customLabels>
     <customLabels>
-        <label>认证程序</label>
+        <label>资格审核业务</label>
         <name>csp_Accreditation_Process</name>
     </customLabels>
     <customLabels>
@@ -36388,6 +36396,71 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <sections>
             <label><!-- Agencies (AMS) --></label>
             <name>Agencies (AMS)</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Agencies for Airport IS --></description>
+        <label><!-- Agencies for Airport IS --></label>
+        <name>Agencies_for_Airport_IS</name>
+        <sections>
+            <columns>
+                <label><!-- ISO Country: ISO Code --></label>
+                <name>ISO Country: ISO Code</name>
+            </columns>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <columns>
+                <label><!-- Geoname Billing City: Id --></label>
+                <name>Geoname Billing City: Id</name>
+            </columns>
+            <columns>
+                <label><!-- Geoname Billing City: Location (Latitude) --></label>
+                <name>Geoname Billing City: Location (Latitude)</name>
+            </columns>
+            <columns>
+                <label><!-- Geoname Billing City: Location (Longitude) --></label>
+                <name>Geoname Billing City: Location (Longitude)</name>
+            </columns>
+            <columns>
+                <label><!-- Geoname Billing City: Name --></label>
+                <name>Geoname Billing City: Name</name>
+            </columns>
+            <label><!-- Geoname billing city --></label>
+            <name>Geoname billing city</name>
+        </sections>
+        <sections>
+            <columns>
+                <label><!-- Parent Account: Account ID --></label>
+                <name>Parent Account: Account ID</name>
+            </columns>
+            <columns>
+                <label><!-- Parent Account: Account Name --></label>
+                <name>Parent Account: Account Name</name>
+            </columns>
+            <columns>
+                <label><!-- Parent Account: IATA Code --></label>
+                <name>Parent Account: IATA Code</name>
+            </columns>
+            <label><!-- Parent --></label>
+            <name>Parent</name>
+        </sections>
+        <sections>
+            <columns>
+                <label><!-- Top Parent: Account ID --></label>
+                <name>Top Parent: Account ID</name>
+            </columns>
+            <columns>
+                <label><!-- Top Parent: Account Name --></label>
+                <name>Top Parent: Account Name</name>
+            </columns>
+            <columns>
+                <label><!-- Top Parent: IATA Code --></label>
+                <name>Top Parent: IATA Code</name>
+            </columns>
+            <label><!-- Top Parent --></label>
+            <name>Top Parent</name>
         </sections>
     </reportTypes>
     <reportTypes>
