@@ -964,10 +964,28 @@ public without sharing class CW_FacilityCapabilitiesController {
 			}	
 		}
 		//Read files to capabilities removed
+		result = deleteFileDissociatedFromCapabilities(accRoleDet, currentListId);
+
+		if (result){
+			//Read files deleted in process
+			result = deleteFileFromCapabilities(accRoleDet, currentListId, currentFilesId);
+		}
+
+		return result;
+	}
+
+	/**
+	 * @description		Delete files that there is no relation with capabilities
+	 * @param			accRoleDet - Account Role Detail Id, capabAssigmenGroup - Capab Assigment Group
+	 * @param			capabilitiesId - Id list of capabilities
+	 * @return			Boolean true or false
+	 */
+	public static Boolean deleteFileDissociatedFromCapabilities(String accRoleDet, Set<Id> capabilitiesId) {
+		Boolean result = true;
 		List<ICG_Account_Role_Capability_Assignment__c> assigmentList = [SELECT Account_Role_Detail_Capability__r.Photos__c, Account_Role_Detail_Capability__r.More_Info_Document__c 
 			FROM ICG_Account_Role_Capability_Assignment__c 
 				WHERE ICG_Account_Role_Detail__c =: accRoleDet 
-						AND Account_Role_Detail_Capability__c NOT IN : currentListId];
+						AND Account_Role_Detail_Capability__c NOT IN : capabilitiesId];
 
 		Set<Id> filesToDeleteId = new Set<Id>();
 		try {
@@ -997,13 +1015,24 @@ public without sharing class CW_FacilityCapabilitiesController {
 		} catch (Exception e) {
 			result = false;
 		}
+		
+		return result;
+	}
 
-		filesToDeleteId = new Set<Id>();
-		//Read files deleted in process
-		assigmentList = [SELECT Account_Role_Detail_Capability__r.Photos__c 
+	/**
+	 * @description		Read files deleted in process
+	 * @param			accRoleDet - Account Role Detail Id, capabAssigmenGroup - Capab Assigment Group
+	 * @param			capabilitiesId - Id list of capabilities
+	 * @param			currentFilesId - Id list of files
+	 * @return			Boolean true or false
+	 */
+	public static Boolean deleteFileFromCapabilities(String accRoleDet, Set<Id> capabilitiesId, Set<Id> currentFilesId) {
+		Boolean result = true;
+		Set<Id> filesToDeleteId = new Set<Id>();
+		List<ICG_Account_Role_Capability_Assignment__c> assigmentList = [SELECT Account_Role_Detail_Capability__r.Photos__c 
 			FROM ICG_Account_Role_Capability_Assignment__c 
 				WHERE ICG_Account_Role_Detail__c =: accRoleDet 
-						AND Account_Role_Detail_Capability__c IN : currentListId];
+						AND Account_Role_Detail_Capability__c IN : capabilitiesId];
 
 		try {
 			if(assigmentList.size() > 0){
@@ -1029,7 +1058,7 @@ public without sharing class CW_FacilityCapabilitiesController {
 		} catch (Exception e) {
 			result = false;
 		}
-
+		
 		return result;
 	}
 

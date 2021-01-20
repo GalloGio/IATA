@@ -22,7 +22,6 @@ public with sharing class CW_CapabilitiesUtilities {
 	public static final String HAS_ROWS = 'hasRows';
 	public static final String CONTAINS_DATA = 'containsData';
 	public static final String ACTIVE = 'Active';
-	public static final String SYSTEM_ADMINISTRADOR = 'System Administrator';
 	public static final String SMART_FACILITY_REMOTE_VALIDATION = 'Smart Facility Remote Validation';
 	public static final String SFRV_MANAGERS = 'SFRV_MANAGERS';
 

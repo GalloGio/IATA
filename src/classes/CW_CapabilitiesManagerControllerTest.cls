@@ -39,9 +39,9 @@ public class CW_CapabilitiesManagerControllerTest {
 
 		Account_Role_Detail_Capability__c ardCap = CW_TestDataFactory.createAccountRoleDetailCapability('Beneficial_Insects_Bees', 'Live_Animals_Capacities_1', null);
 		insert ardCap;
-        
-        ICG_Certification__c cert = CW_TestDataFactory.newCertification();
-        cert.Name = 'cert';
+		
+		ICG_Certification__c cert = CW_TestDataFactory.newCertification();
+		cert.Name = 'cert';
 		insert cert;
 		ICG_Certification__c cert2 = CW_TestDataFactory.newCertification();
 		cert2.Name = 'cert2';
@@ -51,11 +51,11 @@ public class CW_CapabilitiesManagerControllerTest {
 		capvalcert.Issue_Date__c = Date.today().addDays(-1);
 		capvalcert.Expiration_Date__c = Date.today().addDays(1);
 		capvalcert.ICG_Account_Role_Detail__c = ard.Id;
-        capvalcert.ICG_Certification__c = cert.id;
+		capvalcert.ICG_Certification__c = cert.id;
 		capvalcert.RecordTypeId = RT_CERTIFICATION;
 		insert capvalcert;
-        
-        ICG_Capability_Assignment_Group__c capvalcertRV = new ICG_Capability_Assignment_Group__c();
+		
+		ICG_Capability_Assignment_Group__c capvalcertRV = new ICG_Capability_Assignment_Group__c();
 		capvalcertRV.Issue_Date__c = Date.today().addDays(-1);
 		capvalcertRV.Expiration_Date__c = Date.today().addDays(1);
 		capvalcertRV.ICG_Account_Role_Detail__c = ard.Id;
@@ -86,9 +86,9 @@ public class CW_CapabilitiesManagerControllerTest {
 		cap.Equipment__c = 'CARDIT';
 		insert cap;
 
-        ICG_Certification__c cert = [SELECT id FROM ICG_Certification__c WHERE Name ='cert'];
-        
-        ICG_Capability_Assignment_Group__c ardcert = [SELECT id,ICG_Certification__c FROM ICG_Capability_Assignment_Group__c WHERE RecordTypeId =: RT_CERTIFICATION];
+		ICG_Certification__c cert = [SELECT id FROM ICG_Certification__c WHERE Name ='cert'];
+		
+		ICG_Capability_Assignment_Group__c ardcert = [SELECT id,ICG_Certification__c FROM ICG_Capability_Assignment_Group__c WHERE RecordTypeId =: RT_CERTIFICATION];
 
 		ICG_Capability_Assignment_Group__c capvalcert = [SELECT id FROM ICG_Capability_Assignment_Group__c WHERE RecordTypeId =: RT_REMOTE_VALIDATION];
 
@@ -172,9 +172,9 @@ public class CW_CapabilitiesManagerControllerTest {
 		Id rtId = [SELECT id FROM RecordType WHERE SObjectType = 'Account_Role_Detail_Capability__c' AND developername = 'System_For_Mail_Tracking_And_Reporting' LIMIT 1].id;
 		Id rtColdRoomsId = [SELECT id FROM RecordType WHERE SObjectType = 'Account_Role_Detail_Capability__c' AND developername = 'Cold_Room_Standard_Temperature_Ranges' LIMIT 1].id;
 
-        ICG_Certification__c cert = [SELECT id FROM ICG_Certification__c WHERE Name ='cert'];
-        
-        ICG_Capability_Assignment_Group__c ardcert = [SELECT id,ICG_Certification__c FROM ICG_Capability_Assignment_Group__c WHERE RecordTypeId =: RT_CERTIFICATION];
+		ICG_Certification__c cert = [SELECT id FROM ICG_Certification__c WHERE Name ='cert'];
+		
+		ICG_Capability_Assignment_Group__c ardcert = [SELECT id,ICG_Certification__c FROM ICG_Capability_Assignment_Group__c WHERE RecordTypeId =: RT_CERTIFICATION];
 
 		ICG_Capability_Assignment_Group__c capvalcert = [SELECT id FROM ICG_Capability_Assignment_Group__c WHERE RecordTypeId =: RT_REMOTE_VALIDATION];
 
