@@ -963,12 +963,39 @@ public without sharing class CW_FacilityCapabilitiesController {
 				}
 			}	
 		}
-		//Read files to capabilities removed
-		result = deleteFileDissociatedFromCapabilities(accRoleDet, currentListId);
+		
+		try {
+			List<ICG_Account_Role_Capability_Assignment__c> assigmentList = [SELECT Account_Role_Detail_Capability__r.Photos__c, Account_Role_Detail_Capability__r.More_Info_Document__c 
+				FROM ICG_Account_Role_Capability_Assignment__c 
+				WHERE ICG_Account_Role_Detail__c =: accRoleDet ];
 
-		if (result){
+			List<ICG_Account_Role_Capability_Assignment__c> assigmentListDissociated = new List<ICG_Account_Role_Capability_Assignment__c>();
+			List<ICG_Account_Role_Capability_Assignment__c> assigmentListAssociated = new List<ICG_Account_Role_Capability_Assignment__c>();
+			
+			for(ICG_Account_Role_Capability_Assignment__c assigment : assigmentList){
+				if (assigment.Account_Role_Detail_Capability__c != null && currentListId.contains(assigment.Account_Role_Detail_Capability__c)){
+					assigmentListAssociated.add(assigment);
+				}
+				else{
+					assigmentListDissociated.add(assigment);
+				}
+			}
+
+			Set<Id> filesToDeleteId = new Set<Id>();
+			
+			//Read files to capabilities removed
+			filesToDeleteId.addAll(deleteFileDissociatedFromCapabilities(assigmentListDissociated, accRoleDet));
 			//Read files deleted in process
-			result = deleteFileFromCapabilities(accRoleDet, currentListId, currentFilesId);
+			filesToDeleteId.addAll(deleteFileFromCapabilities(assigmentListAssociated, accRoleDet, currentFilesId));
+
+			if(filesToDeleteId.size()>0){
+				List<ContentDocument> docList = [SELECT Id FROM ContentDocument WHERE Id in :filesToDeleteId];
+				if(docList.size()>0){
+					delete docList;
+				}
+			}
+		} catch (Exception e) {
+			result = false;
 		}
 
 		return result;
@@ -977,89 +1004,54 @@ public without sharing class CW_FacilityCapabilitiesController {
 	/**
 	 * @description		Delete files that there is no relation with capabilities
 	 * @param			accRoleDet - Account Role Detail Id, capabAssigmenGroup - Capab Assigment Group
-	 * @param			capabilitiesId - Id list of capabilities
 	 * @return			Boolean true or false
 	 */
-	public static Boolean deleteFileDissociatedFromCapabilities(String accRoleDet, Set<Id> capabilitiesId) {
-		Boolean result = true;
-		List<ICG_Account_Role_Capability_Assignment__c> assigmentList = [SELECT Account_Role_Detail_Capability__r.Photos__c, Account_Role_Detail_Capability__r.More_Info_Document__c 
-			FROM ICG_Account_Role_Capability_Assignment__c 
-				WHERE ICG_Account_Role_Detail__c =: accRoleDet 
-						AND Account_Role_Detail_Capability__c NOT IN : capabilitiesId];
-
+	public static Set<Id> deleteFileDissociatedFromCapabilities(List<ICG_Account_Role_Capability_Assignment__c> assigmentList, String accRoleDet) {
 		Set<Id> filesToDeleteId = new Set<Id>();
-		try {
-			if(assigmentList.size() > 0){
-				for(ICG_Account_Role_Capability_Assignment__c assigment : assigmentList){
-					if(String.isNotEmpty(assigment.Account_Role_Detail_Capability__r.Photos__c)){
-						List<CapabilityPhoto> photoList = (List<CapabilityPhoto>) JSON.deserialize(assigment.Account_Role_Detail_Capability__r.Photos__c, List<CapabilityPhoto>.class);
-						for(CapabilityPhoto photo : photoList){
-							filesToDeleteId.add(photo.id);
-						}
-					}
-					if(String.isNotEmpty(assigment.Account_Role_Detail_Capability__r.More_Info_Document__c)){
-						List<CapabilityPhoto> docList = (List<CapabilityPhoto>) JSON.deserialize(assigment.Account_Role_Detail_Capability__r.More_Info_Document__c, List<CapabilityPhoto>.class);
-						for(CapabilityPhoto doc : docList){
-							filesToDeleteId.add(doc.id);
-						}
+
+		if(assigmentList.size() > 0){
+			for(ICG_Account_Role_Capability_Assignment__c assigment : assigmentList){
+				if(String.isNotEmpty(assigment.Account_Role_Detail_Capability__r.Photos__c)){
+					List<CapabilityPhoto> photoList = (List<CapabilityPhoto>) JSON.deserialize(assigment.Account_Role_Detail_Capability__r.Photos__c, List<CapabilityPhoto>.class);
+					for(CapabilityPhoto photo : photoList){
+						filesToDeleteId.add(photo.id);
 					}
 				}
-				if(filesToDeleteId.size()>0){
-					List<ContentDocument> docList = [SELECT Id FROM ContentDocument WHERE Id in :filesToDeleteId];
-					if(docList.size()>0){
-						delete docList;
+				if(String.isNotEmpty(assigment.Account_Role_Detail_Capability__r.More_Info_Document__c)){
+					List<CapabilityPhoto> docList = (List<CapabilityPhoto>) JSON.deserialize(assigment.Account_Role_Detail_Capability__r.More_Info_Document__c, List<CapabilityPhoto>.class);
+					for(CapabilityPhoto doc : docList){
+						filesToDeleteId.add(doc.id);
 					}
 				}
 			}
-
-		} catch (Exception e) {
-			result = false;
 		}
 		
-		return result;
+		return filesToDeleteId;
 	}
 
 	/**
 	 * @description		Read files deleted in process
 	 * @param			accRoleDet - Account Role Detail Id, capabAssigmenGroup - Capab Assigment Group
-	 * @param			capabilitiesId - Id list of capabilities
 	 * @param			currentFilesId - Id list of files
 	 * @return			Boolean true or false
 	 */
-	public static Boolean deleteFileFromCapabilities(String accRoleDet, Set<Id> capabilitiesId, Set<Id> currentFilesId) {
-		Boolean result = true;
+	public static Set<Id> deleteFileFromCapabilities(List<ICG_Account_Role_Capability_Assignment__c> assigmentList, String accRoleDet, Set<Id> currentFilesId) {
 		Set<Id> filesToDeleteId = new Set<Id>();
-		List<ICG_Account_Role_Capability_Assignment__c> assigmentList = [SELECT Account_Role_Detail_Capability__r.Photos__c 
-			FROM ICG_Account_Role_Capability_Assignment__c 
-				WHERE ICG_Account_Role_Detail__c =: accRoleDet 
-						AND Account_Role_Detail_Capability__c IN : capabilitiesId];
 
-		try {
-			if(assigmentList.size() > 0){
-				for(ICG_Account_Role_Capability_Assignment__c assigment : assigmentList){
-					if(String.isNotEmpty(assigment.Account_Role_Detail_Capability__r.Photos__c)){
-						List<CapabilityPhoto> photoList = (List<CapabilityPhoto>) JSON.deserialize(assigment.Account_Role_Detail_Capability__r.Photos__c, List<CapabilityPhoto>.class);
-						for(CapabilityPhoto photo : photoList){
-							if(!currentFilesId.contains(photo.id)){
-								filesToDeleteId.add(photo.id);
-							}
+		if(assigmentList.size() > 0){
+			for(ICG_Account_Role_Capability_Assignment__c assigment : assigmentList){
+				if(String.isNotEmpty(assigment.Account_Role_Detail_Capability__r.Photos__c)){
+					List<CapabilityPhoto> photoList = (List<CapabilityPhoto>) JSON.deserialize(assigment.Account_Role_Detail_Capability__r.Photos__c, List<CapabilityPhoto>.class);
+					for(CapabilityPhoto photo : photoList){
+						if(!currentFilesId.contains(photo.id)){
+							filesToDeleteId.add(photo.id);
 						}
 					}
 				}
-
-				if(filesToDeleteId.size()>0){
-					List<ContentDocument> docList = [SELECT Id FROM ContentDocument WHERE Id in :filesToDeleteId];
-					if(docList.size()>0){
-						delete docList;
-					}
-				}
 			}
-
-		} catch (Exception e) {
-			result = false;
 		}
 		
-		return result;
+		return filesToDeleteId;
 	}
 
 	/*
