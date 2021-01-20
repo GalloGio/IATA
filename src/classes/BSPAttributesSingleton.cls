@@ -108,4 +108,14 @@ public class BSPAttributesSingleton {
 		}
 		return lsToReturn;
 	}
+
+	/**
+	 * Method that returns the map of attributes (where the index is the UniqueKey of the record)
+	 * @param  BSPId the ID of the BSP
+	 * @return       the map of attributes
+	 */
+	public map<string, ANG_BSP_Attributes__c> getFullBSPMap(id BSPId){
+		if(BSPAttributes.containsKey(BSPId)) return BSPAttributes.get(BSPId);
+		else return new map<string, ANG_BSP_Attributes__c>();
+	}
 }

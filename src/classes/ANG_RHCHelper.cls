@@ -139,7 +139,8 @@ public class ANG_RHCHelper {
 
 		for(ANG_RHC_Information__c rhc : rhcInfo) accountsIds.add(rhc.ANG_AccountId__c);
 
-		Map<Id, String> accountsBspMap = new Map<Id, Id>();
+		Map<Id, id> accountsBspMap = new Map<Id, Id>();
+		set<id> setAllBSPInvolved = new set<id>();
 		Map<Id, Account> accountsMap = new Map<Id, Account>();
 		Map<Id, String> isoCountries = new Map<Id, String>();
 		Map<String, AMS_Country_Specific_Attribute__c> attributes = new Map<String, AMS_Country_Specific_Attribute__c>();
@@ -154,8 +155,10 @@ public class ANG_RHCHelper {
 
 				if(!a.RHC_Informations__r.isEmpty() && !a.RHC_Informations__r[0].ANG_RHC_Amount_Equals_FS__c) 	isoCountries.put(a.Id, a.IATA_ISO_Country__r.Iso_Code__c);
 				
-				if(string.isNotEmpty(a.IATA_ISO_Country__r.AMS_Settlement_System__c))
+				if(string.isNotEmpty(a.IATA_ISO_Country__r.AMS_Settlement_System__c)){
 					accountsBspMap.put(a.Id, a.IATA_ISO_Country__r.AMS_Settlement_System__c);
+					setAllBSPInvolved.add(a.IATA_ISO_Country__r.AMS_Settlement_System__c);
+				}
 				
 				accountsMap.put(a.Id, a);
 			}
@@ -175,37 +178,14 @@ public class ANG_RHCHelper {
 
 		Map<String, ANG_BSP_Attributes__c> bspAttributesMap = new Map<String, ANG_BSP_Attributes__c>();
 
-		if(!accountsBspMap.values().isEmpty()){
-			for(ANG_BSP_Attributes__c bspAttr : [SELECT
-							Id,
-							BSP__c,
-							BSP__r.Name,
-							UniqueKey__c,
-							RecordTypeId,
-							RecordType.DeveloperName,
-							Risk_Status__c,
-							FS_Percentage__c,
-							Min_FA_Points__c,
-							Max_FA_Points__c,
-							RHC_Amnt_Calc_Type__c,
-							Limit_Cash_Condition__c,
-							Amount_At_Risk_From_USD__c,
-							Amount_At_Risk_Multiplier__c,
-							Amount_At_Risk_To_USD__c,
-							Tier__c,
-							Tier_RHC_Formula_Deduct_USD__c,
-							Tier_RHC_Formula_TopUp_USD__c
-						FROM ANG_BSP_Attributes__c
-						WHERE BSP__c IN :accountsBspMap.values()
-						AND (recordtypeID =: RECTYPE_RHC_AMOUNT_CONFIG OR recordtypeID =: RECTYPE_CASH_CONDITION_CONFIG)
-						]
-				){
-				//For RHC Amount Conf Rec Type the unique key is:
-				//	BSP Id + RHC Amount Conf Record Type Id
-				//For Cash Condition Conf Rec Type the unique key is:
-				//	BSP Id + Cash Condition Conf Record Type Id + Tier + Risk Status + Min FA Points
-				bspAttributesMap.put(bspAttr.UniqueKey__c, bspAttr);
-			}
+		BSPAttributesSingleton BSPAttrST = BSPAttributesSingleton.getInstance(setAllBSPInvolved, new set<string>{'RHC_Amount_Conf', 'Cash_Condition_Conf'});
+
+		for(Id AccntId:accountsBspMap.keyset()){
+			bspAttributesMap.putAll(BSPAttrST.getFullBSPMap(accountsBspMap.get(AccntId)));
+			//For RHC Amount Conf Rec Type the unique key is:
+			//	BSP Id + RHC Amount Conf Record Type Id
+			//For Cash Condition Conf Rec Type the unique key is:
+			//	BSP Id + Cash Condition Conf Record Type Id + Tier + Risk Status + Min FA Points
 		}
 
 		for(ANG_RHC_Information__c rhc : rhcInfo){

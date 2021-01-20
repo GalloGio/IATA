@@ -68,4 +68,21 @@ public class BSPAttributesSingletonTest {
 
 		test.stopTest();
 	}
+
+	@isTest
+	private static void getBSPFullMap() {
+		set<id> setBSPIds = new set<id>();
+		for(AMS_Settlement_System__c BSP:[select id from AMS_Settlement_System__c]) setBSPIds.add(bsp.id);
+
+		BSPAttributesSingleton BSPAttrST = BSPAttributesSingleton.getInstance(setBSPIds, new set<string>{'RHC_Amount_Conf', 'Cash_Condition_Conf'});
+
+		test.startTest();
+		system.assertEquals(0, Limits.getQueries());
+		for(id BSP:setBSPIds){
+			map<string, ANG_BSP_Attributes__c> mapAttrsBSP = BSPAttrST.getFullBSPMap(bsp);
+			system.assertNotEquals(0, mapAttrsBSP.size());
+		}
+		system.assertEquals(0, Limits.getQueries());
+		test.StopTest();
+	}
 }

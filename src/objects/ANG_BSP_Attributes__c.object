@@ -598,6 +598,17 @@ CASE( (TEXT(Remittance_Frequency__c)) ,
         <type>Text</type>
         <unique>true</unique>
     </fields>
+    <fields>
+        <fullName>create_SAAM_Case__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>used to specify if need to create a SAAM case when Tier changes</description>
+        <externalId>false</externalId>
+        <inlineHelpText>used to specify if need to create a SAAM case when Tier changes</inlineHelpText>
+        <label>create SAAM Case</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
     <label>BSP Attributes</label>
     <nameField>
         <displayFormat>{0}</displayFormat>
