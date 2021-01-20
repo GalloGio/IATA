@@ -225,7 +225,7 @@ public without sharing class CW_Utilities {
 
 	/*
 	 * @description		Save a list of the history related to ICG_Account_Role_Detail__c
-	 * @param			List<ICG_Contact_Role_Detail__c>
+	 * @param			List<ICG_Account_Role_Detail__c>
 	 * @param			Map<Id, ICG_Account_Role_Detail__c>
 	 */
 	public static void generateAccountRoleDetailHistory(List<ICG_Account_Role_Detail__c> newItems, Map<Id, ICG_Account_Role_Detail__c> oldMap){
@@ -235,7 +235,7 @@ public without sharing class CW_Utilities {
 		Map<Id, ICG_Account_Role_Detail__c> oldMapFiltered = new Map<Id, ICG_Account_Role_Detail__c>();
 		Map<Id, String> typesById = new Map<Id, String>();
 		for (ICG_Account_Role_Detail__c newItem : newItems) {
-			if (allowedStatus.indexOf(newItem.Status__c) > -1 && (oldMap == null || newItem.Status__c != oldMap.get(newItem.Id).Status__c)) {
+			if (allowedStatus.contains(newItem.Status__c) && (oldMap == null || newItem.Status__c != oldMap.get(newItem.Id).Status__c)) {
 				newItemsFiltered.add(newItem);
 				if (oldMap != null) {
 					oldMapFiltered.put(newItem.Id, oldMap.get(newItem.Id));
@@ -244,7 +244,7 @@ public without sharing class CW_Utilities {
 			}
 		}
 
-		if (newItemsFiltered.size() > 0) {
+		if (!newItemsFiltered.isEmpty()) {
 			Id rtIdToUse = RecordTypeSingleton.getInstance().getRecordTypeId('ICG_History_Track__c', 'Changes_by_Type');
 			generateHistoryTrack(rtIdToUse, newItemsFiltered, oldMapFiltered, typesById, new List<String>{'Status__c'});
 		}
