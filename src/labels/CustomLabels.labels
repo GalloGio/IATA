@@ -31361,6 +31361,22 @@ Can you please confirm which country you&apos;ve previously received support for
         <value>Product cannot be requested: please note that IATA certificates is only available to IATA accredited Passenger and Cargo Agents, that currently are approved. Terminated or defaulted agents under those groups, or other agent types like TIDS and CASS associates cannot request a certificate.</value>
     </labels>
     <labels>
+        <fullName>ISSP_Certificate_is_being_uploaded</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Certificate is being uploaded</shortDescription>
+        <value>Certificate is being uploaded</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Certificate_was_uploaded_satisfactory</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Certificate was uploaded satisfactory</shortDescription>
+        <value>Certificate was uploaded satisfactory</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Certifications</fullName>
         <categories>S11, Portal</categories>
         <language>en_US</language>
@@ -40410,6 +40426,32 @@ CNS Customer Services</value>
         <protected>false</protected>
         <shortDescription>ISSP cannot open the selected account</shortDescription>
         <value>Error in the system: cannot open the selected account</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_certificate_Submit</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP certificate Submit</shortDescription>
+        <value>Submit</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_certificate_expiry_date</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP certificate expiry date</shortDescription>
+        <value>Please note that Expiry date has to be minimum 15 days from today.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_certificate_with_the_same</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP certificate with the same</shortDescription>
+        <value>Please take note:&lt;/br&gt;
+We are unable to accept your DGR update as the same information has been updated in our record.&lt;/br&gt;
+Please amend with new DGR information.</value>
     </labels>
     <labels>
         <fullName>ISSP_characters_new_password</fullName>
