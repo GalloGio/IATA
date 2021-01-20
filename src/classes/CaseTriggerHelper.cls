@@ -181,7 +181,7 @@ public with sharing class CaseTriggerHelper {
 					points = 0;
 			}
 			if(points != 0) {
-				KPI_Value__c valueToInsert = createKPIReportingValue(newMap.get(cId), points, kpiReportingClosureId);
+				KPI_Value__c valueToInsert = createKPIReportingValue(newMap.get(cId), points, kpiReportingClosureId, UserInfo.getUserId());
 				kpiValuesToInsert.add(valueToInsert);
 			}
 		}
@@ -189,21 +189,39 @@ public with sharing class CaseTriggerHelper {
 		// case internal escalation
 		for(Id cId: consideredForEscInt) {
 			String cRTDevName = RecordTypeSingleton.getInstance().getRecordTypeById('Case', oldMap.get(cId).RecordTypeId).DeveloperName;
-			KPI_Value__c valueToInsert = createKPIReportingValue(oldMap.get(cId), Integer.valueOf(configsMap.get(CASE_ACTION_CASE_ESCALATION).get(cRTDevName).Points__c.intValue()), kpiReportingEscalationId);
+			KPI_Value__c valueToInsert = createKPIReportingValue(oldMap.get(cId), Integer.valueOf(configsMap.get(CASE_ACTION_CASE_ESCALATION).get(cRTDevName).Points__c.intValue()), kpiReportingEscalationId, UserInfo.getUserId());
 			kpiValuesToInsert.add(valueToInsert);
 		}
 
 		// case reopen
-		for(Id cId: consideredForReopen) {
-			String cRTDevName = RecordTypeSingleton.getInstance().getRecordTypeById('Case', oldMap.get(cId).RecordTypeId).DeveloperName;
-			KPI_Value__c valueToInsert = createKPIReportingValue(oldMap.get(cId), Integer.valueOf(configsMap.get(CASE_ACTION_CASE_REOPENING).get(cRTDevName).Points__c.intValue()),kpiReportingReopeningId);
-			kpiValuesToInsert.add(valueToInsert);
+		if(!consideredForReopen.isEmpty()) {
+			Map<Id, KPI_Value__c> typeOfActionReopenedMap = new Map<Id, KPI_Value__c>();
+
+			// find registered case reopened from past
+			List<KPI_Value__c> claimingForReopen = [SELECT Id, Responsible__c, CaseNumber__c FROM KPI_Value__c WHERE CaseNumber__c IN :consideredForReopen AND FDS_KPI_Reporting__r.Type_Of_Action__c=:CASE_ACTION_CASE_CLOSURE order by createdDate desc];
+			
+			for(KPI_Value__c cr: claimingForReopen) {
+				if(typeOfActionReopenedMap.get(cr.CaseNumber__c) == null){
+					typeOfActionReopenedMap.put(cr.CaseNumber__c, cr);
+				}
+			}
+			for(Id cId: consideredForReopen) {
+				KPI_Value__c kpv = typeOfActionReopenedMap.get(cId);
+				String cRTDevName = RecordTypeSingleton.getInstance().getRecordTypeById('Case', oldMap.get(cId).RecordTypeId).DeveloperName;
+				Integer points = Integer.valueOf(configsMap.get(CASE_ACTION_CASE_REOPENING).get(cRTDevName).Points__c.intValue());
+				if(newMap.get(cId).Reopening_Reason__c == 'new query')
+					points = -points;
+				KPI_Value__c valueToInsert = createKPIReportingValue(oldMap.get(cId), points,kpiReportingReopeningId, (kpv != null ? kpv.Responsible__c : UserInfo.getUserId()));
+				kpiValuesToInsert.add(valueToInsert);
+			}
 		}
+		
+		
 
 		// NOI sent
 		for(Id cId: consideredForNOI) {
 			String cRTDevName = RecordTypeSingleton.getInstance().getRecordTypeById('Case', oldMap.get(cId).RecordTypeId).DeveloperName;
-			KPI_Value__c valueToInsert = createKPIReportingValue(oldMap.get(cId), Integer.valueOf(configsMap.get(CASE_ACTION_SEND_NOI).get(cRTDevName).Points__c.intValue()),kpiReportingNOIId);
+			KPI_Value__c valueToInsert = createKPIReportingValue(oldMap.get(cId), Integer.valueOf(configsMap.get(CASE_ACTION_SEND_NOI).get(cRTDevName).Points__c.intValue()),kpiReportingNOIId, UserInfo.getUserId());
 			kpiValuesToInsert.add(valueToInsert);
 		}
 
@@ -223,7 +241,7 @@ public with sharing class CaseTriggerHelper {
 		return [SELECT Id, Action__c, Case_Record_Type__c, Field_API_Name__c, Value_To__c, Points__c, Reopening_Reason__c,  Status_From__c, Status_To__c, Type_of_Task__c, Value_From__c FROM ISSP_KPI_Reporting__mdt WHERE Action__c IN :actionTypes];
 	}
 
-	public static KPI_Value__c createKPIReportingValue(Case caseToProcess, Integer points, String kpiReportingId){
+	public static KPI_Value__c createKPIReportingValue(Case caseToProcess, Integer points, String kpiReportingId, Id responsible){
 		KPI_Value__c valueToAdd = new KPI_Value__c();
 
 		valueToAdd.Name = 'Value_' + caseToProcess.Id + '_' + System.now().format('hh_mm_ss');
@@ -232,7 +250,7 @@ public with sharing class CaseTriggerHelper {
 		valueToAdd.Month__c = System.now().format('MMMM');
 		valueToAdd.Year__c = String.valueOf(Date.today().year());
 		valueToAdd.KPI_Value__c = points;
-		valueToAdd.Responsible__c = UserInfo.getUserId();
+		valueToAdd.Responsible__c = responsible;
 
 		return valueToAdd;
 	}
