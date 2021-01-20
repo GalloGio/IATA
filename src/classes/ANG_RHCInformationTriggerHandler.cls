@@ -46,15 +46,7 @@ public class ANG_RHCInformationTriggerHandler{
 		new ANG_AgencyEventsGenerator(filterByIATACode(triggerNew),oldMap,'RHC_Information','ANG_AccountId__c').run();
 		refreshRMEData();
 		handleRhcUpdate();
-
-		//NEWGEN-6810
-		//If the tier changes, create a SAAM case and assign to Regional Risk Queue
-		set<Id> setAccntId = new set<Id>();
-		for(ANG_RHC_Information__c rhc : triggerNew)
-			if(rhc.Tier__c != oldMap.get(rhc.id).Tier__c)
-				setAccntId.add(rhc.ANG_AccountId__c);
-		
-		CreateSAAMCase(setAccntId);
+		CreateSAAMCaseUponTierChange();
 	}
 
 	public void onBeforeDelete(){}
@@ -63,9 +55,33 @@ public class ANG_RHCInformationTriggerHandler{
 	// ************************************************************
 	// ********************* action methods ***********************
 	// ************************************************************
-	private static void CreateSAAMCase(set<Id> setAccntId){
-		if(setAccntId.isEmpty())	return;
+	private void CreateSAAMCaseUponTierChange(){
+		//NEWGEN-6810
+		//If the tier changes, check if the Tier Configuration foresee the creation of SAAM case
+		//If so, create it and assign to Regional Risk Queue
+		
+		set<id> setBSPId = new set<id>();
+		for(ANG_RHC_Information__c rhc : triggerNew)
+			if(rhc.Tier__c != oldMap.get(rhc.id).Tier__c){
+				if(string.isNotBlank(rhc.Account_BSP__c))
+					setBSPId.add(rhc.Account_BSP__c);
+			}
+		
+		BSPAttributesSingleton BSPAttrST = BSPAttributesSingleton.getInstance(setBSPId, new set<string>{'RHC_Amount_Conf'});
+		
+		set<Id> setAccntId = new set<Id>();
+		
+		for(ANG_RHC_Information__c rhc : triggerNew){
+			if(rhc.Tier__c != oldMap.get(rhc.id).Tier__c){
+				//BSP Id + BSP Attribute RecordType Id (RHC Amount Conf) + Tier + Agent Risk Status.
+				string sKey = rhc.Account_BSP__c + '.' + ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG + '.' + rhc.Tier__c + '.' + rhc.Agency_Risk_Status__c;
+				if(BSPAttrST.getSingleBSPAttributeByUniqueId(rhc.Account_BSP__c, sKey).create_SAAM_Case__c)
+					setAccntId.add(rhc.ANG_AccountId__c);
+			}
+		}
 
+		if(setAccntId.isEmpty())	return;
+		
 		map<id, Account> mapAccnt = new map<id, account>([select id, Name, Short_Name__c, IATACode__c, Region_formula__c from Account where id in:setAccntId]);
 		list<case> CaseToCreate = new list<case>();
 

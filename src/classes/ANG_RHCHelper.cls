@@ -183,9 +183,10 @@ public class ANG_RHCHelper {
 		for(Id AccntId:accountsBspMap.keyset()){
 			bspAttributesMap.putAll(BSPAttrST.getFullBSPMap(accountsBspMap.get(AccntId)));
 			//For RHC Amount Conf Rec Type the unique key is:
-			//	BSP Id + RHC Amount Conf Record Type Id
+			//BSP Id + BSP Attribute RecordType Id (RHC Amount Conf) + Tier + Agent Risk Status.
+			
 			//For Cash Condition Conf Rec Type the unique key is:
-			//	BSP Id + Cash Condition Conf Record Type Id + Tier + Risk Status + Min FA Points
+			//BSP Id + Cash Condition Conf Record Type Id + Tier + Risk Status + Min FA Points
 		}
 
 		for(ANG_RHC_Information__c rhc : rhcInfo){
