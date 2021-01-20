@@ -4400,6 +4400,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>EscalatewithinIATAKeyCustomerAlertCtrl</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>EventTriggerHandler</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -7653,6 +7657,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>IsraelDisputesCreateNewCaseTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>KeyCustomerAlertCtrl</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>KeyCustomerAlertTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -11680,6 +11692,10 @@
         <enabled>true</enabled>
         <name>IFAP_Can_Bypass_Resubmission_Validation</name>
     </customPermissions>
+    <customSettingAccesses>
+        <enabled>true</enabled>
+        <name>Case_RTs_for_Key_Customer_alert__c</name>
+    </customSettingAccesses>
     <fieldPermissions>
         <editable>false</editable>
         <field>ACCA_Service_Request__c.ACCA_Service_Request_Subject__c</field>
@@ -12531,6 +12547,11 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>AMS_Account_Role__c.Percentage_Formated__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>AMS_Account_Role__c.Percentage__c</field>
         <readable>true</readable>
@@ -12798,6 +12819,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>AMS_Accreditation_Contact__c.Financial_Assessment_Contact__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>AMS_Accreditation_Contact__c.Financial_Interest_Formated__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -61838,6 +61864,10 @@
         <recordType>Case.Funds_Management</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Case-GCS SIDRA Lite</layout>
+        <recordType>Case.SIDRA_Lite</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Case-GDPR Request</layout>
         <recordType>Case.GDPR_Request</recordType>
     </layoutAssignments>
@@ -62015,10 +62045,6 @@
     <layoutAssignments>
         <layout>Case-SIDRA Global %28IDFS ISS%29 lightning</layout>
         <recordType>Case.SIDRA</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Case-SIDRA Lite</layout>
-        <recordType>Case.SIDRA_Lite</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-TTBS Case Layout</layout>

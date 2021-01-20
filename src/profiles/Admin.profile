@@ -4400,6 +4400,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>EscalatewithinIATAKeyCustomerAlertCtrl</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>EventTriggerHandler</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -7653,6 +7657,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>IsraelDisputesCreateNewCaseTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>KeyCustomerAlertCtrl</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>KeyCustomerAlertTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -12523,6 +12535,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>AMS_Account_Role__c.Percentage_Formated__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>AMS_Account_Role__c.Percentage__c</field>
         <readable>true</readable>
@@ -12790,6 +12807,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>AMS_Accreditation_Contact__c.Financial_Assessment_Contact__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>AMS_Accreditation_Contact__c.Financial_Interest_Formated__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

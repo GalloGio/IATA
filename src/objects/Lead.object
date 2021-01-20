@@ -6350,6 +6350,15 @@ albam@iata.org</description>
             <role>VPMACS</role>
         </sharedTo>
     </listViews>
+    <listViews>
+        <fullName>TASF_Lead</fullName>
+        <filterScope>Queue</filterScope>
+        <label>TASF</label>
+        <queue>TASF</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
     <recordTypeTrackHistory>true</recordTypeTrackHistory>
     <recordTypes>
         <fullName>CorpComLeads</fullName>
