@@ -144,7 +144,7 @@ public without sharing class CW_Utilities {
 		AggregateResult[] exist = [SELECT count(Id) FROM PermissionSetAssignment WHERE AssigneeId =: UserInfo.getUserId() AND (PermissionSet.Name = 'One_Source_Backend_Admin')];
 		result = (!exist.isEmpty() && (Integer.valueOf(exist[0].get('expr0')) > 0));
 
-		return (result || profileName == CW_CapabilitiesUtilities.SYSTEM_ADMINISTRADOR);
+		return (result || profileName == CW_CapabilitiesUtilities.SYSTEM_ADMINISTRATOR);
 	}
 
 

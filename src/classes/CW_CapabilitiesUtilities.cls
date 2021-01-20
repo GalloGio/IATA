@@ -22,6 +22,7 @@ public with sharing class CW_CapabilitiesUtilities {
 	public static final String HAS_ROWS = 'hasRows';
 	public static final String CONTAINS_DATA = 'containsData';
 	public static final String ACTIVE = 'Active';
+	public static final String SYSTEM_ADMINISTRATOR = 'System Administrator';
 	public static final String SMART_FACILITY_REMOTE_VALIDATION = 'Smart Facility Remote Validation';
 	public static final String SFRV_MANAGERS = 'SFRV_MANAGERS';
 
@@ -378,7 +379,30 @@ public with sharing class CW_CapabilitiesUtilities {
 
 		return categoryFound;
 	}
-
+	/*********************************************************************************************************
+	 * @name			generateCurrentObject
+	 * @author			
+	 * @created			01 / 09 / 2020
+	 * @description		Updates a capability assigment group object with the given data in the attributes.
+	 * @param			Map<String, Object> currentObject: Capability assigment objects by capability field
+	 * 					String currentDetailId: ICG_Account_Role_Capability_Assignment__r.Account_Role_Detail_Capability__r.Id
+	 *					Account_Role_Detail_Capability__c currentDetail: ICG_Account_Role_Capability_Assignment__r.Account_Role_Detail_Capability__c
+	 *					List<Object> certifications: current ICG_Account_Role_Capability_Assignment__c List with its CW_Utilities.AsgmtGroupWrapper
+	 *					String currentAssignmentRT: ICG_Account_Role_Capability_Assignment__c.ICG_Capability_Assignment_Group__r.RecordTypeId
+	 *					Map<String, Object> capabilityFound: currentDetail RT and capability found boolean
+	 *					Map<String, List<String>> mapFieldsByRecordTypeAndCategory: Assignment fields by RT And Category
+	 *					String rtDevNameLC: Account Role Detail Assignment Rt  
+	 *					Map<String, Schema.PicklistEntry> mapEquipments: Account_Role_Detail_Capability__c.Equipment__c picklist values
+	 *					Map<String, List<String>> mapTooltipFieldsByField: ICG_capability_configuration__mdt data by key
+	 *					Map<String, Schema.SObjectField> fieldsMap: Schema.SObjectType.Account_Role_Detail_Capability__c.fields
+	 *					Boolean isMultiRecordCapabilities: is currentDetail.Category__c Multi_Record_Capabilities
+	 *					Boolean isAssigned:
+	 *					Boolean contains:
+	 *					String stationRT: ICG_Account_Role_Detail__c
+	 *					List<String> CERTIFICATIONS_ALLOWED_USER: Certification allowed by station
+	 *					Boolean userHasPermissionToEdit: Has user profile One_Source_Backend_Admin permission set
+	 * @return			Updated Capability object.
+	**********************************************************************************************************/
 	public static Map<String, Object> generateCurrentObject(Map<String, Object> currentObject, String currentDetailId,
 	 Account_Role_Detail_Capability__c currentDetail, List<Object> certifications, String currentAssignmentRT, 
 	 Map<String, Object> capabilityFound, Map<String, List<String>> mapFieldsByRecordTypeAndCategory, String rtDevNameLC,
