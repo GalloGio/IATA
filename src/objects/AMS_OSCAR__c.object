@@ -4371,7 +4371,7 @@ Promotions defined in Custom Metadata &apos;Oscar_Promotion__mdt&apos;</descript
         ,IF(INCLUDES(Type_of_change__c, &quot;Name&quot;),&quot;CHN - Change of Name&quot;
         ,IF(OR(INCLUDES(Type_of_change__c, &quot;Location&quot;), INCLUDES(Type_of_change__c, &quot;Location with inspection&quot;)),&quot;CHL - Change of Location&quot;
         ,IF(INCLUDES(Type_of_change__c, &quot;VMFR&quot;),&quot;VMFR Setup/Update&quot;
-        ,IF(INCLUDES(Type_of_change__c, &quot;Minor Shareholding&quot;),&quot;CHG – Data Maintenance&quot;
+        ,IF(INCLUDES(Type_of_change__c, &quot;Minor Shareholding&quot;),&quot;MCH – Minor Change of Shareholding&quot;
         ,&quot;&quot;  )))))))
     , &quot;&quot;)
    )</formula>
