@@ -155,9 +155,8 @@ public without sharing class CW_FacilityCapabilitiesController {
 
 	public static List<Id> getListEditableRecordTypesID() {
 		List<Id> output = new List<Id>();
-		List<RecordType> rtEditables = [SELECT Id FROM RecordType WHERE DeveloperName IN : getMapEditableRecordTypes().get(MD_EDITABLE_RECORDTYPES)];
-		for(RecordType rt : rtEditables){
-			output.add(rt.id);
+		for(String rt : getMapEditableRecordTypes().get(MD_EDITABLE_RECORDTYPES)){
+			output.add(RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role_Detail_Capability__c', rt));
 		}
 
 		return output;

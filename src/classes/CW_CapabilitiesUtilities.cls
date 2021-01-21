@@ -579,7 +579,28 @@ public with sharing class CW_CapabilitiesUtilities {
 		return photosCarousel;
 	}
 
-	
+	/*********************************************************************************************************
+	 * @name			getCapabilitiesByRecordTypeNotIncluded
+	 * @author			
+	 * @created			21 / 01 / 2021
+	 * @description		Returns the mandatory capabilities (mandatory in the view side) that was not previously certified
+	 * 					or assigned
+	 * @param			Map<String, Object> rawData: Capability objects by field (name, label, check_summary ...)
+	 * 					ICG_Account_Role_Detail__c accountRoleDetailFound: Capability account role detail
+	 * 					Map<String, List<String>> mapFieldsByRecordTypeAndCategory: ICG_capability_configuration__mdt data by key
+	 * 					Map<String, String> mapRecordTypeIdByCategory: List of categories by record type
+	 * 					Map<Id, RecordType> mapAccountRoleDetailAssignmentRtsById: Account role detail assignment record types by ids
+	 * 					Map<String, List<String>> mapCategoriesByRecordTypeDevName: Category record types by developer name
+	 * 					Map<String, List<String>> mapFieldsByGroupField: ICG_capability_configuration__mdt data by key 
+	 * 					Map<String, String> columnsToHandle: Colums to generate category found
+	 * 					Map<String, Schema.PicklistEntry> mapEquipments: Account_Role_Detail_Capability__c.Equipment__c picklist values
+	 * 					Map<String, List<String>> mapTooltipFieldsByField: ICG_capability_configuration__mdt data by key
+	 * 					Map<String, Schema.SObjectField> fieldsMap: Schema.SObjectType.Account_Role_Detail_Capability__c.fields
+	 *					String stationRT: Certification station record type
+	 *					List<String> CERTIFICATIONS_ALLOWED_USER: Certification allowed by station
+	 *					Boolean userHasPermissionToEdit: Has user profile One_Source_Backend_Admin permission set
+	 * @return			Set<String> not certified capabilities that must be shown
+	**********************************************************************************************************/
 	public static Set<String> getCapabilitiesByRecordTypeNotIncluded(Map<String, Object> rawData,ICG_Account_Role_Detail__c accountRoleDetailFound,
 	Map<String, List<String>> mapFieldsByRecordTypeAndCategory,
 	Map<String, String> mapRecordTypeIdByCategory,Map<Id, RecordType> mapAccountRoleDetailAssignmentRtsById,
