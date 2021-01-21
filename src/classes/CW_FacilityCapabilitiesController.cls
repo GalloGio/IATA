@@ -980,7 +980,7 @@ public without sharing class CW_FacilityCapabilitiesController {
 				}
 			}
 
-			Set<Id> filesToDeleteId = new Set<Id>();
+			List<Id> filesToDeleteId = new List<Id>();
 			
 			//Read files to capabilities removed
 			filesToDeleteId.addAll(deleteFileDissociatedFromCapabilities(assigmentListDissociated, accRoleDet));
@@ -988,10 +988,7 @@ public without sharing class CW_FacilityCapabilitiesController {
 			filesToDeleteId.addAll(deleteFileFromCapabilities(assigmentListAssociated, accRoleDet, currentFilesId));
 
 			if(filesToDeleteId.size()>0){
-				List<ContentDocument> docList = [SELECT Id FROM ContentDocument WHERE Id in :filesToDeleteId];
-				if(docList.size()>0){
-					delete docList;
-				}
+				Database.delete(filesToDeleteId, false);
 			}
 		} catch (Exception e) {
 			result = false;

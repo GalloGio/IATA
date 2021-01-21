@@ -60,6 +60,12 @@ public with sharing class CW_CapabilitiesUtilities {
 		return certificationId;
 	}
 
+	/**
+	 * @description		Generate categories by developer name
+	 * @param			mapCategoriesByRecordTypeDevName <Map with information of fields by record type>
+	 * @param			categoriesToRetrieve <List of categories to be filtered>
+	 * @return			Map of categories
+	 */
 	private static Map<String, List<String>> generateMapCategoriesByRecordTypeDevNameTmp(Map<String, List<String>> mapCategoriesByRecordTypeDevName, List<String> categoriesToRetrieve) {
 		Map<String, List<String>> mapCategoriesByRecordTypeDevNameTmp = new Map<String, List<String>>();
 		for (String currentKey : mapCategoriesByRecordTypeDevName.keySet()) {
@@ -274,6 +280,16 @@ public with sharing class CW_CapabilitiesUtilities {
 		return returnValue;
 	}
 
+		/**
+	 * @description		Generate capabilities properties
+	 * @param			rtDevNameLC Account Role Detail Assignment Rt  
+	 * @param			mapCategoriesByRecordTypeDevName <Categories by record type dev name>
+	 * @param			mapCategories <Map of categories>
+	 * @param			categoriesToRetrieve <List of categories to retrieve>
+	 * @param			equipmentsByCategory,  
+	 * @param			currentRecordType RecordType 
+	 * @return			Map based on capability properties
+	 */
 	private static Map<String, Object> generateCurrentCapability(String rtDevNameLC, Map<String, List<String>> mapCategoriesByRecordTypeDevName, Map<String, Schema.PicklistEntry> mapCategories, List<String> categoriesToRetrieve, Map<String, List<String>> mapEquipmentValuesBySpecificProcessing, Map<String, List<Map<String, Object>>> equipmentsByCategory, RecordType currentRecordType) {
 		Map<String, Object> currentCapatibility = new Map<String, Object>();
 		currentCapatibility.put('name', rtDevNameLC);
@@ -475,22 +491,24 @@ public with sharing class CW_CapabilitiesUtilities {
 		currentObject.put('isEditableRecordType', isEditableRecordType);
 		currentObject.put('isNotCertiRequired', currentAssignmentRT == RT_NO_CERTIFICATION_REQUIRED);
 
-		Boolean isPermission=false;
-		if(userHasPermissionToEdit){
-			isPermission=true;
-		}
-		else{
+		if(!userHasPermissionToEdit){
 			for(CW_Utilities.AsgmtGroupWrapper cert : (List<CW_Utilities.AsgmtGroupWrapper>)certifications){
 				if(CERTIFICATIONS_ALLOWED_USER.contains(cert.name)){
-					isPermission=true;
+					userHasPermissionToEdit=true;
+					break;
 				}
 			}
 		}		
-		currentObject.put('isPermissionByDepartment',isPermission);
+		currentObject.put('isPermissionByDepartment',userHasPermissionToEdit);
 
 		return currentObject;
 	}
 
+	/**
+	 * @description		Get a list of certification (List<ICG_Certification__c.Name>) filtered by ICG_Account_Role_Detail__c recordType
+	 * @param			stationRT <ICG_Account_Role_Detail__c record type>
+	 * @return			List of certifications
+	 */
 	public static List<String> getCertificationsAllowedByDepartments(String stationRT) {
 		List<String> lstDepts = new List<String>();
 		List<String> lstCertiAllowed = new List<String>();
@@ -520,6 +538,11 @@ public with sharing class CW_CapabilitiesUtilities {
 		return lstCertiAllowed;
 	}
 
+	/**
+	 * @description		Get a list of document filtered by accRoleDetail.Id
+	 * @param			recordId <ICG_Account_Role_Detail__c.Id>
+	 * @return			List of files (CW_AccountDetailCarousel.Carousel)
+	 */
 	public static List<CW_AccountDetailCarousel.Carousel> getCapabilitiesPhotosFromStation(String recordId) {
 		List<String> acceptFormats = new List<String>{ 'pdf' };
 		Map<String, CW_FacilityCapabilitiesController.CapabilityPhoto> photosCapab = new Map<String, CW_FacilityCapabilitiesController.CapabilityPhoto>();
