@@ -1686,8 +1686,8 @@ public class ANG_RHCAlertTriggerHandler{
 				htmlBody = htmlBody.replace('##COUNTRY##', acct.IATA_ISO_Country__r.Name);
 				htmlBody = htmlBody.replace('##RHC_AMOUNT##', rhcAmount.format());
 				htmlBody = htmlBody.replace('##RHC_CURRENCY##', bspCurrency);
-				htmlBody = htmlBody.replace('##THRESHOLD##', ra.ANG_Threshold_Level__c);
-				htmlBody = htmlBody.replace('##DIRECTION##', ra.ANG_Direction__c);
+				if(htmlBody.indexOf('##THRESHOLD##')>0)	htmlBody = htmlBody.replace('##THRESHOLD##', ra.ANG_Threshold_Level__c);
+				if(htmlBody.indexOf('##DIRECTION##')>0)	htmlBody = htmlBody.replace('##DIRECTION##', ra.ANG_Direction__c);
 			}
 
 			emailLst.addAll(createNotificationEmailMessages(null, htmlBody, ORG_WIDE_EMAILS.get(0).Id, emailSubject, notificationWrapper));
