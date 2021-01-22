@@ -75,8 +75,10 @@ public class ANG_RHCInformationTriggerHandler{
 			if(rhc.Tier__c != oldMap.get(rhc.id).Tier__c){
 				//BSP Id + BSP Attribute RecordType Id (RHC Amount Conf) + Tier + Agent Risk Status.
 				string sKey = rhc.Account_BSP__c + '.' + ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG + '.' + rhc.Tier__c + '.' + rhc.Agency_Risk_Status__c;
-				if(BSPAttrST.getSingleBSPAttributeByUniqueId(rhc.Account_BSP__c, sKey).create_SAAM_Case__c)
-					setAccntId.add(rhc.ANG_AccountId__c);
+				ANG_BSP_Attributes__c theAttr = BSPAttrST.getSingleBSPAttributeByUniqueId(rhc.Account_BSP__c, sKey);
+				if(theAttr!=null)
+					if(theAttr.create_SAAM_Case__c)
+						setAccntId.add(rhc.ANG_AccountId__c);
 			}
 		}
 
