@@ -17,6 +17,7 @@ public class BSPAttributesSingleton {
 		string sQuery = 'select id, recordtype.DeveloperName, FS_Percentage__c, Amount_At_Risk_From_USD__c, Amount_At_Risk_Multiplier__c, Amount_At_Risk_To_USD__c' +
 						'  , BSP__c, Class_Type__c, ISO_State__c, Limit_Cash_Condition__c, Max_FA_Points__c, Min_FA_Points__c, Operation__c, Remittance_Frequency__c' +
 						'  , Remittances_Per_Year__c, RHC_Amnt_Calc_Type__c, Risk_Status__c, Tier__c, Tier_RHC_Formula__c, Tier_RHC_Formula_Deduct_USD__c, Tier_RHC_Formula_TopUp_USD__c, UniqueKey__c ' +
+						'  , bsp__r.name	 ' +
 						'  from ANG_BSP_Attributes__c';
 						
 		if(setBSPId!=null && setRTNames!=null)
