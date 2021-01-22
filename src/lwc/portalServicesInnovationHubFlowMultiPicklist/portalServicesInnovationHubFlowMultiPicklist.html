@@ -1,0 +1,11 @@
+<template>
+    <lightning-dual-listbox name="multiPickList"
+                            label={_label}
+                            class="marginMulti"
+                            source-label={labels.Available}
+                            selected-label={labels.Selected}
+                            field-level-help={labels.ChooseAny}
+                            options={_allOptions}
+                            value={_defaultOptions}
+                            onchange={handleChange}></lightning-dual-listbox>
+</template>
