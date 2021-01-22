@@ -571,7 +571,8 @@ public class ANG_RHCAlertTriggerHandler{
 		Set<Id> targetRecordTypesSet = new Set<Id>{
 			riskAlertRTSRecType,
 			riskAlertEDSRecType,
-			riskAlertRHCRecType
+			riskAlertRHCRecType,
+			riskAlertGDSRecType
 		};
 
 		set<id> accIdSet= new set<id>();
@@ -617,7 +618,7 @@ public class ANG_RHCAlertTriggerHandler{
 								(SELECT ID, Name, RecordTypeId, ANG_Account__c, CurrencyIsoCode, ANG_Sidra_Lite__c, ANG_Agent_Sales__c,
 									 ANG_Is_Case_Created__c, ANG_Direction__c, ANG_email_sent__c, ANG_EventId__c, ANG_RHC_Information__c,
 									 ANG_RME_Last_Update__c, ANG_Severity__c, ANG_Threshold_Level__c, ANG_Agent_current_standing__c,
-									 ANG_Open_Cash_Position__c, tolabel(ANG_Triggered_Rules__c)
+									 ANG_Open_Cash_Position__c, tolabel(ANG_Triggered_Rules__c), GDS_Alert_Type__c
 								 FROM Risk_Alerts__r
 								 WHERE ID IN :triggerNew
 									 AND recordTypeId IN :targetRecordTypesSet
