@@ -17,6 +17,10 @@ public without sharing class CW_FacilityCapabilitiesController {
 	public final static Map<String, List<String>> EDITABLE_RECORDTYPES = getMapEditableRecordTypes();
 	public final static List<Id> EDITABLE_RECORDTYPES_ID = getListEditableRecordTypesID();
 
+	/*
+	 * @description		Generate a cvs based on this structure :  StationType_DeveloperName,StationType_Name,Category_Value,Category_Label,Equipment,Equipment_Label
+	 * @return			Csv content
+	 */
 	public static String generateCapabilitiesStructureCsv() {
 		List<String> output = new List<String>();
 		output.add('StationType_DeveloperName,StationType_Name,Category_Value,Category_Label,Equipment,Equipment_Label');
@@ -47,6 +51,10 @@ public without sharing class CW_FacilityCapabilitiesController {
 		return String.join(output, '\n');
 	}
 
+	/*
+	 * @description		Generate a cvs based on this structure :  StationType_DeveloperName,StationType_Name,Category_Value,Category_Label,Equipment,Equipment_Label
+	 * @return			Csv content
+	 */
 	@auraEnabled(cacheable=true)
 	public static Map<String, List<String>> getMapCategoriesByAccountRoleDetailRecordType() {
 		Map<String, List<String>> output = new Map<String, List<String>>();
@@ -57,6 +65,10 @@ public without sharing class CW_FacilityCapabilitiesController {
 		return output;
 	}
 
+	/*
+	 * @description		Retrieves metadata related to Capability filtered by 'Sections_By_Supercategory' or 'Data__c' record type
+	 * @return			List of strings splitted by ',' from ICG_capability_configuration__mdt.Data__c)
+	 */
 	public static List<Map<String, Object>> getMapSectionsBySupercategory() {
 		List<Map<String, Object>> output = new List<Map<String, Object>>();
 		for (ICG_capability_configuration__mdt currentConfig : getCapabilityConfigurationMetadataByType(MD_SECTIONS_BY_SUPERCATEGORY, SEARCH_ONLY_DATA)) {
@@ -66,6 +78,10 @@ public without sharing class CW_FacilityCapabilitiesController {
 		return output;
 	}
 
+	/*
+	 * @description		Retrieves metadata related to Capability filtered by 'Record_Types_By_Section' or 'Data__c' record type
+	 * @return			List of strings splitted by ',' from ICG_capability_configuration__mdt.Data__c)
+	 */
 	public static List<Map<String, Object>> getMapRecordTypesBySection() {
 		List<Map<String, Object>> output = new List<Map<String, Object>>();
 		for (ICG_capability_configuration__mdt currentConfig : getCapabilityConfigurationMetadataByType(MD_RTS_BY_SECTION, SEARCH_ONLY_DATA)) {
@@ -75,6 +91,10 @@ public without sharing class CW_FacilityCapabilitiesController {
 		return output;
 	}
 
+	/*
+	 * @description		Retrieves metadata related to Capability filtered by 'Categories_By_Record_Type' or 'Data__c' record type
+	 * @return			List of strings splitted by ',' from ICG_capability_configuration__mdt.Data__c)
+	 */
 	public static Map<String, List<String>> getMapCategoriesByRecordType() {
 		Map<String, List<String>> output = new Map<String, List<String>>();
 		for (ICG_capability_configuration__mdt currentConfig : getCapabilityConfigurationMetadataByType(MD_CATEGORIES_BY_RT, SEARCH_ONLY_DATA)) {
@@ -84,6 +104,10 @@ public without sharing class CW_FacilityCapabilitiesController {
 		return output;
 	}
 
+	/*
+	 * @description		Retrieves metadata related to Capability filtered by 'Fields_By_Record_Type_And_Category' or 'Data__c' record type
+	 * @return			List of strings splitted by ',' from ICG_capability_configuration__mdt.Data__c)
+	 */
 	public static Map<String, List<String>> getMapFieldsByRecordTypeAndCategory() {
 		Map<String, List<String>> output = new Map<String, List<String>>();
 		for (ICG_capability_configuration__mdt currentConfig : getCapabilityConfigurationMetadataByType(MD_FIELDS_BY_RT_AND_CATEGORY, SEARCH_ONLY_DATA)) {
@@ -93,6 +117,10 @@ public without sharing class CW_FacilityCapabilitiesController {
 		return output;
 	}
 
+	/*
+	 * @description		Retrieves metadata related to Capability filtered by 'Fields_By_Record_Type_And_Category' or 'Extra_Data__c' record type
+	 * @return			List of strings splitted by ',' from ICG_capability_configuration__mdt.Data__c)
+	 */
 	public static Map<String, List<String>> getMapFieldsByExtraDataType() {
 		Map<String, List<String>> output = new Map<String, List<String>>();
 		for (ICG_capability_configuration__mdt currentConfig : getCapabilityConfigurationMetadataByType(MD_FIELDS_BY_RT_AND_CATEGORY, SEARCH_WITH_EXTRADATA)) {
@@ -102,6 +130,10 @@ public without sharing class CW_FacilityCapabilitiesController {
 		return output;
 	}
 
+	/*
+	 * @description		Retrieves metadata related to Capability filtered by 'Grouped_Fields' or 'Data__c' record type
+	 * @return			List of strings splitted by ',' from ICG_capability_configuration__mdt.Data__c)
+	 */
 	public static Map<String, List<String>> getMapFieldsByGroupField() {
 		Map<String, List<String>> output = new Map<String, List<String>>();
 		for (ICG_capability_configuration__mdt currentConfig : getCapabilityConfigurationMetadataByType(MD_GROUPED_FIELDS, SEARCH_ONLY_DATA)) {
@@ -111,6 +143,10 @@ public without sharing class CW_FacilityCapabilitiesController {
 		return output;
 	}
 
+	/*
+	 * @description		Retrieves metadata related to Capability filtered by 'Specific_Processing' or 'Data__c' record type
+	 * @return			List of strings splitted by ',' from ICG_capability_configuration__mdt.Data__c)
+	 */
 	public static Map<String, List<String>> getMapEquipmentValuesBySpecificProcessing() {
 		Map<String, List<String>> output = new Map<String, List<String>>();
 		for (ICG_capability_configuration__mdt currentConfig : getCapabilityConfigurationMetadataByType(MD_SPECIFIC_PROCESSING, SEARCH_ONLY_DATA)) {
@@ -120,6 +156,10 @@ public without sharing class CW_FacilityCapabilitiesController {
 		return output;
 	}
 
+	/*
+	 * @description		Retrieves metadata related to Capability filtered by 'Tooltip_Fields_By_Field' or 'Data__c' record type
+	 * @return			List of strings splitted by ',' from ICG_capability_configuration__mdt.Data__c)
+	 */
 	public static Map<String, List<String>> getMapTooltipFieldsByField() {
 		Map<String, List<String>> output = new Map<String, List<String>>();
 		for (ICG_capability_configuration__mdt currentConfig : getCapabilityConfigurationMetadataByType(MD_TOOLTIP_FIELDS_BY_FIELD, SEARCH_ONLY_DATA)) {
@@ -129,12 +169,23 @@ public without sharing class CW_FacilityCapabilitiesController {
 		return output;
 	}
 
+	/*
+	 * @description		Retrieves metadata related to Capability filtered by type and data
+	 * @param			type: ICG_capability_configuration__mdt.Type__c
+	 * @param			type: condition that compares the value as 'Extra_Data__c' and if it is positive, brings a Extra_Data__c field as value
+	 * @return			List of strings splitted by ',' from ICG_capability_configuration__mdt.Data__c)
+	 */
 	public static List<ICG_capability_configuration__mdt> getCapabilityConfigurationMetadataByType(String type, String fieldsData) {
 		if (fieldsData.equalsIgnoreCase(SEARCH_WITH_EXTRADATA)) {
 			return [SELECT Key__c, Extra_Data__c, Data__c, Order__c FROM ICG_capability_configuration__mdt WHERE Type__c = :type ORDER BY Order__c ASC, Key__c ASC];
 		}
 		return [SELECT Key__c, Data__c, Order__c FROM ICG_capability_configuration__mdt WHERE Type__c = :type ORDER BY Order__c ASC, Key__c ASC];
 	}
+
+	/*
+	 * @description		Retrieves metadata related to Capability filtered by 'Config' record type
+	 * @return			List of strings splitted by ',' from ICG_capability_configuration__mdt.Data__c)
+	 */
 	public static Map<String, List<String>> getMapConfig() {
 		Map<String, List<String>> output = new Map<String, List<String>>();
 		for (ICG_capability_configuration__mdt currentConfig : getCapabilityConfigurationMetadataByType(MD_CONFIG)) {
@@ -144,6 +195,10 @@ public without sharing class CW_FacilityCapabilitiesController {
 		return output;
 	}
 
+	/*
+	 * @description		Retrieves metadata related to Capability filtered by 'Editable_RecordTypes' record type
+	 * @return			List of strings splitted by ',' from ICG_capability_configuration__mdt.Data__c)
+	 */
 	public static Map<String, List<String>> getMapEditableRecordTypes() {
 		Map<String, List<String>> output = new Map<String, List<String>>();
 		for (ICG_capability_configuration__mdt currentConfig : getCapabilityConfigurationMetadataByType(MD_EDITABLE_RECORDTYPES)) {
@@ -153,6 +208,10 @@ public without sharing class CW_FacilityCapabilitiesController {
 		return output;
 	}
 
+	/*
+	 * @description		Retrieves record type ids related to Capability's metadata filtered by 'Editable_RecordTypes' record type
+	 * @return			List of strings splitted by ',' from ICG_capability_configuration__mdt.Data__c)
+	 */
 	public static List<Id> getListEditableRecordTypesID() {
 		List<Id> output = new List<Id>();
 		for(String rt : getMapEditableRecordTypes().get(MD_EDITABLE_RECORDTYPES)){
@@ -162,7 +221,11 @@ public without sharing class CW_FacilityCapabilitiesController {
 		return output;
 	}
 	
-
+	/*
+	 * @description		Retrieves metadata related to Capability filtered by type
+	 * @param			type: ICG_capability_configuration__mdt.Type__c
+	 * @return			List of ICG_capability_configuration__mdt
+	 */
 	public static List<ICG_capability_configuration__mdt> getCapabilityConfigurationMetadataByType(String type) {
 		return [SELECT Key__c, Data__c, Order__c FROM ICG_capability_configuration__mdt WHERE Type__c = :type ORDER BY Order__c ASC, Key__c ASC];
 	}
@@ -233,6 +296,11 @@ public without sharing class CW_FacilityCapabilitiesController {
 		return returnValue;
 	}
 
+	/**
+	 * @description		Generate the CW_Utilities.AsgmtGroupWrapper in memory based on List<ICG_Account_Role_Capability_Assignment__c> received by parameter
+	 * @param			assignments List<ICG_Account_Role_Capability_Assignment__c>
+	 * @return			Wrap the List<ICG_Account_Role_Capability_Assignment__c> to List<CW_Utilities.AsgmtGroupWrapper>
+	 */
 	private static Map<Id, List<CW_Utilities.AsgmtGroupWrapper>> generateAsgmtGroupByCapabilityId(List<ICG_Account_Role_Capability_Assignment__c> assignments) {
 		Map<Id, List<CW_Utilities.AsgmtGroupWrapper>> asgmtGroupByCapabilityId = new Map<Id, List<CW_Utilities.AsgmtGroupWrapper>>();
 
@@ -267,6 +335,19 @@ public without sharing class CW_FacilityCapabilitiesController {
 		return asgmtGroupByCapabilityId;
 	}
 
+	/**
+	 * @description		Generate a object with 3 different properties: 
+	 * listSectionsIncluded: Developer name list of ICG_Account_Role_Capability_Assignment__c, 
+	 * checksMap: CW_FacilityCapabilitiesController.SectionsWrapper
+	 * rawData: Generated map with info about capabilities
+	 * @param			id ICG_Account_Role_Detail__c Id
+	 * @param	        categoriesToRetrieve List<ICG_Account_Role_Capability_Assignment__c>
+	 * @param	 		mapCategoriesByRecordTypeDevName list of record type dev names
+	 * @param	 		mapAccountRoleDetailAssignmentRtsById List<ICG_Account_Role_Capability_Assignment__c>
+	 * @param	 		capabilitiesIdForConflicts Id List of capabilities with conflicts
+	 * @param	 		accountRoleDetailFound ICG_Account_Role_Detail__c
+	 * @return			Map<String, Object> with these properties: listSectionsIncluded, checksMap and rawData
+	 */
 	private static Map<String, Object> generateData(String id, List<String> categoriesToRetrieve, Map<String, List<String>> mapCategoriesByRecordTypeDevName, Map<Id, RecordType> mapAccountRoleDetailAssignmentRtsById, List<String> capabilitiesIdForConflicts, ICG_Account_Role_Detail__c accountRoleDetailFound) {
 		Set<String> listSectionsIncluded = new Set<String>();
 		CW_FacilityCapabilitiesController.SectionsWrapper checksMap;
@@ -352,11 +433,22 @@ public without sharing class CW_FacilityCapabilitiesController {
 		return returnValue;
 	}
 
+	/**
+	 * @description		Generate the full value to return and be used by the front end to render the capabilities tables
+	 * @param			id <The id to filter the account role detail>
+	 * @return			The full value to return and be used by the front end to render the capabilities tables
+	 */
 	@AuraEnabled
 	public static Map<String, Object> getCapabilitiesFromAccountRoleDetailId(String id) {
 		return getCapabilitiesInternal(id, null);
 	}
 
+	/**
+	 * @description		Generate the full value to return and be used by the front end to render the capabilities tables
+	 * @param			id <The id to filter the account role detail>
+	 * @param			capabilitiesIdForConflicts Id List of capabilities with conflicts
+	 * @return			The full value to return and be used by the front end to render the capabilities tables
+	 */
 	@AuraEnabled
 	public static Map<String, Object> getCapabilitiesInternal(String id, List<String> capabilitiesIdForConflicts) {
 		Map<String, Object> returnValue = new Map<String, Object>{ CW_CapabilitiesUtilities.SUPERCATEGORIES => new List<Map<String, Object>>() };
@@ -401,6 +493,13 @@ public without sharing class CW_FacilityCapabilitiesController {
 		return returnValue;
 	}
 
+	/**
+	 * @description	Set the visibility of the files
+	 * @param			id Account_Role_Detail_Capability__c Id
+	 * @param			field field of Account_Role_Detail_Capability__c
+	 * @param			content value of the field of Account_Role_Detail_Capability__c
+	 * @return			Object that the value referes to Account_Role_Detail_Capability__c
+	 */
 	@AuraEnabled
 	public static Object setVisibilityPhotos(String id,String field, String content) {		
 		SObject sObj = new Account_Role_Detail_Capability__c();
@@ -416,6 +515,11 @@ public without sharing class CW_FacilityCapabilitiesController {
 		}
 	}
 
+	/**
+	 * @description	    Compare Capabilities
+	 * @param			accountRoleDetailRT Record Type related to Account_Role_Detail_Capability__c
+	 * @return			Map superCategories: ComparisonSuperCategoryWrapper
+	 */
 	@AuraEnabled(cacheable=true)
 	public static Object getComparisonSchema(String accountRoleDetailRT) {
 		Map<String, Object> returnValue = new Map<String, Object>();
@@ -590,6 +694,13 @@ public without sharing class CW_FacilityCapabilitiesController {
 		public String label { get; set; }
 	}
 
+	/**
+	 * @description	    Map Item
+	 * @param			data list of a map item
+	 * @param			key field name
+	 * @param			value value of the field name
+	 * @return			Map<String, Object> with the new values
+	 */
 	public static Object getItemInMap(List<Map<String, Object>> data, String key, Object value) {
 		try {
 			for (Map<String, Object> currentItem : (List<Map<String, Object>>) data) {
@@ -603,6 +714,13 @@ public without sharing class CW_FacilityCapabilitiesController {
 		return null;
 	}
 
+	/**
+	 * @description	    Convert Account_Role_Detail_Capability__c to Map<String, Object>
+	 * @param			itemToConvert Account_Role_Detail_Capability__c
+	 * @param			fieldsToGet field to retrieve
+	 * @param			fieldsMap mapped fields
+	 * @return			Converted object
+	 */
 	public static Map<String, Object> convertCapabilityAssignmentToObject(Account_Role_Detail_Capability__c itemToConvert, List<String> fieldsToGet, Map<String, Schema.SObjectField> fieldsMap) {
 		Map<String, Object> convertedItem = new Map<String, Object>();
 		if (fieldsToGet != null) {
@@ -646,6 +764,11 @@ public without sharing class CW_FacilityCapabilitiesController {
 		return values;
 	}
 
+	/**
+	 * @description		Generate picklist value from Schema.DescribeFieldResult
+	 * @param			fieldResult - Schema.DescribeFieldResult 
+	 * @return			Map<String, Schema.PicklistEntry>
+	 */
 	public static Map<String, Schema.PicklistEntry> generatePicklistMap(Schema.DescribeFieldResult fieldResult) {
 		Map<String, Schema.PicklistEntry> mapObjs = new Map<String, Schema.PicklistEntry>();
 		List<Schema.PicklistEntry> ple = fieldResult.getPicklistValues();
@@ -656,16 +779,33 @@ public without sharing class CW_FacilityCapabilitiesController {
 		return mapObjs;
 	}
 
+	/**
+	 * @description		Generate picklist value from Schema.DescribeFieldResult based on Account_Role_Detail_Capability__c.Equipment__c
+	 * @param			fieldResult - Schema.DescribeFieldResult 
+	 * @return			Map<String, Schema.PicklistEntry>
+	 */
 	public static Map<String, Schema.PicklistEntry> getPicklistEntryMapCapEquipment() {
 		Schema.DescribeFieldResult fieldResult = Account_Role_Detail_Capability__c.Equipment__c.getDescribe();
 		return generatePicklistMap(fieldResult);
 	}
 
+	/**
+	 * @description		Generate picklist value from Schema.DescribeFieldResult based on Account_Role_Detail_Capability__c.Category__c
+	 * @param			fieldResult - Schema.DescribeFieldResult 
+	 * @return			Map<String, Schema.PicklistEntry>
+	 */
 	public static Map<String, Schema.PicklistEntry> getPicklistEntryMapCapCategory() {
 		Schema.DescribeFieldResult fieldResult = Account_Role_Detail_Capability__c.Category__c.getDescribe();
 		return generatePicklistMap(fieldResult);
 	}
 
+	/**
+	 * @description		Convert object to List<List<Map<String, Object>>>
+	 * @param			item - object 
+	 * @param			fieldsName - list of fields that will be cover
+	 * @param			fieldGroups - list of map fields
+	 * @return			List<List<Map<String, Object>>> with related fieds: 'colspan', 'name', 'label', 'isformula', 'type', 'values', 'isfileupload'
+	 */
 	public static List<List<Map<String, Object>>> getColumnsByRtAndGroup(SObject item, List<String> fieldsName, Map<String, List<String>> fieldGroups) {
 		List<List<Map<String, Object>>> headers = new List<List<Map<String, Object>>>();
 
@@ -740,6 +880,13 @@ public without sharing class CW_FacilityCapabilitiesController {
 		return headers;
 	}
 
+	/**
+	 * @description		Auto map and fill an object
+	 * @param			objectName - object name
+	 * @param			fieldsToRetrieve - list of fields to retrive
+	 * @param			fieldsMap - list of map fields
+	 * @return			List of strings with the fields of the object received by parameters
+	 */
 	public static List<String> validateFieldsOfObject(String objectName, List<String> fieldsToRetrieve, Map<String, Schema.SObjectField> fieldsMap) {
 		List<String> validatedFields = new List<String>();
 		for (String currentField : fieldsToRetrieve) {
@@ -757,6 +904,12 @@ public without sharing class CW_FacilityCapabilitiesController {
 		return new List<String>(new Set<String>(validatedFields));
 	}
 
+	/**
+	 * @description		Update the summary json in the ICG_Account_Role_Detail__c
+	 * @param			icgAccountRoleDetailId - AICG_Account_Role_Detail__c Id
+	 * @param			jsonData -Summary_Detail_Check_JSON__c
+	 * @return			ICG_Account_Role_Detail__c
+	 */
 	@AuraEnabled
 	public static Object setSummaryDetailCheckJSON(String icgAccountRoleDetailId, String jsonData) {
 		ICG_Account_Role_Detail__c icgAccountRoleDetail = new ICG_Account_Role_Detail__c(Id = icgAccountRoleDetailId);
@@ -943,19 +1096,11 @@ public without sharing class CW_FacilityCapabilitiesController {
 
 				//Read all file Id in photos__c field input
 				for(CW_Utilities.CapabilityFieldsWrapper capfield : c.fields){
-					if (capfield.field.equals('photos__c')){
+					if (capfield.field.equals('photos__c') || capfield.field.equals('more_info_document__c')){
 						if(String.isNotEmpty(capfield.value)){
 							List<CapabilityPhoto> photoList = (List<CapabilityPhoto>) JSON.deserialize(capfield.value, List<CapabilityPhoto>.class);
 							for(CapabilityPhoto photo : photoList){
 								currentFilesId.add(photo.id);
-							}
-						}
-					}
-					if (capfield.field.equals('more_info_document__c')){
-						if(String.isNotEmpty(capfield.value)){
-							List<CapabilityPhoto> docList = (List<CapabilityPhoto>) JSON.deserialize(capfield.value, List<CapabilityPhoto>.class);
-							for(CapabilityPhoto doc : docList){
-								currentFilesId.add(doc.id);
 							}
 						}
 					}

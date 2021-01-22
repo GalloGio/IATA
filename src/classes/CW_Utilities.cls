@@ -14,8 +14,15 @@ public without sharing class CW_Utilities {
 	final static string HISTORY_STATUS_REJECTED = 'Rejected';
 	final static string HISTORY_STATUS_PENDINGIATA = 'Pending for IATA Approval';
 	final static string HISTORY_STATUS_PENDING = 'Pending for Approval';
+	
+	final static List<String> ALLOWED_STATUS = new List<String> { HISTORY_STATUS_APPROVED, HISTORY_STATUS_REJECTED, HISTORY_STATUS_PENDING, HISTORY_STATUS_PENDINGIATA };
+	final static Id RT_ID_TOUSE = RecordTypeSingleton.getInstance().getRecordTypeId('ICG_History_Track__c', 'Changes_by_Type');
 
-	//Retrieve metadata related to Portal
+	/*
+	 * @description		Retrieves metadata related to Portal
+	 * @param			String mtdName: Metadata record name Ex. Footer_Title
+	 * @return			ICG_Portal_URL__mdt Metadata record
+	 */
 	@AuraEnabled (cacheable=true)
 	public static ICG_Portal_URL__mdt getMetadataInfo(String mtdName) {
 		// Fetch the metadata required
@@ -24,7 +31,11 @@ public without sharing class CW_Utilities {
 		return metadata;
 	}
 
-	//Retrieve page URL url community + page name
+	/*
+	 * @description		Retrieves page URL url community + page name
+	 * @param			String page: Portal page metadata name Ex. URL_ICG_ResultPage  
+	 * @return			String os community URL + page name
+	 */
 	@AuraEnabled (cacheable=true)
 	public static String getURLPage(String page) {
 		String result;
@@ -35,12 +46,20 @@ public without sharing class CW_Utilities {
 		return result;
 	}
 
-	//Retrieve Community URL
+	/*
+	 * @description		Retrieves Community URL
+	 * @param			
+	 * @return			String ICG Url base stored on ISSP_CS__c custom setting.
+	 */
 	public static String getCommunityUrlBase() {
 		return ISSP_CS__c.getValues('ICG_URL_Base').Value__c;
 	}
 
-	//Retrieve eCommerce Url
+	/*
+	 * @description		Retrieves eCommerce Url
+	 * @param			
+	 * @return			String ecommerce url base stored on ISSP_CS__c custom setting.
+	 */
 	@AuraEnabled (cacheable = true)
 	public static String getEcommerceUrlBase() {
 		Boolean isProductionEnvironment = CW_PrivateAreaController.isProductionEnvironment();
@@ -60,18 +79,31 @@ public without sharing class CW_Utilities {
 		return url;
 	}
 
-	//Retrieve Environment Variables
+	/*
+	 * @description		Retrieves Environment Variables
+	 * @param			
+	 * @return			ICG_Environment_Variables__c complete instance.
+	 */
 	@AuraEnabled (cacheable = true)
 	public static ICG_Environment_Variables__c getEnvironmentVariables() {
 		return ICG_Environment_Variables__c.getInstance();
 	}
 
-	//Retrieve Setting Values
+	/*
+	 * @description		Retrieves Setting Values
+	 * @param			
+	 * @return			IEC_Settings__c complete instance.
+	 */
 	@AuraEnabled (cacheable = true)
 	public static IEC_Settings__c getIECSettingVariables() {
 		return IEC_Settings__c.getInstance();
 	}
 
+	/*
+	 * @description		Retrieves Setting Values
+	 * @param			String facilityId: ICG_Account_Role_Detail__c id
+	 * @return			String userRole [Not assigned, Guest, Pending Facility Manager, Facility Manager, Company Admin, Pending Company Admin]
+	 */
 	@AuraEnabled
 	public static String getUserRole(String facilityId) {	
 		String userRole = 'Not assigned';
@@ -130,24 +162,31 @@ public without sharing class CW_Utilities {
 	public static Boolean getPermissionToEdit() {
 		Boolean result=false;
 
-		AggregateResult[] exist = [SELECT count(Id) FROM PermissionSetAssignment WHERE AssigneeId =: UserInfo.getUserId() AND (PermissionSet.Name = 'One_Source_Certification_Manager')];
-		result = (!exist.isEmpty() && (Integer.valueOf(exist[0].get('expr0')) > 0));
+		List<PermissionSetAssignment> exist = [SELECT Id FROM PermissionSetAssignment WHERE AssigneeId =: UserInfo.getUserId() AND (PermissionSet.Name = 'One_Source_Certification_Manager')];
+		result = !exist.isEmpty();
 
 		return (result || hasSpecialPermissionsToEdit());
 	}
 
+	/*
+	 * @description		Checks if the current user is administrator or has the One_Source_Backend_Admin permission set assigned. 
+	 * @param			
+	 * @return			Boolean true if current user is system admin or One_Source_Backend_Admin
+	 */
 	public static Boolean hasSpecialPermissionsToEdit(){
 		Boolean result=false;
+
+		List<PermissionSetAssignment> exist = [SELECT Id, PermissionSetId, PermissionSetGroupId, AssigneeId, PermissionSet.name, Assignee.Profile.name FROM PermissionSetAssignment WHERE AssigneeId =: UserInfo.getUserId() AND ((PermissionSet.Name = 'One_Source_Backend_Admin') or (Assignee.Profile.name = 'System Administrator'))];
 		
-		String profileName = [SELECT Id, Name FROM Profile WHERE Id = :UserInfo.getProfileId()].Name;
-
-		AggregateResult[] exist = [SELECT count(Id) FROM PermissionSetAssignment WHERE AssigneeId =: UserInfo.getUserId() AND (PermissionSet.Name = 'One_Source_Backend_Admin')];
-		result = (!exist.isEmpty() && (Integer.valueOf(exist[0].get('expr0')) > 0));
-
-		return (result || profileName == CW_CapabilitiesUtilities.SYSTEM_ADMINISTRATOR);
+		result = !exist.isEmpty();
+		return result;
 	}
 
-
+	/*
+	 * @description		If the user is company admin of station and status os "Pending for Approval", the status mut change and the approver/rejector will be the user
+	 * @param			String stationId: ICG_Account_Role_Detail__c id
+	 * @return			Boolean true if the user is company admin of station and status os "Pending for Approval", the status mut change and the approver/rejector will be the user 
+	 */
 	@AuraEnabled
 	public static Boolean approveStationAutomaticProcess(String stationId) {
 		Boolean approved = false;
@@ -229,13 +268,11 @@ public without sharing class CW_Utilities {
 	 * @param			Map<Id, ICG_Account_Role_Detail__c>
 	 */
 	public static void generateAccountRoleDetailHistory(List<ICG_Account_Role_Detail__c> newItems, Map<Id, ICG_Account_Role_Detail__c> oldMap){
-		List<String> allowedStatus = new List<String> { HISTORY_STATUS_APPROVED, HISTORY_STATUS_REJECTED, HISTORY_STATUS_PENDING, HISTORY_STATUS_PENDINGIATA };
-
 		List<ICG_Account_Role_Detail__c> newItemsFiltered = new List<ICG_Account_Role_Detail__c>();
 		Map<Id, ICG_Account_Role_Detail__c> oldMapFiltered = new Map<Id, ICG_Account_Role_Detail__c>();
 		Map<Id, String> typesById = new Map<Id, String>();
 		for (ICG_Account_Role_Detail__c newItem : newItems) {
-			if (allowedStatus.contains(newItem.Status__c) && (oldMap == null || newItem.Status__c != oldMap.get(newItem.Id).Status__c)) {
+			if (ALLOWED_STATUS.contains(newItem.Status__c) && (oldMap == null || newItem.Status__c != oldMap.get(newItem.Id).Status__c)) {
 				newItemsFiltered.add(newItem);
 				if (oldMap != null) {
 					oldMapFiltered.put(newItem.Id, oldMap.get(newItem.Id));
@@ -245,8 +282,7 @@ public without sharing class CW_Utilities {
 		}
 
 		if (!newItemsFiltered.isEmpty()) {
-			Id rtIdToUse = RecordTypeSingleton.getInstance().getRecordTypeId('ICG_History_Track__c', 'Changes_by_Type');
-			generateHistoryTrack(rtIdToUse, newItemsFiltered, oldMapFiltered, typesById, new List<String>{'Status__c'});
+			generateHistoryTrack(RT_ID_TOUSE, newItemsFiltered, oldMapFiltered, typesById, new List<String>{'Status__c'});
 		}
 	}
 	
@@ -257,13 +293,12 @@ public without sharing class CW_Utilities {
 	 */
 	public static void generateContactRoleDetailHistory(List<ICG_Contact_Role_Detail__c> newItems, Map<Id, ICG_Contact_Role_Detail__c> oldMap) {
 		List<String> allowedRoles = new List<String> { CW_Utilities.FACILITY_MANAGER, CW_Utilities.COMPANY_ADMIN };
-		List<String> allowedStatus = new List<String> { HISTORY_STATUS_APPROVED, HISTORY_STATUS_REJECTED, HISTORY_STATUS_PENDING, HISTORY_STATUS_PENDINGIATA };
 
 		List<ICG_Contact_Role_Detail__c> newItemsFiltered = new List<ICG_Contact_Role_Detail__c>();
 		Map<Id, ICG_Contact_Role_Detail__c> oldMapFiltered = new Map<Id, ICG_Contact_Role_Detail__c>();
 		Map<Id, String> typesById = new Map<Id, String>();
 		for (ICG_Contact_Role_Detail__c newItem : newItems) {
-			if (allowedRoles.indexOf(newItem.ICG_Role__c) > -1 && allowedStatus.indexOf(newItem.Status__c) > -1 && (oldMap == null || newItem.Status__c != oldMap.get(newItem.Id).Status__c )) {
+			if (allowedRoles.indexOf(newItem.ICG_Role__c) > -1 && ALLOWED_STATUS.indexOf(newItem.Status__c) > -1 && (oldMap == null || newItem.Status__c != oldMap.get(newItem.Id).Status__c )) {
 				newItemsFiltered.add(newItem);
 				if (oldMap != null) {
 					oldMapFiltered.put(newItem.Id, oldMap.get(newItem.Id));
@@ -272,9 +307,8 @@ public without sharing class CW_Utilities {
 			}
 		}
 
-		if (newItemsFiltered.size() > 0) {
-			Id rtIdToUse = RecordTypeSingleton.getInstance().getRecordTypeId('ICG_History_Track__c', 'Changes_by_Type');
-			generateHistoryTrack(rtIdToUse, newItemsFiltered, oldMapFiltered, typesById, new List<String>{'Status__c'});
+		if (!newItemsFiltered.isEmpty()) {
+			generateHistoryTrack(RT_ID_TOUSE, newItemsFiltered, oldMapFiltered, typesById, new List<String>{'Status__c'});
 		}
 	}
 
@@ -331,10 +365,11 @@ public without sharing class CW_Utilities {
 			}
 		}
 
-		if (itemsToInsert.size() > 0) {
+		if (!itemsToInsert.isEmpty()) {
 			insert itemsToInsert;
 		}
 	}
+	
 	public class HandledContactRole {
 		public String message { get; set; }
 		public ICG_Contact_Role_Detail__c contactRole { get; set; }
@@ -469,13 +504,21 @@ public without sharing class CW_Utilities {
 		return JSON.serialize(companyTypes);
 	}
 
+	/*
+	 * @description		Retrieves IATA_ISO_Country__c
+	 * @return			Json format of List<IATA_ISO_Country__c>
+	 */
 	@AuraEnabled (cacheable = true)
 	public static String getIATACountries() {
 		List<IATA_ISO_Country__c> countries = [select id, name, ISO_Code__c, ISO_Code_Numeric__c from IATA_ISO_Country__c];
 		return JSON.serialize(countries);
 	}
 
-	// Pass the resource name
+	/*
+	 * @description		Generate the resource url
+	 * @param			resourceName Name of a StaticResource
+	 * @return			resource name concatenated with datetime and namespace
+	 */
 	public static String getResourceURL(String resourceName) {
 
 		// Fetching the resource
@@ -515,11 +558,18 @@ public without sharing class CW_Utilities {
 		public Boolean userAvailable {get;set;}
 	}
 
-	//Not cacheable at they can be called more than once in the same context
-	//and perform the action
+	/*
+	 * @description		Generate the resource url
+	 * @param			companyId Id of the company
+	 * @param			facilityIds Ids of ICG_Account_Role_Detail__c
+	 * @param			contactId If of Contact__c
+	 * @param			skipApprovalProcess Flag that sets the Status as 'Approved' when is true or 'Pending for approval' when is false 
+	 * @return			JSON format of CW_Utilities.ResponseBody
+	 */
 	@AuraEnabled
 	public static String becomeFacilityAdmin(String companyId, String facilityIds, String contactId, Boolean skipApprovalProcess) {
-
+		//Not cacheable at they can be called more than once in the same context
+		//and perform the action
 		ResponseBody res = new ResponseBody();
 		if(facilityIds != null && contactId != null) {
 			try {
@@ -611,11 +661,24 @@ public without sharing class CW_Utilities {
 		return JSON.serialize(res);
 	}
 
+	/*
+	 * @description		Retrieve approved contacts that belong to one station
+	 * @param			stationId ICG_Account_Role_Detail__c.Id
+	 * @return			List of approved contacts related to the stationId passed by parameter
+	 */
 	@AuraEnabled
 	public static List<ICG_Contact_Role_Detail__c> getStationManagersContactRoleDetails(String stationId) {
 		return getFacilityManagerContactRolesFromStationListByStatus(new List<String>{stationId}, new List<String>{'Approved'});
 	}
 
+	/*
+	 * @description		Create in memory a contact related to one ICG_Account_Role_Detail__c
+	 * @param			companyId Id of the company
+	 * @param			facilityIds Ids of ICG_Account_Role_Detail__c
+	 * @param			contactId If of Contact__c
+	 * @param			status of the contact
+	 * @return			List of ICG_Contact_Role_Detail__c 
+	 */
 	public static List<ICG_Contact_Role_Detail__c> getContactRoleDetailsToInsert(String companyId, String facilityIds, String contactId, String status) {
 		List<ICG_Contact_Role_Detail__c> crdsToInsert = new List<ICG_Contact_Role_Detail__c>();
 		List<String> facilityIdsToLoop = facilityIds.replaceAll('[^a-zA-Z0-9,\\s+]', '').split(',');
@@ -674,6 +737,13 @@ public without sharing class CW_Utilities {
 	}
 
 	@AuraEnabled
+	/*
+	 * @description		handles user request to be company admin of specific station
+	 * @param			stationId <The id of the Account>
+	 * @param			companyId <The id of the Account>
+	 * @param			contactId <The id of the Contact>
+	 * @return			Message to the user's request 
+	 */
 	public static String becomeCompanyAdminFromStation(String stationId, String companyId, String contactId) {
 		return becomeCompanyAdmin(getOpsHierarchyNameFromStationId(stationId), companyId, contactId);
 	}
@@ -786,11 +856,20 @@ public without sharing class CW_Utilities {
 		return res;
 	}
 
+	/*
+	 * @description		Retrieve Users that are group member of ICG_Stakeholders
+	 * @return			List of User
+	 */
 	public static List<User> getIATAStakeHoldersUsersList() {
 		return [Select id, name, email from User where Id IN (Select UserOrGroupId from GroupMember where Group.DeveloperName = 'ICG_Stakeholders')];
 	}
 
-
+	/*
+	 * @description		Retrieve list of contacts by group name
+	 * @param			groupName <Account contact role Id>
+	 * @param			statusList <Account role Id>
+	 * @return			Message result
+	 */
 	public static List<Contact> getCompanyAdminContactsFromGroupNameByStatus (String groupName, List<String> statusList) {
 		
 		Set<Id> contactsIds = new Set<Id>();
@@ -803,16 +882,32 @@ public without sharing class CW_Utilities {
 		return adminContacts;
 	}
 
+	 /*
+	 * @description		Retrieve list of ICG_Contact_Role_Detail__c by group name
+	 * @param			groupName <Station group name>
+	 * @param			statusList <ICG_Contact_Role_Detail__c.Status__c>
+	 * @return			Ids of ICG_Contact_Role_Detail__c
+	 */
 	public static List<ICG_Contact_Role_Detail__c> getCompanyAdminContactRolesFromGroupNameByStatus(String groupName, List<String> statusList) {
 		Set<Id> accountRolesToSearch = getAccountsRolesToSearch(groupName);
 		return [Select Id, CreatedDate, ContactId__c, Account_Contact_Role__r.Contact__r.FirstName, Account_Contact_Role__r.Contact__r.LastName, Account_Contact_Role__r.Contact__r.Email, Account_Contact_Role__r.Contact__r.Phone, Account_Contact_Role__r.Contact__r.Title from ICG_Contact_Role_Detail__c where ICG_Role__c =: COMPANY_ADMIN and Status__c IN:statusList and Account_Role__c IN:accountRolesToSearch];
 	}
 
+	/*
+	 * @description		Retrieve list of ICG_Contact_Role_Detail__c by group name
+	 * @param			groupName <Station group name>
+	 * @return			Ids of ICG_Contact_Role_Detail__c
+	 */
 	public static List<ICG_Contact_Role_Detail__c> getRelatedContactsFromGroupName(String groupName) {
 		Set<Id> accountRolesToSearch = getAccountsRolesToSearch(groupName);
 		return [Select Id, CreatedDate, ContactId__c, Account_Contact_Role__r.Contact__r.FirstName, Account_Contact_Role__r.Contact__r.LastName, Account_Contact_Role__r.Contact__r.Email, Account_Contact_Role__r.Account__c, Account_Contact_Role__r.Contact__r.Phone, Account_Contact_Role__r.Contact__r.Title from ICG_Contact_Role_Detail__c where Account_Role__c IN:accountRolesToSearch];
 	}
 
+	/*
+	 * @description		Retrieve Accounts related to a Station
+	 * @param			stationId ICG_Account_Role_Detail__c.Id
+	 * @return			Ids of Accounts
+	 */
 	public static Set<Id> getRelatedAccountsByStation(String stationId) {
 		List<ICG_Contact_Role_Detail__c> relatedContacts = getRelatedContactsFromGroupName(getOpsHierarchyNameFromStationId(stationId));
 		Set<Id> accountsIds = new Set<Id>(); 
@@ -827,7 +922,7 @@ public without sharing class CW_Utilities {
 	/*
 	 * @description		Retrieve list account roles to search by group name
 	 * @param			groupName <Account Role Relationship name>
-	 * @return			Message result
+	 * @return			Ids of Accounts
 	*/
 	private static Set<Id> getAccountsRolesToSearch(String groupName) {
 		Set<Id> accountRolesToSearch = new Set<Id>();
@@ -853,22 +948,43 @@ public without sharing class CW_Utilities {
 		return accountRolesToSearch;
 	}
 
+	 /*
+	 * @description		Retrieve list of approved contacts by group name
+	 * @param			groupName <Account contact role Id>
+	 * @return			Ids of Contacts
+	 */
 	@AuraEnabled
 	public static List<Contact> getCompanyAdminContactsFromGroupName (String groupName) {
 		return getCompanyAdminContactsFromGroupNameByStatus(groupName, new List<String>{'Approved'});
 	}
 
+	/*
+	 * @description		Retrieve list of pendings contacts by group name
+	 * @param			groupName <Account contact role Id>
+	 * @return			Ids of ICG_Contact_Role_Detail__c
+	 */
 	@AuraEnabled (cacheable = false)
 	public static List<ICG_Contact_Role_Detail__c> getPendingCompanyAdminContactRolesFromGroupName (String groupName) {
 		return getCompanyAdminContactRolesFromGroupNameByStatus(groupName, new List<String>{'Pending for Approval', 'Pending for Removal'});
 	}
+	
+	/*
+	 * @description		Retrieve list of ICG_Contact_Role_Detail__c filtering by stations and status
+	 * @param			stationIds <List of station Ids>
+	 * @param			statusList <List of status Ids>
+	 * @return			Ids of ICG_Contact_Role_Detail__c
+	 */
 	@AuraEnabled
 	public static List<ICG_Contact_Role_Detail__c> getFacilityManagerContactRolesFromStationListByStatus(List<String> stationIds, List<String> statusList) {
 		return [Select Id, CreatedDate, Status__c, Account_Contact_Role__r.Account__c, ContactId__c,Account_Contact_Role__c,Account_Contact_Role__r.Contact__r.OtherState, Account_Contact_Role__r.Contact__r.Name,
 		Account_Contact_Role__r.Contact__r.OtherCountry,Account_Contact_Role__r.Contact__r.FirstName, ICG_Account_Role_Detail__c,Account_Contact_Role__r.Contact__r.LastName, Account_Contact_Role__r.Contact__c, Account_Contact_Role__r.Contact__r.Email, Account_Contact_Role__r.Contact__r.Membership_Function__c, Account_Contact_Role__r.Contact__r.Phone, Account_Contact_Role__r.Contact__r.Title from ICG_Contact_Role_Detail__c where ICG_Role__c =: FACILITY_MANAGER and Status__c IN:statusList and ICG_Account_Role_Detail__c IN:stationIds];
 	}
 
-
+	/*
+	 * @description		Retrieve list of ICG_Contact_Role_Detail__c filtering by FICG_Role__c=ACILITY_MANAGER and user created
+	 * @param			userId <User Id who make the requests>
+	 * @return			Ids of ICG_Contact_Role_Detail__c
+	 */
 	@AuraEnabled
 	public static List<ICG_Contact_Role_Detail__c> getFacilityManagerContactRolesFromStationListByUser(String userId) {
 		return [Select Id, Status__c,Name, LastModifiedById, isPendingApproval__c, CreatedDate, LastModifiedDate, ContactId__c, 
@@ -923,6 +1039,11 @@ public without sharing class CW_Utilities {
 		}
 	}
 
+	/*
+	 * @description		Retrieve the list of History of request done by a user
+	 * @param			userId <User Id>
+	 * @return			List of HistoryDTO
+	 */
 	@AuraEnabled
 	public static List<HistoryDTO> getFacilityHistoryByUser(String userId) {
 		User user = [SELECT Id, ContactId FROM User WHERE id = :userId LIMIT 1];
@@ -988,7 +1109,7 @@ public without sharing class CW_Utilities {
 			if (item.Type == STATION_CREATION_REQUEST){
 
 				String station = (item.ICG_Account_Role_DetailR != null) ? item.ICG_Account_Role_DetailR.Name : '';
-                        
+						
 				if (station != '' && hierarchyByStation.containsKey(station)){
 					String company = hierarchyByStation.get(station);
 					item.ICG_Account_Role_DetailR.Name += ';' + company;	
@@ -997,7 +1118,12 @@ public without sharing class CW_Utilities {
 		}
 		return listMyRequest;
 	}
-
+	
+	/*
+	 * @description		Retrieve the list of facility managers approved or removed by one specific user
+	 * @param			userId <User Id who make the requests>
+	 * @return			List of ICG_Contact_Role_Detail__c
+	 */
 	@AuraEnabled
 	public static List<ICG_Contact_Role_Detail__c> getFacilityManagerApprovedOrRemovedByUser(String userId) {
 		return [Select Id, ICG_Role__c, Status__c, LastModifiedDate,
@@ -1011,11 +1137,15 @@ public without sharing class CW_Utilities {
 		where (ICG_Role__c =: FACILITY_MANAGER OR ICG_Role__c =: COMPANY_ADMIN) AND (Status__c= 'Approved' OR Status__c= 'Removed') AND createdById = :userId];
 	}
 
+	/*
+	 * @description		Retrieve the admins of a station or company
+	 * @param			accountId <Account Ids>
+	 * @return			List of Contact
+	 */
 	@AuraEnabled
 	public static List<Contact> getCompanyAdminContactsFromAccountId(String accountId) {
 		return accountId != null ? getCompanyAdminContactsFromGroupName(getOpsHierarchyNameFromAccountId(accountId)) : new List<Contact>();
 	}
-
 
 	/*
 	 * @description		Get the global company name
@@ -1097,6 +1227,11 @@ public without sharing class CW_Utilities {
 		return opsHierarchy;
 	}
 
+	/*
+	 * @description		Get the global company group name
+	 * @param			accountId <Account Id>
+	 * @return			Company group
+	*/
 	@AuraEnabled
 	public static String getOpsHierarchyGroupNameFromAccountId (String accountId) {
 		String opsHierarchyName;
@@ -1114,6 +1249,11 @@ public without sharing class CW_Utilities {
 		return opsHierarchyName;
 	}
 
+	/*
+	 * @description		Get the global company group name by userid
+	 * @param			userId <User Id>
+	 * @return			Company group
+	*/
 	public static String getOpsHierarchyNameFromUserId (String userId) {
 		String opsHierarchy;
 		List<User> u = [Select id, AccountId from User where id=:userId];
@@ -1123,6 +1263,11 @@ public without sharing class CW_Utilities {
 		return opsHierarchy;
 	}
 
+	/*
+	 * @description		Get the global company group by userid
+	 * @param			userId <User Id>
+	 * @return			Company group
+	*/
 	public static String getOpsHierarchyGroupFromUserId (String userId) {
 		String opsHierarchy;
 		List<User> u = [Select id, AccountId from User where id=:userId];
@@ -1132,6 +1277,11 @@ public without sharing class CW_Utilities {
 		return opsHierarchy;
 	}
 
+	/*
+	 * @description		Get the global company name by station Id
+	 * @param			stationId <Station Id>
+	 * @return			Company Name
+	*/
 	@AuraEnabled
 	public static String getOpsHierarchyNameFromStationId (String stationId) {
 		String opsHierarchy;
@@ -1160,6 +1310,14 @@ public without sharing class CW_Utilities {
 		return JSON.serialize(picklistValues);
 	}
 
+	/*
+	 * @description		    Retrieve the pickList structure
+	 * @objectName			object Api name
+	 * @controllingField	List of fields
+	 * @dependentField		List of dependent fields
+	 * @saveKeyAsLowerCase	if this flag is true, it will transform the value in lowercase
+	 * @return			    Picklist label/value structure
+	*/
 	public static Map<String, List<Map<String, Object>>> getPicklistFieldDependencies(String objectName, String controllingField, String dependentField, Boolean saveKeyAsLowerCase) {
 		Map<String, List<Map<String, Object>>> controllingInfo = new Map<String, List<Map<String, Object>>>();		
 		Schema.SObjectType objType = Schema.getGlobalDescribe().get(objectName);		
@@ -1383,6 +1541,7 @@ public without sharing class CW_Utilities {
 			CW_NotificationsController.setNotificationCustom(adminSubject, adminSubject, 'Requested', companyAdminNotificationIds, crd.ICG_Account_Role_Detail__r, CW_NotificationsController.RT_NOTIFICATION_PRIVATE_AREA);
 		}
 	}
+	
 	/*
 	 * @description		Update status station 
 	 * @param			contactId <Ontact Id>
@@ -1400,6 +1559,12 @@ public without sharing class CW_Utilities {
 		}
 	}
 
+	/*
+	 * @description		Retrieve the pick list structure in JSON 
+	 * @param			objectApi <Object name>
+	 * @param			fieldApi <Field Api name>
+	 * @param			Picklist structure
+	*/
 	@AuraEnabled
 	public static String getPicklistValues(string objectApi ,string fieldApi) {
 		
