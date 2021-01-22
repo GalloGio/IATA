@@ -18,7 +18,7 @@ global class ANG_RME_Alert_Service {
 	@TestVisible
 	private static final String GDS_CASHLESSFOPALERT_EVENT_TYPE = 'CashlessGDSAlert';
 	@TestVisible
-	private static final String GDS_TA_ALERT_EVENT_TYPE = 'TAGdsAlert';
+	private static final String GDS_TA_ALERT_EVENT_TYPE = 'TAGDSAlert';
 
 	public class RHCMessage{
 		//Basic info
@@ -285,7 +285,7 @@ global class ANG_RME_Alert_Service {
 							}
 						}
 					}
-					when 'TAGdsAlert'{
+					when 'TAGDSAlert'{
 						if(string.isBlank(req.agentStatus)){
 							setResponse('agentStatus cannot be blank', 400);
 						}else{
