@@ -160,7 +160,7 @@
     </alerts>
     <alerts>
         <fullName>Approved_Ad_hoc_calendar_change</fullName>
-        <ccEmails>iccso@iata.org,efs@iata.org,efclient@iata.org,madcscmgr@iata.org,B&amp;R_GDC_SIN@iata.org</ccEmails>
+        <ccEmails>iccso@iata.org,efs@iata.org,efclient@iata.org,madcscmgr@iata.org,europs@iata.org</ccEmails>
         <description>Approved - Ad-hoc calendar change</description>
         <protected>false</protected>
         <recipients>
@@ -171,10 +171,6 @@
         </recipients>
         <recipients>
             <recipient>concessios@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>mohananb@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -18447,10 +18443,6 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
     </rules>
     <rules>
         <fullName>SIS Help Desk - New Case Except Web</fullName>
-        <actions>
-            <name>SIS_Assign_Case_Record_Type</name>
-            <type>FieldUpdate</type>
-        </actions>
         <actions>
             <name>SIS_Assign_Case_to_SIS_Help_Desk_queue</name>
             <type>FieldUpdate</type>

@@ -236,7 +236,7 @@ public with sharing class PortalServicesCtrl {
 		String conditionStr = PortalServicesCtrl.getConditionFromSelectedView(selectedView);
 
 		String extraQueryFields = ' CreatedDate, Application_URL__c, Cannot_be_managed_by_portal_admin__c, New_Window__c,ServiceName__c, Service_Description_Label__c, '+
-									'ANG_Restrict_by_Agency_Sector__c, ANG_Accredited_Agents_Only__c, Application_icon_URL__c, Requestable__c, Requires_Level2_Registration__c';
+									'ANG_Restrict_by_Agency_Sector__c, ANG_Accredited_Agents_Only__c, Application_icon_URL__c, Requestable__c, Requires_Level2_Registration__c, Requires_Service_Admin_Approval__c';
 		String finalQuery = 'SELECT '+ extraQueryFields + fieldsStr+ ' FROM Portal_Applications__c ' + conditionStr + ' ORDER BY Name ASC ';
 
 		List<Portal_Applications__c> portalAppList = Database.query(finalQuery);
@@ -922,6 +922,12 @@ public with sharing class PortalServicesCtrl {
 			}
 		}
 
+		if (sw.recordService.Name == 'ONE Source') {
+			Cache.SessionPartition sessionPart = Cache.Session.getPartition('local.ServiceAccess');
+			if (sessionPart != null && sw.recordService.Id != null) {
+				sessionPart.put(sw.recordService.Id, sw.accessGranted);
+			}
+		}
 
 	}
 

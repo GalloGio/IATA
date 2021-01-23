@@ -10,7 +10,7 @@ public without sharing class TIDS_Controller {
 		Savepoint sp = Database.setSavepoint();
 		try {
 			final String result = TIDSUtil.getAttachment(caseId[0], TIDS_Constant.DATAJSONFILENAME);
-			if (result!=''){
+			if (!String.isEmpty(result)){
 				loadTIDSFromJson(result);
 				if (!TIDSUtil.iataCodeError.hasAnError){
 					//Delta changes  
@@ -74,7 +74,9 @@ public without sharing class TIDS_Controller {
 				if (tidsCase.Status==TIDS_Constant.IS_CLOSED){
 					TIDSUtil.setError(TIDS_Constant.MSG11,false);
 					return TIDSUtil.iataCodeError;
-				}else if ((!String.isEmpty(tidsCase.Account.IATACode__c) && tidsCase.Account.RecordType.DeveloperName=='IATA_Agency' && applicationType==TIDS_Constant.NEW_HO)){
+				}else if ((!String.isEmpty(tidsCase.Account.IATACode__c) 
+					&& tidsCase.Account.RecordType.DeveloperName==TIDS_Constant.RT_AGENCY 
+					&& applicationType==TIDS_Constant.NEW_HO)){
 					TIDSUtil.setError(TIDS_Constant.MSG11,false);
 					return TIDSUtil.iataCodeError;
 				}
@@ -100,14 +102,18 @@ public without sharing class TIDS_Controller {
 			}else if(type2.Contains(tids.applicationType)){
 				//Account Creation  
 				tidsGenerateIATACode(tidsCase.contactId, caseId, null, false);
-				if (TIDSUtil.iataCodeError.hasAnError){return TIDSUtil.iataCodeError;}
+				if (TIDSUtil.iataCodeError.hasAnError){
+					return TIDSUtil.iataCodeError;
+				}
 			}
 		}else if(applicationDecision==TIDS_Constant.IS_REJECTED || applicationDecision==TIDS_Constant.IS_APPREJECTED  || applicationDecision==TIDS_Constant.IS_CLOSED ){
 			tidsCase.Decision__c = TIDS_Constant.IS_REJECTED.toUpperCase();
 			tidsCase.Status = TIDS_Constant.IS_CLOSED;
 		}
 		if (TIDSUtil.iataCodeError.hasAnError){return TIDSUtil.iataCodeError;}
-		if (!String.isBlank(reason)){TIDSUtil.createCaseComment(true, caseId,reason);}
+		if (!String.isBlank(reason)){
+			TIDSUtil.createCaseComment(true, caseId,reason);
+		}
 		tidsCase.Decision_Date__c = System.Now();
 		try {    
 			update tidsCase;
@@ -137,14 +143,17 @@ public without sharing class TIDS_Controller {
 		Id tidsCaseId,
 		Id accountId,
 		Boolean isRollback){
-		final String LOCCLASSTIDS = 'T';
-
+		
 		Boolean isNewBranch = false;
-		if (tids.applicationType == TIDS_Constant.NEW_BR){isNewBranch = true;}
+		if (tids.applicationType == TIDS_Constant.NEW_BR){
+			isNewBranch = true;
+		}
 		
 		//Try to lock the state to gain exclusive access to the IATA Code generator
 		testUpdateLocking();
-		if (TIDSUtil.iataCodeError.hasAnError){return;}
+		if (TIDSUtil.iataCodeError.hasAnError){
+			return;
+		}
 		//Account loaded
 		String iataCode;
 		String iataCheckDigit;
@@ -170,12 +179,16 @@ public without sharing class TIDS_Controller {
 				Branch_Office_Country__c = states[0].IATA_ISO_Country__c,
 				IATA_ISO_State__c = states[0].Id,
 				SAAM_Case__c = tidsCaseId,
-				Location_Class__c = LOCCLASSTIDS,
+				Location_Class__c = TIDS_Constant.TIDS_T,
 				Account_Name__c = theFormAccount.Name
 			);
 			if (!Test.isRunningTest()){
 				ANG_OscarProcessHelper.EntityUpdater upd = AmsIataCodeGenerator.generatedAgencyIATACode(theFormAccount,theForm, null);
-				if (upd.isFaulty){TIDSUtil.setError(upd.errorMessage,true); Database.rollback(sp); return;}
+				if (upd.isFaulty){
+					TIDSUtil.setError(upd.errorMessage,true);
+					Database.rollback(sp);
+					return;
+				}
 				theFormAccount = (account) upd.acctMap.get(tids.userInfo.tidsAccount.Id);
 				iataCode = theFormAccount.IATAcode__c;
 				iataCheckDigit =theFormAccount.Check_Digit__c;
@@ -187,16 +200,22 @@ public without sharing class TIDS_Controller {
 				iataCheckDigit = '2';
 				iataSite = 'x';
 			}
-			Id agencyId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+			Id agencyId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', TIDS_Constant.RT_AGENCY);
 			theAccount.IATAcode__c = IATACode;
-			if (agencyId != theAccount.RecordTypeId){theAccount.RecordTypeId = agencyId;}
-			if (theAccount.Location_Class__c == null){theAccount.Location_Class__c = LOCCLASSTIDS;}
+			if (agencyId != theAccount.RecordTypeId){
+				theAccount.RecordTypeId = agencyId;
+			}
+			if (theAccount.Location_Class__c==null){
+				theAccount.Location_Class__c=TIDS_Constant.TIDS_T;
+			}
 			theAccount.Site = iataSite;
 			theAccount.Check_Digit__c = iataCheckDigit;
 			update theAccount;
 			tids.saveBuinessProfiles(tids.userInfo.tidsAccount.Id);
 			tids.saveAMSRole(tids.userInfo.tidsAccount.Id);
-			if (!isNewBranch){TIDSUtil.grantTIDSPortalAccess(contactId);}
+			if (!isNewBranch){
+				TIDSUtil.grantTIDSPortalAccess(contactId);
+			}
 		} catch (exception e){
 			Database.rollback(sp);
 			TIDSUtil.setError(e.getMessage(),true);
@@ -578,7 +597,7 @@ public without sharing class TIDS_Controller {
 		}
 		
 		public void getRoles(Id accountId){
-			List<AMS_Account_Role__c> amsroles = TIDSUtil.tidsShareholders(accountId);
+			List<AMS_Account_Role__c> amsroles = TIDSUtil.tidsShareholders(accountId,true,true);
 			List<vShareholderDetails> values = new List<vShareholderDetails>();
 			for (AMS_Account_Role__c item : amsroles){
 				vShareholderDetails vitem = new vShareholderDetails();
@@ -599,14 +618,20 @@ public without sharing class TIDS_Controller {
 			if (isFromRelatedAccount){
 				List<Account> relatedobjects = new List<Account>();
 				relatedobjects = [SELECT ParentId, Location_Type__c FROM Account WHERE Id=:objectId Limit 1];
-				if (relatedobjects.size()==0){return mapaccounts;}
+				if (relatedobjects.size()==0){
+					return mapaccounts;
+				}
 				transactiontype=relatedobjects[0].Location_Type__c;
-				if (transactiontype!='HO'){objectId=relatedobjects[0].ParentId;}
+				if (transactiontype!=TIDS_Constant.TIDS_HO){
+					objectId=relatedobjects[0].ParentId;
+				}
 			}
 			if (isFromContact){
 				List<Contact> relatedobjects = new List<Contact>();
 				relatedobjects = [SELECT AccountId FROM Contact WHERE Id=:objectId Limit 1];
-				if (relatedobjects.size()==0){return mapaccounts;}
+				if (relatedobjects.size()==0){
+					return mapaccounts;
+				}
 				objectId=relatedobjects[0].AccountId;
 			}
 			mapaccounts = [
@@ -661,8 +686,12 @@ public without sharing class TIDS_Controller {
 		private Map<String, Id> geonameIds {get;set;}
 		public void setGeonames(){
 		 	geonameIds = new Map<String, Id>();
-		 	if (!String.isEmpty(this.sections.Address.values.citygeonameId)){geonameIds.put(this.sections.Address.values.citygeonameId, null);}
-			if (!String.isEmpty(this.sections.Mailing.values.citygeonameId)){geonameIds.put(this.sections.Mailing.values.citygeonameId, null);}
+		 	if (!String.isEmpty(this.sections.Address.values.citygeonameId)){
+				geonameIds.put(this.sections.Address.values.citygeonameId, null);
+			}
+			if (!String.isEmpty(this.sections.Mailing.values.citygeonameId)){
+				geonameIds.put(this.sections.Mailing.values.citygeonameId, null);
+			}
 			readGeonames();
 		}
 		
@@ -687,9 +716,13 @@ public without sharing class TIDS_Controller {
 			mapaccount.Sector__c = 'Travel Agent';
 			mapaccount.Status__c = TIDS_Constant.IS_APPROVED; // Date Organization Status attained must be provided
 
-			mapaccount.Location_Type__c = 'HO'; //HO ==>HO BR ==>BR VB ==>VB
-			if (this.applicationType == TIDS_Constant.NEW_BR){mapaccount.Location_Type__c = 'BR';}
-			if (this.applicationType == TIDS_Constant.NEW_VB){mapaccount.Location_Type__c = 'VB';}
+			mapaccount.Location_Type__c = TIDS_Constant.TIDS_HO; //HO ==>HO BR ==>BR VB ==>VB
+			if (this.applicationType == TIDS_Constant.NEW_BR){
+				mapaccount.Location_Type__c = TIDS_Constant.TIDS_BR;
+			}
+			if (this.applicationType == TIDS_Constant.NEW_VB){
+				mapaccount.Location_Type__c = TIDS_Constant.TIDS_VB;
+			}
 			mapaccount.Accreditation_Date__c = System.Today();
 			mapaccount.Date_Organisation_Status_attained__c = System.Today();
 			mapaccount.GDP_Opt_In__c = true;
@@ -697,7 +730,7 @@ public without sharing class TIDS_Controller {
 			mapaccount.Source_System__c = 'TIDS Online Portal';
 		}
 		public void setGDS(){
-			 mapaccount.GDS__c = getGDS();
+			mapaccount.GDS__c = getGDS();
 		}
 		public void setCompanyType(){   
 			mapaccount.Company_Type__c = this.sections.AgencyLegalStatus.values.companyType;
@@ -719,9 +752,9 @@ public without sharing class TIDS_Controller {
 			mapaccount.BillingCountry = this.sections.Address.values.countryName; // JH Change mapping
 			mapaccount.IATA_ISO_Country__c = this.sections.Address.values.countryId;
 			if (this.sections.Address.values.state!=null){
-				 mapaccount.BillingState = this.sections.Address.values.state.label;
-				 mapaccount.IATA_ISO_Billing_State__c = this.sections.Address.values.state.Id;
-				 mapaccount.Iso_State__c = this.sections.Address.values.state.Id;
+				mapaccount.BillingState = this.sections.Address.values.state.label;
+				mapaccount.IATA_ISO_Billing_State__c = this.sections.Address.values.state.Id;
+				mapaccount.Iso_State__c = this.sections.Address.values.state.Id;
 			}
 			mapaccount.Geoname_Billing_City__c = null;
 			string key = this.sections.Address.values.citygeonameId;
@@ -739,20 +772,22 @@ public without sharing class TIDS_Controller {
 				mapaccount.IATA_ISO_Shipping_Country__c=null;
 				mapaccount.IATA_ISO_Shipping_State__c=null;
 		 	}else{
-			 mapaccount.ShippingStreet = this.sections.Mailing.values.mailingAddress;
-			 mapaccount.ShippingCity = this.sections.Mailing.values.city;
-			 mapaccount.ShippingState =null;
-			 mapaccount.IATA_ISO_Shipping_State__c =null;
-			 if (this.sections.Mailing.values.state!=null){
+			mapaccount.ShippingStreet = this.sections.Mailing.values.mailingAddress;
+			mapaccount.ShippingCity = this.sections.Mailing.values.city;
+			mapaccount.ShippingState =null;
+			mapaccount.IATA_ISO_Shipping_State__c =null;
+			if (this.sections.Mailing.values.state!=null){
 				mapaccount.ShippingState = this.sections.Mailing.values.state.label;
 				mapaccount.IATA_ISO_Shipping_State__c = this.sections.Mailing.values.state.Id;
-			 }
-			 mapaccount.IATA_ISO_Shipping_Country__c = this.sections.Mailing.values.countryId;
-			 mapaccount.ShippingPostalCode = this.sections.Mailing.values.postalCode;
-			 mapaccount.ShippingCountry = this.sections.Mailing.values.countryName;
-			 mapaccount.Geoname_Shipping_City__c = null;
-			 string key = this.sections.Mailing.values.citygeonameId;
-			 if (geonameIds.containsKey(key)){mapaccount.Geoname_Shipping_City__c = (Id) geonameIds.get(key);}
+			}
+			mapaccount.IATA_ISO_Shipping_Country__c = this.sections.Mailing.values.countryId;
+			mapaccount.ShippingPostalCode = this.sections.Mailing.values.postalCode;
+			mapaccount.ShippingCountry = this.sections.Mailing.values.countryName;
+			mapaccount.Geoname_Shipping_City__c = null;
+			string key = this.sections.Mailing.values.citygeonameId;
+			if (geonameIds.containsKey(key)){
+				mapaccount.Geoname_Shipping_City__c = (Id) geonameIds.get(key);
+			}
 		 }
 		}
 		public void setLastDateOrgChange(){
@@ -816,7 +851,7 @@ public without sharing class TIDS_Controller {
 				Database.executeBatch(nb,100);
 			}
 		}
-		private string transactiontype='HO';
+		private string transactiontype=TIDS_Constant.TIDS_HO;
 		private boolean isVirtualBranchDateOfOp=false;
 		private boolean isSaveVBISOCountry=false;
 		private boolean isSaveAllBP=false;
@@ -842,7 +877,7 @@ public without sharing class TIDS_Controller {
 					//Agency and Legal Status
 					isSaveInOperationSince=true;
 					retrieveAccount(false, true);
-					if (transactiontype=='HO'){
+					if (transactiontype==TIDS_Constant.TIDS_HO){
 						inheritanceBatched=true;
 						isSaveAMSRole=true;
 						mapaccount.id=parentaccount.Id;
@@ -856,7 +891,7 @@ public without sharing class TIDS_Controller {
 				}
 				when 'chg-address-contact'{
 					retrieveAccount(false, true);
-					if (transactiontype=='HO'){
+					if (transactiontype==TIDS_Constant.TIDS_HO){
 						inheritanceBatched=true;
 						mapaccount.id=parentaccount.Id;
 						setGeonames();
@@ -864,7 +899,7 @@ public without sharing class TIDS_Controller {
 						mapaccount.id=this.userInfo.tidsAccount.Id;
 						setGeonames();
 					}
-					if (transactiontype=='VB'){
+					if (transactiontype==TIDS_Constant.TIDS_VB){
 						inheritanceBatched=false;
 					}else{
 						setAddress();
@@ -876,7 +911,7 @@ public without sharing class TIDS_Controller {
 				when 'chg-business-profile-specialization' {
 					inheritanceBatched=false;
 					retrieveAccount(false, true);
-					if (transactiontype=='HO'){
+					if (transactiontype==TIDS_Constant.TIDS_HO){
 						mapaccount.id=parentaccount.Id;
 					}else{
 						mapaccount.id=this.userInfo.tidsAccount.Id;
@@ -953,7 +988,9 @@ public without sharing class TIDS_Controller {
 		public void saveBuinessProfiles(Id accountId){
 			currentAccountId=accountId;
 			this.businessProfiles = new Map<String, AMS_Agency_Profile__c>();
-			if (isSaveInOperationSince){getinOperationsSince();}
+			if (isSaveInOperationSince){
+				getinOperationsSince();
+			}
 			if (isSaveAllBP){
 				getdestinationSpecialties();
 				getmarketSpecialties();
@@ -965,8 +1002,12 @@ public without sharing class TIDS_Controller {
 				getNumberOfEmployees();
 				getNumberOffices();
 			}
-			if (isVirtualBranchDateOfOp) {setVirtualAddressOfOperation();}
-			if (businessProfiles.size() > 0){loadbusinessProfiles(businessProfiles.Values());}
+			if (isVirtualBranchDateOfOp) {
+				setVirtualAddressOfOperation();
+			}
+			if (businessProfiles.size() > 0){
+				loadbusinessProfiles(businessProfiles.Values());
+			}
 		}
 
 		private void getTravelSales(){
@@ -997,7 +1038,9 @@ public without sharing class TIDS_Controller {
 		}
 		//create and replace
 		public void saveAMSRole(Id accountId){
-			if (!isSaveAMSRole){return;}
+			if (!isSaveAMSRole){
+				return;
+			}
 			//expiration date on the owner
 			//check expiration date and disable existing one and create new owners
 			//Action and Id to add in the json
@@ -1006,7 +1049,7 @@ public without sharing class TIDS_Controller {
 			
 			set<String> itemtypes = new Set<String>();
 			List<vShareholderDetails> values = this.sections.ShareholderDetails.values;
-			List<AMS_Account_Role__c> amsroles = TIDSUtil.tidsShareholders(accountId);
+			List<AMS_Account_Role__c> amsroles = TIDSUtil.tidsShareholders(accountId,false,false);
 			List<AMS_Account_Role__c> newroles = new List<AMS_Account_Role__c>();
 			List<AMS_Account_Role__c> delroles = new List<AMS_Account_Role__c>();
 			Set<Id> delset = new Set<Id>();
@@ -1021,23 +1064,32 @@ public without sharing class TIDS_Controller {
 				n.Owner_Email__c = item.email;
 				n.Account__c = accountId;
 				for (AMS_Account_Role__c o: amsroles){
-					 if (delset.Contains(o.Id)){continue;}
-					 if (o.Owner_Category__c==n.Owner_Category__c && 
+					if (delset.Contains(o.Id)){
+						continue;
+					}
+					if (o.Owner_Category__c==n.Owner_Category__c && 
 						o.Owner_Email__c==n.Owner_Email__c &&
 						o.Owner_Name__c==n.Owner_Name__c){
-						n=o;
-						n.Percentage__c = Decimal.ValueOf(item.percentage);
+						if (o.Active__c){
+							n=o;
+							n.Percentage__c = Decimal.ValueOf(item.percentage);
+						}
 						delset.add(o.Id);
-					 }
+					}
 				}
 				newroles.add(n);
 			}
 			for (AMS_Account_Role__c o: amsroles){
-				if (!delset.Contains(o.Id)){delroles.add(o);}
+				if (!delset.Contains(o.Id)){
+					delroles.add(o);
+				}
 			}
-			if (delroles.size() > 0){delete delroles;}
-			if (newroles.size() > 0){upsert newroles;}
-
+			if (delroles.size() > 0){
+				delete delroles;
+			}
+			if (newroles.size() > 0){
+				upsert newroles;
+			}
 		}
 		private Id currentAccountId;
 		private Map<String, AMS_Agency_Profile__c> businessProfiles {get;set;}
@@ -1051,15 +1103,21 @@ public without sharing class TIDS_Controller {
 																	FROM AMS_Agency_Profile__c
 																	WHERE Account__c = :currentAccountId 
 																	and GR_Code__c=:grcodes];
-				if (businessprofilelist.size() > 0){delete businessprofilelist;}
-				if (insertbr.size()>0){insert insertbr;}
+				if (businessprofilelist.size() > 0){
+					delete businessprofilelist;
+				}
+				if (insertbr.size()>0){
+					insert insertbr;
+				}
 		}
 		private void setBusinessCodes(
 				List<vslabel> svalues,
 				boolean isMultipleSelection,
 				boolean isLabelBased,
 			String itemcode){
-			if (svalues == null || svalues.isEmpty() == true || svalues.size() == 0){return;}
+			if (svalues == null || svalues.isEmpty() == true || svalues.size() == 0){
+				return;
+			}
 			string grcode = '';
 			Map<String, String> mapgrcodes = new Map<String, String>();
 			mapgrcodes.put('Meetings/Groups','TIDS_ME');
@@ -1078,10 +1136,12 @@ public without sharing class TIDS_Controller {
 				if (isLabelBased){
 					if (mapgrcodes.ContainsKey(item.label)){
 						grcode = (String) mapgrcodes.get(item.label);
-						if (item.value==null || item.value==''){item.value='0';}
+						if (item.value==null || String.IsEmpty(item.value)){item.value='0';}
 					}
 				}
-				if (grcode == ''){continue;}
+				if (String.IsEmpty(grcode)){
+					continue;
+				}
 				AMS_Agency_Profile__c businessprofile = (AMS_Agency_Profile__c) businessProfiles.get(grcode);
 				if (businessprofile == null){
 					businessprofile = new AMS_Agency_Profile__c(GR_Code__c = grcode,GR_Item__c = null);
@@ -1118,8 +1178,10 @@ public without sharing class TIDS_Controller {
 		private String getGDS(){
 			List<vslabel> values = this.sections.BusinessProfile.values.GDS.values;
 			string selection = null;
-			if (values == null || values.isEmpty() == true || values.size() == 0){return selection;}
-				for (vslabel item : values){
+			if (values == null || values.isEmpty() == true || values.size() == 0){
+				return selection;
+			}
+			for (vslabel item : values){
 				if (selection == null){
 					selection = item.value;
 				}else{

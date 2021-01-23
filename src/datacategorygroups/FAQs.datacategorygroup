@@ -862,6 +862,26 @@
             <dataCategory>
                 <dataCategory>
                     <label>General Information</label>
+                    <name>General_Information_IDX</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>Sign Up / Join</label>
+                    <name>Sign_Up_Join_IDX</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>User Management</label>
+                    <name>User_Management_IDX</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>Technical Issue</label>
+                    <name>Technical_Issue_IDX</name>
+                </dataCategory>
+                <label>IDX - Incident Data Exchange</label>
+                <name>IDX_Incident_Data_Exchange</name>
+            </dataCategory>
+            <dataCategory>
+                <dataCategory>
+                    <label>General Information</label>
                     <name>General_Information_Agency_Database_Files</name>
                 </dataCategory>
                 <dataCategory>
@@ -1107,10 +1127,6 @@
                 <dataCategory>
                     <label>Technical Issue</label>
                     <name>Technical_Issue_FFP</name>
-                </dataCategory>
-                <dataCategory>
-                    <label>Other</label>
-                    <name>Other_FFP</name>
                 </dataCategory>
                 <dataCategory>
                     <label>Events</label>
@@ -1582,6 +1598,14 @@
             <dataCategory>
                 <dataCategory>
                     <label>General Information</label>
+                    <name>General_Information_OS</name>
+                </dataCategory>
+                <label>OneSource</label>
+                <name>OneSource</name>
+            </dataCategory>
+            <dataCategory>
+                <dataCategory>
+                    <label>General Information</label>
                     <name>General_Information_CheckACode</name>
                 </dataCategory>
                 <dataCategory>
@@ -1826,10 +1850,6 @@
                 </dataCategory>
                 <label>Weblink</label>
                 <name>Weblink</name>
-            </dataCategory>
-            <dataCategory>
-                <label>Video FAQs</label>
-                <name>Video_FAQs</name>
             </dataCategory>
             <label>Platforms</label>
             <name>Platforms</name>

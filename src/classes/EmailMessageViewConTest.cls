@@ -108,8 +108,8 @@ public class EmailMessageViewConTest{
 
 		Case testCase = [SELECT id, CaseNumber, RecordTypeId, RecordType.Name FROM Case where id =:ca.Id];
 		Test.startTest();
-		System.debug('************ Case for Standard Controller ' + testCase.Id);
 		PageReference pageRef = Page.EmailMessagesView;
+		pageRef.getParameters().put('fieldValue',testCase.Id);
 		Test.setCurrentPage(pageRef);
 		ApexPages.StandardController sc = new ApexPages.StandardController(testCase);
 

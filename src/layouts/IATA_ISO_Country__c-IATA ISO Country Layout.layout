@@ -73,6 +73,10 @@
                 <behavior>Edit</behavior>
                 <field>ISO_Country_Short_Name__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>GxA_Enable__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>

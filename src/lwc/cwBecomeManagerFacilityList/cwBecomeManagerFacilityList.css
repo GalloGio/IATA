@@ -1,0 +1,51 @@
+.itemBase {
+    margin: 2px;
+    z-index: 10;
+    color: #333;
+}
+.itemBase:hover {
+    border: none 2px rgb(70, 71, 70);
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+.itemSelected {
+    transition: all 0.5s ease;
+}
+.greyFilter {
+    -webkit-filter: grayscale(80%);
+    -moz-filter: grayscale(80%);
+    filter: grayscale(80%);
+}
+.itemUnselected {
+    color: #888;
+}
+.breadlink{
+    cursor: pointer;
+    color: blue;
+}
+.letterSelected{
+    font-weight:900;
+}
+.itemAlreadyManager{
+    color: #F19632;
+    cursor: not-allowed !important;
+}
+.itemPendingManager{
+    color: #F19632;
+    cursor: not-allowed !important;
+}
+.itemPendingManager:hover, .itemAlreadyManager:hover{
+    font-size: 1rem;
+}
+.airlineName {
+    font-weight:500;
+}
+.companytype{
+    color:#F04431;
+}
+.backnext {
+    color: #f04431;
+}
+.inlineblock, .inlineblock *{
+    display: inline-block;
+}

@@ -1,7 +1,8 @@
 public with sharing class CaseCommentHandler {
 	public static final String CASE_COMMENT_ACTION = 'Public Case Comment';
 	
-	public static List<KPI_Value__c> kpiValuesToInsert = new List<KPI_Value__c>();	
+	public static List<KPI_Value__c> kpiValuesToInsert = new List<KPI_Value__c>();
+	public static Boolean caseCommentKPI = false;
 	public CaseCommentHandler(){}
 
 	public static void doBeforeInsert(list<CaseComment> listComments) {
@@ -20,7 +21,6 @@ public with sharing class CaseCommentHandler {
 		return caseCommentIdToCaseIdMap;
 	}
 
-	@future
 	public static void doAfterInsert(Set<Id> CaseCommentIds) {
 		//only fire integration if user making the insert is not integration user
 		//1. if case comment is for a case with a case item then fire platform event
@@ -29,13 +29,6 @@ public with sharing class CaseCommentHandler {
 											  FROM CaseComment WHERE Id IN :CaseCommentIds];
 		
 		if(fullCaseComments.isEmpty()) return;
-
-		Map<Id,Id> caseCommentIdToCaseIdMap = getCaseCommentsForCases(fullCaseComments);
-		//get case item records with a case that has an inserted comment
-		Map<Id,Case_Item__c> caseItemsWithCaseComments = new Map<Id,Case_Item__c> ([SELECT Id, RecordTypeId FROM Case_Item__c WHERE Case__c IN :caseCommentIdToCaseIdMap.values()]);
-		//call update on related case items to fire integration
-		CaseItems caseItems = new CaseItems(caseItemsWithCaseComments);
-		caseItems.onAfterUpdate();
 
 		List<ISSP_KPI_Reporting__mdt> config = new List<ISSP_KPI_Reporting__mdt>();
 		Map<String, ISSP_KPI_Reporting__mdt> rtToConfigMap = new Map<String, ISSP_KPI_Reporting__mdt>();
@@ -55,12 +48,6 @@ public with sharing class CaseCommentHandler {
 			recordTypesToProcess.add(RecordTypeSingleton.getInstance().getRecordType('Case', cfg.Case_Record_Type__c).Id);
 			rtToConfigMap.put(cfg.Case_Record_Type__c, cfg);
 		}
-
-		List<CaseComment> publishedCaseComments = new List<CaseComment>();
-		for(CaseComment cc : fullCaseComments) {
-			if(cc.isPublished && recordTypesToProcess.contains(cc.Parent.RecordTypeId))
-				publishedCaseComments.add(cc);
-		}
 		
 		Id kpiReportingId = kpiReporting.get(0).Id;
 		
@@ -72,7 +59,24 @@ public with sharing class CaseCommentHandler {
 		
 		if(kpiValuesToInsert.size() > 0 ) {
 			insert kpiValuesToInsert;
+			caseCommentKPI = true;
 		}
+	}
+
+	@future
+	public static void doAfterInsertFuture(Set<Id> CaseCommentIds){
+		doAfterInsert(CaseCommentIds);
+	}
+
+	public void processCaseItems(List<CaseComment> listOfComments){
+		//only fire integration if user making the insert is not integration user
+		////1. if case comment is for a case with a case item then fire platform event
+		Map<Id,Id> caseCommentIdToCaseIdMap = getCaseCommentsForCases(listOfComments);
+		//get case item records with a case that has an inserted comment
+		Map<Id,Case_Item__c> caseItemsWithCaseComments = new Map<Id,Case_Item__c> ([SELECT Id, RecordTypeId FROM Case_Item__c WHERE Case__c IN :caseCommentIdToCaseIdMap.values()]);
+		//call update on related case items to fire integration
+		CaseItems caseItems = new CaseItems(caseItemsWithCaseComments);
+		caseItems.onAfterUpdate();
 	}
 
 	public void doAfterUpdate(Map<Id, CaseComment> updatedCaseCommentMap, Map<Id, CaseComment> originalCaseCommentMap){

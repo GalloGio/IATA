@@ -223,9 +223,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <div class="background" style="height: 900px;">
                 
             <center>
-				<div>
-					<apex:outputLabel value="{!$Label.Important_Delivery_Information}" style="font-weight:800" escape="false" /><br />
-					<apex:outputLabel value="{!$Label.IDCard_Covid}" escape="false" />
+				<div style = "padding-top: 15px; padding-left: 20px; padding-right: 20px">
+                    <apex:outputLabel value="{!$Label.Important_Delivery_Information}" style="font-weight:800; font-size: 11pt" escape="false"/><br/>
+					<apex:outputLabel value="{!$Label.IDCard_Covid}" style="font-size: 9.5pt" escape="false"/>
 				</div>
              <!-------------------------------------------------------------------------------->
                 <div id="PInfo"  class="LogMenuPanel">

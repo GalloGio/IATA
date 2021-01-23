@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>Always_Visible__c</field>
-        <value xsi:type="xsd:boolean">true</value>
+        <value xsi:type="xsd:boolean">false</value>
     </values>
     <values>
         <field>CaseArea__c</field>

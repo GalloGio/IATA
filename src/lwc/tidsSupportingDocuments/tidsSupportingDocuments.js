@@ -58,7 +58,7 @@ export default class TidsSupportingDocuments extends LightningElement {
 	@track fileContents;
 	@track fileReader;
 	@track content;
-	@track MAX_FILE_SIZE = 1500000;
+	@track MAX_FILE_SIZE = 3100000;
 	@track showSpinner = false;
 	@track totalDocuments = 0;
 	// New branch
@@ -83,8 +83,8 @@ export default class TidsSupportingDocuments extends LightningElement {
 		let userType = getUserType();
 		this.vettingMode = userType === "vetting" ? true : false;
 		let savedInfo = getSectionInfo(this.cmpName);
+		this.getRelatedFiles();
 		if (savedInfo) {
-			this.getRelatedFiles();
 			if (
 				this.vettingMode &&
 				savedInfo.errors !== undefined &&
@@ -173,8 +173,7 @@ export default class TidsSupportingDocuments extends LightningElement {
 			this.documentsView.push(this.mappingFile(file));
 		});
 		this.totalDocuments = this.documentsView.length;
-		this.disableButton = this.documentsView.length > 0 ? false : true;
-
+		this.nextButtonDisabled();
 	}
 
 	handleSave() {
@@ -187,12 +186,21 @@ export default class TidsSupportingDocuments extends LightningElement {
 	}
 
 	uploadHelper() {
+		this.nextButtonDisabled();
 		if (this.documentindex === this.documentsView.length) {
 			this.documents = [];
 			return;
 		}
 		this.file = this.documentsView[this.documentindex].document;
 		if (this.file.size > this.MAX_FILE_SIZE) {
+			this.dispatchEvent(
+				new ShowToastEvent({
+					title: "Maximum file size exceeded",
+					message: 'File '+this.file.name +' exceeds the 3mb maximum file size.',
+					variant: "error"
+				})
+			);
+			this.showSpinner = false;
 			return;
 		}
 		this.showLoadingSpinner = true;
@@ -211,7 +219,6 @@ export default class TidsSupportingDocuments extends LightningElement {
 		this.fileReader.addEventListener('progress', (event) => {
 			if (event.loaded && event.total) {
 				const percent = (event.loaded / event.total) * 100;
-				console.log(`Progress: ${Math.round(percent)}`);
 			}
 		});
 		this.fileReader.readAsDataURL(this.file);
@@ -275,10 +282,9 @@ export default class TidsSupportingDocuments extends LightningElement {
 			filename: this.file.name,
 			fileType: this.file.type,
 			base64data: this.fileContents,
-			isUnique: false
+			isUnique: true
 		})
 			.then(result => {
-				console.log('result',JSON.stringify(result));
 				this.documentindex++;
 				// Showing Success message after file insert
 				this.dispatchEvent(
@@ -288,7 +294,7 @@ export default class TidsSupportingDocuments extends LightningElement {
 						variant: "success"
 					})
 				);
-				if(this.documentindex < this.totalDocuments) {
+				if(this.documentindex < this.documentsView.length) {
 					this.uploadHelper();
 				} else {
 					this.showSpinner = false;
@@ -298,12 +304,12 @@ export default class TidsSupportingDocuments extends LightningElement {
 				}        
 			})
 			.catch(error => {
-				console.log('error', JSON.stringify(error));
+				this.showSpinner = false;
 				// Showing errors if any while inserting the files
 				this.dispatchEvent(
 					new ShowToastEvent({
-						title: "Error while uploading File",
-						message: error.body.message,
+						title: "Maximum file size exceeded",
+						message: 'File '+this.file.name +' exceeds the 3mb maximum file size.',
 						variant: "error"
 					})
 				);
@@ -312,7 +318,6 @@ export default class TidsSupportingDocuments extends LightningElement {
 	upsertSupportingDocs() {
 		let documentsValues;
 		let option= this.transactiontype;
-		console.log('option', this.transactiontype);
 		if (option === "next-section" || option === "save-quit") {
 			documentsValues = this.infoToBeSave();
 			if(this.isSaveAndQuit){
@@ -334,16 +339,14 @@ export default class TidsSupportingDocuments extends LightningElement {
 	getRelatedFiles() {
 		relatedFiles({ parentid: this.tidsCase.Id })
 			.then(data => {
-				console.log('relatedfiles:',JSON.stringify(data));
 				let sfAttachments = JSON.parse(JSON.stringify(data));
 				if(sfAttachments !== undefined){
 					if (sfAttachments.isError===0){
-						console.log('relatedfiles:',sfAttachments.isError);
 						sfAttachments.documents.forEach(item => {
 							this.filedocuments.push(this.mappingFileFromSF(item));
 						});
 					}
-					this.disableButton = false;
+					this.nextButtonDisabled();
 				}
 			})
 			.catch(error => {
@@ -363,6 +366,7 @@ export default class TidsSupportingDocuments extends LightningElement {
 		let fileselected = event.target.dataset.name;
 		let index = this.documentsView.findIndex(x => x.name === fileselected);
 		this.documentsView.splice(index,1);
+		this.nextButtonDisabled();
 	}
 
 	handleUploadFileRemove(event) {
@@ -372,6 +376,7 @@ export default class TidsSupportingDocuments extends LightningElement {
 		currentDocument = this.filedocuments[index];
 		this.filedocuments.splice(index,1);
 		this.showSpinner = true;
+		this.nextButtonDisabled();
 		deleteFiles({ attachmentid: fileselected })
 		.then(result => {
 			this.showSpinner = false;
@@ -382,8 +387,7 @@ export default class TidsSupportingDocuments extends LightningElement {
 					message: currentDocument.name + " - deleted Successfully!!!",
 					variant: "success"
 				})
-			);
-			
+			);			
 		})
 		.catch(error => {
 			this.dispatchEvent(
@@ -398,8 +402,9 @@ export default class TidsSupportingDocuments extends LightningElement {
 
 	// Next button disabled
 	nextButtonDisabled() {
-		let documentsValid = this.documents.length > 0 ? true : false;
-		if (documentsValid) {
+		let documentsValid = this.documentsView.length > 0 ? true : false;
+		let filesValid = this.filedocuments.length > 0 ? true : false;
+		if (documentsValid || filesValid) {
 			this.disableButton = false;
 		} else {
 			this.disableButton = true;

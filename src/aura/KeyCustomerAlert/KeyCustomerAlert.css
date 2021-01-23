@@ -1,0 +1,17 @@
+.THIS .right-align {
+    text-align: right;
+}
+
+.THIS .img-size {
+    width: 50%;
+    
+}
+
+.THIS.exampleHolder{
+    position: relative;
+    height: 200px;
+}
+
+.THIS .page-header {
+    background: #ccc;
+}

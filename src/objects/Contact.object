@@ -12583,6 +12583,20 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
         <type>Summary</type>
     </fields>
     <fields>
+        <fullName>S_TIDS__c</fullName>
+        <externalId>false</externalId>
+        <label>Service TIDS</label>
+        <summaryFilterItems>
+            <field>Portal_Application_Right__c.Portal_Application__c</field>
+            <operation>startsWith</operation>
+            <value>a2w5J000000kP35</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Portal_Application_Right__c.Contact__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <type>Summary</type>
+    </fields>
+    <fields>
         <fullName>Sales_Region__c</fullName>
         <externalId>false</externalId>
         <label>Sales Region</label>
@@ -12876,7 +12890,9 @@ IF(S_ICE__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000004IwcT&
 &amp;&quot; &quot;&amp; 
 IF(S_Standards_Setting_Workspace__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000005xvJ2&quot; ,&quot;&quot;,40,40),&quot;&quot;)
 &amp;&quot; &quot;&amp; 
-IF(S_Risk_RHC__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000006MxBK&quot; ,&quot;&quot;,40,40),&quot;&quot;)</formula>
+IF(S_Risk_RHC__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000006MxBK&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp; 
+IF(S_TIDS__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=0155J000000l6ic&quot; ,&quot;&quot;,40,40),&quot;&quot;)</formula>
         <label>Services</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -21142,13 +21158,26 @@ myuser={!User.Id}</url>
         <fullName>Log_Phone_Case</fullName>
         <availability>online</availability>
         <displayType>button</displayType>
-        <encodingKey>UTF-8</encodingKey>
-        <height>600</height>
-        <linkType>url</linkType>
+        <linkType>javascript</linkType>
         <masterLabel>Log Phone Case</masterLabel>
-        <openType>sidebar</openType>
+        <openType>onClickJavaScript</openType>
         <protected>false</protected>
-        <url>/apex/LogPhoneCase?ContactId={!Contact.Id}</url>
+        <url>{!REQUIRESCRIPT(&quot;/resource/1552329049000/keyCustomerAlert&quot;)}
+{!REQUIRESCRIPT(&quot;/soap/ajax/40.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/40.0/apex.js&quot;)}
+{!REQUIRESCRIPT(&quot;/support/console/30.0/integration.js&quot;)}
+
+try {
+    var targetURL = &quot;/apex/LogPhoneCase?ContactId={!Contact.Id}&quot;;
+
+    if({!Account.Identify_as_Key_Customer__c}) {
+            displayKeyCustomerAlert(targetURL, &quot;{!$Label.KEY_CUSTOMER_ALERT_TITLE}&quot;, &quot;{!$Label.KEY_CUSTOMER_ALERT}&quot;); 
+    } else {
+        goToURL(targetURL);
+    }
+} catch(e) {
+    alert(&apos;An error has occurred. Error: &apos; + e);
+}</url>
     </webLinks>
     <webLinks>
         <fullName>LogaCall</fullName>

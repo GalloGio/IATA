@@ -1,0 +1,19 @@
+<template>
+	<template if:true={shouldDisplayEditButtons}>
+		<div class="editMapButtonOuterDiv">
+			<div class="editMapButtonInnerDiv">
+				<lightning-icon icon-name="utility:close" class="ml-2 cursor-pt" if:true={draggable} variant="error"
+					title="Close" onclick={removeEditOption} size="x-small"></lightning-icon>
+				<lightning-icon icon-name="utility:edit" class="ml-2 cursor-pt" if:false={draggable}
+					title={label.icg_capab_magmnt_edit} onclick={prepareForEdit} size="x-small"></lightning-icon>
+			</div>
+		</div>
+
+	</template>
+	<iframe id="vfFrame" src={iframeurl} width={currentWith} height={currentHeight}></iframe>
+	<template if:false={shouldHideExpandBtn}>
+		<div class="expandButtonOuterDiv" title={label.expand_collapse} onclick={modifyHeight}>
+			<div class="expandButtonInnerDiv"><img class={arrowStyle} src={collapsearrow} /></div>
+		</div>
+	</template>
+</template>

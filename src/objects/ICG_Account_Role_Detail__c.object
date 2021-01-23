@@ -185,7 +185,6 @@
         <externalId>false</externalId>
         <label>Link to Station Account</label>
         <referenceTo>Account_Role__c</referenceTo>
-        <relationshipLabel>ONE Source Account Role Detail</relationshipLabel>
         <relationshipName>ICG_Account_Role_Details</relationshipName>
         <required>true</required>
         <trackHistory>false</trackHistory>
@@ -242,6 +241,11 @@
                     <label>Akan</label>
                 </value>
                 <value>
+                    <fullName>Albanian</fullName>
+                    <default>false</default>
+                    <label>Albanian</label>
+                </value>
+                <value>
                     <fullName>Amharic</fullName>
                     <default>false</default>
                     <label>Amharic</label>
@@ -290,6 +294,11 @@
                     <fullName>Bhojpuri</fullName>
                     <default>false</default>
                     <label>Bhojpuri</label>
+                </value>
+                <value>
+                    <fullName>Bulgarian</fullName>
+                    <default>false</default>
+                    <label>Bulgarian</label>
                 </value>
                 <value>
                     <fullName>Burmese</fullName>
@@ -365,6 +374,11 @@
                     <fullName>English</fullName>
                     <default>false</default>
                     <label>English</label>
+                </value>
+                <value>
+                    <fullName>Finnish</fullName>
+                    <default>false</default>
+                    <label>Finnish</label>
                 </value>
                 <value>
                     <fullName>Flemish</fullName>
@@ -572,6 +586,11 @@
                     <label>Northern Min</label>
                 </value>
                 <value>
+                    <fullName>Norwegian</fullName>
+                    <default>false</default>
+                    <label>Norwegian</label>
+                </value>
+                <value>
                     <fullName>Odia</fullName>
                     <default>false</default>
                     <label>Odia</label>
@@ -665,6 +684,11 @@
                     <fullName>Sundanese</fullName>
                     <default>false</default>
                     <label>Sundanese</label>
+                </value>
+                <value>
+                    <fullName>Swahili</fullName>
+                    <default>false</default>
+                    <label>Swahili</label>
                 </value>
                 <value>
                     <fullName>Swedish</fullName>
@@ -822,7 +846,7 @@ IF(Pharmaceuticals__c, 1, 0)</formula>
         <externalId>false</externalId>
         <formula>Account_Role__r.Account__r.Name</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Company Name</label>
+        <label>Company Name (Account)</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -903,7 +927,7 @@ IF(Pharmaceuticals__c, 1, 0)</formula>
         <fullName>Fleet__c</fullName>
         <description>Number of fleets</description>
         <externalId>false</externalId>
-        <label>Fleet</label>
+        <label>Fleet (Number of Trucks)</label>
         <precision>18</precision>
         <required>false</required>
         <scale>0</scale>
@@ -970,7 +994,6 @@ IF( ISBLANK( Country_FOR__c ) ,NULL,  Country_FOR__c + &quot;, &quot;) + &quot;.
         <externalId>false</externalId>
         <label>IATA ISO Country</label>
         <referenceTo>IATA_ISO_Country__c</referenceTo>
-        <relationshipLabel>ONE Source Account Role Details</relationshipLabel>
         <relationshipName>ICG_Account_Role_Details</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -1047,7 +1070,6 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
         <externalId>false</externalId>
         <label>Nearest Airport</label>
         <referenceTo>Airport_Detail__c</referenceTo>
-        <relationshipLabel>ONE Source Account Role Details</relationshipLabel>
         <relationshipName>ICG_Account_Role_Details</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -1367,7 +1389,7 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
         <trackTrending>false</trackTrending>
         <type>Url</type>
     </fields>
-    <label>OS Account Role Detail</label>
+    <label>OS Station</label>
     <listViews>
         <fullName>Account_pending_for_IATA_approval</fullName>
         <columns>NAME</columns>
@@ -1452,6 +1474,8 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
         <fullName>All</fullName>
         <columns>NAME</columns>
         <columns>RECORDTYPE</columns>
+        <columns>City_FOR__c</columns>
+        <columns>Country_FOR__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
     </listViews>
@@ -1662,7 +1686,7 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
         <trackHistory>false</trackHistory>
         <type>Text</type>
     </nameField>
-    <pluralLabel>OS Account Role Detail</pluralLabel>
+    <pluralLabel>OS Stations</pluralLabel>
     <recordTypeTrackHistory>false</recordTypeTrackHistory>
     <recordTypes>
         <fullName>Airline</fullName>
@@ -1672,6 +1696,10 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
             <picklist>Available_Languages__c</picklist>
             <values>
                 <fullName>Akan</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Albanian</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1712,6 +1740,10 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
             </values>
             <values>
                 <fullName>Bhojpuri</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bulgarian</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1939,6 +1971,10 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
                 <default>false</default>
             </values>
             <values>
+                <fullName>Norwegian</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Odia</fullName>
                 <default>false</default>
             </values>
@@ -2012,6 +2048,10 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
             </values>
             <values>
                 <fullName>Sundanese</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Swahili</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2126,6 +2166,10 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
                 <default>false</default>
             </values>
             <values>
+                <fullName>Albanian</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Amharic</fullName>
                 <default>false</default>
             </values>
@@ -2163,6 +2207,10 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
             </values>
             <values>
                 <fullName>Bhojpuri</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bulgarian</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2390,6 +2438,10 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
                 <default>false</default>
             </values>
             <values>
+                <fullName>Norwegian</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Odia</fullName>
                 <default>false</default>
             </values>
@@ -2463,6 +2515,10 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
             </values>
             <values>
                 <fullName>Sundanese</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Swahili</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2577,6 +2633,10 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
                 <default>false</default>
             </values>
             <values>
+                <fullName>Albanian</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Amharic</fullName>
                 <default>false</default>
             </values>
@@ -2614,6 +2674,10 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
             </values>
             <values>
                 <fullName>Bhojpuri</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bulgarian</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2841,6 +2905,10 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
                 <default>false</default>
             </values>
             <values>
+                <fullName>Norwegian</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Odia</fullName>
                 <default>false</default>
             </values>
@@ -2914,6 +2982,10 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
             </values>
             <values>
                 <fullName>Sundanese</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Swahili</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -3028,6 +3100,10 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
                 <default>false</default>
             </values>
             <values>
+                <fullName>Albanian</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Amharic</fullName>
                 <default>false</default>
             </values>
@@ -3065,6 +3141,10 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
             </values>
             <values>
                 <fullName>Bhojpuri</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bulgarian</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -3292,6 +3372,10 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
                 <default>false</default>
             </values>
             <values>
+                <fullName>Norwegian</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Odia</fullName>
                 <default>false</default>
             </values>
@@ -3365,6 +3449,10 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
             </values>
             <values>
                 <fullName>Sundanese</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Swahili</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -3479,6 +3567,10 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
                 <default>false</default>
             </values>
             <values>
+                <fullName>Albanian</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Amharic</fullName>
                 <default>false</default>
             </values>
@@ -3516,6 +3608,10 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
             </values>
             <values>
                 <fullName>Bhojpuri</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bulgarian</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -3743,6 +3839,10 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
                 <default>false</default>
             </values>
             <values>
+                <fullName>Norwegian</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Odia</fullName>
                 <default>false</default>
             </values>
@@ -3816,6 +3916,10 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
             </values>
             <values>
                 <fullName>Sundanese</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Swahili</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -3930,6 +4034,10 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
                 <default>false</default>
             </values>
             <values>
+                <fullName>Albanian</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Amharic</fullName>
                 <default>false</default>
             </values>
@@ -3967,6 +4075,10 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
             </values>
             <values>
                 <fullName>Bhojpuri</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bulgarian</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -4194,6 +4306,10 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
                 <default>false</default>
             </values>
             <values>
+                <fullName>Norwegian</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Odia</fullName>
                 <default>false</default>
             </values>
@@ -4267,6 +4383,10 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
             </values>
             <values>
                 <fullName>Sundanese</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Swahili</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -4381,6 +4501,10 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
                 <default>false</default>
             </values>
             <values>
+                <fullName>Albanian</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Amharic</fullName>
                 <default>false</default>
             </values>
@@ -4418,6 +4542,10 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
             </values>
             <values>
                 <fullName>Bhojpuri</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bulgarian</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -4645,6 +4773,10 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
                 <default>false</default>
             </values>
             <values>
+                <fullName>Norwegian</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Odia</fullName>
                 <default>false</default>
             </values>
@@ -4718,6 +4850,10 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
             </values>
             <values>
                 <fullName>Sundanese</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Swahili</fullName>
                 <default>false</default>
             </values>
             <values>

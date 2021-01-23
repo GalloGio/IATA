@@ -58,7 +58,7 @@
 							<li>Change of Ownership (Head Office only)</li>
 							<li>Change of Company Type (Head Office only) </li>
 							<li>Change of License/Business Registration number</li>
-							<li>Change of Tax/VAT number</li>	
+							<li>Change of Tax/VAT number</li>								
 						</template>
 						<template if:true={change2}>
 							<li>Change of Physical Address</li>
@@ -73,6 +73,9 @@
 							<li>Change of Sales Activities</li>	
 						</template>
 					</ul>
+					<template if:true={change1}>
+						<p>When submitting this change type, supporting documentation reflecting the change(s) must be provided.</p>
+					</template>
 				</div>
 				<div class="col s12" if:true={caseInProgress}>
 					<p class="errorMessage">{changeTypeSelectedLabel} in progress</p>

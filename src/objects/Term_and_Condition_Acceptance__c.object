@@ -149,7 +149,7 @@
     <enableHistory>true</enableHistory>
     <enableLicensing>false</enableLicensing>
     <enableReports>false</enableReports>
-    <enableSearch>false</enableSearch>
+    <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ReadWrite</externalSharingModel>
@@ -275,6 +275,40 @@ Indicates if the related Term and Condition was accepted by the related Contact<
         <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>All1</fullName>
+        <columns>NAME</columns>
+        <columns>Contact__c</columns>
+        <columns>Date_Accepted__c</columns>
+        <columns>Is_Accepted__c</columns>
+        <columns>Status__c</columns>
+        <columns>Term_Condition__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Term_Condition__c</field>
+            <operation>contains</operation>
+            <value>ONE</value>
+        </filters>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>ONE_Source</fullName>
+        <columns>NAME</columns>
+        <columns>Contact__c</columns>
+        <columns>Status__c</columns>
+        <columns>Status_Date__c</columns>
+        <columns>Term_Condition__c</columns>
+        <columns>Term_and_Condition_Version_Number__c</columns>
+        <columns>Is_Superseded__c</columns>
+        <columns>Is_Accepted__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Term_Condition__c</field>
+            <operation>contains</operation>
+            <value>ONE Source</value>
+        </filters>
+        <label>ONE Source</label>
     </listViews>
     <nameField>
         <displayFormat>TCA-{000000}</displayFormat>

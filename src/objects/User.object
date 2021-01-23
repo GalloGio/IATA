@@ -2644,9 +2644,9 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         <columns>CORE.USERS.EMAIL</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>FULL_NAME</field>
-            <operation>contains</operation>
-            <value>troll</value>
+            <field>CORE.USERS.EMAIL</field>
+            <operation>equals</operation>
+            <value>huangjl@iata.org,dengww@iata.org,congzh@iata.org</value>
         </filters>
         <label>User with name</label>
         <language>en_US</language>

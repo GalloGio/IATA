@@ -27,8 +27,6 @@ export default class TidsViewBranches extends LightningElement {
 		
 		connectedCallback() {
 			 this.accountInfo = getAccountSelected();
-			 console.log('HOAccount',JSON.stringify(this.accountInfo));
-			 
 			 this.isHOAccountTerminated=false;
 			 if (this.accountInfo!=undefined){
 					 if (this.accountInfo.Status__c==='Terminated'){this.isHOAccountTerminated=true;}
@@ -38,13 +36,17 @@ export default class TidsViewBranches extends LightningElement {
 		// <template for:each={branches} for:item="branch">
 		// the above is how you would link the javascript to the html
 		branchValues() {
-			console.log('branchValues:this.accountInfo.Id',this.accountInfo.Id);
-			getSortedBranches({accountIds:this.accountInfo.Id, name:this.sortCode,order:this.sortDirection,search:this.newsearch}).then(result => {this.viewBranchList(result);});
+			getSortedBranches({
+				accountIds:this.accountInfo.Id
+				,name:this.sortCode
+				,order:this.sortDirection
+				,search:this.newsearch
+				,allrecords:this.allRecords
+			}).then(result => {this.viewBranchList(result);});
 		}
 		viewBranchList(result){
 			this.morethanzero=false;
 			let count=0;
-			console.log('result', JSON.stringify(result));
 			result.forEach(function(item){
 				count++;
 				if (item.TradeName__c===null || item.TradeName__c==='' || item.TradeName__c===undefined){
@@ -54,7 +56,6 @@ export default class TidsViewBranches extends LightningElement {
 				item.showContextMenu=false;
 				item.showRelinquishment=true;
 				item.showReinstatement=false;
-				//console.log('item.Accreditation__r', JSON.stringify(item.Accreditation__r));
 				if (item.Status__c=='Terminated'){
 						item.showRelinquishment=false;
 						item.showReinstatement=true;
@@ -80,7 +81,12 @@ export default class TidsViewBranches extends LightningElement {
 			var idx = event.currentTarget.id;
 			this.sortCode = this.categorize(idx);
 			this.sortDirection = this.determineSortDirection(idx);
-			getSortedBranches({accountIds:this.accountInfo.Id,name:sortCode,order:sortDirection, search:this.newsearch}).then(result => {
+			getSortedBranches({
+				accountIds:this.accountInfo.Id
+				,name:sortCode,order:sortDirection
+				,search:this.newsearch
+				,allrecords:this.allRecords
+			}).then(result => {
 				this.viewBranchList(result);
 			});
 		}
@@ -117,19 +123,20 @@ export default class TidsViewBranches extends LightningElement {
 			});
 		}
 		handlesearchBranches(event){
-			//event.preventDefault();
-			//if (event.which == 13){
-			//  console.log('enter newsearch',newsearch);
-			//}
 			this.isSearchOn=false;
 			let newsearch = event.target.value;
-			console.log('newsearch',newsearch);
 			this.newsearch=newsearch;
 		}
 		handlegetBranches(event){
 			event.preventDefault();
 			fireEvent(this.pageRef,'spinnerListener', {payload:{show:true}});
-			getSortedBranches({accountIds:this.accountInfo.Id,name:this.sortCode,order:this.sortDirection, search:this.newsearch}).then(result => {
+			getSortedBranches({
+				accountIds:this.accountInfo.Id
+				,name:this.sortCode
+				,order:this.sortDirection
+				,search:this.newsearch
+				,allrecords:this.allRecords
+			}).then(result => {
 				this.isSearchOn=true;
 				fireEvent(this.pageRef,'spinnerListener', {payload:{show:false}});
 				this.viewBranchList(result);
@@ -139,7 +146,13 @@ export default class TidsViewBranches extends LightningElement {
 			event.preventDefault();
 			fireEvent(this.pageRef,'spinnerListener', {payload:{show:true}});
 			this.newsearch='';
-			getSortedBranches({accountIds:this.accountInfo.Id,name:this.sortCode,order:this.sortDirection, search:this.newsearch}).then(result => {
+			getSortedBranches({
+				accountIds:this.accountInfo.Id
+				,name:this.sortCode
+				,order:this.sortDirection
+				,search:this.newsearch
+				,allrecords:this.allRecords
+			}).then(result => {
 				this.isSearchOn=false;
 				fireEvent(this.pageRef,'spinnerListener', {payload:{show:false}});
 				this.viewBranchList(result);
@@ -175,7 +188,6 @@ export default class TidsViewBranches extends LightningElement {
 		}
 		oops(error){
 			fireEvent(this.pageRef,'spinnerListener', {payload:{show:false}});
-			console.log(' fetchRoles error',error);
 			this.modalDefaultMessage='Oops! something happened, please retry.'
 			this.modalAction='OK';
 			this.showConfimationModal=true;
@@ -200,7 +212,6 @@ export default class TidsViewBranches extends LightningElement {
 				type:'Terminated'
 			}).then(result => {
 				//Alert Relinquishment in process
-				console.log('handleRelinquish result',result);
 				let isReinstatement=false;
 				if (result===''){
 				}else {  
@@ -209,7 +220,6 @@ export default class TidsViewBranches extends LightningElement {
 						new ShowToastEvent({mode: "dismissable", title: "Alert",message: result,variant: "info"})
 					);
 				}
-				console.log('handleRelinquish isReinstatement',isReinstatement);
 				let triggertype='SELECT_BRANCH';
 				this.triggerEvent({type:triggertype,payload:{showreinstatement:isReinstatement, detail: selectedbranchAccount}});
 				fireEvent(this.pageRef,'spinnerListener', {payload:{show:false}});
@@ -247,7 +257,6 @@ export default class TidsViewBranches extends LightningElement {
 		}
 		handleReinstate(event) {
 			event.preventDefault();
-			console.log('handleReinstatement',this.isHOReinstatement);
 			this.showConfimationModal=false;
 			if (this.isHOReinstatement){
 				 this.modalDefaultMessage='There is already a request pending review for the Head Office to allow your reinstatement.';
@@ -272,13 +281,11 @@ export default class TidsViewBranches extends LightningElement {
 			}else if (selectedbranchAccount.Location_Type__c==='BR'){
 				triggertype='REINSTATEBR';
 			}
-			console.log('selectedbranchAccount',JSON.stringify(selectedbranchAccount)); 
 			let accountId = selectedbranchAccount.Id;     
 			isTidsRequestPending({
 				accountId: accountId,
 				type:'TIDS – Reinstatement'
 			}).then(result => {
-			 console.log('handleReinstatement result',result);
 			 if (result===''){
 					//is the branch in the reinstatement period
 					isTidsRequestPending({
@@ -286,7 +293,6 @@ export default class TidsViewBranches extends LightningElement {
 						type:'Terminated'
 					}).then(result2 => {
 						//Alert Relinquishment in process
-						console.log('handleRelinquish result',result2);
 						let isReinstatement=false;
 						if (result2===''){
 						}else{
@@ -295,10 +301,10 @@ export default class TidsViewBranches extends LightningElement {
 								new ShowToastEvent({mode: "dismissable",title: "Alert",message: result2,variant: "info"})
 							);
 						}
-						console.log('handleReinstate isReinstatement',isReinstatement);
 						this.triggerEvent({type:triggertype,payload:{showreinstatement:isReinstatement, detail: selectedbranchAccount}});
 						fireEvent(this.pageRef,'spinnerListener', {payload:{show:false}});
 					 }).catch(error => {
+						console.log('error',JSON.stringify(error));
 						this.oops(error);
 					});
 			 }else{
@@ -314,7 +320,6 @@ export default class TidsViewBranches extends LightningElement {
 
 		handleRelinquish(event) {
 		 event.preventDefault();
-		 console.log('handleRelinquish',this.isHOReinstatement);
 		 this.showConfimationModal=false;
 		 if (this.isHOReinstatement){
 				this.modalDefaultMessage='There is already a request pending review for the Head Office to allow your relinquishement.';
@@ -337,14 +342,11 @@ export default class TidsViewBranches extends LightningElement {
 		 if (selectedbranchAccount.Location_Type__c==='VB'){
 				 triggertype='RELINQUISHVB';
 		 }
-		 console.log('triggertype',triggertype); 
-		 console.log('selectedbranchAccount',JSON.stringify(selectedbranchAccount)); 
 		 let accountId = selectedbranchAccount.Id;     
 		 isTidsRequestPending({
 			 accountId: accountId,
 			 type:'TIDS – Relinquishment'
 		 }).then(result => {
-			console.log('handleRelinquish result',result);
 			if (result===''){
 				this.triggerEvent({type:triggertype,payload:{detail: selectedbranchAccount}});
 			}else{

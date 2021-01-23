@@ -18,6 +18,10 @@ public class UserProvisioningUtils {
 
 	private static final Integer MAX_LOG_LEN = 1300;
 
+	public static final String PARAM_EXTERNAL_SYSTEM = 'ExternalSystem';
+
+	public static final set<string> AllowedExternalSystems = new set<string>{'IEP', 'GDI', 'PASS', 'FRED+'};
+
 	private UserProvisioningRequest upr;
 	private NamedCredential namedCredential;
 	private UserProvisioningConfig upc;
@@ -51,6 +55,20 @@ public class UserProvisioningUtils {
 		else
 		{
 			return 'callout:' + namedCredential.developerName;
+		}
+	}
+
+	public String getNamedCredential(string ExternalSystem, string DevName) {
+		if (Test.isRunningTest()){
+			return 'callout:' + TESTING_NAMED_CREDENTIAL;
+		}
+		else{
+			if(AllowedExternalSystems.contains(ExternalSystem)){
+				CalloutHelper cHelp = new CalloutHelper();
+				return 'callout:' + namedCredential.developerName + cHelp.getResourceFromConfig(DevName);
+			}else{
+				return 'callout:' + namedCredential.developerName;
+			}
 		}
 	}
 

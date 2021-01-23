@@ -8,7 +8,15 @@ trigger CaseComment on CaseComment (before insert, before update, before delete,
 			for(CaseComment cc : Trigger.new){
 				ccIds.add(cc.Id);
 			}
-			CaseCommentHandler.doAfterInsert(ccIds);
+			if(!ccIds.isEmpty()){
+				if(!(System.isFuture() || System.isBatch())){
+					CaseCommentHandler.doAfterInsertFuture(ccIds);
+				}
+				else {
+					CaseCommentHandler.doAfterInsert(ccIds);
+				}
+			}
+			handler.processCaseItems(Trigger.new);
 			Unbabel_CaseCommentRequestTranslation.requestTranslation(Trigger.new);
 		} else if(Trigger.isUpdate){
 			handler.doAfterUpdate(Trigger.newMap, Trigger.oldMap);
