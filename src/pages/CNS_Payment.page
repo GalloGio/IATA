@@ -50,7 +50,7 @@
 			</apex:pageBlock>
 
 			<apex:outputPanel id="a">
-				<form name="formCyberSource" action="{!$Label.IDCard_Cybersourcelink}" method="post">
+				<form name="formCyberSource" action="{!url}" method="post">
 					<apex:repeat value="{!cyberSrcData}" var="cbsKey">
 						<input type="hidden" name="{!cbsKey}" value="{!cyberSrcData[cbsKey]}" />
 					</apex:repeat>
