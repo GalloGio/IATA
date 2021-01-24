@@ -67994,7 +67994,7 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>AirlineSuspensionCsTemplateMerge</apexPage>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>AirlineSuspensionFMExportCSV</apexPage>
