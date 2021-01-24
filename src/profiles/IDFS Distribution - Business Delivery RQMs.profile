@@ -4400,6 +4400,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>EscalatewithinIATAKeyCustomerAlertCtrl</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>EventTriggerHandler</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -7653,6 +7657,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>IsraelDisputesCreateNewCaseTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>KeyCustomerAlertCtrl</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>KeyCustomerAlertTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -11672,6 +11684,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <custom>true</custom>
+    <customSettingAccesses>
+        <enabled>true</enabled>
+        <name>Case_RTs_for_Key_Customer_alert__c</name>
+    </customSettingAccesses>
     <description>Profile used for Regional Quality Managers / Deputies - Worldwide</description>
     <fieldPermissions>
         <editable>false</editable>
@@ -12525,6 +12541,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>AMS_Account_Role__c.Percentage_Formated__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>AMS_Account_Role__c.Percentage__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -12791,6 +12812,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>AMS_Accreditation_Contact__c.Financial_Assessment_Contact__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>AMS_Accreditation_Contact__c.Financial_Interest_Formated__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>

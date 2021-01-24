@@ -61,7 +61,6 @@
         <members>CaseType</members>
         <members>ContactRole</members>
         <members>ContractContactRole</members>
-        <!-- <members>ContractStatus</members> Remove the comment after sprint 21 release-->
         <members>EntitlementType</members>
         <members>EventSubject</members>
         <members>EventType</members>

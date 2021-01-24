@@ -5,6 +5,7 @@
     <name>AGM Non Compliance - A&amp;ME</name>
     <queueMembers>
         <publicGroups>
+            <publicGroup>GCS_L1L2_Queues_Members</publicGroup>
             <publicGroup>IDFSAfricaMEallusers</publicGroup>
             <publicGroup>IDFSAllusersexcludingIWandACCA</publicGroup>
         </publicGroups>

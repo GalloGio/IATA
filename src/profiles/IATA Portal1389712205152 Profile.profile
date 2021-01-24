@@ -4396,6 +4396,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>EscalatewithinIATAKeyCustomerAlertCtrl</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>EventTriggerHandler</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -7649,6 +7653,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>IsraelDisputesCreateNewCaseTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>KeyCustomerAlertCtrl</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>KeyCustomerAlertTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -12520,6 +12532,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>AMS_Account_Role__c.Percentage_Formated__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>AMS_Account_Role__c.Percentage__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -12786,6 +12803,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>AMS_Accreditation_Contact__c.Financial_Assessment_Contact__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>AMS_Accreditation_Contact__c.Financial_Interest_Formated__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -64132,7 +64154,16 @@
         <layout>xtma_Link_Detail__c-Link Detail Layout</layout>
     </layoutAssignments>
     <objectPermissions>
-        <allowCreate>false</allowCreate>
+        <allowCreate>true</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>Account</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
@@ -67463,6 +67494,7 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
+        <personAccountDefault>true</personAccountDefault>
         <recordType>Account.Standard_Account</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -68243,6 +68275,7 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
+        <personAccountDefault>true</personAccountDefault>
         <recordType>Contact.Standard_Contact</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
