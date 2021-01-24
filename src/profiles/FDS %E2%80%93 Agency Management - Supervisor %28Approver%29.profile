@@ -11688,6 +11688,10 @@
         <enabled>true</enabled>
         <name>IFAP_Can_Bypass_Resubmission_Validation</name>
     </customPermissions>
+    <customSettingAccesses>
+        <enabled>true</enabled>
+        <name>Case_RTs_for_Key_Customer_alert__c</name>
+    </customSettingAccesses>
     <fieldPermissions>
         <editable>false</editable>
         <field>ACCA_Service_Request__c.ACCA_Service_Request_Subject__c</field>
