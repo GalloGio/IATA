@@ -129,11 +129,10 @@ public static List<PortalLookupSearchResult> searchContacts(String searchTerm) {
 
 	return results;
 }
-
 //Dynamic Query to perform searches on the Contact.
 private static List<Contact> searchRelatedContacts(String searchTerm) {
-	String parentId = getParentId();
 	Account currentAccount = getAccount();
+	String parentId = getParentId();
 	//prepare query
 	String finalQuery = 'SELECT Id, Name, Email FROM Contact WHERE Email != \'' + CONTACT.Email + '\' AND User_Portal_Status__c in (\'Approved Admin\',\'Approved User\') ';
 
@@ -142,9 +141,8 @@ private static List<Contact> searchRelatedContacts(String searchTerm) {
 	} else {
 		finalQuery += 'AND Status__c = \'Active\' AND (NOT Email LIKE \'%.inactive%\')';
 	}
-	finalQuery += ' AND (AccountId = \'' + currentAccount.Id + '\' OR AccountId = \'' + parentId + '\')';
+	finalQuery += ' AND (AccountId = \'' + currentAccount.Id + '\' OR Account.ParentId = \'' + parentId + '\')';
 	finalQuery += ' LIMIT ' + MAX_RESULTS;
-	
 	List<Contact> allContacts = DAL_WithoutSharing.getRelatedContacts(finalQuery);
 	return allContacts;
 
