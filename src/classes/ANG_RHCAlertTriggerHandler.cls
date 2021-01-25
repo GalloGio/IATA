@@ -984,7 +984,7 @@ public class ANG_RHCAlertTriggerHandler{
 			}
 		}
 
-		if(SAAMToCreate.isEmpty())	insert SAAMToCreate;
+		if(!SAAMToCreate.isEmpty())	insert SAAMToCreate;
 		//Notify the internal stakeholders
 		if(!mapTemplates.isEmpty()){
 			List<Messaging.SingleEmailMessage> emailLst = createRhcExceptionalMonitoringNotifications(GDSAlerts, raAccMap, mapEmailPerAlert, mapTemplates);
