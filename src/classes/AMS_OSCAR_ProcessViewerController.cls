@@ -288,7 +288,7 @@ public class AMS_OSCAR_ProcessViewerController {
 		return oscar.Change_effective_as_of__c.format();
 	}
 	public boolean getIsAgencyChange(){
-		return oscar.RecordType.DeveloperName == 'CHANGE';
+		return (oscar.RecordTypeId == AMS_Utils.RECTYPE_CHANGE || oscar.RecordTypeId == AMS_Utils.RECTYPE_NGCHANGES);
 	}
 
 	public Boolean isValidationCompleted {
