@@ -36,6 +36,7 @@ global class ISSP_AmazonS3_Ctrl {
 	public boolean canUploadAndDelete {get{return true;} set;}
 	public AMS_Accreditation_Contact__c newAccreditationContact {get; set;}
 	public Id topParentIdHierarchy {get; set;}
+	public boolean isDGRForm {get; set;}
 
 	private static List<String> AMAZON_FILES_QUERY_FIELDS = new List<String>{
 		'Id',
@@ -117,6 +118,11 @@ global class ISSP_AmazonS3_Ctrl {
 				 from Case where id = : this.id];
 
 		this.topParentIdHierarchy = this.cse.Account.Top_Parent__c != null ? this.cse.Account.Top_Parent__c : this.cse.AccountId;
+		this.isDGRForm = false;
+		list<AMS_OSCAR__c> oscarCase = [SELECT id, recordTypeId from AMS_OSCAR__c where Name =: this.cse.CaseNumber AND Account__c =: this.cse.AccountId];
+		if(!oscarCase.isEmpty() && oscarCase[0].recordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CERTIFICATE')){
+			this.isDGRForm = true;
+		}
 		calculePolicy('');
 		this.refreshAmazonFileMap();
 		this.refreshReviewStatusMap();
@@ -460,7 +466,7 @@ global class ISSP_AmazonS3_Ctrl {
 		Creates a new Amazon file record for the related Case
 	**/
 	@RemoteAction
-	global static Boolean createAmazonFileObject(Id caseId, String filename, String formId, Long fielsize, String fileid, String firstName, String lastName, String certificateIssuedOn, String ExpiryDate, String issuedBy) {
+	global static Boolean createAmazonFileObject(Id caseId, String filename, String formId, Long fielsize, String fileid, String firstName, String lastName, String certificateIssuedOn, String ExpiryDate, String issuedBy, boolean isDGRForm) {
 		try {
 			Case cse = [SELECT Id, Status FROM Case WHERE Id = :caseId];
 
@@ -490,21 +496,23 @@ global class ISSP_AmazonS3_Ctrl {
 				update cse;
 			}
 
-			AMS_Pax_Accreditation_Form__c paf = [SELECT id FROM AMS_Pax_Accreditation_Form__c WHERE SAAM_Case__c = :caseId LIMIT 1];
+			if(isDGRForm){
+				AMS_Pax_Accreditation_Form__c paf = [SELECT id FROM AMS_Pax_Accreditation_Form__c WHERE SAAM_Case__c = :caseId LIMIT 1];
+	
+				AMS_Accreditation_Contact__c accContact = new AMS_Accreditation_Contact__c(
+					Name = firstName + ' ' + lastName,
+					First_Name__c = firstName,
+					Last_Name__c = lastName,
+					Certificate_issued_on__c = Date.parse(certificateIssuedOn),
+					Valid_until__c = Date.parse(ExpiryDate),
+					AMS_Pax_Accreditation_Form__c = paf.id,
+					Type_Of_Certificate__c = AMS_Utils.CERT_DGR,
+					Certificate_Issuer__c = issuedBy,
+					recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Trained_Staff')
+				);
 
-			AMS_Accreditation_Contact__c accContact = new AMS_Accreditation_Contact__c(
-				Name = firstName + ' ' + lastName,
-				First_Name__c = firstName,
-				Last_Name__c = lastName,
-				Certificate_issued_on__c = Date.parse(certificateIssuedOn),
-				Valid_until__c = Date.parse(ExpiryDate),
-				AMS_Pax_Accreditation_Form__c = paf.id,
-				Type_Of_Certificate__c = AMS_Utils.CERT_DGR,
-				Certificate_Issuer__c = issuedBy,
-				recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Trained_Staff')
-			);
-
-			insert accContact;
+				insert accContact;
+			}
 
 			return true;
 		} catch ( Exception ex) {

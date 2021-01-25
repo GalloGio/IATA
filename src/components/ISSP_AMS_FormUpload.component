@@ -39,7 +39,7 @@
         <span class="addText"></span> 
     </div>
     <div class="well">
-        <apex:form >
+        <apex:form rendered="{!isDGRForm}">
             <apex:pageblock >
                 <apex:pageBlockSection columns="1">
                         <apex:inputField value="{!newAccreditationContact.First_name__c}" styleClass="First_Name" required="true"/>
@@ -164,6 +164,8 @@
     var validField = '';
     var certificateIssuer = '';
     var folderInit = '{!storageFolder}';
+    var isDGRForm = false;
+    var expiryDate = '';
 
     function isIE(){
         if (/MSIE/.test(navigator.userAgent)){
@@ -212,7 +214,7 @@
         );
     }
 
-    function createAmazonFileObject(caseId, filename, formId, fielsize, fileid, firstName, lastName, certificateIssuedOn, ExpiryDate, certificateIssuer, callback) {
+    function createAmazonFileObject(caseId, filename, formId, fielsize, fileid, firstName, lastName, certificateIssuedOn, ExpiryDate, certificateIssuer, isDGRForm, callback) {
         Visualforce.remoting.Manager.invokeAction(
             '{!$RemoteAction.ISSP_AmazonS3_Ctrl.createAmazonFileObject}',
             caseId,
@@ -225,6 +227,7 @@
             certificateIssuedOn,
             ExpiryDate,
             certificateIssuer,
+            isDGRForm,
             function(result, event){
                 if (event.status) {
                     callback(result);
@@ -259,106 +262,132 @@
     }
 
     function submitCertificate(){
-        firstName = document.getElementsByClassName('First_Name')[0].value;
-        lastName = document.getElementsByClassName('Last_Name')[0].value;
-        certificateIssuedOn = document.getElementsByClassName('Certificate_issued_on')[0].value;
-        expiryDate = document.getElementsByClassName('Expiry_Date')[0].value;
-        certificateIssuer = document.getElementsByClassName('Certificate_Issuer')[0].value;
         var validField = true;
-        if(firstName == ''){
-            document.getElementsByClassName('First_Name')[0].style.borderColor = "red";
-            validField = false;
-        }else{
-            document.getElementsByClassName('First_Name')[0].style.borderColor = "";
+        if('{!isDGRForm}' == 'true'){
+            isDGRForm = true;
         }
+        if(isDGRForm == true){
+            firstName = document.getElementsByClassName('First_Name')[0].value;
+            lastName = document.getElementsByClassName('Last_Name')[0].value;
+            certificateIssuedOn = document.getElementsByClassName('Certificate_issued_on')[0].value;
+            expiryDate = document.getElementsByClassName('Expiry_Date')[0].value;
+            certificateIssuer = document.getElementsByClassName('Certificate_Issuer')[0].value;
 
-        if(lastName == ''){
-            document.getElementsByClassName('Last_Name')[0].style.borderColor = "red";
-            validField = false;
-        }else{
-            document.getElementsByClassName('Last_Name')[0].style.borderColor = "";
-        }
-
-        if(certificateIssuedOn == ''){
-            document.getElementsByClassName('Certificate_issued_on')[0].style.borderColor = "red";
-            validField = false;
-        }else{
-            document.getElementsByClassName('Certificate_issued_on')[0].style.borderColor = "";
-        }
-
-        if(expiryDate == ''){
-            document.getElementsByClassName('Expiry_Date')[0].style.borderColor = "red";
-            validField = false;
-        }else{
-            document.getElementsByClassName('Expiry_Date')[0].style.borderColor = "";
-        }
-
-        if(certificateIssuer == ''){
-            document.getElementsByClassName('Certificate_Issuer')[0].style.borderColor = "red";
-            validField = false;
-        }else{
-            document.getElementsByClassName('Certificate_Issuer')[0].style.borderColor = "";
-        }
-        
-        if( document.getElementById("input-{!reqCnt}").files.length == 0  && fileUploaded == false){
-            var element = document.getElementById("{!$Component.mainblock}");
-            element.style.border = "solid 1px red";
-            validField = false;
-        }else{
-            var element = document.getElementById("{!$Component.mainblock}");
-            element.style.border = "";
-        }
-
-        if(!validField){
-            return;
-        }
-        document.getElementsByClassName('addText')[0].textContent = '';
-        document.getElementsByClassName('alert')[0].style.display = 'none';
-
-        isFileInTheSameAccountHierarchy(
-            document.getElementById('topParentIdHierarchy').value,
-            firstName,
-            lastName,
-            expiryDate,
-            certificateIssuedOn,
-            function(result) {
-                document.getElementsByClassName('Expiry_Date')[0].style.borderColor = "";
-                if(result != ''){
-                    if(result == 'fields'){
-                        setTimeout(function(){ 
-                            $( ".addText" ).append('{!JSEncode($Label.ISSP_certificate_with_the_same)}');
-                            document.getElementsByClassName('alert')[0].style.display = 'block';
-                        }, 500);
-                        document.getElementsByClassName('First_Name')[0].style.borderColor = "red";
-                        document.getElementsByClassName('Last_Name')[0].style.borderColor = "red";
-                        document.getElementsByClassName('Expiry_Date')[0].style.borderColor = "red";
-                        document.getElementsByClassName('Certificate_Issuer')[0].style.borderColor = "red";
-                    }else{
-                        document.getElementsByClassName('addText')[0].textContent = '';
-                        document.getElementsByClassName('alert')[0].style.display = 'none';
-                        document.getElementsByClassName('First_Name')[0].style.borderColor = "";
-                        document.getElementsByClassName('Last_Name')[0].style.borderColor = "";
-                        document.getElementsByClassName('Expiry_Date')[0].style.borderColor = "";
-                        document.getElementsByClassName('Certificate_Issuer')[0].style.borderColor = "";
-                    }
-                    if(result == 'Date'){
-                        $( ".addText" ).append('{!JSEncode($Label.ISSP_certificate_expiry_date)}');
-                        document.getElementsByClassName('alert')[0].style.display = 'block';
-                        document.getElementsByClassName('Expiry_Date')[0].style.borderColor = "red";
-                    }else{
-                        document.getElementsByClassName('addText')[0].textContent = '';
-                        document.getElementsByClassName('alert')[0].style.display = 'none';
-                        document.getElementsByClassName('Expiry_Date')[0].style.borderColor = "";
-                    }
-                }else{
-                    $('[id*="Loading"]').children().each(function () {
-                        $(this).html( $(this).html().replace("Work in progress..",'{!JSEncode($Label.ISSP_Certificate_is_being_uploaded)}') );
-                    });
-                    $('[id*="Loading"]').show();
-                    executeDataUpload.submit();
-                }
+            if(firstName == ''){
+                document.getElementsByClassName('First_Name')[0].style.borderColor = "red";
+                validField = false;
+            }else{
+                document.getElementsByClassName('First_Name')[0].style.borderColor = "";
             }
-        );
+
+            if(lastName == ''){
+                document.getElementsByClassName('Last_Name')[0].style.borderColor = "red";
+                validField = false;
+            }else{
+                document.getElementsByClassName('Last_Name')[0].style.borderColor = "";
+            }
+
+            if(certificateIssuedOn == ''){
+                document.getElementsByClassName('Certificate_issued_on')[0].style.borderColor = "red";
+                validField = false;
+            }else{
+                document.getElementsByClassName('Certificate_issued_on')[0].style.borderColor = "";
+            }
+
+            if(expiryDate == ''){
+                document.getElementsByClassName('Expiry_Date')[0].style.borderColor = "red";
+                validField = false;
+            }else{
+                document.getElementsByClassName('Expiry_Date')[0].style.borderColor = "";
+            }
+
+            if(certificateIssuer == ''){
+                document.getElementsByClassName('Certificate_Issuer')[0].style.borderColor = "red";
+                validField = false;
+            }else{
+                document.getElementsByClassName('Certificate_Issuer')[0].style.borderColor = "";
+            }
+            
+            if( document.getElementById("input-{!reqCnt}").files.length == 0  && fileUploaded == false){
+                var element = document.getElementById("{!$Component.mainblock}");
+                element.style.border = "solid 1px red";
+                validField = false;
+            }else{
+                var element = document.getElementById("{!$Component.mainblock}");
+                element.style.border = "";
+            }
+
+            if(!validField){
+                return;
+            }
+
+            document.getElementsByClassName('addText')[0].textContent = '';
+            document.getElementsByClassName('alert')[0].style.display = 'none';
+
+            isFileInTheSameAccountHierarchy(
+                document.getElementById('topParentIdHierarchy').value,
+                firstName,
+                lastName,
+                expiryDate,
+                certificateIssuedOn,
+                function(result) {
+                    document.getElementsByClassName('Expiry_Date')[0].style.borderColor = "";
+                    if(result != ''){
+                        if(result == 'fields'){
+                            setTimeout(function(){ 
+                                $( ".addText" ).append('{!JSEncode($Label.ISSP_certificate_with_the_same)}');
+                                document.getElementsByClassName('alert')[0].style.display = 'block';
+                            }, 500);
+                            document.getElementsByClassName('First_Name')[0].style.borderColor = "red";
+                            document.getElementsByClassName('Last_Name')[0].style.borderColor = "red";
+                            document.getElementsByClassName('Expiry_Date')[0].style.borderColor = "red";
+                            document.getElementsByClassName('Certificate_Issuer')[0].style.borderColor = "red";
+                        }else{
+                            document.getElementsByClassName('addText')[0].textContent = '';
+                            document.getElementsByClassName('alert')[0].style.display = 'none';
+                            document.getElementsByClassName('First_Name')[0].style.borderColor = "";
+                            document.getElementsByClassName('Last_Name')[0].style.borderColor = "";
+                            document.getElementsByClassName('Expiry_Date')[0].style.borderColor = "";
+                            document.getElementsByClassName('Certificate_Issuer')[0].style.borderColor = "";
+                        }
+                        if(result == 'Date'){
+                            $( ".addText" ).append('{!JSEncode($Label.ISSP_certificate_expiry_date)}');
+                            document.getElementsByClassName('alert')[0].style.display = 'block';
+                            document.getElementsByClassName('Expiry_Date')[0].style.borderColor = "red";
+                        }else{
+                            document.getElementsByClassName('addText')[0].textContent = '';
+                            document.getElementsByClassName('alert')[0].style.display = 'none';
+                            document.getElementsByClassName('Expiry_Date')[0].style.borderColor = "";
+                        }
+                    }else{
+                        $('[id*="Loading"]').children().each(function () {
+                            $(this).html( $(this).html().replace("Work in progress..",'{!JSEncode($Label.ISSP_Certificate_is_being_uploaded)}') );
+                        });
+                        $('[id*="Loading"]').show();
+                        executeDataUpload.submit();
+                    }
+                }
+            );
+
+        }else{
+            if( document.getElementById("input-{!reqCnt}").files.length == 0  && fileUploaded == false){
+                var element = document.getElementById("{!$Component.mainblock}");
+                element.style.border = "solid 1px red";
+                validField = false;
+            }else{
+                var element = document.getElementById("{!$Component.mainblock}");
+                element.style.border = "";
+            }
+
+            if(!validField){
+                return;
+            }
+            $('[id*="Loading"]').children().each(function () {
+                $(this).html( $(this).html().replace("Work in progress..",'{!JSEncode($Label.ISSP_Certificate_is_being_uploaded)}') );
+            });
+            $('[id*="Loading"]').show();
+            executeDataUpload.submit();
+        }
 
     }
     $(document).ready( function() {
@@ -475,6 +504,7 @@
                         certificateIssuedOn,
                         expiryDate,
                         certificateIssuer,
+                        isDGRForm,
                         function(result) {
                             if (!result) {
                                 alert('{!JSEncode($Label.ISSP_File_Exists)}');

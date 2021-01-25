@@ -269,8 +269,9 @@ private class ISSP_AmazonS3_Test {
 		insert cse;
 
 		Test.startTest();
-		ISSP_AmazonS3_Ctrl.createAmazonFileObject(null, null, null, null, null, null, null, null, null, null);
-		ISSP_AmazonS3_Ctrl.createAmazonFileObject(cse.Id, 'filename', 'none', 10, 'filename', 'teste', 'teste', '1/15/2040', '1/15/2040', 'teste');
+		ISSP_AmazonS3_Ctrl.createAmazonFileObject(null, null, null, null, null, null, null, null, null, null, null);
+		ISSP_AmazonS3_Ctrl.createAmazonFileObject(cse.Id, 'filename', 'none', 10, 'filename', 'teste', 'teste', '1/15/2040', '1/15/2040', 'teste', true);
+		ISSP_AmazonS3_Ctrl.createAmazonFileObject(cse.Id, 'filename', 'none', 10, 'filename', 'teste', 'teste', '1/15/2040', '1/15/2040', 'teste', false);
 		ISSP_AmazonS3_Ctrl.isFileNameUnique(cse.Id, 'filename', 'none');
 		Test.stopTest();
 	}
