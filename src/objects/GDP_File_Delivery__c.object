@@ -557,6 +557,32 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>ZZZZ_Random_Search</fullName>
+        <columns>NAME</columns>
+        <columns>Subscription__c</columns>
+        <columns>File_Specification__c</columns>
+        <columns>File_Name__c</columns>
+        <columns>File_Size_KB__c</columns>
+        <columns>Notification__c</columns>
+        <columns>Quantity_of_file_in_delivery__c</columns>
+        <columns>Message__c</columns>
+        <columns>Status__c</columns>
+        <columns>Delivery_Date__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Delivery_Date__c</field>
+            <operation>equals</operation>
+            <value>TODAY</value>
+        </filters>
+        <filters>
+            <field>File_Specification__c</field>
+            <operation>contains</operation>
+            <value>Master</value>
+        </filters>
+        <label>ZZZZ-Random Search</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>ZZZ_Deliveries_With_No_Link_to_Z_Sub</fullName>
         <booleanFilter>1 OR 2</booleanFilter>
         <columns>NAME</columns>
