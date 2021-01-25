@@ -51,6 +51,7 @@ public with sharing class CustomQueueNotifications {
 						body = body.replace('{!Case.Subject}', c.Subject);
 						body = body.replace('{!Case.Description}', c.Description != null ? c.Description : '');
 						body = body.replace('{!Case.Link}', System.URL.getSalesforceBaseUrl().toExternalForm() + '/' + c.Id);
+						body = body.replace('{!Case.BSPCountry__c}', c.BSPCountry__c != null ? c.BSPCountry__c : '');
 
 						String subject = Label.Custom_Queue_Notifications_Email_Subject;
 						subject = subject.replace('{!QueueName}', mapQueuesPerId.get(c.OwnerId).Name);

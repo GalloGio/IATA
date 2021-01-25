@@ -287,7 +287,7 @@
         <description>Stores the ID of the Financial Security as assigned by the archiving company to help operational teams find the FS referenced by that company faster.</description>
         <externalId>false</externalId>
         <label>Archiving company’s ID</label>
-        <length>12</length>
+        <length>30</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
