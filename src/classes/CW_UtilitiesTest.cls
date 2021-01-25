@@ -84,7 +84,6 @@ public class CW_UtilitiesTest {
 
 		Account_Contact_Role__c acr = CW_TestDataFactory.testAccountContactRole(accRole.Id, acc.Id, con1.Id);
 		insert acr;
-		System.debug(LoggingLevel.FINE, 'AB:: SETUP Account_Contact_Role__c = >' + acr.Id);
 
 		ISSP_CS__c icgUralBase = new ISSP_CS__c(Name = 'ICG_URL_Base', Value__c = 'https://theurl.com/s/');
 		insert icgUralBase;
@@ -385,8 +384,6 @@ public class CW_UtilitiesTest {
 
 		List<User> urs = [SELECT id, accountid, contactid FROM user WHERE firstname = 'IATAICGACB' AND lastname = 'IATAICGXYZ'];
 		List<ICG_Account_Role_Detail__c> ard = [SELECT id FROM ICG_Account_Role_Detail__c];
-		System.debug(LoggingLevel.FINE, '@FIX->usr: ' + urs);
-		System.debug(LoggingLevel.FINE, '@FIX->ard: ' + ard);
 		test.startTest();
 		String hFromUser = CW_Utilities.getOpsHierarchyNameFromUserId(urs[0].Id);
 		String hFromStation = CW_Utilities.getOpsHierarchyNameFromStationId(ard[0].Id);

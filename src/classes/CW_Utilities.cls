@@ -1616,7 +1616,9 @@ public without sharing class CW_Utilities {
 	 * @name			getUserIdsFromGroup
 	 * @author			Beatriz <beatriz.menendez@next-lin.ch>
 	 * @created			09 / 12 / 2020
-	 * @description		Generates a map for all the requested groups and its related users (and subordinates)
+	 * @description		Generates a map for all the requested groups and its related users (and subordinates).
+	 *					This map can be used to know all queue member ids for notification purposes as well as
+	 *					for any functionality that works with queues and all the child ids must be known.
 	 * @param			String param : groupIds -> set of all parent groups to be taken into account.
 	 * @return			Map<QueueId, Set<MemmberUsersIds>>
 	**********************************************************************************************************/

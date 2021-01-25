@@ -525,7 +525,6 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 				if (this.isRenewMode) {
 					this.addPreviuosCapabilities();
 				}
-				console.log(JSON.parse(JSON.stringify(result)));
 				// Creates the event with the data and dispatches.
 				const newEvent = new CustomEvent("dataloaded", {
 					detail: {
