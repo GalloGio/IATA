@@ -90,8 +90,11 @@
                         </apex:outputText>
                     </apex:outputText>
                 </div>
-                <div class="col-md-2">
-                    ({!$Label.ISSP_Mandatory})
+                <div class="col-md-2"  style="display: {!IF(isDGRForm, 'none', 'block')};">
+                    {!CASE(reqRequired, 'Mandatory', '*', 'Optional', '(', '')}{!CASE(reqRequired, 'Mandatory', $Label.ISSP_Mandatory, 'Optional', $Label.ISSP_Optional, '')}{!CASE(reqRequired, 'Optional', ')', '')}
+                </div>
+                <div class="col-md-2" style="display: {!IF(isDGRForm, 'block', 'none')};">
+                    {!$Label.ISSP_Mandatory}                
                 </div>
             </apex:outputPanel>
             <div class="progress" style="height:8px;display:{!IF(reqRequired!=null,'','none')}"><div class="uploadbar-{!reqCnt} progress-bar progress-bar-success progress-bar-striped"></div></div>
