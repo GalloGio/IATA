@@ -151,10 +151,6 @@
                 <field>IATA_ISO_Country__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Nearest_Airport_Name__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Required</behavior>
                 <field>Nearest_Airport__c</field>
             </layoutItems>
