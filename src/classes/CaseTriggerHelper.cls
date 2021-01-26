@@ -25,7 +25,7 @@ public with sharing class CaseTriggerHelper {
 	public static final List<String> PORTAL_PENDING_CLOSURE_RECORD_TYPES = new List<String> {
 		'CasesMENA', 'CasesAmericas', 'Cases_China_North_Asia', 'CasesEurope', 'Cases_Global', 'ExternalCasesIDFSglobal'
 	};
-	public static final List<String> reopening_reasons = new List<String> {'same query', 'new query'};
+	public static final List<String> reopening_reasons = new List<String> {'same query'};
 	private static final string complaintRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ComplaintIDFS');
 	private static List<Id> portalPendingClosureRecordTypes;
 
@@ -168,19 +168,18 @@ public with sharing class CaseTriggerHelper {
 			// sprint6 if a case is close as part of same query
 			// substract from original user while awarding the new one
 			Integer points = configsMap.get(CASE_ACTION_CASE_CLOSURE).get(cRTDevName).Points__c.intValue();
+			Boolean flagKPI = false;
 			if(String.isNotBlank(newMap.get(cId).Reopening_reason__c) && newMap.get(cId).Status=='Closed' && oldMap.get(cId).Status=='Reopen' && !reopening_reasons.contains(newMap.get(cId).Reopening_Reason__c)){
 				points = 0;
 			} else if(newMap.get(cId).Status=='Closed' && oldMap.get(cId).Status!='Reopen' && typeOfActionClosureMap.get(cId) != null){
 				List<KPI_Value__c> caseKpiValues = typeOfActionClosureMap.get(cId);
-				Boolean flagKPI = false;
+				
 				for(KPI_Value__c kpiValue : caseKpiValues) {
 					if((kpiValue.CreatedById == UserInfo.getUserId() && kpiValue.CaseNumber__r.RecordTypeId == complaintRT && kpiValue.KPI_Value__c == points))
 						flagKPI = true;
 				}
-				if(flagKPI)
-					points = 0;
 			}
-			if(points != 0) {
+			if(!flagKPI) {
 				KPI_Value__c valueToInsert = createKPIReportingValue(newMap.get(cId), points, kpiReportingClosureId, UserInfo.getUserId());
 				kpiValuesToInsert.add(valueToInsert);
 			}
@@ -209,8 +208,9 @@ public with sharing class CaseTriggerHelper {
 				KPI_Value__c kpv = typeOfActionReopenedMap.get(cId);
 				String cRTDevName = RecordTypeSingleton.getInstance().getRecordTypeById('Case', oldMap.get(cId).RecordTypeId).DeveloperName;
 				Integer points = Integer.valueOf(configsMap.get(CASE_ACTION_CASE_REOPENING).get(cRTDevName).Points__c.intValue());
-				if(newMap.get(cId).Reopening_Reason__c == 'new query')
-					points = -points;
+				
+				if(!reopening_reasons.contains(newMap.get(cId).Reopening_Reason__c))
+					points = 0;
 				KPI_Value__c valueToInsert = createKPIReportingValue(oldMap.get(cId), points,kpiReportingReopeningId, (kpv != null ? kpv.Responsible__c : UserInfo.getUserId()));
 				kpiValuesToInsert.add(valueToInsert);
 			}
