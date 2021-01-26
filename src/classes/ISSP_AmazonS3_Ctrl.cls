@@ -431,7 +431,7 @@ global class ISSP_AmazonS3_Ctrl {
 	@RemoteAction
 	global static string isFileInTheSameAccountHierarchy(Id parentID, String firstName, String lastName, String ExpiryDate, String certificateIssuedOn) {
 
-		if(Date.parse(ExpiryDate) <= Date.Today().addDays(15)){
+		if(Date.parse(ExpiryDate) <= Date.Today().addDays(90)){
 			return 'Date';
 		}
 
