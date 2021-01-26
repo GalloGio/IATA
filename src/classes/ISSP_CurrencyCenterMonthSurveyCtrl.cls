@@ -1391,7 +1391,7 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 		return ISSP_CurrencyCenterMonthSurveyCtrl.orderSurveyList(listSurveys);
 	}
 
-	private Currency_Center_Survey__c orderSurveyList(List<Currency_Center_Survey__c> listSurveys) {
+	private static Currency_Center_Survey__c orderSurveyList(List<Currency_Center_Survey__c> listSurveys) {
 		map<Integer,Currency_Center_Survey__c> mapSurvey = new map<Integer,Currency_Center_Survey__c>();
 		for (Currency_Center_Survey__c survey: listSurveys ) {
 			String month = survey.Month_Survey__c;
