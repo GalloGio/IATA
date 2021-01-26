@@ -6,6 +6,20 @@ public with sharing class CaseProcessTypeHelper {
 
 	private static final Id CASE_RT_OSCAR = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
+	// Values for the standard field Case.Status marked as a closed
+	private static Set<String> CLOSED_STATUSES {
+		get {
+			if (CLOSED_STATUSES==null) {
+				CLOSED_STATUSES = new Set<String>();
+				for (CaseStatus status : [SELECT ApiName  FROM CaseStatus WHERE IsClosed = true]) {
+					CLOSED_STATUSES.add(status.ApiName);
+				}
+			}
+			return CLOSED_STATUSES;
+		}
+		private set;
+	}
+
 	//This variable maps the metadata per reason and case recordtype id
 	private static Map<Id,Map<String,list<Case_Process_Type__mdt>>> mapRTsToReasons = null;
 
@@ -91,20 +105,21 @@ public with sharing class CaseProcessTypeHelper {
 	 *  - RecordType must be defined in at least one of the metadata records
 	 *  - Case is being closed
 	 *  - Subject cannot contain 'PROCOM'
-	 *  - ClosedDate must be 2019 or bigger
-	 *  - Closed By Role cannot be empty
 	 */
+	private static Boolean PROCESS_KPI_EXECUTED = false;
 	public static void processKPI(List<Case> cases, Map<Id,Case> oldMap) {
-		Datetime x1stDate = Datetime.newInstance(2019, 1, 1);
+		if (PROCESS_KPI_EXECUTED) return;
+		PROCESS_KPI_EXECUTED = true;
+
 		Set<Id> oscarIds = new Set<Id>(); //WMO-564 - ACAMBAS
 		List<Case> casesToProcess = new List<Case>();
 
 		for(Case cse : cases) {
 			Case oldRecord = oldMap.get(cse.Id);
-			Boolean beingClosed = cse.IsClosed && !oldRecord.IsClosed;
+			Boolean beingClosed = CLOSED_STATUSES.contains(cse.Status) && !CLOSED_STATUSES.contains(oldRecord.Status);
 			Boolean hasConfig = getMapRTsToReasons().get(cse.RecordTypeId) != null && getMapRTsToReasons().get(cse.RecordTypeId).get(cse.Reason1__c) != null;
 			Boolean validSubject = String.isNotBlank(cse.Subject) && !cse.Subject.contains('PROCOM');
-			if(hasConfig && beingClosed && cse.ClosedDate >= x1stDate && String.isNotBlank(cse.Closed_by_Role__c) && validSubject) {
+			if(hasConfig && beingClosed && validSubject) {
 				casesToProcess.add(cse);
 				oscarIds.add(cse.OSCAR__c); //WMO-564 - ACAMBAS
 			}
