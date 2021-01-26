@@ -1366,7 +1366,7 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 		if (surveyToClone==null || this.parentQueryResult.Status__c != 'Draft') return false;
 
 		List<Currency_Center_Survey__c> listSurveys = [
-			SELECT Id
+			SELECT Id, Year_Survey__c, Month_Survey__c
 			FROM Currency_Center_Survey__c
 			WHERE RecordTypeId = :ISSP_CurrencyCenterUtil.rtIdMonthlySurvey
 			AND Airline__c = :airlineId
