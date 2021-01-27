@@ -12046,6 +12046,11 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
                     <default>false</default>
                     <label>Closed - Extended</label>
                 </value>
+                <value>
+                    <fullName>Closed - Not required</fullName>
+                    <default>false</default>
+                    <label>Closed - Not required</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -19584,6 +19589,10 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
                 <default>false</default>
             </values>
             <values>
+                <fullName>Closed - Not required</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Under Investigation</fullName>
                 <default>true</default>
             </values>
@@ -25088,6 +25097,10 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
             <values>
                 <fullName>Closed - Extended</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed - Not required</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -30622,6 +30635,10 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
                 <default>false</default>
             </values>
             <values>
+                <fullName>Closed - Not required</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Closed - Rejected</fullName>
                 <default>false</default>
             </values>
@@ -35994,6 +36011,10 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
         <picklistValues>
             <picklist>Status__c</picklist>
             <values>
+                <fullName>Closed - Not required</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Under Investigation</fullName>
                 <default>true</default>
             </values>
@@ -41358,6 +41379,10 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
             <values>
                 <fullName>Closed - Extended</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed - Not required</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -46873,6 +46898,10 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
         <picklistValues>
             <picklist>Status__c</picklist>
             <values>
+                <fullName>Closed - Not required</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Under Investigation</fullName>
                 <default>true</default>
             </values>
@@ -52377,6 +52406,10 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
             <values>
                 <fullName>Closed - Extended</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed - Not required</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -57911,6 +57944,10 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
                 <default>false</default>
             </values>
             <values>
+                <fullName>Closed - Not required</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Closed - Rejected</fullName>
                 <default>false</default>
             </values>
@@ -63391,6 +63428,10 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
         <picklistValues>
             <picklist>Status__c</picklist>
             <values>
+                <fullName>Closed - Not required</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Under Investigation</fullName>
                 <default>true</default>
             </values>
@@ -68863,6 +68904,10 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
             <values>
                 <fullName>Closed - Extended</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed - Not required</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -74362,6 +74407,10 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
             <values>
                 <fullName>Closed - Extended</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed - Not required</fullName>
                 <default>false</default>
             </values>
             <values>
