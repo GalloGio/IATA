@@ -462,6 +462,7 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Extension__c</fields>
         <fields>Exe_Category_New__c</fields>
         <fields>Exception_Type__c</fields>
         <fields>SOP_Type__c</fields>
