@@ -11037,7 +11037,7 @@ TEXT( Related_Case_Number__r.Region__c))</formula>
         <label>Related Case Number</label>
         <referenceTo>Case</referenceTo>
         <relationshipName>Quality</relationshipName>
-        <required>true</required>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
