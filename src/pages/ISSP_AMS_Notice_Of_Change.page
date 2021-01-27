@@ -212,6 +212,7 @@
 		// checks initial state
 		showForms();
 		checkGoGlobal();
+		$( "label:contains('{!$Label.ISSP_NDC_Transaction_Info}')" ).css('float','left');
 	});
 
 	var ownerRecType;
@@ -1686,6 +1687,14 @@
 								<apex:inputfield value="{!newForm.ISSP_AMS_GDS_with_signed_contract__c}"/>
 							</apex:pageblocksectionitem>
 						</apex:pageblocksection>
+
+						<apex:pageblocksection columns="1">
+							<apex:pageblocksectionitem labelStyle="width:50%">
+								<apex:outputlabel id="dgs-label" value="{!$Label.ISSP_AMS_Step3_Indicate_GDSs}" />
+								<apex:inputfield id="dgs-options" value="{!newForm.ISSP_AMS_GDS_with_signed_contract__c}" onchange="checkNDC();"/>
+							</apex:pageblocksectionitem>
+						</apex:pageblocksection>
+						<c:ISSP_ANG_NDC validationError="{!isValError}" applyNewStyle="true" ndcValue="{!newForm.NDC_Transactions__c}" rendered="{!namEnabled}"/>
 						<!--END NEWGEN-668-->
 						<apex:pageBlockSectionItem >
 							<apex:outputLabel value="{!$Label.ISSP_AMS_NoC_Provide_Registeration_Or_License}"/>
@@ -1719,7 +1728,7 @@
 							<apex:inputfield value="{!newForm.Effective_Date_Of_Change__c}" onclick="showFuturePastDates();"/>
 						</apex:pageblocksectionitem>
 					</apex:pageBlockSection>
-							
+				
 				
 				
 			</div>	<!-- EO APContainer -->

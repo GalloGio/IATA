@@ -1,5 +1,6 @@
 <apex:component id="updateComponent" controller="ISSP_ANG_ANNUAL_REV_UPDATE" allowDML="true">
     <apex:attribute name="caParam" type="ANG_AnnualRevCurrentAccount" description="ca" assignTo="{!ca}"/>
+    <apex:attribute name="newGen" type="boolean" description="newGen" assignTo="{!namEnabled}"/>
 
     <style>
         .section-header {
@@ -1108,11 +1109,12 @@
             </apex:outputPanel>
 
             <apex:pageblocksectionitem labelStyle="width:50%">
-                <apex:outputlabel id="section5-gds" value="{!$Label.ISSP_ANG_ANNUAL_REV_Q3}" />
+                <apex:outputlabel id="dgs-label" value="{!$Label.ISSP_ANG_ANNUAL_REV_Q3}" />
                 <apex:outputPanel id="multiSelectId">
-                <apex:inputfield id="ISSP_AMS_GDS_with_signed_contract__c" value="{!ca.fw.newForm.ISSP_AMS_GDS_with_signed_contract__c}"/>
+                    <apex:inputfield id="dgs-options" value="{!ca.fw.newForm.ISSP_AMS_GDS_with_signed_contract__c}" onchange="checkNDC();"/>
                 </apex:outputPanel>
             </apex:pageblocksectionitem>
+            <c:ISSP_ANG_NDC validationError="{!isValError}" applyNewStyle="true" ndcValue="{!ca.fw.newForm.NDC_Transactions__c}" rendered="{!namEnabled}"/>
 
             <apex:outputPanel layout="block">
                 <apex:pageBlockSectionItem >
@@ -1495,7 +1497,7 @@
             $('[id$="ISSP_AMS_License_No__c"]').prop('disabled', true);
             $('[id$="ISSP_AMS_Date_Registration_granted__c"]').prop('disabled', true);
             $('[id$="ISSP_AMS_Trade_Reg_No__c"]').prop('disabled', true);
-            $('[id$="ISSP_AMS_GDS_with_signed_contract__c"]').prop('disabled', true);
+            $('[id$="dgs-options"]').prop('disabled', true);
             $('[id$="Give_details_for_the_change_of_ownership__c"]').prop('disabled', true);
             $('[id$="Give_details_for_authorization_to_act__c"]').prop('disabled', true);
             $('[id$="ISSP_AMS_Gross_Amnt_Second_year__c"]').prop('disabled', true);
@@ -1544,6 +1546,8 @@
             $('[id$="newEmail"]' + " :input").attr("disabled", true);
 
             $('[id$="multiSelectId"]' + " :input").attr("disabled", true);
+            $j('[name$=ndcQuestion]')[0].disabled = true;
+            $j('[name$=ndcQuestion]')[1].disabled = true;
             $('#shipping_country__c > input').css('display','block');
             $('[id$="billingStateText"]').css('display', 'none');
         }
