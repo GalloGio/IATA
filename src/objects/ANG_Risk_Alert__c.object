@@ -477,19 +477,6 @@
         <type>Lookup</type>
     </fields>
     <fields>
-        <fullName>Related_SAAM_Case__c</fullName>
-        <deleteConstraint>SetNull</deleteConstraint>
-        <description>the saam case created as part of the actions taken by the type of alert</description>
-        <externalId>false</externalId>
-        <label>Related SAAM Case</label>
-        <referenceTo>Case</referenceTo>
-        <relationshipLabel>Risk Alerts (Related SAAM Case)</relationshipLabel>
-        <relationshipName>Risk_Alerts1</relationshipName>
-        <required>false</required>
-        <trackTrending>false</trackTrending>
-        <type>Lookup</type>
-    </fields>
-    <fields>
         <fullName>Ticket_Number__c</fullName>
         <description>Ticket number which raised the GDS Failsafe alert</description>
         <externalId>false</externalId>

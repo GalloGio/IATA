@@ -78,7 +78,7 @@
         <label>RME Information</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>ANG_RHC_Amount_Provisional__c</field>
             </layoutItems>
             <layoutItems>

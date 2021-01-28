@@ -954,17 +954,17 @@ public class ANG_RHCAlertTriggerHandler{
 						switch on RS.GDS_Alert_Type__c{
 							when 'CashlessGDSAlert'{
 								c.CaseArea__c = ANG_Risk_Helper.CASE_AREA_RISK_MANAGEMENT_PROCESS;
-								c.Subject = RS.GDS_Alert_Type__c + (String.isEmpty(raAccMap.get(RS.Id).Short_Name__c) ? raAccMap.get(RS.Id).Name.left(20) : raAccMap.get(RS.Id).Short_Name__c.left(20));
+								c.Subject = RS.GDS_Alert_Type__c + ' - ' + (String.isEmpty(raAccMap.get(RS.Id).Short_Name__c) ? raAccMap.get(RS.Id).Name.left(20) : raAccMap.get(RS.Id).Short_Name__c.left(20));
 								c.Reason1__c = RS.GDS_Alert_Type__c;
 							}
 							when 'CashGDSAlert'{
 								c.CaseArea__c = ANG_Risk_Helper.CASE_AREA_RISK_MANAGEMENT_PROCESS;
-								c.Subject = RS.GDS_Alert_Type__c + (String.isEmpty(raAccMap.get(RS.Id).Short_Name__c) ? raAccMap.get(RS.Id).Name.left(20) : raAccMap.get(RS.Id).Short_Name__c.left(20));
+								c.Subject = RS.GDS_Alert_Type__c + ' - ' + (String.isEmpty(raAccMap.get(RS.Id).Short_Name__c) ? raAccMap.get(RS.Id).Name.left(20) : raAccMap.get(RS.Id).Short_Name__c.left(20));
 								c.Reason1__c = RS.GDS_Alert_Type__c;
 							}
 							when 'TAGDSAlert'{
 								c.CaseArea__c = ANG_Risk_Helper.CASE_AREA_RISK_MANAGEMENT_PROCESS;
-								c.Subject = RS.GDS_Alert_Type__c + (String.isEmpty(raAccMap.get(RS.Id).Short_Name__c) ? raAccMap.get(RS.Id).Name.left(20) : raAccMap.get(RS.Id).Short_Name__c.left(20));
+								c.Subject = RS.GDS_Alert_Type__c + ' - ' + (String.isEmpty(raAccMap.get(RS.Id).Short_Name__c) ? raAccMap.get(RS.Id).Name.left(20) : raAccMap.get(RS.Id).Short_Name__c.left(20));
 								c.Reason1__c = RS.GDS_Alert_Type__c;
 							}
 						}
