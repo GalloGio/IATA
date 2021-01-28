@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>50.0</apiVersion>
     <assignments>
         <name>Unpublish</name>
         <label>Unpublish</label>
@@ -20,8 +19,8 @@
     <decisions>
         <name>checkSuccess</name>
         <label>checkSuccess</label>
-        <locationX>612</locationX>
-        <locationY>341</locationY>
+        <locationX>583</locationX>
+        <locationY>501</locationY>
         <defaultConnector>
             <targetReference>SuccessScreen</targetReference>
         </defaultConnector>
@@ -30,7 +29,7 @@
             <name>Fail</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>getIHubDetailProvider.Published__c</leftValueReference>
+                <leftValueReference>getProviderUpdated.Published__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -72,7 +71,6 @@
         <connector>
             <targetReference>Unpublish</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -80,11 +78,29 @@
                 <elementReference>recordId</elementReference>
             </value>
         </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>IH_Account_Role_Detail__c</object>
         <queriedFields>Id</queriedFields>
         <queriedFields>Published__c</queriedFields>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>getProviderUpdated</name>
+        <label>getProviderUpdated</label>
+        <locationX>633</locationX>
+        <locationY>336</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>checkSuccess</targetReference>
+        </connector>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <object>IH_Account_Role_Detail__c</object>
+        <queriedFields>Id</queriedFields>
+        <queriedFields>Published__c</queriedFields>
     </recordLookups>
     <recordUpdates>
         <name>saveUnpublishChanges</name>
@@ -92,15 +108,15 @@
         <locationX>757</locationX>
         <locationY>123</locationY>
         <connector>
-            <targetReference>checkSuccess</targetReference>
+            <targetReference>getProviderUpdated</targetReference>
         </connector>
         <inputReference>getIHubDetailProvider</inputReference>
     </recordUpdates>
     <screens>
         <name>FailScreen</name>
         <label>FailScreen</label>
-        <locationX>794</locationX>
-        <locationY>425</locationY>
+        <locationX>925</locationX>
+        <locationY>571</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -115,8 +131,8 @@
     <screens>
         <name>SuccessScreen</name>
         <label>SuccessScreen</label>
-        <locationX>516</locationX>
-        <locationY>458</locationY>
+        <locationX>250</locationX>
+        <locationY>656</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -128,13 +144,7 @@
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
-    <start>
-        <locationX>50</locationX>
-        <locationY>50</locationY>
-        <connector>
-            <targetReference>getIHubDetailProvider</targetReference>
-        </connector>
-    </start>
+    <startElementReference>getIHubDetailProvider</startElementReference>
     <status>Active</status>
     <variables>
         <name>recordId</name>
