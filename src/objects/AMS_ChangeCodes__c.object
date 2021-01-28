@@ -636,7 +636,7 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <filters>
             <field>Change_Code__c</field>
             <operation>equals</operation>
-            <value>IRR</value>
+            <value>REI</value>
         </filters>
         <label>Irregularities</label>
         <language>en_US</language>
