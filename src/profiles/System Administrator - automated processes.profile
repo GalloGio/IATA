@@ -11682,6 +11682,10 @@
     <custom>true</custom>
     <customSettingAccesses>
         <enabled>true</enabled>
+        <name>Apex_Setting__c</name>
+    </customSettingAccesses>
+    <customSettingAccesses>
+        <enabled>true</enabled>
         <name>Case_RTs_for_Key_Customer_alert__c</name>
     </customSettingAccesses>
     <fieldPermissions>
