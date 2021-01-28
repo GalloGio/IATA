@@ -560,7 +560,7 @@ public with sharing class AMS_AccountRoleCreator
 			role.RecordTypeId            = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
 			role.Account__c              = accountId;
 			role.Duty__c                 = accreditationContact.Job_Title__c;
-			role.Employee_Name__c        = accreditationContact.First_Name__c + ' ' + accreditationContact.Last_Name__c;
+			role.Employee_Name__c        = (accreditationContact.First_Name__c == null ? '' : accreditationContact.First_Name__c + ' ') + accreditationContact.Last_Name__c;
 			role.Hours__c                = String.valueOf(accreditationContact.Time_devoted_to_Agency_business__c);
 			role.IsManager__c            = accreditationContact.Agency_role__c;
 			role.Percentage__c           = accreditationContact.Financial_Interest__c;
