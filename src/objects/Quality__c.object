@@ -10315,6 +10315,7 @@ To comunitacate an issue, use ISSUE-Quality</inlineHelpText>
     <fields>
         <fullName>Parent__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Lookup to another exception to allow a hierarchy system in exceptions</description>
         <externalId>false</externalId>
         <label>Parent Exception</label>
         <referenceTo>Quality__c</referenceTo>
