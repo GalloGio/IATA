@@ -19,6 +19,8 @@ global class ANG_RME_Alert_Service {
 	private static final String GDS_CASHLESSFOPALERT_EVENT_TYPE = 'CashlessGDSAlert';
 	@TestVisible
 	private static final String GDS_TA_ALERT_EVENT_TYPE = 'TAGDSAlert';
+	@TestVisible
+	private static final String GDS_CASH_ALERT_EVENT_TYPE = 'CashGDSAlert';
 
 	public class RHCMessage{
 		//Basic info
