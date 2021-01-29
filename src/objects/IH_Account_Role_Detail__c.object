@@ -1964,17 +1964,6 @@
         <filterScope>Everything</filterScope>
         <label>All</label>
     </listViews>
-	<listViews>
-        <fullName>For_Approval</fullName>
-        <columns>NAME</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Status__c</field>
-            <operation>equals</operation>
-            <value>Submitted</value>
-        </filters>
-        <label>For Approval</label>
-    </listViews>
     <listViews>
         <fullName>Consumers</fullName>
         <columns>NAME</columns>
@@ -1985,8 +1974,29 @@
             <operation>equals</operation>
             <value>IH_Account_Role_Detail__c.Consumer,IH_Account_Role_Detail__c.Consumer_and_Provider</value>
         </filters>
-        <label>Consumers</label>
-        <language>en_US</language>
+        <label>All Consumers</label>
+    </listViews>
+    <listViews>
+        <fullName>Draft</fullName>
+        <columns>NAME</columns>
+        <filterScope>Mine</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Draft</value>
+        </filters>
+        <label>Draft</label>
+    </listViews>
+    <listViews>
+        <fullName>For_Approval</fullName>
+        <columns>NAME</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Submitted</value>
+        </filters>
+        <label>Submitted</label>
     </listViews>
     <listViews>
         <fullName>Providers</fullName>
@@ -1998,8 +2008,39 @@
             <operation>equals</operation>
             <value>IH_Account_Role_Detail__c.Provider,IH_Account_Role_Detail__c.Consumer_and_Provider</value>
         </filters>
-        <label>Providers</label>
-        <language>en_US</language>
+        <label>All Providers</label>
+    </listViews>
+    <listViews>
+        <fullName>Providers_to_Publish</fullName>
+        <columns>NAME</columns>
+        <filterScope>Mine</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Approved</value>
+        </filters>
+        <filters>
+            <field>Published__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <label>Providers to Publish</label>
+    </listViews>
+    <listViews>
+        <fullName>Published_Providers</fullName>
+        <columns>NAME</columns>
+        <filterScope>Mine</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Approved</value>
+        </filters>
+        <filters>
+            <field>Published__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>Published Providers</label>
     </listViews>
 	<validationRules>
         <fullName>canPublish</fullName>
