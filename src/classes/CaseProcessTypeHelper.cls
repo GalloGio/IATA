@@ -116,7 +116,7 @@ public with sharing class CaseProcessTypeHelper {
 
 		for(Case cse : cases) {
 			Case oldRecord = oldMap.get(cse.Id);
-			Boolean beingClosed = CLOSED_STATUSES.contains(cse.Status) && !CLOSED_STATUSES.contains(oldRecord.Status);
+			Boolean beingClosed = cse.Status!=oldRecord.Status && CLOSED_STATUSES.contains(cse.Status) && !CLOSED_STATUSES.contains(oldRecord.Status);
 			Boolean hasConfig = getMapRTsToReasons().get(cse.RecordTypeId) != null && getMapRTsToReasons().get(cse.RecordTypeId).get(cse.Reason1__c) != null;
 			Boolean validSubject = String.isNotBlank(cse.Subject) && !cse.Subject.contains('PROCOM');
 			if(hasConfig && beingClosed && validSubject) {
