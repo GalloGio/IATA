@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>50.0</apiVersion>
     <decisions>
         <name>checkSuccess</name>
         <label>checkSuccess</label>
@@ -45,7 +46,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>UnPublishCurrentProvider</targetReference>
+                <targetReference>deletePreviousPublished</targetReference>
             </connector>
             <label>Yes</label>
         </rules>
@@ -71,6 +72,24 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
+    <recordDeletes>
+        <name>deletePreviousPublished</name>
+        <label>deletePreviousPublished</label>
+        <locationX>773</locationX>
+        <locationY>374</locationY>
+        <connector>
+            <targetReference>PublishProvider</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>getCurrentPublishedProvider.Id</elementReference>
+            </value>
+        </filters>
+        <object>IH_Account_Role_Detail__c</object>
+    </recordDeletes>
     <recordLookups>
         <name>getCurrentPublishedProvider</name>
         <label>getCurrentPublishedProvider</label>
@@ -80,6 +99,7 @@
         <connector>
             <targetReference>hasPublishedProvider</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Account_Role__c</field>
             <operator>EqualTo</operator>
@@ -101,8 +121,9 @@
                 <stringValue>Approved</stringValue>
             </value>
         </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>IH_Account_Role_Detail__c</object>
-        <queriedFields>Id</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
         <name>getProviderToPublish</name>
@@ -113,6 +134,7 @@
         <connector>
             <targetReference>getCurrentPublishedProvider</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -120,7 +142,9 @@
                 <elementReference>recordId</elementReference>
             </value>
         </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>IH_Account_Role_Detail__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
         <name>getProviderUpdated</name>
@@ -131,6 +155,7 @@
         <connector>
             <targetReference>checkSuccess</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -138,9 +163,11 @@
                 <elementReference>recordId</elementReference>
             </value>
         </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>IH_Account_Role_Detail__c</object>
         <queriedFields>Id</queriedFields>
         <queriedFields>Published__c</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
         <name>PublishProvider</name>
@@ -150,6 +177,7 @@
         <connector>
             <targetReference>getProviderUpdated</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -165,34 +193,11 @@
         </inputAssignments>
         <object>IH_Account_Role_Detail__c</object>
     </recordUpdates>
-    <recordUpdates>
-        <name>UnPublishCurrentProvider</name>
-        <label>UnPublishCurrentProvider</label>
-        <locationX>774</locationX>
-        <locationY>338</locationY>
-        <connector>
-            <targetReference>PublishProvider</targetReference>
-        </connector>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>getCurrentPublishedProvider.Id</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>Published__c</field>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </inputAssignments>
-        <object>IH_Account_Role_Detail__c</object>
-    </recordUpdates>
     <screens>
         <name>FailScreen</name>
         <label>FailScreen</label>
-        <locationX>78</locationX>
-        <locationY>565</locationY>
+        <locationX>47</locationX>
+        <locationY>563</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -220,7 +225,13 @@
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
-    <startElementReference>getProviderToPublish</startElementReference>
+    <start>
+        <locationX>177</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>getProviderToPublish</targetReference>
+        </connector>
+    </start>
     <status>Active</status>
     <variables>
         <name>recordId</name>
