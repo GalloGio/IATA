@@ -4,7 +4,7 @@ public class AMS_OSCAR_TestDataFactory
 	public static void createOSCARtestData()
 	{	
 		insert new Apex_Setting__c(Name='RT valid to reopen attachment trigger', Text_1__c='CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia, ComplaintIDFS,'
-                                           +  'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
+											+  'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
 		AMS_Person__c per = new AMS_Person__c(Name = 'teste', User__c = UserInfo.getUserId());
 		insert per;
 
@@ -336,7 +336,7 @@ public class AMS_OSCAR_TestDataFactory
 									Name='Test Cargo BR',Short_Name__c='Test Cargo', Sector__c = AMS_Utils.SECTOR_CARGO,
 									Location_Class__c = 'C', Location_type__c = 'BR', Reason_for_creation__c = 'none', ParentId = cargoHO.Id,
 									Status__c = AMS_Utils.ACC_S9_APPROVED);
-        insert cargoBR;
+		insert cargoBR;
 
 		AMS_OSCAR__c OSCAR = new AMS_OSCAR__c(Account__c = cargoHO.id, RecordTypeId = AMS_Utils.RECTYPE_NEW, Process__c =AMS_Utils.new_HO);
 		insert OSCAR;
@@ -453,7 +453,7 @@ public class AMS_OSCAR_TestDataFactory
 				NULL,
 				NULL,
 				TRUE,
-				NULL, NULL, NULL, NULL, NULL, NULL			
+				NULL, NULL, NULL, NULL, NULL, NULL, true
 			)
 		);
 
@@ -464,7 +464,7 @@ public class AMS_OSCAR_TestDataFactory
 				ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_TIER,
 				'A',
 				false,
-				'1', double.valueof(2.00), double.valueof(0.00), double.valueof(0.00), double.valueof('-1000000000000000'), double.valueof(5000000.00)
+				'1', double.valueof(2.00), double.valueof(0.00), double.valueof(0.00), double.valueof('-1000000000000000'), double.valueof(5000000.00), true
 			)
 		);
 
@@ -475,7 +475,7 @@ public class AMS_OSCAR_TestDataFactory
 				ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_TIER,
 				'B',
 				false,
-				'1', double.valueof(1.5), double.valueof(0.00), double.valueof(0.00), double.valueof('-1000000000000000'), double.valueof(5000000.00)
+				'1', double.valueof(1.5), double.valueof(0.00), double.valueof(0.00), double.valueof('-1000000000000000'), double.valueof(5000000.00), true
 			)
 		);
 
@@ -486,7 +486,7 @@ public class AMS_OSCAR_TestDataFactory
 				ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_TIER,
 				'C',
 				false,
-				'1', double.valueof(1.00), double.valueof(0.00), double.valueof(0.00), double.valueof('-1000000000000000'), double.valueof(5000000.00)
+				'1', double.valueof(1.00), double.valueof(0.00), double.valueof(0.00), double.valueof('-1000000000000000'), double.valueof(5000000.00), true
 			)
 		);
 
@@ -497,7 +497,7 @@ public class AMS_OSCAR_TestDataFactory
 				ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_TIER,
 				'A',
 				false,
-				'2', double.valueof(1.5), double.valueof(9500000.00), double.valueof(5000000.00), double.valueof(5000000.00), double.valueof(10000000.00)
+				'2', double.valueof(1.5), double.valueof(9500000.00), double.valueof(5000000.00), double.valueof(5000000.00), double.valueof(10000000.00), true
 			)
 		);
 
@@ -508,7 +508,7 @@ public class AMS_OSCAR_TestDataFactory
 				ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_TIER,
 				'B',
 				false,
-				'2', double.valueof(1.12), double.valueof(7000000.00), double.valueof(5000000.00), double.valueof(5000000.00), double.valueof(10000000.00)
+				'2', double.valueof(1.12), double.valueof(7000000.00), double.valueof(5000000.00), double.valueof(5000000.00), double.valueof(10000000.00), true
 			)
 		);
 
@@ -519,7 +519,7 @@ public class AMS_OSCAR_TestDataFactory
 				ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_TIER,
 				'C',
 				false,
-				'2', double.valueof(1.00), double.valueof(0.00), double.valueof(0.00), double.valueof(5000000.00), double.valueof(10000000.00)
+				'2', double.valueof(1.00), double.valueof(0.00), double.valueof(0.00), double.valueof(5000000.00), double.valueof(10000000.00), true
 			)
 		);
 
@@ -530,7 +530,7 @@ public class AMS_OSCAR_TestDataFactory
 				ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_TIER,
 				'A',
 				false,
-				'3', double.valueof(1.25), double.valueof(17000000.00), double.valueof(10000000.00), double.valueof(10000000.00), double.valueof('1000000000000000')
+				'3', double.valueof(1.25), double.valueof(17000000.00), double.valueof(10000000.00), double.valueof(10000000.00), double.valueof('1000000000000000'), true
 			)
 		);
 
@@ -541,7 +541,7 @@ public class AMS_OSCAR_TestDataFactory
 				ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_TIER,
 				'B',
 				false,
-				'3', double.valueof(1.05), double.valueof(12600000.00), double.valueof(10000000.00), double.valueof(10000000.00), double.valueof('1000000000000000')
+				'3', double.valueof(1.05), double.valueof(12600000.00), double.valueof(10000000.00), double.valueof(10000000.00), double.valueof('1000000000000000'), true
 			)
 		);
 
@@ -552,7 +552,7 @@ public class AMS_OSCAR_TestDataFactory
 				ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_TIER,
 				'C',
 				false,
-				'3', double.valueof(1.00), double.valueof(0.00), double.valueof(0.00), double.valueof(10000000.00), double.valueof('1000000000000000')
+				'3', double.valueof(1.00), double.valueof(0.00), double.valueof(0.00), double.valueof(10000000.00), double.valueof('1000000000000000'), true
 			)
 		);
 
@@ -560,7 +560,7 @@ public class AMS_OSCAR_TestDataFactory
 	}
 
 	private static ANG_BSP_Attributes__c createBSPAttribute(String bspId, String recTypeId, String calcType, String riskStatus, Boolean limitCash
-															, string Tier, Double AmntAtRiskMult, Double TopUp, Double Deduct, Double AmntAtRiskFrom, Double AmntAtRiskTo){
+															, string Tier, Double AmntAtRiskMult, Double TopUp, Double Deduct, Double AmntAtRiskFrom, Double AmntAtRiskTo, boolean bCreateSaamCase){
 
 		ANG_BSP_Attributes__c attr = new ANG_BSP_Attributes__c();
 
@@ -578,6 +578,7 @@ public class AMS_OSCAR_TestDataFactory
 		if(Deduct != NULL){attr.Tier_RHC_Formula_Deduct_USD__c =Deduct;}
 		if(AmntAtRiskFrom != NULL){attr.Amount_At_Risk_From_USD__c =AmntAtRiskFrom;}
 		if(AmntAtRiskTo != NULL){attr.Amount_At_Risk_To_USD__c =AmntAtRiskTo;}
+		attr.create_SAAM_Case__c = bCreateSaamCase;
 
 		return attr;
 

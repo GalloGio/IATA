@@ -6,9 +6,9 @@ private class ANG_RHCHelperTest {
 		Id devRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c', 'Minimum_RHC_Amount');
 
 		List<AMS_Settlement_System__c> bspList = new List<AMS_Settlement_System__c>();
-		AMS_Settlement_System__c settlement = new AMS_Settlement_System__c(CurrencyIsoCode = 'USD', ANG_RHC_Amount_Equals_FS__c = true);
+		AMS_Settlement_System__c settlement = new AMS_Settlement_System__c(CurrencyIsoCode = 'USD', Enable_Provisional_RHC_Request__c=true, ANG_RHC_Amount_Equals_FS__c = true);
 		bspList.add(settlement);
-		AMS_Settlement_System__c settlement2 = new AMS_Settlement_System__c(CurrencyIsoCode = 'USD', ANG_RHC_Amount_Equals_FS__c = false);
+		AMS_Settlement_System__c settlement2 = new AMS_Settlement_System__c(CurrencyIsoCode = 'USD', Enable_Provisional_RHC_Request__c=true, ANG_RHC_Amount_Equals_FS__c = false);
 		bspList.add(settlement2);
 		insert bspList;
 
@@ -166,5 +166,26 @@ private class ANG_RHCHelperTest {
 		String result = AMS_OSCAR_Webservice.updateRME_Amount(rhc.Id);
 		Test.stopTest();
 		System.assert(result != '');
+	}
+
+	@isTest static void ChangeTier_Test() {
+		Set<ID> accountIdSet = new Set<ID>();
+		list<account> lsAccnt = [Select id FROM Account where IATACode__c='1234562'];
+		for(Account a : lsAccnt){
+			accountIdSet.add(a.ID);
+			a.ANG_HE_RiskStatus__c = 'A';
+		}
+		update lsAccnt;
+		
+		ANG_RHCHelper.createRHCInfo(accountIdSet, false);
+		ANG_RHC_Information__c rhc = [SELECT id, ANG_RHC_Amount_Provisional__c, Tier__c, Agency_Risk_Status__c FROM ANG_RHC_Information__c LIMIT 1];
+
+		Test.startTest();	
+		rhc.Tier__c = '1';
+		update rhc;
+
+		rhc.Tier__c = '2';
+		update rhc;
+		Test.stopTest();
 	}
 }
