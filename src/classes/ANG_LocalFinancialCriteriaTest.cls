@@ -300,57 +300,9 @@ private class ANG_LocalFinancialCriteriaTest {
 			)
 		);
 
-		bspAttrLst.add(
-			createBSPAttribute(
-				bspFR.Id,
-				ANG_RHCHelper.RECTYPE_CASH_CONDITION_CONFIG,
-				CASH_CONDITION_PERCENTAGE,
-				NULL,
-				NULL,
-				NULL,
-				NULL,
-				TRUE
-			)
-		);
-
-		bspAttrLst.add(
-			createBSPAttribute(
-				bspFR.Id,
-				ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG,
-				NULL,
-				ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_FORMULA,
-				'A',
-				NULL,
-				NULL,
-				FALSE
-			)
-		);
-
-		bspAttrLst.add(
-			createBSPAttribute(
-				bspFR.Id,
-				ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG,
-				NULL,
-				ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_FORMULA,
-				'B',
-				NULL,
-				NULL,
-				FALSE
-			)
-		);
-
-		bspAttrLst.add(
-			createBSPAttribute(
-				bspFR.Id,
-				ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG,
-				NULL,
-				ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_FORMULA,
-				'C',
-				NULL,
-				NULL,
-				FALSE
-			)
-		);
+		for(AMS_Settlement_System__c iss:[select id, name from AMS_Settlement_System__c where id=:bspFR.Id]){
+			bspAttrLst.addAll(AMS_OSCAR_TestDataFactory.createOperationAttributes(iss));
+		}
 
 		insert bspAttrLst;
 
@@ -737,10 +689,7 @@ private class ANG_LocalFinancialCriteriaTest {
 			 	Id = :rhcInfo.Id
 			];
 
-		Decimal expectedAmount = 8002000.00;
-
-		System.assertEquals(expectedAmount, rhcUpdated.ANG_RHC_Amount_Forecasted__c);
-
+		System.assertEquals(16004000.00, rhcUpdated.ANG_RHC_Amount_Forecasted__c);
 	}
 
 	@isTest static void triggerRhcCalculationOnPointsChangeTest() {
@@ -863,10 +812,6 @@ private class ANG_LocalFinancialCriteriaTest {
 				Id = :rhcInfo.Id
 			];
 
-		Decimal expectedAmount = 8002000.00;
-
-		System.assertEquals(expectedAmount, rhcUpdated.ANG_RHC_Amount_Forecasted__c);
-
+		System.assertEquals(8002000.00, rhcUpdated.ANG_RHC_Amount_Forecasted__c);
 	}
-
 }

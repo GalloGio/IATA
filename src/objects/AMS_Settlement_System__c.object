@@ -322,6 +322,17 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Enable_Provisional_RHC_Request__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>If true, is possible to request a new Provisional Amount for the agency in the BSP</description>
+        <externalId>false</externalId>
+        <inlineHelpText>If true, is possible to request a new Provisional Amount for the agency in the BSP</inlineHelpText>
+        <label>Enable Provisional RHC Request</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Exc_RHC_Monitoring_Alert__c</fullName>
         <description>Define which type of RHC alert will be exceptionally monitored</description>
         <externalId>false</externalId>

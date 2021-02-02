@@ -310,7 +310,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 			LastName = 'test', 
 			AccountId = accnt.Id,
 			User_Portal_Status__c = ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM,
-			email = 'testiata@yopmail.com'
+			email = 'testiata' + string.valueof(system.now().getTime()) + '@yopmail.com'
 			);
 		insert contact;
 
