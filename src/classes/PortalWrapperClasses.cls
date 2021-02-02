@@ -18,6 +18,9 @@ public with sharing class PortalWrapperClasses {
 
 		@AuraEnabled
 		public List<CardWrapper> lstCards;
+
+		@AuraEnabled
+		public String extraDetails;
 	}
 
     //Contains the card properties and a list of fields
@@ -117,6 +120,9 @@ public with sharing class PortalWrapperClasses {
 		public Boolean isTouchPoint;
 
 		@AuraEnabled
+		public Boolean isMultipick;
+
+		@AuraEnabled
 		public Boolean isLastLogin;
 
 		@AuraEnabled
@@ -175,6 +181,8 @@ public with sharing class PortalWrapperClasses {
 			}
 
 			this.isContactServices = fieldName == 'ContactServices' ? true : false;
+
+			this.isMultipick = false;
 
 		}
 		public FieldWrapper (String fieldName, Boolean editable, Boolean visible,String className, String label){

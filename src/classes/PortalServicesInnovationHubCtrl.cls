@@ -44,14 +44,40 @@ public without sharing class PortalServicesInnovationHubCtrl {
 
 	@AuraEnabled (cacheable = false)
 	public static PortalWrapperClasses.ListCardsAndPropertiesWrapper getProviderPropertiesAndCardsList(){
-	
+		
 		PortalWrapperClasses.ListCardsAndPropertiesWrapper propertiesAndLstCards = new PortalWrapperClasses.ListCardsAndPropertiesWrapper();
 		propertiesAndLstCards.objectAPIName = 'IH_Account_Role_Detail__c';
 
-		//get the last 
-		propertiesAndLstCards.recordId = PortalServicesInnovationHubCtrl.getUserIHAccountRoleDetailWithStatus(IH_ACCOUNT_ROLE_DETAILS_STATUS_APPROVED).Id;
-		propertiesAndLstCards.lstCards = PortalServicesInnovationHubCtrl.getProviderProfileCards();
-		propertiesAndLstCards.viewNavigation = true;
+		Map<String, String> extraDetails = new Map<String, String>();
+
+		//get the provider profile for view 
+		IH_Account_Role_Detail__c providerProfileForView = PortalServicesInnovationHubCtrl.getLastestPublishedProviderUserIHAccountRoleDetail();
+
+		if(providerProfileForView != null){
+			propertiesAndLstCards.recordId = providerProfileForView.Id;
+			propertiesAndLstCards.lstCards = PortalServicesInnovationHubCtrl.getProviderProfileCards();
+			propertiesAndLstCards.viewNavigation = true;
+			extraDetails.put('viewStatus', 'Published');
+		}else{
+			extraDetails.put('viewStatus', 'None');
+		}
+
+		IH_Account_Role_Detail__c accountRoleDetailsDraft = PortalServicesInnovationHubCtrl.getUserIHAccountRoleDetailWithStatus(IH_ACCOUNT_ROLE_DETAILS_STATUS_DRAFT);
+		extraDetails.put('viewComments', 'No');
+		if(accountRoleDetailsDraft != null){
+			String viewComments = accountRoleDetailsDraft.Marked_For_Review__c ? 'Yes' : 'No';
+			extraDetails.put('viewComments', viewComments);
+		}
+
+		//check if there is a submited provider profile
+		IH_Account_Role_Detail__c providerProfileSubmitted = PortalServicesInnovationHubCtrl.getUserIHAccountRoleDetailWithStatus(IH_ACCOUNT_ROLE_DETAILS_STATUS_SUBMITTED);
+		if(providerProfileSubmitted != null){
+			extraDetails.put('editButtonStatus', IH_ACCOUNT_ROLE_DETAILS_STATUS_SUBMITTED);
+		}else{
+			extraDetails.put('editButtonStatus', 'None');
+		}
+		
+		propertiesAndLstCards.extraDetails = JSON.Serialize(extraDetails);
 
 		return propertiesAndLstCards;
 	}
@@ -109,9 +135,37 @@ public without sharing class PortalServicesInnovationHubCtrl {
 	
 		PortalWrapperClasses.ListCardsAndPropertiesWrapper propertiesAndLstCards = new PortalWrapperClasses.ListCardsAndPropertiesWrapper();
 		propertiesAndLstCards.objectAPIName = 'IH_Account_Role_Detail__c';
-		propertiesAndLstCards.recordId = PortalServicesInnovationHubCtrl.getUserIHAccountRoleDetailWithStatus(IH_ACCOUNT_ROLE_DETAILS_STATUS_DRAFT).Id;
+
+		Map<String, String> extraDetails = new Map<String, String>();
+
+		//Try to get a draft provider profile
+		IH_Account_Role_Detail__c accountRoleDetailsAux = PortalServicesInnovationHubCtrl.getUserIHAccountRoleDetailWithStatus(IH_ACCOUNT_ROLE_DETAILS_STATUS_DRAFT);
+		String profileStatus = IH_ACCOUNT_ROLE_DETAILS_STATUS_DRAFT;
+
+		//if there is no draft, try to get the submitted profile
+		if(accountRoleDetailsAux == null){
+			accountRoleDetailsAux = PortalServicesInnovationHubCtrl.getUserIHAccountRoleDetailWithStatus(IH_ACCOUNT_ROLE_DETAILS_STATUS_SUBMITTED);
+			profileStatus = IH_ACCOUNT_ROLE_DETAILS_STATUS_SUBMITTED;
+		}
+
+		if(accountRoleDetailsAux == null){
+			//If there is no draft then get the latest published version
+			accountRoleDetailsAux = PortalServicesInnovationHubCtrl.getLastestPublishedProviderUserIHAccountRoleDetail();
+			profileStatus = IH_ACCOUNT_ROLE_DETAILS_STATUS_APPROVED;
+		}
+
+		propertiesAndLstCards.recordId = accountRoleDetailsAux.Id;
+		if(accountRoleDetailsAux.Status__c == IH_ACCOUNT_ROLE_DETAILS_STATUS_DRAFT){
+			String viewComments = accountRoleDetailsAux.Marked_For_Review__c ? 'Yes' : 'No';
+			extraDetails.put('viewComments', viewComments);
+			extraDetails.put('comments', accountRoleDetailsAux.Internal_comments__c + '');
+		}
+
 		propertiesAndLstCards.lstCards = PortalServicesInnovationHubCtrl.getProviderProfileCardsForEdit();
 		propertiesAndLstCards.viewNavigation = true;
+
+		extraDetails.put('editStatus', profileStatus);
+		propertiesAndLstCards.extraDetails = JSON.Serialize(extraDetails);
 
 		return propertiesAndLstCards;
 	}
@@ -126,23 +180,23 @@ public without sharing class PortalServicesInnovationHubCtrl {
 		PortalWrapperClasses.FieldWrapper logo = new PortalWrapperClasses.FieldWrapper('Logo_File_Id__c',true,false);
 		logo.isLogo = true;
 		lstfw1.add(logo);
-		PortalWrapperClasses.FieldWrapper fa = new PortalWrapperClasses.FieldWrapper('Focus_Areas__c',true,false);
-		fa.isFocusArea = true;
-		lstfw1.add(fa);
+		PortalWrapperClasses.FieldWrapper focusAreas = new PortalWrapperClasses.FieldWrapper('Focus_Areas__c',true,true);
+		focusAreas.isMultipick = true;
+		lstfw1.add(focusAreas);
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Legal_Name__c',true,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Number_of_employees__c',true,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Also_known_as__c',true,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Company_Description__c',true,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Location__c',true,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Website__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Solution__c',false,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Solution__c',true,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Case_Studies_Pilots__c',true,true));
-		PortalWrapperClasses.FieldWrapper tech = new PortalWrapperClasses.FieldWrapper('Technology__c',true,false);
-		tech.isTech = true;
-		lstfw1.add(tech);
-		PortalWrapperClasses.FieldWrapper cat = new PortalWrapperClasses.FieldWrapper('Tags_of_categories__c',true,false);
-		cat.isCategory = true;
-		lstfw1.add(cat);
+		PortalWrapperClasses.FieldWrapper technology = new PortalWrapperClasses.FieldWrapper('Technology__c',true,true);
+		technology.isMultipick = true;
+		lstfw1.add(technology);
+		PortalWrapperClasses.FieldWrapper tagsOfCategories = new PortalWrapperClasses.FieldWrapper('Tags_of_categories__c',true,true);
+		tagsOfCategories.isMultipick = true;
+		lstfw1.add(tagsOfCategories);
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Contact_info_of_startup__c',true,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Industry_Perspectives__c',true,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Competition_Competitors__c',true,true));
@@ -150,11 +204,15 @@ public without sharing class PortalServicesInnovationHubCtrl {
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Funding_Amount__c',true,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Funding_Rounds__c',true,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Funding_Stage__c',true,true));
-		PortalWrapperClasses.FieldWrapper tp = new PortalWrapperClasses.FieldWrapper('IATA_touchpoints__c',true,false);
-		tp.isTouchPoint = true;
-		lstfw1.add(tp);
+		PortalWrapperClasses.FieldWrapper iataTouchpoints = new PortalWrapperClasses.FieldWrapper('IATA_touchpoints__c',true,true);
+		iataTouchpoints.isMultipick = true;
+		lstfw1.add(iataTouchpoints);
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Investors__c',true,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Link_to_Social_Media_accounts__c',true,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Status__c',true,false));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Id',true,false));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('RecordTypeId',true,false));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Account_Role__c',true,false));
 		lstCardWrapper.add(new PortalWrapperClasses.CardWrapper('New Details', lstfw1, false,'New Details'));
 
 		return lstCardWrapper;
@@ -391,7 +449,8 @@ public without sharing class PortalServicesInnovationHubCtrl {
 		//get the users account role detail
 		User currentUser = CSP_Utils.getLoggedUser();
 		String statusAux = '%' + status + '%';
-		List<IH_Account_Role_Detail__c> lstAccountRoles = [SELECT Id, RecordType.DeveloperName,Logo_File_Id__c FROM IH_Account_Role_Detail__c 
+		List<IH_Account_Role_Detail__c> lstAccountRoles = [SELECT Id, RecordType.DeveloperName,Logo_File_Id__c,Internal_comments__c,Status__c,Marked_For_Review__c
+															FROM IH_Account_Role_Detail__c 
 															WHERE Account_Role__r.Account__c = :currentUser.Contact.AccountId
 															AND Account_Role__r.RecordType.DeveloperName = :ACCOUNT_ROLE_INNOVATIONHUB_RTYPE_DEVNAME 
 															AND Status__c LIKE :statusAux LIMIT 1];
@@ -401,7 +460,8 @@ public without sharing class PortalServicesInnovationHubCtrl {
 	public static IH_Account_Role_Detail__c getLastestPublishedProviderUserIHAccountRoleDetail(){
 		//get the users account role detail
 		User currentUser = CSP_Utils.getLoggedUser();
-		List<IH_Account_Role_Detail__c> lstAccountRoles = [SELECT Id, RecordType.DeveloperName FROM IH_Account_Role_Detail__c 
+		List<IH_Account_Role_Detail__c> lstAccountRoles = [SELECT Id, RecordType.DeveloperName,Internal_comments__c,Status__c,Marked_For_Review__c 
+															FROM IH_Account_Role_Detail__c 
 															WHERE Account_Role__r.Account__c = :currentUser.Contact.AccountId
 															AND (RecordType.DeveloperName = :ACCOUNT_ROLE_DETAIL_PROVIDER_RTYPE_DEVNAME OR 
 															RecordType.DeveloperName = :ACCOUNT_ROLE_DETAIL_CONSUMERANDPROVIDER_RTYPE_DEVNAME) 
@@ -414,7 +474,8 @@ public without sharing class PortalServicesInnovationHubCtrl {
 	public static IH_Account_Role_Detail__c getLastestDraftProviderUserIHAccountRoleDetail(){
 		//get the users account role detail
 		User currentUser = CSP_Utils.getLoggedUser();
-		List<IH_Account_Role_Detail__c> lstAccountRoles = [SELECT Id, RecordType.DeveloperName FROM IH_Account_Role_Detail__c 
+		List<IH_Account_Role_Detail__c> lstAccountRoles = [SELECT Id, RecordType.DeveloperName,Internal_comments__c,Status__c,Marked_For_Review__c
+															FROM IH_Account_Role_Detail__c 
 															WHERE Account_Role__r.Account__c = :currentUser.Contact.AccountId
 															AND (RecordType.DeveloperName = :ACCOUNT_ROLE_DETAIL_PROVIDER_RTYPE_DEVNAME OR 
 															RecordType.DeveloperName = :ACCOUNT_ROLE_DETAIL_CONSUMERANDPROVIDER_RTYPE_DEVNAME) 
@@ -422,6 +483,80 @@ public without sharing class PortalServicesInnovationHubCtrl {
 															ORDER BY LastModifiedDate DESC LIMIT 1];
 		return lstAccountRoles != null && !lstAccountRoles.isEmpty() ? lstAccountRoles.get(0) : null;
 	}
+
+	@AuraEnabled(cacheable = false)
+	public static PicklistPropertiesWrapper getLabelPicklistValuesAndSelected(String objectName, String fieldName, String recordId){
+		//get the object field label 
+		String fieldLabel = Schema.getGlobalDescribe().get(objectName).getDescribe().fields.getMap().get(fieldName).getDescribe().getLabel();
+		
+		//get the available picklist options
+		List<CSP_Utils.PickListWrapper> lstPickOptions = CSP_Utils.getPickListValues(objectName, fieldName);
+		
+		//get the selected options from the record id
+		String queryStr = 'SELECT ' + fieldName + ' FROM ' + objectName + ' WHERE Id = :recordId ';
+		sObject queryObject = Database.query(queryStr);
+		String fieldContent = (String) queryObject.get(fieldName);
+		List<String> fieldContentSplit = fieldContent != null && fieldContent != '' ? fieldContent.split(';') : new List<String>();
+		Set<String> selectedValues = new Set<String>(fieldContentSplit);
+
+		for(CSP_Utils.PickListWrapper pickValueAux : lstPickOptions){
+			pickValueAux.checked = selectedValues.contains(pickValueAux.value);
+		}
+
+		return new PicklistPropertiesWrapper(fieldLabel, lstPickOptions);
+	}
+
+	@AuraEnabled(cacheable = false)
+	public static String saveProviderProfile(String innoHubAccountRoleDetailsStr, String mode){
+
+		try{
+			IH_Account_Role_Detail__c innoHubAccountRoleDetails = (IH_Account_Role_Detail__c) JSON.deserialize(innoHubAccountRoleDetailsStr, IH_Account_Role_Detail__c.class);
+			IH_Account_Role_Detail__c innoHubAccountRoleDetailsAux = null;
+
+			if(innoHubAccountRoleDetails.Status__c == IH_ACCOUNT_ROLE_DETAILS_STATUS_APPROVED){
+				//if the status is approved then it means that a new record needs to be created 
+				innoHubAccountRoleDetailsAux = innoHubAccountRoleDetails.clone(false, true, false, false);
+				innoHubAccountRoleDetailsAux.Published__c = false;
+
+				IH_Account_Role_Detail__c iharlForExtraFields = [SELECT Id, RecordTypeId, Account_Role__c 
+																FROM IH_Account_Role_Detail__c WHERE Id = :innoHubAccountRoleDetails.Id];
+				innoHubAccountRoleDetailsAux.RecordTypeId = iharlForExtraFields.RecordTypeId;
+				innoHubAccountRoleDetailsAux.Account_Role__c = iharlForExtraFields.Account_Role__c;
+				innoHubAccountRoleDetailsAux.Marked_For_Review__c = false;
+				innoHubAccountRoleDetailsAux.Internal_comments__c = '';
+			}else{
+				//not approved means that is a draft and therefore can be used to persist the new changes
+				innoHubAccountRoleDetailsAux = innoHubAccountRoleDetails;
+			}
+
+			if(mode == 'save'){
+				//when the user clicks on save button
+				innoHubAccountRoleDetailsAux.Status__c = IH_ACCOUNT_ROLE_DETAILS_STATUS_DRAFT;
+			}else{
+				//when the user clicks on submit button
+				innoHubAccountRoleDetailsAux.Status__c = IH_ACCOUNT_ROLE_DETAILS_STATUS_SUBMITTED;
+			}
+
+			upsert innoHubAccountRoleDetailsAux;
+			return innoHubAccountRoleDetailsAux.Id;
+		} catch( Exception e){
+			System.debug('____ [PortalServicesInnovationHubCtrl - saveProviderProfile] error: ' + e.getMessage());
+			throw e;
+		}
+	}
+
+	public class PicklistPropertiesWrapper {
+		@AuraEnabled
+		public String fieldLabel {get; set;}
+		@AuraEnabled
+		public List<CSP_Utils.PickListWrapper> lstPickOptions {get; set;}
+
+		public PicklistPropertiesWrapper(String fieldLabel, List<CSP_Utils.PickListWrapper> lstPickOptions ){
+			this.fieldLabel = fieldLabel;
+			this.lstPickOptions = lstPickOptions;
+		}
+	}
+
 
 	public class TabWrapper {
 		@AuraEnabled

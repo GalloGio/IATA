@@ -8,30 +8,103 @@
     <div if:false={componentLoading}>
 
         <div class="slds-grid slds-wrap slds-gutters_medium slds-grid--vertical-stretch">
-            <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1">    
+            
+            <div if:true={viewSubmitWarning} class="slds-p-vertical_xx-small slds-col slds-size_1-of-1"> 
+                <c-portal-warning-banner label-input="There is already a profile update waiting to be approved. You cannot create a new request until the ongoing is rejected or approved.">
+                </c-portal-warning-banner>
+            </div>
+
+            <div if:true={markedForReview} class="slds-p-vertical_xx-small slds-col slds-size_1-of-1"> 
+                <c-portal-warning-banner label-input="The submited profile was marked for review. Click on the edit button to view more details.">
+                </c-portal-warning-banner>
+            </div>
+            
+            <div if:false={viewSubmitWarning} class="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-large-size_1-of-4 slds-col_bump-left">
                 <lightning-button class="baseButton newContainedButton buttonMinHeightMedium text-xsmall fullWidth" label="Edit" 
                                     variant="neutral" onclick={handleOpenEditModalButtonClick}></lightning-button>
             </div>
 
-            <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1">    
-                <c-portal-record-view-edit-cards-and-navigation properties-and-cards-list-api={propertiesAndAndCardsList}>
-                </c-portal-record-view-edit-cards-and-navigation>
+            <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1">
+                <template if:true={viewPublishedRecord}>
+                    <c-portal-record-view-edit-cards-and-navigation properties-and-cards-list-api={propertiesAndAndCardsList}>
+                    </c-portal-record-view-edit-cards-and-navigation>
+                </template>
+                <template if:false={viewPublishedRecord}>
+                    <div class="slds-p-vertical_xx-large slds-p-horizontal_x-large customBorderlessCardWhite slds-m-bottom_medium section">
+                        <lightning-formatted-rich-text                       
+                            value="There is no published record to preview.">
+                        </lightning-formatted-rich-text>
+                    </div>
+                </template>
             </div>
 
         </div>
 
         <div if:true={showSuccessModal}>
-
+            <c-portal-generic-popup-window show-close variant="success">
+                <span slot="bodycontent" >
+                    <div>
+                        <div class="slds-p-around--medium text-bold text-small">                   
+                            <span class="slds-float_right slds-m-horizontal_xx-small" onclick={handleCloseSuccessPopup} >
+                                <lightning-icon icon-name="utility:close" size="x-small" class="cursorPointer blackIcon"></lightning-icon>
+                            </span>
+                        </div>
+                        <div class="slds-p-around_large"> 
+                            <p class="slds-text-align_center slds-p-vertical_x-small text-small">
+                                <template if:true={displaySaveTextSuccessModal}>
+                                    <lightning-formatted-rich-text                       
+                                        value="Provider profile draft saved successfully. Once it's ready for submit click on the 'Save and Submit' button.">
+                                    </lightning-formatted-rich-text>
+                                </template>
+                                <template if:false={displaySaveTextSuccessModal}>
+                                    <lightning-formatted-rich-text                       
+                                        value="The provider profile was saved and submited for approval. A notification will be send with further instructions. ">
+                                    </lightning-formatted-rich-text>
+                                </template>
+                            </p> 
+                        </div>
+        
+                        <div class="slds-m-top--xxx-small slds-m-bottom--large slds-text-align--center customWhiteBackground slds-clearfix">
+                            <slot name="ButtonSection">
+                                &nbsp;
+                            </slot>
+                        </div>
+                    </div>
+                </span>
+            </c-portal-generic-popup-window>
         </div>
 
         <div if:true={showErrorModal}>
-
+            <c-portal-generic-popup-window show-close variant="warning">
+                <span slot="bodycontent" >
+                    <div>
+                        <div class="slds-p-around--medium text-bold text-small">                   
+                            <span class="slds-float_right slds-m-horizontal_xx-small" onclick={handleCloseErrorPopup} >
+                                <lightning-icon icon-name="utility:close" size="x-small" class="cursorPointer blackIcon" ></lightning-icon>
+                            </span>
+                        </div>
+                        <div class="slds-p-around_large">
+                            <p class="slds-text-align_center slds-p-vertical_x-small text-small">
+                                <lightning-formatted-rich-text                       
+                                    value="Something went wrong during the submission process. Please contact your administrator for more details.">
+                                </lightning-formatted-rich-text>
+                            </p>
+                        </div>
+        
+                        <div class="slds-m-top--xxx-small slds-m--bottom-large slds-text-align--center customWhiteBackground slds-clearfix">
+                            <slot name="ButtonSection">   
+                                &nbsp;
+                            </slot>
+                        </div>
+                    </div>
+                </span>
+            </c-portal-generic-popup-window>
         </div>
 
         <!-- EDIT MODAL -->
         <div if:true={showEditModal} >
 
-            <c-portal-popup-container size="half">
+            <c-portal-popup-container size="threeQuarters">
                 <span slot="modalHeader">
                     <span>Edit Provider Details</span>
                     <span class="slds-float_right slds-m-horizontal_x-small close-mark" onclick={handleCancelButtonEditModal}>
@@ -43,9 +116,18 @@
                 </span>
 
                 <span slot="modalBody">
-                    <lightning-record-edit-form record-id={recordId} object-api-name={objectName}
-                        onload={loadedEdit} onsuccess={handleSucess} onsubmit={handleSubmit}
-                        onerror={handleError} density="comfy">
+
+                    <div if:true={viewComments} class="slds-p-vertical_xx-small slds-col slds-size_1-of-1">
+                        <c-portal-warning-banner label-input="Please review the comments and submit again.">
+                        </c-portal-warning-banner>
+                        <div class="slds-p-vertical_xx-large slds-p-horizontal_x-large customBorderlessCardWhite slds-m-bottom_medium section">
+                            <div class="slds-form-element__label">Comments</div>
+                            <div class="text-xxxsmall">{comments}</div>
+                        </div>
+                    </div>
+
+                    <lightning-record-edit-form record-id={propertiesAndCardsListEdit.recordId} object-api-name={propertiesAndCardsListEdit.objectAPIName}
+                                onsubmit={handleSubmitForm} density="comfy">
 
                         <template if:true={isSaving}>
                             <div class="modalSpinnerContainer">
@@ -65,38 +147,52 @@
                         </template>
 
                         <template if:false={isLoadingEdit}>
-                            <div class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_x-large">
+                            <div class="slds-grid slds-wrap slds-gutters_direct-medium slds-p-vertical_x-large">
 
                                 <lightning-messages class="toastMessage"></lightning-messages>
 
-                                <template for:each={editFields} for:item="field">
-                                    <div key={field.fieldName}
-                                    class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-m-bottom_medium">
-                                        <template if:true={field.visible}>
+                                <template for:each={propertiesAndCardsListEdit.lstCards} for:item="card">
+
+                                    <template for:each={card.lstFieldWrapper} for:item="field">
+                                        <div key={field.fieldName} if:false={field.visible} class="slds-hide">
+                                            <lightning-input-field field-name={field.fieldName}>
+                                            </lightning-input-field>
+                                        </div>
+                                        <div key={field.fieldName} if:true={field.visible} class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-m-bottom_medium">
                                             <template if:false={field.outputOnly}>
-                                                <template if:true={field.editable}>
-                                                    <lightning-input-field
-                                                        onchange={styleInputs}
-                                                        class="labelValue textValue"
-                                                        field-name={field.fieldName}>
-                                                    </lightning-input-field>
-                                                    <template if:true={field.invalid}>
-                                                        <div
-                                                            class="slds-form-element__help invalidValueLabel">
-                                                            {labels.InvalidValue}</div>
+                                                    <template if:true={field.editable}>
+                                                        <template if:true={field.isMultipick}>
+                                                            <c-portal-record-view-edit-multipicklist-selector 
+                                                                record-id-input={propertiesAndCardsListEdit.recordId} 
+                                                                object-name-input={propertiesAndCardsListEdit.objectAPIName}
+                                                                field-name-input={field.fieldName} 
+                                                                onupdatemultipickvalue={handleMultipickUpdate}>
+                                                            </c-portal-record-view-edit-multipicklist-selector>
+                                                        </template>
+                                                        <template if:false={field.isMultipick}>
+                                                            <lightning-input-field
+                                                                onchange={styleInputs}
+                                                                class="labelValue textValue"
+                                                                field-name={field.fieldName}>
+                                                            </lightning-input-field>
+                                                        </template>
+                                                        <template if:true={field.invalid}>
+                                                            <div
+                                                                class="slds-form-element__help invalidValueLabel">
+                                                                {labels.InvalidValue}</div>
+                                                        </template>
+                                                        <template if:true={field.missing}>
+                                                            <div
+                                                                class="slds-form-element__help invalidValueLabel">
+                                                                {labels.CompleteField}</div>
+                                                        </template>
                                                     </template>
-                                                    <template if:true={field.missing}>
-                                                        <div
-                                                            class="slds-form-element__help invalidValueLabel">
-                                                            {labels.CompleteField}</div>
+                                                    <template if:false={field.editable}>
+                                                        <lightning-input-field
+                                                            class="labelValue textValue disabledValue disabledInput"
+                                                            field-name={field.fieldName} disabled>
+                                                        </lightning-input-field>
                                                     </template>
-                                                </template>
-                                                <template if:false={field.editable}>
-                                                    <lightning-input-field
-                                                        class="labelValue textValue disabledValue disabledInput"
-                                                        field-name={field.fieldName} disabled>
-                                                    </lightning-input-field>
-                                                </template>
                                             </template>
 
                                             <template if:true={field.outputOnly}>
@@ -105,8 +201,9 @@
                                                     field-name={field.fieldName}>
                                                 </lightning-output-field>
                                             </template>
-                                        </template>
-                                    </div>
+                                        </div>
+                                    </template>
+
                                 </template>
                             </div>
                         </template>
@@ -118,11 +215,11 @@
                             </div>
                             <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-large-size_1-of-3">    
                                 <lightning-button class="baseButton newContainedButton buttonMinHeightMedium text-xsmall fullWidth" label="Save" 
-                                                    variant="neutral" onclick={handleSaveButtonEditModal}></lightning-button>
+                                                    variant="neutral" type="submit" data-buttonname="save"></lightning-button>
                             </div>
                             <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-large-size_1-of-3">
-                                <lightning-button class="baseButton newContainedButton buttonMinHeightMedium text-xsmall fullWidth" label="Submit" 
-                                                    variant="neutral" onclick={handleSubmitButtonEditModal} type="submit" disabled={canSave}></lightning-button>
+                                <lightning-button class="baseButton newContainedButton buttonMinHeightMedium text-xsmall fullWidth" label="Save and Submit" 
+                                                    variant="neutral"  type="submit" data-buttonname="submit"></lightning-button>
                             </div>
                         </div>
                     </lightning-record-edit-form>

@@ -580,6 +580,16 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Marked_For_Review__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Checked when the submit is rejected and contains internal comments.</description>
+        <externalId>false</externalId>
+        <label>Marked For Review</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Number_of_employees__c</fullName>
         <externalId>false</externalId>
         <label>Number of employees</label>
