@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Airline_HQ_MER_Membership</name>
+    </customPermissions>
+    <description>DO NOT ASSIGN OR MODIFY UNLESS AUTHORIZED BY ACCOUNT MANAGEMENT TEAM</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Airline HQ MER Membership</label>
+</PermissionSet>

@@ -1,8 +1,9 @@
 @istest
 private class ang_AmendFS_test {
 	 @testSetup static void testSetup(){
-	 	  // Create a new ISO Country
-		IATA_ISO_Country__c country = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR', ANG_Enable_NewGen__c = true);
+		AMS_Settlement_System__c bsp = AMS_OSCAR_TestDataFactory.createOperationAndItsAttributes('BSP-FR');
+	 	// Create a new ISO Country
+		IATA_ISO_Country__c country = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR', ANG_Enable_NewGen__c = true, AMS_Settlement_System__c=bsp.id);
 		insert country;
          
          insert new Apex_Setting__c(Name='RT valid to reopen attachment trigger', Text_1__c='CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia, ComplaintIDFS,'
