@@ -1,7 +1,14 @@
 @isTest
 private class ANG_Migration_MassRMECallout_test {
 	@testSetup static void createData() {
-		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c(Name = 'USA', ISO_Code__c = 'US', CurrencyIsoCode = 'USD');
+		AMS_Settlement_System__c bspUS = new AMS_Settlement_System__c(
+			Name = 'BSP-US',
+			CurrencyIsoCode = 'USD',
+			RecordTypeId = AMS_Utils.RECTYPE_BSP,
+			Enable_Provisional_RHC_Request__c=true);
+		insert bspUS;
+
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c(Name = 'USA', ISO_Code__c = 'US', CurrencyIsoCode = 'USD', AMS_Settlement_System__c = bspUS.Id);
 		insert ctry;
 
 		Account a = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = AMS_utils.RECTYPE_IATAAGENCY, IATACode__c='1234562',Location_Type__c= AMS_Utils.BR, Name='Test2 Agency OK',Short_Name__c='Test1 Agency', Sector__c = AMS_Utils.CATEGORY_TRAVEL_AGENT, Location_Class__c = AMS_Utils.LC_PASSENGER);
