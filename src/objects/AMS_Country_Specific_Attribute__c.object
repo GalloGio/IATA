@@ -2414,6 +2414,21 @@ J-Joint Vent</description>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>GDS_Alert_Type__c</picklist>
+            <values>
+                <fullName>CashGDSAlert</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CashlessGDSAlert</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TAGDSAlert</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Location_Class__c</picklist>
             <values>
                 <fullName>A</fullName>
