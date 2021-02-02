@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>New Gen permission set: it&apos;s used to give access to SSO to users who subscribed for MSTS service</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>IATA EasyPay (MSTS)</label>
+</PermissionSet>
