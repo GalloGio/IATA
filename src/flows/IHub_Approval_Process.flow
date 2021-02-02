@@ -13,6 +13,13 @@
                 <stringValue>Approved</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getIHubDetail.Marked_For_Review__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>updateIHubDetail</targetReference>
         </connector>
@@ -27,6 +34,13 @@
             <operator>Assign</operator>
             <value>
                 <stringValue>Draft</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getIHubDetail.Marked_For_Review__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
             </value>
         </assignmentItems>
         <connector>
@@ -332,16 +346,6 @@
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>Published</name>
-            <dataType>Boolean</dataType>
-            <defaultValue>
-                <elementReference>getIHubDetail.Published__c</elementReference>
-            </defaultValue>
-            <fieldText>Published</fieldText>
-            <fieldType>InputField</fieldType>
-            <isRequired>true</isRequired>
-        </fields>
-        <fields>
             <name>Company_Name</name>
             <dataType>String</dataType>
             <defaultValue>
@@ -494,6 +498,9 @@
         </connector>
         <fields>
             <name>Observations</name>
+            <defaultValue>
+                <stringValue>{!getIHubDetail.Internal_comments__c}</stringValue>
+            </defaultValue>
             <fieldText>Observations</fieldText>
             <fieldType>LargeTextArea</fieldType>
             <isRequired>false</isRequired>
