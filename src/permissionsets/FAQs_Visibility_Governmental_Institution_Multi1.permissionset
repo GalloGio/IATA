@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Individual Government,Inter-Governmental Body</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>FAQs Visibility Governmental Institution Multi1</label>
+    <license>Partner Community</license>
+</PermissionSet>

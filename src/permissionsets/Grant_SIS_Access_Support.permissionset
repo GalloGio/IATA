@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Grant_SIS_Service</name>
+    </customPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Grant SIS Access Support</label>
+</PermissionSet>
