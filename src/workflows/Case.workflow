@@ -1116,17 +1116,6 @@
         <template>SCEQOS/Case_escalated_to_LO</template>
     </alerts>
     <alerts>
-        <fullName>IDFS_Complaint_out_of_query</fullName>
-        <description>IDFS Complaint out of query</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>info.sce@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <senderType>CurrentUser</senderType>
-        <template>All/complaint_out_of_query</template>
-    </alerts>
-    <alerts>
         <fullName>IDFS_SIDRA_CS_request_feedback_to_R_S</fullName>
         <description>IDFS SIDRA_CS/ACC request feedback to R&amp;S</description>
         <protected>false</protected>
@@ -13199,26 +13188,6 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
             <field>Case.Complaint_Opened_Date__c</field>
             <operation>equals</operation>
         </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>IDFS Complaint out of query</fullName>
-        <actions>
-            <name>IDFS_Complaint_out_of_query</name>
-            <type>Alert</type>
-        </actions>
-        <active>true</active>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>SAAM,SIDRA,Process,OSCAR Communication,IATA Financial Review,SIDRA Lite</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.IsComplaint__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <description>2013 process</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
