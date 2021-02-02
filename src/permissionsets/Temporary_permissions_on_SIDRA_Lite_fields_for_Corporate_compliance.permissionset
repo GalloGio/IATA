@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Access to case fields:
+Default/Suspension Date
+DEF/SUS Approval/Rejection Remarks
+Propose Default/Termination
+Termination Date (manual entry)
+
+For corporate compliance users to be able to propose suspensions from non-compliance of due diligence.</description>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.DEF_Approval_Rejection_Remarks__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Propose_Default__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.SIDRA_Lite_Default_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Termination_date_manual_entry__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Temporary permissions on SIDRA Lite fields for Corporate compliance</label>
+    <license>Salesforce</license>
+</PermissionSet>

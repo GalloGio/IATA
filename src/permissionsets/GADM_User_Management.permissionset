@@ -285,6 +285,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>GADM_Account_Service_Detail__c.Expected_amount_of_data_submissions__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>GADM_Account_Service_Detail__c.External_Actor_Id__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -306,6 +311,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>GADM_Account_Service_Detail__c.IATA_Member__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>GADM_Account_Service_Detail__c.Periods_without_data_submission_notify__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -338,6 +348,11 @@
         <field>Portal_Applications__c.Service_Description__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Service_Notification_Role__c.Contact_Roles__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
     <label>GADM User Management</label>
     <objectPermissions>
@@ -366,6 +381,15 @@
         <modifyAllRecords>true</modifyAllRecords>
         <object>Account_Role_Service__c</object>
         <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>Account_Role_Services__c</object>
+        <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>

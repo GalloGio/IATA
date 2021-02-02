@@ -89,6 +89,10 @@
                 <field>New_docs_Received__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Type_of_change__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>ANG_Type_Of_Change__c</field>
             </layoutItems>

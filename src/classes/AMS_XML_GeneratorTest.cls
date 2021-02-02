@@ -84,10 +84,16 @@ private class AMS_XML_GeneratorTest {
 		settlementSystemList.add(sett_cass);
 		insert settlementSystemList;
 
+		List<ANG_BSP_Attributes__c> bspAttrLst = new List<ANG_BSP_Attributes__c>();
+		for(AMS_Settlement_System__c iss:settlementSystemList){
+			bspAttrLst.addAll(AMS_OSCAR_TestDataFactory.createOperationAttributes(iss));
+		}
+		insert bspAttrLst;
+
 		//Countries
 		List<IATA_ISO_Country__c> countrylist = new List<IATA_ISO_Country__c>();
 		IATA_ISO_Country__c ctr1 = new IATA_ISO_Country__c(Name = 'Test1 country', ISO_Code__c = 'PT', AMS_Settlement_System__c = sett_dpc.Id, AMS_Settlement_System_CASS__c = sett_cass.Id);
-		IATA_ISO_Country__c ctr2 = new IATA_ISO_Country__c(Name = 'Test2 country', ISO_Code__c = 'ES');
+		IATA_ISO_Country__c ctr2 = new IATA_ISO_Country__c(Name = 'Test2 country', ISO_Code__c = 'ES', AMS_Settlement_System__c = sett_dpc.Id, AMS_Settlement_System_CASS__c = sett_cass.Id);
 		IATA_ISO_Country__c ctr3 = new IATA_ISO_Country__c(Name = 'Test3 country', ISO_Code__c = 'UK', AMS_Settlement_System__c = sett_dpc.Id, AMS_Settlement_System_CASS__c = sett_cass.Id);
 		IATA_ISO_Country__c ctr4 = new IATA_ISO_Country__c(Name = 'Test4 country', ISO_Code__c = 'FR', AMS_Settlement_System__c = sett_dpc.Id, AMS_Settlement_System_CASS__c = sett_cass.Id);
 		countrylist.add(ctr1);
