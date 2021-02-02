@@ -20,6 +20,12 @@ private class ANG_FinancialAssessmentTest {
 
 		insert new List<AMS_Settlement_System__c>{bspSG, bspPT};
 
+		List<ANG_BSP_Attributes__c> bspAttrLst = new List<ANG_BSP_Attributes__c>();
+		for(AMS_Settlement_System__c iss:[select id, name from AMS_Settlement_System__c]){
+			bspAttrLst.addAll(AMS_OSCAR_TestDataFactory.createOperationAttributes(iss));
+		}
+		insert bspAttrLst;
+
 		IATA_ISO_Country__c countryWW = new IATA_ISO_Country__c(
 			Name = 'All Countries',
 			ISO_Code__c = 'WW'

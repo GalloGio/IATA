@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Gives visibility to the link to SAP with sales figures.
+For more details, contact AMP team.</description>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.SAP_BW_report_with_sales_figures__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.SAP_BW_report_without_sales_figures__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>AMP SAP sales figures</label>
+</PermissionSet>
