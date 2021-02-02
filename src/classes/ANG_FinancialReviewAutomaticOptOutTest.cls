@@ -46,6 +46,8 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 
 		insert new List<AMS_Settlement_System__c>{bspCN};
 
+		insert AMS_OSCAR_TestDataFactory.createOperationAttributes(bspCN);
+
 		IATA_ISO_Country__c countryWW = new IATA_ISO_Country__c(
 			Name = 'All Countries',
 			ISO_Code__c = 'WW'
