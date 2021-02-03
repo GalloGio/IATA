@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <classAccesses>
+        <apexClass>CreateNotificationsBatch</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>CreateNotificationsFromQueryBatch</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>NotificationCenterController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>OneIdUtils</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>UserController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <description>Grant access to the Notification Center Tab</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Notification Center Page</label>
+    <tabSettings>
+        <tab>Notification_Center</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+</PermissionSet>

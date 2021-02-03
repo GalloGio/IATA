@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
-    <description>Assigns read-only rights on the Contact fields displayed in the Contact section "Senior Contact Details". DO NOT ASSIGN OR EDIT THIS PS UNLESS AUTHORIZED BY ACCOUNT MANAGEMENT TEAM.</description>
+    <description>Assigns read-only rights on the Contact fields displayed in the Contact section &quot;Senior Contact Details&quot;. DO NOT ASSIGN OR EDIT THIS PS UNLESS AUTHORIZED BY ACCOUNT MANAGEMENT TEAM.</description>
     <fieldPermissions>
         <editable>false</editable>
         <field>Contact.Senior_Contact_Email__c</field>

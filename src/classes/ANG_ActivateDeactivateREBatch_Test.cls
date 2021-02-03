@@ -63,10 +63,22 @@ public class ANG_ActivateDeactivateREBatch_Test{
 		);
 		insert ret;
 
+		List<AMS_Settlement_System__c> settlementSystemList = new List<AMS_Settlement_System__c>();
+		settlementSystemList.add(new AMS_Settlement_System__c(name = 'BSP-01'));
+		settlementSystemList.add(new AMS_Settlement_System__c(name = 'BSP-02'));
+		settlementSystemList.add(new AMS_Settlement_System__c(name = 'BSP-03'));
+		insert settlementSystemList;
+
+		List<ANG_BSP_Attributes__c> bspAttrLst = new List<ANG_BSP_Attributes__c>();
+		for(AMS_Settlement_System__c iss:settlementSystemList){
+			bspAttrLst.addAll(AMS_OSCAR_TestDataFactory.createOperationAttributes(iss));
+		}
+		insert bspAttrLst;
+
 		//isoCountry
-		IATA_ISO_Country__c isoCntr1 = new IATA_ISO_Country__c(Name = 'Portugal', Region__c = 'Europe', ISO_Code__c='PT', ANG_Enable_NewGen__c = true);
-		IATA_ISO_Country__c isoCntr2 = new IATA_ISO_Country__c(Name = 'China', Region__c = 'Asia', ISO_Code__c='CN', ANG_Enable_NewGen__c = true);
-		IATA_ISO_Country__c isoCntr3 = new IATA_ISO_Country__c(Name = 'United States', Region__c = 'Americas', ISO_Code__c='US', ANG_Enable_NewGen__c = true);
+		IATA_ISO_Country__c isoCntr1 = new IATA_ISO_Country__c(Name = 'Portugal', Region__c = 'Europe', ISO_Code__c='PT', ANG_Enable_NewGen__c = true, AMS_Settlement_System__c = settlementSystemList[0].id);
+		IATA_ISO_Country__c isoCntr2 = new IATA_ISO_Country__c(Name = 'China', Region__c = 'Asia', ISO_Code__c='CN', ANG_Enable_NewGen__c = true, AMS_Settlement_System__c = settlementSystemList[1].id);
+		IATA_ISO_Country__c isoCntr3 = new IATA_ISO_Country__c(Name = 'United States', Region__c = 'Americas', ISO_Code__c='US', ANG_Enable_NewGen__c = true, AMS_Settlement_System__c = settlementSystemList[2].id);
 
 		insert new List<IATA_ISO_Country__c>{isoCntr1, isoCntr2, isoCntr3};
 

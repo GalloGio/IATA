@@ -95,7 +95,7 @@ public without sharing class ISSP_UserTriggerHandler {
 																UserLicenseId,
 																UserLicense.Name
 													 FROM Profile
-													WHERE (UserLicense.Name =: ENV.Partner_Community OR UserLicense.Name =: ENV.Identity)]);
+													WHERE UserLicense.Name =: ENV.Partner_Community]);
 		}
 
 		//TF - SP9-A5
