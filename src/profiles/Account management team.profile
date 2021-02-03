@@ -70341,6 +70341,10 @@
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
+        <apexPage>site_robots</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>thai</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
