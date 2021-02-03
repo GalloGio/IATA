@@ -359,13 +359,6 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 	public static Boolean checkIsUsernameIsAvailableInGlobalSalesforce(String email, List<Contact> conList) {
 		// Method to test if another user existin in all SF instances to avoid having an error at the end of the process
 		Savepoint sp = Database.setSavepoint();
-		List<Profile> profileList = [SELECT Id, Name FROM Profile];
-		map<ID, Profile> profileMap = new map<ID, Profile> (
-		[SELECT Id, Name,
-				UserLicenseId,
-				UserLicense.Name
-		FROM Profile
-		WHERE (UserLicense.Name = 'Partner Community' OR UserLicense.Name = 'Identity')]);
 
 		Contact[] recordCont = [SELECT Id FROM Contact WHERE Id NOT IN (SELECT ContactId FROM User) LIMIT 1];
 
