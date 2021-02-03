@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Privileges on Call Center setup screen to allow CSR administrators to add/remove users from the AltiGen Call Center. Used primarily for SIN hub.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>CTI_AltiGen_CallCenterAdmin</label>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>ManageCallCenters</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>ViewRoles</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>ViewSetup</name>
+    </userPermissions>
+</PermissionSet>

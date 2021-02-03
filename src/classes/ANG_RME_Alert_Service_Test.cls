@@ -24,7 +24,8 @@ public class ANG_RME_Alert_Service_Test {
 			CurrencyIsoCode = 'EUR',
 			RecordTypeId = AMS_Utils.RECTYPE_BSP,
 			RHC_Exceptional_Monitoring__c = true,
-			Exc_RHC_Monitoring_Alert__c = '100%UP'
+			Exc_RHC_Monitoring_Alert__c = '100%UP',
+			Enable_Provisional_RHC_Request__c=true
 		);
 		insert bspKZ;
 
@@ -33,12 +34,32 @@ public class ANG_RME_Alert_Service_Test {
 			CurrencyIsoCode = 'EUR',
 			RecordTypeId = AMS_Utils.RECTYPE_BSP,
 			RHC_Exceptional_Monitoring__c = true,
-			Exc_RHC_Monitoring_Alert__c = '100%UP;75%UP;50%UP;100%DOWN;75%DOWN;50%DOWN'
+			Exc_RHC_Monitoring_Alert__c = '100%UP;75%UP;50%UP;100%DOWN;75%DOWN;50%DOWN',
+			Enable_Provisional_RHC_Request__c=true
 		);
 
 		insert bspRU;
+		
+		List<ANG_BSP_Attributes__c> bspAttrLst = new List<ANG_BSP_Attributes__c>();
+		for(AMS_Settlement_System__c iss:[select id, name from AMS_Settlement_System__c]){
+			bspAttrLst.addAll(AMS_OSCAR_TestDataFactory.createOperationAttributes(iss));
+		}
+		insert bspAttrLst;
 
-		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c(Name = 'USA', ISO_Code__c = 'US', CurrencyIsoCode = 'USD');
+		AMS_Settlement_System__c bspUS = new AMS_Settlement_System__c(
+			Name = 'BSP-US',
+			CurrencyIsoCode = 'USD',
+			RecordTypeId = AMS_Utils.RECTYPE_BSP);
+		insert bspUS;
+
+		AMS_Settlement_System__c bspIT = new AMS_Settlement_System__c(
+			Name = 'BSP-IT',
+			CurrencyIsoCode = 'EUR',
+			RecordTypeId = AMS_Utils.RECTYPE_BSP);
+		insert bspIT;
+
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c(Name = 'USA', ISO_Code__c = 'US', CurrencyIsoCode = 'USD', AMS_Settlement_System__c = bspUS.Id);
+		IATA_ISO_Country__c ctryNG = new IATA_ISO_Country__c(Name = 'Italy', ISO_Code__c = 'IT', CurrencyIsoCode = 'EUR', AMS_Settlement_System__c = bspIT.Id, ANG_Enable_NewGen__c = true);
 		
 		IATA_ISO_Country__c countryKZ = new IATA_ISO_Country__c (
 			Name = 'Kazakhstan',
@@ -54,7 +75,12 @@ public class ANG_RME_Alert_Service_Test {
 			ANG_Enable_NewGen__c = false
 		);
 
-		insert new List<IATA_ISO_Country__c>{ctry, countryKZ, countryRU};
+		IATA_ISO_Country__c AllCountries = new IATA_ISO_Country__c (
+			Name = 'ALL Countries',
+			ISO_Code__c = ANG_RHCAlertTriggerHandler.DEFAULT_CODE
+		);
+
+		insert new List<IATA_ISO_Country__c>{ctry, countryKZ, countryRU, AllCountries, ctryNG};
 
 		list<AMS_Country_Specific_Attribute__c> lsAttr = new list<AMS_Country_Specific_Attribute__c>();
 
@@ -84,8 +110,40 @@ public class ANG_RME_Alert_Service_Test {
 														 Email_Template_Internal_Stakeholders__c = '',
 														 Create_SMAP_Case__c = false,
 														 Stakeholders_email_list__c = ''));
+
+		lsAttr.add(new AMS_Country_Specific_Attribute__c(IATA_ISO_Country__c = AllCountries.Id,
+														 recordtypeid = RecordTypeSingleton.getInstance().getRecordTypeID('AMS_Country_Specific_Attribute__c', 'RiskAlertGDS'),
+														 GDS_Alert_Type__c = ANG_RME_Alert_Service.GDS_TA_ALERT_EVENT_TYPE,
+														 Create_SAAM_Case__c = true,
+														 Email_Template_Internal_Stakeholders__c = 'GDS_Monitoring_TAGDSAlert',
+														 Stakeholders_email_list__c = 'tullod@iata.org'));
+
+		lsAttr.add(new AMS_Country_Specific_Attribute__c(IATA_ISO_Country__c = AllCountries.Id,
+														 recordtypeid = RecordTypeSingleton.getInstance().getRecordTypeID('AMS_Country_Specific_Attribute__c', 'RiskAlertGDS'),
+														 GDS_Alert_Type__c = ANG_RME_Alert_Service.GDS_CASH_ALERT_EVENT_TYPE,
+														 Create_SAAM_Case__c = false,
+														 Email_Template_Internal_Stakeholders__c = 'GDS_Monitoring_CASHGDSAlert',
+														 Stakeholders_email_list__c = 'tullod@iata.org'));
+
+		lsAttr.add(new AMS_Country_Specific_Attribute__c(IATA_ISO_Country__c = AllCountries.Id,
+														 recordtypeid = RecordTypeSingleton.getInstance().getRecordTypeID('AMS_Country_Specific_Attribute__c', 'RiskAlertGDS'),
+														 GDS_Alert_Type__c = ANG_RME_Alert_Service.GDS_CASHLESSFOPALERT_EVENT_TYPE,
+														 Create_SAAM_Case__c = false,
+														 Email_Template_Internal_Stakeholders__c = 'GDS_Monitoring_CashlessGDSAlert',
+														 Stakeholders_email_list__c = 'tullod@iata.org'));
+
 		
 		insert lsAttr;
+
+		Account NewGenAccnt = new Account();
+		NewGenAccnt.Name = 'Account for exceptional monitoring';
+		NewGenAccnt.IATACode__c = '00000011';
+		NewGenAccnt.IATA_ISO_Country__c = ctryNG.Id;
+		NewGenAccnt.RecordTypeId = AMS_Utils.RECTYPE_IATAAGENCY;
+		NewGenAccnt.Location_Type__c = AMS_Utils.HE;
+		NewGenAccnt.Sector__c = AMS_Utils.CATEGORY_TRAVEL_AGENT;
+		NewGenAccnt.Location_Class__c = AMS_Utils.LC_PASSENGER;
+		NewGenAccnt.status__c = 'Approved';
 
 		Account a = new Account(IATA_ISO_Country__c = ctry.id, RecordTypeId = AMS_utils.RECTYPE_IATAAGENCY, IATACode__c='1234562',Location_Type__c= AMS_Utils.BR, Name='Test2 Agency OK',Short_Name__c='Test1 Agency', Sector__c = AMS_Utils.CATEGORY_TRAVEL_AGENT, Location_Class__c = AMS_Utils.LC_PASSENGER);
 		
@@ -108,11 +166,22 @@ public class ANG_RME_Alert_Service_Test {
 		RussiaRhcMonitoringAccount.Location_Class__c = AMS_Utils.LC_PASSENGER;
 
 
-		insert new List<Account>{a, rhcMonitoringAccount, RussiaRhcMonitoringAccount};
+		insert new List<Account>{a, rhcMonitoringAccount, RussiaRhcMonitoringAccount, NewGenAccnt};
 
 		ANG_RHCHelper.createRHCInfo(new Set<Id>{a.Id}, false);
 
 		List<ANG_RHC_Information__c> rhcLst = [SELECT Id FROM ANG_RHC_Information__c WHERE ANG_AccountId__c = :a.Id];
+
+		for(ANG_RHC_Information__c rhc:rhcLst)
+			rhc.ANG_RHC_Amount__c = 1000;
+		
+		update rhcLst;
+
+		list<Agency_Authorization__c> LSFOP = new list<Agency_Authorization__c>();
+		LSFOP.add(new Agency_Authorization__c(Account__c = NewGenAccnt.id, Status__c='Active', recordtypeid= RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment'), ANG_FormOfPayment_ID__c='CA'));
+		LSFOP.add(new Agency_Authorization__c(Account__c = NewGenAccnt.id, Status__c='Active', recordtypeid= RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment'), ANG_FormOfPayment_ID__c='CC'));
+		LSFOP.add(new Agency_Authorization__c(Account__c = NewGenAccnt.id, Status__c='Active', recordtypeid= RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment'), ANG_FormOfPayment_ID__c='EP'));
+		insert lsFOP;
 
 		createRMEMappings();
 	}
@@ -278,6 +347,31 @@ public class ANG_RME_Alert_Service_Test {
 
 	@isTest
 	static void webservice_sucess() {
+		Account accnt = [SELECT id, IATACode__c,IATA_ISO_Country__r.AMS_Settlement_System__r.Enable_Provisional_RHC_Request__c FROM account WHERE Name='Test2 Agency OK' limit 1];
+		AMS_Settlement_System__c bsp = [select id, Enable_Provisional_RHC_Request__c from AMS_Settlement_System__c where id=:accnt.IATA_ISO_Country__r.AMS_Settlement_System__c];
+		bsp.Enable_Provisional_RHC_Request__c = true;
+		update bsp;
+
+		ANG_RME_Alert_Service.RHCMessage message = new ANG_RME_Alert_Service.RHCMessage();
+		message.iataCode = '1234562';
+		message.eventTime = System.now();
+		message.storedRHCValue = 200;
+		message.storedBaseCurrency = 'USD';
+
+		Test.setMock(HttpCalloutMock.class, new HttpResponseGenerator(200, JSON.serialize(message)));
+
+		Test.startTest();
+		
+
+		ANG_RME_Alert_Service.WebserviceResult result = ANG_RME_Alert_Service.requestProvisionalRHC([SELECT IATACode__c FROM Account WHERE Name='Test2 Agency OK'][0].Id);
+
+		Test.stopTest();
+		System.assertEquals(message.iataCode, result.iataCode);
+		System.assert(result.isSuccess);
+	}
+
+	@isTest
+	static void provisional_not_enabled() {
 		ANG_RME_Alert_Service.RHCMessage message = new ANG_RME_Alert_Service.RHCMessage();
 		message.iataCode = '1234562';
 		message.eventTime = System.now();
@@ -286,13 +380,17 @@ public class ANG_RME_Alert_Service_Test {
 		Test.setMock(HttpCalloutMock.class, new HttpResponseGenerator(200, JSON.serialize(message)));
 
 		Test.startTest();
+		Account accnt = [SELECT id, IATACode__c,IATA_ISO_Country__r.AMS_Settlement_System__r.Enable_Provisional_RHC_Request__c FROM account limit 1];
+		AMS_Settlement_System__c bsp = [select id, Enable_Provisional_RHC_Request__c from AMS_Settlement_System__c where id=:accnt.IATA_ISO_Country__r.AMS_Settlement_System__c];
+		bsp.Enable_Provisional_RHC_Request__c = false;
+		update bsp;
 
 		ANG_RME_Alert_Service.WebserviceResult result = ANG_RME_Alert_Service.requestProvisionalRHC([SELECT IATACode__c FROM Account][0].Id);
 
 		Test.stopTest();
 
-		System.assertEquals(message.iataCode, result.iataCode);
-		System.assert(result.isSuccess);
+		System.assertEquals(ANG_RME_Alert_Service.PROVISIONAL_NOT_ALLOWED_BY_BSP, result.description);
+		System.assert(!result.isSuccess);
 	}
 
 	@isTest
@@ -433,7 +531,7 @@ public class ANG_RME_Alert_Service_Test {
 
 	@isTest
 	static void testDoPost() {
-		List <Account> accountList = new List <Account> ([SELECT Id FROM Account LIMIT 1]);
+		List <Account> accountList = new List <Account> ([SELECT Id FROM Account WHERE Name='Test2 Agency OK' LIMIT 1]);
 		ANG_RME_Alert_Service.RHCMessage message = new ANG_RME_Alert_Service.RHCMessage();
 		message.iataCode = '1234562';
 		message.eventId = 'AlertRequest';
@@ -443,7 +541,7 @@ public class ANG_RME_Alert_Service_Test {
 
 		message.storedBaseCurrency = 'USD';
 
-		message.storedRHCValue = 0;
+		message.storedRHCValue = 0.0;
 		message.consumedRHCAmount = 200;
 		message.consumedRHCPercentage = 0.5;
 
@@ -577,4 +675,236 @@ public class ANG_RME_Alert_Service_Test {
 		System.assertEquals(0, alerts.size(), 'The RHC Alert must NOT be created');
 	}
 
+
+	@isTest
+	static void testCASHGDSAlert_success(){
+		ANG_RME_Alert_Service.RHCMessage message = new ANG_RME_Alert_Service.RHCMessage();
+		
+		message.eventId = String.valueOf(System.now());
+		message.schemaVersion = 2;
+		message.eventTime = System.now();
+		message.iataCode = '00000011';
+		message.gds = 'theGDS';
+		message.ticketNumber = '123123123';
+
+		message.eventType = ANG_RME_Alert_Service.GDS_CASH_ALERT_EVENT_TYPE;
+
+		list<ANG_RME_Alert_Service.fopValues> lsFOP = new list<ANG_RME_Alert_Service.fopValues>();
+
+		ANG_RME_Alert_Service.fopValues fopCA = new ANG_RME_Alert_Service.fopValues();
+		fopCA.type = 'CA';
+		fopCA.status = 'Active';
+		lsFOP.add(fopCA);
+		ANG_RME_Alert_Service.fopValues fopCC = new ANG_RME_Alert_Service.fopValues();
+		fopCC.type = 'CC';
+		fopCC.status = 'Active';
+		lsFOP.add(fopCC);
+		ANG_RME_Alert_Service.fopValues fopEP = new ANG_RME_Alert_Service.fopValues();
+		fopEP.type = 'EP';
+		fopEP.status = 'Active';
+		lsFOP.add(fopEP);
+
+		message.fop = lsFOP;
+
+		req.requestBody = Blob.valueOf(JSON.serialize(message));
+		req.params.put('eventType', ANG_RME_Alert_Service.GDS_CASH_ALERT_EVENT_TYPE);
+		RestContext.request = req;
+
+		Test.startTest();
+
+		ANG_RME_Alert_Service.RequestResult result = ANG_RME_Alert_Service.doPut().get('apiStatus');
+
+		Test.stopTest();
+
+		System.assertEquals(202, RestContext.response.StatusCode, 'The response code must be 202');
+		System.assertNotEquals(0, [SELECT id  FROM ANG_Risk_Alert__c].size(), 'The RHC Alert must be created');
+	}
+
+	@isTest
+	static void testCASHGDSAlert_wrongFOP(){
+		ANG_RME_Alert_Service.RHCMessage message = new ANG_RME_Alert_Service.RHCMessage();
+		
+		message.eventId = String.valueOf(System.now());
+		message.schemaVersion = 2;
+		message.eventTime = System.now();
+		message.iataCode = '00000011';
+		message.gds = 'theGDS';
+		message.ticketNumber = '123123123';
+
+		message.eventType = ANG_RME_Alert_Service.GDS_CASH_ALERT_EVENT_TYPE;
+
+		list<ANG_RME_Alert_Service.fopValues> lsFOP = new list<ANG_RME_Alert_Service.fopValues>();
+
+		ANG_RME_Alert_Service.fopValues fopCA = new ANG_RME_Alert_Service.fopValues();
+		fopCA.type = 'CA';
+		fopCA.status = 'Non-Active';
+		lsFOP.add(fopCA);
+		ANG_RME_Alert_Service.fopValues fopCC = new ANG_RME_Alert_Service.fopValues();
+		fopCC.type = 'CC';
+		fopCC.status = 'Active';
+		lsFOP.add(fopCC);
+		ANG_RME_Alert_Service.fopValues fopEP = new ANG_RME_Alert_Service.fopValues();
+		fopEP.type = 'EP';
+		fopEP.status = 'Active';
+		lsFOP.add(fopEP);
+
+		message.fop = lsFOP;
+
+		req.requestBody = Blob.valueOf(JSON.serialize(message));
+		req.params.put('eventType', ANG_RME_Alert_Service.GDS_CASH_ALERT_EVENT_TYPE);
+		RestContext.request = req;
+
+		Test.startTest();
+
+		ANG_RME_Alert_Service.RequestResult result = ANG_RME_Alert_Service.doPut().get('apiStatus');
+
+		Test.stopTest();
+
+		System.assertEquals(400, RestContext.response.StatusCode, 'The response code must be 400');
+		System.assertEquals(0, [SELECT id  FROM ANG_Risk_Alert__c].size(), 'The RHC Alert must NOT be created');
+	}
+
+	@isTest
+	static void testCASHLESSGDSAlert_wrongFOP(){
+		ANG_RME_Alert_Service.RHCMessage message = new ANG_RME_Alert_Service.RHCMessage();
+		
+		message.eventId = String.valueOf(System.now());
+		message.schemaVersion = 2;
+		message.eventTime = System.now();
+		message.iataCode = '00000011';
+		message.gds = 'theGDS';
+		message.ticketNumber = '123123123';
+
+		message.eventType = ANG_RME_Alert_Service.GDS_CASHLESSFOPALERT_EVENT_TYPE;
+
+		list<ANG_RME_Alert_Service.fopValues> lsFOP = new list<ANG_RME_Alert_Service.fopValues>();
+
+		ANG_RME_Alert_Service.fopValues fopCA = new ANG_RME_Alert_Service.fopValues();
+		fopCA.type = 'CA';
+		fopCA.status = 'Non-Active';
+		lsFOP.add(fopCA);
+		ANG_RME_Alert_Service.fopValues fopCC = new ANG_RME_Alert_Service.fopValues();
+		fopCC.type = 'CC';
+		fopCC.status = 'Active';
+		lsFOP.add(fopCC);
+		ANG_RME_Alert_Service.fopValues fopEP = new ANG_RME_Alert_Service.fopValues();
+		fopEP.type = 'EP';
+		fopEP.status = 'Active';
+		lsFOP.add(fopEP);
+
+		message.fop = lsFOP;
+
+		req.requestBody = Blob.valueOf(JSON.serialize(message));
+		req.params.put('eventType', ANG_RME_Alert_Service.GDS_CASHLESSFOPALERT_EVENT_TYPE);
+		RestContext.request = req;
+
+		Test.startTest();
+
+		ANG_RME_Alert_Service.RequestResult result = ANG_RME_Alert_Service.doPut().get('apiStatus');
+
+		Test.stopTest();
+
+		System.assertEquals(400, RestContext.response.StatusCode, 'The response code must be 400');
+		System.assertEquals(0, [SELECT id  FROM ANG_Risk_Alert__c].size(), 'The RHC Alert must NOT be created');
+	}
+
+	@isTest
+	static void testCASHLESSGDSAlert_success(){
+		ANG_RME_Alert_Service.RHCMessage message = new ANG_RME_Alert_Service.RHCMessage();
+		
+		message.eventId = String.valueOf(System.now());
+		message.schemaVersion = 2;
+		message.eventTime = System.now();
+		message.iataCode = '00000011';
+		message.gds = 'theGDS';
+		message.ticketNumber = '123123123';
+
+		message.eventType = ANG_RME_Alert_Service.GDS_CASHLESSFOPALERT_EVENT_TYPE;
+
+		list<ANG_RME_Alert_Service.fopValues> lsFOP = new list<ANG_RME_Alert_Service.fopValues>();
+
+		ANG_RME_Alert_Service.fopValues fopCA = new ANG_RME_Alert_Service.fopValues();
+		fopCA.type = 'CA';
+		fopCA.status = 'Active';
+		lsFOP.add(fopCA);
+		ANG_RME_Alert_Service.fopValues fopCC = new ANG_RME_Alert_Service.fopValues();
+		fopCC.type = 'CC';
+		fopCC.status = 'Active';
+		lsFOP.add(fopCC);
+		ANG_RME_Alert_Service.fopValues fopEP = new ANG_RME_Alert_Service.fopValues();
+		fopEP.type = 'EP';
+		fopEP.status = 'Active';
+		lsFOP.add(fopEP);
+
+		message.fop = lsFOP;
+
+		req.requestBody = Blob.valueOf(JSON.serialize(message));
+		req.params.put('eventType', ANG_RME_Alert_Service.GDS_CASHLESSFOPALERT_EVENT_TYPE);
+		RestContext.request = req;
+
+		Test.startTest();
+
+		ANG_RME_Alert_Service.RequestResult result = ANG_RME_Alert_Service.doPut().get('apiStatus');
+
+		Test.stopTest();
+
+		System.assertEquals(202, RestContext.response.StatusCode, 'The response code must be 202');
+		System.assertNotEquals(0, [SELECT id  FROM ANG_Risk_Alert__c].size(), 'The RHC Alert must be created');
+	}
+	
+	@isTest
+	static void testTAGDSAlert_success(){
+		ANG_RME_Alert_Service.RHCMessage message = new ANG_RME_Alert_Service.RHCMessage();
+		
+		message.eventId = String.valueOf(System.now());
+		message.schemaVersion = 2;
+		message.eventTime = System.now();
+		message.iataCode = '00000011';
+		message.gds = 'theGDS';
+		message.ticketNumber = '123123123';
+		message.agentStatus ='Approved';
+
+		message.eventType = ANG_RME_Alert_Service.GDS_TA_ALERT_EVENT_TYPE;
+
+		req.requestBody = Blob.valueOf(JSON.serialize(message));
+		req.params.put('eventType', ANG_RME_Alert_Service.GDS_TA_ALERT_EVENT_TYPE);
+		RestContext.request = req;
+
+		Test.startTest();
+
+		ANG_RME_Alert_Service.RequestResult result = ANG_RME_Alert_Service.doPut().get('apiStatus');
+
+		Test.stopTest();
+
+		System.assertEquals(202, RestContext.response.StatusCode, 'The response code must be 202');
+		System.assertNotEquals(0, [SELECT id  FROM ANG_Risk_Alert__c].size(), 'The RHC Alert must be created');
+	}
+
+	@isTest
+	static void testTAGDSAlert_wrongAccountStatus(){
+		ANG_RME_Alert_Service.RHCMessage message = new ANG_RME_Alert_Service.RHCMessage();
+		
+		message.eventId = String.valueOf(System.now());
+		message.schemaVersion = 2;
+		message.eventTime = System.now();
+		message.iataCode = '00000011';
+		message.gds = 'theGDS';
+		message.ticketNumber = '123123123';
+		message.agentStatus ='Under Review';
+
+		message.eventType = ANG_RME_Alert_Service.GDS_TA_ALERT_EVENT_TYPE;
+
+		req.requestBody = Blob.valueOf(JSON.serialize(message));
+		req.params.put('eventType', ANG_RME_Alert_Service.GDS_TA_ALERT_EVENT_TYPE);
+		RestContext.request = req;
+
+		Test.startTest();
+
+		ANG_RME_Alert_Service.RequestResult result = ANG_RME_Alert_Service.doPut().get('apiStatus');
+
+		Test.stopTest();
+
+		System.assertEquals(400, RestContext.response.StatusCode, 'The response code must be 202');
+		System.assertEquals(0, [SELECT id  FROM ANG_Risk_Alert__c].size(), 'The RHC Alert must NOT be created');
+	}
 }

@@ -28,6 +28,9 @@ public class ANG_TestDataHelper
 		);
 		insert bsp;
 
+		List<ANG_BSP_Attributes__c> bspAttrLst = AMS_OSCAR_TestDataFactory.createOperationAttributes(bsp);
+		insert bspAttrLst;
+
 		IATA_ISO_Country__c country = new IATA_ISO_Country__c();
 		country.Name = countryInformation.name;
 		country.ISO_Code__c = countryInformation.code;

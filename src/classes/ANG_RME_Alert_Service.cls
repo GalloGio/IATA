@@ -13,6 +13,14 @@ global class ANG_RME_Alert_Service {
 	private static final String EDS_ALERT_EVENT_TYPE = 'EDSAlert';
 	@TestVisible
 	private static final String BALANCE_UPDATE_EVENT_TYPE = 'BalanceUpdate';
+	
+	public static final string PROVISIONAL_NOT_ALLOWED_BY_BSP = 'Agency\'s BSP does not allow to request new provisional';
+	@TestVisible
+	private static final String GDS_CASHLESSFOPALERT_EVENT_TYPE = 'CashlessGDSAlert';
+	@TestVisible
+	private static final String GDS_TA_ALERT_EVENT_TYPE = 'TAGDSAlert';
+	@TestVisible
+	private static final String GDS_CASH_ALERT_EVENT_TYPE = 'CashGDSAlert';
 
 	public class RHCMessage{
 		//Basic info
@@ -48,6 +56,17 @@ global class ANG_RME_Alert_Service {
 		public List<String> triggeredRules;
 		public List<AgentStates> agentStates;
 
+		//INT_032: GDS FailSafe alert
+		public string gds;
+		public string ticketNumber;
+		public string agentStatus;
+		public list<fopValues> fop;
+
+	}
+
+	public class fopValues{
+		public string type; //Valid values: CC, CA, EP
+		public string status;
 	}
 
 	//INT_032: reception of EDS Alerts
@@ -151,11 +170,11 @@ global class ANG_RME_Alert_Service {
 
 			//fetch current information
 			List<Account> accs = [
-				SELECT Id, IATACode__c, 
+				SELECT Id, IATACode__c, top_parent__c, ANG_IsNewGenAgency__c, status__c, 
 					IATA_ISO_Country__r.AMS_Settlement_System__r.RHC_Exceptional_Monitoring__c,
 					IATA_ISO_Country__r.AMS_Settlement_System__r.Exc_RHC_Monitoring_Alert__c,
-					(SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c
-					 FROM RHC_Informations__r)
+					(SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c FROM RHC_Informations__r),
+					(SELECT Id, ANG_FormOfPayment_ID__c, Status__c FROM Agency_Authorizations__r WHERE recordtype.developername ='FormOfPayment')  //Accelya Email + FOP
 				FROM Account
 				WHERE IATACode__c = :req.iataCode
 					AND RecordTypeId = :AMS_Utils.RECTYPE_IATAAGENCY];
@@ -226,8 +245,61 @@ global class ANG_RME_Alert_Service {
 							}
 						}
 					}
+					when 'CashlessGDSAlert'{
+						if(req.fop == null || req.fop.size()==0){
+							setResponse('FOP attribute cannot be blank',  400);
+						}else{
+							map<string, string> RMEFOPS = new map<string, string>();
+							for(fopValues fops:req.fop) RMEFOPS.put(fops.type, fops.status);
+							if(acct.Agency_Authorizations__r.isEmpty()){
+								setResponse('Agent '+req.iataCode+' does not have FOP set', 404);
+							}else{
+								if(validateFOP(acct.Agency_Authorizations__r, RMEFOPS)){
+									saveGDSAlert(req, acct.id, acct.top_parent__c);
+								}else{
+									map<string, string> SFDCFOPS = new map<string, string>();
+									for(Agency_Authorization__c sffops:acct.Agency_Authorizations__r)	SFDCFOPS.put(sffops.ANG_FormOfPayment_ID__c , sffops.status__c);
+									setResponse('FOPS Received (' + RMEFOPS + ') don\'t match Salesforce FOPS (' + SFDCFOPS + ') for agent ' +  req.iataCode,  400);
+								}
+							}
+						}
+					}
+					when 'CashGDSAlert'{
+						if(req.fop == null || req.fop.size()==0){
+							setResponse('FOP attribute cannot be blank',  400);
+						}else{
+							if(acct.ANG_IsNewGenAgency__c){
+								map<string, string> RMEFOPS = new map<string, string>();
+								for(fopValues fops:req.fop) RMEFOPS.put(fops.type, fops.status);
+								if(acct.Agency_Authorizations__r.isEmpty()){
+									setResponse('Agent '+req.iataCode+' does not have FOP set', 404);
+								}else{
+									if(validateFOP(acct.Agency_Authorizations__r, RMEFOPS)){
+										saveGDSAlert(req, acct.id, acct.top_parent__c);
+									}else{
+										map<string, string> SFDCFOPS = new map<string, string>();
+										for(Agency_Authorization__c sffops:acct.Agency_Authorizations__r)	SFDCFOPS.put(sffops.ANG_FormOfPayment_ID__c , sffops.status__c);
+										setResponse('FOPS Received (' + RMEFOPS + ') don\'t match Salesforce FOPS (' + SFDCFOPS + ') for agent ' +  req.iataCode,  400);
+									}
+								}
+							}else{
+								setResponse('Agent '+req.iataCode+' is not a newgen agency', 404);
+							}
+						}
+					}
+					when 'TAGDSAlert'{
+						if(string.isBlank(req.agentStatus)){
+							setResponse('agentStatus cannot be blank', 400);
+						}else{
+							if(acct.status__c == req.agentStatus){
+								saveGDSAlert(req, acct.id, acct.top_parent__c);
+							}else{
+								setResponse('Request agentStatus (' + req.agentStatus +  ') doesn\'t match Agent '+req.iataCode+' status (' + acct.status__c + ')', 400);
+							}
+						}
+					}
 					when else {
-						setResponse('Invalid Event Type: '+eventType, 405);
+						setResponse('Invalid Event Type: '+req.eventType, 405);
 					}
 				}
 			}
@@ -352,6 +424,34 @@ global class ANG_RME_Alert_Service {
 
 	}
 
+	//Validates that the FOPS received from RME matches FOPS in Salesforce 
+	private static boolean validateFOP(List<Agency_Authorization__c> agencyFOPs, map<string, string> RMEFOPs){
+		for(Agency_Authorization__c FOP:agencyFOPs){
+			if(!RMEFOPs.containsKey(FOP.ANG_FormOfPayment_ID__c))
+				return false;
+			else{
+				if(FOP.status__c <> RMEFOPs.get(FOP.ANG_FormOfPayment_ID__c))
+					return false;
+			}
+		}
+		return true;
+	}
+
+	private static void saveGDSAlert(RHCMessage req, Id accountId, id TopParentAccntId){
+		ANG_Risk_Alert__c gdsAlert = new ANG_Risk_Alert__c(
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('ANG_Risk_Alert__c','RiskAlertGDS'),
+			ANG_Account__c = TopParentAccntId==null?accountId:TopParentAccntId,
+			GDS__c = req.gds,
+			GDS_Alert_Type__c = req.eventType,
+			Monitored_Account__c = accountId,
+			Ticket_Number__c = req.ticketNumber,
+			Additional_Alert_information__c = (req.eventType==GDS_TA_ALERT_EVENT_TYPE?string.valueOf(req.agentStatus):string.valueOf(req.fop)),
+			ANG_EventId__c = req.eventId
+		);
+		insert gdsAlert;
+		setResponse(null, 202);
+	}
+
 	private static void saveEDSAlert(RHCMessage req, Id accountId){
 
 		if(!validateEDSAlert(req)){
@@ -464,46 +564,58 @@ global class ANG_RME_Alert_Service {
 
 	webservice static WebserviceResult requestProvisionalRHC(String accountId){
 		list<ANG_RHC_Information__c> rhcInfo = [SELECT id, ANG_AccountId__r.IATACode__c, ANG_AccountId__r.Location_Type__c,
+												ANG_AccountId__r.IATA_ISO_Country__r.AMS_Settlement_System__r.Enable_Provisional_RHC_Request__c,
 										  ANG_RHC_Amount_Provisional__c, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c, ANG_Provisional_RHC_Last_Update__c
 										  FROM ANG_RHC_Information__c WHERE ANG_AccountId__c=:accountId];
-
-		return requestProvisionalRHC(rhcInfo[0], true);
-		//Account acc = [SELECT Id, IATACode__c, Location_Type__c, (SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c FROM RHC_Informations__r) FROM Account where Id = :accountId];
+		if(rhcInfo[0].ANG_AccountId__r.IATA_ISO_Country__r.AMS_Settlement_System__r.Enable_Provisional_RHC_Request__c)
+			return requestProvisionalRHC(rhcInfo[0], true);
+		else{
+			WebserviceResult result = new WebserviceResult();
+			result.isSuccess = false;
+			result.description = PROVISIONAL_NOT_ALLOWED_BY_BSP;
+			return result;
+		}
 	}
 
 	public static WebserviceResult requestProvisionalRHC(ANG_RHC_Information__c rhcInfo, boolean ProvisionalIsAppliedImmediately){
-		WebserviceResult result = doRequest(rhcInfo.ANG_AccountId__r.IATACode__c, 'BTN_Prov', rhcInfo.ANG_AccountId__r.Location_Type__c); //results are saved on the private varible "result"
+		if(rhcInfo.ANG_AccountId__r.IATA_ISO_Country__r.AMS_Settlement_System__r.Enable_Provisional_RHC_Request__c){
+			WebserviceResult result = doRequest(rhcInfo.ANG_AccountId__r.IATACode__c, 'BTN_Prov', rhcInfo.ANG_AccountId__r.Location_Type__c); //results are saved on the private varible "result"
 
-		if(result.isSuccess){
+			if(result.isSuccess){
 
-			if(result.res.iataCode != rhcInfo.ANG_AccountId__r.IATACode__c){
-				if(ProvisionalIsAppliedImmediately){
-					log.Error_Code__c = 'Iata Code Mismatch';
-					ServiceNow_Helper.sendRequestToSNOWRME('JSD6', rhcInfo.ANG_AccountId__r.IATACode__c, log, result);
+				if(result.res.iataCode != rhcInfo.ANG_AccountId__r.IATACode__c){
+					if(ProvisionalIsAppliedImmediately){
+						log.Error_Code__c = 'Iata Code Mismatch';
+						ServiceNow_Helper.sendRequestToSNOWRME('JSD6', rhcInfo.ANG_AccountId__r.IATACode__c, log, result);
+					}
 				}
-			}
-			else if (result.res.storedBaseCurrency != rhcInfo.CurrencyIsoCode){
-				if(ProvisionalIsAppliedImmediately){
-					log.Error_Code__c = 'Currency Mismatch';
-					ServiceNow_Helper.sendRequestToSNOWRME('JSD7', rhcInfo.ANG_AccountId__r.IATACode__c, log, result);
+				else if (result.res.storedBaseCurrency != rhcInfo.CurrencyIsoCode){
+					if(ProvisionalIsAppliedImmediately){
+						log.Error_Code__c = 'Currency Mismatch';
+						ServiceNow_Helper.sendRequestToSNOWRME('JSD7', rhcInfo.ANG_AccountId__r.IATACode__c, log, result);
+					}
 				}
-			}
-			else{
-				rhcInfo.ANG_RHC_Amount_Provisional__c = result.res.provisionalRHC;
-				rhcInfo.ANG_Provisional_RHC_Last_Update__c = System.today();
+				else{
+					rhcInfo.ANG_RHC_Amount_Provisional__c = result.res.provisionalRHC;
+					rhcInfo.ANG_Provisional_RHC_Last_Update__c = System.today();
 
-				if(ProvisionalIsAppliedImmediately)
-					update rhcInfo;
+					if(ProvisionalIsAppliedImmediately)
+						update rhcInfo;
+				}
+				if(String.isNotEmpty(log.Error_Code__c)) update log;
 			}
-			if(String.isNotEmpty(log.Error_Code__c)) update log;
+
+			//
+			// To reset the singleton for future calls
+			//
+			log = null;
+			return result;
+		}else{
+			WebserviceResult result = new WebserviceResult();
+			result.isSuccess = false;
+			result.description = PROVISIONAL_NOT_ALLOWED_BY_BSP;
+			return result;
 		}
-
-		//
-		// To reset the singleton for future calls
-		//
-		log = null;
-
-		return result;
 	}
 
 	//called from the oscar trigger when Endorsement_Requested__c is set to true
