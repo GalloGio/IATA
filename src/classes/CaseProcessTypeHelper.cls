@@ -106,22 +106,22 @@ public with sharing class CaseProcessTypeHelper {
 	 *  - Case is being closed
 	 *  - Subject cannot contain 'PROCOM'
 	 */
-	private static Boolean PROCESS_KPI_EXECUTED = false;
+	private static Set<String> SET_CASE_KPI_PROCESSED = new Set<String>();
 	public static void processKPI(List<Case> cases, Map<Id,Case> oldMap) {
-		if (PROCESS_KPI_EXECUTED) return;
-		PROCESS_KPI_EXECUTED = true;
-
 		Set<Id> oscarIds = new Set<Id>(); //WMO-564 - ACAMBAS
 		List<Case> casesToProcess = new List<Case>();
 
 		for(Case cse : cases) {
-			Case oldRecord = oldMap.get(cse.Id);
-			Boolean beingClosed = cse.Status!=oldRecord.Status && CLOSED_STATUSES.contains(cse.Status) && !CLOSED_STATUSES.contains(oldRecord.Status);
-			Boolean hasConfig = getMapRTsToReasons().get(cse.RecordTypeId) != null && getMapRTsToReasons().get(cse.RecordTypeId).get(cse.Reason1__c) != null;
-			Boolean validSubject = String.isNotBlank(cse.Subject) && !cse.Subject.contains('PROCOM');
-			if(hasConfig && beingClosed && validSubject) {
-				casesToProcess.add(cse);
-				oscarIds.add(cse.OSCAR__c); //WMO-564 - ACAMBAS
+			if (!SET_CASE_KPI_PROCESSED.contains(cse.Id)) {
+				Case oldRecord = oldMap.get(cse.Id);
+				Boolean beingClosed = cse.Status!=oldRecord.Status && CLOSED_STATUSES.contains(cse.Status) && !CLOSED_STATUSES.contains(oldRecord.Status);
+				Boolean hasConfig = getMapRTsToReasons().get(cse.RecordTypeId) != null && getMapRTsToReasons().get(cse.RecordTypeId).get(cse.Reason1__c) != null;
+				Boolean validSubject = String.isNotBlank(cse.Subject) && !cse.Subject.contains('PROCOM');
+				if(hasConfig && beingClosed && validSubject) {
+					SET_CASE_KPI_PROCESSED.add(cse.Id);
+					casesToProcess.add(cse);
+					oscarIds.add(cse.OSCAR__c); //WMO-564 - ACAMBAS
+				}
 			}
 		}
 
