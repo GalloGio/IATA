@@ -53008,9 +53008,9 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Portal_Application_Right__c.New_Role_Requested__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -71368,6 +71368,10 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>sendSingleTrackedEmail</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>site_robots</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
