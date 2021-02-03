@@ -30,7 +30,7 @@ public class EmailMessageKPIHandler {
 		}
 
 		List<EmailMessage> emailMessages = [SELECT id, ParentId, Parent.RecordType.DeveloperName
-											FROM EmailMessage WHERE ID IN: newEmails AND Incoming=False
+											FROM EmailMessage WHERE ID IN: emailsToProcess AND Incoming=False
 											AND Parent.RecordTypeId IN :recordTypesToProcess];
 
 		if(emailMessages.isEmpty()) {
