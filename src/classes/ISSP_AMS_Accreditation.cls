@@ -391,6 +391,13 @@ public without sharing class ISSP_AMS_Accreditation {
 			}
 		set;
 	}
+	public Boolean isTIDSAgent{
+		get{
+			if(con.Account.Category__c == AMS_Utils.CATEGORY_TIDS) return true;
+			else return false;
+			}
+		set;
+	}
 
 	public String passParam { get { if(isPassAccreditation==true){ return '&accType=PASS';} return '';} set;}
 
