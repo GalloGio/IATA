@@ -19077,7 +19077,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>ANG_RHC_Information__c.ANG_RHC_Amount_Provisional__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -68203,6 +68203,10 @@
     <pageAccesses>
         <apexPage>sendSingleTrackedEmail</apexPage>
         <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>site_robots</apexPage>
+        <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>thai</apexPage>
