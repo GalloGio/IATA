@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>For CS to create Cases - Africa &amp; Middle East record type</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Cases - Africa &amp; Middle East</label>
+    <license>Salesforce</license>
+    <recordTypeVisibilities>
+        <recordType>Case.CasesMENA</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+</PermissionSet>

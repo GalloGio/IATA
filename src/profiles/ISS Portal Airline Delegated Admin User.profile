@@ -2932,6 +2932,14 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>BSPAttributesSingleton</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>BSPAttributesSingletonTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>BSPParticipationManager</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -14102,6 +14110,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>AMS_Country_Specific_Attribute__c.Create_SAAM_Case__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>AMS_Country_Specific_Attribute__c.Create_SMAP_Case__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -14113,6 +14126,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>AMS_Country_Specific_Attribute__c.Email_Template_Internal_Stakeholders__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>AMS_Country_Specific_Attribute__c.GDS_Alert_Type__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -18247,6 +18265,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>AMS_Settlement_System__c.Enable_Provisional_RHC_Request__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>AMS_Settlement_System__c.Exc_RHC_Monitoring_Alert__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -18807,6 +18830,21 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>ANG_BSP_Attributes__c.Amount_At_Risk_From_USD__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ANG_BSP_Attributes__c.Amount_At_Risk_Multiplier__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ANG_BSP_Attributes__c.Amount_At_Risk_To_USD__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>ANG_BSP_Attributes__c.BSP__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -18867,7 +18905,32 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>ANG_BSP_Attributes__c.Tier_RHC_Formula_Deduct_USD__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ANG_BSP_Attributes__c.Tier_RHC_Formula_TopUp_USD__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ANG_BSP_Attributes__c.Tier_RHC_Formula__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ANG_BSP_Attributes__c.Tier__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>ANG_BSP_Attributes__c.UniqueKey__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ANG_BSP_Attributes__c.create_SAAM_Case__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -19061,9 +19124,44 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>ANG_RHC_Information__c.Account_BSP__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ANG_RHC_Information__c.Agency_Risk_Status__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ANG_RHC_Information__c.Amount_At_Risk_USD__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ANG_RHC_Information__c.Forecasted_Tier__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>ANG_RHC_Information__c.RHC_Amount_Equals_FS_Percent__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ANG_RHC_Information__c.RHC_Amount_USD__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ANG_RHC_Information__c.Tier__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ANG_RHC_Information__c.Tiered_Provisional_Amount__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -19137,7 +19235,27 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>ANG_Risk_Alert__c.Additional_Alert_information__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ANG_Risk_Alert__c.GDS_Alert_Type__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ANG_Risk_Alert__c.GDS__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>ANG_Risk_Alert__c.Monitored_Account__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ANG_Risk_Alert__c.Ticket_Number__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -60676,6 +60794,10 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>AMS_Country_Specific_Attribute__c-Irregularity Threshold</layout>
+        <recordType>AMS_Country_Specific_Attribute__c.RiskAlertGDS</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>AMS_Country_Specific_Attribute__c-Irregularity Threshold</layout>
         <recordType>AMS_Country_Specific_Attribute__c.ULD_Minimum_Requirements</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -61098,6 +61220,10 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>ANG_Risk_Alert__c-Risk Alert Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ANG_Risk_Alert__c-Risk Alert Layout</layout>
+        <recordType>ANG_Risk_Alert__c.RiskAlertGDS</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>ANG_Risk_Alert__c-Risk Alert Layout</layout>
@@ -67819,6 +67945,10 @@
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
+        <apexPage>site_robots</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>thai</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
@@ -68010,6 +68140,11 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>AMS_Country_Specific_Attribute__c.RTS_Risk_Alert_Notification</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>AMS_Country_Specific_Attribute__c.RiskAlertGDS</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
@@ -68385,6 +68520,11 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>ANG_RHC_Information__c.RHC_Information</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>ANG_Risk_Alert__c.RiskAlertGDS</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>

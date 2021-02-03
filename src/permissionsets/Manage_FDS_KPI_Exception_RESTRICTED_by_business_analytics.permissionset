@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>This permission set is to allow few users to exclude cases from the KPI reporting using the case field Exception__c
+
+PLEASE DO NOT ASSIGN BEFORE CHECKING WITH BUSINESS ANALYTICS</description>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Exception__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Manage FDS KPI Exception - RESTRICTED by business analytics</label>
+</PermissionSet>
