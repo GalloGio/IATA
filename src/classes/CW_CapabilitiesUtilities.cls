@@ -29,6 +29,13 @@ public with sharing class CW_CapabilitiesUtilities {
 	public final static String RT_REMOTE_VALIDATION = RecordTypeSingleton.getInstance().getRecordTypeId('ICG_Capability_Assignment_Group__c', 'Remote_Validation');
 	public final static String RT_NO_CERTIFICATION_REQUIRED = RecordTypeSingleton.getInstance().getRecordTypeId('ICG_Capability_Assignment_Group__c', 'No_Certification_Required');
 
+	public static Map<String, Schema.PicklistEntry> MAPEquipments;
+	public static Map<String, Schema.SObjectField> MAPfields;
+	public static Map<String, List<String>> MAPFieldsByGroupField;
+	public static Map<String, List<String>> MAPTooltipFieldsByField;
+	public static Map<String, List<String>> MAPFieldsByRecordTypeAndCategory;
+	public static Map<String, String> MAPRecordTypeIdByCategory;
+
 	/**
 	 * @description		Generate a map containing record type information
 	 * @param			mapCategoriesByRecordTypeDevName <Categories by record type dev name>
@@ -400,6 +407,9 @@ public with sharing class CW_CapabilitiesUtilities {
 	 * @author			
 	 * @created			01 / 09 / 2020
 	 * @description		Updates a capability assigment group object with the given data in the attributes.
+	 * Note: 			Suggestion for a future refactor: 
+	 * 					These fields of CW_CapabilitiesUtilities (MAPEquipments, MAPfields, MAPFieldsByGroupField, MAPTooltipFieldsByField, MAPFieldsByRecordTypeAndCategory, MAPRecordTypeIdByCategory)
+	 * 					could be used to reduce the amount of parameters in this method. They must be previusly loaded before the call. (e.g. getCapabilitiesByRecordTypeNotIncluded) 				
 	 * @param			Map<String, Object> currentObject: Capability assigment objects by capability field
 	 * 					String currentDetailId: ICG_Account_Role_Capability_Assignment__r.Account_Role_Detail_Capability__r.Id
 	 *					Account_Role_Detail_Capability__c currentDetail: ICG_Account_Role_Capability_Assignment__r.Account_Role_Detail_Capability__c
@@ -608,37 +618,16 @@ public with sharing class CW_CapabilitiesUtilities {
 	 * @created			21 / 01 / 2021
 	 * @description		Returns the mandatory capabilities (mandatory in the view side) that was not previously certified
 	 * 					or assigned
-	 * @param			Map<String, Object> rawData: Capability objects by field (name, label, check_summary ...)
-	 * 					ICG_Account_Role_Detail__c accountRoleDetailFound: Capability account role detail
-	 * 					Map<String, List<String>> mapFieldsByRecordTypeAndCategory: ICG_capability_configuration__mdt data by key
-	 * 					Map<String, String> mapRecordTypeIdByCategory: List of categories by record type
-	 * 					Map<Id, RecordType> mapAccountRoleDetailAssignmentRtsById: Account role detail assignment record types by ids
-	 * 					Map<String, List<String>> mapCategoriesByRecordTypeDevName: Category record types by developer name
-	 * 					Map<String, List<String>> mapFieldsByGroupField: ICG_capability_configuration__mdt data by key 
-	 * 					Map<String, String> columnsToHandle: Colums to generate category found
-	 * 					Map<String, Schema.PicklistEntry> mapEquipments: Account_Role_Detail_Capability__c.Equipment__c picklist values
-	 * 					Map<String, List<String>> mapTooltipFieldsByField: ICG_capability_configuration__mdt data by key
-	 * 					Map<String, Schema.SObjectField> fieldsMap: Schema.SObjectType.Account_Role_Detail_Capability__c.fields
-	 *					String stationRT: Certification station record type
-	 *					List<String> CERTIFICATIONS_ALLOWED_USER: Certification allowed by station
-	 *					Boolean userHasPermissionToEdit: Has user profile One_Source_Backend_Admin permission set
+	 * @param			CapabilityNotIncludedDTO dto
 	 * @return			Set<String> not certified capabilities that must be shown
 	**********************************************************************************************************/
-	public static Set<String> getCapabilitiesByRecordTypeNotIncluded(Map<String, Object> rawData,ICG_Account_Role_Detail__c accountRoleDetailFound,
-	Map<String, List<String>> mapFieldsByRecordTypeAndCategory,
-	Map<String, String> mapRecordTypeIdByCategory,Map<Id, RecordType> mapAccountRoleDetailAssignmentRtsById,
-	Map<String, List<String>> mapCategoriesByRecordTypeDevName,Map<String, List<String>> mapFieldsByGroupField,
-	Map<String, String> columnsToHandle,
-	Map<String, Schema.PicklistEntry> mapEquipments,
-	Map<String, List<String>> mapTooltipFieldsByField,
-	Map<String, Schema.SObjectField> fieldsMap,
-	String stationRT,List<String> CERTIFICATIONS_ALLOWED_USER,Boolean userHasPermissionToEdit){
+		public static Set<String> getCapabilitiesByRecordTypeNotIncluded(CapabilityNotIncludedDTO dto){
 
 		Set<String> listSectionsIncluded = new Set<String>();
 		CW_FacilityCapabilitiesController.SectionsWrapper checksMap;
 		Map<String, List<String>> capabilitiesByRecordTypeNotIncluded = new Map<String, List<String>>();
 
-		for (Map<String, Object> capability : (List<Map<String, Object>>) rawData.get(CAPABILITIES)) {
+		for (Map<String, Object> capability : (List<Map<String, Object>>) dto.rawData.get(CAPABILITIES)) {
 			// if recordtype is editable in private area
 			if ((Boolean) capability.get('isEditableRecordType')) {
 				capabilitiesByRecordTypeNotIncluded.put((String) capability.get('name'), new List<String>());
@@ -652,29 +641,29 @@ public with sharing class CW_CapabilitiesUtilities {
 
 		if (capabilitiesByRecordTypeNotIncluded.size() > 0) {
 			//Read missing Capabilities by mapRecordTypeIdByCategory
-			List<Account_Role_Detail_Capability__c> accountCapabNotInluded = CW_FacilityCapabilitiesController.getCapabilitiesNotIncludedDetail(capabilitiesByRecordTypeNotIncluded, mapRecordTypeIdByCategory);
+			List<Account_Role_Detail_Capability__c> accountCapabNotInluded = CW_FacilityCapabilitiesController.getCapabilitiesNotIncludedDetail(capabilitiesByRecordTypeNotIncluded, MAPRecordTypeIdByCategory);
 			accountCapabNotInluded.sort();
 			for (Account_Role_Detail_Capability__c currentDetail : accountCapabNotInluded) {
-				listSectionsIncluded.add(mapAccountRoleDetailAssignmentRtsById.get(currentDetail.RecordTypeId).DeveloperName);
+				listSectionsIncluded.add(dto.mapAccountRoleDetailAssignmentRtsById.get(currentDetail.RecordTypeId).DeveloperName);
 				
-				String rtDevNameLC = mapAccountRoleDetailAssignmentRtsById.get(currentDetail.RecordTypeId).DeveloperName.toLowerCase();
-				if (mapCategoriesByRecordTypeDevName.containsKey(rtDevNameLC)) {
+				String rtDevNameLC = dto.mapAccountRoleDetailAssignmentRtsById.get(currentDetail.RecordTypeId).DeveloperName.toLowerCase();
+				if (dto.mapCategoriesByRecordTypeDevName.containsKey(rtDevNameLC)) {
 					// We look for the Capability, Category to which it belongs
-					Map<String, Object> capabilityFound = (Map<String, Object>) CW_FacilityCapabilitiesController.getItemInMap((List<Map<String, Object>>) rawData.get(CAPABILITIES), 'name', rtDevNameLC);
+					Map<String, Object> capabilityFound = (Map<String, Object>) CW_FacilityCapabilitiesController.getItemInMap((List<Map<String, Object>>) dto.rawData.get(CAPABILITIES), 'name', rtDevNameLC);
 					capabilityFound = generateCapabilityFound(capabilityFound, currentDetail);
 					Map<String, Object> categoryFound = (Map<String, Object>) CW_FacilityCapabilitiesController.getItemInMap((List<Map<String, Object>>) capabilityFound.get(CATEGORIES), 'value', currentDetail.Category__c);
-					categoryFound = generateCategoryFound(categoryFound, capabilityFound, mapFieldsByRecordTypeAndCategory, rtDevNameLC, currentDetail, mapFieldsByGroupField, columnsToHandle, false);
+					categoryFound = generateCategoryFound(categoryFound, capabilityFound, MAPFieldsByRecordTypeAndCategory, rtDevNameLC, currentDetail, MAPFieldsByGroupField, dto.columnsToHandle, false);
 
-					if (!String.isBlank(accountRoleDetailFound.Summary_Detail_Check_JSON__c)) {
-						checksMap = (CW_FacilityCapabilitiesController.SectionsWrapper) JSON.deserialize(accountRoleDetailFound.Summary_Detail_Check_JSON__c, CW_FacilityCapabilitiesController.SectionsWrapper.class);
+					if (!String.isBlank(dto.accountRoleDetailFound.Summary_Detail_Check_JSON__c)) {
+						checksMap = (CW_FacilityCapabilitiesController.SectionsWrapper) JSON.deserialize(dto.accountRoleDetailFound.Summary_Detail_Check_JSON__c, CW_FacilityCapabilitiesController.SectionsWrapper.class);
 					}
 
 					Map<String, Object> currentObject;
 					if (categoryFound != null && categoryFound.containsKey(ROWS)) {
 						List<Object> capabilityGroupRowsFound = (List<Object>) categoryFound.get(ROWS);
-						currentObject = CW_CapabilitiesManagerController.cleanCapabilitiesFieldsToObject(currentDetail, mapFieldsByRecordTypeAndCategory.get(rtDevNameLC + '#' + currentDetail.Category__c.toLowerCase()), fieldsMap);
-						currentObject = generateCurrentObject(currentObject, '', currentDetail, new List<CW_Utilities.AsgmtGroupWrapper>(), '', capabilityFound, mapFieldsByRecordTypeAndCategory, rtDevNameLC,
-						 mapEquipments, mapTooltipFieldsByField, fieldsMap, false, false, false,stationRT,CERTIFICATIONS_ALLOWED_USER,userHasPermissionToEdit);
+						currentObject = CW_CapabilitiesManagerController.cleanCapabilitiesFieldsToObject(currentDetail, MAPFieldsByRecordTypeAndCategory.get(rtDevNameLC + '#' + currentDetail.Category__c.toLowerCase()), MAPfields);
+						currentObject = generateCurrentObject(currentObject, '', currentDetail, new List<CW_Utilities.AsgmtGroupWrapper>(), '', capabilityFound, MAPFieldsByRecordTypeAndCategory, rtDevNameLC,
+						MAPEquipments, MAPTooltipFieldsByField, MAPfields, false, false, false, dto.stationRT, dto.certificationsAllowedUser, dto.userHasPermissionToEdit);
 						capabilityGroupRowsFound.add(currentObject);
 					}
 					categoryFound.put('templateFields', currentObject);
@@ -684,4 +673,44 @@ public with sharing class CW_CapabilitiesUtilities {
 		return listSectionsIncluded;
 	}
 	
+	/*********************************************************************************************************
+	* Map<String, Object> rawData: Capability objects by field (name, label, check_summary ...)
+	* ICG_Account_Role_Detail__c accountRoleDetailFound: Capability account role detail
+	* Map<String, List<String>> mapFieldsByRecordTypeAndCategory: ICG_capability_configuration__mdt data by key
+	* Map<String, String> mapRecordTypeIdByCategory: List of categories by record type
+	* Map<Id, RecordType> mapAccountRoleDetailAssignmentRtsById: Account role detail assignment record types by ids
+	* Map<String, List<String>> mapCategoriesByRecordTypeDevName: Category record types by developer name
+	* Map<String, List<String>> mapFieldsByGroupField: ICG_capability_configuration__mdt data by key 
+	* Map<String, String> columnsToHandle: Colums to generate category found
+	* Map<String, Schema.PicklistEntry> mapEquipments: Account_Role_Detail_Capability__c.Equipment__c picklist values
+	* Map<String, List<String>> mapTooltipFieldsByField: ICG_capability_configuration__mdt data by key
+	* Map<String, Schema.SObjectField> fieldsMap: Schema.SObjectType.Account_Role_Detail_Capability__c.fields
+	* String stationRT: Certification station record type
+	* List<String> certificationsAllowedUser: Certification allowed by station
+	* Boolean userHasPermissionToEdit: Has user profile One_Source_Backend_Admin permission set
+	**********************************************************************************************************/
+	public class CapabilityNotIncludedDTO {
+		public Map<String, Object> rawData;
+		public ICG_Account_Role_Detail__c accountRoleDetailFound;
+		public Map<Id, RecordType> mapAccountRoleDetailAssignmentRtsById;
+		public Map<String, List<String>> mapCategoriesByRecordTypeDevName;
+		public Map<String, String> columnsToHandle;
+		public String stationRT;
+		public List<String> certificationsAllowedUser;
+		public Boolean userHasPermissionToEdit;
+		
+		public CapabilityNotIncludedDTO(Map<String, Object> rawData, ICG_Account_Role_Detail__c accountRoleDetailFound, 
+										Map<Id, RecordType> mapAccountRoleDetailAssignmentRtsById, Map<String, List<String>> mapCategoriesByRecordTypeDevName, 
+										Map<String, String> columnsToHandle, String stationRT, 
+										List<String> certificationsAllowedUser, Boolean userHasPermissionToEdit){
+			this.rawData = rawData;
+			this.accountRoleDetailFound = accountRoleDetailFound;
+			this.mapAccountRoleDetailAssignmentRtsById = mapAccountRoleDetailAssignmentRtsById;
+			this.mapCategoriesByRecordTypeDevName = mapCategoriesByRecordTypeDevName;
+			this.columnsToHandle = columnsToHandle;
+			this.stationRT = stationRT;
+			this.certificationsAllowedUser = certificationsAllowedUser;
+			this.userHasPermissionToEdit = userHasPermissionToEdit;
+		}
+	}
 }

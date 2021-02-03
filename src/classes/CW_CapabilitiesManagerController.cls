@@ -96,6 +96,14 @@ public without sharing class CW_CapabilitiesManagerController {
 		Map<Id, List<CW_Utilities.AsgmtGroupWrapper>> asgmtGroupByCapabilityId = generateAsgmtGroupByCapabilityId(assignments);
 
 		Map<String, String> columnsToHandle = new Map<String, String>();
+		
+		// Load static fields to reduce the parameters in CapabilityNotIncludedDTO and future refactores
+		CW_CapabilitiesUtilities.MAPEquipments = mapEquipments;
+		CW_CapabilitiesUtilities.MAPfields = fieldsMap;
+		CW_CapabilitiesUtilities.MAPFieldsByGroupField = mapFieldsByGroupField;
+		CW_CapabilitiesUtilities.MAPTooltipFieldsByField = mapTooltipFieldsByField;
+		CW_CapabilitiesUtilities.MAPFieldsByRecordTypeAndCategory = mapFieldsByRecordTypeAndCategory;
+		CW_CapabilitiesUtilities.MAPRecordTypeIdByCategory = mapRecordTypeIdByCategory;
 
 		// Loop assignments and fill the output data model
 		for (ICG_Account_Role_Capability_Assignment__c currentAssignment : assignments) {
@@ -206,9 +214,12 @@ public without sharing class CW_CapabilitiesManagerController {
 			}
 		}
 		// if recordtype is editable
-		listSectionsIncluded.addAll(CW_CapabilitiesUtilities.getCapabilitiesByRecordTypeNotIncluded(rawData,accountRoleDetailFound,mapFieldsByRecordTypeAndCategory,
-		mapRecordTypeIdByCategory, mapAccountRoleDetailAssignmentRtsById,mapCategoriesByRecordTypeDevName, mapFieldsByGroupField, columnsToHandle,
-		mapEquipments,mapTooltipFieldsByField,fieldsMap,stationRT,CERTIFICATIONS_ALLOWED_USER,userHasPermissionToEdit));
+		CW_CapabilitiesUtilities.CapabilityNotIncludedDTO capNotIncluded = new CW_CapabilitiesUtilities.CapabilityNotIncludedDTO(rawData, accountRoleDetailFound, 
+			mapAccountRoleDetailAssignmentRtsById, mapCategoriesByRecordTypeDevName, 
+			columnsToHandle, stationRT, 
+			CERTIFICATIONS_ALLOWED_USER, userHasPermissionToEdit);
+
+		listSectionsIncluded.addAll(CW_CapabilitiesUtilities.getCapabilitiesByRecordTypeNotIncluded(capNotIncluded));
 
 		Map<String, Object> returnValue = new Map<String, Object>();
 		returnValue.put(CW_CapabilitiesUtilities.LIST_SECTIONS_INCLUDED, listSectionsIncluded);
