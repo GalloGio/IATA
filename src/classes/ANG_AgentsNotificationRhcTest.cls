@@ -36,6 +36,8 @@ private class ANG_AgentsNotificationRhcTest {
 
 		insert bspES;
 
+		insert AMS_OSCAR_TestDataFactory.createOperationAttributes(bspES);
+
 		Operational_Calendar__c opES = new Operational_Calendar__c(
 			ISS_Operation__c = bspES.id,
 			First_Day__c = Date.today().addDays(30),

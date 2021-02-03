@@ -6,11 +6,17 @@ private class ANG_RHCHelperTest {
 		Id devRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c', 'Minimum_RHC_Amount');
 
 		List<AMS_Settlement_System__c> bspList = new List<AMS_Settlement_System__c>();
-		AMS_Settlement_System__c settlement = new AMS_Settlement_System__c(CurrencyIsoCode = 'USD', ANG_RHC_Amount_Equals_FS__c = true);
+		AMS_Settlement_System__c settlement = new AMS_Settlement_System__c(CurrencyIsoCode = 'USD', Enable_Provisional_RHC_Request__c=true, ANG_RHC_Amount_Equals_FS__c = true);
 		bspList.add(settlement);
-		AMS_Settlement_System__c settlement2 = new AMS_Settlement_System__c(CurrencyIsoCode = 'USD', ANG_RHC_Amount_Equals_FS__c = false);
+		AMS_Settlement_System__c settlement2 = new AMS_Settlement_System__c(CurrencyIsoCode = 'USD', Enable_Provisional_RHC_Request__c=true, ANG_RHC_Amount_Equals_FS__c = false);
 		bspList.add(settlement2);
 		insert bspList;
+
+		List<ANG_BSP_Attributes__c> bspAttrLst = new List<ANG_BSP_Attributes__c>();
+		for(AMS_Settlement_System__c iss:[select id, name from AMS_Settlement_System__c]){
+			bspAttrLst.addAll(AMS_OSCAR_TestDataFactory.createOperationAttributes(iss));
+		}
+		insert bspAttrLst;
 
 		list<String> listAirlineId = new list<String>();
 		for (Profile profile: [SELECT Id FROM Profile WHERE Name LIKE 'ISS Portal Airline%']) {
@@ -115,7 +121,8 @@ private class ANG_RHCHelperTest {
 		List<ANG_RHC_Information__c> rhcinformationList =
 				[SELECT id, ANG_CashCondition__c, ANG_AccountId__c,ANG_RHC_Amount_Equals_FS__c, ANG_Financial_Security__c,
 					ANG_RME_Amount__c, ANG_RHC_Amount_Provisional__c, ANG_Exceeding_Financial_Security__c,ANG_RHC_Amount_Forecasted__c,
-					CurrencyIsoCode, RHC_Amount_Equals_FS_Percent__c, ANG_Minimum_Financial_Security__c
+					CurrencyIsoCode, RHC_Amount_Equals_FS_Percent__c, ANG_Minimum_Financial_Security__c, 
+					Amount_At_Risk_USD__c, Forecasted_Tier__c, RHC_Amount_USD__c, Tier__c, Tiered_Provisional_Amount__c
 				FROM ANG_RHC_Information__c];
 
 		ANG_RHCHelper.calculateRHCAmount(rhcinformationList);
@@ -159,5 +166,26 @@ private class ANG_RHCHelperTest {
 		String result = AMS_OSCAR_Webservice.updateRME_Amount(rhc.Id);
 		Test.stopTest();
 		System.assert(result != '');
+	}
+
+	@isTest static void ChangeTier_Test() {
+		Set<ID> accountIdSet = new Set<ID>();
+		list<account> lsAccnt = [Select id FROM Account where IATACode__c='1234562'];
+		for(Account a : lsAccnt){
+			accountIdSet.add(a.ID);
+			a.ANG_HE_RiskStatus__c = 'A';
+		}
+		update lsAccnt;
+		
+		ANG_RHCHelper.createRHCInfo(accountIdSet, false);
+		ANG_RHC_Information__c rhc = [SELECT id, ANG_RHC_Amount_Provisional__c, Tier__c, Agency_Risk_Status__c FROM ANG_RHC_Information__c LIMIT 1];
+
+		Test.startTest();	
+		rhc.Tier__c = '1';
+		update rhc;
+
+		rhc.Tier__c = '2';
+		update rhc;
+		Test.stopTest();
 	}
 }

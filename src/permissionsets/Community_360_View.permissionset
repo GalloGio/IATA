@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Manage Community 360 authorized permission</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Community 360 View</label>
+    <license>Salesforce</license>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>ViewCustomerSentiment</name>
+    </userPermissions>
+</PermissionSet>
