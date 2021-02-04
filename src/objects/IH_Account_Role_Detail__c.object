@@ -128,16 +128,22 @@
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
-        <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>IH_Account_Role_Detail_Record_Page</content>
         <formFactor>Large</formFactor>
-        <type>Default</type>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
     </actionOverrides>
     <actionOverrides>
         <actionName>View</actionName>
+        <comment>Action override created by Lightning App Builder during activation.</comment>
+        <content>IH_Account_Role_Detail_Record_Page</content>
         <formFactor>Small</formFactor>
+        <skipRecordTypeSelect>false</skipRecordTypeSelect>
+        <type>Flexipage</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
         <type>Default</type>
     </actionOverrides>
     <allowInChatterGroups>false</allowInChatterGroups>
@@ -168,6 +174,7 @@
     <fields>
         <fullName>Account_Role__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Lookup to the related account role</description>
         <externalId>false</externalId>
         <label>Account Role</label>
         <referenceTo>Account_Role__c</referenceTo>
@@ -179,7 +186,7 @@
         <type>Lookup</type>
     </fields>
     <fields>
-        <fullName>Also_known_as__c</fullName>
+        <fullName>Also_Known_As__c</fullName>
         <externalId>false</externalId>
         <label>Also known as</label>
         <length>255</length>
@@ -191,6 +198,7 @@
     </fields>
     <fields>
         <fullName>Case_Studies_Pilots__c</fullName>
+        <description>Case studies and pilots</description>
         <externalId>false</externalId>
         <label>Case Studies / Pilots</label>
         <length>32768</length>
@@ -201,6 +209,7 @@
     </fields>
     <fields>
         <fullName>Company_Description__c</fullName>
+        <description>Description of the company</description>
         <externalId>false</externalId>
         <label>Company Description</label>
         <length>32768</length>
@@ -210,7 +219,8 @@
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
-        <fullName>Company_name__c</fullName>
+        <fullName>Company_Name__c</fullName>
+        <description>Name of the company</description>
         <externalId>false</externalId>
         <label>Company name</label>
         <length>255</length>
@@ -222,6 +232,7 @@
     </fields>
     <fields>
         <fullName>Competition_Competitors__c</fullName>
+        <description>Competitors in the same field area</description>
         <externalId>false</externalId>
         <label>Competition / Competitors</label>
         <required>false</required>
@@ -241,6 +252,7 @@
     </fields>
     <fields>
         <fullName>Competitive_Advantage__c</fullName>
+        <description>Advantages over the competition</description>
         <externalId>false</externalId>
         <label>Competitive Advantage</label>
         <required>false</required>
@@ -249,7 +261,8 @@
         <type>TextArea</type>
     </fields>
     <fields>
-        <fullName>Contact_info_of_startup__c</fullName>
+        <fullName>Contact_Info_Of_Startup__c</fullName>
+        <description>Startup contact</description>
         <externalId>false</externalId>
         <label>Contact info of startup</label>
         <required>false</required>
@@ -259,6 +272,7 @@
     </fields>
     <fields>
         <fullName>Description__c</fullName>
+        <description>Description of the provider/consumer</description>
         <externalId>false</externalId>
         <label>Description</label>
         <required>false</required>
@@ -268,6 +282,7 @@
     </fields>
     <fields>
         <fullName>Focus_Areas__c</fullName>
+        <description>Fields of action</description>
         <externalId>false</externalId>
         <label>Focus Areas</label>
         <required>false</required>
@@ -381,7 +396,7 @@
         <fullName>Founding_Date__c</fullName>
         <externalId>false</externalId>
         <label>Founding Date</label>
-        <precision>18</precision>
+        <precision>4</precision>
         <required>false</required>
         <scale>0</scale>
         <trackHistory>false</trackHistory>
@@ -391,8 +406,9 @@
     </fields>
     <fields>
         <fullName>Funding_Amount__c</fullName>
+        <description>Amount of funding in us dollars</description>
         <externalId>false</externalId>
-        <label>Funding Amount(USD)</label>
+        <label>Funding Amount (USD)</label>
         <precision>18</precision>
         <required>false</required>
         <scale>2</scale>
@@ -403,6 +419,7 @@
     </fields>
     <fields>
         <fullName>Funding_Rounds__c</fullName>
+        <description>Rounds of funding</description>
         <externalId>false</externalId>
         <label>Funding Rounds</label>
         <precision>18</precision>
@@ -415,6 +432,7 @@
     </fields>
     <fields>
         <fullName>Funding_Stage__c</fullName>
+        <description>Stages of funding</description>
         <externalId>false</externalId>
         <label>Funding Stage</label>
         <required>false</required>
@@ -459,9 +477,10 @@
         </valueSet>
     </fields>
     <fields>
-        <fullName>IATA_touchpoints__c</fullName>
+        <fullName>IATA_Touchpoints__c</fullName>
+        <description>IATA contact points(deprecated)</description>
         <externalId>false</externalId>
-        <label>IATA touchpoints</label>
+        <label>IATA touchpoints(deprecated)</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -496,6 +515,7 @@
     </fields>
     <fields>
         <fullName>Industry_Perspectives__c</fullName>
+        <description>Industry Perspectives</description>
         <externalId>false</externalId>
         <label>Industry Perspectives</label>
         <length>32768</length>
@@ -505,7 +525,8 @@
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
-        <fullName>Internal_comments__c</fullName>
+        <fullName>Internal_Comments__c</fullName>
+        <description>Observations</description>
         <externalId>false</externalId>
         <label>Internal comments</label>
         <required>false</required>
@@ -515,6 +536,7 @@
     </fields>
     <fields>
         <fullName>Investors__c</fullName>
+        <description>Investors</description>
         <externalId>false</externalId>
         <label>Investors</label>
         <length>32768</length>
@@ -525,6 +547,7 @@
     </fields>
     <fields>
         <fullName>Legal_Name__c</fullName>
+        <description>Company Legal Name</description>
         <externalId>false</externalId>
         <label>Legal Name</label>
         <length>255</length>
@@ -535,7 +558,7 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Link_to_Social_Media_accounts__c</fullName>
+        <fullName>Link_to_Social_Media_Accounts__c</fullName>
         <externalId>false</externalId>
         <label>Link to Social Media accounts</label>
         <required>false</required>
@@ -546,6 +569,7 @@
     <fields>
         <fullName>Location__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
+        <description>Country</description>
         <externalId>false</externalId>
         <label>Location(s)</label>
         <referenceTo>IATA_ISO_Country__c</referenceTo>
@@ -558,6 +582,7 @@
     </fields>
     <fields>
         <fullName>Logo_File_Id__c</fullName>
+        <description>Logo id for the static resource</description>
         <externalId>false</externalId>
         <label>Logo File Id</label>
         <length>100</length>
@@ -569,6 +594,7 @@
     </fields>
     <fields>
         <fullName>Logo__c</fullName>
+        <description>Logo</description>
         <externalId>false</externalId>
         <formula>IMAGE(&apos;/sfc/servlet.shepherd/version/download/&apos; + Logo_File_Id__c, &quot;&quot;)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
@@ -590,7 +616,8 @@
         <type>Checkbox</type>
     </fields>
     <fields>
-        <fullName>Number_of_employees__c</fullName>
+        <fullName>Number_Of_Employees__c</fullName>
+        <description>Number of employees</description>
         <externalId>false</externalId>
         <label>Number of employees</label>
         <required>false</required>
@@ -607,14 +634,14 @@
                     <label>1-10</label>
                 </value>
                 <value>
-                    <fullName>11-20</fullName>
+                    <fullName>11-30</fullName>
                     <default>false</default>
-                    <label>11-20</label>
+                    <label>11-30</label>
                 </value>
                 <value>
-                    <fullName>20-50</fullName>
+                    <fullName>31-50</fullName>
                     <default>false</default>
-                    <label>20-50</label>
+                    <label>31-50</label>
                 </value>
                 <value>
                     <fullName>50+</fullName>
@@ -627,6 +654,7 @@
     <fields>
         <fullName>Published__c</fullName>
         <defaultValue>false</defaultValue>
+        <description>Checks if the provider/consumer is published in the portal</description>
         <externalId>false</externalId>
         <label>Published</label>
         <trackHistory>false</trackHistory>
@@ -635,6 +663,7 @@
     </fields>
     <fields>
         <fullName>Recent_News__c</fullName>
+        <description>Recent News</description>
         <externalId>false</externalId>
         <label>Recent News</label>
         <length>32768</length>
@@ -645,6 +674,7 @@
     </fields>
     <fields>
         <fullName>Solution__c</fullName>
+        <description>Solution</description>
         <externalId>false</externalId>
         <label>Solution</label>
         <length>32768</length>
@@ -655,6 +685,7 @@
     </fields>
     <fields>
         <fullName>Status__c</fullName>
+        <description>Current status of the provider/consumer</description>
         <externalId>false</externalId>
         <label>Status</label>
         <required>false</required>
@@ -684,9 +715,10 @@
         </valueSet>
     </fields>
     <fields>
-        <fullName>Tags_of_categories__c</fullName>
+        <fullName>Tags_Of_Categories__c</fullName>
+        <description>Categories</description>
         <externalId>false</externalId>
-        <label>Tags of categories</label>
+        <label>IATA touchpoints</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -1052,7 +1084,7 @@
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>IATA_touchpoints__c</picklist>
+            <picklist>IATA_Touchpoints__c</picklist>
             <values>
                 <fullName>Accelerate%40IATA</fullName>
                 <default>false</default>
@@ -1071,17 +1103,17 @@
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Number_of_employees__c</picklist>
+            <picklist>Number_Of_Employees__c</picklist>
             <values>
                 <fullName>1-10</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>11-20</fullName>
+                <fullName>11-30</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>20-50</fullName>
+                <fullName>31-50</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1105,7 +1137,7 @@
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Tags_of_categories__c</picklist>
+            <picklist>Tags_Of_Categories__c</picklist>
             <values>
                 <fullName>Accelerate%40IATA</fullName>
                 <default>false</default>
@@ -1397,7 +1429,7 @@
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>IATA_touchpoints__c</picklist>
+            <picklist>IATA_Touchpoints__c</picklist>
             <values>
                 <fullName>Accelerate%40IATA</fullName>
                 <default>false</default>
@@ -1416,17 +1448,17 @@
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Number_of_employees__c</picklist>
+            <picklist>Number_Of_Employees__c</picklist>
             <values>
                 <fullName>1-10</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>11-20</fullName>
+                <fullName>11-30</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>20-50</fullName>
+                <fullName>31-50</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1450,7 +1482,7 @@
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Tags_of_categories__c</picklist>
+            <picklist>Tags_Of_Categories__c</picklist>
             <values>
                 <fullName>Accelerate%40IATA</fullName>
                 <default>false</default>
@@ -1742,7 +1774,7 @@
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>IATA_touchpoints__c</picklist>
+            <picklist>IATA_Touchpoints__c</picklist>
             <values>
                 <fullName>Accelerate%40IATA</fullName>
                 <default>false</default>
@@ -1761,17 +1793,17 @@
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Number_of_employees__c</picklist>
+            <picklist>Number_Of_Employees__c</picklist>
             <values>
                 <fullName>1-10</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>11-20</fullName>
+                <fullName>11-30</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>20-50</fullName>
+                <fullName>31-50</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1795,7 +1827,7 @@
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Tags_of_categories__c</picklist>
+            <picklist>Tags_Of_Categories__c</picklist>
             <values>
                 <fullName>Accelerate%40IATA</fullName>
                 <default>false</default>
@@ -1969,6 +2001,12 @@
             </values>
         </picklistValues>
     </recordTypes>
+    <validationRules>
+        <fullName>canPublish</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(NOT(ISPICKVAL(Status__c, &apos;Approved&apos;)),Published__c,ISCHANGED(Published__c))</errorConditionFormula>
+        <errorMessage>This provider profile cannot be published because it&apos;s not approved.</errorMessage>
+    </validationRules>
     <listViews>
         <fullName>All</fullName>
         <filterScope>Everything</filterScope>
@@ -1977,7 +2015,7 @@
     <listViews>
         <fullName>Consumers</fullName>
         <columns>NAME</columns>
-        <columns>Company_name__c</columns>
+        <columns>Company_Name__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>RECORDTYPE</field>
@@ -2011,7 +2049,7 @@
     <listViews>
         <fullName>Providers</fullName>
         <columns>NAME</columns>
-        <columns>Company_name__c</columns>
+        <columns>Company_Name__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>RECORDTYPE</field>
@@ -2052,10 +2090,4 @@
         </filters>
         <label>Published Providers</label>
     </listViews>
-	<validationRules>
-        <fullName>canPublish</fullName>
-        <active>true</active>
-        <errorConditionFormula>AND(NOT(ISPICKVAL(Status__c, &apos;Approved&apos;)),Published__c,ISCHANGED(Published__c))</errorConditionFormula>
-        <errorMessage>This provider profile cannot be published because it&apos;s not approved.</errorMessage>
-    </validationRules>
 </CustomObject>

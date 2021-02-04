@@ -134,7 +134,7 @@ export default class PortalServicesInnovationHubSearchTab extends LightningEleme
 
     getCategories(){
         this.catLoading = true;
-        getPickListValues({ sobj: 'IH_Account_Role_Detail__c', field: 'Tags_of_categories__c' }).then(result => {
+        getPickListValues({ sobj: 'IH_Account_Role_Detail__c', field: 'Tags_Of_Categories__c' }).then(result => {
             this.lstAllCategories = JSON.parse(JSON.stringify(result));
             this.setUncheckedProperty('cat');
             this.catLoading = false;

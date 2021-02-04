@@ -53,7 +53,7 @@
         <locationX>1044</locationX>
         <locationY>204</locationY>
         <assignmentItems>
-            <assignToReference>getIHubDetail.Company_name__c</assignToReference>
+            <assignToReference>getIHubDetail.Company_Name__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Company_Name</elementReference>
@@ -67,7 +67,7 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>getIHubDetail.Also_known_as__c</assignToReference>
+            <assignToReference>getIHubDetail.Also_Known_As__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Also_Known_As</elementReference>
@@ -118,13 +118,6 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>getIHubDetail.Case_Studies_Pilots__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Case_Studies_Pilots</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>getIHubDetail.Description__c</assignToReference>
             <operator>Assign</operator>
             <value>
@@ -132,10 +125,10 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>getIHubDetail.Contact_info_of_startup__c</assignToReference>
+            <assignToReference>getIHubDetail.Contact_Info_Of_Startup__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Contact_info_of_startup</elementReference>
+                <elementReference>Contact_Info_Of_Startup</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -156,7 +149,7 @@
             <assignToReference>getIHubDetail.Funding_Amount__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Funding_AmountFlow</elementReference>
+                <elementReference>Funding_Amount</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -181,10 +174,10 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>getIHubDetail.Link_to_Social_Media_accounts__c</assignToReference>
+            <assignToReference>getIHubDetail.Link_to_Social_Media_Accounts__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Link_to_Social_Media_accounts</elementReference>
+                <elementReference>Link_to_Social_Media_Accounts</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -197,7 +190,7 @@
         <locationX>851</locationX>
         <locationY>375</locationY>
         <assignmentItems>
-            <assignToReference>getIHubDetail.Internal_comments__c</assignToReference>
+            <assignToReference>getIHubDetail.Internal_Comments__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Observations</elementReference>
@@ -253,7 +246,7 @@
         <dataType>Multipicklist</dataType>
         <displayField xsi:nil="true"/>
         <object xsi:nil="true"/>
-        <picklistField>Tags_of_categories__c</picklistField>
+        <picklistField>Tags_Of_Categories__c</picklistField>
         <picklistObject>IH_Account_Role_Detail__c</picklistObject>
     </dynamicChoiceSets>
     <dynamicChoiceSets>
@@ -342,14 +335,14 @@
         </connector>
         <fields>
             <name>Name</name>
-            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;b style=&quot;font-size: 16px;&quot;&gt;IH Account Role Detail - &lt;i&gt;{!getIHubDetail.Company_name__c}&lt;/i&gt;&lt;/b&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;b style=&quot;font-size: 16px;&quot;&gt;IH Account Role Detail - &lt;i&gt;{!getIHubDetail.Company_Name__c}&lt;/i&gt;&lt;/b&gt;&lt;/p&gt;&lt;p style=&quot;text-align: center;&quot;&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>Company_Name</name>
             <dataType>String</dataType>
             <defaultValue>
-                <elementReference>getIHubDetail.Company_name__c</elementReference>
+                <elementReference>getIHubDetail.Company_Name__c</elementReference>
             </defaultValue>
             <fieldText>Company Name</fieldText>
             <fieldType>InputField</fieldType>
@@ -414,7 +407,7 @@
             <name>Also_Known_As</name>
             <dataType>String</dataType>
             <defaultValue>
-                <elementReference>getIHubDetail.Also_known_as__c</elementReference>
+                <elementReference>getIHubDetail.Also_Known_As__c</elementReference>
             </defaultValue>
             <fieldText>Also Known As</fieldText>
             <fieldType>InputField</fieldType>
@@ -427,24 +420,24 @@
             <inputParameters>
                 <name>field</name>
                 <value>
-                    <stringValue>Number_of_employees__c</stringValue>
+                    <stringValue>Number_Of_Employees__c</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>label</name>
                 <value>
-                    <stringValue>Number of employees</stringValue>
+                    <stringValue>Number of Employees</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>selectedOption</name>
                 <value>
-                    <elementReference>getIHubDetail.Number_of_employees__c</elementReference>
+                    <elementReference>getIHubDetail.Number_Of_Employees__c</elementReference>
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>
             <outputParameters>
-                <assignToReference>getIHubDetail.Number_of_employees__c</assignToReference>
+                <assignToReference>getIHubDetail.Number_Of_Employees__c</assignToReference>
                 <name>selectedOption</name>
             </outputParameters>
         </fields>
@@ -488,7 +481,7 @@
     <screens>
         <name>FinalDecision</name>
         <label>Decision</label>
-        <locationX>833</locationX>
+        <locationX>832</locationX>
         <locationY>204</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -499,7 +492,7 @@
         <fields>
             <name>Observations</name>
             <defaultValue>
-                <stringValue>{!getIHubDetail.Internal_comments__c}</stringValue>
+                <stringValue>{!getIHubDetail.Internal_Comments__c}</stringValue>
             </defaultValue>
             <fieldText>Observations</fieldText>
             <fieldType>LargeTextArea</fieldType>
@@ -534,15 +527,6 @@
                 <stringValue>{!getIHubDetail.Solution__c}</stringValue>
             </defaultValue>
             <fieldText>Solution</fieldText>
-            <fieldType>LargeTextArea</fieldType>
-            <isRequired>false</isRequired>
-        </fields>
-        <fields>
-            <name>Case_Studies_Pilots</name>
-            <defaultValue>
-                <stringValue>{!getIHubDetail.Case_Studies_Pilots__c}</stringValue>
-            </defaultValue>
-            <fieldText>Case Studies / Pilots</fieldText>
             <fieldType>LargeTextArea</fieldType>
             <isRequired>false</isRequired>
         </fields>
@@ -591,32 +575,32 @@
             <inputParameters>
                 <name>label</name>
                 <value>
-                    <stringValue>Tags of categories</stringValue>
+                    <stringValue>IATA Touchpoints</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>selectedOptions</name>
                 <value>
-                    <elementReference>getIHubDetail.Tags_of_categories__c</elementReference>
+                    <elementReference>getIHubDetail.Tags_Of_Categories__c</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>field</name>
                 <value>
-                    <stringValue>Tags_of_categories__c</stringValue>
+                    <stringValue>Tags_Of_Categories__c</stringValue>
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>
             <outputParameters>
-                <assignToReference>getIHubDetail.Tags_of_categories__c</assignToReference>
+                <assignToReference>getIHubDetail.Tags_Of_Categories__c</assignToReference>
                 <name>selectedOptions</name>
             </outputParameters>
         </fields>
         <fields>
-            <name>Contact_info_of_startup</name>
+            <name>Contact_Info_Of_Startup</name>
             <dataType>String</dataType>
             <defaultValue>
-                <elementReference>getIHubDetail.Contact_info_of_startup__c</elementReference>
+                <elementReference>getIHubDetail.Contact_Info_Of_Startup__c</elementReference>
             </defaultValue>
             <fieldText>Contact info of startup</fieldText>
             <fieldType>InputField</fieldType>
@@ -671,7 +655,7 @@
             <isRequired>false</isRequired>
         </fields>
         <fields>
-            <name>Funding_AmountFlow</name>
+            <name>Funding_Amount</name>
             <dataType>Number</dataType>
             <defaultValue>
                 <elementReference>getIHubDetail.Funding_Amount__c</elementReference>
@@ -731,34 +715,6 @@
             </outputParameters>
         </fields>
         <fields>
-            <name>IATATouchpoints</name>
-            <extensionName>c:portalServicesInnovationHubFlowMultiPicklist</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>label</name>
-                <value>
-                    <stringValue>IATA touchpoints</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>selectedOptions</name>
-                <value>
-                    <elementReference>getIHubDetail.IATA_touchpoints__c</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>field</name>
-                <value>
-                    <stringValue>IATA_touchpoints__c</stringValue>
-                </value>
-            </inputParameters>
-            <isRequired>true</isRequired>
-            <outputParameters>
-                <assignToReference>getIHubDetail.IATA_touchpoints__c</assignToReference>
-                <name>selectedOptions</name>
-            </outputParameters>
-        </fields>
-        <fields>
             <name>Investors</name>
             <dataType>String</dataType>
             <defaultValue>
@@ -769,10 +725,10 @@
             <isRequired>false</isRequired>
         </fields>
         <fields>
-            <name>Link_to_Social_Media_accounts</name>
+            <name>Link_to_Social_Media_Accounts</name>
             <dataType>String</dataType>
             <defaultValue>
-                <elementReference>getIHubDetail.Link_to_Social_Media_accounts__c</elementReference>
+                <elementReference>getIHubDetail.Link_to_Social_Media_Accounts__c</elementReference>
             </defaultValue>
             <fieldText>Link to Social Media accounts</fieldText>
             <fieldType>InputField</fieldType>

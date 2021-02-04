@@ -47,15 +47,9 @@ export default class PortalRecordViewList extends LightningElement {
                     }
                     break;
 
-                case 'Tags_of_categories__c':
-                    if(result[0].Tags_of_categories__c != undefined){
-                        this.list = result[0].Tags_of_categories__c.split(';');
-                    }
-                    break;
-
-                case 'IATA_touchpoints__c':
-                    if(result[0].IATA_touchpoints__c != undefined){
-                        this.list = result[0].IATA_touchpoints__c.split(';');
+                case 'Tags_Of_Categories__c':
+                    if(result[0].Tags_Of_Categories__c != undefined){
+                        this.list = result[0].Tags_Of_Categories__c.split(';');
                     }
                     break;
 

@@ -178,14 +178,7 @@
                             <template if:true={field.isCategory}>
                                 <div key={providerId} class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
                                     <c-portal-record-view-list key={providerId} label-api={_labels.CSP_Categories} provider-id-api={providerId}
-                                    field-api="Tags_of_categories__c"></c-portal-record-view-list>
-                                </div>
-                            </template>
-
-                            <template if:true={field.isTouchPoint}>
-                                <div key={providerId} class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
-                                    <c-portal-record-view-list key={providerId} label-api={_labels.CSP_Touchpoints} provider-id-api={providerId}
-                                    field-api="IATA_touchpoints__c"></c-portal-record-view-list>
+                                    field-api="Tags_Of_Categories__c"></c-portal-record-view-list>
                                 </div>
                             </template>
 

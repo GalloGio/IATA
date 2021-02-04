@@ -88,7 +88,7 @@ public without sharing class PortalServicesInnovationHubCtrl {
 
 		//COMPANY INFORMATION
 		List<PortalWrapperClasses.FieldWrapper> lstfw1 = new List<PortalWrapperClasses.FieldWrapper>();
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Company_name__c',true,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Company_Name__c',true,true));
 		PortalWrapperClasses.FieldWrapper logo = new PortalWrapperClasses.FieldWrapper('Logo_File_Id__c',true,false);
 		logo.isLogo = true;
 		lstfw1.add(logo);
@@ -96,8 +96,8 @@ public without sharing class PortalServicesInnovationHubCtrl {
 		fa.isFocusArea = true;
 		lstfw1.add(fa);
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Legal_Name__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Number_of_employees__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Also_known_as__c',true,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Number_Of_Employees__c',true,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Also_Known_As__c',true,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Company_Description__c',true,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Location__c',true,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Website__c',true,true));
@@ -110,21 +110,18 @@ public without sharing class PortalServicesInnovationHubCtrl {
 		PortalWrapperClasses.FieldWrapper tech = new PortalWrapperClasses.FieldWrapper('Technology__c',true,false);
 		tech.isTech = true;
 		lstfw2.add(tech);
-		PortalWrapperClasses.FieldWrapper cat = new PortalWrapperClasses.FieldWrapper('Tags_of_categories__c',true,false);
+		PortalWrapperClasses.FieldWrapper cat = new PortalWrapperClasses.FieldWrapper('Tags_Of_Categories__c',true,false);
 		cat.isCategory = true;
 		lstfw2.add(cat);
-		lstfw2.add(new PortalWrapperClasses.FieldWrapper('Contact_info_of_startup__c',true,true));
+		lstfw2.add(new PortalWrapperClasses.FieldWrapper('Contact_Info_Of_Startup__c',true,true));
 		lstfw2.add(new PortalWrapperClasses.FieldWrapper('Industry_Perspectives__c',true,true));
 		lstfw2.add(new PortalWrapperClasses.FieldWrapper('Competition_Competitors__c',true,true));
 		lstfw2.add(new PortalWrapperClasses.FieldWrapper('Competitive_Advantage__c',true,true));
 		lstfw2.add(new PortalWrapperClasses.FieldWrapper('Funding_Amount__c',true,true));
 		lstfw2.add(new PortalWrapperClasses.FieldWrapper('Funding_Rounds__c',true,true));
 		lstfw2.add(new PortalWrapperClasses.FieldWrapper('Funding_Stage__c',true,true));
-		PortalWrapperClasses.FieldWrapper tp = new PortalWrapperClasses.FieldWrapper('IATA_touchpoints__c',true,false);
-		tp.isTouchPoint = true;
-		lstfw2.add(tp);
 		lstfw2.add(new PortalWrapperClasses.FieldWrapper('Investors__c',true,true));
-		lstfw2.add(new PortalWrapperClasses.FieldWrapper('Link_to_Social_Media_accounts__c',true,true));
+		lstfw2.add(new PortalWrapperClasses.FieldWrapper('Link_to_Social_Media_Accounts__c',true,true));
 		lstCardWrapper.add(new PortalWrapperClasses.CardWrapper('Service Information', lstfw2, false,'Service Information'));
 
 		return lstCardWrapper;
@@ -176,7 +173,7 @@ public without sharing class PortalServicesInnovationHubCtrl {
 
 		//COMPANY INFORMATION
 		List<PortalWrapperClasses.FieldWrapper> lstfw1 = new List<PortalWrapperClasses.FieldWrapper>();
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Company_name__c',true,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Company_Name__c',true,true));
 		PortalWrapperClasses.FieldWrapper logo = new PortalWrapperClasses.FieldWrapper('Logo_File_Id__c',true,false);
 		logo.isLogo = true;
 		lstfw1.add(logo);
@@ -184,31 +181,27 @@ public without sharing class PortalServicesInnovationHubCtrl {
 		focusAreas.isMultipick = true;
 		lstfw1.add(focusAreas);
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Legal_Name__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Number_of_employees__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Also_known_as__c',true,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Number_Of_Employees__c',true,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Also_Known_As__c',true,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Company_Description__c',true,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Location__c',true,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Website__c',true,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Solution__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Case_Studies_Pilots__c',true,true));
 		PortalWrapperClasses.FieldWrapper technology = new PortalWrapperClasses.FieldWrapper('Technology__c',true,true);
 		technology.isMultipick = true;
 		lstfw1.add(technology);
-		PortalWrapperClasses.FieldWrapper tagsOfCategories = new PortalWrapperClasses.FieldWrapper('Tags_of_categories__c',true,true);
+		PortalWrapperClasses.FieldWrapper tagsOfCategories = new PortalWrapperClasses.FieldWrapper('Tags_Of_Categories__c',true,true);
 		tagsOfCategories.isMultipick = true;
 		lstfw1.add(tagsOfCategories);
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Contact_info_of_startup__c',true,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Contact_Info_Of_Startup__c',true,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Industry_Perspectives__c',true,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Competition_Competitors__c',true,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Competitive_Advantage__c',true,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Funding_Amount__c',true,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Funding_Rounds__c',true,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Funding_Stage__c',true,true));
-		PortalWrapperClasses.FieldWrapper iataTouchpoints = new PortalWrapperClasses.FieldWrapper('IATA_touchpoints__c',true,true);
-		iataTouchpoints.isMultipick = true;
-		lstfw1.add(iataTouchpoints);
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Investors__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Link_to_Social_Media_accounts__c',true,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Link_to_Social_Media_Accounts__c',true,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Status__c',true,false));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Id',true,false));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('RecordTypeId',true,false));
@@ -236,7 +229,7 @@ public without sharing class PortalServicesInnovationHubCtrl {
 
 		//COMPANY INFORMATION
 		List<PortalWrapperClasses.FieldWrapper> lstfw1 = new List<PortalWrapperClasses.FieldWrapper>();
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Company_name__c',false,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Company_Name__c',false,true));
 		PortalWrapperClasses.FieldWrapper logo = new PortalWrapperClasses.FieldWrapper('Logo_File_Id__c',true,false);
 		logo.isLogo = true;
 		lstfw1.add(logo);
@@ -244,33 +237,29 @@ public without sharing class PortalServicesInnovationHubCtrl {
 		fa.isFocusArea = true;
 		lstfw1.add(fa);
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Legal_Name__c',false,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Number_of_employees__c',false,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Also_known_as__c',false,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Number_Of_Employees__c',false,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Also_Known_As__c',false,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Company_Description__c',false,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Location__c',false,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Website__c',false,true));
 
 		//SERVICE INFORMATION
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Solution__c',false,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Case_Studies_Pilots__c',false,true));
 		PortalWrapperClasses.FieldWrapper tech = new PortalWrapperClasses.FieldWrapper('Technology__c',true,false);
 		tech.isTech = true;
 		lstfw1.add(tech);
-		PortalWrapperClasses.FieldWrapper cat = new PortalWrapperClasses.FieldWrapper('Tags_of_categories__c',true,false);
+		PortalWrapperClasses.FieldWrapper cat = new PortalWrapperClasses.FieldWrapper('Tags_Of_Categories__c',true,false);
 		cat.isCategory = true;
 		lstfw1.add(cat);
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Contact_info_of_startup__c',false,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Contact_Info_Of_Startup__c',false,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Industry_Perspectives__c',false,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Competition_Competitors__c',false,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Competitive_Advantage__c',false,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Funding_Amount__c',false,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Funding_Rounds__c',false,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Funding_Stage__c',false,true));
-		PortalWrapperClasses.FieldWrapper tp = new PortalWrapperClasses.FieldWrapper('IATA_touchpoints__c',true,false);
-		tp.isTouchPoint = true;
-		lstfw1.add(tp);
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Investors__c',false,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Link_to_Social_Media_accounts__c',false,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Link_to_Social_Media_Accounts__c',false,true));
 
 		lstCardWrapper.add(new PortalWrapperClasses.CardWrapper('Company Information', lstfw1, false,'Company Information'));
 
@@ -366,12 +355,12 @@ public without sharing class PortalServicesInnovationHubCtrl {
 		List<String> focusAreas = filterWrapperAux.focusAreas;
 		List<String> categories = filterWrapperAux.categories;
 
-		String query = 'SELECT Id,Name,Description__c,Company_Description__c,RecordType.DeveloperName,Logo__c,Logo_File_Id__c,Company_name__c,Funding_Stage__c,Focus_Areas__c,Tags_of_categories__c FROM IH_Account_Role_Detail__c ';
+		String query = 'SELECT Id,Name,Description__c,Company_Description__c,RecordType.DeveloperName,Logo__c,Logo_File_Id__c,Company_Name__c,Funding_Stage__c,Focus_Areas__c,Tags_Of_Categories__c FROM IH_Account_Role_Detail__c ';
 		query+= 'WHERE (RecordType.DeveloperName = :ACCOUNT_ROLE_DETAIL_PROVIDER_RTYPE_DEVNAME OR RecordType.DeveloperName = :ACCOUNT_ROLE_DETAIL_CONSUMERANDPROVIDER_RTYPE_DEVNAME) AND Published__c = true';
 
 		if(searchText.length()>0){
 			String aux = '%' + String.escapeSingleQuotes(searchText) + '%';
-			query+= ' AND Company_name__c LIKE \'' + aux + '\'';	
+			query+= ' AND Company_Name__c LIKE \'' + aux + '\'';	
 		}
 
 		if(filterWrapperAux.fundingStage.length()>0){
@@ -391,15 +380,15 @@ public without sharing class PortalServicesInnovationHubCtrl {
 
 		if(categories.size()>0){
 			String categoriesOptions = String.join(categories,';');
-			query+= ' AND Tags_of_categories__c includes ( \'' + categoriesOptions + '\'' + ')';	
+			query+= ' AND Tags_Of_Categories__c includes ( \'' + categoriesOptions + '\'' + ')';	
 		}
 
-		query+= ' ORDER BY Company_name__c ASC';
+		query+= ' ORDER BY Company_Name__c ASC';
 
 		List<IH_Account_Role_Detail__c> lstProvidersAux = Database.query(query);	
 		
 		for(IH_Account_Role_Detail__c provider : lstProvidersAux){
-			lstProviders.add(new PortalServicesInnovationHubCtrl.ProviderWrapper(provider.id, provider.company_name__c, provider.Company_Description__c,getProviderImgURL(provider.Logo_File_Id__c), provider.Logo_File_Id__c));
+			lstProviders.add(new PortalServicesInnovationHubCtrl.ProviderWrapper(provider.id, provider.Company_Name__c, provider.Company_Description__c,getProviderImgURL(provider.Logo_File_Id__c), provider.Logo_File_Id__c));
 		}	
 		
 		return lstProviders;
