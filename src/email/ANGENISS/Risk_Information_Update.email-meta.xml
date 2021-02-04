@@ -9,10 +9,9 @@
     <textOnly>Dear Agent,
 
 We would like to inform you that according to our records your Risk Status / Cash conditions have been recently updated.
-Your risk information result now in:
+Your risk information result now is:
 
 Risk Status: #RISK_STATUS#
-Cash conditions limited to Financial Security: #CASH_CONDITIONS#
 RHC Amount: #RHC_AMOUNT#
 
 Please check more details on the IATA Customer Portal.
