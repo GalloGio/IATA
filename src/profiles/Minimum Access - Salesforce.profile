@@ -60559,6 +60559,10 @@
         <readable>false</readable>
     </fieldPermissions>
     <layoutAssignments>
+        <layout>ANG_Risk_Alert__c-Risk Alert GDS</layout>
+        <recordType>ANG_Risk_Alert__c.RiskAlertGDS</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Account-Airport</layout>
         <recordType>Account.Airport</recordType>
     </layoutAssignments>
