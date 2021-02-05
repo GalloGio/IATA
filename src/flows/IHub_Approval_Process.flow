@@ -111,13 +111,6 @@
         <locationX>1084</locationX>
         <locationY>443</locationY>
         <assignmentItems>
-            <assignToReference>getIHubDetail.Solution__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Solution</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>getIHubDetail.Description__c</assignToReference>
             <operator>Assign</operator>
             <value>
@@ -178,6 +171,20 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>Link_to_Social_Media_Accounts</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getIHubDetail.Solution__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Solution</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getIHubDetail.Competition_Competitors__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Competition_Competitors</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -531,6 +538,15 @@
             <isRequired>false</isRequired>
         </fields>
         <fields>
+            <name>Competition_Competitors</name>
+            <defaultValue>
+                <stringValue>{!getIHubDetail.Competition_Competitors__c}</stringValue>
+            </defaultValue>
+            <fieldText>Competition / Competitors</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
             <name>TechnologyMulti</name>
             <extensionName>c:portalServicesInnovationHubFlowMultiPicklist</extensionName>
             <fieldType>ComponentInstance</fieldType>
@@ -615,34 +631,6 @@
             <fieldText>Industry Perspectives</fieldText>
             <fieldType>InputField</fieldType>
             <isRequired>false</isRequired>
-        </fields>
-        <fields>
-            <name>competitors</name>
-            <extensionName>c:portalServicesInnovationHubFlowPicklist</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>label</name>
-                <value>
-                    <stringValue>Competition / Competitors</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>selectedOption</name>
-                <value>
-                    <elementReference>getIHubDetail.Competition_Competitors__c</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>field</name>
-                <value>
-                    <stringValue>Competition_Competitors__c</stringValue>
-                </value>
-            </inputParameters>
-            <isRequired>true</isRequired>
-            <outputParameters>
-                <assignToReference>getIHubDetail.Competition_Competitors__c</assignToReference>
-                <name>selectedOption</name>
-            </outputParameters>
         </fields>
         <fields>
             <name>Competitive_Advantage</name>

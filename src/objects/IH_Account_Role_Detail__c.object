@@ -204,8 +204,8 @@
         <length>32768</length>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>Html</type>
-        <visibleLines>25</visibleLines>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
     </fields>
     <fields>
         <fullName>Company_Description__c</fullName>
@@ -235,20 +235,11 @@
         <description>Competitors in the same field area</description>
         <externalId>false</externalId>
         <label>Competition / Competitors</label>
-        <required>false</required>
+        <length>32768</length>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>Picklist</type>
-        <valueSet>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>Samsung</fullName>
-                    <default>false</default>
-                    <label>Samsung</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
     </fields>
     <fields>
         <fullName>Competitive_Advantage__c</fullName>
@@ -279,6 +270,15 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Facebook__c</fullName>
+        <externalId>false</externalId>
+        <label>Facebook</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
     </fields>
     <fields>
         <fullName>Focus_Areas__c</fullName>
@@ -525,6 +525,16 @@
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
+        <fullName>Instagram__c</fullName>
+        <description>Link for the instagram profile</description>
+        <externalId>false</externalId>
+        <label>Instagram</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
         <fullName>Internal_Comments__c</fullName>
         <description>Observations</description>
         <externalId>false</externalId>
@@ -680,8 +690,8 @@
         <length>32768</length>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>Html</type>
-        <visibleLines>25</visibleLines>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
     </fields>
     <fields>
         <fullName>Status__c</fullName>
@@ -958,6 +968,15 @@
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
+        <fullName>Twitter__c</fullName>
+        <externalId>false</externalId>
+        <label>Twitter</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Url</type>
+    </fields>
+    <fields>
         <fullName>Website__c</fullName>
         <externalId>false</externalId>
         <label>Website</label>
@@ -970,13 +989,6 @@
         <fullName>Consumer</fullName>
         <active>true</active>
         <label>Consumer</label>
-        <picklistValues>
-            <picklist>Competition_Competitors__c</picklist>
-            <values>
-                <fullName>Samsung</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
         <picklistValues>
             <picklist>Focus_Areas__c</picklist>
             <values>
@@ -1316,13 +1328,6 @@
         <active>true</active>
         <label>Consumer&amp;Provider</label>
         <picklistValues>
-            <picklist>Competition_Competitors__c</picklist>
-            <values>
-                <fullName>Samsung</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Focus_Areas__c</picklist>
             <values>
                 <fullName>Airports</fullName>
@@ -1660,13 +1665,6 @@
         <fullName>Provider</fullName>
         <active>true</active>
         <label>Provider</label>
-        <picklistValues>
-            <picklist>Competition_Competitors__c</picklist>
-            <values>
-                <fullName>Samsung</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
         <picklistValues>
             <picklist>Focus_Areas__c</picklist>
             <values>
