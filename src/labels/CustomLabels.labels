@@ -40441,7 +40441,7 @@ CNS Customer Services</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP certificate expiry date</shortDescription>
-        <value>Please note that Expiry date has to be minimum 15 days from today.</value>
+        <value>Please take note that the Expiry date must be minimun 90 days from today</value>
     </labels>
     <labels>
         <fullName>ISSP_certificate_with_the_same</fullName>
