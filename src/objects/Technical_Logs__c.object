@@ -371,7 +371,7 @@
         <filters>
             <field>start_date__c</field>
             <operation>equals</operation>
-            <value>1/27/2021 12:00 AM</value>
+            <value>1/5/2021 12:00 AM</value>
         </filters>
         <label>AMS - Sales Order</label>
         <language>en_US</language>

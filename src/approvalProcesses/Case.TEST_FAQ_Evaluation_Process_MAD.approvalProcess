@@ -61,7 +61,7 @@
         </approvalActions>
         <assignedApprover>
             <approver>
-                <name>gabriel@iata.org</name>
+                <name>oueidatg2@iata.org</name>
                 <type>user</type>
             </approver>
             <whenMultipleApprovers>Unanimous</whenMultipleApprovers>
