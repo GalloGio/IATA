@@ -310,6 +310,8 @@
         <columns>NAME</columns>
         <columns>GeonameName__c</columns>
         <columns>GeonameAlternateNames__c</columns>
+        <columns>IATA_ISO_State__c</columns>
+        <columns>Status__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>
