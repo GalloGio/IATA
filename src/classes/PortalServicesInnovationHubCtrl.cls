@@ -275,38 +275,56 @@ public without sharing class PortalServicesInnovationHubCtrl {
 					description='Given a list of Portal Application Rights IDs create a list of Acount Roles and Account Role Details for Innovation Hub')
 	public static List<String> createAccountRoleAndAccountRoleDetails(List<ID> ids) {
 
-		List<Portal_Application_Right__c> lstPortalApplicationRights = [SELECT Id,Contact__r.Account.Sector__c,Contact__r.AccountId,
-																		Portal_Application__r.Name, Right__c 
-																		FROM Portal_Application_Right__c WHERE Id IN :ids];
-		List<Account_Role__c> lstAccountRoles = new List<Account_Role__c>();
-		for(Portal_Application_Right__c portalApplicationRightAux : lstPortalApplicationRights){
-			if(portalApplicationRightAux.Portal_Application__r.Name == INNOVATION_HUB_SERVICE_NAME && portalApplicationRightAux.Right__c == 'Access Granted'){
-						lstAccountRoles.add(new Account_Role__c(Account__c = portalApplicationRightAux.Contact__r.AccountId, 
-																RecordTypeId = accountRoleRecordTypeId,
-																Status__c = 'Active', 
-																Functional_Role__c = 'InnovationHub CRM'));
-			}
-		}
+        Set<Id> accWoArd = new Set<Id>(); // Accounts without IH-ARD
+        Map<Id, Id> mapAccRoles = new Map<Id, Id>(); // map Account Role -> Account Role Id
+        Map<Id, Id> mapARDetail = new Map<Id, Id>(); 
+        List<Account_Role__c> lstAccountRoles = new List<Account_Role__c>();
+        List<IH_Account_Role_Detail__c> lstAccountRoleDetails = new List<IH_Account_Role_Detail__c>();
 
+        // Insert IH Account Role Details
+		lstAccountRoles =[SELECT Id, Account__c FROM Account_Role__c WHERE Account__c IN :ids and RecordTypeId = :accountRoleRecordTypeId];		
+        for(Account_Role__c ar : lstAccountRoles) {
+            mapAccRoles.put(ar.Account__c, ar.Id);
+        }
+
+        // If IH-AR does not exists, create a new one
+        for(Id accountId : ids){
+            if(mapAccRoles.isEmpty() || (!mapAccRoles.isEmpty() && !mapAccRoles.containsKey(accountId))) {
+                lstAccountRoles.add(new Account_Role__c(Account__c = accountId,  RecordTypeId = accountRoleRecordTypeId, Status__c = 'Active',  Functional_Role__c = 'InnovationHub CRM'));
+            }
+        }
 		insert lstAccountRoles;
 
-		List<IH_Account_Role_Detail__c> lstAccountRoleDetails = new List<IH_Account_Role_Detail__c>();
-		for(Account_Role__c accountRoleAux : lstAccountRoles){
-			for(Portal_Application_Right__c portalApplicationRightAux : lstPortalApplicationRights){
-				if(portalApplicationRightAux.Contact__r.AccountId == accountRoleAux.Account__c){
-					if(portalApplicationRightAux.Contact__r.Account.Sector__c == 'Airline' || portalApplicationRightAux.Contact__r.Account.Sector__c == 'Airline Supplier'){
-						lstAccountRoleDetails.add(new IH_Account_Role_Detail__c(Account_Role__c = accountRoleAux.Id,
-																			RecordTypeId = accountRoleDetailConsumerRecordTypeId,
-																			Status__c = 'Approved'));
-					}
-					else {
-						lstAccountRoleDetails.add(new IH_Account_Role_Detail__c(Account_Role__c = accountRoleAux.Id,
-																			RecordTypeId = accountRoleDetailProviderRecordTypeId,
-																			Status__c = 'Draft'));
-					}
-				}
-			}
-		}
+        for(Account_Role__c ar : lstAccountRoles) {
+			mapAccRoles.put(ar.Account__c, ar.Id);
+        }
+
+        // Insert IH Account Role Details
+		lstAccountRoleDetails = [SELECT Id, Account_Role__c, Account_Role__r.Account__c, Account_Role__r.Account__r.Sector__c FROM IH_Account_Role_Detail__c WHERE Account_Role__c IN :mapAccRoles.values() AND (RecordTypeId = :accountRoleDetailConsumerRecordTypeId OR RecordTypeId = :accountRoleDetailProviderRecordTypeId)];
+
+        
+        for(IH_Account_Role_Detail__c ar : lstAccountRoleDetails) {
+            mapARDetail.put(ar.Account_Role__r.Account__c, ar.Id);
+        }
+        for(Id accId : ids){
+            if(mapARDetail.isEmpty() || (!mapARDetail.isEmpty() && !mapARDetail.containsKey(accId))) {
+                accWoArd.add(accId);
+            }
+        }
+        List<Account> accs = [Select Id, Sector__c FROM Account WHERE Id IN :accWoArd];
+
+        for(Account acc : accs){
+            if(acc.Sector__c == 'Airline' || acc.Sector__c == 'Airline Supplier'){
+                lstAccountRoleDetails.add(new IH_Account_Role_Detail__c(Account_Role__c = mapAccRoles.get(acc.Id),
+                                                                    RecordTypeId = accountRoleDetailConsumerRecordTypeId,
+                                                                    Status__c = 'Approved'));
+            }
+            else {
+                lstAccountRoleDetails.add(new IH_Account_Role_Detail__c(Account_Role__c = mapAccRoles.get(acc.Id),
+                                                                    RecordTypeId = accountRoleDetailProviderRecordTypeId,
+                                                                    Status__c = 'Draft'));
+            }
+        }
 		insert lstAccountRoleDetails;
 		
 		return ids;
@@ -533,6 +551,53 @@ public without sharing class PortalServicesInnovationHubCtrl {
 			throw e;
 		}
 	}
+
+/* 
+	*	Methods used for uploading new logo file 
+	*/
+	
+	@AuraEnabled(cacheable = false)
+	public static String uploadFile(String base64, String filename, String recordId) {
+		ContentVersion cv = createContentVersion(base64, filename);
+		ContentDocumentLink cdl = createContentLink(cv.Id, recordId);
+		if (cv == null || cdl == null) { return null; }
+		return cdl.Id;
+  	}
+
+	//Creates a content version from a given file's base64 and name
+	private static ContentVersion createContentVersion(String base64, String filename) {
+		ContentVersion cv = new ContentVersion();
+		cv.VersionData = EncodingUtil.base64Decode(base64);
+		cv.Title = filename;
+		cv.PathOnClient = filename;
+		try {
+			insert cv;
+			return cv;
+		} catch(DMLException e) {
+			System.debug(e);
+			return null;
+		}
+	}
+
+	//Creates a content link for a given ContentVersion and record
+	private static ContentDocumentLink createContentLink(String contentVersionId, String recordId) {
+		if (contentVersionId == null || recordId == null) { return null; }
+		
+		ContentDocumentLink cdl = new ContentDocumentLink();
+		cdl.ContentDocumentId = [ SELECT ContentDocumentId FROM ContentVersion WHERE Id =: contentVersionId].ContentDocumentId;
+		cdl.LinkedEntityId = recordId;
+		// ShareType is either 'V', 'C', or 'I'
+		// V = Viewer, C = Collaborator, I = Inferred
+		cdl.ShareType = 'V';
+		try {
+			insert cdl;
+			return cdl;
+		} catch(DMLException e) {
+			System.debug(e);
+			return null;
+		}
+	}
+
 
 	public class PicklistPropertiesWrapper {
 		@AuraEnabled
