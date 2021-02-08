@@ -126,57 +126,63 @@
     </actionCalls>
     <actionCalls>
         <processMetadataValues>
-            <name>apexSelection</name>
+            <name>ActionCallType</name>
             <value>
-                <stringValue>Create Account Role and Account Role Detail from Portal Application Right</stringValue>
+                <stringValue>process</stringValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>flowSelection</name>
+            <value>
+                <stringValue>Innovation Hub User Access</stringValue>
             </value>
         </processMetadataValues>
         <name>myRule_5_A1</name>
-        <label>Create Account Role and Account Role Detail from Portal Application Right</label>
+        <label>Innovation Hub User Access</label>
         <locationX>500</locationX>
         <locationY>200</locationY>
-        <actionName>PortalServicesInnovationHubCtrl</actionName>
-        <actionType>apex</actionType>
+        <actionName>Innovation_Hub_User_Access</actionName>
+        <actionType>flow</actionType>
         <inputParameters>
             <processMetadataValues>
                 <name>dataType</name>
                 <value>
-                    <stringValue>ID</stringValue>
+                    <stringValue>SObject</stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
                 <name>isRequired</name>
                 <value>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
                 <name>leftHandSideLabel</name>
                 <value>
-                    <stringValue>ids</stringValue>
+                    <stringValue>SObject</stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
                 <name>maxOccurs</name>
                 <value>
-                    <numberValue>1.0</numberValue>
+                    <numberValue>0.0</numberValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
                 <name>objectType</name>
                 <value>
-                    <stringValue/>
+                    <stringValue>Portal_Application_Right__c</stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
                 <name>rightHandSideType</name>
                 <value>
-                    <stringValue>Reference</stringValue>
+                    <stringValue>SObject</stringValue>
                 </value>
             </processMetadataValues>
-            <name>ids</name>
+            <name>SObject</name>
             <value>
-                <elementReference>myVariable_current.Id</elementReference>
+                <elementReference>myVariable_current</elementReference>
             </value>
         </inputParameters>
     </actionCalls>
@@ -325,17 +331,15 @@
             <name>originalFormula</name>
             <value>
                 <stringValue>[Portal_Application_Right__c].Portal_Application__r.Name = &quot;Innovation Hub&quot; &amp;&amp; 
-(ISCHANGED([Portal_Application_Right__c].Right__c ) || ISNEW())  &amp;&amp; 
-ISPICKVAL([Portal_Application_Right__c].Right__c, &quot;Access Granted&quot;)</stringValue>
+(ISCHANGED([Portal_Application_Right__c].Right__c ) || ISNEW())</stringValue>
             </value>
         </processMetadataValues>
         <name>formula_myRule_5</name>
         <dataType>Boolean</dataType>
         <expression>{!myVariable_current.Portal_Application__r.Name} = &quot;Innovation Hub&quot; &amp;&amp; 
-(ISCHANGED({!myVariable_current.Right__c} ) || ISNEW())  &amp;&amp; 
-ISPICKVAL({!myVariable_current.Right__c}, &quot;Access Granted&quot;)</expression>
+(ISCHANGED({!myVariable_current.Right__c} ) || ISNEW())</expression>
     </formulas>
-    <interviewLabel>Service_User_Provisioning-5_InterviewLabel</interviewLabel>
+    <interviewLabel>Service_User_Provisioning-7_InterviewLabel</interviewLabel>
     <label>Service User Provisioning</label>
     <processMetadataValues>
         <name>ObjectType</name>
