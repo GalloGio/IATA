@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>This allows the standardization team assign the credit risk person in the airline that also automatically assign the MIR portal service</description>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.Airline_Credit_Risk_Manager__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Distribution Risk Leader assignment</label>
+</PermissionSet>

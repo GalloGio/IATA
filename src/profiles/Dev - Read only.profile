@@ -61204,11 +61204,11 @@
         <recordType>ANG_Risk_Alert__c.Risk_Alert_EDS</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>ANG_Risk_Alert__c-Risk Alert Layout</layout>
+        <layout>ANG_Risk_Alert__c-Risk Alert GDS</layout>
+        <recordType>ANG_Risk_Alert__c.RiskAlertGDS</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>ANG_Risk_Alert__c-Risk Alert Layout</layout>
-        <recordType>ANG_Risk_Alert__c.RiskAlertGDS</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>ANG_Risk_Alert__c-Risk Alert Layout</layout>
@@ -70472,6 +70472,10 @@
     <pageAccesses>
         <apexPage>sendSingleTrackedEmail</apexPage>
         <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>site_robots</apexPage>
+        <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>thai</apexPage>

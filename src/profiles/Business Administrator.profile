@@ -61207,11 +61207,11 @@
         <recordType>ANG_Risk_Alert__c.Risk_Alert_EDS</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>ANG_Risk_Alert__c-Risk Alert Layout</layout>
+        <layout>ANG_Risk_Alert__c-Risk Alert GDS</layout>
+        <recordType>ANG_Risk_Alert__c.RiskAlertGDS</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>ANG_Risk_Alert__c-Risk Alert Layout</layout>
-        <recordType>ANG_Risk_Alert__c.RiskAlertGDS</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>ANG_Risk_Alert__c-Risk Alert Layout</layout>
@@ -64501,6 +64501,11 @@
     <layoutAssignments>
         <layout>xtma_Link_Detail__c-Link Detail Layout</layout>
     </layoutAssignments>
+    <loginIpRanges>
+        <description>activation</description>
+        <endAddress>255.255.255.255</endAddress>
+        <startAddress>0.0.0.0</startAddress>
+    </loginIpRanges>
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>true</allowDelete>
@@ -70248,6 +70253,10 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>sendSingleTrackedEmail</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>site_robots</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
