@@ -2,7 +2,7 @@
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
         <fullName>ACCA_Notification_on_new_Application_Change_Request</fullName>
-        <ccEmails>accabspdevelop@acca.com.cn</ccEmails>
+        <ccEmails>accaisis2develop@acca.com.cn</ccEmails>
         <ccEmails>Jana_sun@163.com</ccEmails>
         <ccEmails>Cindy.acca@gmail.com</ccEmails>
         <ccEmails>xbkcw@126.com</ccEmails>
@@ -13,7 +13,6 @@
     </alerts>
     <alerts>
         <fullName>ACCA_Notification_on_new_Application_Change_Request_ISIS2_ISIS2D</fullName>
-        <ccEmails>accabspdevelop@acca.com.cn</ccEmails>
         <ccEmails>accaisis2develop@acca.com.cn</ccEmails>
         <description>ACCA: Notification on new Application Change Request ISIS2 &amp; ISIS2D</description>
         <protected>false</protected>
@@ -171,22 +170,6 @@
         </recipients>
         <recipients>
             <recipient>concessios@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>enriquezj@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>gonzalezce@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>matepiner@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>mohananb@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -808,7 +791,7 @@
         <description>Global approval of FAQ change - to GVA</description>
         <protected>false</protected>
         <recipients>
-            <recipient>gabriel@iata.org</recipient>
+            <recipient>oueidatg2@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
@@ -3788,7 +3771,7 @@
         <description>TEST Email Alert on IS for AM</description>
         <protected>false</protected>
         <recipients>
-            <recipient>gabriel@iata.org</recipient>
+            <recipient>oueidatg2@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>

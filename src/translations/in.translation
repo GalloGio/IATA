@@ -23698,6 +23698,14 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
         <name>KALE_SUPPORT_EMAIL</name>
     </customLabels>
     <customLabels>
+        <label><!-- Key Customer alert message --></label>
+        <name>KEY_CUSTOMER_ALERT</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Key Customer alert title --></label>
+        <name>KEY_CUSTOMER_ALERT_TITLE</name>
+    </customLabels>
+    <customLabels>
         <label><!-- KPI1RT --></label>
         <name>KPI1RT</name>
     </customLabels>
@@ -36405,6 +36413,71 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Agencies for Airport IS --></description>
+        <label><!-- Agencies for Airport IS --></label>
+        <name>Agencies_for_Airport_IS</name>
+        <sections>
+            <columns>
+                <label><!-- ISO Country: ISO Code --></label>
+                <name>ISO Country: ISO Code</name>
+            </columns>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <columns>
+                <label><!-- Geoname Billing City: Id --></label>
+                <name>Geoname Billing City: Id</name>
+            </columns>
+            <columns>
+                <label><!-- Geoname Billing City: Location (Latitude) --></label>
+                <name>Geoname Billing City: Location (Latitude)</name>
+            </columns>
+            <columns>
+                <label><!-- Geoname Billing City: Location (Longitude) --></label>
+                <name>Geoname Billing City: Location (Longitude)</name>
+            </columns>
+            <columns>
+                <label><!-- Geoname Billing City: Name --></label>
+                <name>Geoname Billing City: Name</name>
+            </columns>
+            <label><!-- Geoname billing city --></label>
+            <name>Geoname billing city</name>
+        </sections>
+        <sections>
+            <columns>
+                <label><!-- Parent Account: Account ID --></label>
+                <name>Parent Account: Account ID</name>
+            </columns>
+            <columns>
+                <label><!-- Parent Account: Account Name --></label>
+                <name>Parent Account: Account Name</name>
+            </columns>
+            <columns>
+                <label><!-- Parent Account: IATA Code --></label>
+                <name>Parent Account: IATA Code</name>
+            </columns>
+            <label><!-- Parent --></label>
+            <name>Parent</name>
+        </sections>
+        <sections>
+            <columns>
+                <label><!-- Top Parent: Account ID --></label>
+                <name>Top Parent: Account ID</name>
+            </columns>
+            <columns>
+                <label><!-- Top Parent: Account Name --></label>
+                <name>Top Parent: Account Name</name>
+            </columns>
+            <columns>
+                <label><!-- Top Parent: IATA Code --></label>
+                <name>Top Parent: IATA Code</name>
+            </columns>
+            <label><!-- Top Parent --></label>
+            <name>Top Parent</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Agency Hierarchy --></description>
         <label><!-- Agency Hierarchy --></label>
         <name>Agency_Hierarchy</name>
@@ -37486,6 +37559,19 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
         <sections>
             <label><!-- Country Profile Histories --></label>
             <name>Country Profile Histories</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Country profile with IATA ISO Country --></description>
+        <label><!-- Country profile with IATA ISO Country --></label>
+        <name>Country_profile_with_IATA_ISO_Country</name>
+        <sections>
+            <label><!-- Country Profiles --></label>
+            <name>Country Profiles</name>
+        </sections>
+        <sections>
+            <label><!-- IATA ISO Countries --></label>
+            <name>IATA ISO Countries</name>
         </sections>
     </reportTypes>
     <reportTypes>

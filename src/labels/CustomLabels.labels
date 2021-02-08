@@ -10178,6 +10178,7 @@ Case Reason: {!Case.Reason1__c}
 Case subject: {!Case.Subject}
 
 Case description: {!Case.Description}
+Case Country: {!Case.BSPCountry__c}
 
 {!Case.Link}</value>
     </labels>
@@ -40730,6 +40731,20 @@ Using the Join BSP/CASS service, you can directly manage the joining process onl
         <value>sis.servicedesk@accelya.com</value>
     </labels>
     <labels>
+        <fullName>KEY_CUSTOMER_ALERT</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Key Customer alert message</shortDescription>
+        <value>&lt;p&gt;KEY CUSTOMER!&lt;/p&gt;&lt;p&gt;This is a reminder that this case is related to a KEY CUSTOMER.&lt;/p&gt;</value>
+    </labels>
+    <labels>
+        <fullName>KEY_CUSTOMER_ALERT_TITLE</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Key Customer alert title</shortDescription>
+        <value>KEY CUSTOMER!</value>
+    </labels>
+    <labels>
         <fullName>KPI1RT</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -52176,16 +52191,16 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
     <labels>
         <fullName>pkb2_lang_zh_CN</fullName>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>Chinese (Simplified)</shortDescription>
-        <value>中国的</value>
+        <value>中文</value>
     </labels>
     <labels>
         <fullName>pkb2_lang_zh_TW</fullName>
         <language>en_US</language>
-        <protected>true</protected>
+        <protected>false</protected>
         <shortDescription>Chinese (Traditional)</shortDescription>
-        <value>中國的</value>
+        <value>中文</value>
     </labels>
     <labels>
         <fullName>regular_price</fullName>
