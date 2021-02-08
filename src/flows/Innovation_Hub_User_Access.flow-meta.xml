@@ -16,7 +16,7 @@
         <inputParameters>
             <name>emailBody</name>
             <value>
-                <stringValue>The Innovation_Hub_User_Access-1 invocable process failed to start because no records in your org match the record Id specified. In the entities that invoke Innovation_Hub_User_Access-1, such as other processes, check the value for this input: SObjectId.</stringValue>
+                <stringValue>The Innovation_Hub_User_Access-2 invocable process failed to start because no records in your org match the record Id specified. In the entities that invoke Innovation_Hub_User_Access-2, such as other processes, check the value for this input: SObjectId.</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -42,7 +42,7 @@
         <inputParameters>
             <name>emailBody</name>
             <value>
-                <stringValue>The Innovation_Hub_User_Access-1 invocable process failed to start because a valid value wasn&apos;t found. This can happen when entities that invoke Innovation_Hub_User_Access-1, such as other processes, don&apos;t have values for either the SObject or SObjectId. For example: 
+                <stringValue>The Innovation_Hub_User_Access-2 invocable process failed to start because a valid value wasn&apos;t found. This can happen when entities that invoke Innovation_Hub_User_Access-2, such as other processes, don&apos;t have values for either the SObject or SObjectId. For example: 
 -An SObject or SObject ID wasn&apos;t specified.
 -A value might have been included, but it was null at runtime. </stringValue>
             </value>
@@ -249,7 +249,7 @@
             </processMetadataValues>
             <name>ids</name>
             <value>
-                <elementReference>SObject.Contact__c</elementReference>
+                <elementReference>SObject.Contact__r.AccountId</elementReference>
             </value>
         </inputParameters>
     </actionCalls>
@@ -393,6 +393,7 @@
             </value>
         </inputParameters>
     </actionCalls>
+    <apiVersion>50.0</apiVersion>
     <decisions>
         <name>invocableContextCheckDecision</name>
         <label>Context Check Decision</label>
@@ -566,7 +567,7 @@
         </rules>
     </decisions>
     <description>Used to handle Innovation Hub Service Request account role creation and permission set assignment</description>
-    <interviewLabel>Innovation_Hub_User_Access-1_InterviewLabel</interviewLabel>
+    <interviewLabel>Innovation_Hub_User_Access-2_InterviewLabel</interviewLabel>
     <label>Innovation Hub User Access</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -584,6 +585,7 @@
         <connector>
             <targetReference>invocableContextCheckDecision</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
