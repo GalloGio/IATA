@@ -20,6 +20,7 @@
         <apexClass>PortalServicesInnovationHubCtrl</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <description>Innovation Hub service admin permissions</description>
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.Category__c</field>
