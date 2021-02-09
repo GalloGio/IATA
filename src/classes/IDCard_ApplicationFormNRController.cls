@@ -168,7 +168,7 @@ public without sharing class IDCard_ApplicationFormNRController  extends IDCardA
 			//String applicationId = IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_APPID));
 			//workaround for Guest user not able to update record
 			//ID_Card_Application__c iTmp = 
-			IDCardApplicationNR = retrieveCommittedICA();
+			IDCardApplicationNR = IDCardUtilWithoutSharing.retrieveCommittedICA(IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_APPID)));
 			//get application info from DB
 			/*IDCardApplicationNR = [SELECT i.Payment_Amount__c, i.VER_Number__c, i.RecordTypeId, i.Revenue_Confirmation__c, i.UIR__c, i.Type_of_application__c, i.Title__c,
 														i.Telephone__c, i.SystemModstamp, i.Start_Date_Industry__c, i.Start_Date_Agency_Year__c, i.Start_Date_Agency_Month__c, i.Solicitation_Flag__c, i.Promotion_Code__c,
@@ -297,32 +297,6 @@ public without sharing class IDCard_ApplicationFormNRController  extends IDCardA
 			AddError(ex.getMessage());
 			CanRenderPage = false;
 		}
-	}
-
-	private ID_Card_Application__c retrieveCommittedICA(){
-		ID_Card_Application__c ICAToReturn = new ID_Card_Application__c();
-		list<string> lsFields = TransformationHelper.selectAllWritableFieldsByCurrentUser('ID_Card_Application__c');
-
-		for(ID_Card_Application__c ica:database.query('select Id, ' + string.join(lsFields, ',') + ' from ID_Card_Application__c where id =\'' + IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_APPID)) + '\'')){
-			for(string field:lsFields)
-				ICAToReturn.put(field, ica.get(field));
-			
-			//ICAToReturn.id = ica.id;
-		}
-		
-		return ICAToReturn;	
-	}
-
-	private static void saveCommittedICA(ID_Card_Application__c transientICA){
-		list<string> lsFields = TransformationHelper.selectAllWritableFieldsByCurrentUser('ID_Card_Application__c');
-		ID_Card_Application__c ICAToCommit = new ID_Card_Application__c();
-
-		for(string field:lsFields)
-			ICAToCommit.put(field, transientICA.get(field));
-		
-		ICAToCommit.Id = IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_APPID));
-
-		update ICAToCommit;	
 	}
 
 	public Boolean IsContactFromCanada {
@@ -692,7 +666,7 @@ public without sharing class IDCard_ApplicationFormNRController  extends IDCardA
 						IDCardApplicationNR.Middle_Initial__c = (IDCardApplicationNR.Middle_Initial__c).toUpperCase();
 					
 					//	update IDCardApplicationNR;
-					saveCommittedICA(IDCardApplicationNR);
+					IDCardUtilWithoutSharing.saveCommittedICA(IDCardApplicationNR, IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_APPID)));
 
 					try {
 
@@ -759,7 +733,7 @@ public without sharing class IDCard_ApplicationFormNRController  extends IDCardA
 
 				//save image name
 				IDCardApplicationNR.IDCard_Prefered_Language__c = Language;
-				saveCommittedICA(IDCardApplicationNR);
+				IDCardUtilWithoutSharing.saveCommittedICA(IDCardApplicationNR, IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_APPID)));
 				//update IDCardApplicationNR;
 
 				//redirect to next part
@@ -777,7 +751,7 @@ public without sharing class IDCard_ApplicationFormNRController  extends IDCardA
 					CalculateApplicationFee();
 					IDCardApplicationNR.IDCard_Prefered_Language__c = Language;
 					//update IDCardApplicationNR;
-					saveCommittedICA(IDCardApplicationNR);
+					IDCardUtilWithoutSharing.saveCommittedICA(IDCardApplicationNR, IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_APPID)));
 
 					//upgrade for payment: according to record type will redirect to payment or not.
 					String singleRT = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operation');
@@ -838,7 +812,7 @@ public without sharing class IDCard_ApplicationFormNRController  extends IDCardA
 						IDCardApplicationNR.IDCard_Expedite_Delivery__c = true;
 					}
 					//update IDCardApplicationNR;
-					saveCommittedICA(IDCardApplicationNR);
+					IDCardUtilWithoutSharing.saveCommittedICA(IDCardApplicationNR, IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_APPID)));
 
 					//upgrade for payment: according to record type will redirect to payment or not.
 					String singleRT = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operation');

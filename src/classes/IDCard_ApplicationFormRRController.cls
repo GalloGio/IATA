@@ -254,7 +254,7 @@ public without sharing class IDCard_ApplicationFormRRController extends  IDCardA
 	}
 
 	public List<Attachment> getDocs() {
-		docs = [Select Name, Description, Id from Attachment where ParentId = :IDCardApplicationRR.Id];
+		docs = [Select Name, Description, Id from Attachment where ParentId = :IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_APPID))];
 		return docs;
 	}
 
@@ -341,23 +341,11 @@ public without sharing class IDCard_ApplicationFormRRController extends  IDCardA
 		}
 
 		try {
-
-			system.debug('[IDCard_ApplicationFormRRController] app Id  ' + IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_APPID)))  ;
-			String applicationId = IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_APPID));
-			system.debug('[IDCard_ApplicationFormRRController] found id card app Id  ' + applicationId)  ;
-			//get application info from DB
-			IDCardApplicationRR = [SELECT i.Payment_Amount__c, i.VER_Number__c, i.RecordTypeId, i.Revenue_Confirmation__c, i.UIR__c, i.Type_of_application__c, i.Title__c,
-														i.Telephone__c, i.SystemModstamp, i.Start_Date_Industry__c, i.Start_Date_Agency_Year__c, i.Start_Date_Agency_Month__c, i.Solicitation_Flag__c, i.Promotion_Code__c,
-														i.Position_in_Current_Agency__c, i.Position_Code__c, i.Photo__c, i.Package_of_Travel_Professionals_Course_2__c, i.Package_of_Travel_Professionals_Course_1__c, i.OwnerId, i.Name, i.Middle_Initial__c,
-														i.Last_Name__c, i.LastModifiedDate, i.LastModifiedById, i.IsDeleted, i.Id, i.IDCard_Prefered_Language__c, i.IDCard_Expedite_Delivery__c, i.IDCard_Expedite_Delivery_Fee__c, i.IATA_numeric_code_previous_employer_4__c,
-														i.IATA_numeric_code_previous_employer_3__c, i.IATA_numeric_code_previous_employer_2__c, i.IATA_numeric_code_previous_employer_1__c, i.IATA_Code_for_previous_agency__c, i.IATA_Code__c, i.Hours_worked__c, i.Hours_Worked_Code__c,
-														i.Gender__c, i.First_Name__c, i.Email_admin__c, i.Duties_in_Current_Agency__c, i.Duties_Code__c, i.Displayed_Name__c, i.Date_of_Birth__c, i.CurrencyIsoCode, i.CreatedDate, i.CreatedById, i.Approving_Manager_s_Name__c, i.Approving_Manager_s_Email__c,
-														i.Applicable_Fee__c, i.Regional_Office__c, i.AgencyShare_Confirmation__c, i.Card_Type__c, i.Tax_1_Value__c, i.Tax_2_Value__c, i.Physical_Card_Fee__c, i.ID_Card_Fee_Discount__c
-														FROM ID_Card_Application__c i
-														WHERE i.Id = :applicationId LIMIT 1];
+			//String applicationId = IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_APPID));
+			IDCardApplicationRR = IDCardUtilWithoutSharing.retrieveCommittedICA(IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_APPID)));
 			system.debug('[IDCard_ApplicationFormRRController] found id card app from Id ?  ' + (IDCardApplicationRR != null))  ;
 			//Block Page if payment is done and case is created
-			Case[] tempCase = [ Select id from Case where Related_ID_Card_Application__c = : IDCardApplicationRR.Id ] ;
+			Case[] tempCase = [ Select id from Case where Related_ID_Card_Application__c = : IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_APPID)) ] ;
 			if (tempCase.size() > 0 ) {
 				system.debug('[IDCard_ApplicationFormRRController] ERROR found cases   ' + tempCase.size())  ;
 				part = '';
@@ -431,7 +419,7 @@ public without sharing class IDCard_ApplicationFormRRController extends  IDCardA
 
 				}
 				if (part == 'attach') { //attachments
-					Attachment[] a = [Select a.ParentId, a.Name From Attachment a where a.ParentId = :IDCardApplicationRR.Id];
+					Attachment[] a = [Select a.ParentId, a.Name From Attachment a where a.ParentId = :IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_APPID))];
 					if (a.size() > 0) {
 						DocUploaded = true;
 					}
@@ -613,15 +601,15 @@ public without sharing class IDCard_ApplicationFormRRController extends  IDCardA
 					IDCardApplicationRR.IDCard_Prefered_Language__c = Language;
 					if (IDCardApplicationRR.Middle_Initial__c != null && IDCardApplicationRR.Middle_Initial__c != '')
 						IDCardApplicationRR.Middle_Initial__c = (IDCardApplicationRR.Middle_Initial__c).toUpperCase();
-					update IDCardApplicationRR;
+					IDCardUtilWithoutSharing.saveCommittedICA(IDCardApplicationRR, IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_APPID)));
 
 					// reselect the ID Card Application object
-					ID_Card_Application__c idCardApp = [Select i.Name From ID_Card_Application__c i where i.Id = :IDCardApplicationRR.Id limit 1];
+					ID_Card_Application__c idCardApp = [Select i.Name From ID_Card_Application__c i where i.Id = :IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_APPID)) limit 1];
 
 
 					//Go to next part
 					Pagereference confPage = Page.IDCard_ApplicationForm_RR;
-					System.debug('$$ PARMS ' + IDCardApplicationRR.IATA_Code__c + ' ' + IDCardApplicationRR.Type_of_application__c + ' ' + IDCardApplicationRR.VER_Number__c + ' ' + IDCardApplicationRR.Id);
+					System.debug('$$ PARMS ' + IDCardApplicationRR.IATA_Code__c + ' ' + IDCardApplicationRR.Type_of_application__c + ' ' + IDCardApplicationRR.VER_Number__c + ' ' + IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_APPID)));
 					confPage.getParameters().put(IDCardUtil.PARAM_IATACODE, IDCardUtil.EncryptEncodeParameter(IDCardApplicationRR.IATA_Code__c));
 					confPage.getParameters().put(IDCardUtil.PARAM_APPLICATIONTYPE, IDCardUtil.EncryptEncodeParameter(IDCardApplicationRR.Type_of_application__c));
 					confPage.getParameters().put(IDCardUtil.PARAM_VER, IDCardUtil.EncryptEncodeParameter(IDCardApplicationRR.VER_Number__c));
@@ -647,7 +635,7 @@ public without sharing class IDCard_ApplicationFormRRController extends  IDCardA
 					else
 						confPage.getParameters().put(IDCardUtil.PAGE_PART, IDCardUtil.EncryptEncodeParameter(sectionTwo));
 
-					confPage.getParameters().put(IDCardUtil.PARAM_APPID, IDCardUtil.EncryptEncodeParameter(IDCardApplicationRR.Id));
+					confPage.getParameters().put(IDCardUtil.PARAM_APPID, IDCardUtil.EncryptEncodeParameter(IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_APPID))));
 					confPage.setRedirect(true);
 					return confPage;
 				} catch (Exception ex) {
@@ -671,7 +659,7 @@ public without sharing class IDCard_ApplicationFormRRController extends  IDCardA
 			//save image name
 			IDCardApplicationRR.Photo__c = hiddenFilename;
 			IDCardApplicationRR.IDCard_Prefered_Language__c = Language;
-			update IDCardApplicationRR;
+			IDCardUtilWithoutSharing.saveCommittedICA(IDCardApplicationRR, IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_APPID)));
 
 			//redirect to next part
 			Pagereference confPage = Page.IDCard_ApplicationForm_RR;
@@ -686,13 +674,13 @@ public without sharing class IDCard_ApplicationFormRRController extends  IDCardA
 
 				CalculateApplicationFee();
 				IDCardApplicationRR.IDCard_Prefered_Language__c = Language;
-				update IDCardApplicationRR;
+				IDCardUtilWithoutSharing.saveCommittedICA(IDCardApplicationRR, IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_APPID)));
 
 				//upgrade for payment: according to record type will redirect to payment or not.
 				String singleRT = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operation');
 				if (IDCardApplicationRR.RecordTypeId != null && IDCardApplicationRR.RecordTypeId.equals(singleRT)) {
 					Pagereference checkoutPage = Page.IDCard_CheckoutSingleApplication;
-					checkoutPage.getParameters().put(IDCardUtil.PARAM_APPID, IDCardUtil.EncryptEncodeParameter(IDCardApplicationRR.Id));
+					checkoutPage.getParameters().put(IDCardUtil.PARAM_APPID, IDCardUtil.EncryptEncodeParameter(IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_APPID))));
 					checkoutPage.setRedirect(true);
 					return checkoutPage;
 
@@ -700,7 +688,7 @@ public without sharing class IDCard_ApplicationFormRRController extends  IDCardA
 			}
 
 			confPage.getParameters().put(IDCardUtil.PAGE_PART, IDCardUtil.EncryptEncodeParameter(sectionThree));
-			confPage.getParameters().put(IDCardUtil.PARAM_APPID, IDCardUtil.EncryptEncodeParameter(IDCardApplicationRR.Id));
+			confPage.getParameters().put(IDCardUtil.PARAM_APPID, IDCardUtil.EncryptEncodeParameter(IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_APPID))));
 			confPage.setRedirect(true);
 			return confPage;
 		}
@@ -744,21 +732,21 @@ public without sharing class IDCard_ApplicationFormRRController extends  IDCardA
 				if(IsExpediteDelivery){
 						IDCardApplicationRR.IDCard_Expedite_Delivery__c = true;
 					}
-				update IDCardApplicationRR;
+				IDCardUtilWithoutSharing.saveCommittedICA(IDCardApplicationRR, IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_APPID)));
 
 
 				//upgrade for payment: according to record type will redirect to payment or not.
 				String singleRT = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operation');
 				if (IDCardApplicationRR.RecordTypeId != null && IDCardApplicationRR.RecordTypeId.equals(singleRT)) {
 					Pagereference checkoutPage = Page.IDCard_CheckoutSingleApplication;
-					checkoutPage.getParameters().put(IDCardUtil.PARAM_APPID, IDCardUtil.EncryptEncodeParameter(IDCardApplicationRR.Id));
+					checkoutPage.getParameters().put(IDCardUtil.PARAM_APPID, IDCardUtil.EncryptEncodeParameter(IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_APPID))));
 					checkoutPage.setRedirect(true);
 					return checkoutPage;
 
 				}
 
 				Pagereference checkoutPage = Page.IDCard_Checkout;
-				checkoutPage.getParameters().put(IDCardUtil.PARAM_APPID, IDCardUtil.EncryptEncodeParameter(IDCardApplicationRR.Id));
+				checkoutPage.getParameters().put(IDCardUtil.PARAM_APPID, IDCardUtil.EncryptEncodeParameter(IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_APPID))));
 				checkoutPage.setRedirect(true);
 				return checkoutPage;
 
@@ -778,14 +766,14 @@ public without sharing class IDCard_ApplicationFormRRController extends  IDCardA
 			}
 
 			try {
-				System.debug('** IDCardApplicationRR.IATA_Code__c ' + IDCardApplicationRR.IATA_Code__c + ' IDCardApplicationRR.Type_of_application__c ' + IDCardApplicationRR.Type_of_application__c + ' IDCardApplicationRR.VER_Number__c' + IDCardApplicationRR.VER_Number__c + ' IDCardApplicationRR.Id ' + IDCardApplicationRR.Id );
+				System.debug('** IDCardApplicationRR.IATA_Code__c ' + IDCardApplicationRR.IATA_Code__c + ' IDCardApplicationRR.Type_of_application__c ' + IDCardApplicationRR.Type_of_application__c + ' IDCardApplicationRR.VER_Number__c' + IDCardApplicationRR.VER_Number__c + ' IDCardApplicationRR.Id ' + IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_APPID)) );
 				Pagereference confPage = Page.IDCard_ApplicationForm_RR;
 
 				confPage.getParameters().put(IDCardUtil.PARAM_IATACODE, IDCardUtil.EncryptEncodeParameter(IDCardApplicationRR.IATA_Code__c));
 				confPage.getParameters().put(IDCardUtil.PARAM_APPLICATIONTYPE, IDCardUtil.EncryptEncodeParameter(IDCardApplicationRR.Type_of_application__c));
 				confPage.getParameters().put(IDCardUtil.PARAM_VER, IDCardUtil.EncryptEncodeParameter(IDCardApplicationRR.VER_Number__c));
 				confPage.getParameters().put(IDCardUtil.PAGE_PART, IDCardUtil.EncryptEncodeParameter(sectionTwo));
-				confPage.getParameters().put(IDCardUtil.PARAM_APPID, IDCardUtil.EncryptEncodeParameter(IDCardApplicationRR.Id));
+				confPage.getParameters().put(IDCardUtil.PARAM_APPID, IDCardUtil.EncryptEncodeParameter(IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_APPID))));
 				confPage.setRedirect(true);
 				return confPage;
 			} catch (Exception ex) {
@@ -805,7 +793,7 @@ public without sharing class IDCard_ApplicationFormRRController extends  IDCardA
 			confPage.getParameters().put(IDCardUtil.PARAM_APPLICATIONTYPE, IDCardUtil.EncryptEncodeParameter(IDCardApplicationRR.Type_of_application__c));
 			confPage.getParameters().put(IDCardUtil.PARAM_VER, IDCardUtil.EncryptEncodeParameter(IDCardApplicationRR.VER_Number__c));
 			confPage.getParameters().put(IDCardUtil.PAGE_PART, IDCardUtil.EncryptEncodeParameter(sectionTwo));
-			confPage.getParameters().put(IDCardUtil.PARAM_APPID, IDCardUtil.EncryptEncodeParameter(IDCardApplicationRR.Id));
+			confPage.getParameters().put(IDCardUtil.PARAM_APPID, IDCardUtil.EncryptEncodeParameter(IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_APPID))));
 			confPage.setRedirect(true);
 			return confPage;
 		}
@@ -828,7 +816,7 @@ public without sharing class IDCard_ApplicationFormRRController extends  IDCardA
 			else
 				confPage.getParameters().put(IDCardUtil.PAGE_PART, IDCardUtil.EncryptEncodeParameter(sectionOne));
 
-			confPage.getParameters().put(IDCardUtil.PARAM_APPID, IDCardUtil.EncryptEncodeParameter(IDCardApplicationRR.Id));
+			confPage.getParameters().put(IDCardUtil.PARAM_APPID, IDCardUtil.EncryptEncodeParameter(IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_APPID))));
 			confPage.setRedirect(true);
 			return confPage;
 		}
@@ -838,7 +826,7 @@ public without sharing class IDCard_ApplicationFormRRController extends  IDCardA
 			confPage.getParameters().put(IDCardUtil.PARAM_APPLICATIONTYPE, IDCardUtil.EncryptEncodeParameter(IDCardApplicationRR.Type_of_application__c));
 			confPage.getParameters().put(IDCardUtil.PARAM_VER, IDCardUtil.EncryptEncodeParameter(IDCardApplicationRR.VER_Number__c));
 			confPage.getParameters().put(IDCardUtil.PAGE_PART, IDCardUtil.EncryptEncodeParameter(sectionTwo));
-			confPage.getParameters().put(IDCardUtil.PARAM_APPID, IDCardUtil.EncryptEncodeParameter(IDCardApplicationRR.Id));
+			confPage.getParameters().put(IDCardUtil.PARAM_APPID, IDCardUtil.EncryptEncodeParameter(IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_APPID))));
 			confPage.setRedirect(true);
 			return confPage;
 
@@ -849,7 +837,7 @@ public without sharing class IDCard_ApplicationFormRRController extends  IDCardA
 			confPage.getParameters().put(IDCardUtil.PARAM_APPLICATIONTYPE, IDCardUtil.EncryptEncodeParameter(IDCardApplicationRR.Type_of_application__c));
 			confPage.getParameters().put(IDCardUtil.PARAM_VER, IDCardUtil.EncryptEncodeParameter(IDCardApplicationRR.VER_Number__c));
 			confPage.getParameters().put(IDCardUtil.PAGE_PART, IDCardUtil.EncryptEncodeParameter(sectionOne));
-			confPage.getParameters().put(IDCardUtil.PARAM_APPID, IDCardUtil.EncryptEncodeParameter(IDCardApplicationRR.Id));
+			confPage.getParameters().put(IDCardUtil.PARAM_APPID, IDCardUtil.EncryptEncodeParameter(IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_APPID))));
 			confPage.setRedirect(true);
 			return confPage;
 
@@ -866,7 +854,7 @@ public without sharing class IDCard_ApplicationFormRRController extends  IDCardA
 			System.debug('**** Deleteing ATTACHMENT with ID ' + attachmentID);
 			delete new List<Attachment>( [Select Name from Attachment where Id = :attachmentID]);
 
-			List<Attachment> tempList = [Select Name, Description, Id from Attachment where ParentId = :IDCardApplicationRR.Id];
+			List<Attachment> tempList = [Select Name, Description, Id from Attachment where ParentId = :IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_APPID))];
 			if (tempList.size() == 0)
 				DocUploaded = false;
 		} catch (Exception e) {
@@ -886,13 +874,13 @@ public without sharing class IDCard_ApplicationFormRRController extends  IDCardA
 				return null;
 			}
 			//get parent ID
-			document1.ParentId = IDCardApplicationRR.Id;
+			document1.ParentId = IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_APPID));
 			//document1.Description = 'Last Name Change Proof';
 			document1.Description = docDesc1;
-			document2.ParentId = IDCardApplicationRR.Id;
+			document2.ParentId = IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_APPID));
 			//document2.Description = 'Independent Contractor Proof';
 			document2.Description = docDesc2;
-			document3.ParentId = IDCardApplicationRR.Id;
+			document3.ParentId = IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_APPID));
 			//document3.Description = 'Employment Proof';
 			document3.Description = docDesc3;
 
@@ -964,9 +952,9 @@ public without sharing class IDCard_ApplicationFormRRController extends  IDCardA
 			document3.body = null; // clears the viewstate
 			document3 = new Attachment();
 			//get parent ID
-			document1.ParentId = IDCardApplicationRR.Id;
-			document2.ParentId = IDCardApplicationRR.Id;
-			document3.ParentId = IDCardApplicationRR.Id;
+			document1.ParentId = IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_APPID));
+			document2.ParentId = IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_APPID));
+			document3.ParentId = IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_APPID));
 			docDesc1 = null;
 			docDesc2 = null;
 			docDesc3 = null;
