@@ -317,18 +317,20 @@ public without sharing class PortalServicesInnovationHubCtrl {
         for(Account_Role__c ar : lstAccountRoles) {
             mapAccRoles.put(ar.Account__c, ar.Id);
         }
-
+		lstAccountRoles.clear();
         // If IH-AR does not exists, create a new one
         for(Id accountId : ids){
             if(mapAccRoles.isEmpty() || (!mapAccRoles.isEmpty() && !mapAccRoles.containsKey(accountId))) {
                 lstAccountRoles.add(new Account_Role__c(Account__c = accountId,  RecordTypeId = accountRoleRecordTypeId, Status__c = 'Active',  Functional_Role__c = 'InnovationHub CRM'));
             }
         }
-		insert lstAccountRoles;
-
-        for(Account_Role__c ar : lstAccountRoles) {
-			mapAccRoles.put(ar.Account__c, ar.Id);
-        }
+		if(!lstAccountRoles.isEmpty()){
+			insert lstAccountRoles;
+			for(Account_Role__c ar : lstAccountRoles) {
+				mapAccRoles.put(ar.Account__c, ar.Id);
+			}
+		}
+		
 
         // Insert IH Account Role Details
 		lstAccountRoleDetails = [SELECT Id, Account_Role__c, Account_Role__r.Account__c, Account_Role__r.Account__r.Sector__c FROM IH_Account_Role_Detail__c WHERE Account_Role__c IN :mapAccRoles.values() AND (RecordTypeId = :accountRoleDetailConsumerRecordTypeId OR RecordTypeId = :accountRoleDetailProviderRecordTypeId)];
@@ -343,7 +345,7 @@ public without sharing class PortalServicesInnovationHubCtrl {
             }
         }
         List<Account> accs = [Select Id, Sector__c FROM Account WHERE Id IN :accWoArd];
-
+		lstAccountRoleDetails.clear();
         for(Account acc : accs){
             if(acc.Sector__c == 'Airline' || acc.Sector__c == 'Airline Supplier'){
                 lstAccountRoleDetails.add(new IH_Account_Role_Detail__c(Account_Role__c = mapAccRoles.get(acc.Id),
@@ -356,7 +358,8 @@ public without sharing class PortalServicesInnovationHubCtrl {
                                                                     Status__c = 'Draft'));
             }
         }
-		insert lstAccountRoleDetails;
+		if(!lstAccountRoleDetails.isEmpty())
+			insert lstAccountRoleDetails;
 		
 		return ids;
 	}
