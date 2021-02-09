@@ -67289,7 +67289,7 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>Order</apexPage>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>PowerBI_Dashboard</apexPage>
