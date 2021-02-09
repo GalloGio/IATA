@@ -50,11 +50,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>IH_Account_Role_Detail__c.Contact_Info_Of_Startup__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>IH_Account_Role_Detail__c.Description__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -208,9 +203,9 @@
         <allowDelete>true</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
-        <modifyAllRecords>true</modifyAllRecords>
+        <modifyAllRecords>false</modifyAllRecords>
         <object>IH_Account_Role_Detail__c</object>
-        <viewAllRecords>true</viewAllRecords>
+        <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <recordTypeVisibilities>
         <recordType>Account_Role__c.Innovation_Hub</recordType>

@@ -217,8 +217,28 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>IH_Account_Role_Detail__c.Contact_Email__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>IH_Account_Role_Detail__c.Contact_Phone_Number__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>IH_Account_Role_Detail__c.Contact_Position__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
-        <field>IH_Account_Role_Detail__c.Contact_Info_Of_Startup__c</field>
+        <field>IH_Account_Role_Detail__c.Contact__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>IH_Account_Role_Detail__c.Contact_info_of_startup__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -258,6 +278,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>IH_Account_Role_Detail__c.GitHub__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>IH_Account_Role_Detail__c.IATA_Touchpoints__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -289,6 +314,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>IH_Account_Role_Detail__c.Link_to_Social_Media_Accounts__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>IH_Account_Role_Detail__c.LinkedIn__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -344,6 +374,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>IH_Account_Role_Detail__c.Technology__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>IH_Account_Role_Detail__c.Telegram__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
