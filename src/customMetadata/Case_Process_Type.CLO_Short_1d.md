@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>Other_Conditions__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">Account.Location_Class__c NOT IN (&apos;T&apos;,&apos;M&apos;)</value>
     </values>
     <values>
         <field>Reason__c</field>
