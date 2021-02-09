@@ -101,6 +101,48 @@
                 <elementReference>FoundingDate</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getIHubDetail.Facebook__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Facebook</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getIHubDetail.Instagram__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Instagram</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getIHubDetail.Twitter__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Twitter</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getIHubDetail.LinkedIn__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>LinkedIn</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getIHubDetail.GitHub__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GitHub</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getIHubDetail.Telegram__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Telegram</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>setValuesScreen2</targetReference>
         </connector>
@@ -115,13 +157,6 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>Description</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>getIHubDetail.Contact_Info_Of_Startup__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Contact_Info_Of_Startup</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -146,13 +181,6 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>getIHubDetail.Funding_Rounds__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Funding_Rounds</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>getIHubDetail.Recent_News__c</assignToReference>
             <operator>Assign</operator>
             <value>
@@ -164,13 +192,6 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>Investors</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>getIHubDetail.Link_to_Social_Media_Accounts__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Link_to_Social_Media_Accounts</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -356,6 +377,40 @@
             <isRequired>false</isRequired>
         </fields>
         <fields>
+            <name>Legal_Name</name>
+            <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>getIHubDetail.Legal_Name__c</elementReference>
+            </defaultValue>
+            <fieldText>Legal Name</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>Also_Known_As</name>
+            <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>getIHubDetail.Also_Known_As__c</elementReference>
+            </defaultValue>
+            <fieldText>Also Known As</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>Company_Description</name>
+            <defaultValue>
+                <stringValue>{!getIHubDetail.Company_Description__c}</stringValue>
+            </defaultValue>
+            <fieldText>Company Description</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>Location</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Location(s):&lt;/span&gt;&lt;/p&gt;&lt;p&gt;{!getIHubDetail.Location__r.Name}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
             <name>FocusAreas</name>
             <extensionName>c:portalServicesInnovationHubFlowMultiPicklist</extensionName>
             <fieldType>ComponentInstance</fieldType>
@@ -390,16 +445,6 @@
             </outputParameters>
         </fields>
         <fields>
-            <name>Legal_Name</name>
-            <dataType>String</dataType>
-            <defaultValue>
-                <elementReference>getIHubDetail.Legal_Name__c</elementReference>
-            </defaultValue>
-            <fieldText>Legal Name</fieldText>
-            <fieldType>InputField</fieldType>
-            <isRequired>false</isRequired>
-        </fields>
-        <fields>
             <name>FoundingDate</name>
             <dataType>Number</dataType>
             <defaultValue>
@@ -409,16 +454,6 @@
             <fieldType>InputField</fieldType>
             <isRequired>false</isRequired>
             <scale>1</scale>
-        </fields>
-        <fields>
-            <name>Also_Known_As</name>
-            <dataType>String</dataType>
-            <defaultValue>
-                <elementReference>getIHubDetail.Also_Known_As__c</elementReference>
-            </defaultValue>
-            <fieldText>Also Known As</fieldText>
-            <fieldType>InputField</fieldType>
-            <isRequired>false</isRequired>
         </fields>
         <fields>
             <name>Number_of_employees_Picklist</name>
@@ -449,15 +484,6 @@
             </outputParameters>
         </fields>
         <fields>
-            <name>Company_Description</name>
-            <defaultValue>
-                <stringValue>{!getIHubDetail.Company_Description__c}</stringValue>
-            </defaultValue>
-            <fieldText>Company Description</fieldText>
-            <fieldType>LargeTextArea</fieldType>
-            <isRequired>false</isRequired>
-        </fields>
-        <fields>
             <name>Logo_File_Id</name>
             <dataType>String</dataType>
             <defaultValue>
@@ -468,8 +494,23 @@
             <isRequired>false</isRequired>
         </fields>
         <fields>
-            <name>Location</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Location(s):&lt;/span&gt;&lt;/p&gt;&lt;p&gt;{!getIHubDetail.Location__r.Name}&lt;/p&gt;</fieldText>
+            <name>Contact_Info_Of_Startup</name>
+            <fieldText>&lt;p&gt;Contact info of startup:&lt;/p&gt;&lt;p&gt;{!getIHubDetail.Contact_info_of_startup__c}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Contact_Position</name>
+            <fieldText>&lt;p&gt;Contact Position:&lt;/p&gt;&lt;p&gt;{!getIHubDetail.Contact_Position__c}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Contact_Email</name>
+            <fieldText>&lt;p&gt;Contact Email:&lt;/p&gt;&lt;p&gt;{!getIHubDetail.Contact_Email__c}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Contact_Phone_Number</name>
+            <fieldText>&lt;p&gt;Contact Phone Number:&lt;/p&gt;&lt;p&gt;{!getIHubDetail.Contact_Phone_Number__c}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -479,6 +520,66 @@
                 <elementReference>getIHubDetail.Website__c</elementReference>
             </defaultValue>
             <fieldText>Website</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>Facebook</name>
+            <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>getIHubDetail.Facebook__c</elementReference>
+            </defaultValue>
+            <fieldText>Facebook</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>Instagram</name>
+            <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>getIHubDetail.Instagram__c</elementReference>
+            </defaultValue>
+            <fieldText>Instagram</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>Twitter</name>
+            <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>getIHubDetail.Twitter__c</elementReference>
+            </defaultValue>
+            <fieldText>Twitter</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>LinkedIn</name>
+            <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>getIHubDetail.LinkedIn__c</elementReference>
+            </defaultValue>
+            <fieldText>LinkedIn</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>GitHub</name>
+            <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>getIHubDetail.GitHub__c</elementReference>
+            </defaultValue>
+            <fieldText>GitHub</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>Telegram</name>
+            <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>getIHubDetail.Telegram__c</elementReference>
+            </defaultValue>
+            <fieldText>Telegram</fieldText>
             <fieldType>InputField</fieldType>
             <isRequired>false</isRequired>
         </fields>
@@ -538,15 +639,6 @@
             <isRequired>false</isRequired>
         </fields>
         <fields>
-            <name>Competition_Competitors</name>
-            <defaultValue>
-                <stringValue>{!getIHubDetail.Competition_Competitors__c}</stringValue>
-            </defaultValue>
-            <fieldText>Competition / Competitors</fieldText>
-            <fieldType>LargeTextArea</fieldType>
-            <isRequired>false</isRequired>
-        </fields>
-        <fields>
             <name>TechnologyMulti</name>
             <extensionName>c:portalServicesInnovationHubFlowMultiPicklist</extensionName>
             <fieldType>ComponentInstance</fieldType>
@@ -585,44 +677,6 @@
             <isRequired>false</isRequired>
         </fields>
         <fields>
-            <name>categoriesMulti</name>
-            <extensionName>c:portalServicesInnovationHubFlowMultiPicklist</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>label</name>
-                <value>
-                    <stringValue>IATA Touchpoints</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>selectedOptions</name>
-                <value>
-                    <elementReference>getIHubDetail.Tags_Of_Categories__c</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>field</name>
-                <value>
-                    <stringValue>Tags_Of_Categories__c</stringValue>
-                </value>
-            </inputParameters>
-            <isRequired>true</isRequired>
-            <outputParameters>
-                <assignToReference>getIHubDetail.Tags_Of_Categories__c</assignToReference>
-                <name>selectedOptions</name>
-            </outputParameters>
-        </fields>
-        <fields>
-            <name>Contact_Info_Of_Startup</name>
-            <dataType>String</dataType>
-            <defaultValue>
-                <elementReference>getIHubDetail.Contact_Info_Of_Startup__c</elementReference>
-            </defaultValue>
-            <fieldText>Contact info of startup</fieldText>
-            <fieldType>InputField</fieldType>
-            <isRequired>false</isRequired>
-        </fields>
-        <fields>
             <name>Industry_Perspectives</name>
             <dataType>String</dataType>
             <defaultValue>
@@ -633,46 +687,15 @@
             <isRequired>false</isRequired>
         </fields>
         <fields>
-            <name>Competitive_Advantage</name>
-            <dataType>String</dataType>
-            <defaultValue>
-                <elementReference>getIHubDetail.Competitive_Advantage__c</elementReference>
-            </defaultValue>
-            <fieldText>Competitive Advantage</fieldText>
-            <fieldType>InputField</fieldType>
-            <isRequired>false</isRequired>
-        </fields>
-        <fields>
             <name>Funding_Amount</name>
             <dataType>Number</dataType>
             <defaultValue>
                 <elementReference>getIHubDetail.Funding_Amount__c</elementReference>
             </defaultValue>
-            <fieldText>Funding Amount</fieldText>
+            <fieldText>Funding Amount (USD)</fieldText>
             <fieldType>InputField</fieldType>
             <isRequired>false</isRequired>
             <scale>2</scale>
-        </fields>
-        <fields>
-            <name>Funding_Rounds</name>
-            <dataType>Number</dataType>
-            <defaultValue>
-                <elementReference>getIHubDetail.Funding_Rounds__c</elementReference>
-            </defaultValue>
-            <fieldText>Funding Rounds</fieldText>
-            <fieldType>InputField</fieldType>
-            <isRequired>false</isRequired>
-            <scale>2</scale>
-        </fields>
-        <fields>
-            <name>Recent_News</name>
-            <dataType>String</dataType>
-            <defaultValue>
-                <elementReference>getIHubDetail.Recent_News__c</elementReference>
-            </defaultValue>
-            <fieldText>Recent News</fieldText>
-            <fieldType>InputField</fieldType>
-            <isRequired>false</isRequired>
         </fields>
         <fields>
             <name>FundingStage</name>
@@ -713,41 +736,60 @@
             <isRequired>false</isRequired>
         </fields>
         <fields>
-            <name>Link_to_Social_Media_Accounts</name>
+            <name>Competition_Competitors</name>
+            <defaultValue>
+                <stringValue>{!getIHubDetail.Competition_Competitors__c}</stringValue>
+            </defaultValue>
+            <fieldText>Competition / Competitors</fieldText>
+            <fieldType>LargeTextArea</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>Competitive_Advantage</name>
             <dataType>String</dataType>
             <defaultValue>
-                <elementReference>getIHubDetail.Link_to_Social_Media_Accounts__c</elementReference>
+                <elementReference>getIHubDetail.Competitive_Advantage__c</elementReference>
             </defaultValue>
-            <fieldText>Link to Social Media accounts</fieldText>
+            <fieldText>Competitive Advantage</fieldText>
             <fieldType>InputField</fieldType>
             <isRequired>false</isRequired>
         </fields>
         <fields>
-            <name>Currency</name>
-            <extensionName>c:portalServicesInnovationHubFlowPicklist</extensionName>
+            <name>Recent_News</name>
+            <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>getIHubDetail.Recent_News__c</elementReference>
+            </defaultValue>
+            <fieldText>Recent News</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>categoriesMulti</name>
+            <extensionName>c:portalServicesInnovationHubFlowMultiPicklist</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
                 <name>label</name>
                 <value>
-                    <stringValue>Currency</stringValue>
+                    <stringValue>IATA Touchpoints</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>selectedOption</name>
+                <name>selectedOptions</name>
                 <value>
-                    <elementReference>getIHubDetail.CurrencyIsoCode</elementReference>
+                    <elementReference>getIHubDetail.Tags_Of_Categories__c</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>field</name>
                 <value>
-                    <stringValue>CurrencyIsoCode</stringValue>
+                    <stringValue>Tags_Of_Categories__c</stringValue>
                 </value>
             </inputParameters>
             <isRequired>true</isRequired>
             <outputParameters>
-                <assignToReference>getIHubDetail.CurrencyIsoCode</assignToReference>
-                <name>selectedOption</name>
+                <assignToReference>getIHubDetail.Tags_Of_Categories__c</assignToReference>
+                <name>selectedOptions</name>
             </outputParameters>
         </fields>
         <showFooter>true</showFooter>

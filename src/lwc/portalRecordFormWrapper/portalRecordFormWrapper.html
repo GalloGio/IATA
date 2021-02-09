@@ -160,25 +160,11 @@
                                 </div>
                             </template>
 
-                            <template if:true={field.isTech}>
+                            <template if:true={field.isMultipick}>
                                 <div key={providerId} class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
-                                    <c-portal-record-view-list key={providerId} label-api={_labels.CSP_Technology} provider-id-api={providerId}
-                                    field-api="Technology__c">
+                                    <c-portal-record-view-list key={providerId} label-api={field.label} provider-id-api={providerId}
+                                    field-api={field.fieldName}>
                                     </c-portal-record-view-list>
-                                </div>
-                            </template>
-
-                            <template if:true={field.isFocusArea}>
-                                <div key={providerId} class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
-                                    <c-portal-record-view-list key={providerId} label-api={_labels.CSP_FocusAreas} provider-id-api={providerId}
-                                    field-api="Focus_Areas__c"></c-portal-record-view-list>
-                                </div>
-                            </template>
-
-                            <template if:true={field.isCategory}>
-                                <div key={providerId} class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
-                                    <c-portal-record-view-list key={providerId} label-api={_labels.CSP_Categories} provider-id-api={providerId}
-                                    field-api="Tags_Of_Categories__c"></c-portal-record-view-list>
                                 </div>
                             </template>
 
