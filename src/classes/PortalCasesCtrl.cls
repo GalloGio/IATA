@@ -717,7 +717,7 @@ public with sharing class PortalCasesCtrl {
 						Description,E2CP__AdditionalCC__c,Account_Concerned__c, Status,RecordType__c,Has_the_agent_paid_invoice__c,
 						RecordType.Name, WhoClosedCase__c,WhoClosedCase__r.UserRole.Name, BSPCountry__c, AccountId,
 						Account.Name, ContactId, Contact.FirstName, Contact.LastName, Contact.Email,Contact.Phone,RecordType.Id,RecordType.DeveloperName,
-						Airline__c, Airline_E_mail__c, Document_number__c, Reporting_date__c, Amount_disputed__c, Portal_Closure_Status__c
+						Airline__c, Airline_E_mail__c, Document_number__c, Reporting_date__c, Amount_disputed__c, Portal_Closure_Status__c, OSCAR__c
 						FROM Case 
 						WHERE Id = :caseId];
 
@@ -748,6 +748,15 @@ public with sharing class PortalCasesCtrl {
 		
 		return ((!cases.isEmpty() && newCase.ClosedDate < Date.today().addDays(-13))
 			|| (newCase.Status == 'Pending Closure' && newCase.Portal_Closure_Status__c == 'Started') || isMSO);
+	}
+
+	@AuraEnabled
+	public static Boolean getHideAddNewDocumentsDGR(String caseId) {
+		Case newCase = getCaseById(caseId);
+		list<AMS_OSCAR__c> oscarCase = [SELECT id, recordTypeId from AMS_OSCAR__c where Id =: newCase.OSCAR__c];
+		return ((!oscarCase.isEmpty() && oscarCase[0].recordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CERTIFICATE'))
+				&& newCase.RecordType.Id == RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication')
+				&& newCase.Status == 'Closed');
 	}
 	
 	private Static boolean isMSOcase(Case newCase){

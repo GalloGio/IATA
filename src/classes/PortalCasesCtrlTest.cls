@@ -605,6 +605,36 @@ private class PortalCasesCtrlTest {
 		
 			}
 	}
+
+	@IsTest
+	static void testGetHideAddNewDocumentsDGR(){
+		User usr = [SELECT Id, ContactId FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
+		IATA_ISO_Country__c isoCountry = new IATA_ISO_Country__c(name = 'suisse',ISO_Code__c ='SS' );
+		insert isoCountry;
+		Id agencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
+		Account newAcc = new Account(RecordTypeId=agencyRT, Status__c = 'Approved', Reason_for_creation__c = 'Headquarter is missing', 
+									Name='Test1 Account', Location_Type__c = 'HO', Type='CASS Associate', Sector__c = 'Travel Agent', 
+									IATA_ISO_Country__c = isoCountry.id, IATAcode__c = '12345678', AIMS_ID__c = '12345678', Source_System__c = 'AIMS2');
+		insert newAcc;
+		ID rtChange = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CERTIFICATE');
+		AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtChange, Account__c = newAcc.Id, Type_of_change__c = AMS_Utils.COR,Change_effective_as_of__c  = Date.today());
+		insert theOscar;
+
+		ID rtCommCase = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
+		Case newCase4 = new Case(Subject = 'Bla', Region__c = 'Africa & Middle East',
+								Origin = 'Portal', CaseArea__c = 'Accreditation',
+								E2CP__AdditionalCC__c = 'testqa.tcosta@yopmail.com.inactive.inactive',
+								RecordTypeId = rtCommCase,
+								Visible_on_ISS_Portal__c = true, ContactId = usr.ContactId, OSCAR__c = theOscar.Id);
+		insert newCase4;
+		Test.startTest();
+		System.runAs(usr) {
+			boolean expired = PortalCasesCtrl.getHideAddNewDocumentsDGR(newCase4.Id);
+			System.assertEquals(expired,false);
+			Test.stopTest();
+	
+		}
+	}
 	
 	@IsTest
 	static void testSidraCase(){

@@ -114,12 +114,12 @@ global class ISSP_AmazonS3_Ctrl {
 		this.cse = [Select id, Status,CaseNumber,ArchivedDate__c,account.type,
 				 account.IATA_ISO_Country__r.iso_code__c ,
 				 IFAP_Agent_Code__c, AccountId, Account.Top_Parent__c, Financial_Review_Type__c, IsComplaint__c,
-				 Reason1__c, CaseArea__c, Owner.Name
+				 Reason1__c, CaseArea__c, Owner.Name, OSCAR__c
 				 from Case where id = : this.id];
 
 		this.topParentIdHierarchy = this.cse.Account.Top_Parent__c != null ? this.cse.Account.Top_Parent__c : this.cse.AccountId;
 		this.isDGRForm = false;
-		list<AMS_OSCAR__c> oscarCase = [SELECT id, recordTypeId from AMS_OSCAR__c where Name =: this.cse.CaseNumber AND Account__c =: this.cse.AccountId];
+		list<AMS_OSCAR__c> oscarCase = [SELECT id, recordTypeId from AMS_OSCAR__c where ID =: this.cse.OSCAR__c];
 		if(!oscarCase.isEmpty() && oscarCase[0].recordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CERTIFICATE')){
 			this.isDGRForm = true;
 		}

@@ -57,6 +57,7 @@ export default class PortalCaseDetailsDetails extends LightningElement {
     @track showNewDescriptionSection = false;
     @track isCollapsedWhenNewDescriptionInPlace = "slds-p-around_medium ";
     @track trackedIsExpired = false;
+    @track trackedIsExpiredDGR = false;
     @track isICollectionCase;
 
     @api
@@ -65,6 +66,13 @@ export default class PortalCaseDetailsDetails extends LightningElement {
     }
     set isexpired(value) {
         this.trackedIsExpired = value;
+	}
+    @api
+    get isexpireddgr() {
+        return this.trackedIsExpiredDGR;
+    }
+    set isexpireddgr(value) {
+        this.trackedIsExpiredDGR = value;
 	}
 	@track israelCase;
 	

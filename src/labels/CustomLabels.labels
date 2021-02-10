@@ -8700,6 +8700,14 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <value>Case Classification</value>
     </labels>
     <labels>
+        <fullName>Case_Closed_For_DGR</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case Closed For DGR</shortDescription>
+        <value>This case has been resolved, Please create a new query if you would like to contact us.</value>
+    </labels>
+    <labels>
         <fullName>Case_Closure_Error_Cannot_Close</fullName>
         <categories>CS Portal, Case Closure</categories>
         <language>en_US</language>
@@ -21832,6 +21840,14 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <protected>false</protected>
         <shortDescription>ISSP AMS Case Attach Description</shortDescription>
         <value>You can upload additional files to support your accreditation application or notice of change at any time.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Case_Attach_Description_DGR</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Case Attach Description DGR</shortDescription>
+        <value>Please upload the documents to confirm the validity of your Certification</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Case_Attach_Limit</fullName>
