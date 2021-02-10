@@ -33,13 +33,10 @@ export default class PortalServicesInnovationHubEditTab extends LightningElement
     processViewCards(){
         getProviderPropertiesAndCardsList({})
         .then(result => {
-            console.log('view card: ',  JSON.parse(JSON.stringify(result)) );
-
             var properties = JSON.parse(JSON.stringify(result));
             this.propertiesAndAndCardsList = properties;
 
             var extraDetails = JSON.parse(properties.extraDetails);
-            console.log('extraDetails', extraDetails);
             this.viewSubmitWarning = extraDetails.editButtonStatus === 'Submitted';
             this.viewPublishedRecord = extraDetails.viewStatus === 'Published';
             this.markedForReview = extraDetails.viewComments === 'Yes';
@@ -56,11 +53,9 @@ export default class PortalServicesInnovationHubEditTab extends LightningElement
         getProviderPropertiesAndEditCardsList({})
         .then(result => {
             var properties = JSON.parse(JSON.stringify(result));
-            console.log('edit card: ',  JSON.parse(JSON.stringify(result)));
             this.propertiesAndCardsListEdit = properties;
             
             var extraDetails = JSON.parse(properties.extraDetails);
-            console.log('extraDetails', extraDetails);
             this.disableSave = extraDetails.editStatus === 'Submitted';
             this.viewComments = extraDetails.viewComments === 'Yes';
             this.comments = extraDetails.comments;
@@ -78,17 +73,14 @@ export default class PortalServicesInnovationHubEditTab extends LightningElement
         event.preventDefault();// stop the form from submitting
         var fields = JSON.parse(JSON.stringify(event.detail.fields));
         var buttonName = event.target.dataset.buttonname;
-        console.log('buttonName: ', buttonName);
 
         //set the mode for success popup text
         this.displaySaveTextSuccessModal = buttonName === 'save';
 
         //get the extra fields (multipick values)
-        console.log('extraFields', this.extraFields);
         for (var key of Object.keys(this.extraFields)) {
             fields[key] = this.extraFields[key];
         }
-        console.log('fields: ', fields);
         fields.Id = this.propertiesAndCardsListEdit.recordId;
 
         //JSON object that contains the input for the apex method
@@ -103,7 +95,6 @@ export default class PortalServicesInnovationHubEditTab extends LightningElement
             this.handleSucess();
         })
         .catch(error => {
-            console.log('handleSubmitForm error: ' , error);
             this.handleCancelButtonEditModal();
             this.handleError();
         });
