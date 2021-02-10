@@ -29,7 +29,6 @@ import RelocateAccount from '@salesforce/label/c.ISSP_Relocate_Contact';
 import CSP_Technology from '@salesforce/label/c.CSP_Technology';
 import CSP_FocusAreas from '@salesforce/label/c.CSP_FocusAreas';
 import CSP_Categories from '@salesforce/label/c.CSP_Categories';
-import CSP_Touchpoints from '@salesforce/label/c.CSP_IATA_Touchpoints';
 
 import IdCard from '@salesforce/label/c.CSP_Id_Card';
 import IdCardNumber from '@salesforce/label/c.CSP_IDCard_Ver_Number';

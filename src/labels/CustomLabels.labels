@@ -3777,7 +3777,7 @@ If you are already CNS Endorsed, you can use this service to update information 
         <categories>CSPortal</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>CSP_Breadcrumb_Service_InnovationHub</shortDescription>
+        <shortDescription>CSP Breadcrumb IH Service title</shortDescription>
         <value>Innovation Hub</value>
     </labels>
     <labels>
@@ -3785,7 +3785,7 @@ If you are already CNS Endorsed, you can use this service to update information 
         <categories>CSPortal</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>CSP_Breadcrumb_Service_InnovationHub_Pro</shortDescription>
+        <shortDescription>CSP Breadcrumb IH Service Provider identification</shortDescription>
         <value>Provider</value>
     </labels>
     <labels>
@@ -3974,7 +3974,7 @@ If you are already CNS Endorsed, you can use this service to update information 
         <fullName>CSP_Categories</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>CSP_Categories</shortDescription>
+        <shortDescription>CSP IH Service Card Key Label</shortDescription>
         <value>IATA touchpoints</value>
     </labels>
     <labels>
@@ -4973,7 +4973,7 @@ If you are already CNS Endorsed, you can use this service to update information 
         <fullName>CSP_FocusAreas</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>CSP_FocusAreas</shortDescription>
+        <shortDescription>CSP IH Service Card Key Label</shortDescription>
         <value>Focus Areas</value>
     </labels>
     <labels>
@@ -5044,7 +5044,7 @@ If you are already CNS Endorsed, you can use this service to update information 
         <fullName>CSP_FundingStage</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>CSP_FundingStage</shortDescription>
+        <shortDescription>CSP IH Service Card Key Label</shortDescription>
         <value>Funding Stage</value>
     </labels>
     <labels>
@@ -5165,14 +5165,6 @@ If you are already CNS Endorsed, you can use this service to update information 
         <protected>false</protected>
         <shortDescription>IATA Invoices</shortDescription>
         <value>IATA Invoices</value>
-    </labels>
-    <labels>
-        <fullName>CSP_IATA_Touchpoints</fullName>
-        <categories>CSP</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP IATA Touchpoints</shortDescription>
-        <value>IATA Touchpoints</value>
     </labels>
     <labels>
         <fullName>CSP_IDCard_Name</fullName>
@@ -7435,7 +7427,7 @@ You can easily create a company account in two steps</value>
         <fullName>CSP_ResetFilters</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>CSP_ResetFilters</shortDescription>
+        <shortDescription>CSP IH Service Reset Filters Label</shortDescription>
         <value>Reset Filters</value>
     </labels>
     <labels>
@@ -7524,7 +7516,7 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <fullName>CSP_SearchByName</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>CSP_SearchByName</shortDescription>
+        <shortDescription>CSP IH Service Search Label</shortDescription>
         <value>Search By Name</value>
     </labels>
     <labels>
@@ -7773,7 +7765,7 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <categories>CSPortal</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>CSP_Service_InnovationHub_NoAccess</shortDescription>
+        <shortDescription>CSP IH Service Access Denied Label</shortDescription>
         <value>Sorry, you don&apos;t have access to service. Please contact administrator if you need to get access to this service.</value>
     </labels>
     <labels>
@@ -7781,7 +7773,7 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <categories>CSPortal</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>CSP_Service_InnovationHub_ProviderProfileTab</shortDescription>
+        <shortDescription>CSP IH Service Provider Profile Label</shortDescription>
         <value>Provider Profile</value>
     </labels>
     <labels>
@@ -7789,14 +7781,14 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <categories>CSPortal</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>CSP_Service_InnovationHub_SearchTab</shortDescription>
+        <shortDescription>CSP IH Service Search Label</shortDescription>
         <value>Search</value>
     </labels>
     <labels>
         <fullName>CSP_Service_InnovationHub_Title</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>CSP_Service_InnovationHub_Title</shortDescription>
+        <shortDescription>CSP IH Service Title</shortDescription>
         <value>Innovation Hub</value>
     </labels>
     <labels>
@@ -8203,7 +8195,7 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <fullName>CSP_Technology</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>CSP_Technology</shortDescription>
+        <shortDescription>CSP IH Service Card Key Label</shortDescription>
         <value>Technology</value>
     </labels>
     <labels>
@@ -40694,7 +40686,7 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <categories>Global</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>InnovationHub_ServiceName</shortDescription>
+        <shortDescription>CSP IH Service Field Label</shortDescription>
         <value>Innovation Hub</value>
     </labels>
     <labels>
@@ -40702,7 +40694,7 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <categories>CSPortal</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>Innovation_Hub_Service_Description</shortDescription>
+        <shortDescription>CSP IH Service Description</shortDescription>
         <value>The Startup Hotlist enables airlines to search and find startups that are currently, or are interested, in supporting airlines through the development of innovative solutions in areas such as distribution, payment and digitalization. &lt;br /&gt;&lt;br /&gt;The 150+ startups listed in the tool are vetted by IATA, ensuring the relevance of their solutions with current industry initiatives.</value>
     </labels>
     <labels>

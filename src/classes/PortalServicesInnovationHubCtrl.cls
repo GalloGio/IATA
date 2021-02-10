@@ -5,7 +5,6 @@ public without sharing class PortalServicesInnovationHubCtrl {
 	private static String ACCOUNT_ROLE_DETAIL_CONSUMER_RTYPE_DEVNAME = 'Consumer';
 	private static String ACCOUNT_ROLE_DETAIL_PROVIDER_RTYPE_DEVNAME = 'Provider';
 	private static String ACCOUNT_ROLE_DETAIL_CONSUMERANDPROVIDER_RTYPE_DEVNAME = 'Consumer_and_Provider';
-	private static String INNOVATION_HUB_SERVICE_NAME = Label.InnovationHub_ServiceName;
 
 	private static String IH_ACCOUNT_ROLE_DETAILS_STATUS_DRAFT = 'Draft';
 	private static String IH_ACCOUNT_ROLE_DETAILS_STATUS_SUBMITTED = 'Submitted';
@@ -272,7 +271,7 @@ public without sharing class PortalServicesInnovationHubCtrl {
 
 	@AuraEnabled(cacheable = false)
 	public static PortalServicesCtrl.ServiceWrapper getInnovationHubServiceDetails(){
-		return PortalServicesCtrl.getPortalServiceDetails(INNOVATION_HUB_SERVICE_NAME);
+		return PortalServicesCtrl.getPortalServiceDetails(Label.InnovationHub_ServiceName);
 	}
 
 	@InvocableMethod(label='Create Account Role and Account Role Detail from Portal Application Right' 
