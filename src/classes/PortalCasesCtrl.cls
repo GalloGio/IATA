@@ -753,9 +753,9 @@ public with sharing class PortalCasesCtrl {
 	@AuraEnabled
 	public static Boolean getHideAddNewDocumentsDGR(String caseId) {
 		Case newCase = getCaseById(caseId);
-		list<AMS_OSCAR__c> oscarCase = [SELECT id, recordTypeId from AMS_OSCAR__c where Id =: newCase.OSCAR__c];
-		return ((!oscarCase.isEmpty() && oscarCase[0].recordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CERTIFICATE'))
-				&& newCase.RecordType.Id == RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication')
+		list<AMS_OSCAR__c> oscarCase = [SELECT id, recordType.DeveloperName from AMS_OSCAR__c where Id =: newCase.OSCAR__c];
+		return ((!oscarCase.isEmpty() && oscarCase[0].recordType.DeveloperName == 'CERTIFICATE')
+				&& newCase.recordType.DeveloperName == 'OSCAR_Communication'
 				&& newCase.Status == 'Closed');
 	}
 	

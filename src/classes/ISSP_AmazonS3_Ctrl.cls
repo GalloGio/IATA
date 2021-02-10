@@ -119,8 +119,8 @@ global class ISSP_AmazonS3_Ctrl {
 
 		this.topParentIdHierarchy = this.cse.Account.Top_Parent__c != null ? this.cse.Account.Top_Parent__c : this.cse.AccountId;
 		this.isDGRForm = false;
-		list<AMS_OSCAR__c> oscarCase = [SELECT id, recordTypeId from AMS_OSCAR__c where ID =: this.cse.OSCAR__c];
-		if(!oscarCase.isEmpty() && oscarCase[0].recordTypeId == RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CERTIFICATE')){
+		list<AMS_OSCAR__c> oscarCase = [SELECT id, recordType.DeveloperName from AMS_OSCAR__c where ID =: this.cse.OSCAR__c];
+		if(!oscarCase.isEmpty() && oscarCase[0].recordType.DeveloperName == 'CERTIFICATE'){
 			this.isDGRForm = true;
 		}
 		calculePolicy('');
