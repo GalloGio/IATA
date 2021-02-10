@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>Apartment &amp; Villa Rental</label>
+    <label>Apartment and Villa Rental</label>
     <protected>false</protected>
     <values>
         <field>Can_Account_Be_Created__c</field>
@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>Created_Account_Category__c</field>
-        <value xsi:type="xsd:string">Apartment &amp; Villa Rental</value>
+        <value xsi:type="xsd:string">Apartment and Villa Rental</value>
     </values>
     <values>
         <field>Created_Account_Sector__c</field>

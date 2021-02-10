@@ -12549,7 +12549,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>AMS_Account_Role__c.Percentage_Formated__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -67289,7 +67289,7 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>Order</apexPage>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>PowerBI_Dashboard</apexPage>
