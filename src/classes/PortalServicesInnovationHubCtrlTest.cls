@@ -195,10 +195,12 @@ public class PortalServicesInnovationHubCtrlTest {
         }
 		Test.stopTest();
         Id iHubRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'Innovation_Hub');
-        List<Account_Role__c> arList = [SELECT Id from Account_Role__c where Account__c = :con.AccountId AND RecordtypeId = :iHubRT];
+        List<Account_Role__c> arList = [SELECT Id FROM Account_Role__c WHERE Account__c = :con.AccountId AND RecordtypeId = :iHubRT];
         System.assertEquals(arList.size(), 1);
-        List<IH_Account_Role_Detail__c> ardList = [SELECT Id from IH_Account_Role_Detail__c where Account_Role__r.Account__c = :con.AccountId];
+        List<IH_Account_Role_Detail__c> ardList = [SELECT Id FROM IH_Account_Role_Detail__c WHERE Account_Role__r.Account__c = :con.AccountId];
         System.assertEquals(ardList.size(), 1);
+        List<PermissionSetAssignment> psList = [SELECT Id FROM PermissionSetAssignment WHERE PermissionSet.Name = 'IH_Portal_Users' and Assignee.ContactId = :con.Id];
+        System.assertEquals(psList.size(), 1);
     }
     @isTest 
     static void testCreateAccountRoleAndAccountRoleDetailsProvider() {
@@ -213,10 +215,12 @@ public class PortalServicesInnovationHubCtrlTest {
         }
 		Test.stopTest();
         Id iHubRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'Innovation_Hub');
-        List<Account_Role__c> arList = [SELECT Id from Account_Role__c where Account__c = :con.AccountId AND RecordtypeId = :iHubRT];
+        List<Account_Role__c> arList = [SELECT Id FROM Account_Role__c WHERE Account__c = :con.AccountId AND RecordtypeId = :iHubRT];
         System.assertEquals(arList.size(), 1);
-        List<IH_Account_Role_Detail__c> ardList = [SELECT Id from IH_Account_Role_Detail__c where Account_Role__r.Account__c = :con.AccountId];
+        List<IH_Account_Role_Detail__c> ardList = [SELECT Id FROM IH_Account_Role_Detail__c WHERE Account_Role__r.Account__c = :con.AccountId];
         System.assertEquals(ardList.size(), 1);
+        List<PermissionSetAssignment> psList = [SELECT Id FROM PermissionSetAssignment WHERE PermissionSet.Name = 'IH_Portal_Users' and Assignee.ContactId = :con.Id];
+        System.assertEquals(psList.size(), 1);
     }
 
     @isTest 
