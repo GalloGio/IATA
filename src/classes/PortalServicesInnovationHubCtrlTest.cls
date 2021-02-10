@@ -158,7 +158,7 @@ public class PortalServicesInnovationHubCtrlTest {
 			update provider;
 
 			PortalWrapperClasses.ListCardsAndPropertiesWrapper lcpw2 = PortalServicesInnovationHubCtrl.getProviderPropertiesAndEditCardsList();
-			PortalWrapperClasses.ListCardsAndPropertiesWrapper lcpw3 = PortalServicesInnovationHubCtrl..getProviderPropertiesAndCardsList();
+			PortalWrapperClasses.ListCardsAndPropertiesWrapper lcpw3 = PortalServicesInnovationHubCtrl.getProviderPropertiesAndCardsList();
 			System.debug('lcpw2: '+lcpw2);
 			System.debug('lcpw3: '+lcpw3);
 			provider.Status__c = 'Approved';
