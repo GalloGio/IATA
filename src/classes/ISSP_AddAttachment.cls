@@ -40,10 +40,9 @@ public class ISSP_AddAttachment {
 
 		if (CaseId != '' && CaseId != null) {
 
-			tmpCase = [Select Id , CaseNumber, RecordType.Name, OSCAR__c, Status, CaseArea__c, Reason1__c, New_interaction__c, RecordType.Developername, New_Attachment_From_Portal_User__c, Reopening_reason__c, Reopened_case__c  From Case Where Id = : CaseId];
+			tmpCase = [Select Id , CaseNumber, RecordType.Name, OSCAR__c, OSCAR__r.recordType.DeveloperName, Status, CaseArea__c, Reason1__c, New_interaction__c, RecordType.Developername, New_Attachment_From_Portal_User__c, Reopening_reason__c, Reopened_case__c  From Case Where Id = : CaseId];
 			
-			list<AMS_OSCAR__c> oscarCase = [SELECT id, recordType.DeveloperName from AMS_OSCAR__c where Id =: tmpCase.OSCAR__c];
-			if(!oscarCase.isEmpty() && oscarCase[0].recordType.DeveloperName == 'CERTIFICATE'){
+			if(tmpCase.OSCAR__c != null && tmpCase.OSCAR__r.recordType.DeveloperName == 'CERTIFICATE'){
 				isOscarCertificate = true;
 			}
 			tmpCase.New_Attachment_From_Portal_User__c = true;

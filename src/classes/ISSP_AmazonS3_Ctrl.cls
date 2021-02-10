@@ -114,13 +114,11 @@ global class ISSP_AmazonS3_Ctrl {
 		this.cse = [Select id, Status,CaseNumber,ArchivedDate__c,account.type,
 				 account.IATA_ISO_Country__r.iso_code__c ,
 				 IFAP_Agent_Code__c, AccountId, Account.Top_Parent__c, Financial_Review_Type__c, IsComplaint__c,
-				 Reason1__c, CaseArea__c, Owner.Name, OSCAR__c
+				 Reason1__c, CaseArea__c, Owner.Name, OSCAR__c, OSCAR__r.recordType.DeveloperName
 				 from Case where id = : this.id];
 
-		this.topParentIdHierarchy = this.cse.Account.Top_Parent__c != null ? this.cse.Account.Top_Parent__c : this.cse.AccountId;
 		this.isDGRForm = false;
-		list<AMS_OSCAR__c> oscarCase = [SELECT id, recordType.DeveloperName from AMS_OSCAR__c where ID =: this.cse.OSCAR__c];
-		if(!oscarCase.isEmpty() && oscarCase[0].recordType.DeveloperName == 'CERTIFICATE'){
+		if(this.cse.OSCAR__c != null && this.cse.OSCAR__r.recordType.DeveloperName == 'CERTIFICATE'){
 			this.isDGRForm = true;
 		}
 		calculePolicy('');

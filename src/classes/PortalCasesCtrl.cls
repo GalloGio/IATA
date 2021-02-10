@@ -717,7 +717,7 @@ public with sharing class PortalCasesCtrl {
 						Description,E2CP__AdditionalCC__c,Account_Concerned__c, Status,RecordType__c,Has_the_agent_paid_invoice__c,
 						RecordType.Name, WhoClosedCase__c,WhoClosedCase__r.UserRole.Name, BSPCountry__c, AccountId,
 						Account.Name, ContactId, Contact.FirstName, Contact.LastName, Contact.Email,Contact.Phone,RecordType.Id,RecordType.DeveloperName,
-						Airline__c, Airline_E_mail__c, Document_number__c, Reporting_date__c, Amount_disputed__c, Portal_Closure_Status__c, OSCAR__c
+						Airline__c, Airline_E_mail__c, Document_number__c, Reporting_date__c, Amount_disputed__c, Portal_Closure_Status__c, OSCAR__c, OSCAR__r.recordType.DeveloperName
 						FROM Case 
 						WHERE Id = :caseId];
 
@@ -753,8 +753,7 @@ public with sharing class PortalCasesCtrl {
 	@AuraEnabled
 	public static Boolean getHideAddNewDocumentsDGR(String caseId) {
 		Case newCase = getCaseById(caseId);
-		list<AMS_OSCAR__c> oscarCase = [SELECT id, recordType.DeveloperName from AMS_OSCAR__c where Id =: newCase.OSCAR__c];
-		return ((!oscarCase.isEmpty() && oscarCase[0].recordType.DeveloperName == 'CERTIFICATE')
+		return ((newCase.OSCAR__c != null && newCase.OSCAR__r.recordType.DeveloperName == 'CERTIFICATE')
 				&& newCase.recordType.DeveloperName == 'OSCAR_Communication'
 				&& newCase.Status == 'Closed');
 	}
