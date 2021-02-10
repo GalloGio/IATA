@@ -1,6 +1,7 @@
 public without sharing class PortalServicesInnovationHubCtrl {
 
 	private static String ACCOUNT_ROLE_INNOVATIONHUB_RTYPE_DEVNAME = 'Innovation_Hub';
+	private static String IH_ACCOUNT_ROLE_DETAIL = 'IH_Account_Role_Detail__c';
 	private static String ACCOUNT_ROLE_DETAIL_CONSUMER_RTYPE_DEVNAME = 'Consumer';
 	private static String ACCOUNT_ROLE_DETAIL_PROVIDER_RTYPE_DEVNAME = 'Provider';
 	private static String ACCOUNT_ROLE_DETAIL_CONSUMERANDPROVIDER_RTYPE_DEVNAME = 'Consumer_and_Provider';
@@ -10,43 +11,15 @@ public without sharing class PortalServicesInnovationHubCtrl {
 	private static String IH_ACCOUNT_ROLE_DETAILS_STATUS_SUBMITTED = 'Submitted';
 	private static String IH_ACCOUNT_ROLE_DETAILS_STATUS_APPROVED = 'Approved';
 	private static String IH_LOGO_PATH = '/sfc/servlet.shepherd/version/download/';
-
-
-	public static Id accountRoleRecordTypeId {
-		get {
-			if(accountRoleRecordTypeId == null) {
-				accountRoleRecordTypeId = Schema.SObjectType.Account_Role__c.getRecordTypeInfosByDeveloperName().get(ACCOUNT_ROLE_INNOVATIONHUB_RTYPE_DEVNAME).getRecordTypeId();
-			}
-			return accountRoleRecordTypeId;
-		}
-		set;
-	}
-
-	public static Id accountRoleDetailConsumerRecordTypeId {
-		get {
-			if(accountRoleDetailConsumerRecordTypeId == null) {
-				accountRoleDetailConsumerRecordTypeId = Schema.SObjectType.IH_Account_Role_Detail__c.getRecordTypeInfosByDeveloperName().get(ACCOUNT_ROLE_DETAIL_CONSUMER_RTYPE_DEVNAME).getRecordTypeId();
-			}
-			return accountRoleDetailConsumerRecordTypeId;
-		}
-		set;
-	}
-
-	public static Id accountRoleDetailProviderRecordTypeId {
-		get {
-			if(accountRoleDetailProviderRecordTypeId == null) {
-				accountRoleDetailProviderRecordTypeId = Schema.SObjectType.IH_Account_Role_Detail__c.getRecordTypeInfosByDeveloperName().get(ACCOUNT_ROLE_DETAIL_PROVIDER_RTYPE_DEVNAME).getRecordTypeId();
-			}
-			return accountRoleDetailProviderRecordTypeId;
-		}
-		set;
-	}
+	private static String accountRoleRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', ACCOUNT_ROLE_INNOVATIONHUB_RTYPE_DEVNAME);
+	private static String accountRoleDetailConsumerRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('IH_Account_Role_Detail__c', ACCOUNT_ROLE_DETAIL_CONSUMER_RTYPE_DEVNAME);
+	private static String accountRoleDetailProviderRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('IH_Account_Role_Detail__c', ACCOUNT_ROLE_DETAIL_PROVIDER_RTYPE_DEVNAME);
 
 	@AuraEnabled (cacheable = false)
 	public static PortalWrapperClasses.ListCardsAndPropertiesWrapper getProviderPropertiesAndCardsList(){
 		
 		PortalWrapperClasses.ListCardsAndPropertiesWrapper propertiesAndLstCards = new PortalWrapperClasses.ListCardsAndPropertiesWrapper();
-		propertiesAndLstCards.objectAPIName = 'IH_Account_Role_Detail__c';
+		propertiesAndLstCards.objectAPIName = IH_ACCOUNT_ROLE_DETAIL;
 
 		Map<String, String> extraDetails = new Map<String, String>();
 
@@ -62,7 +35,7 @@ public without sharing class PortalServicesInnovationHubCtrl {
 			extraDetails.put('viewStatus', 'None');
 		}
 
-		IH_Account_Role_Detail__c accountRoleDetailsDraft = PortalServicesInnovationHubCtrl.getUserIHAccountRoleDetailWithStatus(IH_ACCOUNT_ROLE_DETAILS_STATUS_DRAFT);
+		IH_Account_Role_Detail__c accountRoleDetailsDraft = getUserIHAccountRoleDetailWithStatus(IH_ACCOUNT_ROLE_DETAILS_STATUS_DRAFT);
 		extraDetails.put('viewComments', 'No');
 		if(accountRoleDetailsDraft != null){
 			String viewComments = accountRoleDetailsDraft.Marked_For_Review__c ? 'Yes' : 'No';
@@ -70,7 +43,7 @@ public without sharing class PortalServicesInnovationHubCtrl {
 		}
 
 		//check if there is a submited provider profile
-		IH_Account_Role_Detail__c providerProfileSubmitted = PortalServicesInnovationHubCtrl.getUserIHAccountRoleDetailWithStatus(IH_ACCOUNT_ROLE_DETAILS_STATUS_SUBMITTED);
+		IH_Account_Role_Detail__c providerProfileSubmitted = getUserIHAccountRoleDetailWithStatus(IH_ACCOUNT_ROLE_DETAILS_STATUS_SUBMITTED);
 		if(providerProfileSubmitted != null){
 			extraDetails.put('editButtonStatus', IH_ACCOUNT_ROLE_DETAILS_STATUS_SUBMITTED);
 		}else{
@@ -102,7 +75,7 @@ public without sharing class PortalServicesInnovationHubCtrl {
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Founding_Date__c',true,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Number_Of_Employees__c',true,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Contact_info_of_startup__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Contact_Phone_Number__c',true,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Contact_Position__c',true,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Contact_Email__c',true,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Contact_Phone_Number__c',true,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Website__c',false,true));
@@ -141,23 +114,23 @@ public without sharing class PortalServicesInnovationHubCtrl {
 	public static PortalWrapperClasses.ListCardsAndPropertiesWrapper getProviderPropertiesAndEditCardsList(){
 	
 		PortalWrapperClasses.ListCardsAndPropertiesWrapper propertiesAndLstCards = new PortalWrapperClasses.ListCardsAndPropertiesWrapper();
-		propertiesAndLstCards.objectAPIName = 'IH_Account_Role_Detail__c';
+		propertiesAndLstCards.objectAPIName = IH_ACCOUNT_ROLE_DETAIL;
 
 		Map<String, String> extraDetails = new Map<String, String>();
 
 		//Try to get a draft provider profile
-		IH_Account_Role_Detail__c accountRoleDetailsAux = PortalServicesInnovationHubCtrl.getUserIHAccountRoleDetailWithStatus(IH_ACCOUNT_ROLE_DETAILS_STATUS_DRAFT);
+		IH_Account_Role_Detail__c accountRoleDetailsAux = getUserIHAccountRoleDetailWithStatus(IH_ACCOUNT_ROLE_DETAILS_STATUS_DRAFT);
 		String profileStatus = IH_ACCOUNT_ROLE_DETAILS_STATUS_DRAFT;
 
 		//if there is no draft, try to get the submitted profile
 		if(accountRoleDetailsAux == null){
-			accountRoleDetailsAux = PortalServicesInnovationHubCtrl.getUserIHAccountRoleDetailWithStatus(IH_ACCOUNT_ROLE_DETAILS_STATUS_SUBMITTED);
+			accountRoleDetailsAux = getUserIHAccountRoleDetailWithStatus(IH_ACCOUNT_ROLE_DETAILS_STATUS_SUBMITTED);
 			profileStatus = IH_ACCOUNT_ROLE_DETAILS_STATUS_SUBMITTED;
 		}
 
 		if(accountRoleDetailsAux == null){
 			//If there is no draft then get the latest published version
-			accountRoleDetailsAux = PortalServicesInnovationHubCtrl.getLastestPublishedProviderUserIHAccountRoleDetail();
+			accountRoleDetailsAux = getLastestPublishedProviderUserIHAccountRoleDetail();
 			profileStatus = IH_ACCOUNT_ROLE_DETAILS_STATUS_APPROVED;
 		}
 
@@ -236,7 +209,7 @@ public without sharing class PortalServicesInnovationHubCtrl {
 	public static PortalWrapperClasses.ListCardsAndPropertiesWrapper getProviderDetailsPropertiesAndCardsList(String providerId){
 	
 		PortalWrapperClasses.ListCardsAndPropertiesWrapper propertiesAndLstCards = new PortalWrapperClasses.ListCardsAndPropertiesWrapper();
-		propertiesAndLstCards.objectAPIName = 'IH_Account_Role_Detail__c';
+		propertiesAndLstCards.objectAPIName = IH_ACCOUNT_ROLE_DETAIL;
 		propertiesAndLstCards.recordId = providerId;
 		propertiesAndLstCards.lstCards = PortalServicesInnovationHubCtrl.getProviderDetailsPageCardDetails();
 		propertiesAndLstCards.viewNavigation = false;
@@ -306,24 +279,24 @@ public without sharing class PortalServicesInnovationHubCtrl {
 					description='Given a list of Portal Application Rights IDs create a list of Acount Roles and Account Role Details for Innovation Hub')
 	public static List<String> createAccountRoleAndAccountRoleDetails(List<ID> ids) {
 
-        Set<Id> accWoArd = new Set<Id>(); // Accounts without IH-ARD
-        Map<Id, Id> mapAccRoles = new Map<Id, Id>(); // map Account Role -> Account Role Id
-        Map<Id, Id> mapARDetail = new Map<Id, Id>(); 
-        List<Account_Role__c> lstAccountRoles = new List<Account_Role__c>();
-        List<IH_Account_Role_Detail__c> lstAccountRoleDetails = new List<IH_Account_Role_Detail__c>();
+		Set<Id> accWoArd = new Set<Id>(); // Accounts without IH-ARD
+		Map<Id, Id> mapAccRoles = new Map<Id, Id>(); // map Account Role -> Account Role Id
+		Map<Id, Id> mapARDetail = new Map<Id, Id>(); 
+		List<Account_Role__c> lstAccountRoles = new List<Account_Role__c>();
+		List<IH_Account_Role_Detail__c> lstAccountRoleDetails = new List<IH_Account_Role_Detail__c>();
 
-        // Insert IH Account Role Details
+		// Insert IH Account Role Details
 		lstAccountRoles =[SELECT Id, Account__c FROM Account_Role__c WHERE Account__c IN :ids and RecordTypeId = :accountRoleRecordTypeId];		
-        for(Account_Role__c ar : lstAccountRoles) {
-            mapAccRoles.put(ar.Account__c, ar.Id);
-        }
+		for(Account_Role__c ar : lstAccountRoles) {
+			mapAccRoles.put(ar.Account__c, ar.Id);
+		}
 		lstAccountRoles.clear();
-        // If IH-AR does not exists, create a new one
-        for(Id accountId : ids){
-            if(mapAccRoles.isEmpty() || (!mapAccRoles.isEmpty() && !mapAccRoles.containsKey(accountId))) {
-                lstAccountRoles.add(new Account_Role__c(Account__c = accountId,  RecordTypeId = accountRoleRecordTypeId, Status__c = 'Active',  Functional_Role__c = 'InnovationHub CRM'));
-            }
-        }
+		// If IH-AR does not exists, create a new one
+		for(Id accountId : ids){
+			if(mapAccRoles.isEmpty() || (!mapAccRoles.isEmpty() && !mapAccRoles.containsKey(accountId))) {
+				lstAccountRoles.add(new Account_Role__c(Account__c = accountId,  RecordTypeId = accountRoleRecordTypeId, Status__c = 'Active',  Functional_Role__c = 'InnovationHub CRM'));
+			}
+		}
 		if(!lstAccountRoles.isEmpty()){
 			insert lstAccountRoles;
 			for(Account_Role__c ar : lstAccountRoles) {
@@ -332,32 +305,32 @@ public without sharing class PortalServicesInnovationHubCtrl {
 		}
 		
 
-        // Insert IH Account Role Details
-		lstAccountRoleDetails = [SELECT Id, Account_Role__c, Account_Role__r.Account__c, Account_Role__r.Account__r.Sector__c FROM IH_Account_Role_Detail__c WHERE Account_Role__c IN :mapAccRoles.values() AND (RecordTypeId = :accountRoleDetailConsumerRecordTypeId OR RecordTypeId = :accountRoleDetailProviderRecordTypeId)];
+		// Insert IH Account Role Details
+		lstAccountRoleDetails = [SELECT Id, Account_Role__r.Account__c FROM IH_Account_Role_Detail__c WHERE Account_Role__c IN :mapAccRoles.values() AND (RecordTypeId = :accountRoleDetailConsumerRecordTypeId OR RecordTypeId = :accountRoleDetailProviderRecordTypeId)];
 
-        
-        for(IH_Account_Role_Detail__c ar : lstAccountRoleDetails) {
-            mapARDetail.put(ar.Account_Role__r.Account__c, ar.Id);
-        }
-        for(Id accId : ids){
-            if(mapARDetail.isEmpty() || (!mapARDetail.isEmpty() && !mapARDetail.containsKey(accId))) {
-                accWoArd.add(accId);
-            }
-        }
-        List<Account> accs = [Select Id, Sector__c FROM Account WHERE Id IN :accWoArd];
+		
+		for(IH_Account_Role_Detail__c ar : lstAccountRoleDetails) {
+			mapARDetail.put(ar.Account_Role__r.Account__c, ar.Id);
+		}
+		for(Id accId : ids){
+			if(mapARDetail.isEmpty() || (!mapARDetail.isEmpty() && !mapARDetail.containsKey(accId))) {
+				accWoArd.add(accId);
+			}
+		}
+		List<Account> accs = [Select Id, Sector__c FROM Account WHERE Id IN :accWoArd];
 		lstAccountRoleDetails.clear();
-        for(Account acc : accs){
-            if(acc.Sector__c == 'Airline' || acc.Sector__c == 'Airline Supplier'){
-                lstAccountRoleDetails.add(new IH_Account_Role_Detail__c(Account_Role__c = mapAccRoles.get(acc.Id),
-                                                                    RecordTypeId = accountRoleDetailConsumerRecordTypeId,
-                                                                    Status__c = 'Approved'));
-            }
-            else {
-                lstAccountRoleDetails.add(new IH_Account_Role_Detail__c(Account_Role__c = mapAccRoles.get(acc.Id),
-                                                                    RecordTypeId = accountRoleDetailProviderRecordTypeId,
-                                                                    Status__c = 'Draft'));
-            }
-        }
+		for(Account acc : accs){
+			if(acc.Sector__c == 'Airline' || acc.Sector__c == 'Airline Supplier'){
+				lstAccountRoleDetails.add(new IH_Account_Role_Detail__c(Account_Role__c = mapAccRoles.get(acc.Id),
+																	RecordTypeId = accountRoleDetailConsumerRecordTypeId,
+																	Status__c = 'Approved'));
+			}
+			else {
+				lstAccountRoleDetails.add(new IH_Account_Role_Detail__c(Account_Role__c = mapAccRoles.get(acc.Id),
+																	RecordTypeId = accountRoleDetailProviderRecordTypeId,
+																	Status__c = 'Draft'));
+			}
+		}
 		if(!lstAccountRoleDetails.isEmpty())
 			insert lstAccountRoleDetails;
 		
@@ -372,7 +345,7 @@ public without sharing class PortalServicesInnovationHubCtrl {
 		lstTabs.add(new TabWrapper(1, Label.CSP_Service_InnovationHub_ProviderProfileTab, false, '', true));
 
 		//get the users account role 
-		IH_Account_Role_Detail__c userAccountRole = PortalServicesInnovationHubCtrl.getUserIHAccountRoleDetailWithStatus(''); //ANY STATUS
+		IH_Account_Role_Detail__c userAccountRole = getUserIHAccountRoleDetailWithStatus(''); //ANY STATUS
 		
 		//no account role -> no access to service
 		if(userAccountRole == null){
@@ -581,7 +554,7 @@ public without sharing class PortalServicesInnovationHubCtrl {
 			upsert innoHubAccountRoleDetailsAux;
 			return innoHubAccountRoleDetailsAux.Id;
 		} catch( Exception e){
-			System.debug('____ [PortalServicesInnovationHubCtrl - saveProviderProfile] error: ' + e.getMessage());
+			System.debug('____ [cls PortalServicesInnovationHubCtrl - saveProviderProfile] innoHubAccountRoleDetailsAux: ' + e.getMessage());
 			throw e;
 		}
 	}
@@ -593,8 +566,8 @@ public without sharing class PortalServicesInnovationHubCtrl {
 	@AuraEnabled(cacheable = false)
 	public static String uploadFile(String base64, String filename, String recordId) {
 		ContentVersion cv = createContentVersion(base64, filename);
+		if (cv == null || recordId == null) { return null; }
 		ContentDocumentLink cdl = createContentLink(cv.Id, recordId);
-		if (cv == null || cdl == null) { return null; }
 		return cdl.Id;
   	}
 
@@ -608,14 +581,13 @@ public without sharing class PortalServicesInnovationHubCtrl {
 			insert cv;
 			return cv;
 		} catch(DMLException e) {
-			System.debug(e);
+			System.debug(loggingLevel.FINE, '____ [cls PortalServicesInnovationHubCtrl - createContentVersion] cv - ' + e);
 			return null;
 		}
 	}
 
 	//Creates a content link for a given ContentVersion and record
 	private static ContentDocumentLink createContentLink(String contentVersionId, String recordId) {
-		if (contentVersionId == null || recordId == null) { return null; }
 		
 		ContentDocumentLink cdl = new ContentDocumentLink();
 		cdl.ContentDocumentId = [ SELECT ContentDocumentId FROM ContentVersion WHERE Id =: contentVersionId].ContentDocumentId;
@@ -627,7 +599,7 @@ public without sharing class PortalServicesInnovationHubCtrl {
 			insert cdl;
 			return cdl;
 		} catch(DMLException e) {
-			System.debug(e);
+			System.debug(loggingLevel.FINE, '____ [cls PortalServicesInnovationHubCtrl - createContentLink] cdl - ' + e);
 			return null;
 		}
 	}

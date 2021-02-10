@@ -28,7 +28,7 @@ export default class PortalServicesInnovationHubHomePage extends LightningElemen
 
     onmouseenterTab(event){
         let clickedTab = event.target.dataset.item;
-        let tabsAux = JSON.parse(JSON.stringify(this.lstTabs)); //because proxy.......
+        let tabsAux = JSON.parse(JSON.stringify(this.lstTabs));
 
         for(let i = 0; i < tabsAux.length; i++){
             if(i+"" === clickedTab){
