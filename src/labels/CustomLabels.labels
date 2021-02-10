@@ -7769,14 +7769,6 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <value>Airline Daily Sales Dashboard</value>
     </labels>
     <labels>
-        <fullName>CSP_Service_InnovationHub_HomeTab</fullName>
-        <categories>CSPortal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_Service_InnovationHub_HomeTab</shortDescription>
-        <value>Home</value>
-    </labels>
-    <labels>
         <fullName>CSP_Service_InnovationHub_NoAccess</fullName>
         <categories>CSPortal</categories>
         <language>en_US</language>
