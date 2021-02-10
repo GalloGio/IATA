@@ -1,5 +1,6 @@
 import { LightningElement, api, track } from 'lwc';
 import getLogoUrl from '@salesforce/apex/PortalServicesInnovationHubCtrl.getProviderImgURLById';
+import CSP_No_Logo_Available from '@salesforce/label/c.CSP_No_Logo_Available';
 
 export default class PortalRecordViewEditLogo extends LightningElement {
 
@@ -7,6 +8,10 @@ export default class PortalRecordViewEditLogo extends LightningElement {
     @track logoId;
     @track logoCSS = '';
     @track showLogo = false;
+
+    labels = {
+        CSP_No_Logo_Available,
+    }
 
     @api 
     get providerIdApi(){

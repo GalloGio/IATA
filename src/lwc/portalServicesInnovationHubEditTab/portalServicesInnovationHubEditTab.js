@@ -4,6 +4,20 @@ import { LightningElement,track } from 'lwc';
 import getProviderPropertiesAndCardsList from '@salesforce/apex/PortalServicesInnovationHubCtrl.getProviderPropertiesAndCardsList';
 import getProviderPropertiesAndEditCardsList from '@salesforce/apex/PortalServicesInnovationHubCtrl.getProviderPropertiesAndEditCardsList';
 import saveProviderProfile from '@salesforce/apex/PortalServicesInnovationHubCtrl.saveProviderProfile';
+//labels
+import Comments from '@salesforce/label/c.CSP_CaseMessage_MessageTitle';
+import Edit from '@salesforce/label/c.Edit';
+import Cancel from '@salesforce/label/c.Cancel';
+import Save from '@salesforce/label/c.Save';
+import SaveAndSubmit from '@salesforce/label/c.CSP_SaveAndSubmit';
+import EditProviderDetails from '@salesforce/label/c.CSP_EditProviderDetails';
+import PublishedRecordPreview from '@salesforce/label/c.CSP_PublishedRecordPreview';
+import MarkedForReview from '@salesforce/label/c.CSP_MarkedForReview';
+import WaitingApproval from '@salesforce/label/c.CSP_WaitingApproval';
+import ProviderDraftSaved from '@salesforce/label/c.CSP_ProviderDraftSaved';
+import ProviderSaveAndSubmit from '@salesforce/label/c.CSP_ProviderSaveAndSubmit';
+import ProviderWrongSubmit from '@salesforce/label/c.CSP_ProviderWrongSubmit';
+import ProviderReviewComments from '@salesforce/label/c.CSP_ProviderReviewComments';
 
 export default class PortalServicesInnovationHubEditTab extends LightningElement {
 
@@ -26,6 +40,22 @@ export default class PortalServicesInnovationHubEditTab extends LightningElement
     @track showSuccessModal = false;
     @track showErrorModal = false;
     @track showEditModal = false;
+
+    labels = {
+        Comments,
+        Edit,
+        Cancel,
+        Save,
+        SaveAndSubmit,
+        EditProviderDetails,
+        PublishedRecordPreview,
+        MarkedForReview,
+        WaitingApproval,
+        ProviderDraftSaved,
+        ProviderSaveAndSubmit,
+        ProviderWrongSubmit,
+        ProviderReviewComments,
+    }
 
     //object to include extra fields
     extraFields = {};
@@ -91,14 +121,14 @@ export default class PortalServicesInnovationHubEditTab extends LightningElement
 
         saveProviderProfile(inputVariables)
         .then(result => {
-            this.handleCancelButtonEditModal();
-            this.handleSucess();
-        })
-        .catch(error => {
-            this.handleCancelButtonEditModal();
-            this.handleError();
-        });
-    }
+                    this.handleCancelButtonEditModal();
+                    this.handleSucess();
+                })
+                .catch(error => {
+                    this.handleCancelButtonEditModal();
+                    this.handleError();
+                });
+            }
 
     //Methods for the success modal
     handleSucess(event){

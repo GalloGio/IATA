@@ -54,7 +54,7 @@
                             <div class="slds-col slds-size_1-of-12 slds-p-top_small slds-p-bottom_small">
                                 <div>
                                     <div>
-                                        For more information about this invoice
+                                        {labels.CSP_ForMoreInfo}
                                     </div>
                                 </div>
                                 <div>
@@ -525,7 +525,7 @@
                 <div class="customPopupInteriorHalfScreenCenteredShippingAddress">
                     <!-- Popup Header -->
                     <div class="slds-p-horizontal_large slds-p-vertical_medium editIcon">
-                        <span>Edit Training Details</span>
+                        <span>{labels.CSP_EditTrainingDetails}</span>
                         <span class="slds-float_right slds-m-horizontal_x-small close-mark" onclick={closeModal}>
                             <template if:false={isSaving}>
                                 <lightning-icon icon-name="utility:close" size="x-small" class="cursorPointer"
@@ -553,7 +553,7 @@
         <template if:false={isTrainingInfo}>
             <c-portal-popup-container size="half">
                 <span slot="modalHeader">
-                    <span>Edit {objectName}</span>
+                    <span>{labels.Edit} {objectName}</span>
                     <span class="slds-float_right slds-m-horizontal_x-small close-mark" onclick={closeModal}>
                         <template if:false={isSaving}>
                             <lightning-icon icon-name="utility:close" size="x-small" class="cursorPointer"

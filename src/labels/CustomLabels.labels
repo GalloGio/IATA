@@ -1,5 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+	<labels>
+        <fullName>CSP_EditProviderDetails</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_EditProviderDetails</shortDescription>
+        <value>Edit Provider Details</value>
+    </labels>
+    <labels>
+        <fullName>CSP_MarkedForReview</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_MarkedForReview</shortDescription>
+        <value>The submited profile was marked for review. Click on the edit button to view more details.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_ProviderDraftSaved</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_ProviderDraftSaved</shortDescription>
+        <value>Provider profile draft saved successfully. Once it&apos;s ready for submit click on the &apos;Save and Submit&apos; button.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_ProviderReviewComments</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_ProviderReviewComments</shortDescription>
+        <value>Please review the comments and submit again.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_ProviderSaveAndSubmit</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_ProviderSaveAndSubmit</shortDescription>
+        <value>The provider profile was saved and submitted for approval. A notification will be send with further instructions.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_ProviderWrongSubmit</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_ProviderWrongSubmit</shortDescription>
+        <value>Something went wrong during the submission process. Please contact your administrator for more details.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_PublishedRecordPreview</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_PublishedRecordPreview</shortDescription>
+        <value>There is no published record to preview.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_SaveAndSubmit</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_SaveAndSubmit</shortDescription>
+        <value>Save and Submit</value>
+    </labels>
+    <labels>
+        <fullName>CSP_WaitingApproval</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_WaitingApproval</shortDescription>
+        <value>There is already a profile update waiting to be approved. You cannot create a new request until the ongoing is rejected or approved.</value>
+    </labels>
     <labels>
         <fullName>ACCEPTED_PAYMENT_METHODS_MANDATORY</fullName>
         <categories>IEC,Payment,Payment Method,Product,Configuration</categories>
