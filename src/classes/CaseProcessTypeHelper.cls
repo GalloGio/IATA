@@ -220,7 +220,7 @@ public with sharing class CaseProcessTypeHelper {
 				return values.contains(fieldValue);
 			}
 		} catch (Exception e) {
-			TransformationHelper.sendEmailSupport( 'CaseProcessTypeHelper - ProcessOtherConditions Exception', 'Exception: ' + e + ' || StackTrace: ' + e.getStackTraceString());
+			TransformationHelper.sendEmailSupport( 'CaseProcessTypeHelper - ProcessOtherConditions Exception', 'Exception: ' + e + ' || case: ' + cse + ' || conditions ' + conditions + ' || StackTrace: ' + e.getStackTraceString());
 		}
 		return false;
 	}
