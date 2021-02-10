@@ -739,9 +739,6 @@
         <columns>FileRecipent_iiNet_TDF_Recipient__c</columns>
         <columns>Calendar_Next_Submission_Date__c</columns>
         <columns>Calendar_New_Submission_Effective_Date__c</columns>
-        <columns>FileRecipientEmail__c</columns>
-        <columns>FileRecipientFirstName__c</columns>
-        <columns>FileRecipientLastName__c</columns>
         <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
