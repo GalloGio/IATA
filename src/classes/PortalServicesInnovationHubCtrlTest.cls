@@ -39,7 +39,7 @@ public class PortalServicesInnovationHubCtrlTest {
 		IH_Account_Role_Detail__c ihubDetail2 = new IH_Account_Role_Detail__c(Account_Role__c = ar2.Id,Company_name__c = 'Test Consumer',
 																			  Published__c = true, RecordTypeId = iHubDetailConsumerRT, Status__c='Submitted');  
 		IH_Account_Role_Detail__c ihubDetail3 = new IH_Account_Role_Detail__c(Account_Role__c = ar3.Id,Company_name__c = 'Test Consumer & Provider',
-																			  Published__c = true, RecordTypeId = iHubDetailProAndConsRT, Status__c='Submitted');
+																			  Published__c = true, RecordTypeId = iHubDetailProAndConsRT, Status__c='Approved');
 		IH_Account_Role_Detail__c ihubDetail4 = new IH_Account_Role_Detail__c(Account_Role__c = ar4.Id,Company_name__c = 'Account Test Airline 4',
 																			  Funding_Stage__c = 'Seed',Focus_Areas__c = 'Marketing',
 																			  Tags_of_categories__c = 'Health',Technology__c = 'IOT',
@@ -57,15 +57,24 @@ public class PortalServicesInnovationHubCtrlTest {
 		Test.startTest();
 		System.runAs(newUser1){
 			List<PortalServicesInnovationHubCtrl.TabWrapper> tw1 = PortalServicesInnovationHubCtrl.getInnovationHubTabs();
-			System.assertEquals(tw1.size(),2);
+			System.assertEquals(tw1.get(0).tabIsHidden,true);
+			System.assertEquals(tw1.get(0).tabIsActive,false);
+			System.assertEquals(tw1.get(1).tabIsHidden,false);
+			System.assertEquals(tw1.get(1).tabIsActive,true);
 		}
 		System.runAs(newUser2){
 			List<PortalServicesInnovationHubCtrl.TabWrapper> tw2 = PortalServicesInnovationHubCtrl.getInnovationHubTabs();
-			System.assertEquals(tw2.size(),0);
+			System.assertEquals(tw2.get(0).tabIsHidden,false);
+			System.assertEquals(tw2.get(0).tabIsActive,true);
+			System.assertEquals(tw2.get(1).tabIsHidden,true);
+			System.assertEquals(tw2.get(1).tabIsActive,false);
 		}
 		System.runAs(newUser3){
 			List<PortalServicesInnovationHubCtrl.TabWrapper> tw3 = PortalServicesInnovationHubCtrl.getInnovationHubTabs();
-			System.assertEquals(tw3.size(),0);
+			System.assertEquals(tw3.get(0).tabIsHidden,false);
+			System.assertEquals(tw3.get(0).tabIsActive,true);
+			System.assertEquals(tw3.get(1).tabIsHidden,false);
+			System.assertEquals(tw3.get(1).tabIsActive,false);
 		}
 		Test.stopTest();	
 	}
@@ -89,7 +98,7 @@ public class PortalServicesInnovationHubCtrlTest {
 	@isTest 
 	static void testProviderLogo() {
 		List<Contact> contacts = [SELECT AccountId, FirstName,LastName, Email, User_Portal_Status__c, Status__c FROM Contact];
-		IH_Account_Role_Detail__c provider = [SELECT Id,Company_name__c FROM IH_Account_Role_Detail__c WHERE Company_name__c = 'Test Provider' LIMIT 1];       
+		IH_Account_Role_Detail__c provider = [SELECT Id FROM IH_Account_Role_Detail__c WHERE Company_name__c = 'Test Provider' LIMIT 1];       
 		
 		Test.startTest();
 		User newUser1 = ISSP_ObjectFactory.createPortalUser(contacts[0]);
@@ -110,7 +119,7 @@ public class PortalServicesInnovationHubCtrlTest {
 	@isTest 
 	static void testFieldLists() {
 		List<Contact> contacts = [SELECT AccountId, FirstName,LastName, Email, User_Portal_Status__c, Status__c FROM Contact];
-		IH_Account_Role_Detail__c provider = [SELECT Id,Company_name__c FROM IH_Account_Role_Detail__c WHERE Company_name__c = 'Test Provider' LIMIT 1];       
+		IH_Account_Role_Detail__c provider = [SELECT Id FROM IH_Account_Role_Detail__c WHERE Company_name__c = 'Test Provider' LIMIT 1];       
 		
 		Test.startTest();
 		User newUser1 = ISSP_ObjectFactory.createPortalUser(contacts[0]);
@@ -127,11 +136,10 @@ public class PortalServicesInnovationHubCtrlTest {
 	@isTest 
 	static void testLatestRoleDetail() {
 		List<Contact> contacts = [SELECT AccountId, FirstName,LastName, Email, User_Portal_Status__c, Status__c FROM Contact];
-		IH_Account_Role_Detail__c provider = [SELECT Id,Company_name__c FROM IH_Account_Role_Detail__c WHERE Company_name__c = 'Test Provider' LIMIT 1];       
-		
+		IH_Account_Role_Detail__c provider = [SELECT Id,Account_Role__r.Account__c,RecordType.DeveloperName,Published__c,Status__c FROM IH_Account_Role_Detail__c WHERE Company_name__c = 'Test Consumer & Provider' LIMIT 1];
+		User newUser1 = ISSP_ObjectFactory.createPortalUser(contacts[2]);
 		Test.startTest();
-		User newUser1 = ISSP_ObjectFactory.createPortalUser(contacts[0]);
-			
+
 		System.runAs(newUser1){
 			IH_Account_Role_Detail__c ih1 = PortalServicesInnovationHubCtrl.getLastestPublishedProviderUserIHAccountRoleDetail();
 			System.assertEquals(ih1.Id,provider.Id);
@@ -144,7 +152,7 @@ public class PortalServicesInnovationHubCtrlTest {
 	@isTest 
 	static void testGetProviderCards() {  
 		List<Contact> contacts = [SELECT AccountId, FirstName,LastName, Email, User_Portal_Status__c, Status__c FROM Contact];
-		IH_Account_Role_Detail__c provider = [SELECT Id,Company_name__c, Status__c, Published__c FROM IH_Account_Role_Detail__c WHERE Company_name__c = 'Account Test Airline 4' LIMIT 1];       
+		IH_Account_Role_Detail__c provider = [SELECT Id, Status__c, Published__c FROM IH_Account_Role_Detail__c WHERE Company_name__c = 'Account Test Airline 4' LIMIT 1];       
 		Test.startTest();
 	   
 		User newUser1 = ISSP_ObjectFactory.createPortalUser(contacts[3]);
@@ -152,15 +160,27 @@ public class PortalServicesInnovationHubCtrlTest {
 		System.runAs(newUser1){
 			PortalWrapperClasses.ListCardsAndPropertiesWrapper lcpw = PortalServicesInnovationHubCtrl.getProviderPropertiesAndEditCardsList();
 			PortalWrapperClasses.ListCardsAndPropertiesWrapper lcpw1 = PortalServicesInnovationHubCtrl.getProviderPropertiesAndCardsList();
-			System.debug('lcpw: '+lcpw);
-			System.debug('lcpw1: '+lcpw1);
+			
+			Map<String, String> answer = (Map<String, String>) JSON.deserialize( lcpw.extraDetails, Map<String, String>.class);
+			System.assertEquals(answer.get('editStatus'),'Draft');
+			System.assertEquals(lcpw.lstCards.size(),1);
+			answer = (Map<String, String>) JSON.deserialize( lcpw1.extraDetails, Map<String, String>.class);
+			System.assertEquals(answer.get('viewStatus'),'None');
+			System.assertEquals(lcpw1.lstCards,null);
+
 			provider.Status__c = 'Submitted';
 			update provider;
 
 			PortalWrapperClasses.ListCardsAndPropertiesWrapper lcpw2 = PortalServicesInnovationHubCtrl.getProviderPropertiesAndEditCardsList();
 			PortalWrapperClasses.ListCardsAndPropertiesWrapper lcpw3 = PortalServicesInnovationHubCtrl.getProviderPropertiesAndCardsList();
-			System.debug('lcpw2: '+lcpw2);
-			System.debug('lcpw3: '+lcpw3);
+			
+			answer = (Map<String, String>) JSON.deserialize( lcpw2.extraDetails, Map<String, String>.class);
+			System.assertEquals(answer.get('editStatus'),'Submitted');
+			System.assertEquals(lcpw2.lstCards.size(),1);
+			answer = (Map<String, String>) JSON.deserialize( lcpw3.extraDetails, Map<String, String>.class);
+			System.assertEquals(answer.get('viewStatus'),'None');
+			System.assertEquals(lcpw3.lstCards,null);
+
 			provider.Status__c = 'Approved';
 			provider.Published__c = true;
 			update provider;
@@ -168,9 +188,15 @@ public class PortalServicesInnovationHubCtrlTest {
 			PortalWrapperClasses.ListCardsAndPropertiesWrapper lcpw4 = PortalServicesInnovationHubCtrl.getProviderPropertiesAndEditCardsList();
 			PortalWrapperClasses.ListCardsAndPropertiesWrapper lcpw5 = PortalServicesInnovationHubCtrl.getProviderPropertiesAndCardsList();
 			PortalWrapperClasses.ListCardsAndPropertiesWrapper lcpw6 = PortalServicesInnovationHubCtrl.getProviderDetailsPropertiesAndCardsList(provider.Id);
-			System.debug('lcpw4: '+lcpw4);
-			System.debug('lcpw5: '+lcpw5);
-			System.debug('lcpw6: '+lcpw6);
+
+			answer = (Map<String, String>) JSON.deserialize( lcpw4.extraDetails, Map<String, String>.class);
+			System.assertEquals(answer.get('editStatus'),'Approved');
+			System.assertEquals(lcpw4.lstCards.size(),1);
+			answer = (Map<String, String>) JSON.deserialize( lcpw5.extraDetails, Map<String, String>.class);
+			System.assertEquals(answer.get('viewStatus'),'Published');
+			System.assertEquals(lcpw5.lstCards.size(),2);
+			System.assertEquals(lcpw6.extraDetails,null);
+			System.assertEquals(lcpw6.lstCards.size(),1);
 		}
 		
 		Test.stopTest();
