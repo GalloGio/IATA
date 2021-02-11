@@ -12554,7 +12554,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>AMS_Account_Role__c.Percentage_Formated__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -67573,10 +67573,10 @@
     </objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>
-        <allowDelete>true</allowDelete>
+        <allowDelete>false</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
-        <modifyAllRecords>true</modifyAllRecords>
+        <modifyAllRecords>false</modifyAllRecords>
         <object>LocalGovernance__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
@@ -73375,6 +73375,7 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
+        <personAccountDefault>true</personAccountDefault>
         <recordType>LocalGovernance__c.Local_Groups</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>

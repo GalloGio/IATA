@@ -6,6 +6,20 @@ public with sharing class CaseProcessTypeHelper {
 
 	private static final Id CASE_RT_OSCAR = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
+	// Values for the standard field Case.Status marked as a closed
+	private static Set<String> CLOSED_STATUSES {
+		get {
+			if (CLOSED_STATUSES==null) {
+				CLOSED_STATUSES = new Set<String>();
+				for (CaseStatus status : [SELECT ApiName  FROM CaseStatus WHERE IsClosed = true]) {
+					CLOSED_STATUSES.add(status.ApiName);
+				}
+			}
+			return CLOSED_STATUSES;
+		}
+		private set;
+	}
+
 	//This variable maps the metadata per reason and case recordtype id
 	private static Map<Id,Map<String,list<Case_Process_Type__mdt>>> mapRTsToReasons = null;
 
@@ -91,24 +105,23 @@ public with sharing class CaseProcessTypeHelper {
 	 *  - RecordType must be defined in at least one of the metadata records
 	 *  - Case is being closed
 	 *  - Subject cannot contain 'PROCOM'
-	 *  - ClosedDate must be 2019 or bigger
-	 *  - Case Region cannot be empty
-	 *  - Closed By Role cannot be empty
-	 *  - Account IATA ISO Country cannot be United States
 	 */
+	private static Set<String> SET_CASE_KPI_PROCESSED = new Set<String>();
 	public static void processKPI(List<Case> cases, Map<Id,Case> oldMap) {
-		Datetime x1stDate = Datetime.newInstance(2019, 1, 1);
 		Set<Id> oscarIds = new Set<Id>(); //WMO-564 - ACAMBAS
 		List<Case> casesToProcess = new List<Case>();
 
 		for(Case cse : cases) {
-			Case oldRecord = oldMap.get(cse.Id);
-			Boolean beingClosed = cse.IsClosed && !oldRecord.IsClosed;
-			Boolean hasConfig = getMapRTsToReasons().get(cse.RecordTypeId) != null && getMapRTsToReasons().get(cse.RecordTypeId).get(cse.Reason1__c) != null;
-			Boolean validSubject = String.isNotBlank(cse.Subject) && !cse.Subject.contains('PROCOM');
-			if(hasConfig && beingClosed && cse.ClosedDate >= x1stDate && String.isNotBlank(cse.Closed_by_Role__c) && String.isNotBlank(cse.Region__c) && validSubject) {
-				casesToProcess.add(cse);
-				oscarIds.add(cse.OSCAR__c); //WMO-564 - ACAMBAS
+			if (!SET_CASE_KPI_PROCESSED.contains(cse.Id)) {
+				Case oldRecord = oldMap.get(cse.Id);
+				Boolean beingClosed = cse.Status!=oldRecord.Status && CLOSED_STATUSES.contains(cse.Status) && !CLOSED_STATUSES.contains(oldRecord.Status);
+				Boolean hasConfig = getMapRTsToReasons().get(cse.RecordTypeId) != null && getMapRTsToReasons().get(cse.RecordTypeId).get(cse.Reason1__c) != null;
+				Boolean validSubject = String.isNotBlank(cse.Subject) && !cse.Subject.contains('PROCOM');
+				if(hasConfig && beingClosed && validSubject) {
+					SET_CASE_KPI_PROCESSED.add(cse.Id);
+					casesToProcess.add(cse);
+					oscarIds.add(cse.OSCAR__c); //WMO-564 - ACAMBAS
+				}
 			}
 		}
 
@@ -123,10 +136,10 @@ public with sharing class CaseProcessTypeHelper {
 			if (oscar!=null) {
 				cse.OSCAR__r = oscar;
 				cse.Account = oscar.Account__r;
-				Case_Process_Type__mdt process = getRightProcess(cse);
-				if (process!=null) {
-					calculateKPI(cse, oscar, process);
-				}
+			}
+			Case_Process_Type__mdt process = getRightProcess(cse);
+			if (process!=null) {
+				calculateKPI(cse, oscar, process);
 			}
 		}
 	}
@@ -207,7 +220,7 @@ public with sharing class CaseProcessTypeHelper {
 				return values.contains(fieldValue);
 			}
 		} catch (Exception e) {
-			TransformationHelper.sendEmailSupport( 'CaseProcessTypeHelper - ProcessOtherConditions Exception', 'Exception: ' + e + ' || StackTrace: ' + e.getStackTraceString());
+			TransformationHelper.sendEmailSupport( 'CaseProcessTypeHelper - ProcessOtherConditions Exception', 'Exception: ' + e + ' || case: ' + cse + ' || conditions ' + conditions + ' || StackTrace: ' + e.getStackTraceString());
 		}
 		return false;
 	}

@@ -8357,7 +8357,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>Order_Svc</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>Order_Svc_Test</apexClass>
@@ -12550,7 +12550,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>AMS_Account_Role__c.Percentage_Formated__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -71441,6 +71441,10 @@
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
+        <name>AuthorApex</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
         <name>CanUseNewDashboardBuilder</name>
     </userPermissions>
     <userPermissions>
@@ -71666,6 +71670,10 @@
     <userPermissions>
         <enabled>true</enabled>
         <name>MergeTopics</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>ModifyMetadata</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>
