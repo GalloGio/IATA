@@ -160,7 +160,7 @@ public without sharing class PortalServicesInnovationHubCtrl {
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Also_Known_As__c',true,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Company_Description__c',true,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Location__c',true,true));
-		PortalWrapperClasses.FieldWrapper focusAreas = new PortalWrapperClasses.FieldWrapper('Focus_Areas__c',true,false,'',System.Label.CSP_FocusAreas);
+		PortalWrapperClasses.FieldWrapper focusAreas = new PortalWrapperClasses.FieldWrapper('Focus_Areas__c',true,true);
 		focusAreas.isMultipick = true;
 		lstfw1.add(focusAreas);
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Founding_Date__c',true,true));
@@ -179,7 +179,7 @@ public without sharing class PortalServicesInnovationHubCtrl {
 
 		//SERVICE INFORMATION
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Solution__c',true,true));
-		PortalWrapperClasses.FieldWrapper technology = new PortalWrapperClasses.FieldWrapper('Technology__c',true,false,'',System.Label.CSP_Technology);
+		PortalWrapperClasses.FieldWrapper technology = new PortalWrapperClasses.FieldWrapper('Technology__c',true,true);
 		technology.isMultipick = true;
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Description__c',true,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Industry_Perspectives__c',true,true));
@@ -189,7 +189,7 @@ public without sharing class PortalServicesInnovationHubCtrl {
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Competition_Competitors__c',true,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Competitive_Advantage__c',true,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Recent_News__c',true,true));
-		PortalWrapperClasses.FieldWrapper tagsOfCategories = new PortalWrapperClasses.FieldWrapper('Tags_Of_Categories__c',true,false,'',System.Label.CSP_Categories);
+		PortalWrapperClasses.FieldWrapper tagsOfCategories = new PortalWrapperClasses.FieldWrapper('Tags_Of_Categories__c',true,true);
 		tagsOfCategories.isMultipick = true;
 		lstfw1.add(tagsOfCategories);	
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Status__c',true,false));
@@ -537,6 +537,18 @@ public without sharing class PortalServicesInnovationHubCtrl {
 		}
 	}
 
+	@AuraEnabled(cacheable = false)
+	public static String saveLogoId(String providerProfileId, String contentDocumentId){
+		try{
+			IH_Account_Role_Detail__c providerProfileDetails = new IH_Account_Role_Detail__c(Id =providerProfileId, Logo_File_Id__c = contentDocumentId);
+			update providerProfileDetails;
+			return providerProfileDetails.Id;
+		}catch( Exception e){
+			System.debug('____ [cls PortalServicesInnovationHubCtrl - saveLogoId] error: ' + e.getMessage());
+			throw e;
+		}
+	}
+
 /* 
 	*	Methods used for uploading new logo file 
 	*/
@@ -546,7 +558,7 @@ public without sharing class PortalServicesInnovationHubCtrl {
 		ContentVersion cv = createContentVersion(base64, filename);
 		if (cv == null || recordId == null) { return null; }
 		ContentDocumentLink cdl = createContentLink(cv.Id, recordId);
-		return cdl.Id;
+		return cv.Id;
   	}
 
 	//Creates a content version from a given file's base64 and name
