@@ -169,6 +169,7 @@ public class LVA_AfterChatTriggerTest {
 					bulkCases.add(new Case(Subject='Case ' + i,
 										   RecordTypeId = recordTypeID,
 										   Status='Open',
+										   CaseArea__c='Accreditation',
 										   Origin='Chat',
 										   ContactId = con.Id));
 				}
