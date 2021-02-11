@@ -4,6 +4,9 @@ import { LightningElement,track } from 'lwc';
 import getProviderPropertiesAndCardsList from '@salesforce/apex/PortalServicesInnovationHubCtrl.getProviderPropertiesAndCardsList';
 import getProviderPropertiesAndEditCardsList from '@salesforce/apex/PortalServicesInnovationHubCtrl.getProviderPropertiesAndEditCardsList';
 import saveProviderProfile from '@salesforce/apex/PortalServicesInnovationHubCtrl.saveProviderProfile';
+import uploadFile from '@salesforce/apex/PortalServicesInnovationHubCtrl.uploadFile';
+import saveLogoId from '@salesforce/apex/PortalServicesInnovationHubCtrl.saveLogoId';
+
 //labels
 import Comments from '@salesforce/label/c.CSP_CaseMessage_MessageTitle';
 import Edit from '@salesforce/label/c.Edit';
@@ -35,6 +38,7 @@ export default class PortalServicesInnovationHubEditTab extends LightningElement
     @track viewComments = false;
     @track comments = '';
     @track markedForReview = false;
+    @track mode = '';
 
     //modals visibility controllers
     @track showSuccessModal = false;
@@ -59,6 +63,9 @@ export default class PortalServicesInnovationHubEditTab extends LightningElement
 
     //object to include extra fields
     extraFields = {};
+
+    //input file fields
+    fileData;
 
     processViewCards(){
         getProviderPropertiesAndCardsList({})
@@ -99,13 +106,19 @@ export default class PortalServicesInnovationHubEditTab extends LightningElement
         this.showEditModal = false;
     }
 
-    handleSubmitForm(event){
-        event.preventDefault();// stop the form from submitting
-        var fields = JSON.parse(JSON.stringify(event.detail.fields));
-        var buttonName = event.target.dataset.buttonname;
+    handleSaveButtonClick(event){
+        var buttonName = event.target.dataset.name;
 
         //set the mode for success popup text
         this.displaySaveTextSuccessModal = buttonName === 'save';
+        this.mode = buttonName;
+        this.isSaving = true;
+    }
+
+    handleSubmitForm(event){
+
+        event.preventDefault();// stop the form from submitting
+        var fields = JSON.parse(JSON.stringify(event.detail.fields));
 
         //get the extra fields (multipick values)
         for (var key of Object.keys(this.extraFields)) {
@@ -116,19 +129,70 @@ export default class PortalServicesInnovationHubEditTab extends LightningElement
         //JSON object that contains the input for the apex method
         var inputVariables = {
             innoHubAccountRoleDetailsStr : JSON.stringify(fields),
-            mode : buttonName
+            mode : this.mode
         };
 
+        //save the form
         saveProviderProfile(inputVariables)
         .then(result => {
-                    this.handleCancelButtonEditModal();
-                    this.handleSucess();
+
+            if(this.fileData !== undefined && this.fileData !== null){
+                //save the logo file
+                var fileDataAux = this.fileData;
+                fileDataAux.recordId = result;
+                
+                uploadFile(fileDataAux)
+                .then(resultUpload=>{
+                    saveLogoId({providerProfileId : result, contentDocumentId : resultUpload})
+                    .then(resultSaveLogo => {
+                        this.fileData = null;
+                        this.isSaving = false;
+                        this.handleCancelButtonEditModal();
+                        this.handleSucess();
+
+                    })
+                    .catch(errorSaveLogo => {
+                        console.log('uploadFile error: ' , errorSaveLogo);
+                        this.isSaving = false;
+                        this.handleCancelButtonEditModal();
+                        this.handleError();
+                    });
+
                 })
-                .catch(error => {
+                .catch(errorUploadFile => {
+                    console.log('uploadFile error: ' , errorUploadFile);
+                    this.isSaving = false;
                     this.handleCancelButtonEditModal();
                     this.handleError();
                 });
+            }else{
+                this.isSaving = false;
+                this.handleCancelButtonEditModal();
+                this.handleSucess();
             }
+        })
+        .catch(error => {
+            console.log('handleSubmitForm error: ' , error);
+            this.isSaving = false;
+            this.handleCancelButtonEditModal();
+            this.handleError();
+        });
+    }
+
+    //Method for input file
+    openfileUpload(event) {
+        let file = event.target.files[0];
+        let reader = new FileReader()
+        reader.onload = () => {
+            var base64 = reader.result.split(',')[1];
+            this.fileData = {
+                'filename': file.name,
+                'base64': base64,
+                'recordId': this.recordId
+            }
+        }
+        reader.readAsDataURL(file);
+    }
 
     //Methods for the success modal
     handleSucess(event){

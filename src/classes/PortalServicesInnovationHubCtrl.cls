@@ -1,18 +1,15 @@
 public without sharing class PortalServicesInnovationHubCtrl {
 
-	private static String ACCOUNT_ROLE_INNOVATIONHUB_RTYPE_DEVNAME = 'Innovation_Hub';
 	private static String IH_ACCOUNT_ROLE_DETAIL = 'IH_Account_Role_Detail__c';
-	private static String ACCOUNT_ROLE_DETAIL_CONSUMER_RTYPE_DEVNAME = 'Consumer';
-	private static String ACCOUNT_ROLE_DETAIL_PROVIDER_RTYPE_DEVNAME = 'Provider';
-	private static String ACCOUNT_ROLE_DETAIL_CONSUMERANDPROVIDER_RTYPE_DEVNAME = 'Consumer_and_Provider';
-
 	private static String IH_ACCOUNT_ROLE_DETAILS_STATUS_DRAFT = 'Draft';
 	private static String IH_ACCOUNT_ROLE_DETAILS_STATUS_SUBMITTED = 'Submitted';
 	private static String IH_ACCOUNT_ROLE_DETAILS_STATUS_APPROVED = 'Approved';
 	private static String IH_LOGO_PATH = '/sfc/servlet.shepherd/version/download/';
-	private static String accountRoleRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', ACCOUNT_ROLE_INNOVATIONHUB_RTYPE_DEVNAME);
-	private static String accountRoleDetailConsumerRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('IH_Account_Role_Detail__c', ACCOUNT_ROLE_DETAIL_CONSUMER_RTYPE_DEVNAME);
-	private static String accountRoleDetailProviderRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('IH_Account_Role_Detail__c', ACCOUNT_ROLE_DETAIL_PROVIDER_RTYPE_DEVNAME);
+
+	private static String accountRoleRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'Innovation_Hub');
+	private static String accountRoleDetailConsumerRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('IH_Account_Role_Detail__c', 'Consumer');
+	private static String accountRoleDetailProviderRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('IH_Account_Role_Detail__c', 'Provider');
+	private static String accountRoleDetailConsumerProviderRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('IH_Account_Role_Detail__c', 'Consumer_and_Provider');
 
 	@AuraEnabled (cacheable = false)
 	public static PortalWrapperClasses.ListCardsAndPropertiesWrapper getProviderPropertiesAndCardsList(){
@@ -163,7 +160,7 @@ public without sharing class PortalServicesInnovationHubCtrl {
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Also_Known_As__c',true,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Company_Description__c',true,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Location__c',true,true));
-		PortalWrapperClasses.FieldWrapper focusAreas = new PortalWrapperClasses.FieldWrapper('Focus_Areas__c',true,false,'',System.Label.CSP_FocusAreas);
+		PortalWrapperClasses.FieldWrapper focusAreas = new PortalWrapperClasses.FieldWrapper('Focus_Areas__c',true,true);
 		focusAreas.isMultipick = true;
 		lstfw1.add(focusAreas);
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Founding_Date__c',true,true));
@@ -182,7 +179,7 @@ public without sharing class PortalServicesInnovationHubCtrl {
 
 		//SERVICE INFORMATION
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Solution__c',true,true));
-		PortalWrapperClasses.FieldWrapper technology = new PortalWrapperClasses.FieldWrapper('Technology__c',true,false,'',System.Label.CSP_Technology);
+		PortalWrapperClasses.FieldWrapper technology = new PortalWrapperClasses.FieldWrapper('Technology__c',true,true);
 		technology.isMultipick = true;
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Description__c',true,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Industry_Perspectives__c',true,true));
@@ -192,7 +189,7 @@ public without sharing class PortalServicesInnovationHubCtrl {
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Competition_Competitors__c',true,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Competitive_Advantage__c',true,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Recent_News__c',true,true));
-		PortalWrapperClasses.FieldWrapper tagsOfCategories = new PortalWrapperClasses.FieldWrapper('Tags_Of_Categories__c',true,false,'',System.Label.CSP_Categories);
+		PortalWrapperClasses.FieldWrapper tagsOfCategories = new PortalWrapperClasses.FieldWrapper('Tags_Of_Categories__c',true,true);
 		tagsOfCategories.isMultipick = true;
 		lstfw1.add(tagsOfCategories);	
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Status__c',true,false));
@@ -267,11 +264,6 @@ public without sharing class PortalServicesInnovationHubCtrl {
 		lstCardWrapper.add(new PortalWrapperClasses.CardWrapper('Provider Information', lstfw1, false,'Provider Information'));
 
 		return lstCardWrapper;
-	}
-
-	@AuraEnabled(cacheable = false)
-	public static PortalServicesCtrl.ServiceWrapper getInnovationHubServiceDetails(){
-		return PortalServicesCtrl.getPortalServiceDetails(Label.InnovationHub_ServiceName);
 	}
 
 	@InvocableMethod(label='Create Account Role and Account Role Detail from Portal Application Right' 
@@ -351,17 +343,17 @@ public without sharing class PortalServicesInnovationHubCtrl {
 			lstTabs = new List<TabWrapper>();
 		}else{
 			//Functional role = "provider" -> provider profile tab
-			if(userAccountRole.RecordType.DeveloperName == ACCOUNT_ROLE_DETAIL_PROVIDER_RTYPE_DEVNAME){
+			if(userAccountRole.RecordTypeId == accountRoleDetailProviderRecordTypeId){
 				lstTabs.get(1).tabIsHidden = false;
 				lstTabs.get(1).tabIsActive = true;
 			}
 			//Functional role = "consumer" -> view search tab
-			if(userAccountRole.RecordType.DeveloperName == ACCOUNT_ROLE_DETAIL_CONSUMER_RTYPE_DEVNAME){
+			if(userAccountRole.RecordTypeId == accountRoleDetailConsumerRecordTypeId){
 				lstTabs.get(0).tabIsHidden = false;
 				lstTabs.get(0).tabIsActive = true;
 			}
 			//Functional role = "provider & consumer" -> view all tabs
-			if(userAccountRole.RecordType.DeveloperName == ACCOUNT_ROLE_DETAIL_CONSUMERANDPROVIDER_RTYPE_DEVNAME){
+			if(userAccountRole.RecordTypeId == accountRoleDetailConsumerProviderRecordTypeId){
 				lstTabs.get(0).tabIsHidden = false;
 				lstTabs.get(1).tabIsHidden = false;
 				lstTabs.get(0).tabIsActive = true;
@@ -379,8 +371,8 @@ public without sharing class PortalServicesInnovationHubCtrl {
 		List<String> focusAreas = filterWrapperAux.focusAreas;
 		List<String> categories = filterWrapperAux.categories;
 
-		String query = 'SELECT Id,Name,Description__c,Company_Description__c,RecordType.DeveloperName,Logo__c,Logo_File_Id__c,Company_Name__c,Funding_Stage__c,Focus_Areas__c,Tags_Of_Categories__c FROM IH_Account_Role_Detail__c ';
-		query+= 'WHERE (RecordType.DeveloperName = :ACCOUNT_ROLE_DETAIL_PROVIDER_RTYPE_DEVNAME OR RecordType.DeveloperName = :ACCOUNT_ROLE_DETAIL_CONSUMERANDPROVIDER_RTYPE_DEVNAME) AND Published__c = true';
+		String query = 'SELECT Id,Name,Description__c,Company_Description__c,Logo__c,Logo_File_Id__c,Company_Name__c,Funding_Stage__c,Focus_Areas__c,Tags_Of_Categories__c FROM IH_Account_Role_Detail__c ';
+		query+= 'WHERE (RecordTypeId = :accountRoleDetailProviderRecordTypeId OR RecordTypeId = :accountRoleDetailConsumerProviderRecordTypeId) AND Published__c = true';
 
 		if(searchText.length()>0){
 			String aux = '%' + String.escapeSingleQuotes(searchText) + '%';
@@ -462,10 +454,10 @@ public without sharing class PortalServicesInnovationHubCtrl {
 		//get the users account role detail
 		User currentUser = CSP_Utils.getLoggedUser();
 		String statusAux = '%' + status + '%';
-		List<IH_Account_Role_Detail__c> lstAccountRoles = [SELECT Id, RecordType.DeveloperName,Logo_File_Id__c,Internal_comments__c,Status__c,Marked_For_Review__c
+		List<IH_Account_Role_Detail__c> lstAccountRoles = [SELECT Id,RecordTypeId, Logo_File_Id__c,Internal_comments__c,Status__c,Marked_For_Review__c
 															FROM IH_Account_Role_Detail__c 
 															WHERE Account_Role__r.Account__c = :currentUser.Contact.AccountId
-															AND Account_Role__r.RecordType.DeveloperName = :ACCOUNT_ROLE_INNOVATIONHUB_RTYPE_DEVNAME 
+															AND Account_Role__r.RecordTypeId = :accountRoleRecordTypeId 
 															AND Status__c LIKE :statusAux LIMIT 1];
 		return lstAccountRoles != null && !lstAccountRoles.isEmpty() ? lstAccountRoles.get(0) : null;
 	}
@@ -473,26 +465,13 @@ public without sharing class PortalServicesInnovationHubCtrl {
 	public static IH_Account_Role_Detail__c getLastestPublishedProviderUserIHAccountRoleDetail(){
 		//get the users account role detail
 		User currentUser = CSP_Utils.getLoggedUser();
-		List<IH_Account_Role_Detail__c> lstAccountRoles = [SELECT Id, RecordType.DeveloperName,Internal_comments__c,Status__c,Marked_For_Review__c 
+		List<IH_Account_Role_Detail__c> lstAccountRoles = [SELECT Id, Internal_comments__c, Status__c, Marked_For_Review__c 
 															FROM IH_Account_Role_Detail__c 
 															WHERE Account_Role__r.Account__c = :currentUser.Contact.AccountId
-															AND (RecordType.DeveloperName = :ACCOUNT_ROLE_DETAIL_PROVIDER_RTYPE_DEVNAME OR 
-															RecordType.DeveloperName = :ACCOUNT_ROLE_DETAIL_CONSUMERANDPROVIDER_RTYPE_DEVNAME) 
+															AND (RecordTypeId = :accountRoleDetailProviderRecordTypeId OR 
+															RecordTypeId = :accountRoleDetailConsumerProviderRecordTypeId) 
 															AND Published__c = true
 															AND Status__c = :IH_ACCOUNT_ROLE_DETAILS_STATUS_APPROVED 
-															ORDER BY LastModifiedDate DESC LIMIT 1];
-		return lstAccountRoles != null && !lstAccountRoles.isEmpty() ? lstAccountRoles.get(0) : null;
-	}
-
-	public static IH_Account_Role_Detail__c getLastestDraftProviderUserIHAccountRoleDetail(){
-		//get the users account role detail
-		User currentUser = CSP_Utils.getLoggedUser();
-		List<IH_Account_Role_Detail__c> lstAccountRoles = [SELECT Id, RecordType.DeveloperName,Internal_comments__c,Status__c,Marked_For_Review__c
-															FROM IH_Account_Role_Detail__c 
-															WHERE Account_Role__r.Account__c = :currentUser.Contact.AccountId
-															AND (RecordType.DeveloperName = :ACCOUNT_ROLE_DETAIL_PROVIDER_RTYPE_DEVNAME OR 
-															RecordType.DeveloperName = :ACCOUNT_ROLE_DETAIL_CONSUMERANDPROVIDER_RTYPE_DEVNAME) 
-															AND Status__c = :IH_ACCOUNT_ROLE_DETAILS_STATUS_DRAFT
 															ORDER BY LastModifiedDate DESC LIMIT 1];
 		return lstAccountRoles != null && !lstAccountRoles.isEmpty() ? lstAccountRoles.get(0) : null;
 	}
@@ -558,6 +537,18 @@ public without sharing class PortalServicesInnovationHubCtrl {
 		}
 	}
 
+	@AuraEnabled(cacheable = false)
+	public static String saveLogoId(String providerProfileId, String contentDocumentId){
+		try{
+			IH_Account_Role_Detail__c providerProfileDetails = new IH_Account_Role_Detail__c(Id =providerProfileId, Logo_File_Id__c = contentDocumentId);
+			update providerProfileDetails;
+			return providerProfileDetails.Id;
+		}catch( Exception e){
+			System.debug('____ [cls PortalServicesInnovationHubCtrl - saveLogoId] error: ' + e.getMessage());
+			throw e;
+		}
+	}
+
 /* 
 	*	Methods used for uploading new logo file 
 	*/
@@ -567,7 +558,7 @@ public without sharing class PortalServicesInnovationHubCtrl {
 		ContentVersion cv = createContentVersion(base64, filename);
 		if (cv == null || recordId == null) { return null; }
 		ContentDocumentLink cdl = createContentLink(cv.Id, recordId);
-		return cdl.Id;
+		return cv.Id;
   	}
 
 	//Creates a content version from a given file's base64 and name

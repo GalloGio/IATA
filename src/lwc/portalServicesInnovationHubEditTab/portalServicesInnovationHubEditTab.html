@@ -215,15 +215,15 @@
                         <div class="slds-grid slds-wrap slds-gutters_medium slds-grid--vertical-stretch">
                             <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-large-size_1-of-3">    
                                 <lightning-button class="baseButton newContainedButton buttonMinHeightMedium text-xsmall fullWidth" label={labels.Cancel} 
-                                                    variant="neutral" onclick={handleCancelButtonEditModal}></lightning-button>
+                                                    variant="neutral" onclick={handleCancelButtonEditModal} disabled={isSaving}></lightning-button>
                             </div>
                             <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-large-size_1-of-3">    
                                 <lightning-button class="baseButton newContainedButton buttonMinHeightMedium text-xsmall fullWidth" label={labels.Save} 
-                                                    variant="neutral" type="submit" data-name="save"></lightning-button>
+                                                    variant="neutral" data-name="save" type="submit" onclick={handleSaveButtonClick} disabled={isSaving}></lightning-button>
                             </div>
                             <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-large-size_1-of-3">
                                 <lightning-button class="baseButton newContainedButton buttonMinHeightMedium text-xsmall fullWidth" label={labels.SaveAndSubmit} 
-                                                    variant="neutral"  type="submit" data-name="submit"></lightning-button>
+                                                    variant="neutral" data-name="submit" type="submit" onclick={handleSaveButtonClick} disabled={isSaving}></lightning-button>
                             </div>
                         </div>
                     </lightning-record-edit-form>
