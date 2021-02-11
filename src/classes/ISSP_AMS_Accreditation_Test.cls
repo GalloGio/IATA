@@ -4991,6 +4991,7 @@ Location_Type__c = 'BR');
 			String portalRedirectToCompanyProfile = ctrl.portalRedirectToCompanyProfile;
 			String portalRedirectToMyProfile = ctrl.portalRedirectToMyProfile;
 			Boolean isPassAccreditation = ctrl.isPassAccreditation;
+			Boolean isTIDSAgent = ctrl.isTIDSAgent;
 			String goGlobalDocumentLink = ctrl.goGlobalDocumentLink;
 			List<SelectOption> mcNocCountryList = ctrl.mcNocCountryList;
 			ctrl.getDisablePrevious();
