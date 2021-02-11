@@ -8990,16 +8990,6 @@ IF(IFG_PreProduction__c == 1, &apos;IFG PreProduction Access&apos;,
             </valueSetDefinition>
         </valueSet>
     </fields>
-	<fields>
-        <fullName>Info_Of_Startup__c</fullName>
-        <externalId>false</externalId>
-        <label>Info of startup</label>
-        <length>255</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
     <fields>
         <fullName>Instant_Survey_Last_feedback_received__c</fullName>
         <externalId>false</externalId>
@@ -9139,16 +9129,6 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
         <scale>0</scale>
         <trackHistory>false</trackHistory>
         <type>Number</type>
-        <unique>false</unique>
-    </fields>
-	<fields>
-        <fullName>Position_IHUB__c</fullName>
-        <externalId>false</externalId>
-        <label>Position</label>
-        <length>255</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
         <unique>false</unique>
     </fields>
     <fields>

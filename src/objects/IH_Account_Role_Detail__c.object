@@ -253,11 +253,10 @@
     </fields>
     <fields>
         <fullName>Contact_Email__c</fullName>
-        <description>Formula field for the contact email</description>
+        <description>Contact Email</description>
         <externalId>false</externalId>
-        <formula>Contact__r.Email</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Contact Email</label>
+        <length>255</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -266,11 +265,10 @@
     </fields>
     <fields>
         <fullName>Contact_info_of_startup__c</fullName>
-        <description>Formula field for the contact startup info</description>
+        <description>Contact information of startup</description>
         <externalId>false</externalId>
-        <formula>Contact__r.Info_Of_Startup__c</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Contact info of startup</label>
+        <length>255</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -279,10 +277,10 @@
     </fields>
     <fields>
         <fullName>Contact_Phone_Number__c</fullName>
+        <description>Contact Phone Number</description>
         <externalId>false</externalId>
-        <formula>Contact__r.Phone</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Contact Phone Number</label>
+        <length>255</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -291,11 +289,10 @@
     </fields>
     <fields>
         <fullName>Contact_Position__c</fullName>
-        <description>Formula field for the contact position</description>
+        <description>Contact Position</description>
         <externalId>false</externalId>
-        <formula>Contact__r.Position_IHUB__c</formula>
-        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Contact Position</label>
+        <length>255</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>

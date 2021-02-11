@@ -81,13 +81,6 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>getIHubDetail.Logo_File_Id__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Logo_File_Id</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>getIHubDetail.Website__c</assignToReference>
             <operator>Assign</operator>
             <value>
@@ -141,6 +134,34 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>Telegram</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getIHubDetail.Contact_info_of_startup__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Contact_info_of_startup</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getIHubDetail.Contact_Position__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Contact_Position</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getIHubDetail.Contact_Phone_Number__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Contact_Phone_Number</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getIHubDetail.Contact_Email__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Contact_Email</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -484,34 +505,44 @@
             </outputParameters>
         </fields>
         <fields>
-            <name>Logo_File_Id</name>
+            <name>Contact_info_of_startup</name>
             <dataType>String</dataType>
             <defaultValue>
-                <elementReference>getIHubDetail.Logo_File_Id__c</elementReference>
+                <elementReference>getIHubDetail.Contact_info_of_startup__c</elementReference>
             </defaultValue>
-            <fieldText>Logo File Id</fieldText>
+            <fieldText>Contact info of startup</fieldText>
             <fieldType>InputField</fieldType>
             <isRequired>false</isRequired>
         </fields>
         <fields>
-            <name>Contact_Info_Of_Startup</name>
-            <fieldText>&lt;p&gt;Contact info of startup:&lt;/p&gt;&lt;p&gt;{!getIHubDetail.Contact_info_of_startup__c}&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
             <name>Contact_Position</name>
-            <fieldText>&lt;p&gt;Contact Position:&lt;/p&gt;&lt;p&gt;{!getIHubDetail.Contact_Position__c}&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>Contact_Email</name>
-            <fieldText>&lt;p&gt;Contact Email:&lt;/p&gt;&lt;p&gt;{!getIHubDetail.Contact_Email__c}&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
+            <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>getIHubDetail.Contact_Position__c</elementReference>
+            </defaultValue>
+            <fieldText>Contact Position</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
         </fields>
         <fields>
             <name>Contact_Phone_Number</name>
-            <fieldText>&lt;p&gt;Contact Phone Number:&lt;/p&gt;&lt;p&gt;{!getIHubDetail.Contact_Phone_Number__c}&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
+            <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>getIHubDetail.Contact_Phone_Number__c</elementReference>
+            </defaultValue>
+            <fieldText>Contact Phone Number</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
+        </fields>
+        <fields>
+            <name>Contact_Email</name>
+            <dataType>String</dataType>
+            <defaultValue>
+                <elementReference>getIHubDetail.Contact_Email__c</elementReference>
+            </defaultValue>
+            <fieldText>Contact Email</fieldText>
+            <fieldType>InputField</fieldType>
+            <isRequired>false</isRequired>
         </fields>
         <fields>
             <name>Website</name>

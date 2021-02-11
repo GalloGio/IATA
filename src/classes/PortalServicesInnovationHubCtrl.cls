@@ -77,7 +77,7 @@ public without sharing class PortalServicesInnovationHubCtrl {
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Contact_Position__c',true,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Contact_Email__c',true,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Contact_Phone_Number__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Website__c',false,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Website__c',true,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Facebook__c',true,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Instagram__c',true,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Twitter__c',true,true));
@@ -172,7 +172,7 @@ public without sharing class PortalServicesInnovationHubCtrl {
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Contact_Position__c',true,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Contact_Email__c',true,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Contact_Phone_Number__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Website__c',false,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Website__c',true,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Facebook__c',true,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Instagram__c',true,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Twitter__c',true,true));
@@ -256,7 +256,7 @@ public without sharing class PortalServicesInnovationHubCtrl {
 		PortalWrapperClasses.FieldWrapper tagsOfCategories = new PortalWrapperClasses.FieldWrapper('Tags_Of_Categories__c',true,false,'',System.Label.CSP_Categories);
 		tagsOfCategories.isMultipick = true;
 		lstfw1.add(tagsOfCategories);
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Website__c',false,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Website__c',true,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Facebook__c',true,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Instagram__c',true,true));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Twitter__c',true,true));
