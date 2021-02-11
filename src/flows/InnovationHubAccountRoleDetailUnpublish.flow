@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>50.0</apiVersion>
     <assignments>
         <name>Unpublish</name>
         <label>Unpublish</label>
@@ -72,7 +71,6 @@
         <connector>
             <targetReference>Unpublish</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -93,7 +91,6 @@
         <connector>
             <targetReference>checkSuccess</targetReference>
         </connector>
-        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
