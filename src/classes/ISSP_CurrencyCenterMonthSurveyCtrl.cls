@@ -1366,14 +1366,14 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 		if (surveyToClone==null || this.parentQueryResult.Status__c != 'Draft') return false;
 
 		List<Currency_Center_Survey__c> listSurveys = [
-			SELECT Id
+			SELECT Id, Year_Survey__c, Month_Survey__c
 			FROM Currency_Center_Survey__c
 			WHERE RecordTypeId = :ISSP_CurrencyCenterUtil.rtIdMonthlySurvey
 			AND Airline__c = :airlineId
-			ORDER BY Year_Survey__c DESC, Month_Survey__c DESC
-			LIMIT 1];
+			ORDER BY Year_Survey__c DESC, Month_Survey__c DESC];
 		if (listSurveys.isEmpty()) return false;
-		return listSurveys.get(0).Id == this.parentQueryResult.Id;
+		Currency_Center_Survey__c survey = ISSP_CurrencyCenterMonthSurveyCtrl.orderSurveyList(listSurveys);
+		return survey.Id == this.parentQueryResult.Id;
 	}
 
 	/**
@@ -1388,7 +1388,10 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 			AND Status__c = 'Submitted'
 			ORDER BY Year_Survey__c DESC, Month_Survey__c DESC];
 		if (listSurveys.isEmpty()) return null;
+		return ISSP_CurrencyCenterMonthSurveyCtrl.orderSurveyList(listSurveys);
+	}
 
+	private static Currency_Center_Survey__c orderSurveyList(List<Currency_Center_Survey__c> listSurveys) {
 		map<Integer,Currency_Center_Survey__c> mapSurvey = new map<Integer,Currency_Center_Survey__c>();
 		for (Currency_Center_Survey__c survey: listSurveys ) {
 			String month = survey.Month_Survey__c;
