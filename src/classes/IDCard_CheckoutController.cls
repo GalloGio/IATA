@@ -106,34 +106,22 @@ public  class IDCard_CheckoutController extends IDCardAbstractController {
 						}
 
 						try {
-								// get ID Card Application
-								idCardApplication = [Select i.RecordtypeId, i.VER_Number__c, i.UIR__c,i.Revenue_Confirmation__c, i.Type_of_application__c, i.Title__c, i.Telephone__c, i.SystemModstamp,
-																		 i.Start_Date_Industry__c, i.Start_Date_Agency_Year__c, i.Start_Date_Agency_Month__c, i.Solicitation_Flag__c,
-																		 i.Promotion_Code__c, i.Position_in_Current_Agency__c, i.Position_Code__c, i.Photo__c,
-																		 i.Package_of_Travel_Professionals_Course_2__c, i.Package_of_Travel_Professionals_Course_1__c, i.OwnerId, i.Name, i.Middle_Initial__c,
-																		 i.Last_Name__c, i.LastModifiedDate, i.LastModifiedById, i.IsDeleted, i.Id, i.IDCard_Prefered_Language__c, i.IDCard_Expedite_Delivery__c,
-																		 i.IDCard_Expedite_Delivery_Fee__c, i.ID_Card_Fee__c, i.ITDI_Courses_Fee__c, i.IATA_numeric_code_previous_employer_4__c, i.IATA_numeric_code_previous_employer_3__c,
-																		 i.IATA_numeric_code_previous_employer_2__c, i.IATA_numeric_code_previous_employer_1__c, i.IATA_Code_for_previous_agency__c, i.IATA_Code__c,
-																		 i.Hours_worked__c, i.Hours_Worked_Code__c, i.Gender__c, i.First_Name__c, i.Email_admin__c,
-																		 i.Duties_in_Current_Agency__c, i.Duties_Code__c, i.Displayed_Name__c, i.Date_of_Birth__c, i.CurrencyIsoCode, i.CreatedDate, i.CreatedById,
-																		 i.Approving_Manager_s_Name__c, i.Approving_Manager_s_Email__c, i.Applicable_Fee__c,
-																		 i.Tax_2_Name__c,  i.Tax_1_Name__c,  i.Tax_1_Value__c,  i.Tax_2_Value__c, i.Physical_Card_Fee__c, i.ID_Card_Fee_Discount__c
-																		 From ID_Card_Application__c i
-																		 where i.Id = :applicationId
-																		 limit 1];
-							 System.debug('****************************************************** IDCard Fees ' + idCardApplication.ITDI_Courses_Fee__c);
 
-							 Account a = [ Select BillingState, BillingCountry from Account where IATACode__c =: idCardApplication.IATA_Code__c limit 1];
+							idCardApplication = IDCardUtilWithoutSharing.retrieveCommittedICA(applicationId);
+							
+							System.debug('****************************************************** IDCard Fees ' + idCardApplication.ITDI_Courses_Fee__c);
 
-							 Map<String,String> taxes =  IDCardTaxUtil.GetTaxes(a.BillingState,a.BillingCountry);
-							 if(taxes.keySet().Size()==1){
-										 vatPrice = Double.valueOf(Decimal.valueOf(Double.valueOf(idCardApplication.Tax_1_Value__c.split(' ', 0)[0])).setScale(2));
+							Account a = [ Select BillingState, BillingCountry from Account where IATACode__c =: idCardApplication.IATA_Code__c limit 1];
 
-							 }else if(taxes.keySet().Size()==2){
-										 vatPrice = Double.valueOf(Decimal.valueOf(Double.valueOf(idCardApplication.Tax_1_Value__c.split(' ', 0)[0])).setScale(2) +
-																Decimal.valueOf(Double.valueOf(idCardApplication.Tax_2_Value__c.split(' ', 0)[0])).setScale(2));
+							Map<String,String> taxes =  IDCardTaxUtil.GetTaxes(a.BillingState,a.BillingCountry);
+							if(taxes.keySet().Size()==1){
+										vatPrice = Double.valueOf(Decimal.valueOf(Double.valueOf(idCardApplication.Tax_1_Value__c.split(' ', 0)[0])).setScale(2));
 
-								 }
+							}else if(taxes.keySet().Size()==2){
+										vatPrice = Double.valueOf(Decimal.valueOf(Double.valueOf(idCardApplication.Tax_1_Value__c.split(' ', 0)[0])).setScale(2) +
+															Decimal.valueOf(Double.valueOf(idCardApplication.Tax_2_Value__c.split(' ', 0)[0])).setScale(2));
+
+								}
 						}
 						catch (Exception ex) {
 								throw new IDCardApplicationException(Label.IDCard_IDCardAppNotFound);
@@ -162,12 +150,12 @@ public  class IDCard_CheckoutController extends IDCardAbstractController {
 								amount =  '0.00';
 						else amount = String.valueOf(idCardApplication.Applicable_Fee__c);
 
-
+ 
 						//####set ISO Country name as part of order name:
 						//this is a workaround for SAP since their logic was built on wrong assumption
 						// order number must have ID+ISOCode as a prefix
 						//remove IDCA- from the idCardApplication.Name
-						orderNumber = 'ID'+contactCountry.ISO_Code__c + '-'+ idCardApplication.Name.substring(5, idCardApplication.Name.length());
+						orderNumber = 'ID'+contactCountry.ISO_Code__c + '-'+ IDCardUtilWithoutSharing.ICAName.substring(5, IDCardUtilWithoutSharing.ICAName.length());
 
 
 
@@ -256,7 +244,8 @@ public  class IDCard_CheckoutController extends IDCardAbstractController {
 						calculatedSignature = machash(buildDataToSign(), sharedSecret);
 						// Update idCardApplication__c with the profit center information
 						idCardApplication.Profit_Center__c = profitCenter;
-						update idCardApplication;
+						//update idCardApplication;
+						IDCardUtilWithoutSharing.saveCommittedICA(idCardApplication, IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_APPID)));
 						return null;
 				}
 				catch (Exception ex) {
@@ -310,12 +299,13 @@ public  class IDCard_CheckoutController extends IDCardAbstractController {
 		 //set param to show that its a payment by cheque
 		 String temp = CanPayByCheque+'';
 		 confPage.getParameters().put(IDCardUtil.ISPAYMENTBYCHEQUE,IDCardUtil.EncryptEncodeParameter(temp));
-		 confPage.getParameters().put('req_reference_number',idCardApplication.Name);
+		 confPage.getParameters().put('req_reference_number',IDCardUtilWithoutSharing.ICAName);
 		 //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, idCardApplication.Name));
 
 		 // Update idCardApplication__c with the profit center information
 		 idCardApplication.Profit_Center__c = profitCenter;
-		 update idCardApplication;
+		 //update idCardApplication;
+		 IDCardUtilWithoutSharing.saveCommittedICA(idCardApplication, IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_APPID)));
 		 return confPage;
 
 
@@ -329,12 +319,13 @@ public  class IDCard_CheckoutController extends IDCardAbstractController {
 		 //set param to show that its a payment by cheque
 		 String temp = amount;
 		 confPage.getParameters().put(IDCardUtil.ISFOC,IDCardUtil.EncryptEncodeParameter(temp));
-		 confPage.getParameters().put('req_reference_number',idCardApplication.Name);
+		 confPage.getParameters().put('req_reference_number',IDCardUtilWithoutSharing.ICAName);
 		 //ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, idCardApplication.Name));
 
 		 // Update idCardApplication__c with the profit center information
 		 idCardApplication.Profit_Center__c = profitCenter;
-		 update idCardApplication;
+		 //update idCardApplication;
+		 IDCardUtilWithoutSharing.saveCommittedICA(idCardApplication, IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_APPID)));
 		 return confPage;
 
 
