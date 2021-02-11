@@ -7,6 +7,27 @@
         <shortDescription>CSP_EditProviderDetails</shortDescription>
         <value>Edit Provider Details</value>
     </labels>
+	<labels>
+        <fullName>CSP_EditTrainingDetails</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_EditTrainingDetails</shortDescription>
+        <value>Edit Training Details</value>
+    </labels>
+	<labels>
+        <fullName>CSP_ForMoreInfo</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_ForMoreInfo</shortDescription>
+        <value>For more information about this invoice</value>
+    </labels>
+	<labels>
+        <fullName>CSP_No_Logo_Available</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_No_Logo_Available</shortDescription>
+        <value>No logo available</value>
+    </labels>
     <labels>
         <fullName>CSP_MarkedForReview</fullName>
         <language>en_US</language>
