@@ -970,7 +970,7 @@ Name
 &quot;Simplified Interline Settlement&quot;, $Label.ISSP_SIS_1_Description, 
 &quot;SIS&quot;, $Label.ISSP_SIS_3_Description, 
 &quot;Payment Link&quot;, $Label.ISSP_Payment_Link_Description, 
-&quot;Paypal&quot;, $Label.ISSP_Payment_Link_Description_CNS, 
+&quot;Credit Card Link&quot;, $Label.ISSP_Payment_Link_Description_CNS, 
 &quot;Standards Setting Workspace&quot;, $Label.Standards_Setting_Workspace, 
 &quot;IATA EasyPay (WEX)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
 &quot;IATA EasyPay (EDENRED)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
