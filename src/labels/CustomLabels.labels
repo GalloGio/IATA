@@ -36449,7 +36449,9 @@ Please note that many IATA invoices for accredited agents are collected through 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_Payment_Link_Description_CNS</shortDescription>
-        <value>Paypal is used to pay CNS Non-CASS invoices by Credit Card.</value>
+        <value>Credit Card Link is used to pay CNS Non-CASS invoices by Credit Card (Agent Annual Fee, New Endorsement Fee, Change of Owner, New Branch, etc).
+
+&lt;b&gt;Casslink invoices shouldn’t be paid using this service.&lt;/b&gt;</value>
     </labels>
     <labels>
         <fullName>ISSP_Payment_Provider_Details_section_1</fullName>
