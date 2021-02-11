@@ -573,20 +573,6 @@
         </workflowTimeTriggers>
     </rules>
     <rules>
-        <fullName>Africa Deal Alert</fullName>
-        <active>false</active>
-        <description>Identifies an opportunity closing in IATA&apos;s Africa RCT</description>
-        <formula>AND (     ISPICKVAL(Geographic_Region__c, &apos;Africa&apos;),     OwnerId = LastModifiedById, Amount   &gt;= 10000,      ISPICKVAL( StageName ,&apos;7. Closed Sales / Sold&apos;),      $User.Division = &apos;MACS&apos;            )</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Asia Pac Deal Alert</fullName>
-        <active>true</active>
-        <description>Identifies an opportunity closing in IATA&apos;s Asia Pacific RCT</description>
-        <formula>AND (          OR (                ISPICKVAL(Geographic_Region__c, &apos;Asia Pacific&apos;),                ISPICKVAL(Geographic_Region__c, &apos;South Asia&apos;),                ISPICKVAL(Geographic_Region__c, &apos;Oceania&apos;)                 ),      OwnerId = LastModifiedById, Amount   &gt;= 10000,      ISPICKVAL( StageName ,&apos;7. Closed Sales / Sold&apos;),      $User.Division = &apos;MACS&apos;            )</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>Big Deal Alert</fullName>
         <active>false</active>
         <description>Used to send a big deal email alert.Created for Big Deal alert modification for MACS.</description>
@@ -752,20 +738,6 @@ As it concerns non RCRM opps, the NBB is not included in the message</descriptio
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>North America Deal Alert</fullName>
-        <active>true</active>
-        <description>Identifies an opportunity closing in IATA&apos;s North America RCT</description>
-        <formula>AND  (     ISPICKVAL(Geographic_Region__c, &apos;North America&apos;),     OwnerId = LastModifiedById, Amount   &gt;= 10000,      ISPICKVAL( StageName ,&apos;7. Closed Sales / Sold&apos;),      $User.Division = &apos;MACS&apos;            )</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>North Asia Deal Alert</fullName>
-        <active>true</active>
-        <description>Identifies an opportunity closing in IATA&apos;s North Asia RCT</description>
-        <formula>AND (       ISPICKVAL(Geographic_Region__c, &apos;North Asia&apos;),      OwnerId = LastModifiedById, Amount   &gt;= 10000,      ISPICKVAL( StageName ,&apos;7. Closed Sales / Sold&apos;),      $User.Division = &apos;MACS&apos;            )</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>One time blast%3A Outdated Opportunities</fullName>
         <actions>
             <name>Outdated_Opportunity</name>
@@ -925,13 +897,6 @@ As it concerns non RCRM opps, the NBB is not included in the message</descriptio
         <active>true</active>
         <description>Notification sent to the SM when the PM validates a sale (a RCRM Opportunity). Not sent if the PM user validating the Opp is the owner (contract getting renewed by PM).</description>
         <formula>AND (   RecordType.DeveloperName = &apos;RCRM_Opportunity&apos;,   ISPICKVAL( RCRM_Validation_Status__c , &apos;Validated by PM&apos;),   OwnerId &lt;&gt;  $User.Id  )</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>The Americas Deal Alert</fullName>
-        <active>true</active>
-        <description>Identifies an opportunity closing in IATA&apos;s The Americas RCT</description>
-        <formula>AND (     ISPICKVAL(Geographic_Region__c, &apos;The Americas&apos;),     OwnerId = LastModifiedById, Amount   &gt;= 10000,      ISPICKVAL( StageName ,&apos;7. Closed Sales / Sold&apos;),      $User.Division = &apos;MACS&apos;            )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <tasks>
