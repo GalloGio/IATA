@@ -239,178 +239,29 @@
     </alerts>
     <alerts>
         <fullName>Marketingalertofnewdeals</fullName>
-        <ccEmails>rubioj@iata.org, walkers@iata.org, OdeleJ@iata.org</ccEmails>
         <description>MACS alert of new deals over 10K</description>
         <protected>false</protected>
         <recipients>
             <type>owner</type>
         </recipients>
         <recipients>
-            <recipient>acostam@iata.org</recipient>
+            <recipient>hartonga@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>agouzoulm@iata.org</recipient>
+            <recipient>week@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>alicia@iata.org</recipient>
+            <recipient>legerf@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>astridgec@iata.org</recipient>
+            <recipient>leej@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>atakee@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>barrocasb@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>blondeelm@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>bradshawde@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>bretonc@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>brissetc@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>burkem@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>chanda@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>chanj@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>debonol2@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>deghelderc@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>dehiav@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>dursune@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>eldiabm@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>gennaouip@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>greenwayt@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>hanj@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>heinickem@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>herrerak@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>hoychin@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>hungerr@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>itania@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>jiangy@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>jimenezw@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>karanjac@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>kikanor@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>kilanim@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>krishnanh@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>legerf@iata.org.prod</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>lis@iata.org.prod</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>loupasisv2@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>luolu@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>malika1@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>marafonc@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>mattal@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>mccorleys@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>murrayhaydena@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>nitkowskit@iata.org</recipient>
+            <recipient>meuniera@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -418,47 +269,27 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>pellegrint@iata.org</recipient>
+            <recipient>shemid@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>raickovics@iata.org</recipient>
+            <recipient>burkem@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>rossandj@iata.org</recipient>
+            <recipient>astridgec@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>schaaft@iata.org</recipient>
+            <recipient>chanj@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>shemid2@iata.org</recipient>
+            <recipient>SchaafT@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>siouffis@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>solorzanoj@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>tomalaj@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>wangw@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>wattc@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>zhangln@iata.org</recipient>
+            <recipient>szpyndam@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
@@ -571,20 +402,6 @@
             <timeLength>-90</timeLength>
             <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Africa Deal Alert</fullName>
-        <active>false</active>
-        <description>Identifies an opportunity closing in IATA&apos;s Africa RCT</description>
-        <formula>AND (     ISPICKVAL(Geographic_Region__c, &apos;Africa&apos;),     OwnerId = LastModifiedById, Amount   &gt;= 10000,      ISPICKVAL( StageName ,&apos;7. Closed Sales / Sold&apos;),      $User.Division = &apos;MACS&apos;            )</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Asia Pac Deal Alert</fullName>
-        <active>true</active>
-        <description>Identifies an opportunity closing in IATA&apos;s Asia Pacific RCT</description>
-        <formula>AND (          OR (                ISPICKVAL(Geographic_Region__c, &apos;Asia Pacific&apos;),                ISPICKVAL(Geographic_Region__c, &apos;South Asia&apos;),                ISPICKVAL(Geographic_Region__c, &apos;Oceania&apos;)                 ),      OwnerId = LastModifiedById, Amount   &gt;= 10000,      ISPICKVAL( StageName ,&apos;7. Closed Sales / Sold&apos;),      $User.Division = &apos;MACS&apos;            )</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>Big Deal Alert</fullName>
@@ -716,7 +533,7 @@
         </actions>
         <active>true</active>
         <description>Notifications sent to sales and marketing about closed deals over US$ 10,000</description>
-        <formula>AND(Amount &gt;= 10000, ISPICKVAL(StageName,&apos;7. Closed Sales / Sold&apos;), RecordType.Name = &quot;RCRM Opportunity&quot;,  Block_alerts_on_updates__c = false)</formula>
+        <formula>AND(Amount &gt;= 10000, ISPICKVAL(StageName,&apos;7. Closed Sales / Sold&apos;), RecordType.Name = &quot;RCRM Opportunity&quot;,  Block_alerts_on_updates__c = false, ISPICKVAL(Product_Family__c,&apos;TACT&apos;))</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -749,20 +566,6 @@ As it concerns non RCRM opps, the NBB is not included in the message</descriptio
             <value>7. Closed Sales / Sold</value>
         </criteriaItems>
         <description>Identifies an opportunity closing in IATA&apos;s MENA RCT</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>North America Deal Alert</fullName>
-        <active>true</active>
-        <description>Identifies an opportunity closing in IATA&apos;s North America RCT</description>
-        <formula>AND  (     ISPICKVAL(Geographic_Region__c, &apos;North America&apos;),     OwnerId = LastModifiedById, Amount   &gt;= 10000,      ISPICKVAL( StageName ,&apos;7. Closed Sales / Sold&apos;),      $User.Division = &apos;MACS&apos;            )</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>North Asia Deal Alert</fullName>
-        <active>true</active>
-        <description>Identifies an opportunity closing in IATA&apos;s North Asia RCT</description>
-        <formula>AND (       ISPICKVAL(Geographic_Region__c, &apos;North Asia&apos;),      OwnerId = LastModifiedById, Amount   &gt;= 10000,      ISPICKVAL( StageName ,&apos;7. Closed Sales / Sold&apos;),      $User.Division = &apos;MACS&apos;            )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -925,13 +728,6 @@ As it concerns non RCRM opps, the NBB is not included in the message</descriptio
         <active>true</active>
         <description>Notification sent to the SM when the PM validates a sale (a RCRM Opportunity). Not sent if the PM user validating the Opp is the owner (contract getting renewed by PM).</description>
         <formula>AND (   RecordType.DeveloperName = &apos;RCRM_Opportunity&apos;,   ISPICKVAL( RCRM_Validation_Status__c , &apos;Validated by PM&apos;),   OwnerId &lt;&gt;  $User.Id  )</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>The Americas Deal Alert</fullName>
-        <active>true</active>
-        <description>Identifies an opportunity closing in IATA&apos;s The Americas RCT</description>
-        <formula>AND (     ISPICKVAL(Geographic_Region__c, &apos;The Americas&apos;),     OwnerId = LastModifiedById, Amount   &gt;= 10000,      ISPICKVAL( StageName ,&apos;7. Closed Sales / Sold&apos;),      $User.Division = &apos;MACS&apos;            )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <tasks>
