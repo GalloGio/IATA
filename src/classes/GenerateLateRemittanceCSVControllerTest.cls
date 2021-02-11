@@ -144,8 +144,8 @@ private class GenerateLateRemittanceCSVControllerTest {
 
 						GenerateLateRemittanceCSVController csvCtrl = new GenerateLateRemittanceCSVController();
 						csvCtrl.strRegion = 'Europe';
-						csvCtrl.strStartDate = dToday.addDays(-1).addMonths(2).toStartOfMonth().format();
-						csvCtrl.strEndDate = dToday.addDays(-1).addMonths(3).toStartOfMonth().addDays(-1).format();
+						csvCtrl.dummyStart.Bank_Guarantee_deadline__c = dToday.addDays(-1).addMonths(2).toStartOfMonth();
+						csvCtrl.dummyEnd.Bank_Guarantee_deadline__c = dToday.addDays(-1).addMonths(3).toStartOfMonth().addDays(-1);
 						csvCtrl.GenerateCSV();
 
 						List <Case> csAux = [SELECT CaseNumber, Region__c FROM case];

@@ -17,11 +17,17 @@ public without sharing class GenerateLateRemittanceCSVController {
 		} private set;
 	}
 
-	private Date startDate {get; set;}
-	private Date endDate {get; set;}
+	public Case dummyStart {get;set;}
+	public Case dummyEnd {get;set;}
 
-	public String strStartDate {get; set;}
-	public String strEndDate {get; set;}
+	private Date startDate {
+		get {return dummyStart.Bank_Guarantee_deadline__c;}
+		set;
+	}
+	private Date endDate {
+		get{return dummyEnd.Bank_Guarantee_deadline__c;}
+		set;
+	}
 
 	public String contentType {public get; private set;}
 	public Boolean filterView {public get; private set;}
@@ -33,8 +39,9 @@ public without sharing class GenerateLateRemittanceCSVController {
 
 	public GenerateLateRemittanceCSVController() {
 		// initialize the report dates to the first day and last day of the current month
-		strStartDate = Date.today().toStartOfMonth().format();
-		strEndDate = Date.today().toStartOfMonth().addMonths(1).addDays(-1).format();
+
+		this.dummyStart = new Case(Bank_Guarantee_deadline__c = Date.today());
+		this.dummyEnd = new Case(Bank_Guarantee_deadline__c = Date.today().toStartOfMonth().addMonths(1).addDays(-1));
 
 		// initialize the page in the view filter mode
 		filterView = true;
@@ -43,7 +50,7 @@ public without sharing class GenerateLateRemittanceCSVController {
 		// initialize the default extracted filename
 		strFileName = 'Late_Payment_Fee_Report.csv';
 
-		system.debug('### Start date: ' + strStartDate + '; End date: ' + strEndDate);
+		system.debug('### Start date: ' + this.startDate.format() + '; End date: ' + this.endDate.format());
 
 		this.listExcludedCountries = new list<String>();
 		for (Late_Payment_Fees_CASS_ISO_Countries_Exc__c country: Late_Payment_Fees_CASS_ISO_Countries_Exc__c.getall().values()) {
@@ -55,8 +62,6 @@ public without sharing class GenerateLateRemittanceCSVController {
 	public void GenerateCSV () {
 		contentType = 'application/octet-stream#' + (strFileName != '' ? strFileName : 'Late_Payment_Fee_Report.csv');
 		filterView = false;
-		startDate = Date.parse(strStartDate);
-		endDate = Date.parse(strEndDate);
 
 		system.debug('### Parsed dates for the CSV generation >>> Start date: ' + startDate + '; End date: ' + endDate);
 	}
@@ -209,12 +214,12 @@ public without sharing class GenerateLateRemittanceCSVController {
 						AND Account.IATA_ISO_Country__r.SAP_Sales_Org__c != null
 						AND (
 							(   RecordType.DeveloperName = 'IATA_Financial_Review'
-								AND Deadline_Date__c >= :date.newinstance(startDate.year(), startDate.month(), startDate.day())
-								AND Deadline_Date__c <= :date.newinstance(endDate.year(), endDate.month(), endDate.day())
+								AND Deadline_Date__c >= :startDate
+								AND Deadline_Date__c <= :endDate
 							) OR (
 								RecordType.DeveloperName = 'ProcessEuropeSCE'
-								AND Bank_Guarantee_deadline__c >= :date.newinstance(startDate.year(), startDate.month(), startDate.day())
-								AND Bank_Guarantee_deadline__c <= :date.newinstance(endDate.year(), endDate.month(), endDate.day())
+								AND Bank_Guarantee_deadline__c >= :startDate
+								AND Bank_Guarantee_deadline__c <= :endDate
 							)
 						)
 						AND Region__c = :strRegion
