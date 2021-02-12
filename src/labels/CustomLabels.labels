@@ -1,89 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
-	<labels>
-        <fullName>CSP_EditProviderDetails</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_EditProviderDetails</shortDescription>
-        <value>Edit Provider Details</value>
-    </labels>
-	<labels>
-        <fullName>CSP_EditTrainingDetails</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_EditTrainingDetails</shortDescription>
-        <value>Edit Training Details</value>
-    </labels>
-	<labels>
-        <fullName>CSP_ForMoreInfo</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_ForMoreInfo</shortDescription>
-        <value>For more information about this invoice</value>
-    </labels>
-	<labels>
-        <fullName>CSP_No_Logo_Available</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_No_Logo_Available</shortDescription>
-        <value>No logo available</value>
-    </labels>
-    <labels>
-        <fullName>CSP_MarkedForReview</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_MarkedForReview</shortDescription>
-        <value>The submited profile was marked for review. Click on the edit button to view more details.</value>
-    </labels>
-    <labels>
-        <fullName>CSP_ProviderDraftSaved</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_ProviderDraftSaved</shortDescription>
-        <value>Provider profile draft saved successfully. Once it&apos;s ready for submit click on the &apos;Save and Submit&apos; button.</value>
-    </labels>
-    <labels>
-        <fullName>CSP_ProviderReviewComments</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_ProviderReviewComments</shortDescription>
-        <value>Please review the comments and submit again.</value>
-    </labels>
-    <labels>
-        <fullName>CSP_ProviderSaveAndSubmit</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_ProviderSaveAndSubmit</shortDescription>
-        <value>The provider profile was saved and submitted for approval. A notification will be send with further instructions.</value>
-    </labels>
-    <labels>
-        <fullName>CSP_ProviderWrongSubmit</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_ProviderWrongSubmit</shortDescription>
-        <value>Something went wrong during the submission process. Please contact your administrator for more details.</value>
-    </labels>
-    <labels>
-        <fullName>CSP_PublishedRecordPreview</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_PublishedRecordPreview</shortDescription>
-        <value>There is no published record to preview.</value>
-    </labels>
-    <labels>
-        <fullName>CSP_SaveAndSubmit</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_SaveAndSubmit</shortDescription>
-        <value>Save and Submit</value>
-    </labels>
-    <labels>
-        <fullName>CSP_WaitingApproval</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_WaitingApproval</shortDescription>
-        <value>There is already a profile update waiting to be approved. You cannot create a new request until the ongoing is rejected or approved.</value>
-    </labels>
     <labels>
         <fullName>ACCEPTED_PAYMENT_METHODS_MANDATORY</fullName>
         <categories>IEC,Payment,Payment Method,Product,Configuration</categories>
@@ -4460,6 +4376,20 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>E&amp;F Invoices</value>
     </labels>
     <labels>
+        <fullName>CSP_EditProviderDetails</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_EditProviderDetails</shortDescription>
+        <value>Edit Provider Details</value>
+    </labels>
+    <labels>
+        <fullName>CSP_EditTrainingDetails</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_EditTrainingDetails</shortDescription>
+        <value>Edit Training Details</value>
+    </labels>
+    <labels>
         <fullName>CSP_Email</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -5061,6 +4991,13 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>Focus Areas</value>
     </labels>
     <labels>
+        <fullName>CSP_ForMoreInfo</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_ForMoreInfo</shortDescription>
+        <value>For more information about this invoice</value>
+    </labels>
+    <labels>
         <fullName>CSP_ForYou</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -5251,6 +5188,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>IATA Invoices</value>
     </labels>
     <labels>
+        <fullName>CSP_IATA_Touchpoints</fullName>
+        <categories>CSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP IATA Touchpoints</shortDescription>
+        <value>IATA Touchpoints</value>
+    </labels>
+    <labels>
         <fullName>CSP_IDCard_Name</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -5298,6 +5243,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>ID Card VER Number</value>
     </labels>
     <labels>
+        <fullName>CSP_IHub_ChooseAny</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP IH text label</shortDescription>
+        <value>Choose any option(s)</value>
+    </labels>
+    <labels>
         <fullName>CSP_IMPORTANT</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -5311,14 +5264,6 @@ If you are already CNS Endorsed, you can use this service to update information 
         <protected>false</protected>
         <shortDescription>CSP Id Card</shortDescription>
         <value>ID Card</value>
-    </labels>
-    <labels>
-        <fullName>CSP_IHub_ChooseAny</fullName>
-        <categories>CS Portal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP IH text label</shortDescription>
-        <value>Choose any option(s)</value>
     </labels>
     <labels>
         <fullName>CSP_Invalid_Email</fullName>
@@ -6937,6 +6882,13 @@ You can easily create a company account in two steps</value>
         <value>Your IATA Easy Pay Status is not &quot;Open&quot;. Please contact Support.</value>
     </labels>
     <labels>
+        <fullName>CSP_MarkedForReview</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_MarkedForReview</shortDescription>
+        <value>The submited profile was marked for review. Click on the edit button to view more details.</value>
+    </labels>
+    <labels>
         <fullName>CSP_MyCases</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -7070,6 +7022,13 @@ You can easily create a company account in two steps</value>
         <value>If necessary, you can add documents to the case.</value>
     </labels>
     <labels>
+        <fullName>CSP_No_Logo_Available</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_No_Logo_Available</shortDescription>
+        <value>No logo available</value>
+    </labels>
+    <labels>
         <fullName>CSP_OperationalCalendar_HomeTileTitle</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -7185,7 +7144,7 @@ You can easily create a company account in two steps</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_PortalPath</shortDescription>
-        <value>/s/</value>
+        <value>/csportal/s/</value>
     </labels>
     <labels>
         <fullName>CSP_Portal_Administrators</fullName>
@@ -7265,6 +7224,41 @@ You can easily create a company account in two steps</value>
         <protected>false</protected>
         <shortDescription>CSP_Profile_PrivacyManagement_URL</shortDescription>
         <value>/dataprivacy/s/landing</value>
+    </labels>
+    <labels>
+        <fullName>CSP_ProviderDraftSaved</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_ProviderDraftSaved</shortDescription>
+        <value>Provider profile draft saved successfully. Once it&apos;s ready for submit click on the &apos;Save and Submit&apos; button.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_ProviderReviewComments</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_ProviderReviewComments</shortDescription>
+        <value>Please review the comments and submit again.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_ProviderSaveAndSubmit</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_ProviderSaveAndSubmit</shortDescription>
+        <value>The provider profile was saved and submitted for approval. A notification will be send with further instructions.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_ProviderWrongSubmit</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_ProviderWrongSubmit</shortDescription>
+        <value>Something went wrong during the submission process. Please contact your administrator for more details.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_PublishedRecordPreview</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_PublishedRecordPreview</shortDescription>
+        <value>There is no published record to preview.</value>
     </labels>
     <labels>
         <fullName>CSP_Question1</fullName>
@@ -7597,6 +7591,13 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <value>Save</value>
     </labels>
     <labels>
+        <fullName>CSP_SaveAndSubmit</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_SaveAndSubmit</shortDescription>
+        <value>Save and Submit</value>
+    </labels>
+    <labels>
         <fullName>CSP_Save_Login</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -7851,6 +7852,14 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <protected>false</protected>
         <shortDescription>CSP_Service_AirlineDailySales_Title</shortDescription>
         <value>Airline Daily Sales Dashboard</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Service_InnovationHub_HomeTab</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Service_InnovationHub_HomeTab</shortDescription>
+        <value>Home</value>
     </labels>
     <labels>
         <fullName>CSP_Service_InnovationHub_NoAccess</fullName>
@@ -8548,6 +8557,13 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <protected>false</protected>
         <shortDescription>CSP_Verification_L3_Email_UE_3_LMS</shortDescription>
         <value>Your training record will be maintained under this merged user. &lt;b&gt;From now on you will only be able to login with your work email address.&lt;/b&gt;&lt;br/&gt;</value>
+    </labels>
+    <labels>
+        <fullName>CSP_WaitingApproval</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_WaitingApproval</shortDescription>
+        <value>There is already a profile update waiting to be approved. You cannot create a new request until the ongoing is rejected or approved.</value>
     </labels>
     <labels>
         <fullName>CSP_Welcome_Email_Subject</fullName>
