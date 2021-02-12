@@ -37,6 +37,8 @@ public  class IDCard_CheckoutController extends IDCardAbstractController {
 
 		public ID_Card_Application__c idCardApplication {get; private set;}
 
+		public string applicationId {get; set;}
+
 		private String accountType;
 
 		private Account theAccount;
@@ -97,7 +99,7 @@ public  class IDCard_CheckoutController extends IDCardAbstractController {
 						// retreive ID Card Application from URL param
 						if (System.currentPageReference().getParameters().get(IDCardUtil.PARAM_APPID) == null)
 								throw new IDCardApplicationException('Missing parameter ' + IDCardUtil.PARAM_APPID);
-						String applicationId = IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_APPID));
+						applicationId = IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_APPID));
 
 						// retreive error msg if any (coming from CheckoutConfirmation)
 						if (System.currentPageReference().getParameters().get(IDCardUtil.PARAM_ERRMSG) != null) {
@@ -245,7 +247,7 @@ public  class IDCard_CheckoutController extends IDCardAbstractController {
 						// Update idCardApplication__c with the profit center information
 						idCardApplication.Profit_Center__c = profitCenter;
 						//update idCardApplication;
-						IDCardUtilWithoutSharing.saveCommittedICA(idCardApplication, IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_APPID)));
+						IDCardUtilWithoutSharing.saveCommittedICA(idCardApplication, ApplicationID);
 						return null;
 				}
 				catch (Exception ex) {
@@ -260,7 +262,7 @@ public  class IDCard_CheckoutController extends IDCardAbstractController {
 				cyberSrcData.put('profile_id', profile_id);
 				cyberSrcData.put('access_key', access_key);
 				cyberSrcData.put('signed_date_time', DateTime.now().format('yyyy-MM-dd\'T\'HH:mm:ss\'Z\''));
-				cyberSrcData.put('transaction_uuid', String.ValueOf(idCardApplication.Id) + DateTime.now().format('yyyy-MM-dd\'T\'HH:mm:ss\'Z\''));
+				cyberSrcData.put('transaction_uuid', String.ValueOf(applicationId) + DateTime.now().format('yyyy-MM-dd\'T\'HH:mm:ss\'Z\''));
 				cyberSrcData.put('currency', curr);
 				cyberSrcData.put('amount', amount);
 				cyberSrcData.put('reference_number', orderNumber);
@@ -305,7 +307,7 @@ public  class IDCard_CheckoutController extends IDCardAbstractController {
 		 // Update idCardApplication__c with the profit center information
 		 idCardApplication.Profit_Center__c = profitCenter;
 		 //update idCardApplication;
-		 IDCardUtilWithoutSharing.saveCommittedICA(idCardApplication, IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_APPID)));
+		 IDCardUtilWithoutSharing.saveCommittedICA(idCardApplication, ApplicationId);
 		 return confPage;
 
 
@@ -325,7 +327,7 @@ public  class IDCard_CheckoutController extends IDCardAbstractController {
 		 // Update idCardApplication__c with the profit center information
 		 idCardApplication.Profit_Center__c = profitCenter;
 		 //update idCardApplication;
-		 IDCardUtilWithoutSharing.saveCommittedICA(idCardApplication, IDCardUtil.DecodeDecryptParameter(System.currentPageReference().getParameters().get(IDCardUtil.PARAM_APPID)));
+		 IDCardUtilWithoutSharing.saveCommittedICA(idCardApplication, applicationId);
 		 return confPage;
 
 
@@ -349,7 +351,7 @@ public  class IDCard_CheckoutController extends IDCardAbstractController {
 						confPage.getParameters().put(IDCardUtil.PARAM_APPLICATIONTYPE, IDCardUtil.EncryptEncodeParameter(idCardApplication.Type_of_application__c));
 
 						confPage.getParameters().put(IDCardUtil.PAGE_PART,IDCardUtil.EncryptEncodeParameter('3'));
-						confPage.getParameters().put(IDCardUtil.PARAM_APPID,IDCardUtil.EncryptEncodeParameter(idCardApplication.Id));
+						confPage.getParameters().put(IDCardUtil.PARAM_APPID,IDCardUtil.EncryptEncodeParameter(applicationID));
 						confPage.setRedirect(true);
 						return confPage;
 

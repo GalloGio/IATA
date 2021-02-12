@@ -31,6 +31,22 @@ global without sharing class IDCardUtilWithoutSharing {
 		update ICAToCommit;	
 	}
 
+	
+
+
+	public static database.UpsertResult dbUpsertCommittedICA(ID_Card_Application__c transientICA, id AppId){
+		system.debug('DTULLO dbUpsertCommittedICA AppId = ' + appId);
+		list<string> lsFields = TransformationHelper.selectAllWritableFieldsByCurrentUser('ID_Card_Application__c');
+		ID_Card_Application__c ICAToCommit = new ID_Card_Application__c();
+
+		for(string field:lsFields)
+			ICAToCommit.put(field, transientICA.get(field));
+		
+		ICAToCommit.Id = AppId;
+
+		return database.upsert(ICAToCommit);
+	}
+
 	public static void updateCheckoutCase(id idCardAppId){
 		List<Case> cases = [SELECT Id FROM Case WHERE Related_ID_Card_Application__c = :idCardAppId];
 		if (cases.size() > 0)
