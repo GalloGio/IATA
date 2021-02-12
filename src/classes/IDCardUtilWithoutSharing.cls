@@ -5,8 +5,9 @@ global without sharing class IDCardUtilWithoutSharing {
 	public static ID_Card_Application__c retrieveCommittedICA(id AppId){
 		ID_Card_Application__c ICAToReturn = new ID_Card_Application__c();
 		list<string> lsFields = TransformationHelper.selectAllWritableFieldsByCurrentUser('ID_Card_Application__c');
+		if(!lsFields.contains('RecordTypeId')) lsFields.add('recordtypeId');
 
-		for(ID_Card_Application__c ica:database.query('select Id, Name, ' + string.join(lsFields, ',') + ' from ID_Card_Application__c where id =\'' + AppId + '\'')){
+		for(ID_Card_Application__c ica:database.query('select Id, Name, recordtype.Developername, ' + string.join(lsFields, ',') + ' from ID_Card_Application__c where id =\'' + AppId + '\'')){
 			for(string field:lsFields)
 				ICAToReturn.put(field, ica.get(field));
 			
@@ -24,7 +25,7 @@ global without sharing class IDCardUtilWithoutSharing {
 		ID_Card_Application__c ICAToCommit = new ID_Card_Application__c();
 
 		for(string field:lsFields)
-			ICAToCommit.put(field, transientICA.get(field));
+				ICAToCommit.put(field, transientICA.get(field));
 		
 		ICAToCommit.Id = AppId;
 

@@ -27,6 +27,8 @@ public without sharing class IDCard_CheckoutConfirmation extends IDCardAbstractC
 
 	private ID_Card_Application__c iDCardApplication;
 
+	public static string idCardAppId {get;set;}
+
 	public IDCard_CheckoutConfirmation() {
 		initialize();
 		PaymentByCheque = false;
@@ -68,6 +70,7 @@ public without sharing class IDCard_CheckoutConfirmation extends IDCardAbstractC
 			orderNumber = 'IDCA-' + orderNumber.substring(5, orderNumber.length());
 
 			ID_Card_Application__c idCardApp = [Select id, name From ID_Card_Application__c where Name = :orderNumber limit 1];
+			idCardAppId = idCardApp.Id;
 			iDCardApplication = IDCardUtilWithoutSharing.retrieveCommittedICA(idCardApp.id);
 
 			String massAppRT = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Mass_Order_Application');
@@ -130,7 +133,7 @@ public without sharing class IDCard_CheckoutConfirmation extends IDCardAbstractC
 	}
 
 	public Pagereference interpretDecision() {
-		system.debug(LoggingLevel.ERROR, '[interpretDecision] --> PaymentByCheque=' + PaymentByCheque + ' -- orderNumber=' + orderNumber);
+		system.debug(LoggingLevel.ERROR, '[int	heque=' + PaymentByCheque + ' -- orderNumber=' + orderNumber);
 		try {
 			if (orderNumber != null && orderNumber != '') {
 				try {
@@ -177,7 +180,8 @@ public without sharing class IDCard_CheckoutConfirmation extends IDCardAbstractC
 		}
 		idCardApp.Application_Status__c = 'Processing Successfull payment';
 		idCardApp.Payment_Type__c = IDCardUtil.PAYMENT_TYPE_INVOICE;
-		IDCardUtilWithoutSharing.saveCommittedICA(idCardApp, idCardApp.id);
+		
+		IDCardUtilWithoutSharing.saveCommittedICA(idCardApp, idCardAppId);
 		try {
 			processSuccessPayment(idCardApp);
 		}  catch (Exception e) {
@@ -199,7 +203,7 @@ public without sharing class IDCard_CheckoutConfirmation extends IDCardAbstractC
 		idCardApp.Payment_Currency__c = paymentCurrency;
 		idCardApp.Payment_Type__c = IDCardUtil.PAYMENT_TYPE_CC;
 
-		IDCardUtilWithoutSharing.saveCommittedICA(idCardApp, idCardApp.id);
+		IDCardUtilWithoutSharing.saveCommittedICA(idCardApp, idCardAppId);
 
 		if (idCardApp.Application_Status__c == 'Processing Successfull payment' || idCardApp.Case_Number__c != null) {
 			return;
@@ -246,7 +250,7 @@ public without sharing class IDCard_CheckoutConfirmation extends IDCardAbstractC
 			} else {
 				idCardApp.Application_Status__c = 'Pending';
 			}
-			IDCardUtilWithoutSharing.saveCommittedICA(idCardApp, idCardApp.id);
+			IDCardUtilWithoutSharing.saveCommittedICA(idCardApp, idCardAppId);
 
 			system.debug(LoggingLevel.ERROR, '[processSuccessPayment]  Set case.status = "Ready for production".  keyContactAndDelegateForAccountList.get(idCardApp.IATA_code__c)= ' + keyContactAndDelegateForAccountList.get(idCardApp.IATA_code__c));
 			string accFeatures = '';
