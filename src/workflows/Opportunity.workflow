@@ -245,19 +245,27 @@
             <type>owner</type>
         </recipients>
         <recipients>
+            <recipient>astridgec@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>burkem@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>chanj@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
             <recipient>hartonga@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>week@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>legerf@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>leej@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>legerf@iata.org.prod</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -269,27 +277,19 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>shemid@iata.org</recipient>
+            <recipient>schaaft@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>burkem@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>astridgec@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>chanj@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>SchaafT@iata.org</recipient>
+            <recipient>shemid2@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
             <recipient>szpyndam@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>week@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>

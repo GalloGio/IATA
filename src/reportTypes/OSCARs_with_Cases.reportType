@@ -4548,6 +4548,11 @@
             <field>Account.Location_Class__c</field>
             <table>AMS_OSCAR__c.Cases__r</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Owner.UserRole</field>
+            <table>AMS_OSCAR__c.Cases__r</table>
+        </columns>
         <masterLabel>Cases</masterLabel>
     </sections>
 </ReportType>
