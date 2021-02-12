@@ -1,5 +1,6 @@
 global without sharing class IDCardUtilWithoutSharing {
 	public static string ICAName = '';
+	public static id AppId = null;
 
 	public static ID_Card_Application__c retrieveCommittedICA(id AppId){
 		ID_Card_Application__c ICAToReturn = new ID_Card_Application__c();
@@ -11,6 +12,7 @@ global without sharing class IDCardUtilWithoutSharing {
 			
 			//ICAToReturn.id = ica.id;
 			ICAName = ica.Name;
+			AppId = ica.Id;
 			//ICAToReturn.put('Name', ica.get('Name'));
 		}
 		
