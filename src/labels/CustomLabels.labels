@@ -7144,7 +7144,7 @@ You can easily create a company account in two steps</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_PortalPath</shortDescription>
-        <value>/csportal/s/</value>
+        <value>/s/</value>
     </labels>
     <labels>
         <fullName>CSP_Portal_Administrators</fullName>
