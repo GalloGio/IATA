@@ -35,7 +35,6 @@ global without sharing class IDCardUtilWithoutSharing {
 
 
 	public static database.UpsertResult dbUpsertCommittedICA(ID_Card_Application__c transientICA, id AppId){
-		system.debug('DTULLO dbUpsertCommittedICA AppId = ' + appId);
 		list<string> lsFields = TransformationHelper.selectAllWritableFieldsByCurrentUser('ID_Card_Application__c');
 		ID_Card_Application__c ICAToCommit = new ID_Card_Application__c();
 
