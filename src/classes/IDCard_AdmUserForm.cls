@@ -27,6 +27,7 @@ public class IDCard_AdmUserForm extends IDCardAbstractController{
 	public ID_Card_Application__c app {get;set;}
 	public ID_Card_Application__c oldapp {get;set;}
 
+	public string appid {get; set;}
 
 	public IDCard_AdmUserForm (){
 			initialize(true);
@@ -74,7 +75,8 @@ public class IDCard_AdmUserForm extends IDCardAbstractController{
 																OR Application_Status__c = :IDcardUtil.APPlICATIONSTATUS_UNPAID)
 															ORDER BY CreatedDate DESC];
 				if(pendingapps.size()>=1){
-					app = pendingapps[0];
+					app = IDCardUtilWithoutSharing.retrieveCommittedICA(pendingapps[0].Id);
+					appid = pendingapps[0].Id;
 					oldapp = app.clone(true,true);
 					if(app.Type_of_application__c==IDCardUtil.APPLICATIONTYPE_NEW)
 						isEditNew = true;
@@ -365,7 +367,7 @@ system.debug(LoggingLevel.ERROR,'------- FINE STEP 2 - Caso 2');
 
 		// ############ STEP 4: ###############
 		// Now I can finally save the application!
-		database.UpsertResult result = database.upsert(app);
+		database.UpsertResult result = IDCardUtilWithoutSharing.dbUpsertCommittedICA(app, IDCardUtilWithoutSharing.AppId);
 		if(!result.isSuccess()){
 			printErr('An error occurred. Please contact your key contact ('+adminName+': '+adminEmail+').'+result.getErrors()[0].getMessage() );
 			return null;

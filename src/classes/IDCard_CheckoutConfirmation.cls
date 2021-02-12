@@ -1,4 +1,4 @@
-public with sharing class IDCard_CheckoutConfirmation extends IDCardAbstractController {
+public without sharing class IDCard_CheckoutConfirmation extends IDCardAbstractController {
 
 	public String allParams { get; private set; }
 
@@ -26,6 +26,8 @@ public with sharing class IDCard_CheckoutConfirmation extends IDCardAbstractCont
 	public boolean isMassApplicationPurchase {get; set;}
 
 	private ID_Card_Application__c iDCardApplication;
+
+	public static string idCardAppId {get;set;}
 
 	public IDCard_CheckoutConfirmation() {
 		initialize();
@@ -67,30 +69,9 @@ public with sharing class IDCard_CheckoutConfirmation extends IDCardAbstractCont
 			//trim first 3 characters to remove country ISOCode and the dash
 			orderNumber = 'IDCA-' + orderNumber.substring(5, orderNumber.length());
 
-			ID_Card_Application__c idCardApp = [Select i.Case_Number__c, i.Application_Status__c,  i.Tax_2_Name__c,
-												i.Tax_1_Name__c, i.Tax_1_Value__c, i.Tax_2_Value__c,
-												i.Renewal_From_Replace__c, i.ID_Card_Fee__c, i.VER_Number__c,
-												i.UIR__c, i.Revenue_Confirmation__c, i.Type_of_application__c,
-												i.Title__c, i.Telephone__c, i.SystemModstamp, i.Start_Date_Industry__c,
-												i.Start_Date_Agency_Year__c, i.Start_Date_Agency_Month__c,
-												i.Solicitation_Flag__c, i.Promotion_Code__c, i.Position_in_Current_Agency__c,
-												i.Position_Code__c, i.Photo__c, i.Package_of_Travel_Professionals_Course_2__c,
-												i.Package_of_Travel_Professionals_Course_1__c, i.OwnerId, i.Name,
-												i.Middle_Initial__c, i.Last_Name__c, i.LastModifiedDate, i.LastModifiedById,
-												i.IsDeleted, i.Id, i.IDCard_Prefered_Language__c, i.IDCard_Expedite_Delivery__c,
-												i.IDCard_Expedite_Delivery_Fee__c, i.IATA_numeric_code_previous_employer_4__c,
-												i.IATA_numeric_code_previous_employer_3__c, i.IATA_numeric_code_previous_employer_2__c,
-												i.IATA_numeric_code_previous_employer_1__c, i.IATA_Code_for_previous_agency__c,
-												i.IATA_Code__c, i.Hours_worked__c, i.Hours_Worked_Code__c, i.Gender__c, i.First_Name__c,
-												i.Hours_Worked_Validation_Failed__c, i.Email_admin__c, i.Duties_in_Current_Agency__c,
-												i.Duties_Code__c, i.Displayed_Name__c, i.Date_of_Birth__c, i.CurrencyIsoCode,
-												i.CreatedDate, i.CreatedById, i.Card_Type__c,
-												i.Approving_Manager_s_Name__c, i.Approving_Manager_s_Email__c, i.Applicable_Fee__c,
-												i.Payment_Credit_Card_Number__c, i.Payment_Date__c, i.Revenue_Confirmation_Validation_Failed__c,
-												i.Payment_Transaction_Number__c, i.Payment_Amount__c , i.RecordTypeId
-												From ID_Card_Application__c i where i.Name = :orderNumber limit 1];
-			System.debug('/*//*/* ' + idCardApp.Name);
-			iDCardApplication = idCardApp;
+			ID_Card_Application__c idCardApp = [Select id, name From ID_Card_Application__c where Name = :orderNumber limit 1];
+			idCardAppId = idCardApp.Id;
+			iDCardApplication = IDCardUtilWithoutSharing.retrieveCommittedICA(idCardApp.id);
 
 			String massAppRT = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Mass_Order_Application');
 			isMassApplicationPurchase = (massAppRT == idCardApp.RecordTypeId);
@@ -152,7 +133,7 @@ public with sharing class IDCard_CheckoutConfirmation extends IDCardAbstractCont
 	}
 
 	public Pagereference interpretDecision() {
-		system.debug(LoggingLevel.ERROR, '[interpretDecision] --> PaymentByCheque=' + PaymentByCheque + ' -- orderNumber=' + orderNumber);
+		system.debug(LoggingLevel.ERROR, '[int	heque=' + PaymentByCheque + ' -- orderNumber=' + orderNumber);
 		try {
 			if (orderNumber != null && orderNumber != '') {
 				try {
@@ -199,7 +180,8 @@ public with sharing class IDCard_CheckoutConfirmation extends IDCardAbstractCont
 		}
 		idCardApp.Application_Status__c = 'Processing Successfull payment';
 		idCardApp.Payment_Type__c = IDCardUtil.PAYMENT_TYPE_INVOICE;
-		update idCardApp;
+		
+		IDCardUtilWithoutSharing.saveCommittedICA(idCardApp, idCardAppId);
 		try {
 			processSuccessPayment(idCardApp);
 		}  catch (Exception e) {
@@ -221,7 +203,7 @@ public with sharing class IDCard_CheckoutConfirmation extends IDCardAbstractCont
 		idCardApp.Payment_Currency__c = paymentCurrency;
 		idCardApp.Payment_Type__c = IDCardUtil.PAYMENT_TYPE_CC;
 
-		update idCardApp;
+		IDCardUtilWithoutSharing.saveCommittedICA(idCardApp, idCardAppId);
 
 		if (idCardApp.Application_Status__c == 'Processing Successfull payment' || idCardApp.Case_Number__c != null) {
 			return;
@@ -261,14 +243,14 @@ public with sharing class IDCard_CheckoutConfirmation extends IDCardAbstractCont
 			}
 
 
-			//specific to mass update:
+			//specific to mass up_date:
 			//else {
 			if (!PaymentByCheque) {
 				idCardApp.Application_Status__c = 'Paid';
 			} else {
 				idCardApp.Application_Status__c = 'Pending';
 			}
-			update idCardApp;
+			IDCardUtilWithoutSharing.saveCommittedICA(idCardApp, idCardAppId);
 
 			system.debug(LoggingLevel.ERROR, '[processSuccessPayment]  Set case.status = "Ready for production".  keyContactAndDelegateForAccountList.get(idCardApp.IATA_code__c)= ' + keyContactAndDelegateForAccountList.get(idCardApp.IATA_code__c));
 			string accFeatures = '';
@@ -278,10 +260,11 @@ public with sharing class IDCard_CheckoutConfirmation extends IDCardAbstractCont
 				accFeatures = '';
 
 			if (isMassApplicationPurchase && (!PaymentByCheque || accFeatures.contains(IDCardUtil.Key_Account_Feature_Immediate_Processing))) {
-				List<Case> cases = [SELECT Id FROM Case WHERE Related_ID_Card_Application__c = :idCardApp.id];
+				IDCardUtilWithoutSharing.updateCheckoutCase(idCardApp.id);
+				/*List<Case> cases = [SELECT Id FROM Case WHERE Related_ID_Card_Application__c = :idCardApp.id];
 				if (cases.size() > 0)
 					cases[0].Status = 'Ready for production';
-				update cases[0];
+				update cases[0];*/
 			}
 
 			//}

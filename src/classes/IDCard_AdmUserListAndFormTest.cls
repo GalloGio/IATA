@@ -887,7 +887,7 @@ private class IDCard_AdmUserListAndFormTest {
 		apps = [SELECT Type_of_application__c, Application_status__c, VER_Number__c, UIR__c, First_Name__c, Last_Name__c, Displayed_Name__c, Applicable_Fee__c
 				FROM ID_Card_Application__c
 				WHERE Id <> :firstappid];
-		system.assertEquals(1, apps.size());
+		system.assertEquals(2, apps.size());
 		system.assertEquals(IDCardUtil.APPLICATIONTYPE_REISSUE, apps[0].Type_of_application__c);
 		system.assertEquals(IDCardUtil.APPLICATIONSTATUS_PENDING, apps[0].Application_status__c);
 		system.assertNotEquals(null, apps[0].UIR__c);
@@ -910,7 +910,7 @@ private class IDCard_AdmUserListAndFormTest {
 		apps = [SELECT Type_of_application__c, Application_status__c, VER_Number__c, UIR__c, First_Name__c, Last_Name__c, Displayed_Name__c, Applicable_Fee__c
 				FROM ID_Card_Application__c
 				WHERE Id <> :firstappid];
-		system.assertEquals(1, apps.size());
+		system.assertEquals(3, apps.size());
 		system.assertEquals(IDCardUtil.APPLICATIONTYPE_REPLACEMENT, apps[0].Type_of_application__c);
 
 		// I should not have any idcard or contacts
