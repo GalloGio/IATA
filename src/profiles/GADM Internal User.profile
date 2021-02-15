@@ -5144,6 +5144,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>IDCardUtilWithoutSharing</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>IDCardWebService</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -70634,6 +70638,10 @@
     <userPermissions>
         <enabled>true</enabled>
         <name>AllowViewKnowledge</name>
+    </userPermissions>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>ApiEnabled</name>
     </userPermissions>
     <userPermissions>
         <enabled>true</enabled>

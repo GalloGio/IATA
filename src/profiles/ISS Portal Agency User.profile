@@ -5152,6 +5152,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>IDCardUtilWithoutSharing</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>IDCardWebService</apexClass>
         <enabled>false</enabled>
     </classAccesses>

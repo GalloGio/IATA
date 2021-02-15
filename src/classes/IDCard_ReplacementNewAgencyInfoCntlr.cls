@@ -130,7 +130,8 @@ public with sharing class IDCard_ReplacementNewAgencyInfoCntlr extends IDCardAbs
 
 		//update application form with new Data
 		try {
-			ID_Card_Application__c idCardApp = [Select i.Id, i.RecordTypeId, i.IATA_Code__c, i.VER_Number__c From ID_Card_Application__c i where i.Id = :idCardAppID limit 1];
+			ID_Card_Application__c idCardApp = IDCardUtilWithoutSharing.retrieveCommittedICA(idCardAppID);
+
 			idCardApp.IATA_Code__c = NewAgencyCode;
 			String singleKAIDCAppId =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operation');
 			String defaultIDCApp =  RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Standard');
@@ -143,7 +144,8 @@ public with sharing class IDCard_ReplacementNewAgencyInfoCntlr extends IDCardAbs
 			} else
 				idCardApp.RecordTypeId = defaultIDCApp;
 			system.debug('[REPLACEMENT] new Application Record type:' + idCardApp.RecordTypeId);
-			update idCardApp;
+			//update idCardApp;
+			IDCardUtilWithoutSharing.saveCommittedICA(idCardApp, idCardAppID);
 
 
 			//redirect to application form
@@ -169,7 +171,7 @@ public with sharing class IDCard_ReplacementNewAgencyInfoCntlr extends IDCardAbs
 			Pagereference prChecklist = Page.IDCard_Checklist;
 
 			//set APPLication ID
-			prChecklist.getParameters().put(IDCardUtil.PARAM_APPID, IDCardUtil.EncryptEncodeParameter(idCardApp.Id));
+			prChecklist.getParameters().put(IDCardUtil.PARAM_APPID, IDCardUtil.EncryptEncodeParameter(idCardAppID));
 			//new IATA CODE
 			prChecklist.getParameters().put(IDCardUtil.PARAM_IATACODE, IDCardUtil.EncryptEncodeParameter(idCardApp.IATA_Code__c));
 			//Application type = replacement
