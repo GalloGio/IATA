@@ -259,8 +259,8 @@ public class PortalServicesInnovationHubCtrlTest {
 		Test.startTest();
 		String fileUploaded = PortalServicesInnovationHubCtrl.uploadFile(sbase64, 'test.txt', provider.Id);
 		Test.stopTest();
-		List<ContentDocumentLink> cdlList = [SELECT Id FROM ContentDocumentLink WHERE Id = :fileUploaded];
-		System.assertEquals(cdlList.size(), 1);
+		List<ContentVersion> cvlList = [SELECT Id FROM ContentVersion WHERE Id = :fileUploaded];
+		System.assertEquals(cvlList.size(), 1);
 	}
 
 	@isTest 
