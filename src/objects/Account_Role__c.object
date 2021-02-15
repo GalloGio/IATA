@@ -479,6 +479,19 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
         <label>All</label>
         <language>en_US</language>
     </listViews>
+    <ListViews>
+        <fullName>Innovation_Hub</fullName>
+        <columns>NAME</columns>
+        <columns>Account_Name__c</columns>
+        <columns>Status__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Account_Role__c.Innovation_Hub</value>
+        </filters>
+        <label>Innovation Hub</label>
+    </ListViews>
     <nameField>
         <displayFormat>AR-{0000}</displayFormat>
         <label>Account Role Name</label>

@@ -4,6 +4,10 @@
         <application>Innovation_Hub</application>
         <visible>true</visible>
     </applicationVisibilities>
+    <applicationVisibilities>
+        <application>Innovation_Hub_lightning</application>
+        <visible>true</visible>
+    </applicationVisibilities>
     <classAccesses>
         <apexClass>ISSP_EditPortalServiceAccess</apexClass>
         <enabled>true</enabled>
