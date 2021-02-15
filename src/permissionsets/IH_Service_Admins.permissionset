@@ -13,10 +13,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>ISSP_InnovationHubController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>PortalServicesInnovationHubCtrl</apexClass>
         <enabled>true</enabled>
     </classAccesses>
