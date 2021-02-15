@@ -37555,6 +37555,19 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Country profile with IATA ISO Country --></description>
+        <label><!-- Country profile with IATA ISO Country --></label>
+        <name>Country_profile_with_IATA_ISO_Country</name>
+        <sections>
+            <label><!-- Country Profiles --></label>
+            <name>Country Profiles</name>
+        </sections>
+        <sections>
+            <label><!-- IATA ISO Countries --></label>
+            <name>IATA ISO Countries</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Country profile with surveys --></description>
         <label><!-- Country profile with surveys --></label>
         <name>Country_profile_with_surveys</name>

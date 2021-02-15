@@ -5148,6 +5148,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>IDCardUtilWithoutSharing</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>IDCardWebService</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -15580,7 +15584,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>AMS_OSCAR__c.KPI_Aux1__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>

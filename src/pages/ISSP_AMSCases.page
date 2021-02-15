@@ -527,7 +527,7 @@
                             </apex:outputPanel>
                          </div>
                         </section>
-             <apex:outputPanel rendered="{!NOT(isPassAccreditation)}" layout="none">
+             <apex:outputPanel rendered="{!AND(NOT(isPassAccreditation), NOT(isTIDSAgent))}" layout="none">
                         <section name="right-side-other-forms" id="other-forms" class="col-md-5" style="display:{!IF(OR(AND(isMultiCountryStarted, NOT(isMCAccredited)),AND(con.Account.Category__c == 'Domestic Agent', NOT(isocountry.ANG_Enable_NewGen__c))), 'none', IF(isUserAccAccredited, '', 'none'))}; margin-right: 0px; margin-left: 0px; min-height: 350px; padding-top: 20px;">
 				            <div class="content-box">
                                 <header>
