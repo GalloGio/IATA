@@ -579,7 +579,7 @@ private class IDCardUtilTest {
 		upsert testData.IDCards_IDCardApplications[2];
 		//insert testData.IDCard_Accounts[0];
 
-		IDCardUtil.CreateIDCardApplicationCase(testData.IDCards_IDCardApplications[2], testData.IDCard_Accounts[0]);
+		IDCardUtil.CreateIDCardApplicationCase(testData.IDCards_IDCardApplications[2], testData.IDCard_Accounts[0], null);
 		/*
 		Area_Counter__c counter = new Area_Counter__c();
 		counter.AIMS_Area_Id__c = 1;
@@ -593,7 +593,7 @@ private class IDCardUtilTest {
 
 		IDCardUtil.CreateContactWhenNewCardIsApproved(testData.IDCards_IDCardApplications[2]);
 
-		IDCardutil.CreateIDCardApplicationCase(testData.IDCards_IDCardApplications[2], testData.IDCard_Accounts[0]);
+		IDCardutil.CreateIDCardApplicationCase(testData.IDCards_IDCardApplications[2], testData.IDCard_Accounts[0], null);
 	}
 
 	TestMethod static void CreateIdCardApplicationAndCaseTest(){
@@ -825,7 +825,7 @@ private class IDCardUtilTest {
 
 		IDCardUtil.increaseUIR(IDCardUtil.generateUIR(a));
 
-		IDCardUtil.createKeyAccountIdCardMassApplicationCase(idcapp, a, true);
+		IDCardUtil.createKeyAccountIdCardMassApplicationCase(idcapp, a, true,null);
 		IDCardUtil.createKeyAccountIdCardApplicationCase(idcapp, a);
 		IDCardUtil.deleteUnpaidIDCardApplication();
 	}

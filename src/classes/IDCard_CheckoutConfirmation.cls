@@ -248,14 +248,14 @@ public without sharing class IDCard_CheckoutConfirmation extends IDCardAbstractC
 			// Create the case
 			if (!isMassApplicationPurchase) {
 				Account theAccount = IDCardUtil.GetAccountObjectFromIATACode(idCardApp.IATA_Code__c);
-				IDCardUtil.CreateIDCardApplicationCase(idCardApp, theAccount, PaymentByCheque);
+				IDCardUtil.CreateIDCardApplicationCase(idCardApp, theAccount, PaymentByCheque, idCardAppId);
 				idCardApplicationCaseNumber = 'Loading...';
 			}
 
 			//INC158853
 			else {
 				Account theAccount = IDCardUtil.GetAccountObjectFromIATACode(idCardApp.IATA_Code__c);
-				insert IDCardUtil.createKeyAccountIdCardMassApplicationCase(iDCardApplication, theAccount, false);
+				insert IDCardUtil.createKeyAccountIdCardMassApplicationCase(iDCardApplication, theAccount, false, idCardAppId);
 			}
 
 
