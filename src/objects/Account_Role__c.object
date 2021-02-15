@@ -479,7 +479,7 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
         <label>All</label>
         <language>en_US</language>
     </listViews>
-    <ListViews>
+    <listViews>
         <fullName>Innovation_Hub</fullName>
         <columns>NAME</columns>
         <columns>Account_Name__c</columns>
@@ -491,7 +491,7 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
             <value>Account_Role__c.Innovation_Hub</value>
         </filters>
         <label>Innovation Hub</label>
-    </ListViews>
+    </listViews>
     <nameField>
         <displayFormat>AR-{0000}</displayFormat>
         <label>Account Role Name</label>
