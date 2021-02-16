@@ -197,7 +197,12 @@
                                                                     <b><lightning-output-field field-name={field.fieldName}></lightning-output-field></b>
                                                                 </template>
                                                                 <template if:false={isCustomerInvoice}>
-                                                                    <lightning-output-field class="labelValue textValue" field-name={field.fieldName}></lightning-output-field>      
+                                                                    <div if:false={isProviderDetail}>
+                                                                        <lightning-output-field class="labelValue textValue" field-name={field.fieldName}></lightning-output-field>      
+                                                                    </div>
+                                                                    <div if:true={isProviderDetail}>
+                                                                        <lightning-output-field class="ihub textValue" field-name={field.fieldName}></lightning-output-field>      
+                                                                    </div>
                                                                 </template>
                                                                 <!--WMO-699 - ACAMBAS: End -->
                                                             </template>

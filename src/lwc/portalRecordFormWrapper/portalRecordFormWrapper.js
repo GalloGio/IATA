@@ -508,6 +508,10 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         return this.objectName != null && this.objectName.toLowerCase() == 'contact';
     }
 
+    get isProviderDetail() {
+        return this.providerId != null && this.providerId != '';
+    }
+
     //WMO-699 - ACAMBAS: Begin
     get isCustomerInvoice() {
         return this.objectName != null && this.objectName.toLowerCase() == 'customer_invoice__c';
