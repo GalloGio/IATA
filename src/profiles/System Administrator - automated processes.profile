@@ -1833,7 +1833,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>ANG_ISSP_MailIEPStatusInProgressToOpen</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>ANG_ISSP_PortalServiceHelper</apexClass>
@@ -5142,6 +5142,10 @@
     <classAccesses>
         <apexClass>IDCardUtilWebServicesTest</apexClass>
         <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IDCardUtilWithoutSharing</apexClass>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>IDCardWebService</apexClass>

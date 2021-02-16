@@ -2441,7 +2441,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>AccountRolesAlignBatch</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>AccountRolesAlignBatch_Test</apexClass>
@@ -5145,6 +5145,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>IDCardUtilWebServicesTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IDCardUtilWithoutSharing</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
