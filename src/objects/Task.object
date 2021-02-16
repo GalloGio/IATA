@@ -114,6 +114,8 @@
     </actionOverrides>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
     <enableFeeds>false</enableFeeds>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
     <fields>
         <fullName>ActivityDate</fullName>
     </fields>
@@ -184,192 +186,6 @@
         <fullName>WhoId</fullName>
         <type>Lookup</type>
     </fields>
-    <listViews>
-        <fullName>CompletedTasks</fullName>
-        <columns>SUBJECT</columns>
-        <columns>WHO_NAME</columns>
-        <columns>WHAT_NAME</columns>
-        <columns>DUE_DATE</columns>
-        <columns>STATUS</columns>
-        <columns>PRIORITY</columns>
-        <columns>CORE.USERS.ALIAS</columns>
-        <columns>LAST_UPDATE</columns>
-        <columns>UPDATEDBY_USER.ALIAS</columns>
-        <filterScope>Mine</filterScope>
-        <filters>
-            <field>IS_CLOSED</field>
-            <operation>equals</operation>
-            <value>1</value>
-        </filters>
-        <filters>
-            <field>IS_RECURRENCE</field>
-            <operation>equals</operation>
-            <value>0</value>
-        </filters>
-        <filters>
-            <field>LAST_UPDATE</field>
-            <operation>equals</operation>
-            <value>TODAY,LAST_N_DAYS:30</value>
-        </filters>
-        <label>ENCODED:{!FilterNames.Task_CompletedTasks}</label>
-    </listViews>
-    <listViews>
-        <fullName>DelegatedTasks</fullName>
-        <columns>SUBJECT</columns>
-        <columns>WHO_NAME</columns>
-        <columns>WHAT_NAME</columns>
-        <columns>DUE_DATE</columns>
-        <columns>STATUS</columns>
-        <columns>PRIORITY</columns>
-        <columns>CORE.USERS.ALIAS</columns>
-        <columns>LAST_UPDATE</columns>
-        <columns>UPDATEDBY_USER.ALIAS</columns>
-        <filterScope>Delegated</filterScope>
-        <label>Delegated Tasks</label>
-    </listViews>
-    <listViews>
-        <fullName>Medaire_Approvals_Task</fullName>
-        <filterScope>Queue</filterScope>
-        <label>Medaire Approvals</label>
-        <queue>Medaire_Approvals</queue>
-        <sharedTo>
-            <allInternalUsers></allInternalUsers>
-        </sharedTo>
-    </listViews>
-    <listViews>
-        <fullName>OpenTasks</fullName>
-        <columns>SUBJECT</columns>
-        <columns>WHO_NAME</columns>
-        <columns>WHAT_NAME</columns>
-        <columns>DUE_DATE</columns>
-        <columns>STATUS</columns>
-        <columns>PRIORITY</columns>
-        <columns>CORE.USERS.ALIAS</columns>
-        <columns>LAST_UPDATE</columns>
-        <columns>UPDATEDBY_USER.ALIAS</columns>
-        <filterScope>Mine</filterScope>
-        <filters>
-            <field>IS_CLOSED</field>
-            <operation>equals</operation>
-            <value>0</value>
-        </filters>
-        <filters>
-            <field>IS_RECURRENCE</field>
-            <operation>equals</operation>
-            <value>0</value>
-        </filters>
-        <filters>
-            <field>DUE_DATE</field>
-            <operation>greaterOrEqual</operation>
-            <value>LAST_N_DAYS:30</value>
-        </filters>
-        <label>ENCODED:{!FilterNames.Task_OpenTasks}</label>
-    </listViews>
-    <listViews>
-        <fullName>OverdueTasks</fullName>
-        <columns>SUBJECT</columns>
-        <columns>WHO_NAME</columns>
-        <columns>WHAT_NAME</columns>
-        <columns>DUE_DATE</columns>
-        <columns>STATUS</columns>
-        <columns>PRIORITY</columns>
-        <columns>CORE.USERS.ALIAS</columns>
-        <columns>LAST_UPDATE</columns>
-        <columns>UPDATEDBY_USER.ALIAS</columns>
-        <filterScope>Mine</filterScope>
-        <filters>
-            <field>IS_CLOSED</field>
-            <operation>equals</operation>
-            <value>0</value>
-        </filters>
-        <filters>
-            <field>IS_RECURRENCE</field>
-            <operation>equals</operation>
-            <value>0</value>
-        </filters>
-        <filters>
-            <field>DUE_DATE</field>
-            <operation>lessThan</operation>
-            <value>TODAY</value>
-        </filters>
-        <label>ENCODED:{!FilterNames.Task_OverdueTasks}</label>
-    </listViews>
-    <listViews>
-        <fullName>RecurringTasks</fullName>
-        <columns>SUBJECT</columns>
-        <columns>WHO_NAME</columns>
-        <columns>WHAT_NAME</columns>
-        <columns>DUE_DATE</columns>
-        <columns>STATUS</columns>
-        <columns>PRIORITY</columns>
-        <columns>CORE.USERS.ALIAS</columns>
-        <columns>LAST_UPDATE</columns>
-        <columns>UPDATEDBY_USER.ALIAS</columns>
-        <filterScope>Mine</filterScope>
-        <filters>
-            <field>IS_RECURRENCE</field>
-            <operation>equals</operation>
-            <value>1</value>
-        </filters>
-        <label>Recurring Tasks</label>
-    </listViews>
-    <listViews>
-        <fullName>TodaysTasks</fullName>
-        <columns>SUBJECT</columns>
-        <columns>WHO_NAME</columns>
-        <columns>WHAT_NAME</columns>
-        <columns>DUE_DATE</columns>
-        <columns>STATUS</columns>
-        <columns>PRIORITY</columns>
-        <columns>CORE.USERS.ALIAS</columns>
-        <columns>LAST_UPDATE</columns>
-        <columns>UPDATEDBY_USER.ALIAS</columns>
-        <filterScope>Mine</filterScope>
-        <filters>
-            <field>IS_CLOSED</field>
-            <operation>equals</operation>
-            <value>0</value>
-        </filters>
-        <filters>
-            <field>IS_RECURRENCE</field>
-            <operation>equals</operation>
-            <value>0</value>
-        </filters>
-        <filters>
-            <field>DUE_DATE</field>
-            <operation>equals</operation>
-            <value>TODAY,LAST_N_DAYS:30</value>
-        </filters>
-        <label>ENCODED:{!FilterNames.z_TodaysTasks}</label>
-    </listViews>
-    <listViews>
-        <fullName>UnscheduledTasks</fullName>
-        <columns>SUBJECT</columns>
-        <columns>WHO_NAME</columns>
-        <columns>WHAT_NAME</columns>
-        <columns>DUE_DATE</columns>
-        <columns>STATUS</columns>
-        <columns>PRIORITY</columns>
-        <columns>CORE.USERS.ALIAS</columns>
-        <columns>LAST_UPDATE</columns>
-        <columns>UPDATEDBY_USER.ALIAS</columns>
-        <filterScope>Mine</filterScope>
-        <filters>
-            <field>IS_CLOSED</field>
-            <operation>equals</operation>
-            <value>0</value>
-        </filters>
-        <filters>
-            <field>IS_RECURRENCE</field>
-            <operation>equals</operation>
-            <value>0</value>
-        </filters>
-        <filters>
-            <field>DUE_DATE</field>
-            <operation>equals</operation>
-        </filters>
-        <label>ENCODED:{!FilterNames.Task_UnscheduledTasks}</label>
-    </listViews>
     <recordTypes>
         <fullName>Airlines_Industry_Communication</fullName>
         <active>true</active>
@@ -1963,32 +1779,6 @@
             </values>
         </picklistValues>
     </recordTypes>
-    <searchLayouts/>
-    <sharingModel>ControlledByParent</sharingModel>
-    <validationRules>
-        <fullName>Date_Mandatory_If_Communication_Sent</fullName>
-        <active>true</active>
-        <description>If the user selects &quot;Yes&quot; in the Communication Sent pick list, then the Communication Sent Date field becomes mandatory.</description>
-        <errorConditionFormula>AND (
-  ISPICKVAL( Communication_Sent__c , &apos;Yes&apos; ),
-  ISBLANK( Communication_Sent_Date__c )
-)</errorConditionFormula>
-        <errorDisplayField>Communication_Sent_Date__c</errorDisplayField>
-        <errorMessage>Please specify the date when the communication was sent.</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>KAP_Milestone_Mandatory_Fields</fullName>
-        <active>true</active>
-        <description>Make the Subject and Deadline fields mandatory</description>
-        <errorConditionFormula>AND ( 
-  RecordType.DeveloperName = &apos;Key_Account_Plan_Milestone&apos;, 
-  OR ( 
-    AND(ISBLANK( Subject__c),ISBLANK( Subject)), 
-    ISBLANK( ActivityDate ) 
-  ) 
-)</errorConditionFormula>
-        <errorMessage>Please fill in the Milestone and the End Date fields</errorMessage>
-    </validationRules>
     <webLinks>
         <fullName>Mark_Task_Complete</fullName>
         <availability>online</availability>
@@ -2022,4 +1812,233 @@ function updateTask( )
 
 updateTask();</url>
     </webLinks>
+    <validationRules>
+        <fullName>Date_Mandatory_If_Communication_Sent</fullName>
+        <active>true</active>
+        <description>If the user selects &quot;Yes&quot; in the Communication Sent pick list, then the Communication Sent Date field becomes mandatory.</description>
+        <errorConditionFormula>AND (
+  ISPICKVAL( Communication_Sent__c , &apos;Yes&apos; ),
+  ISBLANK( Communication_Sent_Date__c )
+)</errorConditionFormula>
+        <errorDisplayField>Communication_Sent_Date__c</errorDisplayField>
+        <errorMessage>Please specify the date when the communication was sent.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>KAP_Milestone_Mandatory_Fields</fullName>
+        <active>true</active>
+        <description>Make the Subject and Deadline fields mandatory</description>
+        <errorConditionFormula>AND ( 
+  RecordType.DeveloperName = &apos;Key_Account_Plan_Milestone&apos;, 
+  OR ( 
+    AND(ISBLANK( Subject__c),ISBLANK( Subject)), 
+    ISBLANK( ActivityDate ) 
+  ) 
+)</errorConditionFormula>
+        <errorMessage>Please fill in the Milestone and the End Date fields</errorMessage>
+    </validationRules>
+    <listViews>
+        <fullName>Airport_IS</fullName>
+        <columns>SUBJECT</columns>
+        <columns>WHO_NAME</columns>
+        <columns>WHAT_NAME</columns>
+        <columns>DUE_DATE</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>PRIORITY</columns>
+        <columns>STATUS</columns>
+        <columns>UPDATEDBY_USER.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>SUBJECT</field>
+            <operation>contains</operation>
+            <value>Airport IS</value>
+        </filters>
+        <label>Airport IS</label>
+    </listViews>
+    <listViews>
+        <fullName>CompletedTasks</fullName>
+        <columns>SUBJECT</columns>
+        <columns>WHO_NAME</columns>
+        <columns>WHAT_NAME</columns>
+        <columns>DUE_DATE</columns>
+        <columns>STATUS</columns>
+        <columns>PRIORITY</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>UPDATEDBY_USER.ALIAS</columns>
+        <filterScope>Mine</filterScope>
+        <filters>
+            <field>IS_CLOSED</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>IS_RECURRENCE</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>LAST_UPDATE</field>
+            <operation>equals</operation>
+            <value>TODAY,LAST_N_DAYS:30</value>
+        </filters>
+        <label>ENCODED:{!FilterNames.Task_CompletedTasks}</label>
+    </listViews>
+    <listViews>
+        <fullName>DelegatedTasks</fullName>
+        <columns>SUBJECT</columns>
+        <columns>WHO_NAME</columns>
+        <columns>WHAT_NAME</columns>
+        <columns>DUE_DATE</columns>
+        <columns>STATUS</columns>
+        <columns>PRIORITY</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>UPDATEDBY_USER.ALIAS</columns>
+        <filterScope>Delegated</filterScope>
+        <label>Delegated Tasks</label>
+    </listViews>
+    <listViews>
+        <fullName>Medaire_Approvals_Task</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Medaire Approvals</label>
+        <queue>Medaire_Approvals</queue>
+        <sharedTo>
+            <allInternalUsers/>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>OpenTasks</fullName>
+        <columns>SUBJECT</columns>
+        <columns>WHO_NAME</columns>
+        <columns>WHAT_NAME</columns>
+        <columns>DUE_DATE</columns>
+        <columns>STATUS</columns>
+        <columns>PRIORITY</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>UPDATEDBY_USER.ALIAS</columns>
+        <filterScope>Mine</filterScope>
+        <filters>
+            <field>IS_CLOSED</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>IS_RECURRENCE</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>DUE_DATE</field>
+            <operation>greaterOrEqual</operation>
+            <value>LAST_N_DAYS:30</value>
+        </filters>
+        <label>ENCODED:{!FilterNames.Task_OpenTasks}</label>
+    </listViews>
+    <listViews>
+        <fullName>OverdueTasks</fullName>
+        <columns>SUBJECT</columns>
+        <columns>WHO_NAME</columns>
+        <columns>WHAT_NAME</columns>
+        <columns>DUE_DATE</columns>
+        <columns>STATUS</columns>
+        <columns>PRIORITY</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>UPDATEDBY_USER.ALIAS</columns>
+        <filterScope>Mine</filterScope>
+        <filters>
+            <field>IS_CLOSED</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>IS_RECURRENCE</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>DUE_DATE</field>
+            <operation>lessThan</operation>
+            <value>TODAY</value>
+        </filters>
+        <label>ENCODED:{!FilterNames.Task_OverdueTasks}</label>
+    </listViews>
+    <listViews>
+        <fullName>RecurringTasks</fullName>
+        <columns>SUBJECT</columns>
+        <columns>WHO_NAME</columns>
+        <columns>WHAT_NAME</columns>
+        <columns>DUE_DATE</columns>
+        <columns>STATUS</columns>
+        <columns>PRIORITY</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>UPDATEDBY_USER.ALIAS</columns>
+        <filterScope>Mine</filterScope>
+        <filters>
+            <field>IS_RECURRENCE</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>Recurring Tasks</label>
+    </listViews>
+    <listViews>
+        <fullName>TodaysTasks</fullName>
+        <columns>SUBJECT</columns>
+        <columns>WHO_NAME</columns>
+        <columns>WHAT_NAME</columns>
+        <columns>DUE_DATE</columns>
+        <columns>STATUS</columns>
+        <columns>PRIORITY</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>UPDATEDBY_USER.ALIAS</columns>
+        <filterScope>Mine</filterScope>
+        <filters>
+            <field>IS_CLOSED</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>IS_RECURRENCE</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>DUE_DATE</field>
+            <operation>equals</operation>
+            <value>TODAY,LAST_N_DAYS:30</value>
+        </filters>
+        <label>ENCODED:{!FilterNames.z_TodaysTasks}</label>
+    </listViews>
+    <listViews>
+        <fullName>UnscheduledTasks</fullName>
+        <columns>SUBJECT</columns>
+        <columns>WHO_NAME</columns>
+        <columns>WHAT_NAME</columns>
+        <columns>DUE_DATE</columns>
+        <columns>STATUS</columns>
+        <columns>PRIORITY</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>UPDATEDBY_USER.ALIAS</columns>
+        <filterScope>Mine</filterScope>
+        <filters>
+            <field>IS_CLOSED</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>IS_RECURRENCE</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>DUE_DATE</field>
+            <operation>equals</operation>
+        </filters>
+        <label>Unscheduled Tasks</label>
+    </listViews>
 </CustomObject>
