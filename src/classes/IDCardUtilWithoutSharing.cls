@@ -3,6 +3,7 @@ global without sharing class IDCardUtilWithoutSharing {
 	public static id AppId = null;
 
 	public static ID_Card_Application__c retrieveCommittedICA(id iAppId){
+		system.debug(LoggingLevel.ERROR,'IDCardUtilWithoutSharing.retrieveCommittedICA iAppId = ' + iAppId);
 		ID_Card_Application__c ICAToReturn = new ID_Card_Application__c();
 		list<string> lsFields = TransformationHelper.selectAllWritableFieldsByCurrentUser('ID_Card_Application__c');
 		if(!lsFields.contains('RecordTypeId')) lsFields.add('recordtypeId');
@@ -21,6 +22,7 @@ global without sharing class IDCardUtilWithoutSharing {
 	}
 
 	public static void saveCommittedICA(ID_Card_Application__c transientICA, id iAppId){
+		system.debug(LoggingLevel.ERROR,'IDCardUtilWithoutSharing.saveCommittedICA iAppId = ' + iAppId);
 		list<string> lsFields = TransformationHelper.selectAllWritableFieldsByCurrentUser('ID_Card_Application__c');
 		ID_Card_Application__c ICAToCommit = new ID_Card_Application__c();
 
@@ -33,16 +35,18 @@ global without sharing class IDCardUtilWithoutSharing {
 	}
 
 	public static database.UpsertResult dbUpsertCommittedICA(ID_Card_Application__c transientICA, id iAppId){
+		system.debug(LoggingLevel.ERROR,'IDCardUtilWithoutSharing.dbUpsertCommittedICA iAppId = ' + iAppId);
+
 		list<string> lsFields = TransformationHelper.selectAllWritableFieldsByCurrentUser('ID_Card_Application__c');
 		ID_Card_Application__c ICAToCommit = new ID_Card_Application__c();
 
 		for(string field:lsFields){
 			ICAToCommit.put(field, transientICA.get(field));
-			system.debug('DTULLO Field: ' + field + ' Value: ' +  transientICA.get(field));
+			system.debug(LoggingLevel.ERROR,'Field: ' + field + ' Value: ' +  transientICA.get(field));
 		}
 			
 		
-		system.debug('DTULLO ' + iAppId );
+		system.debug(LoggingLevel.ERROR,'iAppID ' + iAppId );
 		
 		if(iAppId!=null)
 			ICAToCommit.Id = iAppId;
@@ -51,6 +55,8 @@ global without sharing class IDCardUtilWithoutSharing {
 	}
 
 	public static void updateCheckoutCase(id idCardAppId){
+		system.debug(LoggingLevel.ERROR,'IDCardUtilWithoutSharing.updateCheckoutCase idCardAppId = ' + idCardAppId);
+
 		List<Case> cases = [SELECT Id FROM Case WHERE Related_ID_Card_Application__c = :idCardAppId];
 		if (cases.size() > 0)
 			cases[0].Status = 'Ready for production';

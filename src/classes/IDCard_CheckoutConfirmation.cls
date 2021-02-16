@@ -27,7 +27,7 @@ public without sharing class IDCard_CheckoutConfirmation extends IDCardAbstractC
 
 	private ID_Card_Application__c iDCardApplication;
 
-	public static string idCardAppId {get;set;}
+	private id idCardAppId;
 
 	public IDCard_CheckoutConfirmation() {
 		initialize();

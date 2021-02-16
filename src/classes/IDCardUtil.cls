@@ -1317,7 +1317,7 @@ global with sharing class IDCardUtil {
 		// Create the case
 		Case newCase = new Case();
 		newCase.RecordTypeId = IDCardcaseRecordTypeID;
-		newCase.Subject = 'Case for ID Card Application ' + idCardApp.Name;
+		newCase.Subject = 'Case for ID Card Application ' + (idCardAppId==null?'':([SELECT Name FROM ID_Card_Application__c WHERE Id = :idCardAppId].Name));
 		if (SendEmail)
 			newCase.Status = 'Agent to be Notified';
 		else
