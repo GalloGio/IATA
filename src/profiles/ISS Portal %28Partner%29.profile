@@ -2445,7 +2445,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>AccountRolesAlignBatch</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>AccountRolesAlignBatch_Test</apexClass>
