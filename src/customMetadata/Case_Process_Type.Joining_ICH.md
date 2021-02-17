@@ -16,7 +16,7 @@
     </values>
     <values>
         <field>Reason__c</field>
-        <value xsi:type="xsd:string">New ICH Participant</value>
+        <value xsi:type="xsd:string">ICH Membership</value>
     </values>
     <values>
         <field>Record_Type__c</field>

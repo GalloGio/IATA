@@ -1930,6 +1930,4 @@ global with sharing class IDCardUtil {
 		}
 		return '';
 	}
-
-
 }

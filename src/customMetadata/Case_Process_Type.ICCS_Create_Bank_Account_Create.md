@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>Other_Conditions__c</field>
-        <value xsi:type="xsd:string">CaseArea__c IN (&apos;ICCS – Update Bank Account&apos;)</value>
+        <value xsi:type="xsd:string">CaseArea__c IN (&apos;ICCS – Create Bank Account&apos;)</value>
     </values>
     <values>
         <field>Reason__c</field>

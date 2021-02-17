@@ -5152,6 +5152,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>IDCardUtilWithoutSharing</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>IDCardWebService</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -67572,10 +67576,10 @@
     </objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>
-        <allowDelete>true</allowDelete>
+        <allowDelete>false</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
-        <modifyAllRecords>true</modifyAllRecords>
+        <modifyAllRecords>false</modifyAllRecords>
         <object>LocalGovernance__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>

@@ -11874,7 +11874,7 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>gabriel@iata.org</assignedTo>
+            <assignedTo>oueidatg2@iata.org</assignedTo>
             <assignedToType>User</assignedToType>
             <booleanFilter>(1 AND 2) OR 3</booleanFilter>
             <criteriaItems>
@@ -11939,15 +11939,6 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
                 <field>Case.Subject</field>
                 <operation>contains</operation>
                 <value>out of office</value>
-            </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>CasesISS</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.Origin</field>
-                <operation>equals</operation>
-                <value>E-mail to Case - ISS</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>

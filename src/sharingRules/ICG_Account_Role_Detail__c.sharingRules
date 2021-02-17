@@ -11,7 +11,7 @@
         <criteriaItems>
             <field>CreatedById</field>
             <operation>notEqual</operation>
-            <value/>
+            <value></value>
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingGuestRules>
@@ -25,7 +25,7 @@
         <criteriaItems>
             <field>CreatedById</field>
             <operation>notEqual</operation>
-            <value/>
+            <value></value>
         </criteriaItems>
     </sharingGuestRules>
 </SharingRules>
