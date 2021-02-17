@@ -8,7 +8,7 @@ public with sharing class AirportISService {
 			portalApplication.Auto_grant_Account_Role__c = TRUE;
 			portalApplication.Functional_Role__c = FUNCTIONALROLE;
 		}else
-			portalApplication = PortalApplicationSelector.selectAutoGrantAccountRoleByName(new Set<String>{FUNCTIONALROLE}).get(0);
+			portalApplication = PortalApplicationSelector.selectAutoGrantAccountRoleByFunctionalRole(new Set<String>{FUNCTIONALROLE}).get(0);
 		
 		//create contact Id, Contact map
 		Map<Id, Contact> inputContactIdMap = new Map<Id, Contact>();
