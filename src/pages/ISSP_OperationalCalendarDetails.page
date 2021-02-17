@@ -5,7 +5,7 @@
            readonly="true"
            controller="ISSP_OperationalCalendarController">
 
-<c:ISSP_Header ></c:ISSP_Header>
+<c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>
 
 <script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/jquery.dataTables.min.js')}"></script>
 <script src="{!URLFOR($Resource.ISSP_OperationalCalendar, '/js/dataTables.bootstrap.min.js')}"></script>
@@ -1170,7 +1170,7 @@
 </script>
 
 <div class="container" >
-    <c:ISSP_CustomNavigation />
+    <c:ISSP_CustomNavigation communityName="{!communityName}"/>
     
     <div id='table'>
         <!-- TITLE -->
@@ -1401,5 +1401,6 @@
         </apex:outputPanel>
     </div>
 
+    <c:ISSP_CustomFooter communityName="{!communityName}"/>
 </div>
 </apex:page>
