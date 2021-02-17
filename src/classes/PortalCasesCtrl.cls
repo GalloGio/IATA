@@ -753,7 +753,7 @@ public with sharing class PortalCasesCtrl {
 	@AuraEnabled
 	public static Boolean getHideAddNewDocumentsDGR(String caseId) {
 		Case newCase = getCaseById(caseId);
-		return ((newCase.OSCAR__c != null && newCase.OSCAR__r.recordType.DeveloperName == 'CERTIFICATE')
+		return ((newCase.OSCAR__c != null && newCase.OSCAR__r.recordType.DeveloperName == 'CERTIFICATION')
 				&& newCase.recordType.DeveloperName == 'OSCAR_Communication'
 				&& newCase.Status == 'Closed');
 	}

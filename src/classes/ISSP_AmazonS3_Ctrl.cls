@@ -118,7 +118,7 @@ global class ISSP_AmazonS3_Ctrl {
 				 from Case where id = : this.id];
 
 		this.isDGRForm = false;
-		if(this.cse.OSCAR__c != null && this.cse.OSCAR__r.recordType.DeveloperName == 'CERTIFICATE'){
+		if(this.cse.OSCAR__c != null && this.cse.OSCAR__r.recordType.DeveloperName == 'CERTIFICATION'){
 			this.isDGRForm = true;
 		}
 		calculePolicy('');

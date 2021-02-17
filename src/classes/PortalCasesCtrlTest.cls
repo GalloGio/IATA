@@ -616,7 +616,7 @@ private class PortalCasesCtrlTest {
 									Name='Test1 Account', Location_Type__c = 'HO', Type='CASS Associate', Sector__c = 'Travel Agent', 
 									IATA_ISO_Country__c = isoCountry.id, IATAcode__c = '12345678', AIMS_ID__c = '12345678', Source_System__c = 'AIMS2');
 		insert newAcc;
-		ID rtChange = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CERTIFICATE');
+		ID rtChange = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'CERTIFICATION');
 		AMS_OSCAR__c theOscar = new AMS_OSCAR__c(RecordTypeId = rtChange, Account__c = newAcc.Id, Type_of_change__c = AMS_Utils.COR,Change_effective_as_of__c  = Date.today());
 		insert theOscar;
 
