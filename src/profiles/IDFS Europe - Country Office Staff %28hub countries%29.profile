@@ -5144,6 +5144,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>IDCardUtilWithoutSharing</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>IDCardWebService</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -22795,7 +22799,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.Remittance_frequency__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -61203,11 +61207,11 @@
         <recordType>ANG_Risk_Alert__c.Risk_Alert_EDS</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>ANG_Risk_Alert__c-Risk Alert Layout</layout>
+        <layout>ANG_Risk_Alert__c-Risk Alert GDS</layout>
+        <recordType>ANG_Risk_Alert__c.RiskAlertGDS</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>ANG_Risk_Alert__c-Risk Alert Layout</layout>
-        <recordType>ANG_Risk_Alert__c.RiskAlertGDS</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>ANG_Risk_Alert__c-Risk Alert Layout</layout>
@@ -68554,6 +68558,7 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
+        <personAccountDefault>true</personAccountDefault>
         <recordType>Account.Standard_Account</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>

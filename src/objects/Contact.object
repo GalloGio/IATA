@@ -9536,12 +9536,6 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
                     <label>Aeropolitico</label>
                 </value>
                 <value>
-                    <fullName>Aéropolitique</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Aéropolitique</label>
-                </value>
-                <value>
                     <fullName>Altro</fullName>
                     <default>false</default>
                     <isActive>false</isActive>
@@ -9682,18 +9676,6 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
                     <label>Finanzas</label>
                 </value>
                 <value>
-                    <fullName>Finanze</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Finanze</label>
-                </value>
-                <value>
-                    <fullName>Finanzen</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Finanzen</label>
-                </value>
-                <value>
                     <fullName>Flight Operation</fullName>
                     <default>false</default>
                     <isActive>false</isActive>
@@ -9704,12 +9686,6 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
                     <default>false</default>
                     <isActive>false</isActive>
                     <label>Formación</label>
-                </value>
-                <value>
-                    <fullName>Formation</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Formation</label>
                 </value>
                 <value>
                     <fullName>Frachtgut</fullName>
@@ -9762,12 +9738,6 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
                     <fullName>Human Resources</fullName>
                     <default>false</default>
                     <label>Human Resources</label>
-                </value>
-                <value>
-                    <fullName>Información legal</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Información legal</label>
                 </value>
                 <value>
                     <fullName>Informations légales</fullName>
@@ -9869,12 +9839,6 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
                     <label>Marketing&amp;Sales</label>
                 </value>
                 <value>
-                    <fullName>Marketing&amp; Sales</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Marketing&amp; Sales</label>
-                </value>
-                <value>
                     <fullName>Marketing &amp; Sales</fullName>
                     <default>false</default>
                     <isActive>false</isActive>
@@ -9885,12 +9849,6 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
                     <default>false</default>
                     <isActive>false</isActive>
                     <label>Marketing &amp; Verkauf</label>
-                </value>
-                <value>
-                    <fullName>Marketing et ventes</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Marketing et ventes</label>
                 </value>
                 <value>
                     <fullName>Marketing e Vendas</fullName>
@@ -9986,12 +9944,6 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
                     <label>Other</label>
                 </value>
                 <value>
-                    <fullName>Otro</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Otro</label>
-                </value>
-                <value>
                     <fullName>Outra</fullName>
                     <default>false</default>
                     <isActive>false</isActive>
@@ -10040,18 +9992,6 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
                     <label>Rechtliches</label>
                 </value>
                 <value>
-                    <fullName>Recursos Humanos</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Recursos Humanos</label>
-                </value>
-                <value>
-                    <fullName>Ressources humaines</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Ressources humaines</label>
-                </value>
-                <value>
                     <fullName>Safety</fullName>
                     <default>false</default>
                     <label>Safety</label>
@@ -10067,12 +10007,6 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
                     <default>false</default>
                     <isActive>false</isActive>
                     <label>Sales</label>
-                </value>
-                <value>
-                    <fullName>Sales&amp;Marketing</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Sales&amp;Marketing</label>
                 </value>
                 <value>
                     <fullName>Sécurité</fullName>
@@ -10108,12 +10042,6 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
                     <default>false</default>
                     <isActive>false</isActive>
                     <label>Security &amp; Facilitation</label>
-                </value>
-                <value>
-                    <fullName>Segurança</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Segurança</label>
                 </value>
                 <value>
                     <fullName>Segurança e Facilitação</fullName>
@@ -10173,18 +10101,6 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
                     <default>false</default>
                     <isActive>false</isActive>
                     <label>Technique</label>
-                </value>
-                <value>
-                    <fullName>Técnica</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Técnica</label>
-                </value>
-                <value>
-                    <fullName>Tecnico</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Tecnico</label>
                 </value>
                 <value>
                     <fullName>Técnico</fullName>
@@ -10250,12 +10166,6 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
                     <default>false</default>
                     <isActive>false</isActive>
                     <label>أنظمة الملاحة الجوية</label>
-                </value>
-                <value>
-                    <fullName>الأمن والتسهيلات</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>الأمن والتسهيلات</label>
                 </value>
                 <value>
                     <fullName>التسويق والمبيعات</fullName>
@@ -10390,18 +10300,6 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
                     <label>培训</label>
                 </value>
                 <value>
-                    <fullName>安全与便利</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>安全与便利</label>
-                </value>
-                <value>
-                    <fullName>技术</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>技术</label>
-                </value>
-                <value>
                     <fullName>技術</fullName>
                     <default>false</default>
                     <isActive>false</isActive>
@@ -10484,12 +10382,6 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
                     <default>false</default>
                     <isActive>false</isActive>
                     <label>마케팅 및 세일즈</label>
-                </value>
-                <value>
-                    <fullName>영업활동</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>영업활동</label>
                 </value>
                 <value>
                     <fullName>인적 자원</fullName>
