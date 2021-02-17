@@ -14,6 +14,7 @@ public with sharing class ISSP_EditPortalServiceAccessExt {
 		showOAG = false;
 		isTD = false;
 		serviceAccess = (Portal_Application_Right__c)controller.getRecord();
+		String functionalRole = PortalApplicationSelector.selectFunctionalRoleMapByServiceNameSet(new Set<String>{serviceAccess.Application_Name__c}).get(serviceAccess.Portal_Application__c).Functional_Role__c;
 		pendingApproval = false;
 		noUser = false;
 		inactiveUser = false;
@@ -42,7 +43,7 @@ public with sharing class ISSP_EditPortalServiceAccessExt {
 		}
 		if (serviceAccess.Portal_Application__c != null){
 			if (serviceAccess.Application_Name__c != null){
-				if (serviceAccess.Application_Name__c.contains('Airport IS'))
+				if (functionalRole.equals('Airport IS'))
 					showOAG = true;
 				if (serviceAccess.Application_Name__c.contains('Treasury Dashboard')){
 					isTD = true;
