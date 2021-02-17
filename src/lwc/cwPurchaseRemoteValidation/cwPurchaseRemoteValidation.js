@@ -102,7 +102,7 @@ export default class CwPurchaseRemoteValidation extends LightningElement {
 
 		if(allowedRt.length > 0 && rvProduct && this._userManagedFacilities && this.stationsWithOpenRemoteValidations) {
 			let items = [];
-			let ecommerceUrlRequired = false;
+			let ecommerceUrlRequired = (this.stationsWithOpenRemoteValidations.length == 0);
 
 			this._userManagedFacilities.forEach(currentRecord => {
 				if (currentRecord.isApproved__c === true && allowedRt.includes(currentRecord.RecordType.DeveloperName)) {
