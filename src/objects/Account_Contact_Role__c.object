@@ -142,6 +142,16 @@
     </actionOverrides>
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <compactLayouts>
+        <fullName>IFTP_Compact_Layout</fullName>
+        <fields>Account__c</fields>
+        <fields>Name</fields>
+        <fields>Account_Role__c</fields>
+        <fields>Contact__c</fields>
+        <fields>First_Name__c</fields>
+        <fields>Last_Name__c</fields>
+        <label>IFTP Compact Layout</label>
+    </compactLayouts>
     <deploymentStatus>Deployed</deploymentStatus>
     <description>Related to the Account Role, used to designate an existing contact, under the account, that acts as a primary contact for the associated type of account role.</description>
     <enableActivities>true</enableActivities>
@@ -154,36 +164,6 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ControlledByParent</externalSharingModel>
-    <label>Account Contact Role</label>
-    <nameField>
-        <displayFormat>ACR-{000000000}</displayFormat>
-        <label>Account Contact Role Id</label>
-        <trackHistory>false</trackHistory>
-        <type>AutoNumber</type>
-    </nameField>
-    <pluralLabel>Account Contacts Role</pluralLabel>
-    <recordTypeTrackHistory>true</recordTypeTrackHistory>
-    <searchLayouts>
-        <customTabListAdditionalFields>Contact_Name__c</customTabListAdditionalFields>
-        <customTabListAdditionalFields>Account_Role__c</customTabListAdditionalFields>
-        <lookupDialogsAdditionalFields>Contact_Name__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>Email__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>Contact_Roles__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>Service_Rendered__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>Account_Name__c</lookupDialogsAdditionalFields>
-        <searchFilterFields>First_Name__c</searchFilterFields>
-        <searchFilterFields>Last_Name__c</searchFilterFields>
-        <searchFilterFields>Email__c</searchFilterFields>
-        <searchFilterFields>Company_Code__c</searchFilterFields>
-        <searchFilterFields>Contact__c</searchFilterFields>
-        <searchResultsAdditionalFields>Account__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Account_Role__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>First_Name__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Last_Name__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Email__c</searchResultsAdditionalFields>
-    </searchLayouts>
-    <sharingModel>ControlledByParent</sharingModel>
-    <visibility>Public</visibility>
     <fields>
         <fullName>Account_Name__c</fullName>
         <description>It returns the name account associated to the account role. Used in flows.</description>
@@ -608,16 +588,27 @@
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
-    <compactLayouts>
-        <fullName>IFTP_Compact_Layout</fullName>
-        <fields>Account__c</fields>
-        <fields>Name</fields>
-        <fields>Account_Role__c</fields>
-        <fields>Contact__c</fields>
-        <fields>First_Name__c</fields>
-        <fields>Last_Name__c</fields>
-        <label>IFTP Compact Layout</label>
-    </compactLayouts>
+    <label>Account Contact Role</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Contact__c</columns>
+        <columns>Service_Rendered__c</columns>
+        <columns>Account_Role__c</columns>
+        <columns>Contact_Roles__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>RECORDTYPE</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <displayFormat>ACR-{000000000}</displayFormat>
+        <label>Account Contact Role Id</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Account Contacts Role</pluralLabel>
+    <recordTypeTrackHistory>true</recordTypeTrackHistory>
     <recordTypes>
         <fullName>Functional</fullName>
         <active>true</active>
@@ -999,22 +990,31 @@
             </values>
         </picklistValues>
     </recordTypes>
+    <searchLayouts>
+        <customTabListAdditionalFields>Contact_Name__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Account_Role__c</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>Contact_Name__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Email__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Contact_Roles__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Service_Rendered__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Account_Name__c</lookupDialogsAdditionalFields>
+        <searchFilterFields>First_Name__c</searchFilterFields>
+        <searchFilterFields>Last_Name__c</searchFilterFields>
+        <searchFilterFields>Email__c</searchFilterFields>
+        <searchFilterFields>Company_Code__c</searchFilterFields>
+        <searchFilterFields>Contact__c</searchFilterFields>
+        <searchResultsAdditionalFields>Account__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Account_Role__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>First_Name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Last_Name__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Email__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
     <validationRules>
         <fullName>Mandatory_fields_for_primary_contact</fullName>
         <active>true</active>
         <errorConditionFormula>is_primary__c  &amp;&amp; ( First_Name__c = null || Last_Name__c = null || Email__c = null || Position__c = null || Title__c = null || Business_Phone__c = null)</errorConditionFormula>
         <errorMessage>The following Contact fields cannot be empty for Primary Provider Contacts: First name, Last Name, Salutation, Title, Email &amp; Phone.</errorMessage>
     </validationRules>
-    <listViews>
-        <fullName>All</fullName>
-        <columns>NAME</columns>
-        <columns>Contact__c</columns>
-        <columns>Service_Rendered__c</columns>
-        <columns>Account_Role__c</columns>
-        <columns>Contact_Roles__c</columns>
-        <columns>CREATED_DATE</columns>
-        <columns>RECORDTYPE</columns>
-        <filterScope>Everything</filterScope>
-        <label>All</label>
-    </listViews>
+    <visibility>Public</visibility>
 </CustomObject>
