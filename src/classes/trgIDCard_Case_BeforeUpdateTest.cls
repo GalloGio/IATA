@@ -58,7 +58,7 @@ private class trgIDCard_Case_BeforeUpdateTest
 			Contact contactId1 = IDCardUtil.CreateContactWhenNewCardIsApproved(idCardAppToInsert[0]);
 
 
-			IDCardUtil.CreateIDCardApplicationCase(idCardAppToInsert[0], testData.IDCard_Accounts[0]);
+			IDCardUtil.CreateIDCardApplicationCase(idCardAppToInsert[0], testData.IDCard_Accounts[0],null);
 			System.debug('*-*-*-*-*-*-*-*-*- IdCardApplication ' + idCardAppToInsert[0].Id);
 			System.debug('*-*-*-*-*-*-*-*-*- Account ' + testData.IDCard_Accounts[0]);
 			relatedCase = [SELECT ID_Card_Status__c FROM Case];
