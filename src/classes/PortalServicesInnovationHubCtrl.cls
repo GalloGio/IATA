@@ -5,8 +5,8 @@ public without sharing class PortalServicesInnovationHubCtrl {
 	private static String IH_ACCOUNT_ROLE_DETAILS_STATUS_SUBMITTED = 'Submitted';
 	private static String IH_ACCOUNT_ROLE_DETAILS_STATUS_APPROVED = 'Approved';
 	private static String IH_LOGO_PATH = '/sfc/servlet.shepherd/version/download/';
+	private static String IH_FUNCTIONAL_ROLE = 'InnovationHub CRM';
 
-	private static String accountRoleRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'Innovation_Hub');
 	private static String accountRoleDetailConsumerRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('IH_Account_Role_Detail__c', 'Consumer');
 	private static String accountRoleDetailProviderRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('IH_Account_Role_Detail__c', 'Provider');
 	private static String accountRoleDetailConsumerProviderRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('IH_Account_Role_Detail__c', 'Consumer_and_Provider');
@@ -277,7 +277,7 @@ public without sharing class PortalServicesInnovationHubCtrl {
 		List<IH_Account_Role_Detail__c> lstAccountRoleDetails = new List<IH_Account_Role_Detail__c>();
 
 		// Insert IH Account Role Details
-		lstAccountRoles =[SELECT Id, Account__c FROM Account_Role__c WHERE Account__c IN :ids and RecordTypeId = :accountRoleRecordTypeId];		
+		lstAccountRoles =[SELECT Id, Account__c FROM Account_Role__c WHERE Account__c IN :ids and Functional_Role__c = :IH_FUNCTIONAL_ROLE];		
 		for(Account_Role__c ar : lstAccountRoles) {
 			mapAccRoles.put(ar.Account__c, ar.Id);
 		}
@@ -285,7 +285,7 @@ public without sharing class PortalServicesInnovationHubCtrl {
 		// If IH-AR does not exists, create a new one
 		for(Id accountId : ids){
 			if(mapAccRoles.isEmpty() || (!mapAccRoles.isEmpty() && !mapAccRoles.containsKey(accountId))) {
-				lstAccountRoles.add(new Account_Role__c(Account__c = accountId,  RecordTypeId = accountRoleRecordTypeId, Status__c = 'Active',  Functional_Role__c = 'InnovationHub CRM'));
+				lstAccountRoles.add(new Account_Role__c(Account__c = accountId, Status__c = 'Active',  Functional_Role__c = IH_FUNCTIONAL_ROLE));
 			}
 		}
 		if(!lstAccountRoles.isEmpty()){
@@ -457,7 +457,7 @@ public without sharing class PortalServicesInnovationHubCtrl {
 		List<IH_Account_Role_Detail__c> lstAccountRoles = [SELECT Id,RecordTypeId, Logo_File_Id__c,Internal_comments__c,Status__c,Marked_For_Review__c
 															FROM IH_Account_Role_Detail__c 
 															WHERE Account_Role__r.Account__c = :currentUser.Contact.AccountId
-															AND Account_Role__r.RecordTypeId = :accountRoleRecordTypeId 
+															AND Account_Role__r.Functional_Role__c = :IH_FUNCTIONAL_ROLE 
 															AND Status__c LIKE :statusAux LIMIT 1];
 		return lstAccountRoles != null && !lstAccountRoles.isEmpty() ? lstAccountRoles.get(0) : null;
 	}

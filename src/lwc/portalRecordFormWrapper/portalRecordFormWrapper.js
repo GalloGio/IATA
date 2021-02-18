@@ -173,7 +173,6 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         CSP_Technology,
         CSP_FocusAreas,
         CSP_Categories,
-        CSP_Touchpoints,
         CSP_ForMoreInfo,
         Edit,
         CSP_EditTrainingDetails,

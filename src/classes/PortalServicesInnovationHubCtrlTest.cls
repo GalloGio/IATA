@@ -4,7 +4,6 @@ public class PortalServicesInnovationHubCtrlTest {
 	@TestSetup
 	static void testSetup(){
 		Id accountAirlineRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
-		Id iHubRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'Innovation_Hub');
 		Id iHubDetailProviderRT = RecordTypeSingleton.getInstance().getRecordTypeId('IH_Account_Role_Detail__c', 'Provider');
 		Id iHubDetailConsumerRT = RecordTypeSingleton.getInstance().getRecordTypeId('IH_Account_Role_Detail__c', 'Consumer');
 		Id iHubDetailProAndConsRT = RecordTypeSingleton.getInstance().getRecordTypeId('IH_Account_Role_Detail__c', 'Consumer_and_Provider');
@@ -25,10 +24,10 @@ public class PortalServicesInnovationHubCtrlTest {
 		Contact newCon6 = new Contact(AccountId = newAcc6.Id, FirstName = 'John', LastName = 'Doe', Email = 'testemail6@csp.testclass', User_Portal_Status__c = 'Approved Admin', Status__c = 'Active');
 		insert new List<Contact>{newCon1, newCon2, newCon3, newCon4, newCon5, newCon6};
 		
-		Account_Role__c ar1 = new Account_Role__c(Account__c = newAcc1.Id,Account_Name__c = 'Test Role 1', RecordTypeId = iHubRT);
-		Account_Role__c ar2 = new Account_Role__c(Account__c = newAcc2.Id,Account_Name__c = 'Test Role 2', RecordTypeId = iHubRT);
-		Account_Role__c ar3 = new Account_Role__c(Account__c = newAcc3.Id,Account_Name__c = 'Test Role 3', RecordTypeId = iHubRT);
-		Account_Role__c ar4 = new Account_Role__c(Account__c = newAcc4.Id,Account_Name__c = 'Test Role 4', RecordTypeId = iHubRT);
+		Account_Role__c ar1 = new Account_Role__c(Account__c = newAcc1.Id,Account_Name__c = 'Test Role 1', Functional_Role__c = 'InnovationHub CRM');
+		Account_Role__c ar2 = new Account_Role__c(Account__c = newAcc2.Id,Account_Name__c = 'Test Role 2', Functional_Role__c = 'InnovationHub CRM');
+		Account_Role__c ar3 = new Account_Role__c(Account__c = newAcc3.Id,Account_Name__c = 'Test Role 3', Functional_Role__c = 'InnovationHub CRM');
+		Account_Role__c ar4 = new Account_Role__c(Account__c = newAcc4.Id,Account_Name__c = 'Test Role 4', Functional_Role__c = 'InnovationHub CRM');
 		insert new List<Account_Role__c>{ar1, ar2, ar3, ar4};
 		
 		IH_Account_Role_Detail__c ihubDetail1 = new IH_Account_Role_Detail__c(Account_Role__c = ar1.Id,Company_name__c = 'Test Provider',
@@ -213,8 +212,7 @@ public class PortalServicesInnovationHubCtrlTest {
 			insert par;
 		}
 		Test.stopTest();
-		Id iHubRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'Innovation_Hub');
-		List<Account_Role__c> arList = [SELECT Id FROM Account_Role__c WHERE Account__c = :con.AccountId AND RecordtypeId = :iHubRT];
+		List<Account_Role__c> arList = [SELECT Id FROM Account_Role__c WHERE Account__c = :con.AccountId AND Functional_Role__c = 'InnovationHub CRM'];
 		System.assertEquals(arList.size(), 1);
 		List<IH_Account_Role_Detail__c> ardList = [SELECT Id FROM IH_Account_Role_Detail__c WHERE Account_Role__r.Account__c = :con.AccountId];
 		System.assertEquals(ardList.size(), 1);
@@ -233,8 +231,7 @@ public class PortalServicesInnovationHubCtrlTest {
 			insert par;
 		}
 		Test.stopTest();
-		Id iHubRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'Innovation_Hub');
-		List<Account_Role__c> arList = [SELECT Id FROM Account_Role__c WHERE Account__c = :con.AccountId AND RecordtypeId = :iHubRT];
+		List<Account_Role__c> arList = [SELECT Id FROM Account_Role__c WHERE Account__c = :con.AccountId AND Functional_Role__c = 'InnovationHub CRM'];
 		System.assertEquals(arList.size(), 1);
 		List<IH_Account_Role_Detail__c> ardList = [SELECT Id FROM IH_Account_Role_Detail__c WHERE Account_Role__r.Account__c = :con.AccountId];
 		System.assertEquals(ardList.size(), 1);
