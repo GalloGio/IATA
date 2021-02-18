@@ -42,7 +42,6 @@ global without sharing class IDCardUtilWithoutSharing {
 
 		for(string field:lsFields){
 			ICAToCommit.put(field, transientICA.get(field));
-			system.debug(LoggingLevel.ERROR,'Field: ' + field + ' Value: ' +  transientICA.get(field));
 		}
 			
 		
