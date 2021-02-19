@@ -486,9 +486,9 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
         <columns>Status__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>RECORDTYPE</field>
+            <field>Functional_Role__c</field>
             <operation>equals</operation>
-            <value>Account_Role__c.Innovation_Hub</value>
+            <value>InnovationHub CRM</value>
         </filters>
         <label>Innovation Hub</label>
     </listViews>
@@ -665,60 +665,6 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
             </values>
             <values>
                 <fullName>Inactive</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-    </recordTypes>
-    <recordTypes>
-        <fullName>Innovation_Hub</fullName>
-        <active>true</active>
-        <description>Used for Innovation hub service roles</description>
-        <label>Innovation Hub</label>
-        <picklistValues>
-            <picklist>Flow_Status__c</picklist>
-            <values>
-                <fullName>Completed</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Pending</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Functional_Role__c</picklist>
-            <values>
-                <fullName>InnovationHub CRM</fullName>
-                <default>true</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Provider_Type__c</picklist>
-            <values>
-                <fullName>Closed Loop</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Open Loop</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Status__c</picklist>
-            <values>
-                <fullName>Active</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>In Progress</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Inactive</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Terminated</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
