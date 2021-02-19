@@ -116,7 +116,7 @@ global class ISSP_AmazonS3_Ctrl {
 				 IFAP_Agent_Code__c, AccountId, Account.Top_Parent__c, Financial_Review_Type__c, IsComplaint__c,
 				 Reason1__c, CaseArea__c, Owner.Name, OSCAR__c, OSCAR__r.recordType.DeveloperName
 				 from Case where id = : this.id];
-
+		this.topParentIdHierarchy = this.cse.Account.Top_Parent__c != null ? this.cse.Account.Top_Parent__c : this.cse.AccountId;
 		this.isDGRForm = false;
 		if(this.cse.OSCAR__c != null && this.cse.OSCAR__r.recordType.DeveloperName == 'CERTIFICATION'){
 			this.isDGRForm = true;
@@ -442,7 +442,7 @@ global class ISSP_AmazonS3_Ctrl {
 																WHERE Account__c IN: accountListInHierarchy];
 		
 		for (AMS_Agency_Regulation__c ag : agencyRegulationList) {
-			if(ag.First_Name__c == firstName && ag.Last_Name__c == lastName && ag.Issued_on__c == Date.parse(certificateIssuedOn)  && ag.Expiry_Date__c == Date.parse(ExpiryDate)){
+			if(ag.First_Name__c.equalsIgnoreCase(firstName) && ag.Last_Name__c.equalsIgnoreCase(lastName) && ag.Issued_on__c == Date.parse(certificateIssuedOn)  && ag.Expiry_Date__c == Date.parse(ExpiryDate)){
 				return 'fields';
 			}
 		}
@@ -452,7 +452,7 @@ global class ISSP_AmazonS3_Ctrl {
 											WHERE AMS_Pax_Accreditation_Form__r.SAAM_Case__r.AccountId IN: accountListInHierarchy];
 
 		for (AMS_Accreditation_Contact__c af : amsAccreditationContact) {
-			if(af.First_Name__c == firstName && af.Last_Name__c == lastName && af.Certificate_Issued_on__c == Date.parse(certificateIssuedOn) && af.Valid_until__c == Date.parse(ExpiryDate)){
+			if(af.First_Name__c.equalsIgnoreCase(firstName) && af.Last_Name__c.equalsIgnoreCase(lastName) && af.Certificate_Issued_on__c == Date.parse(certificateIssuedOn) && af.Valid_until__c == Date.parse(ExpiryDate)){
 				return 'fields';
 			}
 		}
