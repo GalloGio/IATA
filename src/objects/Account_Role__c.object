@@ -142,6 +142,14 @@
     </actionOverrides>
     <allowInChatterGroups>false</allowInChatterGroups>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
+    <compactLayouts>
+        <fullName>IFTP_Compact_Layout</fullName>
+        <fields>Account__c</fields>
+        <fields>Account_Roles__c</fields>
+        <fields>Name</fields>
+        <fields>Status__c</fields>
+        <label>IFTP Compact Layout</label>
+    </compactLayouts>
     <deploymentStatus>Deployed</deploymentStatus>
     <description>Used to extend the role of any existing account type e.g. an airline that also acts as a payment provider. A record type should be created for each type of account role required.</description>
     <enableActivities>false</enableActivities>
@@ -155,29 +163,6 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ControlledByParent</externalSharingModel>
-    <label>Account Role</label>
-    <nameField>
-        <displayFormat>AR-{0000}</displayFormat>
-        <label>Account Role Name</label>
-        <trackHistory>true</trackHistory>
-        <type>AutoNumber</type>
-    </nameField>
-    <pluralLabel>Account Roles</pluralLabel>
-    <recordTypeTrackHistory>true</recordTypeTrackHistory>
-    <searchLayouts>
-        <lookupDialogsAdditionalFields>Account_Name__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>Account_Roles__c</lookupDialogsAdditionalFields>
-        <lookupFilterFields>Account_Roles__c</lookupFilterFields>
-        <lookupFilterFields>Account_Name__c</lookupFilterFields>
-        <lookupFilterFields>NAME</lookupFilterFields>
-        <searchFilterFields>Account__c</searchFilterFields>
-        <searchFilterFields>Account_Roles__c</searchFilterFields>
-        <searchResultsAdditionalFields>Account__c</searchResultsAdditionalFields>
-        <searchResultsAdditionalFields>Account_Roles__c</searchResultsAdditionalFields>
-    </searchLayouts>
-    <sharingModel>ControlledByParent</sharingModel>
-    <startsWith>Vowel</startsWith>
-    <visibility>Public</visibility>
     <fields>
         <fullName>Account_Name__c</fullName>
         <externalId>false</externalId>
@@ -484,14 +469,24 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
         <type>Text</type>
         <unique>false</unique>
     </fields>
-    <compactLayouts>
-        <fullName>IFTP_Compact_Layout</fullName>
-        <fields>Account__c</fields>
-        <fields>Account_Roles__c</fields>
-        <fields>Name</fields>
-        <fields>Status__c</fields>
-        <label>IFTP Compact Layout</label>
-    </compactLayouts>
+    <label>Account Role</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Account__c</columns>
+        <columns>Account_Name__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <displayFormat>AR-{0000}</displayFormat>
+        <label>Account Role Name</label>
+        <trackHistory>true</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Account Roles</pluralLabel>
+    <recordTypeTrackHistory>true</recordTypeTrackHistory>
     <recordTypes>
         <fullName>Amsterdam_Publications</fullName>
         <active>true</active>
@@ -800,17 +795,19 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
             </values>
         </picklistValues>
     </recordTypes>
-    <webLinks>
-        <fullName>Terminate_Provider_Account</fullName>
-        <availability>online</availability>
-        <displayType>button</displayType>
-        <encodingKey>UTF-8</encodingKey>
-        <linkType>url</linkType>
-        <masterLabel>Terminate ATM Provider</masterLabel>
-        <openType>replace</openType>
-        <protected>false</protected>
-        <url>/flow/TIP_Payment_Provider_Termination?vAccountRoleId={!Account_Role__c.Id}&amp;retURL=/{!Account_Role__c.Id}</url>
-    </webLinks>
+    <searchLayouts>
+        <lookupDialogsAdditionalFields>Account_Name__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Account_Roles__c</lookupDialogsAdditionalFields>
+        <lookupFilterFields>Account_Roles__c</lookupFilterFields>
+        <lookupFilterFields>Account_Name__c</lookupFilterFields>
+        <lookupFilterFields>NAME</lookupFilterFields>
+        <searchFilterFields>Account__c</searchFilterFields>
+        <searchFilterFields>Account_Roles__c</searchFilterFields>
+        <searchResultsAdditionalFields>Account__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Account_Roles__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+    <startsWith>Vowel</startsWith>
     <validationRules>
         <fullName>Effective_Start_Date_on_Payment_Provider</fullName>
         <active>true</active>
@@ -859,13 +856,16 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
         <errorConditionFormula>AND(RecordType.DeveloperName=&quot;TIP_Payment_Provider&quot;, TEXT(Status__c)=&quot;Active&quot;, Effective_From_Date__c&gt;Today())</errorConditionFormula>
         <errorMessage>Can’t have active Payment Providers with Effective date From in the future</errorMessage>
     </validationRules>
-    <listViews>
-        <fullName>All</fullName>
-        <columns>NAME</columns>
-        <columns>Account__c</columns>
-        <columns>Account_Name__c</columns>
-        <filterScope>Everything</filterScope>
-        <label>All</label>
-        <language>en_US</language>
-    </listViews>
+    <visibility>Public</visibility>
+    <webLinks>
+        <fullName>Terminate_Provider_Account</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <encodingKey>UTF-8</encodingKey>
+        <linkType>url</linkType>
+        <masterLabel>Terminate ATM Provider</masterLabel>
+        <openType>replace</openType>
+        <protected>false</protected>
+        <url>/flow/TIP_Payment_Provider_Termination?vAccountRoleId={!Account_Role__c.Id}&amp;retURL=/{!Account_Role__c.Id}</url>
+    </webLinks>
 </CustomObject>
