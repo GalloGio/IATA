@@ -6,7 +6,7 @@ public without sharing class PortalServicesInnovationHubCtrl {
 	private static String IH_ACCOUNT_ROLE_DETAILS_STATUS_APPROVED = 'Approved';
 	private static String IH_LOGO_PATH = '/sfc/servlet.shepherd/version/download/';
 	private static String IH_FUNCTIONAL_ROLE = 'InnovationHub CRM';
-
+	private static String accountRoleRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'Default');
 	private static String accountRoleDetailConsumerRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('IH_Account_Role_Detail__c', 'Consumer');
 	private static String accountRoleDetailProviderRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('IH_Account_Role_Detail__c', 'Provider');
 	private static String accountRoleDetailConsumerProviderRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('IH_Account_Role_Detail__c', 'Consumer_and_Provider');
@@ -285,7 +285,7 @@ public without sharing class PortalServicesInnovationHubCtrl {
 		// If IH-AR does not exists, create a new one
 		for(Id accountId : ids){
 			if(mapAccRoles.isEmpty() || (!mapAccRoles.isEmpty() && !mapAccRoles.containsKey(accountId))) {
-				lstAccountRoles.add(new Account_Role__c(Account__c = accountId, Status__c = 'Active',  Functional_Role__c = IH_FUNCTIONAL_ROLE));
+				lstAccountRoles.add(new Account_Role__c(Account__c = accountId, Status__c = 'Active',  Functional_Role__c = IH_FUNCTIONAL_ROLE, RecordtypeId = :accountRoleRecordTypeId));
 			}
 		}
 		if(!lstAccountRoles.isEmpty()){
