@@ -25,6 +25,11 @@
         <default>false</default>
         <label>InnovationHub CRM</label>
     </customValue>
+    <customValue>
+        <fullName>Airport IS</fullName>
+        <default>false</default>
+        <label>Airport IS</label>
+    </customValue>
     <description>Functional Roles</description>
     <masterLabel>Functional Roles</masterLabel>
     <sorted>false</sorted>

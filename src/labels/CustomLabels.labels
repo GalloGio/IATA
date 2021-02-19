@@ -2886,6 +2886,15 @@ SF Workflow Process</value>
 3- Your world-wide outstanding BSPLink refund authority request transactions, by country</value>
     </labels>
     <labels>
+        <fullName>AirportAIS_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AirportAIS_Service_Description</shortDescription>
+        <value>AirportIS is the most powerful market intelligence and analysis tool for the airports available today capturing 100% traffic around the world.
+
+AirportIS provides airports with the most accurate and reliable traffic data and timely schedule information, combining total market supply and demand in a single user-friendly on-line platform.</value>
+    </labels>
+    <labels>
         <fullName>All_Notifications_Notification</fullName>
         <language>en_US</language>
         <protected>false</protected>
