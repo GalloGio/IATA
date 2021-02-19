@@ -39,11 +39,21 @@ export default class PortalServicesInnovationHubEditTab extends LightningElement
     @track comments = '';
     @track markedForReview = false;
     @track mode = '';
+    @track fileToUpload = '';
+    @track logo = '';
 
     //modals visibility controllers
     @track showSuccessModal = false;
     @track showErrorModal = false;
     @track showEditModal = false;
+
+    get hasFileToUpload() {
+        return this.fileToUpload != null && this.fileToUpload != '';
+    }
+
+    get hasLogo() {
+        return this.logo != null && this.logo != '';
+    }
 
     labels = {
         Comments,
@@ -71,7 +81,7 @@ export default class PortalServicesInnovationHubEditTab extends LightningElement
         getProviderPropertiesAndCardsList({})
         .then(result => {
             var properties = JSON.parse(JSON.stringify(result));
-            this.propertiesAndAndCardsList = properties;
+            this.propertiesAndAndCardsList = properties;           
 
             var extraDetails = JSON.parse(properties.extraDetails);
             this.viewSubmitWarning = extraDetails.editButtonStatus === 'Submitted';
@@ -182,6 +192,7 @@ export default class PortalServicesInnovationHubEditTab extends LightningElement
     //Method for input file
     openfileUpload(event) {
         let file = event.target.files[0];
+        this.fileToUpload = file.name; 
         let reader = new FileReader()
         reader.onload = () => {
             var base64 = reader.result.split(',')[1];

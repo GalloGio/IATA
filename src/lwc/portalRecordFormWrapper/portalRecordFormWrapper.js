@@ -507,8 +507,8 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         return this.objectName != null && this.objectName.toLowerCase() == 'contact';
     }
 
-    get isProviderDetail() {
-        return this.providerId != null && this.providerId != '';
+    get isIHUB() {
+        return window.location.pathname.includes('service-innovationhub');
     }
 
     //WMO-699 - ACAMBAS: Begin

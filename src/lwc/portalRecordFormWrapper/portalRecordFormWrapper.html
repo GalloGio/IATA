@@ -197,10 +197,10 @@
                                                                     <b><lightning-output-field field-name={field.fieldName}></lightning-output-field></b>
                                                                 </template>
                                                                 <template if:false={isCustomerInvoice}>
-                                                                    <div if:false={isProviderDetail}>
+                                                                    <div if:false={isIHUB}>
                                                                         <lightning-output-field class="labelValue textValue" field-name={field.fieldName}></lightning-output-field>      
                                                                     </div>
-                                                                    <div if:true={isProviderDetail}>
+                                                                    <div if:true={isIHUB}>
                                                                         <lightning-output-field class="ihub textValue" field-name={field.fieldName}></lightning-output-field>      
                                                                     </div>
                                                                 </template>
@@ -216,6 +216,7 @@
                                                                             onclick={openChangeUserPortalStatus}>
                                                                         </lightning-icon>
                                                                 </template>
+                                                                
                                                             <lightning-output-field class="labelValue textValue removeLinks"
                                                                     field-name={field.fieldName}>
                                                             </lightning-output-field>
