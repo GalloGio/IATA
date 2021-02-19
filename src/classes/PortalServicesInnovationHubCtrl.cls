@@ -285,7 +285,7 @@ public without sharing class PortalServicesInnovationHubCtrl {
 		// If IH-AR does not exists, create a new one
 		for(Id accountId : ids){
 			if(mapAccRoles.isEmpty() || (!mapAccRoles.isEmpty() && !mapAccRoles.containsKey(accountId))) {
-				lstAccountRoles.add(new Account_Role__c(Account__c = accountId, Status__c = 'Active',  Functional_Role__c = IH_FUNCTIONAL_ROLE, RecordtypeId = :accountRoleRecordTypeId));
+				lstAccountRoles.add(new Account_Role__c(Account__c = accountId, Status__c = 'Active',  Functional_Role__c = IH_FUNCTIONAL_ROLE, RecordtypeId = accountRoleRecordTypeId));
 			}
 		}
 		if(!lstAccountRoles.isEmpty()){
@@ -413,7 +413,7 @@ public without sharing class PortalServicesInnovationHubCtrl {
 	@AuraEnabled(cacheable = false)
 	public static String getProviderImgURL(String logoId) {
 		if(logoId != null){
-			return URL.getOrgDomainUrl().toExternalForm() + IH_LOGO_PATH + logoId;
+			return System.URL.getSalesforceBaseURL().toExternalForm() + IH_LOGO_PATH + logoId;
 		}
 
 		return null;
@@ -582,6 +582,7 @@ public without sharing class PortalServicesInnovationHubCtrl {
 		ContentDocumentLink cdl = new ContentDocumentLink();
 		cdl.ContentDocumentId = [ SELECT ContentDocumentId FROM ContentVersion WHERE Id =: contentVersionId].ContentDocumentId;
 		cdl.LinkedEntityId = recordId;
+		cdl.Visibility = 'AllUsers';
 		// ShareType is either 'V', 'C', or 'I'
 		// V = Viewer, C = Collaborator, I = Inferred
 		cdl.ShareType = 'V';

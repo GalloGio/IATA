@@ -1,15 +1,10 @@
 .displayImg{
-    width:200px;
-    height:70px;
+    height:140px;
 }
   
 .cardImagePropertiesDetail{
-    background-position: 50% 50% !important;
     background-repeat: no-repeat !important;
-}
-
-.logoMargin{
-    margin-top:-15px;
+    background-size: contain !important;
 }
 
 .noLogo{
