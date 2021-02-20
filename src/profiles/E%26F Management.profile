@@ -62732,6 +62732,9 @@
         <layout>ContactPointPhone-Contact Point Phone Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>ContactPointTypeConsent-Contact Point Type Consent Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Contact_Endorsement__c-Contact Endorsement Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
