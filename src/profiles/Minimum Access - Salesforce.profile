@@ -60865,6 +60865,9 @@
         <layout>ContactPointAddress-Contact Point Address Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>ContactPointTypeConsent-Contact Point Type Consent Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>ContentAsset-Asset File Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
