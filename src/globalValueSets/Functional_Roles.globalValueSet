@@ -1,19 +1,269 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customValue>
+        <fullName>Access BOP</fullName>
+        <default>false</default>
+        <label>Access BOP</label>
+    </customValue>
+    <customValue>
+        <fullName>Airline Daily Sales</fullName>
+        <default>false</default>
+        <label>Airline Daily Sales</label>
+    </customValue>
+    <customValue>
+        <fullName>Airline Default Summary Report</fullName>
+        <default>false</default>
+        <label>Airline Default Summary Report</label>
+    </customValue>
+    <customValue>
+        <fullName>Airport IS</fullName>
+        <default>false</default>
+        <label>Airport IS</label>
+    </customValue>
+    <customValue>
+        <fullName>ASD</fullName>
+        <default>false</default>
+        <label>ASD</label>
+    </customValue>
+    <customValue>
+        <fullName>Biller Direct</fullName>
+        <default>false</default>
+        <label>Biller Direct</label>
+    </customValue>
+    <customValue>
+        <fullName>BSP / CASS Change of Bank details</fullName>
+        <default>false</default>
+        <label>BSP / CASS Change of Bank details</label>
+    </customValue>
+    <customValue>
+        <fullName>BSP / CASS Change Request</fullName>
+        <default>false</default>
+        <label>BSP / CASS Change Request</label>
+    </customValue>
+    <customValue>
+        <fullName>BSPLink</fullName>
+        <default>false</default>
+        <label>BSPLink</label>
+    </customValue>
+    <customValue>
+        <fullName>CassLink</fullName>
+        <default>false</default>
+        <label>CassLink</label>
+    </customValue>
+    <customValue>
+        <fullName>CASSLink Analytics</fullName>
+        <default>false</default>
+        <label>CASSLink Analytics</label>
+    </customValue>
+    <customValue>
+        <fullName>CASSLink Export</fullName>
+        <default>false</default>
+        <label>CASSLink Export</label>
+    </customValue>
+    <customValue>
+        <fullName>CASSLink Import</fullName>
+        <default>false</default>
+        <label>CASSLink Import</label>
+    </customValue>
+    <customValue>
+        <fullName>CNS CassLink</fullName>
+        <default>false</default>
+        <label>CNS CassLink</label>
+    </customValue>
+    <customValue>
+        <fullName>CNS Website</fullName>
+        <default>false</default>
+        <label>CNS Website</label>
+    </customValue>
+    <customValue>
+        <fullName>Country Requirements</fullName>
+        <default>false</default>
+        <label>Country Requirements</label>
+    </customValue>
+    <customValue>
+        <fullName>COVID-19 Agencies Updates</fullName>
+        <default>false</default>
+        <label>COVID-19 Agencies Updates</label>
+    </customValue>
+    <customValue>
+        <fullName>COVID-19 Airlines Updates</fullName>
+        <default>false</default>
+        <label>COVID-19 Airlines Updates</label>
+    </customValue>
+    <customValue>
+        <fullName>Currency Center</fullName>
+        <default>false</default>
+        <label>Currency Center</label>
+    </customValue>
+    <customValue>
+        <fullName>Deduction Notice</fullName>
+        <default>false</default>
+        <label>Deduction Notice</label>
+    </customValue>
+    <customValue>
         <fullName>E&amp;F</fullName>
         <default>false</default>
         <label>E&amp;F</label>
     </customValue>
     <customValue>
-        <fullName>Training</fullName>
+        <fullName>E&amp;F APPS</fullName>
         <default>false</default>
-        <label>Training</label>
+        <label>E&amp;F APPS</label>
+    </customValue>
+    <customValue>
+        <fullName>E-Bulletin</fullName>
+        <default>false</default>
+        <label>E-Bulletin</label>
+    </customValue>
+    <customValue>
+        <fullName>Financial Securities</fullName>
+        <default>false</default>
+        <label>Financial Securities</label>
+    </customValue>
+    <customValue>
+        <fullName>GADM</fullName>
+        <default>false</default>
+        <label>GADM</label>
+    </customValue>
+    <customValue>
+        <fullName>Global Default Insurance (GDI)</fullName>
+        <default>false</default>
+        <label>Global Default Insurance (GDI)</label>
+    </customValue>
+    <customValue>
+        <fullName>IATA Accreditation &amp; Changes</fullName>
+        <default>false</default>
+        <label>IATA Accreditation &amp; Changes</label>
+    </customValue>
+    <customValue>
+        <fullName>IATA Airlines and Location Codes</fullName>
+        <default>false</default>
+        <label>IATA Airlines and Location Codes</label>
+    </customValue>
+    <customValue>
+        <fullName>IATA Certificates</fullName>
+        <default>false</default>
+        <label>IATA Certificates</label>
+    </customValue>
+    <customValue>
+        <fullName>IATA Code Search</fullName>
+        <default>false</default>
+        <label>IATA Code Search</label>
+    </customValue>
+    <customValue>
+        <fullName>IATA EasyPay (2C2P)</fullName>
+        <default>false</default>
+        <label>IATA EasyPay (2C2P)</label>
+    </customValue>
+    <customValue>
+        <fullName>IATA EasyPay (EDENRED)</fullName>
+        <default>false</default>
+        <label>IATA EasyPay (EDENRED)</label>
+    </customValue>
+    <customValue>
+        <fullName>IATA EasyPay (MSTS)</fullName>
+        <default>false</default>
+        <label>IATA EasyPay (MSTS)</label>
+    </customValue>
+    <customValue>
+        <fullName>IATAN Online Services</fullName>
+        <default>false</default>
+        <label>IATAN Online Services</label>
+    </customValue>
+    <customValue>
+        <fullName>IATA Postal Accounts Settlement System</fullName>
+        <default>false</default>
+        <label>IATA Postal Accounts Settlement System</label>
+    </customValue>
+    <customValue>
+        <fullName>IATA Store</fullName>
+        <default>false</default>
+        <label>IATA Store</label>
+    </customValue>
+    <customValue>
+        <fullName>ICCS</fullName>
+        <default>false</default>
+        <label>ICCS</label>
+    </customValue>
+    <customValue>
+        <fullName>ICE – IATA Customer E-Statement</fullName>
+        <default>false</default>
+        <label>ICE – IATA Customer E-Statement</label>
+    </customValue>
+    <customValue>
+        <fullName>ID Card Online Platform</fullName>
+        <default>false</default>
+        <label>ID Card Online Platform</label>
+    </customValue>
+    <customValue>
+        <fullName>IFAP</fullName>
+        <default>false</default>
+        <label>IFAP</label>
+    </customValue>
+    <customValue>
+        <fullName>IFG Production</fullName>
+        <default>false</default>
+        <label>IFG Production</label>
+    </customValue>
+    <customValue>
+        <fullName>IFG Sandbox</fullName>
+        <default>false</default>
+        <label>IFG Sandbox</label>
+    </customValue>
+    <customValue>
+        <fullName>IFTP</fullName>
+        <default>false</default>
+        <label>IFTP</label>
+    </customValue>
+    <customValue>
+        <fullName>Insurance Providers</fullName>
+        <default>false</default>
+        <label>Insurance Providers</label>
+    </customValue>
+    <customValue>
+        <fullName>Interline agreements</fullName>
+        <default>false</default>
+        <label>Interline agreements</label>
+    </customValue>
+    <customValue>
+        <fullName>Join BSP / CASS</fullName>
+        <default>false</default>
+        <label>Join BSP / CASS</label>
+    </customValue>
+    <customValue>
+        <fullName>Join SIS e-Invoicing</fullName>
+        <default>false</default>
+        <label>Join SIS e-Invoicing</label>
+    </customValue>
+    <customValue>
+        <fullName>Local Industry Groups</fullName>
+        <default>false</default>
+        <label>Local Industry Groups</label>
+    </customValue>
+    <customValue>
+        <fullName>Login T&amp;C Checker</fullName>
+        <default>false</default>
+        <label>Login T&amp;C Checker</label>
+    </customValue>
+    <customValue>
+        <fullName>Management Information Report</fullName>
+        <default>false</default>
+        <label>Management Information Report</label>
     </customValue>
     <customValue>
         <fullName>MedAire</fullName>
         <default>false</default>
         <label>MedAire</label>
+    </customValue>
+    <customValue>
+        <fullName>MSO Management</fullName>
+        <default>false</default>
+        <label>MSO Management</label>
+    </customValue>
+    <customValue>
+        <fullName>One Id NDC Matchmaker</fullName>
+        <default>false</default>
+        <label>One Id NDC Matchmaker</label>
     </customValue>
     <customValue>
         <fullName>One Source</fullName>
@@ -26,11 +276,91 @@
         <label>InnovationHub CRM</label>
     </customValue>
     <customValue>
-        <fullName>Airport IS</fullName>
+        <fullName>PASSlink Single Sign-On</fullName>
         <default>false</default>
-        <label>Airport IS</label>
+        <label>PASSlink Single Sign-On</label>
+    </customValue>
+    <customValue>
+        <fullName>Payment Link</fullName>
+        <default>false</default>
+        <label>Payment Link</label>
+    </customValue>
+    <customValue>
+        <fullName>Paypal</fullName>
+        <default>false</default>
+        <label>Paypal</label>
+    </customValue>
+    <customValue>
+        <fullName>Resource Center</fullName>
+        <default>false</default>
+        <label>Resource Center</label>
+    </customValue>
+    <customValue>
+        <fullName>Risk Profile and RHC</fullName>
+        <default>false</default>
+        <label>Risk Profile and RHC</label>
+    </customValue>
+    <customValue>
+        <fullName>SIS</fullName>
+        <default>false</default>
+        <label>SIS</label>
+    </customValue>
+    <customValue>
+        <fullName>SIS Help Desk</fullName>
+        <default>false</default>
+        <label>SIS Help Desk</label>
+    </customValue>
+    <customValue>
+        <fullName>Smart Lite</fullName>
+        <default>false</default>
+        <label>Smart Lite</label>
+    </customValue>
+    <customValue>
+        <fullName>Standards Setting Workspace</fullName>
+        <default>false</default>
+        <label>Standards Setting Workspace</label>
+    </customValue>
+    <customValue>
+        <fullName>TIDS</fullName>
+        <default>false</default>
+        <label>TIDS</label>
+    </customValue>
+    <customValue>
+        <fullName>TIP Reports</fullName>
+        <default>false</default>
+        <label>TIP Reports</label>
+    </customValue>
+    <customValue>
+        <fullName>Trained Staff Certification</fullName>
+        <default>false</default>
+        <label>Trained Staff Certification</label>
+    </customValue>
+    <customValue>
+        <fullName>Training</fullName>
+        <default>false</default>
+        <label>Training</label>
+    </customValue>
+    <customValue>
+        <fullName>Training Platform (LMS)</fullName>
+        <default>false</default>
+        <label>Training Platform (LMS)</label>
+    </customValue>
+    <customValue>
+        <fullName>Transparency in Payments (TIP)</fullName>
+        <default>false</default>
+        <label>Transparency in Payments (TIP)</label>
+    </customValue>
+    <customValue>
+        <fullName>Treasury Dashboard</fullName>
+        <default>false</default>
+        <label>Treasury Dashboard</label>
+    </customValue>
+    <customValue>
+        <fullName>Treasury Dashboard - Premium</fullName>
+        <default>false</default>
+        <label>Treasury Dashboard - Premium</label>
     </customValue>
     <description>Functional Roles</description>
     <masterLabel>Functional Roles</masterLabel>
-    <sorted>false</sorted>
+    <sorted>true</sorted>
 </GlobalValueSet>
