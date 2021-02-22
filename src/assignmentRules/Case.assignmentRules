@@ -7149,7 +7149,7 @@ ISPICKVAL(BSPCountry__c,&quot;Russian Federation&quot;)
         <ruleEntry>
             <assignedTo>ID_Card_Global_Mailbox</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 OR (2 AND 3 AND 4)</booleanFilter>
+            <booleanFilter>1 OR (2 AND 3 AND 4 AND 5)</booleanFilter>
             <criteriaItems>
                 <field>Case.Origin</field>
                 <operation>equals</operation>
@@ -7169,6 +7169,11 @@ ISPICKVAL(BSPCountry__c,&quot;Russian Federation&quot;)
                 <field>Case.BSPCountry__c</field>
                 <operation>notEqual</operation>
                 <value>United States</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>notEqual</operation>
+                <value>Corporate Compliance</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>

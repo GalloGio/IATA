@@ -1690,6 +1690,10 @@ Daha fazla ayrıntı için, Müşteri Portalı&apos;nda &quot;Resolution 812&quo
         <name>Airline_Daily_Sales_portal_service</name>
     </customLabels>
     <customLabels>
+        <label><!-- AirportAIS_Service_Description --></label>
+        <name>AirportAIS_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label>Tüm Bildirimler</label>
         <name>All_Notifications_Notification</name>
     </customLabels>

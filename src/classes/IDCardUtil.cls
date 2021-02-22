@@ -1183,15 +1183,15 @@ global with sharing class IDCardUtil {
 		}
 	}
 
-	public static Case CreateIDCardApplicationCase(ID_Card_Application__c idCardApp, Account theAccount) {
-		return  CreateIDCardApplicationCase(idCardApp, theAccount, false);
+	public static Case CreateIDCardApplicationCase(ID_Card_Application__c idCardApp, Account theAccount, id idCardAppId) {
+		return  CreateIDCardApplicationCase(idCardApp, theAccount, false, idCardAppId);
 	}
 
-	public static Case CreateIDCardApplicationCase(ID_Card_Application__c idCardApp, Account theAccount, Boolean isPaidByCheque) {
-		return CreateIDCardApplicationCase(idCardApp, theAccount, isPaidByCheque, true);
+	public static Case CreateIDCardApplicationCase(ID_Card_Application__c idCardApp, Account theAccount, Boolean isPaidByCheque, id idCardAppId) {
+		return CreateIDCardApplicationCase(idCardApp, theAccount, isPaidByCheque, true, idCardAppId);
 	}
 
-	public static Case createKeyAccountIdCardMassApplicationCase(ID_Card_Application__c idCardApp, Account theAccount, boolean mustInsertInDB) {
+	public static Case createKeyAccountIdCardMassApplicationCase(ID_Card_Application__c idCardApp, Account theAccount, boolean mustInsertInDB, id idCardAppId) {
 
 		// Create the case
 		Case newCase = new Case();
@@ -1205,7 +1205,7 @@ global with sharing class IDCardUtil {
 
 		newCase.AccountId = theAccount.Id;
 		newCase.Origin = 'ID Card Portal';
-		newCase.Related_ID_Card_Application__c = idCardApp.Id;
+		newCase.Related_ID_Card_Application__c = idCardAppId==null?idCardApp.Id:idCardAppId;
 		newCase.SuppliedEmail = idCardApp.Email_admin__c;
 		newCase.CaseArea__c = 'Accreditation';
 		newCase.Reason1__c  = 'ID Card';
@@ -1310,14 +1310,14 @@ global with sharing class IDCardUtil {
 		return newCase;
 	}
 
-	public static Case CreateIDCardApplicationCase(ID_Card_Application__c idCardApp, Account theAccount, Boolean isPaidByCheque, Boolean SendEmail) {
+	public static Case CreateIDCardApplicationCase(ID_Card_Application__c idCardApp, Account theAccount, Boolean isPaidByCheque, Boolean SendEmail, id idCardAppId) {
 		// Get recordtype ID
 
 
 		// Create the case
 		Case newCase = new Case();
 		newCase.RecordTypeId = IDCardcaseRecordTypeID;
-		newCase.Subject = 'Case for ID Card Application ' + idCardApp.Name;
+		newCase.Subject = 'Case for ID Card Application ' + (idCardAppId==null?'':([SELECT Name FROM ID_Card_Application__c WHERE Id = :idCardAppId].Name));
 		if (SendEmail)
 			newCase.Status = 'Agent to be Notified';
 		else
@@ -1335,7 +1335,7 @@ global with sharing class IDCardUtil {
 
 		newCase.AccountId = theAccount.Id;
 		newCase.Origin = 'ID Card Portal';
-		newCase.Related_ID_Card_Application__c = idCardApp.Id;
+		newCase.Related_ID_Card_Application__c = idCardAppId==null?idCardApp.Id:idCardAppId;
 		newCase.SuppliedEmail = idCardApp.Email_admin__c;
 		newCase.ID_Card_Status__c = CASECARDSTATUS_PENDING;
 		newCase.CaseArea__c = 'Accreditation';
@@ -1801,7 +1801,7 @@ global with sharing class IDCardUtil {
 			newIDCardApplication = [ Select Id, Name, Hours_Worked_Validation_Failed__c, Revenue_Confirmation_Validation_Failed__c, Email_admin__c, IDCard_Expedite_Delivery__c, VER_Number__c from ID_Card_Application__c where id = :newIDCardApplication.Id limit 1];
 
 			//create case without sending an email.
-			CreateIDCardApplicationCase(newIDCardApplication , theAccount, false, false);
+			CreateIDCardApplicationCase(newIDCardApplication , theAccount, false, false, null);
 
 
 			return newIDCardApplication.Id;
