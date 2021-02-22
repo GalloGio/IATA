@@ -2712,8 +2712,8 @@ public without sharing class ISSP_AMS_Accreditation {
 				newForm.NDC_Transactions__c = 'No';
 			}
 			
-			if (hqAccount.Cass_Number__c != null) {
-				newForm.CASS_Number__c = hqAccount.Cass_Number__c;
+			if (accountConcerned.Cass_Number__c != null) {
+				newForm.CASS_Number__c = accountConcerned.Cass_Number__c;
 			}
 			upsert newForm;
 
