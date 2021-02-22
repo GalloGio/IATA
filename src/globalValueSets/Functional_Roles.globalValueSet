@@ -216,6 +216,11 @@
         <label>IFTP</label>
     </customValue>
     <customValue>
+        <fullName>InnovationHub CRM</fullName>
+        <default>false</default>
+        <label>InnovationHub CRM</label>
+    </customValue>
+    <customValue>
         <fullName>Insurance Providers</fullName>
         <default>false</default>
         <label>Insurance Providers</label>
@@ -269,11 +274,6 @@
         <fullName>One Source</fullName>
         <default>false</default>
         <label>One Source</label>
-    </customValue>
-    <customValue>
-        <fullName>InnovationHub CRM</fullName>
-        <default>false</default>
-        <label>InnovationHub CRM</label>
     </customValue>
     <customValue>
         <fullName>PASSlink Single Sign-On</fullName>
