@@ -12,8 +12,39 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 	 and IATA_code__c = currentIATACode and Application_Status__c = 'Pending'
 	*/
 	public List<ID_Card_Application__c> pendingApplications {get; set;}
-	public Promotion__c promotion {get; set;} 
+	public List<ApplicationWrapper> pendingApplicationsWrapped {get; set;}
+	public Promotion__c promotion {get; set;}
+	public map<integer, pendingApplicationsWrapped> mapAppWrap	{get; set;}
 
+	
+	private map<integer, id> mapAppID;
+
+	public class ApplicationWrapper{
+		public string appCounter {get;set;}
+		public string AppName {get; set;}
+		public id appId	{get;set;}
+		public ID_Card_Application__c ICA {get;set;}
+		public string appStatus {get; set;} //DoNothing, Validate, Unvalidate
+
+		public contat AppContact {get; set;}
+		public string ContactVerNum	{get; set;}
+
+		private list<string> lsFields = TransformationHelper.selectAllWritableFieldsByCurrentUser('ID_Card_Application__c');
+
+		public ApplicationWrapper(integer appCounter, ID_Card_Application__c app){
+			if(!this.lsFields.contains('RecordTypeId')) lsFields.add('recordtypeId');
+
+			this.appCounter = string.valueOf(appCounter);
+			ID_Card_Application__c WrapICA = new ID_Card_Application__c();
+			for(string field:lsFields)
+				WrapICA.put(field, app.get(field));
+			
+			this.ICA = WrapICA;
+			this.AppName = app.Name;
+			this.appId = app.Id;
+			this.appStatus = 'doNothing';
+		}
+	}
 	/**
 	Contact informaetion per pending applicatioj
 	*/
@@ -119,8 +150,9 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 		discountFee = 0;
 		cyberSrcData = null;
 		fastExpedition =  false;
-		cyberSrcData = new Map<String, String>()     ;
+		cyberSrcData = new Map<String, String>();
 		pendingApplications = new List<ID_Card_Application__c>();
+		pendingApplicationsWrapped = new list<ApplicationWrapper>();
 		promotion = new Promotion__c();
 		unvalidatedApplication = new Map<String, ID_Card_Application__c> ();
 		validatedApplication = new Map<String, ID_Card_Application__c> ();
@@ -129,6 +161,7 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 		isNotDigitalOnly = new Map<String, Boolean>();
 		discountPerKeyAccount = new Map<String, Decimal>();
 		taxesPerKeyAccount = new Map<String, Account>();
+		mapAppID = new map<integer, id>();
 		Promotion__c validPromotion = null;
 		singeAppRT = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operation');
 
@@ -150,6 +183,7 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 
 		//clear exsiting
 		pendingApplications.clear();
+		pendingApplicationsWrapped.clear();
 		validatedApplication.clear();
 		contactsPerApplication.clear();
 		unvalidatedApplication.clear();
@@ -178,40 +212,44 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 										'  WHERE Mass_order_application__c = null and recordTypeId = \'' + singeAppRT + '\'' +
 										' and (' + iataCodeSubstring + ') and Application_Status__c = \'Pending\' ';
 
+
+		Set<String> iataCodes = new Set<String>();
+		Map<String, ID_Card_Application__c> tmpMap = new Map<String, ID_Card_Application__c>();
+
+		for(ID_Card_Application__c app:database.query(IdCardApplicationQuery)){
+			iataCodes.add(app.IATA_Code__C);
+			
+			integer iNewId = pendingApplicationsWrapped.size()+1;
+			mapAppID.put(iNewId, app.Id);
+			pendingApplicationsWrapped.add(new ApplicationWrapper(iNewId, app));
+
+			if (app.Ver_Number__c != null) {
+				tmpMap.put(app.Ver_Number__c, app);
+			} else {
+				system.debug('[IDCard_AdmPendingOpsController] nO VERNUM FOR APP ' + app.iD);
+				contactsPerApplication.put(app.id, new ContactProxy(null, app));
+			}
+			isApplicationreadyMap.put(app.Id, isApplicationValid(app));
+		}
+
 		pendingApplications = (list<ID_Card_Application__c>)(database.query(IdCardApplicationQuery));
 
-		//pendingApplications = [Select i.VER_Number__c, i.UIR__c, i.Type_of_application__c, i.Title__c, i.Terms_and_Conditions_Time_Stamp__c, i.Telephone__c, i.Tax_2_Value__c, i.Tax_2_Name__c, i.Tax_1_Value__c, i.Tax_1_Name__c, i.SystemModstamp, i.Start_Date_Industry__c, i.Start_Date_Agency_Year__c, i.Start_Date_Agency_Month__c, i.Solicitation_Flag__c, i.Single_Application_Processing_Step__c, i.Selected_Preferred_Language__c, i.Revenue_Confirmation__c, i.Revenue_Confirmation_Validation_Failed__c, i.Renewal_From_Replace__c, i.Regional_Office__c, i.RecordTypeId, i.Promotion_Code__c, i.Profit_Center__c, i.Position_in_Current_Agency__c, i.Position_Code__c, i.Photo__c, i.Payment_Type__c, i.Payment_Transaction_Number__c, i.Payment_Date__c, i.Payment_Currency__c, i.Payment_Credit_Card_Number__c, i.Payment_Amount__c, i.Package_of_Travel_Professionals_Course_2__c, i.Package_of_Travel_Professionals_Course_1__c, i.OwnerId, i.Name, i.Middle_Initial__c, i.Mass_order_Application__c, i.Last_Name__c, i.LastViewedDate, i.LastReferencedDate, i.LastModifiedDate, i.LastModifiedById, i.LastActivityDate, i.IsDeleted, i.Id, i.ITDI_Courses_Fee__c, i.ID_Card_Fee__c, i.IDCard_Prefered_Language__c, i.IDCard_Expedite_Delivery__c, i.IDCard_Expedite_Delivery_Fee__c, i.IATA_numeric_code_previous_employer_4__c, i.IATA_numeric_code_previous_employer_3__c, i.IATA_numeric_code_previous_employer_2__c, i.IATA_numeric_code_previous_employer_1__c, i.IATA_Code_for_previous_agency__c, i.IATA_Code__c, i.Hours_worked__c, i.Hours_Worked_Validation_Failed__c, i.Hours_Worked_Code__c, i.Gender__c, i.First_Name__c, i.Email_admin__c, i.Duties_in_Current_Agency__c, i.Duties_Code__c, i.Displayed_Name__c, i.Date_of_Birth__c, i.CurrencyIsoCode, i.CreatedDate, i.CreatedById, i.ConnectionSentId, i.ConnectionReceivedId, i.Case_Number__c, i.Approving_Manager_s_Name__c, i.Approving_Manager_s_Email__c, i.Application_Status__c, i.Applicable_Fee__c, i.AgencyShare_Confirmation__c From ID_Card_Application__c i where    Mass_order_application__c = null and recordTypeId = :singeAppRT and IATA_Code__c in :keyContactAndDelegateForAccountList.keySet() and Application_Status__c = 'Pending' ];
 		system.debug('[IDCard_AdmPendingOpsController] Found application:' + pendingApplications.size());
-		Set<String> iataCodes = new Set<String>();
-		if (pendingApplications.size() > 0) {
-			List<String> verNums = new List<String>();
-			Map<String, ID_Card_Application__c> tmpMap = new Map<String, ID_Card_Application__c>();
-
-			for (ID_Card_Application__c app : pendingApplications) {
-				iataCodes.add(app.IATA_Code__C);
-				if (app.Ver_Number__c != null) {
-					verNums.add(app.Ver_Number__c);
-					tmpMap.put(app.Ver_Number__c, app);
-				} else {
-					system.debug('[IDCard_AdmPendingOpsController] nO VERNUM FOR APP ' + app.iD);
-					contactsPerApplication.put(app.id, new ContactProxy(null, app));
-				}
-				isApplicationreadyMap.put(app.Id, isApplicationValid(app));
-			}
-
+		
+		if (pendingApplicationsWrapped.size() > 0) {
 			List<Contact> contacts = [select Id, UIR__C, Salutation,  FirstName, LastName, Name,  Title, VER_Number_2__c, Email , AccountID,
 									  IATA_Code__c, Date_of_Birth__c, Gender__c, Phone, Start_Date_Agency_Month__c, Hours_per_week__c,
 									  Middle_Initial__c, Position__c, Start_Date_Agency_Year__c, Start_Date_Industry__c, Duties__c
-									  from Contact where VER_Number_2__c in :verNums];
+									  from Contact where VER_Number_2__c in :tmpMap.keyset()];
 			system.debug('[IDCard_AdmPendingOpsController]Contact found from applications :' + contacts.size());
 			for (Contact c : contacts) {
 				contactsPerApplication.put(tmpMap.get(c.VER_Number_2__c).id, new ContactProxy(c, tmpMap.get(c.VER_Number_2__c)));
 			}
 
-			for (ID_Card_Application__c app : pendingApplications) {
-				if (contactsPerApplication.get(app.Id) == null) {
-					system.debug('[IDCard_AdmPendingOpsController] Warning  failed to find a contact for VERNUM ' + app.Ver_Number__c);
-					contactsPerApplication.put(app.Id, new ContactProxy(null, app));
+			for (ApplicationWrapper app : pendingApplicationsWrapped) {
+				if (contactsPerApplication.get(app.appId) == null) {
+					system.debug('[IDCard_AdmPendingOpsController] Warning  failed to find a contact for VERNUM ' + app.ICA.Ver_Number__c);
+					contactsPerApplication.put(app.appId, new ContactProxy(null, app.ICA));
 				}
 			}
 			system.debug('[IDCard_AdmPendingOpsController]returned contact per element ' + contactsPerApplication.size());
