@@ -1441,7 +1441,7 @@ public with sharing class ANG_AgencyChangesHelper {
 		Account oscarAccount = toReturn.accountsMap.get(oscarToProcess.Account__c);
 
 		if(oscarAccount == null) {
-			oscarAccount = [SELECT Id, ANG_Accreditation_Model__c, Remittance_frequency__c, CNS_Agency__c,
+			oscarAccount = [SELECT Id, ANG_Accreditation_Model__c, IATACode__c, Remittance_frequency__c, CNS_Agency__c,
 								IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c, Location_Class__c, Sector__c , Category__c
 							FROM Account
 							WHERE Id = :oscarToProcess.Account__c];
@@ -1452,7 +1452,7 @@ public with sharing class ANG_AgencyChangesHelper {
 			//Map<Id,Account> accountsMap;
 
 			if(newHEaccount == null) {
-				newHEaccount = [Select Id , ANG_Accreditation_Model__c, Remittance_frequency__c, CNS_Agency__c, ANG_FA_Opt_out__c, Location_Class__c, Sector__c , Category__c from Account where Id = :oscarToProcess.New_parent__c];
+				newHEaccount = [Select Id , ANG_Accreditation_Model__c, Remittance_frequency__c, IATACode__c, CNS_Agency__c, ANG_FA_Opt_out__c, Location_Class__c, Sector__c , Category__c from Account where Id = :oscarToProcess.New_parent__c];
 			}
 
 			if(!doesItContainAccreditationType && newHEaccount.ANG_Accreditation_Model__c != oscarAccount.ANG_Accreditation_Model__c){
@@ -1538,6 +1538,13 @@ public with sharing class ANG_AgencyChangesHelper {
 			newRel.Hierarchy__c = hierarchyId;
 
 			toReturn.addRelation(newRel);
+			AMS_ChangeCodesHelper.ObjectChange objectChangesHierarchy = new AMS_ChangeCodesHelper.ObjectChange('Account', 'Parent.IATACode__c', oscarAccount.IATACode__c, newHEaccount.IATACode__c);
+			if (toReturn.changesStruct.get(oscarAccount.Id) == null) {
+				AMS_ChangeCodesHelper.ObjectChangesStruct acctChangesStruct = new AMS_ChangeCodesHelper.ObjectChangesStruct(new List <AMS_ChangeCodesHelper.ObjectChange>{objectChangesHierarchy});
+				toReturn.changesStruct.put(oscarAccount.Id, acctChangesStruct);
+			} else {
+				toReturn.changesStruct.get(oscarAccount.Id).changes.add(objectChangesHierarchy);
+			}
 
 			if(switchAccreditationModel){
 
@@ -1614,6 +1621,14 @@ public with sharing class ANG_AgencyChangesHelper {
 
 				if (AMS_Utils.pickListContains(oscarToProcess.Change_of_Hierarchy_Scenario__c, AMS_Utils.MULTICOUNTRY_BSP_SPLIT) && switchAccreditationModel) {
 					newHe.ANG_Accreditation_Model__c = newAccreditationModel;
+				}
+
+				AMS_ChangeCodesHelper.ObjectChange objectChangesHierarchy = new AMS_ChangeCodesHelper.ObjectChange('Account', 'Parent.IATACode__c', toReturn.accountsMap.get(oscarToProcess.Account__c).Parent_account_IATAcode__c, newHEaccount.IATACode__c);
+				if (toReturn.changesStruct.get(accountID) == null) {
+					AMS_ChangeCodesHelper.ObjectChangesStruct acctChangesStruct = new AMS_ChangeCodesHelper.ObjectChangesStruct(new List <AMS_ChangeCodesHelper.ObjectChange>{objectChangesHierarchy});
+					toReturn.changesStruct.put(accountID, acctChangesStruct);
+				} else {
+					toReturn.changesStruct.get(accountID).changes.add(objectChangesHierarchy);
 				}
 
 				toReturn.addAccount(newHe);
@@ -2256,7 +2271,7 @@ public with sharing class ANG_AgencyChangesHelper {
 	}
 
 	private static Map<Id, Account> getAccounts(Set<Id> accountIds) {
-		return new Map<Id, Account>([SELECT Status__c,ParentId, Top_Parent__c, Name, IATACode__c, Company_Type__c, Short_Name__c, TradeName__c, License_Number__c, VAT_Number__c, GDS__c, Operation__c,
+		return new Map<Id, Account>([SELECT Status__c,ParentId, Top_Parent__c, Name, IATACode__c, Company_Type__c, Short_Name__c, TradeName__c, License_Number__c, VAT_Number__c, GDS__c, Operation__c, Parent_account_IATAcode__c,
 				BillingCountry, BillingStreet, BillingPostalCode, BillingState, BillingCity, IATA_ISO_Country__c, Iso_State__c, ShippingCountry, Is_Branch_Abroad__c,
 				ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity, Email__c, Website, Phone, Fax, In_a_Airport__c, Abbreviated_name__c, Abbreviated_address__c,
 				Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c,
