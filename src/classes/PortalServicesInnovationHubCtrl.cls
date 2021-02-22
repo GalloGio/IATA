@@ -20,7 +20,7 @@ public without sharing class PortalServicesInnovationHubCtrl {
 		Map<String, String> extraDetails = new Map<String, String>();
 
 		//get the provider profile for view 
-		IH_Account_Role_Detail__c providerProfileForView = PortalServicesInnovationHubCtrl.getLastestPublishedProviderUserIHAccountRoleDetail();
+		IH_Account_Role_Detail__c providerProfileForView = PortalServicesInnovationHubCtrl.getLatestPublishedProviderUserIHAccountRoleDetail();
 
 		if(providerProfileForView != null){
 			propertiesAndLstCards.recordId = providerProfileForView.Id;
@@ -126,7 +126,7 @@ public without sharing class PortalServicesInnovationHubCtrl {
 
 		if(accountRoleDetailsAux == null){
 			//If there is no draft then get the latest published version
-			accountRoleDetailsAux = getLastestPublishedProviderUserIHAccountRoleDetail();
+			accountRoleDetailsAux = getLatestPublishedProviderUserIHAccountRoleDetail();
 			profileStatus = IH_ACCOUNT_ROLE_DETAILS_STATUS_APPROVED;
 		}
 
@@ -462,7 +462,7 @@ public without sharing class PortalServicesInnovationHubCtrl {
 		return lstAccountRoles != null && !lstAccountRoles.isEmpty() ? lstAccountRoles.get(0) : null;
 	}
 
-	public static IH_Account_Role_Detail__c getLastestPublishedProviderUserIHAccountRoleDetail(){
+	public static IH_Account_Role_Detail__c getLatestPublishedProviderUserIHAccountRoleDetail(){
 		//get the users account role detail
 		User currentUser = CSP_Utils.getLoggedUser();
 		List<IH_Account_Role_Detail__c> lstAccountRoles = [SELECT Id, Internal_comments__c, Status__c, Marked_For_Review__c 
