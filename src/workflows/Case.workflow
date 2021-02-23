@@ -18455,7 +18455,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6</booleanFilter>
+        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7</booleanFilter>
         <criteriaItems>
             <field>Case.CaseArea__c</field>
             <operation>equals</operation>
@@ -18464,7 +18464,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
         <criteriaItems>
             <field>Case.Origin</field>
             <operation>notEqual</operation>
-            <value>Web,Internal Case,Portal</value>
+            <value>Web,Internal Case,Portal,IATA Internal User</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.SuppliedEmail</field>
@@ -18485,6 +18485,11 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <field>Case.Subject</field>
             <operation>notContain</operation>
             <value>EXPIRED DELIVERY RETRY NOTIFICATION,FAILED,FAILURE NOTICE,NON REMIS,OUT OF OFFICE,OUT OF THE OFFICE,REMISE DIFFEREE,UNDELIVERABLE,VIOLATION,WARNING : EMAIL EXCEED MAXIMUM SIZE LIMIT</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Cases - SIS Help Desk</value>
         </criteriaItems>
         <triggerType>onCreateOnly</triggerType>
     </rules>
