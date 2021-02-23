@@ -37,6 +37,7 @@ global with sharing class AirlineSuspensionCaseController {
 				tplName += asrecord.BSP_Participations_locked__c == 'No BSP Participation' ? '' : '_BSP';
 				tplName += asrecord.CASS_Participations_locked__c == 'No CASS Participation' ? '' : '_CASS';
 				tplName += asrecord.PASS_Participations_locked__c == 'No PASS Participation' ? '' : '_PASS';
+				tplName += asrecord.IATA_Pay_Participations_locked__c == 'No IATA Pay Participation' ? '' : '_IATAPay';
 
 				tplName += asrecord.Settle_Directly_To__c == 'IATA' ? '_Settle_to_IATA' : '_Settle_to_Airline';
 				tplName += '_Cloned';
@@ -95,7 +96,7 @@ global with sharing class AirlineSuspensionCaseController {
 												Suspension_Instructions_to_CS_Teams_Sent__c, Suspension_Letter_Sent__c, ChildSuspensionCasesGenerated__c, Participates_in_IATA_Governance_Groups__c, ICCS_membership_Status_locked_value__c,
 												IATA_member_locked_value__c, Receipt_Confirmation_from_GDS__c, Receipt_Confirmation_from_GDS_2__c, Receipt_Confirmation_from_GDS_3__c,
 												Receipt_Confirmation_from_GDS_4__c, Receipt_Confirmation_from_GDS_5__c, GDS_Name__c, GDS_Name_2__c, GDS_Name_3__c, GDS_Name_4__c, GDS_Name_5__c,
-												Amount_of_Cash_Deposit__c, Confirmation_of_the_Event__c, Occurence_of_Event__c, PASS_Participations_locked__c
+												Amount_of_Cash_Deposit__c, Confirmation_of_the_Event__c, Occurence_of_Event__c, PASS_Participations_locked__c, IATA_Pay_Participations_locked__c
 												FROM Airline_Suspension__c WHERE Case__c = :controller.getRecord().Id];
 
 			if (lstASRecords.size() == 1) {
@@ -126,6 +127,13 @@ global with sharing class AirlineSuspensionCaseController {
 						asrecord.PASS_Participations_locked__c = String.join(tempResultsMap.get('countries'), ', ');
 					} else {
 						asrecord.PASS_Participations_locked__c = 'No PASS Participation';
+					}
+
+					tempResultsMap = getParticipations('IATA Pay');
+					if (tempResultsMap.get('countries').size() != 0) {
+						asrecord.IATA_Pay_Participations_locked__c = String.join(tempResultsMap.get('countries'), ', ');
+					} else {
+						asrecord.IATA_Pay_Participations_locked__c = 'No IATA Pay Participation';
 					}
 
 					tempSet.addAll(tempResultsMap.get('regions'));

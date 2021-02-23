@@ -161,6 +161,10 @@ public without sharing class AMS_Utils {
 	public static final String accountReasonForCreationPASS = 'New Airline joining PASS';
 	public static final String passSSOPortalService = 'PASSlink Single Sign-On';
 
+	//Process IATA Pay
+	public static final String iataPayParticipation  = 'IATA Pay Participation';
+	public static final String iataPayCountryAggregator  = 'IATA Pay Country Aggregator';
+
 	public static final Set<String> setAMS = new Set<String> {HO, BR, SA, AO};
 	public static final Set<String> setNewGen = new Set<String> {HE, AE, GE};
 
