@@ -3,16 +3,16 @@ public with sharing class AccountContactRoles {
 
 	public AccountContactRoles(){
 		records = new List<Account_Contact_Role__c>();
-		initialise();
+		// initialise();
 	}
 	public AccountContactRoles(List<Account_Contact_Role__c> accountContactRoleList){
 		records = accountContactRoleList.clone();
-		initialise();
+		// initialise();
 	}
 	
 	// perform any domain class initialisation logic
-	private void initialise(){
-	}
+	// private void initialise(){
+	// }
 
 	public List<Account_Contact_Role__c> assignRole(List<Contact> contactList, String functionalRoleName, Map<Id, Id> accountIdAccountRoleIdMap){
 		List<Account_Contact_Role__c> accountContactRoleList = new List<Account_Contact_Role__c>();
@@ -40,19 +40,19 @@ public with sharing class AccountContactRoles {
 		return AccountContactRoleSelector.selectByContactsAndFunctionalRole(contactList , functionalRoleName);
 	}
 
-	public void onAfterInsert(){
-	}
-	public void onAfterUpdate(){
-	}
-	public void onAfterDelete(){
-	}
-	public void onAfterUndelete(){
-	}
+	// public void onAfterInsert(){
+	// }
+	// public void onAfterUpdate(){
+	// }
+	// public void onAfterDelete(){
+	// }
+	// public void onAfterUndelete(){
+	// }
 	
-	public void onBeforeInsert(){
-	}
-	public void onBeforeDelete(){
-	}
+	// public void onBeforeInsert(){
+	// }
+	// public void onBeforeDelete(){
+	// }
 	
 	public class AccountContactRoleDomainException extends Exception {}
 }
