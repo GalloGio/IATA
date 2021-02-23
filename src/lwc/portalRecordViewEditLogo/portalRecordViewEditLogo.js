@@ -7,7 +7,7 @@ export default class PortalRecordViewEditLogo extends LightningElement {
     @track providerId;
     @track logoId;
     @track logoCSS = '';
-    @track showLogo = false;
+    @track showLogo = true;
 
     labels = {
         CSP_No_Logo_Available,
@@ -27,6 +27,9 @@ export default class PortalRecordViewEditLogo extends LightningElement {
             if(results !== null){
                 this.logoCSS = 'background: url(' + '"' + results + '"' + ');';
                 this.showLogo = true;
+            }
+            else{
+                this.showLogo = false;
             }
         });
     }

@@ -206,10 +206,13 @@
                                     </template>
 
                                     <div class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-m-bottom_medium" key={card.cardTitle}>
-                                        <div class="slds-m-bottom_medium text-small">Logo</div>
-                                        <c-portal-record-view-edit-logo key={propertiesAndCardsListEdit.recordId} provider-id-api={propertiesAndCardsListEdit.recordId}></c-portal-record-view-edit-logo>
+                                        <div class="text-small">Logo</div>
                                         
-                                        <lightning-input class="labelValue textValue" type="file" accept=".png, .jpg" onchange={openfileUpload}></lightning-input>
+                                        <div class="slds-m-top_x-large">
+                                            <c-portal-record-view-edit-logo key={propertiesAndCardsListEdit.recordId} provider-id-api={propertiesAndCardsListEdit.recordId}></c-portal-record-view-edit-logo>
+                                        </div>
+
+                                        <lightning-input class="slds-m-top_large labelValue textValue" type="file" accept=".png, .jpg" onchange={openfileUpload}></lightning-input>
                                                                
                                         <lightning-input if:true={hasFileToUpload} class="fullWidth labelValue textValue disabledValue disabledInput" label="File to Upload" placeholder={fileToUpload} disabled></lightning-input>
                                     </div>
