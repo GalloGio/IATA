@@ -1860,12 +1860,10 @@ public with sharing class AMS_XML_Generator {
 			getElementNode(agencyNode, 'purge_code',agency.Purge_Flag__c ? 'true' : 'false');
 			if(!agency.Purge_Flag__c){
 				getElementNode(agencyNode, 'iatacode_purged',null);
-			}else if(agency.Old_IATA_Code__c != null){ 
-				if(agency.Purge_Flag__c && agency.Old_IATA_Code__c.substring(0,1) == 'P' && agency.Old_IATA_Code__c.substring(agency.Old_IATA_Code__c.length() - 1) == '_'){
-					getElementNode(agencyNode, 'iatacode_purged',agency.Old_IATA_Code__c+agency.IATACode__c);
-				}else if(agency.Purge_Flag__c && (agency.Old_IATA_Code__c.substring(0,1) != 'P' || agency.Old_IATA_Code__c.substring(agency.Old_IATA_Code__c.length() - 1) != '_')){
-					getElementNode(agencyNode, 'iatacode_purged',agency.IATACode__c);
-				} 
+			}else if( agency.Old_IATA_Code__c != null
+					&& agency.Old_IATA_Code__c.substring(0,1) == 'P'
+					&& agency.Old_IATA_Code__c.substring(agency.Old_IATA_Code__c.length() - 1) == '_'){
+				getElementNode(agencyNode, 'iatacode_purged',agency.Old_IATA_Code__c+agency.IATACode__c);
 			}else{
 				getElementNode(agencyNode, 'iatacode_purged',agency.IATACode__c);
 			}
