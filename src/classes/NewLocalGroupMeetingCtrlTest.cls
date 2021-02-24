@@ -65,7 +65,7 @@ public class NewLocalGroupMeetingCtrlTest{
 
 			parts = new List<Participant__c>();
 			for(Integer i = 0; i<NRECORDS; i++)
-				parts.add(new Participant__c(Contact__c=conts[i].Id, Local_Governance__c=lg.Id));
+				parts.add(new Participant__c(Contact__c=conts[i].Id, Local_Governance__c=lg.Id, Local_Group_Type__c = 'APJC'));
 			insert parts;
 
 	}
