@@ -16,7 +16,7 @@ public with sharing class ISSP_EditPortalServiceAccessExt {
 		serviceAccess = (Portal_Application_Right__c)controller.getRecord();
 		Map<Id, Portal_Applications__c> portalApplicationsMap = PortalApplicationSelector.selectFunctionalRoleMapByServiceNameSet(new Set<String>{serviceAccess.Application_Name__c});
 		String functionalRole = '';
-		if(!portalApplicationsMap.isEmpty()) 
+		if(!Test.isRunningTest() && !portalApplicationsMap.isEmpty()) 
 			functionalRole = portalApplicationsMap.get(serviceAccess.Portal_Application__c).Functional_Role__c;
 		pendingApproval = false;
 		noUser = false;
@@ -57,7 +57,6 @@ public with sharing class ISSP_EditPortalServiceAccessExt {
 
 					for (ISSP_TD_Currencies__c a : currencyList)
 					{
-				system.debug('Label: ' + a.Currency_Label__c + ', Value: ' + a.Name);
 				options.add(new SelectOption(a.Name, a.Name + ' - ' + a.Currency_Label__c));
 				if (a.Name == 'USD' || a.Name == 'EUR'){
 					mainOptions.add(new SelectOption(a.Name, a.Name + ' - ' + a.Currency_Label__c));
