@@ -6,6 +6,12 @@ private class PortalApplicationSelectorTest {
 	}
 
 	@IsTest
+	static void testSelectAutoGrantAccountRoleByFunctionalRole(){
+		List<Portal_Applications__c> portalApplicationList = PortalApplicationSelector.selectAutoGrantAccountRoleByFunctionalRole(new Set<String>{'FAKE'});
+		System.assert(!portalApplicationList.isEmpty());
+	}
+
+	@IsTest
 	static void testSelectIdByName(){
 		List<Portal_Applications__c> portalApplicationList = PortalApplicationSelector.selectIdByName(new Set<String>{TestDataFactory_PortalApplications.DEFAULTSERVICENAME});
 		System.assertEquals(1, portalApplicationList.size(), 'Expected 1 Portal_Applications__c record but got ' + portalApplicationList.size());
