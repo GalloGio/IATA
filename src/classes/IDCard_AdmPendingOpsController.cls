@@ -300,10 +300,10 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 			//rejApp.ICA.Application_Status__c = 'Rejected';
 			if (rejApp.ICA.VER_Number__c != null && rejApp.ICA.VER_Number__c.startsWith('Z')) {
 				ContactProxy cp = contactsPerApplication.get(rejApp.appId);
-				if (cp.verNum.startsWith('Z'))
+				if (cp.verNum.startsWith('Z') && string.isNotBlank(cp.Id)){
 					contact2deleteIids.add(cp.Id);
+				}
 			}
-
 			setRejectAppIDToDelete.add(rejApp.appId);
 		}
 		if(!setRejectAppIDToDelete.isEmpty()) IDCardUtilWithoutSharing.deleteApplications(setRejectAppIDToDelete);
