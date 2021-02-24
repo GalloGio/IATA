@@ -4,6 +4,6 @@
     <protected>false</protected>
     <values>
         <field>Rate__c</field>
-        <value xsi:type="xsd:double">588.81</value>
+        <value xsi:type="xsd:double">531.64</value>
     </values>
 </CustomMetadata>
