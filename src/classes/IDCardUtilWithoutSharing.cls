@@ -23,15 +23,10 @@ global without sharing class IDCardUtilWithoutSharing {
 
 	public static void saveCommittedICA(ID_Card_Application__c transientICA, id iAppId){
 		system.debug(LoggingLevel.ERROR,'IDCardUtilWithoutSharing.saveCommittedICA iAppId = ' + iAppId);
-		list<string> lsFields = TransformationHelper.selectAllWritableFieldsByCurrentUser('ID_Card_Application__c');
-		ID_Card_Application__c ICAToCommit = new ID_Card_Application__c();
-
-		for(string field:lsFields)
-			ICAToCommit.put(field, transientICA.get(field));
+		map<id, ID_Card_Application__c> mapToCommit = new map<id, ID_Card_Application__c>();
+		mapToCommit.put(iAppId, transientICA);
 		
-		ICAToCommit.Id = iAppId;
-
-		update ICAToCommit;	
+		saveCommittedICAS(mapToCommit);
 	}
 
 	public static database.UpsertResult dbUpsertCommittedICA(ID_Card_Application__c transientICA, id iAppId){
@@ -95,8 +90,10 @@ global without sharing class IDCardUtilWithoutSharing {
 
 			for(id appId:mapToCommit.keyset()){
 				ID_Card_Application__c ICAToCommit = new ID_Card_Application__c();
+				set<string> setPopulatedField = mapToCommit.get(appId).getPopulatedFieldsAsMap().keyset();
 				for(string field:lsFields)
-					ICAToCommit.put(field, mapToCommit.get(appId).get(field));
+					if(setPopulatedField.contains(field))
+						ICAToCommit.put(field, mapToCommit.get(appId).get(field));
 
 				ICAToCommit.Id = appId;
 
