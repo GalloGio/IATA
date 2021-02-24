@@ -1,4 +1,4 @@
-public with sharing class IDCard_CheckoutConfirmation extends IDCardAbstractController {
+public without sharing class IDCard_CheckoutConfirmation extends IDCardAbstractController {
 
 	public String allParams { get; private set; }
 
@@ -26,6 +26,8 @@ public with sharing class IDCard_CheckoutConfirmation extends IDCardAbstractCont
 	public boolean isMassApplicationPurchase {get; set;}
 
 	private ID_Card_Application__c iDCardApplication;
+
+	private id idCardAppId;
 
 	public IDCard_CheckoutConfirmation() {
 		initialize();
@@ -89,8 +91,10 @@ public with sharing class IDCard_CheckoutConfirmation extends IDCardAbstractCont
 												i.Payment_Credit_Card_Number__c, i.Payment_Date__c, i.Revenue_Confirmation_Validation_Failed__c,
 												i.Payment_Transaction_Number__c, i.Payment_Amount__c , i.RecordTypeId
 												From ID_Card_Application__c i where i.Name = :orderNumber limit 1];
-			System.debug('/*//*/* ' + idCardApp.Name);
-			iDCardApplication = idCardApp;
+
+			idCardAppId = idCardApp.Id;
+			iDCardApplication = IDCardUtilWithoutSharing.retrieveCommittedICA(idCardApp.id);
+
 
 			String massAppRT = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Mass_Order_Application');
 			isMassApplicationPurchase = (massAppRT == idCardApp.RecordTypeId);
@@ -99,7 +103,6 @@ public with sharing class IDCard_CheckoutConfirmation extends IDCardAbstractCont
 				success = false;
 				return;
 			}
-
 
 			if (freeOfCharges)
 				success = true;
@@ -152,7 +155,7 @@ public with sharing class IDCard_CheckoutConfirmation extends IDCardAbstractCont
 	}
 
 	public Pagereference interpretDecision() {
-		system.debug(LoggingLevel.ERROR, '[interpretDecision] --> PaymentByCheque=' + PaymentByCheque + ' -- orderNumber=' + orderNumber);
+		system.debug(LoggingLevel.ERROR, '[int	heque=' + PaymentByCheque + ' -- orderNumber=' + orderNumber);
 		try {
 			if (orderNumber != null && orderNumber != '') {
 				try {
@@ -180,13 +183,6 @@ public with sharing class IDCard_CheckoutConfirmation extends IDCardAbstractCont
 	}
 
 	public Pagereference processFailurePayment(ID_Card_Application__c idCardApp) {
-		//redirect
-		//Pagereference checkoutPage = Page.IDCard_Checkout;
-		//checkoutPage.getParameters().put(IDCardUtil.PARAM_APPID, IDCardUtil.EncryptEncodeParameter(idCardApp.Id));
-		//checkoutPage.getParameters().put(IDCardUtil.PARAM_ERRMSG, IDCardUtil.EncryptEncodeParameter(ReasonCodeMsg));
-		//checkoutPage.setRedirect(true);
-		//return checkoutPage;
-
 		Pagereference IDCardLoginPage = Page.IDCardLogin;
 		IDCardLoginPage.setRedirect(true);
 		return IDCardLoginPage;
@@ -199,7 +195,8 @@ public with sharing class IDCard_CheckoutConfirmation extends IDCardAbstractCont
 		}
 		idCardApp.Application_Status__c = 'Processing Successfull payment';
 		idCardApp.Payment_Type__c = IDCardUtil.PAYMENT_TYPE_INVOICE;
-		update idCardApp;
+		
+		IDCardUtilWithoutSharing.saveCommittedICA(idCardApp, idCardAppId);
 		try {
 			processSuccessPayment(idCardApp);
 		}  catch (Exception e) {
@@ -221,7 +218,7 @@ public with sharing class IDCard_CheckoutConfirmation extends IDCardAbstractCont
 		idCardApp.Payment_Currency__c = paymentCurrency;
 		idCardApp.Payment_Type__c = IDCardUtil.PAYMENT_TYPE_CC;
 
-		update idCardApp;
+		IDCardUtilWithoutSharing.saveCommittedICA(idCardApp, idCardAppId);
 
 		if (idCardApp.Application_Status__c == 'Processing Successfull payment' || idCardApp.Case_Number__c != null) {
 			return;
@@ -237,8 +234,9 @@ public with sharing class IDCard_CheckoutConfirmation extends IDCardAbstractCont
 	public void processSuccessPayment(ID_Card_Application__c idCardApp) {
 		// check if an ID Card already exists for the ID Card Application
 		system.debug(LoggingLevel.ERROR, '[processSuccessPayment] --> idCardApp=' + idCardApp);
+		system.debug(LoggingLevel.ERROR, '[processSuccessPayment] --> idcardID =' + idCardAppId);
 
-		ID_Card__c[] existingIDCards = [Select i.Name_on_ID_Card__c From ID_Card__c i where i.ID_Card_Application__r.Id = :idCardApp.Id limit 1];
+		ID_Card__c[] existingIDCards = [Select i.Name_on_ID_Card__c From ID_Card__c i where i.ID_Card_Application__r.Id = :idCardAppId limit 1];
 		if (existingIDCards != null && existingIDCards.size() > 0)
 			throw new IDCardApplicationException(Label.IDCard_IDCardAlreadyExistsError);
 
@@ -250,25 +248,25 @@ public with sharing class IDCard_CheckoutConfirmation extends IDCardAbstractCont
 			// Create the case
 			if (!isMassApplicationPurchase) {
 				Account theAccount = IDCardUtil.GetAccountObjectFromIATACode(idCardApp.IATA_Code__c);
-				IDCardUtil.CreateIDCardApplicationCase(idCardApp, theAccount, PaymentByCheque);
+				IDCardUtil.CreateIDCardApplicationCase(idCardApp, theAccount, PaymentByCheque, idCardAppId);
 				idCardApplicationCaseNumber = 'Loading...';
 			}
 
 			//INC158853
 			else {
 				Account theAccount = IDCardUtil.GetAccountObjectFromIATACode(idCardApp.IATA_Code__c);
-				insert IDCardUtil.createKeyAccountIdCardMassApplicationCase(iDCardApplication, theAccount, false);
+				insert IDCardUtil.createKeyAccountIdCardMassApplicationCase(iDCardApplication, theAccount, false, idCardAppId);
 			}
 
 
-			//specific to mass update:
+			//specific to mass up_date:
 			//else {
 			if (!PaymentByCheque) {
 				idCardApp.Application_Status__c = 'Paid';
 			} else {
 				idCardApp.Application_Status__c = 'Pending';
 			}
-			update idCardApp;
+			IDCardUtilWithoutSharing.saveCommittedICA(idCardApp, idCardAppId);
 
 			system.debug(LoggingLevel.ERROR, '[processSuccessPayment]  Set case.status = "Ready for production".  keyContactAndDelegateForAccountList.get(idCardApp.IATA_code__c)= ' + keyContactAndDelegateForAccountList.get(idCardApp.IATA_code__c));
 			string accFeatures = '';
@@ -278,10 +276,11 @@ public with sharing class IDCard_CheckoutConfirmation extends IDCardAbstractCont
 				accFeatures = '';
 
 			if (isMassApplicationPurchase && (!PaymentByCheque || accFeatures.contains(IDCardUtil.Key_Account_Feature_Immediate_Processing))) {
-				List<Case> cases = [SELECT Id FROM Case WHERE Related_ID_Card_Application__c = :idCardApp.id];
+				IDCardUtilWithoutSharing.updateCheckoutCase(idCardAppid);
+				/*List<Case> cases = [SELECT Id FROM Case WHERE Related_ID_Card_Application__c = :idCardApp.id];
 				if (cases.size() > 0)
 					cases[0].Status = 'Ready for production';
-				update cases[0];
+				update cases[0];*/
 			}
 
 			//}
@@ -302,9 +301,9 @@ public with sharing class IDCard_CheckoutConfirmation extends IDCardAbstractCont
 			if (isMassApplicationPurchase) {
 				IDCardcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ID_Card_Mass_Application');
 			}
-			system.debug('[checkoutConfirmation] lookfor case: SELECT CaseNumber FROM Case c WHERE c.Related_ID_Card_Application__r.Id =' + iDCardApplication.Id + ' and c.RecordTypeId =' + IDCardcaseRecordTypeID + ' limit 1');
+			system.debug('[checkoutConfirmation] lookfor case: SELECT CaseNumber FROM Case c WHERE c.Related_ID_Card_Application__r.Id =' + idCardAppId + ' and c.RecordTypeId =' + IDCardcaseRecordTypeID + ' limit 1');
 
-			list<Case> aCaseApplication = [SELECT CaseNumber FROM Case c WHERE c.Related_ID_Card_Application__r.Id = :iDCardApplication.Id and c.RecordTypeId = : IDCardcaseRecordTypeID limit 1];
+			list<Case> aCaseApplication = [SELECT CaseNumber FROM Case c WHERE c.Related_ID_Card_Application__r.Id = :idCardAppId and c.RecordTypeId = : IDCardcaseRecordTypeID limit 1];
 			System.debug('******* Case SIZE = ' + aCaseApplication.size());
 			if (aCaseApplication.size() != 0) {
 

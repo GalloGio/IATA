@@ -372,13 +372,13 @@
         <columns>NAME</columns>
         <columns>Customer_Type__c</columns>
         <columns>Product__c</columns>
+        <columns>CREATED_DATE</columns>
         <columns>Swapped_Product__c</columns>
         <columns>Released__c</columns>
         <columns>Nb_Customer__c</columns>
         <columns>Sales_Amout__c</columns>
         <columns>Sales_Quantity__c</columns>
         <columns>Processing_Status__c</columns>
-        <columns>CREATED_DATE</columns>
         <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>

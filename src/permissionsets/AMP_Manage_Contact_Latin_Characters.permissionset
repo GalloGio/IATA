@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Assigns edit rights on the First / Last name latin char. fields and Job Title - English equvalent fields on Contact. AMP project. To be assigned to the AMP team and Account Managers. 
+For more details, contact AMP team.</description>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.AM_First_Name_Latin_Char__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.AM_Job_Title_English__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.AM_Last_Name_Latin_Char__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>AMP Manage Contact Latin Characters</label>
+</PermissionSet>

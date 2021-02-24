@@ -491,6 +491,16 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Has_access_to_OAG__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Indicates if this user should also get access to the OAG Application which is related to the ‘IS’ set of Applications.</description>
+        <externalId>false</externalId>
+        <label>Has access to OAG?</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>IATA_Code__c</fullName>
         <externalId>false</externalId>
         <formula>Contact__r.IATA_Code__c</formula>
@@ -761,6 +771,11 @@ Application_Name__c
                     <default>false</default>
                     <label>Pending</label>
                 </value>
+                <value>
+                    <fullName>Pending Provisioning</fullName>
+                    <default>false</default>
+                    <label>Pending Provisioning</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -910,6 +925,26 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
         </filters>
         <label>IFG Services Access</label>
         <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>IFTP</fullName>
+        <columns>NAME</columns>
+        <columns>Right__c</columns>
+        <columns>Account__c</columns>
+        <columns>Application_Name__c</columns>
+        <columns>Contact__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Application_Name__c</field>
+            <operation>contains</operation>
+            <value>IFTP</value>
+        </filters>
+        <filters>
+            <field>Right__c</field>
+            <operation>equals</operation>
+            <value>Access Granted</value>
+        </filters>
+        <label>IFTP</label>
     </listViews>
     <listViews>
         <fullName>Pending_approvals</fullName>
@@ -1069,6 +1104,10 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
             </values>
             <values>
                 <fullName>Access Granted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending Provisioning</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1244,6 +1283,12 @@ OR(ISPICKVAL(Right__c, &apos;Access Granted&apos;), ISPICKVAL(Right__c, &apos;Ac
 $User.Mgmt_Report_Team__c = false 
 )</errorConditionFormula>
         <errorMessage>The Access Status of this service can only be changed by IATA ‘Management Report’ team.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>OAG_Access</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(Has_access_to_OAG__c = true,  NOT( TEXT(Portal_Application__r.Functional_Role__c) = &apos;Airport IS&apos;) )</errorConditionFormula>
+        <errorMessage>The &apos;Has Access to OAG&apos; field is only applicable for certain services. Check the Functional Role of the related Portal Service.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Old_CassLink_not_available</fullName>

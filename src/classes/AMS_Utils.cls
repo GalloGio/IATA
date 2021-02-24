@@ -312,6 +312,7 @@ public without sharing class AMS_Utils {
 
 	public static final String FINANCIAL_REVIEW_ANNUAL = 'Annual';
 	public static final String FINANCIAL_REVIEW_MAJOR_CHANGES = 'Major Changes';
+	public static final String FINANCIAL_REVIEW_NEW_APPLICATION = 'New applications';
 
 	public static final String FINANCIAL_REVIEW_MULTICOUNTRY_ANNUAL = 'Multicountry Annual';
 	public static final String FINANCIAL_REVIEW_MULTICOUNTRY_ADHOC = 'Multicountry Adhoc';
@@ -368,6 +369,7 @@ public without sharing class AMS_Utils {
 	public static final String CASE_TYPE_OF_CUSTOMER_IATA_TRAVEL_AGENT = 'IATA Travel Agent';
 
 	public static final String CATEGORY_TRAVEL_AGENT = 'Travel Agent';// To replaces uses with SECTOR_PASSENGER
+	public static final String CATEGORY_TIDS = 'TIDS Agent';
 	public static final String CATEGORY_PASSENGER_SALES_AGENT = 'IATA Passenger Sales Agent';
 	public static final String CATEGORY_NON_IATA_PASSENGER = 'Non-IATA Passenger Agent';
 	public static final String CATEGORY_NON_IATA_TRAVEL = 'Non-IATA Travel Agent';

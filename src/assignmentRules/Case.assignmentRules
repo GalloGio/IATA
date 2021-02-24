@@ -756,7 +756,7 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
             <criteriaItems>
                 <field>Case.BSPCountry__c</field>
                 <operation>equals</operation>
-                <value>France,Lebanon,Switzerland &amp; Liechtenstein</value>
+                <value>France,Switzerland &amp; Liechtenstein</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Account.HQ_Service_Model__c</field>
@@ -1021,7 +1021,7 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
             <criteriaItems>
                 <field>Case.BSPCountry__c</field>
                 <operation>equals</operation>
-                <value>Oman,Palestinian Territories,Qatar,Reunion,Rwanda,Sao Tome,Seychelles,South Africa,Swaziland,Tanzania,Tchad,Turkmenistan,Uganda,United Arab Emirates,Zambia,Zimbabwe</value>
+                <value>Oman,Palestinian Territories,Qatar,Reunion,Rwanda,Sao Tome,Seychelles,South Africa,Swaziland,Tanzania,Tchad,Turkmenistan,Uganda,United Arab Emirates,Zambia,Zimbabwe,Lebanon</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Account.HQ_Service_Model__c</field>
@@ -5105,6 +5105,25 @@ Product__r.Product_Section__c = &quot;TRQ003&quot;
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
+            <assignedTo>L3_T_T_TIDS</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>And(
+	or(
+		RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,
+		RecordType.Name = &quot;Process&quot;
+		),
+		ISPICKVAL(CaseArea__c, &quot;TIDS&quot;),
+		or(
+		ISPICKVAL(Reason1__c, &quot;Changes / Updates&quot;),
+		ISPICKVAL(Reason1__c, &quot;Closure / Cancellation&quot;),
+		ISPICKVAL(Reason1__c, &quot;General information&quot;),
+		ISPICKVAL(Reason1__c, &quot;New application - forms, procedures, fees&quot;),
+		ISPICKVAL(Reason1__c, &quot;Report issue / Technical Issue&quot;),
+		ISPICKVAL(Reason1__c, &quot;Status of Application&quot;)
+	)
+)</formula>
+        </ruleEntry>
+        <ruleEntry>
             <assignedTo>L3_Training_ProductMgmt_Distribution</assignedTo>
             <assignedToType>Queue</assignedToType>
             <formula>AND(		
@@ -7130,7 +7149,7 @@ ISPICKVAL(BSPCountry__c,&quot;Russian Federation&quot;)
         <ruleEntry>
             <assignedTo>ID_Card_Global_Mailbox</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 OR (2 AND 3 AND 4)</booleanFilter>
+            <booleanFilter>1 OR (2 AND 3 AND 4 AND 5)</booleanFilter>
             <criteriaItems>
                 <field>Case.Origin</field>
                 <operation>equals</operation>
@@ -7150,6 +7169,11 @@ ISPICKVAL(BSPCountry__c,&quot;Russian Federation&quot;)
                 <field>Case.BSPCountry__c</field>
                 <operation>notEqual</operation>
                 <value>United States</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>notEqual</operation>
+                <value>Corporate Compliance</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -8146,7 +8170,7 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>OperationalManagementAmericas</assignedTo>
+            <assignedTo>OperationalManagementAP</assignedTo>
             <assignedToType>Queue</assignedToType>
             <booleanFilter>(1 OR 2) AND 3 AND 4 AND 5</booleanFilter>
             <criteriaItems>
@@ -8175,7 +8199,7 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>OperationalManagementAfricaME</assignedTo>
+            <assignedTo>OperationalManagementAP</assignedTo>
             <assignedToType>Queue</assignedToType>
             <booleanFilter>(1 OR 2) AND 3 AND 4 AND 5</booleanFilter>
             <criteriaItems>
@@ -8204,7 +8228,7 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>CasesReportingBilling</assignedTo>
+            <assignedTo>OperationalManagementAP</assignedTo>
             <assignedToType>Queue</assignedToType>
             <booleanFilter>((1 OR 2) AND 3 AND 4 AND 5) OR (6)</booleanFilter>
             <criteriaItems>
@@ -9359,7 +9383,7 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>CasesReportingBilling</assignedTo>
+            <assignedTo>OperationalManagementAP</assignedTo>
             <assignedToType>Queue</assignedToType>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
@@ -11111,7 +11135,7 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>OperationalManagementAfricaME</assignedTo>
+            <assignedTo>OperationalManagementAP</assignedTo>
             <assignedToType>Queue</assignedToType>
             <booleanFilter>1 OR (2 AND 3 AND 4)</booleanFilter>
             <criteriaItems>
@@ -11386,7 +11410,7 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>OperationalManagementAmericas</assignedTo>
+            <assignedTo>OperationalManagementAP</assignedTo>
             <assignedToType>Queue</assignedToType>
             <booleanFilter>(1 AND 2 AND 3) OR 4 OR (5 AND 6)</booleanFilter>
             <criteriaItems>
@@ -11855,7 +11879,7 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>gabriel@iata.org</assignedTo>
+            <assignedTo>oueidatg2@iata.org</assignedTo>
             <assignedToType>User</assignedToType>
             <booleanFilter>(1 AND 2) OR 3</booleanFilter>
             <criteriaItems>
@@ -11909,26 +11933,6 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
             <template>All/IDFS_Caseassignmentstaff</template>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>corciulos@iata.org</assignedTo>
-            <assignedToType>User</assignedToType>
-            <criteriaItems>
-                <field>Case.CaseArea__c</field>
-                <operation>contains</operation>
-                <value>Product</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Reason1__c</field>
-                <operation>contains</operation>
-                <value>CASS,Normative</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.BSPCountry__c</field>
-                <operation>equals</operation>
-                <value>Italy</value>
-            </criteriaItems>
-            <template>All/IDFS_Caseassignmentstaff</template>
-        </ruleEntry>
-        <ruleEntry>
             <assignedTo>RecycleBinEurope</assignedTo>
             <assignedToType>Queue</assignedToType>
             <criteriaItems>
@@ -11943,30 +11947,12 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>CasesISS</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.Origin</field>
-                <operation>equals</operation>
-                <value>E-mail to Case - ISS</value>
-            </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
             <assignedTo>CasesACCEuropeBankGuarantees</assignedTo>
             <assignedToType>Queue</assignedToType>
             <criteriaItems>
                 <field>Case.Origin</field>
                 <operation>equals</operation>
                 <value>Email to Case - BG noreply</value>
-            </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>ivancans@iata.org</assignedTo>
-            <assignedToType>User</assignedToType>
-            <criteriaItems>
-                <field>Case.Origin</field>
-                <operation>equals</operation>
-                <value>Exact Target commercial TEST</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -13642,16 +13628,6 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
             <team>SIDRA AME HUB R&amp;S Team 1</team>
             <team>SIDRA AME LO EAC</team>
             <template>All/IDFS_Caseassignmentstaff</template>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>CasesAmericasemails</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.Origin</field>
-                <operation>equals</operation>
-                <value>E-mail to Case - Americas,E-mail to Case - Americas FAX,E-mail to Case - Agency Services</value>
-            </criteriaItems>
-            <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>Cases_Armenia_Belarus_Turkmenistan</assignedTo>

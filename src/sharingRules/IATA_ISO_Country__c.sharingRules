@@ -27,6 +27,20 @@
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingGuestRules>
+        <fullName>IATA_ISO_Country_OS_GuestUser</fullName>
+        <accessLevel>Read</accessLevel>
+        <description>Give view all access to onesource guest user. (Needed after Spring21 release)</description>
+        <label>IATA ISO Country OS Guest User</label>
+        <sharedTo>
+            <guestUser>ONE_Source</guestUser>
+        </sharedTo>
+        <criteriaItems>
+            <field>CreatedById</field>
+            <operation>notEqual</operation>
+            <value></value>
+        </criteriaItems>
+    </sharingGuestRules>
+    <sharingGuestRules>
         <fullName>IDCard_Share_guest_permissions_for_ISO_Country</fullName>
         <accessLevel>Read</accessLevel>
         <description>IDCard Share guest permissions for ISO Country</description>
