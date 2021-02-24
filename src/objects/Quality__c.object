@@ -74917,7 +74917,7 @@ ISPICKVAL(Exception_Classification_Type__c, &quot;Services Conference&quot;)
     </validationRules>
     <validationRules>
         <fullName>Closure_Date_cannot_be_deleted</fullName>
-        <active>true</active>
+        <active>false</active>
         <errorConditionFormula>AND(
 ISPICKVAL( Status__c , &quot;Closed&quot;), ISNULL(DA_Closure_Date__c)
 )</errorConditionFormula>
@@ -74926,7 +74926,7 @@ ISPICKVAL( Status__c , &quot;Closed&quot;), ISNULL(DA_Closure_Date__c)
     </validationRules>
     <validationRules>
         <fullName>Closure_date_higher_than_alignment</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>Closure date cannot be higher than Deadline for alignment</description>
         <errorConditionFormula>DA_Closure_Date__c &gt; Deadline_for_Alignment__c</errorConditionFormula>
         <errorDisplayField>DA_Closure_Date__c</errorDisplayField>
