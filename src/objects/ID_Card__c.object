@@ -1252,7 +1252,7 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <description>Is Active according the new conditions Valid Date To and The Card Status not Cancelled</description>
         <externalId>false</externalId>
         <formula>IF (
-       AND(Valid_To_Date__c &gt; TODAY(),
+       AND(Valid_To_Date__c = TODAY(),
            NOT(OR (
                    ISPICKVAL(Card_Status__c, &apos;Cancelled ID Card&apos;),
                    ISPICKVAL(Card_Status__c, &apos;Cancelled&apos;)
