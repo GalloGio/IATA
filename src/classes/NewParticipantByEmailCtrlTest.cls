@@ -10,8 +10,8 @@ public class NewParticipantByEmailCtrlTest {
 	public static Account hq;
 	public static Account branch;
 	public static Account ot;
-
-	public static void prepareData(){
+	@TestSetup
+	private static void prepareData(){
 
 		List<User> users = [SELECT Id FROM User WHERE isActive = true AND Profile.Name = 'System Administrator' LIMIT 2 ];
 
@@ -94,9 +94,9 @@ public class NewParticipantByEmailCtrlTest {
 		insert psa;
 
 		System.runAs(u) {
-			prepareData();
 			Test.startTest();
 
+			List<IATA_ISO_Country__c> isocs = [SELECT Id, Name, ISS_Office_Location__c, Country_Manager__c FROM IATA_ISO_Country__c];
 			NewLocalGroupCtrl lgctrl = new NewLocalGroupCtrl(new ApexPages.StandardController(new LocalGovernance__c()));
 
 
@@ -153,7 +153,7 @@ public class NewParticipantByEmailCtrlTest {
 			lg = [SELECT Id, Name, Region__c, IATA_Local_Office__c, Group_Owner__c, Local_Governance_type__c, Active__c
 				  					 FROM LocalGovernance__c WHERE Id = :lgctrl.lg.ID];
 			system.assertEquals(true, lg.Active__c);
-
+			Contact contincomplete = [SELECT id, AccountId, FirstName, LastName, Email FROM Contact WHERE FirstName = 'Incomplete' LIMIT 1];
 			contincomplete.Title = 'theBoss';
 			update contincomplete;
 			ctrl.MySave();
@@ -181,8 +181,8 @@ public class NewParticipantByEmailCtrlTest {
 		insert psa;
 
 		System.runAs(u) {
-			prepareData();
 			Test.startTest();
+			List<IATA_ISO_Country__c> isocs = [SELECT Id, Name, ISS_Office_Location__c, Country_Manager__c FROM IATA_ISO_Country__c];
 			NewLocalGroupCtrl lgctrl = new NewLocalGroupCtrl(new ApexPages.StandardController(new LocalGovernance__c()));
 			lgctrl.lg.Cargo_Passenger__c = 'BSP';
 			lgctrl.lg.Local_Governance_type__c = 'APJC';
@@ -224,6 +224,7 @@ public class NewParticipantByEmailCtrlTest {
 
 			system.assertEquals(true,ctrl.chooseContact);
 
+			Contact contcomplete = [SELECT id, AccountId, FirstName, LastName, Email, Title FROM Contact WHERE FirstName = 'Complete' LIMIT 1];
 			System.currentPageReference().getParameters().put('contactId',contcomplete.ID);
 			ctrl.chooseContact();
 
@@ -243,6 +244,7 @@ public class NewParticipantByEmailCtrlTest {
 
 			system.assertEquals(true,ctrl.chooseContact);
 
+			Contact contduplicate = [SELECT id, AccountId, FirstName, LastName, Email, title FROM Contact WHERE FirstName = 'Duplicate' LIMIT 1];
 			System.currentPageReference().getParameters().put('contactId',contduplicate.ID);
 			ctrl.chooseContact();
 
@@ -261,9 +263,10 @@ public class NewParticipantByEmailCtrlTest {
 
 
 	static testmethod void testLocalGroupsWithClusters(){
-		prepareData();
 		Test.startTest();
 
+		List<IATA_ISO_Country__c> isocs = [SELECT Id, Name, ISS_Office_Location__c, Country_Manager__c FROM IATA_ISO_Country__c];
+		List<Cluster__c> cls = [SELECT id, Name, IATA_Local_Office__c, Country_Manager__c FROM Cluster__c];
 		NewLocalGroupCtrl ctrl = new NewLocalGroupCtrl(new ApexPages.StandardController(new LocalGovernance__c()));
 
 
