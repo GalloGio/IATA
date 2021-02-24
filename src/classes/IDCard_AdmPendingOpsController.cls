@@ -331,7 +331,7 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 									  from Contact where Ver_Number_2__c = :vernumParameter limit 1];
 			//switch account status will be paid by wire / check or by CB
 			List<ID_Card_Application__c> tmpLst = new List<ID_Card_Application__c>();
-			for(integer i:mapAppWrap.keySet()){
+			for(integer i:setValidApplicationId){
 				ID_Card_Application__c tmpApp = mapAppWrap.get(i).ICA;
 				//tmpApp.id = mapAppWrap.get(i).appId;
 				tmpLst.add(tmpApp);
@@ -363,7 +363,7 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 				massUpdateApplication.Applicable_Fee__c += massAppDeliveryFee;
 			}
 			system.debug('[Mass creation] id created : ' + massUpdateApplication.Id);
-			for(integer i:mapAppWrap.keySet()){
+			for(integer i:setValidApplicationId){
 				if(validatePromotion(mapAppWrap.get(i).ICA) != null){
 					mapAppWrap.get(i).ICA.Promotion_Code__c = promotion.Promotion_Code__c;
 				}
@@ -378,7 +378,7 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 			}
 
 			map<id, ID_Card_Application__c> mapToCommit = new map<id, ID_Card_Application__c>();
-			for(integer i:mapAppWrap.keyset())
+			for(integer i:setValidApplicationId)
 				mapToCommit.put(mapAppWrap.get(i).appId, mapAppWrap.get(i).ICA);
 			
 			//update validatedApplication.values();
