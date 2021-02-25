@@ -937,6 +937,7 @@
     </fields>
     <fields>
         <fullName>IATA_Pay_Participations_locked__c</fullName>
+        <description>Holds a list of countries in which the airline had active IATA Pay participations at the time of the suspension approval.</description>
         <externalId>false</externalId>
         <label>IATA Pay Participations</label>
         <length>32768</length>
