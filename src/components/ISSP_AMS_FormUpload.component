@@ -462,14 +462,22 @@
                             checkIfFileExists('{!$CurrentPage.parameters.caseId}',fn, '{!$CurrentPage.parameters.formId}', function(result) {
                                 if (result) {
                                     // and then Submit
-                                    executeDataUpload = data;
-                                    fileUploaded = true;
+                                    if('{!isDGRForm}' == 'true'){
+                                        executeDataUpload = data;
+                                        fileUploaded = true;
+                                    }else{
+                                        data.submit();
+                                    }
                                     $("#input-{!reqCnt}").attr('disabled', 'disabled');
                                 } else {
-                                    $( ".addText" ).append('{!JSEncode($Label.ISSP_File_Exists)}');
-                                    document.getElementsByClassName('alert')[0].style.display = 'block';
+                                    if('{!isDGRForm}' == 'true'){
+                                        $( ".addText" ).append('{!JSEncode($Label.ISSP_File_Exists)}');
+                                        document.getElementsByClassName('alert')[0].style.display = 'block';
+                                        $('[id*="Loading"]').hide();
+                                    }else{
+                                        alert('{!JSEncode($Label.ISSP_File_Exists)}');
+                                    }
                                     window.onbeforeunload = null;
-                                    $('[id*="Loading"]').hide();
                                 }
                             });
                         }
@@ -521,7 +529,9 @@
                             }
                             window.onbeforeunload = null;
                             $('[id*="Loading"]').hide();
-                            window.location.href = document.location.origin+ '/csportal/s/case-details?caseId=' + '{!$CurrentPage.parameters.caseId}' + '&uploaded=true';
+                            if('{!isDGRForm}' == 'true'){
+                                window.location.href = document.location.origin+ '/csportal/s/case-details?caseId=' + '{!$CurrentPage.parameters.caseId}' + '&uploaded=true';
+                            }
                         }
                     );
                 },
