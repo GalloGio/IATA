@@ -12,10 +12,8 @@ global without sharing class IDCardUtilWithoutSharing {
 			for(string field:lsFields)
 				ICAToReturn.put(field, ica.get(field));
 			
-			//ICAToReturn.id = ica.id;
 			ICAName = ica.Name;
 			AppId = ica.Id;
-			//ICAToReturn.put('Name', ica.get('Name'));
 		}
 		
 		return ICAToReturn;	
@@ -58,6 +56,31 @@ global without sharing class IDCardUtilWithoutSharing {
 			ICAToCommit.setOptions(dmo);
 		}
 		return database.upsert(ICAToCommit);
+	}
+
+	public static void upsertGenericObject(string objName, sObject sObjFrom, id recordId, list<string> lsFields){
+		set<string> setBooleanFields = new set<string>();
+		for(string s:Schema.getGlobalDescribe().get(objName).getDescribe().fields.getMap().keyset())
+			if(string.ValueOf(Schema.getGlobalDescribe().get(objName).getDescribe().fields.getMap().get(s).getDescribe().getType())=='BOOLEAN')
+				setBooleanFields.add(s.toUpperCase());
+
+		sObject sObjToCommit = Schema.getGlobalDescribe().get(objName).newSObject();
+		for(string field:lsFields){
+			if(setBooleanFields.contains(field.toUpperCase()) && ( string.isblank(string.valueOf(sObjFrom.get(field)))))
+				sObjToCommit.put(field, false);
+			else
+				sObjToCommit.put(field, sObjFrom.get(field));
+		}
+
+		if(recordId!=null)
+			sObjToCommit.Id = recordId;
+		else{
+			sObjToCommit.put('OwnerId',UserInfo.getUserId());
+			Database.DMLOptions dmo = new Database.DMLOptions();
+			dmo.assignmentRuleHeader.useDefaultRule= true;
+			sObjToCommit.setOptions(dmo);
+		}
+		database.upsert(sObjToCommit);
 	}
 
 	public static void updateCheckoutCase(id idCardAppId){

@@ -31,15 +31,19 @@ global with sharing class IDCardWebService {
 	webservice static String[] processKeyAccountSingleApplication(String id, String accountId,String sessionId){
 		String[] result =new String[]{IDCardWebService.WS_FAILURE, ''};
 		ID_Card_Application__c singleApp  = null;
+		list<string> lsFields = TransformationHelper.selectAllWritableFieldsByCurrentUser('ID_Card_Application__c');
 		system.debug(LoggingLevel.ERROR,'[processKeyAccountSingleApplication] Start processing Single application:  '+id+ ' and session id to use ='+sessionId);
 		try {
-			string IdCardApplicationQuery = 'SELECT '+ TransformationHelper.getAllFields(Schema.SObjectType.ID_Card_Application__c.fields.getMap())+
+			string IdCardApplicationQuery = 'SELECT '+ string.join(lsFields, ',') +
 												   '  FROM ID_Card_Application__c  '+
 												   '  WHERE Id = \''+id+'\' and recordTypeId = \''+RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operation')+'\''+
 												   '  and Single_Application_Processing_Step__c = \'In Queue for processing\' ';
 			list<ID_Card_Application__c> pendingApplications = (list<ID_Card_Application__c>)(database.query(IdCardApplicationQuery));
 			if(pendingApplications.size()==1){
-				singleApp = pendingApplications.get(0);
+				singleApp = new ID_Card_Application__c();
+				for(string field:lsFields)
+					singleApp.put(field, pendingApplications.get(0).get(field));
+
 				string accQuery = 'SELECT '+ TransformationHelper.getAllFields(Schema.SObjectType.Account.fields.getMap())+
 												   '  FROM Account where IATACode__c =\''+singleApp.IATA_code__c+'\' limit 1';
 				list<Account> accList = (list<Account>)(database.query(accQuery));
@@ -54,16 +58,16 @@ global with sharing class IDCardWebService {
 					//IDCardUtil.generateAndAssignVERandUIR(singleApp, account);
 					List<Contact> cs = [select Id, VER_Number_2__c, UIR__c from Contact where VER_Number_2__c  = :singleApp.VER_Number__c limit 1];
 					Contact c = cs.size()==1 ? cs[0] : IDCardApplicationFactory.createContactFromApplication(singleapp,account);
-
+					
 					c.VER_Number_2__c = IdcardUtil.generateVER(account);
 					c.UIR__c = IdcardUtil.generateUIR(account);
-					//update c;
-					upsert c;
+					IDCardUtilWithoutSharing.upsertGenericObject('Contact', (sObject)(c), c.Id, TransformationHelper.selectAllWritableFieldsByCurrentUser('Contact'));
+
 					system.debug(LoggingLevel.ERROR,'[processKeyAccountSingleApplication] upserted the contact:'+c.id+' with ver = '+c.VER_Number_2__c);
 					singleApp.VER_Number__c = c.VER_Number_2__c ;
 					singleApp.UIR__c = c.UIR__c ;
 					String picName = singleApp.Photo__c;
-					update singleApp;
+					IDCardUtilWithoutSharing.saveCommittedICA(singleApp, id);
 					//rename the picture
 					system.debug(LoggingLevel.ERROR,'[processKeyAccountSingleApplication] call web service to rename picture with new name:');
 					IdCardUtil.renameIDCardPhotoOfContact(singleApp.Id,'',sessionid);
@@ -72,7 +76,7 @@ global with sharing class IDCardWebService {
 				else{
 					Contact c = [select Id, VER_Number_2__c, UIR__c from Contact where VER_Number_2__c  = :singleApp.VER_Number__c limit 1];
 					singleApp.UIR__c = c.UIR__c ;
-					update singleApp;
+					IDCardUtilWithoutSharing.saveCommittedICA(singleApp, id);
 				}
 
 				system.debug(LoggingLevel.ERROR,'[processKeyAccountSingleApplication] Lock single App  '+id);
@@ -83,7 +87,7 @@ global with sharing class IDCardWebService {
 				if(accountId !=null && accountId !=account.Id){
 					system.debug(LoggingLevel.ERROR,'[processKeyAccountSingleApplication] ERROR : wrong accountID  '+accountId+'  != '+account.id+'  for app '+id);
 					singleApp.Single_Application_Processing_Step__c = IDCardUtil.single_application_status_waiting;
-					update singleApp;
+					IDCardUtilWithoutSharing.saveCommittedICA(singleApp, id);
 					result[1] = 'single pending application account doesn t match with provided account ID';
 					return result;
 				}
@@ -101,7 +105,7 @@ global with sharing class IDCardWebService {
 				 System.debug(LoggingLevel.ERROR,'[processKeyAccountSingleApplication]  The case '+acase.id+' here  has status' +aCase.status );
 
 				singleApp.Single_Application_Processing_Step__c = 'Processed';
-				update singleApp;
+				IDCardUtilWithoutSharing.saveCommittedICA(singleApp, id);
 				system.debug(LoggingLevel.ERROR,'[processKeyAccountSingleApplication] unLock single App  '+id);
 
 				/* INC157243
@@ -123,7 +127,7 @@ global with sharing class IDCardWebService {
 			DevsTools.sendSFDevsAlertMessage('Failed to process a Single Id card application with Id  :'+id, 'Cause : \n '+e.getStackTraceString());
 			if( singleApp !=null){
 				singleApp.Single_Application_Processing_Step__c = IDCardUtil.single_application_status_waiting;
-				update singleApp;
+				IDCardUtilWithoutSharing.saveCommittedICA(singleApp, id);
 				system.debug(LoggingLevel.ERROR,'[processKeyAccountSingleApplication] unLock AFTER ERROR single App  '+id);
 			}
 			result[1] = e.getMessage();
