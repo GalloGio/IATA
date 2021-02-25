@@ -25,7 +25,12 @@ public with sharing class PortalServiceAccessService {
 			} catch(Exception e){
 				throw new PortalServiceAccessServiceException('Error managing user onboarding for ' + AirportISService.FUNCTIONALROLE, e);
 			}
-			
+		} else if(functionalRoleName.equals(IATAPayService.FUNCTIONALROLE)){
+			try{
+				IATAPayService.manageUserOnboarding(contactSet, accessStatus);
+			} catch(Exception e){
+				throw new PortalServiceAccessServiceException('Error managing user onboarding for ' + IATAPayService.FUNCTIONALROLE, e);
+			}	
 		}
 	}
 
