@@ -95,7 +95,7 @@ global with sharing class IDCardWebService {
 
 				//create case
 				system.debug(LoggingLevel.ERROR,'[processKeyAccountSingleApplication] create case for App  '+id);
-				Case aCase = IDCardUtil.createKeyAccountIdCardApplicationCase(singleApp,account);
+				Case aCase = IDCardUtil.createKeyAccountIdCardApplicationCase(singleApp,account,id);
 				if(aCase.CaseNumber==null)
 					aCase = [select Id, CaseNumber, status from case where Id = :aCase.Id];
 
