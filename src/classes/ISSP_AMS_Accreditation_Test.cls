@@ -3010,6 +3010,8 @@ Location_Type__c = 'BR');
 			ctrl.newform.Agent_Type__c = AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH;
 
 			Pagereference pr1 = ctrl.goToFinalStep();
+			Pagereference saveAndNavigateToOwnersForm = ctrl.saveAndNavigateToOwnersForm();
+			Pagereference checkLegalStatus = ctrl.checkLegalStatus();
 
 			ApexPages.currentPage().getParameters().put('caseId', testCase2.Id);
 			ISSP_AMS_Accreditation ctrl2 = new ISSP_AMS_Accreditation();
