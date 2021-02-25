@@ -22,7 +22,7 @@ global without sharing class IDCardMassApplicationBatch implements Schedulable {
 		this.sessionId = Userinfo.getSessionId();
 		this.batchName = name;
 		list<string> lsFields = TransformationHelper.selectAllWritableFieldsByCurrentUser('ID_Card_Application__c');
-		List<ID_Card_Application__c> singlesApps = database.query('select Id, Name, recordtype.Developername, ' + string.join(lsFields, ',') + ' from ID_Card_Application__c  where (Single_Application_Processing_Step__c = null or  Single_Application_Processing_Step__c = :IDcardUtil.single_application_status_waiting ) and Mass_order_Application__c = :this.massApplicationId ');
+		List<ID_Card_Application__c> singlesApps = database.query('select Id, Name, recordtype.Developername, ' + string.join(lsFields, ',') + ' from ID_Card_Application__c  where (Single_Application_Processing_Step__c = null or  Single_Application_Processing_Step__c = \'' + IDcardUtil.single_application_status_waiting + '\') and Mass_order_Application__c = \'' + this.massApplicationId + '\'');
 		map<id, ID_Card_Application__c> mapToCommit = new map<id, ID_Card_Application__c>();
 
 		for(ID_Card_Application__c app:singlesApps){
