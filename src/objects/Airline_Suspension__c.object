@@ -936,6 +936,15 @@
         </valueSet>
     </fields>
     <fields>
+        <fullName>IATA_Pay_Participations_locked__c</fullName>
+        <externalId>false</externalId>
+        <label>IATA Pay Participations</label>
+        <length>32768</length>
+        <trackTrending>false</trackTrending>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
         <fullName>IATA_member__c</fullName>
         <externalId>false</externalId>
         <formula>IF (
