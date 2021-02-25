@@ -201,11 +201,10 @@ public with sharing class IDCard_PendingOpsAndProcessedAppTest {
 
 		IDCard_AdmPendingOpsController ctrl = new IDCard_AdmPendingOpsController();
 		map<string, ID_Card_Application__c> verToApp = new map<string, ID_Card_Application__c>();
-		for (ID_Card_Application__c app : ctrl.pendingApplications) {
-			verToApp.put(app.VER_Number__c, app);
-			system.debug(LoggingLevel.Error, ' ************************ Pending ops displays app with VER=' + app.VER_Number__c);
+		for(integer i:ctrl.mapAppWrap.keyset()){
+			verToApp.put(ctrl.mapAppWrap.get(i).ICA.VER_Number__c, ctrl.mapAppWrap.get(i).ICA);
+			system.debug(LoggingLevel.Error, ' ************************ Pending ops displays app with VER=' + ctrl.mapAppWrap.get(i).ICA.VER_Number__c);
 		}
-
 
 		// CONTACTS 1,2,3,4,5 various idcard situations but no applications:
 		system.assert(!verToApp.keyset().contains('1'));
@@ -306,26 +305,26 @@ public with sharing class IDCard_PendingOpsAndProcessedAppTest {
 
 		IDCard_AdmPendingOpsController ctrl = new IDCard_AdmPendingOpsController();
 		map<string, ID_Card_Application__c> verToApp = new map<string, ID_Card_Application__c>();
-		for (ID_Card_Application__c app : ctrl.pendingApplications) {
-			verToApp.put(app.VER_Number__c, app);
-			system.debug(LoggingLevel.Error, ' ************************ Pending ops displays app with VER=' + app.VER_Number__c);
+		for(integer i:ctrl.mapAppWrap.keyset()){
+			verToApp.put(ctrl.mapAppWrap.get(i).ICA.VER_Number__c, ctrl.mapAppWrap.get(i).ICA);
+			system.debug(LoggingLevel.Error, ' ************************ Pending ops displays app with VER=' + ctrl.mapAppWrap.get(i).ICA.VER_Number__c);
 		}
-		system.assertEquals(10, ctrl.pendingApplications.size());
+		system.assertEquals(10, ctrl.mapAppWrap.size());
 
 		// approve the first application
-		ID_Card_Application__c theApp = ctrl.pendingApplications[0];
-		Apexpages.currentPage().getParameters().put('id', theApp.id);
+		ID_Card_Application__c theApp = ctrl.mapAppWrap.get(1).ICA;
+		Apexpages.currentPage().getParameters().put('id', ctrl.mapAppWrap.get(1).AppId);
 		ctrl.validationApplication();
-		system.assertEquals(1, ctrl.validatedApplication.size());
+		system.assertEquals(1, ctrl.setValidApplicationId.size());
 		//system.assertEquals(theApp.Applicable_fee__c, ctrl.tPrice);
 		//system.assertEquals(double.valueOf(theApp.Tax_1_Value__c) + double.valueOf(theApp.Tax_2_Value__c), double.valueOf(ctrl.vatPrice));
 
 
 		// reject the second one
-		theApp = ctrl.pendingApplications[1];
-		Apexpages.currentPage().getParameters().put('id', theApp.id);
+		theApp =  ctrl.mapAppWrap.get(2).ICA;
+		Apexpages.currentPage().getParameters().put('id', ctrl.mapAppWrap.get(2).AppId);
 		ctrl.unvalidationApplication();
-		system.assertEquals(1, ctrl.unvalidatedApplication.size());
+		system.assertEquals(1, ctrl.setRejectedApplicationId.size());
 
 
 		// process the order for these 2 applications
@@ -370,29 +369,29 @@ public with sharing class IDCard_PendingOpsAndProcessedAppTest {
 
 
 		// approve applications 3-4-5
-		theApp = ctrl.pendingApplications[0];
-		Apexpages.currentPage().getParameters().put('id', theApp.id);
+		theApp =  ctrl.mapAppWrap.get(1).ICA;
+		Apexpages.currentPage().getParameters().put('id', ctrl.mapAppWrap.get(1).AppId);
 		ctrl.validationApplication();
 
-		theApp = ctrl.pendingApplications[1];
-		Apexpages.currentPage().getParameters().put('id', theApp.id);
+		theApp =  ctrl.mapAppWrap.get(2).ICA;
+		Apexpages.currentPage().getParameters().put('id', ctrl.mapAppWrap.get(3).AppId);
 		ctrl.validationApplication();
 
-		theApp = ctrl.pendingApplications[2];
-		Apexpages.currentPage().getParameters().put('id', theApp.id);
+		theApp =  ctrl.mapAppWrap.get(3).ICA;
+		Apexpages.currentPage().getParameters().put('id', ctrl.mapAppWrap.get(3).AppId);
 		ctrl.validationApplication();
 
 		// reject applications 6-7-8
-		theApp = ctrl.pendingApplications[3];
-		Apexpages.currentPage().getParameters().put('id', theApp.id);
+		theApp =  ctrl.mapAppWrap.get(4).ICA;
+		Apexpages.currentPage().getParameters().put('id', ctrl.mapAppWrap.get(4).AppId);
 		ctrl.unvalidationApplication();
 
-		theApp = ctrl.pendingApplications[4];
-		Apexpages.currentPage().getParameters().put('id', theApp.id);
+		theApp =  ctrl.mapAppWrap.get(5).ICA;
+		Apexpages.currentPage().getParameters().put('id', ctrl.mapAppWrap.get(5).AppId);
 		ctrl.unvalidationApplication();
 
-		theApp = ctrl.pendingApplications[5];
-		Apexpages.currentPage().getParameters().put('id', theApp.id);
+		theApp =  ctrl.mapAppWrap.get(6).ICA;
+		Apexpages.currentPage().getParameters().put('id', ctrl.mapAppWrap.get(6).AppId);
 		ctrl.unvalidationApplication();
 
 		// process the order for these 6 applications
@@ -445,7 +444,7 @@ public with sharing class IDCard_PendingOpsAndProcessedAppTest {
 		// The 8 applications processed should not be visible on the pending ops page
 		ctrl = new IDCard_AdmPendingOpsController();
 		verToApp = new map<string, ID_Card_Application__c>();
-		system.assertEquals(2, ctrl.pendingApplications.size());
+		system.assertEquals(2, ctrl.mapAppWrap.size());
 
 		// On the page payment history I should be able to see the 2 mass application I just created
 		IDCard_AdmPaymentsCtrl payctrl = new IDCard_AdmPaymentsCtrl();

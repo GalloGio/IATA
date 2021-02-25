@@ -1196,7 +1196,7 @@ global with sharing class IDCardUtil {
 		// Create the case
 		Case newCase = new Case();
 		newCase.RecordTypeId =  RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ID_Card_Mass_Application');
-		newCase.Subject = 'Case for ID Card Mass Application ' + [select name from ID_Card_Application__c where id =:idCardAppId].Name;
+		newCase.Subject = 'Case for ID Card Mass Application ' + (string.isBlank(idCardAppId)?idCardApp.Name:[select name from ID_Card_Application__c where id =:idCardAppId].Name);
 
 		newCase.Status = 'In progress';
 		newCase.OwnerId = System.Userinfo.getUserId();
