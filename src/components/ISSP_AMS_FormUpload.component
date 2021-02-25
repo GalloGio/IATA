@@ -98,7 +98,7 @@
                 </div>
             </apex:outputPanel>
             <div class="progress" style="height:8px;display:{!IF(reqRequired!=null,'','none')}"><div class="uploadbar-{!reqCnt} progress-bar progress-bar-success progress-bar-striped"></div></div>
-            <button type="button" onClick="submitCertificate();return false;" style="float: right;">{!$Label.ISSP_certificate_Submit}</button>
+            <button type="button" onClick="submitCertificate();return false;" style="float: right;display: {!IF(isDGRForm, 'block', 'none')}">{!$Label.ISSP_certificate_Submit}</button>
         </form>
         <div class="row">
             <div class="col-md-4">&nbsp;</div>
