@@ -998,6 +998,7 @@ private class ISSP_AMS_Accreditation_Test {
 			ctrl.newform.Accept_terms_and_conditions__c = true;
 
 			ctrl.goToFinalStep();
+			ctrl.getOwnersFromMainLegalEntity();
 		}
 	}
 
@@ -3152,6 +3153,7 @@ Top_Parent__c = parent.Id);
 
 			ctrl.newForm.Agency_Codes_Concerned__c = 'a;b;c';
 			List<SelectOption> lsoAgencyCodesConcerned = ctrl.getAgencyCodesConcerned();
+			Boolean boolMultipleCountriesSelected = ctrl.multipleCountriesSelected;
 
 			ctrl.updateNoCAgencyLegalDetails();
 		}
@@ -4183,8 +4185,6 @@ Location_Type__c = 'BR');
 
 			ctrl.newForm.Branch_Office_Phone__c = '123123';
 			ctrl.newForm.Branch_Office_Email__c = 'qwe@qwe.pt';
-			ctrl.newForm.Shipping_City__c = 'City';
-			ctrl.newForm.Shipping_Country__c = 'PORTUGAL';
 			ctrl.newForm.Shipping_ISO_Country__c = fetchCountry('Portugal').Id;
 
 			Date newDate = Date.today();
@@ -4223,6 +4223,9 @@ Location_Type__c = 'BR');
 			ctrl.newForm.IATA_Registered_IATAN_Agent__c = 'No';
 			ctrl.newForm.ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus';
 
+			ctrl.newForm.Shipping_City__c = 'City';
+			ctrl.saveAMSFormAndGoForward();
+			ctrl.newForm.Shipping_Country__c = 'PORTUGAL';
 			ctrl.saveAMSFormAndGoForward();
 		}
 		Test.stopTest();
@@ -4309,7 +4312,6 @@ Location_Type__c = 'BR');
 			ctrl.newCase.IFAP_Country_ISO__c = 'pt';
 			ctrl.mcformCountryISO = 'pt';
 
-			//ctrl.getLegalNameOptions();
 			String hierarchyIsoCodesString = ctrl.hierarchyIsoCodesString;
 
 			ctrl.save();
@@ -4422,6 +4424,7 @@ Location_Type__c = 'BR');
 			aeForms[0].Status__c = 'Completed';
 			aeForms[1].Status__c = 'Completed';
 			aeForms[2].Status__c = 'Completed';
+			aeForms[2].AE_separate_Legal_Entity__c = 'No';
 
 			insert heForm;
 			insert aeForms[0];
@@ -4437,9 +4440,8 @@ Location_Type__c = 'BR');
 
 			ctrl.mcFormIdToDelete = aeForms[2].Id;
 			ctrl.deleteMCForm();
-
 			ctrl.termsAndConditionsMC = true;
-
+			ctrl.getLegalNameOptions();
 			ctrl.submitMultiCountryApplication();
 		}
 		Test.stopTest();
@@ -5000,6 +5002,8 @@ Location_Type__c = 'BR');
 			ctrl.Beginning();
 			ctrl.Previous();
 			ctrl.Next();
+			ctrl.selectAllCountries();
+			ctrl.allCountriesSelected = true;
 			ctrl.selectAllCountries();
 
 			Test.stopTest();
