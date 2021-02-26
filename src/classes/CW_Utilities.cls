@@ -133,7 +133,7 @@ public without sharing class CW_Utilities {
 					}
 					//Get station ops hierarchy
 					String opsHierarchyGroup = getOpsHierarchyNameFromStationId(station[0].Id);
-					List<Contact> companyAdminsFromGroup = getCompanyAdminContactsFromGroupName(opsHierarchyGroup);
+					List<Contact> companyAdminsFromGroup = getCompanyAdminContactsFromGroupName(new List<String>{opsHierarchyGroup});
 
 					for(Contact con : companyAdminsFromGroup) {
 						if(con.Id == usr[0].contactId) {
@@ -141,7 +141,7 @@ public without sharing class CW_Utilities {
 						}
 					}
 					if(userRole != FACILITY_MANAGER && userRole != COMPANY_ADMIN) {
-						List<Contact> pendingCompanyAdminsFromGroup = getCompanyAdminContactsFromGroupNameByStatus(opsHierarchyGroup, new List<String>{'Pending for Approval'});
+						List<Contact> pendingCompanyAdminsFromGroup = getCompanyAdminContactsFromGroupNameByStatus(new List<String>{opsHierarchyGroup}, new List<String>{'Pending for Approval'});
 						for(Contact con : pendingCompanyAdminsFromGroup) {
 							if(con.Id == usr[0].contactId) {
 								userRole = 'Pending Company Admin';
@@ -150,7 +150,7 @@ public without sharing class CW_Utilities {
 					}
 				}
 			}
-		}		
+		}
 		return userRole;
 	}
 
@@ -759,7 +759,7 @@ public without sharing class CW_Utilities {
 	@AuraEnabled
 	public static String becomeCompanyAdmin(String groupName, String companyId, String contactId) {
 		ResponseBody res = new ResponseBody();
-		Set<Id> accRolesIds = getAccountsRolesToSearch(groupName);
+		Set<Id> accRolesIds = getAccountsRolesToSearch(new List<String>{groupName});
 		if(accRolesIds.isEmpty()) {
 			//Get Ops Hierarchy -- Encapsulate
 			List<Account> acc = [Select id,Global_Ultimate_Account_Global_ID__c,(Select id from Account_Roles__r where Functional_Role__c = 'One Source') from Account where Name = :groupName];
@@ -829,7 +829,7 @@ public without sharing class CW_Utilities {
 			
 			Set<Id> companyAdminIds = new Set<Id>();
 			List<String> lstCompanyAdminIds = new List<String>();
-			for (Contact cadmn : getCompanyadminContactsFromGroupName(groupName)) {
+			for (Contact cadmn : getCompanyadminContactsFromGroupName(new List<String>{groupName})) {
 				companyAdminIds.add(cadmn.Id);
 				lstCompanyAdminIds.add(cadmn.Id);
 			}
@@ -870,7 +870,7 @@ public without sharing class CW_Utilities {
 	 * @param			statusList <Account role Id>
 	 * @return			Message result
 	 */
-	public static List<Contact> getCompanyAdminContactsFromGroupNameByStatus (String groupName, List<String> statusList) {
+	public static List<Contact> getCompanyAdminContactsFromGroupNameByStatus (List<String> groupName, List<String> statusList) {
 		
 		Set<Id> contactsIds = new Set<Id>();
 		for (ICG_Contact_Role_Detail__c crd : getCompanyAdminContactRolesFromGroupNameByStatus(groupName, statusList)) {
@@ -884,11 +884,11 @@ public without sharing class CW_Utilities {
 
 	 /*
 	 * @description		Retrieve list of ICG_Contact_Role_Detail__c by group name
-	 * @param			groupName <Station group name>
+	 * @param			List<groupName> <Station group name>
 	 * @param			statusList <ICG_Contact_Role_Detail__c.Status__c>
 	 * @return			Ids of ICG_Contact_Role_Detail__c
 	 */
-	public static List<ICG_Contact_Role_Detail__c> getCompanyAdminContactRolesFromGroupNameByStatus(String groupName, List<String> statusList) {
+	public static List<ICG_Contact_Role_Detail__c> getCompanyAdminContactRolesFromGroupNameByStatus(List<String> groupName, List<String> statusList) {
 		Set<Id> accountRolesToSearch = getAccountsRolesToSearch(groupName);
 		return [Select Id, CreatedDate, ContactId__c, Account_Contact_Role__r.Contact__r.FirstName, Account_Contact_Role__r.Contact__r.LastName, Account_Contact_Role__r.Contact__r.Email, Account_Contact_Role__r.Contact__r.Phone, Account_Contact_Role__r.Contact__r.Title from ICG_Contact_Role_Detail__c where ICG_Role__c =: COMPANY_ADMIN and Status__c IN:statusList and Account_Role__c IN:accountRolesToSearch];
 	}
@@ -899,7 +899,7 @@ public without sharing class CW_Utilities {
 	 * @return			Ids of ICG_Contact_Role_Detail__c
 	 */
 	public static List<ICG_Contact_Role_Detail__c> getRelatedContactsFromGroupName(String groupName) {
-		Set<Id> accountRolesToSearch = getAccountsRolesToSearch(groupName);
+		Set<Id> accountRolesToSearch = getAccountsRolesToSearch(new List<String>{groupName});
 		return [Select Id, CreatedDate, ContactId__c, Account_Contact_Role__r.Contact__r.FirstName, Account_Contact_Role__r.Contact__r.LastName, Account_Contact_Role__r.Contact__r.Email, Account_Contact_Role__r.Account__c, Account_Contact_Role__r.Contact__r.Phone, Account_Contact_Role__r.Contact__r.Title from ICG_Contact_Role_Detail__c where Account_Role__c IN:accountRolesToSearch];
 	}
 
@@ -921,15 +921,15 @@ public without sharing class CW_Utilities {
 
 	/*
 	 * @description		Retrieve list account roles to search by group name
-	 * @param			groupName <Account Role Relationship name>
+	 * @param			List<groupName> <Account Role Relationship name>
 	 * @return			Ids of Accounts
 	*/
-	private static Set<Id> getAccountsRolesToSearch(String groupName) {
+	private static Set<Id> getAccountsRolesToSearch(List<String> groupName) {
 		Set<Id> accountRolesToSearch = new Set<Id>();
 		//Select Parent Groups AccountRoles
-		Map<Id,Account_Role__c> accRolesParentOfGroups = new Map<Id,Account_Role__c>([Select id from Account_Role__c where ID IN (Select From__c from Account_Role_Relationship__c where Relationship_Name__c =:groupName)]);
+		Map<Id,Account_Role__c> accRolesParentOfGroups = new Map<Id,Account_Role__c>([Select id from Account_Role__c where ID IN (Select From__c from Account_Role_Relationship__c where Relationship_Name__c IN :groupName)]);
 
-		List<Account_Role_Relationship__c> accountRoleRelatioships = [Select id, From__c, To__c from Account_Role_Relationship__c where Relationship_Name__c =:groupName or To__c IN :accRolesParentOfGroups.keySet() or (Ops_Hierarchy_Group__c =:groupName and To__c = null)];
+		List<Account_Role_Relationship__c> accountRoleRelatioships = [Select id, From__c, To__c from Account_Role_Relationship__c where Relationship_Name__c IN :groupName or To__c IN :accRolesParentOfGroups.keySet() or (Ops_Hierarchy_Group__c IN :groupName and To__c = null)];
 		for (Account_Role_Relationship__c accrRel : accountRoleRelatioships) {
 			if(accrRel.To__c != null) {
 				accountRolesToSearch.add(accrRel.To__c);
@@ -939,7 +939,7 @@ public without sharing class CW_Utilities {
 			}
 		}
 		if(accountRolesToSearch.isEmpty()) {
-			List<Account_Role__c> accountsRoleToSearch = [Select Id from Account_Role__c where Functional_Role__c = 'One Source' and Account__r.Name =:groupName];
+			List<Account_Role__c> accountsRoleToSearch = [Select Id from Account_Role__c where Functional_Role__c = 'One Source' and Account__r.Name IN :groupName];
 			for (Account_Role__c accrRol : accountsRoleToSearch) {
 				accountRolesToSearch.add(accrRol.Id);
 			}
@@ -950,11 +950,11 @@ public without sharing class CW_Utilities {
 
 	 /*
 	 * @description		Retrieve list of approved contacts by group name
-	 * @param			groupName <Account contact role Id>
+	 * @param			List<groupName> <Account contact role Id>
 	 * @return			Ids of Contacts
 	 */
 	@AuraEnabled
-	public static List<Contact> getCompanyAdminContactsFromGroupName (String groupName) {
+	public static List<Contact> getCompanyAdminContactsFromGroupName (List<String> groupName) {
 		return getCompanyAdminContactsFromGroupNameByStatus(groupName, new List<String>{'Approved'});
 	}
 
@@ -965,7 +965,7 @@ public without sharing class CW_Utilities {
 	 */
 	@AuraEnabled (cacheable = false)
 	public static List<ICG_Contact_Role_Detail__c> getPendingCompanyAdminContactRolesFromGroupName (String groupName) {
-		return getCompanyAdminContactRolesFromGroupNameByStatus(groupName, new List<String>{'Pending for Approval', 'Pending for Removal'});
+		return getCompanyAdminContactRolesFromGroupNameByStatus(new List<String>{groupName}, new List<String>{'Pending for Approval', 'Pending for Removal'});
 	}
 	
 	/*
@@ -1061,7 +1061,7 @@ public without sharing class CW_Utilities {
 			[SELECT Id, Account_Role__r.Account__c, Name, RecordType.Name, createdById FROM ICG_Account_Role_Detail__c WHERE CreatedById = :userId]);
 
 		List<ICG_History_Track__c> historyTrack = [
-			SELECT Id, Type__c, Target_Id__c, Old_Value__c, LastModifiedById, CreatedDate, LastModifiedDate 
+			SELECT Id, Type__c, Target_Id__c, New_Value__c, LastModifiedById, CreatedDate, LastModifiedDate 
 			FROM ICG_History_Track__c 
 			WHERE  (Target_Id__c IN :crd.keySet() AND (Type__C =: ADMIN_REQUEST OR Type__C =: STATION_MANAGER_REQUEST)) 
 				OR (Target_Id__c IN :ard.keySet() AND Type__C =: STATION_CREATION_REQUEST)];
@@ -1071,7 +1071,7 @@ public without sharing class CW_Utilities {
 				HistoryDTO itemToAdd = new HistoryDTO();
 				itemToAdd.Id = currentItem.Id;
 				itemToAdd.Type = currentItem.Type__c;
-				itemToAdd.Status = currentItem.Old_Value__c;
+				itemToAdd.Status = currentItem.New_Value__c;
 				itemToAdd.LastModifiedById = currentItem.LastModifiedById;
 				itemToAdd.CreatedDate = currentItem.CreatedDate;
 				itemToAdd.LastModifiedDate = currentItem.LastModifiedDate;
@@ -1083,7 +1083,7 @@ public without sharing class CW_Utilities {
 				HistoryDTO itemToAdd = new HistoryDTO();
 				itemToAdd.Id = currentItem.Id;
 				itemToAdd.Type = currentItem.Type__c;
-				itemToAdd.Status = currentItem.Old_Value__c;
+				itemToAdd.Status = currentItem.New_Value__c;
 				itemToAdd.LastModifiedById = currentItem.LastModifiedById;
 				itemToAdd.CreatedDate = currentItem.CreatedDate;
 				itemToAdd.LastModifiedDate = currentItem.LastModifiedDate;
@@ -1139,12 +1139,22 @@ public without sharing class CW_Utilities {
 
 	/*
 	 * @description		Retrieve the admins of a station or company
+	 * @param			contactId <Contact Ids>
+	 * @return			List of Contact
+	 */
+	@AuraEnabled
+	public static List<Contact> getCompanyAdminContactsFromContactId(String contactId) {
+		return contactId != null ? getCompanyAdminContactsFromGroupName(getOpsHierarchyNameFromContactId(contactId, new List<String>{'Approved'})) : new List<Contact>();
+	}
+
+	/*
+	 * @description		Retrieve the admins of a station or company
 	 * @param			accountId <Account Ids>
 	 * @return			List of Contact
 	 */
 	@AuraEnabled
 	public static List<Contact> getCompanyAdminContactsFromAccountId(String accountId) {
-		return accountId != null ? getCompanyAdminContactsFromGroupName(getOpsHierarchyNameFromAccountId(accountId)) : new List<Contact>();
+		return accountId != null ? getCompanyAdminContactsFromGroupName(new List<String>{getOpsHierarchyNameFromAccountId(accountId)}) : new List<Contact>();
 	}
 
 	/*
@@ -1154,47 +1164,94 @@ public without sharing class CW_Utilities {
 	*/
 	@AuraEnabled
 	public static String getOpsHierarchyNameFromAccountId (String accountId) {
-		String opsHierarchy;
-		List<Account_Role__c> accRole = [Select Id, (Select Id, From__c, To__c, Relationship_Name__c, Ops_Hierarchy_Group__c from From_Relationships__r) from Account_Role__c Where Account__c = :accountId AND Functional_Role__c = 'One Source'];
-		if (!accRole.isEmpty()) {
-			if(!accRole[0].From_Relationships__r.isEmpty()) {
-				if(accRole[0].From_Relationships__r[0].To__c != null && accRole[0].From_Relationships__r[0].To__c != accRole[0].From_Relationships__r[0].From__c) {
-					List<Account_Role_Relationship__c> rel = [Select Id, From__c, To__c, Relationship_Name__c, Ops_Hierarchy_Group__c from Account_Role_Relationship__c where From__c = :accRole[0].From_Relationships__r[0].To__c];
-					if(!rel.isEmpty()) {
-						if(rel[0].Relationship_Name__c != null) {
-							opsHierarchy = rel[0].Relationship_Name__c;
+		List<String> opsHierarchies = getOpsHierarchyNameFromAccountId(new List<String>{accountId});
+		if (opsHierarchies.isEmpty()) {
+			return null;
+		} else{
+			return opsHierarchies[0];
+		}
+	}
+
+	/*
+	 * @description		Get the global company name
+	 * @param			List<accountId> <Account Id>
+	 * @return			Company Name
+	*/
+	public static List<String> getOpsHierarchyNameFromAccountId (List<String> accountId) {
+		List<String> opsHierarchyFull = new List<String>();
+		List<Account_Role__c> accsRole = new List<Account_Role__c>();
+		Map<Id, Id> mapRelationshipIdByAccountRoleId = new Map<Id, Id>();
+		
+		Map<Id, Account> accountById = new Map<Id, Account>();
+		Map<String, Account> accountParentByUltimateAccountGlobalId = new Map<String, Account>();
+
+		for (Account currentItem : [SELECT Id, Name, Global_Ultimate_Account_Global_ID__c FROM Account WHERE Id IN :accountId]) {
+			accountById.put(currentItem.Id, currentItem);
+			if (currentItem.Global_Ultimate_Account_Global_ID__c != null) {
+				accountParentByUltimateAccountGlobalId.put(currentItem.Global_Ultimate_Account_Global_ID__c, null);
+			}
+		}
+
+		for (Account currentItem : [SELECT Id, Name, Global_Ultimate_Account_Global_ID__c FROM Account WHERE Global_ID__c IN : accountParentByUltimateAccountGlobalId.keySet()]) {
+			accountParentByUltimateAccountGlobalId.put(currentItem.Global_Ultimate_Account_Global_ID__c, currentItem);
+		}
+
+		for (Account_Role__c currentItem : [SELECT Id, Account__c, (SELECT Id, From__c, To__c, Relationship_Name__c, Ops_Hierarchy_Group__c FROM From_Relationships__r) FROM Account_Role__c WHERE Account__c IN :accountId AND Functional_Role__c = 'One Source' ORDER BY CreatedDate DESC]) {
+			accsRole.add(currentItem);
+			if ( !currentItem.From_Relationships__r.isEmpty() && currentItem.From_Relationships__r[0].To__c != null && currentItem.From_Relationships__r[0].To__c != currentItem.From_Relationships__r[0].From__c) {
+				mapRelationshipIdByAccountRoleId.put(currentItem.Id, currentItem.From_Relationships__r[0].To__c);
+			}
+		}
+
+		Map<Id, Account_Role_Relationship__c> mapRelationships = new Map<Id, Account_Role_Relationship__c>([SELECT Id, From__c, To__c, Relationship_Name__c, Ops_Hierarchy_Group__c FROM Account_Role_Relationship__c WHERE From__c IN :mapRelationshipIdByAccountRoleId.values()]);
+		for (Account_Role__c currentItem : accsRole) {
+			String opsHierarchy;
+			
+			if(!currentItem.From_Relationships__r.isEmpty()) {
+
+				if(currentItem.From_Relationships__r[0].To__c != null && currentItem.From_Relationships__r[0].To__c != currentItem.From_Relationships__r[0].From__c) {
+					Account_Role_Relationship__c rel = mapRelationships.get(mapRelationshipIdByAccountRoleId.get(currentItem.Id));
+					if(rel != null) {
+						if(rel.Relationship_Name__c != null) {
+							opsHierarchy = rel.Relationship_Name__c;
 						}
-						else if (rel[0].Ops_Hierarchy_Group__c != null) {
-							opsHierarchy = rel[0].Ops_Hierarchy_Group__c;
+						else if (rel.Ops_Hierarchy_Group__c != null) {
+							opsHierarchy = rel.Ops_Hierarchy_Group__c;
 						}
 					}
 				}
 				if(opsHierarchy == null) {
-					if(accRole[0].From_Relationships__r[0].Relationship_Name__c != null) {
-						opsHierarchy = accRole[0].From_Relationships__r[0].Relationship_Name__c;
+					if(currentItem.From_Relationships__r[0].Relationship_Name__c != null) {
+						opsHierarchy = currentItem.From_Relationships__r[0].Relationship_Name__c;
 					}
-					else if (accRole[0].From_Relationships__r[0].Ops_Hierarchy_Group__c != null) {
-						opsHierarchy = accRole[0].From_Relationships__r[0].Ops_Hierarchy_Group__c;
+					else if (currentItem.From_Relationships__r[0].Ops_Hierarchy_Group__c != null) {
+						opsHierarchy = currentItem.From_Relationships__r[0].Ops_Hierarchy_Group__c;
 					}
 				}
 			}
-		}
-		if(opsHierarchy == null) {
-			List<Account> acc = [Select id, name, Global_Ultimate_Account_Global_ID__c from Account where Id =:accountId];
-			if(!acc.isEmpty()) {
-				if(acc[0].Global_Ultimate_Account_Global_ID__c != null) {
-					List<Account> parentAcc = [Select id, name, Global_Ultimate_Account_Global_ID__c from Account where Global_ID__c =:acc[0].Global_Ultimate_Account_Global_ID__c];
-					if(!parentAcc.isEmpty()) {
-						opsHierarchy = parentAcc[0].Name;
+
+			if(opsHierarchy == null) {
+				Account acc = accountById.get(currentItem.Account__c);
+				if(acc != null) {
+					if(acc.Global_Ultimate_Account_Global_ID__c != null) {
+						Account parentAcc = accountParentByUltimateAccountGlobalId.get(acc.Global_Ultimate_Account_Global_ID__c);
+						if(parentAcc != null) {
+							opsHierarchy = parentAcc.Name;
+						} else {
+							opsHierarchy = acc.Name;
+						}
 					} else {
-						opsHierarchy = acc[0].Name;
+						opsHierarchy = acc.Name;
 					}
-				} else {
-					opsHierarchy = acc[0].Name;
 				}
 			}
+
+			if(opsHierarchy != null) {
+				opsHierarchyFull.add(opsHierarchy);
+			}
 		}
-		return opsHierarchy;
+
+		return opsHierarchyFull;
 	}
 
 	/*
@@ -1247,6 +1304,23 @@ public without sharing class CW_Utilities {
 		}		
 		
 		return opsHierarchyName;
+	}
+
+	/*
+	 * @description		Get the global company group name by userid
+	 * @param			contactId <Contact Id>
+	 * @return			List<Company group>
+	*/
+	public static List<String> getOpsHierarchyNameFromContactId (String contactId, List<String> allowedStatus) {
+		List<Id> accountIds = new List<Id>();
+		for (ICG_Contact_Role_Detail__c currentItem : [SELECT Id, Account_Role__r.Account__r.Id FROM ICG_Contact_Role_Detail__c 
+														WHERE ICG_Role__c = :COMPANY_ADMIN AND Status__c IN :allowedStatus AND Account_Contact_Role__r.Contact__r.Id = :contactId]
+		) {
+			if (!accountIds.contains(currentItem.Account_Role__r.Account__r.Id)) {
+				accountIds.add(currentItem.Account_Role__r.Account__r.Id);
+			}
+		}
+		return getOpsHierarchyNameFromAccountId(accountIds);
 	}
 
 	/*
@@ -1703,7 +1777,7 @@ public without sharing class CW_Utilities {
 	  		getAllSubRoleIds(roleIds, currentRoleIds);
 		}
 	}
-	  
+
 	  /*********************************************************************************************************
 	   * @name			addMapMember
 	   * @author		Beatriz <beatriz.menendez@next-lin.ch>

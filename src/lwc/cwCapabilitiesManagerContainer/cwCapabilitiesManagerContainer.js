@@ -1006,6 +1006,9 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 	}
 
 	get checkRequiredFields() {
+		let obligationLinkField = 'more_info_link__c';
+		let uploadDocumentationField = 'more_info_document__c';
+
 		let listFieldByEquipments = [];
 		let returnValue = true;
 		this.listAddedRows.forEach(element => {
@@ -1016,7 +1019,20 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 			element.fields.forEach(field => {
 				if (field.required.toString() === "true" && field.field != "equipment__c") {
 					if (field.value === "") {
-						returnValue = false;
+						if(field.field === obligationLinkField || field.field === uploadDocumentationField){
+							if(field.field === obligationLinkField){
+								let selectField = element.fields.filter(row => row.field === uploadDocumentationField);
+
+								returnValue = selectField[0].value != null ? true :  false;
+							}
+							else if(field.field === uploadDocumentationField){
+								let selectField = element.fields.filter(row => row.field === obligationLinkField);
+								returnValue = selectField[0].value != null ? true :  false;
+							}
+						}						
+						else{
+							returnValue = false;
+						}
 						fieldByEquipmentRequired.equipment = element.equipment_label;
 						fieldByEquipmentRequired.fields.push(field.label);
 					}

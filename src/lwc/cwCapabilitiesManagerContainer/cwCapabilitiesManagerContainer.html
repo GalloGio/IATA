@@ -204,10 +204,6 @@
 														</template>
 
 														<template if:true={currentheader.last}>
-															<template if:true={currentCategory.isEditableRecordType}>
-																<th key={currentheader.value.name}
-																scope="col" class="photo-colum-head">{label.manage_photos}</th>
-															</template>
 															<template if:false={currentCategory.isEditableRecordType}>
 																<th key={currentheader.value.name}
 																	scope="col" class="photo-colum-head">{label.photos}</th>
@@ -341,7 +337,7 @@
 															</template>
 														</template>
 
-														<td class="row-separator photo-colum" 
+														<td if:false={currentCategory.isEditableRecordType} class="row-separator photo-colum" 
 															data-super-categories-index={superCategoryIndex}
 															data-section-index={sectionIndex}
 															data-capability-index={capabilityIndex}
@@ -417,6 +413,7 @@
 																			<img key={cert.id} width="35px" src={cert.src}																	
 																				class="certifications-disabled">
 																		</template>
+
 																</template>
 															</div>
 														</td>

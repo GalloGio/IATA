@@ -459,6 +459,8 @@ import obligation_documents from "@salesforce/label/c.icg_documents";
 import manage_documents from "@salesforce/label/c.icg_manage_documents";
 import icg_user_guide_pdf_link from "@salesforce/label/c.icg_user_guide_pdf_link";
 import icg_station_has_been_created from "@salesforce/label/c.icg_station_has_been_created";
+import icg_manage_obligations_documents from "@salesforce/label/c.icg_manage_obligations_documents";
+
 
 export function labels() {
 	let labels = {
@@ -923,7 +925,8 @@ export function labels() {
 		obligation_documents,
 		manage_documents,
 		icg_user_guide_pdf_link,
-		icg_station_has_been_created
+		icg_station_has_been_created,
+		icg_manage_obligations_documents
 
 	};
 

@@ -20,10 +20,8 @@ public class CW_UtilitiesTest {
 
 		Account acc = CW_TestDataFactory.TestAccount(country.Id);
 		acc.Business_City__c = city.Id;
-		insert acc;
-		
 		Account ac2 = new Account(Name = 'Account02', IATA_ISO_Country__c = country.Id, Business_City_Name__c = 'Madrid');
-		insert ac2;
+		insert new List<Account>{acc, ac2};
 
 		Airport_Detail__c airport = CW_TestDataFactory.newAirport(country.Id, acc.Id);
 		insert airport;
@@ -31,28 +29,21 @@ public class CW_UtilitiesTest {
 		Contact con1 = CW_TestDataFactory.testContact(acc.id);
 		insert con1;
 
+		
 		Account_Role__c accRole = CW_TestDataFactory.testAccountRole(acc.Id, 'Test');
-		insert accRole;
+		Account_Role__c accRole2 = CW_TestDataFactory.testAccountRole(ac2.Id, 'Test2');
+		insert new List<Account_Role__c>{accRole, accRole2};
 
-		Account_Role__c accRole2 = CW_TestDataFactory.testAccountRole(acc.Id, 'Test2');
-		insert accRole2;
-
-		Account_Role__c accRole3 = CW_TestDataFactory.testAccountRole(acc.Id, 'Test3');
-		insert accRole3;
-
-		ICG_Account_Role_Detail__c accRoleDetail = CW_TestDataFactory.testICGAccountRoleDetail(accRole.Id, airport);
-		insert accRoleDetail;
-
-		ICG_Account_Role_Detail__c accRoleDetail2 = CW_TestDataFactory.testICGAccountRoleDetail(accRole2.Id, airport);
-		insert accRoleDetail2;
-
-		ICG_Account_Role_Detail__c accRoleDetail3 = CW_TestDataFactory.testICGAccountRoleDetailPendingForApproval(accRole3.Id, airport);
-		insert accRoleDetail3;
+		ICG_Account_Role_Detail__c stationOne = CW_TestDataFactory.testICGAccountRoleDetail(accRole.Id, airport);
+		stationOne.Name = 'Test 1';
+		ICG_Account_Role_Detail__c stationTwo = CW_TestDataFactory.testICGAccountRoleDetail(accRole2.Id, airport);
+		stationTwo.Name = 'Test 2';
+		ICG_Account_Role_Detail__c stationThree = CW_TestDataFactory.testICGAccountRoleDetailPendingForApproval(accRole2.Id, airport);
+		stationThree.Name = 'Test 3';
+		insert new List<ICG_Account_Role_Detail__c>{stationOne, stationTwo, stationThree};
 		
 		User uu = CW_TestDataFactory.testUser('IATAICGACB', 'IATAICGXYZ', uniqueName, orgId, pf.Id, con1.id);
-		insert uu;
-
-		User uu2 =new User(firstname = 'IATATESTQUEUE', 
+		User uu2 = new User(firstname = 'IATATESTQUEUE', 
 						   lastName = 'IATAQUEUETEST', 
 						   email = uniqueName + '2@test' + orgId + '.org', 
 						   Username = uniqueName + '2@test' + orgId + '.org', 
@@ -64,7 +55,8 @@ public class CW_UtilitiesTest {
 						   ProfileId = pf2.Id,
 						   License_Cost_Center__c = 'XSMW01JO01'
 						);
-		insert uu2;
+		insert new List<User>{uu, uu2};
+
 		System.runAs(uu2) {
 			List<Group> groupLst = new List<Group>();
 			Group testQueue = new Group(Name = 'Fresh_Test_Queue', Type = 'Queue');
@@ -77,9 +69,8 @@ public class CW_UtilitiesTest {
 			groupMembership.add(new GroupMember(UserOrGroupId = uu2.Id, GroupId = testPublicGroup.Id));			
 			groupMembership.add(new GroupMember(UserOrGroupId = uu2.Id, GroupId = testQueue.Id));
 			groupMembership.add(new GroupMember(UserOrGroupId = testPublicGroup.Id, GroupId = testQueue.Id));
-			insert groupMembership;		
-
-			insert new GroupMember(UserOrGroupId = testPublicGroup.Id, GroupId = testQueue.Id);
+			groupMembership.add(new GroupMember(UserOrGroupId = testPublicGroup.Id, GroupId = testQueue.Id));
+			insert groupMembership;
 		}
 
 		Account_Contact_Role__c acr = CW_TestDataFactory.testAccountContactRole(accRole.Id, acc.Id, con1.Id);
@@ -112,12 +103,9 @@ public class CW_UtilitiesTest {
 														SF_Partner_Web_Service_endpoint__c = '', Zuora_Generate_Quote_PDF_URL__c = '');
 		insert iecSettings;
 
-		List<Account_Role_Relationship__c> lstARR = new List<Account_Role_Relationship__c>();
 		Account_Role_Relationship__c arr = new Account_Role_Relationship__c(From__c = accRole.Id, To__c = accRole2.Id, Ops_Hierarchy_Group__c = 'Test');
-		lstARR.add(arr);
 		Account_Role_Relationship__c arr2 = new Account_Role_Relationship__c(From__c = accRole2.Id, Relationship_Name__c = 'TestNameRelationship', To__c = accRole2.Id, Ops_Hierarchy_Group__c = 'Test');
-		lstARR.add(arr2);
-		insert lstARR;
+		insert new List<Account_Role_Relationship__c>{arr, arr2};
 	}
 	/*
 	 * @author
@@ -349,31 +337,36 @@ public class CW_UtilitiesTest {
 
 	@isTest
 	static void testApproveRejectStationAutomaticProcess() {
-		List<User> urs = [SELECT id, accountid, contactid FROM user WHERE firstname = 'IATAICGACB' AND lastname = 'IATAICGXYZ'];
-		List<ICG_Account_Role_Detail__c> ard = [SELECT id FROM ICG_Account_Role_Detail__c];
-		List<Account_Contact_Role__c> acr = [SELECT Id FROM Account_Contact_Role__c];
-		List<Account_Role__c> arc = [SELECT Id FROM Account_Role__c LIMIT 1];
+		User usr;
+		for (User currentItem : [SELECT Id, AccountId, ContactId FROM User WHERE Firstname = 'IATAICGACB' AND Lastname = 'IATAICGXYZ']) {
+			usr = currentItem;
+		}
+		
+		Map<String, ICG_Account_Role_Detail__c> mapStationByName = new Map<String, ICG_Account_Role_Detail__c>();
+		for (ICG_Account_Role_Detail__c currentItem : [SELECT id, Name, Status__c, Account_Role__c FROM ICG_Account_Role_Detail__c ORDER BY Name]) {
+			mapStationByName.put(currentItem.Name, currentItem);
+		}
 
-		//For some reason I cannot yet see, this object cannot be created in the SETUP method
-		ICG_Contact_Role_Detail__c crd = CW_TestDataFactory.testICGContactRoleDetail(acr[0].id, ard[0].id);
-		crd.ICG_Role__c = 'Company Admin';
-		crd.Status__c = 'Approved';
-		crd.Account_Role__c = arc[0].Id;
+		Account_Contact_Role__c accContactRole;
+		for (Account_Contact_Role__c currentItem : [SELECT Id FROM Account_Contact_Role__c WHERE Contact__c = :usr.ContactId]) {
+			accContactRole = currentItem;
+		}
 
+		ICG_Account_Role_Detail__c stationOne = mapStationByName.get('Test 1');
+		ICG_Account_Role_Detail__c stationImCompanyAdmin = mapStationByName.get('Test 3');
+
+		ICG_Contact_Role_Detail__c crd = CW_TestDataFactory.testICGContactRoleDetail(accContactRole.id, stationImCompanyAdmin.id);
+		crd.ICG_Role__c = CW_Utilities.COMPANY_ADMIN;
+		crd.Account_Role__c = stationImCompanyAdmin.Account_Role__c;
 		insert crd;
-		Boolean aux = false;
-		System.runAs(urs[0]) {
+
+		System.runAs(usr) {
 			test.startTest();
-			aux = CW_Utilities.approveStationAutomaticProcess(ard[0].Id);
-			System.assertEquals(false, aux, 'The process run correctly');
-			aux = CW_Utilities.approveStationAutomaticProcess('notId');
-			System.assertEquals(false, aux, 'The process run correctly');
-			aux = CW_Utilities.rejectStationAutomaticProcess(ard[0].Id, 'the reason');
-			System.assertEquals(false, aux, 'The process run correctly');
-			aux = CW_Utilities.rejectStationAutomaticProcess(ard[2].Id, 'the reason');
-			System.assertEquals(true, aux, 'The process run correctly');
-			aux = CW_Utilities.rejectStationAutomaticProcess('notId', 'the reason');
-			System.assertEquals(false, aux, 'The process run correctly');
+			System.assertEquals(false, CW_Utilities.approveStationAutomaticProcess(stationOne.Id), 'The process run correctly');
+			System.assertEquals(false, CW_Utilities.rejectStationAutomaticProcess(stationOne.Id, 'the reason'), 'The process run correctly');
+			System.assertEquals(false, CW_Utilities.approveStationAutomaticProcess('notId'), 'The process run correctly');
+			System.assertEquals(false, CW_Utilities.rejectStationAutomaticProcess('notId', 'the reason'), 'The process run correctly');
+			System.assertEquals(true, CW_Utilities.rejectStationAutomaticProcess(stationImCompanyAdmin.Id, 'the reason'), 'The process run correctly');
 			test.stopTest();
 		}
 	}
@@ -388,8 +381,8 @@ public class CW_UtilitiesTest {
 		String hFromUser = CW_Utilities.getOpsHierarchyNameFromUserId(urs[0].Id);
 		String hFromStation = CW_Utilities.getOpsHierarchyNameFromStationId(ard[0].Id);
 		test.stopTest();
-		System.assertEquals('TestNameRelationship', hFromUser, 'Hierarchy Fails');
-		System.assertEquals('TestNameRelationship', hFromStation, 'Hierarchy Fails');
+		System.assertEquals('Test', hFromUser, 'Hierarchy Fails 1');
+		System.assertEquals('Test', hFromStation, 'Hierarchy Fails 2');
 	}
 
 	@isTest
@@ -399,7 +392,7 @@ public class CW_UtilitiesTest {
 		List<Contact> auxContact = new List<Contact>();
 		String aux = '';
 		test.startTest();
-		auxContact = CW_Utilities.getCompanyAdminContactsFromGroupName(lstARR[0].Relationship_Name__c);
+		auxContact = CW_Utilities.getCompanyAdminContactsFromGroupName(new List<String>{lstARR[0].Relationship_Name__c});
 		aux = CW_Utilities.getOpsHierarchyNameFromAccountId(listAR[0].Account_Role_Name__c);
 		test.stopTest();
 		System.assertEquals(0, auxContact.size(), 'Contact list size > 0');
@@ -905,5 +898,72 @@ public class CW_UtilitiesTest {
 
 			System.assert(!historyLst.isEmpty(), 'ERROR: historyLst should not be null');
 		}
+	}
+
+	/*********************************************************************************************************
+	 * @name			getFacilityHistoryByUserTest
+	 * @author			Daniel Mendoza <daniel.mendoza@nextlinksolutions.ch>
+	 * @created			24 / 02 / 2021
+	 * @description		Test method for getOpsHierarchyNameFromContactId method
+	 * @param			-
+	 * @return			-
+	**********************************************************************************************************/
+	@isTest
+	static void getOpsHierarchyNameFromContactIdTest(){
+		User usr;
+		for (User currentItem : [SELECT Id, AccountId, ContactId FROM User WHERE Firstname = 'IATAICGACB' AND Lastname = 'IATAICGXYZ']) {
+			usr = currentItem;
+		}
+		
+		Map<String, ICG_Account_Role_Detail__c> mapStationByName = new Map<String, ICG_Account_Role_Detail__c>();
+		for (ICG_Account_Role_Detail__c currentItem : [SELECT id, Name, Status__c, Account_Role__c FROM ICG_Account_Role_Detail__c ORDER BY Name]) {
+			mapStationByName.put(currentItem.Name, currentItem);
+		}
+
+		Account_Contact_Role__c accContactRole;
+		for (Account_Contact_Role__c currentItem : [SELECT Id FROM Account_Contact_Role__c WHERE Contact__c = :usr.ContactId]) {
+			accContactRole = currentItem;
+		}
+
+		ICG_Account_Role_Detail__c stationImCompanyAdmin = mapStationByName.get('Test 3');
+
+		ICG_Contact_Role_Detail__c crd = CW_TestDataFactory.testICGContactRoleDetail(accContactRole.id, stationImCompanyAdmin.id);
+		crd.ICG_Role__c = CW_Utilities.COMPANY_ADMIN;
+		crd.Account_Role__c = stationImCompanyAdmin.Account_Role__c;
+		insert crd;
+		
+		List<CW_Utilities.HistoryDTO> history = CW_Utilities.getFacilityHistoryByUser(usr.Id);
+
+		List<Contact> contacts = CW_Utilities.getCompanyAdminContactsFromContactId(usr.ContactId);
+		System.runAs(usr) {
+			test.startTest();
+			System.assert(!contacts.isEmpty(), 'ERROR: contacts should not be empty');
+			System.assertEquals('Test', contacts[0].FirstName, 'ERROR: contact FirstName  should be Test');
+			System.assert(!history.isEmpty(), 'ERROR: history should not be empty');
+			test.stopTest();
+		}
+	}
+
+
+	/*********************************************************************************************************
+	 * @name			getAccountContactRoleTest
+	 * @author			Daniel Mendoza <daniel.mendoza@nextlinksolutions.ch>
+	 * @created			24 / 02 / 2021
+	 * @description		Test method for getAccountContactRole method
+	 * @param			-
+	 * @return			-
+	**********************************************************************************************************/
+	@isTest
+	static void getAccountContactRoleTest(){
+		Account_Role__c accRole = [SELECT Id, Account__c FROM Account_Role__c WHERE Account_Role_Name__c = 'Test' LIMIT 1];
+		accRole.Functional_Role__c = '';
+		update accRole;
+		ICG_Account_Role_Detail__c station = [SELECT id FROM ICG_Account_Role_Detail__c WHERE Name = 'Test 1' LIMIT 1];
+		User usr = [SELECT Id, AccountId, ContactId FROM User WHERE Firstname = 'IATAICGACB' AND Lastname = 'IATAICGXYZ' LIMIT 1];
+		
+		test.startTest();
+		List<ICG_Contact_Role_Detail__c> crds = CW_Utilities.getContactRoleDetailsToInsert(accRole.Account__c, station.Id, usr.ContactId, 'Approved');
+		test.stopTest();
+		System.assert(!crds.isEmpty(), 'ERROR: crds should not be empty');
 	}
 }

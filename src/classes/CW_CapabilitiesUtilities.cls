@@ -508,7 +508,7 @@ public with sharing class CW_CapabilitiesUtilities {
 					break;
 				}
 			}
-		}		
+		}
 		currentObject.put('isPermissionByDepartment',userHasPermissionToEdit);
 
 		return currentObject;
@@ -520,6 +520,7 @@ public with sharing class CW_CapabilitiesUtilities {
 	 * @return			List of certifications
 	 */
 	public static List<String> getCertificationsAllowedByDepartments(String stationRT) {
+
 		List<String> lstDepts = new List<String>();
 		List<String> lstCertiAllowed = new List<String>();
 		List<ICG_Certification__c> lstCerti;
@@ -536,7 +537,7 @@ public with sharing class CW_CapabilitiesUtilities {
 					existSFRM = true;
 				}
 			}
-			lstCerti = [SELECT Name FROM ICG_Certification__c WHERE Department__c IN :lstDepts];
+			lstCerti = [SELECT Name, Label__c FROM ICG_Certification__c WHERE Applicable_to__c INCLUDES (:stationRT)];
 			if (existSFRM) {
 				lstCerti.add(new ICG_Certification__c(Name = SMART_FACILITY_REMOTE_VALIDATION, Label__c = SMART_FACILITY_REMOTE_VALIDATION));
 			}

@@ -291,7 +291,6 @@ public without sharing class CW_FacilityCapabilitiesController {
 
 			// Fields related to Certifications
 			fieldsToRetrieve.addAll(new List<String>{ caGroupR + '.Id', caGroupR + '.Expiration_Date__c', caGroupR + '.Issue_Date__c', caGroupR + '.' + certificationR + '.Name', caGroupR + '.' + certificationR + '.Label__c', caGroupR + '.' + certificationR + '.Image__c', caGroupR + '.' + certificationR + '.Order__c' });
-
 			String optionalFilterConflicts = capabilitiesIdForConflicts == null || capabilitiesIdForConflicts.isEmpty() ? ' AND Is_In_Conflict__c = false' : 'AND ' + ardCapabilityR + '.Id IN (\'' + String.join((capabilitiesIdForConflicts), '\', \'') + '\')';
 
 			String query = 'SELECT Id, ' + String.join(fieldsToRetrieve, ', ') + ' FROM ICG_Account_Role_Capability_Assignment__c ' + ' WHERE ' + caGroupR + '.Is_Active__c = true ' + optionalFilterConflicts + ' AND ' + caGroupR + '.Expiration_Date__c >= TODAY AND ' + arDetailR + '.Id = \'' + ardId + '\' ' + ' AND ' + ardCapabilityR + '.RecordTypeId IN (\'' + String.join((recordTypesId), '\', \'') + '\')' + ' AND ' + ardCapabilityR + '.Category__c IN (\'' + String.join(categoriesToRetrieve, '\', \'') + '\') order by CreatedDate ';
@@ -353,7 +352,11 @@ public without sharing class CW_FacilityCapabilitiesController {
 	 * @param	 		accountRoleDetailFound ICG_Account_Role_Detail__c
 	 * @return			Map<String, Object> with these properties: listSectionsIncluded, checksMap and rawData
 	 */
-	private static Map<String, Object> generateData(String id, List<String> categoriesToRetrieve, Map<String, List<String>> mapCategoriesByRecordTypeDevName, Map<Id, RecordType> mapAccountRoleDetailAssignmentRtsById, List<String> capabilitiesIdForConflicts, ICG_Account_Role_Detail__c accountRoleDetailFound) {
+	private static Map<String, Object> generateData(String id, List<String> categoriesToRetrieve, 
+													Map<String, List<String>> mapCategoriesByRecordTypeDevName, 
+													Map<Id, RecordType> mapAccountRoleDetailAssignmentRtsById,
+													List<String> capabilitiesIdForConflicts, 
+													ICG_Account_Role_Detail__c accountRoleDetailFound) {
 		Set<String> listSectionsIncluded = new Set<String>();
 		CW_FacilityCapabilitiesController.SectionsWrapper checksMap;
 
@@ -875,7 +878,8 @@ public without sharing class CW_FacilityCapabilitiesController {
 					 'isformula' => fieldMap.get(fieldName).getDescribe().isCalculated(),
 					  'type' => fieldMap.get(fieldName).getDescribe().getType().name(), 
 					  'values' => pickListValuesList,
-					  'isfileupload' => (fieldName == 'more_info_document__c')
+					  'isfileupload' => (fieldName == 'more_info_document__c'),
+					  'isurlfield' => fieldMap.get(fieldName).getDescribe().getType().name() == 'URL'
 					 });
 
 				if (!foundGroup) {
@@ -883,8 +887,9 @@ public without sharing class CW_FacilityCapabilitiesController {
 						 'colspan' => 1, 'name' => fieldName, 'label' => '', 
 						 'isformula' => fieldMap.get(fieldName).getDescribe().isCalculated(),
 						  'type' => fieldMap.get(fieldName).getDescribe().getType().name(),
-						   'values' => pickListValuesList,
-						   'isfileupload' => (fieldName == 'more_info_document__c')
+						  'values' => pickListValuesList,
+						  'isfileupload' => (fieldName == 'more_info_document__c'),
+					  	  'isurlfield' => fieldMap.get(fieldName).getDescribe().getType().name() == 'URL'
 						 });
 				}
 			}

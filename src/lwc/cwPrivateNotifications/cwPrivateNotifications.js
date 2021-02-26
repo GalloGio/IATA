@@ -21,6 +21,9 @@ const CONFLICT = 'conflict';
 const STATION_CREATION = 'creation';
 const APPROVED = 'approved';
 const REJECTED = 'rejected';
+const STATION_MANAGER_REMOVAL = 'remove station manager';
+const STATION_MANAGER_REMOVAL_REQ = 'station manager removal';
+const STATION_MANAGER_REMOVAL_OTHER_USER = 'station manager rights removed';
 export default class CwPrivateNotifications extends LightningElement {
 	initialized = false;
 
@@ -101,6 +104,9 @@ export default class CwPrivateNotifications extends LightningElement {
 	descriptionHasValidValue(description) {
 		return description.includes(REMOTE) || description.includes(VALIDATION) ||
 		description.includes(PENDING_APPROVAL) ||
+		description.includes(STATION_MANAGER_REMOVAL) ||
+		description.includes(STATION_MANAGER_REMOVAL_REQ) ||
+		description.includes(STATION_MANAGER_REMOVAL_OTHER_USER) ||
 		description.includes(STATION_MANAGER) ||
 		description.includes(FACILITY_MANAGER) ||
 		description.includes(COMPANY_ADMIN) ||
@@ -138,8 +144,9 @@ export default class CwPrivateNotifications extends LightningElement {
 		else if(description.includes(COMPANY_ADMIN) || description.includes(STATION_MANAGER) || description.includes(FACILITY_MANAGER)){
 			if (description.includes(APPROVED)){
 				destiny = STATION;
-			}
-			else{
+			}else if(description.includes(STATION_MANAGER_REMOVAL) || description.includes(STATION_MANAGER_REMOVAL_REQ) || description.includes(STATION_MANAGER_REMOVAL_OTHER_USER)){
+				destiny = MY_REQUESTS;
+			}else{
 				destiny = PENDING_USER_APPROVAL;
 			}
 		}                

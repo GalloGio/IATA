@@ -973,11 +973,28 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 
 	checkRequiredFields(){
 		let returnValue=true;
+		let obligationLinkField = 'more_info_link__c';
+		let uploadDocumentationField = 'more_info_document__c';
+
 		this.listCapabilitiesRow.forEach(element => {
 			element.fields.forEach(field => {
 				if(field.required.toString() === "true" ){
 					if(field.value === ""){
-						returnValue = false;
+
+						if(field.field === obligationLinkField || field.field === uploadDocumentationField){
+							if(field.field === obligationLinkField){
+								let selectField = element.fields.filter(row => row.field === uploadDocumentationField);
+								returnValue = selectField[0].value != "" ? true :  false;
+							}
+							else if(field.field === uploadDocumentationField){
+								let selectField = element.fields.filter(row => row.field === obligationLinkField);
+								returnValue = selectField[0].value != "" ? true :  false;
+							}
+						}						
+						else{
+							returnValue = false;
+						}
+						
 					}					
 				}
 			});

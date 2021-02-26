@@ -153,14 +153,14 @@
     left: 0;
     position: sticky;
     width: 25%;
-    z-index: 20;
+    z-index: 21;
     background-color: white;
   }
 
   .zui-sticky-col-right{
     position: sticky;
     right: 0;
-    z-index: 20;
+    z-index: 21;
     background-color: white;
   }
 

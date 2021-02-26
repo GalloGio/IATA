@@ -345,32 +345,72 @@
 																						</template>	
 																					</template>
 																					<template if:false={isPrivateArea}>
-																						<th if:false={currentfield.first}
+																						<template if:true={currentCategory.isEditableRecordType}>
+																							<template if:false={currentfield.first}>
+																								<th if:true={currentfield.value.isurlfield}
+																								key={currentfield.value.name}
+																								scope="col"
+																								colspan={currentfield.value.colspan}>
+																								{label.icg_manage_obligations_documents}
+																								</th>
+
+																								<th if:false={currentfield.value.isurlfield}
+																								key={currentfield.value.name}
+																								scope="col"
+																								colspan={currentfield.value.colspan}>
+																								{currentfield.value.label}
+																								</th>
+																							</template>
+																						</template>
+																						<template if:false={currentCategory.isEditableRecordType}>
+																							<th if:false={currentfield.first}
 																							key={currentfield.value.name}
 																							scope="col"
 																							colspan={currentfield.value.colspan}>
 																							{currentfield.value.label}
-																						</th>
+																							</th>
+																						</template>
+																						
 																					</template>	
 																																								
 																				</template>
 																				<template if:false={editMode}>
-																					<template if:true={currentfield.value.isfileupload}>
-																						<th if:false={currentfield.first}
-																						key={currentfield.value.name}
-																						scope="col"
-																						colspan={currentfield.value.colspan}>
-																						{label.obligation_documents}
-																						</th>
+																					<template if:true={currentCategory.isEditableRecordType}>
+																						<template if:true={currentfield.value.isfileupload}>
+																							<th if:false={currentfield.first}
+																							key={currentfield.value.name}
+																							scope="col"
+																							colspan={currentfield.value.colspan}>
+																							{label.manage_documents}
+																							</th>
+																						</template>
+
+																						<template if:false={currentfield.value.isfileupload}>
+																							<template if:false={currentfield.first}>
+																								<th if:true={currentfield.value.isurlfield}
+																								key={currentfield.value.name}
+																								scope="col"
+																								colspan={currentfield.value.colspan}>
+																								{label.icg_manage_obligations_documents}
+																								</th>
+
+																								<th if:false={currentfield.value.isurlfield}
+																								key={currentfield.value.name}
+																								scope="col"
+																								colspan={currentfield.value.colspan}>
+																								{currentfield.value.label}
+																								</th>
+																							</template>
+																						</template>
 																					</template>
-																					<template if:false={currentfield.value.isfileupload}>
+																					<template if:false={currentCategory.isEditableRecordType}>
 																						<th if:false={currentfield.first}
 																						key={currentfield.value.name}
 																						scope="col"
 																						colspan={currentfield.value.colspan}>
 																						{currentfield.value.label}
 																						</th>
-																					</template>
+																					</template>																				
 																					
 																				</template>
 
@@ -380,9 +420,6 @@
 
 																		<template if:true={currentheader.last}>
 																			<template if:false={editMode}>
-																				<th if:true={currentcapability.value.isEditableRecordType} key={currentheader.value.name} scope="col"
-																					class="photo-colum-head">
-																					{label.manage_photos}</th>
 																				<th if:false={currentcapability.value.isEditableRecordType} key={currentheader.value.name} scope="col"
 																				class="photo-colum-head">
 																				{label.photos}</th>
@@ -391,14 +428,13 @@
 																			</template>
 
 																			<template if:true={editMode}>
-																				<template if:false={isPrivateArea}>
-																					<th key={currentheader.value.name} scope="col" class="photo-colum-head"> {label.manage_photos}</th>
+																				<template if:true={isStationManager}>
+																					<th if:false={currentcapability.value.isEditableRecordType} key={currentheader.value.name} scope="col" class="photo-colum-head"> {label.manage_photos}</th>
 																				</template>
-																				<template if:true={isPrivateArea}>
-																					<template if:true={isStationManager}>
-																						<th key={currentheader.value.name} scope="col" class="photo-colum-head"> {label.manage_photos}</th>
-																					</template>
-																				</template>	
+																				<template if:false={isStationManager}>
+																					<th if:false={currentcapability.value.isEditableRecordType} key={currentheader.value.name} scope="col" class="photo-colum-head"> {label.photos}</th>
+																				</template>
+
 																				<th key={currentheader.value.name} scope="col"
 																					class="certifications-stamp"></th>
 																				<template if:true={isPrivateArea}>
@@ -708,7 +744,7 @@
 																		<template if:true={editMode}>
 																			<template if:true={isPrivateArea}>
 																				<template if:true={isStationManager}>
-																					<td class="row-separator"
+																					<td if:false={currentCategory.isEditableRecordType} class="row-separator"
 																						data-super-categories-index={currentsupercategory.index}
 																						data-section-index={currentsection.index}
 																						data-capability-index={currentcapability.index}
@@ -716,18 +752,7 @@
 																						data-row-index={rowIndex}
 																						onclick={setRowClicked}>
 
-																						<lightning-file-upload if:true={currentCategory.isEditableRecordType}
-																						variant="label-hidden"
-																						name="fileUploader"
-																						accept={acceptedDocumentsFormats}
-																						record-id={recordId}
-																						onuploadfinished={handleUploadPhotoFinished}
-																						disabled={row.isNotEditable}
-																						multiple>
-																						</lightning-file-upload>
-
 																						<template if:false={disablePhotoIcon}>
-																						
 																								<button if:true={row.photosAvailableEdit}
 																								class="p-0 bg-transp border-0"
 																								data-tosca="edit_photos">
@@ -748,14 +773,7 @@
 																								</button>
 																						</template>
 																						<template if:true={disablePhotoIcon}>
-																							<template if:true={currentCategory.isEditableRecordType}>
-																								<button
-																								disabled
-																								class="p-0 bg-transp border-0 disabled-filter">
-																								<img src={infoIcon} width="20px" />
-																							</button>
-																							</template>
-																							<template if:false={currentCategory.isEditableRecordType}>
+
 																								<button if:false={row.photosAvailableEdit}
 																									disabled
 																									class="p-0 bg-transp border-0 disabled-filter">
@@ -773,7 +791,6 @@
 																										data-field="photos"
 																										onclick={openModalEditPhotos} />
 																								</button>
-																							</template>
 																						</template>
 
 																					</td>
@@ -809,7 +826,7 @@
 																				</template>
 																			</template>	
 																			<template if:false={isPrivateArea}>
-																				
+																				<template if:false={currentCategory.isEditableRecordType}>
 																					<td  class="row-separator photo-colum" 
 																					data-super-categories-index={currentsupercategory.index}
 																					data-section-index={currentsection.index}
@@ -837,54 +854,56 @@
 																							<img src={infoIcon} width="20px" />
 																						</button>
 																					</td>
-																				
+																				</template>
 																			</template>															
 																		</template>
 																		<template if:false={editMode}>
-																			<td class="row-separator photo-colum" 
-																				data-super-categories-index={currentsupercategory.index}
-																				data-section-index={currentsection.index}
-																				data-capability-index={currentcapability.index}
-																				data-category-index={categoryIndex}
-																				data-row-index={rowIndex}
-																				onclick={setRowClicked}>
+																			<template if:false={currentCategory.isEditableRecordType}>
+																				<td class="row-separator photo-colum" 
+																					data-super-categories-index={currentsupercategory.index}
+																					data-section-index={currentsection.index}
+																					data-capability-index={currentcapability.index}
+																					data-category-index={categoryIndex}
+																					data-row-index={rowIndex}
+																					onclick={setRowClicked}>
 
-																				<button if:true={row.photosAvailable}
-																					class="p-0 bg-transp border-0"
-																					data-tosca="edit_photos">
-																					<img src={infoIcon} width="20px"
-																						data-super-category-index={currentsupercategory.index}
-																						data-section-index={currentsection.index}
-																						data-capability-index={currentcapability.index}
-																						data-category-index={categoryIndex}
-																						data-row-index={rowIndex}
-																						data-field="photos"
-																						onclick={openModalEditPhotos} />
-																				</button>
-																			
-																				<button if:false={row.photosAvailable}
-																					disabled
-																					class="p-0 bg-transp border-0 disabled-filter">
-																					<img src={infoIcon} width="20px" />
-																				</button>
-																			</td>
+																					<button if:true={row.photosAvailable}
+																						class="p-0 bg-transp border-0"
+																						data-tosca="edit_photos">
+																						<img src={infoIcon} width="20px"
+																							data-super-category-index={currentsupercategory.index}
+																							data-section-index={currentsection.index}
+																							data-capability-index={currentcapability.index}
+																							data-category-index={categoryIndex}
+																							data-row-index={rowIndex}
+																							data-field="photos"
+																							onclick={openModalEditPhotos} />
+																					</button>
+																				
+																					<button if:false={row.photosAvailable}
+																						disabled
+																						class="p-0 bg-transp border-0 disabled-filter">
+																						<img src={infoIcon} width="20px" />
+																					</button>
+																				</td>
+																			</template>
 																		</template>
-																		<td class="certifications-stamp">
-																			<div class="stamp-inline">
-																				<template for:each={row.certifications}
-																					for:item="cert">
-																					<img key={cert.id} width="35px"
-																						src={cert.src}
-																						onmouseover={showHideStampHover}
-																						onmousemove={showHideStampHover}
-																						onmouseout={showHideStampHover}
-																						data-name={cert.name}
-																						data-label={cert.label}
-																						data-issue-date={cert.issueDate}
-																						data-expiration-date={cert.expirationDate}>
-																				</template>
-																			</div>
-																		</td>
+																			<td class="certifications-stamp">
+																				<div class="stamp-inline">
+																					<template for:each={row.certifications}
+																						for:item="cert">
+																						<img key={cert.id} width="35px"
+																							src={cert.src}
+																							onmouseover={showHideStampHover}
+																							onmousemove={showHideStampHover}
+																							onmouseout={showHideStampHover}
+																							data-name={cert.name}
+																							data-label={cert.label}
+																							data-issue-date={cert.issueDate}
+																							data-expiration-date={cert.expirationDate}>
+																					</template>
+																				</div>
+																			</td>
 																		<template if:true={editMode}>
 																			<template if:true={row.isEditableRecordType}>
 																			<td class="cell-buttons">																				

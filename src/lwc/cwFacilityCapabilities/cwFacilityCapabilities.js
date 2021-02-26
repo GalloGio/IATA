@@ -823,7 +823,7 @@ export default class CwFacilityCapabilities extends LightningElement {
 		};
 		let containField=false;
 		this.listAddedRows.forEach(function(element) {
-			if(element.equipment === data.equipment && element.position === data.rowIndex){ 
+			if(element.equipment === data.equipment.toLowerCase() && element.position === data.rowIndex){ 
 				element.fields.forEach(field => {
 					if(field.field === data.field){
 						field.value = data.value;
@@ -838,7 +838,6 @@ export default class CwFacilityCapabilities extends LightningElement {
 				}
 			}			
 		});
-
 		this.sendParamToParent();
 	}
 
@@ -939,13 +938,32 @@ export default class CwFacilityCapabilities extends LightningElement {
 
 	get checkRequiredFields(){
 		let returnValue=true;
+		let obligationLinkField = 'more_info_link__c';
+		let uploadDocumentationField = 'more_info_document__c';
+
 		this.listAddedRows.forEach(element => {
 			element.fields.forEach(field => {
-				if(field.required.toString() === "true" ){
-					if(field.value === ""){
-						returnValue = false;
-					}					
-				}
+				
+					if(field.required.toString() === "true" ){
+						if(field.value === ""){
+							if(field.field === obligationLinkField || field.field === uploadDocumentationField){
+								if(field.field === obligationLinkField){
+									let selectField = element.fields.filter(row => row.field === uploadDocumentationField);
+	
+									returnValue = selectField[0].value != null ? true :  false;
+								}
+								else if(field.field === uploadDocumentationField){
+									let selectField = element.fields.filter(row => row.field === obligationLinkField);
+									returnValue = selectField[0].value != null ? true :  false;
+								}
+							}						
+							else{
+								returnValue = false;
+							}
+							
+						}
+					}
+				
 			});
 						
 		});	

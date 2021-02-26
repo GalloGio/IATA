@@ -90,7 +90,8 @@ public class CW_CreateFacilityControllerTest {
 		Test.stopTest();
 	}
 	
-	@isTest private static void createFacilityTest(){
+	@isTest 
+	private static void createFacilityAccountTrueTest(){
 		List<User> urs = [SELECT id, accountid, contactid FROM user WHERE firstname = 'IATAICGACB' AND lastname = 'IATAICGXYZUnique1'];
 		CW_CreateFacilityController.LogoInfo info = new CW_CreateFacilityController.LogoInfo ();
 		info.fileName = 'Test';
@@ -119,11 +120,74 @@ public class CW_CreateFacilityControllerTest {
 		Test.startTest();
 		
 		CW_CreateFacilityController.createFacility(accRole.Account__c, JSON.serialize(accRoleDetail), JSON.serialize(info), geoLocationsJSON, accRoleDetail.Id, airport.Code__c, true,false, false,'[]','[]');
-		CW_CreateFacilityController.createFacility(accNew.Id, JSON.serialize(accRoleDetail), JSON.serialize(info), geoLocationsJSON, accRoleDetail.Id, airport.Code__c, true,false, false,'[]','[]');
-		CW_CreateFacilityController.createFacility(accRole.Account__c, JSON.serialize(accRoleDetail), JSON.serialize(info), geoLocationsJSON, accRoleDetail.Id, airport.Code__c, false,false, false,'[]','[]');
-	
+		
 		Test.stopTest();
 	}
+
+	@isTest 
+	private static void createFacilityNewAccTrueTest(){
+		List<User> urs = [SELECT id, accountid, contactid FROM user WHERE firstname = 'IATAICGACB' AND lastname = 'IATAICGXYZUnique1'];
+		CW_CreateFacilityController.LogoInfo info = new CW_CreateFacilityController.LogoInfo ();
+		info.fileName = 'Test';
+		info.base64Data = 'Test';
+		info.contentType = 'Test';
+		
+		Airport_Detail__c airport = [Select Id, IATA_ISO_Country__c, Code__c from Airport_Detail__c limit 1];
+		Account acc = [Select Id from Account limit 1];
+		Account_Role__c accRole = [Select Id, Account__c from Account_Role__c limit 1];
+
+		ICG_Account_Role_Detail__c accRoleDetail = CW_TestDataFactory.testICGAccountRoleDetail(
+			accRole.Id,
+			airport
+		);
+		
+		List <IATA_ISO_Country__c> isoCodes = [SELECT Id FROM IATA_ISO_Country__c LIMIT 1];
+		Account accNew = new Account (Name = 'Account03', IATA_ISO_Country__c = isoCodes[0].Id);
+		List <Account_Role__c> ar = [SELECT Id FROM Account_Role__c LIMIT 2];
+
+		CW_CreateFacilityController.GeoLocationInfo geoLocations = new CW_CreateFacilityController.GeoLocationInfo ();
+		geoLocations.companyId = acc.Id;
+		geoLocations.latitude = 1.32;
+		geoLocations.longitude = 2.45;
+		String geoLocationsJSON = JSON.serialize(geoLocations);
+
+		Test.startTest();		
+		CW_CreateFacilityController.createFacility(accNew.Id, JSON.serialize(accRoleDetail), JSON.serialize(info), geoLocationsJSON, accRoleDetail.Id, airport.Code__c, true,false, false,'[]','[]');
+		Test.stopTest();
+	}
+
+	@isTest 
+	private static void createFacilityAccFalseTest(){
+		List<User> urs = [SELECT id, accountid, contactid FROM user WHERE firstname = 'IATAICGACB' AND lastname = 'IATAICGXYZUnique1'];
+		CW_CreateFacilityController.LogoInfo info = new CW_CreateFacilityController.LogoInfo ();
+		info.fileName = 'Test';
+		info.base64Data = 'Test';
+		info.contentType = 'Test';
+		
+		Airport_Detail__c airport = [Select Id, IATA_ISO_Country__c, Code__c from Airport_Detail__c limit 1];
+		Account acc = [Select Id from Account limit 1];
+		Account_Role__c accRole = [Select Id, Account__c from Account_Role__c limit 1];
+
+		ICG_Account_Role_Detail__c accRoleDetail = CW_TestDataFactory.testICGAccountRoleDetail(
+			accRole.Id,
+			airport
+		);
+		
+		List <IATA_ISO_Country__c> isoCodes = [SELECT Id FROM IATA_ISO_Country__c LIMIT 1];
+		Account accNew = new Account (Name = 'Account03', IATA_ISO_Country__c = isoCodes[0].Id);
+		List <Account_Role__c> ar = [SELECT Id FROM Account_Role__c LIMIT 2];
+
+		CW_CreateFacilityController.GeoLocationInfo geoLocations = new CW_CreateFacilityController.GeoLocationInfo ();
+		geoLocations.companyId = acc.Id;
+		geoLocations.latitude = 1.32;
+		geoLocations.longitude = 2.45;
+		String geoLocationsJSON = JSON.serialize(geoLocations);
+
+		Test.startTest();
+		CW_CreateFacilityController.createFacility(accRole.Account__c, JSON.serialize(accRoleDetail), JSON.serialize(info), geoLocationsJSON, accRoleDetail.Id, airport.Code__c, false,false, false,'[]','[]');
+		Test.stopTest();
+	}
+
 	/**
 	 * @description		test method for CW_CreateFacilityController.createDummyCompany complete OK
 	 */    

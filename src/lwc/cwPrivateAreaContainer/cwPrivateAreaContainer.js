@@ -3,7 +3,7 @@ import getUserFacilities from "@salesforce/apex/CW_PrivateAreaController.getUser
 import getUserRemoteValidations from "@salesforce/apex/CW_RemoteValidationsController.getUserRemoteValidations";
 import getUserRequestedAudits from "@salesforce/apex/CW_ScheduleAuditsController.getUserRequestedAudits";
 import getUserInfo from "@salesforce/apex/CW_PrivateAreaController.getUserInfo";
-import getCompanyAdminContactsFromAccountId from "@salesforce/apex/CW_Utilities.getCompanyAdminContactsFromAccountId";
+import getCompanyAdminContactsFromContactId from "@salesforce/apex/CW_Utilities.getCompanyAdminContactsFromContactId";
 import getActiveCertifications from "@salesforce/apex/CW_PrivateAreaController.getActiveCertifications";
 import getUserCompanyInfo from "@salesforce/apex/CW_PrivateAreaController.getUserCompanyInfo";
 import getURL from "@salesforce/apex/CW_Utilities.getURLPage";
@@ -147,7 +147,7 @@ export default class CwPrivateAreaContainer extends LightningElement {
 		this.rawUserInfo = result;
 		if (result.data) {
 			this.userInfo = JSON.parse(result.data);
-			getCompanyAdminContactsFromAccountId({ accountId: this.userInfo.AccountId })
+			getCompanyAdminContactsFromContactId({ contactId: this.userInfo.ContactId })
 				.then(cadmins => {
 					this.companyAdmins = cadmins;
 					this.userInfo.isCompanyAdmin = this.companyAdmins.some(contact => this.userInfo && contact.Id === this.userInfo.ContactId);
