@@ -522,7 +522,7 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <filters>
             <field>Change_Code__c</field>
             <operation>equals</operation>
-            <value>CHI,CHO,CHS,CLI,COH,COS,CSC,CSM,HIS,HLN,HLP,HNP,HNR,TNI,UOS,CHC</value>
+            <value>SDR</value>
         </filters>
         <label>AMS_NOT</label>
         <language>en_US</language>
