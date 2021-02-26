@@ -65575,7 +65575,7 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>Quality__c</object>
-        <viewAllRecords>false</viewAllRecords>
+        <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>
@@ -70592,6 +70592,7 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
+        <personAccountDefault>true</personAccountDefault>
         <recordType>Quality__c.Major_EXE_to_SOP</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>

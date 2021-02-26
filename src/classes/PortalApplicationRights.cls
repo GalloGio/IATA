@@ -9,30 +9,30 @@ public with sharing class PortalApplicationRights {
 
 	public PortalApplicationRights(){
 		records = new List<Portal_Application_Right__c>();
-		initialise();
+		// initialise();
 	}
 	public PortalApplicationRights(List<Portal_Application_Right__c> portalApplicationRightList){
 		records = portalApplicationRightList.clone();
-		initialise();
+		// initialise();
 	}
 	
 	// perform any domain class initialisation logic
-	private void initialise(){
-	}
+	// private void initialise(){
+	// }
 
-	public void onAfterInsert(){
-	}
-	public void onAfterUpdate(){
-	}
-	public void onAfterDelete(){
-	}
-	public void onAfterUndelete(){
-	}
+	// public void onAfterInsert(){
+	// }
+	// public void onAfterUpdate(){
+	// }
+	// public void onAfterDelete(){
+	// }
+	// public void onAfterUndelete(){
+	// }
 	
-	public void onBeforeInsert(){
-	}
-	public void onBeforeDelete(){
-	}
+	// public void onBeforeInsert(){
+	// }
+	// public void onBeforeDelete(){
+	// }
 	
 	public class PortalApplicationRightDomainException extends Exception {}
 }
