@@ -1,0 +1,5 @@
+<apex:page contentType="text/plain">
+    User-agent: *
+    Disallow: /faq/articles/en_US/FAQ/How-to-become-an-IATA-Travel-Agent-1415811095316/
+    Sitemap: https://portal.iata.org/faq/s/sitemap.xml
+</apex:page>
