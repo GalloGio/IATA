@@ -10,14 +10,14 @@
         <processMetadataValues>
             <name>flowSelection</name>
             <value>
-                <stringValue>IATA Pay User Access</stringValue>
+                <stringValue>Innovation Hub User Access</stringValue>
             </value>
         </processMetadataValues>
         <name>myRule_10_A1</name>
-        <label>IATA Pay User Access</label>
+        <label>Innovation Hub User Access</label>
         <locationX>1000</locationX>
         <locationY>200</locationY>
-        <actionName>IATA_Pay_User_Access</actionName>
+        <actionName>Innovation_Hub_User_Access</actionName>
         <actionType>flow</actionType>
         <inputParameters>
             <processMetadataValues>
@@ -254,7 +254,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>myDecision</targetReference>
+            <targetReference>isChangedDecision14_myRule_13_Right_c</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
@@ -275,9 +275,41 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>myDecision</targetReference>
+                <targetReference>isChangedDecision14_myRule_13_Right_c</targetReference>
             </connector>
             <label>isChangedRule_11_myRule_10_Right_c</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>isChangedDecision14_myRule_13_Right_c</name>
+        <label>isChangedDecision14_myRule_13_Right_c</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>myDecision</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>isChangedRule_14_myRule_13_Right_c</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>myVariable_old</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>myVariable_old.Right__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>myVariable_current.Right__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myDecision</targetReference>
+            </connector>
+            <label>isChangedRule_14_myRule_13_Right_c</label>
         </rules>
     </decisions>
     <decisions>
@@ -522,6 +554,148 @@
                 <targetReference>myRule_1_A1</targetReference>
             </connector>
             <label>MedAire?</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <processMetadataValues>
+            <name>index</name>
+            <value>
+                <numberValue>4.0</numberValue>
+            </value>
+        </processMetadataValues>
+        <name>myDecision12</name>
+        <label>myDecision12</label>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>myRule_13</name>
+            <conditionLogic>1 AND 2 AND (3 OR 4)</conditionLogic>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.Portal_Application__r.Functional_Role__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>IATA Pay</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Boolean</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Boolean</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>isChangedRule_14_myRule_13_Right_c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.Right__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Access Granted</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.Right__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Access Denied</stringValue>
+                </rightValue>
+            </conditions>
+            <label>IATA Pay?</label>
         </rules>
     </decisions>
     <decisions>
@@ -780,7 +954,7 @@
                 <leftValueReference>myVariable_current.Right__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Access Requested</stringValue>
+                    <stringValue>Access Granted</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -831,6 +1005,9 @@
         <label>myDecision9</label>
         <locationX>50</locationX>
         <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>myDecision12</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
             <name>myRule_10</name>
@@ -863,7 +1040,7 @@
                 <leftValueReference>myVariable_current.Portal_Application__r.Functional_Role__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>IATA Pay</stringValue>
+                    <stringValue>InnovationHub CRM</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -962,11 +1139,11 @@
             <connector>
                 <targetReference>myRule_10_A1</targetReference>
             </connector>
-            <label>IATA Pay?</label>
+            <label>Innovation Hub?</label>
         </rules>
     </decisions>
     <description>Process to manage changes to Portal Service Application records for Services. The Process will invoke a sub-process for managing the activities related to onboarding a User for a particular Service.</description>
-    <interviewLabel>Service_User_Provisioning-11_InterviewLabel</interviewLabel>
+    <interviewLabel>Service_User_Provisioning-8_InterviewLabel</interviewLabel>
     <label>Service User Provisioning</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -994,7 +1171,7 @@
     </processMetadataValues>
     <processType>Workflow</processType>
     <startElementReference>isChangedDecision2_myRule_1_Right_c</startElementReference>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>myVariable_current</name>
         <dataType>SObject</dataType>
