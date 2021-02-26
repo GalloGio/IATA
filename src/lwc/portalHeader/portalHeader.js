@@ -343,7 +343,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
                 });
 
                 let pageParams = getParamsFromPage();
-                if(pageParams && pageParams.firstLogin){
+                if(pageParams && pageParams.firstLogin && pageParams.firstLogin !== 'false'){
                     this.firstLogin = true;
                     this.displayFirstLogin = true;
                 }
@@ -397,19 +397,17 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
                             .catch(error => {
                                 this.error = error;
                             });
-
-			}
-		}else if(pageParams.lmsflow.indexOf('flow') > -1){
-			this.thirdLoginLMS = true;
-			this.registrationlevel = '3';
-			this.displayFirstLogin = false;
-			this.triggerThirdLevelRegistrationLMS();
-		}
-	}
-
-        getNotifications().then(result => {
-            this.baseURL = window.location.href;
-            let resultsAux = JSON.parse(JSON.stringify(result));
+                        }
+                    }else if(pageParams.lmsflow.indexOf('flow') > -1){
+                        this.thirdLoginLMS = true;
+                        this.registrationlevel = '3';
+                        this.displayFirstLogin = false;
+                        this.triggerThirdLevelRegistrationLMS();
+                    }
+                }
+                getNotifications().then(result => {
+                    this.baseURL = window.location.href;
+                    let resultsAux = JSON.parse(JSON.stringify(result));
 
                     resultsAux.sort(function (a, b) {
                         return new Date(b.createdDate) - new Date(a.createdDate);
@@ -459,7 +457,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
                             if(isLatestAccepted){
                                 this.displayAcceptTerms = false;
-                                if(result.users && result.users[0].Portal_Registration_Required__c === true){
+                                if(result.Users && result.Users[0].Portal_Registration_Required__c === true){
                                     this.displayRegistrationConfirmation = true;
                                 }else{
                                     if(this.firstLogin === true){

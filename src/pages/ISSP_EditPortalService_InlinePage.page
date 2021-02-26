@@ -6,15 +6,15 @@
 		var statusValue = document.getElementById("{!$Component.theForm.theBlock.theSection.rightItem.rightField}").value;
 		if (statusValue == 'Access Granted'){
 			if ('{!pendingApproval}' == 'true'){
-				if (confirm('This user is Pending Approval. If you grant him access to a service, this user will automatically become Active. Continue?'))
+				if (confirm('This user is Pending Approval. If you grant them access to a service, this user will automatically become Active. Continue?'))
 					save();
 			}
 			else if ('{!noUser}' == 'true'){
-				if (confirm('This contact is still not a user. If you grant him access to a service, a user will automatically be created. Continue?'))
+				if (confirm('This contact is still not a user. If you grant them access to a service, a user will automatically be created. Continue?'))
 					save();
 			}
 			else if ('{!inactiveUser}' == 'true'){
-				alert('This user is inactive. If you grant him access to a service, you must first reactivate the user manually.');
+				alert('This user is inactive. If you grant them access to a service, you must first reactivate the user manually.');
 			}
 			else{
 				save();
@@ -58,6 +58,10 @@
 			<apex:outputLabel value="Enable Notifications" for="enable_notifications" />
 			<apex:inputField value="{!Portal_Application_Right__c.Enable_Notifications__c}" id="enable_notifications" />
 		</apex:pageBlockSectionItem>
+		<apex:pageBlockSectionItem rendered="{!showOAG}" >
+			<apex:outputLabel value="Grant access to OAG?" for="has_access_to_OAG" />
+			<apex:inputField value="{!Portal_Application_Right__c.Has_access_to_OAG__c}" id="has_access_to_OAG" />
+		</apex:pageBlockSectionItem>
 		<apex:pageBlockSectionItem rendered="{!isTD}" >
 			<apex:outputLabel value="Main Currency" for="currency1" />
 			<apex:selectList id="currency1" value="{!Portal_Application_Right__c.Currency1__c}" size="1" >
@@ -72,7 +76,7 @@
 		</apex:pageBlockSectionItem>
 		<apex:pageBlockSectionItem rendered="{!Portal_Application_Right__c.ANG_Portal_Service_Role__c != null}">
 			<apex:outputLabel value="Portal Service Role" for="portalserrole" />
-			<apex:outputText  value="{!Portal_Application_Right__c.ANG_Portal_Service_Role__c}" id="portalserrole" />
+			<apex:outputText value="{!Portal_Application_Right__c.ANG_Portal_Service_Role__c}" id="portalserrole" />
 		</apex:pageBlockSectionItem>
 	</apex:pageBlockSection>
 </apex:pageBlock>
