@@ -118,9 +118,8 @@ public class CW_CreateFacilityControllerTest {
 		String geoLocationsJSON = JSON.serialize(geoLocations);
 
 		Test.startTest();
-		
-		CW_CreateFacilityController.createFacility(accRole.Account__c, JSON.serialize(accRoleDetail), JSON.serialize(info), geoLocationsJSON, accRoleDetail.Id, airport.Code__c, true,false, false,'[]','[]');
-		
+		String response = CW_CreateFacilityController.createFacility(accRole.Account__c, JSON.serialize(accRoleDetail), JSON.serialize(info), geoLocationsJSON, accRoleDetail.Id, airport.Code__c, true,false, false,'[]','[]');
+		System.assert(response.containsIgnoreCase('true'));
 		Test.stopTest();
 	}
 
@@ -152,7 +151,8 @@ public class CW_CreateFacilityControllerTest {
 		String geoLocationsJSON = JSON.serialize(geoLocations);
 
 		Test.startTest();		
-		CW_CreateFacilityController.createFacility(accNew.Id, JSON.serialize(accRoleDetail), JSON.serialize(info), geoLocationsJSON, accRoleDetail.Id, airport.Code__c, true,false, false,'[]','[]');
+		String response = CW_CreateFacilityController.createFacility(accNew.Id, JSON.serialize(accRoleDetail), JSON.serialize(info), geoLocationsJSON, accRoleDetail.Id, airport.Code__c, true,false, false,'[]','[]');
+		System.assert(response.containsIgnoreCase('false'));
 		Test.stopTest();
 	}
 
@@ -184,7 +184,8 @@ public class CW_CreateFacilityControllerTest {
 		String geoLocationsJSON = JSON.serialize(geoLocations);
 
 		Test.startTest();
-		CW_CreateFacilityController.createFacility(accRole.Account__c, JSON.serialize(accRoleDetail), JSON.serialize(info), geoLocationsJSON, accRoleDetail.Id, airport.Code__c, false,false, false,'[]','[]');
+		String response = CW_CreateFacilityController.createFacility(accRole.Account__c, JSON.serialize(accRoleDetail), JSON.serialize(info), geoLocationsJSON, accRoleDetail.Id, airport.Code__c, true,false, false,'[]','[]');
+		System.assert(response.containsIgnoreCase('true'));
 		Test.stopTest();
 	}
 
