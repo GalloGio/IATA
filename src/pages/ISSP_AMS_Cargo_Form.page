@@ -173,9 +173,6 @@
         $j(".country__c").val("{!isocountry.Name}");
         $j(".country__c").attr('readonly', true);
         $j(".country__c").attr('disabled', 'disabled');
-        $j(".shipping_country__c").val("{!isocountry.Name}");
-        $j(".shipping_country__c").attr('readonly', true);
-        $j(".shipping_country__c").attr('disabled', 'disabled');
         $j(".labelText").hide();
         $j(".branchemail").find("label").css("margin-right","-2%");
         $j("#branch_office_phone__c").hide();
