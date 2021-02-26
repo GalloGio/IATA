@@ -553,7 +553,7 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 
 		ApplicationWrapper currentSelectedApp = mapAppWrap.get(id);
 		
-		if(currentSelectedApp.IsApplicationValid){
+		if(currentSelectedApp!= null && currentSelectedApp.IsApplicationValid){
 			if (ccurrency == null) //initialized after the first app getting Approved
 				ccurrency = currentSelectedApp.ICA.CurrencyIsoCode;
 			

@@ -313,7 +313,7 @@ public with sharing class IDCard_PendingOpsAndProcessedAppTest {
 
 		// approve the first application
 		ID_Card_Application__c theApp = ctrl.mapAppWrap.get(1).ICA;
-		Apexpages.currentPage().getParameters().put('id', ctrl.mapAppWrap.get(1).AppId);
+		Apexpages.currentPage().getParameters().put('id', '1');
 		ctrl.validationApplication();
 		system.assertEquals(1, ctrl.setValidApplicationId.size());
 		//system.assertEquals(theApp.Applicable_fee__c, ctrl.tPrice);
@@ -322,7 +322,7 @@ public with sharing class IDCard_PendingOpsAndProcessedAppTest {
 
 		// reject the second one
 		theApp =  ctrl.mapAppWrap.get(2).ICA;
-		Apexpages.currentPage().getParameters().put('id', ctrl.mapAppWrap.get(2).AppId);
+		Apexpages.currentPage().getParameters().put('id', '2');
 		ctrl.unvalidationApplication();
 		system.assertEquals(1, ctrl.setRejectedApplicationId.size());
 
@@ -370,28 +370,28 @@ public with sharing class IDCard_PendingOpsAndProcessedAppTest {
 
 		// approve applications 3-4-5
 		theApp =  ctrl.mapAppWrap.get(1).ICA;
-		Apexpages.currentPage().getParameters().put('id', ctrl.mapAppWrap.get(1).AppId);
+		Apexpages.currentPage().getParameters().put('id', '1');
 		ctrl.validationApplication();
 
 		theApp =  ctrl.mapAppWrap.get(2).ICA;
-		Apexpages.currentPage().getParameters().put('id', ctrl.mapAppWrap.get(3).AppId);
+		Apexpages.currentPage().getParameters().put('id', '2');
 		ctrl.validationApplication();
 
 		theApp =  ctrl.mapAppWrap.get(3).ICA;
-		Apexpages.currentPage().getParameters().put('id', ctrl.mapAppWrap.get(3).AppId);
+		Apexpages.currentPage().getParameters().put('id', '3');
 		ctrl.validationApplication();
 
 		// reject applications 6-7-8
 		theApp =  ctrl.mapAppWrap.get(4).ICA;
-		Apexpages.currentPage().getParameters().put('id', ctrl.mapAppWrap.get(4).AppId);
+		Apexpages.currentPage().getParameters().put('id', '4');
 		ctrl.unvalidationApplication();
 
 		theApp =  ctrl.mapAppWrap.get(5).ICA;
-		Apexpages.currentPage().getParameters().put('id', ctrl.mapAppWrap.get(5).AppId);
+		Apexpages.currentPage().getParameters().put('id', '5');
 		ctrl.unvalidationApplication();
 
 		theApp =  ctrl.mapAppWrap.get(6).ICA;
-		Apexpages.currentPage().getParameters().put('id', ctrl.mapAppWrap.get(6).AppId);
+		Apexpages.currentPage().getParameters().put('id', '6');
 		ctrl.unvalidationApplication();
 
 		// process the order for these 6 applications
@@ -529,7 +529,7 @@ public with sharing class IDCard_PendingOpsAndProcessedAppTest {
 
 		IDCard_AdmPendingOpsController pendingctrl = new IDCard_AdmPendingOpsController();
 
-		ApexPages.currentPage().getParameters().put('id', apps[0].id);
+		ApexPages.currentPage().getParameters().put('id', '1');
 		pendingctrl.validationApplication();
 
 		pendingctrl.paymentMode = IDCardUtil.Key_Account_Feature_Payment_Wire_Check;
@@ -660,7 +660,7 @@ public with sharing class IDCard_PendingOpsAndProcessedAppTest {
 
 		IDCard_AdmPendingOpsController pendingctrl = new IDCard_AdmPendingOpsController();
 
-		ApexPages.currentPage().getParameters().put('id', apps[0].id);
+		ApexPages.currentPage().getParameters().put('id', '1');
 		pendingctrl.validationApplication();
 
 		pendingctrl.paymentMode = IDCardUtil.Key_Account_Feature_Payment_Wire_Check;
@@ -764,7 +764,7 @@ public with sharing class IDCard_PendingOpsAndProcessedAppTest {
 
 		IDCard_AdmPendingOpsController pendingctrl = new IDCard_AdmPendingOpsController();
 
-		ApexPages.currentPage().getParameters().put('id', apps[0].id);
+		ApexPages.currentPage().getParameters().put('id', '1');
 		pendingctrl.validationApplication();
 
 		pendingctrl.paymentMode = IDCardUtil.Key_Account_Feature_Payment_Wire_Check;
@@ -861,7 +861,7 @@ public with sharing class IDCard_PendingOpsAndProcessedAppTest {
 
 		IDCard_AdmPendingOpsController pendingctrl = new IDCard_AdmPendingOpsController();
 
-		ApexPages.currentPage().getParameters().put('id', apps[0].id);
+		ApexPages.currentPage().getParameters().put('id', '1');
 		pendingctrl.validationApplication();
 
 		List<ID_Card_Application__c> singles = [SELECT Single_Application_Processing_Step__c, Application_Status__c, Photo__c, RecordTypeId
