@@ -119,10 +119,6 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>hungerr@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>itania@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -140,10 +136,6 @@
         </recipients>
         <recipients>
             <recipient>kikanor@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>kilanim@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -196,10 +188,6 @@
         </recipients>
         <recipients>
             <recipient>raickovics@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>rossandj@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
