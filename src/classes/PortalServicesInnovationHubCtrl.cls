@@ -51,56 +51,101 @@ public without sharing class PortalServicesInnovationHubCtrl {
 		return propertiesAndLstCards;
 	}
 
+	private static List<PortalWrapperClasses.FieldWrapper> getFieldsCompanyCard(List<PortalWrapperClasses.FieldWrapper> fieldWrapper, Boolean edit){
+
+		//COMPANY INFORMATION
+		fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Company_Name__c',true,true));
+		PortalWrapperClasses.FieldWrapper logo = new PortalWrapperClasses.FieldWrapper('Logo_File_Id__c',true,false);
+		logo.isLogo = true;
+		fieldWrapper.add(logo);
+		fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Legal_Name__c',true,true));
+		fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Also_Known_As__c',true,true));
+		fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Company_Description__c',true,true));
+		fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Location__c',true,true));
+	
+
+		if(edit){
+			PortalWrapperClasses.FieldWrapper focusAreas = new PortalWrapperClasses.FieldWrapper('Focus_Areas__c',true,true);	
+			focusAreas.isMultipick = true;
+			fieldWrapper.add(focusAreas);
+		}
+		else{
+			PortalWrapperClasses.FieldWrapper focusAreas = new PortalWrapperClasses.FieldWrapper('Focus_Areas__c',true,false,'',System.Label.CSP_FocusAreas);
+			focusAreas.isMultipick = true;
+			fieldWrapper.add(focusAreas);
+		}
+		
+		fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Founding_Date__c',true,true));
+		fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Number_Of_Employees__c',true,true));
+		fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Contact_info_of_startup__c',true,true));
+		fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Contact_Position__c',true,true));
+		fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Contact_Email__c',true,true));
+		fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Contact_Phone_Number__c',true,true));
+		fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Website__c',true,true));
+		fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Facebook__c',true,true));
+		fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Instagram__c',true,true));
+		fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Twitter__c',true,true));
+		fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('LinkedIn__c',true,true));
+		fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('GitHub__c',true,true));
+		fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Telegram__c',true,true));
+
+		return fieldWrapper;
+
+	}
+
+	private static List<PortalWrapperClasses.FieldWrapper> getFieldsServiceCard(List<PortalWrapperClasses.FieldWrapper> fieldWrapper, Boolean edit){
+
+		//SERVICE INFORMATION
+		
+		fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Solution__c',true,true));
+
+		if(edit){
+			PortalWrapperClasses.FieldWrapper technology = new PortalWrapperClasses.FieldWrapper('Technology__c',true,true);
+			technology.isMultipick = true;
+			fieldWrapper.add(technology);
+		}
+		else{
+			PortalWrapperClasses.FieldWrapper technology = new PortalWrapperClasses.FieldWrapper('Technology__c',true,false,'',System.Label.CSP_Technology);
+			technology.isMultipick = true;
+			fieldWrapper.add(technology);
+		}
+
+		if(edit){
+			PortalWrapperClasses.FieldWrapper tagsOfCategories = new PortalWrapperClasses.FieldWrapper('Tags_Of_Categories__c',true,true);
+			tagsOfCategories.isMultipick = true;
+			fieldWrapper.add(tagsOfCategories);
+		}
+		else{
+			PortalWrapperClasses.FieldWrapper tagsOfCategories = new PortalWrapperClasses.FieldWrapper('Tags_Of_Categories__c',true,false,'',System.Label.CSP_Categories);
+			tagsOfCategories.isMultipick = true;
+			fieldWrapper.add(tagsOfCategories);
+
+		fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Description__c',true,true));
+		fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Industry_Perspectives__c',true,true));
+		fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Funding_Amount__c',true,true));
+		fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Funding_Stage__c',true,true));
+		fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Investors__c',true,true));
+		fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Competition_Competitors__c',true,true));
+		fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Competitive_Advantage__c',true,true));
+		fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Recent_News__c',true,true));
+		
+		}		
+
+		return fieldWrapper;
+
+	}
+
 	private static List<PortalWrapperClasses.CardWrapper> getProviderProfileCards(){
 		//stores each card
 		List<PortalWrapperClasses.CardWrapper> lstCardWrapper = new List<PortalWrapperClasses.CardWrapper>();
-
-		//COMPANY INFORMATION
+		
 		List<PortalWrapperClasses.FieldWrapper> lstfw1 = new List<PortalWrapperClasses.FieldWrapper>();
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Company_Name__c',true,true));
-		PortalWrapperClasses.FieldWrapper logo = new PortalWrapperClasses.FieldWrapper('Logo_File_Id__c',true,false);
-		logo.isLogo = true;
-		lstfw1.add(logo);
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Legal_Name__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Also_Known_As__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Company_Description__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Location__c',true,true));
-		PortalWrapperClasses.FieldWrapper focusAreas = new PortalWrapperClasses.FieldWrapper('Focus_Areas__c',true,false,'',System.Label.CSP_FocusAreas);
-		focusAreas.isMultipick = true;
-		lstfw1.add(focusAreas);
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Founding_Date__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Number_Of_Employees__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Contact_info_of_startup__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Contact_Position__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Contact_Email__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Contact_Phone_Number__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Website__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Facebook__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Instagram__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Twitter__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('LinkedIn__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('GitHub__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Telegram__c',true,true));
-
-		lstCardWrapper.add(new PortalWrapperClasses.CardWrapper('Company Information', lstfw1, false,'Company Information'));
-
-		//SERVICE INFORMATION
 		List<PortalWrapperClasses.FieldWrapper> lstfw2 = new List<PortalWrapperClasses.FieldWrapper>();
-		lstfw2.add(new PortalWrapperClasses.FieldWrapper('Solution__c',true,true));
-		PortalWrapperClasses.FieldWrapper technology = new PortalWrapperClasses.FieldWrapper('Technology__c',true,false,'',System.Label.CSP_Technology);
-		technology.isMultipick = true;
-		lstfw2.add(technology);
-		lstfw2.add(new PortalWrapperClasses.FieldWrapper('Description__c',true,true));
-		lstfw2.add(new PortalWrapperClasses.FieldWrapper('Industry_Perspectives__c',true,true));
-		lstfw2.add(new PortalWrapperClasses.FieldWrapper('Funding_Amount__c',true,true));
-		lstfw2.add(new PortalWrapperClasses.FieldWrapper('Funding_Stage__c',true,true));
-		lstfw2.add(new PortalWrapperClasses.FieldWrapper('Investors__c',true,true));
-		lstfw2.add(new PortalWrapperClasses.FieldWrapper('Competition_Competitors__c',true,true));
-		lstfw2.add(new PortalWrapperClasses.FieldWrapper('Competitive_Advantage__c',true,true));
-		lstfw2.add(new PortalWrapperClasses.FieldWrapper('Recent_News__c',true,true));
-		PortalWrapperClasses.FieldWrapper tagsOfCategories = new PortalWrapperClasses.FieldWrapper('Tags_Of_Categories__c',true,false,'',System.Label.CSP_Categories);
-		tagsOfCategories.isMultipick = true;
-		lstfw2.add(tagsOfCategories);
+
+		lstfw1 = getFieldsCompanyCard(lstfw1,false);	
+		lstfw2 = getFieldsServiceCard(lstfw2,false);
+
+		lstCardWrapper.add(new PortalWrapperClasses.CardWrapper('Company Information', lstfw1, false,'Company Information'));		
 		lstCardWrapper.add(new PortalWrapperClasses.CardWrapper('Service Information', lstfw2, false,'Service Information'));
 
 		return lstCardWrapper;
@@ -152,46 +197,10 @@ public without sharing class PortalServicesInnovationHubCtrl {
 
 		//COMPANY INFORMATION
 		List<PortalWrapperClasses.FieldWrapper> lstfw1 = new List<PortalWrapperClasses.FieldWrapper>();
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Company_Name__c',true,true));
-		PortalWrapperClasses.FieldWrapper logo = new PortalWrapperClasses.FieldWrapper('Logo_File_Id__c',true,false);
-		logo.isLogo = true;
-		lstfw1.add(logo);
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Legal_Name__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Also_Known_As__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Company_Description__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Location__c',true,true));
-		PortalWrapperClasses.FieldWrapper focusAreas = new PortalWrapperClasses.FieldWrapper('Focus_Areas__c',true,true);
-		focusAreas.isMultipick = true;
-		lstfw1.add(focusAreas);
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Founding_Date__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Number_Of_Employees__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Contact_info_of_startup__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Contact_Position__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Contact_Email__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Contact_Phone_Number__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Website__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Facebook__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Instagram__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Twitter__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('LinkedIn__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('GitHub__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Telegram__c',true,true));
+		
+		lstfw1 = getFieldsCompanyCard(lstfw1,true);	
+		lstfw1 = getFieldsServiceCard(lstfw1,true);
 
-		//SERVICE INFORMATION
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Solution__c',true,true));
-		PortalWrapperClasses.FieldWrapper technology = new PortalWrapperClasses.FieldWrapper('Technology__c',true,true);
-		technology.isMultipick = true;
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Description__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Industry_Perspectives__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Funding_Amount__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Funding_Stage__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Investors__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Competition_Competitors__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Competitive_Advantage__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Recent_News__c',true,true));
-		PortalWrapperClasses.FieldWrapper tagsOfCategories = new PortalWrapperClasses.FieldWrapper('Tags_Of_Categories__c',true,true);
-		tagsOfCategories.isMultipick = true;
-		lstfw1.add(tagsOfCategories);	
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Status__c',true,false));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Id',true,false));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('RecordTypeId',true,false));
@@ -219,47 +228,9 @@ public without sharing class PortalServicesInnovationHubCtrl {
 
 		//COMPANY INFORMATION
 		List<PortalWrapperClasses.FieldWrapper> lstfw1 = new List<PortalWrapperClasses.FieldWrapper>();
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Company_Name__c',true,true));
-		PortalWrapperClasses.FieldWrapper logo = new PortalWrapperClasses.FieldWrapper('Logo_File_Id__c',true,false);
-		logo.isLogo = true;
-		lstfw1.add(logo);
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Legal_Name__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Also_Known_As__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Company_Description__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Location__c',true,true));
-		PortalWrapperClasses.FieldWrapper focusAreas = new PortalWrapperClasses.FieldWrapper('Focus_Areas__c',true,false,'',System.Label.CSP_FocusAreas);
-		focusAreas.isMultipick = true;
-		lstfw1.add(focusAreas);
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Founding_Date__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Number_Of_Employees__c',true,true));
-
-		//SERVICE INFORMATION
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Solution__c',true,true));
-		PortalWrapperClasses.FieldWrapper technology = new PortalWrapperClasses.FieldWrapper('Technology__c',true,false,'',System.Label.CSP_Technology);
-		technology.isMultipick = true;
-		lstfw1.add(technology);
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Description__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Contact_info_of_startup__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Contact_Position__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Contact_Email__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Contact_Phone_Number__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Industry_Perspectives__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Funding_Amount__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Funding_Stage__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Investors__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Competition_Competitors__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Competitive_Advantage__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Recent_News__c',true,true));
-		PortalWrapperClasses.FieldWrapper tagsOfCategories = new PortalWrapperClasses.FieldWrapper('Tags_Of_Categories__c',true,false,'',System.Label.CSP_Categories);
-		tagsOfCategories.isMultipick = true;
-		lstfw1.add(tagsOfCategories);
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Website__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Facebook__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Instagram__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Twitter__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('LinkedIn__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('GitHub__c',true,true));
-		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Telegram__c',true,true));
+		
+		lstfw1 = getFieldsCompanyCard(lstfw1,false);	
+		lstfw1 = getFieldsServiceCard(lstfw1,false);
 
 		lstCardWrapper.add(new PortalWrapperClasses.CardWrapper('Provider Information', lstfw1, false,'Provider Information'));
 

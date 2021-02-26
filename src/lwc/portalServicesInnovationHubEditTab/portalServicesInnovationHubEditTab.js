@@ -8,19 +8,22 @@ import uploadFile from '@salesforce/apex/PortalServicesInnovationHubCtrl.uploadF
 import saveLogoId from '@salesforce/apex/PortalServicesInnovationHubCtrl.saveLogoId';
 
 //labels
-import Comments from '@salesforce/label/c.CSP_CaseMessage_MessageTitle';
+import CSP_CaseMessage_MessageTitle from '@salesforce/label/c.CSP_CaseMessage_MessageTitle';
 import Edit from '@salesforce/label/c.Edit';
 import Cancel from '@salesforce/label/c.Cancel';
 import Save from '@salesforce/label/c.Save';
-import SaveAndSubmit from '@salesforce/label/c.CSP_SaveAndSubmit';
-import EditProviderDetails from '@salesforce/label/c.CSP_EditProviderDetails';
+import CSP_SaveAndSubmit from '@salesforce/label/c.CSP_SaveAndSubmit';
+import CSP_EditProviderDetails from '@salesforce/label/c.CSP_EditProviderDetails';
 import PublishedRecordPreview from '@salesforce/label/c.CSP_PublishedRecordPreview';
-import MarkedForReview from '@salesforce/label/c.CSP_MarkedForReview';
-import WaitingApproval from '@salesforce/label/c.CSP_WaitingApproval';
-import ProviderDraftSaved from '@salesforce/label/c.CSP_ProviderDraftSaved';
-import ProviderSaveAndSubmit from '@salesforce/label/c.CSP_ProviderSaveAndSubmit';
-import ProviderWrongSubmit from '@salesforce/label/c.CSP_ProviderWrongSubmit';
-import ProviderReviewComments from '@salesforce/label/c.CSP_ProviderReviewComments';
+import CSP_MarkedForReview from '@salesforce/label/c.CSP_MarkedForReview';
+import CSP_WaitingApproval from '@salesforce/label/c.CSP_WaitingApproval';
+import CSP_ProviderDraftSaved from '@salesforce/label/c.CSP_ProviderDraftSaved';
+import CSP_ProviderSaveAndSubmit from '@salesforce/label/c.CSP_ProviderSaveAndSubmit';
+import CSP_ProviderWrongSubmit from '@salesforce/label/c.CSP_ProviderWrongSubmit';
+import CSP_ProviderReviewComments from '@salesforce/label/c.CSP_ProviderReviewComments';
+import Upload_File from '@salesforce/label/c.Upload_File';
+import CSP_IHUB_LogoFileTypes from '@salesforce/label/c.CSP_IHUB_LogoFileTypes';
+
 
 export default class PortalServicesInnovationHubEditTab extends LightningElement {
 
@@ -56,19 +59,21 @@ export default class PortalServicesInnovationHubEditTab extends LightningElement
     }
 
     labels = {
-        Comments,
+        CSP_CaseMessage_MessageTitle,
         Edit,
         Cancel,
         Save,
-        SaveAndSubmit,
-        EditProviderDetails,
+        CSP_SaveAndSubmit,
+        CSP_EditProviderDetails,
         PublishedRecordPreview,
-        MarkedForReview,
-        WaitingApproval,
-        ProviderDraftSaved,
-        ProviderSaveAndSubmit,
-        ProviderWrongSubmit,
-        ProviderReviewComments,
+        CSP_MarkedForReview,
+        CSP_WaitingApproval,
+        CSP_ProviderDraftSaved,
+        CSP_ProviderSaveAndSubmit,
+        CSP_ProviderWrongSubmit,
+        CSP_ProviderReviewComments,
+        Upload_File,
+        CSP_IHUB_LogoFileTypes,
     }
 
     //object to include extra fields

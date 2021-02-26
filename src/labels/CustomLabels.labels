@@ -5252,6 +5252,13 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>ID Card VER Number</value>
     </labels>
     <labels>
+        <fullName>CSP_IHUB_LogoFileTypes</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_IHUB_LogoFileTypes</shortDescription>
+        <value>Accepted file types are: png, jpeg</value>
+    </labels>
+    <labels>
         <fullName>CSP_IHub_ChooseAny</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>

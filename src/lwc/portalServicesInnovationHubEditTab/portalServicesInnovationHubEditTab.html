@@ -10,12 +10,12 @@
         <div class="slds-grid slds-wrap slds-gutters_medium slds-grid--vertical-stretch">
             
             <div if:true={viewSubmitWarning} class="slds-p-vertical_xx-small slds-col slds-size_1-of-1"> 
-                <c-portal-warning-banner label-input={labels.WaitingApproval}>
+                <c-portal-warning-banner label-input={labels.CSP_WaitingApproval}>
                 </c-portal-warning-banner>
             </div>
 
             <div if:true={markedForReview} class="slds-p-vertical_xx-small slds-col slds-size_1-of-1"> 
-                <c-portal-warning-banner label-input={labels.MarkedForReview}>
+                <c-portal-warning-banner label-input={labels.CSP_MarkedForReview}>
                 </c-portal-warning-banner>
             </div>
             
@@ -53,12 +53,12 @@
                             <p class="slds-text-align_center slds-p-vertical_x-small text-small">
                                 <template if:true={displaySaveTextSuccessModal}>
                                     <lightning-formatted-rich-text                       
-                                        value={labels.ProviderDraftSaved}>
+                                        value={labels.CSP_ProviderDraftSaved}>
                                     </lightning-formatted-rich-text>
                                 </template>
                                 <template if:false={displaySaveTextSuccessModal}>
                                     <lightning-formatted-rich-text                       
-                                        value={labels.ProviderSaveAndSubmit}>
+                                        value={labels.CSP_ProviderSaveAndSubmit}>
                                     </lightning-formatted-rich-text>
                                 </template>
                             </p> 
@@ -86,7 +86,7 @@
                         <div class="slds-p-around_large">
                             <p class="slds-text-align_center slds-p-vertical_x-small text-small">
                                 <lightning-formatted-rich-text                       
-                                    value={labels.ProviderWrongSubmit}>
+                                    value={labels.CSP_ProviderWrongSubmit}>
                                 </lightning-formatted-rich-text>
                             </p>
                         </div>
@@ -106,7 +106,7 @@
 
             <c-portal-popup-container size="threeQuarters">
                 <span slot="modalHeader">
-                    <span>{labels.EditProviderDetails}</span>
+                    <span>{labels.CSP_EditProviderDetails}</span>
                     <span class="slds-float_right slds-m-horizontal_x-small close-mark" onclick={handleCancelButtonEditModal}>
                         <template if:false={isSaving}>
                             <lightning-icon icon-name="utility:close" size="x-small" class="cursorPointer"
@@ -118,10 +118,10 @@
                 <span slot="modalBody">
 
                     <div if:true={viewComments} class="slds-p-vertical_xx-small slds-col slds-size_1-of-1">
-                        <c-portal-warning-banner label-input={labels.ProviderReviewComments}>
+                        <c-portal-warning-banner label-input={labels.CSP_ProviderReviewComments}>
                         </c-portal-warning-banner>
                         <div class="slds-p-vertical_xx-large slds-p-horizontal_x-large customBorderlessCardWhite slds-m-bottom_medium section">
-                            <div class="slds-form-element__label">{labels.Comments}</div>
+                            <div class="slds-form-element__label">{labels.CSP_CaseMessage_MessageTitle}</div>
                             <div class="text-xxxsmall">{comments}</div>
                         </div>
                     </div>
@@ -212,9 +212,9 @@
                                             <c-portal-record-view-edit-logo key={propertiesAndCardsListEdit.recordId} provider-id-api={propertiesAndCardsListEdit.recordId}></c-portal-record-view-edit-logo>
                                         </div>
 
-                                        <lightning-input class="slds-m-top_large labelValue textValue" type="file" accept=".png, .jpg" onchange={openfileUpload}></lightning-input>
+                                        <lightning-input class="slds-m-top_large labelValue textValue" type="file" accept=".png, .jpg" title={labels.CSP_IHUB_LogoFileTypes} onchange={openfileUpload}></lightning-input>
                                                                
-                                        <lightning-input if:true={hasFileToUpload} class="fullWidth labelValue textValue disabledValue disabledInput" label="File to Upload" placeholder={fileToUpload} disabled></lightning-input>
+                                        <lightning-input if:true={hasFileToUpload} class="fullWidth labelValue textValue disabledValue disabledInput" label={labels.Upload_File} placeholder={fileToUpload} disabled></lightning-input>
                                     </div>
 
                                 </template>
@@ -231,7 +231,7 @@
                                                     variant="neutral" data-name="save" type="submit" onclick={handleSaveButtonClick} disabled={isSaving}></lightning-button>
                             </div>
                             <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-large-size_1-of-3">
-                                <lightning-button class="baseButton newContainedButton buttonMinHeightMedium text-xsmall fullWidth" label={labels.SaveAndSubmit} 
+                                <lightning-button class="baseButton newContainedButton buttonMinHeightMedium text-xsmall fullWidth" label={labels.CSP_SaveAndSubmit} 
                                                     variant="neutral" data-name="submit" type="submit" onclick={handleSaveButtonClick} disabled={isSaving}></lightning-button>
                             </div>
                         </div>
