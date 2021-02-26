@@ -61,7 +61,7 @@ global with sharing class IDCardWebService {
 					
 					c.VER_Number_2__c = IdcardUtil.generateVER(account);
 					c.UIR__c = IdcardUtil.generateUIR(account);
-					IDCardUtilWithoutSharing.upsertGenericObject('Contact', (sObject)(c), c.Id, TransformationHelper.selectAllWritableFieldsByCurrentUser('Contact'));
+					IDCardUtilWithoutSharing.upsertGenericObject('Contact', (sObject)(c), c.Id, c.getPopulatedFieldsAsMap().keyset());
 
 					system.debug(LoggingLevel.ERROR,'[processKeyAccountSingleApplication] upserted the contact:'+c.id+' with ver = '+c.VER_Number_2__c);
 					singleApp.VER_Number__c = c.VER_Number_2__c ;
@@ -99,14 +99,14 @@ global with sharing class IDCardWebService {
 				if(aCase.CaseNumber==null)
 					aCase = [select Id, CaseNumber, status from case where Id = :aCase.Id];
 
-				//approved case and launch id card creation
-				system.debug(LoggingLevel.ERROR,'[processKeyAccountSingleApplication] approve case for App  '+id);
-				IDCardUtil.UpdateCaseToApproved_Rejected(aCase.CaseNumber,true);
-				 System.debug(LoggingLevel.ERROR,'[processKeyAccountSingleApplication]  The case '+acase.id+' here  has status' +aCase.status );
-
 				singleApp.Single_Application_Processing_Step__c = 'Processed';
 				IDCardUtilWithoutSharing.saveCommittedICA(singleApp, id);
 				system.debug(LoggingLevel.ERROR,'[processKeyAccountSingleApplication] unLock single App  '+id);
+				
+				//approved case and launch id card creation
+				system.debug(LoggingLevel.ERROR,'[processKeyAccountSingleApplication] approve case for App  '+id);
+				IDCardUtil.UpdateCaseToApproved_Rejected(aCase.CaseNumber,true);
+				System.debug(LoggingLevel.ERROR,'[processKeyAccountSingleApplication]  The case '+acase.id+' here  has status' +aCase.status );
 
 				/* INC157243
 				aCase.Status = 'Closed';

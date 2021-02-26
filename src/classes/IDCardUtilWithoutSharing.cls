@@ -58,11 +58,11 @@ global without sharing class IDCardUtilWithoutSharing {
 		return database.upsert(ICAToCommit);
 	}
 
-	public static void upsertGenericObject(string objName, sObject sObjFrom, id recordId, list<string> lsFields){
+	public static void upsertGenericObject(string objName, sObject sObjFrom, id recordId, set<string> lsFields){
 		set<string> setBooleanFields = new set<string>();
-		for(string s:Schema.getGlobalDescribe().get(objName).getDescribe().fields.getMap().keyset())
+		for(string s:lsFields)
 			if(string.ValueOf(Schema.getGlobalDescribe().get(objName).getDescribe().fields.getMap().get(s).getDescribe().getType())=='BOOLEAN')
-				setBooleanFields.add(s.toUpperCase());
+				setBooleanFields.add(s);
 
 		sObject sObjToCommit = Schema.getGlobalDescribe().get(objName).newSObject();
 		for(string field:lsFields){
