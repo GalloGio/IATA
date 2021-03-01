@@ -276,7 +276,7 @@ PARTIAL MATCH</inlineHelpText>
     <label>GCS Customer Type For Registration</label>
     <listViews>
         <fullName>Detailed_View</fullName>
-        <columns>DeveloperName</columns>
+        <columns>MasterLabel</columns>
         <columns>Is_Active__c</columns>
         <columns>Type__c</columns>
         <columns>Parent__c</columns>

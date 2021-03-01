@@ -13471,6 +13471,7 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
         <label>EXE2014 - All Pending Approval - SVP</label>
         <language>en_US</language>
         <sharedTo>
+            <group>CFDS_SVP</group>
             <role>A_P_Business_Delivery_Manager</role>
             <role>Distribution_Business_Delivery_HO</role>
             <role>MAD_Hub_Business_Delivery_Manager</role>
