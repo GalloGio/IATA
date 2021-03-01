@@ -7,6 +7,7 @@ public class PortalServicesInnovationHubCtrlTest {
 		Id iHubDetailProviderRT = RecordTypeSingleton.getInstance().getRecordTypeId('IH_Account_Role_Detail__c', 'Provider');
 		Id iHubDetailConsumerRT = RecordTypeSingleton.getInstance().getRecordTypeId('IH_Account_Role_Detail__c', 'Consumer');
 		Id iHubDetailProAndConsRT = RecordTypeSingleton.getInstance().getRecordTypeId('IH_Account_Role_Detail__c', 'Consumer_and_Provider');
+		Id accountRoleRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'Default');
 	   
 		Account newAcc1 = new Account(Name='Account Test Airline 1', Site = 'Site Test 1', Sector__c = 'Airline',IATACode__c = '123', RecordTypeId = accountAirlineRT);
 		Account newAcc2 = new Account(Name='Account Test Airline 2', Site = 'Site Test 2', Sector__c = 'Airline',IATACode__c = '1234', RecordTypeId = accountAirlineRT);
@@ -24,10 +25,10 @@ public class PortalServicesInnovationHubCtrlTest {
 		Contact newCon6 = new Contact(AccountId = newAcc6.Id, FirstName = 'John', LastName = 'Doe', Email = 'testemail6@csp.testclass', User_Portal_Status__c = 'Approved Admin', Status__c = 'Active');
 		insert new List<Contact>{newCon1, newCon2, newCon3, newCon4, newCon5, newCon6};
 		
-		Account_Role__c ar1 = new Account_Role__c(Account__c = newAcc1.Id,Account_Name__c = 'Test Role 1', Functional_Role__c = 'InnovationHub CRM');
-		Account_Role__c ar2 = new Account_Role__c(Account__c = newAcc2.Id,Account_Name__c = 'Test Role 2', Functional_Role__c = 'InnovationHub CRM');
-		Account_Role__c ar3 = new Account_Role__c(Account__c = newAcc3.Id,Account_Name__c = 'Test Role 3', Functional_Role__c = 'InnovationHub CRM');
-		Account_Role__c ar4 = new Account_Role__c(Account__c = newAcc4.Id,Account_Name__c = 'Test Role 4', Functional_Role__c = 'InnovationHub CRM');
+		Account_Role__c ar1 = new Account_Role__c(Account__c = newAcc1.Id,Account_Name__c = 'Test Role 1', Functional_Role__c = 'InnovationHub CRM', RecordtypeId = accountRoleRecordTypeId);
+		Account_Role__c ar2 = new Account_Role__c(Account__c = newAcc2.Id,Account_Name__c = 'Test Role 2', Functional_Role__c = 'InnovationHub CRM', RecordtypeId = accountRoleRecordTypeId);
+		Account_Role__c ar3 = new Account_Role__c(Account__c = newAcc3.Id,Account_Name__c = 'Test Role 3', Functional_Role__c = 'InnovationHub CRM', RecordtypeId = accountRoleRecordTypeId);
+		Account_Role__c ar4 = new Account_Role__c(Account__c = newAcc4.Id,Account_Name__c = 'Test Role 4', Functional_Role__c = 'InnovationHub CRM', RecordtypeId = accountRoleRecordTypeId);
 		insert new List<Account_Role__c>{ar1, ar2, ar3, ar4};
 		
 		IH_Account_Role_Detail__c ihubDetail1 = new IH_Account_Role_Detail__c(Account_Role__c = ar1.Id,Company_name__c = 'Test Provider',
@@ -126,22 +127,6 @@ public class PortalServicesInnovationHubCtrlTest {
 		System.runAs(newUser1){
 			List<IH_Account_Role_Detail__c> details = PortalServicesInnovationHubCtrl.getProviderFieldLists(provider.Id,'Technology__c');
 			System.assertEquals(details.size(),1);
-		}
-		
-		Test.stopTest();
-
-	}
-	
-	@isTest 
-	static void testLatestRoleDetail() {
-		List<Contact> contacts = [SELECT AccountId, FirstName,LastName, Email, User_Portal_Status__c, Status__c FROM Contact];
-		IH_Account_Role_Detail__c provider = [SELECT Id,Account_Role__r.Account__c,RecordType.DeveloperName,Published__c,Status__c FROM IH_Account_Role_Detail__c WHERE Company_name__c = 'Test Consumer & Provider' LIMIT 1];
-		User newUser1 = ISSP_ObjectFactory.createPortalUser(contacts[2]);
-		Test.startTest();
-
-		System.runAs(newUser1){
-			IH_Account_Role_Detail__c ih1 = PortalServicesInnovationHubCtrl.getLastestPublishedProviderUserIHAccountRoleDetail();
-			System.assertEquals(ih1.Id,provider.Id);
 		}
 		
 		Test.stopTest();
@@ -255,9 +240,11 @@ public class PortalServicesInnovationHubCtrlTest {
 
 		Test.startTest();
 		String fileUploaded = PortalServicesInnovationHubCtrl.uploadFile(sbase64, 'test.txt', provider.Id);
+		String logoId = PortalServicesInnovationHubCtrl.saveLogoId(provider.Id, fileUploaded);
 		Test.stopTest();
 		List<ContentVersion> cvlList = [SELECT Id FROM ContentVersion WHERE Id = :fileUploaded];
 		System.assertEquals(cvlList.size(), 1);
+		System.assertEquals(logoId, provider.Id);
 	}
 
 	@isTest 

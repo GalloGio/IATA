@@ -2085,13 +2085,17 @@
     </validationRules>
     <listViews>
         <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Company_Name__c</columns>
+        <columns>RECORDTYPE</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>Status__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
     </listViews>
     <listViews>
         <fullName>Consumers</fullName>
         <columns>NAME</columns>
-        <columns>Company_Name__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>RECORDTYPE</field>
@@ -2103,6 +2107,8 @@
     <listViews>
         <fullName>Draft</fullName>
         <columns>NAME</columns>
+        <columns>Company_Name__c</columns>
+        <columns>CREATED_DATE</columns>
         <filterScope>Mine</filterScope>
         <filters>
             <field>Status__c</field>
@@ -2114,6 +2120,10 @@
     <listViews>
         <fullName>For_Approval</fullName>
         <columns>NAME</columns>
+        <columns>Company_Name__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>UPDATEDBY_USER</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Status__c</field>
@@ -2126,6 +2136,10 @@
         <fullName>Providers</fullName>
         <columns>NAME</columns>
         <columns>Company_Name__c</columns>
+        <columns>Status__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>UPDATEDBY_USER</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>RECORDTYPE</field>
@@ -2137,6 +2151,10 @@
     <listViews>
         <fullName>Providers_to_Publish</fullName>
         <columns>NAME</columns>
+        <columns>Company_Name__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>UPDATEDBY_USER</columns>
         <filterScope>Mine</filterScope>
         <filters>
             <field>Status__c</field>
@@ -2153,6 +2171,10 @@
     <listViews>
         <fullName>Published_Providers</fullName>
         <columns>NAME</columns>
+        <columns>Company_Name__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>UPDATEDBY_USER</columns>
         <filterScope>Mine</filterScope>
         <filters>
             <field>Status__c</field>
