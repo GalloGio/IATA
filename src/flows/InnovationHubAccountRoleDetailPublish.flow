@@ -38,7 +38,7 @@
             <name>Yes</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>getCurrentPublishedProvider.Id</leftValueReference>
+                <leftValueReference>getCurrentPublishedProvider</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
