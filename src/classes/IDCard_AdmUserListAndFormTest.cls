@@ -721,7 +721,7 @@ private class IDCard_AdmUserListAndFormTest {
 		idcs[0].ID_Card_Application__c = app[1].id;
 		update idcs[0];
 
-		ApexPages.currentPage().getParameters().put('id','1');
+		ApexPages.currentPage().getParameters().put('id','2');
 		pendingctrl.validationApplication();
 		pendingctrl.paymentMode = IDCardUtil.Key_Account_Feature_Payment_Wire_Check;
 		pendingctrl.createMassUpdateIdCardApplication();
