@@ -1099,6 +1099,17 @@
         <template>SCEQOS/Case_escalated_to_LO</template>
     </alerts>
     <alerts>
+        <fullName>IDFS_Complaint_out_of_query</fullName>
+        <description>IDFS Complaint out of query</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>info.sce@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>All/complaint_out_of_query</template>
+    </alerts>
+    <alerts>
         <fullName>IDFS_SIDRA_CS_request_feedback_to_R_S</fullName>
         <description>IDFS SIDRA_CS/ACC request feedback to R&amp;S</description>
         <protected>false</protected>
@@ -6411,7 +6422,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <fullName>SCE_Serial_Number_Allocation_owner_R_B</fullName>
         <description>Update case owner: Reporting &amp; Billing</description>
         <field>OwnerId</field>
-        <lookupValue>CasesReportingBilling</lookupValue>
+        <lookupValue>OperationalManagementHeadOffice</lookupValue>
         <lookupValueType>Queue</lookupValueType>
         <name>SCE:Serial Number Allocation owner R&amp;B</name>
         <notifyAssignee>true</notifyAssignee>
@@ -13171,6 +13182,26 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
             <field>Case.Complaint_Opened_Date__c</field>
             <operation>equals</operation>
         </criteriaItems>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>IDFS Complaint out of query</fullName>
+        <actions>
+            <name>IDFS_Complaint_out_of_query</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>SAAM,SIDRA,Process,OSCAR Communication,IATA Financial Review,SIDRA Lite</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.IsComplaint__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <description>2013 process</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
