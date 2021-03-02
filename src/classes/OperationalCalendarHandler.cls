@@ -367,6 +367,7 @@ public with sharing class OperationalCalendarHandler {
 		public void setISSOperation(Id ISSOperationId) {
 			if (String.isBlank(operation.ISS_operation__c)) {
 				operation.ISS_operation__c = ISSOperationId;
+				operation.RecordTypeId = ISS_RECORDTYPE_ID;
 			}
 		}
 

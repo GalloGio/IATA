@@ -558,6 +558,10 @@ IF (ISPICKVAL (Campaign_focus__c,&quot;Not Specific&quot;), &quot;NS-&quot; &amp
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>TenantId</fullName>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>TotalEmailsDelivered</fullName>
     </fields>
     <fields>

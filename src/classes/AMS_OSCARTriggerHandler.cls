@@ -2799,13 +2799,21 @@ public class AMS_OSCARTriggerHandler {
 
 		Set<Id> oscarOnlineAccredIds = new Set<Id>();
 		Map<Id, Set<Id>> accountsInvolved = new Map<Id, Set<Id>>();
+		
+		//If all oscar are just being closed, there is no need to run handleVRProcess method
+		Boolean noNeedForValidations = true;
 
 		for (AMS_OSCAR__c oscar : oscars) {
-			addAccountId(oscar.Account__c);
-			addAccountId(oscar.AMS_Target_Agency__c);
-			oscarOnlineAccredIds.add(oscar.AMS_Online_Accreditation__c);
-			accountsInvolved.put(oscar.Id, new Set<Id>{oscar.Account__c});
+			if(oscar.Status__c != AMS_Utils.OSCAR_CLOSED){
+				addAccountId(oscar.Account__c);
+				addAccountId(oscar.AMS_Target_Agency__c);
+				oscarOnlineAccredIds.add(oscar.AMS_Online_Accreditation__c);
+				accountsInvolved.put(oscar.Id, new Set<Id>{oscar.Account__c});
+				noNeedForValidations = false;
+			}
 		}
+
+		if(noNeedForValidations) return;
 
 		//find all agencies involved
 		//DTULLO: Added Record Type
@@ -3063,7 +3071,6 @@ public class AMS_OSCARTriggerHandler {
 		else if(agencyType == ANG_OscarProcessHelper.ANG_PCI_RENEWAL && step == null ) templateId  = 'ANG_PCI_RENEWAL';
 		else if(agencyType == ANG_FOPOSCARNotificationBatch.FOP_REMINDER_TEMPLATE_ID && step == null) templateId  = 'ANG_Mass_FOP_OSCAR_Reminder';
 		else if(agencyType == ANG_FOPOSCARNotificationBatch.FOP_NONCOMPLIANCE_TEMPLATE_ID && step == null) templateId  = 'ANG_Mass_FOP_OSCAR_NonCompliance';
-		else if(agencyType == ANG_FOPOSCARNotificationBatch.RENEWAL_FOP_REMINDER_TEMPLATE_ID&& step == null) templateId  = 'ANG_PCI_RENEWAL_Reminder';
 		else if(agencyType == ANG_FOPOSCARNotificationBatch.RENEWAL_FOP_NONCOMPLIANCE_TEMPLATE_ID&& step == null) templateId  = 'ANG_PCI_RENEWAL_NonCompliance';
 		else if(agencyType == ANG_FOPOSCARNotificationBatch.ANNUAL_REV_REMINDER && step == null) {
 			templateId  = 'ANG_Annual_Revalidation_Reminder';

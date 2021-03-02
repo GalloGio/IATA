@@ -791,7 +791,7 @@
         <description>Global approval of FAQ change - to GVA</description>
         <protected>false</protected>
         <recipients>
-            <recipient>gabriel@iata.org</recipient>
+            <recipient>oueidatg2@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
@@ -3771,7 +3771,7 @@
         <description>TEST Email Alert on IS for AM</description>
         <protected>false</protected>
         <recipients>
-            <recipient>gabriel@iata.org</recipient>
+            <recipient>oueidatg2@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
@@ -6422,7 +6422,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <fullName>SCE_Serial_Number_Allocation_owner_R_B</fullName>
         <description>Update case owner: Reporting &amp; Billing</description>
         <field>OwnerId</field>
-        <lookupValue>CasesReportingBilling</lookupValue>
+        <lookupValue>OperationalManagementHeadOffice</lookupValue>
         <lookupValueType>Queue</lookupValueType>
         <name>SCE:Serial Number Allocation owner R&amp;B</name>
         <notifyAssignee>true</notifyAssignee>

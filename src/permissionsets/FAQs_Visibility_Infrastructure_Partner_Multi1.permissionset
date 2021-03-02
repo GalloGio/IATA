@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Airport Concessionaire,Airport Operator,ANSP,Airport Authority</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>FAQs Visibility Infrastructure Partner - Multi1</label>
+    <license>Partner Community</license>
+</PermissionSet>

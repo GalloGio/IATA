@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Some business admins need to update the roles. Like for the fluid manpower project in MAD</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Manage roles</label>
+    <license>Salesforce</license>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>ManageRoles</name>
+    </userPermissions>
+</PermissionSet>

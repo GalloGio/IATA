@@ -391,6 +391,13 @@ public without sharing class ISSP_AMS_Accreditation {
 			}
 		set;
 	}
+	public Boolean isTIDSAgent{
+		get{
+			if(con.Account.Category__c == AMS_Utils.CATEGORY_TIDS) return true;
+			else return false;
+			}
+		set;
+	}
 
 	public String passParam { get { if(isPassAccreditation==true){ return '&accType=PASS';} return '';} set;}
 
@@ -2705,8 +2712,8 @@ public without sharing class ISSP_AMS_Accreditation {
 				newForm.NDC_Transactions__c = 'No';
 			}
 			
-			if (hqAccount.Cass_Number__c != null) {
-				newForm.CASS_Number__c = hqAccount.Cass_Number__c;
+			if (accountConcerned.Cass_Number__c != null) {
+				newForm.CASS_Number__c = accountConcerned.Cass_Number__c;
 			}
 			upsert newForm;
 
@@ -6518,20 +6525,22 @@ public without sharing class ISSP_AMS_Accreditation {
 	private Boolean validateFormShipping() {
 		Boolean errorFound = false;
 
-		if (getIsAccreditationModelNotNullOrLegacy() || newCase.Reason1__c == AMS_UTILS.CASE_REASON_HE_LITE || newCase.Reason1__c == AMS_UTILS.CASE_REASON_HE_STANDARD || newCase.Reason1__c == AMS_UTILS.CASE_REASON_HE_MULTICOUNTRY) {
-			if (newForm.Shipping_City__c == null) {
-				newForm.Shipping_City__c.addError(Label.ISSP_YouMustEnter);
-				errorFound = true;
-			}
+		if (getIsAccreditationModelNotNullOrLegacy() || newCase.Reason1__c == AMS_UTILS.CASE_REASON_HE_LITE || newCase.Reason1__c == AMS_UTILS.CASE_REASON_HE_STANDARD || newCase.Reason1__c == AMS_UTILS.CASE_REASON_HE_MULTICOUNTRY || newCase.Reason1__c == AMS_UTILS.CASE_REASON_NEW_HO) {
+			if(String.isNotBlank(newForm.Shipping_City__c) || String.isNotBlank(newForm.Shipping_Street__c) || String.isNotBlank(newForm.Shipping_Country__c)){
+				if (newForm.Shipping_Country__c == null) {
+					newForm.Shipping_Country__c.addError(Label.ISSP_YouMustEnter);
+					errorFound = true;
+				}
 
-			if (newForm.Shipping_Street__c == null) {
-				newForm.Shipping_Street__c.addError(Label.ISSP_YouMustEnter);
-				errorFound = true;
-			}
-
-			if (newForm.Shipping_Country__c == null) {
-				newForm.Shipping_Country__c.addError(Label.ISSP_YouMustEnter);
-				errorFound = true;
+				if (newForm.Shipping_City__c == null) {
+					newForm.Shipping_City__c.addError(Label.ISSP_YouMustEnter);
+					errorFound = true;
+				}
+	
+				if (newForm.Shipping_Street__c == null) {
+					newForm.Shipping_Street__c.addError(Label.ISSP_YouMustEnter);
+					errorFound = true;
+				}
 			}
 		}
 
@@ -7000,19 +7009,21 @@ public without sharing class ISSP_AMS_Accreditation {
 					}
 
 					if ((hqAccount.Status__c != 'Terminated' || hqAccount.Status__c == null) && hqAccount.IATA_ISO_Country__r.ANG_Enable_NewGen__c) {
-						if (hqAccount.ShippingStreet == null){
-							hqAccount.ShippingStreet.addError(Label.ISSP_YouMustEnter);
-							errorFound = true;
-						}
+						if(String.isNotBlank(newForm.Shipping_City__c) || String.isNotBlank(newForm.Shipping_Street__c) || String.isNotBlank(newForm.Shipping_Country__c)){
+							if (newForm.Shipping_Country__c == null){
+								newForm.Shipping_Country__c.addError(Label.ISSP_YouMustEnter);
+								errorFound = true;
+							}
 
-						if (hqAccount.ShippingCity == null){
-							hqAccount.ShippingCity.addError(Label.ISSP_YouMustEnter);
-							errorFound = true;
-						}
-
-						if (hqAccount.ShippingCountry == null){
-							hqAccount.ShippingCountry.addError(Label.ISSP_YouMustEnter);
-							errorFound = true;
+							if (newForm.Shipping_City__c == null){
+								newForm.Shipping_City__c.addError(Label.ISSP_YouMustEnter);
+								errorFound = true;
+							}
+	
+							if (newForm.Shipping_Street__c == null){
+								newForm.Shipping_Street__c.addError(Label.ISSP_YouMustEnter);
+								errorFound = true;
+							}
 						}
 					}
 

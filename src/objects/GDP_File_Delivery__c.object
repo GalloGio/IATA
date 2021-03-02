@@ -572,12 +572,12 @@ Should be one of - Daily, Weekly, Semi-Monthly, Monthly</inlineHelpText>
         <filters>
             <field>Delivery_Date__c</field>
             <operation>equals</operation>
-            <value>TODAY</value>
+            <value>2/9/2021</value>
         </filters>
         <filters>
             <field>File_Specification__c</field>
             <operation>contains</operation>
-            <value>Master</value>
+            <value>Daily</value>
         </filters>
         <label>ZZZZ-Random Search</label>
         <language>en_US</language>

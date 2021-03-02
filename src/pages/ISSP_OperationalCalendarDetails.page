@@ -161,7 +161,7 @@
             refreshDetails();
         });
         $("#countryFilter").change(function() {
-            //updatePicklistsFromCountry();
+            updatePicklistsFromCountry();
             refreshDetails();
         });
         $("#frequencyFilter").change(function() {
@@ -351,7 +351,8 @@
             doc.content.splice( 0, 0, {
                 margin: [ 0, 0, 0, 0 ],
                 alignment: 'center',
-                image: getLogo(nvl($("#typeFilter").val()))
+                image: getLogo(nvl($("#typeFilter").val())),
+                width: 140
             });
             
             var language = "{!UserLanguage}";
@@ -456,36 +457,37 @@
     }
     
     function addExportButtons() {
-        var table = $('.table-pagination').DataTable();
-        var colCount = 0;
-        for (var i=0; i<table.columns().count(); i++) {
-            if(table.column(i).visible()) colCount++;
-        }
-        //PDF Button
-        pdfButton.orientation = colCount>7? "landscape": "portrait";
-        var isDisabled = $(".buttons-pdf").prop("disabled");
-        $(".buttons-pdf").remove();
-        $("#advanced-filters").empty();
-        var table =  $('.table-pagination').dataTable();
-        new $.fn.dataTable.Buttons(table, {
-            buttons: [pdfButton]
-        }).container().appendTo($('#exportPDF'));
-        $(".buttons-pdf")
-            .prepend( "<span class='glyphicon glyphicon-th' style='padding-right:2px;'></span>")
-            .toggleClass('btn-default btn-primary')
-            .prop("disabled", isDisabled);
-        $(".buttons-pdf").attr('onclick','alert("{!$Label.ISSP_OperationalCalendar_Export_Disclaimer}")');
-        // CSV Button
-        $(".buttons-csv").remove();
-        new $.fn.dataTable.Buttons(table, {
-            buttons: [csvButton]
-        }).container().appendTo($('#exportCSV'));
-        $(".buttons-csv")
-            .prepend( "<span class='glyphicon glyphicon-th' style='padding-right:2px;'></span>")
-            .toggleClass('btn-default btn-primary')
-            .prop("disabled", isDisabled);
-        $(".buttons-csv").attr('onclick','alert("{!$Label.ISSP_OperationalCalendar_Export_Disclaimer}")');
-        /*** WMO-388 ***/
+        try {
+            var table = $('.table-pagination').DataTable();
+            var colCount = 0;
+            for (var i=0; i<table.columns().count(); i++) {
+                if(table.column(i).visible()) colCount++;
+            }
+            //PDF Button
+            pdfButton.orientation = colCount>7? "landscape": "portrait";
+            var isDisabled = $(".buttons-pdf").prop("disabled");
+            $(".buttons-pdf").remove();
+            $("#advanced-filters").empty();
+            var table =  $('.table-pagination').dataTable();
+            new $.fn.dataTable.Buttons(table, {
+                buttons: [pdfButton]
+            }).container().appendTo($('#exportPDF'));
+            $(".buttons-pdf")
+                .prepend( "<span class='glyphicon glyphicon-th' style='padding-right:2px;'></span>")
+                .toggleClass('btn-default btn-primary')
+                .prop("disabled", isDisabled);
+            $(".buttons-pdf").attr('onclick','alert("{!$Label.ISSP_OperationalCalendar_Export_Disclaimer}")');
+            // CSV Button
+            $(".buttons-csv").remove();
+            new $.fn.dataTable.Buttons(table, {
+                buttons: [csvButton]
+            }).container().appendTo($('#exportCSV'));
+            $(".buttons-csv")
+                .prepend( "<span class='glyphicon glyphicon-th' style='padding-right:2px;'></span>")
+                .toggleClass('btn-default btn-primary')
+                .prop("disabled", isDisabled);
+            $(".buttons-csv").attr('onclick','alert("{!$Label.ISSP_OperationalCalendar_Export_Disclaimer}")');
+        } catch (e) {}
         //Multi-Download Button
         var operationType = nvl($("#typeFilter").val());
         if(isMultiButtonVisible && operationType != "SIS" && operationType != "ICCS") {
@@ -579,6 +581,9 @@
             //populate visible picklists for BSP/CASS
             var listValues = containsInArray(LIST_FILTERS, operationType + ',' + operationSubtype + ',');
             updatePicklist($("#countryFilter"), listValues, 2, '');
+            if ($("#countryFilter").val()>"") {
+                listValues = containsInArray(listValues, $("#countryFilter").val());
+            }
             updatePicklist($("#frequencyFilter"), listValues, 3, '');
             updatePicklist($("#currencyFilter"), listValues, 4, '');
         }
@@ -594,11 +599,25 @@
         }
     }
 
+    function updatePicklistsFromCountry() {
+        var operationType = nvl($("#typeFilter").val());
+        var operationSubtype = nvl($("#subtypeFilter").val());
+        var country = nvl($("#countryFilter").val());
+        if (operationType=='BSP/CASS' || operationType.includes('CNS')) {
+            var listValues = containsInArray(LIST_FILTERS, operationType + ',' + operationSubtype + ',' + country + ',');
+            updatePicklist($("#frequencyFilter"), listValues, 3, '');
+            updatePicklist($("#currencyFilter"), listValues, 4, '');
+        }
+    }
+
     function updatePicklist(inputSelect, listValues, position, defValue) {
         inputSelect.find('option').remove();
         var listUniqueValues = [];
+        if (inputSelect.attr("id")=="frequencyFilter") console.log("listValues " + listValues);
         // get only the part required
         $.each(listValues, function (i, item) {
+            if (inputSelect.attr("id")=="frequencyFilter") console.log("item " + item);
+            if (inputSelect.attr("id")=="frequencyFilter") console.log("item split  " + item.split(",")[position]);
             listUniqueValues.push(item.split(",")[position]);
         });
         // remove duplicates
@@ -617,7 +636,9 @@
             inputSelect.append(option);
         }
         // Add options
-        $.each(listUniqueValues, function (i, item) {
+        var options = [];
+        for (i=0; i<listUniqueValues.length; i++) {
+            var item = listUniqueValues[i];
             var label = item;
             if (inputSelect.attr("id")=="frequencyFilter") {
                 label = MAP_FREQUENCIES[item];
@@ -625,10 +646,14 @@
             if (inputSelect.attr("id")=="countryFilter") {
                 label = MAP_COUNTRIES[item];
             }
+            options.push([label,item]);
+        }
+        for (i=0; i<options.sort().length; i++) {
+            var [label,item] = options[i];
             var option = $('<option>', {value: item,text: label});
             if (defValue==item) option.attr("selected",true);
             inputSelect.append(option);
-        });
+        }
     }
 
     function updatePicklistWithMap(inputSelect, mapValues, defValue) {
@@ -664,6 +689,7 @@
                 } else if (event.type === 'exception') {
                     if (!ignoreError) showError(event.message);
                     $("div#table-container").hide();
+                    addExportButtons();
                 } else {
                     console.log('Unknown error in refreshDetails result: ' + unescape(result));
                     $("div#table-container").hide();
@@ -988,7 +1014,8 @@
                         r += val +',';  
                     });
 
-                    r += (index2 == 0 ? '{!$Label.ISSP_FDS_CountryName}' : safeValueForCSV(file.countryName)) + '\n';
+                    r += (index2 == 0 ? '{!$Label.ISSP_FDS_CountryName}' : safeValueForCSV(file.countryName)) + ',';
+                    r += (index2 == 0 ? 'ISO' : safeValueForCSV(file.countryISO)) + '\n';
                     fileBody +=  r;
                 }
             });
@@ -1091,6 +1118,7 @@
                 {
                     alignment: "center",
                     image: getLogo(data.operationType),
+                    width: 140,
                     margin: [0,0,0,0]
                 },
                 {
@@ -1221,7 +1249,7 @@
                 <div class="col-sm-2 hidden">
                     <div class="form-group">
                         <label for="countryFilterInput">{!$Label.ISSP_OperationalCalendar_CountryFilter}</label>
-                        <select id="countryFilter" class="form-control"></select>
+                        <select id="countryFilter" class="form-control required"></select>
                     </div>
                 </div>
                 <div class="col-sm-2 hidden">
