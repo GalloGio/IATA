@@ -20,6 +20,8 @@ public with sharing class CaseTriggerHelper {
 	public static final String CASE_ACTION_CASE_REOPENING = 'Case Reopening';
 	public static final String CASE_ACTION_SEND_NOI = 'Send NOI';
 
+	public static final String EMPTY_KEYWORD = '[EMPTY]'; // used in ISSP KPI Reporting metadata, in field status_from__c, to be used when the field is empty because the record is being inserted
+
 	public static List<String> actionTypes = new List<String>{CASE_ACTION_CASE_CLOSURE, CASE_ACTION_CASE_ESCALATION, CASE_ACTION_CASE_REOPENING, CASE_ACTION_SEND_NOI};
 
 	public static final List<String> PORTAL_PENDING_CLOSURE_RECORD_TYPES = new List<String> {
@@ -97,8 +99,9 @@ public with sharing class CaseTriggerHelper {
 		}
 
 		// filter out the cases that need to be treated
-		for(Case c: newList) {
-			String cRTDevName = RecordTypeSingleton.getInstance().getRecordTypeById('Case', c.RecordTypeId).DeveloperName;
+		for(Case newCase: newList) {
+			Case oldCase = oldMap==null? null: oldMap.get(newCase.Id); // oldmap is only available for update trigger, for insert oldCase is null
+			String cRTDevName = RecordTypeSingleton.getInstance().getRecordTypeById('Case', newCase.RecordTypeId).DeveloperName;
 			//Exclude All TIDS Cases from KPI processing
 			if (cRTDevName=='TIDS'){ continue;}
 
@@ -114,29 +117,31 @@ public with sharing class CaseTriggerHelper {
 				reopening_fromStatus = configsMap.get(CASE_ACTION_CASE_REOPENING).get(cRTDevName).Status_From__c.split(',');
 				reopening_toStatus = configsMap.get(CASE_ACTION_CASE_REOPENING).get(cRTDevName).Status_To__c.split(',');
 			}
-			
+
+			String oldStatus = oldCase==null? EMPTY_KEYWORD: oldCase.Status;
+
 			// case closure
-			if(configsMap.get(CASE_ACTION_CASE_CLOSURE).keySet().contains(cRTDevName) && closure_fromStatus.contains(oldMap.get(c.Id).Status) && closure_toStatus.contains(newMap.get(c.Id).Status)) {
-				consideredForClosure.add(c.Id);
-				allConsidered.add(c.Id);
+			if(configsMap.get(CASE_ACTION_CASE_CLOSURE).keySet().contains(cRTDevName) && closure_fromStatus.contains(oldStatus) && closure_toStatus.contains(newCase.Status)) {
+				consideredForClosure.add(newCase.Id);
+				allConsidered.add(newCase.Id);
 			}
 
 			// case reopening
-			if(configsMap.get(CASE_ACTION_CASE_REOPENING).keySet().contains(cRTDevName) && reopening_fromStatus.contains(oldMap.get(c.Id).Status) && reopening_toStatus.contains(newMap.get(c.Id).Status) && reopening_reasons.contains(newMap.get(c.Id).Reopening_Reason__c)) {
-				consideredForReopen.add(c.Id);
-				allConsidered.add(c.Id);
+			if(configsMap.get(CASE_ACTION_CASE_REOPENING).keySet().contains(cRTDevName) && reopening_fromStatus.contains(oldStatus) && reopening_toStatus.contains(newCase.Status) && reopening_reasons.contains(newCase.Reopening_Reason__c)) {
+				consideredForReopen.add(newCase.Id);
+				allConsidered.add(newCase.Id);
 			}
 
 			// escalation
-			if(configsMap.get(CASE_ACTION_CASE_ESCALATION).keySet().contains(cRTDevName) && escalation_fromStatus.contains(oldMap.get(c.Id).Status) && escalation_toStatus.contains(newMap.get(c.Id).Status)) {
-				consideredForEscInt.add(c.Id);
-				allConsidered.add(c.Id);
+			if(configsMap.get(CASE_ACTION_CASE_ESCALATION).keySet().contains(cRTDevName) && escalation_fromStatus.contains(oldStatus) && escalation_toStatus.contains(newCase.Status)) {
+				consideredForEscInt.add(newCase.Id);
+				allConsidered.add(newCase.Id);
 			}
 
 			// NOI sent
-			if(newMap.get(c.Id).NOI_sent__c != null && oldMap.get(c.Id).NOI_sent__c == null && configsMap.get(CASE_ACTION_SEND_NOI).keySet().contains(cRTDevName)){
-				consideredForNOI.add(c.Id);
-				allConsidered.add(c.Id);
+			if(newMap.get(newCase.Id).NOI_sent__c != null && oldCase != null && oldCase.NOI_sent__c == null && configsMap.get(CASE_ACTION_SEND_NOI).keySet().contains(cRTDevName)){
+				consideredForNOI.add(newCase.Id);
+				allConsidered.add(newCase.Id);
 			}
 		}
 
@@ -163,15 +168,19 @@ public with sharing class CaseTriggerHelper {
 
 		// closure
 		for(Id cId: consideredForClosure) {
-			String cRTDevName = RecordTypeSingleton.getInstance().getRecordTypeById('Case', oldMap.get(cId).RecordTypeId).DeveloperName;
+			Case newCase = newMap.get(cId);
+			Case oldCase = oldMap==null? null: oldMap.get(cId);
+			String cRTDevName = RecordTypeSingleton.getInstance().getRecordTypeById('Case', newCase.RecordTypeId).DeveloperName;
+
+			String oldStatus = oldCase==null? EMPTY_KEYWORD: oldCase.Status;
 
 			// sprint6 if a case is close as part of same query
 			// substract from original user while awarding the new one
 			Integer points = configsMap.get(CASE_ACTION_CASE_CLOSURE).get(cRTDevName).Points__c.intValue();
 			Boolean flagKPI = false;
-			if(String.isNotBlank(newMap.get(cId).Reopening_reason__c) && newMap.get(cId).Status=='Closed' && oldMap.get(cId).Status=='Reopen' && !reopening_reasons.contains(newMap.get(cId).Reopening_Reason__c)){
+			if(String.isNotBlank(newCase.Reopening_reason__c) && newCase.Status=='Closed' && oldStatus=='Reopen' && !reopening_reasons.contains(newCase.Reopening_Reason__c)){
 				points = 0;
-			} else if(newMap.get(cId).Status=='Closed' && oldMap.get(cId).Status!='Reopen' && typeOfActionClosureMap.get(cId) != null){
+			} else if(newCase.Status=='Closed' && oldStatus!='Reopen' && typeOfActionClosureMap.get(cId) != null){
 				List<KPI_Value__c> caseKpiValues = typeOfActionClosureMap.get(cId);
 				
 				for(KPI_Value__c kpiValue : caseKpiValues) {
@@ -180,15 +189,16 @@ public with sharing class CaseTriggerHelper {
 				}
 			}
 			if(!flagKPI) {
-				KPI_Value__c valueToInsert = createKPIReportingValue(newMap.get(cId), points, kpiReportingClosureId, UserInfo.getUserId());
+				KPI_Value__c valueToInsert = createKPIReportingValue(newCase, points, kpiReportingClosureId, UserInfo.getUserId());
 				kpiValuesToInsert.add(valueToInsert);
 			}
 		}
 
 		// case internal escalation
 		for(Id cId: consideredForEscInt) {
-			String cRTDevName = RecordTypeSingleton.getInstance().getRecordTypeById('Case', oldMap.get(cId).RecordTypeId).DeveloperName;
-			KPI_Value__c valueToInsert = createKPIReportingValue(oldMap.get(cId), Integer.valueOf(configsMap.get(CASE_ACTION_CASE_ESCALATION).get(cRTDevName).Points__c.intValue()), kpiReportingEscalationId, UserInfo.getUserId());
+			Case newCase = newMap.get(cId);
+			String cRTDevName = RecordTypeSingleton.getInstance().getRecordTypeById('Case', newCase.RecordTypeId).DeveloperName;
+			KPI_Value__c valueToInsert = createKPIReportingValue(newCase, Integer.valueOf(configsMap.get(CASE_ACTION_CASE_ESCALATION).get(cRTDevName).Points__c.intValue()), kpiReportingEscalationId, UserInfo.getUserId());
 			kpiValuesToInsert.add(valueToInsert);
 		}
 
@@ -205,13 +215,14 @@ public with sharing class CaseTriggerHelper {
 				}
 			}
 			for(Id cId: consideredForReopen) {
+				Case newCase = newMap.get(cId);
 				KPI_Value__c kpv = typeOfActionReopenedMap.get(cId);
-				String cRTDevName = RecordTypeSingleton.getInstance().getRecordTypeById('Case', oldMap.get(cId).RecordTypeId).DeveloperName;
+				String cRTDevName = RecordTypeSingleton.getInstance().getRecordTypeById('Case', newCase.RecordTypeId).DeveloperName;
 				Integer points = Integer.valueOf(configsMap.get(CASE_ACTION_CASE_REOPENING).get(cRTDevName).Points__c.intValue());
 				
-				if(!reopening_reasons.contains(newMap.get(cId).Reopening_Reason__c))
+				if(!reopening_reasons.contains(newCase.Reopening_Reason__c))
 					points = 0;
-				KPI_Value__c valueToInsert = createKPIReportingValue(oldMap.get(cId), points,kpiReportingReopeningId, (kpv != null ? kpv.Responsible__c : UserInfo.getUserId()));
+				KPI_Value__c valueToInsert = createKPIReportingValue(newCase, points,kpiReportingReopeningId, (kpv != null ? kpv.Responsible__c : UserInfo.getUserId()));
 				kpiValuesToInsert.add(valueToInsert);
 			}
 		}
@@ -220,8 +231,9 @@ public with sharing class CaseTriggerHelper {
 
 		// NOI sent
 		for(Id cId: consideredForNOI) {
-			String cRTDevName = RecordTypeSingleton.getInstance().getRecordTypeById('Case', oldMap.get(cId).RecordTypeId).DeveloperName;
-			KPI_Value__c valueToInsert = createKPIReportingValue(oldMap.get(cId), Integer.valueOf(configsMap.get(CASE_ACTION_SEND_NOI).get(cRTDevName).Points__c.intValue()),kpiReportingNOIId, UserInfo.getUserId());
+			Case newCase = newMap.get(cId);
+			String cRTDevName = RecordTypeSingleton.getInstance().getRecordTypeById('Case', newCase.RecordTypeId).DeveloperName;
+			KPI_Value__c valueToInsert = createKPIReportingValue(newCase, Integer.valueOf(configsMap.get(CASE_ACTION_SEND_NOI).get(cRTDevName).Points__c.intValue()),kpiReportingNOIId, UserInfo.getUserId());
 			kpiValuesToInsert.add(valueToInsert);
 		}
 
