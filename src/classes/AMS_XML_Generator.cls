@@ -737,7 +737,7 @@ public with sharing class AMS_XML_Generator {
 		//REFERENCE
 		lAccount = [SELECT Airline_Code__c,A_Code__c,
 					CASS_Number__c,Check_Digit__c,GDS__c,
-					Company_Type__c,C_Code__c,IATACode__c,Id,Location_Type__c,
+					Company_Type__c,C_Code__c,IATACode__c,Old_IATA_Code__c,Id,Location_Type__c,
 					Last_Inspection_Date__c,Last_synchronization__c,
 					License_Number__c,Location_Category__c,Location_Class__c,Name,GDP_Opt_In__c,
 					N_Code__c,Organization_Last_Change_Date__c,
@@ -1857,6 +1857,15 @@ public with sharing class AMS_XML_Generator {
 			getElementNode(agencyNode, 'iep_status',agency.ANG_IEP_Status_FF__c);
 			getElementNode(agencyNode, 'segmentation',agency.Segmentation__c);
 			getElementNode(agencyNode, 'purge_code',agency.Purge_Flag__c ? 'true' : 'false');
+			if(!agency.Purge_Flag__c){
+				getElementNode(agencyNode, 'iatacode_purged',null);
+			}else if( agency.Old_IATA_Code__c != null
+					&& agency.Old_IATA_Code__c.substring(0,1) == 'P'
+					&& agency.Old_IATA_Code__c.substring(agency.Old_IATA_Code__c.length() - 1) == '_'){
+				getElementNode(agencyNode, 'iatacode_purged',agency.Old_IATA_Code__c+agency.IATACode__c);
+			}else{
+				getElementNode(agencyNode, 'iatacode_purged',agency.IATACode__c);
+			}
 			getElementNode(agencyNode, 'is_branch_abroad',agency.Is_Branch_Abroad__c);
 
 
