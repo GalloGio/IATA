@@ -3,9 +3,9 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <name>IEnvA Managers</name>
     <queueMembers>
-        <publicGroups>
-            <publicGroup>IEnvA_Managers</publicGroup>
-        </publicGroups>
+        <users>
+            <user>holderq@iata.org</user>
+        </users>
     </queueMembers>
     <queueSobject>
         <sobjectType>ICG_Notification__c</sobjectType>
