@@ -1281,6 +1281,35 @@ ISPICKVAL(Topic__c, &quot;IATA Codes (not applicable to Agents)&quot;)
 )</formula>
         </ruleEntry>
         <ruleEntry>
+            <assignedTo>GCS_MRO_SmartHub_L2</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>And(
+ISPICKVAL(Service_Level__c, &quot;2&quot;),
+RecordType.Name = &quot;Cases - Global&quot;,
+ISPICKVAL(Topic__c, &quot;MRO SmartHub&quot;)
+)</formula>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>GCS_MRO_SmartHub</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>And(
+RecordType.Name = &quot;Cases - Global&quot;,
+ISPICKVAL(Topic__c, &quot;MRO SmartHub&quot;)
+)</formula>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>L3_MRO_SmartHub_PM</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>AND(
+OR(
+RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,
+RecordType.Name = &quot;Complaint (IDFS ISS)&quot;,
+RecordType.Name = &quot;Process&quot;
+),
+ISPICKVAL(CaseArea__c, &quot;MRO SmartHub&quot;)
+)</formula>
+        </ruleEntry>
+        <ruleEntry>
             <assignedTo>GCS_Incident_Data_Exchange_L2</assignedTo>
             <assignedToType>Queue</assignedToType>
             <formula>And(
