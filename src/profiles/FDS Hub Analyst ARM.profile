@@ -1493,7 +1493,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>ANG_AgencyChangesHelper</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>ANG_AgencyChangesHelperTest</apexClass>
@@ -7342,10 +7342,6 @@
     <classAccesses>
         <apexClass>ISSP_PortalUserStatusChange</apexClass>
         <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>ISSP_PortalUserStatusChangeHelper</apexClass>
-        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>ISSP_PortalUserStatusChangeTest</apexClass>
@@ -66603,10 +66599,6 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>GCSDowntime</apexPage>
-        <enabled>false</enabled>
-    </pageAccesses>
-    <pageAccesses>
-        <apexPage>GCSDowntime2</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
