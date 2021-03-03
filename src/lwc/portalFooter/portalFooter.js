@@ -96,8 +96,17 @@ export default class PortalFooter extends LightningElement {
     handleChangeLang(event) {
         this.chagingLang = true;
         let lang = event.detail.value;
-        changeUserLanguage({lang}).then(() => {
-            window.location.reload(); // Review this
+        changeUserLanguage({lang}).then(() => {    
+            let url_test = window.location.href;
+            if(url_test.includes('language')){
+                let hasAmp = new RegExp(/language\=\w[a-zA-Z_]*$/).test(url_test);
+                let completeLanguage = 'language=' + lang + (hasAmp ? '' : '&');
+                url_test = url_test.replace(/language\=\w[a-zA-Z_]*&?/, completeLanguage);
+                console.log(url_test);
+                window.location.href = url_test; // Review this
+            }else{
+                window.location.reload();
+            }
         }).catch(error => {
             console.error('Error changeUserLanguage', error);
             this.chagingLang = false;
