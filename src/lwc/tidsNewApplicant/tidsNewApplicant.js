@@ -208,10 +208,10 @@ export default class TidsNewApplicant extends NavigationMixin(LightningElement){
 			this.reportChanges();
 			// If the form has errors and it is on vetting mode loading
 			if (
+				this.vettingMode &&
 				savedInfo.errors !== undefined &&
 				savedInfo.errors &&
-				savedInfo.errors.length > 0 &&
-				this.vettingMode
+				savedInfo.errors.length > 0
 			){
 				let er = JSON.parse(JSON.stringify(savedInfo.errors));
 				er.forEach(el => {
@@ -373,6 +373,7 @@ export default class TidsNewApplicant extends NavigationMixin(LightningElement){
 		this.modalAction = "FIELD";
 		switch (field){
 			case "error-companylegalname-desc":
+				this.companyLegalNameError.show=true;
 				this.companyLegalNameError.description = event.target.value;
 				break;
 			default:
@@ -385,15 +386,15 @@ export default class TidsNewApplicant extends NavigationMixin(LightningElement){
 	 * Vetting duplicate account confirmation modal
 	*/
 	handleVettingAction(event){
-	 event.preventDefault();
-	 this.vettingAction = event.target.dataset.name;
-	 this.vettingOption = event.target.dataset.name;
-	
-	 let vettingPayload={
-		 action: "VETTING_DUPLICATE",
-		 type: this.applicationType
-	 }
-	 this.duplicateAccountValidation(vettingPayload); 
+		event.preventDefault();
+		this.vettingAction = event.target.dataset.name;
+		this.vettingOption = event.target.dataset.name;
+		
+		let vettingPayload={
+		action: "VETTING_DUPLICATE",
+		type: this.applicationType
+		}
+		this.duplicateAccountValidation(vettingPayload); 
 	}
 	
 	/**
@@ -506,6 +507,7 @@ export default class TidsNewApplicant extends NavigationMixin(LightningElement){
 	}
 
 	applicantToSave(){
+		this.applicantErrors();
 		let countrySelected = this.countries.find(
 			country => country.value === this.country
 		);
@@ -541,11 +543,7 @@ export default class TidsNewApplicant extends NavigationMixin(LightningElement){
 		if(this.companyLegalNameError.show && this.companyLegalNameError.description !== ""){
 			companyLegalNameValid = true;
 		}
-		if(companyLegalNameValid){
-			this.reportErrorButtonDisabled = false;
-		}else{
-			this.reportErrorButtonDisabled = true;
-		}
+		this.reportErrorButtonDisabled = !companyLegalNameValid;
 		return companyLegalNameValid;
 	}
 

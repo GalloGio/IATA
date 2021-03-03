@@ -1,5 +1,10 @@
 public with sharing class ISSP_WS_SIS_Callout_Common {
-	private static final Boolean IS_SANDBOX = [SELECT Id, IsSandbox FROM Organization LIMIT 1].IsSandbox;
+	private static final Boolean IS_SANDBOX{
+		get{
+			if(IS_SANDBOX == null) IS_SANDBOX = [SELECT Id, IsSandbox FROM Organization LIMIT 1].IsSandbox;
+			return IS_SANDBOX;
+		}
+	}
 
 	private static final String SIS_HOST_PROD;
 	private static final String SIS_USER_PROD;

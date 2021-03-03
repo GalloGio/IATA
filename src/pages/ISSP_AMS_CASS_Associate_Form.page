@@ -745,7 +745,7 @@
                                     <div class="contact-detail"><span style="font-weight:bold">{!$ObjectType.Contact.fields.Phone.Label}&nbsp;</span>{!agencycon.Phone__c}</div>
                                 	<div class="contact-detail"><span style="font-weight:bold">{!$ObjectType.Contact.fields.MobilePhone.Label}&nbsp;</span>{!agencycon.Mobile__c}</div>
                                   	<div class="contact-detail"><span style="font-weight:bold">{!$ObjectType.Contact.fields.FAX.Label}&nbsp;</span>{!agencycon.FAX__c}</div>
-                                   	<div class="contact-detail"><span style="font-weight:bold">{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_interest__c.Label} </span>{!TEXT(agencycon.Financial_interest__c)}</div>
+                                   	<div class="contact-detail"><span style="font-weight:bold">{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_interest__c.Label} </span>{!agencycon.Financial_Interest_Formated__c}</div>
                             	</div>
                             </apex:column>
                         </apex:pageBlockTable>
@@ -762,7 +762,7 @@
                             <apex:column headerValue="{!$ObjectType.Account.fields.Legal_name__c.Label}" value="{!agencycon.Name} {!IF(isocountry.Local_language_Agency_details_required__c,'('+agencycon.Company_Name_Local__c + ')','')}"/>
                             <apex:column value="{!agencycon.Registration_number__c}"/>
                             <apex:column value="{!agencycon.IATACode__c}"/>
-                            <apex:column value="{!agencycon.Financial_interest__c}"/>
+                            <apex:column value="{!agencycon.Financial_Interest_Formated__c}"/>
                              <apex:column >
                                 <apex:commandLink action="{!editAgencyContact}" styleClass="glyphicon glyphicon-pencil" oncomplete="showNewCompanyDialog();" rerender="companyList, newCompany">
                                     <apex:param value="{!agencycon.Id}" name="recordId" assignTo="{!editContactId}" />
@@ -784,7 +784,7 @@
                         <apex:pageBlockTable value="{!List_Ownership_Summary}" var="owner"  id="ownerList" styleClass="table-hover table table-condensed table-responsive">
                             <apex:column headerValue="{!$Label.ISSP_Owner}" value="{!owner.Name}"/>
                             <apex:column footerClass="tbFooter" footerValue="TOTAL" headerValue="{!$Label.LAQ_Type}" value="{!owner.RecordType.DeveloperName}"/>
-                            <apex:column footerValue="{!ROUND(Ownership_Total, 2)}%" value="{!owner.Financial_interest__c}"/>
+                            <apex:column value="{!owner.Financial_Interest_Formated__c}"/>
                      </apex:pageBlockTable>
                 </apex:pageBlockSection>
                 </div>

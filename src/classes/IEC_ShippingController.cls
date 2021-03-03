@@ -1398,6 +1398,9 @@ global without sharing class IEC_ShippingController extends IEC_PageController
 
 			//*** set control variables
 			currentShipToLocationId = sfOrder.ShipTo_Location__c;
+			sfOrder = IECOrder_Svc.getPenddingOrder(true);
+			vfOrder = new Order_DTO(sfOrder);
+			validateCountryCompliance();
 		}
 		else
 		{

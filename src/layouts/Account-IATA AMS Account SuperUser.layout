@@ -89,6 +89,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Old_IATA_Code__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Airline_Code__c</field>
             </layoutItems>
             <layoutItems>
@@ -853,6 +857,7 @@
         <relatedList>Case.Account_Concerned__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <customButtons>GSA_BSP_Participation</customButtons>
         <fields>Active__c</fields>
         <fields>Change_Code__c</fields>
         <fields>NAME</fields>

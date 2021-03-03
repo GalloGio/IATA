@@ -109,6 +109,14 @@
         <name>MITA_BIETA</name>
     </customApplications>
     <customApplications>
+        <label><!-- ONE Source --></label>
+        <name>ONE_Source</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- ONE Source --></label>
+        <name>ONE_Source_Console</name>
+    </customApplications>
+    <customApplications>
         <label><!-- PKB 2 --></label>
         <name>PKB_2</name>
     </customApplications>
@@ -1525,7 +1533,8 @@
         <name>ANG_RHC_RHCAmountTooltip</name>
     </customLabels>
     <customLabels>
-        <label>พิจารณาจากประวัติความเสี่ยงต่อเนื่องและผลของการตรวจสอบทางการเงินของตัวแทน</label>
+        <label>สถานะความเสี่ยงของคุณขึ้นอยู่กับผลของการประเมินทางการเงินครั้งล่าสุดและการประเมินประวัติความเสี่ยง
+สำหรับรายละเอียดเพิ่มเติมโปรดดูข้อมูลได้จาก Resolution  812 (ส่วนที่ 5.2 และ 5.3) ซึ่งสามารถเข้าถึงได้โดยค้นหาที่ &apos;Resolution 812&apos; ในพอร์ทัลลูกค้าของท่าน</label>
         <name>ANG_RHC_RiskStatusTooltip</name>
     </customLabels>
     <customLabels>
@@ -1681,6 +1690,10 @@
         <name>Airline_Daily_Sales_portal_service</name>
     </customLabels>
     <customLabels>
+        <label><!-- AirportAIS_Service_Description --></label>
+        <name>AirportAIS_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label>การแจ้งเตือนทั้งหมด</label>
         <name>All_Notifications_Notification</name>
     </customLabels>
@@ -1781,12 +1794,44 @@
         <name>BSPLink_Description</name>
     </customLabels>
     <customLabels>
+        <label><!-- BSP Participation Disable --></label>
+        <name>BSPParticipationDisable</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- BSP Participation Enable --></label>
+        <name>BSPParticipationEnable</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- BSP Participation Popup Alert --></label>
+        <name>BSPParticipationPopupAlert</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- BSP Participation Popup Alert Active GSA Only --></label>
+        <name>BSPParticipationPopupAlertActiveGSAOnly</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- BSP Participation Popup Title --></label>
+        <name>BSPParticipationPopupTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- BSP Participation User Access Error --></label>
+        <name>BSPParticipationUserAccess</name>
+    </customLabels>
+    <customLabels>
         <label><!-- BSP/CASS Ch Bank Service Description --></label>
         <name>BSP_CASS_Ch_Bank_Service_Description</name>
     </customLabels>
     <customLabels>
         <label><!-- BSP/CASS Ch Request Service Description --></label>
         <name>BSP_CASS_Ch_Request_Service_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- BSP Participation Button Disable --></label>
+        <name>BSP_Participation_Button_Disable</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- BSP Participation Button Enable --></label>
+        <name>BSP_Participation_Button_Enable</name>
     </customLabels>
     <customLabels>
         <label><!-- BSPlink Service Description --></label>
@@ -3314,6 +3359,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Email_Here</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Email Link button Image --></label>
+        <name>CSP_Email_Link_Button_Image</name>
+    </customLabels>
+    <customLabels>
         <label>เราได้รับคำขอของคุณเพื่อรีเซ็ตรหัสผ่านสำหรับพอร์ทัลสำหรับลูกค้าของ IATA</label>
         <name>CSP_Email_Password_Reset_Body_Part_1</name>
     </customLabels>
@@ -3550,7 +3599,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Forgot_Password_Success_Message</name>
     </customLabels>
     <customLabels>
-        <label>เนื่องจากคุณไม่ได้ลงชื่อเข้าใช้ใน 90 วันที่ผ่านมา เราจึงส่งอีเมลพร้อมรหัสผ่านใหม่ให้คุณ</label>
+        <label>ด้วยเหตุผลด้านความปลอดภัยเราได้ส่งอีเมลถึงคุณเพื่อตั้งรหัสผ่านใหม่</label>
         <name>CSP_Frozen_User_Message</name>
     </customLabels>
     <customLabels>
@@ -3568,6 +3617,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>มันคือ</label>
         <name>CSP_Give_Feedback_Type_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>ไปที่คำถามที่พบบ่อย</label>
+        <name>CSP_Go_to_FAQ</name>
+    </customLabels>
+    <customLabels>
+        <label>ไปที่ iata.org</label>
+        <name>CSP_Go_to_IataOrg</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Go to Webstar --></label>
@@ -4378,6 +4435,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_LogOut</name>
     </customLabels>
     <customLabels>
+        <label>เข้าสู่ระบบ</label>
+        <name>CSP_Login</name>
+    </customLabels>
+    <customLabels>
         <label>ลงชื่อเข้าใช้ทันที</label>
         <name>CSP_Login_Now</name>
     </customLabels>
@@ -4654,6 +4715,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Record_Deleted</name>
     </customLabels>
     <customLabels>
+        <label>การลงทะเบียน</label>
+        <name>CSP_Registration</name>
+    </customLabels>
+    <customLabels>
         <label>การลงทะเบียนเสร็จสมบูรณ์แล้ว</label>
         <name>CSP_Registration_Complete</name>
     </customLabels>
@@ -4902,6 +4967,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Service_AirlineDailySales_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_Service_SmartLite_NoAccess --></label>
+        <name>CSP_Service_SmartLite_NoAccess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_SmartLite_Title --></label>
+        <name>CSP_Service_SmartLite_Title</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Service_TIPReports_AmazonType --></label>
         <name>CSP_Service_TIPReports_AmazonType</name>
     </customLabels>
@@ -5034,12 +5107,20 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Share_CopiedToClipBoard</name>
     </customLabels>
     <customLabels>
+        <label>ลงชื่อ</label>
+        <name>CSP_Sign_Up</name>
+    </customLabels>
+    <customLabels>
         <label>ข้ามการดำเนินการในตอนนี้</label>
         <name>CSP_Skip</name>
     </customLabels>
     <customLabels>
         <label>สถานะ</label>
         <name>CSP_Status</name>
+    </customLabels>
+    <customLabels>
+        <label>เก็บ</label>
+        <name>CSP_Store</name>
     </customLabels>
     <customLabels>
         <label>กรุณาใส่หัวเรื่องสั้น ๆ</label>
@@ -5132,6 +5213,30 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>การแก้ไขปัญหา</label>
         <name>CSP_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label>คำอธิบายปัญหา:</label>
+        <name>CSP_TroubleshootingDesc</name>
+    </customLabels>
+    <customLabels>
+        <label>แบบฟอร์มการแก้ไขปัญหา</label>
+        <name>CSP_TroubleshootingForm</name>
+    </customLabels>
+    <customLabels>
+        <label>หากขั้นตอนข้างต้นไม่สามารถแก้ไขปัญหาได้ โปรดคลิกด้านล่างเพื่อติดต่อเรา:</label>
+        <name>CSP_TroubleshootingMSG</name>
+    </customLabels>
+    <customLabels>
+        <label>กรุณากรอกแบบฟอร์มแล้วเราจะติดต่อคุณเพื่อช่วยให้คุณเข้าถึงแพลตฟอร์มของเรา</label>
+        <name>CSP_TroubleshootingSbtitle</name>
+    </customLabels>
+    <customLabels>
+        <label>การแก้ไขปัญหาการเข้าสู่ระบบและการลงทะเบียน</label>
+        <name>CSP_TroubleshootingTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>ฉันต้องการความช่วยเหลือเกี่ยวกับ:</label>
+        <name>CSP_TroubleshootingType</name>
     </customLabels>
     <customLabels>
         <label>สำหรับความช่วยเหลือเพิ่มเติม กรุณาดูที่</label>
@@ -5476,6 +5581,26 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- Case Defect/Issue --></label>
         <name>Case_Defect_Issue</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_KPI_AirlineManagement --></label>
+        <name>Case_KPI_AirlineManagement</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_KPI_Long50d --></label>
+        <name>Case_KPI_Long50d</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_KPI_Medium20d --></label>
+        <name>Case_KPI_Medium20d</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_KPI_Risk --></label>
+        <name>Case_KPI_Risk</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_KPI_Short24 --></label>
+        <name>Case_KPI_Short24</name>
     </customLabels>
     <customLabels>
         <label><!-- Case Type --></label>
@@ -8252,6 +8377,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- Go to IATA corporate site --></label>
         <name>Go_to_IATA_corporate_site</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- GxA Link Label --></label>
+        <name>GxA_Link_Label</name>
     </customLabels>
     <customLabels>
         <label><!-- Handling --></label>
@@ -14558,6 +14687,10 @@ and
         <name>ISSP_AMS_LeftNav_Section8_Cargo</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_License_No_Company --></label>
+        <name>ISSP_AMS_License_No_Company</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_Link_Add_Office --></label>
         <name>ISSP_AMS_Link_Add_Office</name>
     </customLabels>
@@ -15090,6 +15223,10 @@ and
         <name>ISSP_AMS_NoC_Change_Bank_Details_message1</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_NoC_Change_Ownership_Legal_Status --></label>
+        <name>ISSP_AMS_NoC_Change_Ownership_Legal_Status</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_NoC_Change_Ownership_Shareholding --></label>
         <name>ISSP_AMS_NoC_Change_Ownership_Shareholding</name>
     </customLabels>
@@ -15140,6 +15277,10 @@ and
     <customLabels>
         <label>ยืนยันความถูกต้องของประเภทบริษัทและรายละเอียดความเป็นเจ้าของ</label>
         <name>ISSP_AMS_NoC_Confirm_Ownership_details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Confirm_Type_of_Entity --></label>
+        <name>ISSP_AMS_NoC_Confirm_Type_of_Entity</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_NoC_Confirm_details --></label>
@@ -15208,6 +15349,10 @@ and
     <customLabels>
         <label><!-- ISSP AMS NoC IATA Admin --></label>
         <name>ISSP_AMS_NoC_IATA_Admin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS NoC IATA Admin Company --></label>
+        <name>ISSP_AMS_NoC_IATA_Admin_Company</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS NoC IATA Only --></label>
@@ -15518,6 +15663,10 @@ and
         <name>ISSP_AMS_NoC_error_message1</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_NoC_error_message1_company --></label>
+        <name>ISSP_AMS_NoC_error_message1_Company</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_NoC_error_message2 --></label>
         <name>ISSP_AMS_NoC_error_message2</name>
     </customLabels>
@@ -15526,12 +15675,20 @@ and
         <name>ISSP_AMS_NoC_error_message2_CNS</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_NoC_error_message2_company --></label>
+        <name>ISSP_AMS_NoC_error_message2_company</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_NoC_error_message3 --></label>
         <name>ISSP_AMS_NoC_error_message3</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_NoC_error_message3_CNS --></label>
         <name>ISSP_AMS_NoC_error_message3_CNS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_error_message3_company --></label>
+        <name>ISSP_AMS_NoC_error_message3_company</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_NoC_error_message4 --></label>
@@ -16122,6 +16279,10 @@ and
         <name>ISSP_AMS_Step0_Minor_Changes</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Step0 Minor Changes --></label>
+        <name>ISSP_AMS_Step0_Minor_Changes_Company</name>
+    </customLabels>
+    <customLabels>
         <label>สมัครสมาชิกใหม่</label>
         <name>ISSP_AMS_Step0_New_Application</name>
     </customLabels>
@@ -16144,6 +16305,10 @@ and
     <customLabels>
         <label>สำหรับเปลี่ยนแปลงสถานที่ตั้ง ชื่อที่เป็นทางการตามกฏหมาย สถานะที่เป็นทางการตามกฏหมายหรือ &lt;br/&gt;การเป็นเจ้าของ/การถือหุ้น</label>
         <name>ISSP_AMS_Step0_Other_Changes_Msg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Step0 Other Changes Msg PostalOperator --></label>
+        <name>ISSP_AMS_Step0_Other_Changes_Msg_PostalOperator</name>
     </customLabels>
     <customLabels>
         <label>แบบฟอร์มอื่นๆที่อาจเป็นประโยชน์</label>
@@ -17146,6 +17311,10 @@ and
         <name>ISSP_AMS_eBulletin_Clear_All</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_CompanyChanges --></label>
+        <name>ISSP_AMS_eBulletin_CompanyChanges</name>
+    </customLabels>
+    <customLabels>
         <label>ประเทศ</label>
         <name>ISSP_AMS_eBulletin_Countries</name>
     </customLabels>
@@ -17926,6 +18095,10 @@ and
         <name>ISSP_ANG_Step0_Other_Changes_Msg_NamPaxAgent</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Step0 Other Changes Msg for Nam Pax Agents PostalOperator --></label>
+        <name>ISSP_ANG_Step0_Other_Changes_Msg_NamPaxAgent_PostalOperator</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP ANG Step0 Other Changes Msg RevCaseOpen --></label>
         <name>ISSP_ANG_Step0_Other_Changes_Msg_RevCaseOpen</name>
     </customLabels>
@@ -18012,6 +18185,10 @@ and
     <customLabels>
         <label><!-- ISSP_AN_Step1_AE_Full_Address --></label>
         <name>ISSP_AN_Step1_AE_Full_Address</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Authorization_Form_Description --></label>
+        <name>ISSP_AP_Authorization_Form_Description</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AP_Bank_Details_Change --></label>
@@ -21090,12 +21267,28 @@ Nếu bạn tiếp tục gặp vấn đề khi đăng ký trên Cổng thông ti
         <name>ISSP_PASS_Airline_Checklist</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_PASS_Authorized_Signatories_Header_Text --></label>
+        <name>ISSP_PASS_Authorized_Signatories_Header_Text</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP PASS BankMandate --></label>
         <name>ISSP_PASS_BankMandate</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_PASS_BankMandate_Changes_Description --></label>
+        <name>ISSP_PASS_BankMandate_Changes_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_PASS_BankMandate_Not_Required --></label>
+        <name>ISSP_PASS_BankMandate_Not_Required</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_PASS_Checklist --></label>
         <name>ISSP_PASS_Checklist</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_PASS_Click_Here --></label>
+        <name>ISSP_PASS_Click_Here</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_PASS_Download_Documents --></label>
@@ -22700,6 +22893,10 @@ GSA - ตัวอักษร 3 ตัว
         <name>ISSP_Submitted</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Supporting_Documents --></label>
+        <name>ISSP_Supporting_Documents</name>
+    </customLabels>
+    <customLabels>
         <label>คุณแน่ใจหรือว่าคุณต้องการที่จะดำเนินการต่อ?</label>
         <name>ISSP_SureToContinue</name>
     </customLabels>
@@ -23497,6 +23694,14 @@ GSA - ตัวอักษร 3 ตัว
     <customLabels>
         <label><!-- KALE_SUPPORT_EMAIL --></label>
         <name>KALE_SUPPORT_EMAIL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Key Customer alert message --></label>
+        <name>KEY_CUSTOMER_ALERT</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Key Customer alert title --></label>
+        <name>KEY_CUSTOMER_ALERT_TITLE</name>
     </customLabels>
     <customLabels>
         <label><!-- KPI1RT --></label>
@@ -26151,6 +26356,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>SIS_Operations</name>
     </customLabels>
     <customLabels>
+        <label><!-- SMART_Lite_Service_Description --></label>
+        <name>SMART_Lite_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- SSP AMS Step5 ReviewBeforeSubmit CNS --></label>
         <name>SSP_AMS_Step5_ReviewBeforeSubmit_CNS</name>
     </customLabels>
@@ -26625,6 +26834,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label>อัปโหลดเอกสารทางการเงิน</label>
         <name>Upload_Financial_Documents</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Upload GxA --></label>
+        <name>Upload_GxA</name>
     </customLabels>
     <customLabels>
         <label>{0} ได้ขอการเข้าถึงพอร์ทัล</label>
@@ -27985,6 +28198,1854 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- doubleHash --></label>
         <name>doubleHash</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg IATA Validation Programs --></label>
+        <name>icg_IATA_Validation_Programs</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg_Service_Description --></label>
+        <name>icg_Service_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg about IATA --></label>
+        <name>icg_about_IATA</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg about IATA text1 --></label>
+        <name>icg_about_IATA_text1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg accept --></label>
+        <name>icg_accept</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg account bussiness address info --></label>
+        <name>icg_account_bussiness_address_info</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg account create take several days --></label>
+        <name>icg_account_create_take_several_days</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg account creation --></label>
+        <name>icg_account_creation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg account details --></label>
+        <name>icg_account_details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg account information --></label>
+        <name>icg_account_information</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg account name --></label>
+        <name>icg_account_name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IATA Accredited Agent --></label>
+        <name>icg_accredited_agent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IATA Member Airline --></label>
+        <name>icg_accredited_airline</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg action --></label>
+        <name>icg_action</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg activate --></label>
+        <name>icg_activate</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg add --></label>
+        <name>icg_add</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg add additional filters --></label>
+        <name>icg_add_additional_criteria</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg add station manager --></label>
+        <name>icg_add_station_manager</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg add the second location --></label>
+        <name>icg_add_the_second_location</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg address --></label>
+        <name>icg_address</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg address information --></label>
+        <name>icg_address_information</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg advanced search --></label>
+        <name>icg_advanced_search</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg air cargo and ecommerce --></label>
+        <name>icg_air_cargo_and_ecommerce</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg air cargo and ecommerce	text1 --></label>
+        <name>icg_air_cargo_and_ecommerce_text1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg airline --></label>
+        <name>icg_airline</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg_airmail --></label>
+        <name>icg_airmail</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg airport operator --></label>
+        <name>icg_airport_operator</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg alerts and events --></label>
+        <name>icg_alerts_and_events</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg all --></label>
+        <name>icg_all</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg all results --></label>
+        <name>icg_all_results</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg all rights reserved --></label>
+        <name>icg_all_rights_reserved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg all stations --></label>
+        <name>icg_all_stations</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg already applied filter --></label>
+        <name>icg_already_applied_filter</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg already company admin --></label>
+        <name>icg_already_company_admin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg already open remote validations --></label>
+        <name>icg_already_open_remote_validations</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg already request --></label>
+        <name>icg_already_request</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg already requested remote validations --></label>
+        <name>icg_already_requested_remote_validations</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg apply --></label>
+        <name>icg_apply</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg approve --></label>
+        <name>icg_approve</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg approved by --></label>
+        <name>icg_approved_by</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg are you looking for specific --></label>
+        <name>icg_are_you_looking_for_specific</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg are you sure --></label>
+        <name>icg_are_you_sure</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg are you sure delete certification --></label>
+        <name>icg_are_you_sure_delete_certification</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg are you sure delete station manager --></label>
+        <name>icg_are_you_sure_delete_station_manager</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg are you sure you want --></label>
+        <name>icg_are_you_sure_you_want</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg are your sure you want replace current certification --></label>
+        <name>icg_are_your_sure_you_want_replace_current_certification</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg audits requested --></label>
+        <name>icg_audits_requested</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg_available_rv_recordtypes --></label>
+        <name>icg_available_rv_recordtypes</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg back --></label>
+        <name>icg_back</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg back to results --></label>
+        <name>icg_back_to_results</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg become company admin --></label>
+        <name>icg_become_company_admin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg become company admin titile --></label>
+        <name>icg_become_company_admin_titile</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg become station manager --></label>
+        <name>icg_become_station_manager</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg beta --></label>
+        <name>icg_beta</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg_booked --></label>
+        <name>icg_booked</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg btn add location --></label>
+        <name>icg_btn_add_location</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg btn go to station profile --></label>
+        <name>icg_btn_go_to_station_profile</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg btn learn more --></label>
+        <name>icg_btn_learn_more</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg btn more info --></label>
+        <name>icg_btn_more_info</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg_btn_pre_register_now --></label>
+        <name>icg_btn_pre_register_now</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg btn register now --></label>
+        <name>icg_btn_register_now</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg btn show certified entities --></label>
+        <name>icg_btn_show_certified_entities</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg cancel --></label>
+        <name>icg_cancel</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg cancel edit --></label>
+        <name>icg_cancel_edit</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg_capab_magmnt --></label>
+        <name>icg_capab_magmnt</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg_capab_magmnt_certify --></label>
+        <name>icg_capab_magmnt_certify</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg_capab_magmnt_disable --></label>
+        <name>icg_capab_magmnt_disable</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg_capab_magmnt_edit --></label>
+        <name>icg_capab_magmnt_edit</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg_capab_magmnt_edit_capab --></label>
+        <name>icg_capab_magmnt_edit_capab</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg_capab_magmnt_enable --></label>
+        <name>icg_capab_magmnt_enable</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg_capab_magmnt_mantain_prev --></label>
+        <name>icg_capab_magmnt_mantain_prev</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg_capab_message_to_show --></label>
+        <name>icg_capab_message_to_show</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg capability management --></label>
+        <name>icg_capability_management</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg capability validated by --></label>
+        <name>icg_capability_validated_by</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg cargo commodities --></label>
+        <name>icg_cargo_commodities</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg cargo handling facility --></label>
+        <name>icg_cargo_handling_facility</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg cargo handling id for demo --></label>
+        <name>icg_cargo_handling_id</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- text for confirmation --></label>
+        <name>icg_carousel_info_delete</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- text for information --></label>
+        <name>icg_carousel_info_external_image</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg category --></label>
+        <name>icg_category</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg certification --></label>
+        <name>icg_certification</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg certification deleted --></label>
+        <name>icg_certification_deleted</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg certification id --></label>
+        <name>icg_certification_id</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg certification of excellence --></label>
+        <name>icg_certification_of_excellence</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg certification of excellence description --></label>
+        <name>icg_certification_of_excellence_description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg certification renewed --></label>
+        <name>icg_certification_renewed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg certification search --></label>
+        <name>icg_certification_search</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg certifications of compliance --></label>
+        <name>icg_certifications_of_compliance</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg certifications of compliance description --></label>
+        <name>icg_certifications_of_compliance_description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg change --></label>
+        <name>icg_change</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg change to critical station information --></label>
+        <name>icg_change_to_critical_station_information</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg check before creating station profile --></label>
+        <name>icg_check_before_creating_station_profile</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg check existing facilities --></label>
+        <name>icg_check_existing_facilities</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg check existing stations --></label>
+        <name>icg_check_existing_stations</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg city --></label>
+        <name>icg_city</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg click here --></label>
+        <name>icg_click_here</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg close --></label>
+        <name>icg_close</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg closed --></label>
+        <name>icg_closed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CNS Endorsed Agent --></label>
+        <name>icg_cns_endorsed_agent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg comming soon --></label>
+        <name>icg_comming_soon</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg commodity --></label>
+        <name>icg_commodity</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg company admin --></label>
+        <name>icg_company_admin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg company admins --></label>
+        <name>icg_company_admins</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg company logo --></label>
+        <name>icg_company_logo</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg company name --></label>
+        <name>icg_company_name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg company name search --></label>
+        <name>icg_company_name_search</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg compare --></label>
+        <name>icg_compare</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg condensed list --></label>
+        <name>icg_condensed_list</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg_confirmation_text --></label>
+        <name>icg_confirmation_text</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg consulting url --></label>
+        <name>icg_consulting_url</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg contact email --></label>
+        <name>icg_contact_email</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg contact name --></label>
+        <name>icg_contact_name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg contact phone --></label>
+        <name>icg_contact_phone</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg contact us --></label>
+        <name>icg_contact_us</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg continue --></label>
+        <name>icg_continue</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg could not be approved --></label>
+        <name>icg_could_not_be_approved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg country --></label>
+        <name>icg_country</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg create a new one --></label>
+        <name>icg_create_a_new_one</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg create certification --></label>
+        <name>icg_create_certification</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg create new profile for address --></label>
+        <name>icg_create_new_profile_for_address</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg create new station --></label>
+        <name>icg_create_new_station</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg create station in new address --></label>
+        <name>icg_create_station_in_new_address</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg creating --></label>
+        <name>icg_creating</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg creating station new address required new account --></label>
+        <name>icg_creating_station_new_address_required_new_account</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg customer email --></label>
+        <name>icg_customer_email</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg customer service phone --></label>
+        <name>icg_customer_service_phone</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg customer website --></label>
+        <name>icg_customer_website</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg_dangerousGoods --></label>
+        <name>icg_dangerousGoods</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- You don´t have permission --></label>
+        <name>icg_data_submission_no_access</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg date --></label>
+        <name>icg_date</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg date requested --></label>
+        <name>icg_date_requested</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg detail --></label>
+        <name>icg_detail</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg detail no display public --></label>
+        <name>icg_detail_no_display_public</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg detailed list --></label>
+        <name>icg_detailed_list</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg direct ramp access --></label>
+        <name>icg_direct_ramp_access</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg display in public site --></label>
+        <name>icg_display_in_public_site</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg display publicly --></label>
+        <name>icg_display_publicly</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg display title in public site --></label>
+        <name>icg_display_table_in_public_site</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg do you have booking platform --></label>
+        <name>icg_do_you_have_booking_platform</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg do you manage a Cargo Station --></label>
+        <name>icg_do_you_manage_a_Cargo_Station</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg do you manage a Cargo Station text1 --></label>
+        <name>icg_do_you_manage_a_Cargo_Station_text1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg do you want to request manager rights --></label>
+        <name>icg_do_you_want_to_request_manager_rights</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg do you want to transport a specific --></label>
+        <name>icg_do_you_want_to_transport_a_specific</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Title for documents section --></label>
+        <name>icg_documents</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg dolly truck --></label>
+        <name>icg_dolly_truck</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg ecommerce video --></label>
+        <name>icg_ecommerce_video</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg edit capabilities certification --></label>
+        <name>icg_edit_capabilities_certification</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg email --></label>
+        <name>icg_email</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg employees --></label>
+        <name>icg_employees</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg enter station name --></label>
+        <name>icg_enter_station_name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg entire section no display public --></label>
+        <name>icg_entire_section_no_display_public</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg_error_message --></label>
+        <name>icg_error_message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg error reading certification id to assign --></label>
+        <name>icg_error_reading_certification_id_to_assign</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg error reading certification without capabilities --></label>
+        <name>icg_error_reading_certification_without_capabilities</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg error update facility --></label>
+        <name>icg_error_update_facility</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg error updating record --></label>
+        <name>icg_error_updating_record</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg existing stations --></label>
+        <name>icg_existing_stations</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg expand collapse --></label>
+        <name>icg_expand_collapse</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg expiration date --></label>
+        <name>icg_expiration_date</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg expired --></label>
+        <name>icg_expired</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg expiring remote validations --></label>
+        <name>icg_expiring_remote_validations</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg expiring validations --></label>
+        <name>icg_expiring_validations</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg export to excel --></label>
+        <name>icg_export_to_excel</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg facility invalid info --></label>
+        <name>icg_facility_invalid_info</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg facility management --></label>
+        <name>icg_facility_management</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg file name --></label>
+        <name>icg_file_name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg find info on IATA ONE Source --></label>
+        <name>icg_find_info_on_IATA_ONE_Source</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg find your aviation business partner --></label>
+        <name>icg_find_your_aviation_business_partner</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg firstname --></label>
+        <name>icg_firstname</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg fleet --></label>
+        <name>icg_fleet</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg for the selected account --></label>
+        <name>icg_for_the_selected_account</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg freight forwarder --></label>
+        <name>icg_freight_forwarder</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg from --></label>
+        <name>icg_from</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg gallery --></label>
+        <name>icg_gallery</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg_generalCargo --></label>
+        <name>icg_generalCargo</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg go to public area --></label>
+        <name>icg_go_to_public_area</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg grid empty message --></label>
+        <name>icg_gridEmptyMessage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg has been approved --></label>
+        <name>icg_has_been_approved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg_header_capab_management --></label>
+        <name>icg_header_capab_management</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg_header_delete_photo --></label>
+        <name>icg_header_delete_photo</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg_header_remove_certi --></label>
+        <name>icg_header_remove_certi</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg history --></label>
+        <name>icg_history</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg home --></label>
+        <name>icg_home</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg https default value --></label>
+        <name>icg_https_default_value</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg hybrid view --></label>
+        <name>icg_hybrid_view</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg IATA base url --></label>
+        <name>icg_iata_base_url</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg id --></label>
+        <name>icg_id</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg if address no list create new one --></label>
+        <name>icg_if_address_no_list_create_new_one</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg if facility no list --></label>
+        <name>icg_if_facility_no_list</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg in --></label>
+        <name>icg_in</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg in progress --></label>
+        <name>icg_in_progress</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg in validation --></label>
+        <name>icg_in_validation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg information not verified --></label>
+        <name>icg_information_not_verified</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg information validated by --></label>
+        <name>icg_information_validated_by</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg invalid email --></label>
+        <name>icg_invalid_email</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg issue date --></label>
+        <name>icg_issue_date</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg issued date --></label>
+        <name>icg_issued_date</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg issuing date --></label>
+        <name>icg_issuing_date</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg join now --></label>
+        <name>icg_join_now</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg join now pop-up ok button --></label>
+        <name>icg_join_now_popup_have_account</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg join now pop-up message --></label>
+        <name>icg_join_now_popup_message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg join now popup message01 --></label>
+        <name>icg_join_now_popup_message01</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg join now popup message02 --></label>
+        <name>icg_join_now_popup_message02</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg join now pop-up message --></label>
+        <name>icg_join_now_popup_message11</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg join now pop-up message --></label>
+        <name>icg_join_now_popup_message12</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg join now pop-up message --></label>
+        <name>icg_join_now_popup_message21</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg join now pop-up message --></label>
+        <name>icg_join_now_popup_message22</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg join now pop-up message --></label>
+        <name>icg_join_now_popup_message31</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg join now pop-up message --></label>
+        <name>icg_join_now_popup_message32</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg join now popup message41 --></label>
+        <name>icg_join_now_popup_message41</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg join now popup message42 --></label>
+        <name>icg_join_now_popup_message42</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg join now popup message51 --></label>
+        <name>icg_join_now_popup_message51</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg join now popup message52 --></label>
+        <name>icg_join_now_popup_message52</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg join now pop-up ok button --></label>
+        <name>icg_join_now_popup_ok_button</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg join now title --></label>
+        <name>icg_join_now_title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg languages spoken --></label>
+        <name>icg_languages_spoken</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg lastname --></label>
+        <name>icg_lastname</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg latest --></label>
+        <name>icg_latest</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg latest news --></label>
+        <name>icg_latest_news</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg latest validation updates --></label>
+        <name>icg_latest_validation_updates</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg legal name --></label>
+        <name>icg_legal_name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg limit filters reached --></label>
+        <name>icg_limit_filters_reached</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg link --></label>
+        <name>icg_link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg list airlines handled --></label>
+        <name>icg_list_airlines_handled</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg_liveAnimals --></label>
+        <name>icg_liveAnimals</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg location search --></label>
+        <name>icg_location_search</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg login --></label>
+        <name>icg_login</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg main one source --></label>
+        <name>icg_main_one_source</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg manage documents --></label>
+        <name>icg_manage_documents</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg manage photos --></label>
+        <name>icg_manage_photos</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg manage remote validations --></label>
+        <name>icg_manage_remote_validations</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg manage user permission --></label>
+        <name>icg_manage_user_permission</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg manager user permission --></label>
+        <name>icg_manager_user_permission</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg members airlines --></label>
+        <name>icg_members_airlines</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg members airlines2 --></label>
+        <name>icg_members_airlines2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg members airlines modal --></label>
+        <name>icg_members_airlines_modal</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg members airlines modal2 --></label>
+        <name>icg_members_airlines_modal2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg members airlines modal3 --></label>
+        <name>icg_members_airlines_modal3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg menu about IATA --></label>
+        <name>icg_menu_about_IATA</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg menu about one source --></label>
+        <name>icg_menu_about_one_source</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg menu home --></label>
+        <name>icg_menu_home</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg menu latest news --></label>
+        <name>icg_menu_latest_news</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg menu remote validations --></label>
+        <name>icg_menu_remote_validations</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg menu validation programs --></label>
+        <name>icg_menu_validation_programs</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg my facilities --></label>
+        <name>icg_my_facilities</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg my requests --></label>
+        <name>icg_my_requests</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg my stations --></label>
+        <name>icg_my_stations</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg my validated facilities --></label>
+        <name>icg_my_validated_facilities</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg my validated stations --></label>
+        <name>icg_my_validated_stations</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg name --></label>
+        <name>icg_name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg nearest airport --></label>
+        <name>icg_nearest_airport</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg nearest airport description --></label>
+        <name>icg_nearest_airport_description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg need to be company admin to approve --></label>
+        <name>icg_need_to_be_company_admin_to_approve</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg new account creation --></label>
+        <name>icg_new_account_creation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg new company admin requests --></label>
+        <name>icg_new_company_admin_requests</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg new notification --></label>
+        <name>icg_new_notification</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg new station account address --></label>
+        <name>icg_new_station_account_address</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg new station account address hint --></label>
+        <name>icg_new_station_account_address_hint</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg new station account address internal --></label>
+        <name>icg_new_station_account_address_internal</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg new station manager requests --></label>
+        <name>icg_new_station_manager_requests</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg new station name --></label>
+        <name>icg_new_station_name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg new station profiles --></label>
+        <name>icg_new_station_profiles</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg news --></label>
+        <name>icg_news</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg news alerts of --></label>
+        <name>icg_news_alerts_of</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg next --></label>
+        <name>icg_next</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg next step address inf --></label>
+        <name>icg_next_step_address_inf</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg no --></label>
+        <name>icg_no</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg no account in this country --></label>
+        <name>icg_no_account_in_this_country</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg no account role found msg --></label>
+        <name>icg_no_account_role_found_msg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg no conflict to handle --></label>
+        <name>icg_no_conflict_to_handle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg no images profile --></label>
+        <name>icg_no_images_profile</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg no remote validation product found --></label>
+        <name>icg_no_remote_validation_product_found</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg no results review filters --></label>
+        <name>icg_no_results_review_filters</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg notification collapse all --></label>
+        <name>icg_notification_collapse_all</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg notification dismiss --></label>
+        <name>icg_notification_dismiss</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg notification dismiss all --></label>
+        <name>icg_notification_dismiss_all</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg notification view all --></label>
+        <name>icg_notification_view_all</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg notifications --></label>
+        <name>icg_notifications</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg now pending for IATA Approval --></label>
+        <name>icg_now_pending_for_IATA_Approval</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg number of accounts --></label>
+        <name>icg_number_of_accounts</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg number of employees --></label>
+        <name>icg_number_of_employees</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg number of facilities at station --></label>
+        <name>icg_number_of_facilities_at_station</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg of your company --></label>
+        <name>icg_of_your_company</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg ok --></label>
+        <name>icg_ok</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg on airport --></label>
+        <name>icg_on_airport</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg one process at time msg --></label>
+        <name>icg_one_process_at_time_msg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg online booking --></label>
+        <name>icg_online_booking</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg online platform --></label>
+        <name>icg_online_platform</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg open remote validations --></label>
+        <name>icg_open_remote_validations</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg operating airlines --></label>
+        <name>icg_operating_airlines</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg operating cargo handling facilities --></label>
+        <name>icg_operating_cargo_handling_facilities</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg operating ramp handler --></label>
+        <name>icg_operating_ramp_handler</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg operational hierarchy --></label>
+        <name>icg_operational_hierarchy</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg or --></label>
+        <name>icg_or</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg or create a new hierarchy --></label>
+        <name>icg_or_create_a_new_hierarchy</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg order to create new phyisical address --></label>
+        <name>icg_order_to_create_new_phyisical_address</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg overall airport size --></label>
+        <name>icg_overall_aiport_size</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg overall airport size --></label>
+        <name>icg_overall_airport_size</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg overall facility size --></label>
+        <name>icg_overall_facility_size</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg overview --></label>
+        <name>icg_overview</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg pending approvals --></label>
+        <name>icg_pending_approvals</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg pending company admins --></label>
+        <name>icg_pending_company_admins</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg pending station approvals --></label>
+        <name>icg_pending_station_approvals</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg pending user approvals --></label>
+        <name>icg_pending_user_approvals</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg_perishables --></label>
+        <name>icg_perishables</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg_pharmaceuticals --></label>
+        <name>icg_pharmaceuticals</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg phone --></label>
+        <name>icg_phone</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg photo --></label>
+        <name>icg_photo</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg photos --></label>
+        <name>icg_photos</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg grid pilot information --></label>
+        <name>icg_pilotInformation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg pleae select country --></label>
+        <name>icg_pleae_select_country</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg please contact iata --></label>
+        <name>icg_please_contact_iata</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg please fill account bussiness addess --></label>
+        <name>icg_please_fill_account_bussiness_addess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg please rotate device --></label>
+        <name>icg_please_rotate_device</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg pre-register --></label>
+        <name>icg_pre_register</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg preferable audit date --></label>
+        <name>icg_preferable_audit_date</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg prev --></label>
+        <name>icg_prev</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg private area --></label>
+        <name>icg_private_area</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg proceed to account creation --></label>
+        <name>icg_proceed_to_account_creation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg process finished --></label>
+        <name>icg_process_finished</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg public area --></label>
+        <name>icg_public_area</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg publications url --></label>
+        <name>icg_publications_url</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg purchase remote valdation --></label>
+        <name>icg_purchase_remote_valdation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg ramp handler --></label>
+        <name>icg_ramp_handler</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg received --></label>
+        <name>icg_received</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg record activated --></label>
+        <name>icg_record_activated</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg record updated --></label>
+        <name>icg_record_updated</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg register --></label>
+        <name>icg_register</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg registration automatically approved --></label>
+        <name>icg_registration_auto_approved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg registration request submitted --></label>
+        <name>icg_registration_request_submitted1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg registration request submitted --></label>
+        <name>icg_registration_request_submitted2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg registration url --></label>
+        <name>icg_registration_url</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg reject --></label>
+        <name>icg_reject</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg remote validation history --></label>
+        <name>icg_remote_validation_history</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg remote validations --></label>
+        <name>icg_remote_validations</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg remove --></label>
+        <name>icg_remove</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg remove all --></label>
+        <name>icg_remove_all</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg remove certification --></label>
+        <name>icg_remove_certification</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg remove location --></label>
+        <name>icg_remove_location</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg remove logo --></label>
+        <name>icg_remove_logo</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg renew --></label>
+        <name>icg_renew</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg renew certification --></label>
+        <name>icg_renew_certification</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg request --></label>
+        <name>icg_request</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg request by --></label>
+        <name>icg_request_by</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg request date --></label>
+        <name>icg_request_date</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg request remote valdation --></label>
+        <name>icg_request_remote_valdation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg_reset_capabilities_button --></label>
+        <name>icg_reset_capabilities_button</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg resultpage banner button --></label>
+        <name>icg_resultpage_banner_button</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg resultpage banner text --></label>
+        <name>icg_resultpage_banner_text</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg_resultpage_register_company --></label>
+        <name>icg_resultpage_register_company</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg_resultpage_register_company2 --></label>
+        <name>icg_resultpage_register_company2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg road feeder services --></label>
+        <name>icg_road_feeder_services</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg room --></label>
+        <name>icg_room</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg save --></label>
+        <name>icg_save</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg schedule audits --></label>
+        <name>icg_schedule_audits</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg scope --></label>
+        <name>icg_scope</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg search --></label>
+        <name>icg_search</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg search assistant --></label>
+        <name>icg_search_assistant</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg search by --></label>
+        <name>icg_search_by</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg search by certification --></label>
+        <name>icg_search_by_certification</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg search by company name --></label>
+        <name>icg_search_by_company_name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg search by location --></label>
+        <name>icg_search_by_location</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg search in the list --></label>
+        <name>icg_search_in_the_list</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg second address --></label>
+        <name>icg_second_address</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg sector --></label>
+        <name>icg_sector</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg see listed companies --></label>
+        <name>icg_see_listed_companies</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg see more --></label>
+        <name>icg_see_more</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg see results --></label>
+        <name>icg_see_results</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg select --></label>
+        <name>icg_select</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg select all --></label>
+        <name>icg_select_all</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg select an existing hierarchy --></label>
+        <name>icg_select_an_existing_hierarchy</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg select certification --></label>
+        <name>icg_select_certification</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg select new station type --></label>
+        <name>icg_select_new_station_type</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg select scope --></label>
+        <name>icg_select_scope</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg select station --></label>
+        <name>icg_select_station</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg select station to display --></label>
+        <name>icg_select_station_to_display</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg select your station service --></label>
+        <name>icg_select_your_station_service</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg selected --></label>
+        <name>icg_selected</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg service home1 --></label>
+        <name>icg_service_home1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg service home2 --></label>
+        <name>icg_service_home2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg service home3 --></label>
+        <name>icg_service_home3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg service home4 --></label>
+        <name>icg_service_home4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg shipper --></label>
+        <name>icg_shipper</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg show all --></label>
+        <name>icg_show_all</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg show selected --></label>
+        <name>icg_show_selected</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg smart facility remote validation --></label>
+        <name>icg_smart_facility_remote_validation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg smart facility remote validation text1 --></label>
+        <name>icg_smart_facility_remote_validation_text1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg smart facility remote validation text2 --></label>
+        <name>icg_smart_facility_remote_validation_text2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg smart facility remote validation text3 --></label>
+        <name>icg_smart_facility_remote_validation_text3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg smart facility url --></label>
+        <name>icg_smart_facility_url</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg something went wrong --></label>
+        <name>icg_something_went_wrong</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg something went wrong contact iata --></label>
+        <name>icg_something_went_wrong_contact_iata</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg something went wrong email --></label>
+        <name>icg_something_went_wrong_emails</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg state province --></label>
+        <name>icg_state_province</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg station --></label>
+        <name>icg_station</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg station creation --></label>
+        <name>icg_station_creation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg station details --></label>
+        <name>icg_station_details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg station has been created --></label>
+        <name>icg_station_has_been_created</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg station information --></label>
+        <name>icg_station_information</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg station location --></label>
+        <name>icg_station_location</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg station manager --></label>
+        <name>icg_station_manager</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg station manager request sent --></label>
+        <name>icg_station_manager_request_sent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg station name --></label>
+        <name>icg_station_name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg station name and address --></label>
+        <name>icg_station_name_and_address</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg station name and type already exists --></label>
+        <name>icg_station_name_and_type_already_exists</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg station overview --></label>
+        <name>icg_station_overview</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg station to compare --></label>
+        <name>icg_station_to_compare</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg station type --></label>
+        <name>icg_station_type</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg station type already exists --></label>
+        <name>icg_station_type_already_exists</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg station types --></label>
+        <name>icg_station_types</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg stations --></label>
+        <name>icg_stations</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg status --></label>
+        <name>icg_status</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg sticker id --></label>
+        <name>icg_sticker_id</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg strategic partners --></label>
+        <name>icg_strategic_partners</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg strategic partners2 --></label>
+        <name>icg_strategic_partners2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg strategic partners modal --></label>
+        <name>icg_strategic_partners_modal</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg strategic partners modal 2 --></label>
+        <name>icg_strategic_partners_modal2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg street name --></label>
+        <name>icg_street_name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg submit --></label>
+        <name>icg_submit</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg success --></label>
+        <name>icg_success</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg successful save facility --></label>
+        <name>icg_successful_save_facility</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg summary --></label>
+        <name>icg_summary</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg summary capabilities --></label>
+        <name>icg_summary_capabilities</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg summary no display public --></label>
+        <name>icg_summary_no_display_public</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg supported languages --></label>
+        <name>icg_supported_languages</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg temperature range --></label>
+        <name>icg_temperature_range</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg thank you iata contact --></label>
+        <name>icg_thank_you_iata_contact</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg the station --></label>
+        <name>icg_the_station</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg there are not existing station managers --></label>
+        <name>icg_there_are_not_existing_station_managers</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg they approve --></label>
+        <name>icg_they_approve</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg title --></label>
+        <name>icg_title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg to --></label>
+        <name>icg_to</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg total facility space --></label>
+        <name>icg_total_facility_space</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg trade name --></label>
+        <name>icg_trade_name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg training url --></label>
+        <name>icg_training_url</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg trucker --></label>
+        <name>icg_trucker</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg trucks --></label>
+        <name>icg_trucks</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg type location --></label>
+        <name>icg_type_location</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg type search --></label>
+        <name>icg_type_search</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg unselected all --></label>
+        <name>icg_unselected_all</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg upload image --></label>
+        <name>icg_upload_image</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg user guide pdf link --></label>
+        <name>icg_user_guide_pdf_link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg validation history --></label>
+        <name>icg_validation_history</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg validation management --></label>
+        <name>icg_validation_management</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg watch video --></label>
+        <name>icg_watch_video</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg wcs url --></label>
+        <name>icg_wcs_url</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg we found existing stations --></label>
+        <name>icg_we_found_existing_stations</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg website --></label>
+        <name>icg_website</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg welcome back --></label>
+        <name>icg_welcome_back</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg what_is_the_IATA_One_Source --></label>
+        <name>icg_what_is_the_IATA_One_Source</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg what is the IATA One Source text1 --></label>
+        <name>icg_what_is_the_IATA_One_Source_text1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg what is the IATA One Source text2 --></label>
+        <name>icg_what_is_the_IATA_One_Source_text2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg what is the IATA One Source videoUrl --></label>
+        <name>icg_what_is_the_IATA_One_Source_videoUrl</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg which station to manage --></label>
+        <name>icg_which_station_to_manage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg which validation programs to renew archieve --></label>
+        <name>icg_which_validation_programs_to_renew_archieve</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg wizard title location --></label>
+        <name>icg_wizard_title_location</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg worldwide search --></label>
+        <name>icg_worldwide_search</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg xlsx icon --></label>
+        <name>icg_xlsx_icon</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg yes --></label>
+        <name>icg_yes</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg you are filtering by --></label>
+        <name>icg_you_are_filtering_by</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg your current stats --></label>
+        <name>icg_your_current_stats</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg zip code --></label>
+        <name>icg_zip_code</name>
     </customLabels>
     <customLabels>
         <label><!-- IDCard_replacementHeadText --></label>
@@ -32736,6 +34797,28 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- ARD Certification by type --></description>
+        <label><!-- ARD Certification by type --></label>
+        <name>ARD_Certification_by_type</name>
+        <sections>
+            <label><!-- ONE Source Account Role Details --></label>
+            <name>ONE Source Account Role Details</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- ARD and Airlines Handlers --></description>
+        <label><!-- ARD and Airlines Handlers --></label>
+        <name>ARD_and_Airlines_Handlers</name>
+        <sections>
+            <label><!-- ONE Source Account Role Detail Relationships --></label>
+            <name>ONE Source Account Role Detail Relationships</name>
+        </sections>
+        <sections>
+            <label><!-- ONE Source Account Role Details --></label>
+            <name>ONE Source Account Role Details</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Accounts with Cases with Emails --></description>
         <label><!-- Accounts with Cases with Emails --></label>
         <name>AccCaseEmails</name>
@@ -34328,6 +36411,71 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Agencies for Airport IS --></description>
+        <label><!-- Agencies for Airport IS --></label>
+        <name>Agencies_for_Airport_IS</name>
+        <sections>
+            <columns>
+                <label><!-- ISO Country: ISO Code --></label>
+                <name>ISO Country: ISO Code</name>
+            </columns>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <columns>
+                <label><!-- Geoname Billing City: Id --></label>
+                <name>Geoname Billing City: Id</name>
+            </columns>
+            <columns>
+                <label><!-- Geoname Billing City: Location (Latitude) --></label>
+                <name>Geoname Billing City: Location (Latitude)</name>
+            </columns>
+            <columns>
+                <label><!-- Geoname Billing City: Location (Longitude) --></label>
+                <name>Geoname Billing City: Location (Longitude)</name>
+            </columns>
+            <columns>
+                <label><!-- Geoname Billing City: Name --></label>
+                <name>Geoname Billing City: Name</name>
+            </columns>
+            <label><!-- Geoname billing city --></label>
+            <name>Geoname billing city</name>
+        </sections>
+        <sections>
+            <columns>
+                <label><!-- Parent Account: Account ID --></label>
+                <name>Parent Account: Account ID</name>
+            </columns>
+            <columns>
+                <label><!-- Parent Account: Account Name --></label>
+                <name>Parent Account: Account Name</name>
+            </columns>
+            <columns>
+                <label><!-- Parent Account: IATA Code --></label>
+                <name>Parent Account: IATA Code</name>
+            </columns>
+            <label><!-- Parent --></label>
+            <name>Parent</name>
+        </sections>
+        <sections>
+            <columns>
+                <label><!-- Top Parent: Account ID --></label>
+                <name>Top Parent: Account ID</name>
+            </columns>
+            <columns>
+                <label><!-- Top Parent: Account Name --></label>
+                <name>Top Parent: Account Name</name>
+            </columns>
+            <columns>
+                <label><!-- Top Parent: IATA Code --></label>
+                <name>Top Parent: IATA Code</name>
+            </columns>
+            <label><!-- Top Parent --></label>
+            <name>Top Parent</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Agency Hierarchy --></description>
         <label><!-- Agency Hierarchy --></label>
         <name>Agency_Hierarchy</name>
@@ -34413,6 +36561,19 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <sections>
             <label><!-- Appointments (AMS) --></label>
             <name>Appointments (AMS)</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Approval history for Exceptions --></description>
+        <label><!-- Approval history for Exceptions --></label>
+        <name>Approval_history_for_Exceptions</name>
+        <sections>
+            <label><!-- Process Instance --></label>
+            <name>Process Instance</name>
+        </sections>
+        <sections>
+            <label><!-- Process Instance Node --></label>
+            <name>Process Instance Node</name>
         </sections>
     </reportTypes>
     <reportTypes>
@@ -35412,6 +37573,19 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Country profile with IATA ISO Country --></description>
+        <label><!-- Country profile with IATA ISO Country --></label>
+        <name>Country_profile_with_IATA_ISO_Country</name>
+        <sections>
+            <label><!-- Country Profiles --></label>
+            <name>Country Profiles</name>
+        </sections>
+        <sections>
+            <label><!-- IATA ISO Countries --></label>
+            <name>IATA ISO Countries</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Country profile with surveys --></description>
         <label><!-- Country profile with surveys --></label>
         <name>Country_profile_with_surveys</name>
@@ -35649,6 +37823,15 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Exceptions with Approval history --></description>
+        <label><!-- Exceptions with Approval history --></label>
+        <name>Exceptions_with_Approval_history</name>
+        <sections>
+            <label><!-- Exceptions --></label>
+            <name>Exceptions</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Financial Institutions with Securities --></description>
         <label><!-- Financial Institutions with Securities --></label>
         <name>Financial_Institutions_with_Securities</name>
@@ -35765,6 +37948,15 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <sections>
             <label><!-- IATA ISO States --></label>
             <name>IATA ISO States</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- ONE Source Acc. Role Details with Certifications --></description>
+        <label><!-- ONE Source Acc. Role Details with Certifications --></label>
+        <name>ICG_Acc_Role_Details_with_Certifications</name>
+        <sections>
+            <label><!-- ONE Source Account Role Details --></label>
+            <name>ONE Source Account Role Details</name>
         </sections>
     </reportTypes>
     <reportTypes>
@@ -36523,6 +38715,27 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- NDC Airlines --></description>
+        <label><!-- NDC Airlines --></label>
+        <name>NDC_Airlines</name>
+        <sections>
+            <label><!-- Account Role Services --></label>
+            <name>Account Role Services</name>
+        </sections>
+        <sections>
+            <label><!-- Account Roles --></label>
+            <name>Account Roles</name>
+        </sections>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- NDC Account Service Details --></label>
+            <name>NDC Account Service Details</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Network Members --></description>
         <label><!-- Network Members --></label>
         <name>Network_Members</name>
@@ -36690,7 +38903,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Opportunities with Accounts and Contracts --></label>
         <name>Opportunities_with_Accounts_and_Contracts</name>
         <sections>
-            <label><!-- Accounts --></label>
+            <label>รายงาน</label>
             <name>Accounts</name>
         </sections>
         <sections>
@@ -36724,7 +38937,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Opportunities with or without RSL --></label>
         <name>Opportunities_with_or_without_RSL</name>
         <sections>
-            <label><!-- Opportunities --></label>
+            <label>รายงาน</label>
             <name>Opportunities</name>
         </sections>
         <sections>

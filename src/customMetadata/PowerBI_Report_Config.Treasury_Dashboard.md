@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>Group_Id_Prod__c</field>
-        <value xsi:type="xsd:string">tempfordeploy</value>
+        <value xsi:type="xsd:string">6c583190-e636-48a7-bcfe-374e783cce1e</value>
     </values>
     <values>
         <field>LastModifiedDate__c</field>
@@ -20,7 +20,7 @@
     </values>
     <values>
         <field>Report_Id_Prod__c</field>
-        <value xsi:type="xsd:string">tempfordeploy</value>
+        <value xsi:type="xsd:string">2f9d23ac-df95-4372-9b21-68403030ebcb</value>
     </values>
     <values>
         <field>Type__c</field>

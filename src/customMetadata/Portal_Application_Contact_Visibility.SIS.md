@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>Country__c</field>
-        <value xsi:type="xsd:string">-JP,CL,GT,IL,US,UY,IQ,TH,SG,SD,TW,SY,VN,IR,LY,XK,PR,UM</value>
+        <value xsi:type="xsd:string">-CL,GT,IL,US,UY,TH,SG,SD,TW,VN,IR,XK,PR,UM</value>
     </values>
     <values>
         <field>Location_Class__c</field>

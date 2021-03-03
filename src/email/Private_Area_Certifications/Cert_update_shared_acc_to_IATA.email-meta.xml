@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>48.0</apiVersion>
+    <available>true</available>
+    <description>Certification Update for shared account: Email to IATA.</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Certification update for shared account to IATA</name>
+    <style>none</style>
+    <subject>Certification/accreditation has been updated:</subject>
+    <type>visualforce</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

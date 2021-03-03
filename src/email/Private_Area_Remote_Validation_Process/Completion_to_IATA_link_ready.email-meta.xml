@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>48.0</apiVersion>
+    <available>true</available>
+    <description>Email to user when link is ready</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Completion to User link ready</name>
+    <style>none</style>
+    <subject>Questionnaire is now available</subject>
+    <type>visualforce</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

@@ -33,23 +33,11 @@ public with sharing  class IDCard_CheckoutSingleApplication   extends IDCardAbst
 	public Pagereference updateRecord() {
 		try {
 			// get ID Card Application
-			idCardApplication = [Select i.RecordtypeId, i.VER_Number__c, i.UIR__c, i.Revenue_Confirmation__c, i.Type_of_application__c, i.Title__c, i.Telephone__c, i.SystemModstamp,
-								 i.Start_Date_Industry__c, i.Start_Date_Agency_Year__c, i.Start_Date_Agency_Month__c, i.Solicitation_Flag__c,
-								 i.Promotion_Code__c, i.Position_in_Current_Agency__c, i.Position_Code__c, i.Photo__c,
-								 i.Package_of_Travel_Professionals_Course_2__c, i.Package_of_Travel_Professionals_Course_1__c, i.OwnerId, i.Name, i.Middle_Initial__c,
-								 i.Last_Name__c, i.LastModifiedDate, i.LastModifiedById, i.IsDeleted, i.Id, i.IDCard_Prefered_Language__c, i.IDCard_Expedite_Delivery__c,
-								 i.IDCard_Expedite_Delivery_Fee__c, i.ID_Card_Fee__c, i.ITDI_Courses_Fee__c, i.IATA_numeric_code_previous_employer_4__c, i.IATA_numeric_code_previous_employer_3__c,
-								 i.IATA_numeric_code_previous_employer_2__c, i.IATA_numeric_code_previous_employer_1__c, i.IATA_Code_for_previous_agency__c, i.IATA_Code__c,
-								 i.Hours_worked__c, i.Hours_Worked_Code__c, i.Gender__c, i.First_Name__c, i.Email_admin__c,
-								 i.Duties_in_Current_Agency__c, i.Duties_Code__c, i.Displayed_Name__c, i.Date_of_Birth__c, i.CurrencyIsoCode, i.CreatedDate, i.CreatedById,
-								 i.Approving_Manager_s_Name__c, i.Approving_Manager_s_Email__c, i.Applicable_Fee__c,
-								 i.Tax_2_Name__c,  i.Tax_1_Name__c,  i.Tax_1_Value__c,  i.Tax_2_Value__c
-								 From ID_Card_Application__c i
-								 where i.Id = :applicationId
-											  limit 1];
+			idCardApplication = IDCardUtilWithoutSharing.retrieveCommittedICA(applicationId);
 			//set the Id Card as available for Key Contact:
 			idCardApplication.Application_Status__c = 'Pending' ;
-			update idCardApplication;
+			//update idCardApplication;
+			IDCardUtilWithoutSharing.saveCommittedICA(idCardApplication, applicationId);
 
 
 			account = [ Select BillingState, BillingCountry , Id from Account where IATACode__c = : idCardApplication.IATA_Code__c limit 1];
@@ -81,6 +69,7 @@ public with sharing  class IDCard_CheckoutSingleApplication   extends IDCardAbst
 		if ( ets.size() > 0 ) {
 			EmailTemplate et = ets.get(0);
 			List<Messaging.SingleEmailMessage> lstEmails = new List<Messaging.SingleEmailMessage>();
+			Set<String> setEmails = new Set<String>();
 			system.debug('[IDCard_CheckoutSingleApplication]Emailing');
 
 			for (Managed_agency__c c : managedAccountList ) {
@@ -88,14 +77,15 @@ public with sharing  class IDCard_CheckoutSingleApplication   extends IDCardAbst
 					keyContactEmail = c.Contact__r.IDCard_Email__c;
 				}
 
-				if (String.isNotBlank(c.Contact__r.IDCard_Email__c) && !c.Contact__r.IsEmailBounced && String.isNotBlank(c.Contact__r.Email) && !c.Contact__r.Email.endsWithIgnoreCase('.inactive')) {
+				if (String.isNotBlank(c.Contact__r.IDCard_Email__c) && !c.Contact__r.IsEmailBounced && String.isNotBlank(c.Contact__r.Email) && !c.Contact__r.Email.endsWithIgnoreCase('.inactive') && !setEmails.contains(c.Contact__r.IDcard_Email__c)) {
 					Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
 					email.setTargetObjectId(c.Contact__r.Id);
-					email.setToAddresses(new List<String>{c.Contact__r.Email});
+					email.setToAddresses(new List<String>{c.Contact__r.IDcard_Email__c});
 					email.setWhatId(idCardApplication.Id);
 					email.setTreatTargetObjectAsRecipient(false);
 					email.setTemplateId(et.Id);
 					lstEmails.add(email);
+					setEmails.add(c.Contact__r.IDcard_Email__c);
 				}
 			}
 			

@@ -1,9 +1,8 @@
 public with sharing class CaseCommentHandler {
 	public static final String CASE_COMMENT_ACTION = 'Public Case Comment';
 	
-	List<FDS_KPI_Reporting__c> kpiReportingsToInsert = new List<FDS_KPI_Reporting__c>();
-	List<KPI_Value__c> kpiValuesToInsert = new List<KPI_Value__c>();
-	
+	public static List<KPI_Value__c> kpiValuesToInsert = new List<KPI_Value__c>();
+	public static Boolean caseCommentKPI = false;
 	public CaseCommentHandler(){}
 
 	public static void doBeforeInsert(list<CaseComment> listComments) {
@@ -14,7 +13,7 @@ public with sharing class CaseCommentHandler {
 	}
 	
 	//creates a map of CaseId and CaseCommentId for Cases with CaseComments
-	private Map<Id,Id> getCaseCommentsForCases(List<CaseComment> listOfComments){
+	private static Map<Id,Id> getCaseCommentsForCases(List<CaseComment> listOfComments){
 		Map<Id,Id> caseCommentIdToCaseIdMap = new Map<Id,Id>();
 		for(CaseComment caseComment : listOfComments){
 			caseCommentIdToCaseIdMap.put(caseComment.Id, caseComment.ParentId);
@@ -22,15 +21,14 @@ public with sharing class CaseCommentHandler {
 		return caseCommentIdToCaseIdMap;
 	}
 
-	public void doAfterInsert(List<CaseComment> listOfComments) {
+	public static void doAfterInsert(Set<Id> CaseCommentIds) {
 		//only fire integration if user making the insert is not integration user
 		//1. if case comment is for a case with a case item then fire platform event
-		Map<Id,Id> caseCommentIdToCaseIdMap = getCaseCommentsForCases(listOfComments);
-		//get case item records with a case that has an inserted comment
-		Map<Id,Case_Item__c> caseItemsWithCaseComments = new Map<Id,Case_Item__c> ([SELECT Id, RecordTypeId FROM Case_Item__c WHERE Case__c IN :caseCommentIdToCaseIdMap.values()]);
-		//call update on related case items to fire integration
-		CaseItems caseItems = new CaseItems(caseItemsWithCaseComments);
-		caseItems.onAfterUpdate();
+
+		List<CaseComment> fullCaseComments = [SELECT id, isPublished, ParentId, Parent.Portal_Closure_Status__c, Parent.RecordTypeId, Parent.RecordType.DeveloperName
+											  FROM CaseComment WHERE Id IN :CaseCommentIds];
+		
+		if(fullCaseComments.isEmpty()) return;
 
 		List<ISSP_KPI_Reporting__mdt> config = new List<ISSP_KPI_Reporting__mdt>();
 		Map<String, ISSP_KPI_Reporting__mdt> rtToConfigMap = new Map<String, ISSP_KPI_Reporting__mdt>();
@@ -38,40 +36,47 @@ public with sharing class CaseCommentHandler {
 		
 		config = getKPIConfig(CASE_COMMENT_ACTION);
 
-		if(config.size() == 0) {
-			return;
-		}
+		if(config.isEmpty()) {return;}
+
+		List<FDS_KPI_Reporting__c> kpiReporting = [SELECT Id, Type_Of_Action__c 
+												   FROM FDS_KPI_Reporting__c 
+												   WHERE Name =: CASE_COMMENT_ACTION 
+												   AND Type_Of_Action__c =: CASE_COMMENT_ACTION FOR UPDATE];
+		if(kpiReporting.isEmpty()) {return;}
 
 		for(ISSP_KPI_Reporting__mdt cfg : config){
 			recordTypesToProcess.add(RecordTypeSingleton.getInstance().getRecordType('Case', cfg.Case_Record_Type__c).Id);
 			rtToConfigMap.put(cfg.Case_Record_Type__c, cfg);
 		}
 		
-		List<CaseComment> fullCaseComments = [SELECT id, isPublished, ParentId, Parent.RecordType.DeveloperName
-											  FROM CaseComment WHERE ID IN: listOfComments AND isPublished=True
-											  AND Parent.RecordTypeId IN :recordTypesToProcess];
-		
-		if(fullCaseComments.isEmpty()) return;
-		
-		List<FDS_KPI_Reporting__c> kpiReporting = [SELECT Id, Type_Of_Action__c 
-												   FROM FDS_KPI_Reporting__c 
-												   WHERE Name =: CASE_COMMENT_ACTION 
-												   AND Type_Of_Action__c =: CASE_COMMENT_ACTION];
-		if(kpiReporting.size() == 0) {
-			return;
-		}
-		
 		Id kpiReportingId = kpiReporting.get(0).Id;
 		
 		for (CaseComment cc : fullCaseComments) {
-			if (UserInfo.getUserType() == 'Standard' && rtToConfigMap.containsKey(cc.Parent.RecordType.DeveloperName)) {
+			if (UserInfo.getUserType() == 'Standard' && rtToConfigMap.containsKey(cc.Parent.RecordType.DeveloperName) && !(cc.Parent.Portal_Closure_Status__c != null && CaseCommentAutoReply.AUTO_REPLY_ELIGIBLE_STATUS.contains(cc.Parent.Portal_Closure_Status__c))) {
 				createKPIReportingValue(cc, Integer.valueOf(rtToConfigMap.get(cc.Parent.RecordType.DeveloperName).Points__c), kpiReportingId);
 			}
 		}
 		
 		if(kpiValuesToInsert.size() > 0 ) {
 			insert kpiValuesToInsert;
+			caseCommentKPI = true;
 		}
+	}
+
+	@future
+	public static void doAfterInsertFuture(Set<Id> CaseCommentIds){
+		doAfterInsert(CaseCommentIds);
+	}
+
+	public void processCaseItems(List<CaseComment> listOfComments){
+		//only fire integration if user making the insert is not integration user
+		////1. if case comment is for a case with a case item then fire platform event
+		Map<Id,Id> caseCommentIdToCaseIdMap = getCaseCommentsForCases(listOfComments);
+		//get case item records with a case that has an inserted comment
+		Map<Id,Case_Item__c> caseItemsWithCaseComments = new Map<Id,Case_Item__c> ([SELECT Id, RecordTypeId FROM Case_Item__c WHERE Case__c IN :caseCommentIdToCaseIdMap.values()]);
+		//call update on related case items to fire integration
+		CaseItems caseItems = new CaseItems(caseItemsWithCaseComments);
+		caseItems.onAfterUpdate();
 	}
 
 	public void doAfterUpdate(Map<Id, CaseComment> updatedCaseCommentMap, Map<Id, CaseComment> originalCaseCommentMap){
@@ -113,7 +118,7 @@ public with sharing class CaseCommentHandler {
 	* @param null
 	* @return List<ISSP_KPI_Reporting__mdt> - list of configs
 	*/
-	private List<ISSP_KPI_Reporting__mdt> getKPIConfig(String actionType) {
+	private static List<ISSP_KPI_Reporting__mdt> getKPIConfig(String actionType) {
 		return [SELECT Action__c, Case_Record_Type__c, DeveloperName, Id, Points__c FROM ISSP_KPI_Reporting__mdt WHERE Action__c =: actionType];
 	}
 
@@ -126,7 +131,7 @@ public with sharing class CaseCommentHandler {
 	*
 	* @return void
 	*/
-	private void createKPIReportingValue(CaseComment comment, Integer points, String kpiReportingId){
+	private static void createKPIReportingValue(CaseComment comment, Integer points, String kpiReportingId){
 		KPI_Value__c valueToAdd = new KPI_Value__c();
 		
 		valueToAdd.Name = 'Value_' + comment.ParentId + '_' + System.now().format('hh_mm_ss');

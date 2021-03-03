@@ -983,22 +983,8 @@ Request an agent to upload Financial Documents&apos; is sent</description>
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <criteriaItems>
-            <field>EmailMessage.Incoming</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Closed</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordType__c</field>
-            <operation>equals</operation>
-            <value>IATA Financial Review</value>
-        </criteriaItems>
         <description>Reopen a closed case on email reception</description>
+        <formula>AND( 				DATEVALUE(Parent.ClosedDate) &gt; TODAY()-14, 				Incoming, 				ISPICKVAL(Parent.Status, &apos;Closed&apos;), 				Parent.RecordTypeDeveloperName__c == &apos;IATA_Financial_Review&apos; )</formula>
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>

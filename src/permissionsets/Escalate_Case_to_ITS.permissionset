@@ -7,11 +7,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>Case_Item__c.Case_Id_Uniqueness__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>true</editable>
         <field>Case_Item__c.Details__c</field>
         <readable>true</readable>
@@ -58,7 +53,7 @@
         <allowDelete>true</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
+        <modifyAllRecords>true</modifyAllRecords>
         <object>Case_Item__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>

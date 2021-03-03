@@ -68,6 +68,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		public Boolean isNewAccount{get;set;}
 		public String selectedCustomerType {get;set;}
 		public String registrationTime {get;set;}
+		public String sourceService {get;set;}
 		public String termsAndUsageIds {get;set;}
 
 		/*YAS info for matching contact based on additional email temporary*/
@@ -358,13 +359,6 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 	public static Boolean checkIsUsernameIsAvailableInGlobalSalesforce(String email, List<Contact> conList) {
 		// Method to test if another user existin in all SF instances to avoid having an error at the end of the process
 		Savepoint sp = Database.setSavepoint();
-		List<Profile> profileList = [SELECT Id, Name FROM Profile];
-		map<ID, Profile> profileMap = new map<ID, Profile> (
-		[SELECT Id, Name,
-				UserLicenseId,
-				UserLicense.Name
-		FROM Profile
-		WHERE (UserLicense.Name = 'Partner Community' OR UserLicense.Name = 'Identity')]);
 
 		Contact[] recordCont = [SELECT Id FROM Contact WHERE Id NOT IN (SELECT ContactId FROM User) LIMIT 1];
 
@@ -480,6 +474,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			params.phone     = (inputMap.get('phone') != null) ? String.valueOf(inputMap.get('phone')) : '';
 			params.country   = (inputMap.get('country') != null) ? String.valueOf(inputMap.get('country')) : '';
 			params.language  = (inputMap.get('language') != null) ? String.valueOf(inputMap.get('language')) : '';
+			params.sourceService = (inputMap.get('sourceService') != null) ? String.valueOf(inputMap.get('sourceService')) : '';
 			params.contactId = contactId != null ? contactId : '';
 			params.accountId = accountId != null ? accountId : '';
 			params.selectedCustomerType = (inputMap.get('selectedCustomerType') != null) ? String.valueOf(inputMap.get('selectedCustomerType')) : '';
@@ -984,6 +979,10 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 	public static String generateOneTimeUrl(RegistrationParameters params, String lang, Map<String,String> urlParams){
 		String paramsJson = JSON.serialize(params);
 		paramsJson = paramsJson.replace('+', PortalPasswordHandler.plusReplacer);
+		if(params.sourceService != null && params.sourceService != '') {
+			if(urlParams == null) urlParams = new Map<String,String>();
+			urlParams.put('sourceService',params.sourceService);
+		}
 
 		return CSP_Utils.generateURl('createPassword', paramsJson, lang, urlParams);
 	}
@@ -1348,5 +1347,60 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			}
 		}
 	}
+
+	/*
+	* @description Method to submit troubleshooting cases
+	* @params String Case info- Serialized object containing all info for the object
+	* @returns the case number
+	*/
+	@AuraEnabled
+	public static String submitTroubleshootingCase(String CaseInfo) {
+		Map<String,String> inputMap = (Map<String,String>)JSON.deserialize(CaseInfo, Map<String,String>.class);
+		String country = inputMap.get('country');
+		string subject= Label.ISSP_Registration_Subject_Default;
+
+		//if case subject not empty override
+		
+		subject +=' - '+inputMap.get('type');
+			if (subject.length() > 255) subject = subject.substring(0,254);
+		
+		String reason = 'Registration process';
+
+		String contactId = null;		
+		List <Contact> searchContactList = [SELECT Id FROM Contact WHERE Email = :inputMap.get('email')];
+		if (searchContactList.size() == 1){
+			contactId = searchContactList[0].Id;
+		}
+ 
+
+		//Fetching the assignment rules
+		AssignmentRule AR = new AssignmentRule();
+		AR = [select id from AssignmentRule where SobjectType = 'Case' and Active = true limit 1];
+
+		//create Flag to run the assignment rules
+		Database.DMLOptions dmlOpts = new Database.DMLOptions();
+		dmlOpts.assignmentRuleHeader.assignmentRuleId= AR.id;
+	
+	
+		Case cas = new Case(
+			CaseArea__c = 'Customer Portal Enquiry',
+			Subject  = subject,
+			SuppliedName = inputMap.get('firstName') + ' ' + inputMap.get('lastName'),
+			SuppliedEmail = inputMap.get('email'),
+			SuppliedPhone = inputMap.get('phone'),
+			Description = inputMap.get('descr'),
+			Country_concerned_by_the_query__c = country,
+			IATAcode__c = inputMap.get('IATACode'),
+			Origin = 'Portal',
+			Reason1__c = reason,
+			ContactId = contactId
+		);
+
+		//Setting the DMLOption on Case instance
+		cas.setOptions(dmlOpts);
+		insert cas;
+
+		return [select caseNumber from case where id =:cas.id].caseNumber;
+	 }
 	
 }

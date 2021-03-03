@@ -9033,7 +9033,7 @@ IF(IFG_PreProduction__c == 1, &apos;IFG PreProduction Access&apos;,
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Invoicing Contact</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>Checkbox</type>
     </fields>
     <fields>
@@ -9536,12 +9536,6 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
                     <label>Aeropolitico</label>
                 </value>
                 <value>
-                    <fullName>Aéropolitique</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Aéropolitique</label>
-                </value>
-                <value>
                     <fullName>Altro</fullName>
                     <default>false</default>
                     <isActive>false</isActive>
@@ -9682,18 +9676,6 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
                     <label>Finanzas</label>
                 </value>
                 <value>
-                    <fullName>Finanze</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Finanze</label>
-                </value>
-                <value>
-                    <fullName>Finanzen</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Finanzen</label>
-                </value>
-                <value>
                     <fullName>Flight Operation</fullName>
                     <default>false</default>
                     <isActive>false</isActive>
@@ -9704,12 +9686,6 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
                     <default>false</default>
                     <isActive>false</isActive>
                     <label>Formación</label>
-                </value>
-                <value>
-                    <fullName>Formation</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Formation</label>
                 </value>
                 <value>
                     <fullName>Frachtgut</fullName>
@@ -9762,12 +9738,6 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
                     <fullName>Human Resources</fullName>
                     <default>false</default>
                     <label>Human Resources</label>
-                </value>
-                <value>
-                    <fullName>Información legal</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Información legal</label>
                 </value>
                 <value>
                     <fullName>Informations légales</fullName>
@@ -9869,12 +9839,6 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
                     <label>Marketing&amp;Sales</label>
                 </value>
                 <value>
-                    <fullName>Marketing&amp; Sales</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Marketing&amp; Sales</label>
-                </value>
-                <value>
                     <fullName>Marketing &amp; Sales</fullName>
                     <default>false</default>
                     <isActive>false</isActive>
@@ -9885,12 +9849,6 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
                     <default>false</default>
                     <isActive>false</isActive>
                     <label>Marketing &amp; Verkauf</label>
-                </value>
-                <value>
-                    <fullName>Marketing et ventes</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Marketing et ventes</label>
                 </value>
                 <value>
                     <fullName>Marketing e Vendas</fullName>
@@ -9986,12 +9944,6 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
                     <label>Other</label>
                 </value>
                 <value>
-                    <fullName>Otro</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Otro</label>
-                </value>
-                <value>
                     <fullName>Outra</fullName>
                     <default>false</default>
                     <isActive>false</isActive>
@@ -10040,18 +9992,6 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
                     <label>Rechtliches</label>
                 </value>
                 <value>
-                    <fullName>Recursos Humanos</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Recursos Humanos</label>
-                </value>
-                <value>
-                    <fullName>Ressources humaines</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Ressources humaines</label>
-                </value>
-                <value>
                     <fullName>Safety</fullName>
                     <default>false</default>
                     <label>Safety</label>
@@ -10067,12 +10007,6 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
                     <default>false</default>
                     <isActive>false</isActive>
                     <label>Sales</label>
-                </value>
-                <value>
-                    <fullName>Sales&amp;Marketing</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Sales&amp;Marketing</label>
                 </value>
                 <value>
                     <fullName>Sécurité</fullName>
@@ -10108,12 +10042,6 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
                     <default>false</default>
                     <isActive>false</isActive>
                     <label>Security &amp; Facilitation</label>
-                </value>
-                <value>
-                    <fullName>Segurança</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Segurança</label>
                 </value>
                 <value>
                     <fullName>Segurança e Facilitação</fullName>
@@ -10173,18 +10101,6 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
                     <default>false</default>
                     <isActive>false</isActive>
                     <label>Technique</label>
-                </value>
-                <value>
-                    <fullName>Técnica</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Técnica</label>
-                </value>
-                <value>
-                    <fullName>Tecnico</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Tecnico</label>
                 </value>
                 <value>
                     <fullName>Técnico</fullName>
@@ -10250,12 +10166,6 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
                     <default>false</default>
                     <isActive>false</isActive>
                     <label>أنظمة الملاحة الجوية</label>
-                </value>
-                <value>
-                    <fullName>الأمن والتسهيلات</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>الأمن والتسهيلات</label>
                 </value>
                 <value>
                     <fullName>التسويق والمبيعات</fullName>
@@ -10390,18 +10300,6 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
                     <label>培训</label>
                 </value>
                 <value>
-                    <fullName>安全与便利</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>安全与便利</label>
-                </value>
-                <value>
-                    <fullName>技术</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>技术</label>
-                </value>
-                <value>
                     <fullName>技術</fullName>
                     <default>false</default>
                     <isActive>false</isActive>
@@ -10484,12 +10382,6 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
                     <default>false</default>
                     <isActive>false</isActive>
                     <label>마케팅 및 세일즈</label>
-                </value>
-                <value>
-                    <fullName>영업활동</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>영업활동</label>
                 </value>
                 <value>
                     <fullName>인적 자원</fullName>
@@ -12583,6 +12475,20 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
         <type>Summary</type>
     </fields>
     <fields>
+        <fullName>S_TIDS__c</fullName>
+        <externalId>false</externalId>
+        <label>Service TIDS</label>
+        <summaryFilterItems>
+            <field>Portal_Application_Right__c.Portal_Application__c</field>
+            <operation>startsWith</operation>
+            <value>a2w5J000000kP35</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Portal_Application_Right__c.Contact__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <type>Summary</type>
+    </fields>
+    <fields>
         <fullName>Sales_Region__c</fullName>
         <externalId>false</externalId>
         <label>Sales Region</label>
@@ -12876,7 +12782,9 @@ IF(S_ICE__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000004IwcT&
 &amp;&quot; &quot;&amp; 
 IF(S_Standards_Setting_Workspace__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000005xvJ2&quot; ,&quot;&quot;,40,40),&quot;&quot;)
 &amp;&quot; &quot;&amp; 
-IF(S_Risk_RHC__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000006MxBK&quot; ,&quot;&quot;,40,40),&quot;&quot;)</formula>
+IF(S_Risk_RHC__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=015w0000006MxBK&quot; ,&quot;&quot;,40,40),&quot;&quot;)
+&amp;&quot; &quot;&amp; 
+IF(S_TIDS__c&gt;0,IMAGE(&quot;/servlet/servlet.FileDownload?file=0155J000000l6ic&quot; ,&quot;&quot;,40,40),&quot;&quot;)</formula>
         <label>Services</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -21142,13 +21050,26 @@ myuser={!User.Id}</url>
         <fullName>Log_Phone_Case</fullName>
         <availability>online</availability>
         <displayType>button</displayType>
-        <encodingKey>UTF-8</encodingKey>
-        <height>600</height>
-        <linkType>url</linkType>
+        <linkType>javascript</linkType>
         <masterLabel>Log Phone Case</masterLabel>
-        <openType>sidebar</openType>
+        <openType>onClickJavaScript</openType>
         <protected>false</protected>
-        <url>/apex/LogPhoneCase?ContactId={!Contact.Id}</url>
+        <url>{!REQUIRESCRIPT(&quot;/resource/1552329049000/keyCustomerAlert&quot;)}
+{!REQUIRESCRIPT(&quot;/soap/ajax/40.0/connection.js&quot;)} 
+{!REQUIRESCRIPT(&quot;/soap/ajax/40.0/apex.js&quot;)}
+{!REQUIRESCRIPT(&quot;/support/console/30.0/integration.js&quot;)}
+
+try {
+    var targetURL = &quot;/apex/LogPhoneCase?ContactId={!Contact.Id}&quot;;
+
+    if({!Account.Identify_as_Key_Customer__c}) {
+            displayKeyCustomerAlert(targetURL, &quot;{!$Label.KEY_CUSTOMER_ALERT_TITLE}&quot;, &quot;{!$Label.KEY_CUSTOMER_ALERT}&quot;); 
+    } else {
+        goToURL(targetURL);
+    }
+} catch(e) {
+    alert(&apos;An error has occurred. Error: &apos; + e);
+}</url>
     </webLinks>
     <webLinks>
         <fullName>LogaCall</fullName>

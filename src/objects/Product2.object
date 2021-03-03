@@ -2547,6 +2547,11 @@ SIS Charge Code Type.</description>
                     <label>DGR Training Books</label>
                 </value>
                 <value>
+                    <fullName>Disruption Management Manual</fullName>
+                    <default>false</default>
+                    <label>Disruption Management Manual</label>
+                </value>
+                <value>
                     <fullName>eAWBLink</fullName>
                     <default>false</default>
                     <label>eAWBLink</label>
@@ -2742,6 +2747,11 @@ SIS Charge Code Type.</description>
                     <label>Other DGR Products</label>
                 </value>
                 <value>
+                    <fullName>Passenger Accessibility Operations Manual</fullName>
+                    <default>false</default>
+                    <label>Passenger Accessibility Operations Manual</label>
+                </value>
+                <value>
                     <fullName>Passenger Agency Conference Resolutions Manual</fullName>
                     <default>false</default>
                     <label>Passenger Agency Conference Resolutions Manual</label>
@@ -2805,6 +2815,11 @@ SIS Charge Code Type.</description>
                     <fullName>Revenue Accounting Manual</fullName>
                     <default>false</default>
                     <label>Revenue Accounting Manual</label>
+                </value>
+                <value>
+                    <fullName>Secured Simplified Borders Manual</fullName>
+                    <default>false</default>
+                    <label>Secured Simplified Borders Manual</label>
                 </value>
                 <value>
                     <fullName>Security Management System Manual</fullName>
@@ -5552,6 +5567,15 @@ The product will only appear on the Online Store when the date entered in this f
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Smart_Facility_Remote_Validation__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>This field has to be set manually to True for the product that matches Smart Facility Remote Validation</description>
+        <externalId>false</externalId>
+        <label>Smart Facility Remote Validation</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Source__c</fullName>
@@ -14633,6 +14657,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Disruption Management Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>EPIC</fullName>
                 <default>false</default>
             </values>
@@ -14785,6 +14813,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Passenger Accessibility Operations Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Passenger Agency Conference Resolutions Manual</fullName>
                 <default>false</default>
             </values>
@@ -14834,6 +14866,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Revenue Accounting Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Secured Simplified Borders Manual</fullName>
                 <default>false</default>
             </values>
             <values>

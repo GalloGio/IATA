@@ -149,7 +149,7 @@
     <enableHistory>true</enableHistory>
     <enableLicensing>false</enableLicensing>
     <enableReports>false</enableReports>
-    <enableSearch>false</enableSearch>
+    <enableSearch>true</enableSearch>
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>Private</externalSharingModel>
@@ -203,6 +203,15 @@
         <filterScope>Everything</filterScope>
         <label>All</label>
         <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>All1</fullName>
+        <columns>NAME</columns>
+        <columns>Portal_Service__c</columns>
+        <columns>Term_Condition__c</columns>
+        <columns>Term_Condition_Version__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
     </listViews>
     <nameField>
         <displayFormat>STC-{00000}</displayFormat>

@@ -1,0 +1,125 @@
+.box-position1of1 {
+  position: relative;
+  box-shadow: 1px 12px 33px rgba(0, 0, 0, 0.5);
+  background-color: #1e32fa;
+  color: white;
+}
+.box-position1of1:before {
+  border: 25px solid;
+  content: "";
+  border-left-color: transparent;
+  border-bottom-color: #1e32fa;
+  border-right-color: transparent;
+  border-top-color: transparent;
+  position: absolute;
+  bottom: 100%;
+  left: calc(50% - 25px);
+}
+
+.box-position1of2 {
+  position: relative;
+  box-shadow: 1px 12px 33px rgba(0, 0, 0, 0.5);
+  background-color: #1e32fa;
+  color: white;
+}
+.box-position1of2:before {
+  border: 25px solid;
+  content: "";
+  border-left-color: transparent;
+  border-bottom-color: #1e32fa;
+  border-right-color: transparent;
+  border-top-color: transparent;
+  position: absolute;
+  bottom: 100%;
+  left: calc(36% - 25px);
+}
+
+.box-position2of2 {
+  position: relative;
+  box-shadow: 1px 12px 33px rgba(0, 0, 0, 0.5);
+  background-color: #1e32fa;
+  color: white;
+}
+.box-position2of2:before {
+  border: 25px solid;
+  content: "";
+  border-left-color: transparent;
+  border-bottom-color: #1e32fa;
+  border-right-color: transparent;
+  border-top-color: transparent;
+  position: absolute;
+  bottom: 100%;
+  left: calc(66% - 25px);
+}
+
+.box-position1of3 {
+  position: relative;
+  box-shadow: 1px 12px 33px rgba(0, 0, 0, 0.5);
+  background-color: #1e32fa;
+  color: white;
+}
+.box-position1of3:before {
+  border: 25px solid;
+  content: "";
+  border-left-color: transparent;
+  border-bottom-color: #1e32fa;
+  border-right-color: transparent;
+  border-top-color: transparent;
+  position: absolute;
+  bottom: 100%;
+  left: calc(16.3% - 25px);
+}
+
+.box-position2of3 {
+  position: relative;
+  box-shadow: 1px 12px 33px rgba(0, 0, 0, 0.5);
+  background-color: #1e32fa;
+  color: white;
+}
+.box-position2of3:before {
+  border: 25px solid;
+  content: "";
+  border-left-color: transparent;
+  border-bottom-color: #1e32fa;
+  border-right-color: transparent;
+  border-top-color: transparent;
+  position: absolute;
+  bottom: 100%;
+  left: calc(50% - 25px);
+}
+
+.box-position3of3 {
+  position: relative;
+  box-shadow: 1px 12px 33px rgba(0, 0, 0, 0.5);
+  background-color: #1e32fa;
+  color: white;
+}
+.box-position3of3:before {
+  border: 25px solid;
+  content: "";
+  border-left-color: transparent;
+  border-bottom-color: #1e32fa;
+  border-right-color: transparent;
+  border-top-color: transparent;
+  position: absolute;
+  bottom: 100%;
+  left: calc(83.3% - 25px);
+}
+
+.certs-text{
+  min-height: 88px;
+  display: flex;
+  align-items: center;
+
+}
+
+.title-h3{
+  padding:15px;
+  font-weight: 600;
+  font-size:1.2rem
+}
+
+.section-cert{
+  min-height: 320px;
+  margin-bottom: 3%;
+}

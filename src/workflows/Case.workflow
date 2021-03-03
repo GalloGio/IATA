@@ -2,7 +2,7 @@
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
         <fullName>ACCA_Notification_on_new_Application_Change_Request</fullName>
-        <ccEmails>accabspdevelop@acca.com.cn</ccEmails>
+        <ccEmails>accaisis2develop@acca.com.cn</ccEmails>
         <ccEmails>Jana_sun@163.com</ccEmails>
         <ccEmails>Cindy.acca@gmail.com</ccEmails>
         <ccEmails>xbkcw@126.com</ccEmails>
@@ -13,7 +13,6 @@
     </alerts>
     <alerts>
         <fullName>ACCA_Notification_on_new_Application_Change_Request_ISIS2_ISIS2D</fullName>
-        <ccEmails>accabspdevelop@acca.com.cn</ccEmails>
         <ccEmails>accaisis2develop@acca.com.cn</ccEmails>
         <description>ACCA: Notification on new Application Change Request ISIS2 &amp; ISIS2D</description>
         <protected>false</protected>
@@ -160,7 +159,7 @@
     </alerts>
     <alerts>
         <fullName>Approved_Ad_hoc_calendar_change</fullName>
-        <ccEmails>iccso@iata.org,efs@iata.org,efclient@iata.org,madcscmgr@iata.org,B&amp;R_GDC_SIN@iata.org</ccEmails>
+        <ccEmails>iccso@iata.org,efs@iata.org,efclient@iata.org,madcscmgr@iata.org,europs@iata.org</ccEmails>
         <description>Approved - Ad-hoc calendar change</description>
         <protected>false</protected>
         <recipients>
@@ -171,10 +170,6 @@
         </recipients>
         <recipients>
             <recipient>concessios@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>mohananb@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -796,7 +791,7 @@
         <description>Global approval of FAQ change - to GVA</description>
         <protected>false</protected>
         <recipients>
-            <recipient>gabriel@iata.org</recipient>
+            <recipient>oueidatg2@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
@@ -3776,7 +3771,7 @@
         <description>TEST Email Alert on IS for AM</description>
         <protected>false</protected>
         <recipients>
-            <recipient>gabriel@iata.org</recipient>
+            <recipient>oueidatg2@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
@@ -5492,14 +5487,23 @@ IF(IsClosed, &quot;Closed&quot;, &quot;Open&quot;)</formula>
     <fieldUpdates>
         <fullName>IDFS_CREATED_BY_ROLE</fullName>
         <field>Created_By_Role__c</field>
-        <formula>(IF( 
+        <formula>(
+IF(
+  CONTAINS($UserRole.Name, &quot;WH CS&quot;),
+  &quot;WH Customer Service&quot;,
+IF(
+  CONTAINS($UserRole.Name, &quot;WH AGM&quot;),
+  &quot;WH Agency Management&quot;,
+IF(
+  CONTAINS($UserRole.Name, &quot;WH Airline Participation&quot;),
+  &quot;WH Airline Participation&quot;,
+IF( 
   CONTAINS($Profile.Name,&quot;ISS Portal DPC&quot;), 
   &quot;DPC External&quot;, 
   (IF( 
   OR( 
   CONTAINS( $Profile.Name,&quot;ISS Portal&quot;), 
-  CONTAINS( $Profile.Name,&quot;IATA Portal1389712205152 Profile&quot;),
-  CONTAINS( $Profile.Name,&quot;CS Portal Profile&quot;),
+  CONTAINS( $Profile.Name,&quot;IATA Portal1389712205152 Profile&quot;), 
   CONTAINS($Profile.Name,&quot;IATA IDCard Profile&quot;) 
   ), 
   &quot;IATA Partner&quot;, 
@@ -5578,7 +5582,7 @@ IF(IsClosed, &quot;Closed&quot;, &quot;Open&quot;)</formula>
   ),
     &quot;IATA System&quot;,
   
-  &quot;IATA Other&quot;))))))))))))))))))))))))))))))))))))))</formula>
+  &quot;IATA Other&quot;)))))))))))))))))))))))))))))))))))))))))</formula>
         <name>IDFS_CREATED_BY_ROLE</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
@@ -6418,7 +6422,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <fullName>SCE_Serial_Number_Allocation_owner_R_B</fullName>
         <description>Update case owner: Reporting &amp; Billing</description>
         <field>OwnerId</field>
-        <lookupValue>CasesReportingBilling</lookupValue>
+        <lookupValue>OperationalManagementHeadOffice</lookupValue>
         <lookupValueType>Queue</lookupValueType>
         <name>SCE:Serial Number Allocation owner R&amp;B</name>
         <notifyAssignee>true</notifyAssignee>
@@ -7459,8 +7463,16 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <fullName>update_closed_by_role_field</fullName>
         <description>This field update contains a formula based on User&apos;s profile and role, the result is stored in the case field &apos;Closed by Role&apos;</description>
         <field>Closed_by_Role__c</field>
-        <formula>IF(NOT(ISPICKVAL(PRIORVALUE(Status), &quot;Pending Closure&quot;)),
-(IF(
+        <formula>(IF(
+  CONTAINS($UserRole.Name, &quot;WH CS&quot;),
+  &quot;WH Customer Service&quot;,
+IF(
+  CONTAINS($UserRole.Name, &quot;WH AGM&quot;),
+  &quot;WH Agency Management&quot;,
+IF(
+  CONTAINS($UserRole.Name, &quot;WH Airline Participation&quot;),
+  &quot;WH Airline Participation&quot;,
+IF(
   CONTAINS($Profile.Name,&quot;ISS Portal DPC&quot;),
   &quot;DPC External&quot;,
 (IF(
@@ -7534,7 +7546,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
 (IF(
   CONTAINS($UserRole.Name, &quot;Distribution - Airline Management&quot;),
   &quot;Airline Management&quot;,
-  &quot;IATA Other&quot;)))))))))))))))))))))))))))))))))),Closed_by_Role__c)</formula>
+  &quot;IATA Other&quot;)))))))))))))))))))))))))))))))))))))</formula>
         <name>update closed by role field</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
@@ -18430,10 +18442,6 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
     </rules>
     <rules>
         <fullName>SIS Help Desk - New Case Except Web</fullName>
-        <actions>
-            <name>SIS_Assign_Case_Record_Type</name>
-            <type>FieldUpdate</type>
-        </actions>
         <actions>
             <name>SIS_Assign_Case_to_SIS_Help_Desk_queue</name>
             <type>FieldUpdate</type>

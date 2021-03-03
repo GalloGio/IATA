@@ -1,6 +1,5 @@
-
 public without sharing class TIDSUtil{
-   
+
 	private static Id tidsrecordtypeId {get;set;} 
 	public static ErrorWrapper iataCodeError {get;set;}
 	public static List<String> replaceby {get;set;}
@@ -8,29 +7,36 @@ public without sharing class TIDSUtil{
 	public static List<Case> cases {get;set;}
 	 
 	public class ErrorWrapper {
-		@AuraEnabled public String caseId = '';
-		@AuraEnabled public String reason = '';
-		@AuraEnabled public Boolean hasAnError = false;
-		@AuraEnabled public TIDS_Error_Message__mdt error = new TIDS_Error_Message__mdt();
-		@AuraEnabled public Date reinstamentDeadline = null;
-		@AuraEnabled public Boolean hasReinstatementDeadline = false;
+		@AuraEnabled public String caseId='';
+		@AuraEnabled public String reason='';
+		@AuraEnabled public String info='';
+		@AuraEnabled public Boolean hasAnError=false;
+		@AuraEnabled public TIDS_Error_Message__mdt error= new TIDS_Error_Message__mdt();
+		@AuraEnabled public Date reinstamentDeadline=null;
+		@AuraEnabled public Boolean hasReinstatementDeadline=false;
 	}
 	//Gets the RecordtypeId for TIDS case
 	public static Id getTidsRecordTypeId(){
-		if (tidsrecordtypeId==null){tidsrecordtypeId=RecordTypeSingleton.getInstance().getRecordTypeId('Case', TIDS_Constant.TIDSVALUE);}
+		if (tidsrecordtypeId==null){
+			tidsrecordtypeId=RecordTypeSingleton.getInstance().getRecordTypeId('Case', TIDS_Constant.TIDSVALUE);
+		}
 		return tidsrecordtypeId;
 	}
 	//Updates the case status 
 	//if the update fails it is catch by calling function 
-   public static void changeCaseStatus(String caseStatus, String userId){
-		if (cases.size()==0){return;}
+	public static void changeCaseStatus(String caseStatus, String userId){
+		if (cases.size()==0){
+			return;
+		}
 		Case tidsCase = new Case();
 		tidsCase = cases[0];
 		tidsCase.Origin = TIDS_Constant.CASE_ORIGIN;
 		tidsCase.CaseArea__c = TIDS_Constant.CASE_AREA;
 		tidsCase.Priority = TIDS_Constant.CASE_PRIORITY;
 		if (caseStatus==TIDS_Constant.IS_INPROGRESS){
-			if (tidsCase.Status == TIDS_Constant.IS_REVIEWED){tidsCase.OwnerId=userId;}
+			if (tidsCase.Status == TIDS_Constant.IS_REVIEWED){
+				tidsCase.OwnerId=userId;
+			}
 		}
 		tidscase.Status = caseStatus;
 		update tidsCase;
@@ -42,42 +48,44 @@ public without sharing class TIDSUtil{
 		cases = new List<Case>();
 		if (isDraft){
 			Case mycase = searchCase(objectId, TIDS_Constant.IS_DRAFT);
-			if (mycase==null){return;}
+			if (mycase==null){
+				return;
+			}
 			objectId= mycase.Id;
-		}   
+		}
 		cases = [SELECT Id
-			  ,CreatedDate
-			  ,CaseNumber
-			  ,Status
-			  ,Decision_Date__c
-			  ,Decision__c
-			  ,BSPCountry__c
-			  ,Reason1__c
-			  ,Customer_recovery__c
-			  ,BounceEmailCounter__c
-			  ,Case_Language__c
-			  ,Subject
-			  ,Reopened_case__c
-			  ,Account_Concerned__c
-			  ,IFAP_Country_ISO__c
-			  ,AccountId
-			  ,Account.IATACode__c
-			  ,Account.RecordType.DeveloperName
-			  ,Account.RecordType.Name
-			  ,ContactId
-			  ,ContactEmail
-			  ,RecordTypeId
-			  ,Account.Location_Class__c
-			  ,Account.Location_Type__c
-			  ,Account.Country_ISO_Code__c
-			  ,Account.Email__c
-			  ,Account.Parent.Email__c
-			  ,Ownerid
-			  ,Previous_case_owner__c
-			  ,Last_Status_Change__c
-			  ,Origin
-			  ,CaseArea__c
-			  ,Priority
+				,CreatedDate
+				,CaseNumber
+				,Status
+				,Decision_Date__c
+				,Decision__c
+				,BSPCountry__c
+				,Reason1__c
+				,Customer_recovery__c
+				,BounceEmailCounter__c
+				,Case_Language__c
+				,Subject
+				,Reopened_case__c
+				,Account_Concerned__c
+				,IFAP_Country_ISO__c
+				,AccountId
+				,Account.IATACode__c
+				,Account.RecordType.DeveloperName
+				,Account.RecordType.Name
+				,ContactId
+				,ContactEmail
+				,RecordTypeId
+				,Account.Location_Class__c
+				,Account.Location_Type__c
+				,Account.Country_ISO_Code__c
+				,Account.Email__c
+				,Account.Parent.Email__c
+				,Ownerid
+				,Previous_case_owner__c
+				,Last_Status_Change__c
+				,Origin
+				,CaseArea__c
+				,Priority
 		  FROM Case
 		  WHERE Id=:objectId
 		  Limit 1];
@@ -101,28 +109,32 @@ public without sharing class TIDSUtil{
 		return businessProfile;
 	}
 	//Gets all the sholderholders with the percentage and Owners
-	public static List<AMS_Account_Role__c> tidsShareholders(String accountId){
-		final Id ownershipId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
-		List<AMS_Account_Role__c> shareholders = [SELECT Id, 
-				Percentage__c, 
-				Owner_Category__c, 
-				Owner_Name__c, 
-				Owner_Email__c,
-				Account__c, 
-				RecordTypeId, 
-				Owner_Account__c 
-		  FROM AMS_Account_Role__c
-		  WHERE Account__r.Id=:accountId 
-		  AND Active__c=true 
-		  AND RecordTypeId=:ownershipId];
-		  
+	//Active=true will be displayed only and kept
+	//Active=false will be deleted
+	public static List<AMS_Account_Role__c> tidsShareholders(String accountId, boolean isActiveOnly, boolean isOnlyOwnership){
+		boolean isActive=true;
+		boolean isDeactivated=false;
+		String query='Select Id, Percentage__c,Owner_Category__c,Owner_Name__c,Owner_Email__c,Account__c,RecordTypeId,Active__c, Owner_Account__c '+
+					' From AMS_Account_Role__c Where Account__c=:accountId';
+		if (isActiveOnly){
+			query +=' and Active__c=true';
+		}
+		if (isOnlyOwnership){
+			final Id ownershipId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
+			query +=' and RecordTypeId=\''+ownershipId+'\'';
+		}
+		List<AMS_Account_Role__c> shareholders = Database.query(query);
 		return shareholders;
 	  }
 	//composes the returned error message  
 	public static String ComposeMessage(Database.Error error){
 		String errormessage = '';
-		if (error != null){errormessage = error.getStatusCode() + ': ' + error.getMessage();}
-		if (error != null){errormessage += ' fields that affected this error: ' + error.getFields();}
+		if (error != null){
+			errormessage = error.getStatusCode() + ': ' + error.getMessage();
+		}
+		if (error != null){
+			errormessage += ' fields that affected this error: ' + error.getFields();
+		}
 		return errormessage;
 	}
 	
@@ -130,7 +142,9 @@ public without sharing class TIDSUtil{
 	@AuraEnabled(cacheable=false)
 	public static boolean deleteFiles(String attachmentid){
 		List<Attachment> attachments = getAttachments(false,' WHERE Id=\''+attachmentid+'\' AND (NOT Name LIKE \'%.json\')',' LIMIT 1');
-		if (attachments.size() > 0){delete attachments;}
+		if (attachments.size() > 0){
+			delete attachments;
+		}
 		return true;
 	}
 	
@@ -147,11 +161,13 @@ public without sharing class TIDSUtil{
 		return getAttachment(services.Id, TIDS_Constant.TIDSCONFIGURATIONFILE);
 	}
    //reads the tids configuration
-   @AuraEnabled(cacheable=false)
-   public static Attachment  getTermsAndConditions(){
+	@AuraEnabled(cacheable=false)
+	public static Attachment  getTermsAndConditions(){
 		Portal_Applications__c services = getTIDSService();
 		List<Attachment> attachments = getAttachments(false,' WHERE parentId=\''+services.id+'\' AND name=\''+TIDS_Constant.TIDSTERMSANDCONDITIONS+'\'',' LIMIT 1');
-		if (attachments.size()>0) {return attachments[0];}
+		if (attachments.size()>0) {
+			return attachments[0];
+		}
 		return null;
 	}
 	//returns the portal Tids Service Information
@@ -168,20 +184,29 @@ public without sharing class TIDSUtil{
 	//Returns the configuration .json to drive the menu
 	//and the forms (Address, Mailing...)
 	public static String getSettings(String parentid, string type){
-		if (String.isEmpty(parentid)){return null;}
+		if (String.isEmpty(parentid)){
+			return null;
+		}
 		parentid = String.escapeSingleQuotes(parentid.trim());
-	   //read the settings file
+		//read the settings file
 		List<Attachment> newsettings = getAttachments(true,' WHERE parentId=\''+parentid+'\' AND name=\''+type+'\'',' LIMIT 1');
-		if (newsettings.size() > 0){Blob body = newsettings[0].Body;return body.toString();}
+		if (newsettings.size() > 0){
+			Blob body = newsettings[0].Body;
+			return body.toString();
+		}
 		// return the Body Content
 		return null;
 	}
 	//Returns the lastest attachment body content
 	public static String getAttachment(String parentId, String fileName){
 		String result = '';
-		if (parentId==null){return result;}
+		if (parentId==null){
+			return result;
+		}
 		List<Attachment> attachments = getAttachments(true, ' WHERE parentId=\''+parentid+'\' AND name=\''+filename+'\'',' ORDER BY CreatedDate DESC LIMIT 1');
-		if (attachments.size() > 0){result = EncodingUtil.base64Decode(EncodingUtil.base64Encode(attachments.get(0).Body)).toString();}
+		if (attachments.size() > 0){
+			result = EncodingUtil.base64Decode(EncodingUtil.base64Encode(attachments.get(0).Body)).toString();
+		}
 		return result;
 	}
 	
@@ -194,9 +219,15 @@ public without sharing class TIDSUtil{
 		List<Case> cases = new List<Case>(); 
 		cases = [Select Id, Status From Case Where Id=:parentid Limit 1];
 		newdoc.isError=0;
-		if (cases.size()==0) {newdoc.isError=1;}
-		if (cases[0].status=='Closed') {newdoc.isError=2;}
-		if (newdoc.isError==0) {newdoc.documents=lstConDocs;}
+		if (cases.size()==0) {
+			newdoc.isError=1;
+		}
+		if (cases[0].status==TIDS_Constant.IS_CLOSED) {
+			newdoc.isError=2;
+		}
+		if (newdoc.isError==0) {
+			newdoc.documents=lstConDocs;
+		}
 		return newdoc;
 	}
 	private static list<Attachment> getAttachments(boolean isBodyIncluded, String selectWhere, String selectOrder){
@@ -226,7 +257,7 @@ public without sharing class TIDSUtil{
 		Blob attachmentBody = Blob.valueOf(payload);
 		newAttachment.Body = attachmentBody;
 		upsert newAttachment;
-	}    
+	}
 
 	//Save the upload file from the supporting document lwc interface
 	@AuraEnabled(cacheable=false)
@@ -240,9 +271,13 @@ public without sharing class TIDSUtil{
 		Attachment attachment1 = new Attachment();
 		if (isUnique){
 			List<Attachment> newsettings = getAttachments(false,' WHERE parentId=\''+parentid+'\' AND name=\''+filename+'\'',' LIMIT 1');
-			if (newsettings.size() > 0){attachment1.Id = newsettings[0].Id;}
+			if (newsettings.size() > 0){
+				attachment1.Id = newsettings[0].Id;
+			}
 		}
-		if (attachment1.Id == null){attachment1.Name = filename;attachment1.ParentId = parentid;}
+		if (attachment1.Id == null){
+			attachment1.Name = filename;attachment1.ParentId = parentid;
+		}
 		//Blob body = Blob.valueOf(base64data);
 		Blob body = EncodingUtil.Base64Decode(base64data);
 		attachment1.body = body;
@@ -260,7 +295,9 @@ public without sharing class TIDSUtil{
 				}
 			}
 		}
-		if (errormessage!=''){return;}
+		if (errormessage!=''){
+			return;
+		}
 	}
 	@AuraEnabled(cacheable=true)
 	public static List<ValueLabel> getGDSValues(){
@@ -280,7 +317,7 @@ public without sharing class TIDSUtil{
 	public static List<ValueLabel> getFocusValues(){
 		return getPicklistValues('FOCUSVALUES', 'Name');
 	}
-   
+
 	@AuraEnabled(cacheable=true)
 	public static List<ValueLabel> companyTypes(){
 		return getPicklistValues('LGLTYP', 'Name');
@@ -314,8 +351,12 @@ public without sharing class TIDSUtil{
 									String.escapeSingleQuotes(orderBy);
 		List<GDP_Reference_Table__c> gdpValues = Database.query(query);
 		for (GDP_Reference_Table__c gdpValue : gdpValues){
-			if (criteria=='AIRSYS') {values.add(new ValueLabel(gdpValue.Corresponding_AMS_Code__c, gdpValue.Name));}
-			if (criteria!='AIRSYS') {values.add(new ValueLabel(gdpValue.Code__c, gdpValue.Name));}
+			if (criteria=='AIRSYS') {
+				values.add(new ValueLabel(gdpValue.Corresponding_AMS_Code__c, gdpValue.Name));
+			}
+			if (criteria!='AIRSYS') {
+				values.add(new ValueLabel(gdpValue.Code__c, gdpValue.Name));
+			}
 		}
 		return values;
 	}
@@ -332,7 +373,9 @@ public without sharing class TIDSUtil{
 	@InvocableMethod
 	public static void tidsNotifications(List<String> caseId){
 		getTidsCases(caseId[0],false);
-		if (cases.size()==0) {return;}
+		if (cases.size()==0) {
+			return;
+		}
 		Case tidscase = cases[0];
 		Id whatId = tidscase.AccountId;
 		Id refId = tidscase.ContactId;
@@ -360,7 +403,9 @@ public without sharing class TIDSUtil{
 		&& tidscase.Subject==TIDS_Constant.CASE_SUBJECT_BRANCH){
 			//BR Approved
 			Account lastbranch = [Select Id FROM Account Where ParentId=:tidscase.AccountId Order by CreatedDate Desc Limit 1]; 
-			if (lastbranch!=null) {whatId= lastbranch.Id;}
+			if (lastbranch!=null) {
+				whatId= lastbranch.Id;
+			}
 			template='TIDS_BR_Approved_Notification';
 		}else if (tidscase.Status==TIDS_Constant.IS_CUSTOMER
 		&& String.isEmpty(tidscase.Decision__c)
@@ -379,7 +424,9 @@ public without sharing class TIDSUtil{
 		&& tidscase.Subject==TIDS_Constant.CASE_SUBJECT_VIRTUAL_BRANCH){
 			//VB Approved
 			Account lastbranch = [Select Id FROM Account Where ParentId=:tidscase.AccountId Order by CreatedDate Desc Limit 1];
-			if (lastbranch!=null) {whatId= lastbranch.Id;}			
+			if (lastbranch!=null) {
+				whatId= lastbranch.Id;
+			}			
 			template='TIDS_VB_Approved_Notification';
 		}else if (tidscase.Status==TIDS_Constant.IS_CUSTOMER
 		&& String.isEmpty(tidscase.Decision__c)
@@ -450,29 +497,50 @@ public without sharing class TIDSUtil{
 			template='TIDS_VB_Reinstatement_Notification';
 		}
 		//no template found for this conditions
-		if (string.isEmpty(template)) {return;}
+		if (string.isEmpty(template)) {
+			return;
+		}
 
-		final string tidsadminemail = getTIDSMetadataError(TIDS_Constant.TIDS_ADM_EMAIL);
 		sendNotification(whatId,
 						refId, 
-						template,  
-						tidsadminemail );
-	}	
-	//Sends notifications to the client
-	public static void sendNotification(Id whatId, Id refId, String emailTemplate, String tidsadminemail ){
+						getEmailTemplateId(template),  
+						getTIDSMetadataError(TIDS_Constant.TIDS_ADM_EMAIL));
+	}
+
+	//Return the email Template Id
+	public static Id getEmailTemplateId(string emailTemplate){
 		List<EmailTemplate> emailtemp = [SELECT Id
 		  FROM EmailTemplate
 		  WHERE DeveloperName =:emailTemplate LIMIT 1];
-		if (emailtemp.size()==0) {return;}
-
+		if (emailtemp.size()==0) {
+			return null;
+		}
+		return emailtemp[0].Id;
+	}	
+	//Sends notifications to the client
+	public static void sendNotification(Id whatId, Id refId, Id templateId, String tidsadminemail ){
+		if (!String.isBlank(templateId)) {
+			postNotification(whatId, refId, templateId, null, tidsadminemail);
+		}
+	}
+	//Physically post the email using template or body content
+	//If the refId is not informed the email goes to the Tids admin
+	public static void postNotification(Id whatId, Id refId, Id templateId, List<String> bodyContent, String tidsadminemail){
 		Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
 		List<OrgWideEmailAddress> owea = new List<OrgWideEmailAddress>();
 		owea = [select Id from OrgWideEmailAddress where Address =:tidsadminemail Or DisplayName=:tidsadminemail Limit 1];
-		if (owea.size() > 0){email.setOrgWideEmailAddressId(owea[0].Id);}  
-	
-		email.setTemplateId(emailtemp[0].Id);
-		email.setTargetObjectId(refId);
-		email.setWhatId(whatId);    
+		if (owea.size() > 0){
+			email.setOrgWideEmailAddressId(owea[0].Id);
+		}
+		if (!String.isBlank(templateId)){
+			email.setTemplateId(templateId);
+			email.setTargetObjectId(refId);
+			email.setWhatId(whatId);
+		}else{
+			email.setSubject(bodyContent[0]);
+			email.setPlainTextBody(bodyContent[1]);
+			email.setToAddresses(new List<String>{tidsadminemail});
+		}
 		Messaging.sendEmail(new List<Messaging.SingleEmailMessage>{ email });
 	}
 	
@@ -480,7 +548,9 @@ public without sharing class TIDSUtil{
 	//Replace elements in the data
 	public static string getTIDSMetadataError(String errorCondition){
 		getTIDSMetadata(errorCondition);
-		if (metadata.Visit_URL__c!=null) {return metadata.Visit_URL__c;}
+		if (metadata.Visit_URL__c!=null) {
+			return metadata.Visit_URL__c;
+		}
 		return metadata.Subtitle__c;
 	}
 	//Gets the TIDSMetadata record based on the error Condition (developername)
@@ -507,9 +577,13 @@ public without sharing class TIDSUtil{
 			FROM TIDS_Error_Message__mdt
 			WHERE DeveloperName=:errorCondition LIMIT 1];
 		
-		if (metadatas.size()==0) {return metadata;}
+		if (metadatas.size()==0) {
+			return metadata;
+		}
 		metadata=metadatas[0];
-		if (replaceby!=null){contentReplace();}
+		if (replaceby!=null){
+			contentReplace();
+		}
 		return metadata;
 	}
 	//replaces the content information for the conditions
@@ -525,7 +599,9 @@ public without sharing class TIDSUtil{
 		integer i=0;
 		List<String> toreplace = new List<String>{'{@email}','{@Case}','{@Case Status}','{@ApplicationDecision}','{@CreatedDate}'};
 		for(String o:toreplace){
-			if (replaceby[i]==null) {replaceby[i]='';}
+			if (replaceby[i]==null) {
+				replaceby[i]='';
+			}
 			content=content.replace(o,replaceby[i]);
 			i++;
 		}
@@ -595,7 +671,9 @@ public without sharing class TIDSUtil{
 			WHERE Status=:caseStatus
 				AND AccountId=:accountId
 				AND RecordTypeId=:TIDSUtil.getTidsRecordTypeId() LIMIT 1];
-		if (cases.size() > 0){tidscase = cases[0];}
+		if (cases.size() > 0){
+			tidscase = cases[0];
+		}
 		return tidscase;
 	}
 }
