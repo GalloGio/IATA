@@ -1,19 +1,5 @@
 global with sharing class IDCardWebService {
 
-	@RemoteAction
-	public static final String WS_SUCCESS ='Success';
-	@RemoteAction
-	public static final String WS_FAILURE ='Failure';
-
-	@RemoteAction
-	webService static boolean SessionIsValid() {
-
-		return true;
-	}
-
-
-	private static Map<String,String> idcardAppRT = null;
-
 	/**
 	This method will process and ID card applicsation :
 	requirement
@@ -29,7 +15,7 @@ global with sharing class IDCardWebService {
 	*/
 	@remoteAction
 	webservice static String[] processKeyAccountSingleApplication(String id, String accountId,String sessionId){
-		String[] result =new String[]{IDCardWebService.WS_FAILURE, ''};
+		String[] result =new String[]{'Failure', ''};
 		ID_Card_Application__c singleApp  = null;
 		list<string> lsFields = TransformationHelper.selectAllWritableFieldsByCurrentUser('ID_Card_Application__c');
 		system.debug(LoggingLevel.ERROR,'[processKeyAccountSingleApplication] Start processing Single application:  '+id+ ' and session id to use ='+sessionId);
@@ -70,7 +56,7 @@ global with sharing class IDCardWebService {
 					IDCardUtilWithoutSharing.saveCommittedICA(singleApp, id);
 					//rename the picture
 					system.debug(LoggingLevel.ERROR,'[processKeyAccountSingleApplication] call web service to rename picture with new name:');
-					IdCardUtil.renameIDCardPhotoOfContact(singleApp.Id,'',sessionid);
+					IdCardUtil.renameIDCardPhotoOfContact(id,'',sessionid);
 
 				}
 				else{
@@ -114,7 +100,7 @@ global with sharing class IDCardWebService {
 				update acase;
 				*/
 
-				result[0] = IDCardWebService.WS_SUCCESS;
+				result[0] = 'Success';
 				DevsTools.sendSFDevsAlertMessage('Successfull processing of ID card :'+id, 'Cause : \n ');
 				System.debug(LoggingLevel.ERROR,'[processKeyAccountSingleApplication]  The case has status' +aCase.status );
 			}
