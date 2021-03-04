@@ -578,16 +578,19 @@ export default class CwResultsPageContainer extends LightningElement {
 		this.isLoading = true;
 		this.selectedPage++;
 		this.paginateLogic();
+		window.scrollTo(0, 0);
 	}
 	previouspage(event) {
 		this.isLoading = true;
 		this.selectedPage--;
 		this.paginateLogic();
+		window.scrollTo(0, 0);
 	}
 	gotopage(event) {
 		this.isLoading = true;
 		this.selectedPage = event.detail;
 		this.paginateLogic();
+		window.scrollTo(0, 0);
 	}
 
 	paginateLogic() {

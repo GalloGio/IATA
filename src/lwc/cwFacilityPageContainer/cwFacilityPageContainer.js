@@ -264,7 +264,7 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 
 	get getIATAIcon() {
 		if (this.facility) {
-			return getIataSrc(this.facility.recordTypeDevName, this.facility.location, this.facility.locationClass, resources);
+			return getIataSrc(this.facility.IATA_icon, this.facility.recordTypeDevName, this.facility.location, this.facility.locationClass, resources);
 		}
 		return "";
 	}
@@ -273,7 +273,7 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 		let style = "";
 		if (this.facility) {
 			if (this.facility.IATA_icon) {
-				let image = getIataSrc(this.facility.recordTypeDevName, this.facility.location, this.facility.locationClass, resources);
+				let image = getIataSrc(this.facility.IATA_icon, this.facility.recordTypeDevName, this.facility.location, this.facility.locationClass, resources);
 				let cssClass = " align-middle ml-2";
 				if (image.includes("cns-endorsed-agent")) {
 					cssClass += " height-20";
@@ -1146,7 +1146,7 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 
 	tooltipText() {
 		if (this.facility && this.label) {
-			return getIataTooltip(this.facility.recordTypeDevName, this.facility.location, this.facility.locationClass, this.label);
+			return getIataTooltip(this.facility.IATA_icon, this.facility.recordTypeDevName, this.facility.location, this.facility.locationClass, this.label);
 		}
 
 		return "";

@@ -12,7 +12,9 @@ const STATION_MANAGER = 'station manager';
 const FACILITY_MANAGER = 'facility manager';
 const COMPANY_ADMIN = 'company admin';
 const AUDIT_SCHEDULE = 'audit schedule';
-const STATION_MANAGERS = 'station managers';
+const AUDIT_REQUEST_SENT = 'audit request sent';
+const AUDIT_REQUEST = 'audits requested';
+const MANAGER_USER_PERMISSION = 'manager user permission';
 const STATION = 'station';
 const PENDING_USER_APPROVAL = 'pending user approval';
 const MY_REQUESTS = 'my requests';
@@ -21,8 +23,9 @@ const CONFLICT = 'conflict';
 const STATION_CREATION = 'creation';
 const APPROVED = 'approved';
 const REJECTED = 'rejected';
-const STATION_MANAGER_REMOVAL = 'remove station manager';
-const STATION_MANAGER_REMOVAL_REQ = 'station manager removal';
+const REQUEST_SENT = 'request sent';
+const STATION_MANAGER_REQUEST_SENT = 'station manager removal request sent';
+const STATION_MANAGER_REMOVAL = 'remove station manager rights';
 const STATION_MANAGER_REMOVAL_OTHER_USER = 'station manager rights removed';
 export default class CwPrivateNotifications extends LightningElement {
 	initialized = false;
@@ -104,56 +107,45 @@ export default class CwPrivateNotifications extends LightningElement {
 	descriptionHasValidValue(description) {
 		return description.includes(REMOTE) || description.includes(VALIDATION) ||
 		description.includes(PENDING_APPROVAL) ||
+		description.includes(REJECTED) ||
 		description.includes(STATION_MANAGER_REMOVAL) ||
-		description.includes(STATION_MANAGER_REMOVAL_REQ) ||
 		description.includes(STATION_MANAGER_REMOVAL_OTHER_USER) ||
 		description.includes(STATION_MANAGER) ||
+		description.includes(STATION_MANAGER_REQUEST_SENT) ||
+		description.includes(REQUEST_SENT) ||
 		description.includes(FACILITY_MANAGER) ||
 		description.includes(COMPANY_ADMIN) ||
-		description.includes(AUDIT_SCHEDULE);
+		description.includes(AUDIT_SCHEDULE) || description.includes(AUDIT_REQUEST_SENT);
 	}
 
 	generateNotificationDestiny(elem, description) {
-
 		let destiny; 
-		if(description.includes(PENDING_APPROVAL) && this.notificationStationIsDefined(elem)){
-			if (elem.CreatedById === this.userInfo.Id || description.includes(STATION)){
-				destiny = MY_REQUESTS;
-			}
-			else{
-				destiny = PENDING_USER_APPROVAL;
-			}
-		}
-		else if(description.includes(STATION_CREATION)){
-			if (description.includes(APPROVED)){
-				destiny = STATION;
-			}
-			else{
-				destiny = MY_REQUESTS;
-			}
-		}
-		else if(description.includes(CONFLICT)){
+			
+		if(description.includes(CONFLICT)){
 			destiny = CONFLICT;
-		}
-		else if(description.includes(PENDING_APPROVAL)){
-			destiny = PENDING_USER_APPROVAL;
-		}
-		else if(description.includes(AUDIT_SCHEDULE)){
+		}else if(description.includes(AUDIT_SCHEDULE)){
 			destiny = AUDIT_SCHEDULE;
-		}
-		else if(description.includes(COMPANY_ADMIN) || description.includes(STATION_MANAGER) || description.includes(FACILITY_MANAGER)){
-			if (description.includes(APPROVED)){
-				destiny = STATION;
-			}else if(description.includes(STATION_MANAGER_REMOVAL) || description.includes(STATION_MANAGER_REMOVAL_REQ) || description.includes(STATION_MANAGER_REMOVAL_OTHER_USER)){
-				destiny = MY_REQUESTS;
-			}else{
-				destiny = PENDING_USER_APPROVAL;
-			}
-		}                
-		else if(description.includes(REMOTE) || description.includes(VALIDATION)){
+		}else if(description.includes(AUDIT_REQUEST_SENT)){
+			destiny = AUDIT_REQUEST;
+		}else if(this.notificationStationIsDefined(elem) && 
+				(description.includes(REMOTE) || description.includes(VALIDATION) ||
+				(description.includes(STATION_CREATION) && description.includes(APPROVED)) ||
+				((description.includes(STATION_MANAGER) || description.includes(FACILITY_MANAGER)) && (description.includes(APPROVED) || description.includes(STATION_MANAGER_REMOVAL_OTHER_USER))
+				))){
 			destiny = STATION;
-		}
-		else if(this.notificationStationIsDefined(elem)){
+		}else if((elem.CreatedById === this.userInfo.Id && (description.includes(STATION_MANAGER_REQUEST_SENT) || description.includes(STATION_CREATION))) ||
+				(((description.includes(COMPANY_ADMIN) || description.includes(STATION_MANAGER) || description.includes(FACILITY_MANAGER)) && (description.includes(REQUEST_SENT) && !description.includes(STATION_MANAGER_REMOVAL_OTHER_USER)))) ||
+				description.includes(REJECTED)){
+			destiny = MY_REQUESTS;
+		}else if(elem.CreatedById !== this.userInfo.Id && description.includes(PENDING_APPROVAL)){
+			destiny = PENDING_USER_APPROVAL;
+		}else if(this.notificationStationIsDefined(elem) && elem.CreatedById !== this.userInfo.Id && description.includes(STATION_CREATION)){
+			destiny = PENDING_STATION_APPROVAL;
+		}else if(elem.CreatedById !== this.userInfo.Id && description.includes(STATION_MANAGER_REQUEST_SENT)){
+			destiny = MANAGER_USER_PERMISSION;
+		}else if(description.includes(COMPANY_ADMIN) && description.includes(APPROVED)){
+			destiny = COMPANY_ADMIN;
+		}else if(this.notificationStationIsDefined(elem)){//Default
 			destiny = STATION;
 		}
 
@@ -188,46 +180,33 @@ export default class CwPrivateNotifications extends LightningElement {
 
 		if(destiny === STATION){
 			url = '#ID:' + event.currentTarget.getAttribute("data-id");
-		}
-		else if(destiny === PENDING_STATION_APPROVAL){
+		}else if(destiny === PENDING_STATION_APPROVAL){
 			url = '#Pending Facility Approvals';
-		}
-		else if(destiny === PENDING_USER_APPROVAL){
-			url = '#Pending User Approvals';
-			
-		}
-		else if(destiny === STATION_MANAGERS){
-			url = '#Station Managers';
-			
-		} 
-		else if(destiny === COMPANY_ADMIN){
-			url = '#Company Admins';
-			
-		}
-		else if(destiny === AUDIT_SCHEDULE){
+		}else if(destiny === PENDING_USER_APPROVAL){
+			url = '#Pending User Approvals';			
+		}else if(destiny === COMPANY_ADMIN){
+			url = '#Company Admins';			
+		}else if(destiny === AUDIT_SCHEDULE){
 			url = '#Schedule Audits';
-		}  
-		else if(destiny === CONFLICT){
+		}else if(destiny === AUDIT_REQUEST){
+			url = '#Audits Requested';
+		}else if(destiny === CONFLICT){
 			url = '#' + this.label.capability_management;
-		}
-		else if(destiny === MY_REQUESTS){
-			url = '#My Requests';
-			
-		}  
-		else if(destiny === REMOTE){
+		}else if(destiny === MY_REQUESTS){
+			url = '#My Requests';			
+		}else if(destiny === MANAGER_USER_PERMISSION){
+			url = '#Manager User Permission';
+		}else if(destiny === REMOTE){
 			let description = event.currentTarget.getAttribute("data-description").toLowerCase();
 			//redirection depend to the action...
 			if(description.includes('granted') || description.includes('approved') || description.includes('accepted')){
-				url = '#ID:' + event.currentTarget.getAttribute("data-id");
-				
+				url = '#ID:' + event.currentTarget.getAttribute("data-id");				
 			}
 			else if(description.includes('expired') || description.includes('rejected')){
-				url = '#Remote Validation History';
-				
+				url = '#Remote Validation History';				
 			}
 			else{
-				url = this.gxaUrl;
-				
+				url = this.gxaUrl;				
 			}
 		}
 
