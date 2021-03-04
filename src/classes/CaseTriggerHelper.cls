@@ -31,6 +31,20 @@ public with sharing class CaseTriggerHelper {
 	private static final string complaintRT = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ComplaintIDFS');
 	private static List<Id> portalPendingClosureRecordTypes;
 
+	public static Map<String, FDS_KPI_Reporting__c> MAP_ACTION_TO_KPI_REPORTING {
+		get{
+			if (MAP_ACTION_TO_KPI_REPORTING == null) {
+				MAP_ACTION_TO_KPI_REPORTING = new Map<String, FDS_KPI_Reporting__c>();
+				for(FDS_KPI_Reporting__c rep :
+						[SELECT Id, Type_Of_Action__c FROM FDS_KPI_Reporting__c WHERE Name IN: actionTypes AND Type_Of_Action__c IN: actionTypes]) {
+							MAP_ACTION_TO_KPI_REPORTING.put(rep.Type_Of_Action__c, rep);
+				}
+			}
+			return MAP_ACTION_TO_KPI_REPORTING;
+		}
+		set;
+	}
+
 	public static void publishPlatformEvent(Map<Id,sObject> sObjectMap, string platformEventName, string objectSource, boolean isInsert, boolean isUpdate, boolean isDelete, boolean isUndelete){
 		if((Limits.getLimitQueueableJobs() - Limits.getQueueableJobs()) > 0 && !System.isFuture() && !System.isBatch()) {
 			System.enqueueJob(new PlatformEvents_Helper(sObjectMap, platformEventName, objectSource, isInsert, isUpdate, isDelete, isUndelete));
@@ -54,22 +68,17 @@ public with sharing class CaseTriggerHelper {
 		}
 
 		List<KPI_Value__c> kpiValuesToInsert = new List<KPI_Value__c>();
-		Map<String, FDS_KPI_Reporting__c> actionToKPIReportingMap = new Map<String, FDS_KPI_Reporting__c>();
 
-		List<FDS_KPI_Reporting__c> curKPIReportings = [SELECT Id, Type_Of_Action__c FROM FDS_KPI_Reporting__c WHERE Name IN: actionTypes AND Type_Of_Action__c IN: actionTypes];
-
-		for(FDS_KPI_Reporting__c rep : curKPIReportings)
-				actionToKPIReportingMap.put(rep.Type_Of_Action__c, rep);
-		if(actionTypes.size() != actionToKPIReportingMap.size()) {
-				// a KPI reporting for an action type is missing, abort, they all should be present
-				System.debug('CaseTriggerHelper: KPI report for one of action types not present, aborting.');
-				return;
+		if(actionTypes.size() != MAP_ACTION_TO_KPI_REPORTING.size()) {
+			// a KPI reporting for an action type is missing, abort, they all should be present
+			System.debug('CaseTriggerHelper: KPI report for one of action types not present, aborting.');
+			return;
 		}
 
-		String kpiReportingClosureId = actionToKPIReportingMap.get(CASE_ACTION_CASE_CLOSURE).Id;
-		String kpiReportingEscalationId = actionToKPIReportingMap.get(CASE_ACTION_CASE_ESCALATION).Id;
-		String kpiReportingReopeningId = actionToKPIReportingMap.get(CASE_ACTION_CASE_REOPENING).Id;
-		String kpiReportingNOIId = actionToKPIReportingMap.get(CASE_ACTION_SEND_NOI).Id;
+		String kpiReportingClosureId = MAP_ACTION_TO_KPI_REPORTING.get(CASE_ACTION_CASE_CLOSURE).Id;
+		String kpiReportingEscalationId = MAP_ACTION_TO_KPI_REPORTING.get(CASE_ACTION_CASE_ESCALATION).Id;
+		String kpiReportingReopeningId = MAP_ACTION_TO_KPI_REPORTING.get(CASE_ACTION_CASE_REOPENING).Id;
+		String kpiReportingNOIId = MAP_ACTION_TO_KPI_REPORTING.get(CASE_ACTION_SEND_NOI).Id;
 
 		Set<Id> allConsidered = new Set<Id>();
 		Set<Id> consideredForClosure = new Set<Id>();
