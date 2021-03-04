@@ -1,4 +1,4 @@
-public with sharing class IDCardLoginController extends IdCardAbstractController {
+public without sharing class IDCardLoginController extends IdCardAbstractController {
 
 
 	public String IATACodeLocation {get; set;}

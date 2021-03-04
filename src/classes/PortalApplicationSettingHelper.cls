@@ -70,7 +70,7 @@ public with sharing class PortalApplicationSettingHelper {
 				Boolean newValue = Boolean.ValueOf(contactNew.get(visibility.Checkbox_Fieldname__c));
 				Boolean oldValue = contactOld==null? !newValue: Boolean.ValueOf(contactOld.get(visibility.Checkbox_Fieldname__c));
 				if (newValue==true && oldValue==false && contactNew.Account!=null
-					&&( visibility.Location_Class__c == WILDCARD || visibility.Location_Class__c == contactNew.Account.Location_Class__c)
+					&&( visibility.Location_Class__c == WILDCARD || (String.isNotEmpty(visibility.Location_Class__c) && visibility.Location_Class__c.indexOf(contactNew.Account.Location_Class__c) > -1))
 					&&( visibility.Location_Type__c == WILDCARD || visibility.Location_Type__c == contactNew.Account.Location_Type__c)
 					&&( checkCountry(visibility.Country__c, contactNew.Account.Country_ISO_Code__c))
 				) {
@@ -100,7 +100,7 @@ public with sharing class PortalApplicationSettingHelper {
 				Boolean newValue = Boolean.ValueOf(contactNew.get(visibility.Checkbox_Fieldname__c));
 				Boolean oldValue = Boolean.ValueOf(contactOld.get(visibility.Checkbox_Fieldname__c));
 				if (newValue==false && oldValue==true && contactNew.Account!=null
-					&&( visibility.Location_Class__c == WILDCARD || visibility.Location_Class__c == contactNew.Account.Location_Class__c)
+					&&( visibility.Location_Class__c == WILDCARD || (String.isNotEmpty(visibility.Location_Class__c) && visibility.Location_Class__c.indexOf(contactNew.Account.Location_Class__c) > -1))
 					&&( visibility.Location_Type__c == WILDCARD || visibility.Location_Type__c == contactNew.Account.Location_Type__c)
 					&&( checkCountry(visibility.Country__c, contactNew.Account.Country_ISO_Code__c))
 				) {
