@@ -1267,7 +1267,7 @@ global without sharing class ISSP_OperationalCalendarController {
 		if(option == 'allservices') {
 			List<Services_Rendered__c> services = [SELECT ISO_Country_Code__c
 													 FROM Services_Rendered__c
-													 WHERE Services_Rendered_to_Airline__c = :accountId AND ISO_Country_Code__c <> null];
+													 WHERE Services_Rendered_By__c = :accountId AND ISO_Country_Code__c <> null];
 			Set<String> countryCodes = new Set<String>();
 			for(Services_Rendered__c service : services) {
 				countryCodes.add(service.ISO_Country_Code__c);
