@@ -426,7 +426,7 @@
         </fields>
         <fields>
             <name>Location</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Location(s):&lt;/span&gt;&lt;/p&gt;&lt;p&gt;{!getIHubDetail.Location__r.Name}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Location:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;{!getIHubDetail.Location__r.Name}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -469,10 +469,10 @@
             <defaultValue>
                 <elementReference>getIHubDetail.Founding_Date__c</elementReference>
             </defaultValue>
-            <fieldText>Founding Date</fieldText>
+            <fieldText>Founding Year</fieldText>
             <fieldType>InputField</fieldType>
             <isRequired>false</isRequired>
-            <scale>1</scale>
+            <scale>0</scale>
         </fields>
         <fields>
             <name>Number_of_employees_Picklist</name>
@@ -508,7 +508,7 @@
             <defaultValue>
                 <elementReference>getIHubDetail.Contact_info_of_startup__c</elementReference>
             </defaultValue>
-            <fieldText>Contact info of startup</fieldText>
+            <fieldText>Startup Contact</fieldText>
             <fieldType>InputField</fieldType>
             <isRequired>false</isRequired>
         </fields>

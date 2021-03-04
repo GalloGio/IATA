@@ -264,18 +264,6 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Contact_info_of_startup__c</fullName>
-        <description>Contact information of startup</description>
-        <externalId>false</externalId>
-        <label>Contact info of startup</label>
-        <length>255</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>Contact_Phone_Number__c</fullName>
         <description>Contact Phone Number</description>
         <externalId>false</externalId>
@@ -311,6 +299,18 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Contact_info_of_startup__c</fullName>
+        <description>Contact information of startup</description>
+        <externalId>false</externalId>
+        <label>Startup Contact</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Description__c</fullName>
@@ -445,8 +445,10 @@
     </fields>
     <fields>
         <fullName>Founding_Date__c</fullName>
+        <description>Founding Year</description>
         <externalId>false</externalId>
-        <label>Founding Date</label>
+        <inlineHelpText>Format(YYYY)</inlineHelpText>
+        <label>Founding Year</label>
         <precision>4</precision>
         <required>false</required>
         <scale>0</scale>
@@ -650,7 +652,7 @@
         <deleteConstraint>SetNull</deleteConstraint>
         <description>Country</description>
         <externalId>false</externalId>
-        <label>Location(s)</label>
+        <label>Location</label>
         <referenceTo>IATA_ISO_Country__c</referenceTo>
         <relationshipLabel>IH Account Role Details</relationshipLabel>
         <relationshipName>IH_Account_Role_Details</relationshipName>
@@ -2109,7 +2111,7 @@
         <columns>NAME</columns>
         <columns>Company_Name__c</columns>
         <columns>CREATED_DATE</columns>
-        <filterScope>Mine</filterScope>
+        <filterScope>Everything</filterScope>
         <filters>
             <field>Status__c</field>
             <operation>equals</operation>
@@ -2155,7 +2157,7 @@
         <columns>CREATED_DATE</columns>
         <columns>LAST_UPDATE</columns>
         <columns>UPDATEDBY_USER</columns>
-        <filterScope>Mine</filterScope>
+        <filterScope>Everything</filterScope>
         <filters>
             <field>Status__c</field>
             <operation>equals</operation>
@@ -2175,7 +2177,7 @@
         <columns>CREATED_DATE</columns>
         <columns>LAST_UPDATE</columns>
         <columns>UPDATEDBY_USER</columns>
-        <filterScope>Mine</filterScope>
+        <filterScope>Everything</filterScope>
         <filters>
             <field>Status__c</field>
             <operation>equals</operation>
