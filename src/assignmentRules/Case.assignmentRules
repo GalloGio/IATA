@@ -775,6 +775,20 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
+            <assignedTo>Cases_CNS</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.CNSCase__c</field>
+                <operation>equals</operation>
+                <value>True</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>notEqual</operation>
+                <value>Complaint (IDFS ISS),IATA Financial Review,OSCAR Communication</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
             <assignedTo>ISS_L1_French_AMR</assignedTo>
             <assignedToType>Queue</assignedToType>
             <booleanFilter>1 AND (2 OR 6) AND 3 AND 4 AND 5</booleanFilter>
@@ -807,6 +821,20 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <field>Case.Topic__c</field>
                 <operation>equals</operation>
                 <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>Cases_CNS</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>Voicemail</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Description</field>
+                <operation>contains</operation>
+                <value>CNS Market</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -6443,20 +6471,6 @@ ISPICKVAL(Reason1__c,&quot;Support escalation&quot;),ISPICKVAL(Reason1__c,&quot;
                 <field>Case.RecordType__c</field>
                 <operation>equals</operation>
                 <value>Cases - IFG</value>
-            </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>Cases_CNS</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.CNSCase__c</field>
-                <operation>equals</operation>
-                <value>True</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.RecordTypeId</field>
-                <operation>notEqual</operation>
-                <value>Complaint (IDFS ISS),IATA Financial Review,OSCAR Communication</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -13095,20 +13109,6 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
                 <field>Case.Description</field>
                 <operation>contains</operation>
                 <value>IATAN</value>
-            </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>Cases_CNS</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.Origin</field>
-                <operation>equals</operation>
-                <value>Voicemail</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Description</field>
-                <operation>contains</operation>
-                <value>CNS Market</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>

@@ -74,6 +74,7 @@ public with sharing class IDCard_AdmUserManagmentPictureCtrl extends IDCardAbstr
 	private boolean fromAgencyChange;
 
 	public ID_Card_Application__c IDCardApplicationNR {get; set;}
+	private id AppId;
 
 	private List<Attachment> docs;
 
@@ -93,6 +94,7 @@ public with sharing class IDCard_AdmUserManagmentPictureCtrl extends IDCardAbstr
 	   isEmployee = false;
 	   detailledFees = new Map<String, decimal>();
 	   selectedITDICourses = new String[]{};
+	   AppId = null;
 
 		geographyinTravelPlanning_Description = Label.IDCard_GeographyinTravelPlanning_Description;
 		destinationGeography_Description = Label.IDCard_DestinationGeography_Description;
@@ -152,7 +154,8 @@ public with sharing class IDCard_AdmUserManagmentPictureCtrl extends IDCardAbstr
 			);
 
 			if(idcapps.size()>0){
-				IDCardApplicationNR = idcapps[0];
+				AppId = idcapps[0].Id;
+				IDCardApplicationNR = IDCardUtilWithoutSharing.retrieveCommittedICA(AppId);
 			}else{
 				Contact c = database.query(
 								  'SELECT '+TransformationHelper.getAllFields(Schema.SObjectType.Contact.fields.getMap())+
@@ -170,7 +173,7 @@ public with sharing class IDCard_AdmUserManagmentPictureCtrl extends IDCardAbstr
 			//printerr('IDCardApplicationNR.id = '+IDCardApplicationNR.id+ ' IDCardApplicationNR.Photo__c :'+IDCardApplicationNR.Photo__c);
 
 			// If there's not the photo on the application I'll look for it on the id card as well
-			if(IDCardApplicationNR.id == null || IDCardApplicationNR.Photo__c == null){
+			if(AppId == null || IDCardApplicationNR.Photo__c == null){
 				idCardTemp = [Select i.Photo__c, i.ID_Card_Application__r.Displayed_Name__c From ID_Card__c i where i.Related_Contact__r.VER_Number_2__c = :ver order by i.Valid_To_Date__c desc];
 				//printerr('idCardTemp.size() = '+idCardTemp.size());
 				// I take the photo from Id Card
@@ -553,8 +556,12 @@ public with sharing class IDCard_AdmUserManagmentPictureCtrl extends IDCardAbstr
 
 				//save image name
 				IDCardApplicationNR.IDCard_Prefered_Language__c = Language;
-				upsert IDCardApplicationNR;
-		system.debug('---------------------------- TEST IDCardApplicationNR-> Id = '+IDCardApplicationNR.id+' -  photo = '+IDCardApplicationNR.photo__c);
+				database.UpsertResult UR = IDCardUtilWithoutSharing.dbUpsertCommittedICA(IDCardApplicationNR, AppId);
+				if(UR.isSuccess())
+					AppId = UR.getId();
+				//upsert IDCardApplicationNR;
+				
+		system.debug('---------------------------- TEST IDCardApplicationNR-> Id = '+AppId+' -  photo = '+IDCardApplicationNR.photo__c);
 
 		// Constantin - 12.12.2016 - removed, no longer needed; the new cropping tool keeps the existing filename (UIR.jpg)
 		//IDCardUtil.renameIDCardPhotoOfContact(IDCardApplicationNR.ID, IDCardApplicationNR.UIR__c,Userinfo.getSessionId());   // rename photo to its old name
@@ -565,7 +572,7 @@ public with sharing class IDCard_AdmUserManagmentPictureCtrl extends IDCardAbstr
 					return null;
 				}
 				if(fromAgencyChange)
-				  return new PageReference(pagesurl.get('prefix')+'/IDCard_AdmUserManagmentAgencyChange?ImagedSaved='+IDCardApplicationNR.id);
+				  return new PageReference(pagesurl.get('prefix')+'/IDCard_AdmUserManagmentAgencyChange?ImagedSaved='+AppId);
 				return new PageReference(pagesurl.get('prefix')+'/IDCard_AdmUserForm?ver='+IDCardApplicationNR.VER_Number__c);
 
 		}
