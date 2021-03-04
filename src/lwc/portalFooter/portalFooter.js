@@ -97,13 +97,12 @@ export default class PortalFooter extends LightningElement {
         this.chagingLang = true;
         let lang = event.detail.value;
         changeUserLanguage({lang}).then(() => {    
-            let url_test = window.location.href;
-            if(url_test.includes('language')){
-                let hasAmp = new RegExp(/language\=\w[a-zA-Z_]*$/).test(url_test);
+            let urlLangCheck = window.location.href;
+            if(urlLangCheck.includes('language')){ //if doesn't have any language parameter on the url, maintain the previous behaviour otherwise it needs to be force updated on the code
+                let hasAmp = new RegExp(/language\=\w[a-zA-Z_]*$/).test(urlLangCheck); //check if there are other parameters like ec=302
                 let completeLanguage = 'language=' + lang + (hasAmp ? '' : '&');
-                url_test = url_test.replace(/language\=\w[a-zA-Z_]*&?/, completeLanguage);
-                console.log(url_test);
-                window.location.href = url_test; // Review this
+                urlLangCheck = urlLangCheck.replace(/language\=\w[a-zA-Z_]*&?/, completeLanguage); //update the language parameter on the url
+                window.location.href = urlLangCheck; // Review this
             }else{
                 window.location.reload();
             }
