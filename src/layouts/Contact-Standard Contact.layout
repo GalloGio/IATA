@@ -6,13 +6,13 @@
     <customButtons>Log_Phone_Case</customButtons>
     <customButtons>SAP_Airline_Request</customButtons>
     <customButtons>SIS_Airline_Request</customButtons>
-    <excludeButtons>DataDotComClean</excludeButtons>
     <excludeButtons>DisableCustomerPortal</excludeButtons>
     <excludeButtons>DisablePartnerPortal</excludeButtons>
     <excludeButtons>EnableCustomerPortal</excludeButtons>
     <excludeButtons>EnablePartnerPortalUser</excludeButtons>
     <excludeButtons>EnableSelfService</excludeButtons>
     <excludeButtons>LoginToPortalAsUser</excludeButtons>
+    <excludeButtons>RequestUseSfdc</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <excludeButtons>ViewCustomerPortal</excludeButtons>
     <excludeButtons>ViewSelfService</excludeButtons>
@@ -786,14 +786,9 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>Contact_Role_Name__c</fields>
-        <fields>First_Name__c</fields>
-        <fields>Last_Name__c</fields>
-        <fields>Account_Role__c.Account__c</fields>
-        <fields>Contact_Roles__c</fields>
-        <fields>Service_Rendered__c</fields>
-        <fields>RECORDTYPE</fields>
-        <fields>UniqueKey__c</fields>
+        <fields>Contact_Name__c</fields>
+        <fields>Functional_Role__c</fields>
+        <fields>Status__c</fields>
         <relatedList>Account_Contact_Role__c.Contact__c</relatedList>
     </relatedLists>
     <relatedLists>
