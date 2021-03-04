@@ -44,6 +44,7 @@ public class CW_CertificationSectionTest {
 		insert ard2;
 
 		ICG_Capability_Assignment_Group__c joinrow = new ICG_Capability_Assignment_Group__c();
+		joinrow.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('ICG_Capability_Assignment_Group__c', 'No_Certification_Required');
 		joinrow.ICG_Certification__c = certs[0].Id;
 		joinrow.Expiration_Date__c = Date.valueOf('2025-09-16');
 		joinrow.Issue_Date__c = Date.valueOf('2020-09-09');

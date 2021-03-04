@@ -49957,7 +49957,7 @@ ONE Source is the industry platform for validated aviation capability and infras
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>icg manage documents</shortDescription>
-        <value>Manage Documents</value>
+        <value>Supporting Documentation</value>
     </labels>
     <labels>
         <fullName>icg_manage_photos</fullName>
@@ -49965,7 +49965,7 @@ ONE Source is the industry platform for validated aviation capability and infras
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>icg manage photos</shortDescription>
-        <value>Manage Photos</value>
+        <value>Supporting Documentation</value>
     </labels>
     <labels>
         <fullName>icg_manage_remote_validations</fullName>
@@ -51822,6 +51822,14 @@ ONE Source is the industry platform for validated aviation capability and infras
         <protected>false</protected>
         <shortDescription>icg zip code</shortDescription>
         <value>Zip Code</value>
+    </labels>
+    <labels>
+        <fullName>icg_manage_obligations_documents</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg manage documents</shortDescription>
+        <value>Obligation Documentation Link</value>
     </labels>
     <labels>
         <fullName>idcard_replacementHeadText</fullName>

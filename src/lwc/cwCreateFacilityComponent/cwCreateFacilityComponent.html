@@ -262,7 +262,7 @@
                         <label class="slds-form-element__label" for="stationtype">{label.station_type}</label>
                         <div class="slds-form-element__control">
                             <input type="text" disabled class="slds-input" name="stationtype"
-                            data-tosca="stationtype" id="stationtype" value={companyType}>
+                            data-tosca="stationtype" id="stationtype" value={companyTypeInput}>
                         </div>
                     </div>
                 </div>
@@ -398,9 +398,9 @@
                 </div>
             </div>
             <div class="slds-form-element"> 
-                <label class="slds-form-element__label" for="email">{label.customer_email}*</label>
+                <label class="slds-form-element__label" for="email">{label.customer_email}</label>
                 <div class="slds-form-element__control">
-                    <input type="email" name="email" data-tosca="email" class="slds-input" id="email"  required
+                    <input type="email" name="email" data-tosca="email" class="slds-input" id="email"  
                         pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" 
                         value={additionalData.email}>
                 </div>
@@ -558,7 +558,7 @@
                         <br />
                         <div class="form-row">
                             <div class="col">
-                                <c-cw-handled-airlines label={label} preselected-airlines={selectedAirlines} isreadonly={summaryStep}
+                                <c-cw-handled-airlines auto-select-items={autoSelectItems} station-type={companyType} label={label} preselected-airlines={selectedAirlines} isreadonly={summaryStep}
                                     filter-text={filterTextAirlines} onselectairlines={setSelectedAirlines}>
                                 </c-cw-handled-airlines>
                             </div>
@@ -584,7 +584,7 @@
                         <br />
                         <div class="form-row">
                             <div class="col">
-                                <c-cw-handled-airlines label={label}  filter-text={filterTextOperatingCHF} 
+                                <c-cw-handled-airlines label={label} auto-select-items={autoSelectItems} station-type={companyType} filter-text={filterTextOperatingCHF} 
                                 isreadonly={summaryStep} raw-data={onAirportOperatingCHF} onselectairlines={hideCargoStations}  class="cmpOperatingCHF"></c-cw-handled-airlines>
 
                             </div>
@@ -610,7 +610,7 @@
                         <br />
                         <div class="form-row">
                             <div class="col">
-                                <c-cw-handled-airlines label={label} isreadonly={summaryStep} raw-data={onAirportRampH} filter-text={filterTextRampH} onselectairlines={hideRampHandlers}  class="cmpRampHandlers"></c-cw-handled-airlines>
+                                <c-cw-handled-airlines auto-select-items={autoSelectItems} station-type={companyType} label={label} isreadonly={summaryStep} raw-data={onAirportRampH} filter-text={filterTextRampH} onselectairlines={hideRampHandlers}  class="cmpRampHandlers"></c-cw-handled-airlines>
                             </div>
                         </div>
                     </div>
@@ -641,7 +641,7 @@
                 <div class="col-8 summarydatadiv separatorbelow">
                     <p><b>{label.station_information}</b></p>
                     <hr class="yellow-underline mb-2-5">
-                    <p>{label.station_type}: <b>{companyType}</b></p>
+                    <p>{label.station_type}: <b>{companyTypeInput}</b></p>
                     <p>{label.station_name}: <b>{formData.name}</b></p>
                     <p>{label.address}: <b>{selectedAddress}</b></p>
                     <p>{label.icg_second_address}: <b>{additionalData.stationsecondaddress}</b></p>
@@ -717,7 +717,7 @@
                         <br />
                         <div class="form-row">
                             <div class="col">
-                                <c-cw-handled-airlines label={label} preselected-airlines={selectedAirlines} isreadonly={summaryStep}
+                                <c-cw-handled-airlines label={label} auto-select-items={autoSelectItems} station-type={companyType} preselected-airlines={selectedAirlines} isreadonly={summaryStep}
                                     filter-text={filterTextAirlines}></c-cw-handled-airlines>
                             </div>
                         </div>
@@ -742,9 +742,8 @@
                         <br />
                         <div class="form-row">
                             <div class="col">
-                                <c-cw-handled-airlines label={label}  filter-text={filterTextOperatingCHF} 
+                                <c-cw-handled-airlines label={label} auto-select-items={autoSelectItems} station-type={companyType} filter-text={filterTextOperatingCHF} 
                                 isreadonly={summaryStep} raw-data={onAirportOperatingCHF} onselectairlines={hideCargoStations}></c-cw-handled-airlines>
-
                             </div>
                         </div>
                     </div>
@@ -768,7 +767,7 @@
                         <br />
                         <div class="form-row">
                             <div class="col">
-                                <c-cw-handled-airlines label={label} isreadonly={summaryStep} raw-data={onAirportRampH}
+                                <c-cw-handled-airlines label={label} auto-select-items={autoSelectItems} station-type={companyType} isreadonly={summaryStep} raw-data={onAirportRampH}
                                                 filter-text={filterTextRampH} onselectairlines={hideRampHandlers}></c-cw-handled-airlines>
                             </div>
                         </div>

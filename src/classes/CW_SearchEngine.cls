@@ -17,9 +17,8 @@ public without sharing class CW_SearchEngine {
 	private static final String STRINGOR = ' OR ';
 	/* Conditional operatorANDOR depending on one input param */
 	private static String operatorANDOR = ' OR ';
-	
-	private static List<Param> lstAfterQueryFilters = new List<Param>();
-
+	/* Filter search ids to take into account for main query purposes */
+	private static Set<Id> filteredStationIds = new Set<Id>();
 	/*Available Languages*/
 	private static final List<CW_Utilities.PicklistValue> AVAILABLE_LANGUAGES = (List<CW_Utilities.PicklistValue>) JSON.deserialize(CW_Utilities.getFacilityLanguages(), List<CW_Utilities.PicklistValue>.class);
 	/*
@@ -34,22 +33,25 @@ public without sharing class CW_SearchEngine {
 	@auraEnabled
 	public static String getInfo(String attributes, Boolean isMapQuery, Boolean getOpeningHours, Boolean getHandledAirlines, Boolean orderByOnAirport, Boolean isPendingApproval, Integer limitRecords, Integer offset, Boolean isStrongFilter) {
 		try {
+			String response;
+			List<OutputRow> lstARD = new List<OutputRow>();
+			List<ICG_Account_Role_Detail_Relationship__c> operatingStations = new List<ICG_Account_Role_Detail_Relationship__c>();
+			List<ICG_Account_Role_Detail__c> onAirportStations = new List<ICG_Account_Role_Detail__c>();
+			final List<Param> wrapperParams = (List<Param>) JSON.deserialize(attributes, List<Param>.class);			
+
 			if (isStrongFilter == true) {
 				operatorANDOR = ' AND ';
 			}
-			String response;
-			final List<Param> wrapperParams = (List<Param>) JSON.deserialize(attributes, List<Param>.class);
 			final String QUERY = generateQuery(wrapperParams, isMapQuery, getOpeningHours, getHandledAirlines, orderByOnAirport, isPendingApproval, limitRecords, offset);
 			final List<ICG_Account_Role_Detail__c> lstResults = Database.query(QUERY);
-			List<ICG_Account_Role_Detail_Relationship__c> operatingStations = new List<ICG_Account_Role_Detail_Relationship__c>();
-			List<ICG_Account_Role_Detail__c> onAirportStations = new List<ICG_Account_Role_Detail__c>();
+
 			if (getHandledAirlines == true) {
 				Set<String> airlineCodes = new Set<String>();
 				Set<String> setIATACodes = new Set<String>();
 				Set<String> setICAODesignators = new Set<String>();
 				Set<String> accountNames = new Set<String>();
 				Set<Id> nearestAirports = new Set<Id>();
-				for (ICG_Account_Role_Detail__c ard : lstResults) {
+				for (ICG_Account_Role_Detail__c ard : lstResults) {					
 					if (ard.Account_Role__r.Account__r.Airline_designator__c != null) {
 						airlineCodes.add(ard.Account_Role__r.Account__r.Airline_designator__c);
 					}
@@ -72,22 +74,18 @@ public without sharing class CW_SearchEngine {
 					onAirportStations.addAll([SELECT id, Name, RecordType.DeveloperName, Nearest_Airport__c FROM ICG_Account_Role_Detail__c WHERE Is_On_Airport__c = true AND Nearest_Airport__c IN :nearestAirports]);
 				}
 			}
-			List<OutputRow> lstARD = new List<OutputRow>();
+
 			List<ICG_Certification__c> allCertifications = [SELECT Id, Name, Label__c, Certification_Type__c, Expiration_Period__c, is_visible__C, Image__c, Order__c, Applicable_to__c FROM ICG_Certification__c WHERE is_visible__C = true ORDER BY Order__c ASC LIMIT 1000];
 			if (!lstResults.isEmpty()) {
 				/* lstARD - list account role detail == Facility rows */
-				for (ICG_Account_Role_Detail__c result : lstResults) {
+				for (ICG_Account_Role_Detail__c result : lstResults) {					
 					OutputRow row = new OutputRow(result, allCertifications, isMapQuery, getOpeningHours, getHandledAirlines, operatingStations, onAirportStations);
 					lstARD.add(row);
 				}
 			}
-
-			if (!lstAfterQueryFilters.isEmpty()) {
-				lstARD = filterResultsAfterQuery(lstARD, lstAfterQueryFilters);
-			}
 			return JSON.serialize(lstARD);
 		} catch (Exception exc) {
-			throw new AuraHandledException('exception: ' + exc);
+			throw new AuraHandledException('exception: ' + exc.getMessage());
 		}
 	}
 	/*
@@ -110,7 +108,7 @@ public without sharing class CW_SearchEngine {
 		Id rtAsgmtGroup = RecordTypeSingleton.getInstance().getRecordTypeId('ICG_Capability_Assignment_Group__c', 'Certification');
 
 		if (isMapQuery != true) {
-			querySelect = 'SELECT ' + 'Id, Pilot_Information__c, Formatted_Address__c,Hidden_Operating_Stations__c, Fleet__c, RecordType.Name, Overall_Airport_Size__c, Secondary_Address__c, RecordType.DeveloperName, Name, Customer_Service_Email__c,Customer_Service_Phone_Number__c, General_Cargo__c, ' + 'Dangerous_Goods__c,Live_Animals__c, Road_Feeder_Services__c,Pharmaceuticals__c,Perishables__c,Airmail__c, logoUrl__c,' + 'Street_Nr_FOR__c,Postal_Code_FOR__c,State_Province_FOR__c,City_FOR__c, Nearest_Airport__c, Nearest_Airport__r.Airport_Name__c, Nearest_Airport__r.Code__c, IATA_ISO_Country__r.Name, Country_FOR__c, Account_Role__r.Account__c,' + 'Account_Role__r.Account__r.RecordType.Name, Account_Role__r.Account__r.Location_Class__c, Company_FOR__c, Account_Role__r.Account__r.Name,Account_Role__r.Account__r.Airline_designator__c,Account_Role__r.Account__r.ICAO_designator__c,Account_Role__r.Account__r.IATACode__c, Number_of_Employees__c, Overall_Facility_Size_m2__c, Is_On_Airport__c,' + 'Is_Direct_Ramp_Access__c, Account_Role__r.Account__r.Business_Geo_Coordinates__Latitude__s,Account_Role__r.Account__r.Business_Geo_Coordinates__Longitude__s,' + 'Website__c,Online_Booking_System_Link__c,Available_Languages__c, Station_Geo_Coordinates__Latitude__s, Station_Geo_Coordinates__Longitude__s,' + '(Select Id, ICG_Certification__r.Name, ICG_Certification__r.Label__c, ICG_Certification__c, ICG_Certification__r.Image__c, ICG_Certification__r.Order__c, Expiration_Date__c, Issue_Date__c, Certification_Id__c, Is_Expired__c, TOLABEL(CEIV_Scope_List__c), TOLABEL(SFOC_Scope__c) from ICG_Capability_Assignment_Groups__r WHERE Is_Expired__c = false AND Is_Active__c = true AND RecordTypeId = \'' + rtAsgmtGroup + '\' ORDER BY Expiration_Date__c desc NULLS FIRST) ';
+			querySelect = 'SELECT ' + 'Id, Pilot_Information__c, Formatted_Address__c,Hidden_Operating_Stations__c, Fleet__c, RecordType.Name, Overall_Airport_Size__c, Secondary_Address__c, RecordType.DeveloperName, Name, Customer_Service_Email__c,Customer_Service_Phone_Number__c, General_Cargo__c, ' + 'Dangerous_Goods__c,Live_Animals__c, Road_Feeder_Services__c,Pharmaceuticals__c,Perishables__c,Airmail__c, logoUrl__c,' + 'Street_Nr_FOR__c,Postal_Code_FOR__c,State_Province_FOR__c,City_FOR__c, Nearest_Airport__c, Nearest_Airport__r.Airport_Name__c, Nearest_Airport__r.Code__c, IATA_ISO_Country__r.Name, Country_FOR__c, Account_Role__r.Account__c,' + 'Account_Role__r.Account__r.RecordType.Name,Account_Role__r.Account__r.RecordType.DeveloperName, Account_Role__r.Account__r.Location_Class__c, Company_FOR__c, Account_Role__r.Account__r.Name,Account_Role__r.Account__r.Airline_designator__c,Account_Role__r.Account__r.ICAO_designator__c,Account_Role__r.Account__r.IATACode__c, Number_of_Employees__c, Overall_Facility_Size_m2__c, Is_On_Airport__c,' + 'Is_Direct_Ramp_Access__c, Account_Role__r.Account__r.Business_Geo_Coordinates__Latitude__s,Account_Role__r.Account__r.Business_Geo_Coordinates__Longitude__s,' + 'Website__c,Online_Booking_System_Link__c,Available_Languages__c, Station_Geo_Coordinates__Latitude__s, Station_Geo_Coordinates__Longitude__s,' + '(Select Id, ICG_Certification__r.Name, ICG_Certification__r.Label__c, ICG_Certification__c, ICG_Certification__r.Image__c, ICG_Certification__r.Order__c, Expiration_Date__c, Issue_Date__c, Certification_Id__c, Is_Expired__c, TOLABEL(CEIV_Scope_List__c), TOLABEL(SFOC_Scope__c) from ICG_Capability_Assignment_Groups__r WHERE Is_Expired__c = false AND Is_Active__c = true AND RecordTypeId = \'' + rtAsgmtGroup + '\' ORDER BY Expiration_Date__c desc NULLS FIRST) ';
 		} else {
 			querySelect = 'Select ' + 'Id,Name, RecordType.Name,RecordType.DeveloperName, Nearest_Airport__r.Code__c,Nearest_Airport__c,Secondary_Address__c,logoUrl__c,Company_FOR__c, Account_Role__r.Account__r.Name,City_FOR__c, Country_FOR__c,' + 'Postal_Code_FOR__c,State_Province_FOR__c,Street_Nr_FOR__c,Account_Role__r.Account__r.Business_Geo_Coordinates__Latitude__s,Account_Role__r.Account__r.Business_Geo_Coordinates__Longitude__s,Station_Geo_Coordinates__Latitude__s, Station_Geo_Coordinates__Longitude__s,Account_Role__r.Account__r.Airline_designator__c,Account_Role__r.Account__r.IATACode__c,Account_Role__r.Account__r.ICAO_designator__c,' + '(Select Id, ICG_Certification__r.Name, ICG_Certification__r.Label__c, ICG_Certification__c, ICG_Certification__r.Image__c, ICG_Certification__r.Order__c, Expiration_Date__c, Issue_Date__c, Certification_Id__c, Is_Expired__c, TOLABEL(CEIV_Scope_List__c), TOLABEL(SFOC_Scope__c) from ICG_Capability_Assignment_Groups__r WHERE Is_Expired__c = false AND Is_Active__c = true AND RecordTypeId = \'' + rtAsgmtGroup + '\' ORDER BY ICG_Certification__r.Order__c asc,Expiration_Date__c desc NULLS FIRST)';
 		}
@@ -140,6 +138,8 @@ public without sharing class CW_SearchEngine {
 			v1 - 2019/08/07 - Initial version
 	*/
 	private static String getWhereClause(List<Param> wrapperParams, Boolean isPendingApproval) {
+		List<Param> lstAfterQueryFilters = new List<Param>();
+		List<ICG_Account_Role_Capability_Assignment__c> lstFilteredAssigments = new List<ICG_Account_Role_Capability_Assignment__c>();
 		String queryWhere = '';
 
 		queryWhere = isPendingApproval == true ? 'isPendingApproval__c = true' + STRINGAND : 'isApproved__c = true' + STRINGAND;
@@ -152,12 +152,18 @@ public without sharing class CW_SearchEngine {
 		//and can end in the other side of the world at -140, so that we need to fix this maxLong and MinLong query
 		Boolean fixLongitudeQuery = false;
 		for (Param param : wrapperParams) {
-			if (param.field == 'Account_Role__r.Account__r.Business_Geo_Coordinates__Longitude__s') {
+			if (param.field != null && param.field == 'Account_Role__r.Account__r.Business_Geo_Coordinates__Longitude__s') {
 				if (param.operator == '<') {
 					maxLong = Double.valueOf(param.value);
 				} else {
 					minLong = Double.valueOf(param.value);
 				}
+			}else if(param.field != null && (  param.field.equalsIgnoreCase('Account_Role_Detail_Capability__r.crstr_positions_ake__c')
+					 || param.field.equalsIgnoreCase('Account_Role_Detail_Capability__r.CRSTR_Positions_20ft_ULDs__c') 
+					 || param.field.equalsIgnoreCase('Account_Role_Detail_Capability__r.CRSTR_Positions_10ft_ULDs__c'))
+					 && param.value == 'true'){
+				param.operator = '>';
+				param.value = '0';
 			}
 		}
 		if (maxLong != null && minLong != null && maxLong < minLong) {
@@ -199,6 +205,18 @@ public without sharing class CW_SearchEngine {
 		queryWhere = booleanValues(queryWhere);
 
 		queryWhere = !String.isBlank(queryWhere) ? ' WHERE ' + queryWhere : '';
+
+		if (!lstAfterQueryFilters.isEmpty()) {
+			String query = getAdditionalQuery(lstAfterQueryFilters);
+			lstFilteredAssigments = Database.query(query);
+						
+			for(ICG_Account_Role_Capability_Assignment__c currentStation :lstFilteredAssigments){
+				filteredStationIds.add(currentStation.ICG_Account_Role_Detail__c);
+			}
+			queryWhere += !String.isBlank(queryWhere) ? ' AND ' : ' WHERE ';
+			queryWhere += ' Id IN : filteredStationIds ';
+		}
+
 		return queryWhere;
 	}
 
@@ -272,7 +290,7 @@ public without sharing class CW_SearchEngine {
 	private static List<OutputRow> filterResultsAfterQuery(List<OutputRow> lstARDinput, List<Param> lstAfterQueryFilters) {
 		List<OutputRow> lstARDoutput;
 
-		String query = getAdditionalQuery(lstARDinput, lstAfterQueryFilters);
+		String query = getAdditionalQuery(lstAfterQueryFilters);
 		List<ICG_Account_Role_Capability_Assignment__c> lstAssigments = Database.query(query);
 		if (!lstAssigments.isEmpty()) {
 			lstARDoutput = filterRowsByAssingments(lstARDinput, lstAssigments);
@@ -288,7 +306,7 @@ public without sharing class CW_SearchEngine {
 	*	@Param: List<Param> lstAfterQueryFilters - althought 
 	*   @Returns: String query to be launched
 	*/
-	private static String getAdditionalQuery(List<OutputRow> lstARDinput, List<Param> lstAfterQueryFilters) {
+	private static String getAdditionalQuery(List<Param> lstAfterQueryFilters) {
 		String querySelect = 'SELECT Id, ICG_Account_Role_Detail__c';
 		String queryFrom = ' FROM ICG_Account_Role_Capability_Assignment__c ';
 		String queryWhere = ' WHERE ';
@@ -586,7 +604,10 @@ public without sharing class CW_SearchEngine {
 				this.airmail = acr.Airmail__c;
 				this.companyId = acr.Account_Role__r.Account__c;
 				this.locationClass = acr.Account_Role__r.Account__r.Location_Class__c;
-				this.IATA_icon = (acr.RecordType.DeveloperName == 'Freight_Forwarder' && acr.Account_Role__r.Account__r.Location_Class__c == 'C');
+				this.IATA_icon = (
+					(acr.RecordType.DeveloperName == 'Freight_Forwarder' && acr.Account_Role__r.Account__r.Location_Class__c == 'C') 
+				 || (((acr.Account_Role__r.Account__r.RecordType.DeveloperName == 'Airline_Headquarters') || (acr.Account_Role__r.Account__r.RecordType.DeveloperName == 'Operator')) && (this.recordTypeDevName == 'Airline'))
+				);
 				this.CargoCom_icon = acr.RecordType.DeveloperName == 'Airline';
 				this.ListAir_icon = acr.RecordType.DeveloperName == 'Cargo_Handling_Facility';
 				this.listAccCert = acr.ICG_Capability_Assignment_Groups__r.isEmpty() ? null : acr.ICG_Capability_Assignment_Groups__r;

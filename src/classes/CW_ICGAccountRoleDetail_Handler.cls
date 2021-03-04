@@ -12,20 +12,21 @@ public with sharing class CW_ICGAccountRoleDetail_Handler {
 	 * @param			Map<Id, ICG_Account_Role_Detail__c> newMap
 	 */
 	public static void handleAfterInsert(Map<Id, ICG_Account_Role_Detail__c> newMap) {
-		futureUpdateARDs(newMap.keySet(), false);
+		updateARDs(newMap.keySet());
 		CW_OneSourceGxaProvision.provisionOrDeprovisionStations(newMap.values(), null);
+		CW_Utilities.generateAccountRoleDetailHistory(newMap.values(), null);
 	}
 	/**
 	 * @description		handler After Update
 	 * @param			Map<Id, ICG_Account_Role_Detail__c> newMap
 	 */
 	public static void handleAfterUpdate(Map<Id, ICG_Account_Role_Detail__c> newMap,Map<Id, ICG_Account_Role_Detail__c> oldMap) {
-		futureUpdateARDs(newMap.keySet(), false);
+		updateARDs(newMap.keySet());
 		if(newMap.size() == 1) {
 			CW_Utilities.sendApproveOrRejectMails(newMap.values()[0], oldMap.values()[0]);
 		}
 		CW_OneSourceGxaProvision.provisionOrDeprovisionStations(newMap.values(), oldMap);
-
+		CW_Utilities.generateAccountRoleDetailHistory(newMap.values(), oldMap);
 	}
 	/**
 	 * @description		handler After Update
@@ -37,29 +38,24 @@ public with sharing class CW_ICGAccountRoleDetail_Handler {
 	/**
 	 * @description		method to update search facilities´s fields based on formula fields
 	 * 
-	 * @param			String inputText to be modified
+	 * @param			Set<Id> ICG_Account_Role_Detail__c records to be updated
 	 */
-	public static void futureUpdateARDs(Set<Id> lstFacilities, Boolean callQueueable) {
-		if(callQueueable) {
-			System.enqueueJob(new CW_ICG_Facility_Queuable(lstFacilities));
-		} else {
-			updateSearchByFormulaValues(lstFacilities);
+	public static void updateARDs(Set<Id> lstFacilities) {
+		List<ICG_Account_Role_Detail__c> ardsToUpdate = calculateARDsNewValues(lstFacilities);
+
+		if (!ardsToUpdate.isEmpty()) {
+			Database.SaveResult [] updateResult = Database.update(ardsToUpdate, false);
 		}
 	}
-	
+
 	/**
-	 * @description		@future method to update search facilities´s fields based on formula fields
+	 * @description		method to calculate search facilities´s fields based on formula fields
 	 * 
-	 * @param			List<Id> lstFacilities
+	 * @param			Set<Id> ICG_Account_Role_Detail__c records to be updated
 	 */
-	private static void updateSearchByFormulaValues(Set<Id> lstFacilities) {
+	private static List<ICG_Account_Role_Detail__c> calculateARDsNewValues(Set<Id> lstFacilities) {
 		List<ICG_Account_Role_Detail__c> ardFinal = new List<ICG_Account_Role_Detail__c>();
-		List<ICG_Account_Role_Detail__c> ardToUpdate = [SELECT Id, Company_FOR__c, City_FOR__c, Country_FOR__c,
-														Search_By_City__c, Search_By_Company__c, Search_By_Country__c
-														FROM ICG_Account_Role_Detail__c
-														WHERE Id IN :lstFacilities];
-														
-		for(ICG_Account_Role_Detail__c facility : ardToUpdate) {
+		for(ICG_Account_Role_Detail__c facility : [SELECT Id, Company_FOR__c, City_FOR__c, Country_FOR__c, Search_By_City__c, Search_By_Company__c, Search_By_Country__c FROM ICG_Account_Role_Detail__c WHERE Id IN :lstFacilities]) {
 			Boolean toUpdate = false;
 			
 			if(facility.City_FOR__c != null) {
@@ -109,10 +105,9 @@ public with sharing class CW_ICGAccountRoleDetail_Handler {
 				ardFinal.add(facility);
 			}
 		}
-		if (!ardFinal.isEmpty()) {
-			Database.SaveResult [] updateResult = Database.update(ardFinal, false);
-		}
+		return ardFinal;
 	}
+
 	/**
 	 * @description		check formula values after update account row
 	 * 
@@ -129,7 +124,7 @@ public with sharing class CW_ICGAccountRoleDetail_Handler {
 		if(!lstAccIds.isEmpty()) {
 			Map<Id,ICG_Account_Role_Detail__c> results = new Map<Id,ICG_Account_Role_Detail__c>([SELECT Id FROM ICG_Account_Role_Detail__c WHERE Account_Role__r.Account__c IN :lstAccIds]);
 			Set<Id> resultIds = results.keySet();
-			futureUpdateARDs(resultIds, true);
+			updateARDs(resultIds);
 		}
 	}
 	/**
@@ -148,7 +143,7 @@ public with sharing class CW_ICGAccountRoleDetail_Handler {
 		if(!lstCityIds.isEmpty()) {
 			Map<Id,ICG_Account_Role_Detail__c> results = new Map<Id,ICG_Account_Role_Detail__c>([SELECT Id FROM ICG_Account_Role_Detail__c WHERE Account_Role__r.Account__r.Business_City__c IN :lstCityIds]);
 			Set<Id> resultIds = results.keySet();
-			futureUpdateARDs(resultIds, false);
+			updateARDs(resultIds);
 		}
 	}
 	/**
@@ -168,7 +163,7 @@ public with sharing class CW_ICGAccountRoleDetail_Handler {
 		if(!lstCountryIds.isEmpty()) {
 			Map<Id,ICG_Account_Role_Detail__c> results = new Map<Id,ICG_Account_Role_Detail__c>([SELECT Id FROM ICG_Account_Role_Detail__c WHERE Account_Role__r.Account__r.Business_City__c IN :lstCountryIds]);
 			Set<Id> resultIds = results.keySet();
-			futureUpdateARDs(resultIds, false);
+			updateARDs(resultIds);
 		}
 	}
 	/**

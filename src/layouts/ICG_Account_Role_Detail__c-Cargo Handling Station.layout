@@ -115,6 +115,10 @@
                 <behavior>Edit</behavior>
                 <field>Is_On_Airport__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Is_Direct_Ramp_Access__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>

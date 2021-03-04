@@ -37,20 +37,27 @@ export default class CwBecomeManagerFacilityList extends LightningElement {
         });
     }
     @track facilityList = [];
+    @track filterOptions = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
     @api
     get facilities() {
         return this.facilityList;
     }
     set facilities(userFacilities) {
+        let selectedPrevious;
         this.facilityList = [];
         userFacilities.forEach(facility => {
             if (facility && facility.isApproved__c) {
                 let address = concatinateAddressString(facility.addressStreetNr) + concatinateAddressString(facility.secondAddress) + concatinateFacilityAddress(facility);
                 address = removeLastCommaAddress(address);  
+                if(this.selectedFacilities && this.selectedFacilities[1].value === facility.Id){
+                    selectedPrevious = true;
+                }else{
+                    selectedPrevious = false;
+                }
                 let facilityInfo = {
                     value: facility.Id,
                     label: facility.Name,
-                    selected: false,
+                    selected: selectedPrevious,
                     clickable: true,
                     companyType: facility.RecordType.Name,
                     address: address
@@ -107,7 +114,12 @@ export default class CwBecomeManagerFacilityList extends LightningElement {
             this.dispatchEvent(new CustomEvent('toomanyfacilities', {})); 
         }
         else{
-            this.facilityList.forEach(elem => { if (elem.value === name) { elem.selected = !elem.selected } });
+            this.facilityList.forEach(elem => {
+                if (elem.value === name) {
+                    elem.selected = !elem.selected
+                }
+            });
+            this.selectedFacilities = this.allSelectedFacilities;
             this.dispatchEvent(new CustomEvent('selectfacilities', { detail: this.allSelectedFacilities })); 
         }
     }
@@ -187,7 +199,13 @@ export default class CwBecomeManagerFacilityList extends LightningElement {
         } else {
             let filteredFacilities = [];
             this.facilityList.forEach(facility => {
-                if ((facility.isHeader && facility.label.toLowerCase() === this.letterSelected.toLowerCase()) || this.letterSelected.toLowerCase() === facility.label.charAt(0).toLowerCase()) filteredFacilities.push(facility);
+                if (
+                    (facility.isHeader && facility.label.toLowerCase() === this.letterSelected.toLowerCase())
+                    || (this.letterSelected.toLowerCase() === facility.label.charAt(0).toLowerCase())
+                    || (this.letterSelected.length > 1 && this.letterSelected.split(',').indexOf(facility.label.charAt(0)) > -1)
+                ) {
+                    filteredFacilities.push(facility);
+                }
             });
             return filteredFacilities;
         }
@@ -221,7 +239,10 @@ export default class CwBecomeManagerFacilityList extends LightningElement {
         return this.pageSelected > 1;
     }
     get showNextButton() {
-        if (this.showOnlySelected) return ((this.pageSelected - 1) * 10 + 10) < this.selectedFacilities.length;
-        else return ((this.pageSelected - 1) * 10 + 10) < this.filteredFacilities.length;
+        if (this.showOnlySelected) {
+            return ((this.pageSelected - 1) * 10 + 10) < this.allSelectedFacilities.length;
+        } else {
+            return ((this.pageSelected - 1) * 10 + 10) < this.filteredFacilities.length;
+        }
     }
 }
