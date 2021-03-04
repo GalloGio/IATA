@@ -14,4 +14,17 @@
             <value></value>
         </criteriaItems>
     </sharingGuestRules>
+    <sharingGuestRules>
+        <fullName>Share_with_guest_IDCard</fullName>
+        <accessLevel>Read</accessLevel>
+        <label>Share with guest IDCard</label>
+        <sharedTo>
+            <guestUser>IATA_IDCard</guestUser>
+        </sharedTo>
+        <criteriaItems>
+            <field>CreatedById</field>
+            <operation>equals</operation>
+            <value>005w0000003WXRy</value>
+        </criteriaItems>
+    </sharingGuestRules>
 </SharingRules>
