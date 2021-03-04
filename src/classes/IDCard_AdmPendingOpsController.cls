@@ -4,7 +4,7 @@ This controller is used on ID CArd Manageöent part to manage Pending Mass opera
 
 It is based on List of application for current account
 */
-global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
+global without sharing class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 
 	/**
 	List of pneding operation:

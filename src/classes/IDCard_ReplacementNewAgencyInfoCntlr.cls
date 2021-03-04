@@ -1,4 +1,4 @@
-public with sharing class IDCard_ReplacementNewAgencyInfoCntlr extends IDCardAbstractController {
+public without sharing class IDCard_ReplacementNewAgencyInfoCntlr extends IDCardAbstractController {
 
 
 

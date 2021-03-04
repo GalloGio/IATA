@@ -1,4 +1,4 @@
-public class IDCard_AdmUserForm extends IDCardAbstractController{
+public without sharing class IDCard_AdmUserForm extends IDCardAbstractController{
 	public Contact loggedContact {get;set;}
 	public Account mainAccount {get;set;}
 
