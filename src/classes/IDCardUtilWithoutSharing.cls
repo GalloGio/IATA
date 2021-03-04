@@ -12,10 +12,8 @@ global without sharing class IDCardUtilWithoutSharing {
 			for(string field:lsFields)
 				ICAToReturn.put(field, ica.get(field));
 			
-			//ICAToReturn.id = ica.id;
 			ICAName = ica.Name;
 			AppId = ica.Id;
-			//ICAToReturn.put('Name', ica.get('Name'));
 		}
 		
 		return ICAToReturn;	
@@ -23,34 +21,66 @@ global without sharing class IDCardUtilWithoutSharing {
 
 	public static void saveCommittedICA(ID_Card_Application__c transientICA, id iAppId){
 		system.debug(LoggingLevel.ERROR,'IDCardUtilWithoutSharing.saveCommittedICA iAppId = ' + iAppId);
-		list<string> lsFields = TransformationHelper.selectAllWritableFieldsByCurrentUser('ID_Card_Application__c');
-		ID_Card_Application__c ICAToCommit = new ID_Card_Application__c();
-
-		for(string field:lsFields)
-			ICAToCommit.put(field, transientICA.get(field));
+		map<id, ID_Card_Application__c> mapToCommit = new map<id, ID_Card_Application__c>();
+		mapToCommit.put(iAppId, transientICA);
 		
-		ICAToCommit.Id = iAppId;
-
-		update ICAToCommit;	
+		saveCommittedICAS(mapToCommit);
 	}
 
 	public static database.UpsertResult dbUpsertCommittedICA(ID_Card_Application__c transientICA, id iAppId){
 		system.debug(LoggingLevel.ERROR,'IDCardUtilWithoutSharing.dbUpsertCommittedICA iAppId = ' + iAppId);
 
 		list<string> lsFields = TransformationHelper.selectAllWritableFieldsByCurrentUser('ID_Card_Application__c');
+		set<string> setBooleanFields = new set<string>();
+		for(string s:Schema.getGlobalDescribe().get('ID_Card_Application__c').getDescribe().fields.getMap().keyset())
+			if(string.ValueOf(Schema.getGlobalDescribe().get('ID_Card_Application__c').getDescribe().fields.getMap().get(s).getDescribe().getType())=='BOOLEAN')
+				setBooleanFields.add(s.toUpperCase());
+
 		ID_Card_Application__c ICAToCommit = new ID_Card_Application__c();
 
 		for(string field:lsFields){
-			ICAToCommit.put(field, transientICA.get(field));
+			if(setBooleanFields.contains(field.toUpperCase()) && (transientICA.get(field)==null || transientICA.get(field)==''))
+				ICAToCommit.put(field, false);
+			else
+				ICAToCommit.put(field, transientICA.get(field));
 		}
-			
 		
 		system.debug(LoggingLevel.ERROR,'iAppID ' + iAppId );
 		
 		if(iAppId!=null)
 			ICAToCommit.Id = iAppId;
-	
+		else{
+			ICAToCommit.OwnerId = UserInfo.getUserId();
+			Database.DMLOptions dmo = new Database.DMLOptions();
+			dmo.assignmentRuleHeader.useDefaultRule= true;
+			ICAToCommit.setOptions(dmo);
+		}
 		return database.upsert(ICAToCommit);
+	}
+
+	public static void upsertGenericObject(string objName, sObject sObjFrom, id recordId, set<string> lsFields){
+		set<string> setBooleanFields = new set<string>();
+		for(string s:lsFields)
+			if(string.ValueOf(Schema.getGlobalDescribe().get(objName).getDescribe().fields.getMap().get(s).getDescribe().getType())=='BOOLEAN')
+				setBooleanFields.add(s);
+
+		sObject sObjToCommit = Schema.getGlobalDescribe().get(objName).newSObject();
+		for(string field:lsFields){
+			if(setBooleanFields.contains(field.toUpperCase()) && ( string.isblank(string.valueOf(sObjFrom.get(field)))))
+				sObjToCommit.put(field, false);
+			else
+				sObjToCommit.put(field, sObjFrom.get(field));
+		}
+
+		if(recordId!=null)
+			sObjToCommit.Id = recordId;
+		else{
+			sObjToCommit.put('OwnerId',UserInfo.getUserId());
+			Database.DMLOptions dmo = new Database.DMLOptions();
+			dmo.assignmentRuleHeader.useDefaultRule= true;
+			sObjToCommit.setOptions(dmo);
+		}
+		database.upsert(sObjToCommit);
 	}
 
 	public static void updateCheckoutCase(id idCardAppId){
@@ -60,5 +90,40 @@ global without sharing class IDCardUtilWithoutSharing {
 		if (cases.size() > 0)
 			cases[0].Status = 'Ready for production';
 		update cases[0];
+	}
+
+	
+	public static void deleteApplications(set<id> setToDelete){
+		system.debug(LoggingLevel.ERROR,'IDCardUtilWithoutSharing.deleteApplication setToDelete = ' + setToDelete);
+		List<ID_Card_Application__c> lsToDelete = [select id from ID_Card_Application__c where id in:setToDelete];
+		if(!lsToDelete.isEmpty()) delete lsToDelete;
+	}
+
+	public static void deleteContacts(set<id> setToDelete){
+		system.debug(LoggingLevel.ERROR,'IDCardUtilWithoutSharing.deleteContacts setToDelete = ' + setToDelete);
+		List<Contact> lsToDelete = [select id from Contact where id in:setToDelete];
+		if(!lsToDelete.isEmpty()) delete lsToDelete;
+	}
+
+	public static void saveCommittedICAS(map<id, ID_Card_Application__c> mapToCommit){
+		system.debug(LoggingLevel.ERROR,'IDCardUtilWithoutSharing.saveCommittedICAS map.Keyset()  = ' + mapToCommit.keyset());
+		if(!mapToCommit.isEmpty()){
+			list<string> lsFields = TransformationHelper.selectAllWritableFieldsByCurrentUser('ID_Card_Application__c');
+			List<ID_Card_Application__c> appsToCommit = new list<ID_Card_Application__c>();
+
+			for(id appId:mapToCommit.keyset()){
+				ID_Card_Application__c ICAToCommit = new ID_Card_Application__c();
+				set<string> setPopulatedField = mapToCommit.get(appId).getPopulatedFieldsAsMap().keyset();
+				for(string field:lsFields)
+					if(setPopulatedField.contains(field))
+						ICAToCommit.put(field, mapToCommit.get(appId).get(field));
+
+				ICAToCommit.Id = appId;
+
+				appsToCommit.add(ICAToCommit);
+			}
+
+			update appsToCommit;
+		}
 	}
 }
