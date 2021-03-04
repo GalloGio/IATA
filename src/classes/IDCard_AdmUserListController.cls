@@ -1,4 +1,4 @@
-global with sharing class IDCard_AdmUserListController extends IDCardAbstractController {
+global without sharing class IDCard_AdmUserListController extends IDCardAbstractController {
 	public Contact loggedContact {get; set;}
 	public List<Contact> conts {get; set;}
 	public Account mainAccount {get; set;}

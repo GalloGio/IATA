@@ -1,4 +1,4 @@
-global class IDCard_CropperCtrl {
+global without sharing class IDCard_CropperCtrl {
 
 	public String controllerSessionId{public get; public set;}
 	public String controllerFileId{public get; public set;}
