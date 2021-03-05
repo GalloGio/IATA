@@ -1688,13 +1688,13 @@
 							</apex:pageblocksectionitem>
 						</apex:pageblocksection>
 
-						<apex:pageblocksection columns="1">
+						<apex:pageblocksection columns="1" rendered="{!showNDCQuestion}">
 							<apex:pageblocksectionitem labelStyle="width:50%">
 								<apex:outputlabel id="dgs-label" value="{!$Label.ISSP_AMS_Step3_Indicate_GDSs}" />
 								<apex:inputfield id="dgs-options" value="{!newForm.ISSP_AMS_GDS_with_signed_contract__c}" onchange="checkNDC();"/>
 							</apex:pageblocksectionitem>
 						</apex:pageblocksection>
-						<c:ISSP_ANG_NDC validationError="{!isValError}" applyNewStyle="true" ndcValue="{!newForm.NDC_Transactions__c}" rendered="{!namEnabled}"/>
+						<c:ISSP_ANG_NDC validationError="{!isValError}" applyNewStyle="true" ndcValue="{!newForm.NDC_Transactions__c}" rendered="{!IF(namEnabled && showNDCQuestion, true, false)}"/>
 						<!--END NEWGEN-668-->
 						<apex:pageBlockSectionItem >
 							<apex:outputLabel value="{!$Label.ISSP_AMS_NoC_Provide_Registeration_Or_License}"/>
