@@ -1099,6 +1099,17 @@
         <template>SCEQOS/Case_escalated_to_LO</template>
     </alerts>
     <alerts>
+        <fullName>IDFS_Complaint_out_of_query</fullName>
+        <description>IDFS Complaint out of query</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>info.sce@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>All/complaint_out_of_query</template>
+    </alerts>
+    <alerts>
         <fullName>IDFS_SIDRA_CS_request_feedback_to_R_S</fullName>
         <description>IDFS SIDRA_CS/ACC request feedback to R&amp;S</description>
         <protected>false</protected>
@@ -6411,7 +6422,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <fullName>SCE_Serial_Number_Allocation_owner_R_B</fullName>
         <description>Update case owner: Reporting &amp; Billing</description>
         <field>OwnerId</field>
-        <lookupValue>CasesReportingBilling</lookupValue>
+        <lookupValue>OperationalManagementHeadOffice</lookupValue>
         <lookupValueType>Queue</lookupValueType>
         <name>SCE:Serial Number Allocation owner R&amp;B</name>
         <notifyAssignee>true</notifyAssignee>
@@ -13174,6 +13185,26 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
+        <fullName>IDFS Complaint out of query</fullName>
+        <actions>
+            <name>IDFS_Complaint_out_of_query</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>SAAM,SIDRA,Process,OSCAR Communication,IATA Financial Review,SIDRA Lite</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.IsComplaint__c</field>
+            <operation>equals</operation>
+            <value>True</value>
+        </criteriaItems>
+        <description>2013 process</description>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
         <fullName>IDFS Complaint out of query log</fullName>
         <actions>
             <name>Complaint_open_date</name>
@@ -18424,7 +18455,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6</booleanFilter>
+        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7</booleanFilter>
         <criteriaItems>
             <field>Case.CaseArea__c</field>
             <operation>equals</operation>
@@ -18433,7 +18464,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
         <criteriaItems>
             <field>Case.Origin</field>
             <operation>notEqual</operation>
-            <value>Web,Internal Case,Portal</value>
+            <value>Web,Internal Case,Portal,IATA Internal User</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.SuppliedEmail</field>
@@ -18454,6 +18485,11 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <field>Case.Subject</field>
             <operation>notContain</operation>
             <value>EXPIRED DELIVERY RETRY NOTIFICATION,FAILED,FAILURE NOTICE,NON REMIS,OUT OF OFFICE,OUT OF THE OFFICE,REMISE DIFFEREE,UNDELIVERABLE,VIOLATION,WARNING : EMAIL EXCEED MAXIMUM SIZE LIMIT</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Cases - SIS Help Desk</value>
         </criteriaItems>
         <triggerType>onCreateOnly</triggerType>
     </rules>

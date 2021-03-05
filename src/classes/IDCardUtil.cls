@@ -1,4 +1,4 @@
-global with sharing class IDCardUtil {
+global without sharing class IDCardUtil {
 
 	//flag to determine if idcard contact trigger can run more than once per execution
 	public static Boolean isFirstTime = true;
@@ -1196,7 +1196,7 @@ global with sharing class IDCardUtil {
 		// Create the case
 		Case newCase = new Case();
 		newCase.RecordTypeId =  RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ID_Card_Mass_Application');
-		newCase.Subject = 'Case for ID Card Mass Application ' + idCardApp.Name;
+		newCase.Subject = 'Case for ID Card Mass Application ' + (string.isBlank(idCardAppId)?idCardApp.Name:[select name from ID_Card_Application__c where id =:idCardAppId].Name);
 
 		newCase.Status = 'In progress';
 		newCase.OwnerId = System.Userinfo.getUserId();
@@ -1230,13 +1230,15 @@ global with sharing class IDCardUtil {
 
 		return newCase;
 	}
-
 	public static Case createKeyAccountIdCardApplicationCase(ID_Card_Application__c idCardApp, Account theAccount) {
+		return createKeyAccountIdCardApplicationCase(idCardApp, theAccount, null);
+	}
 
+	public static Case createKeyAccountIdCardApplicationCase(ID_Card_Application__c idCardApp, Account theAccount, id AppId) {
 		// Create the case
 		Case newCase = new Case();
 		newCase.RecordTypeId = IDCardcaseRecordTypeID;
-		newCase.Subject = 'Case for ID Card Application ' + idCardApp.Name;
+		newCase.Subject = 'Case for ID Card Application ' + (appId==null?idCardApp.Name:([select name from ID_Card_Application__c where id=:AppId].name));
 
 		newCase.Status = 'In progress';
 		newCase.OwnerId = System.Userinfo.getUserId();
@@ -1244,7 +1246,7 @@ global with sharing class IDCardUtil {
 
 		newCase.AccountId = theAccount.Id;
 		newCase.Origin = 'ID Card Portal';
-		newCase.Related_ID_Card_Application__c = idCardApp.Id;
+		newCase.Related_ID_Card_Application__c = AppId==null?idCardApp.Id:AppId;
 		newCase.SuppliedEmail = idCardApp.Email_admin__c;
 		newCase.ID_Card_Status__c = CASECARDSTATUS_PENDING;
 		newCase.CaseArea__c = 'Accreditation';

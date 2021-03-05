@@ -3782,22 +3782,6 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>Home</value>
     </labels>
     <labels>
-        <fullName>CSP_Breadcrumb_Service_InnovationHub</fullName>
-        <categories>CSPortal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP Breadcrumb IH Service title</shortDescription>
-        <value>Innovation Hub</value>
-    </labels>
-    <labels>
-        <fullName>CSP_Breadcrumb_Service_InnovationHub_Pro</fullName>
-        <categories>CSPortal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP Breadcrumb IH Service Provider identification</shortDescription>
-        <value>Provider</value>
-    </labels>
-    <labels>
         <fullName>CSP_Breadcrumb_Service_TIPReports</fullName>
         <categories>CSPortal</categories>
         <language>en_US</language>
@@ -3978,13 +3962,6 @@ If you are already CNS Endorsed, you can use this service to update information 
         <protected>false</protected>
         <shortDescription>CSP_Cases</shortDescription>
         <value>Cases</value>
-    </labels>
-    <labels>
-        <fullName>CSP_Categories</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP IH Service Card Key Label</shortDescription>
-        <value>IATA touchpoints</value>
     </labels>
     <labels>
         <fullName>CSP_Change_Email</fullName>
@@ -4383,20 +4360,6 @@ If you are already CNS Endorsed, you can use this service to update information 
         <protected>false</protected>
         <shortDescription>EF Invoices</shortDescription>
         <value>E&amp;F Invoices</value>
-    </labels>
-    <labels>
-        <fullName>CSP_EditProviderDetails</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_EditProviderDetails</shortDescription>
-        <value>Edit Provider Details</value>
-    </labels>
-    <labels>
-        <fullName>CSP_EditTrainingDetails</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_EditTrainingDetails</shortDescription>
-        <value>Edit Training Details</value>
     </labels>
     <labels>
         <fullName>CSP_Email</fullName>
@@ -4993,20 +4956,6 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>Improve Your Experience</value>
     </labels>
     <labels>
-        <fullName>CSP_FocusAreas</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP IH Service Card Key Label</shortDescription>
-        <value>Focus Areas</value>
-    </labels>
-    <labels>
-        <fullName>CSP_ForMoreInfo</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_ForMoreInfo</shortDescription>
-        <value>For more information about this invoice</value>
-    </labels>
-    <labels>
         <fullName>CSP_ForYou</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -5069,13 +5018,6 @@ If you are already CNS Endorsed, you can use this service to update information 
         <protected>false</protected>
         <shortDescription>CSP Frozen User Message</shortDescription>
         <value>For security reasons, we have sent you an email to set a new password.</value>
-    </labels>
-    <labels>
-        <fullName>CSP_FundingStage</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP IH Service Card Key Label</shortDescription>
-        <value>Funding Stage</value>
     </labels>
     <labels>
         <fullName>CSP_Give_Feedback_ButtonLabel</fullName>
@@ -5197,14 +5139,6 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>IATA Invoices</value>
     </labels>
     <labels>
-        <fullName>CSP_IATA_Touchpoints</fullName>
-        <categories>CSP</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP IATA Touchpoints</shortDescription>
-        <value>IATA Touchpoints</value>
-    </labels>
-    <labels>
         <fullName>CSP_IDCard_Name</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -5250,21 +5184,6 @@ If you are already CNS Endorsed, you can use this service to update information 
         <protected>false</protected>
         <shortDescription>CSP IDCard Ver Number</shortDescription>
         <value>ID Card VER Number</value>
-    </labels>
-    <labels>
-        <fullName>CSP_IHUB_LogoFileTypes</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_IHUB_LogoFileTypes</shortDescription>
-        <value>Accepted file types are: png, jpeg</value>
-    </labels>
-    <labels>
-        <fullName>CSP_IHub_ChooseAny</fullName>
-        <categories>CS Portal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP IH text label</shortDescription>
-        <value>Choose any option(s)</value>
     </labels>
     <labels>
         <fullName>CSP_IMPORTANT</fullName>
@@ -6898,13 +6817,6 @@ You can easily create a company account in two steps</value>
         <value>Your IATA Easy Pay Status is not &quot;Open&quot;. Please contact Support.</value>
     </labels>
     <labels>
-        <fullName>CSP_MarkedForReview</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_MarkedForReview</shortDescription>
-        <value>The submited profile was marked for review. Click on the edit button to view more details.</value>
-    </labels>
-    <labels>
         <fullName>CSP_MyCases</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -7036,13 +6948,6 @@ You can easily create a company account in two steps</value>
         <protected>false</protected>
         <shortDescription>CSP_No_Documents_Message</shortDescription>
         <value>If necessary, you can add documents to the case.</value>
-    </labels>
-    <labels>
-        <fullName>CSP_No_Logo_Available</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_No_Logo_Available</shortDescription>
-        <value>No logo available</value>
     </labels>
     <labels>
         <fullName>CSP_OperationalCalendar_HomeTileTitle</fullName>
@@ -7240,41 +7145,6 @@ You can easily create a company account in two steps</value>
         <protected>false</protected>
         <shortDescription>CSP_Profile_PrivacyManagement_URL</shortDescription>
         <value>/dataprivacy/s/landing</value>
-    </labels>
-    <labels>
-        <fullName>CSP_ProviderDraftSaved</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_ProviderDraftSaved</shortDescription>
-        <value>Provider profile draft saved successfully. Once it&apos;s ready for submit click on the &apos;Save and Submit&apos; button.</value>
-    </labels>
-    <labels>
-        <fullName>CSP_ProviderReviewComments</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_ProviderReviewComments</shortDescription>
-        <value>Please review the comments and submit again.</value>
-    </labels>
-    <labels>
-        <fullName>CSP_ProviderSaveAndSubmit</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_ProviderSaveAndSubmit</shortDescription>
-        <value>The provider profile was saved and submitted for approval. A notification will be send with further instructions.</value>
-    </labels>
-    <labels>
-        <fullName>CSP_ProviderWrongSubmit</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_ProviderWrongSubmit</shortDescription>
-        <value>Something went wrong during the submission process. Please contact your administrator for more details.</value>
-    </labels>
-    <labels>
-        <fullName>CSP_PublishedRecordPreview</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_PublishedRecordPreview</shortDescription>
-        <value>There is no published record to preview.</value>
     </labels>
     <labels>
         <fullName>CSP_Question1</fullName>
@@ -7526,13 +7396,6 @@ You can easily create a company account in two steps</value>
         <value>Resend Verification Mail</value>
     </labels>
     <labels>
-        <fullName>CSP_ResetFilters</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP IH Service Reset Filters Label</shortDescription>
-        <value>Reset Filters</value>
-    </labels>
-    <labels>
         <fullName>CSP_Reset_Password</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -7607,26 +7470,12 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <value>Save</value>
     </labels>
     <labels>
-        <fullName>CSP_SaveAndSubmit</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_SaveAndSubmit</shortDescription>
-        <value>Save and Submit</value>
-    </labels>
-    <labels>
         <fullName>CSP_Save_Login</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Save Login</shortDescription>
         <value>Save &amp; Login</value>
-    </labels>
-    <labels>
-        <fullName>CSP_SearchByName</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP IH Service Search Label</shortDescription>
-        <value>Search By Name</value>
     </labels>
     <labels>
         <fullName>CSP_SearchDocuments</fullName>
@@ -7868,45 +7717,6 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <protected>false</protected>
         <shortDescription>CSP_Service_AirlineDailySales_Title</shortDescription>
         <value>Airline Daily Sales Dashboard</value>
-    </labels>
-    <labels>
-        <fullName>CSP_Service_InnovationHub_HomeTab</fullName>
-        <categories>CSPortal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_Service_InnovationHub_HomeTab</shortDescription>
-        <value>Home</value>
-    </labels>
-    <labels>
-        <fullName>CSP_Service_InnovationHub_NoAccess</fullName>
-        <categories>CSPortal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP IH Service Access Denied Label</shortDescription>
-        <value>Sorry, you don&apos;t have access to service. Please contact administrator if you need to get access to this service.</value>
-    </labels>
-    <labels>
-        <fullName>CSP_Service_InnovationHub_ProviderProfileTab</fullName>
-        <categories>CSPortal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP IH Service Provider Profile Label</shortDescription>
-        <value>Provider Profile</value>
-    </labels>
-    <labels>
-        <fullName>CSP_Service_InnovationHub_SearchTab</fullName>
-        <categories>CSPortal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP IH Service Search Label</shortDescription>
-        <value>Search</value>
-    </labels>
-    <labels>
-        <fullName>CSP_Service_InnovationHub_Title</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP IH Service Title</shortDescription>
-        <value>Innovation Hub</value>
     </labels>
     <labels>
         <fullName>CSP_Service_SmartLite_NoAccess</fullName>
@@ -8309,13 +8119,6 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <value>Task</value>
     </labels>
     <labels>
-        <fullName>CSP_Technology</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP IH Service Card Key Label</shortDescription>
-        <value>Technology</value>
-    </labels>
-    <labels>
         <fullName>CSP_Terms_Updated_Message</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -8573,13 +8376,6 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <protected>false</protected>
         <shortDescription>CSP_Verification_L3_Email_UE_3_LMS</shortDescription>
         <value>Your training record will be maintained under this merged user. &lt;b&gt;From now on you will only be able to login with your work email address.&lt;/b&gt;&lt;br/&gt;</value>
-    </labels>
-    <labels>
-        <fullName>CSP_WaitingApproval</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_WaitingApproval</shortDescription>
-        <value>There is already a profile update waiting to be approved. You cannot create a new request until the ongoing is rejected or approved.</value>
     </labels>
     <labels>
         <fullName>CSP_Welcome_Email_Subject</fullName>
@@ -8868,7 +8664,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - Area2</shortDescription>
-        <value>Instructor-led Training (individual),	Instructor-led Training (groups),IATAN,ID Card,CheckACode,eBroadcast,Global Agency Directory,Travel Agency Data Products,Digital ID Card (Mobile App),IATA AgentExperience,Global System Solution,Weblink,NDClink,Treasury Dashboard,TIMATIC,Publications,TACT, YMQ Publications,Distance Learning,Agency Management,Transparency in Payments (TIP), New BSPlink,IDX - Incident Data Exchange</value>
+        <value>Instructor-led Training (individual),	Instructor-led Training (groups),IATAN,ID Card,CheckACode,eBroadcast,Global Agency Directory,Travel Agency Data Products,Digital ID Card (Mobile App),IATA AgentExperience,Global System Solution,Weblink,NDClink,Treasury Dashboard,TIMATIC,Publications,TACT, YMQ Publications,Distance Learning,Agency Management,Transparency in Payments (TIP), New BSPlink,IDX - Incident Data Exchange, MRO SmartHub</value>
     </labels>
     <labels>
         <fullName>CaseValidation_InDepthArea</fullName>
@@ -40081,7 +39877,7 @@ CNS Customer Services</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Topics To Exclude Country PL</shortDescription>
-        <value>AirSat__c,AirportIS__c,CargoIS__c,DDS__c,Flight_Data_Connect__c,IMX__c,IINet__c,ICH_Helpdesk__c,I_ASC__c,GAP__c,MarketIS__c,PaxIS__c,SIS_Helpdesk__c,SIS_Membership__c,CheckACode_Online_WebService__c,eBroadcast__c,FFP_Frequent_Flyer_Program__c,Flight_Data_Connect__c,Agency_Database_Files__c,Global_Agency_Directory__c,Agency_Data_Products__c,I_ASC_IATA_Safety_Culture_Survey__c,IATA_AgentExperience__c,IATA_net_rates__c,IATA_Store__c,Accreditation_IATAN_US__c,ID_Card_Print_Digital__c,IMX_Integrated_Management_Solutions__c,Instructor_led_training__c,IATA_Publications__c,Self_study_courses__c,Weblink__c,NDClink__c,TACT__c,IATA_Financial_Gateway_IFG__c,Timatic_Solutions__c, IDX_Incident_Data_Exchange__c</value>
+        <value>AirSat__c,AirportIS__c,CargoIS__c,DDS__c,Flight_Data_Connect__c,IMX__c,IINet__c,ICH_Helpdesk__c,I_ASC__c,GAP__c,MarketIS__c,PaxIS__c,SIS_Helpdesk__c,SIS_Membership__c,CheckACode_Online_WebService__c,eBroadcast__c,FFP_Frequent_Flyer_Program__c,Flight_Data_Connect__c,Agency_Database_Files__c,Global_Agency_Directory__c,Agency_Data_Products__c,I_ASC_IATA_Safety_Culture_Survey__c,IATA_AgentExperience__c,IATA_net_rates__c,IATA_Store__c,Accreditation_IATAN_US__c,ID_Card_Print_Digital__c,IMX_Integrated_Management_Solutions__c,Instructor_led_training__c,IATA_Publications__c,Self_study_courses__c,Weblink__c,NDClink__c,TACT__c,IATA_Financial_Gateway_IFG__c,Timatic_Solutions__c, IDX_Incident_Data_Exchange__c, MRO_SmartHub__c</value>
     </labels>
     <labels>
         <fullName>ISSP_Tracking_ID</fullName>
@@ -40804,22 +40600,6 @@ If you continue to experience issues registering for the CNS Customer Portal ple
         <protected>false</protected>
         <shortDescription>Industry_Activities</shortDescription>
         <value>Industry Activities</value>
-    </labels>
-    <labels>
-        <fullName>InnovationHub_ServiceName</fullName>
-        <categories>Global</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP IH Service Field Label</shortDescription>
-        <value>Innovation Hub</value>
-    </labels>
-    <labels>
-        <fullName>Innovation_Hub_Service_Description</fullName>
-        <categories>CSPortal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP IH Service Description</shortDescription>
-        <value>The Startup Hotlist enables airlines to search and find startups that are currently, or are interested, in supporting airlines through the development of innovative solutions in areas such as distribution, payment and digitalization. &lt;br /&gt;&lt;br /&gt;The 150+ startups listed in the tool are vetted by IATA, ensuring the relevance of their solutions with current industry initiatives.</value>
     </labels>
     <labels>
         <fullName>InputRequiredMessage</fullName>

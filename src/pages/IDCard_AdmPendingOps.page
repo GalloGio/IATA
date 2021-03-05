@@ -83,33 +83,29 @@
 		                                  </tr>
 		                              </thead> 
 		                              <tbody>
-		                                  <apex:repeat value="{!pendingApplications}" var="application" >
+		                                  <apex:repeat value="{!mapAppWrap}" var="application" >
 		                                      <tr>
 		                                          <td>
-		                                         		 
-		                                                 <a href="{!if(contactsPerApplication[application.Id].verNum!='','IDCard_AdmUserForm?ver='+contactsPerApplication[application.Id].verNum+'&edit=true','#')}">
-		                                                 {!contactsPerApplication[application.Id].Name}
+		                                                 <a href="{!if(contactsPerApplication[mapAppWrap[application].appId].verNum!='','IDCard_AdmUserForm?ver='+contactsPerApplication[mapAppWrap[application].appId].verNum+'&edit=true','#')}">
+		                                                 {!contactsPerApplication[mapAppWrap[application].appId].Name}
 		                                                </a>
-		                                            	 <!--
-		                                            	 {!contactsPerApplication[application.Id].Name}
-		                                            	 -->
 		                                            </td>
-		                                          <td><apex:outputField value="{!application.IATA_Code__c}" /></td>
-		                                          <td><apex:outputField value="{!application.Type_of_application__c}" /></td>
+		                                          <td><apex:outputField value="{!mapAppWrap[application].ICA.IATA_Code__c}" /></td>
+		                                          <td><apex:outputField value="{!mapAppWrap[application].ICA.Type_of_application__c}" /></td>
 		                                          <td>
 												  <apex:outputPanel id="appFee">
-												  	<apex:outputField value="{!application.Applicable_Fee__c}" />
+												  	<apex:outputField value="{!mapAppWrap[application].ICA.Applicable_Fee__c}" />
 												  </apex:outputPanel></td> 
 												  <td>
 												  <apex:outputPanel id="appDiscount">
-													<apex:outputField value="{!application.ID_Card_Fee_Discount__c}" />
+													<apex:outputField value="{!mapAppWrap[application].ICA.ID_Card_Fee_Discount__c}" />
 												  </apex:outputPanel>
 												  </td>
-		                                          <td><apex:outputField value="{!application.CreatedDate}" /></td>
+		                                          <td><apex:outputField value="{!mapAppWrap[application].ICA.CreatedDate}" /></td>
 												  <td>
-												  	<p style="display:{!IF(isNotDigitalOnly[application.Id],'block','none')}">
+												  	<p><!-- style="display:{!IF(isNotDigitalOnly[mapAppWrap[application].appId],'block','none')}">-->
 													<apex:actionRegion >
-												  	<apex:selectList id="cardTypeSelect" size="1" value="{!application.Card_Type__c}" styleClass="cardTypeSelect">
+												  	<apex:selectList id="cardTypeSelect" size="1" value="{!mapAppWrap[application].ICA.Card_Type__c}" styleClass="cardTypeSelect">
                                             			<apex:selectOptions value="{!cardTypeList}"/>
                                                 			<apex:actionSupport event="onchange"  status="Loading"  action="{!calculateAllPrices}"  reRender="appFee, pageHeader, appDiscount"/>
                                         				</apex:selectList>
@@ -117,16 +113,16 @@
                                                     </p>
                                                   </td>
 		                                          <td>
-		                                              <p style="display:{!IF(isApplicationreadyMap[application.Id],'block','none')}">
-		                                              <input type="radio" class= "radioClass" name="groupb['{!application.Id}']" value="" id ="b_{!application.Id}_0"  onclick="validationApplication('{!application.Id}')" /><label for="b_{!application.Id}_0">{!$Label.IDCard_ka_accept}</label>
+		                                              <p style="display:{!IF(mapAppWrap[application].IsApplicationValid,'block','none')}">
+		                                              <input type="radio" class= "radioClass" name="groupb['{!application}']" value="" id ="b_{!application}_0"  onclick="validationApplication('{!application}')" /><label for="b_{!application}_0">{!$Label.IDCard_ka_accept}</label>
 		                                              </p>
-		                                              <p style="display:{!IF(isApplicationreadyMap[application.Id],'none','block')};color:red">
+		                                              <p style="display:{!IF(mapAppWrap[application].IsApplicationValid,'none','block')};color:red">
 		                                                  {!$Label.IDCard_ka_missing_detials}
 		                                              </p>
 		                                          </td><td>  
-		                                               <input type="radio"  name="groupb['{!application.Id}']" value="" id ="b['{!application.Id}'][1]" onclick="unvalidationApplication('{!application.Id}')" /><label for="b['{!application.Id}'][1]">{!$Label.IDCard_ka_reject}</label>
+		                                               <input type="radio"  name="groupb['{!application}']" value="" id ="b['{!application}'][1]" onclick="unvalidationApplication('{!application}')" /><label for="b['{!application}'][1]">{!$Label.IDCard_ka_reject}</label>
 		                                           </td><td>  
-		                                              <input type="radio" class= "radiodoNothingClass"  name="groupb['{!application.Id}']" value="" id ="b['{!application.Id}'][2]" checked="checked" onclick="doNotProcessApplication('{!application.Id}')" /><label for="b['{!application.Id}'][2]">{!$Label.IDCard_ka_noprocess}</label>
+		                                              <input type="radio" class= "radiodoNothingClass"  name="groupb['{!application}']" value="" id ="b['{!application}'][2]" checked="checked" onclick="doNotProcessApplication('{!application}')" /><label for="b['{!application}'][2]">{!$Label.IDCard_ka_noprocess}</label>
 		                                          </td>
 		                                      </tr>
 		                                  </apex:repeat>
