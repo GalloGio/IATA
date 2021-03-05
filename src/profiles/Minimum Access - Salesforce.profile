@@ -65037,11 +65037,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
-        <recordType>Contact.MACSSales</recordType>
-        <visible>false</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <default>false</default>
         <recordType>Contact.Standard_Contact</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
