@@ -36561,6 +36561,19 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Approval history for Exceptions --></description>
+        <label><!-- Approval history for Exceptions --></label>
+        <name>Approval_history_for_Exceptions</name>
+        <sections>
+            <label><!-- Process Instance --></label>
+            <name>Process Instance</name>
+        </sections>
+        <sections>
+            <label><!-- Process Instance Node --></label>
+            <name>Process Instance Node</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Approval process instances --></description>
         <label><!-- Approval process instances --></label>
         <name>Approval_process_instances</name>
@@ -37804,6 +37817,15 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <sections>
             <label><!-- EmailTemplates --></label>
             <name>EmailTemplates</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Exceptions with Approval history --></description>
+        <label><!-- Exceptions with Approval history --></label>
+        <name>Exceptions_with_Approval_history</name>
+        <sections>
+            <label><!-- Exceptions --></label>
+            <name>Exceptions</name>
         </sections>
     </reportTypes>
     <reportTypes>
