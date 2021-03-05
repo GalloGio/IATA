@@ -1,4 +1,4 @@
-public with sharing class IDCard_AdmUserExportCSVController extends IDCardAbstractController {
+public without sharing class IDCard_AdmUserExportCSVController extends IDCardAbstractController {
 
 	private final string BLACKLISTED = 'Cancelled';
 	public static Integer STATUS_UNDEFINED = -1;
