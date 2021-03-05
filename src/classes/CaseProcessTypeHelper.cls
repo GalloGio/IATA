@@ -11,7 +11,7 @@ public with sharing class CaseProcessTypeHelper {
 		get {
 			if (CLOSED_STATUSES==null) {
 				CLOSED_STATUSES = new Set<String>();
-				for (CaseStatus status : [SELECT ApiName  FROM CaseStatus WHERE IsClosed = true]) {
+				for (CaseStatus status : [SELECT ApiName  FROM CaseStatus WHERE IsClosed = true AND ApiName != 'Abandoned']) {
 					CLOSED_STATUSES.add(status.ApiName);
 				}
 			}
@@ -220,7 +220,7 @@ public with sharing class CaseProcessTypeHelper {
 				return values.contains(fieldValue);
 			}
 		} catch (Exception e) {
-			TransformationHelper.sendEmailSupport( 'CaseProcessTypeHelper - ProcessOtherConditions Exception', 'Exception: ' + e + ' || StackTrace: ' + e.getStackTraceString());
+			TransformationHelper.sendEmailSupport( 'CaseProcessTypeHelper - ProcessOtherConditions Exception', 'Exception: ' + e + ' || case: ' + cse + ' || conditions ' + conditions + ' || StackTrace: ' + e.getStackTraceString());
 		}
 		return false;
 	}

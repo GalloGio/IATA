@@ -1436,24 +1436,12 @@ public with sharing class ANG_AgencyChangesHelper {
 			The selected agencies will be transformed into AE and linked to the new paren, therefore they will automatically get the Accreditation type "XXX"
 		*/
 
-		Account newHEaccount = toReturn.accountsMap.get(oscarToProcess.New_parent__c);
-
-		Account oscarAccount = toReturn.accountsMap.get(oscarToProcess.Account__c);
-
-		if(oscarAccount == null) {
-			oscarAccount = [SELECT Id, ANG_Accreditation_Model__c, Remittance_frequency__c, CNS_Agency__c,
-								IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c, Location_Class__c, Sector__c , Category__c
-							FROM Account
-							WHERE Id = :oscarToProcess.Account__c];
-		}
+		Map<Id, Account> mapAccounts = new Map<Id, Account>([Select Id, ANG_Accreditation_Model__c, Parent_account_IATAcode__c, IATACode__c, Remittance_frequency__c,
+		IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c, ANG_FA_Opt_out__c FROM Account WHERE Id IN :accountIdsInvolvedSet OR Id = :oscarToProcess.New_parent__c OR Id = :oscarToProcess.Account__c]);
+		Account newHEaccount = mapAccounts.get(oscarToProcess.New_parent__c);
+		Account oscarAccount = mapAccounts.get(oscarToProcess.Account__c);
 
 		if((!accountIdsInvolvedSet.contains(oscarToProcess.New_parent__c) && oscarToProcess.Account__c != oscarToProcess.New_parent__c)){
-
-			//Map<Id,Account> accountsMap;
-
-			if(newHEaccount == null) {
-				newHEaccount = [Select Id , ANG_Accreditation_Model__c, Remittance_frequency__c, CNS_Agency__c, ANG_FA_Opt_out__c, Location_Class__c, Sector__c , Category__c from Account where Id = :oscarToProcess.New_parent__c];
-			}
 
 			if(!doesItContainAccreditationType && newHEaccount.ANG_Accreditation_Model__c != oscarAccount.ANG_Accreditation_Model__c){
 				switchAccreditationModel = true;
@@ -1538,6 +1526,13 @@ public with sharing class ANG_AgencyChangesHelper {
 			newRel.Hierarchy__c = hierarchyId;
 
 			toReturn.addRelation(newRel);
+			AMS_ChangeCodesHelper.ObjectChange objectChangesHierarchy = new AMS_ChangeCodesHelper.ObjectChange('Account', 'Parent.IATACode__c', oscarAccount.IATACode__c, newHEaccount.IATACode__c);
+			if (toReturn.changesStruct.get(oscarAccount.Id) == null) {
+				AMS_ChangeCodesHelper.ObjectChangesStruct acctChangesStruct = new AMS_ChangeCodesHelper.ObjectChangesStruct(new List <AMS_ChangeCodesHelper.ObjectChange>{objectChangesHierarchy});
+				toReturn.changesStruct.put(oscarAccount.Id, acctChangesStruct);
+			} else {
+				toReturn.changesStruct.get(oscarAccount.Id).changes.add(objectChangesHierarchy);
+			}
 
 			if(switchAccreditationModel){
 
@@ -1600,6 +1595,14 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		for(Id accountID: accountIdsInvolvedSet){
 
+			AMS_ChangeCodesHelper.ObjectChange objectChangesHierarchy = new AMS_ChangeCodesHelper.ObjectChange('Account', 'Parent.IATACode__c', mapAccounts.get(accountID).Parent_account_IATAcode__c, (accountID == oscarToProcess.New_parent__c ? null : mapAccounts.get(oscarToProcess.New_parent__c).IATACode__c));
+			if (toReturn.changesStruct.get(accountID) == null) {
+				AMS_ChangeCodesHelper.ObjectChangesStruct acctChangesStruct = new AMS_ChangeCodesHelper.ObjectChangesStruct(new List <AMS_ChangeCodesHelper.ObjectChange>{objectChangesHierarchy});
+				toReturn.changesStruct.put(accountID, acctChangesStruct);
+			} else {
+				toReturn.changesStruct.get(accountID).changes.add(objectChangesHierarchy);
+			}
+
 			if(accountID == oscarToProcess.New_parent__c){ // this means that one of the old AE's is going to be the new HE, so let's change it !
 
 				Account newHe = toReturn.accountsMap.get(oscarToProcess.New_parent__c) != null ? toReturn.accountsMap.get(oscarToProcess.New_parent__c) : new Account(Id = oscarToProcess.New_parent__c);
@@ -1615,7 +1618,6 @@ public with sharing class ANG_AgencyChangesHelper {
 				if (AMS_Utils.pickListContains(oscarToProcess.Change_of_Hierarchy_Scenario__c, AMS_Utils.MULTICOUNTRY_BSP_SPLIT) && switchAccreditationModel) {
 					newHe.ANG_Accreditation_Model__c = newAccreditationModel;
 				}
-
 				toReturn.addAccount(newHe);
 
 				continue;
@@ -2256,7 +2258,7 @@ public with sharing class ANG_AgencyChangesHelper {
 	}
 
 	private static Map<Id, Account> getAccounts(Set<Id> accountIds) {
-		return new Map<Id, Account>([SELECT Status__c,ParentId, Top_Parent__c, Name, IATACode__c, Company_Type__c, Short_Name__c, TradeName__c, License_Number__c, VAT_Number__c, GDS__c, Operation__c,
+		return new Map<Id, Account>([SELECT Status__c,ParentId, Top_Parent__c, Name, IATACode__c, Company_Type__c, Short_Name__c, TradeName__c, License_Number__c, VAT_Number__c, GDS__c, Operation__c, Parent_account_IATAcode__c,
 				BillingCountry, BillingStreet, BillingPostalCode, BillingState, BillingCity, IATA_ISO_Country__c, Iso_State__c, ShippingCountry, Is_Branch_Abroad__c,
 				ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity, Email__c, Website, Phone, Fax, In_a_Airport__c, Abbreviated_name__c, Abbreviated_address__c,
 				Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c,
