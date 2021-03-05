@@ -1,7 +1,4 @@
-public class IDCard_ApplicationAdminController{
-
-
-
+public Without Sharing class IDCard_ApplicationAdminController{
 		public Map<String,Contact> contactPerVerNum {get;set;}
 
 		public Map<String,Contact> contactPerId {get;set;}
