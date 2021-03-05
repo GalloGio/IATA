@@ -62720,10 +62720,6 @@ Also used as default WF, Lead, Case</description>
         <layout>Contact-IATA Standard Contact</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Contact-IATA Standard Contact</layout>
-        <recordType>Contact.MACSSales</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>Contact-Standard Contact</layout>
         <recordType>Contact.Standard_Contact</recordType>
     </layoutAssignments>
@@ -72410,11 +72406,6 @@ Also used as default WF, Lead, Case</description>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Comment__c.X4_Regional_Outlook_News</recordType>
-        <visible>false</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <default>false</default>
-        <recordType>Contact.MACSSales</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
