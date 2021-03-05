@@ -113,7 +113,9 @@ public without sharing class CW_CreateFacilityController {
 			List<ICG_Account_Role_Detail_Relationship__c> ardrelationship = new List<ICG_Account_Role_Detail_Relationship__c>();
 			for (String airId : ardRelIds.split(';')) {
 			//Handled airline points to Account, ICG ARD points to Account Role Detail.
-				ardrelationship.add(new ICG_Account_Role_Detail_Relationship__c(ICG_Account_Role_Detail__c = facilityId, Handled_Airline__c = airId.startsWith('001') ? airId : null));
+				if(String.isNotBlank(airId) && Id.valueOf(airId).getSobjectType() == Schema.Account.SObjectType) {
+					ardrelationship.add(new ICG_Account_Role_Detail_Relationship__c(ICG_Account_Role_Detail__c = facilityId, Handled_Airline__c = airId));
+				}
 			}
 			if (!ardrelationship.isEmpty()) {
 				insert ardrelationship;

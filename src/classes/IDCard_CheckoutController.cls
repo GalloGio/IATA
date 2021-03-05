@@ -1,4 +1,4 @@
-public  class IDCard_CheckoutController extends IDCardAbstractController {
+public without sharing class IDCard_CheckoutController extends IDCardAbstractController {
 
 		public String Language {get; set;}
 

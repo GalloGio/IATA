@@ -1,4 +1,4 @@
-public with sharing class IDCard_Replacement_Conf_Controller {
+public without sharing class IDCard_Replacement_Conf_Controller {
 
 	public String Language { get; set; }
 

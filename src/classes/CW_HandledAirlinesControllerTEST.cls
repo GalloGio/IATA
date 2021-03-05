@@ -38,6 +38,7 @@ public without sharing class CW_HandledAirlinesControllerTEST {
 
 		List<ICG_Account_Role_Detail__c> lstARD = new List<ICG_Account_Role_Detail__c>();
 		ICG_Account_Role_Detail__c ard = CW_TestDataFactory.testICGAccountRoleDetail(accRole.Id, airport);
+		ard.Hidden_Operating_Stations__c = 'OperatingCargo:|OperatingRamp:';
 		lstARD.add(ard);
 		ICG_Account_Role_Detail__c ard2 = CW_TestDataFactory.testICGAccountRoleDetail(accRole.Id, airport);
 		ard2.RecordTypeId = Schema.SObjectType.ICG_Account_Role_Detail__c.getRecordTypeInfosByDeveloperName().get('Cargo_Handling_Facility').getRecordTypeId();
@@ -118,8 +119,8 @@ public without sharing class CW_HandledAirlinesControllerTEST {
 	static void testSaveHiddenOperatingStations(){
 		test.startTest();
 		Id stationId = [SELECT id FROM ICG_Account_Role_Detail__c LIMIT 1].id;
-		Boolean result = CW_HandledAirlinesController.saveHiddenOperatingStations('', stationId );
-		system.assertEquals(true, result, 'erro on saveHiddenOperatingStations');
+		Boolean result = CW_HandledAirlinesController.saveHiddenOperatingStations('OperatingCargo:', stationId );
+		system.assertEquals(true, result, 'error on saveHiddenOperatingStations');
 		test.stopTest();
 	}
 }
