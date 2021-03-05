@@ -1,0 +1,27 @@
+<messaging:emailTemplate subject="{!$Label.CS_Portal_Addittional_Recipients_Subject} {!relatedTo.CaseNumber}" 
+        recipientType="User" relatedToType="Case">
+    <messaging:emailHeader name="CaseId">
+        {!relatedTo.Id}
+    </messaging:emailHeader>
+    <messaging:htmlEmailBody >
+        <div style="margin:auto; width:600px">
+            <span style="font-family:'Arial','sans-serif'; color:#000000;">  
+                <apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=01520000000ej3A&oid=00D2000000008TF&lastMod=1246550288000"/>
+                <br/>
+                <br/>
+            </span>
+            <apex:outputPanel >
+                <p>{!$Label.CS_Portal_Addittional_Recipients_Introduction} {!recipient.FirstName} {!recipient.LastName},</p>
+                <p>{!relatedTo.contact.FirstName} {!relatedTo.contact.LastName} {!$Label.CS_Portal_Addittional_Recipients_Body} {!relatedTo.CaseNumber}:</p>
+                <br/>
+                <p>{!relatedTo.Subject}</p>
+                <p>{!relatedTo.Description}</p>
+                <br/>
+                <center>
+                    <a style="font-size:20px;text-align:center;font-weight:bold;background-color:#0A4279;color:white;padding:5px;text-decoration:none;border-collapse: separate!important;border-top-left-radius: 5px;border-top-right-radius: 5px;border-bottom-right-radius: 5px;border-bottom-left-radius: 5px;"
+                            href="{!$Label.ISSP_Email_PortalUrl}s/case-details?caseId={!relatedTo.id}">{!$Label.CS_Portal_Addittional_Recipients_URL_Description}</a>
+                </center>
+            </apex:outputPanel>
+        </div>
+    </messaging:htmlEmailBody>
+</messaging:emailTemplate>

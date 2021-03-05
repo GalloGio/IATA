@@ -273,8 +273,12 @@ private static void createCaseTeamMemberList(Case cse, list<Contact> listContact
 	list<CaseTeamMember > listCaseTeam = new list<CaseTeamMember>();
 	list<String> listEmail = new list<String>();
 	String IdTeamRole = [SELECT id FROM CaseTeamRole WHERE Name = 'Partner User Role' LIMIT 1].Id;
-	for (Contact contact: listContact) {
+	set<string> emailAddressesLst = new set<string>();
+	map<string, Contact> mapContacts = new map<string, Contact>();
 
+	for (Contact contact: listContact) {
+		mapContacts.put(contact.Email, contact);
+		emailAddressesLst.add(contact.Email);
 		listCaseTeam.add(new CaseTeamMember(
 					 ParentId = cse.Id,
 					 MemberId = contact.Id,
@@ -282,8 +286,83 @@ private static void createCaseTeamMemberList(Case cse, list<Contact> listContact
 					 ));
 		listEmail.add(contact.Email);
 	}
+	if(!emailAddressesLst.isEmpty()){
+		wrapFilterContactsAndUsers listContactAndUsers = new wrapFilterContactsAndUsers(emailAddressesLst, mapContacts);
+		if(!listContactAndUsers.setTargetObjectIdUsers.isEmpty()){
+			sendEmailUsers(listContactAndUsers.setTargetObjectIdUsers, cse);
+		}
+		if(!listContactAndUsers.setToAddressesContacts.isEmpty()){
+			sendEmailContatcs(listContactAndUsers.setToAddressesContacts, cse);
+		}
+	}
 	insert listCaseTeam;
 }
+
+public static void sendEmailUsers(List<Id>  userIDs, Case cse) {
+	List<Messaging.SingleEmailMessage> emailsToSend = new List<Messaging.SingleEmailMessage>();
+	String templateId = [SELECT Id FROM EmailTemplate WHERE DeveloperName = 'IATA_CS_Portal_Case_Addittional_Rec_Us'].Id;
+
+	try {
+		for (ID userId : userIDs) {
+			Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+			mail.setTargetObjectId(userId);
+			mail.setSaveAsActivity(false);
+			mail.setTemplateId(templateId);
+			mail.setWhatId(cse.Id);
+			emailsToSend.add(mail);
+		}
+		Messaging.sendEmail(emailsToSend);
+	} catch (Exception  e) {
+		system.debug('Failed to send email to users');
+	}
+
+}
+
+public static void sendEmailContatcs(List<String> receivers, Case cse) {
+	try {
+		List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
+		Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+		String templateId = [SELECT Id FROM EmailTemplate WHERE DeveloperName = 'IATA_CS_Portal_Case_Addittional_Rec_CC'].Id;
+		for (String cc : receivers) {
+			mail.setTargetObjectId(cc);
+			mail.setToAddresses(receivers) ;
+			mail.setTemplateId(templateId);
+			mail.setWhatId(cse.Id);
+			emails.add(mail);
+		}
+		Messaging.sendEmail(emails);
+	} catch (Exception  e) {
+		system.debug('Failed to send email to Contacts');
+	}
+}
+
+
+public without sharing class wrapFilterContactsAndUsers {
+	public List<Id> setTargetObjectIdUsers {get; set;}
+	public List<String> setToAddressesContacts {get; set;}
+
+	public wrapFilterContactsAndUsers(set<string> emailAddressesLst, map<string, Contact> mapContacts) {
+		this.setTargetObjectIdUsers = new List<Id>();
+		this.setToAddressesContacts = new List<String>();
+		map<string, user> mapUsers = new map<string, user>();
+		List<User> usList = [SELECT Id, Email FROM User WHERE IsActive = true AND Email IN :emailAddressesLst];
+		for(user u: usList){
+			mapUsers.put(u.Email, u);
+		}
+		for(string sEmailAddr : emailAddressesLst){
+			if(mapUsers.containsKey(sEmailAddr)){
+				this.setTargetObjectIdUsers.add(mapUsers.get(sEmailAddr).id);
+			}else{
+				if(mapContacts.containsKey(sEmailAddr)){
+					this.setToAddressesContacts.add(mapContacts.get(sEmailAddr).id);
+				}
+			}
+		}
+	}
+}
+
+
+
 
 	//Checks if user is a level 1 user (haven't completed level 2 registration)
 	@AuraEnabled
