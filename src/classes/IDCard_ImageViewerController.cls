@@ -1,4 +1,4 @@
-public with sharing class IDCard_ImageViewerController {
+public without sharing class IDCard_ImageViewerController {
 	private static final String CREDENTIAL_NAME = 'IdCard';
 	private static final String FOLDER = 'a0W';
 
