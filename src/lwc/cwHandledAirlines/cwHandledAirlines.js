@@ -16,7 +16,7 @@ export default class CwHandledAirlines extends LightningElement {
 	@api facilityId;
 	@track offSetNum = 0;
 	@track airlines = [];
-	@api autoSelectItems = false;
+	@api create = false;
 	@api stationType;
 
 	filter;
@@ -139,7 +139,8 @@ export default class CwHandledAirlines extends LightningElement {
 				elem.selected = !elem.selected;
 			}
 		});
-		this.dispatchEvent(new CustomEvent("selectairlines", { detail: this.allSelectedAirlines }));
+		
+		this.callSelectSet(false);
 	}
 
 	showHideSelectedAirlines() {
@@ -206,14 +207,15 @@ export default class CwHandledAirlines extends LightningElement {
 		let prevIsHeader = true;
 		this.filteredAirlines.forEach(airline => {
 			if (airline.isHeader || airline.selected) {
-				if (selectedAirlines.length > 0 && prevIsHeader && airline.label.charAt(0).toLowerCase() != selectedAirlines[selectedAirlines.length - 1].label.toLowerCase()) selectedAirlines.pop();
-				prevIsHeader = airline.isHeader;
+				if (selectedAirlines.length > 0 && prevIsHeader && airline.label.charAt(0).toLowerCase() != selectedAirlines[selectedAirlines.length - 1].label.toLowerCase()) 
+					selectedAirlines.pop();
 
+				prevIsHeader = airline.isHeader;
 				selectedAirlines.push(airline);
 			}
 		});
 		if (selectedAirlines.length > 0 && selectedAirlines[selectedAirlines.length - 1].isHeader) {
-			selectedAirlines.pop();
+		   selectedAirlines.pop();
 		}
 		return selectedAirlines;
 	}
@@ -323,10 +325,31 @@ export default class CwHandledAirlines extends LightningElement {
 					if (data) {
 						data = JSON.parse(data);
 						this.addAirlineHandledHeadersJS(data);
+						if (this.create)
+							this.callSelectSet(true);
 					}
 				});
 			}
-			this.initialized = true;
+			
+			this.initialized = true;			
+		}
+	}
+	
+	callSelectSet(isInitial){
+		let airlineSelected = [];
+		this.airlines.forEach(elem => {
+			if (elem.selected){
+				airlineSelected.push(elem);
+			}
+		});
+		
+		if (!isInitial){
+			this.dispatchEvent(new CustomEvent("selectairlines", { detail: airlineSelected }));
+		}
+		else{
+			if (airlineSelected.length > 0){	
+				this.dispatchEvent(new CustomEvent("selectairlinesinitial", { detail: airlineSelected }));
+			}
 		}
 	}
 
@@ -334,14 +357,21 @@ export default class CwHandledAirlines extends LightningElement {
 		this.airlines = [];
 		this.addAirlineHandledHeaders(data).then(airlinesAndHeaders => {
 			this.airlines.push(...airlinesAndHeaders);
-			if(this.stationType === 'Airport_Operator'){
-				this.airlines = this.selectedAirlines();
+			if (this.create){
+				if(this.stationType === 'Airport_Operator'){
+					this.airlines = this.allSelectedAirlines();
+				}else if(!this.autoSelectItems){
+					this.airlines = this.unSelectedAirlines();
+				}	
 			}
-			else if (this.preselectedAirlines) {
+			else{
+				if (this.preselectedAirlines) {
 					this.airlines = this.manageSelected();
-			}else if(!this.autoSelectItems){
-				this.airlines = this.unSelectedAirlines();
-			}			
+				}
+			}
+			
+			if (this.create)
+				this.callSelectSet(true);
 		});
 	}
 
@@ -359,7 +389,7 @@ export default class CwHandledAirlines extends LightningElement {
 		});
 	}
 	
-	selectedAirlines() {
+	allSelectedAirlines() {
 		return this.airlines.map(airline => {
 			airline.selected = true;
 			return airline;

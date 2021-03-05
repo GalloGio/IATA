@@ -103,8 +103,8 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 		return this.cargoCommodities.length >0;
 	}
 	
-	get autoSelectItems(){
-		return this.companyType === "Airport_Operator";
+	get setCreateMode(){
+		return true;
 	}
 
 	@track selectRt;
@@ -1097,10 +1097,12 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 		this.selectedAirlines = JSON.parse(JSON.stringify(event.detail));
 	}
 	setSelectedCHF(event) {
+		this.hideCargoStations(event);
 		this.getAdditionalFormData();
 		this.selectedOperatingCHF = JSON.parse(JSON.stringify(event.detail));
 	}
 	setSelectedRamp(event) {
+		this.hideRampHandlers(event);
 		this.getAdditionalFormData();
 		this.selectedRampH = JSON.parse(JSON.stringify(event.detail));
 	}
@@ -1425,6 +1427,24 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 		return this.companyTypesRaw;
 	}
 
+	get classMainlyContainer() {
+		if (this.facilityDetailsStep){
+			return 'col-lg-8 col-md-12 formcontainer additionaldataform';
+		}
+		else if (this.summaryStep){
+			return 'col-8 formcontainer summarystep';
+		}
+
+		return '';
+	}
+
+	get mainlyContainer(){
+		if (this.facilityDetailsStep || this.summaryStep){
+			return true;
+		}
+		return false;
+	}
+
 	isCompanyTypeAvailable(sector, category, ctypeName) {
 		for (let sectorX = 0; sectorX < this.ctypesMapBySectorAndCategory.sectors.length; sectorX++){
 			if ((this.ctypesMapBySectorAndCategory.sectors[sectorX].sectorName.toLowerCase() === sector || this.ctypesMapBySectorAndCategory.sectors[sectorX].sectorLabel.toLowerCase() === sector )
@@ -1525,17 +1545,23 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 		let txt = "";
 		if (this.selectedAirlines) {
 			this.selectedAirlines.forEach(airline => {
-				if(airline.value) txt = txt + airline.value + ";";
+				if(airline.value && airline.selected) {
+					txt = txt + airline.value + ";";
+				}
 			});
 		}
 		if (this.selectedOperatingCHF) {
 			this.selectedOperatingCHF.forEach(operatingchf => {
-				if(operatingchf.value) txt = txt + operatingchf.value + ";";
+				if(operatingchf.value && operatingchf.selected) {
+					txt = txt + operatingchf.value + ";";
+				}
 			});
 		}
 		if (this.selectedRampH) {
 			this.selectedRampH.forEach(ramphand => {
-				if(ramphand.value) txt = txt + ramphand.value + ";";
+				if(ramphand.value && ramphand.selected) {
+					txt = txt + ramphand.value + ";";
+				}
 			});
 		}
 		return txt;

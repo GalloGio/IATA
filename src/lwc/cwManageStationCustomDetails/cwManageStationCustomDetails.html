@@ -3,7 +3,7 @@
 
         <!-- Company Logo -->
         <div class="col-6">
-            <p><b>{label.company_logo}</b></p>
+            <p><b class="title-airlines-handled">{label.company_logo}</b></p>
             <hr class="yellow-underline mb-2-5">
             <div class="form-row">
                 <div class="col-6 p-0">
@@ -32,109 +32,61 @@
             </div>
         </div>
 
+
         <!--Operating Hours-->
-        <div class="row m-0 col-6">
-            <template for:each={configOpeningHours} for:item="configHours">
-                <template if:true={configHours.show}>
-                    <div class="col-6 mb-4 mt-3" key={configHours.title}>
-                        <c-cw-opening-hours label={label} record-id={facility.Id} title={configHours.title}
-                            days={configHours.arrayDays} edit-mode={editMode} underline="yellow-underline"
-                            onupdated={handleDaysUpdated}>
-                        </c-cw-opening-hours>
-                    </div>
-                </template>
-            </template>
+        <br><br>
+        <div class="col-6">
+            <p><b class="title-airlines-handled">Opening Hours</b></p>
+            <hr class="yellow-underline mb-2-5">
+            <div class="form-row">
+                <div class="row m-0 col-6">
+                    <template for:each={configOpeningHours} for:item="configHours">
+                        <template if:true={configHours.show}>
+                            <div class="col-6 mb-4 mt-3" key={configHours.title}>
+                                <c-cw-opening-hours label={label} record-id={facility.Id} title={configHours.title}
+                                    days={configHours.arrayDays} edit-mode={editMode} underline="yellow-underline"
+                                    onupdated={handleDaysUpdated}>
+                                </c-cw-opening-hours>
+                            </div>
+                        </template>
+                    </template>
+                </div>
+            </div>
         </div>
 
-        <!-- Airlines Handlers -->
+
+        <!-- Handlers -->
         <div class="col-6">
+
+            <!-- Airlines Handlers -->
             <template if:true={showAirlines}>
-                <div class="row-home">
-                    <div class="col-12">
-                        <p class="title-airlines-handled">
-                            <b if:true={showListAirlines}>{label.list_airlines_handled}</b>
-                            <b if:true={showOperatingAirlines}>{label.operating_airlines}</b>
-                            <img class="img-list-airline" src={getListAirIcon} alt="type"
-                                title={label.information_not_verified} />
-                        </p>
-                        <hr class="yellow-underline mt-2">
-                        <div class="form-row">
-                            <div class="col-6 text-right">
-                                <c-cw-search-in-list label={label} onfilterinlist={filterAirlinesHandled}>
-                                </c-cw-search-in-list>
-                            </div>
-                        </div>
-                        <br />
-                        <div class="form-row">
-                            <div class="col">
-                                <c-cw-handled-airlines label={label} preselected-airlines={airlineHandlers}
-                                    isreadonly={readOnlyMode} filter-text={airlineHandlersFilterText}
-                                    data-target="airline" onselectairlines={setSelectedAirlineHadnlers}>
-                                </c-cw-handled-airlines>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <c-cw-handler-detail station-profile={facility} handler-type="airline" handler-data={airlineHandlers}
+                    is-read-only={readOnlyMode} execute-action={saveAirlines} onsave={handlerAirlineItemsSaved}
+                    label={label}>
+                </c-cw-handler-detail>
             </template>
+
 
             <!-- Cargo Handlers -->
             <template if:true={showOperatingCHFandRampH}>
-                <div class="row-home">
-                    <div class="col-12">
-                        <p class="title-airlines-handled">
-                            <b class="slds-truncate">{label.operating_cargo_handling_facilities}</b>
-                            <img class="img-list-airline" src={getListAirIcon} alt="type"
-                                title={label.information_not_verified} />
-                        </p>
-                        <hr class="yellow-underline mt-2">
-                        <div class="form-row">
-                            <div class="col-6 text-right">
-                                <c-cw-search-in-list label={label} onfilterinlist={filterOperatingCHF}>
-                                </c-cw-search-in-list>
-                            </div>
-                        </div>
-                        <br />
-                        <div class="form-row">
-                            <div class="col">
-                                <c-cw-handled-airlines label={label} raw-data={cargoHandlers} isreadonly={readOnlyMode}
-                                    filter-text={cargoHandlersFilterText} data-target="cargo"
-                                    onselectairlines={setSelectedHandlers}></c-cw-handled-airlines>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <c-cw-handler-detail station-profile={facility} handler-type="cargo" handler-data={cargoHandlers}
+                    is-read-only={readOnlyMode} execute-action={saveCargo} onsave={handlerCargoItemsSaved}
+                    label={label}>
+                </c-cw-handler-detail>
             </template>
+
 
             <!-- Ramp Handlers -->
             <template if:true={showOperatingCHFandRampH}>
-                <div class="row-home">
-                    <div class="col-12">
-                        <p class="title-airlines-handled">
-                            <b>{label.operating_ramp_handler}</b>
-                            <img class="img-list-airline" src={getListAirIcon} alt="type"
-                                title={label.information_not_verified} />
-                        </p>
-                        <hr class="yellow-underline">
-                        <div class="form-row">
-                            <div class="col-6 text-right">
-                                <c-cw-search-in-list label={label} onfilterinlist={filterRampH}>
-                                </c-cw-search-in-list>
-                            </div>
-                        </div>
-                        <br />
-                        <div class="form-row">
-                            <div class="col">
-                                <c-cw-handled-airlines label={label} raw-data={rampHandlers} isreadonly={readOnlyMode}
-                                    filter-text={rampHandlersFilterText} data-target="ramp"
-                                    onselectairlines={setSelectedHandlers}>
-                                </c-cw-handled-airlines>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <c-cw-handler-detail station-profile={facility} handler-type="ramp" handler-data={rampHandlers}
+                    is-read-only={readOnlyMode} execute-action={saveRamp} onsave={handlerRampItemsSaved} label={label}>
+                </c-cw-handler-detail>
             </template>
+
         </div>
 
+
+        <!-- Action Buttons -->
         <div class="slds-grid slds-grid_align-center slds-grid--vertical-align-center footer">
             <div class="slds-col mr-2">
                 <button class="slds-button slds-button--brand button-size-footer" data-name="saveBtn"

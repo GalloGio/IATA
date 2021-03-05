@@ -390,6 +390,16 @@
     </customSettingAccesses>
     <description>Permission Set to allow users to manage One Source Certification Manager</description>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.Airline_designator__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.ICAO_designator__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Account_Role_Detail_Capability__c.AULD_Number_Plug_in_Points__c</field>
         <readable>true</readable>

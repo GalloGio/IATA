@@ -2,15 +2,13 @@ import { LightningElement, track, api } from "lwc";
 import { NavigationMixin } from "lightning/navigation";
 import getResults from "@salesforce/apex/CW_SearchEngine.getInfo";
 import resources from "@salesforce/resourceUrl/ICG_Resources";
-import saveAirlinesHandled from "@salesforce/apex/CW_HandledAirlinesController.saveAirlinesHandled";
-import saveHiddenOperatingStations from "@salesforce/apex/CW_HandledAirlinesController.saveHiddenOperatingStations";
 import { refreshApex } from "@salesforce/apex";
 import updateFacility_ from "@salesforce/apex/CW_CreateFacilityController.updateFacility";
 import { ShowToastEvent } from "lightning/platformShowToastEvent";
 import labels from "c/cwOneSourceLabels";
 import { loadStyle } from "lightning/platformResourceLoader";
 
-export default class CwFacilityPageContainer extends NavigationMixin(LightningElement) {
+export default class cwManageStationCustomDetails extends NavigationMixin(LightningElement) {
 	label = labels.labels();
 
 	_facilityid;
@@ -40,26 +38,10 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 	logoImage;
 	logoInfoObject;
 
-	// Airlines Handlers
-	@track airlineHandlers = [];
-	@track airlineHandlerSelectedEvent = [];
-	@track airlineHandlersToAdd = [];
-	@track airlineHandlersToDel = [];
-	@track airlineHandlersFilterText;
-
-	// Cargo Handlers
-	@track cargoHandlers = [];
-	@track cargoHandlerSelectedEvent = [];
-	@track cargoHandlerToAdd = [];
-	@track cargoHandlerToDel = [];
-	@track cargoHandlersFilterText;
-
-	// Ramp Handlers
-	@track rampHandlers = [];
-	@track rampHandlerSelectedEvent = [];
-	@track rampHandlerToAdd = [];
-	@track rampHandlerToDel = [];
-	@track rampHandlersFilterText;
+	//  Params to execute actions in cwHandlerDetail
+	@track saveAirlines;
+	@track saveCargo;
+	@track saveRamp;
 
 	// UI Events - Start
 	connectedCallback() {
@@ -176,9 +158,10 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 
 		this.loaded = false;
 
-		this.saveSelectedAirlines();
-		this.saveHandlers("cargo");
-		this.saveHandlers("ramp");
+		this.saveAirlines = "save";
+		this.saveCargo = "save";
+		this.saveRamp = "save";
+
 		updateFacility_({ jsonInput, logoInfo: JSON.stringify(this.logoInfoObject), geoLocationInfo: undefined })
 			.then(response => {
 				if (response.result.status == "OK") {
@@ -198,6 +181,32 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 		});
 	}
 	// UI Events - End
+	handlerAirlineItemsSaved(event) {
+		this.saveAirlines = "";
+
+		if (event.detail.error) {
+			this.showToast("Error", this.label.icg_error_update_facility, "error");
+			console.error(err);
+		}
+	}
+
+	handlerCargoItemsSaved(event) {
+		this.saveCargo = "";
+
+		if (event.detail.error) {
+			this.showToast("Error", this.label.icg_error_update_facility, "error");
+			console.error(err);
+		}
+	}
+
+	handlerRampItemsSaved(event) {
+		this.saveRamp = "";
+
+		if (event.detail.error) {
+			this.showToast("Error", this.label.icg_error_update_facility, "error");
+			console.error(err);
+		}
+	}
 
 	// Company Logo - Start
 	setDefaultImg(event) {
@@ -405,9 +414,6 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 		}
 	}
 
-	get getListAirIcon() {
-		return resources + "/icons/company_type/cargo_com_airline.jpg";
-	}
 	get showAirlines() {
 		return this.showListAirlines || this.showOperatingAirlines;
 	}
@@ -417,151 +423,7 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 	get showOperatingAirlines() {
 		return this.facility.recordTypeDevName === "Airport_Operator";
 	}
-	filterAirlinesHandled(event) {
-		this.airlineHandlersFilterText = event.detail;
-	}
-
-	setSelectedAirlineHadnlers(event) {
-		if (this.airlineHandlers && event.detail) {
-			this.airlineHandlersToDel = [];
-			this.airlineHandlersToAdd = [];
-
-			this.airlineHandlers.forEach(airline => {
-				if (!event.detail.find(val => val.value === airline.value)) {
-					this.airlineHandlersToDel.push(airline.value);
-				}
-			});
-			event.detail.forEach(airline => {
-				if (!this.airlineHandlers.find(val => val.value === airline.value)) {
-					this.airlineHandlersToAdd.push(airline.value);
-				}
-			});
-			this.airlineHandlerSelectedEvent = JSON.parse(JSON.stringify(event.detail));
-			this.setFacilityInfo(this.facility.Id, "handledAirlines", "newSelectedAirlines");
-		}
-	}
-	saveSelectedAirlines() {
-		if (this.airlineHandlersToAdd.length > 0 || this.airlineHandlersToDel.length > 0) {
-			saveAirlinesHandled({
-				addList: JSON.stringify(this.airlineHandlersToAdd),
-				deleteList: JSON.stringify(this.airlineHandlersToDel),
-				facilityId: this.facility.Id
-			})
-				.then(result => {
-					this.airlineHandlers = this.airlineHandlerSelectedEvent;
-				})
-				.catch(err => {
-					this.showToast("Save", "Something went wrong", "error");
-				});
-		}
-	}
-
-	filterOperatingCHF(event) {
-		this.cargoHandlersFilterText = event.detail;
-	}
-
-	setSelectedHandlers(event) {
-		let handlerType = event.target.dataset.target;
-		let allowedHandlerTypes = ["cargo", "ramp"];
-		if (!handlerType || allowedHandlerTypes.indexOf(handlerType) < 0) {
-			return;
-		}
-
-		if (this[handlerType + "Handlers"] && event.detail) {
-			this[handlerType + "HandlerToDel"] = [];
-			this[handlerType + "HandlerToAdd"] = [];
-			this[handlerType + "HandlerSelectedEvent"] = JSON.parse(JSON.stringify(event.detail));
-
-			this[handlerType + "Handlers"].forEach(currentHandler => {
-				let found = false;
-				let x = 0;
-				while (this[handlerType + "HandlerSelectedEvent"] && x < this[handlerType + "HandlerSelectedEvent"].length && !found) {
-					found = currentHandler.value == this[handlerType + "HandlerSelectedEvent"][x].value && this[handlerType + "HandlerSelectedEvent"][x].selected;
-					x++;
-				}
-				if (!currentHandler.selected && found) {
-					this[handlerType + "HandlerToAdd"].push(currentHandler.value);
-				} else if (currentHandler.selected && !found) {
-					this[handlerType + "HandlerToDel"].push(currentHandler.value);
-				}
-			});
-
-			this.setFacilityInfo(this.facility.Id, "handled" + handlerType.charAt(0).toUpperCase() + handlerType.slice(1) + "Stations", "new" + handlerType.charAt(0).toUpperCase() + handlerType.slice(1) + "Stations");
-		}
-	}
-
-	saveHandlers(handlerType) {
-		let allowedHandlerTypes = ["cargo", "ramp"];
-		if (allowedHandlerTypes.indexOf(handlerType) < 0) {
-			return;
-		}
-
-		if (this[handlerType + "HandlerToAdd"].length > 0 || this[handlerType + "HandlerToDel"].length > 0) {
-			if (this.facility.recordTypeDevName === "Airport_Operator") {
-				this.updateHiddenOperatingStations();
-			} else if (this.facility.recordTypeDevName === "Airline") {
-				saveAirlinesHandled({
-					addList: JSON.stringify(this[handlerType + "HandlerToAdd"]),
-					deleteList: JSON.stringify(this[handlerType + "HandlerToDel"]),
-					facilityId: this.facility.Id
-				})
-					.then(result => {
-						this[handlerType + "Handlers"].forEach(currentHandler => {
-							let found = false;
-							let x = 0;
-							while (this[handlerType + "HandlerSelectedEvent"] && x < this[handlerType + "HandlerSelectedEvent"].length && !found) {
-								found = currentHandler.value == this[handlerType + "HandlerSelectedEvent"][x].value && this[handlerType + "HandlerSelectedEvent"][x].selected;
-								x++;
-							}
-							currentHandler.selected = found;
-						});
-					})
-					.catch(err => {
-						this.showToast("Save", "Something went wrong saving " + handlerType + " handling facilities", "error");
-					});
-			}
-		}
-	}
-
-	updateHiddenOperatingStations() {
-		let handlerToBeHide = ["cargo", "ramp"];
-		let hiddenOperatingStations = "";
-
-		handlerToBeHide.forEach(handlerType => {
-			let idsToHide = [];
-
-			this[handlerType + "Handlers"].forEach(currentHandler => {
-				let found = false;
-				let x = 0;
-				while (this[handlerType + "HandlerSelectedEvent"] && x < this[handlerType + "HandlerSelectedEvent"].length && !found) {
-					found = currentHandler.value == this[handlerType + "HandlerSelectedEvent"][x].value && this[handlerType + "HandlerSelectedEvent"][x].selected;
-					x++;
-				}
-				if (!found) {
-					idsToHide.push(currentHandler.value);
-				}
-			});
-			if (idsToHide.length > 0) {
-				hiddenOperatingStations += "Operating" + handlerType.charAt(0).toUpperCase() + handlerType.slice(1) + ":" + idsToHide.join(",") + "|";
-			}
-		});
-
-		saveHiddenOperatingStations({ hiddenOperatingStations: hiddenOperatingStations, facilityId: this.facility.Id })
-			.then(result => {
-				if (!result) {
-					this.showToast("Error", this.label.icg_error_update_facility, "error");
-				}
-			})
-			.catch(exception => {
-				this.showToast("Error", this.label.icg_error_update_facility, "error");
-			});
-	}
-
 	get showOperatingCHFandRampH() {
 		return this.facility.recordTypeDevName === "Airport_Operator" || this.facility.recordTypeDevName === "Airline";
 	}
-	filterRampH(event) {
-		this.rampHandlersFilterText = event.detail;
-	}
-	// Airlines Handlers | Ramp Handlers | Cargo Handlers - End
 }
