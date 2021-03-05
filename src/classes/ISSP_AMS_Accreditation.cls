@@ -1739,6 +1739,7 @@ public without sharing class ISSP_AMS_Accreditation {
 	}
 
 	public List<SelectOption> getOfficeTypes() {
+		newCase.IFAP_Country_ISO__c = (newCase != null && String.isNotEmpty(newCase.IFAP_Country_ISO__c) ? newCase.IFAP_Country_ISO__c : con.Account.IATA_ISO_Country__r.ISO_Code__c);
 		Boolean isUKTerritory = (newCase.IFAP_Country_ISO__c == 'GB' || newCase.IFAP_Country_ISO__c == 'GI' || newCase.IFAP_Country_ISO__c == 'GG' || newCase.IFAP_Country_ISO__c == 'IM' || newCase.IFAP_Country_ISO__c == 'JE' || newCase.IFAP_Country_ISO__c == 'SH' || newCase.IFAP_Country_ISO__c == 'PN');
 
 		List<SelectOption> options = new List<SelectOption>();

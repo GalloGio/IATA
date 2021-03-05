@@ -1,4 +1,4 @@
-public class IDCard_AdmUserManagmentAgencyChangeCtrl extends IDCardAbstractController{
+public without sharing class IDCard_AdmUserManagmentAgencyChangeCtrl extends IDCardAbstractController{
 
 	public Map<String, AgencyChangeWrapper> changes {get;set;}
 

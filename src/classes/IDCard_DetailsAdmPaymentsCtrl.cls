@@ -1,4 +1,4 @@
-public with sharing class IDCard_DetailsAdmPaymentsCtrl extends IDCardAbstractController{
+public without sharing class IDCard_DetailsAdmPaymentsCtrl extends IDCardAbstractController{
 
 	public list<ID_Card_Application__c> IdCardApplications {get; set;}
 	public Map<String, list<ID_Card_Application__c>> singleAppsPerMassApps  {get;set;}
