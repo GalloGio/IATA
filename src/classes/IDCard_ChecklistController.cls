@@ -1,4 +1,4 @@
-public with sharing class IDCard_ChecklistController  extends IdCardAbstractController {
+public without sharing class IDCard_ChecklistController  extends IdCardAbstractController {
 
 	public Boolean isPictureOptionActive {get; private set;}
 	public Boolean isProofEmploymentOptionActive {get; private set;}

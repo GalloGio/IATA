@@ -90,7 +90,7 @@ global class AMS_2_MDM_Webservice {
 
 */
 /**  NEWGEN-801 **/
-			List<Account> ag = [SELECT Airline_Code__c,A_Code__c,
+			List<Account> ag = [SELECT Airline_Code__c,A_Code__c, Old_IATA_Code__c,
 					CASS_Number__c,Check_Digit__c,GDS__c,
 					BillingCity, BillingCountry, BillingPostalCode, BillingState, BillingStreet, Iso_State__c,
 					ShippingCity, ShippingCountry, ShippingPostalCode, ShippingState, ShippingStreet,

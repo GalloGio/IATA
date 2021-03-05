@@ -1,4 +1,4 @@
-public class IDCard_Refund{
+public without sharing class IDCard_Refund{
 
 	public Case c {get;set;}
 
