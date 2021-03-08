@@ -119,6 +119,7 @@ public without sharing class PortalServicesInnovationHubCtrl {
 			PortalWrapperClasses.FieldWrapper tagsOfCategories = new PortalWrapperClasses.FieldWrapper('Tags_Of_Categories__c',true,false,'',System.Label.CSP_Categories);
 			tagsOfCategories.isMultipick = true;
 			fieldWrapper.add(tagsOfCategories);
+		}
 
 		fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Description__c',true,true));
 		fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Industry_Perspectives__c',true,true));
@@ -127,9 +128,7 @@ public without sharing class PortalServicesInnovationHubCtrl {
 		fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Investors__c',true,true));
 		fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Competition_Competitors__c',true,true));
 		fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Competitive_Advantage__c',true,true));
-		fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Recent_News__c',true,true));
-		
-		}		
+		fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Recent_News__c',true,true));		
 
 		return fieldWrapper;
 
