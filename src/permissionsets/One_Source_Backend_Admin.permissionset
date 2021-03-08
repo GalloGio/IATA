@@ -4329,10 +4329,6 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <recordType>Contact.MACSSales</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
         <recordType>Contact.Standard_Contact</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
