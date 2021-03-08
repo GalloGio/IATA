@@ -82,7 +82,7 @@ src="https://www.facebook.com/tr?id=1640623029558775&ev=PageView&noscript=1"
                     
                     <div class="tabs">
                     <ul  style="display:{!IF(isMassApplicationPurchase,'block','none')};margin-bottom:0px;"  class="tab-links" >
-                       <li ><a href="{! pagesurl['prefix']}/IDCard_AdmUserManagment" >
+                       <li ><a href="{! pagesurl['prefix']}/IDCard_AdmUserList" >
                             {!$Label.IDCard_PortalPage_MenuuserManagment}
                         </a>  </li>
                         <li ><a href="{! pagesurl['prefix']}/IDCard_AdmPendingOps"  >{!$Label.IDCard_PortalPage_MenuPendingOps}</a></li>

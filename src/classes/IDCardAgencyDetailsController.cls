@@ -1,4 +1,4 @@
-public with sharing class IDCardAgencyDetailsController extends IDCardAbstractController {
+public without sharing class IDCardAgencyDetailsController extends IDCardAbstractController {
 
 
 	public Account theAccount {get; set;}
