@@ -1,4 +1,4 @@
-public class IDCard_AdmUserForm extends IDCardAbstractController{
+public without sharing class IDCard_AdmUserForm extends IDCardAbstractController{
 	public Contact loggedContact {get;set;}
 	public Account mainAccount {get;set;}
 
@@ -382,7 +382,9 @@ public class IDCard_AdmUserForm extends IDCardAbstractController{
 
 	public Pagereference Cancel(){
 		if(!isNew && !isEdit)
-			delete app;
+			if(appid!=null && appid!='')
+				IDCardUtilWithoutSharing.deleteApplications(new set<id>{appid});
+			//delete app;
 		return isEdit ? Page.IDCard_AdmPendingOps : Page.IDCard_AdmUserList;
 	}
 

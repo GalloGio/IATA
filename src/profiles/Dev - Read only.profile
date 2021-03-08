@@ -7344,10 +7344,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>ISSP_PortalUserStatusChangeHelper</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>ISSP_PortalUserStatusChangeTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -62731,10 +62727,6 @@
         <layout>Contact-IATA Standard Contact</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Contact-MACS Sales Contact Layout</layout>
-        <recordType>Contact.MACSSales</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>Contact-Standard Contact</layout>
         <recordType>Contact.Standard_Contact</recordType>
     </layoutAssignments>
@@ -68875,10 +68867,6 @@
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>GCSDowntime2</apexPage>
-        <enabled>false</enabled>
-    </pageAccesses>
-    <pageAccesses>
         <apexPage>GDP_CACWebServiceActionWizard</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
@@ -72125,11 +72113,6 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Comment__c.X4_Regional_Outlook_News</recordType>
-        <visible>false</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <default>false</default>
-        <recordType>Contact.MACSSales</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>

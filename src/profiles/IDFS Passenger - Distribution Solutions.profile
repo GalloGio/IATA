@@ -7340,10 +7340,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>ISSP_PortalUserStatusChangeHelper</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>ISSP_PortalUserStatusChangeTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -62738,10 +62734,6 @@
         <layout>Contact-IDFS IRMS Contact Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Contact-IDFS IRMS Contact Layout</layout>
-        <recordType>Contact.MACSSales</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>ContactPointAddress-Contact Point Address Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -65977,10 +65969,6 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>GCSDowntime</apexPage>
-        <enabled>false</enabled>
-    </pageAccesses>
-    <pageAccesses>
-        <apexPage>GCSDowntime2</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
@@ -69232,11 +69220,6 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Comment__c.X4_Regional_Outlook_News</recordType>
-        <visible>false</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <default>false</default>
-        <recordType>Contact.MACSSales</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
