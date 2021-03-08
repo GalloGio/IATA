@@ -127,7 +127,6 @@ export default class PortalServicesInnovationHubEditTab extends LightningElement
         //set the mode for success popup text
         this.displaySaveTextSuccessModal = buttonName === 'save';
         this.mode = buttonName;
-        this.isSaving = true;
     }
 
     handleSubmitForm(event){
