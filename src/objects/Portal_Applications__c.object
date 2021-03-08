@@ -154,26 +154,24 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ReadWrite</externalSharingModel>
-    <fieldSets>
-        <fullName>ISSP_Available_Services</fullName>
-        <description>ISSP_Available_Services</description>
-        <displayedFields>
-            <field>Application_icon__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Name</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <displayedFields>
-            <field>Service_Description__c</field>
-            <isFieldManaged>false</isFieldManaged>
-            <isRequired>false</isRequired>
-        </displayedFields>
-        <label>ISSP Available Services</label>
-    </fieldSets>
+    <label>Portal Service</label>
+    <nameField>
+        <label>Service</label>
+        <trackHistory>true</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Portal Services</pluralLabel>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <searchLayouts>
+        <customTabListAdditionalFields>Application_icon__c</customTabListAdditionalFields>
+        <lookupDialogsAdditionalFields>Application_icon__c</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Application_icon__c</lookupPhoneDialogsAdditionalFields>
+        <searchFilterFields>Application_icon__c</searchFilterFields>
+        <searchFilterFields>NAME</searchFilterFields>
+        <searchResultsAdditionalFields>Application_icon__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
     <fields>
         <fullName>ANG_Accre_Tp__c</fullName>
         <description>Flag used to filter the Portal Services SOQL Query configured on the custom setting: ISSP Service List View</description>
@@ -1358,131 +1356,6 @@ IF(OR(
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
-    <label>Portal Service</label>
-    <listViews>
-        <fullName>All</fullName>
-        <columns>NAME</columns>
-        <columns>Application_icon__c</columns>
-        <columns>Service_Description_Label__c</columns>
-        <columns>Description__c</columns>
-        <columns>Hide_on_Homepage__c</columns>
-        <columns>Requestable__c</columns>
-        <columns>Visible__c</columns>
-        <columns>Application_URL__c</columns>
-        <columns>Critical_Service__c</columns>
-        <filterScope>Everything</filterScope>
-        <label>All</label>
-        <language>en_US</language>
-        <sharedTo>
-            <allInternalUsers></allInternalUsers>
-        </sharedTo>
-    </listViews>
-    <listViews>
-        <fullName>All_NewGenAPP</fullName>
-        <booleanFilter>1 or 2</booleanFilter>
-        <columns>NAME</columns>
-        <columns>Application_icon__c</columns>
-        <columns>Description__c</columns>
-        <columns>Hide_on_Homepage__c</columns>
-        <columns>Requestable__c</columns>
-        <columns>Visible__c</columns>
-        <columns>Application_URL__c</columns>
-        <columns>Critical_Service__c</columns>
-        <columns>NewGenAPP_ShortName__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>NewGenAPP_ShortName__c</field>
-            <operation>notEqual</operation>
-        </filters>
-        <filters>
-            <field>NAME</field>
-            <operation>equals</operation>
-            <value>NewGenAPP_Mobile</value>
-        </filters>
-        <label>All - NewGenAPP</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>EasyPay</fullName>
-        <columns>NAME</columns>
-        <columns>Application_icon__c</columns>
-        <columns>ServiceName__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>NAME</field>
-            <operation>startsWith</operation>
-            <value>IATA EasyPay</value>
-        </filters>
-        <label>EasyPay</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>My_Company_Applications</fullName>
-        <columns>Application_icon__c</columns>
-        <columns>NAME</columns>
-        <columns>Description__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Visible__c</field>
-            <operation>equals</operation>
-            <value>1</value>
-        </filters>
-        <filters>
-            <field>Requestable__c</field>
-            <operation>equals</operation>
-            <value>1</value>
-        </filters>
-        <filters>
-            <field>Restricted_App__c</field>
-            <operation>equals</operation>
-            <value>0</value>
-        </filters>
-        <label>My Company Services</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>YY_Services_Requiring_Level_2_Registr</fullName>
-        <columns>NAME</columns>
-        <columns>Requires_Level2_Registration__c</columns>
-        <columns>ANG_Cannot_move_contact_between_Agencies__c</columns>
-        <columns>Hide_on_Homepage__c</columns>
-        <columns>Requestable__c</columns>
-        <columns>Visible__c</columns>
-        <columns>Critical_Service__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Requires_Level2_Registration__c</field>
-            <operation>equals</operation>
-            <value>1</value>
-        </filters>
-        <label>YY- Services Requiring Level 2 Registr.</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
-        <fullName>ZZ_Services_Where_Contact_Cant_Be_Moved</fullName>
-        <columns>NAME</columns>
-        <columns>ANG_Cannot_move_contact_between_Agencies__c</columns>
-        <columns>Hide_on_Homepage__c</columns>
-        <columns>Requestable__c</columns>
-        <columns>Visible__c</columns>
-        <columns>Application_URL__c</columns>
-        <columns>Critical_Service__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>ANG_Cannot_move_contact_between_Agencies__c</field>
-            <operation>equals</operation>
-            <value>1</value>
-        </filters>
-        <label>ZZ- Services Where Contact Cant Be Moved</label>
-        <language>en_US</language>
-    </listViews>
-    <nameField>
-        <label>Service</label>
-        <trackHistory>true</trackHistory>
-        <type>Text</type>
-    </nameField>
-    <pluralLabel>Portal Services</pluralLabel>
-    <recordTypeTrackHistory>false</recordTypeTrackHistory>
     <recordTypes>
         <fullName>ISS_Portal_Application</fullName>
         <active>true</active>
@@ -1993,15 +1866,6 @@ IF(OR(
             </values>
         </picklistValues>
     </recordTypes>
-    <searchLayouts>
-        <customTabListAdditionalFields>Application_icon__c</customTabListAdditionalFields>
-        <lookupDialogsAdditionalFields>Application_icon__c</lookupDialogsAdditionalFields>
-        <lookupPhoneDialogsAdditionalFields>Application_icon__c</lookupPhoneDialogsAdditionalFields>
-        <searchFilterFields>Application_icon__c</searchFilterFields>
-        <searchFilterFields>NAME</searchFilterFields>
-        <searchResultsAdditionalFields>Application_icon__c</searchResultsAdditionalFields>
-    </searchLayouts>
-    <sharingModel>ReadWrite</sharingModel>
     <validationRules>
         <fullName>Autoapproved_only_when_managed_by_admins</fullName>
         <active>true</active>
@@ -2064,5 +1928,141 @@ TEXT(ANG_Restrict_by_Agency_Sector__c) != &quot;&quot;
 )</errorConditionFormula>
         <errorMessage>Please check &quot;Cannot be granted internally&quot; and &quot;Cannot be managed by portal admin&quot;. User access requests that do not require approval from a Service Administrator are auto-granted.</errorMessage>
     </validationRules>
-    <visibility>Public</visibility>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Application_icon__c</columns>
+        <columns>Service_Description_Label__c</columns>
+        <columns>Description__c</columns>
+        <columns>Hide_on_Homepage__c</columns>
+        <columns>Requestable__c</columns>
+        <columns>Visible__c</columns>
+        <columns>Application_URL__c</columns>
+        <columns>Critical_Service__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+        <sharedTo>
+            <allInternalUsers/>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>All_NewGenAPP</fullName>
+        <booleanFilter>1 or 2</booleanFilter>
+        <columns>NAME</columns>
+        <columns>Application_icon__c</columns>
+        <columns>Description__c</columns>
+        <columns>Hide_on_Homepage__c</columns>
+        <columns>Requestable__c</columns>
+        <columns>Visible__c</columns>
+        <columns>Application_URL__c</columns>
+        <columns>Critical_Service__c</columns>
+        <columns>NewGenAPP_ShortName__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>NewGenAPP_ShortName__c</field>
+            <operation>notEqual</operation>
+        </filters>
+        <filters>
+            <field>NAME</field>
+            <operation>equals</operation>
+            <value>NewGenAPP_Mobile</value>
+        </filters>
+        <label>All - NewGenAPP</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>EasyPay</fullName>
+        <columns>NAME</columns>
+        <columns>Application_icon__c</columns>
+        <columns>ServiceName__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>NAME</field>
+            <operation>startsWith</operation>
+            <value>IATA EasyPay</value>
+        </filters>
+        <label>EasyPay</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>My_Company_Applications</fullName>
+        <columns>Application_icon__c</columns>
+        <columns>NAME</columns>
+        <columns>Description__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Visible__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>Requestable__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>Restricted_App__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <label>My Company Services</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>YY_Services_Requiring_Level_2_Registr</fullName>
+        <columns>NAME</columns>
+        <columns>Requires_Level2_Registration__c</columns>
+        <columns>ANG_Cannot_move_contact_between_Agencies__c</columns>
+        <columns>Hide_on_Homepage__c</columns>
+        <columns>Requestable__c</columns>
+        <columns>Visible__c</columns>
+        <columns>Critical_Service__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Requires_Level2_Registration__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>YY- Services Requiring Level 2 Registr.</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>ZZ_Services_Where_Contact_Cant_Be_Moved</fullName>
+        <columns>NAME</columns>
+        <columns>ANG_Cannot_move_contact_between_Agencies__c</columns>
+        <columns>Hide_on_Homepage__c</columns>
+        <columns>Requestable__c</columns>
+        <columns>Visible__c</columns>
+        <columns>Application_URL__c</columns>
+        <columns>Critical_Service__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>ANG_Cannot_move_contact_between_Agencies__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>ZZ- Services Where Contact Cant Be Moved</label>
+        <language>en_US</language>
+    </listViews>
+    <fieldSets>
+        <fullName>ISSP_Available_Services</fullName>
+        <description>ISSP_Available_Services</description>
+        <displayedFields>
+            <field>Application_icon__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Name</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <displayedFields>
+            <field>Service_Description__c</field>
+            <isFieldManaged>false</isFieldManaged>
+            <isRequired>false</isRequired>
+        </displayedFields>
+        <label>ISSP Available Services</label>
+    </fieldSets>
 </CustomObject>
