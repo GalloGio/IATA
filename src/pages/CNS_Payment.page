@@ -13,10 +13,18 @@
 					var serviceType = document.getElementById('{!$Component.pb.frm.pbs.serviceType}').value;
 					var invoiceNumber = document.getElementById('{!$Component.pb.frm.pbs.invoiceNumber}').value;
 					var amount = document.getElementById('{!$Component.pb.frm.pbs.amount}').value;
-					if (serviceType.length < 1 || invoiceNumber.length < 1 || amount.length < 1) {
-						alert('Please fill out all fields!');
-					} else {
+					var reg = /^[0-9]{1,10}$/;
+					var tendigitnum = /^\d{10}$/; 
+					console.log("Hello reg!" + reg.test(invoiceNumber));
+					console.log("Hello 10d!" + tendigitnum.test(invoiceNumber));
 
+					if (serviceType.length < 1){
+						alert('Please enter a valid service type.');
+					} else if (!tendigitnum.test(invoiceNumber)){
+						alert('Please enter a valid 10 digit invoice number.');
+					} else if (!reg.test(amount)){
+						alert('Please enter a valid amount.');						
+					}else{
 						fillCyberSrcData();
 					}
 				}
@@ -36,12 +44,12 @@
 
 					<apex:actionFunction name="fillCyberSrcData" action="{!fillCyberSrcData}" oncomplete="document.formCyberSource.submit()" reRender="a" />
 
-					<apex:pageBlockSection id="pbs" title="Invoice Information">
+					<apex:pageBlockSection id="pbs" title="Invoice Information" columns="1">
 						<apex:selectList id="serviceType" label="Service Type" size="1" value="{!ServiceType}" required="true">
 							<apex:selectOptions value="{!ListServiceType}" />
 						</apex:selectList>
-						<apex:inputText id="invoiceNumber" label="Invoice number" value="{!InvoiceNumber}" required="true" />
-						<apex:inputText id="amount" label="Amount (USD)" value="{!Amount}" required="true" />
+						<apex:inputText id="invoiceNumber" label="Invoice number" value="{!InvoiceNumber}" required="true" maxlength="10"/>
+						<apex:inputText id="amount" label="Amount (USD)" value="{!Amount}" required="true" maxlength="10"/>
 					</apex:pageBlockSection>
 
 					<apex:commandButton value="Continue" onclick="submitToCyberSource()" rerender="tstpopup" />
