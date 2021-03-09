@@ -15,8 +15,6 @@
 					var amount = document.getElementById('{!$Component.pb.frm.pbs.amount}').value;
 					var reg = /^[0-9]{1,10}$/;
 					var tendigitnum = /^\d{10}$/; 
-					console.log("Hello reg!" + reg.test(invoiceNumber));
-					console.log("Hello 10d!" + tendigitnum.test(invoiceNumber));
 
 					if (serviceType.length < 1){
 						alert('Please enter a valid service type.');
