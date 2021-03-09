@@ -4547,6 +4547,7 @@ Location_Type__c = 'BR');
 		User mcUser = fetchUser('multicountry@test11.com');
 
 		Account mcAccount = fetchSingleAccount('MultiCountry');
+		mcAccount.Location_Class__c = 'Q';
 		mcAccount.IATACode__c = '98989898';
 		mcAccount.Status__c = 'Approved';
 
