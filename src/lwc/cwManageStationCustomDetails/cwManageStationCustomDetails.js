@@ -38,11 +38,6 @@ export default class cwManageStationCustomDetails extends NavigationMixin(Lightn
 	logoImage;
 	logoInfoObject;
 
-	//  Params to execute actions in cwHandlerDetail
-	@track saveAirlines;
-	@track saveCargo;
-	@track saveRamp;
-
 	// UI Events - Start
 	connectedCallback() {
 		Promise.all([loadStyle(this, resources + "/css/internal.css")]);
@@ -158,9 +153,9 @@ export default class cwManageStationCustomDetails extends NavigationMixin(Lightn
 
 		this.loaded = false;
 
-		this.saveAirlines = "save";
-		this.saveCargo = "save";
-		this.saveRamp = "save";
+		this.template.querySelectorAll("c-cw-handler-detail").forEach(element => {
+			element.saveHandlerItems();
+		});
 
 		updateFacility_({ jsonInput, logoInfo: JSON.stringify(this.logoInfoObject), geoLocationInfo: undefined })
 			.then(response => {
@@ -181,30 +176,11 @@ export default class cwManageStationCustomDetails extends NavigationMixin(Lightn
 		});
 	}
 	// UI Events - End
-	handlerAirlineItemsSaved(event) {
-		this.saveAirlines = "";
-
-		if (event.detail.error) {
+	manageChildEvent(event) {
+		let eventData = event.detail;
+		if (eventData.error) {
 			this.showToast("Error", this.label.icg_error_update_facility, "error");
-			console.error(err);
-		}
-	}
-
-	handlerCargoItemsSaved(event) {
-		this.saveCargo = "";
-
-		if (event.detail.error) {
-			this.showToast("Error", this.label.icg_error_update_facility, "error");
-			console.error(err);
-		}
-	}
-
-	handlerRampItemsSaved(event) {
-		this.saveRamp = "";
-
-		if (event.detail.error) {
-			this.showToast("Error", this.label.icg_error_update_facility, "error");
-			console.error(err);
+			return;
 		}
 	}
 

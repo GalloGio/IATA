@@ -61,7 +61,7 @@
             <!-- Airlines Handlers -->
             <template if:true={showAirlines}>
                 <c-cw-handler-detail station-profile={facility} handler-type="airline" handler-data={airlineHandlers}
-                    is-read-only={readOnlyMode} execute-action={saveAirlines} onsave={handlerAirlineItemsSaved}
+                    is-read-only={readOnlyMode} onevent={manageChildEvent}
                     label={label}>
                 </c-cw-handler-detail>
             </template>
@@ -70,7 +70,7 @@
             <!-- Cargo Handlers -->
             <template if:true={showOperatingCHFandRampH}>
                 <c-cw-handler-detail station-profile={facility} handler-type="cargo" handler-data={cargoHandlers}
-                    is-read-only={readOnlyMode} execute-action={saveCargo} onsave={handlerCargoItemsSaved}
+                    is-read-only={readOnlyMode} onevent={manageChildEvent}
                     label={label}>
                 </c-cw-handler-detail>
             </template>
@@ -79,7 +79,7 @@
             <!-- Ramp Handlers -->
             <template if:true={showOperatingCHFandRampH}>
                 <c-cw-handler-detail station-profile={facility} handler-type="ramp" handler-data={rampHandlers}
-                    is-read-only={readOnlyMode} execute-action={saveRamp} onsave={handlerRampItemsSaved} label={label}>
+                    is-read-only={readOnlyMode} onevent={manageChildEvent} label={label}>
                 </c-cw-handler-detail>
             </template>
 
