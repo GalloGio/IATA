@@ -606,7 +606,7 @@ public without sharing class CW_SearchEngine {
 				this.locationClass = acr.Account_Role__r.Account__r.Location_Class__c;
 				this.IATA_icon = (
 					(acr.RecordType.DeveloperName == 'Freight_Forwarder' && acr.Account_Role__r.Account__r.Location_Class__c == 'C') 
-				 || (((acr.Account_Role__r.Account__r.RecordType.DeveloperName == 'Airline_Headquarters') || (acr.Account_Role__r.Account__r.RecordType.DeveloperName == 'Operator')) && (this.recordTypeDevName == 'Airline'))
+				 || (((acr.Account_Role__r.Account__r.RecordType.DeveloperName == 'IATA_Airline') || (acr.Account_Role__r.Account__r.RecordType.DeveloperName == 'Operator')) && (this.recordTypeDevName == 'Airline'))
 				);
 				this.CargoCom_icon = acr.RecordType.DeveloperName == 'Airline';
 				this.ListAir_icon = acr.RecordType.DeveloperName == 'Cargo_Handling_Facility';
