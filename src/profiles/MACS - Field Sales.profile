@@ -7189,7 +7189,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>ISSP_LastCaseComment</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>ISSP_LastCaseCommentTest</apexClass>
