@@ -1838,6 +1838,10 @@ lightning-datatable .slds-th__action {
    display: none;
 }
 
+.portalFooter .slds-combobox_container lightning-base-combobox-item {
+    color: #ffffff;
+}
+
 .portalFooter .slds-combobox_container lightning-base-combobox-item:hover,
 .portalFooter .slds-combobox_container lightning-base-combobox-item[aria-selected="true"] {
     color: #333 !important;
