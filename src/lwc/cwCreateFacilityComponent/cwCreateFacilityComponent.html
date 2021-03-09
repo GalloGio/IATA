@@ -620,100 +620,43 @@
                     </div>
             </template>
 
-            <!-- SHOW IF RT = RAMP HANDLER || CARGO || AIRPORT OPERATOR -->
-            <template if:true={showListAirlines}>
-                <div class="row-home">
-                    <div class="col-12">
-                        <p class="title-airlines-handled">
-                            <b if:false={showOperatingAirlines}>{label.list_airlines_handled}</b>
-                            <b if:true={showOperatingAirlines}>{label.operating_airlines}</b>
-                        </p>
-                        <hr class="yellow-underline mt-2">
-                        <div class="form-row">
-                            <div class="col-6 text-right">
-                                <c-cw-search-in-list label={label} onfilterinlist={filterAirlinesHandled}>
-                                </c-cw-search-in-list>
-                            </div>
-                        </div>
-                        <br />
-                        <div class="form-row">
-                            <div class="col">
-                                <c-cw-handled-airlines station-type={companyType} label={label} 
-                                    preselected-airlines={selectedAirlines} 
-                                    isreadonly={summaryStep}
-                                    filter-text={filterTextAirlines} 
-                                    onselectairlinesinitial={setSelectedAirlines} 
-                                    onselectairlines={setSelectedAirlines}
-                                    create={setCreateMode}>
-                                </c-cw-handled-airlines>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <!-- Airlines Handlers -->
+            <template if:true={showAirlines}>
+                <c-cw-handler-detail 
+                    station-profile={stationProfile} 
+                    handler-type="airline"
+                    handler-data={selectedAirlines}
+                    is-read-only={summaryStep}
+                    auto-selection={autoSelection}
+                    onevent={manageChildEvent}
+                    label={label}>
+                </c-cw-handler-detail>
             </template>
 
-            <!-- SHOW IF RT = AIRLINES || AIRPORT -->
+            <!-- Cargo Handlers -->
             <template if:true={showOperatingCHFandRampH}>
-                <div class="row-home">
-                    <div class="col-12">
-                        <p class="title-airlines-handled">
-                            <b class="slds-truncate">{label.operating_cargo_handling_facilities}</b>
-                        </p>
-                        <hr class="yellow-underline mt-2">
-                        <div class="form-row">
-                            <div class="col-6 text-right">
-                                <c-cw-search-in-list label={label} onfilterinlist={filterOperatingCHF}>
-                                </c-cw-search-in-list>
-                            </div>
-                        </div>
-                        <br />
-                        <div class="form-row">
-                            <div class="col">
-                                <c-cw-handled-airlines station-type={companyType} label={label}  
-                                    raw-data={onAirportOperatingCHF}    
-                                    isreadonly={summaryStep}  
-                                    filter-text={filterTextOperatingCHF} 
-                                    class="cmpOperatingCHF" 
-                                    onselectairlinesinitial={setSelectedCHF} 
-                                    onselectairlines={setSelectedCHF}
-                                    create={setCreateMode}>
-                                </c-cw-handled-airlines>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <c-cw-handler-detail 
+                    station-profile={stationProfile} 
+                    handler-type="cargo"
+                    handler-data={onAirportOperatingCHF}
+                    is-read-only={summaryStep}
+                    auto-selection={autoSelection}
+                    onevent={manageChildEvent}
+                    label={label}>
+                </c-cw-handler-detail>
             </template>
 
-            <!-- SHOW IF RT = AIRLINES || AIRPORT -->
+            <!-- Ramp Handlers -->
             <template if:true={showOperatingCHFandRampH}>
-                <div class="row-home">
-                    <div class="col-12">
-                        <p class="title-airlines-handled">
-                            <b>{label.operating_ramp_handler}</b>
-                        </p>
-                        <hr class="yellow-underline mt-2">
-                        <div class="form-row">
-                            <div class="col-6 text-right">
-                                <c-cw-search-in-list label={label} onfilterinlist={filterRampH}>
-                                </c-cw-search-in-list>
-                            </div>
-                        </div>
-                        <br />
-                        <div class="form-row">
-                            <div class="col">
-                                <c-cw-handled-airlines station-type={companyType} label={label} 
-                                    raw-data={onAirportRampH} 
-                                    isreadonly={summaryStep} 
-                                    filter-text={filterTextRampH} 
-                                    class="cmpRampHandlers" 
-                                    onselectairlinesinitial={setSelectedRamp} 
-                                    onselectairlines={setSelectedRamp}
-                                    create={setCreateMode}>
-                                </c-cw-handled-airlines>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <c-cw-handler-detail 
+                    station-profile={stationProfile} 
+                    handler-type="ramp"
+                    handler-data={onAirportRampH}
+                    is-read-only={summaryStep}
+                    auto-selection={autoSelection}
+                    onevent={manageChildEvent}
+                    label={label}>
+                </c-cw-handler-detail>
             </template>
 
             <!-- 3 and 4 step * FOOTER  -->    

@@ -361,10 +361,7 @@
                                         handler-data={airlineHandlers}
                                         is-edit-mode-available={editMode}
                                         is-read-only={readOnlyHandlersAirline}
-                                        execute-action={executeActionHandlersAirline}
-                                        onsave={onSaveHandlerItems}
-                                        onselect={onSelectHandlerItem}
-                                        onchangereadonly={onChangeReadOnlyHandlerForm}
+                                        onevent={manageChildEvent}
                                         label={label}>
                                     </c-cw-handler-detail>
                                 </template>
@@ -378,10 +375,7 @@
                                         handler-data={cargoHandlers}
                                         is-edit-mode-available={editMode}
                                         is-read-only={readOnlyHandlersCargo}
-                                        execute-action={executeActionHandlersCargo}
-                                        onsave={onSaveHandlerItems}
-                                        onselect={onSelectHandlerItem}
-                                        onchangereadonly={onChangeReadOnlyHandlerForm}
+                                        onevent={manageChildEvent}
                                         label={label}>
                                     </c-cw-handler-detail>
                                 </template>
@@ -395,10 +389,7 @@
                                         handler-data={rampHandlers}
                                         is-edit-mode-available={editMode}
                                         is-read-only={readOnlyHandlersRamp}
-                                        execute-action={executeActionHandlersRamp}
-                                        onsave={onSaveHandlerItems}
-                                        onselect={onSelectHandlerItem}
-                                        onchangereadonly={onChangeReadOnlyHandlerForm}
+                                        onevent={manageChildEvent}
                                         label={label}>
                                     </c-cw-handler-detail>
                                 </template>

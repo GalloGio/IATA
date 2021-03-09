@@ -86,15 +86,12 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 
 	//  Params to manage child component cwHandlerDetail
 	@track airlineHandlers;
-	@track executeActionHandlersAirline;
 	@track readOnlyHandlersAirline = true;
 
 	@track cargoHandlers = [];
-	@track executeActionHandlersCargo;
 	@track readOnlyHandlersCargo = true;
 
 	@track rampHandlers = [];
-	@track executeActionHandlersRamp;
 	@track readOnlyHandlersRamp = true;
 	
 	@track airportSearchValue = '';
@@ -348,7 +345,11 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 					this.rampHandlers = [];
 					this.airlineHandlers = this.facility.handledAirlines;
 					if (this.airlineHandlers.length == 0) {
-						this.executeActionHandlersAirline = "setDefault";
+						this.template.querySelectorAll("c-cw-handler-detail").forEach(element => {
+							if(element.handlerType === 'airline'){
+								element.setDefaultHandlerData();
+							}
+						});
 					}
 					if(this.facility.recordTypeDevName === "Airport_Operator" || this.facility.recordTypeDevName === "Airline"){
 						this.facility.onAirportStations.forEach(facility => {
@@ -367,7 +368,6 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 				this.loaded = true;
 			})
 			.catch(error => {
-				console.error("error", error);
 				this.setLoadedStatus();
 			});
 	}
@@ -388,7 +388,6 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 		})
 		
 		.catch(err => {
-			console.error("error", err);
 			this.companyAdmins = [];
 		});
 		this.companyAdminsChecked = true;
@@ -405,7 +404,6 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 			}
 		})
 		.catch(err => {
-			console.error("error", err);
 			this.facilityManagers = [];
 		});
 	}
@@ -506,7 +504,6 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 			this.loaded = true;
 		})
 		.catch(err => {
-			console.error('Error', err);
 			this.modalMessage = this.label.icg_error_message;
 			this.modalImage = this.ERROR_IMAGE;
 			this.showModal = true;
@@ -530,7 +527,6 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 				this.showModal = true;
 			})
 			.catch(err => {
-				console.error('Error', err);
 				this.modalMessage = this.label.icg_error_message;
 				this.modalImage = this.ERROR_IMAGE;
 				this.showModal = true;
@@ -558,7 +554,6 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 				this.showModal = true;
 			})
 			.catch(err => {
-				console.error('Error', err);
 				this.modalMessage = this.label.icg_error_message;
 				this.modalImage = this.ERROR_IMAGE;
 				this.showModal = true;
@@ -770,7 +765,6 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 				})
 				.catch(error => {
 					this.loaded = true;
-					console.error("error", error);
 				});
 		} else {
 			this.facility[key] = value;
@@ -857,16 +851,17 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 
 	handleSaveChanges() {
 		if (this.readOnlyHandlersAirline === false || this.readOnlyHandlersCargo === false || this.readOnlyHandlersRamp === false) {
-			if (this.readOnlyHandlersAirline === false) {
-				this.executeActionHandlersAirline = "save";
-			}
-			if (this.readOnlyHandlersCargo === false) {
-				this.executeActionHandlersCargo = "save";
-			}
-			if (this.readOnlyHandlersRamp === false) {
-				this.executeActionHandlersRamp = "save";
-			}
-
+			this.template.querySelectorAll("c-cw-handler-detail").forEach(element => {
+				if (element.handlerType === 'airline' && this.readOnlyHandlersAirline === false){
+					element.saveHandlerItems();
+				}
+				else if (element.handlerType === 'cargo' && this.readOnlyHandlersCargo === false){
+					element.saveHandlerItems();
+				}
+				else if (element.handlerType === 'ramp' && this.readOnlyHandlersRamp === false){
+					element.saveHandlerItems();
+				}
+			});
 		} else if(this.isEditSectionCapabMangment === true){
 			if(!this.checkRequiredFields()){
 				this.showToast("Error", "Complete required fields", "error");
@@ -947,7 +942,6 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 				})
 				.catch(error => {
 					this.loaded = true;
-					console.error("error", error);
 				});
 			this.editOn = false;
 			this.editOnAirport = false;
@@ -959,46 +953,60 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 		}
 	}
 
-	onChangeReadOnlyHandlerForm(event) {
-		let handlerType = event.detail.handlerType;
-		if (handlerType === 'airline') {
-			this.readOnlyHandlersAirline = event.detail.isReadOnly;
-		} else if (handlerType === 'cargo') {
-			this.readOnlyHandlersCargo = event.detail.isReadOnly;
-		} else if (handlerType === 'ramp') {
-			this.readOnlyHandlersRamp = event.detail.isReadOnly;
+	manageChildEvent(event) {
+		let eventData = event.detail
+		if (eventData.error) {
+			this.showToast("Error", this.label.icg_error_update_facility, "error");
+			return;
+		}
+		
+		if (eventData.name === 'save') {
+			this.saveChildEvent(eventData);
+		} else if (eventData.name === 'changeReadOnly') {
+			this.changeReadOnlyChildEvent(eventData);
+		} else if (eventData.name === 'selectItem') {
+			this.onSelectItemChildEvent(eventData);
 		}
 	}
-	onSelectHandlerItem(event) {
-		let handlerType = event.detail.handlerType;
-		if (handlerType === 'airline') {
-			this.setFacilityInfo(this.facility.Id, "handledAirlines", "newSelectedAirlines");
-		} else if (handlerType === 'cargo' || handlerType === 'ramp') {
-			this.setFacilityInfo(this.facility.Id, "handled" + handlerType.charAt(0).toUpperCase() + handlerType.slice(1) + "Stations", "new" + handlerType.charAt(0).toUpperCase() + handlerType.slice(1) + "Stations");
-		}
-	}
-	onSaveHandlerItems(event) {
-		let handlerType = event.detail.handlerType;
-		if (handlerType === 'airline') {
-			this.executeActionHandlersAirline = "";
+	saveChildEvent(eventData) {
+		// Save event
+		if (eventData.name === 'save' && eventData.handlerType === 'airline') {
+			this.airlineHandlers = eventData.handlerData;
 			this.readOnlyHandlersAirline = true;
-	
-		}else if (handlerType === 'cargo') {
-			this.executeActionHandlersCargo = "";
+		}
+		if (eventData.name === 'save' && eventData.handlerType === 'cargo') {
+			this.cargoHandlers = eventData.handlerData;
 			this.readOnlyHandlersCargo = true;
-
-		}else if (handlerType === 'ramp') {
-			this.executeActionHandlersRamp = "";
+		}
+		if (eventData.name === 'save' && eventData.handlerType === 'ramp') {
+			this.rampHandlers = eventData.handlerData;
 			this.readOnlyHandlersRamp = true;
 		}
-
-		if (event.detail.error) {
-			this.showToast("Error", this.label.icg_error_update_facility, "error");
-			console.error(err);
-		} 
-
-		if (this.readOnlyHandlersAirline === true && this.readOnlyHandlersCargo === true && this.readOnlyHandlersRamp === true) {
+		if (eventData.name === 'save' && this.readOnlyHandlersAirline === true && this.readOnlyHandlersCargo === true && this.readOnlyHandlersRamp === true) {
 			this.handleSaveChanges();
+		}
+	}
+	changeReadOnlyChildEvent(eventData) {
+		// Change read only event
+		if (eventData.name === 'changeReadOnly' && eventData.handlerType === 'airline') {
+			this.readOnlyHandlersAirline = eventData.isReadOnly;
+		}
+		if (eventData.name === 'changeReadOnly' && eventData.handlerType === 'cargo') {
+			this.readOnlyHandlersCargo = eventData.isReadOnly;
+		}
+		if (eventData.name === 'changeReadOnly' && eventData.handlerType === 'ramp') {
+			this.readOnlyHandlersRamp = eventData.isReadOnly;
+		}
+	}
+	onSelectItemChildEvent(eventData) {
+		// On select item event
+		if (eventData.name === 'selectItem' && eventData.handlerType === 'airline') {
+			this.setFacilityInfo(this.facility.Id, "handledAirlines", "newSelectedAirlines");
+		}
+		if (eventData.name === 'selectItem' && (eventData.handlerType === 'cargo' || eventData.handlerType === 'ramp')) {
+			this.setFacilityInfo(
+				this.facility.Id, 
+				"handled" + eventData.handlerType.charAt(0).toUpperCase() + eventData.handlerType.slice(1) + "Stations", "new" + eventData.handlerType.charAt(0).toUpperCase() + eventData.handlerType.slice(1) + "Stations");
 		}
 	}
 

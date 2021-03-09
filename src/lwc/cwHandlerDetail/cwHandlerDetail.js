@@ -101,8 +101,9 @@ export default class CwHandlerDetail extends LightningElement {
 		this.showOnlySelected = val;
 
 		this.dispatchEvent(
-			new CustomEvent("changereadonly", {
+			new CustomEvent("event", {
 				detail: {
+					name: "changeReadOnly",
 					handlerType: this.handlerType,
 					isReadOnly: this._isReadOnly
 				}
@@ -112,72 +113,42 @@ export default class CwHandlerDetail extends LightningElement {
 
 	@api label;
 
-	_executedAction = null;
-	@api
-	get executeAction() {
-		return null;
-	}
-	set executeAction(values) {
-		if (values) {
-			values
-				.trim()
-				.split(",")
-				.forEach(value => {
-					if (value && value.toLowerCase() === "save") {
-						this.saveHandlerItems();
-					} else if (value && value.toLowerCase() === "setDefault".toLowerCase()) {
-						this.setDefaultHandlerData();
-					} else if (value && value.toLowerCase() === "getItemsSelected".toLowerCase()) {
-						this.dispatchEvent(
-							new CustomEvent("returnchilddata", {
-								detail: {
-									handlerType: this.handlerType,
-									itemsToAdd: this.getHandlerItemIdsToShow
-								}
-							})
-						);
-					} else if (value && value.toLowerCase() === "getItemsToAdd".toLowerCase()) {
-						this.dispatchEvent(
-							new CustomEvent("returnchilddata", {
-								detail: {
-									handlerType: this.handlerType,
-									itemsToAdd: this.getHandlerItemIdsToAdd
-								}
-							})
-						);
-					} else if (value && value.toLowerCase() === "getItemsToDel".toLowerCase()) {
-						this.dispatchEvent(
-							new CustomEvent("returnchilddata", {
-								detail: {
-									handlerType: this.handlerType,
-									itemsToDel: this.getHandlerItemIdsToDel
-								}
-							})
-						);
-					} else if (value && value.toLowerCase() === "getShownOperationStations".toLowerCase()) {
-						this.dispatchEvent(
-							new CustomEvent("returnchilddata", {
-								detail: {
-									handlerType: this.handlerType,
-									idsToShow: this.getHandlerItemIdsToShow
-								}
-							})
-						);
-					} else if (value && value.toLowerCase() === "getHiddenOperationStations".toLowerCase()) {
-						this.dispatchEvent(
-							new CustomEvent("returnchilddata", {
-								detail: {
-									handlerType: this.handlerType,
-									idsToHide: this.getHandlerItemIdsToHide
-								}
-							})
-						);
-					}
-				});
-		}
-	}
-
 	@api autoSelection = false;
+
+	@api
+	getItemsSelected() {
+		this.dispatchEvent(
+			new CustomEvent("event", {
+				detail: {
+					name: "getItemsSelected",
+					handlerType: this.handlerType,
+					itemsToAdd: this.getHandlerItemIdsToShow
+				}
+			})
+		);
+	}
+	@api getShownOperationStations() {
+		this.dispatchEvent(
+			new CustomEvent("event", {
+				detail: {
+					name: "getShownOperationStations",
+					handlerType: this.handlerType,
+					idsToShow: this.getHandlerItemIdsToShow
+				}
+			})
+		);
+	}
+	@api getHiddenOperationStations() {
+		this.dispatchEvent(
+			new CustomEvent("event", {
+				detail: {
+					name: "getHiddenOperationStations",
+					handlerType: this.handlerType,
+					idsToHide: this.getHandlerItemIdsToHide
+				}
+			})
+		);
+	}
 
 	// ########################################################################################
 	// @track / normal variables
@@ -397,6 +368,7 @@ export default class CwHandlerDetail extends LightningElement {
 		}
 	}
 
+	@api
 	setDefaultHandlerData() {
 		if (this.handlerType == "airline") {
 			getDefaultAirlineHandlersDataApex()
@@ -483,10 +455,12 @@ export default class CwHandlerDetail extends LightningElement {
 
 		let headers = [];
 		values.forEach(currentItem => {
-			if (currentItem.label && currentItem.label.length > 0) {
-				let firstChar = currentItem.label[0].toUpperCase();
-				if (headers.indexOf(firstChar) < 0) {
-					headers.push(firstChar);
+			if (currentItem.isHeader === undefined || currentItem.isHeader === false) {
+				if (currentItem.label && currentItem.label.length > 0) {
+					let firstChar = currentItem.label[0].toUpperCase();
+					if (headers.indexOf(firstChar) < 0) {
+						headers.push(firstChar);
+					}
 				}
 			}
 		});
@@ -509,6 +483,7 @@ export default class CwHandlerDetail extends LightningElement {
 		return valuesWithoutHeaders;
 	}
 
+	@api
 	saveHandlerItems() {
 		if (!this.isValidHandlerType) {
 			return;
@@ -535,8 +510,9 @@ export default class CwHandlerDetail extends LightningElement {
 				.then(result => {
 					this.handlerData = this.removeHandlerItemHeaders(this._handlerDataDraft);
 					this.dispatchEvent(
-						new CustomEvent("save", {
+						new CustomEvent("event", {
 							detail: {
+								name: "save",
 								handlerType: this.handlerType,
 								handlerData: JSON.parse(JSON.stringify(this.handlerData))
 							}
@@ -545,8 +521,9 @@ export default class CwHandlerDetail extends LightningElement {
 				})
 				.catch(err => {
 					this.dispatchEvent(
-						new CustomEvent("save", {
+						new CustomEvent("event", {
 							detail: {
+								name: "save",
 								handlerType: this.handlerType,
 								error: err,
 
@@ -569,8 +546,9 @@ export default class CwHandlerDetail extends LightningElement {
 					if (result) {
 						this.handlerData = this.removeHandlerItemHeaders(this._handlerDataDraft);
 						this.dispatchEvent(
-							new CustomEvent("save", {
+							new CustomEvent("event", {
 								detail: {
+									name: "save",
 									handlerType: this.handlerType,
 									result: result,
 									handlerData: JSON.parse(JSON.stringify(this.handlerData))
@@ -581,8 +559,9 @@ export default class CwHandlerDetail extends LightningElement {
 				})
 				.catch(err => {
 					this.dispatchEvent(
-						new CustomEvent("save", {
+						new CustomEvent("event", {
 							detail: {
+								name: "save",
 								handlerType: this.handlerType,
 								error: err,
 
@@ -632,8 +611,9 @@ export default class CwHandlerDetail extends LightningElement {
 		});
 
 		this.dispatchEvent(
-			new CustomEvent("select", {
+			new CustomEvent("event", {
 				detail: {
+					name: "selectItem",
 					handlerType: this.handlerType,
 					itemSelected: itemSelected,
 					handlerData: this.handlerData,

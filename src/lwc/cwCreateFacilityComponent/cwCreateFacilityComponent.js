@@ -44,12 +44,6 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 	@track formData = {};
 	@track additionalData = {};
 	@track selectedAirlines = [];
-	@track selectedOperatingCHF = [];
-	@track selectedRampH = [];
-	@track filterTextAirlines;
-	@track filterTextOperatingAirlines;
-	@track filterTextOperatingCHF;
-	@track filterTextRampH;
 	@track openingHours;
 	@track activeInfoWindow;
 	@track setFacilityNameAndType;
@@ -99,12 +93,74 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 		{ key: "pharmaceuticals", name: "Pharmaceuticals", matchesCerts: ["ceiv_pharma"], checked: false }
 	];
 	
+
+	get stationProfile() {
+		let station = {
+			recordTypeDevName: this.companyType,
+			accountName: this.selectedCompany ? 
+							this.selectedCompany.accountInfo.Name : 
+							this.account.legalname, 
+			nearestAirport: {
+				city: this.selectedAirport ? this.selectedAirport.value : null,
+			},
+			companyId: this.selectedCompany ? 
+				this.selectedCompany.accountInfo.Id : 
+				null
+		}
+		return station;
+	}
+
+	autoSelection = true;
+	airlineHandledItemsToAdd;
+	airlineHandledItemsToDel;
+	cargoShownOperatingStationIds;
+	cargoHideOperatingStationIds;
+	rampShownOperatingStationIds;
+	rampHideOperatingStationIds;
+
+	manageChildEvent(event) {
+		let eventData = event.detail
+		if (eventData.error) {
+			this.showToast("Error", this.label.icg_error_update_facility, "error");
+			return;
+		}
+		
+		if (eventData.name === 'getItemsSelected') {
+			this.getItemsSelectedChildEvent(eventData);
+		} else if (eventData.name === 'getShownOperationStations') {
+			this.getShownOperationStationsChildEvent(eventData);
+		} else if (eventData.name === 'getHiddenOperationStations') {
+			this.getHiddenOperationStationsChildEvent(eventData);
+		}
+	}
+
+	getItemsSelectedChildEvent(eventData) {
+		if (eventData.name === 'getItemsSelected' && eventData.handlerType === 'airline') {
+			this.airlineHandledItemsToAdd = eventData.itemsToAdd;
+		}
+	}
+	getShownOperationStationsChildEvent(eventData) {
+		if (eventData.name === 'getShownOperationStations' && eventData.handlerType === 'cargo' && eventData.idsToShow) {
+			this.cargoShownOperatingStationIds = eventData.idsToShow;
+		}
+		if (eventData.name === 'getShownOperationStations' && eventData.handlerType === 'ramp' && eventData.idsToShow) {
+			this.rampShownOperatingStationIds = eventData.idsToShow;
+		}
+	}
+	getHiddenOperationStationsChildEvent(eventData) {
+		if (eventData.name === 'getHiddenOperationStations' && eventData.handlerType === 'cargo' && eventData.idsToHide) {
+			this.cargoHideOperatingStationIds = eventData.idsToHide;
+		}
+		if (eventData.name === 'getHiddenOperationStations' && eventData.handlerType === 'ramp' && eventData.idsToHide) {
+			this.rampHideOperatingStationIds = eventData.idsToHide;
+		}
+	}
+
+
+
+
 	get showCargoCommoditiesSection(){
 		return this.cargoCommodities.length >0;
-	}
-	
-	get setCreateMode(){
-		return true;
 	}
 
 	@track selectRt;
@@ -158,13 +214,6 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 		this.getUserFacilitiesFromAccount();
 	}
 	@track isLoading;
-
-	chfToAdd = [];
-	chfToRemove = [];
-	rampToAdd = [];
-	rampToRemove = [];
-	hiddenCargoStations;
-	hiddenRampHandlers;
 
 	clickedFacility;
 	parentCompany; //Id of the parent company
@@ -451,6 +500,19 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 		} else if (this.step >=2 && this.step < 3) {
 			this.getRtAndNameFormData();
 		} else if (this.step === 3) {
+			
+			this.airlineHandledItemsToDel = [];
+			this.template.querySelectorAll("c-cw-handler-detail").forEach(element => {
+				if (element.handlerType === 'airline') {
+					element.getItemsSelected();
+				}else if (element.handlerType === 'cargo') {
+					element.getShownOperationStations();
+					element.getHiddenOperationStations();
+				}else if (element.handlerType === 'ramp') {
+					element.getShownOperationStations();
+					element.getHiddenOperationStations();
+				}
+			});
 			this.getAdditionalFormData();
 		}else if (this.step === 4) {
 			this.beforeSummaryAction();
@@ -659,7 +721,6 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 				this.removeHoverDiv();
 			})
 			.catch(err => {
-				console.error('Error ', err);
 				this.modalMessage = this.label.icg_error_message;
 				this.modalImage = this.ERROR_IMAGE;
 				this.showModal = true;
@@ -1092,45 +1153,6 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 		scrollobjective.scrollIntoView({ behavior: 'smooth', block:'start' });
 	}
 
-	setSelectedAirlines(event) {
-		this.getAdditionalFormData();
-		this.selectedAirlines = JSON.parse(JSON.stringify(event.detail));
-	}
-	setSelectedCHF(event) {
-		this.hideCargoStations(event);
-		this.getAdditionalFormData();
-		this.selectedOperatingCHF = JSON.parse(JSON.stringify(event.detail));
-	}
-	setSelectedRamp(event) {
-		this.hideRampHandlers(event);
-		this.getAdditionalFormData();
-		this.selectedRampH = JSON.parse(JSON.stringify(event.detail));
-	}
-	filterAirlinesHandled(event) {
-		if(this.filterTextAirlines != event.detail){
-			this.getAdditionalFormData();
-			this.filterTextAirlines = event.detail;
-		}
-	}
-	filterOperatingAirlines(event) {
-		if(this.filterTextOperatingAirlines != event.detail){
-			this.getAdditionalFormData();
-			this.filterTextOperatingAirlines = event.detail;
-		}
-	}
-	filterOperatingCHF(event) {
-		if(this.filterTextOperatingCHF != event.detail){
-			this.getAdditionalFormData();
-			this.filterTextOperatingCHF = event.detail;
-		}
-	}
-	filterRampH(event) {
-		if(this.filterTextRampH != event.detail){
-			this.getAdditionalFormData();
-			this.filterTextRampH = event.detail;
-		}
-	}
-
 	invalidFilterValue(value){
 		return !value || value.length < 3;
 	}
@@ -1231,14 +1253,6 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 		}
 
 	}
-	get showListAirlines() {
-		return (this.companyType === 'Ramp_Handler' ||
-			this.companyType === 'Cargo_Handling_Facility' || this.companyType === 'Airport_Operator');
-	}
-
-	get showOperatingAirlines() {
-		return this.companyType === 'Airport_Operator';
-	}
 
 	get showOperatingCHFandRampH() {
 		return ((this.companyType === 'Airport_Operator' || this.companyType === 'Airline') && this.selectedAirport);
@@ -1301,52 +1315,39 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 		}
 	}
 
-	hideCargoStations(event){
-		this.hiddenCargoStations = [];
-		this.chfToAdd  = [];
-		this.chfToRemove = [];
-		this.onAirportOperatingCHF.forEach(chf => {
-			if (!event.detail.find(val => val.value === chf.value)) {
-				this.hiddenCargoStations.push(chf.value);
-				if(chf.originallySelected) this.chfToRemove.push(chf.value);
-				chf.selected = false;
-			}else{
-				if(!chf.originallySelected) this.chfToAdd.push(chf.value);
-				chf.selected = true;
-			}
-		});
-		
-	}
-	hideRampHandlers(event){
-		this.hiddenRampHandlers = [];
-		this.rampToAdd = [];
-		this.rampToRemove = [];
-		this.onAirportRampH.forEach(rmph => {
-			if (!event.detail.find(val => val.value === rmph.value)) {
-				this.hiddenRampHandlers.push(rmph.value);
-				if(rmph.originallySelected) this.rampToRemove.push(rmph.value);
-				rmph.selected = false;
-			}else{
-				if(!rmph.originallySelected) this.rampToAdd.push(rmph.value);
-				rmph.selected = true;
-			}
-		});
-	}
-
 	get hiddenOperatingStations(){
-		let hiddenOperatingStations = '';
+		let hiddenOperatingStation = [];
 		if(this.companyType === 'Airport_Operator'){
-			hiddenOperatingStations = this.hiddenCargoStations && this.hiddenCargoStations.length > 0 ? 'OperatingCargo:'+this.hiddenCargoStations.join(',')+'|': '';
-			hiddenOperatingStations += this.hiddenRampHandlers && this.hiddenRampHandlers.length > 0 ? 'OperatingRamp:'+this.hiddenRampHandlers.join(',')+'|':'';
+			if (this.cargoHideOperatingStationIds) {
+				hiddenOperatingStation.push('OperatingCargo:' + this.cargoHideOperatingStationIds.join(','));
+			}
+			if (this.rampHideOperatingStationIds) {
+				hiddenOperatingStation.push('OperatingRamp:' + this.rampHideOperatingStationIds.join(','));
+			}
 		}
-		return hiddenOperatingStations;
+		return hiddenOperatingStation.join('|');
 	}
 
 	get stationsToAdd(){
-		return this.rampToAdd.concat(this.chfToAdd);
+		return [];
 	}
 	get stationsToRemove(){
-		return this.rampToRemove.concat(this.chfToRemove);
+		let idsToRemove = [];
+		if (this.cargoHideOperatingStationIds) {
+			this.cargoHideOperatingStationIds.forEach(currentItem => {
+				if (currentItem && currentItem.trim().length > 0) {
+					idsToRemove.push(currentItem);
+				}
+			});
+		}
+		if (this.rampHideOperatingStationIds) {
+			this.rampHideOperatingStationIds.forEach(currentItem => {
+				if (currentItem && currentItem.trim().length > 0) {
+					idsToRemove.push(currentItem);
+				}
+			});
+		}
+		return idsToRemove;
 	}
 
 	removeLang(event){
@@ -1531,40 +1532,30 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 		}
 		return company;
 	}
-	get airlinesHandledText() {
-		let txt = "";
-		if (this.selectedAirlines) {
-			this.selectedAirlines.forEach(airline => {
-				txt = txt + airline.label + ", ";
-			});
-			txt = txt.slice(0, -2);
-		}
-		return txt;
-	}
 	get ardRelIds() {
-		let txt = "";
-		if (this.selectedAirlines) {
-			this.selectedAirlines.forEach(airline => {
-				if(airline.value && airline.selected) {
-					txt = txt + airline.value + ";";
+		let newIds = [];
+		if (this.airlineHandledItemsToAdd){
+			this.airlineHandledItemsToAdd.forEach(currentItem=> { 
+				if (currentItem && currentItem.trim().length > 0) {
+					newIds.push(currentItem) 
 				}
 			});
 		}
-		if (this.selectedOperatingCHF) {
-			this.selectedOperatingCHF.forEach(operatingchf => {
-				if(operatingchf.value && operatingchf.selected) {
-					txt = txt + operatingchf.value + ";";
+		if (this.cargoShownOperatingStationIds){
+			this.cargoShownOperatingStationIds.forEach(currentItem=> { 
+				if (currentItem && currentItem.trim().length > 0) {
+					newIds.push(currentItem)
 				}
 			});
 		}
-		if (this.selectedRampH) {
-			this.selectedRampH.forEach(ramphand => {
-				if(ramphand.value && ramphand.selected) {
-					txt = txt + ramphand.value + ";";
-				}
+		if (this.rampShownOperatingStationIds){
+			this.rampShownOperatingStationIds.forEach(currentItem=> {
+				if (currentItem && currentItem.trim().length > 0) {
+					newIds.push(currentItem)
+			 	}
 			});
 		}
-		return txt;
+		return newIds.join(';');
 	}
 	get countryOrAddress() {
 		if (this.selectedHQCountry && !this.formData.sameaddress) return "the selected country";
@@ -1837,6 +1828,12 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 	}
 	get showAirlines(){
 		return this.showListAirlines || this.showOperatingAirlines;
+	}
+	get showListAirlines() {
+		return (this.companyType === 'Ramp_Handler' || this.companyType === 'Cargo_Handling_Facility');
+	}
+	get showOperatingAirlines() {
+		return this.companyType === 'Airport_Operator';
 	}
 	get getListAirIcon() {
 		return resources + "/icons/company_type/cargo_com_airline.jpg";
