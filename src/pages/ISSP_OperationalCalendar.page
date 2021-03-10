@@ -5,7 +5,7 @@
            readonly="true"
            controller="ISSP_OperationalCalendarController">
 
-<c:ISSP_Header ></c:ISSP_Header>
+<c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>
 
 <script src="{!URLFOR($Resource.fullcalendar, '/fullcalendar-3.9.0/lib/moment.min.js')}"></script>
 <script src="{!URLFOR($Resource.fullcalendar, '/fullcalendar-3.9.0/lib/jquery.min.js')}"></script>
@@ -20,29 +20,17 @@
 <apex:stylesheet value="{!URLFOR($Resource.ISSP_OperationalCalendar, '/css/main.min.css')}"/>
 <apex:stylesheet value="{!URLFOR($Resource.ISSP_OperationalCalendar, '/lib/qtip/jquery.qtip.min.css')}"/>
 <link href="//fonts.googleapis.com/css?family=Roboto:100,400,500" rel="stylesheet"/>
-<apex:stylesheet value="{!$Resource.CSP_VF_Stylesheet}"/>
-
 
 <style>
-    .iatabtn-main{
-
-        width: 165px;
-
+    .btn-primary {
+        background-color: #23527C !important;
+        background-image: none !important;
     }
-
-
-    .syncBtn.iatabtn-main{
-
-        background-color: #5cb85c;
-
+    .btn-success {
+        background-color: #5CB85C !important;
+        background-image: none !important;
     }
-
-    .container a{
-        color: white !important;
-    } 
-
 </style>
-
 <script>
     moment.locale("{!UserLanguage}");
     var LIST_FILTERS = {!listFiltersJson};
@@ -557,8 +545,8 @@
     }
 </script>
 
-<c:ISSP_CustomNavigation />
 <div class="container">
+    <c:ISSP_CustomNavigation communityName="{!communityName}" />
     
     <div class="row">
         <div class="col-sm-12">
@@ -592,7 +580,7 @@
         <div class="col-sm-2">
             <apex:form >
                 <apex:outputPanel layout="block" styleclass="form-group">
-                    <button id="syncCalendar" class="btn iatabtn-main syncBtn" type="button">
+                    <button id="syncCalendar" class="btn btn-success btn-block" type="button">
                         <span class="glyphicon glyphicon-calendar"></span>
                         {!$Label.ISSP_OperationalCalendar_Sync_Calendar}
                     </button>
@@ -630,7 +618,7 @@
                     </div>
                 </apex:outputPanel>
                 <div class="form-group">
-                    <button id="resetButton" class="btn iatabtn-main" type="button">{!$Label.ISSP_OperationalCalendar_Reset}</button>
+                    <button id="resetButton" class="btn btn-primary btn-block" type="button">{!$Label.ISSP_OperationalCalendar_Reset}</button>
                 </div>
             </apex:form>
         </div>
@@ -638,6 +626,6 @@
             <div id='calendar'></div>
         </div>
     </div> 
+    <c:ISSP_CustomFooter communityName="{!communityName}"/>
 </div>
-<c:ISSP_CustomFooter />
 </apex:page>

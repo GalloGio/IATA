@@ -12888,9 +12888,9 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>AMS_Accreditation_Contact__c.Certificate_Issued_on__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -19276,6 +19276,11 @@
         <editable>false</editable>
         <field>ANG_RHC_Information__c.RHC_Amount_USD__c</field>
         <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ANG_RHC_Information__c.Remarks__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -62747,10 +62752,6 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Contact-ISS Portal Contact Page Layout</layout>
-        <recordType>Contact.MACSSales</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Contact-ISS Portal Contact Page Layout</layout>
         <recordType>Contact.Standard_Contact</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -69467,11 +69468,6 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Comment__c.X4_Regional_Outlook_News</recordType>
-        <visible>false</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <default>false</default>
-        <recordType>Contact.MACSSales</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
