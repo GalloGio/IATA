@@ -198,8 +198,21 @@ private class ISSP_AMS_Accreditation_Test {
 			Email__c='email@email.com'
 		);
 
+		Account accountTIDSAgent = new Account(
+			BillingCity = 'test',
+			Name = 'accountTIDSAgent',
+			Sector__c = AMS_Utils.SECTOR_PASSENGER,
+			Category__c=AMS_Utils.CATEGORY_TIDS,
+			Location_class__c = AMS_Utils.LC_TIDS,
+			GDS__c = 'ABAC;AGTD;AXSS',
+			IATA_ISO_Country__c = country3.Id,
+			ANG_FA_Opt_out__c=false,
+			RecordTypeId = rtIdBr,
+			Reason_for_creation__c='New agent',
+			Email__c='email@email.com'
+		);
 
-		insert new List<Account>{parentAccountTravel, parentAccountCargo, optOutAcc, parentAccIcc, basicParent, mcParentAcc, mcbranchAcc, cashParentAcc,accountchildAccreditation,accountParentAccreditation};
+		insert new List<Account>{parentAccountTravel, parentAccountCargo, optOutAcc, parentAccIcc, basicParent, mcParentAcc, mcbranchAcc, cashParentAcc,accountchildAccreditation,accountParentAccreditation,accountTIDSAgent};
 
 		Account childAccIcc = new Account(
 			BillingCity = 'test2',
@@ -286,7 +299,11 @@ private class ISSP_AMS_Accreditation_Test {
 		conPASSBR.AccountId = accountchildAccreditation.Id;
 		conPASSBR.Email = 'conPASSBR@test222.com';
 
-		insert new List<Contact>{conTravel, conCargo, conChildIcc, conOptOut, conOptOutAdmin, conBasicChild, conMulticountry, conCash,conPASSHO,conPASSBR};
+		Contact conTIDS = ISSP_ObjectFactory.createNewContact();
+		conTIDS.AccountId = accountTIDSAgent.Id;
+		conTIDS.Email = 'conTIDS@test222.com';
+
+		insert new List<Contact>{conTravel, conCargo, conChildIcc, conOptOut, conOptOutAdmin, conBasicChild, conMulticountry, conCash,conPASSHO,conPASSBR,conTIDS};
 
 		User userIcc = ISSP_ObjectFactory.createPortalUser(conChildIcc);
 		conChildIcc.OwnerId = userIcc.Id;
@@ -315,7 +332,10 @@ private class ISSP_AMS_Accreditation_Test {
 		User userPASSBR = ISSP_ObjectFactory.createPortalUser(conPASSBR);
 		conPASSBR.OwnerId = userPASSBR.Id;
 
-		update new List<Contact>{conChildIcc, conOptOut, conOptOutAdmin, conBasicChild, conMulticountry, conTravel, conCash, conPASSHO,conPASSBR};
+		User userTIDS = ISSP_ObjectFactory.createPortalUser(conTIDS);
+		conTIDS.OwnerId = userTIDS.Id;
+
+		update new List<Contact>{conChildIcc, conOptOut, conOptOutAdmin, conBasicChild, conMulticountry, conTravel, conCash, conPASSHO,conPASSBR,conTIDS};
 
 		mcbranchAcc.OwnerId = userMC.Id;
 		update mcbranchAcc;
@@ -5251,4 +5271,82 @@ Location_Type__c = 'BR');
 
 	}
 
+    @isTest static void ISSP_AMS_Accreditation_TIDS() {
+        User user = fetchUser('conTIDS@test222.com');
+
+        Id rtOwnership = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
+        Id rtEmployee = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Employee');
+        AMS_Account_Role__c ar1 = new AMS_Account_Role__c(
+            Account__c = user.Contact.Account.Id,
+            Employee_Name__c = 'test1',
+            Employee_type__c = 'CL',
+            Owner_Name__c = 'owner test1',
+            Percentage__c = 50,
+            Position__c = 'A',
+            Valid__c = true,
+            Termination_Date__c = null,
+            Title__c = 'owner',
+            Owner_Account__c = user.Contact.Account.Id,
+            RecordTypeId = rtOwnership);
+        AMS_Account_Role__c ar2 = new AMS_Account_Role__c(
+            Account__c = user.Contact.Account.Id,
+            Employee_Name__c = 'test2',
+            Employee_type__c = 'CL',
+            Owner_Name__c = 'owner test2',
+            Percentage__c = 50,
+            Position__c = 'B',
+            Valid__c = true,
+            Termination_Date__c = null,
+            Title__c = 'owner',
+            Owner_Account__c = null,
+            RecordTypeId = rtEmployee);
+        list<AMS_Account_Role__c> listAccountRole = new list<AMS_Account_Role__c>{ar1,ar2};
+        insert listAccountRole;
+
+        ISSP_AMS_Accreditation ctrl;
+
+        Test.startTest();
+        System.runAs(user) { //STEP A
+            PageReference pageRef = Page.ISSP_AMS_Accreditation;
+            pageRef.getParameters().put('sectorValue', AMS_Utils.SECTOR_TRAVEL_AGENT);
+            pageRef.getParameters().put('accredType', AMS_Utils.TYPE_HE_ST_CASH);
+            pageRef.getParameters().put('step', '1');
+
+            Test.setCurrentPage(pageRef);
+
+            ctrl = new ISSP_AMS_Accreditation();
+
+            ctrl.getOfficeTypes();
+            ctrl.amsIsGSA = 'NO';
+
+            ctrl.save();
+
+        }
+        Test.stopTest();
+
+        Account account = [
+            SELECT Id,Name, TradeName__c, BillingStreet, BillingCity, BillingState, IATA_ISO_Country__c, BillingPostalCode, Phone, Mobile__c, Fax, Email__c, Website, VAT_Number__c, Registration_Number__c, License_Number__c,
+                (SELECT Id FROM AMS_Accreditation_Contacts__r)
+            FROM Account
+            WHERE Id = :ctrl.con.Account.Id
+        ];
+        System.assertEquals(ctrl.newForm.Account_Name__c, account.Name);
+        System.assertEquals(ctrl.newForm.TradeName__c, account.TradeName__c);
+        System.assertEquals(ctrl.newForm.Trade_Name__c, account.TradeName__c);
+        System.assertEquals(ctrl.newForm.Branch_Office_Street_name_number__c, account.BillingStreet);
+        System.assertEquals(ctrl.newForm.Branch_Office_City__c, account.BillingCity);
+        System.assertEquals(ctrl.newForm.Billing_State__c, account.BillingState);
+        System.assertEquals(ctrl.newForm.Branch_Office_Country__c, account.IATA_ISO_Country__c);
+        System.assertEquals(ctrl.newForm.Branch_Office_Postal_code__c, account.BillingPostalCode);
+        System.assertEquals(ctrl.newForm.Branch_Office_Phone__c, account.Phone);
+        System.assertEquals(ctrl.newForm.Mobile__c, account.Mobile__c);
+        System.assertEquals(ctrl.newForm.Branch_Office_FAX__c, account.Fax);
+        System.assertEquals(ctrl.newForm.Branch_Office_Email__c, account.Email__c);
+        System.assertEquals(ctrl.newForm.Website__c, account.Website);
+        System.assertEquals(ctrl.newForm.ISSP_AMS_VAT_Number_Input__c, account.VAT_Number__c);
+        System.assertEquals(ctrl.newForm.ISSP_AMS_Trade_Reg_No__c, account.Registration_Number__c);
+        System.assertEquals(ctrl.newForm.ISSP_AMS_License_No__c, account.License_Number__c);
+        System.assertEquals(ctrl.newForm.ISSP_AMS_GDS_with_signed_contract__c, 'Abacus;Amadeus;Axess');
+        System.assertEquals(ctrl.newForm.Link_agent_name__c, account.Id);
+    }
 }
