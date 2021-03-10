@@ -42023,6 +42023,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Portal_Applications__c.Contact_Role_Detail_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Portal_Applications__c.Country_Visibility_Control__c</field>
         <readable>true</readable>
     </fieldPermissions>

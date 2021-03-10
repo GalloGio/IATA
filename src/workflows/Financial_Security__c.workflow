@@ -428,15 +428,7 @@
         </actions>
         <active>true</active>
         <description>Not active guarantee status changes</description>
-        <formula>AND(
-  NOT(ISPICKVAL(Security_Status__c, &apos;Released&apos;)),
-  Validity_Start_Date__c &gt; DATEVALUE(now()),
-  OR(
-    ISPICKVAL(Region__c, &apos;Europe&apos;),
-    ISPICKVAL(Region__c, &apos;Africa &amp; Middle East&apos;),
-    ISPICKVAL(Region__c, &apos;Americas&apos;)
-  )
-)</formula>
+        <formula>AND(   NOT(ISPICKVAL(Security_Status__c, &apos;Released&apos;)),   Validity_Start_Date__c &gt; DATEVALUE(now()),   OR(     ISPICKVAL(Region__c, &apos;Europe&apos;),     ISPICKVAL(Region__c, &apos;Africa &amp; Middle East&apos;),     ISPICKVAL(Region__c, &apos;Americas&apos;)   ) )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
             <actions>
@@ -456,14 +448,7 @@
         </actions>
         <active>true</active>
         <description>Not active guarantee status changes</description>
-        <formula>AND(
-  NOT(ISPICKVAL(Security_Status__c, &apos;Released&apos;)),
-  Validity_Start_Date__c &gt; DATEVALUE(now()),
-  OR(
-    ISPICKVAL(Region__c, &apos;Asia &amp; Pacific&apos;),
-    ISPICKVAL(Region__c, &apos;China &amp; North Asia&apos;)
-  )
-)</formula>
+        <formula>AND(   NOT(ISPICKVAL(Security_Status__c, &apos;Released&apos;)),   Validity_Start_Date__c &gt; DATEVALUE(now()),   OR(     ISPICKVAL(Region__c, &apos;Asia &amp; Pacific&apos;),     ISPICKVAL(Region__c, &apos;China &amp; North Asia&apos;)   ) )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
             <actions>
