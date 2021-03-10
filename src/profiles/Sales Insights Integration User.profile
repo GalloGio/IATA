@@ -19259,6 +19259,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>ANG_RHC_Information__c.Remarks__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>ANG_RHC_Information__c.Tier__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -62622,10 +62627,6 @@
         <layout>Contact-Salesforce Standard Contact Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Contact-Salesforce Standard Contact Layout</layout>
-        <recordType>Contact.MACSSales</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>Contact-Standard Contact</layout>
         <recordType>Contact.Standard_Contact</recordType>
     </layoutAssignments>
@@ -69396,11 +69397,6 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Comment__c.X4_Regional_Outlook_News</recordType>
-        <visible>false</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <default>false</default>
-        <recordType>Contact.MACSSales</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>

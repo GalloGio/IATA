@@ -5484,6 +5484,10 @@ und &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
         <name>Case_Classification</name>
     </customLabels>
     <customLabels>
+        <label><!-- Case Closed For DGR --></label>
+        <name>Case_Closed_For_DGR</name>
+    </customLabels>
+    <customLabels>
         <label>Dieser Fall kann nicht geschlossen werden oder it&amp;apos ist bereits geschlossen.</label>
         <name>Case_Closure_Error_Cannot_Close</name>
     </customLabels>
@@ -13972,6 +13976,10 @@ and
         <name>ISSP_AMS_Case_Attach_Description</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Case Attach Description DGR --></label>
+        <name>ISSP_AMS_Case_Attach_Description_DGR</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS Case Attach Limit --></label>
         <name>ISSP_AMS_Case_Attach_Limit</name>
     </customLabels>
@@ -18893,6 +18901,14 @@ Bitte geben Sie an, für welches Land Sie zuletzt unsere Unterstützung erhalten
         <name>ISSP_Certificate_Profile_Restriction</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Certificate is being uploaded --></label>
+        <name>ISSP_Certificate_is_being_uploaded</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Certificate was uploaded satisfactory --></label>
+        <name>ISSP_Certificate_was_uploaded_satisfactory</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_Certifications --></label>
         <name>ISSP_Certifications</name>
     </customLabels>
@@ -23532,6 +23548,18 @@ Wenn Sie Ihr Passwort zurücksetzen möchten, gehen Sie bitte zum Log-in-Bildsch
     <customLabels>
         <label><!-- ISSP cannot open the selected account --></label>
         <name>ISSP_cannot_open_the_selected_account</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP certificate Submit --></label>
+        <name>ISSP_certificate_Submit</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP certificate expiry date --></label>
+        <name>ISSP_certificate_expiry_date</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP certificate with the same --></label>
+        <name>ISSP_certificate_with_the_same</name>
     </customLabels>
     <customLabels>
         <label>8 Zeichen</label>
