@@ -220,7 +220,7 @@ public class SurveyBatchTest {
 										Region__c = 'China & North Asia',
 										Assessment_Performed_Date__c = date.today(),
 										Financial_Review_Result__c = 'Satisfactory - Update Financial Security',
-										Reason1__c = 'CHC – Change of Shareholding'
+										Reason1__c = 'IATAN Conversion'
 										));
 
 								cases.add(new Case(recordtypeID = processRTId,
@@ -237,7 +237,7 @@ public class SurveyBatchTest {
 										Region__c = 'China & North Asia',
 										Assessment_Performed_Date__c = date.today(),
 										Financial_Review_Result__c = 'Satisfactory',
-										Reason1__c = 'CHC – Change of Shareholding'
+										Reason1__c = 'IATAN Conversion'
 										));
 
 
@@ -255,7 +255,7 @@ public class SurveyBatchTest {
 										BSPCountry__c = 'Italy',
 										Assessment_Performed_Date__c = date.today(),
 										Financial_Review_Result__c = 'Satisfactory',
-										Reason1__c = 'CHC – Change of Shareholding'
+										Reason1__c = 'IATAN Conversion'
 										));
 
 								 cases.add(new Case(recordtypeID = processRTId,
@@ -272,7 +272,7 @@ public class SurveyBatchTest {
 										BSPCountry__c = 'Japan',
 										Assessment_Performed_Date__c = date.today(),
 										Financial_Review_Result__c = 'Satisfactory',
-										Reason1__c = 'CHC – Change of Shareholding'
+										Reason1__c = 'IATAN Conversion'
 									));
 
 								 cases.add(new Case(recordtypeID = processRTId,
@@ -290,7 +290,7 @@ public class SurveyBatchTest {
 										Region__c = 'Africa & Middle East',
 										Assessment_Performed_Date__c = date.today(),
 										Financial_Review_Result__c = 'Satisfactory',
-										Reason1__c = 'CHC – Change of Shareholding'
+										Reason1__c = 'IATAN Conversion'
 										));
 
 								 cases.add(new Case(recordtypeID = processRTId,
@@ -307,7 +307,7 @@ public class SurveyBatchTest {
 										 BSPCountry__c = 'United States',
 										Assessment_Performed_Date__c = date.today(),
 										Financial_Review_Result__c = 'Satisfactory',
-										Reason1__c = 'CHC – Change of Shareholding',
+										Reason1__c = 'IATAN Conversion',
 										CNSCase__c =false
 										));
 
@@ -500,7 +500,7 @@ public class SurveyBatchTest {
 										Region__c = 'China & North Asia',
 										Assessment_Performed_Date__c = date.today(),
 										Financial_Review_Result__c = 'Satisfactory - Update Financial Security',
-										Reason1__c = 'CHC – Change of Shareholding',
+										Reason1__c = 'IATAN Conversion',
 										OwnerId = u1.Id
 										));
 
@@ -597,7 +597,7 @@ public class SurveyBatchTest {
 		for(IATA_ISO_Country__c iso : listCountries) {
 				cases.add(new Case(recordtypeID = processRTId,
 				Status = 'Financial Security Requested',
-				Reason1__c = 'CHC – Change of Shareholding',
+				Reason1__c = 'IATAN Conversion',
 				FS_Submitted_Date__c = date.today(),
 				FS_Deadline_Date__c = twoweeksAgo,
 				Origin = 'asd',
@@ -614,7 +614,7 @@ public class SurveyBatchTest {
 
 				cases.add(new Case(recordtypeID = IFAPcaseRecordTypeID,
 				Status = 'Financial Security Requested',
-				Reason1__c = 'CHC – Change of Shareholding',
+				Reason1__c = 'IATAN Conversion',
 				FS_Submitted_Date__c = date.today(),
 				FS_Deadline_Date__c = twoweeksAgo,
 				Origin = 'asd',
@@ -722,7 +722,8 @@ public class SurveyBatchTest {
 									'CHN - Change of Name',
 									'CHO / CHS – Change of Ownership / Legal Status',
 									'New BR / IP', 'New HO',
-									'New SA / CHV – New Code'};
+									'New SA / CHV – New Code',
+									'IATAN Conversion'};
 		List<String> lsRegions =
 				new List<String>{'Europe',
 									'Asia & Pacific',
@@ -735,7 +736,7 @@ public class SurveyBatchTest {
 				cases.add(new Case(recordtypeID = processRTId,
 				Status = 'Financial Security Requested',
 				// Reason1__c = reason,
-				Reason1__c = 'CHC – Change of Shareholding',
+				Reason1__c = 'IATAN Conversion',
 				FS_Submitted_Date__c = date.today(),
 				FS_Deadline_Date__c = twoweeksAgo,
 				Origin = 'asd',
@@ -850,7 +851,7 @@ public class SurveyBatchTest {
 		Case c = new Case();
 		c.RecordTypeId = chinaRTID;
 		c.OwnerId = u.Id;
-		c.Reason1__c = 'CHC – Change of Shareholding';
+		c.Reason1__c = 'IATAN Conversion';
 		c.BSPCountry__c='Canada';
 		c.Status = 'Open';
 		c.FS_Submitted_Date__c = date.today();
@@ -911,7 +912,7 @@ public class SurveyBatchTest {
 		Case c = new Case();
 		c.RecordTypeId = chinaRTID;
 		c.OwnerId = u.Id;
-		c.Reason1__c = 'CHC – Change of Shareholding';
+		c.Reason1__c = 'IATAN Conversion';
 		c.BSPCountry__c='Canada';
 		c.Status = 'Open';
 		c.FS_Submitted_Date__c = date.today();
@@ -974,7 +975,7 @@ public class SurveyBatchTest {
 		Case c = new Case();
 		c.RecordTypeId = chinaRTID;
 		c.OwnerId = u.Id;
-		c.Reason1__c = 'CHC – Change of Shareholding';
+		c.Reason1__c = 'IATAN Conversion';
 		c.BSPCountry__c='People\'s Republic of China';
 		c.Status = 'Open';
 		c.FS_Submitted_Date__c = date.today();
@@ -1037,7 +1038,7 @@ public class SurveyBatchTest {
 		Case c = new Case();
 		c.RecordTypeId = chinaRTID;
 		c.OwnerId = u.Id;
-		c.Reason1__c = 'CHC – Change of Shareholding';
+		c.Reason1__c = 'IATAN Conversion';
 		c.BSPCountry__c='Canada';
 		c.Status = 'Open';
 		c.FS_Submitted_Date__c = date.today();
@@ -1097,7 +1098,7 @@ public class SurveyBatchTest {
 		Case c = new Case();
 		c.RecordTypeId = chinaRTID;
 		c.OwnerId = u.Id;
-		c.Reason1__c = 'CHC – Change of Shareholding';
+		c.Reason1__c = 'IATAN Conversion';
 		c.BSPCountry__c='Algeria';
 		c.Status = 'Open';
 		c.FS_Submitted_Date__c = date.today();
@@ -1159,7 +1160,7 @@ public class SurveyBatchTest {
 		Case c = new Case();
 		c.RecordTypeId = chinaRTID;
 		c.OwnerId = u.Id;
-		c.Reason1__c = 'CHC – Change of Shareholding';
+		c.Reason1__c = 'IATAN Conversion';
 		c.BSPCountry__c='Philippines';
 		c.Status = 'Open';
 		c.FS_Submitted_Date__c = date.today();
@@ -1221,7 +1222,7 @@ public class SurveyBatchTest {
 		Case c = new Case();
 		c.RecordTypeId = FDS_ICCS_Email_to_CaseRecordTypeID;
 		c.OwnerId = u.Id;
-		c.Reason1__c = 'CHC – Change of Shareholding';
+		c.Reason1__c = 'IATAN Conversion';
 		c.BSPCountry__c='Philippines';
 		c.Status = 'Financial Security Requested';
 		c.FS_Submitted_Date__c = date.today();
@@ -1280,7 +1281,7 @@ public class SurveyBatchTest {
 		Case c = new Case();
 			c.RecordTypeId = Cases_SIS_Help_DeskRecordTypeID;
 			c.OwnerId = u.Id;
-			c.Reason1__c = 'CHC – Change of Shareholding';
+			c.Reason1__c = 'IATAN Conversion';
 			c.BSPCountry__c='Philippines';
 			c.Status = 'Financial Security Requested';
 			c.FS_Submitted_Date__c = date.today();
@@ -1338,7 +1339,7 @@ public class SurveyBatchTest {
 		Case c = new Case();
 		c.RecordTypeId = aCAId;
 		c.OwnerId = u.Id;
-		c.Reason1__c = 'CHC – Change of Shareholding';
+		c.Reason1__c = 'IATAN Conversion';
 		c.BSPCountry__c='Philippines';
 		c.Status = 'Financial Security Requested';
 		c.FS_Submitted_Date__c = date.today();
@@ -1397,7 +1398,7 @@ public class SurveyBatchTest {
 		Case c = new Case();
 			c.RecordTypeId = chinaRTID;
 			c.OwnerId = u.Id;
-			c.Reason1__c = 'CHC – Change of Shareholding';
+			c.Reason1__c = 'IATAN Conversion';
 			c.BSPCountry__c='HAITI';
 			c.Status = 'Open';
 			c.FS_Submitted_Date__c = date.today();
@@ -1457,7 +1458,7 @@ public class SurveyBatchTest {
 		Case c = new Case();
 		c.RecordTypeId = chinaRTID;
 		c.OwnerId = u.Id;
-		c.Reason1__c = 'CHC – Change of Shareholding';
+		c.Reason1__c = 'IATAN Conversion';
 		c.BSPCountry__c='People\'s Republic of China';
 		c.Status = 'Open';
 		c.FS_Submitted_Date__c = date.today();
@@ -1520,7 +1521,7 @@ public class SurveyBatchTest {
 		Case c = new Case();
 		c.RecordTypeId = Cases_SIS_Help_DeskRecordTypeID;
 		c.OwnerId = u.Id;
-		c.Reason1__c = 'CHC – Change of Shareholding';
+		c.Reason1__c = 'IATAN Conversion';
 		c.BSPCountry__c='Philippines';
 		c.Status = 'Financial Security Requested';
 		c.FS_Submitted_Date__c = date.today();
@@ -1581,7 +1582,7 @@ public class SurveyBatchTest {
 		Case c = new Case();
 		c.RecordTypeId = chinaRTID;
 		c.OwnerId = u.Id;
-		c.Reason1__c = 'CHC – Change of Shareholding';
+		c.Reason1__c = 'IATAN Conversion';
 		c.BSPCountry__c='HAITI';
 		c.Status = 'Open';
 		c.FS_Submitted_Date__c = date.today();
@@ -1642,7 +1643,7 @@ public class SurveyBatchTest {
 		Case cse1 = new Case(
 			Account= acc,
 			Contact= con,
-			Reason1__c= 'New HO',
+			Reason1__c= 'IATAN Conversion',
 			Status= 'Closed',
 			WhoClosedCase__r= analyst,
 			RecordType= new RecordType(DeveloperName= 'OSCAR_Communication'),
@@ -1704,7 +1705,7 @@ public class SurveyBatchTest {
 		Case c = new Case();
 		c.RecordTypeId = chinaRTID;
 		c.OwnerId = u.Id;
-		c.Reason1__c = 'CHC – Change of Shareholding';
+		c.Reason1__c = 'IATAN Conversion';
 		c.BSPCountry__c='Algeria';
 		c.Status = 'Open';
 		c.FS_Submitted_Date__c = date.today();

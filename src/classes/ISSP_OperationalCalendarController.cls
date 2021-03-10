@@ -99,6 +99,8 @@ global without sharing class ISSP_OperationalCalendarController {
 		}
 	}
 
+	public String communityName{ get{ return ISSP_Utilities.isCNS()? 'CNS':'ISS'; }set;}
+
 	private transient list<EventWrapper> listEvents;
 	private transient list<Operational_Calendar__c> listOperations;
 	private User user;
