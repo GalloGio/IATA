@@ -47,9 +47,9 @@ global with sharing class IDCardWebService {
 					
 					c.VER_Number_2__c = IdcardUtil.generateVER(account);
 					c.UIR__c = IdcardUtil.generateUIR(account);
-					IDCardUtilWithoutSharing.upsertGenericObject('Contact', (sObject)(c), c.Id, c.getPopulatedFieldsAsMap().keyset());
+					database.UpsertResult sr = IDCardUtilWithoutSharing.upsertGenericObject('Contact', (sObject)(c), c.Id, c.getPopulatedFieldsAsMap().keyset());
 
-					system.debug(LoggingLevel.ERROR,'[processKeyAccountSingleApplication] upserted the contact:'+c.id+' with ver = '+c.VER_Number_2__c);
+					system.debug(LoggingLevel.ERROR,'[processKeyAccountSingleApplication] upserted the contact: Succes: ' + sr.isSuccess() + '. ID: ' + (sr.isSuccess()?sr.getId():'') + ' with ver = '+c.VER_Number_2__c);
 					singleApp.VER_Number__c = c.VER_Number_2__c ;
 					singleApp.UIR__c = c.UIR__c ;
 					String picName = singleApp.Photo__c;
