@@ -24,12 +24,25 @@ public with sharing class LogPhoneCaseController {
 		if (ApexPages.currentPage().getParameters().get('ContactId') != null) {
 			// the request originates from a Contact page
 			ContactId = ApexPages.currentPage().getParameters().get('ContactId');
-			con = [SELECT Id, AccountId, Account.Region_formula__c, Account.Site, Account.Account_Type__c, Account.IATA_ISO_Country__r.Name, Email FROM Contact WHERE Id = :ContactId];
+			con = [SELECT Id, AccountId, Account.Region_formula__c, Account.Site, Account.Account_Type__c, Account.IATA_ISO_Country__r.Name, Email, Preferred_Language__c FROM Contact WHERE Id = :ContactId];
+
+			String usrRoleId = UserInfo.getUserRoleId();
+			UserRole usrRole = [SELECT Id, Name FROM UserRole WHERE Id = :usrRoleId];
+	
+			strSelectedRType = caseRecordTypesMap.get('Cases - Europe');
+	
+			for (String rolePrefix : mapCaseRTNamePerUserRole.keyset()) {
+				if (usrRole.Name.startsWith(rolePrefix)) {
+					strSelectedRType = caseRecordTypesMap.get(mapCaseRTNamePerUserRole.get(rolePrefix));
+				}
+			}
 
 		} else if (ApexPages.currentPage().getParameters().get('CaseId') != null ) {
 			// the request originates from a Case page
 			CaseId = ApexPages.currentPage().getParameters().get('CaseId');
-			parentcase = [SELECT Id, ContactId, AccountId, CaseArea__c, Reason1__c, Type_of_customer__c, BSPCountry__c, Region__c FROM Case WHERE Id = :CaseId];
+			parentcase = [SELECT Id, ContactId, AccountId, CaseArea__c, Reason1__c, Type_of_customer__c, BSPCountry__c, Region__c, RecordTypeId, Case_Language__c FROM Case WHERE Id = :CaseId];
+
+			strSelectedRType = parentcase.RecordTypeId;
 
 			list<Contact> lstTmpContacts = [SELECT Id, AccountId, Account.Region_formula__c, Account.Site, Account.Account_Type__c, Account.IATA_ISO_Country__r.Name, Email FROM Contact WHERE Id = :parentcase.ContactId];
 			if (!lstTmpContacts.isempty()) {
@@ -44,24 +57,14 @@ public with sharing class LogPhoneCaseController {
 			return;
 		}
 
-		// choose the currently selected RT in function of the user role
-		String usrRoleId = UserInfo.getUserRoleId();
-		UserRole usrRole = [SELECT Id, Name FROM UserRole WHERE Id = :usrRoleId];
-
-		strSelectedRType = 'Cases - Europe';
-
-		for (String rolePrefix : mapCaseRTNamePerUserRole.keyset()) {
-			if (usrRole.Name.startsWith(rolePrefix)) {
-				strSelectedRType = mapCaseRTNamePerUserRole.get(rolePrefix);
-			}
+		String rtParam = ApexPages.currentPage().getParameters().get('recordtype');
+		if (!String.IsBlank(rtParam)) {
+			strSelectedRType = rtParam;
 		}
 
 		// prepare the new case, prefill the fields
 		newcase = new Case();
-		if (strSelectedRType != '') {
-			newcase.RecordTypeId = caseRecordTypesMap.get(strSelectedRType);
-		}
-
+		newcase.RecordTypeId = strSelectedRType;
 		newcase.ContactId = con.Id;
 		newcase.AccountId = con.AccountId;
 		newcase.ParentId = CaseId;
@@ -73,7 +76,8 @@ public with sharing class LogPhoneCaseController {
 		newcase.BSPCountry__c = (parentcase != null && parentcase.BSPCountry__c != null) ? parentcase.BSPCountry__c : con.Account.IATA_ISO_Country__r.Name;
 		newcase.Region__c = (parentcase != null && parentcase.Region__c != null) ? parentcase.Region__c : con.Account.Region_formula__c;
 		newcase.Type_of_customer__c = (parentcase != null && parentcase.Type_of_customer__c != null) ? parentcase.Type_of_customer__c : con.Account.Account_Type__c;
-		if (parentcase != null) {
+		newcase.Case_Language__c = parentcase != null ? parentCase.Case_Language__c : con.Preferred_Language__c;
+		if (parentcase != null && newcase.RecordTypeId==parentcase.RecordTypeId) {
 			newcase.CaseArea__c = parentcase.CaseArea__c;
 			newcase.Reason1__c = parentcase.Reason1__c;
 		}
@@ -90,8 +94,7 @@ public with sharing class LogPhoneCaseController {
 
 	public PageReference Save() {
 		try {
-			newcase.RecordTypeId = caseRecordTypesMap.get(strSelectedRType);
-			newcase.case_record_Type__C=strSelectedRType;
+			newcase.RecordTypeId = strSelectedRType;
 			insert newcase;
 
 			if (isNewTaskRequested) {
@@ -100,9 +103,7 @@ public with sharing class LogPhoneCaseController {
 				insert newtask;
 			}
 
-			PageReference retPage = new PageReference('/' + newcase.Id);
-			retPage.setRedirect(true);
-			return retPage;
+			return cancel();
 		} catch (Exception e) {
 			ApexPages.addMessages(e);
 			system.debug(e);
@@ -111,63 +112,25 @@ public with sharing class LogPhoneCaseController {
 	}
 
 	public PageReference SaveAndClose() {
-		try {
-			newcase.RecordTypeId = caseRecordTypesMap.get(strSelectedRType);
-			newcase.case_record_Type__C=strSelectedRType;
-			newcase.Status = 'Closed';
-
-			insert newcase;
-
-			if (isNewTaskRequested) {
-				newtask.WhatId = newcase.Id;
-
-				insert newtask;
-			}
-
-			//PageReference retPage = new PageReference('/' + newcase.Id);
-			PageReference retPage = new PageReference('/' + con.Id);
-			retPage.setRedirect(true);
-			return retPage;
-		} catch (Exception e) {
-			ApexPages.addMessages(e);
-			system.debug(e);
-			return null;
-		}
+		newcase.Status = 'Closed';
+		return Save();
 	}
 
 	public PageReference cancel() {
-		PageReference retPage = new PageReference('/' + con.Id);
+		Id returnId = contactId==null? caseId: contactId;
+		PageReference retPage = new PageReference('/' + returnId);
 		retPage.setRedirect(true);
 		return retPage;
 	}
 
-	public List<SelectOption> getCaseLanguageOptions(){
-		List<SelectOption> options = new List<SelectOption>();
-		options.add(new SelectOption('','--None--'));
-		for(Schema.PicklistEntry entry : Case.Case_Language__c.getDescribe().getPicklistValues()) {
-			options.add(new SelectOption(entry.getLabel(), entry.getValue()));
-		}
-		return options;
-	 }
-
 	 public List<SelectOption> getlstRecordTypes() {
 		List<SelectOption> options = new List<SelectOption>();
-		options.add(new SelectOption('','--None--'));
-		for( String s : mapCaseRTNamePerUserRole.values()) {
-			options.add(new SelectOption(s, s));
+		List<String> listRTs = new List<String>(new Set<String>(mapCaseRTNamePerUserRole.values()));
+		listRTs.sort();
+		for( String s : listRTs) {
+			options.add(new SelectOption(caseRecordTypesMap.get(s),s));
 		}
 		return options;
 	}
 
-	private static final list<String> VALID_CASE_TYPES = new list<String>{'Complaint','Compliment','General Question','Incident','Request'};
-	public List<SelectOption> getlstCaseTypes() {
-		List<SelectOption> options = new List<SelectOption>();
-		options.add(new SelectOption('','--None--'));
-		for(Schema.PicklistEntry entry : Case.Type.getDescribe().getPicklistValues()) {
-			if (VALID_CASE_TYPES.contains(entry.getValue())) {
-				options.add(new SelectOption(entry.getLabel(), entry.getValue()));
-			}
-		}
-		return options;
-	}
 }

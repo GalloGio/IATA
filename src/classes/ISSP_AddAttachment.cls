@@ -12,6 +12,7 @@ public class ISSP_AddAttachment {
 	public Id vAccountConcerned {get; set;}
 	public Contact con {get; set;}
 	Account hqAccount;
+	public boolean isOscarCertification {get; set;}
 
 	//CNS
 	public String communityName{ get{ return ApexPages.currentPage().getParameters().get('CommunityName'); }set;}
@@ -32,16 +33,19 @@ public class ISSP_AddAttachment {
 		isClaim = false;
 		isOSCARCase = false;
 		isOnlineOSCARCase = false;
+		isOscarCertification = false;
 
 		String CaseId = ApexPages.currentPage().getParameters().get('Caseid');
 		List<Case_excluded_w_status_action_needed__c> recordTypesToExclude = Case_excluded_w_status_action_needed__c.getall().values();
 
 		if (CaseId != '' && CaseId != null) {
 
-			tmpCase = [Select Id , CaseNumber, RecordType.Name, Status, CaseArea__c, Reason1__c, New_interaction__c, RecordType.Developername, New_Attachment_From_Portal_User__c, Reopening_reason__c, Reopened_case__c  From Case Where Id = : CaseId];
-
+			tmpCase = [Select Id , CaseNumber, RecordType.Name, OSCAR__c, OSCAR__r.recordType.DeveloperName, Status, CaseArea__c, Reason1__c, New_interaction__c, RecordType.Developername, New_Attachment_From_Portal_User__c, Reopening_reason__c, Reopened_case__c  From Case Where Id = : CaseId];
+			
+			if(tmpCase.OSCAR__c != null && tmpCase.OSCAR__r.recordType.DeveloperName == 'CERTIFICATION'){
+				isOscarCertification = true;
+			}
 			tmpCase.New_Attachment_From_Portal_User__c = true;
-			system.debug('TRUEEEE');
 			isCase = true;
 			String caseRT;
 
