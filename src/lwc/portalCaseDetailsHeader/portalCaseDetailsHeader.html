@@ -9,6 +9,13 @@
                     </div>
             </article>
         </template>
+        <template if:true={isExpiredDGR}>
+            <article class="slds-card expiredCard"> 
+                    <div class="slds-p-vertical_x-small;">
+                        <p class="slds-p-horizontal_small caseClosed2W"><img src={infoIcon}> <span>{labels.Case_Closed_For_DGR}</span></p>
+                    </div>
+            </article>
+        </template>
 
     <div class="customCard">
         <template if:true={loading}>

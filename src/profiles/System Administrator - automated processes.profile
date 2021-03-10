@@ -19267,6 +19267,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>ANG_RHC_Information__c.Remarks__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>ANG_RHC_Information__c.Tier__c</field>
         <readable>true</readable>
     </fieldPermissions>
