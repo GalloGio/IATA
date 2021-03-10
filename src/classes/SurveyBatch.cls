@@ -114,7 +114,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 															 Contact.Email, Contact.HasOptedOutOfEmail, Contact.Instant_Survey_opt_out__c, Account.Name, Account.Status__c,Account.Source_System__c,Account.CNS_Account__c,
 															 Contact.Instant_Survey_Last_feedback_received__c, Contact.Instant_Survey_Last_survey_sent__c,
 															 WhoClosedCase__r.UserRole.Name, Contact.Account.IATA_ISO_Country__r.Case_BSP_Country__c,
-															 WhoClosedCase__r.Profile.Name, CNSCase__c
+															 WhoClosedCase__r.Profile.Name, CNSCase__c, ACC_Process_Type__c
 															 FROM Case
 															 WHERE ClosedDate > :startd AND ClosedDate < :endd
 															 AND ContactId <> NULL AND Contact.Email <> NULL
@@ -340,9 +340,7 @@ global class SurveyBatch implements Database.Batchable<sObject>, Database.Statef
 				/*3*/!c.Contact.Email.contains('@iata.org') &&
 				!c.Contact.Email.contains('@salesforce.com') &&
 				/*4*/c.IATA_Code__c != '953' && c.IATA_Code__c != '954' &&
-				/*5*/(c.Reason1__c == 'CHC – Change of Shareholding' || c.Reason1__c == 'CHL - Change of Location' || c.Reason1__c == 'CHN - Change of Name' ||
-					c.Reason1__c == 'CHO / CHS – Change of Ownership / Legal Status' ||
-					c.Reason1__c == 'New BR / IP' || c.Reason1__c == 'New HO' || c.Reason1__c == 'New SA / CHV – New Code')  &&
+				/*5*/((c.ACC_Process_Type__c == 'Long 40d' && (c.Reason1__c != 'CHG – Data Maintenance' && c.Reason1__c != 'Financial RVW Intermediaries')) || c.ACC_Process_Type__c == 'Medium 25d')  &&
 				/*6*/c.Status == 'Closed'  &&
 				/*7*/(!c.Account.Name.contains('General Public') && !c.Account.Name.contains('Pubblico Italia')) &&
 				/*8*/c.Contact.HasOptedOutOfEmail == false &&

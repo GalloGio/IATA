@@ -1582,7 +1582,8 @@ global without sharing class IDCardUtil {
 					c[0].Status = CASESTATUS_READYFORPRODUCTION;
 
 					//To Check if we can do this Status change now.
-					Update c[0];
+					//Update c[0];
+					database.UpsertResult cur = IDCardUtilWithoutSharing.upsertGenericObject('Case', c[0], c[0].ID, c[0].getPopulatedFieldsAsMap().keyset());
 					System.debug(LoggingLevel.ERROR, '[UpdateCaseToApproved_Rejected]  Case saved with status ' + c[0].status );
 
 					//get IDCard and Application
@@ -1609,9 +1610,20 @@ global without sharing class IDCardUtil {
 						System.debug(LoggingLevel.ERROR, '[UpdateCaseToApproved_Rejected]  calling the method for id card creation');
 
 						idCardNew = IDCardUtil.CreateIDCardObjectFromApplication(application, contacts[0], accountType);
-						upsert idCardNew;
-						application.ID_Card__c = idCardNew.Id;
-						update application;
+
+						database.UpsertResult idcur = IDCardUtilWithoutSharing.upsertGenericObject('ID_Card__c', idCardNew, idCardNew.Id, idCardNew.getPopulatedFieldsAsMap().keyset());
+						//upsert idCardNew;
+						if(idcur.isSuccess()){
+							application.ID_Card__c = idcur.getId();
+						}else{
+							string updateErrors = '';
+							for(Database.Error err : idcur.getErrors()) {
+								updateErrors += '\t' + err.getStatusCode() + ': ' + err.getMessage() + '. Fields affected: ' + err.getFields() + '. \r\n';
+							}
+							throw new TransformationException('Error while creating IDCard: ' + updateErrors);
+						}
+						//update application;
+						IDCardUtilWithoutSharing.saveCommittedICA(application, application.Id);
 					}
 
 					//@@ and c.RecordTypeID =: IDCardContactRecordTypeID
@@ -1640,7 +1652,11 @@ global without sharing class IDCardUtil {
 
 					//update contact after cancelling existing card to avoid validation rule on active cards in case of name change.
 					theContact.Allow_Contact_LastName_Change__c = true;
-					update theContact;
+					for(string s:theContact.getPopulatedFieldsAsMap().keyset()){
+						system.debug('DTULLO Fields: ' + s);
+					}
+					database.UpsertResult cour1 = IDCardUtilWithoutSharing.upsertGenericObject('Contact', theContact, theContact.Id, theContact.getPopulatedFieldsAsMap().keyset());
+					//update theContact;
 
 
 					// call the cropping tool web service to rename the photo filename (from a GUID to the UIR)
@@ -1665,20 +1681,23 @@ global without sharing class IDCardUtil {
 							Id contID = c[0].ContactId;
 							c[0].ContactId = null;
 
-							update c[0];
+							//update c[0];
+							database.UpsertResult caur1 = IDCardUtilWithoutSharing.upsertGenericObject('Case', c[0], c[0].ID, c[0].getPopulatedFieldsAsMap().keyset());
 
 							// Contact cont = [Select id From Contact where Id= : contID limit 1];
 
 							//delete cont;
 						}
 						if (idCards[0].Sent_to_AIMS_on__c == null)
-							delete idCards;
+							IDCardUtilWithoutSharing.deleteGenericsObject(new set<id>{idCards[0].Id}, 'ID_Card__c');
 					}
-					update c[0];
+					//update c[0];
+					database.UpsertResult caur1 = IDCardUtilWithoutSharing.upsertGenericObject('Case', c[0], c[0].ID, c[0].getPopulatedFieldsAsMap().keyset());
 					return 'true';
 
 				}
-				Update c[0];
+				//Update c[0];
+				database.UpsertResult caur1 = IDCardUtilWithoutSharing.upsertGenericObject('Case', c[0], c[0].ID, c[0].getPopulatedFieldsAsMap().keyset());
 				System.debug(LoggingLevel.ERROR, '[UpdateCaseToApproved_Rejected]  Case ' + c[0].id + 'saved for the second time with status ' + c[0].status );
 
 				return 'true';
@@ -1687,6 +1706,8 @@ global without sharing class IDCardUtil {
 		} catch (Exception e) {
 
 			System.debug(LoggingLevel.ERROR, '[UpdateCaseToApproved_Rejected] ################ ERROR : ' + e.getStackTraceString());
+			System.debug(LoggingLevel.ERROR, '[UpdateCaseToApproved_Rejected] ################ ERROR : ' + e.getCause());
+			System.debug(LoggingLevel.ERROR, '[UpdateCaseToApproved_Rejected] ################ ERROR : ' + e.getMessage());
 
 
 

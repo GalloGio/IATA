@@ -32,7 +32,7 @@
         </div>
         <div data-docdiv class="slds-p-around_medium slds-medium-size_1-of-1 slds-m-around-large collapsed documentsAccordionTransition" style="transition: height 0.8s ease;">
           <c-attachment-list-cmp shownorecords="false" parentid={caseId} isportal="true" show-modal={showAddDocsModal}
-            no-attachment-msg={labels.AddDocumentsMsg} onupdateddocs={updateNdocs} accepted-formats={acceptedFormats} 
+            no-attachment-msg={labels.AddDocumentsMsg} onupdateddocs={updateNdocs} accepted-formats={acceptedFormats} expireddgr={trackedIsExpiredDGR}
             expired={trackedIsExpired}>
           </c-attachment-list-cmp>
         </div>

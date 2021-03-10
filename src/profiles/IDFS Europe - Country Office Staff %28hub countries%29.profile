@@ -19263,6 +19263,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>ANG_RHC_Information__c.Remarks__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>ANG_RHC_Information__c.Tier__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -50524,12 +50529,12 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Action_Plan_Closed_Count__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Action_Plan_Count__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -50542,12 +50547,12 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Operational_Improvements__c.Africa_MENA_Countries_Concerned__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Operational_Improvements__c.Americas_Countries_Concerned__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -50564,10 +50569,10 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Approval_process_selector__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Operational_Improvements__c.Asia_Pacific_Countries_Concerned__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -50587,14 +50592,14 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Operational_Improvements__c.China_North_Asia_Countries_Concerned__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Closest_Action_Plan_due_date__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -50609,12 +50614,12 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Conclusion_Date__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Countries_OI__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -50634,17 +50639,17 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Date_Time_Closed__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Days_passed_until_submission_for_approva__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Days_since_submission_for_approval__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -50659,7 +50664,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Description__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -50672,7 +50677,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Operational_Improvements__c.Europe_Countries_Concerned__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -50684,12 +50689,12 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Extension_approved_date__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Extension_rejected_date__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -50704,25 +50709,25 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.If_Yes_please_indicate_the_number__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.If_other_please_explain__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.If_other_please_state_the_affected_proc__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Impact_Post_Improvements__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Operational_Improvements__c.Impact__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -50739,7 +50744,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Initiator__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -50774,7 +50779,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Likelihood_Post_Improvements__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -50784,32 +50789,32 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Machine_tool__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Man_people__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Material_inputs_outputs__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Measure_controls_and_KPIs__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Method_process__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Mother_Earth_force_majeure__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -50824,32 +50829,32 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.OI_Approval_date__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.OI_Status_WF__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.OI_Status_auto__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.OI_Type__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.OI_effective_age__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Open_Date__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -50857,7 +50862,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Operational_Improvements__c.Operation__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -50869,22 +50874,22 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Overall_Deadline__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Overall_effectiveness_of_improvements__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Operational_Improvements__c.Parent_OI__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Pending_eff_validation_date__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -50894,7 +50899,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Please_indicate_reasoning__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -50904,42 +50909,42 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Region__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Related_Case_Number__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Remarks__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Reporting_Frequency__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Reporting_Month__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Reputational_Impact__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Risk_Portfolio__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Risk_Significance_Level_of_initiative__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -50949,7 +50954,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Root_Cause_Analysis__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -50957,19 +50962,19 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Operational_Improvements__c.Section_Code__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Sequency_of_events__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Service_Impact__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -50979,37 +50984,37 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Status_Image__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Status_del__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Status_update__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Subject__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Submission_for_Approval_Date__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Submission_for_extension_date__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Terminated_Date__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -65089,6 +65094,15 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>Meeting_Participant__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>Operational_Improvements__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
