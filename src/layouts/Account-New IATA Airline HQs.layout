@@ -277,10 +277,6 @@
                 <field>IATA_ISO_Billing_State__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Email__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Website</field>
             </layoutItems>
