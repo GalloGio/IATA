@@ -101,7 +101,6 @@ global with sharing class IDCardWebService {
 				*/
 
 				result[0] = 'Success';
-				TransformationHelper.sendEmailSupport('Successfull processing of ID card :'+id, 'Cause : \n ');
 				System.debug(LoggingLevel.ERROR,'[processKeyAccountSingleApplication]  The case has status' +aCase.status );
 			}
 			else  {
