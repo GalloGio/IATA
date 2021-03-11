@@ -1064,13 +1064,13 @@ lightning-datatable .slds-th__action {
 /* ############################################## */
 /* Combobox */
 
-.slds-combobox_container input[role="textbox"] {
+.slds-combobox_container input[role="combobox"] {
 	height: 52px;
     border-radius: 1px;
     cursor: pointer;
 }
 
-.slds-combobox_container input[role="textbox"]:not(:placeholder-shown) {
+.slds-combobox_container input[role="combobox"]:not(:placeholder-shown) {
     background-color: #f7f8fa;
 }
 .slds-combobox_container .slds-input__icon_right lightning-primitive-icon svg{
@@ -1205,16 +1205,16 @@ lightning-datatable .slds-th__action {
     left: 0px;
   }
 
-.languageSelection .slds-combobox_container input[role="textbox"]{
+.languageSelection .slds-combobox_container input[role="combobox"]{
     border:none;
     background-color: transparent;
 }
 
-.languageSelection .slds-combobox_container input[role="textbox"]:not(:placeholder-shown) {
+.languageSelection .slds-combobox_container input[role="combobox"]:not(:placeholder-shown) {
     background-color: transparent;
 }
 
-.languageSelection .slds-combobox_container input[role="textbox"] {
+.languageSelection .slds-combobox_container input[role="combobox"] {
     height: 32px;
     color: #3333ff;
     font-size: 14px;
@@ -1815,12 +1815,12 @@ lightning-datatable .slds-th__action {
 }
 
 /* Footer select language styles */
-.portalFooter .langSelect input[role="textbox"], .portalFooter .langSelect div[role="listbox"] {
+.portalFooter .langSelect input[role="combobox"], .portalFooter .langSelect div[role="listbox"] {
     background-color: #333333;
     border-radius: 0;
 }
 
-.portalFooter .langSelect input[role="textbox"] {
+.portalFooter .langSelect input[role="combobox"] {
     border: 0;
     cursor: pointer;
 }
@@ -1836,6 +1836,10 @@ lightning-datatable .slds-th__action {
 
 .portalFooter .langSelect .slds-form-element__label {
    display: none;
+}
+
+.portalFooter .slds-combobox_container lightning-base-combobox-item {
+    color: #ffffff;
 }
 
 .portalFooter .slds-combobox_container lightning-base-combobox-item:hover,
@@ -1860,7 +1864,7 @@ lightning-datatable .slds-th__action {
     border-top: 0;
 }
 
-.portalFooter .slds-combobox_container input[role="textbox"] {
+.portalFooter .slds-combobox_container input[role="combobox"] {
 	height: 32px;
 }
 
@@ -1940,14 +1944,14 @@ visibility: hidden;
 /* Mobile side menu select language styles */
 
 .sideBar .langSelect,
-.sideBar .langSelect input[role="textbox"],
+.sideBar .langSelect input[role="combobox"],
 .sideBar .langSelect div[role="listbox"] {
     background-color: #f0f2f5;
     font-weight:500;
     border-radius: 0;
 }
 
-.sideBar .langSelect input[role="textbox"] {
+.sideBar .langSelect input[role="combobox"] {
     border: 0;
     cursor: pointer;
     width: 140px;
@@ -1989,7 +1993,7 @@ visibility: hidden;
     border-top: 0;
 }
 
-.sideBar .slds-combobox_container input[role="textbox"] {
+.sideBar .slds-combobox_container input[role="combobox"] {
 	height: 32px;
 }
 
@@ -2216,23 +2220,23 @@ visibility: hidden;
     display: inline-block;
 }
 
-.languageSelection .slds-combobox_container input[role="textbox"]{
+.languageSelection .slds-combobox_container input[role="combobox"]{
     border:none;
     background-color: transparent;
 }
 
-.languageSelection .slds-combobox_container input[role="textbox"]:not(:placeholder-shown) {
+.languageSelection .slds-combobox_container input[role="combobox"]:not(:placeholder-shown) {
     background-color: transparent;
 }
 
-.languageSelection .slds-combobox_container input[role="textbox"] {
+.languageSelection .slds-combobox_container input[role="combobox"] {
 	height: 32px;
     color: #3333ff;
     font-size: 14px;
     font-weight: 500;
 }
 
-.languageSelectWrapper .slds-combobox_container input[role="textbox"]{
+.languageSelectWrapper .slds-combobox_container input[role="combobox"]{
     text-align: right !important;
 }
 
@@ -2313,7 +2317,7 @@ visibility: hidden;
     /*border: solid 1px #e2e2e2;*/
 }
 
-.registrationComboBox .slds-combobox_container input[role="textbox"]{
+.registrationComboBox .slds-combobox_container input[role="combobox"]{
 	border-color: #e6e6e6;
 }
 
@@ -2806,11 +2810,11 @@ html {
 }
 
 
-.specialPickList .slds-combobox_container input[role="textbox"]:not(:placeholder-shown) {
+.specialPickList .slds-combobox_container input[role="combobox"]:not(:placeholder-shown) {
     background-color: white;
 }
 
-.specialPickList .slds-combobox_container input[role="textbox"]{
+.specialPickList .slds-combobox_container input[role="combobox"]{
   border-color:#1e32fa;
 }
 .MaxModalContainerDim{
