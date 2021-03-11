@@ -12,7 +12,7 @@
     border:none !important;
 }
 
-.slds-combobox_container input[role="textbox"]{
+.slds-combobox_container input[role="combobox"]{
     background:transparent !important;
     border:none !important;
 }

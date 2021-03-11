@@ -5392,6 +5392,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>IDCard_RefundTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>IDCard_RenewalReminder_Batch</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -19275,6 +19279,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>ANG_RHC_Information__c.RHC_Amount_USD__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ANG_RHC_Information__c.Remarks__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

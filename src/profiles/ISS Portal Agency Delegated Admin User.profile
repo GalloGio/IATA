@@ -5404,6 +5404,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>IDCard_RefundTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>IDCard_RenewalReminder_Batch</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -12892,9 +12896,9 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>AMS_Accreditation_Contact__c.Certificate_Issued_on__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -19280,6 +19284,11 @@
         <editable>false</editable>
         <field>ANG_RHC_Information__c.RHC_Amount_USD__c</field>
         <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ANG_RHC_Information__c.Remarks__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>

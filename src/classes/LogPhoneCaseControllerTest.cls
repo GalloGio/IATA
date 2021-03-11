@@ -48,7 +48,6 @@ private class LogPhoneCaseControllerTest {
 			Test.setCurrentPage(pageRef);
 
 			LogPhoneCaseController controller = new LogPhoneCaseController();
-			controller.getCaseLanguageOptions();
 			controller.getlstRecordTypes();
 			controller.newcase.CaseArea__c = 'Airline Management';
 			controller.newcase.Reason1__c = 'Airline data changes';
@@ -98,9 +97,7 @@ private class LogPhoneCaseControllerTest {
 			Test.setCurrentPage(pageRef);
 
 			LogPhoneCaseController controller = new LogPhoneCaseController();
-			controller.getCaseLanguageOptions();
 			controller.getlstRecordTypes();
-			controller.getlstCaseTypes();
 			controller = new LogPhoneCaseController();
 			controller.newcase.CaseArea__c = 'Airline Management';
 			controller.newcase.Reason1__c = 'Airline data changes';
