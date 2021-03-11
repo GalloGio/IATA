@@ -211,17 +211,7 @@ public without sharing class CW_EmailTemplateData {
 
 		return listHasValues(crdContact) ? crdContact[0] : null;
 	}
-
-	public User getContactRoleDetailUser(){
-
-		List<User> crdUser;
-		if(getContactRoleDetails() != null){
-			crdUser = queryUserById(contactRoleDetail[0].ContactId__c);
-		}
-
-		return listHasValues(crdUser) ? crdUser[0] : null;
-	}
-
+	
 	public String getContactRoleDetailContactAccountAddress(){
 		String address='';
 		Contact c = getContactRoleDetailContact();
@@ -342,9 +332,9 @@ public without sharing class CW_EmailTemplateData {
 
 	public String getContactRoleDetailUserAddress(){
 		String address='';
-		User u = getContactRoleDetailUser();
-		if ( u != null){
-		   address = buildAddress(u);
+		Contact c = getContactRoleDetailContact();
+		if ( c != null){
+			address = buildAddress(c);
 		}
 
 		return address;

@@ -278,6 +278,7 @@ export function concatinateFacilityAddress(facility) {
 }
 
 export function removeLastCommaAddress(address) {
+	address = address.replaceAll(',,', ',');
 	return address.replace(/,\s*$/, "");
 }
 
@@ -423,21 +424,22 @@ export function getImageString(recordTypeDevName) {
 	return "missing-photo";
 }
 
-export function getIataSrc(recordTypeDevName, location, locationClass, resources) {
+export function getIataSrc(showIcon, recordTypeDevName, location, locationClass, resources) {
 	let src;
 	let freightForwarderValid = recordTypeDevName === "Freight_Forwarder" && locationClass && locationClass.toLowerCase() === "c";
 	let locationIsUS = location && location.location && location.location.Country === "United States";
+	let airline = (recordTypeDevName === "Airline" && (this.type == 'Airline Headquarters') || (this.type == 'Operator'));
 
 	if (freightForwarderValid && locationIsUS) {
 		src = resources + "/img/cns-endorsed-agent.png";
-	} else if (freightForwarderValid) {
+	} else if (freightForwarderValid || showIcon) {
 		src = resources + "/img/iata-logo-cut.png";
-	}
+	} 
 
 	return src;
 }
 
-export function getIataTooltip(recordTypeDevName, location, locationClass, label) {
+export function getIataTooltip(showIcon, recordTypeDevName, location, locationClass, label) {
 	let tooltip = "";
 
 	let freightForwarderValid = recordTypeDevName === "Freight_Forwarder" && locationClass && locationClass.toLowerCase() === "c";
@@ -445,7 +447,7 @@ export function getIataTooltip(recordTypeDevName, location, locationClass, label
 
 	if (freightForwarderValid && locationIsUS) {
 		tooltip = label.icg_cns_endorsed_agent;
-	} else if (freightForwarderValid) {
+	} else if (freightForwarderValid || showIcon) {
 		tooltip = label.icg_accredited_agent;
 	}
 

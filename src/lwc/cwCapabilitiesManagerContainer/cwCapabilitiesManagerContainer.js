@@ -78,7 +78,8 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 	@api editMode = false;
 	@track data = null;
 	@track modalEditPhotos = false;
-	@track photosRow;
+	@track filesRow;
+	@track fieldSelected;
 	@track photos = null;
 	@track photosAvailable = null;
 	@track dataHoverInfoStamp = null;
@@ -106,7 +107,6 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 	rowIndexSelected;
 	equipmentSelected;
 	@track equipmentSelectedLabel;
-	isKeepPhotos = false;
 	listDeleteRows = [];
 	listDataRow = [];
 
@@ -204,12 +204,12 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 		let categoryIndex = event.currentTarget.dataset.categoryIndex;
 		let rowIndex = event.currentTarget.dataset.rowIndex;
 
+		this.columnsToRowSelected = this.data.superCategories[superCategoriesIndex].sections[sectionIndex].capabilities[capabilityIndex].categories[categoryIndex].columns;
 		this.rowSelected = this.data.superCategories[superCategoriesIndex].sections[sectionIndex].capabilities[capabilityIndex].categories[categoryIndex].rows[rowIndex];
 
 		this.rowIndexSelected = rowIndex;
-		this.equipmentSelected = this.rowSelected.equipment_value;
+		this.equipmentSelected = this.rowSelected.equipment;
 		this.equipmentSelectedLabel = this.data.superCategories[superCategoriesIndex].sections[sectionIndex].capabilities[capabilityIndex].categories[categoryIndex].rows[rowIndex].equipment__c;
-		this.rowSelected.isKeepPhotos = this.rowSelected.photosAvailable;
 	}
 
 	photoToDelete;
@@ -221,21 +221,21 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 		this.openModal(this.headerDeletePhoto);
 	}
 
-	setPhotosValue(value) {
+	setFilesValue(value,field) {
 		this.listAddedRows.forEach(element => {
-			if (element.position.toString() === this.rowIndexSelected && element.equipment_value === this.equipmentSelected) {
-				let photoFound = false;
+			if (element.position.toString() === this.rowIndexSelected && element.equipment === this.equipmentSelected) {
+				let fileFound = false;
 				element.fields.forEach(f => {
-					if (f.field === "Photos__c") {
+					if (f.field === field) {
 						f.value = value;
-						photoFound = true;
+						fileFound = true;
 					}
 				});
-				if (!photoFound) {
+				if (!fileFound) {
 					let newField = {
-						field: "Photos__c",
+						field: field,
 						value: value,
-						label: "Photos",
+						label: field === 'photos__c' ? "Photos" : "Documents",
 						required: false
 					};
 					element.fields.push(newField);
@@ -246,17 +246,28 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 
 	restPhotosValue() {
 		let position = this.photoToDelete;
-		this.rowSelected.photos.splice(Number(position), 1);
-		if (this.rowSelected.photos.length > 0) {
-			this.setPhotosValue(JSON.stringify(this.rowSelected.photos));
-		} else {
-			this.rowSelected.photosAvailable = false;
-			this.setPhotosValue("");
+		if(this.fieldSelected === 'photos'){
+			this.rowSelected.photos.splice(Number(position), 1);
+			if (this.rowSelected.photos.length > 0) {
+				this.setFilesValue(JSON.stringify(this.rowSelected.photos),'photos__c');
+			} else {
+				this.rowSelected.photosAvailable = false;
+				this.setFilesValue("",'photos__c');
+			}
+		}
+		if(this.fieldSelected === 'documents'){
+			this.rowSelected.documents.splice(Number(position), 1);
+			if (this.rowSelected.documents.length > 0) {
+				this.setFilesValue(JSON.stringify(this.rowSelected.documents),'more_info_document__c');
+			} else {
+				this.rowSelected.documentsAvailable = false;
+				this.setFilesValue("",'more_info_document__c');
+			}
 		}
 	}
 
 	handleUploadFinished(event) {
-		// Get the list of uploaded files
+		// Get the list of uploaded photos
 		const uploadedFiles = event.detail.files;
 		let fileName = this.equipmentSelectedLabel + "-";
 		let indexFileName = this.rowSelected.photos.length;
@@ -275,34 +286,80 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 				listPhoto.push(photo);
 				indexFileName++;
 			});
-			this.getPublicLinkToFiles(listPhoto);
+			this.getPublicLinkToFiles(listPhoto, 'photos__c');
 		}
 	}
 
-	getPublicLinkToFiles(listPhoto) {
+	handleUploadDocumentFinished(event) {
+		// Get the list of uploaded documents
+		const uploadedFiles = event.detail.files;
+
+		if (uploadedFiles.length > 0) {
+			let listDocument = [];
+
+			uploadedFiles.forEach(function(file, i) {
+				let document = {
+					visible: true,
+					url: "",
+					label: file.name,
+					internalExtension: file.name,
+					id: file.documentId
+				};
+				listDocument.push(document);
+			});
+			this.getPublicLinkToFiles(listDocument,'more_info_document__c');
+		}
+	}
+	
+
+	getPublicLinkToFiles(listPhoto,field) {
 		this.loading = true;
 		getPublicLinkToFiles_({ listPhoto })
 			.then(res => {
 				let result = JSON.parse(res);
 				if (result.success) {
-					let photosToUpsert = result.message;
-					let currentPhotoList = JSON.parse(JSON.stringify(result.message));
-					let currentPhotoListParse = JSON.parse(currentPhotoList);
-					this.rowSelected.newphotos = currentPhotoListParse;
+					let filesToUpsert = result.message;
+					let currentFileList = JSON.parse(JSON.stringify(result.message));
+					let currentFileListParse = JSON.parse(currentFileList);
 
-					let previousPhotoList = this.rowSelected.photos;
-					if (previousPhotoList.length > 0) {
-						currentPhotoListParse.forEach(photo => {
-							previousPhotoList.push(photo);
+					currentFileListParse.forEach(file => {
+						file.downloadDocument = file.url;
+					});
+
+					let previousFileList = [];
+					if(field === 'photos__c'){
+						this.rowSelected.photos.forEach(photo => {
+							photo.url = photo.downloadDocument;
 						});
-						photosToUpsert = JSON.stringify(previousPhotoList);
-					} else {
-						previousPhotoList = currentPhotoListParse;
+						previousFileList = this.rowSelected.photos;
 					}
-					this.rowSelected.photos = previousPhotoList;
-					this.rowSelected.photosAvailable = true;
+					if(field === 'more_info_document__c'){
+						this.rowSelected.documents.forEach(document => {
+							document.url = document.downloadDocument;
+						});
+						previousFileList = this.rowSelected.documents;
+					}
+					
+					if (previousFileList.length > 0) {
+						currentFileListParse.forEach(photo => {
+							photo.url = photo.downloadDocument;
+							previousFileList.push(photo);
+						});
+						filesToUpsert = JSON.stringify(previousFileList);
+					} else {
+						previousFileList = currentFileListParse;
+					}
 
-					this.setPhotosValue(photosToUpsert);
+					if(field === 'photos__c'){
+						this.rowSelected.photos = previousFileList;
+						this.rowSelected.photosAvailable = true;
+					}
+					if(field === 'more_info_document__c'){
+						this.rowSelected.documents = previousFileList;
+						this.rowSelected.documentsAvailable = true;
+					}
+					
+					this.setFilesValue(filesToUpsert,field);
 				} else {
 					this._title = "Error";
 					this._message = result.message;
@@ -389,7 +446,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 		if (photoheaders && photoheaders.length > 0) {
 			photoheaders.forEach(photoheader => {
 				let certheader = photoheader.nextElementSibling;
-				let widthcertheader = certheader.clientWidth;
+				let widthcertheader = certheader != null ? certheader.clientWidth : [];
 				if (editingBtn.length > 0) {
 					photoheader.style.right = widthcertheader + 150 + "px";
 				} else {
@@ -401,7 +458,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 		if (photocells && photocells.length > 0) {
 			photocells.forEach(photocell => {
 				let certcell = photocell.nextElementSibling;
-				let widthcertcell = certcell.clientWidth;
+				let widthcertcell = certcell != null ? certcell.clientWidth : [];
 				if (editingBtn.length > 0) {
 					photocell.style.right = widthcertcell + 150 + "px";
 				} else {
@@ -476,15 +533,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 				});
 				this.dispatchEvent(newEvent);
 			})
-			.catch(error => {
-				this.dispatchEvent(
-					new ShowToastEvent({
-						title: "Error reading capabilities",
-						message: error.body.message,
-						variant: "error"
-					})
-				);
-			})
+			.catch(err => console.error(err))
 			.finally(() => {
 				this.loading = false;
 			});
@@ -498,6 +547,9 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 						category.rows.forEach(function(row, m) {
 							row.photos.forEach(function(pht, n) {
 								pht.downloadDocument = pht.url;
+							});
+							row.documents.forEach(function(doc, n) {
+								doc.downloadDocument = doc.url;
 							});
 						});
 					});
@@ -513,11 +565,19 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 		let categoryIndex = event.target.dataset.categoryIndex;
 		let rowIndex = event.target.dataset.rowIndex;
 		let currentEquipmentPhoto = this.data.superCategories[superCategoriesIndex].sections[sectionIndex].capabilities[capabilityIndex].categories[categoryIndex].rows[rowIndex].equipment__c;
-		this.photosRow = this.data.superCategories[superCategoriesIndex].sections[sectionIndex].capabilities[capabilityIndex].categories[categoryIndex].rows[rowIndex];
+		let filesRow = this.data.superCategories[superCategoriesIndex].sections[sectionIndex].capabilities[capabilityIndex].categories[categoryIndex].rows[rowIndex];
 
+		this.fieldSelected = event.target.dataset.field;
 		let indexFileName = 1;
-		this.photosRow.photos.forEach(element => {
-			if(element.extension.includes("pdf")){
+		let listFiles = [];
+		if(this.fieldSelected === 'photos'){
+			listFiles = filesRow.photos;
+		}
+		if(this.fieldSelected === 'documents'){
+			listFiles = filesRow.documents;
+		}
+		listFiles.forEach(element => {
+			if(element.extension.toLowerCase().includes("pdf")){
 				element.url = this.download;
 			}
 			else{
@@ -525,6 +585,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 			}
 			indexFileName++;
 		});
+		this.filesRow = listFiles;
 		this.modalEditPhotos = true;
 	}
 
@@ -568,7 +629,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 		let containField = false;
 		//update list to update
 		this.listAddedRows.forEach(function(element) {
-			if (element.equipment_value === data.equipment && element.position.toString() === data.rowIndex) {
+			if (element.equipment === data.equipment && element.position.toString() === data.rowIndex) {
 				element.fields.forEach(field => {
 					if (field.field === data.field) {
 						field.value = data.value;
@@ -598,29 +659,43 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 					section.capabilities.forEach(function(capability, k) {
 						capability.categories.forEach(function(category, l) {
 							category.rows.forEach(function(row, m) {
-								row.certifications.forEach(function(cert, n) {
-									if ((row.isAssigned === false && row.isPeviouslyCertified === true && row.isPermissionByDepartment === true && cert.id === groupId) || (row.isAssigned === false && row.isPeviouslyCertified === true && row.isPermissionByDepartment === true && !isTabEditCapabilities)) {
-										let positionRow = {
-											superCategoriesIndex: i,
-											sectionIndex: j,
-											capabilityIndex: k,
-											categoryIndex: l,
-											rowIndex: m
-										};
-
-										let toFind = listPositionsRow.filter(row => row.superCategoriesIndex === positionRow.superCategoriesIndex && row.sectionIndex === positionRow.sectionIndex && row.capabilityIndex === positionRow.capabilityIndex && row.categoryIndex === positionRow.categoryIndex && row.rowIndex === positionRow.rowIndex);
-										if (toFind.length === 0) {
-											listPositionsRow.push(positionRow);
-										}
+								if(row.isEditableRecordType && row.isAssigned && row.isPermissionByDepartment && !isTabEditCapabilities){
+									let positionRow = {
+										superCategoriesIndex: i,
+										sectionIndex: j,
+										capabilityIndex: k,
+										categoryIndex: l,
+										rowIndex: m
+									};
+									let toFind = listPositionsRow.filter(row => row.superCategoriesIndex === positionRow.superCategoriesIndex && row.sectionIndex === positionRow.sectionIndex && row.capabilityIndex === positionRow.capabilityIndex && row.categoryIndex === positionRow.categoryIndex && row.rowIndex === positionRow.rowIndex);
+									if (toFind.length === 0) {
+										listPositionsRow.push(positionRow);
 									}
-								});
+								}
+								else{
+									row.certifications.forEach(function(cert, n) {
+										if ((row.isAssigned === false && row.isPeviouslyCertified === true && row.isPermissionByDepartment === true && cert.id === groupId) || (!row.isAssigned && row.isPeviouslyCertified && row.isPermissionByDepartment && !isTabEditCapabilities)) {
+											let positionRow = {
+												superCategoriesIndex: i,
+												sectionIndex: j,
+												capabilityIndex: k,
+												categoryIndex: l,
+												rowIndex: m
+											};
+
+											let toFind = listPositionsRow.filter(row => row.superCategoriesIndex === positionRow.superCategoriesIndex && row.sectionIndex === positionRow.sectionIndex && row.capabilityIndex === positionRow.capabilityIndex && row.categoryIndex === positionRow.categoryIndex && row.rowIndex === positionRow.rowIndex);
+											if (toFind.length === 0) {
+												listPositionsRow.push(positionRow);
+											}
+										}
+									});
+								}
 							});
 						});
 					});
 				});
 			});
 			this.listPositionsRow = listPositionsRow;
-
 			this.operationCapabilities("assign");
 		} else {
 			this.operationCapabilities("deallocate");
@@ -644,7 +719,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 					if (element.type === "BOOLEAN") {
 						row[element.name] = false;
 					} else {
-						if (element.name !== "equipment__c" && element.name !== "equipment_value") {
+						if (element.name !== "equipment__c" && element.name !== "equipment") {
 							row[element.name] = null;
 						}
 					}
@@ -652,7 +727,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 
 				let index = 0;
 				this.listAddedRows.forEach(element => {
-					if (element.equipment_value === row.equipment_value) {
+					if (element.equipment === row.equipment) {
 						this.listAddedRows.splice(index, 1);
 					}
 					index++;
@@ -676,7 +751,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 					position: elem.rowIndex.toString(),
 					rtypeId: this.data.superCategories[elem.superCategoriesIndex].sections[elem.sectionIndex].capabilities[elem.capabilityIndex].rtypeId,
 					category: this.data.superCategories[elem.superCategoriesIndex].sections[elem.sectionIndex].capabilities[elem.capabilityIndex].categories[elem.categoryIndex].value,
-					equipment_value: row.equipment_value,
+					equipment: row.equipment,
 					equipment_label: row.equipment__c,
 					fields: []
 				};
@@ -693,6 +768,18 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 					};
 					newCapabilityRow.fields.push(newField);
 				});
+
+				//For photo__c field
+				if(row.photos.length>0){
+					let newField = {
+						field: 'photos__c',
+						value: JSON.stringify(row.photos),
+						label: "Photos",
+						required: false
+					}
+					newCapabilityRow.fields.push(newField);
+				}
+
 				this.listAddedRows.push(newCapabilityRow);
 			});
 			this.listPreviuosRows = this.listAddedRows.map(x => x);
@@ -702,13 +789,13 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 			this.listPositionsRow.forEach(elem => {
 				let row = this.data.superCategories[elem.superCategoriesIndex].sections[elem.sectionIndex].capabilities[elem.capabilityIndex].categories[elem.categoryIndex].rows[elem.rowIndex];
 
-				row.isAssigned = false;
+				//row.isAssigned = false;
 				row.isNotEditable = true;
 				row.customClass = "";
 
 				let index = 0;
 				this.listAddedRows.forEach(element => {
-					if (element.equipment_value === row.equipment_value) {
+					if (element.equipment === row.equipment) {
 						this.listAddedRows.splice(index, 1);
 					}
 					index++;
@@ -748,6 +835,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 			}
 		} else {
 			let rowIndex = event.target.dataset.rowIndex;
+			this.columnsToRowSelected = this.data.superCategories[superCategoriesIndex].sections[sectionIndex].capabilities[capabilityIndex].categories[categoryIndex].columns;
 			this.rowSelected = this.listDataRow[rowIndex];
 
 			let newCapabilityRow = {
@@ -755,7 +843,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 				id: this.rowSelected.id,
 				rtypeId: this.data.superCategories[superCategoriesIndex].sections[sectionIndex].capabilities[capabilityIndex].rtypeId,
 				category: this.data.superCategories[superCategoriesIndex].sections[sectionIndex].capabilities[capabilityIndex].categories[categoryIndex].value,
-				equipment_value: this.rowSelected.equipment_value,
+				equipment: this.rowSelected.equipment,
 				equipment_label: this.rowSelected.equipment__c,
 				fields: []
 			};
@@ -771,7 +859,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 				fieldsByColumns.forEach(element => {
 					let newField = {
 						field: element.name,
-						value: this.rowSelected[element.name] != "" && this.rowSelected[element.name] != null && this.rowSelected[element.name] != undefined ? this.rowSelected[element.name] : "",
+						value: this.rowSelected[element.name] != null ? (element.type === "MULTIPICKLIST" ? this.rowSelected[element.name].join(";") : (element.type === "DOUBLE") ? Number(this.rowSelected[element.name]) : this.rowSelected[element.name]): "",
 						label: element.label,
 						required: this.rowSelected.requiredFields.includes(element.name)
 					};
@@ -819,6 +907,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 				this.removeRowToListAddedRows(this.rowSelected, rowIndex.toString());
 			}
 		}
+
 	}
 
 	removeCapabilities(event) {
@@ -828,19 +917,26 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 		let categoryIndex = event.target.dataset.categoryIndex;
 		let rowIndex = event.target.dataset.rowIndex;
 
+		this.columnsToRowSelected = this.data.superCategories[superCategoriesIndex].sections[sectionIndex].capabilities[capabilityIndex].categories[categoryIndex].columns;
 		this.rowSelected = this.data.superCategories[superCategoriesIndex].sections[sectionIndex].capabilities[capabilityIndex].categories[categoryIndex].rows[rowIndex];
 		this.rowIndexSelected = rowIndex;
 		let certificationsAvailables = this.rowSelected.certifications;
 
-		if (certificationsAvailables.length > 1) {
-			this.isMultiValidated = true;
-
-			this.certiAvailablesRow = certificationsAvailables;
-			this.openModal(this.headerRemoveCertification);
-		} else {
-			this.addRowToRemoveList(this.rowSelected.certifications[0].id);
-			this.removeRowToListAddedRows(this.rowSelected, this.rowIndexSelected.toString());
+		if(this.rowSelected.isEditableRecordType){
+			this.addRowToRemoveList();
 		}
+		else{
+			if (certificationsAvailables.length > 1) {
+				this.isMultiValidated = true;
+	
+				this.certiAvailablesRow = certificationsAvailables;
+				this.openModal(this.headerRemoveCertification);
+			} else {
+				this.addRowToRemoveList(this.rowSelected.certifications[0].id);
+			}
+		}		
+		this.removeRowToListAddedRows(this.rowSelected, this.rowIndexSelected.toString());
+
 	}
 
 	certiSelectedToRemove(event) {
@@ -887,12 +983,21 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 		this.rowSelected.isNotEditable = true;
 		this.rowSelected.customClass = "";
 
+		let columns = this.columnsToRowSelected;
+		let fieldsByColumns = columns[columns.length - 1];
+
+		fieldsByColumns.forEach(element => {
+			if(element.name != 'equipment__c' && !element.isformula){
+				this.rowSelected[element.name] = '';
+			}
+		});
+
 		if (this.rowSelected.isAditional === true) {
 			this.listDataRow.splice(rowIndex, 1);
 		}
 		let index = 0;
 		this.listAddedRows.forEach(element => {
-			if (element.equipment_value === rowSelected.equipment_value && element.position === rowIndex){
+			if (element.equipment === rowSelected.equipment && element.position === rowIndex){
 				this.listAddedRows.splice(index, 1);
 			}
 			index++;
@@ -901,6 +1006,9 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 	}
 
 	get checkRequiredFields() {
+		let obligationLinkField = 'more_info_link__c';
+		let uploadDocumentationField = 'more_info_document__c';
+
 		let listFieldByEquipments = [];
 		let returnValue = true;
 		this.listAddedRows.forEach(element => {
@@ -911,7 +1019,20 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 			element.fields.forEach(field => {
 				if (field.required.toString() === "true" && field.field != "equipment__c") {
 					if (field.value === "") {
-						returnValue = false;
+						if(field.field === obligationLinkField || field.field === uploadDocumentationField){
+							if(field.field === obligationLinkField){
+								let selectField = element.fields.filter(row => row.field === uploadDocumentationField);
+
+								returnValue = selectField[0].value != null ? true :  false;
+							}
+							else if(field.field === uploadDocumentationField){
+								let selectField = element.fields.filter(row => row.field === obligationLinkField);
+								returnValue = selectField[0].value != null ? true :  false;
+							}
+						}						
+						else{
+							returnValue = false;
+						}
 						fieldByEquipmentRequired.equipment = element.equipment_label;
 						fieldByEquipmentRequired.fields.push(field.label);
 					}
@@ -1024,9 +1145,9 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 			});
 	}
 
-	editAllCapabilitiesFromStation(listAddedRows,listDeleteRows)
+	editAllCapabilitiesFromStation(accRoleDet,listAddedRows,listDeleteRows)
 	{
-		editAllCapabilitiesFromStation_({listAddedRows,listDeleteRows})
+		editAllCapabilitiesFromStation_({accRoleDet,listAddedRows,listDeleteRows})
 		.then(res => {
 			let result = JSON.parse(res);
 			if(result.success)
@@ -1057,7 +1178,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 			//Option Edit Capabilities in Capabilities Tab
 			if (!this.getCertificationMode) {
 				// this.updateCapabilitiesEdited(this.recordId, null, this.listAddedRows);
-				this.editAllCapabilitiesFromStation(this.listAddedRows,this.listDeleteRows);
+				this.editAllCapabilitiesFromStation(this.recordId,this.listAddedRows,this.listDeleteRows);
 			} else {
 				//Option Edit Capabilities
 				if (this.getisCapabCertiMode) {
@@ -1101,6 +1222,8 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 		this.getCapabilitiesFromCertification(this.recordId,null,null);
 
 		if (this.getStatusEditMode) {
+			this.listAddedRows = [];
+			this.listDeleteRows = [];
 			this.addPreviuosCapabilities();
 		}
 	}

@@ -85,7 +85,7 @@ export default class CwStationCreationCompanyInformation extends LightningElemen
 	checkCompletion(currentEmailValidity){
 		var currentCompletionStatus = this.isNextButtonDisabled;
 
-		this.isNextButtonDisabled = this.localAccount.legalName === '' 
+		this.isNextButtonDisabled = this.localAccount.legalname === '' 
 													|| this.localAccount.phone === ''
 													|| !this.isCategorizationSearchable || !this.localAccount.opsHierarchy;
 

@@ -2,6 +2,7 @@ import { LightningElement, track, api, wire } from "lwc";
 import resources from "@salesforce/resourceUrl/ICG_Resources";
 import { shMenu, sIcons, shButtonUtil, prButton, shareBtn, connectFacebook, connectTwitter, connectLinkedin, sendMail } from "c/cwUtilities";
 import labels from "c/cwOneSourceLabels";
+import pubsub from 'c/cwPubSub';
 import getURL from "@salesforce/apex/CW_Utilities.getURLPage";
 
 
@@ -340,5 +341,10 @@ export default class CwSearchResultWrapper extends LightningElement {
 
 	conEmail() {
 		sendMail("", "Facility Search", encodeURIComponent(this.url));
+	}
+
+	@api
+	showJoinNowPopUp(){
+	  pubsub.fire("showJoinNowPopUp");
 	}
 }
