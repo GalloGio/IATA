@@ -5392,6 +5392,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>IDCard_RefundTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>IDCard_RenewalReminder_Batch</apexClass>
         <enabled>false</enabled>
     </classAccesses>
