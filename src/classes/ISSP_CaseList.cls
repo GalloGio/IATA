@@ -45,6 +45,7 @@ global with sharing class ISSP_CaseList {
 	public boolean isNewGenApp = false;
 	public string ngaListViewName = '';
 	public integer newgenappPage = 0;
+	public Boolean isCNSAgency {get; private set;}
 
 	@HttpGet
 	global static List<Case> doGet(){
@@ -125,8 +126,9 @@ global with sharing class ISSP_CaseList {
 			//TF
 			apList = false;
 			apUser = false;
-			User myUser = [select Id,ContactId, Contact.AccountId from User where Id =:Userinfo.getUserId()];
+			User myUser = [select Id,ContactId, Contact.AccountId, Contact.Account.Sector__c, Contact.Account.CNS_Account__c, Contact.Account.IATA_ISO_Country__r.CNS_Country__c from User where Id =:Userinfo.getUserId()];
 			if (myUser.ContactId != null){
+				isCNSAgency = myUser.Contact.Account.Sector__c == AMS_Utils.SECTOR_CARGO && myUser.Contact.Account.IATA_ISO_Country__r.CNS_Country__c && myUser.Contact.Account.CNS_Account__c;
 				List <Portal_Application_Right__c> appRightList = [Select Id From Portal_Application_Right__c
 																where Contact__c =: myUser.ContactId and
 																Right__c = 'Access Granted'  and
@@ -257,7 +259,7 @@ global with sharing class ISSP_CaseList {
 			if(userIds.endsWith(',')) userIds = userIds.substring(0,userIds.length()-1);
 			if(userIds != '') queryConditions += ' AND OwnerId IN (' + userIds + ') ';
 		}
-
+		queryConditions += ' AND Visible_on_ISS_Portal__c = true';
 		return String.isNotBlank(queryConditions) ? queryConditions : '';
 	}
 
@@ -312,7 +314,7 @@ global with sharing class ISSP_CaseList {
 					queryString = 'select '+query.substring(1) +', Description, (SELECT Id, CreatedDate, CommentBody, CreatedById, CreatedBy.Name FROM CaseComments order by CreatedDate ASC limit 200) from Case  '+getQueryConditions()+' order by CreatedDate DESC limit 200';
 				}
 				else{
-					 queryString = 'select '+query.substring(1) +' from Case  '+getQueryConditions()+' order by CreatedDate '+ sortDirection +' limit 5';
+					queryString = 'select '+query.substring(1) +' from Case  '+getQueryConditions()+' order by CreatedDate '+ sortDirection +' limit 5';
 				}
 				ISSP_Utilities.log('SQL String: ' + queryString);
 				setCon = new ApexPages.StandardSetController(Database.getQueryLocator(queryString));

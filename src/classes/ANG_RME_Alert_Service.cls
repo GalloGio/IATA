@@ -13,6 +13,14 @@ global class ANG_RME_Alert_Service {
 	private static final String EDS_ALERT_EVENT_TYPE = 'EDSAlert';
 	@TestVisible
 	private static final String BALANCE_UPDATE_EVENT_TYPE = 'BalanceUpdate';
+	
+	public static final string PROVISIONAL_NOT_ALLOWED_BY_BSP = 'Agency\'s BSP does not allow to request new provisional';
+	@TestVisible
+	private static final String GDS_CASHLESSFOPALERT_EVENT_TYPE = 'CashlessGDSAlert';
+	@TestVisible
+	private static final String GDS_TA_ALERT_EVENT_TYPE = 'TAGDSAlert';
+	@TestVisible
+	private static final String GDS_CASH_ALERT_EVENT_TYPE = 'CashGDSAlert';
 
 	public class RHCMessage{
 		//Basic info
@@ -48,6 +56,17 @@ global class ANG_RME_Alert_Service {
 		public List<String> triggeredRules;
 		public List<AgentStates> agentStates;
 
+		//INT_032: GDS FailSafe alert
+		public string gds;
+		public string ticketNumber;
+		public string agentStatus;
+		public list<fopValues> fop;
+
+	}
+
+	public class fopValues{
+		public string type; //Valid values: CC, CA, EP
+		public string status;
 	}
 
 	//INT_032: reception of EDS Alerts
@@ -151,10 +170,11 @@ global class ANG_RME_Alert_Service {
 
 			//fetch current information
 			List<Account> accs = [
-				SELECT Id, IATACode__c, 
+				SELECT Id, IATACode__c, top_parent__c, ANG_IsNewGenAgency__c, status__c, 
 					IATA_ISO_Country__r.AMS_Settlement_System__r.RHC_Exceptional_Monitoring__c,
-					(SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c
-					 FROM RHC_Informations__r)
+					IATA_ISO_Country__r.AMS_Settlement_System__r.Exc_RHC_Monitoring_Alert__c,
+					(SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c FROM RHC_Informations__r),
+					(SELECT Id, ANG_FormOfPayment_ID__c, Status__c FROM Agency_Authorizations__r WHERE recordtype.developername ='FormOfPayment')  //Accelya Email + FOP
 				FROM Account
 				WHERE IATACode__c = :req.iataCode
 					AND RecordTypeId = :AMS_Utils.RECTYPE_IATAAGENCY];
@@ -167,43 +187,120 @@ global class ANG_RME_Alert_Service {
 			else {
 				Account acct = accs[0];
 
-				if(acct.IATA_ISO_Country__r.AMS_Settlement_System__r.RHC_Exceptional_Monitoring__c) {
-					if(isEligibleForRhcExceptionalMonitoring(eventType, req)){
-						saveAlert(req, acct.Id, null);
-					} else {
-						//Ignore the request
-						setResponse(null, 202);
+				switch on req.eventType {
+					when 'RTSAlert'{ //move to static final above when Salesforce decides is a good idea to release it https://trailblazer.salesforce.com/ideaView?id=0873A000000lLkNQAU
+						//handle Real Time Sales alert request
+						saveRTSAlert(req, acct.Id);
 					}
-				}
-				//handle Real Time Sales alert request
-				else if(req.eventType == RTS_ALERT_EVENT_TYPE) {
-					saveRTSAlert(req, acct.Id);
-				}
-				else if(req.eventType == EDS_ALERT_EVENT_TYPE){
-					saveEDSAlert(req, acct.Id);
-				}
-				else if(acct.RHC_Informations__r.isEmpty()) {
-					setResponse('Agent '+req.iataCode+' does not have RHC set', 404);
-				} 
-				else if(acct.RHC_informations__r.size()>1) {
-					setResponse('Internal Error: Agent '+req.iataCode+' has more than one RHC record', 409);
-				} 
-				else{
-					//information found, validate values
-					ANG_RHC_Information__c rhcInfo = acct.RHC_informations__r[0];
-
-					String errorMessage = '';
-					//if(rhcInfo.ANG_RHC_Amount__c != req.storedRHCValue) errorMessage += '\n- RHC Amount mismatch. Request value: '+req.storedRHCValue+'. Current value: '+rhcInfo.ANG_RHC_Amount__c;
-					if(rhcInfo.CurrencyIsoCode != req.storedBaseCurrency) errorMessage += '\n- Currency mismatch. Request value: '+req.storedBaseCurrency+'. Current value: '+rhcInfo.CurrencyIsoCode;
-
-					if(String.isNotEmpty(errorMessage)) setResponse('Conflicting informations:'+errorMessage, 409);
-					//validation passed, perform logic
-					else if(eventType == RHC_ALERT_EVENT_TYPE){
-						updateRHC(req, rhcInfo);
-						saveAlert(req, rhcInfo.ANG_AccountId__c, rhcInfo.Id);
+					when 'EDSAlert'{
+						//handle EDS alert request
+						saveEDSAlert(req, acct.Id);
 					}
-					else if(eventType == BALANCE_UPDATE_EVENT_TYPE) updateRHC(req, rhcInfo);
-					else setResponse('Invalid Event Type: '+eventType, 405);
+					when 'RHCAlert'{
+						if(acct.IATA_ISO_Country__r.AMS_Settlement_System__r.RHC_Exceptional_Monitoring__c) {
+							if(string.isNotBlank(acct.IATA_ISO_Country__r.AMS_Settlement_System__r.Exc_RHC_Monitoring_Alert__c) 
+								&& acct.IATA_ISO_Country__r.AMS_Settlement_System__r.Exc_RHC_Monitoring_Alert__c.contains(req.thresholdLevel + req.direction)){
+								saveAlert(req, acct.Id, null);
+							} else {
+								//Ignore the request
+								setResponse(null, 202);
+							}
+						}else{
+							if(acct.RHC_Informations__r.isEmpty()) {
+								setResponse('Agent '+req.iataCode+' does not have RHC set', 404);
+							} 
+							else if(acct.RHC_informations__r.size()>1) {
+								setResponse('Internal Error: Agent '+req.iataCode+' has more than one RHC record', 409);
+							} else{
+								ANG_RHC_Information__c rhcInfo = acct.RHC_informations__r[0];
+
+								String errorMessage = '';
+								if(rhcInfo.CurrencyIsoCode != req.storedBaseCurrency) errorMessage += '\n- Currency mismatch. Request value: '+req.storedBaseCurrency+'. Current value: '+rhcInfo.CurrencyIsoCode;
+
+								if(String.isNotEmpty(errorMessage))
+									setResponse('Conflicting informations:'+errorMessage, 409);
+								else{
+									updateRHC(req, rhcInfo);
+									saveAlert(req, rhcInfo.ANG_AccountId__c, rhcInfo.Id);
+								}
+							}
+						}
+					}
+					when 'BalanceUpdate'{
+						if(acct.RHC_Informations__r.isEmpty()) {
+							setResponse('Agent '+req.iataCode+' does not have RHC set', 404);
+						} 
+						else if(acct.RHC_informations__r.size()>1) {
+							setResponse('Internal Error: Agent '+req.iataCode+' has more than one RHC record', 409);
+						} else{
+							ANG_RHC_Information__c rhcInfo = acct.RHC_informations__r[0];
+
+							String errorMessage = '';
+							if(rhcInfo.CurrencyIsoCode != req.storedBaseCurrency) errorMessage += '\n- Currency mismatch. Request value: '+req.storedBaseCurrency+'. Current value: '+rhcInfo.CurrencyIsoCode;
+
+							if(String.isNotEmpty(errorMessage))
+								setResponse('Conflicting informations:'+errorMessage, 409);
+							else{
+								updateRHC(req, rhcInfo);
+							}
+						}
+					}
+					when 'CashlessGDSAlert'{
+						if(req.fop == null || req.fop.size()==0){
+							setResponse('FOP attribute cannot be blank',  400);
+						}else{
+							map<string, string> RMEFOPS = new map<string, string>();
+							for(fopValues fops:req.fop) RMEFOPS.put(fops.type, fops.status);
+							if(acct.Agency_Authorizations__r.isEmpty()){
+								setResponse('Agent '+req.iataCode+' does not have FOP set', 404);
+							}else{
+								if(validateFOP(acct.Agency_Authorizations__r, RMEFOPS)){
+									saveGDSAlert(req, acct.id, acct.top_parent__c);
+								}else{
+									map<string, string> SFDCFOPS = new map<string, string>();
+									for(Agency_Authorization__c sffops:acct.Agency_Authorizations__r)	SFDCFOPS.put(sffops.ANG_FormOfPayment_ID__c , sffops.status__c);
+									setResponse('FOPS Received (' + RMEFOPS + ') don\'t match Salesforce FOPS (' + SFDCFOPS + ') for agent ' +  req.iataCode,  400);
+								}
+							}
+						}
+					}
+					when 'CashGDSAlert'{
+						if(req.fop == null || req.fop.size()==0){
+							setResponse('FOP attribute cannot be blank',  400);
+						}else{
+							if(acct.ANG_IsNewGenAgency__c){
+								map<string, string> RMEFOPS = new map<string, string>();
+								for(fopValues fops:req.fop) RMEFOPS.put(fops.type, fops.status);
+								if(acct.Agency_Authorizations__r.isEmpty()){
+									setResponse('Agent '+req.iataCode+' does not have FOP set', 404);
+								}else{
+									if(validateFOP(acct.Agency_Authorizations__r, RMEFOPS)){
+										saveGDSAlert(req, acct.id, acct.top_parent__c);
+									}else{
+										map<string, string> SFDCFOPS = new map<string, string>();
+										for(Agency_Authorization__c sffops:acct.Agency_Authorizations__r)	SFDCFOPS.put(sffops.ANG_FormOfPayment_ID__c , sffops.status__c);
+										setResponse('FOPS Received (' + RMEFOPS + ') don\'t match Salesforce FOPS (' + SFDCFOPS + ') for agent ' +  req.iataCode,  400);
+									}
+								}
+							}else{
+								setResponse('Agent '+req.iataCode+' is not a newgen agency', 404);
+							}
+						}
+					}
+					when 'TAGDSAlert'{
+						if(string.isBlank(req.agentStatus)){
+							setResponse('agentStatus cannot be blank', 400);
+						}else{
+							if(acct.status__c == req.agentStatus){
+								saveGDSAlert(req, acct.id, acct.top_parent__c);
+							}else{
+								setResponse('Request agentStatus (' + req.agentStatus +  ') doesn\'t match Agent '+req.iataCode+' status (' + acct.status__c + ')', 400);
+							}
+						}
+					}
+					when else {
+						setResponse('Invalid Event Type: '+req.eventType, 405);
+					}
 				}
 			}
 		}catch(JSONException e){
@@ -223,11 +320,6 @@ global class ANG_RME_Alert_Service {
 	@HttpPost
 	global static void doPost(String accountId){
 		ANG_RME_Alert_Service.requestBalanceUpdate(accountId);
-	}
-
-	private static boolean isEligibleForRhcExceptionalMonitoring(String eventType, RHCMessage request) {
-		return eventType == RHC_ALERT_EVENT_TYPE && request.direction == ANG_RHCHelper.RISK_ALERT_DIRECTION_UP
-			&& request.thresholdLevel == ANG_RHCHelper.RISK_ALERT_THRESHOLD_LEVEL_100;
 	}
 
 	private static void saveAlert(RHCMessage message, Id accountId, Id rhcInfoId) {
@@ -332,6 +424,34 @@ global class ANG_RME_Alert_Service {
 
 	}
 
+	//Validates that the FOPS received from RME matches FOPS in Salesforce 
+	private static boolean validateFOP(List<Agency_Authorization__c> agencyFOPs, map<string, string> RMEFOPs){
+		for(Agency_Authorization__c FOP:agencyFOPs){
+			if(!RMEFOPs.containsKey(FOP.ANG_FormOfPayment_ID__c))
+				return false;
+			else{
+				if(FOP.status__c <> RMEFOPs.get(FOP.ANG_FormOfPayment_ID__c))
+					return false;
+			}
+		}
+		return true;
+	}
+
+	private static void saveGDSAlert(RHCMessage req, Id accountId, id TopParentAccntId){
+		ANG_Risk_Alert__c gdsAlert = new ANG_Risk_Alert__c(
+			RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('ANG_Risk_Alert__c','RiskAlertGDS'),
+			ANG_Account__c = TopParentAccntId==null?accountId:TopParentAccntId,
+			GDS__c = req.gds,
+			GDS_Alert_Type__c = req.eventType,
+			Monitored_Account__c = accountId,
+			Ticket_Number__c = req.ticketNumber,
+			Additional_Alert_information__c = (req.eventType==GDS_TA_ALERT_EVENT_TYPE?string.valueOf(req.agentStatus):string.valueOf(req.fop)),
+			ANG_EventId__c = req.eventId
+		);
+		insert gdsAlert;
+		setResponse(null, 202);
+	}
+
 	private static void saveEDSAlert(RHCMessage req, Id accountId){
 
 		if(!validateEDSAlert(req)){
@@ -411,19 +531,19 @@ global class ANG_RME_Alert_Service {
 			if(result.res.iataCode != acc.IATACode__c){
 				log.Error_Code__c = 'Iata Code Mismatch';
 				result.isSuccess = false;
-				ServiceNow_Helper.sendRequestToSNOWRME('SNOW3', acc.IATACode__c, log, result);
+				ServiceNow_Helper.sendRequestToSNOWRME('JSD3', acc.IATACode__c, log, result);
 				result.description = 'Error: '+log.Error_Code__c+'\nAn incident has been raised on Service Now.';
 			}
 			else if (result.res.storedBaseCurrency != acc.RHC_Informations__r[0].CurrencyIsoCode){
 				result.isSuccess = false;
 				log.Error_Code__c = 'Currency Mismatch';
-				ServiceNow_Helper.sendRequestToSNOWRME('SNOW4', acc.IATACode__c, log, result);
+				ServiceNow_Helper.sendRequestToSNOWRME('JSD4', acc.IATACode__c, log, result);
 				result.description = 'Error: '+log.Error_Code__c+'\nAn incident has been raised on Service Now.';
 			}
 			else if (result.res.storedRHCValue != rounded){
 				result.isSuccess = false;
 				log.Error_Code__c = 'RHC Value Mismatch';
-				ServiceNow_Helper.sendRequestToSNOWRME('SNOW5', acc.IATACode__c, log, result);
+				ServiceNow_Helper.sendRequestToSNOWRME('JSD5', acc.IATACode__c, log, result);
 				result.description = 'Error: '+log.Error_Code__c+'\nAn incident has been raised on Service Now.';
 			}
 			else
@@ -444,46 +564,58 @@ global class ANG_RME_Alert_Service {
 
 	webservice static WebserviceResult requestProvisionalRHC(String accountId){
 		list<ANG_RHC_Information__c> rhcInfo = [SELECT id, ANG_AccountId__r.IATACode__c, ANG_AccountId__r.Location_Type__c,
+												ANG_AccountId__r.IATA_ISO_Country__r.AMS_Settlement_System__r.Enable_Provisional_RHC_Request__c,
 										  ANG_RHC_Amount_Provisional__c, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c, ANG_Provisional_RHC_Last_Update__c
 										  FROM ANG_RHC_Information__c WHERE ANG_AccountId__c=:accountId];
-
-		return requestProvisionalRHC(rhcInfo[0], true);
-		//Account acc = [SELECT Id, IATACode__c, Location_Type__c, (SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c FROM RHC_Informations__r) FROM Account where Id = :accountId];
+		if(rhcInfo[0].ANG_AccountId__r.IATA_ISO_Country__r.AMS_Settlement_System__r.Enable_Provisional_RHC_Request__c)
+			return requestProvisionalRHC(rhcInfo[0], true);
+		else{
+			WebserviceResult result = new WebserviceResult();
+			result.isSuccess = false;
+			result.description = PROVISIONAL_NOT_ALLOWED_BY_BSP;
+			return result;
+		}
 	}
 
 	public static WebserviceResult requestProvisionalRHC(ANG_RHC_Information__c rhcInfo, boolean ProvisionalIsAppliedImmediately){
-		WebserviceResult result = doRequest(rhcInfo.ANG_AccountId__r.IATACode__c, 'BTN_Prov', rhcInfo.ANG_AccountId__r.Location_Type__c); //results are saved on the private varible "result"
+		if(rhcInfo.ANG_AccountId__r.IATA_ISO_Country__r.AMS_Settlement_System__r.Enable_Provisional_RHC_Request__c){
+			WebserviceResult result = doRequest(rhcInfo.ANG_AccountId__r.IATACode__c, 'BTN_Prov', rhcInfo.ANG_AccountId__r.Location_Type__c); //results are saved on the private varible "result"
 
-		if(result.isSuccess){
+			if(result.isSuccess){
 
-			if(result.res.iataCode != rhcInfo.ANG_AccountId__r.IATACode__c){
-				if(ProvisionalIsAppliedImmediately){
-					log.Error_Code__c = 'Iata Code Mismatch';
-					ServiceNow_Helper.sendRequestToSNOWRME('SNOW6', rhcInfo.ANG_AccountId__r.IATACode__c, log, result);
+				if(result.res.iataCode != rhcInfo.ANG_AccountId__r.IATACode__c){
+					if(ProvisionalIsAppliedImmediately){
+						log.Error_Code__c = 'Iata Code Mismatch';
+						ServiceNow_Helper.sendRequestToSNOWRME('JSD6', rhcInfo.ANG_AccountId__r.IATACode__c, log, result);
+					}
 				}
-			}
-			else if (result.res.storedBaseCurrency != rhcInfo.CurrencyIsoCode){
-				if(ProvisionalIsAppliedImmediately){
-					log.Error_Code__c = 'Currency Mismatch';
-					ServiceNow_Helper.sendRequestToSNOWRME('SNOW7', rhcInfo.ANG_AccountId__r.IATACode__c, log, result);
+				else if (result.res.storedBaseCurrency != rhcInfo.CurrencyIsoCode){
+					if(ProvisionalIsAppliedImmediately){
+						log.Error_Code__c = 'Currency Mismatch';
+						ServiceNow_Helper.sendRequestToSNOWRME('JSD7', rhcInfo.ANG_AccountId__r.IATACode__c, log, result);
+					}
 				}
-			}
-			else{
-				rhcInfo.ANG_RHC_Amount_Provisional__c = result.res.provisionalRHC;
-				rhcInfo.ANG_Provisional_RHC_Last_Update__c = System.today();
+				else{
+					rhcInfo.ANG_RHC_Amount_Provisional__c = result.res.provisionalRHC;
+					rhcInfo.ANG_Provisional_RHC_Last_Update__c = System.today();
 
-				if(ProvisionalIsAppliedImmediately)
-					update rhcInfo;
+					if(ProvisionalIsAppliedImmediately)
+						update rhcInfo;
+				}
+				if(String.isNotEmpty(log.Error_Code__c)) update log;
 			}
-			if(String.isNotEmpty(log.Error_Code__c)) update log;
+
+			//
+			// To reset the singleton for future calls
+			//
+			log = null;
+			return result;
+		}else{
+			WebserviceResult result = new WebserviceResult();
+			result.isSuccess = false;
+			result.description = PROVISIONAL_NOT_ALLOWED_BY_BSP;
+			return result;
 		}
-
-		//
-		// To reset the singleton for future calls
-		//
-		log = null;
-
-		return result;
 	}
 
 	//called from the oscar trigger when Endorsement_Requested__c is set to true
@@ -496,7 +628,7 @@ global class ANG_RME_Alert_Service {
 
 			if(result.res.iataCode != iataCode){
 				log.Error_Code__c = 'Iata Code Mismatch';
-				ServiceNow_Helper.sendRequestToSNOWRME('SNOW19',iataCode, log, result);
+				ServiceNow_Helper.sendRequestToSNOWRME('JSD19',iataCode, log, result);
 			}
 
 			if(String.isNotEmpty(log.Error_Code__c)) update log;
@@ -562,9 +694,9 @@ global class ANG_RME_Alert_Service {
 				log.Error_Code__c = String.valueOf(res.getStatusCode());
 				log.Error_Message__c = res.getBody();
 				if(mappingName == 'ENDORS_CERT' && res.getStatusCode() >= 400)
-					ServiceNow_Helper.sendRequestToSNOWRME('SNOW19',iataCode, log, result);
+					ServiceNow_Helper.sendRequestToSNOWRME('JSD21',iataCode, log, result);
 				else if(res.getStatusCode() >= 400)
-					ServiceNow_Helper.sendRequestToSNOWRME((params.name == 'BTN_Bal' ?  'SNOW9': 'SNOW9.1'), iataCode, log, result);
+					ServiceNow_Helper.sendRequestToSNOWRME((params.name == 'BTN_Bal' ?  'JSD9': 'JSD20'), iataCode, log, result);
 				result.description = 'An unexpected error ocurred while contacting the external system. An incident has been raised on Service Now.';
 			}
 		} catch(Exception e) {

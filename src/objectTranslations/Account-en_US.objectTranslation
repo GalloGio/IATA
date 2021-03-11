@@ -329,6 +329,18 @@
         <name>Accelerated_Settlement__c</name>
     </fields>
     <fields>
+        <label><!-- Account Status --></label>
+        <name>AccountStatus__c</name>
+        <picklistValues>
+            <masterLabel>Active</masterLabel>
+            <translation><!-- Active --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Out of Business</masterLabel>
+            <translation><!-- Out of Business --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
         <help><!-- The roles covered by the account --></help>
         <label><!-- Account Role --></label>
         <name>Account_Role__c</name>
@@ -595,6 +607,38 @@
         <name>Admission_Date__c</name>
     </fields>
     <fields>
+        <label><!-- Agency Business Model --></label>
+        <name>Agency_Business_Model__c</name>
+        <picklistValues>
+            <masterLabel>Consolidator</masterLabel>
+            <translation><!-- Consolidator --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Freight Forwarder</masterLabel>
+            <translation><!-- Freight Forwarder --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Online Travel Agency</masterLabel>
+            <translation><!-- Online Travel Agency --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Retail Leisure</masterLabel>
+            <translation><!-- Retail Leisure --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Tour Operator</masterLabel>
+            <translation><!-- Tour Operator --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Travel Management Company</masterLabel>
+            <translation><!-- Travel Management Company --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
         <label><!-- Agent Global HQ --></label>
         <name>Agent_Global_HQ__c</name>
     </fields>
@@ -639,6 +683,11 @@
         </picklistValues>
     </fields>
     <fields>
+        <help><!-- Number of active PASS Services Rendered where the customer is either the airline HQ or one of its branches. --></help>
+        <label><!-- Total PASS Participations --></label>
+        <name>Airline_PASS_Participations__c</name>
+    </fields>
+    <fields>
         <label><!-- Airline Prefix --></label>
         <name>Airline_Prefix__c</name>
     </fields>
@@ -651,7 +700,7 @@
         <name>Airline_designator__c</name>
     </fields>
     <fields>
-        <label><!-- Amount at Risk --></label>
+        <label><!-- Min FS monitoring --></label>
         <name>Amount_at_Risk__c</name>
     </fields>
     <fields>
@@ -1924,13 +1973,22 @@
         </picklistValues>
     </fields>
     <fields>
+        <help><!-- Account name to publish in bulletin for multicountry hierarchies that have headquarter in a non-NewGen country --></help>
+        <label><!-- eBulletin Multicountry Headquarter --></label>
+        <name>Bulletin_Headquarter__c</name>
+    </fields>
+    <fields>
         <label><!-- Business City Name --></label>
         <name>Business_City_Name__c</name>
     </fields>
     <fields>
         <label><!-- Business City --></label>
         <name>Business_City__c</name>
-        <relationshipLabel><!-- Accounts (Business City) --></relationshipLabel>
+        <relationshipLabel><!-- Accounts with Business City --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Business Geo Coordinates --></label>
+        <name>Business_Geo_Coordinates__c</name>
     </fields>
     <fields>
         <label><!-- Business PO Box --></label>
@@ -2022,8 +2080,12 @@
             <translation><!-- ANSP --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Academic/Research Body</masterLabel>
-            <translation><!-- Academic/Research Body --></translation>
+            <masterLabel>Academic or Research Body</masterLabel>
+            <translation><!-- Academic or Research Body --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Aerial Work</masterLabel>
+            <translation><!-- Aerial Work --></translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Agency Holding Company</masterLabel>
@@ -2046,10 +2108,6 @@
             <translation><!-- Airline Holding Company --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Airline Point of Sale</masterLabel>
-            <translation><!-- Airline Point of Sale --></translation>
-        </picklistValues>
-        <picklistValues>
             <masterLabel>Airport Authority</masterLabel>
             <translation><!-- Airport Authority --></translation>
         </picklistValues>
@@ -2058,12 +2116,24 @@
             <translation><!-- Airport Concessionaire --></translation>
         </picklistValues>
         <picklistValues>
+            <masterLabel>Airport Handling Agent</masterLabel>
+            <translation><!-- Airport Handling Agent --></translation>
+        </picklistValues>
+        <picklistValues>
             <masterLabel>Airport Operator</masterLabel>
             <translation><!-- Airport Operator --></translation>
         </picklistValues>
         <picklistValues>
+            <masterLabel>Airport Owner but not Operator</masterLabel>
+            <translation><!-- Airport Owner but not Operator --></translation>
+        </picklistValues>
+        <picklistValues>
             <masterLabel>Apartment and Villa Rental</masterLabel>
             <translation><!-- Apartment and Villa Rental --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Architect or Engineering Consultant</masterLabel>
+            <translation><!-- Architect or Engineering Consultant --></translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Banking Service</masterLabel>
@@ -2110,10 +2180,6 @@
             <translation><!-- Consultancy Firm --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Coordinator</masterLabel>
-            <translation><!-- Coordinator --></translation>
-        </picklistValues>
-        <picklistValues>
             <masterLabel>Courier</masterLabel>
             <translation><!-- Courier --></translation>
         </picklistValues>
@@ -2122,20 +2188,20 @@
             <translation><!-- Cruise Line --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>DPC</masterLabel>
-            <translation><!-- DPC --></translation>
-        </picklistValues>
-        <picklistValues>
             <masterLabel>Domestic Agent</masterLabel>
             <translation><!-- Domestic Agent --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>ERSP Agent</masterLabel>
-            <translation><!-- ERSP Agent --></translation>
-        </picklistValues>
-        <picklistValues>
             <masterLabel>Engine Manufacturer</masterLabel>
             <translation><!-- Engine Manufacturer --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Event Industry</masterLabel>
+            <translation><!-- Event Industry --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Food Industry</masterLabel>
+            <translation><!-- Food Industry --></translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Freight Forwarder Association</masterLabel>
@@ -2144,6 +2210,10 @@
         <picklistValues>
             <masterLabel>Fuel Supplier</masterLabel>
             <translation><!-- Fuel Supplier --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Funeral Industry</masterLabel>
+            <translation><!-- Funeral Industry --></translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>GSA General Sales Agent</masterLabel>
@@ -2170,6 +2240,10 @@
             <translation><!-- Governmental Aviation --></translation>
         </picklistValues>
         <picklistValues>
+            <masterLabel>Ground Service Provider</masterLabel>
+            <translation><!-- Ground Service Provider --></translation>
+        </picklistValues>
+        <picklistValues>
             <masterLabel>Hotel</masterLabel>
             <translation><!-- Hotel --></translation>
         </picklistValues>
@@ -2178,28 +2252,12 @@
             <translation><!-- IATA Cargo Agent --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>IATA Head Office</masterLabel>
-            <translation><!-- IATA Head Office --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>IATA Local office</masterLabel>
-            <translation><!-- IATA Local office --></translation>
-        </picklistValues>
-        <picklistValues>
             <masterLabel>IATA Passenger Sales Agent</masterLabel>
             <translation><!-- IATA Passenger Sales Agent --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>IATA Regional Office</masterLabel>
-            <translation><!-- IATA Regional Office --></translation>
-        </picklistValues>
-        <picklistValues>
             <masterLabel>IATAN Passenger Agent</masterLabel>
             <translation><!-- IATAN Passenger Agent --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>IBCS consolidator</masterLabel>
-            <translation><!-- IBCS consolidator --></translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Import Agent</masterLabel>
@@ -2208,6 +2266,10 @@
         <picklistValues>
             <masterLabel>Individual Government</masterLabel>
             <translation><!-- Individual Government --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Insurance</masterLabel>
+            <translation><!-- Insurance --></translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Inter-Governmental Body</masterLabel>
@@ -2226,12 +2288,16 @@
             <translation><!-- Lessor --></translation>
         </picklistValues>
         <picklistValues>
+            <masterLabel>MRO - Maintenance Repair Overhaul</masterLabel>
+            <translation><!-- MRO - Maintenance Repair Overhaul --></translation>
+        </picklistValues>
+        <picklistValues>
             <masterLabel>MSO Member Sales Office</masterLabel>
             <translation><!-- MSO Member Sales Office --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Maintenance, Repair, Overhaul</masterLabel>
-            <translation><!-- Maintenance, Repair, Overhaul --></translation>
+            <masterLabel>Manufacturing Industry</masterLabel>
+            <translation><!-- Manufacturing Industry --></translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Military</masterLabel>
@@ -2266,10 +2332,6 @@
             <translation><!-- Other Private Sector Association --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Park (Theme Park)</masterLabel>
-            <translation><!-- Park (Theme Park) --></translation>
-        </picklistValues>
-        <picklistValues>
             <masterLabel>Passenger and Cargo</masterLabel>
             <translation><!-- Passenger and Cargo --></translation>
         </picklistValues>
@@ -2282,12 +2344,16 @@
             <translation><!-- Payment Provider --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Processor</masterLabel>
-            <translation><!-- Processor --></translation>
+            <masterLabel>Pharmaceutical Industry</masterLabel>
+            <translation><!-- Pharmaceutical Industry --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Provider</masterLabel>
-            <translation><!-- Provider --></translation>
+            <masterLabel>Postal Operator</masterLabel>
+            <translation><!-- Postal Operator --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Processor</masterLabel>
+            <translation><!-- Processor --></translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Publishing</masterLabel>
@@ -2300,6 +2366,10 @@
         <picklistValues>
             <masterLabel>Resort</masterLabel>
             <translation><!-- Resort --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Retail Industry</masterLabel>
+            <translation><!-- Retail Industry --></translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Security</masterLabel>
@@ -2322,12 +2392,28 @@
             <translation><!-- TIDS Agent --></translation>
         </picklistValues>
         <picklistValues>
+            <masterLabel>Telecommunication Industry</masterLabel>
+            <translation><!-- Telecommunication Industry --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Theme Park</masterLabel>
+            <translation><!-- Theme Park --></translation>
+        </picklistValues>
+        <picklistValues>
             <masterLabel>Tour Operator</masterLabel>
             <translation><!-- Tour Operator --></translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Training Center</masterLabel>
             <translation><!-- Training Center --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Training Coordinator</masterLabel>
+            <translation><!-- Training Coordinator --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Training Provider</masterLabel>
+            <translation><!-- Training Provider --></translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Transfer Service</masterLabel>
@@ -2338,8 +2424,8 @@
             <translation><!-- Travel Agency Association --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Vendor</masterLabel>
-            <translation><!-- Vendor --></translation>
+            <masterLabel>Truck Line</masterLabel>
+            <translation><!-- Truck Line --></translation>
         </picklistValues>
     </fields>
     <fields>
@@ -4245,6 +4331,14 @@ V - Co-operative --></help>
         <name>DSE__X_Internal__c</name>
     </fields>
     <fields>
+        <label><!-- D&amp;B Company --></label>
+        <lookupFilter>
+            <errorMessage><!-- Value does not exist or the D&amp;B Company entered is out of business. --></errorMessage>
+        </lookupFilter>
+        <name>D_B_Company__c</name>
+        <relationshipLabel><!-- Accounts --></relationshipLabel>
+    </fields>
+    <fields>
         <label><!-- Data Quality Description --></label>
         <name>Data_Quality_Description__c</name>
     </fields>
@@ -4344,6 +4438,15 @@ V - Co-operative --></help>
         <help><!-- Latest year expected. --></help>
         <label><!-- Authorized Signatories --></label>
         <name>Document_Std_Instruction__c</name>
+    </fields>
+    <fields>
+        <label><!-- Domestic Headquarter Account --></label>
+        <name>Domestic_Headquarter_Account__c</name>
+        <relationshipLabel><!-- Legal Domestic Child Accounts --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Domestic Ultimate Account Global ID --></label>
+        <name>Domestic_Ultimate_Account_Global_ID__c</name>
     </fields>
     <fields>
         <label><!-- Due Diligence Remarks --></label>
@@ -4522,6 +4625,58 @@ V - Co-operative --></help>
     <fields>
         <label><!-- Expiry Date --></label>
         <name>Expiry_Date__c</name>
+    </fields>
+    <fields>
+        <label><!-- External Entities CARGO (OTHER) --></label>
+        <name>External_Entities_CARGO_OTHER__c</name>
+    </fields>
+    <fields>
+        <label><!-- External Entities CARGO --></label>
+        <name>External_Entities_CARGO__c</name>
+        <picklistValues>
+            <masterLabel>Global Freight Alliance</masterLabel>
+            <translation><!-- Global Freight Alliance --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>International Air Cargo Association (TIACA)</masterLabel>
+            <translation><!-- International Air Cargo Association (TIACA) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>International Federation of Freight Forwarders (FIATA)</masterLabel>
+            <translation><!-- International Federation of Freight Forwarders (FIATA) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>International Freight Association (IFA)</masterLabel>
+            <translation><!-- International Freight Association (IFA) --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- External Entities PAX (OTHER) --></label>
+        <name>External_Entities_PAX_OTHER__c</name>
+    </fields>
+    <fields>
+        <label><!-- External Entities PAX --></label>
+        <name>External_Entities_PAX__c</name>
+        <picklistValues>
+            <masterLabel>ASTA Small Business Network (former NACTA)</masterLabel>
+            <translation><!-- ASTA Small Business Network (former NACTA) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>American Society of Travel Advisors (ASTA)</masterLabel>
+            <translation><!-- American Society of Travel Advisors (ASTA) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Professional Association of Travel Hosts (PATH)</masterLabel>
+            <translation><!-- Professional Association of Travel Hosts (PATH) --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Travel Leaders Network</masterLabel>
+            <translation><!-- Travel Leaders Network --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>World Travel &amp; Tourism Council (WTTC)</masterLabel>
+            <translation><!-- World Travel &amp; Tourism Council (WTTC) --></translation>
+        </picklistValues>
     </fields>
     <fields>
         <label><!-- FAX National --></label>
@@ -4808,8 +4963,17 @@ WSPN-Worldspan --></help>
         </picklistValues>
     </fields>
     <fields>
-        <label><!-- Global ID --></label>
+        <label><!-- Account Number --></label>
         <name>Global_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Global Ultimate Account Global ID --></label>
+        <name>Global_Ultimate_Account_Global_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Global Ultimate Headquarter Account --></label>
+        <name>Global_Ultimate_Headquarter_Account__c</name>
+        <relationshipLabel><!-- Legal Global Child Accounts --></relationshipLabel>
     </fields>
     <fields>
         <help><!-- Shows the total amount of the active bank guarantees --></help>
@@ -4823,6 +4987,11 @@ WSPN-Worldspan --></help>
     <fields>
         <label><!-- HQ Due Dilingence Status --></label>
         <name>HQ_Due_Dilingence_Status__c</name>
+    </fields>
+    <fields>
+        <help><!-- Support model provided to HQ Account --></help>
+        <label><!-- HQ Service Model --></label>
+        <name>HQ_Service_Model__c</name>
     </fields>
     <fields>
         <label><!-- Has Activities --></label>
@@ -4882,8 +5051,42 @@ WSPN-Worldspan --></help>
         <name>Has_cases_from_last_2_years__c</name>
     </fields>
     <fields>
+        <label><!-- Headquarter Account Global ID --></label>
+        <name>Headquarter_Account_Global_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Headquarter_Account__c --></label>
+        <name>Headquarter_Account__c</name>
+        <relationshipLabel><!-- Legal Child Accounts --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Hierarchy Level --></label>
+        <name>Hierarchy_Level__c</name>
+        <picklistValues>
+            <masterLabel>Branch</masterLabel>
+            <translation><!-- Branch --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Domestic</masterLabel>
+            <translation><!-- Domestic --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Global</masterLabel>
+            <translation><!-- Global --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Single Location</masterLabel>
+            <translation><!-- Single Location --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
         <label><!-- Higher Level Customer (SAP) --></label>
         <name>Higher_Level_Customer__c</name>
+    </fields>
+    <fields>
+        <label><!-- Holding Parent --></label>
+        <name>Holding_Parent__c</name>
+        <relationshipLabel><!-- Branch --></relationshipLabel>
     </fields>
     <fields>
         <label><!-- Holds FS requiring first call letter --></label>
@@ -4918,6 +5121,10 @@ WSPN-Worldspan --></help>
         </picklistValues>
     </fields>
     <fields>
+        <label><!-- IATA Code duplicate blocker --></label>
+        <name>IATA_Code_duplicate_blocker__c</name>
+    </fields>
+    <fields>
         <label><!-- ISO Billing State --></label>
         <name>IATA_ISO_Billing_State__c</name>
         <relationshipLabel><!-- Accounts (ISO Billing State) --></relationshipLabel>
@@ -4936,6 +5143,10 @@ WSPN-Worldspan --></help>
         <label><!-- ISO Shipping State --></label>
         <name>IATA_ISO_Shipping_State__c</name>
         <relationshipLabel><!-- Accounts (ISO Shipping State) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- IATA Iso Country Name --></label>
+        <name>IATA_Iso_Country_Name__c</name>
     </fields>
     <fields>
         <label><!-- IATA Member Airline --></label>
@@ -6591,6 +6802,14 @@ Approval: Key Contact can see pending request approve it one by one --></help>
         <name>IFG_Member__c</name>
     </fields>
     <fields>
+        <label><!-- IMPC Code --></label>
+        <name>IMPC_Code__c</name>
+    </fields>
+    <fields>
+        <label><!-- IRIS Code --></label>
+        <name>IRIS_Code__c</name>
+    </fields>
+    <fields>
         <label><!-- SIS TC Accepted Date --></label>
         <name>ISS_SIS_TC_Accepted_Date__c</name>
     </fields>
@@ -6611,6 +6830,11 @@ Approval: Key Contact can see pending request approve it one by one --></help>
     <fields>
         <label><!-- Identify as Last SIDRA Date --></label>
         <name>Identify_as_Last_SIDRA_Date__c</name>
+    </fields>
+    <fields>
+        <help><!-- This field can only be amended from the Global Entity (GE) --></help>
+        <label><!-- Identify as Multicountry Key Hierarchy --></label>
+        <name>Identify_as_Multicountry_Key_Hierarchy__c</name>
     </fields>
     <fields>
         <label><!-- In a Airport --></label>
@@ -6682,6 +6906,10 @@ Approval: Key Contact can see pending request approve it one by one --></help>
         <name>Is_DGR_Compliant__c</name>
     </fields>
     <fields>
+        <label><!-- Is D&amp;B Branch? --></label>
+        <name>Is_D_B_Branch__c</name>
+    </fields>
+    <fields>
         <label><!-- Is General Public Account --></label>
         <name>Is_General_Public_Account__c</name>
     </fields>
@@ -6704,6 +6932,14 @@ Approval: Key Contact can see pending request approve it one by one --></help>
             <masterLabel>Yes</masterLabel>
             <translation><!-- Yes --></translation>
         </picklistValues>
+    </fields>
+    <fields>
+        <label><!--  Is PO Box Address --></label>
+        <name>Is_PO_Box_Address__c</name>
+    </fields>
+    <fields>
+        <label><!-- IATA airline member check --></label>
+        <name>Is_parent_IATA_airline_member__c</name>
     </fields>
     <fields>
         <label><!-- * Is your firm handling Dangerous Goods? --></label>
@@ -6967,6 +7203,7 @@ D-Domestic
 E-External Registrars
 G-General Sales Agents
 K-CATO
+L-PASS
 M-Members &amp; Airlines Sales Offices
 N-NISI
 O-SATO
@@ -7009,6 +7246,10 @@ J-Joint Vent --></help>
         <picklistValues>
             <masterLabel>K</masterLabel>
             <translation><!-- K --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>L</masterLabel>
+            <translation><!-- L --></translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>M</masterLabel>
@@ -7060,7 +7301,7 @@ J-Joint Vent --></help>
         <name>Location_Type_Ordered__c</name>
     </fields>
     <fields>
-        <label><!-- Location Type --></label>
+        <label><!-- Agency Location Type --></label>
         <name>Location_Type__c</name>
         <picklistValues>
             <masterLabel>AE</masterLabel>
@@ -7091,6 +7332,10 @@ J-Joint Vent --></help>
             <translation><!-- ES --></translation>
         </picklistValues>
         <picklistValues>
+            <masterLabel>GE</masterLabel>
+            <translation><!-- GE --></translation>
+        </picklistValues>
+        <picklistValues>
             <masterLabel>HE</masterLabel>
             <translation><!-- HE --></translation>
         </picklistValues>
@@ -7113,6 +7358,10 @@ J-Joint Vent --></help>
         <picklistValues>
             <masterLabel>TD</masterLabel>
             <translation><!-- TD --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>VB</masterLabel>
+            <translation><!-- VB --></translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>WH</masterLabel>
@@ -7188,6 +7437,10 @@ J-Joint Vent --></help>
         <name>Main_Accreditation_Organization__c</name>
     </fields>
     <fields>
+        <label><!-- Majority Owner Account Global ID --></label>
+        <name>Majority_Owner_Account_Global_ID__c</name>
+    </fields>
+    <fields>
         <label><!-- Manager First Name --></label>
         <name>Manager_First_Name__c</name>
     </fields>
@@ -7246,6 +7499,26 @@ J-Joint Vent --></help>
     <fields>
         <label><!-- Mobile --></label>
         <name>Mobile__c</name>
+    </fields>
+    <fields>
+        <label><!-- Multicountry Key Hierarchy --></label>
+        <name>Multicountry_Key_Hierarchy__c</name>
+    </fields>
+    <fields>
+        <label><!-- NDC Agent --></label>
+        <name>NDC_Agent__c</name>
+        <picklistValues>
+            <masterLabel>No</masterLabel>
+            <translation><!-- No --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Yes</masterLabel>
+            <translation><!-- Yes --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
+        <label><!-- NDC engagement --></label>
+        <name>NDC_engagement__c</name>
     </fields>
     <fields>
         <label><!-- N Code --></label>
@@ -7533,6 +7806,10 @@ J-Joint Vent --></help>
         <name>Number_of_open_Financial_Review_Cases__c</name>
     </fields>
     <fields>
+        <label><!-- ONE Source Related Account --></label>
+        <name>ONE_Source_Related_Account__c</name>
+    </fields>
+    <fields>
         <label><!-- Old Airline Prefix --></label>
         <name>Old_Airline_Prefix__c</name>
     </fields>
@@ -7572,9 +7849,17 @@ J-Joint Vent --></help>
         <name>Original_Approval_DAte__c</name>
     </fields>
     <fields>
+        <label><!-- Other Type of Subsidiaries --></label>
+        <name>Other_Type_of_Subsidiaries__c</name>
+    </fields>
+    <fields>
         <help><!-- For more information on the pending items click on the report below. --></help>
         <label><!-- Overdue Invoices Indicator --></label>
         <name>Overdue_Invoices_Indicator__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is Airline participating in this PASS --></label>
+        <name>PASS_Participant_formula__c</name>
     </fields>
     <fields>
         <label><!-- Pax / Cargo --></label>
@@ -7779,6 +8064,10 @@ J-Joint Vent --></help>
         </picklistValues>
     </fields>
     <fields>
+        <label><!-- RecordTypeDeveloperName --></label>
+        <name>RecordTypeDeveloperName__c</name>
+    </fields>
+    <fields>
         <label><!-- Record Sharing Criteria AUX --></label>
         <name>Record_Sharing_Criteria_AUX__c</name>
     </fields>
@@ -7862,6 +8151,10 @@ J-Joint Vent --></help>
             <translation><!-- Daily --></translation>
         </picklistValues>
         <picklistValues>
+            <masterLabel>EasyPay</masterLabel>
+            <translation><!-- EasyPay --></translation>
+        </picklistValues>
+        <picklistValues>
             <masterLabel>Every 10 days</masterLabel>
             <translation><!-- Every 10 days --></translation>
         </picklistValues>
@@ -7876,6 +8169,10 @@ J-Joint Vent --></help>
         <picklistValues>
             <masterLabel>Fortnightly</masterLabel>
             <translation><!-- Fortnightly --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Long Daily</masterLabel>
+            <translation><!-- Long Daily --></translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Monthly</masterLabel>
@@ -7966,6 +8263,10 @@ J-Joint Vent --></help>
             <translation><!-- ISPA Supplier --></translation>
         </picklistValues>
         <picklistValues>
+            <masterLabel>ISUA AGENT UATP</masterLabel>
+            <translation><!-- ISUA AGENT UATP --></translation>
+        </picklistValues>
+        <picklistValues>
             <masterLabel>ISUA Airline</masterLabel>
             <translation><!-- ISUA Airline --></translation>
         </picklistValues>
@@ -7997,6 +8298,10 @@ J-Joint Vent --></help>
             <masterLabel>TOU GROUND HANDLER</masterLabel>
             <translation><!-- TOU GROUND HANDLER --></translation>
         </picklistValues>
+        <picklistValues>
+            <masterLabel>TOU POSTAL OPERATOR</masterLabel>
+            <translation><!-- TOU POSTAL OPERATOR --></translation>
+        </picklistValues>
     </fields>
     <fields>
         <label><!-- STD Code --></label>
@@ -8015,7 +8320,7 @@ J-Joint Vent --></help>
         <name>Sales_Office__c</name>
     </fields>
     <fields>
-        <label><!-- Sales at Risk --></label>
+        <label><!-- SaR monitoring --></label>
         <name>Sales_at_Risk__c</name>
     </fields>
     <fields>
@@ -8042,12 +8347,16 @@ J-Joint Vent --></help>
             <translation><!-- Airline Supplier --></translation>
         </picklistValues>
         <picklistValues>
+            <masterLabel>Airport</masterLabel>
+            <translation><!-- Airport --></translation>
+        </picklistValues>
+        <picklistValues>
             <masterLabel>Association</masterLabel>
             <translation><!-- Association --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Equipment Manufacturer</masterLabel>
-            <translation><!-- Equipment Manufacturer --></translation>
+            <masterLabel>Aviation Equipment Manufacturer</masterLabel>
+            <translation><!-- Aviation Equipment Manufacturer --></translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Financial Institution</masterLabel>
@@ -8074,20 +8383,20 @@ J-Joint Vent --></help>
             <translation><!-- Holding Company --></translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>IATA</masterLabel>
-            <translation><!-- IATA --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Internal Use</masterLabel>
-            <translation><!-- Internal Use --></translation>
-        </picklistValues>
-        <picklistValues>
             <masterLabel>Media</masterLabel>
             <translation><!-- Media --></translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Non-Airline Transportation</masterLabel>
             <translation><!-- Non-Airline Transportation --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Other</masterLabel>
+            <translation><!-- Other --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Postal Service</masterLabel>
+            <translation><!-- Postal Service --></translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Recreational</masterLabel>
@@ -8125,6 +8434,19 @@ J-Joint Vent --></help>
     <fields>
         <label><!-- Sent to External System --></label>
         <name>Sent_to_External_System__c</name>
+    </fields>
+    <fields>
+        <help><!-- Support model provided to Account --></help>
+        <label><!-- Service Model --></label>
+        <name>Service_Model__c</name>
+        <picklistValues>
+            <masterLabel>Differentiated</masterLabel>
+            <translation><!-- Differentiated --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Standard</masterLabel>
+            <translation><!-- Standard --></translation>
+        </picklistValues>
     </fields>
     <fields>
         <label><!-- Services Rendered Country --></label>
@@ -9805,6 +10127,10 @@ J-Joint Vent --></help>
         <relationshipLabel><!-- Accounts --></relationshipLabel>
     </fields>
     <fields>
+        <label><!-- Sold_To_Completed --></label>
+        <name>Sold_To_Completed__c</name>
+    </fields>
+    <fields>
         <label><!-- Solicitation Flag --></label>
         <name>Solicitation_Flag__c</name>
     </fields>
@@ -10296,8 +10622,29 @@ J-Joint Vent --></help>
         <name>Verification_Date__c</name>
     </fields>
     <fields>
+        <label><!-- Verification Status --></label>
+        <name>Verification_Status__c</name>
+        <picklistValues>
+            <masterLabel>Partial</masterLabel>
+            <translation><!-- Partial --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Unverified</masterLabel>
+            <translation><!-- Unverified --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Verified</masterLabel>
+            <translation><!-- Verified --></translation>
+        </picklistValues>
+    </fields>
+    <fields>
         <label><!-- WebStar ID --></label>
         <name>WebStar_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- World Wide Account --></label>
+        <name>World_Wide_Account__c</name>
+        <relationshipLabel><!-- Accounts (Master Parent Id) --></relationshipLabel>
     </fields>
     <fields>
         <label><!-- ICAO 8585 Code --></label>
@@ -10409,6 +10756,20 @@ J-Joint Vent --></help>
         <name>state_numeric_code__c</name>
     </fields>
     <recordTypes>
+        <label><!-- Agency WW HQ --></label>
+        <name>Agency_WW_HQ</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Used to create an account of type airport --></description>
+        <label><!-- Airport --></label>
+        <name>Airport</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Used to create an account of type airline branch. Branch being a local office from an existing legal entity being the parent account of this one. --></description>
+        <label><!-- Airline Local Offices --></label>
+        <name>Branch</name>
+    </recordTypes>
+    <recordTypes>
         <description><!-- The new record type for ALL Agencies with NEW data model - Use this for all Agencies --></description>
         <label><!-- Agency --></label>
         <name>IATA_Agency</name>
@@ -10474,6 +10835,10 @@ J-Joint Vent --></help>
         <name>Agency_Name</name>
     </validationRules>
     <validationRules>
+        <errorMessage><!-- The selected country is not enabled for multicountry. --></errorMessage>
+        <name>Agent_Country_Not_Enabled_Multicountry</name>
+    </validationRules>
+    <validationRules>
         <errorMessage><!-- You are not allowed to change the field &quot;Account Name&quot;. --></errorMessage>
         <name>Airline_HO_Name</name>
     </validationRules>
@@ -10515,11 +10880,15 @@ Name on AOC, IATA Code, Old IATA Code, ICAO Designator, IATA Designator (2-chara
         <name>Block_non_AGM_user_from_modifying_agents</name>
     </validationRules>
     <validationRules>
+        <errorMessage><!-- You do not have permission to edit ISO Country, VAT Number, Billing Address, Legal Name, Trade Name, Sector, Category, Account Type, Agency Business Model, Website and Ownership Type. Please contact your administrator. --></errorMessage>
+        <name>Blocks_Users_Editing_Fields_AgencyWWHQ</name>
+    </validationRules>
+    <validationRules>
         <errorMessage><!-- The CASS Number must have 3 digits. --></errorMessage>
         <name>CASS_Number_3_Digits</name>
     </validationRules>
     <validationRules>
-        <errorMessage><!-- The Location Type of this account cannot be changed from &apos;HO&apos; or &apos;HE&apos; because it has a Financial Assessment Contact linked to it. --></errorMessage>
+        <errorMessage><!-- The Location Type/Accreditation Model of this account cannot be changed from &apos;HO&apos;, &apos;HE&apos;, or &apos;GE&apos; because it has a Financial Assessment Contact linked to it. --></errorMessage>
         <name>Cannot_change_HO_location_type</name>
     </validationRules>
     <validationRules>
@@ -10555,8 +10924,20 @@ Name on AOC, IATA Code, Old IATA Code, ICAO Designator, IATA Designator (2-chara
         <name>EF_BlockRemoveSISVerifiedOnOperator</name>
     </validationRules>
     <validationRules>
+        <errorMessage><!-- A branch or Domestic HQ account needs a Parent account --></errorMessage>
+        <name>EF_Branch_ParentAccount</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- A Branch Account needs the same country as its Parent Account --></errorMessage>
+        <name>EF_Branch_SameCountryWithParentAccount</name>
+    </validationRules>
+    <validationRules>
         <errorMessage><!-- SIS Verified can&apos;t be checked if SIS Accounting Code or SIS Designator are empty --></errorMessage>
         <name>EF_CantSetSISVerifiedIfSISCodeEmpty</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- You need to change the Herarchy level to &quot;branch&quot; for a Branch account --></errorMessage>
+        <name>EF_Herarchylevel_branch_for_Branch</name>
     </validationRules>
     <validationRules>
         <errorMessage><!-- Please fill in E&amp;F Type, E&amp;F Status, E&amp;F Sub-Status, E&amp;F Status Date Change --></errorMessage>
@@ -10567,11 +10948,51 @@ Name on AOC, IATA Code, Old IATA Code, ICAO Designator, IATA Designator (2-chara
         <name>EF_SIS_Location_ID_format_check</name>
     </validationRules>
     <validationRules>
+        <errorMessage><!-- A verified Airport needs a IATA Code. --></errorMessage>
+        <name>EF_VerificationStatus_Airport_IATACode</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- The &quot;Verified&quot; value is available if a Business address is created. --></errorMessage>
+        <name>EF_VerificationStatus_BusinessAddress</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- The account needs to have a Legal Name. --></errorMessage>
+        <name>EF_VerificationStatus_LegalName</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- The &quot;Partial&quot; value is available if a Business address is created. --></errorMessage>
+        <name>EF_VerificationStatus_Partial_BusiAddres</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Partial verification status is allowed for Operator account only with a category of General aviation or Military only --></errorMessage>
+        <name>EF_VerificationStatus_Partial_Category</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- Partial verification status is allowed for Operator account only --></errorMessage>
+        <name>EF_VerificationStatus_Partial_Operator</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- You don’t have permission to edit Partially verified accounts --></errorMessage>
+        <name>EF_VerificationStatus_Partial_Permission</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- The &quot;Verified&quot; value is only available for accounts you have access to. --></errorMessage>
+        <name>EF_VerificationStatus_Permission</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- The account needs to have a Sector and a Category. --></errorMessage>
+        <name>EF_VerificationStatus_Sector_Category</name>
+    </validationRules>
+    <validationRules>
         <errorMessage><!-- Head office account can be edited only by administrator, please contact your administrator --></errorMessage>
         <name>Edit_Head_office</name>
     </validationRules>
     <validationRules>
-        <errorMessage><!-- An Associate Entity (with proper status) must have a parent account with location type HE (or has an AE as a parent) --></errorMessage>
+        <errorMessage><!-- This field can only be amended from the Global Entity (GE) --></errorMessage>
+        <name>Edit_Identify_Multicountry_for_GE_only</name>
+    </validationRules>
+    <validationRules>
+        <errorMessage><!-- An Associate Entity (with proper status) must have a parent account with location type HE OR GE (or has an AE as a parent) --></errorMessage>
         <name>Enforce_HE_Parent_on_AE_Account</name>
     </validationRules>
     <validationRules>
@@ -10607,7 +11028,7 @@ Name on AOC, IATA Code, Old IATA Code, ICAO Designator, IATA Designator (2-chara
         <name>Limit_Remittance_Frequency_Options</name>
     </validationRules>
     <validationRules>
-        <errorMessage><!-- You cannot set location type HE/AE if the location class is not P/D and country is not NewGen. --></errorMessage>
+        <errorMessage><!-- You cannot set location type HE/GE/AE if the location class is not P/D and country is not NewGen. --></errorMessage>
         <name>Location_Type_cannot_choose_HE_or_AE</name>
     </validationRules>
     <validationRules>
@@ -10643,6 +11064,10 @@ Name on AOC, IATA Code, Old IATA Code, ICAO Designator, IATA Designator (2-chara
         <name>Reason_for_creation_is_required</name>
     </validationRules>
     <validationRules>
+        <errorMessage><!-- The selected location type is not allowed for this account. --></errorMessage>
+        <name>Validate_Hierarchy_Location_Type</name>
+    </validationRules>
+    <validationRules>
         <errorMessage><!-- For a Virtual Branch Iso Country is mandatory --></errorMessage>
         <name>Virtual_Branch_Iso_Country</name>
     </validationRules>
@@ -10663,12 +11088,24 @@ Name on AOC, IATA Code, Old IATA Code, ICAO Designator, IATA Designator (2-chara
         <name>AZAirports</name>
     </webLinks>
     <webLinks>
+        <label><!-- Account_Context_Activation --></label>
+        <name>Account_Context_Activation</name>
+    </webLinks>
+    <webLinks>
         <label><!-- Account_Map --></label>
         <name>Account_Map</name>
     </webLinks>
     <webLinks>
+        <label><!-- Account_Profile_v2 --></label>
+        <name>Account_Profile_v2</name>
+    </webLinks>
+    <webLinks>
         <label><!-- Account_archive --></label>
         <name>Account_archive</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- Add_Address --></label>
+        <name>Add_Address</name>
     </webLinks>
     <webLinks>
         <label><!-- BLND_FormFactoryAccountLink --></label>

@@ -109,6 +109,14 @@
         <name>MITA_BIETA</name>
     </customApplications>
     <customApplications>
+        <label><!-- ONE Source --></label>
+        <name>ONE_Source</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- ONE Source --></label>
+        <name>ONE_Source_Console</name>
+    </customApplications>
+    <customApplications>
         <label><!-- PKB 2 --></label>
         <name>PKB_2</name>
     </customApplications>
@@ -141,6 +149,10 @@
         <name>Service_l1l2</name>
     </customApplications>
     <customApplications>
+        <label><!-- TIDS --></label>
+        <name>TIDS</name>
+    </customApplications>
+    <customApplications>
         <label><!-- TIP --></label>
         <name>TIP</name>
     </customApplications>
@@ -159,6 +171,10 @@
     <customLabels>
         <label><!-- ACCEPTED_PAYMENT_METHODS_NOT_EQUAL_TO_PARENT --></label>
         <name>ACCEPTED_PAYMENT_METHODS_NOT_EQUAL_TO_PARENT</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ADSR_Description --></label>
+        <name>ADSR_Description</name>
     </customLabels>
     <customLabels>
         <label><!-- Automated Process Profile Name used in the AIMS Account Trigger (BU) --></label>
@@ -1517,7 +1533,8 @@
         <name>ANG_RHC_RHCAmountTooltip</name>
     </customLabels>
     <customLabels>
-        <label>Зависит от текущей истории рисков агента и результатов его финансовых отчетов</label>
+        <label>Ваш статус риска основан на результатах последней финансовой оценки и оценки истории рисков.
+            Для получения более подробной информации, пожалуйста, обратитесь к Резолюции 812 (разделы 5.2 и 5.3), которую можно получить выполнив поиск «Резолюция 812» на Портале для клиентов.</label>
         <name>ANG_RHC_RiskStatusTooltip</name>
     </customLabels>
     <customLabels>
@@ -1669,6 +1686,14 @@
         <name>AirlineSuspensionEmailRecipientsEurope</name>
     </customLabels>
     <customLabels>
+        <label><!-- Airline Daily Sales portal service --></label>
+        <name>Airline_Daily_Sales_portal_service</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AirportAIS_Service_Description --></label>
+        <name>AirportAIS_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label>Все уведомления</label>
         <name>All_Notifications_Notification</name>
     </customLabels>
@@ -1701,6 +1726,50 @@
         <name>Attention</name>
     </customLabels>
     <customLabels>
+        <label>Данный комментарий был размещен в вашем запросе</label>
+        <name>Auto_Case_Comment_24Hours_Notification_1</name>
+    </customLabels>
+    <customLabels>
+        <label>вчера.</label>
+        <name>Auto_Case_Comment_24Hours_Notification_2</name>
+    </customLabels>
+    <customLabels>
+        <label>Пожалуйста, сообщите нам, если ваш запрос был решен или есть что-то еще, с чем мы можем вам помочь, для этого используйте кнопки ниже или перейдите к вашему запросу:</label>
+        <name>Auto_Case_Comment_24Hours_Notification_3</name>
+    </customLabels>
+    <customLabels>
+        <label>Вы можете сообщить нам об этом, зайдя на клиентский портал ИАТА.</label>
+        <name>Auto_Case_Comment_24Hours_Notification_4</name>
+    </customLabels>
+    <customLabels>
+        <label>Ваш запрос будет закрыт автоматически, если в течение 24 часов не получим от вас ответа.</label>
+        <name>Auto_Case_Comment_24Hours_Notification_5</name>
+    </customLabels>
+    <customLabels>
+        <label>Мы закрываем ваш запрос</label>
+        <name>Auto_Case_Comment_48Hours_Notification_1</name>
+    </customLabels>
+    <customLabels>
+        <label>так как мы не получили от вас ответа за последние 48 часов.</label>
+        <name>Auto_Case_Comment_48Hours_Notification_2</name>
+    </customLabels>
+    <customLabels>
+        <label>Если вам понадобится дальнейшая помощь по вашему запросу, вы можете добавить комментарий или связаться с нами открыв новый запрос</label>
+        <name>Auto_Case_Comment_48Hours_Notification_3</name>
+    </customLabels>
+    <customLabels>
+        <label>Мы ответили на ваш запрос под номером</label>
+        <name>Auto_Case_Comment_Notification_Email_1</name>
+    </customLabels>
+    <customLabels>
+        <label>Вы можете перейти к вашему запросу для просмотра ответа.</label>
+        <name>Auto_Case_Comment_Notification_Email_2</name>
+    </customLabels>
+    <customLabels>
+        <label>Вы можете сообщить нам об этом, зайдя на клиентский портал ИАТА.</label>
+        <name>Auto_Case_Comment_Notification_Email_3</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Auto renew payment method error --></label>
         <name>Auto_renew_payment_method_error</name>
     </customLabels>
@@ -1725,12 +1794,44 @@
         <name>BSPLink_Description</name>
     </customLabels>
     <customLabels>
+        <label><!-- BSP Participation Disable --></label>
+        <name>BSPParticipationDisable</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- BSP Participation Enable --></label>
+        <name>BSPParticipationEnable</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- BSP Participation Popup Alert --></label>
+        <name>BSPParticipationPopupAlert</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- BSP Participation Popup Alert Active GSA Only --></label>
+        <name>BSPParticipationPopupAlertActiveGSAOnly</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- BSP Participation Popup Title --></label>
+        <name>BSPParticipationPopupTitle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- BSP Participation User Access Error --></label>
+        <name>BSPParticipationUserAccess</name>
+    </customLabels>
+    <customLabels>
         <label><!-- BSP/CASS Ch Bank Service Description --></label>
         <name>BSP_CASS_Ch_Bank_Service_Description</name>
     </customLabels>
     <customLabels>
         <label><!-- BSP/CASS Ch Request Service Description --></label>
         <name>BSP_CASS_Ch_Request_Service_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- BSP Participation Button Disable --></label>
+        <name>BSP_Participation_Button_Disable</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- BSP Participation Button Enable --></label>
+        <name>BSP_Participation_Button_Enable</name>
     </customLabels>
     <customLabels>
         <label><!-- BSPlink Service Description --></label>
@@ -2773,7 +2874,7 @@
         <name>CSP_ANG_Portal_Admin_Authorized_Signature</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_About --></label>
+        <label>Описание</label>
         <name>CSP_About</name>
     </customLabels>
     <customLabels>
@@ -2857,11 +2958,11 @@
         <name>CSP_Breadcrumb_CompanyProfile_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Breadcrumb_FAQ_Title --></label>
+        <label>Часто задаваемые вопросы</label>
         <name>CSP_Breadcrumb_FAQ_Title</name>
     </customLabels>
     <customLabels>
-        <label>Домой</label>
+        <label>В начало</label>
         <name>CSP_Breadcrumb_Home_Title</name>
     </customLabels>
     <customLabels>
@@ -2877,7 +2978,7 @@
         <name>CSP_Breadcrumb_Support_CreateNewCase</name>
     </customLabels>
     <customLabels>
-        <label>Связаться с нами</label>
+        <label>Свяжитесь с Нами</label>
         <name>CSP_Breadcrumb_Support_ReachUs</name>
     </customLabels>
     <customLabels>
@@ -2891,6 +2992,10 @@
     <customLabels>
         <label>Приобрести Онлайн</label>
         <name>CSP_Buy_Online</name>
+    </customLabels>
+    <customLabels>
+        <label>Позвоните нам</label>
+        <name>CSP_Call_Tile_SubLabel</name>
     </customLabels>
     <customLabels>
         <label>Отменить</label>
@@ -2917,7 +3022,7 @@
         <name>CSP_Cancel_Request</name>
     </customLabels>
     <customLabels>
-        <label>Вы можете отправлять и получать сообщения об этом случае через Сервис обслуживания клиентов Международной ассоциации воздушного транспорта (ИАТА).</label>
+        <label>Вы можете отправлять и получать сообщения в рамках данного запроса через Службу поддержки клиентов Международной ассоциации воздушного транспорта (ИАТА).</label>
         <name>CSP_CaseMessage_HelpText</name>
     </customLabels>
     <customLabels>
@@ -2925,7 +3030,7 @@
         <name>CSP_CaseMessage_InputPlaceholder</name>
     </customLabels>
     <customLabels>
-        <label>Сообщения</label>
+        <label>Комментарии</label>
         <name>CSP_CaseMessage_MessageTitle</name>
     </customLabels>
     <customLabels>
@@ -2933,7 +3038,7 @@
         <name>CSP_CaseMessage_SubmitSuccess</name>
     </customLabels>
     <customLabels>
-        <label>Номер случая</label>
+        <label>Номер запроса</label>
         <name>CSP_CaseNumber</name>
     </customLabels>
     <customLabels>
@@ -2953,11 +3058,11 @@
         <name>CSP_Case_hasInvoicePaid</name>
     </customLabels>
     <customLabels>
-        <label>Случаи</label>
+        <label>Запрос</label>
         <name>CSP_Cases</name>
     </customLabels>
     <customLabels>
-        <label>Изменить электронную почту</label>
+        <label>Изменить адрес электронной почты</label>
         <name>CSP_Change_Email</name>
     </customLabels>
     <customLabels>
@@ -2977,7 +3082,11 @@
         <name>CSP_Change_Password_Info_2</name>
     </customLabels>
     <customLabels>
-        <label>Пожалуйста, проверьте свою электронную почту, чтобы получить Ваши данные для доступа</label>
+        <label>Чат в $0</label>
+        <name>CSP_Chat_base_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>Пожалуйста, проверьте вашу почту для получения доступа.</label>
         <name>CSP_Check_Email</name>
     </customLabels>
     <customLabels>
@@ -3001,7 +3110,7 @@
         <name>CSP_CompanyAdministration_Link</name>
     </customLabels>
     <customLabels>
-        <label>Посмотреть случаи моей компании</label>
+        <label>Посмотреть запросы моей компании</label>
         <name>CSP_CompanyCases</name>
     </customLabels>
     <customLabels>
@@ -3009,7 +3118,11 @@
         <name>CSP_CompanyProfile</name>
     </customLabels>
     <customLabels>
-        <label>Заполнить свой профиль</label>
+        <label>Рассмотрение жалобы занимает до 5 рабочих дней. Если у вас есть какой либо вопрос или запрос, воспользуйтесь, пожалуйста, опцией &lt;b&gt;Создать запрос &lt;/b&gt;, чтобы мы могли быстрее помочь вам.</label>
+        <name>CSP_Complaint_Select_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Заполнить данные Профиля</label>
         <name>CSP_Complete_Profile</name>
     </customLabels>
     <customLabels>
@@ -3029,7 +3142,11 @@
         <name>CSP_Confirmation_Email_Subject</name>
     </customLabels>
     <customLabels>
-        <label>Ваш запрос на доступ к {0} был доставлен администраторам портала. Если у Вас есть какие-либо вопросы или пожелания по поводу этого процесса, Вы можете связаться с администратором ниже:</label>
+        <label><!-- CSP_Confirmed_Requested_Service_EFApps_Message --></label>
+        <name>CSP_Confirmed_Requested_Service_EFApps_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Ваш запрос на доступ к {0} был передан администраторам портала. Если у Вас есть какие-либо вопросы или пожелания по поводу этого процесса, Вы можете связаться с администратором ниже:</label>
         <name>CSP_Confirmed_Requested_Service_Message</name>
     </customLabels>
     <customLabels>
@@ -3061,11 +3178,11 @@
         <name>CSP_Create_Contact_Complete_Field</name>
     </customLabels>
     <customLabels>
-        <label>Вы новичок на клиентском портале Международной ассоциации воздушного транспорта (ИАТА)?</label>
+        <label>Новый пользователь портала?</label>
         <name>CSP_Create_New_Account_Info</name>
     </customLabels>
     <customLabels>
-        <label>Создать новый аккаунт</label>
+        <label>Создать новую учетную запись</label>
         <name>CSP_Create_New_Account_Label</name>
     </customLabels>
     <customLabels>
@@ -3073,7 +3190,7 @@
         <name>CSP_Create_New_User_Label</name>
     </customLabels>
     <customLabels>
-        <label>Создать пароль</label>
+        <label>Пожалуйста, введите новый пароль.</label>
         <name>CSP_Create_Password</name>
     </customLabels>
     <customLabels>
@@ -3107,6 +3224,10 @@
     <customLabels>
         <label>Отказать в доступе</label>
         <name>CSP_Deny_User_Access_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Напишите краткое описание</label>
+        <name>CSP_DescSubtitleCC</name>
     </customLabels>
     <customLabels>
         <label>Документ добавлен в мои закладки</label>
@@ -3145,11 +3266,20 @@
         <name>CSP_EF_Invoices</name>
     </customLabels>
     <customLabels>
-        <label>Электронный адрес</label>
+        <label>Адрес электронной почты</label>
         <name>CSP_Email</name>
     </customLabels>
     <customLabels>
-        <label>Спасибо за регистрацию на клиентском портале в Международной ассоциации воздушного транспорта (ИАТА). Вы всего в одном шаге от получения доступа!</label>
+        <label>Уважаемый, 
+Спасибо за регистрацию на клиентском портале ИАТА. Вы всего в одном шаге от получения доступа!
+
+Пожалуйста, подтвердите свой адрес электронной почты, нажав здесь.
+
+По соображениям безопасности эта ссылка действительна в течение 8 часов. По истечении времени Вы должны будете повторно подать запрос.
+
+Спасибо за то, что вы с ИАТА.
+
+Международная ассоциация воздушного транспорта (ИАТА)</label>
         <name>CSP_Email_Confirmation_Body_Part_1</name>
     </customLabels>
     <customLabels>
@@ -3237,6 +3367,10 @@
         <name>CSP_Email_Here</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Email Link button Image --></label>
+        <name>CSP_Email_Link_Button_Image</name>
+    </customLabels>
+    <customLabels>
         <label>Мы получили Ваш запрос на сброс Вашего пароля клиентского портала Международной ассоциации воздушного транспорта (ИАТА).</label>
         <name>CSP_Email_Password_Reset_Body_Part_1</name>
     </customLabels>
@@ -3253,7 +3387,7 @@
         <name>CSP_Email_Password_Reset_Body_Part_4</name>
     </customLabels>
     <customLabels>
-        <label>Спасибо за участие в Международной ассоциации воздушного транспорта (ИАТА).</label>
+        <label>Спасибо за то, что вы с ИАТА.</label>
         <name>CSP_Email_Signature_Part_1</name>
     </customLabels>
     <customLabels>
@@ -3261,7 +3395,7 @@
         <name>CSP_Email_Signature_Part_1_LMS</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP Email Signature Part 2 --></label>
+        <label>ИАТА</label>
         <name>CSP_Email_Signature_Part_2</name>
     </customLabels>
     <customLabels>
@@ -3269,24 +3403,68 @@
         <name>CSP_Email_Signature_Part_2_LMS</name>
     </customLabels>
     <customLabels>
-        <label>Мы рады, что Вы с нами на нашем клиентском портале Международной ассоциации воздушного транспорта (ИАТА)!</label>
+        <label>Мы рады приветствовать Вас на нашем клиентстком портале ИАТА!</label>
         <name>CSP_Email_Welcome_Part_1</name>
     </customLabels>
     <customLabels>
-        <label>Клиентский портал Международной ассоциации воздушного транспорта (ИАТА) содержит полезные услуги, информацию о продукте, полезные советы и рекомендации, специально разработанные для Вас. Вы можете использовать его, чтобы легко связаться с нашей службой поддержки клиентов, в том числе в режиме реального времени в чате или непосредственно в нашем интернет-магазине. Это Ваши ворота в Международную ассоциацию воздушного транспорта (ИАТА)!</label>
+        <label>Клиентсктий портал ИАТА содержит перечень услуг, информацию о продуктах, полезные ссылки и советы, подобранные специально для Вас. С его помощью Вы можете как обратиться в нашу Службу по работе с клиентами, в том числе и через чат, либо напрямую совершить покупки в нашем онлайн магазине. Это ваш пропуск в ИАТА.</label>
         <name>CSP_Email_Welcome_Part_2</name>
     </customLabels>
     <customLabels>
-        <label>&lt;a href=&quot;{!Portal_Url}&quot;&gt;Отведите меня на портал!&lt;/a&gt;</label>
+        <label>&lt;a href=&quot;{!Portal_Url}&quot;&gt;Войти на Портал!&lt;/a&gt;</label>
         <name>CSP_Email_Welcome_Part_3</name>
     </customLabels>
     <customLabels>
-        <label>Для еще большего улучшения Вашего опыта в клиентском портале Международной ассоциации воздушного транспорта (ИАТА), Вы можете заполнить информацию в своей учетной записи, когда Вы захотите. Вы можете легко сделать это, нажав</label>
+        <label>Для улучшения работы и Вашего восприятия, Вы можете дополнить информацию о своей учетной записи в любой момент. Для этого просто нажмите здесь.</label>
         <name>CSP_Email_Welcome_Part_4</name>
     </customLabels>
     <customLabels>
-        <label>Мы надеемся, что Вам понравится наш клиентский портал Международной ассоциации воздушного транспорта (ИАТА)!</label>
+        <label>Мы надеемся, что вам понравится наш клиентский портал!</label>
         <name>CSP_Email_Welcome_Part_5</name>
+    </customLabels>
+    <customLabels>
+        <label>&lt;b&gt;Чрезвычайная ситуация&lt;/b&gt;.</label>
+        <name>CSP_Emergency_Box_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Экстренная поддержка предоставляется 24 часа, 7 дней в неделю и только на английском языке.</label>
+        <name>CSP_Emergency_Footer_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Пожалуйста, обратите внимание, что поддержка, предоставляемая по каналу экстренной помощи, предлагается только на &lt;b&gt;английском языке &lt;/b&gt; и для следующих критических ситуаций:</label>
+        <name>CSP_Emergency_Selected_Case_Creation_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Если ваш запрос не связан с одной из этих ситуаций, пожалуйста, нажмите &quot;&lt;b&gt; Отправить как запрос &lt;/b&gt;&quot; ниже, чтобы создать новый запрос.</label>
+        <name>CSP_Emergency_Selected_Case_Creation_Message2</name>
+    </customLabels>
+    <customLabels>
+        <label>Вы выбрали опцию &quot;&quot;Чрезвычайная ситуация&quot;&quot;.</label>
+        <name>CSP_Emergency_Selected_Case_Creation_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Пожалуйста, обратите внимание, что поддержка, предоставляемая по каналу экстренной помощи, предлагается только для следующих критических ситуаций.</label>
+        <name>CSP_Emergency_Selected_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Проблемы доступа к системам или выходом из строя платформ</label>
+        <name>CSP_Emergency_Selected_Reason1</name>
+    </customLabels>
+    <customLabels>
+        <label>Вопросы по выставленным счетам (крупные несоответствия)</label>
+        <name>CSP_Emergency_Selected_Reason2</name>
+    </customLabels>
+    <customLabels>
+        <label>Отключения систем</label>
+        <name>CSP_Emergency_Selected_Reason3</name>
+    </customLabels>
+    <customLabels>
+        <label>Подозрительная активность и мошенничество</label>
+        <name>CSP_Emergency_Selected_Reason4</name>
+    </customLabels>
+    <customLabels>
+        <label>Пожалуйста, не запрашивайте экстренной помощи, если речь не идет о мошенничестве, продаже билетов или финансовых вопросах.</label>
+        <name>CSP_Emergency_Tooltip</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_ErrorMsg_Flow4_Logout_LMS --></label>
@@ -3325,11 +3503,11 @@
         <name>CSP_Expired_Reset_Password_Msg</name>
     </customLabels>
     <customLabels>
-        <label>Связаться с нами</label>
+        <label>Свяжитесь с Нами</label>
         <name>CSP_FAQReachUsBanner_ButtonText</name>
     </customLabels>
     <customLabels>
-        <label>Создайте случай, общайтесь напрямую с представителем Международной ассоциации воздушного транспорта (ИАТА) или позвоните нам.</label>
+        <label>Создайте запрос, общайтесь напрямую с представителем Международной ассоциации воздушного транспорта (ИАТА) или позвоните нам.</label>
         <name>CSP_FAQReachUsBanner_Text</name>
     </customLabels>
     <customLabels>
@@ -3349,7 +3527,7 @@
         <name>CSP_FAQ_Subtitle</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_FAQs_Title --></label>
+        <label>Часто задаваемые вопросы</label>
         <name>CSP_FAQs_Title</name>
     </customLabels>
     <customLabels>
@@ -3381,7 +3559,7 @@
         <name>CSP_Filtered</name>
     </customLabels>
     <customLabels>
-        <label>Ваша учетная запись была успешно создана! И теперь вы уже можете приступить к исследованию возможностей нашего портала. Для получения и просмотра более персонализированного содержания, пожалуйста, заполните свой профиль.</label>
+        <label>Ваша учетная запись успешно создана. Теперь вы можете познакомиться со стандартными функциями Портала. Некоторые дополнительные опции требуют больших дополнительных данных. Пожалуйста, заполните ваш профиль для полного доступа.</label>
         <name>CSP_First_Login_Desc</name>
     </customLabels>
     <customLabels>
@@ -3393,7 +3571,7 @@
         <name>CSP_First_Login_Desc_LMS_IE</name>
     </customLabels>
     <customLabels>
-        <label>Добро пожаловать на борт!</label>
+        <label>Добро пожаловать!</label>
         <name>CSP_First_Login_Title</name>
     </customLabels>
     <customLabels>
@@ -3405,7 +3583,7 @@
         <name>CSP_ForYou</name>
     </customLabels>
     <customLabels>
-        <label>Забыли пароль?</label>
+        <label>Забыт пароль?</label>
         <name>CSP_Forgot_Password</name>
     </customLabels>
     <customLabels>
@@ -3413,7 +3591,7 @@
         <name>CSP_Forgot_Password_Error_Message</name>
     </customLabels>
     <customLabels>
-        <label>Пожалуйста, введите Ваш зарегистрированный адрес электронной почты, чтобы сбросить пароль. Мы вышлем Вам ссылку для сброса на Ваш адрес электронной почты.</label>
+        <label>Пожалуйста, введите свой адрес электронной почты, указанный при регистрации для воссттановления восстановления пароля. Мы вышлем Вам ссылку для восстановления пароля на электронную почту.</label>
         <name>CSP_Forgot_Password_Info</name>
     </customLabels>
     <customLabels>
@@ -3429,8 +3607,32 @@
         <name>CSP_Forgot_Password_Success_Message</name>
     </customLabels>
     <customLabels>
-        <label>Поскольку Вы не входили в систему в течение последних 90 дней, мы отправили Вам электронное письмо с новым паролем.</label>
+        <label>В целях безопасности мы отправили вам е-мейл с просьбой установить новый пароль.</label>
         <name>CSP_Frozen_User_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Отзыв</label>
+        <name>CSP_Give_Feedback_ButtonLabel</name>
+    </customLabels>
+    <customLabels>
+        <label>В ИАТА мы постоянно совершенствуем наши продукты и услуги, чтобы предоставить наилучший сервис. Ваши отзывы и предложения являются движущей силой этих улучшений. Нажмите на кнопку ниже, чтобы оставить свой отзыв.</label>
+        <name>CSP_Give_Feedback_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Give Feedback title --></label>
+        <name>CSP_Give_Feedback_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Это</label>
+        <name>CSP_Give_Feedback_Type_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Перейти к часто задаваемым вопросам</label>
+        <name>CSP_Go_to_FAQ</name>
+    </customLabels>
+    <customLabels>
+        <label>Зайти на iata.org</label>
+        <name>CSP_Go_to_IataOrg</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP Go to Webstar --></label>
@@ -3453,8 +3655,16 @@
         <name>CSP_IATAN_Register_Info</name>
     </customLabels>
     <customLabels>
+        <label>С уважением,&amp;lt;br/&amp;gt; Центр обслуживания клиентов ИАТА</label>
+        <name>CSP_IATA_CSC_Email_Greetings</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_IATA_Country --></label>
         <name>CSP_IATA_Country</name>
+    </customLabels>
+    <customLabels>
+        <label>Клиентский портал ИАТА</label>
+        <name>CSP_IATA_Customer_Portal</name>
     </customLabels>
     <customLabels>
         <label><!-- IATA Invoices --></label>
@@ -3497,7 +3707,7 @@
         <name>CSP_Invalid_Email</name>
     </customLabels>
     <customLabels>
-        <label>Личное имя</label>
+        <label>Имя</label>
         <name>CSP_L1_First_Name</name>
     </customLabels>
     <customLabels>
@@ -3529,11 +3739,11 @@
         <name>CSP_L1_WorkPhone_LMS</name>
     </customLabels>
     <customLabels>
-        <label>Информация о компании</label>
+        <label>Данные об учетной записи организации</label>
         <name>CSP_L2_Account_Information</name>
     </customLabels>
     <customLabels>
-        <label>Заполните информацию ниже, чтобы найти учетную запись вашей компании.</label>
+        <label>Заполните информацию ниже для поиска учетной записи вашей организации</label>
         <name>CSP_L2_Account_Information_Message</name>
     </customLabels>
     <customLabels>
@@ -3541,11 +3751,11 @@
         <name>CSP_L2_Account_Selection</name>
     </customLabels>
     <customLabels>
-        <label>Чтобы привести ваш личный профиль в соответствие с учетной записью вашей компании, нам нужны дополнительные сведения. Это поможет нам проверить, зарегистрирована ли ваша компания в ИАТА.</label>
+        <label>Для идентификации вашей учетной записи с вашей организацией нам необходима информация о ней. Ваша организация уже может иметь свою учетную запись в ИАТА, пожалуйста, проверьте это, прежде чем создавать новую.</label>
         <name>CSP_L2_Account_Selection_Message</name>
     </customLabels>
     <customLabels>
-        <label>Подробная информация</label>
+        <label>Дополнительные данные</label>
         <name>CSP_L2_Additional_Details</name>
     </customLabels>
     <customLabels>
@@ -3585,7 +3795,7 @@
         <name>CSP_L2_Back_to_Profile_Details</name>
     </customLabels>
     <customLabels>
-        <label>Выбор счета и подробная информация</label>
+        <label>Выбор учетной записи и дополнительные данные</label>
         <name>CSP_L2_Banner_Title</name>
     </customLabels>
     <customLabels>
@@ -3945,7 +4155,7 @@
         <name>CSP_L2_SucessUpdate_Title_LMS</name>
     </customLabels>
     <customLabels>
-        <label>приветствие</label>
+        <label>Обращение</label>
         <name>CSP_L2_Title</name>
     </customLabels>
     <customLabels>
@@ -4233,6 +4443,10 @@
         <name>CSP_LogOut</name>
     </customLabels>
     <customLabels>
+        <label>Вход</label>
+        <name>CSP_Login</name>
+    </customLabels>
+    <customLabels>
         <label>Войти сейчас</label>
         <name>CSP_Login_Now</name>
     </customLabels>
@@ -4301,7 +4515,7 @@
         <name>CSP_Manage_Services_NoIEPAccount</name>
     </customLabels>
     <customLabels>
-        <label>Посмотреть мои случаи</label>
+        <label>Посмотреть мои запросы</label>
         <name>CSP_MyCases</name>
     </customLabels>
     <customLabels>
@@ -4333,7 +4547,7 @@
         <name>CSP_Next_EmailValidation_LMS</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Next_LMS --></label>
+        <label>Далее</label>
         <name>CSP_Next_LMS</name>
     </customLabels>
     <customLabels>
@@ -4349,7 +4563,7 @@
         <name>CSP_NoBookmarksText2</name>
     </customLabels>
     <customLabels>
-        <label>На данный момент у вас нет никаких случаев.</label>
+        <label>На данный момент у вас нет никаких запросов.</label>
         <name>CSP_NoCases1</name>
     </customLabels>
     <customLabels>
@@ -4385,19 +4599,19 @@
         <name>CSP_Password</name>
     </customLabels>
     <customLabels>
-        <label>Минимум 10 символов</label>
+        <label>Минимум 10 знаков</label>
         <name>CSP_Password_Rule_1</name>
     </customLabels>
     <customLabels>
-        <label>Как минимум 1 заглавная буква</label>
+        <label>Хотя бы 1 заглавную букву</label>
         <name>CSP_Password_Rule_2</name>
     </customLabels>
     <customLabels>
-        <label>Хотя бы 1 цифра</label>
+        <label>Хотя бы 1 цифру</label>
         <name>CSP_Password_Rule_3</name>
     </customLabels>
     <customLabels>
-        <label>Как минимум один из следующих символов: !@ # $% * () _ + ^ &amp;</label>
+        <label>Хотя бы один из символов (! @ # $ % * ( ) _ + ^ &amp;)</label>
         <name>CSP_Password_Rule_4</name>
     </customLabels>
     <customLabels>
@@ -4409,7 +4623,7 @@
         <name>CSP_PendingApproval</name>
     </customLabels>
     <customLabels>
-        <label>Нам нужно ваше мнение, чтобы продолжить изучение вашего случая.</label>
+        <label>Нам нужен ваш ответ, чтобы продолжить изучение вашего запроса.</label>
         <name>CSP_PendingCustomerCase_Warning</name>
     </customLabels>
     <customLabels>
@@ -4419,6 +4633,10 @@
     <customLabels>
         <label>Персональные данные</label>
         <name>CSP_Personal_Information</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_PortalBaseURL --></label>
+        <name>CSP_PortalBaseURL</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_PortalPath --></label>
@@ -4433,7 +4651,7 @@
         <name>CSP_Portal_Login_Disabled_Message</name>
     </customLabels>
     <customLabels>
-        <label>Статус портала</label>
+        <label>Статус на портале</label>
         <name>CSP_Portal_Status</name>
     </customLabels>
     <customLabels>
@@ -4467,7 +4685,7 @@
         <name>CSP_Profile_PrivacyManagement_URL</name>
     </customLabels>
     <customLabels>
-        <label>Что такое случай и когда он мне нужен?</label>
+        <label>Что такое запрос и когда он мне нужен?</label>
         <name>CSP_Question1</name>
     </customLabels>
     <customLabels>
@@ -4475,7 +4693,7 @@
         <name>CSP_Question1URL</name>
     </customLabels>
     <customLabels>
-        <label>Как я могу увидеть и обновить детали случая?</label>
+        <label>Как я могу увидеть и обновить детали запроса?</label>
         <name>CSP_Question2</name>
     </customLabels>
     <customLabels>
@@ -4483,7 +4701,7 @@
         <name>CSP_Question2URL</name>
     </customLabels>
     <customLabels>
-        <label>Недавние случаи</label>
+        <label>Недавние запросы</label>
         <name>CSP_RecentCases</name>
     </customLabels>
     <customLabels>
@@ -4505,6 +4723,10 @@
     <customLabels>
         <label><!-- CSP Record Deleted --></label>
         <name>CSP_Record_Deleted</name>
+    </customLabels>
+    <customLabels>
+        <label>Регистрация</label>
+        <name>CSP_Registration</name>
     </customLabels>
     <customLabels>
         <label>Регистрация прошла успешно</label>
@@ -4563,7 +4785,7 @@
         <name>CSP_Registration_Existing_Work_Message_LMS_Profile</name>
     </customLabels>
     <customLabels>
-        <label>Пожалуйста, сначала проверьте вашу папку со спамом. Если вы не можете найти нужное сообщение в папке со спамом, еще раз попробуйте зарегистрироваться, нажав кнопку «Повторить попытку».</label>
+        <label>Пожалуйста, сначала проверьте папку с нежелательной почтой. Если вы не можете найти письмо там, повторите регистрацию, нажав на кнопку &quot;Попробовать повторно&quot;</label>
         <name>CSP_Registration_Retry_Message</name>
     </customLabels>
     <customLabels>
@@ -4627,7 +4849,7 @@
         <name>CSP_Save</name>
     </customLabels>
     <customLabels>
-        <label>Сохранить и войти</label>
+        <label>Сохранить и зайти</label>
         <name>CSP_Save_Login</name>
     </customLabels>
     <customLabels>
@@ -4675,7 +4897,7 @@
         <name>CSP_Search_FAQ_Topic</name>
     </customLabels>
     <customLabels>
-        <label>Найти услуги, случаи, поддержку и многое другое</label>
+        <label>Найти услуги, запросы, поддержку и многое другое</label>
         <name>CSP_Search_Home_Placeholder</name>
     </customLabels>
     <customLabels>
@@ -4691,7 +4913,7 @@
         <name>CSP_Search_NoResults_text2</name>
     </customLabels>
     <customLabels>
-        <label>Проверьте правильность написания Ваших ключевых слов или попробуйте еще раз другими.</label>
+        <label>Проверьте правильность написания Ваших ключевых слов или попробуйте еще раз с другими.</label>
         <name>CSP_Search_NoResults_text3</name>
     </customLabels>
     <customLabels>
@@ -4699,7 +4921,7 @@
         <name>CSP_Search_Services_Placeholder</name>
     </customLabels>
     <customLabels>
-        <label>Поиск поддержки</label>
+        <label>Поддержка поиска</label>
         <name>CSP_Search_Support_Placeholder</name>
     </customLabels>
     <customLabels>
@@ -4711,7 +4933,7 @@
         <name>CSP_Search_TypeIn_text1</name>
     </customLabels>
     <customLabels>
-        <label>Пожалуйста, введите что-то большее, чем 2 буквы, чтобы начать поиск.</label>
+        <label>Пожалуйста, введите более 2 букв, чтобы начать поиск.</label>
         <name>CSP_Search_TypeIn_text2</name>
     </customLabels>
     <customLabels>
@@ -4719,7 +4941,7 @@
         <name>CSP_Search_TypeIn_text3</name>
     </customLabels>
     <customLabels>
-        <label>Поиск по номеру дела, теме или описанию</label>
+        <label>Поиск по номеру запроса, теме или описанию</label>
         <name>CSP_SearchingOn</name>
     </customLabels>
     <customLabels>
@@ -4731,12 +4953,36 @@
         <name>CSP_SelectCommunity</name>
     </customLabels>
     <customLabels>
-        <label>Выбрать статус портала</label>
+        <label>Выбрать статус  на портале</label>
         <name>CSP_SelectPortalStatus</name>
+    </customLabels>
+    <customLabels>
+        <label>Выберите тему </label>
+        <name>CSP_Select_Topic_Placeholder</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_ADSR --></label>
+        <name>CSP_Service_ADSR</name>
     </customLabels>
     <customLabels>
         <label>Доступ к услугам</label>
         <name>CSP_Service_Access</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_AirlineDailySales_NoAccess --></label>
+        <name>CSP_Service_AirlineDailySales_NoAccess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_AirlineDailySales_Title --></label>
+        <name>CSP_Service_AirlineDailySales_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_SmartLite_NoAccess --></label>
+        <name>CSP_Service_SmartLite_NoAccess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_Service_SmartLite_Title --></label>
+        <name>CSP_Service_SmartLite_Title</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_Service_TIPReports_AmazonType --></label>
@@ -4815,7 +5061,7 @@
         <name>CSP_Services_HeaderTitle</name>
     </customLabels>
     <customLabels>
-        <label>Управление сервисом</label>
+        <label>Управление услугой</label>
         <name>CSP_Services_ManageService</name>
     </customLabels>
     <customLabels>
@@ -4835,7 +5081,7 @@
         <name>CSP_Services_RequestServiceBannerButton</name>
     </customLabels>
     <customLabels>
-        <label>Просмотреть подробную информацию об услуге и запросить доступ к доступным услугам.</label>
+        <label>Просмотреть подробную информацию об услуге и запросить доступ к возможным услугам.</label>
         <name>CSP_Services_RequestServiceBannerSubtitle</name>
     </customLabels>
     <customLabels>
@@ -4863,12 +5109,32 @@
         <name>CSP_Settings</name>
     </customLabels>
     <customLabels>
-        <label>Пропустить сейчас</label>
+        <label>Поделиться</label>
+        <name>CSP_ShareLink</name>
+    </customLabels>
+    <customLabels>
+        <label>Ссылка на FAQ скопирована!</label>
+        <name>CSP_Share_CopiedToClipBoard</name>
+    </customLabels>
+    <customLabels>
+        <label>Зарегистрироваться</label>
+        <name>CSP_Sign_Up</name>
+    </customLabels>
+    <customLabels>
+        <label>Пропустить на данном этапе</label>
         <name>CSP_Skip</name>
     </customLabels>
     <customLabels>
         <label>Статус</label>
         <name>CSP_Status</name>
+    </customLabels>
+    <customLabels>
+        <label>Магазин</label>
+        <name>CSP_Store</name>
+    </customLabels>
+    <customLabels>
+        <label>Пожалуйста, введите тему</label>
+        <name>CSP_SubjectSubtitleCC</name>
     </customLabels>
     <customLabels>
         <label>Отправить</label>
@@ -4879,11 +5145,19 @@
         <name>CSP_SubmitApproval</name>
     </customLabels>
     <customLabels>
+        <label>Отправить как экстренной запрос</label>
+        <name>CSP_SubmitAsEmergency</name>
+    </customLabels>
+    <customLabels>
+        <label>Отправить как запрос</label>
+        <name>CSP_SubmitAsQuery</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_SubmittedApproval --></label>
         <name>CSP_SubmittedApproval</name>
     </customLabels>
     <customLabels>
-        <label>Успешно!</label>
+        <label>Успешно</label>
         <name>CSP_Success</name>
     </customLabels>
     <customLabels>
@@ -4915,6 +5189,14 @@
         <name>CSP_Title</name>
     </customLabels>
     <customLabels>
+        <label>Все темы</label>
+        <name>CSP_Topic_All_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>Ваши последние темы</label>
+        <name>CSP_Topic_Recent_Label</name>
+    </customLabels>
+    <customLabels>
         <label>Отслеживание</label>
         <name>CSP_Track</name>
     </customLabels>
@@ -4935,19 +5217,47 @@
         <name>CSP_Treasury_Dashboard</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Treasury Dashboard Report --></label>
+        <name>CSP_Treasury_Dashboard_Report</name>
+    </customLabels>
+    <customLabels>
         <label>поиск решений проблемы</label>
         <name>CSP_Troubleshooting</name>
+    </customLabels>
+    <customLabels>
+        <label>Описание проблемы:</label>
+        <name>CSP_TroubleshootingDesc</name>
+    </customLabels>
+    <customLabels>
+        <label>Форма устранения неисправностей</label>
+        <name>CSP_TroubleshootingForm</name>
+    </customLabels>
+    <customLabels>
+        <label>Если вышеприведенные шаги не устранили проблему, нажмите ниже, чтобы связаться с нами:</label>
+        <name>CSP_TroubleshootingMSG</name>
+    </customLabels>
+    <customLabels>
+        <label>Заполните форму и мы свяжемся с вами, чтобы помочь вам получить доступ к нашей платформе.</label>
+        <name>CSP_TroubleshootingSbtitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Устранение неполадок при регистрации и входе в систему</label>
+        <name>CSP_TroubleshootingTitle</name>
+    </customLabels>
+    <customLabels>
+        <label>Мне нужна помощь:</label>
+        <name>CSP_TroubleshootingType</name>
     </customLabels>
     <customLabels>
         <label>Для получения дополнительной помощи проверьте</label>
         <name>CSP_Troubleshooting_Info</name>
     </customLabels>
     <customLabels>
-        <label>Попробовать еще раз</label>
+        <label>Попробовать повторно</label>
         <name>CSP_Try_Again</name>
     </customLabels>
     <customLabels>
-        <label>Тип случая</label>
+        <label>Тип запроса</label>
         <name>CSP_TypeOfCase</name>
     </customLabels>
     <customLabels>
@@ -5075,15 +5385,15 @@
         <name>CSP_cpcc_Contact_Type_Status</name>
     </customLabels>
     <customLabels>
-        <label>Контакт финансовой оценки</label>
+        <label>Контакт для финансовой оценки</label>
         <name>CSP_cpcc_Financial_Assessment_Contact</name>
     </customLabels>
     <customLabels>
-        <label>Контакт счетов</label>
+        <label>Контакт по вопросам оплат счетов</label>
         <name>CSP_cpcc_Invoice_Contact</name>
     </customLabels>
     <customLabels>
-        <label>Новый контактный профиль</label>
+        <label>Профиль нового контактного лица</label>
         <name>CSP_cpcc_New_Contact_Profile</name>
     </customLabels>
     <customLabels>
@@ -5179,8 +5489,132 @@
         <name>Case_Classification</name>
     </customLabels>
     <customLabels>
+        <label><!-- Case Closed For DGR --></label>
+        <name>Case_Closed_For_DGR</name>
+    </customLabels>
+    <customLabels>
+        <label>Ваш запрос не может быть закрыт или он уже закрыт.</label>
+        <name>Case_Closure_Error_Cannot_Close</name>
+    </customLabels>
+    <customLabels>
+        <label>Срок действия ссылки истек.</label>
+        <name>Case_Closure_Error_Expired_Link</name>
+    </customLabels>
+    <customLabels>
+        <label>Перейти на клиентский портал</label>
+        <name>Case_Closure_Go_To_CS_Portal_Button</name>
+    </customLabels>
+    <customLabels>
+        <label>Спасибо, ваш ответ сохранен.</label>
+        <name>Case_Closure_Ignore_Survey</name>
+    </customLabels>
+    <customLabels>
+        <label>Не сейчас.</label>
+        <name>Case_Closure_Ignore_Survey_Button</name>
+    </customLabels>
+    <customLabels>
+        <label>Вы будете перенаправлены, чтобы оставить свой отзыв.</label>
+        <name>Case_Closure_Redirect_Survey</name>
+    </customLabels>
+    <customLabels>
+        <label>Мы закрыли данное дело:</label>
+        <name>Case_Closure_Success_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Поскольку мы не получили от вас ответа за последние 48 часов, данный запрос был закрыт:</label>
+        <name>Case_Closure_Success_Message_48Hours</name>
+    </customLabels>
+    <customLabels>
+        <label>Спасибо за подтверждение!</label>
+        <name>Case_Closure_Success_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>При перенаправлении вас на страницу отзывов произошла ошибка.</label>
+        <name>Case_Closure_Survey_Link_Error</name>
+    </customLabels>
+    <customLabels>
+        <label>В ИАТА мы постоянно совершенствуем наши услуги, чтобы предоставить наилучший сервис. Именно поэтому мы хотели бы узнать ваше мнение по некоторым вопросам, которые мы считаем важными, это не должно занять больше двух минут.</label>
+        <name>Case_Closure_Survey_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Пройдите опрос</label>
+        <name>Case_Closure_Take_Survey_Button</name>
+    </customLabels>
+    <customLabels>
+        <label>Ответ не был ясен.</label>
+        <name>Case_Comment_Button_Answer_Not_Clear</name>
+    </customLabels>
+    <customLabels>
+        <label>Вы можете закрыть это дело.</label>
+        <name>Case_Comment_Button_Can_Close_Case</name>
+    </customLabels>
+    <customLabels>
+        <label>Перейти на страницу Свяжитесь с Нами</label>
+        <name>Case_Comment_Button_Go_To_Contact_Us</name>
+    </customLabels>
+    <customLabels>
+        <label>У меня новый запрос</label>
+        <name>Case_Comment_Button_Have_New_Query</name>
+    </customLabels>
+    <customLabels>
+        <label>Ваш запрос решен?</label>
+        <name>Case_Comment_Have_Been_Resolved_1</name>
+    </customLabels>
+    <customLabels>
+        <label>Eсли в течение 48 часов не получим от вас ответа, вас запрос будет считаться решенным и будет закрыт автоматически.</label>
+        <name>Case_Comment_Have_Been_Resolved_2</name>
+    </customLabels>
+    <customLabels>
+        <label>Пожалуйста, сообщите нам, как мы можем оказать вам дальнейшую помощь в этом вопросе.</label>
+        <name>Case_Comment_How_Can_Assist_You</name>
+    </customLabels>
+    <customLabels>
+        <label>Поскольку у вас есть новый запрос, мы закрыли ваш запрос {arg0}, и вы можете создать новый запрос, нажав на кнопку ниже, чтобы мы могли связаться с вами как можно скорее.</label>
+        <name>Case_Comment_New_Query_Confirmation_Message</name>
+    </customLabels>
+    <customLabels>
+        <label>Спасибо за подтверждение</label>
+        <name>Case_Comment_New_Query_Confirmation_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_Comment_Notification_Template_Name --></label>
+        <name>Case_Comment_Notification_Template_Name</name>
+    </customLabels>
+    <customLabels>
+        <label>Пожалуйста, добавьте ваш комментарий, чтобы мы могли продолжить работу над этим делом.</label>
+        <name>Case_Comment_Provide_Aditional_Feedback</name>
+    </customLabels>
+    <customLabels>
+        <label>данная анкета</label>
+        <name>Case_Comment_Survey_Lik_Label</name>
+    </customLabels>
+    <customLabels>
+        <label>Мы ценим ваше мнение. Пожалуйста, оставьте свой отзыв о IATA&amp;apos; s Support на</label>
+        <name>Case_Comment_Survey_Message</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Case Defect/Issue --></label>
         <name>Case_Defect_Issue</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_KPI_AirlineManagement --></label>
+        <name>Case_KPI_AirlineManagement</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_KPI_Long50d --></label>
+        <name>Case_KPI_Long50d</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_KPI_Medium20d --></label>
+        <name>Case_KPI_Medium20d</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_KPI_Risk --></label>
+        <name>Case_KPI_Risk</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case_KPI_Short24 --></label>
+        <name>Case_KPI_Short24</name>
     </customLabels>
     <customLabels>
         <label><!-- Case Type --></label>
@@ -5243,7 +5677,7 @@
         <name>ConfirmSendRecycleBin</name>
     </customLabels>
     <customLabels>
-        <label>Подтверждение пароля</label>
+        <label>Подтвердите пароль</label>
         <name>Confirm_password</name>
     </customLabels>
     <customLabels>
@@ -5347,10 +5781,6 @@
         <name>CurrencyCenter_All_Other_Countries</name>
     </customLabels>
     <customLabels>
-        <label><!-- CurrencyCenter_All_Others --></label>
-        <name>CurrencyCenter_All_Others</name>
-    </customLabels>
-    <customLabels>
         <label><!-- CurrencyCenter_All_Others_Country --></label>
         <name>CurrencyCenter_All_Others_Country</name>
     </customLabels>
@@ -5391,6 +5821,10 @@
         <name>CurrencyCenter_BSP_ICCS_Availability</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_BSP_Launch_Date --></label>
+        <name>CurrencyCenter_BSP_Launch_Date</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_BSP_Profile --></label>
         <name>CurrencyCenter_BSP_Profile</name>
     </customLabels>
@@ -5427,6 +5861,10 @@
         <name>CurrencyCenter_CASS_ICCS_Availability</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_CASS_Launch_Date --></label>
+        <name>CurrencyCenter_CASS_Launch_Date</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_CASS_Profile --></label>
         <name>CurrencyCenter_CASS_Profile</name>
     </customLabels>
@@ -5443,6 +5881,14 @@
         <name>CurrencyCenter_Cancel_Monthly_Survey</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_Clone_Confirmation_Question --></label>
+        <name>CurrencyCenter_Clone_Confirmation_Question</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Clone_Confirmation_Title --></label>
+        <name>CurrencyCenter_Clone_Confirmation_Title</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_Countries --></label>
         <name>CurrencyCenter_Countries</name>
     </customLabels>
@@ -5451,12 +5897,20 @@
         <name>CurrencyCenter_Countries_Map</name>
     </customLabels>
     <customLabels>
+        <label><!-- CurrencyCenter_Country_Heat_Map --></label>
+        <name>CurrencyCenter_Country_Heat_Map</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CurrencyCenter_Country_Profiles --></label>
         <name>CurrencyCenter_Country_Profiles</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_Currency --></label>
         <name>CurrencyCenter_Currency</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_Currency_Exchange_Rate --></label>
+        <name>CurrencyCenter_Currency_Exchange_Rate</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_DeleteCountry_Confirmation_Question --></label>
@@ -5629,6 +6083,10 @@
     <customLabels>
         <label><!-- CurrencyCenter_Search_Additional_Information --></label>
         <name>CurrencyCenter_Search_Additional_Information</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CurrencyCenter_See_World_Map --></label>
+        <name>CurrencyCenter_See_World_Map</name>
     </customLabels>
     <customLabels>
         <label><!-- CurrencyCenter_Select_Country --></label>
@@ -7399,6 +7857,10 @@
         <name>Discounted_Amount</name>
     </customLabels>
     <customLabels>
+        <label><!-- Distribution &amp; Airlines Retailing with NDC --></label>
+        <name>Distribution_Airlines_Retailing_with_NDC</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Documents POP --></label>
         <name>Documents_POP</name>
     </customLabels>
@@ -7431,6 +7893,10 @@
         <name>EFComplianceReview</name>
     </customLabels>
     <customLabels>
+        <label><!-- EF Account --></label>
+        <name>EF_Account</name>
+    </customLabels>
+    <customLabels>
         <label><!-- E&amp;F Disallow Account Relationships --></label>
         <name>EF_Account_Disallow_BA</name>
     </customLabels>
@@ -7439,8 +7905,24 @@
         <name>EF_Currency_Not_In_Contract_Error</name>
     </customLabels>
     <customLabels>
+        <label><!-- EF Invitation Sent --></label>
+        <name>EF_Invitation_Sent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- EF Invite --></label>
+        <name>EF_Invite</name>
+    </customLabels>
+    <customLabels>
         <label><!-- E&amp;F Line Item Not In Contract Error --></label>
         <name>EF_Line_Item_Not_In_Contract_Error</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- EF_Select --></label>
+        <name>EF_Select</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- E&amp;F Welcome Email Body --></label>
+        <name>EF_Welcome_Email_Body</name>
     </customLabels>
     <customLabels>
         <label><!-- E-Bulletin Service Description --></label>
@@ -7467,7 +7949,7 @@
         <name>Effective_Date</name>
     </customLabels>
     <customLabels>
-        <label>Адрес эл. почты</label>
+        <label>Адрес электронной почты</label>
         <name>Email</name>
     </customLabels>
     <customLabels>
@@ -7911,6 +8393,10 @@
         <name>Go_to_IATA_corporate_site</name>
     </customLabels>
     <customLabels>
+        <label><!-- GxA Link Label --></label>
+        <name>GxA_Link_Label</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Handling --></label>
         <name>Handling</name>
     </customLabels>
@@ -7937,6 +8423,10 @@
     <customLabels>
         <label><!-- IATA Acr Changes Service Description --></label>
         <name>IATA_Acr_Changes_Service_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IATA Acr Changes Service Description CNS --></label>
+        <name>IATA_Acr_Changes_Service_Description_CNS</name>
     </customLabels>
     <customLabels>
         <label><!-- IATA Airl Location Codes Service Description --></label>
@@ -10635,7 +11125,7 @@
         <name>ID_Card_NR_Form_First_Block_Title</name>
     </customLabels>
     <customLabels>
-        <label><!-- ID Card Next button --></label>
+        <label>Далее</label>
         <name>ID_Card_Next_button</name>
     </customLabels>
     <customLabels>
@@ -12745,6 +13235,10 @@
         <name>ISSP_AMC_YES</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS CNS endorsement HO --></label>
+        <name>ISSP_AMSCNS_Endorsement_HO</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_ACCR_Alert1 --></label>
         <name>ISSP_AMS_ACCR_Alert1</name>
     </customLabels>
@@ -12767,6 +13261,10 @@
     <customLabels>
         <label>Пожалуйста примите «Правила и условия», прежде чем отправить заявку на аккредитацию тур агентства в IATA.</label>
         <name>ISSP_AMS_Accept_TOS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Accept TOS CNS --></label>
+        <name>ISSP_AMS_Accept_TOS_CNS</name>
     </customLabels>
     <customLabels>
         <label>Добавить компанию</label>
@@ -12803,6 +13301,10 @@
     <customLabels>
         <label>Аккредитация агентства</label>
         <name>ISSP_AMS_Agency_Accreditation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Agency_Endorsement --></label>
+        <name>ISSP_AMS_Agency_Endorsement</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Agency Type --></label>
@@ -12879,6 +13381,10 @@
     <customLabels>
         <label><!-- ISSP_AMS_Business_Activities_Field_Label --></label>
         <name>ISSP_AMS_Business_Activities_Field_Label</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS CASS Commercial Account HO --></label>
+        <name>ISSP_AMS_CASS_Commercial_Account_HO</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_CASS_Contact --></label>
@@ -13205,6 +13711,46 @@
         <name>ISSP_AMS_CGO_T_Cs_Title1</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS CNS CASS Contact --></label>
+        <name>ISSP_AMS_CNS_CASS_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS CNS Contact Required --></label>
+        <name>ISSP_AMS_CNS_Contact_Required</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS CNS DGR Trained Staff Members Alert --></label>
+        <name>ISSP_AMS_CNS_DGR_Trained_Staff_Members_Alert</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS CNS DGR Trained Staff Members Alert BR --></label>
+        <name>ISSP_AMS_CNS_DGR_Trained_Staff_Members_Alert_BR</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_CNS_ENDORSEMENT --></label>
+        <name>ISSP_AMS_CNS_ENDORSEMENT</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS CNS Error Message Section 3 Ownership --></label>
+        <name>ISSP_AMS_CNS_Error_Message_Section_3_Ownership</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS CNS FIN Contact Help --></label>
+        <name>ISSP_AMS_CNS_FIN_Contact_Help</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS CNS Office Alert --></label>
+        <name>ISSP_AMS_CNS_Office_Alert</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS CNS Portal Admin Help --></label>
+        <name>ISSP_AMS_CNS_Portal_Admin_Help</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS CNS warehouse Alert --></label>
+        <name>ISSP_AMS_CNS_warehouse_Alert</name>
+    </customLabels>
+    <customLabels>
         <label>Вы действительно хотите произвести отмену?</label>
         <name>ISSP_AMS_CONFIRM_CANCEL</name>
     </customLabels>
@@ -13287,6 +13833,10 @@
     <customLabels>
         <label><!-- ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line3 --></label>
         <name>ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line3_CNS --></label>
+        <name>ISSP_AMS_Cargo_Branch_Form_SECTION3_Info_line3_CNS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_Cargo_Branch_Form_SECTION3_New --></label>
@@ -13429,6 +13979,10 @@
         <name>ISSP_AMS_Case_Attach_Description</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Case Attach Description DGR --></label>
+        <name>ISSP_AMS_Case_Attach_Description_DGR</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS Case Attach Limit --></label>
         <name>ISSP_AMS_Case_Attach_Limit</name>
     </customLabels>
@@ -13455,6 +14009,10 @@
     <customLabels>
         <label>Нажмите здесь, чтобы продолжить с аккредитацией агентства.</label>
         <name>ISSP_AMS_Click_here</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Click here CNS --></label>
+        <name>ISSP_AMS_Click_here_CNS</name>
     </customLabels>
     <customLabels>
         <label>Сравнение типов аккредитации</label>
@@ -13517,6 +14075,10 @@
         <name>ISSP_AMS_Download_PDF_Copy</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Download_PDF_Copy_CNS --></label>
+        <name>ISSP_AMS_Download_PDF_Copy_CNS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS Download PDF NOC --></label>
         <name>ISSP_AMS_Download_PDF_NOC</name>
     </customLabels>
@@ -13547,6 +14109,10 @@
     <customLabels>
         <label><!-- ISSP_AMS_Empty_Location_Type --></label>
         <name>ISSP_AMS_Empty_Location_Type</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Endorsement CNS --></label>
+        <name>ISSP_AMS_Endorsement_CNS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_Expiry_date --></label>
@@ -13789,6 +14355,10 @@
         <name>ISSP_AMS_Facility_Type</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Federal EIN Error Message --></label>
+        <name>ISSP_AMS_Federal_EIN_Error_Message</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS File Upload Issue --></label>
         <name>ISSP_AMS_File_Upload_Issue</name>
     </customLabels>
@@ -13823,6 +14393,10 @@
     <customLabels>
         <label><!-- ISSP AMS Form --></label>
         <name>ISSP_AMS_Form</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Form CNS --></label>
+        <name>ISSP_AMS_Form_CNS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_Form_Missing_Signed_File --></label>
@@ -14109,6 +14683,10 @@
         <name>ISSP_AMS_LeftNav_Section6_Cargo</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_LeftNav_Section6_Financial_Cargo --></label>
+        <name>ISSP_AMS_LeftNav_Section6_Financial_Cargo</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS LeftNav_Section7 --></label>
         <name>ISSP_AMS_LeftNav_Section7</name>
     </customLabels>
@@ -14123,6 +14701,10 @@
     <customLabels>
         <label><!-- ISSP AMS LeftNav_Section8_Cargo --></label>
         <name>ISSP_AMS_LeftNav_Section8_Cargo</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_License_No_Company --></label>
+        <name>ISSP_AMS_License_No_Company</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_Link_Add_Office --></label>
@@ -14421,6 +15003,10 @@
         <name>ISSP_AMS_MSO_StepFinal_Thanks</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_MSO_Submit_Case_error --></label>
+        <name>ISSP_AMS_MSO_Submit_Case_error</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_MSO_Termination_Confirmation_Text --></label>
         <name>ISSP_AMS_MSO_Termination_Confirmation_Text</name>
     </customLabels>
@@ -14513,6 +15099,18 @@
         <name>ISSP_AMS_Multicountry_Submit_Button</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_NEW_BR --></label>
+        <name>ISSP_AMS_NEW_BR</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NEW_HO --></label>
+        <name>ISSP_AMS_NEW_HO</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NEW_INDEPENDENT_BR --></label>
+        <name>ISSP_AMS_NEW_INDEPENDENT_BR</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_NOC_All_Countries --></label>
         <name>ISSP_AMS_NOC_All_Countries</name>
     </customLabels>
@@ -14531,6 +15129,10 @@
     <customLabels>
         <label><!-- ISSP AMS NOC Instructions --></label>
         <name>ISSP_AMS_NOC_Instructions</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS NOC Instructions CNS --></label>
+        <name>ISSP_AMS_NOC_Instructions_CNS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS NOC Instructions New --></label>
@@ -14567,6 +15169,10 @@
     <customLabels>
         <label><!-- ISSP AMS Name of employer --></label>
         <name>ISSP_AMS_Name_of_employer</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS CASS Commercial Account BR --></label>
+        <name>ISSP_AMS_New_Commercial_Account_BR</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS New HO details --></label>
@@ -14633,6 +15239,10 @@
         <name>ISSP_AMS_NoC_Change_Bank_Details_message1</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_NoC_Change_Ownership_Legal_Status --></label>
+        <name>ISSP_AMS_NoC_Change_Ownership_Legal_Status</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_NoC_Change_Ownership_Shareholding --></label>
         <name>ISSP_AMS_NoC_Change_Ownership_Shareholding</name>
     </customLabels>
@@ -14683,6 +15293,10 @@
     <customLabels>
         <label>Подтверждение правильности типа компании и данных о собственниках</label>
         <name>ISSP_AMS_NoC_Confirm_Ownership_details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_Confirm_Type_of_Entity --></label>
+        <name>ISSP_AMS_NoC_Confirm_Type_of_Entity</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_NoC_Confirm_details --></label>
@@ -14751,6 +15365,10 @@
     <customLabels>
         <label><!-- ISSP AMS NoC IATA Admin --></label>
         <name>ISSP_AMS_NoC_IATA_Admin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS NoC IATA Admin Company --></label>
+        <name>ISSP_AMS_NoC_IATA_Admin_Company</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS NoC IATA Only --></label>
@@ -14969,6 +15587,10 @@
         <name>ISSP_AMS_NoC_TC</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_NoC_TC_CNS_Only --></label>
+        <name>ISSP_AMS_NoC_TC_CNS_Only</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS NoC TC Change CASS --></label>
         <name>ISSP_AMS_NoC_TC_Change_CASS</name>
     </customLabels>
@@ -14997,6 +15619,14 @@
         <name>ISSP_AMS_NoC_TC_Change_CGO_New</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_NoC_TC_Change_CNS --></label>
+        <name>ISSP_AMS_NoC_TC_Change_CNS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_TC_Change_CNS2 --></label>
+        <name>ISSP_AMS_NoC_TC_Change_CNS2</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS NoC TC Change EACP --></label>
         <name>ISSP_AMS_NoC_TC_Change_EACP</name>
     </customLabels>
@@ -15007,6 +15637,10 @@
     <customLabels>
         <label><!-- ISSP AMS NoC TC Change EACP3 --></label>
         <name>ISSP_AMS_NoC_TC_Change_EACP3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_TC_Change_First_CNS --></label>
+        <name>ISSP_AMS_NoC_TC_Change_First_CNS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_NoC_Transferee --></label>
@@ -15045,12 +15679,32 @@
         <name>ISSP_AMS_NoC_error_message1</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_NoC_error_message1_company --></label>
+        <name>ISSP_AMS_NoC_error_message1_Company</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_NoC_error_message2 --></label>
         <name>ISSP_AMS_NoC_error_message2</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_NoC_error_message2_CNS --></label>
+        <name>ISSP_AMS_NoC_error_message2_CNS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_error_message2_company --></label>
+        <name>ISSP_AMS_NoC_error_message2_company</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_NoC_error_message3 --></label>
         <name>ISSP_AMS_NoC_error_message3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_error_message3_CNS --></label>
+        <name>ISSP_AMS_NoC_error_message3_CNS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_NoC_error_message3_company --></label>
+        <name>ISSP_AMS_NoC_error_message3_company</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_NoC_error_message4 --></label>
@@ -15107,6 +15761,10 @@
     <customLabels>
         <label>&quot;Как организации, акции которой не котируются на бирже, вам необходимо указать данные всех акционеров в разделах «Физические лица» и «Компании» ниже.&quot;</label>
         <name>ISSP_AMS_Not_Listed_Msg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Notify_Change_Legal_Details_CNS --></label>
+        <name>ISSP_AMS_Notify_Change_Legal_Details_CNS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_Number_of_Years_Traded_Field_Label --></label>
@@ -15309,6 +15967,54 @@
         <name>ISSP_AMS_PDF_Initials_Here</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS PDF NoC Authorized Signature for and on behalf of Transferee-Buye --></label>
+        <name>ISSP_AMS_PDF_NoC_Authorized_Signature_for_and_on_behalf_of_Transferee_Buye</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS PDF NoC Authorized signature for and on behalf of  Agent --></label>
+        <name>ISSP_AMS_PDF_NoC_Authorized_signature_for_and_on_behalf_of_Agent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS PDF NoC CNS Address --></label>
+        <name>ISSP_AMS_PDF_NoC_CNS_Address</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS PDF NoC CNS Address1 --></label>
+        <name>ISSP_AMS_PDF_NoC_CNS_Address1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS PDF NoC CNS Address2 --></label>
+        <name>ISSP_AMS_PDF_NoC_CNS_Address2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS PDF NoC CNS Address3 --></label>
+        <name>ISSP_AMS_PDF_NoC_CNS_Address3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS PDF NoC CNS Address4 --></label>
+        <name>ISSP_AMS_PDF_NoC_CNS_Address4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS PDF NoC Name Title or capacity of Person signing --></label>
+        <name>ISSP_AMS_PDF_NoC_Name_Title_or_capacity_of_Person_signing</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS PDF NoC Name of Agent Transferor-Seller --></label>
+        <name>ISSP_AMS_PDF_NoC_Name_of_Agent_Transferor_Seller</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS PDF NoC Name of Transferee-Buyer --></label>
+        <name>ISSP_AMS_PDF_NoC_Name_of_Transferee_Buyer</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS PDF NoC Witness --></label>
+        <name>ISSP_AMS_PDF_NoC_Witness</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS PDF NoC Witness 2 --></label>
+        <name>ISSP_AMS_PDF_NoC_Witness_2</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS PDF Page --></label>
         <name>ISSP_AMS_PDF_Page</name>
     </customLabels>
@@ -15335,6 +16041,10 @@
     <customLabels>
         <label><!-- ISSP AMS Please Upload --></label>
         <name>ISSP_AMS_Please_Upload</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Please Upload CNS --></label>
+        <name>ISSP_AMS_Please_Upload_CNS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Portal Admin --></label>
@@ -15405,6 +16115,14 @@
         <name>ISSP_AMS_STEP_3_1_Branch_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_STEP_3_1_Branch_Title_CASS_Commercial --></label>
+        <name>ISSP_AMS_STEP_3_1_Branch_Title_CASS_Commercial</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS STEP 3_1 Branch Title CNS --></label>
+        <name>ISSP_AMS_STEP_3_1_Branch_Title_CNS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS STEP 3_1 Branch Title New --></label>
         <name>ISSP_AMS_STEP_3_1_Branch_Title_New</name>
     </customLabels>
@@ -15451,6 +16169,14 @@
     <customLabels>
         <label><!-- ISSP AMS Section 2 SubSection 2 --></label>
         <name>ISSP_AMS_Section_2_SubSection_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Security Contact --></label>
+        <name>ISSP_AMS_Security_Contact</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Security Contact Message Popup --></label>
+        <name>ISSP_AMS_Security_Contact_Message_Popup</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Select AEs --></label>
@@ -15505,6 +16231,10 @@
         <name>ISSP_AMS_Step0_Agency_Article</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Step0 CNS NEW HO BR --></label>
+        <name>ISSP_AMS_Step0_CNS_NEW_HO_BR</name>
+    </customLabels>
+    <customLabels>
         <label>Изменение реквизитов банковского счета</label>
         <name>ISSP_AMS_Step0_Change_Bank_Details</name>
     </customLabels>
@@ -15549,6 +16279,10 @@
         <name>ISSP_AMS_Step0_Intro_CNS</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Step0_Intro_CNS_NEW_HO_BR --></label>
+        <name>ISSP_AMS_Step0_Intro_CNS_NEW_HO_BR</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS Step0 Intro New --></label>
         <name>ISSP_AMS_Step0_Intro_New</name>
     </customLabels>
@@ -15559,6 +16293,10 @@
     <customLabels>
         <label>Незначительные изменения данных вашего агентства, такие как номер телефона или адрес эл. почты, можно выполнить непосредственно на вашей странице &lt;a href=&quot;/ISSP_CompanyInformation?mid=M5S2&quot; target=&quot;_self&quot;&gt;информации о компании&lt;/a&gt;.</label>
         <name>ISSP_AMS_Step0_Minor_Changes</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Step0 Minor Changes --></label>
+        <name>ISSP_AMS_Step0_Minor_Changes_Company</name>
     </customLabels>
     <customLabels>
         <label>Новая заявка на аккредитацию</label>
@@ -15583,6 +16321,10 @@
     <customLabels>
         <label>Для изменения месторасположения, наименования компании, организационно-правовой формы или &lt;br/&gt;собственников / акционеров.</label>
         <name>ISSP_AMS_Step0_Other_Changes_Msg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Step0 Other Changes Msg PostalOperator --></label>
+        <name>ISSP_AMS_Step0_Other_Changes_Msg_PostalOperator</name>
     </customLabels>
     <customLabels>
         <label>Другие полезные формы</label>
@@ -15693,6 +16435,14 @@
         <name>ISSP_AMS_Step1_Title_CNS</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Step1 Title CNS BR --></label>
+        <name>ISSP_AMS_Step1_Title_CNS_BR</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Step1 Title CNS HO --></label>
+        <name>ISSP_AMS_Step1_Title_CNS_HO</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS Step1 Title New --></label>
         <name>ISSP_AMS_Step1_Title_New</name>
     </customLabels>
@@ -15789,6 +16539,10 @@
         <name>ISSP_AMS_Step3_4_Branch_People_New</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Step3_4_CNS_Agency_Title --></label>
+        <name>ISSP_AMS_Step3_4_CNS_Agency_Title</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_Step3_4_Cargo_Agent_Title --></label>
         <name>ISSP_AMS_Step3_4_Cargo_Agent_Title</name>
     </customLabels>
@@ -15831,6 +16585,10 @@
     <customLabels>
         <label><!-- ISSP AMS Step3 4 People --></label>
         <name>ISSP_AMS_Step3_4_People</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Step3 4 People CNS --></label>
+        <name>ISSP_AMS_Step3_4_People_CNS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Step3 4 People Intermediary --></label>
@@ -15897,6 +16655,10 @@
         <name>ISSP_AMS_Step3_4_Q19</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AMS_Step3_4_Q19_CNS --></label>
+        <name>ISSP_AMS_Step3_4_Q19_CNS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AMS_Step3_4_Q19 New --></label>
         <name>ISSP_AMS_Step3_4_Q19_New</name>
     </customLabels>
@@ -15915,6 +16677,10 @@
     <customLabels>
         <label><!-- ISSP_AMS_Step3_4_Q1_Agency New --></label>
         <name>ISSP_AMS_Step3_4_Q1_Agency_New</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- +        &lt;fullName&gt;ISSP_AMS_Step3_4_Q1_CNS&lt;/fullName&gt; --></label>
+        <name>ISSP_AMS_Step3_4_Q1_CNS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_Step3_4_Q1_Intermediary --></label>
@@ -15983,6 +16749,14 @@
     <customLabels>
         <label><!-- ISSP AMS Step3 5 Premises Title --></label>
         <name>ISSP_AMS_Step3_5_Premises_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_5_Warehouse --></label>
+        <name>ISSP_AMS_Step3_5_Warehouse</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_Step3_6_Financial --></label>
+        <name>ISSP_AMS_Step3_6_Financial</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS Step3 6 Other Info --></label>
@@ -16083,6 +16857,14 @@
     <customLabels>
         <label><!-- ISSP AMS Step3 Branch Location --></label>
         <name>ISSP_AMS_Step3_Branch_Location</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Step3 Branch Location CASS Commercial --></label>
+        <name>ISSP_AMS_Step3_Branch_Location_CASS_Commercial</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS Step3 Branch Location CNS --></label>
+        <name>ISSP_AMS_Step3_Branch_Location_CNS</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AMS_Step3_Cash_Location --></label>
@@ -16283,6 +17065,10 @@
     <customLabels>
         <label><!-- ISSP AMS StepsAll Cargo CASS Associate Title --></label>
         <name>ISSP_AMS_StepsAll_Cargo_CASS_Associate_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AMS StepsAll Cargo CNS Agency Title --></label>
+        <name>ISSP_AMS_StepsAll_Cargo_CNS_Agency_Title</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP AMS StepsAll Cargo EACP Intermediary Title --></label>
@@ -16539,6 +17325,10 @@
     <customLabels>
         <label><!-- ISSP_AMS_eBulletin_Clear_All --></label>
         <name>ISSP_AMS_eBulletin_Clear_All</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AMS_eBulletin_CompanyChanges --></label>
+        <name>ISSP_AMS_eBulletin_CompanyChanges</name>
     </customLabels>
     <customLabels>
         <label>Страны</label>
@@ -17321,6 +18111,10 @@
         <name>ISSP_ANG_Step0_Other_Changes_Msg_NamPaxAgent</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Step0 Other Changes Msg for Nam Pax Agents PostalOperator --></label>
+        <name>ISSP_ANG_Step0_Other_Changes_Msg_NamPaxAgent_PostalOperator</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP ANG Step0 Other Changes Msg RevCaseOpen --></label>
         <name>ISSP_ANG_Step0_Other_Changes_Msg_RevCaseOpen</name>
     </customLabels>
@@ -17409,6 +18203,10 @@
         <name>ISSP_AN_Step1_AE_Full_Address</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AP_Authorization_Form_Description --></label>
+        <name>ISSP_AP_Authorization_Form_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_AP_Bank_Details_Change --></label>
         <name>ISSP_AP_Bank_Details_Change</name>
     </customLabels>
@@ -17421,8 +18219,40 @@
         <name>ISSP_AP_Cases</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_AP_Countries_Territories --></label>
+        <name>ISSP_AP_Countries_Territories</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Countries_to_optin --></label>
+        <name>ISSP_AP_Countries_to_optin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Error_No_Countries_available --></label>
+        <name>ISSP_AP_Error_No_Countries_available</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Error_No_Country_selected --></label>
+        <name>ISSP_AP_Error_No_Country_selected</name>
+    </customLabels>
+    <customLabels>
         <label>Форма присоединения</label>
         <name>ISSP_AP_Form</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Form_of_Payment --></label>
+        <name>ISSP_AP_Form_of_Payment</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_IATA_EasyPay_Section_Description --></label>
+        <name>ISSP_AP_IATA_EasyPay_Section_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Israel_Submit_Address --></label>
+        <name>ISSP_AP_Israel_Submit_Address</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Israel_Submit_Disclaimer --></label>
+        <name>ISSP_AP_Israel_Submit_Disclaimer</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_AP_New_Change_Bank_Details --></label>
@@ -17459,6 +18289,50 @@
     <customLabels>
         <label><!-- ISSP_AP_Partnership_Download_PDF --></label>
         <name>ISSP_AP_Partnership_Download_PDF</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Report_Options_Add_Emails --></label>
+        <name>ISSP_AP_Report_Options_Add_Emails</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Report_Options_Excel_Selected --></label>
+        <name>ISSP_AP_Report_Options_Excel_Selected</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Report_Options_HOT_Files_Not_Required --></label>
+        <name>ISSP_AP_Report_Options_HOT_Files_Not_Required</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Report_Options_Header --></label>
+        <name>ISSP_AP_Report_Options_Header</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Report_Options_PDF_Files_Not_Required --></label>
+        <name>ISSP_AP_Report_Options_PDF_Files_Not_Required</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Report_Options_Remove_Emails --></label>
+        <name>ISSP_AP_Report_Options_Remove_Emails</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Select_Countries_Territories --></label>
+        <name>ISSP_AP_Select_Countries_Territories</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Select_Form_of_Payment_in_HOT --></label>
+        <name>ISSP_AP_Select_Form_of_Payment_in_HOT</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Stock_Management_Add_Emails --></label>
+        <name>ISSP_AP_Stock_Management_Add_Emails</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_AP_Stock_Management_Remove_Emails --></label>
+        <name>ISSP_AP_Stock_Management_Remove_Emails</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP AP Voluntary Withdrawal Disclaimer --></label>
+        <name>ISSP_AP_Voluntary_Withdrawal_Disclaimer</name>
     </customLabels>
     <customLabels>
         <label>Предоставляя пользователю доступ к Службе участия авиакомпании,</label>
@@ -17863,7 +18737,7 @@
         <name>ISSP_CCOthers_Add</name>
     </customLabels>
     <customLabels>
-        <label>Адрес эл. почты</label>
+        <label>Адрес электронной почты</label>
         <name>ISSP_CCOthers_Email</name>
     </customLabels>
     <customLabels>
@@ -18032,6 +18906,14 @@ IATA стремится обеспечить высочайшее качеств
         <name>ISSP_Certificate_Profile_Restriction</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Certificate is being uploaded --></label>
+        <name>ISSP_Certificate_is_being_uploaded</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Certificate was uploaded satisfactory --></label>
+        <name>ISSP_Certificate_was_uploaded_satisfactory</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_Certifications --></label>
         <name>ISSP_Certifications</name>
     </customLabels>
@@ -18192,7 +19074,7 @@ IATA стремится обеспечить высочайшее качеств
         <name>ISSP_ContactName</name>
     </customLabels>
     <customLabels>
-        <label>Вы связываетесь с нами по поводу курсов IATA ?</label>
+        <label>Вы обращаетесь по вопросу курсов ИАТА?</label>
         <name>ISSP_Contact_About_IATA_Courses</name>
     </customLabels>
     <customLabels>
@@ -18672,7 +19554,7 @@ IATA стремится обеспечить высочайшее качеств
         <name>ISSP_Email_Dear_Post</name>
     </customLabels>
     <customLabels>
-        <label>Уважаемый/ая</label>
+        <label>Уважаемый</label>
         <name>ISSP_Email_Dear_Pre</name>
     </customLabels>
     <customLabels>
@@ -19833,8 +20715,56 @@ IATA стремится обеспечить высочайшее качеств
         <name>ISSP_MIR_Rates_Link</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Mita Add Contact --></label>
+        <name>ISSP_MITA_Add_Contact</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP MITA Agreements Service Name --></label>
         <name>ISSP_MITA_Agreements_Service_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP MITA Edit Contact message --></label>
+        <name>ISSP_MITA_EditContactMsg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP MITA Edit Contact Success --></label>
+        <name>ISSP_MITA_EditContactSuccess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP MITA Remove Contact message --></label>
+        <name>ISSP_MITA_RemoveContactMsg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Active MITA Contacts --></label>
+        <name>ISSP_MITA_SUBTAB_01</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Airline Available Contacts --></label>
+        <name>ISSP_MITA_SUBTAB_02</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Mita Search At Least 3 Chars --></label>
+        <name>ISSP_MITA_Search_At_Least3Chars</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Search by email or name --></label>
+        <name>ISSP_MITA_Search_Button</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Mita Search Text Above button --></label>
+        <name>ISSP_MITA_Search_Text01</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Mita Search Text Below button --></label>
+        <name>ISSP_MITA_Search_Text02</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Mita Search Check Valid Input --></label>
+        <name>ISSP_MITA_Search_ValidInput</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Airline Contacts --></label>
+        <name>ISSP_MITA_TAB</name>
     </customLabels>
     <customLabels>
         <label>Утвердить как администратор</label>
@@ -19901,7 +20831,7 @@ IATA стремится обеспечить высочайшее качеств
         <name>ISSP_MyProfile_COUNTRY</name>
     </customLabels>
     <customLabels>
-        <label>Адрес эл. почты</label>
+        <label>Адрес электронной почты</label>
         <name>ISSP_MyProfile_EMAIL</name>
     </customLabels>
     <customLabels>
@@ -19925,7 +20855,7 @@ IATA стремится обеспечить высочайшее качеств
         <name>ISSP_MyProfile_SALUTATION</name>
     </customLabels>
     <customLabels>
-        <label>Сектор</label>
+        <label>Род деятельности</label>
         <name>ISSP_MyProfile_SECTOR</name>
     </customLabels>
     <customLabels>
@@ -20368,12 +21298,28 @@ IATA стремится обеспечить высочайшее качеств
         <name>ISSP_PASS_Airline_Checklist</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_PASS_Authorized_Signatories_Header_Text --></label>
+        <name>ISSP_PASS_Authorized_Signatories_Header_Text</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP PASS BankMandate --></label>
         <name>ISSP_PASS_BankMandate</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_PASS_BankMandate_Changes_Description --></label>
+        <name>ISSP_PASS_BankMandate_Changes_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_PASS_BankMandate_Not_Required --></label>
+        <name>ISSP_PASS_BankMandate_Not_Required</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_PASS_Checklist --></label>
         <name>ISSP_PASS_Checklist</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_PASS_Click_Here --></label>
+        <name>ISSP_PASS_Click_Here</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP_PASS_Download_Documents --></label>
@@ -20430,6 +21376,18 @@ IATA стремится обеспечить высочайшее качеств
     <customLabels>
         <label><!-- ISSP PASS Users --></label>
         <name>ISSP_PASS_Users</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP PAX Federal EIN --></label>
+        <name>ISSP_PAX_Federal_EIN</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP PAX Federal EIN Title --></label>
+        <name>ISSP_PAX_Federal_EIN_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP PAX Validating Federal EIN --></label>
+        <name>ISSP_PAX_Validating_Federal_EIN</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP PAX Validating VAT Number --></label>
@@ -20586,6 +21544,10 @@ IATA стремится обеспечить высочайшее качеств
         <name>ISSP_Pending_Approval</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Pending Closure --></label>
+        <name>ISSP_Pending_Closure</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP Pending Documents --></label>
         <name>ISSP_Pending_Documents</name>
     </customLabels>
@@ -20738,7 +21700,7 @@ IATA стремится обеспечить высочайшее качеств
         <name>ISSP_Portal_further_clarification</name>
     </customLabels>
     <customLabels>
-        <label>Предпочитаемый язык</label>
+        <label>Предпочтительный язык</label>
         <name>ISSP_Preferred_Language</name>
     </customLabels>
     <customLabels>
@@ -20750,7 +21712,7 @@ IATA стремится обеспечить высочайшее качеств
         <name>ISSP_PriceList</name>
     </customLabels>
     <customLabels>
-        <label>Политика конфиденциальности</label>
+        <label>персональных данных</label>
         <name>ISSP_Privacy_Policy</name>
     </customLabels>
     <customLabels>
@@ -20804,6 +21766,10 @@ IATA стремится обеспечить высочайшее качеств
     <customLabels>
         <label><!-- ISSP Public --></label>
         <name>ISSP_Public</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP_PwC_Managerial_Accounts --></label>
+        <name>ISSP_PwC_Managerial_Accounts</name>
     </customLabels>
     <customLabels>
         <label>Количество</label>
@@ -21958,6 +22924,10 @@ GSA - 3 буквы.
         <name>ISSP_Submitted</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP_Supporting_Documents --></label>
+        <name>ISSP_Supporting_Documents</name>
+    </customLabels>
+    <customLabels>
         <label>Вы действительно хотите продолжить?</label>
         <name>ISSP_SureToContinue</name>
     </customLabels>
@@ -22255,7 +23225,7 @@ GSA - 3 буквы.
         <name>ISSP_TemporaryPassword</name>
     </customLabels>
     <customLabels>
-        <label>Условия использования</label>
+        <label>Условия политики</label>
         <name>ISSP_Terms_of_Use</name>
     </customLabels>
     <customLabels>
@@ -22308,6 +23278,10 @@ GSA - 3 буквы.
     <customLabels>
         <label><!-- Tracking ID Google Analitycs --></label>
         <name>ISSP_Tracking_ID</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Trade Name (D/B/A) --></label>
+        <name>ISSP_Trade_Name_DBA</name>
     </customLabels>
     <customLabels>
         <label>Коммерческое наименование компании</label>
@@ -22590,6 +23564,18 @@ GSA - 3 буквы.
         <name>ISSP_cannot_open_the_selected_account</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP certificate Submit --></label>
+        <name>ISSP_certificate_Submit</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP certificate expiry date --></label>
+        <name>ISSP_certificate_expiry_date</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP certificate with the same --></label>
+        <name>ISSP_certificate_with_the_same</name>
+    </customLabels>
+    <customLabels>
         <label>8 символов</label>
         <name>ISSP_characters_new_password</name>
     </customLabels>
@@ -22754,6 +23740,14 @@ GSA - 3 буквы.
     <customLabels>
         <label><!-- KALE_SUPPORT_EMAIL --></label>
         <name>KALE_SUPPORT_EMAIL</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Key Customer alert message --></label>
+        <name>KEY_CUSTOMER_ALERT</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Key Customer alert title --></label>
+        <name>KEY_CUSTOMER_ALERT_TITLE</name>
     </customLabels>
     <customLabels>
         <label><!-- KPI1RT --></label>
@@ -23064,6 +24058,14 @@ GSA - 3 буквы.
         <name>LVA_CallUsAvailableHours</name>
     </customLabels>
     <customLabels>
+        <label>Если чат на вашем языке в данный момент недоступен, пожалуйста &lt;b&gt;создайтезапрос&lt;/b&gt; или &lt;b&gt;позвоните нам&lt;/b&gt;.</label>
+        <name>LVA_CallUsDefaultMessage</name>
+    </customLabels>
+    <customLabels>
+        <label>Просто наберите номер:</label>
+        <name>LVA_CallUsDial</name>
+    </customLabels>
+    <customLabels>
         <label><!-- LVA_CallUsEmergencyAvailableHours --></label>
         <name>LVA_CallUsEmergencyAvailableHours</name>
     </customLabels>
@@ -23078,6 +24080,10 @@ GSA - 3 буквы.
     <customLabels>
         <label>Вы можете позвонить представителю IATA по следующему номеру:</label>
         <name>LVA_CallUsThruPhoneNum</name>
+    </customLabels>
+    <customLabels>
+        <label>Открыто окно чата</label>
+        <name>LVA_ChatWindowAlreadyOpen</name>
     </customLabels>
     <customLabels>
         <label>Написать нам в чате</label>
@@ -23344,7 +24350,7 @@ GSA - 3 буквы.
         <name>Location</name>
     </customLabels>
     <customLabels>
-        <label>Войти в систему</label>
+        <label>Логин</label>
         <name>Login</name>
     </customLabels>
     <customLabels>
@@ -23544,7 +24550,7 @@ GSA - 3 буквы.
         <name>NotificationCenter_Title</name>
     </customLabels>
     <customLabels>
-        <label>Информация об уведомлении</label>
+        <label>Содержание уведомления</label>
         <name>NotificationDetail_Detail</name>
     </customLabels>
     <customLabels>
@@ -23636,7 +24642,7 @@ GSA - 3 буквы.
         <name>OneId_CreateNew</name>
     </customLabels>
     <customLabels>
-        <label>Создать новый аккаунт</label>
+        <label>Создать новую учетную запись</label>
         <name>OneId_CreateNewAccount</name>
     </customLabels>
     <customLabels>
@@ -24160,7 +25166,7 @@ GSA - 3 буквы.
         <name>OneId_Press_to_Validate</name>
     </customLabels>
     <customLabels>
-        <label>Политика конфиденциальности</label>
+        <label>персональных данных</label>
         <name>OneId_Privacy_Policy</name>
     </customLabels>
     <customLabels>
@@ -25397,6 +26403,14 @@ GSA - 3 буквы.
         <name>SIS_Operations</name>
     </customLabels>
     <customLabels>
+        <label><!-- SMART_Lite_Service_Description --></label>
+        <name>SMART_Lite_Service_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- SSP AMS Step5 ReviewBeforeSubmit CNS --></label>
+        <name>SSP_AMS_Step5_ReviewBeforeSubmit_CNS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Salutation --></label>
         <name>Salutation</name>
     </customLabels>
@@ -25621,11 +26635,11 @@ GSA - 3 буквы.
         <name>SurveyCustomerRecoveriesAnnFARRELL</name>
     </customLabels>
     <customLabels>
-        <label>ИАТА Политикой конфиденциальности</label>
+        <label>персональных данных</label>
         <name>TC_CSP_Privacy_Policy</name>
     </customLabels>
     <customLabels>
-        <label>Условиями использования</label>
+        <label>Условия политики</label>
         <name>TC_CSP_Terms_of_Use</name>
     </customLabels>
     <customLabels>
@@ -25817,6 +26831,14 @@ GSA - 3 буквы.
         <name>Treasury_Dashboard_Premium_Dashboard</name>
     </customLabels>
     <customLabels>
+        <label><!-- Treasury Dashboard Report Access Denied --></label>
+        <name>Treasury_Dashboard_Report_Access_Denied</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Treasury Dashboard Report Access Denied Link --></label>
+        <name>Treasury_Dashboard_Report_Access_Denied_Link</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Treasury Dashboard Service Name --></label>
         <name>Treasury_Dashboard_Service_Name</name>
     </customLabels>
@@ -25859,6 +26881,10 @@ GSA - 3 буквы.
     <customLabels>
         <label>Загрузить Финансовые Документы</label>
         <name>Upload_Financial_Documents</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Upload GxA --></label>
+        <name>Upload_GxA</name>
     </customLabels>
     <customLabels>
         <label>{0} запрашивает доступ к порталу.</label>
@@ -26313,7 +27339,7 @@ GSA - 3 буквы.
         <name>csp_ActionForCategoryPicklist</name>
     </customLabels>
     <customLabels>
-        <label>Служба доступа</label>
+        <label>Доступные каналы поддержки появляются после выбора темы вопроса</label>
         <name>csp_ActionForTopicPicklist</name>
     </customLabels>
     <customLabels>
@@ -26321,7 +27347,7 @@ GSA - 3 буквы.
         <name>csp_ActionIndicator</name>
     </customLabels>
     <customLabels>
-        <label>Дополнительные детали</label>
+        <label>Дополнительные данные</label>
         <name>csp_AdditionalDetails</name>
     </customLabels>
     <customLabels>
@@ -26345,7 +27371,7 @@ GSA - 3 буквы.
         <name>csp_CaseBeingWorked</name>
     </customLabels>
     <customLabels>
-        <label>Случай успешно создано.</label>
+        <label>Запрос успешно создан.</label>
         <name>csp_CaseCreatedSuccess</name>
     </customLabels>
     <customLabels>
@@ -26353,11 +27379,11 @@ GSA - 3 буквы.
         <name>csp_CaseResponseGuarantee</name>
     </customLabels>
     <customLabels>
-        <label>Вы можете добавить комментарии, документы и получателей в случае обновления. Вы можете отслеживать статус и делать обновления в</label>
+        <label>Вы можете добавить комментарии, документы и получателей при необходимости обновления. Вы можете отслеживать статус и вносить изменения в</label>
         <name>csp_CaseTracking</name>
     </customLabels>
     <customLabels>
-        <label>Создать случай</label>
+        <label>Создать запрос</label>
         <name>csp_Case_Panel_label</name>
     </customLabels>
     <customLabels>
@@ -26373,7 +27399,7 @@ GSA - 3 буквы.
         <name>csp_Chat_Panel_sub_label</name>
     </customLabels>
     <customLabels>
-        <label>Получите поддержку напрямую через портал Международной ассоциации воздушного транспорта (ИАТА), по телефону или в чате.</label>
+        <label>Давайте свяжемся с вами. Начните с выбора темы вопроса</label>
         <name>csp_ChooseOption</name>
     </customLabels>
     <customLabels>
@@ -26393,7 +27419,7 @@ GSA - 3 буквы.
         <name>csp_ComplimentInfo</name>
     </customLabels>
     <customLabels>
-        <label>Комплимент</label>
+        <label>Благодарность</label>
         <name>csp_Compliment_Label</name>
     </customLabels>
     <customLabels>
@@ -26409,11 +27435,11 @@ GSA - 3 буквы.
         <name>csp_CountryOrRegionIndicator</name>
     </customLabels>
     <customLabels>
-        <label>Создать дело и добавить вложение</label>
+        <label>Создать запрос и добавить вложение</label>
         <name>csp_CreateNewCaseAddAttachment</name>
     </customLabels>
     <customLabels>
-        <label>Укажите все детали, которые помогут нам расследовать ваш запрос</label>
+        <label>Укажите все детали, которые помогут нам изучить ваш запрос</label>
         <name>csp_CreateNewCaseMainInputBoxSubLabel</name>
     </customLabels>
     <customLabels>
@@ -26441,7 +27467,7 @@ GSA - 3 буквы.
         <name>csp_CreateNewCaseMainPicklistLabel</name>
     </customLabels>
     <customLabels>
-        <label>Создать случай</label>
+        <label>Создать запрос</label>
         <name>csp_CreateNewCaseTopLabel</name>
     </customLabels>
     <customLabels>
@@ -26461,7 +27487,7 @@ GSA - 3 буквы.
         <name>csp_Emergency_Query</name>
     </customLabels>
     <customLabels>
-        <label>Финансовый обзор</label>
+        <label>Финансовая проверка</label>
         <name>csp_Financial_Review</name>
     </customLabels>
     <customLabels>
@@ -26521,7 +27547,7 @@ GSA - 3 буквы.
         <name>csp_IEPAdmin</name>
     </customLabels>
     <customLabels>
-        <label>Техническая поддержка</label>
+        <label>Связаться с нами</label>
         <name>csp_IntentionOnThisPage</name>
     </customLabels>
     <customLabels>
@@ -26537,11 +27563,11 @@ GSA - 3 буквы.
         <name>csp_LastLoginDate</name>
     </customLabels>
     <customLabels>
-        <label>Чат не доступен. Пожалуйста, позвоните или создайте случай.</label>
+        <label>Чат недоступен. Пожалуйста, позвоните или создайте запрос.</label>
         <name>csp_LiveAgentBadConfig</name>
     </customLabels>
     <customLabels>
-        <label>Время соединения чата истекло. Вы можете обновить страницу или создать случай</label>
+        <label>Время соединения в чате истекло. Вы можете обновить страницу или создать запрос</label>
         <name>csp_LiveAgentTimeout</name>
     </customLabels>
     <customLabels>
@@ -26549,11 +27575,11 @@ GSA - 3 буквы.
         <name>csp_LiveTimeout</name>
     </customLabels>
     <customLabels>
-        <label>Менеджер Мастер-кошелька</label>
+        <label>Ответственный за виртуальный кошелек</label>
         <name>csp_MasterWalletManager</name>
     </customLabels>
     <customLabels>
-        <label>Функция работы</label>
+        <label>Должностные функции работы</label>
         <name>csp_MembershipFunction</name>
     </customLabels>
     <customLabels>
@@ -26561,7 +27587,7 @@ GSA - 3 буквы.
         <name>csp_My_Profile_Company</name>
     </customLabels>
     <customLabels>
-        <label>Электронный адрес</label>
+        <label>Адрес электронной почты</label>
         <name>csp_My_Profile_Email</name>
     </customLabels>
     <customLabels>
@@ -26597,7 +27623,7 @@ GSA - 3 буквы.
         <name>csp_Profile_IATACode</name>
     </customLabels>
     <customLabels>
-        <label>Личные контакты</label>
+        <label>Личные данные</label>
         <name>csp_Profile_PersonalContact</name>
     </customLabels>
     <customLabels>
@@ -26621,11 +27647,21 @@ GSA - 3 буквы.
         <name>csp_RecipientsQuestion</name>
     </customLabels>
     <customLabels>
-        <label>Ваше агентство в настоящее время не имеет открытый аккаунт Международной ассоциации воздушного транспорта EasyPay. &lt;br/&gt;&lt;br/&gt;Пожалуйста, свяжитесь с уполномоченным подписантом Вашего головного офиса, чтобы попросить их открыть аккаунт Международной ассоциации воздушного транспорта EasyPay. Как администратор портала Вы можете или обновить &lt;a href=&quot;/my-profile&quot;&gt;Личную информацию&lt;/a&gt; и назначить себя уполномоченным подписчиком, или назначьте правильного администратора портала на странице &lt;a href=&quot;/company-profile&quot;&gt;Администрации компании -&gt; Контакты&lt;/a&gt; и попросите их открыть Ваш аккаунт EasyPay.&lt;br/&gt;&lt;br/&gt;Пожалуйста, &lt;a href=&quot;/Support-Reach-Us&quot;&gt;свяжитесь со службой поддержки&lt;/а&gt;, если Вам понадобится помощь.</label>
+        <label>&quot;«Ваше агентство в настоящее время не имеет открытой учетной записи EasyPay Международной ассоциации воздушного транспорта. &lt;br/&gt;&lt;br/&gt;        Пожалуйста, свяжитесь с уполномоченным подписантом Вашего головного офиса, чтобы попросить открыть учетную запись EasyPay Международной ассоциации воздушного транспорта. 
+        Как администратор портала Вы можете или обновить 
+        &lt;a href=&quot;&quot;&quot;&quot;/my-profile&quot;&quot;&quot;&quot;&gt;Личную информацию&lt;/a&gt; 
+        и назначить себя уполномоченным подписчиком, или назначьте правильного администратора портала на странице 
+        &lt;a href=&quot;&quot;&quot;&quot;/company-profile&quot;&quot;&quot;&quot;&gt;Администрации компании -&gt; Контакты&lt;/a&gt; 
+        и попросите их открыть учетную запись EasyPay.
+        &lt;br/&gt;
+        &lt;br/&gt;
+        Пожалуйста, &lt;a href=&quot;&quot;&quot;&quot;/Support-Reach-Us?MainNav=Queries&amp;subNav=MyQueries&amp;mid=M1S1&quot;&quot;&quot;&quot;&gt;свяжитесь со службой поддержки&lt;/а&gt;, если Вам понадобится помощь.&quot;&quot;&quot;</label>
         <name>csp_RequestService_ContactPortalAdmin_Alt</name>
     </customLabels>
     <customLabels>
-        <label>&quot;У Вашего агенства в настоящее время нет открытого счета Международной ассоциации воздушного транспорта EasyPay.&lt;br/&gt;&lt;br/&gt; Пожалуйста, свяжитесь с авторизированным подписантом из Вашего головного офиса, чтобы попросить их открыть счет Международной ассоциации воздушного транспорта EasyPay Для того, чтобы открыть учетную запись EasyPay Международной ассоциация воздушного транспорта (ИАТА). Вы должны быть администратором портала и авторизованным лицом, имеющим право подписи от своего агентства.&lt;br/&gt;&lt;br/&gt;Пожалуйста, обратитесь в &lt;a href=&quot;/Support-Reach-Us&quot;&gt;техническую поддержку&lt;/a&gt;, если Вам понадобится помощь.</label>
+        <label>&quot;У Вашего агенства агентства в настоящее время нет открытой учетной записи EasyPay Международной ассоциации воздушного транспорта.&lt;br/&gt;&lt;br/&gt; Пожалуйста, свяжитесь с авторизированным подписантом из Вашего головного офиса, чтобы попросить открыть учетную запись EasyPay Международной ассоциации воздушного транспорта.  Для того чтобы открыть учетную запись EasyPay Международной ассоциация воздушного транспорта (ИАТА), Вы должны быть администратором портала и авторизованным лицом, имеющим право подписи от своего агентства.        &lt;br/&gt;
+        &lt;br/&gt;
+        Пожалуйста, обратитесь в техническую поддержку, если Вам понадобится помощь.&quot;</label>
         <name>csp_RequestService_ContactPortalAdmin_LegalAuth</name>
     </customLabels>
     <customLabels>
@@ -26693,7 +27729,7 @@ GSA - 3 буквы.
         <name>csp_SupportReachUs_Category</name>
     </customLabels>
     <customLabels>
-        <label>Комплимент</label>
+        <label>Благодарность</label>
         <name>csp_SupportReachUs_ComplimentTile</name>
     </customLabels>
     <customLabels>
@@ -26749,7 +27785,7 @@ GSA - 3 буквы.
         <name>csp_Support_Label</name>
     </customLabels>
     <customLabels>
-        <label>Эта панель позволяет каждой финансовой команде авиакомпании получить полную информацию о своих поступающих продажах по кредитным картам и загружаемый отчет о продажах по кредитным картам - в дополнение к просмотру денежных потоков, обрабатываемых каждой из основных расчетных систем Международной ассоциации воздушного транспорта: BSP (Система взаиморасчётов), CASS (система взаиморасчетов грузовых перевозок), ICCS (Служба таможенного оформления) и ICH (Расчетная палата Международной ассоциации воздушного транспорта).</label>
+        <label>Эта информационная панель позволяет казначеям в авиакомпании в дополнение к просмотру денежных потоков, обрабатываемых каждой из основных расчетных систем Международной ассоциации воздушного транспорта: BSP (Система взаиморасчётов), CASS (система взаиморасчетов грузовых перевозок), ICCS (Система клиринга BSP платежей) и ICH (Расчетная палата Международной ассоциации воздушного транспорта), получить полную информацию о поступающих платежах за продажи по кредитным картам и соответствующий загружаемый отчет об этих продажах.</label>
         <name>csp_TDP_ServiceRequest_MediumLabel1</name>
     </customLabels>
     <customLabels>
@@ -26757,15 +27793,15 @@ GSA - 3 буквы.
         <name>csp_TDP_ServiceRequest_MediumLabel2</name>
     </customLabels>
     <customLabels>
-        <label>Вы собираетесь запросить дополнительную информацию о коммерческой услуге Международной ассоциации воздушного транспорта. После нажатия кнопки «Подтвердить», вам будут отправлены все подробности о том, как подписаться на Премиум-финансовую панель Международной ассоциации воздушного транспорта на помесячной основе.</label>
+        <label>Вы собираетесь запросить дополнительную информацию о коммерческой услуге Международной ассоциации воздушного транспорта. При нажатии кнопки «Подтвердить» вам будут отправлены все подробности о том, как подписаться на услугу Treasury Dashboard Premium Международной ассоциации воздушного транспорта на ежемесячной основе.</label>
         <name>csp_TDP_ServiceRequest_TopLabel</name>
     </customLabels>
     <customLabels>
-        <label>Вы собираетесь запросить дополнительную информацию о коммерческой услуге Международной ассоциации воздушного транспорта. При нажатии кнопки «Подтвердить» вам будут отправлены все подробности о том, как подписаться на Финансовую панель Международной ассоциации воздушного транспорта на помесячной основе.</label>
+        <label>Вы собираетесь запросить дополнительную информацию о коммерческой услуге Международной ассоциации воздушного транспорта. При нажатии кнопки «Подтвердить» вам будут отправлены все подробности о том, как подписаться на услугу Treasury dashboard Международной ассоциации воздушного транспорта на ежемесячной основе.</label>
         <name>csp_TD_ServiceRequest_TopLabel</name>
     </customLabels>
     <customLabels>
-        <label>Выпуск билетов</label>
+        <label>Кто выписал билет</label>
         <name>csp_TicketIssuer</name>
     </customLabels>
     <customLabels>
@@ -26777,7 +27813,7 @@ GSA - 3 буквы.
         <name>csp_ToastWarningRecipientNotFound</name>
     </customLabels>
     <customLabels>
-        <label>Просмотреть обзор случая</label>
+        <label>Просмотреть обзор запроса</label>
         <name>csp_ViewCaseSummary</name>
     </customLabels>
     <customLabels>
@@ -26789,7 +27825,7 @@ GSA - 3 буквы.
         <name>csp_btn_Support_Label</name>
     </customLabels>
     <customLabels>
-        <label>Ошибка при создании дела</label>
+        <label>Ошибка при создании запроса</label>
         <name>csp_errorCreatingCase</name>
     </customLabels>
     <customLabels>
@@ -27221,6 +28257,1854 @@ GSA - 3 буквы.
         <name>doubleHash</name>
     </customLabels>
     <customLabels>
+        <label><!-- icg IATA Validation Programs --></label>
+        <name>icg_IATA_Validation_Programs</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg_Service_Description --></label>
+        <name>icg_Service_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg about IATA --></label>
+        <name>icg_about_IATA</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg about IATA text1 --></label>
+        <name>icg_about_IATA_text1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg accept --></label>
+        <name>icg_accept</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg account bussiness address info --></label>
+        <name>icg_account_bussiness_address_info</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg account create take several days --></label>
+        <name>icg_account_create_take_several_days</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg account creation --></label>
+        <name>icg_account_creation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg account details --></label>
+        <name>icg_account_details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg account information --></label>
+        <name>icg_account_information</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg account name --></label>
+        <name>icg_account_name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IATA Accredited Agent --></label>
+        <name>icg_accredited_agent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- IATA Member Airline --></label>
+        <name>icg_accredited_airline</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg action --></label>
+        <name>icg_action</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg activate --></label>
+        <name>icg_activate</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg add --></label>
+        <name>icg_add</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg add additional filters --></label>
+        <name>icg_add_additional_criteria</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg add station manager --></label>
+        <name>icg_add_station_manager</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg add the second location --></label>
+        <name>icg_add_the_second_location</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg address --></label>
+        <name>icg_address</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg address information --></label>
+        <name>icg_address_information</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg advanced search --></label>
+        <name>icg_advanced_search</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg air cargo and ecommerce --></label>
+        <name>icg_air_cargo_and_ecommerce</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg air cargo and ecommerce	text1 --></label>
+        <name>icg_air_cargo_and_ecommerce_text1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg airline --></label>
+        <name>icg_airline</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg_airmail --></label>
+        <name>icg_airmail</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg airport operator --></label>
+        <name>icg_airport_operator</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg alerts and events --></label>
+        <name>icg_alerts_and_events</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg all --></label>
+        <name>icg_all</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg all results --></label>
+        <name>icg_all_results</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg all rights reserved --></label>
+        <name>icg_all_rights_reserved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg all stations --></label>
+        <name>icg_all_stations</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg already applied filter --></label>
+        <name>icg_already_applied_filter</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg already company admin --></label>
+        <name>icg_already_company_admin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg already open remote validations --></label>
+        <name>icg_already_open_remote_validations</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg already request --></label>
+        <name>icg_already_request</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg already requested remote validations --></label>
+        <name>icg_already_requested_remote_validations</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg apply --></label>
+        <name>icg_apply</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg approve --></label>
+        <name>icg_approve</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg approved by --></label>
+        <name>icg_approved_by</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg are you looking for specific --></label>
+        <name>icg_are_you_looking_for_specific</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg are you sure --></label>
+        <name>icg_are_you_sure</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg are you sure delete certification --></label>
+        <name>icg_are_you_sure_delete_certification</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg are you sure delete station manager --></label>
+        <name>icg_are_you_sure_delete_station_manager</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg are you sure you want --></label>
+        <name>icg_are_you_sure_you_want</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg are your sure you want replace current certification --></label>
+        <name>icg_are_your_sure_you_want_replace_current_certification</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg audits requested --></label>
+        <name>icg_audits_requested</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg_available_rv_recordtypes --></label>
+        <name>icg_available_rv_recordtypes</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg back --></label>
+        <name>icg_back</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg back to results --></label>
+        <name>icg_back_to_results</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg become company admin --></label>
+        <name>icg_become_company_admin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg become company admin titile --></label>
+        <name>icg_become_company_admin_titile</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg become station manager --></label>
+        <name>icg_become_station_manager</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg beta --></label>
+        <name>icg_beta</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg_booked --></label>
+        <name>icg_booked</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg btn add location --></label>
+        <name>icg_btn_add_location</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg btn go to station profile --></label>
+        <name>icg_btn_go_to_station_profile</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg btn learn more --></label>
+        <name>icg_btn_learn_more</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg btn more info --></label>
+        <name>icg_btn_more_info</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg_btn_pre_register_now --></label>
+        <name>icg_btn_pre_register_now</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg btn register now --></label>
+        <name>icg_btn_register_now</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg btn show certified entities --></label>
+        <name>icg_btn_show_certified_entities</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg cancel --></label>
+        <name>icg_cancel</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg cancel edit --></label>
+        <name>icg_cancel_edit</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg_capab_magmnt --></label>
+        <name>icg_capab_magmnt</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg_capab_magmnt_certify --></label>
+        <name>icg_capab_magmnt_certify</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg_capab_magmnt_disable --></label>
+        <name>icg_capab_magmnt_disable</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg_capab_magmnt_edit --></label>
+        <name>icg_capab_magmnt_edit</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg_capab_magmnt_edit_capab --></label>
+        <name>icg_capab_magmnt_edit_capab</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg_capab_magmnt_enable --></label>
+        <name>icg_capab_magmnt_enable</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg_capab_magmnt_mantain_prev --></label>
+        <name>icg_capab_magmnt_mantain_prev</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg_capab_message_to_show --></label>
+        <name>icg_capab_message_to_show</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg capability management --></label>
+        <name>icg_capability_management</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg capability validated by --></label>
+        <name>icg_capability_validated_by</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg cargo commodities --></label>
+        <name>icg_cargo_commodities</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg cargo handling facility --></label>
+        <name>icg_cargo_handling_facility</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg cargo handling id for demo --></label>
+        <name>icg_cargo_handling_id</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- text for confirmation --></label>
+        <name>icg_carousel_info_delete</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- text for information --></label>
+        <name>icg_carousel_info_external_image</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg category --></label>
+        <name>icg_category</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg certification --></label>
+        <name>icg_certification</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg certification deleted --></label>
+        <name>icg_certification_deleted</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg certification id --></label>
+        <name>icg_certification_id</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg certification of excellence --></label>
+        <name>icg_certification_of_excellence</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg certification of excellence description --></label>
+        <name>icg_certification_of_excellence_description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg certification renewed --></label>
+        <name>icg_certification_renewed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg certification search --></label>
+        <name>icg_certification_search</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg certifications of compliance --></label>
+        <name>icg_certifications_of_compliance</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg certifications of compliance description --></label>
+        <name>icg_certifications_of_compliance_description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg change --></label>
+        <name>icg_change</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg change to critical station information --></label>
+        <name>icg_change_to_critical_station_information</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg check before creating station profile --></label>
+        <name>icg_check_before_creating_station_profile</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg check existing facilities --></label>
+        <name>icg_check_existing_facilities</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg check existing stations --></label>
+        <name>icg_check_existing_stations</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg city --></label>
+        <name>icg_city</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg click here --></label>
+        <name>icg_click_here</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg close --></label>
+        <name>icg_close</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg closed --></label>
+        <name>icg_closed</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CNS Endorsed Agent --></label>
+        <name>icg_cns_endorsed_agent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg comming soon --></label>
+        <name>icg_comming_soon</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg commodity --></label>
+        <name>icg_commodity</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg company admin --></label>
+        <name>icg_company_admin</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg company admins --></label>
+        <name>icg_company_admins</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg company logo --></label>
+        <name>icg_company_logo</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg company name --></label>
+        <name>icg_company_name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg company name search --></label>
+        <name>icg_company_name_search</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg compare --></label>
+        <name>icg_compare</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg condensed list --></label>
+        <name>icg_condensed_list</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg_confirmation_text --></label>
+        <name>icg_confirmation_text</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg consulting url --></label>
+        <name>icg_consulting_url</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg contact email --></label>
+        <name>icg_contact_email</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg contact name --></label>
+        <name>icg_contact_name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg contact phone --></label>
+        <name>icg_contact_phone</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg contact us --></label>
+        <name>icg_contact_us</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg continue --></label>
+        <name>icg_continue</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg could not be approved --></label>
+        <name>icg_could_not_be_approved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg country --></label>
+        <name>icg_country</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg create a new one --></label>
+        <name>icg_create_a_new_one</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg create certification --></label>
+        <name>icg_create_certification</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg create new profile for address --></label>
+        <name>icg_create_new_profile_for_address</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg create new station --></label>
+        <name>icg_create_new_station</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg create station in new address --></label>
+        <name>icg_create_station_in_new_address</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg creating --></label>
+        <name>icg_creating</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg creating station new address required new account --></label>
+        <name>icg_creating_station_new_address_required_new_account</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg customer email --></label>
+        <name>icg_customer_email</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg customer service phone --></label>
+        <name>icg_customer_service_phone</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg customer website --></label>
+        <name>icg_customer_website</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg_dangerousGoods --></label>
+        <name>icg_dangerousGoods</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- You don´t have permission --></label>
+        <name>icg_data_submission_no_access</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg date --></label>
+        <name>icg_date</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg date requested --></label>
+        <name>icg_date_requested</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg detail --></label>
+        <name>icg_detail</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg detail no display public --></label>
+        <name>icg_detail_no_display_public</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg detailed list --></label>
+        <name>icg_detailed_list</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg direct ramp access --></label>
+        <name>icg_direct_ramp_access</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg display in public site --></label>
+        <name>icg_display_in_public_site</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg display publicly --></label>
+        <name>icg_display_publicly</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg display title in public site --></label>
+        <name>icg_display_table_in_public_site</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg do you have booking platform --></label>
+        <name>icg_do_you_have_booking_platform</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg do you manage a Cargo Station --></label>
+        <name>icg_do_you_manage_a_Cargo_Station</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg do you manage a Cargo Station text1 --></label>
+        <name>icg_do_you_manage_a_Cargo_Station_text1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg do you want to request manager rights --></label>
+        <name>icg_do_you_want_to_request_manager_rights</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg do you want to transport a specific --></label>
+        <name>icg_do_you_want_to_transport_a_specific</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Title for documents section --></label>
+        <name>icg_documents</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg dolly truck --></label>
+        <name>icg_dolly_truck</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg ecommerce video --></label>
+        <name>icg_ecommerce_video</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg edit capabilities certification --></label>
+        <name>icg_edit_capabilities_certification</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg email --></label>
+        <name>icg_email</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg employees --></label>
+        <name>icg_employees</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg enter station name --></label>
+        <name>icg_enter_station_name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg entire section no display public --></label>
+        <name>icg_entire_section_no_display_public</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg_error_message --></label>
+        <name>icg_error_message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg error reading certification id to assign --></label>
+        <name>icg_error_reading_certification_id_to_assign</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg error reading certification without capabilities --></label>
+        <name>icg_error_reading_certification_without_capabilities</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg error update facility --></label>
+        <name>icg_error_update_facility</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg error updating record --></label>
+        <name>icg_error_updating_record</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg existing stations --></label>
+        <name>icg_existing_stations</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg expand collapse --></label>
+        <name>icg_expand_collapse</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg expiration date --></label>
+        <name>icg_expiration_date</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg expired --></label>
+        <name>icg_expired</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg expiring remote validations --></label>
+        <name>icg_expiring_remote_validations</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg expiring validations --></label>
+        <name>icg_expiring_validations</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg export to excel --></label>
+        <name>icg_export_to_excel</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg facility invalid info --></label>
+        <name>icg_facility_invalid_info</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg facility management --></label>
+        <name>icg_facility_management</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg file name --></label>
+        <name>icg_file_name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg find info on IATA ONE Source --></label>
+        <name>icg_find_info_on_IATA_ONE_Source</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg find your aviation business partner --></label>
+        <name>icg_find_your_aviation_business_partner</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg firstname --></label>
+        <name>icg_firstname</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg fleet --></label>
+        <name>icg_fleet</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg for the selected account --></label>
+        <name>icg_for_the_selected_account</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg freight forwarder --></label>
+        <name>icg_freight_forwarder</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg from --></label>
+        <name>icg_from</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg gallery --></label>
+        <name>icg_gallery</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg_generalCargo --></label>
+        <name>icg_generalCargo</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg go to public area --></label>
+        <name>icg_go_to_public_area</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg grid empty message --></label>
+        <name>icg_gridEmptyMessage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg has been approved --></label>
+        <name>icg_has_been_approved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg_header_capab_management --></label>
+        <name>icg_header_capab_management</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg_header_delete_photo --></label>
+        <name>icg_header_delete_photo</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg_header_remove_certi --></label>
+        <name>icg_header_remove_certi</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg history --></label>
+        <name>icg_history</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg home --></label>
+        <name>icg_home</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg https default value --></label>
+        <name>icg_https_default_value</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg hybrid view --></label>
+        <name>icg_hybrid_view</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg IATA base url --></label>
+        <name>icg_iata_base_url</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg id --></label>
+        <name>icg_id</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg if address no list create new one --></label>
+        <name>icg_if_address_no_list_create_new_one</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg if facility no list --></label>
+        <name>icg_if_facility_no_list</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg in --></label>
+        <name>icg_in</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg in progress --></label>
+        <name>icg_in_progress</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg in validation --></label>
+        <name>icg_in_validation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg information not verified --></label>
+        <name>icg_information_not_verified</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg information validated by --></label>
+        <name>icg_information_validated_by</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg invalid email --></label>
+        <name>icg_invalid_email</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg issue date --></label>
+        <name>icg_issue_date</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg issued date --></label>
+        <name>icg_issued_date</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg issuing date --></label>
+        <name>icg_issuing_date</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg join now --></label>
+        <name>icg_join_now</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg join now pop-up ok button --></label>
+        <name>icg_join_now_popup_have_account</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg join now pop-up message --></label>
+        <name>icg_join_now_popup_message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg join now popup message01 --></label>
+        <name>icg_join_now_popup_message01</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg join now popup message02 --></label>
+        <name>icg_join_now_popup_message02</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg join now pop-up message --></label>
+        <name>icg_join_now_popup_message11</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg join now pop-up message --></label>
+        <name>icg_join_now_popup_message12</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg join now pop-up message --></label>
+        <name>icg_join_now_popup_message21</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg join now pop-up message --></label>
+        <name>icg_join_now_popup_message22</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg join now pop-up message --></label>
+        <name>icg_join_now_popup_message31</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg join now pop-up message --></label>
+        <name>icg_join_now_popup_message32</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg join now popup message41 --></label>
+        <name>icg_join_now_popup_message41</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg join now popup message42 --></label>
+        <name>icg_join_now_popup_message42</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg join now popup message51 --></label>
+        <name>icg_join_now_popup_message51</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg join now popup message52 --></label>
+        <name>icg_join_now_popup_message52</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg join now pop-up ok button --></label>
+        <name>icg_join_now_popup_ok_button</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg join now title --></label>
+        <name>icg_join_now_title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg languages spoken --></label>
+        <name>icg_languages_spoken</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg lastname --></label>
+        <name>icg_lastname</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg latest --></label>
+        <name>icg_latest</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg latest news --></label>
+        <name>icg_latest_news</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg latest validation updates --></label>
+        <name>icg_latest_validation_updates</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg legal name --></label>
+        <name>icg_legal_name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg limit filters reached --></label>
+        <name>icg_limit_filters_reached</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg link --></label>
+        <name>icg_link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg list airlines handled --></label>
+        <name>icg_list_airlines_handled</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg_liveAnimals --></label>
+        <name>icg_liveAnimals</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg location search --></label>
+        <name>icg_location_search</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg login --></label>
+        <name>icg_login</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg main one source --></label>
+        <name>icg_main_one_source</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg manage documents --></label>
+        <name>icg_manage_documents</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg manage photos --></label>
+        <name>icg_manage_photos</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg manage remote validations --></label>
+        <name>icg_manage_remote_validations</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg manage user permission --></label>
+        <name>icg_manage_user_permission</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg manager user permission --></label>
+        <name>icg_manager_user_permission</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg members airlines --></label>
+        <name>icg_members_airlines</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg members airlines2 --></label>
+        <name>icg_members_airlines2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg members airlines modal --></label>
+        <name>icg_members_airlines_modal</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg members airlines modal2 --></label>
+        <name>icg_members_airlines_modal2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg members airlines modal3 --></label>
+        <name>icg_members_airlines_modal3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg menu about IATA --></label>
+        <name>icg_menu_about_IATA</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg menu about one source --></label>
+        <name>icg_menu_about_one_source</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg menu home --></label>
+        <name>icg_menu_home</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg menu latest news --></label>
+        <name>icg_menu_latest_news</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg menu remote validations --></label>
+        <name>icg_menu_remote_validations</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg menu validation programs --></label>
+        <name>icg_menu_validation_programs</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg my facilities --></label>
+        <name>icg_my_facilities</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg my requests --></label>
+        <name>icg_my_requests</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg my stations --></label>
+        <name>icg_my_stations</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg my validated facilities --></label>
+        <name>icg_my_validated_facilities</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg my validated stations --></label>
+        <name>icg_my_validated_stations</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg name --></label>
+        <name>icg_name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg nearest airport --></label>
+        <name>icg_nearest_airport</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg nearest airport description --></label>
+        <name>icg_nearest_airport_description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg need to be company admin to approve --></label>
+        <name>icg_need_to_be_company_admin_to_approve</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg new account creation --></label>
+        <name>icg_new_account_creation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg new company admin requests --></label>
+        <name>icg_new_company_admin_requests</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg new notification --></label>
+        <name>icg_new_notification</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg new station account address --></label>
+        <name>icg_new_station_account_address</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg new station account address hint --></label>
+        <name>icg_new_station_account_address_hint</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg new station account address internal --></label>
+        <name>icg_new_station_account_address_internal</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg new station manager requests --></label>
+        <name>icg_new_station_manager_requests</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg new station name --></label>
+        <name>icg_new_station_name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg new station profiles --></label>
+        <name>icg_new_station_profiles</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg news --></label>
+        <name>icg_news</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg news alerts of --></label>
+        <name>icg_news_alerts_of</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg next --></label>
+        <name>icg_next</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg next step address inf --></label>
+        <name>icg_next_step_address_inf</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg no --></label>
+        <name>icg_no</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg no account in this country --></label>
+        <name>icg_no_account_in_this_country</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg no account role found msg --></label>
+        <name>icg_no_account_role_found_msg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg no conflict to handle --></label>
+        <name>icg_no_conflict_to_handle</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg no images profile --></label>
+        <name>icg_no_images_profile</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg no remote validation product found --></label>
+        <name>icg_no_remote_validation_product_found</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg no results review filters --></label>
+        <name>icg_no_results_review_filters</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg notification collapse all --></label>
+        <name>icg_notification_collapse_all</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg notification dismiss --></label>
+        <name>icg_notification_dismiss</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg notification dismiss all --></label>
+        <name>icg_notification_dismiss_all</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg notification view all --></label>
+        <name>icg_notification_view_all</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg notifications --></label>
+        <name>icg_notifications</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg now pending for IATA Approval --></label>
+        <name>icg_now_pending_for_IATA_Approval</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg number of accounts --></label>
+        <name>icg_number_of_accounts</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg number of employees --></label>
+        <name>icg_number_of_employees</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg number of facilities at station --></label>
+        <name>icg_number_of_facilities_at_station</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg of your company --></label>
+        <name>icg_of_your_company</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg ok --></label>
+        <name>icg_ok</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg on airport --></label>
+        <name>icg_on_airport</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg one process at time msg --></label>
+        <name>icg_one_process_at_time_msg</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg online booking --></label>
+        <name>icg_online_booking</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg online platform --></label>
+        <name>icg_online_platform</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg open remote validations --></label>
+        <name>icg_open_remote_validations</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg operating airlines --></label>
+        <name>icg_operating_airlines</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg operating cargo handling facilities --></label>
+        <name>icg_operating_cargo_handling_facilities</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg operating ramp handler --></label>
+        <name>icg_operating_ramp_handler</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg operational hierarchy --></label>
+        <name>icg_operational_hierarchy</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg or --></label>
+        <name>icg_or</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg or create a new hierarchy --></label>
+        <name>icg_or_create_a_new_hierarchy</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg order to create new phyisical address --></label>
+        <name>icg_order_to_create_new_phyisical_address</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg overall airport size --></label>
+        <name>icg_overall_aiport_size</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg overall airport size --></label>
+        <name>icg_overall_airport_size</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg overall facility size --></label>
+        <name>icg_overall_facility_size</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg overview --></label>
+        <name>icg_overview</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg pending approvals --></label>
+        <name>icg_pending_approvals</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg pending company admins --></label>
+        <name>icg_pending_company_admins</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg pending station approvals --></label>
+        <name>icg_pending_station_approvals</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg pending user approvals --></label>
+        <name>icg_pending_user_approvals</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg_perishables --></label>
+        <name>icg_perishables</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg_pharmaceuticals --></label>
+        <name>icg_pharmaceuticals</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg phone --></label>
+        <name>icg_phone</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg photo --></label>
+        <name>icg_photo</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg photos --></label>
+        <name>icg_photos</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg grid pilot information --></label>
+        <name>icg_pilotInformation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg pleae select country --></label>
+        <name>icg_pleae_select_country</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg please contact iata --></label>
+        <name>icg_please_contact_iata</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg please fill account bussiness addess --></label>
+        <name>icg_please_fill_account_bussiness_addess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg please rotate device --></label>
+        <name>icg_please_rotate_device</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg pre-register --></label>
+        <name>icg_pre_register</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg preferable audit date --></label>
+        <name>icg_preferable_audit_date</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg prev --></label>
+        <name>icg_prev</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg private area --></label>
+        <name>icg_private_area</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg proceed to account creation --></label>
+        <name>icg_proceed_to_account_creation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg process finished --></label>
+        <name>icg_process_finished</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg public area --></label>
+        <name>icg_public_area</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg publications url --></label>
+        <name>icg_publications_url</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg purchase remote valdation --></label>
+        <name>icg_purchase_remote_valdation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg ramp handler --></label>
+        <name>icg_ramp_handler</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg received --></label>
+        <name>icg_received</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg record activated --></label>
+        <name>icg_record_activated</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg record updated --></label>
+        <name>icg_record_updated</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg register --></label>
+        <name>icg_register</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg registration automatically approved --></label>
+        <name>icg_registration_auto_approved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg registration request submitted --></label>
+        <name>icg_registration_request_submitted1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg registration request submitted --></label>
+        <name>icg_registration_request_submitted2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg registration url --></label>
+        <name>icg_registration_url</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg reject --></label>
+        <name>icg_reject</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg remote validation history --></label>
+        <name>icg_remote_validation_history</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg remote validations --></label>
+        <name>icg_remote_validations</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg remove --></label>
+        <name>icg_remove</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg remove all --></label>
+        <name>icg_remove_all</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg remove certification --></label>
+        <name>icg_remove_certification</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg remove location --></label>
+        <name>icg_remove_location</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg remove logo --></label>
+        <name>icg_remove_logo</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg renew --></label>
+        <name>icg_renew</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg renew certification --></label>
+        <name>icg_renew_certification</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg request --></label>
+        <name>icg_request</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg request by --></label>
+        <name>icg_request_by</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg request date --></label>
+        <name>icg_request_date</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg request remote valdation --></label>
+        <name>icg_request_remote_valdation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg_reset_capabilities_button --></label>
+        <name>icg_reset_capabilities_button</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg resultpage banner button --></label>
+        <name>icg_resultpage_banner_button</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg resultpage banner text --></label>
+        <name>icg_resultpage_banner_text</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg_resultpage_register_company --></label>
+        <name>icg_resultpage_register_company</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg_resultpage_register_company2 --></label>
+        <name>icg_resultpage_register_company2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg road feeder services --></label>
+        <name>icg_road_feeder_services</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg room --></label>
+        <name>icg_room</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg save --></label>
+        <name>icg_save</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg schedule audits --></label>
+        <name>icg_schedule_audits</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg scope --></label>
+        <name>icg_scope</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg search --></label>
+        <name>icg_search</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg search assistant --></label>
+        <name>icg_search_assistant</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg search by --></label>
+        <name>icg_search_by</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg search by certification --></label>
+        <name>icg_search_by_certification</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg search by company name --></label>
+        <name>icg_search_by_company_name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg search by location --></label>
+        <name>icg_search_by_location</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg search in the list --></label>
+        <name>icg_search_in_the_list</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg second address --></label>
+        <name>icg_second_address</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg sector --></label>
+        <name>icg_sector</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg see listed companies --></label>
+        <name>icg_see_listed_companies</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg see more --></label>
+        <name>icg_see_more</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg see results --></label>
+        <name>icg_see_results</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg select --></label>
+        <name>icg_select</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg select all --></label>
+        <name>icg_select_all</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg select an existing hierarchy --></label>
+        <name>icg_select_an_existing_hierarchy</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg select certification --></label>
+        <name>icg_select_certification</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg select new station type --></label>
+        <name>icg_select_new_station_type</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg select scope --></label>
+        <name>icg_select_scope</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg select station --></label>
+        <name>icg_select_station</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg select station to display --></label>
+        <name>icg_select_station_to_display</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg select your station service --></label>
+        <name>icg_select_your_station_service</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg selected --></label>
+        <name>icg_selected</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg service home1 --></label>
+        <name>icg_service_home1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg service home2 --></label>
+        <name>icg_service_home2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg service home3 --></label>
+        <name>icg_service_home3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg service home4 --></label>
+        <name>icg_service_home4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg shipper --></label>
+        <name>icg_shipper</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg show all --></label>
+        <name>icg_show_all</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg show selected --></label>
+        <name>icg_show_selected</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg smart facility remote validation --></label>
+        <name>icg_smart_facility_remote_validation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg smart facility remote validation text1 --></label>
+        <name>icg_smart_facility_remote_validation_text1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg smart facility remote validation text2 --></label>
+        <name>icg_smart_facility_remote_validation_text2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg smart facility remote validation text3 --></label>
+        <name>icg_smart_facility_remote_validation_text3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg smart facility url --></label>
+        <name>icg_smart_facility_url</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg something went wrong --></label>
+        <name>icg_something_went_wrong</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg something went wrong contact iata --></label>
+        <name>icg_something_went_wrong_contact_iata</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg something went wrong email --></label>
+        <name>icg_something_went_wrong_emails</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg state province --></label>
+        <name>icg_state_province</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg station --></label>
+        <name>icg_station</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg station creation --></label>
+        <name>icg_station_creation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg station details --></label>
+        <name>icg_station_details</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg station has been created --></label>
+        <name>icg_station_has_been_created</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg station information --></label>
+        <name>icg_station_information</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg station location --></label>
+        <name>icg_station_location</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg station manager --></label>
+        <name>icg_station_manager</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg station manager request sent --></label>
+        <name>icg_station_manager_request_sent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg station name --></label>
+        <name>icg_station_name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg station name and address --></label>
+        <name>icg_station_name_and_address</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg station name and type already exists --></label>
+        <name>icg_station_name_and_type_already_exists</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg station overview --></label>
+        <name>icg_station_overview</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg station to compare --></label>
+        <name>icg_station_to_compare</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg station type --></label>
+        <name>icg_station_type</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg station type already exists --></label>
+        <name>icg_station_type_already_exists</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg station types --></label>
+        <name>icg_station_types</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg stations --></label>
+        <name>icg_stations</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg status --></label>
+        <name>icg_status</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg sticker id --></label>
+        <name>icg_sticker_id</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg strategic partners --></label>
+        <name>icg_strategic_partners</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg strategic partners2 --></label>
+        <name>icg_strategic_partners2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg strategic partners modal --></label>
+        <name>icg_strategic_partners_modal</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg strategic partners modal 2 --></label>
+        <name>icg_strategic_partners_modal2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg street name --></label>
+        <name>icg_street_name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg submit --></label>
+        <name>icg_submit</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg success --></label>
+        <name>icg_success</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg successful save facility --></label>
+        <name>icg_successful_save_facility</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg summary --></label>
+        <name>icg_summary</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg summary capabilities --></label>
+        <name>icg_summary_capabilities</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg summary no display public --></label>
+        <name>icg_summary_no_display_public</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg supported languages --></label>
+        <name>icg_supported_languages</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg temperature range --></label>
+        <name>icg_temperature_range</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg thank you iata contact --></label>
+        <name>icg_thank_you_iata_contact</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg the station --></label>
+        <name>icg_the_station</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg there are not existing station managers --></label>
+        <name>icg_there_are_not_existing_station_managers</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg they approve --></label>
+        <name>icg_they_approve</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg title --></label>
+        <name>icg_title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg to --></label>
+        <name>icg_to</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg total facility space --></label>
+        <name>icg_total_facility_space</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg trade name --></label>
+        <name>icg_trade_name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg training url --></label>
+        <name>icg_training_url</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg trucker --></label>
+        <name>icg_trucker</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg trucks --></label>
+        <name>icg_trucks</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg type location --></label>
+        <name>icg_type_location</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg type search --></label>
+        <name>icg_type_search</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg unselected all --></label>
+        <name>icg_unselected_all</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg upload image --></label>
+        <name>icg_upload_image</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg user guide pdf link --></label>
+        <name>icg_user_guide_pdf_link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg validation history --></label>
+        <name>icg_validation_history</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg validation management --></label>
+        <name>icg_validation_management</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg watch video --></label>
+        <name>icg_watch_video</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg wcs url --></label>
+        <name>icg_wcs_url</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg we found existing stations --></label>
+        <name>icg_we_found_existing_stations</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg website --></label>
+        <name>icg_website</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg welcome back --></label>
+        <name>icg_welcome_back</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg what_is_the_IATA_One_Source --></label>
+        <name>icg_what_is_the_IATA_One_Source</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg what is the IATA One Source text1 --></label>
+        <name>icg_what_is_the_IATA_One_Source_text1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg what is the IATA One Source text2 --></label>
+        <name>icg_what_is_the_IATA_One_Source_text2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg what is the IATA One Source videoUrl --></label>
+        <name>icg_what_is_the_IATA_One_Source_videoUrl</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg which station to manage --></label>
+        <name>icg_which_station_to_manage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg which validation programs to renew archieve --></label>
+        <name>icg_which_validation_programs_to_renew_archieve</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg wizard title location --></label>
+        <name>icg_wizard_title_location</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg worldwide search --></label>
+        <name>icg_worldwide_search</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg xlsx icon --></label>
+        <name>icg_xlsx_icon</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg yes --></label>
+        <name>icg_yes</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg you are filtering by --></label>
+        <name>icg_you_are_filtering_by</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg your current stats --></label>
+        <name>icg_your_current_stats</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg zip code --></label>
+        <name>icg_zip_code</name>
+    </customLabels>
+    <customLabels>
         <label><!-- IDCard_replacementHeadText --></label>
         <name>idcard_replacementHeadText</name>
     </customLabels>
@@ -27423,6 +30307,10 @@ GSA - 3 буквы.
     <customLabels>
         <label><!-- Tagalog --></label>
         <name>pkb2_lang_tl</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Turkish --></label>
+        <name>pkb2_lang_tr</name>
     </customLabels>
     <customLabels>
         <label><!-- Urdu --></label>
@@ -31713,6 +34601,10 @@ GSA - 3 буквы.
         <name>PKB_2_Settings</name>
     </customTabs>
     <customTabs>
+        <label><!-- Portal Invitation --></label>
+        <name>Portal_Invitation</name>
+    </customTabs>
+    <customTabs>
         <label><!-- Purge IATA Code Process --></label>
         <name>Purge_IATA_Code_Process</name>
     </customTabs>
@@ -31743,6 +34635,14 @@ GSA - 3 буквы.
     <customTabs>
         <label><!-- Settlement &amp; Operation --></label>
         <name>Settlement_Operation</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- TIDS Vetting --></label>
+        <name>TIDSVetting</name>
+    </customTabs>
+    <customTabs>
+        <label><!-- TIDS Setup --></label>
+        <name>TIDS_Setup</name>
     </customTabs>
     <customTabs>
         <label><!-- Projects Calendar --></label>
@@ -31897,6 +34797,23 @@ GSA - 3 буквы.
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- AMS Online Accreditation with OSCAR with Case --></description>
+        <label><!-- AMS Online Accreditation with OSCAR with Case --></label>
+        <name>AMS_Online_Accreditation_with_OSCAR_with_Case</name>
+        <sections>
+            <label><!-- AMS Online Accreditations --></label>
+            <name>AMS Online Accreditations</name>
+        </sections>
+        <sections>
+            <label><!-- Cases --></label>
+            <name>Cases</name>
+        </sections>
+        <sections>
+            <label><!-- OSCARs --></label>
+            <name>OSCARs</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- AMS Territories --></description>
         <label><!-- AMS Territories --></label>
         <name>AMS_Territories</name>
@@ -31934,6 +34851,28 @@ GSA - 3 буквы.
         <sections>
             <label><!-- AP Country  Requirements --></label>
             <name>AP Country  Requirements</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- ARD Certification by type --></description>
+        <label><!-- ARD Certification by type --></label>
+        <name>ARD_Certification_by_type</name>
+        <sections>
+            <label><!-- ONE Source Account Role Details --></label>
+            <name>ONE Source Account Role Details</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- ARD and Airlines Handlers --></description>
+        <label><!-- ARD and Airlines Handlers --></label>
+        <name>ARD_and_Airlines_Handlers</name>
+        <sections>
+            <label><!-- ONE Source Account Role Detail Relationships --></label>
+            <name>ONE Source Account Role Detail Relationships</name>
+        </sections>
+        <sections>
+            <label><!-- ONE Source Account Role Details --></label>
+            <name>ONE Source Account Role Details</name>
         </sections>
     </reportTypes>
     <reportTypes>
@@ -32229,6 +35168,31 @@ GSA - 3 буквы.
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Account relationship with airport information --></description>
+        <label><!-- Account relationship with airport information --></label>
+        <name>Account_relationship_with_airport_information</name>
+        <sections>
+            <columns>
+                <label><!-- Parent Account ID --></label>
+                <name>Parent Account ID</name>
+            </columns>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <columns>
+                <label><!-- Account ID --></label>
+                <name>Account ID</name>
+            </columns>
+            <label><!-- Airport account info --></label>
+            <name>Airport account info</name>
+        </sections>
+        <sections>
+            <label><!-- Manages / Operates --></label>
+            <name>Manages / Operates</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Account w cases and results --></description>
         <label><!-- Account w cases and results --></label>
         <name>Account_w_cases_and_results</name>
@@ -32269,6 +35233,27 @@ GSA - 3 буквы.
         <sections>
             <label><!-- Agency Authorizations --></label>
             <name>Agency Authorizations</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Account with addresses roles and context or not --></description>
+        <label><!-- Account with addresses roles and context or not --></label>
+        <name>Account_with_addresses_roles_and_context_or_not</name>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- Address Roles Business Context --></label>
+            <name>Address Roles Business Context</name>
+        </sections>
+        <sections>
+            <label><!-- Addresses --></label>
+            <name>Addresses</name>
+        </sections>
+        <sections>
+            <label><!-- Addresses Role --></label>
+            <name>Addresses Role</name>
         </sections>
     </reportTypes>
     <reportTypes>
@@ -32468,8 +35453,8 @@ GSA - 3 буквы.
         </sections>
     </reportTypes>
     <reportTypes>
-        <description><!-- Accounts custom --></description>
-        <label><!-- Accounts custom --></label>
+        <description><!-- Accounts custom, user info --></description>
+        <label><!-- Accounts custom, user info --></label>
         <name>Accounts_custom</name>
         <sections>
             <columns>
@@ -32542,12 +35527,38 @@ GSA - 3 буквы.
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Accounts w/wo Billing Geoname City --></description>
+        <label><!-- Accounts w/wo Billing Geoname City --></label>
+        <name>Accounts_w_wo_Billing_Geoname_City</name>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- Billing Geoname City --></label>
+            <name>Billing Geoname City</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Accounts with AMS Account Roles (Owners) --></description>
         <label><!-- Accounts with AMS Account Roles (Owners) --></label>
         <name>Accounts_with_AMS_Account_Roles_Owners</name>
         <sections>
             <label><!-- AMS Account Roles --></label>
             <name>AMS Account Roles</name>
+        </sections>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Accounts with AMS Accreditation contacts --></description>
+        <label><!-- Accounts with AMS Accreditation contacts --></label>
+        <name>Accounts_with_AMS_Accreditation_contacts</name>
+        <sections>
+            <label><!-- AMS Accreditation Contacts --></label>
+            <name>AMS Accreditation Contacts</name>
         </sections>
         <sections>
             <label><!-- Accounts --></label>
@@ -33277,6 +36288,22 @@ GSA - 3 буквы.
             <label><!-- Accounts --></label>
             <name>Accounts</name>
         </sections>
+        <sections>
+            <label><!-- GrandParent --></label>
+            <name>GrandParent</name>
+        </sections>
+        <sections>
+            <label><!-- Great GrandParent --></label>
+            <name>Great GrandParent</name>
+        </sections>
+        <sections>
+            <label><!-- Great Great GrandParent --></label>
+            <name>Great Great GrandParent</name>
+        </sections>
+        <sections>
+            <label><!-- Parent Info --></label>
+            <name>Parent Info</name>
+        </sections>
     </reportTypes>
     <reportTypes>
         <description><!-- Accounts with service rendered and consumer --></description>
@@ -33441,6 +36468,71 @@ GSA - 3 буквы.
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Agencies for Airport IS --></description>
+        <label><!-- Agencies for Airport IS --></label>
+        <name>Agencies_for_Airport_IS</name>
+        <sections>
+            <columns>
+                <label><!-- ISO Country: ISO Code --></label>
+                <name>ISO Country: ISO Code</name>
+            </columns>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <columns>
+                <label><!-- Geoname Billing City: Id --></label>
+                <name>Geoname Billing City: Id</name>
+            </columns>
+            <columns>
+                <label><!-- Geoname Billing City: Location (Latitude) --></label>
+                <name>Geoname Billing City: Location (Latitude)</name>
+            </columns>
+            <columns>
+                <label><!-- Geoname Billing City: Location (Longitude) --></label>
+                <name>Geoname Billing City: Location (Longitude)</name>
+            </columns>
+            <columns>
+                <label><!-- Geoname Billing City: Name --></label>
+                <name>Geoname Billing City: Name</name>
+            </columns>
+            <label><!-- Geoname billing city --></label>
+            <name>Geoname billing city</name>
+        </sections>
+        <sections>
+            <columns>
+                <label><!-- Parent Account: Account ID --></label>
+                <name>Parent Account: Account ID</name>
+            </columns>
+            <columns>
+                <label><!-- Parent Account: Account Name --></label>
+                <name>Parent Account: Account Name</name>
+            </columns>
+            <columns>
+                <label><!-- Parent Account: IATA Code --></label>
+                <name>Parent Account: IATA Code</name>
+            </columns>
+            <label><!-- Parent --></label>
+            <name>Parent</name>
+        </sections>
+        <sections>
+            <columns>
+                <label><!-- Top Parent: Account ID --></label>
+                <name>Top Parent: Account ID</name>
+            </columns>
+            <columns>
+                <label><!-- Top Parent: Account Name --></label>
+                <name>Top Parent: Account Name</name>
+            </columns>
+            <columns>
+                <label><!-- Top Parent: IATA Code --></label>
+                <name>Top Parent: IATA Code</name>
+            </columns>
+            <label><!-- Top Parent --></label>
+            <name>Top Parent</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Agency Hierarchy --></description>
         <label><!-- Agency Hierarchy --></label>
         <name>Agency_Hierarchy</name>
@@ -33526,6 +36618,19 @@ GSA - 3 буквы.
         <sections>
             <label><!-- Appointments (AMS) --></label>
             <name>Appointments (AMS)</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Approval history for Exceptions --></description>
+        <label><!-- Approval history for Exceptions --></label>
+        <name>Approval_history_for_Exceptions</name>
+        <sections>
+            <label><!-- Process Instance --></label>
+            <name>Process Instance</name>
+        </sections>
+        <sections>
+            <label><!-- Process Instance Node --></label>
+            <name>Process Instance Node</name>
         </sections>
     </reportTypes>
     <reportTypes>
@@ -34084,8 +37189,16 @@ GSA - 3 буквы.
         <label><!-- Cases with created by user --></label>
         <name>Cases_with_created_by_user</name>
         <sections>
+            <label><!-- Account information --></label>
+            <name>Account information</name>
+        </sections>
+        <sections>
             <label><!-- Cases --></label>
             <name>Cases</name>
+        </sections>
+        <sections>
+            <label><!-- Contact information --></label>
+            <name>Contact information</name>
         </sections>
         <sections>
             <label><!-- Created by user --></label>
@@ -34244,6 +37357,10 @@ GSA - 3 буквы.
         <label><!-- Contacts with Portal Service access --></label>
         <name>Contact_with_Portal</name>
         <sections>
+            <label><!-- Account --></label>
+            <name>Account</name>
+        </sections>
+        <sections>
             <label><!-- Contacts --></label>
             <name>Contacts</name>
         </sections>
@@ -34401,8 +37518,8 @@ GSA - 3 буквы.
         </sections>
     </reportTypes>
     <reportTypes>
-        <description><!-- Contacts without Cases --></description>
-        <label><!-- Contacts without Cases --></label>
+        <description><!-- Contacts with or without Cases --></description>
+        <label><!-- Contacts with or without Cases --></label>
         <name>Contacts_without_Cases</name>
         <sections>
             <label><!-- Cases --></label>
@@ -34513,6 +37630,19 @@ GSA - 3 буквы.
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Country profile with IATA ISO Country --></description>
+        <label><!-- Country profile with IATA ISO Country --></label>
+        <name>Country_profile_with_IATA_ISO_Country</name>
+        <sections>
+            <label><!-- Country Profiles --></label>
+            <name>Country Profiles</name>
+        </sections>
+        <sections>
+            <label><!-- IATA ISO Countries --></label>
+            <name>IATA ISO Countries</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Country profile with surveys --></description>
         <label><!-- Country profile with surveys --></label>
         <name>Country_profile_with_surveys</name>
@@ -34536,6 +37666,23 @@ GSA - 3 буквы.
         <sections>
             <label><!-- Users --></label>
             <name>Users</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Currency Center Survey - Report type records --></description>
+        <label><!-- Currency Center Survey - Report type records --></label>
+        <name>Currency_Center_Survey_Blocked_amount</name>
+        <sections>
+            <label><!-- Country Level (one up) --></label>
+            <name>Country Level (one up)</name>
+        </sections>
+        <sections>
+            <label><!-- Currency Center Survey --></label>
+            <name>Currency Center Survey</name>
+        </sections>
+        <sections>
+            <label><!-- Monthly record (2 levels up) --></label>
+            <name>Monthly record (2 levels up)</name>
         </sections>
     </reportTypes>
     <reportTypes>
@@ -34733,6 +37880,15 @@ GSA - 3 буквы.
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Exceptions with Approval history --></description>
+        <label><!-- Exceptions with Approval history --></label>
+        <name>Exceptions_with_Approval_history</name>
+        <sections>
+            <label><!-- Exceptions --></label>
+            <name>Exceptions</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Financial Institutions with Securities --></description>
         <label><!-- Financial Institutions with Securities --></label>
         <name>Financial_Institutions_with_Securities</name>
@@ -34752,6 +37908,15 @@ GSA - 3 буквы.
         <sections>
             <label><!-- Financial Securities --></label>
             <name>Financial Securities</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- GADM Data Submissions --></description>
+        <label><!-- GADM Data Submissions --></label>
+        <name>GADM_Data_Submissions</name>
+        <sections>
+            <label><!-- Data Submissions --></label>
+            <name>Data Submissions</name>
         </sections>
     </reportTypes>
     <reportTypes>
@@ -34799,6 +37964,19 @@ GSA - 3 буквы.
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Hierarchy Account Selections with accounts --></description>
+        <label><!-- Hierarchy Account Selections with accounts --></label>
+        <name>Hierarchy_Account_Selections_with_accounts</name>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- Hierarchy Account Selections --></label>
+            <name>Hierarchy Account Selections</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- IATA Geoname Cities --></description>
         <label><!-- IATA Geoname Cities --></label>
         <name>IATA_Geoname_Cities</name>
@@ -34827,6 +38005,15 @@ GSA - 3 буквы.
         <sections>
             <label><!-- IATA ISO States --></label>
             <name>IATA ISO States</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- ONE Source Acc. Role Details with Certifications --></description>
+        <label><!-- ONE Source Acc. Role Details with Certifications --></label>
+        <name>ICG_Acc_Role_Details_with_Certifications</name>
+        <sections>
+            <label><!-- ONE Source Account Role Details --></label>
+            <name>ONE Source Account Role Details</name>
         </sections>
     </reportTypes>
     <reportTypes>
@@ -35111,6 +38298,19 @@ GSA - 3 буквы.
         <sections>
             <label><!-- Ideas --></label>
             <name>Ideas</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Identity Provider Event Log --></description>
+        <label><!-- Identity Provider Event Log --></label>
+        <name>Identity_Provider_Event_Log</name>
+        <sections>
+            <label><!-- Identity Event Logs (User) --></label>
+            <name>Identity Event Logs (User)</name>
+        </sections>
+        <sections>
+            <label><!-- Users --></label>
+            <name>Users</name>
         </sections>
     </reportTypes>
     <reportTypes>
@@ -35572,6 +38772,27 @@ GSA - 3 буквы.
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- NDC Airlines --></description>
+        <label><!-- NDC Airlines --></label>
+        <name>NDC_Airlines</name>
+        <sections>
+            <label><!-- Account Role Services --></label>
+            <name>Account Role Services</name>
+        </sections>
+        <sections>
+            <label><!-- Account Roles --></label>
+            <name>Account Roles</name>
+        </sections>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- NDC Account Service Details --></label>
+            <name>NDC Account Service Details</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Network Members --></description>
         <label><!-- Network Members --></label>
         <name>Network_Members</name>
@@ -35876,6 +39097,14 @@ GSA - 3 буквы.
         <description><!-- Portal Service Access --></description>
         <label><!-- Portal Service Access --></label>
         <name>Portal_Service_Access</name>
+        <sections>
+            <label><!-- Account Information --></label>
+            <name>Account Information</name>
+        </sections>
+        <sections>
+            <label><!-- Contact Information --></label>
+            <name>Contact Information</name>
+        </sections>
         <sections>
             <label><!-- Portal Service Access --></label>
             <name>Portal Service Access</name>
@@ -36556,6 +39785,15 @@ GSA - 3 буквы.
             <label><!-- Followers --></label>
             <name>Followers</name>
         </sections>
+        <sections>
+            <label><!-- Users --></label>
+            <name>Users</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Users with Last Password Change or Reset --></description>
+        <label><!-- Users with Last Password Change or Reset --></label>
+        <name>Users_with_Last_Password_Change_or_Reset</name>
         <sections>
             <label><!-- Users --></label>
             <name>Users</name>

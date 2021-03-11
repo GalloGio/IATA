@@ -1,0 +1,10 @@
+.slds-button_success:hover {
+    background-color: rgb(4, 132, 75) !important;
+    border-color: rgb(4, 132, 75) !important;
+}
+.slds-button_success {
+    background-color: #49ba42 !important;
+    border-color: #49ba42 !important;
+    color: rgb(255, 255, 255) !important;
+    font-size: .8rem;
+}

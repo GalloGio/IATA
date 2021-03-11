@@ -18,6 +18,14 @@
     </types>
     <types>
         <members>*</members>
+        <name>DataCategoryGroup</name>
+    </types>
+    <types>
+        <members>*</members>
+        <name>PermissionSet</name>
+    </types>
+    <types>
+        <members>*</members>
         <name>ReportType</name>
     </types>
     <types>

@@ -1,0 +1,152 @@
+<html style="overflow-y: hidden;">
+<head>
+	<title></title>
+</head>
+<body style="margin: 0px; padding: 0px; height: auto; min-height: auto;">
+<table border="0" cellpadding="0" cellspacing="0" style="background-color: #ffffff; font-family: Verdana, Geneva, sans-serif;" width="100%">
+	<tbody>
+		<tr>
+			<td width="100%">
+			<table border="0" cellpadding="0" cellspacing="0" style="background-color: #ffffff; padding: 20px;" width="100%">
+				<tbody>
+					<tr>
+           			 <td style="text-align: center;">
+						<table border="0" cellpadding="0" cellspacing="0" style="margin: 0 auto; max-width: 768px;" width="100%">
+							<tbody>
+								<tr>
+									<td style="margin: 0; padding: 0; text-align: left; font-family: Verdana, Geneva, sans-serif;">
+									<h1 style="margin: 0; padding: 0; font-size: 26px;">Your TIDS Application is Approved</h1>
+									</td>
+									<td style="margin: 0; padding: 0 0 0 20px; text-align: center; vertical-align: middle;"><a href="https://www.iata.org/tids" title="IATA TIDS Program"><img alt="IATA TIDS Program" height="150" src="https://iata--c.documentforce.com/servlet/servlet.ImageServer?id=0155J000000kus6&oid=00D2000000008TF&lastMod=1602425300000" /></a></td>
+								</tr>
+							</tbody>
+						</table>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<table border="0" cellpadding="0" cellspacing="0" style="background: #f2f2f2; padding: 20px;" width="100%">
+				<tbody>
+					<tr>
+						<td style="text-align: center;">
+						<table border="0" cellpadding="0" cellspacing="0" style="background: #ffffff; margin: 0 auto; max-width: 768px;" width="100%">
+							<tbody>
+								<tr>
+									<td style="margin: 0; padding: 40px; text-align: left; font-family: Verdana, Geneva, sans-serif; font-size: 14px; line-height: 25px; border-top: 10px solid #39c728;">
+									<p style="margin: 0 0 30px 0"><b>Congratulations!</b></p>
+
+									<p style="margin: 0 0 10px 0">Dear {!Contact.Name},</p>
+
+									<p style="margin: 0 0 10px 0">Your application for a Branch Office under the IATA TIDS Program has been approved.</p>
+
+									<p style="margin: 0 0 10px 0">The following IATA TIDS Numeric Code has been assigned to you: <b>{!Account.IATACode__c}</b></p>
+
+									<p style="margin: 0 0 10px 0">This unique industry identifier can now be shared with your travel industry suppliers and partners.</p>
+
+									<p style="margin: 0 0 10px 0">Kindly take a moment to review your office details to ensure they are correct:</p>
+
+									<p style="margin: 0 0 10px 0"><b>Legal Name:</b><br />
+									{!Account.Name}</p>
+
+									<p style="margin: 0 0 10px 0"><b>Trading Name:</b><br />
+									{!Account.TradeName__c}</p>
+
+									<p style="margin: 0 0 10px 0"><b>Business Email:</b><br />
+									{!Account.Email__c}</p>
+
+									<p style="margin: 0 0 10px 0"><b>Address:</b><br />
+									{!Account.BillingAddress}</p>
+
+									<p style="margin: 0 0 10px 0"><b>Phone Number:</b><br />
+									{!Account.Phone}</p>
+
+					                 <p style="margin: 0 0 10px 0">Your agency details will be included in the IATA Agency List which industry suppliers reply upon. If any of these details are incorrect, please let us know at the earliest.</p>
+					                 <p style="margin: 0 0 10px 0">Going forward, please also remember to report any changes to your agency&rsquo;s information or contact details directly through the TIDS Service via the <a href="https://portal.iata.org/s/login/">IATA Customer Portal</a></p>
+                 
+                 					<p style="margin: 0 0 10px 0">Thank you for choosing TIDS, IATA&#39;s program for standard identification of non-accredited travel sellers.</p>
+                  					<p style="margin: 0;">The IATA TIDS Team</p>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<table border="0" cellpadding="0" cellspacing="0" style="text-align: center;" width="100%">
+				<tbody>
+					<tr>
+						<td style="margin: 0; padding: 20px; text-align: center;">
+						<h2 style="margin: 0 auto; padding: 0; font-size: 26px;">You Might Also Need</h2>
+
+						<table border="0" cellpadding="0" cellspacing="0" style="max-width: 768px; margin: 20px auto; padding: 0;" width="100%">
+							<tbody>
+								<tr>
+									<td style="max-width: 245px; text-align: center; font-family: Verdana, Geneva, sans-serif; vertical-align: middle; padding: 0 1%;" width="32%">
+										<a href="https://www.iata.org/en/training-travel-tourism/" title="IATA Travel & Tourism Training">
+											<img alt="IATA Travel & Tourism Training" src="https://iata--c.documentforce.com/servlet/servlet.ImageServer?id=0155J000000kus1&oid=00D2000000008TF&lastMod=1602422903000" style="max-width: 100%; height: auto;" width="245" />
+										</a>
+
+									<p style="margin: 0; padding: 0; font-size: 16px;">
+										<a href="https://www.iata.org/en/training-travel-tourism/" style="color: #000; text-decoration: none;">IATA Travel & Tourism Training
+										</a>
+									</p>
+									</td>
+									
+									<td style="max-width: 245px; text-align: center; font-family: Verdana, Geneva, sans-serif; vertical-align: middle; padding: 0 1%;" width="34%">
+										<a href="https://www.iata.org/idcard/" title="IATA Travel Agent ID Card">
+											<img alt="IATA Travel Agent ID Card" src="https://iata--c.documentforce.com/servlet/servlet.ImageServer?id=0155J000000kurr&oid=00D2000000008TF&lastMod=1602422833000" style="max-width: 100%; height: auto;" width="245" />
+										</a>
+									
+									<p style="margin: 0; padding: 0; font-size: 16px;">
+										<a href="https://www.iata.org/idcard/" style="color: #000; text-decoration: none;">IATA Travel Agent ID Card
+										</a>
+									</p>
+									</td>
+									
+									<td style="max-width: 245px; text-align: center; font-family: Verdana, Geneva, sans-serif; vertical-align: middle; padding: 0 1%;" width="32%">
+										<a href="https://www.iata.org/timaticweb/" title="IATA Timatic Solutions">
+											<img alt="IATA Timatic Solutions" src="https://iata--c.documentforce.com/servlet/servlet.ImageServer?id=0155J000000kurw&oid=00D2000000008TF&lastMod=1602422850000" style="max-width: 100%; height: auto;" width="245" />
+										</a>
+									
+									<p style="margin: 0; padding: 0; font-size: 16px;">
+										<a href="https://www.iata.org/timaticweb/" style="color: #000; text-decoration: none;">IATA Timatic Solutions
+										</a>
+									</p>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<table border="0" cellpadding="0" cellspacing="0" style="background: #525252; padding: 20px;" width="100%">
+				<tbody>
+					<tr>
+						<td style="text-align: center;">
+						<table border="0" cellpadding="0" cellspacing="0" style="max-width: 768px; margin: 0 auto;" width="100%">
+							<tbody>
+								<tr>
+									<td style="margin: 0; padding: 0; text-align: left; font-family: Verdana, Geneva, sans-serif; font-size: 12px; line-height: 25px; color: #fff;">
+									<p>This email was sent to <a href="mailto:{!Contact.Email}" style="color: #fff;">{!Contact.Email}</a>. Please do not reply to this email as this address is not monitored.<br />
+									International Air Transport Association. 800 Square Victoria, Montreal, H4Z 1M1, Canada<br />
+									&copy; Copyright 2020. All rights reserved.<br />
+									<a href="https://www.iata.org" style="color: #fff;">https://www.iata.org</a></p>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</body>
+</html>

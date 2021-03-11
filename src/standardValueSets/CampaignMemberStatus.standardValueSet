@@ -267,6 +267,11 @@
         <label>Consulting (medium)</label>
     </standardValue>
     <standardValue>
+        <fullName>Contacted</fullName>
+        <default>false</default>
+        <label>Contacted</label>
+    </standardValue>
+    <standardValue>
         <fullName>Contact made - need to follow-up</fullName>
         <default>false</default>
         <label>Contact made - need to follow-up</label>
@@ -275,6 +280,11 @@
         <fullName>Contact Wrong Info</fullName>
         <default>false</default>
         <label>Contact Wrong Info</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Converted</fullName>
+        <default>false</default>
+        <label>Converted</label>
     </standardValue>
     <standardValue>
         <fullName>Declined</fullName>
@@ -500,11 +510,6 @@
         <fullName>FS or DS followed up</fullName>
         <default>false</default>
         <label>FS or DS followed up</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Gave Feedback</fullName>
-        <default>false</default>
-        <label>Gave Feedback</label>
     </standardValue>
     <standardValue>
         <fullName>General Info. Sent</fullName>
@@ -737,6 +742,11 @@
         <label>Left Voice Message</label>
     </standardValue>
     <standardValue>
+        <fullName>Lost</fullName>
+        <default>false</default>
+        <label>Lost</label>
+    </standardValue>
+    <standardValue>
         <fullName>Mail returned</fullName>
         <default>false</default>
         <label>Mail returned</label>
@@ -755,6 +765,11 @@
         <fullName>Minimum Too High</fullName>
         <default>false</default>
         <label>Minimum Too High</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Move to Web2</fullName>
+        <default>false</default>
+        <label>Move to Web2</label>
     </standardValue>
     <standardValue>
         <fullName>N/A : Book Reseller</fullName>
@@ -992,11 +1007,6 @@
         <label>No Answer, will follow up</label>
     </standardValue>
     <standardValue>
-        <fullName>No contact</fullName>
-        <default>false</default>
-        <label>No contact</label>
-    </standardValue>
-    <standardValue>
         <fullName>No Contact details</fullName>
         <default>false</default>
         <label>No Contact details</label>
@@ -1205,6 +1215,11 @@
         <fullName>offer created</fullName>
         <default>false</default>
         <label>offer created</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Open</fullName>
+        <default>false</default>
+        <label>Open</label>
     </standardValue>
     <standardValue>
         <fullName>Opened</fullName>
@@ -1660,11 +1675,6 @@
         <fullName>Unrelated LOB</fullName>
         <default>false</default>
         <label>Unrelated LOB</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Usage does not justify cost</fullName>
-        <default>false</default>
-        <label>Usage does not justify cost</label>
     </standardValue>
     <standardValue>
         <fullName>Using DGM - DGOffice</fullName>

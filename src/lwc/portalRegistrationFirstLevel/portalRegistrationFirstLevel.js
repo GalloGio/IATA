@@ -10,8 +10,7 @@ import { LightningElement, track, wire}         from 'lwc';
 import { navigateToPage, getParamsFromPage }    from 'c/navigationUtils';
 import { loadScript, loadStyle }                from 'lightning/platformResourceLoader';
 import RegistrationUtils                        from 'c/registrationUtils';
-import { ShowToastEvent }                       from 'lightning/platformShowToastEvent';
-
+import { getQueryParameters } 					from "c/cwUtilities";
 import getConfig                                from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.getConfig';
 import getUserInformationFromEmail              from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.getUserInformationFromEmail';
 import register                                 from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.simulateRegister';
@@ -20,13 +19,12 @@ import getMetadataCustomerType                  from '@salesforce/apex/PortalReg
 import isGuest                                  from '@salesforce/user/isGuest';
 import getGCSServiceId                          from '@salesforce/apex/ServiceTermsAndConditionsUtils.getPortalServiceId';
 import getWrappedTermsAndConditions				from '@salesforce/apex/ServiceTermsAndConditionsUtils.getWrappedTermsAndConditions';
+import isDisposalEmail							from '@salesforce/apex/GDPR_Helper.isDisposalEmail';
 
 /* ==============================================================================================================*/
 /* External Resources
 /* ==============================================================================================================*/
 import PhoneFormatter16                         from '@salesforce/resourceUrl/PhoneFormatter16';
-import PhoneFormatter                           from '@salesforce/resourceUrl/InternationalPhoneNumberFormat';
-import PhoneFormatterS                          from '@salesforce/resourceUrl/InternationalPhoneNumberFormatS';
 
 /* ==============================================================================================================*/
 /* Custom Labels
@@ -78,22 +76,24 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 	@track isLoading = true;
 	@track config = {};
 	@track userInfo = {}
-	@track registrationForm = { "email" : "",
-								"salutation" : "",
-								"firstName" : "",
-								"lastName" : "",
-								"country" : "",
-								"phone" : "",
-								"sector" : "",
-								"category" : "",
-								"extraChoice" : "",
-								"language" : "",
-								"selectedCustomerType" : "",
-								"termsAndUsage" : false,
-								"termsAndUsageIds" : "",
-								"lmsRedirectFrom" : "",
-								"lmsCourse" : ""
-							  };
+	@track registrationForm = {
+		"email" : "",
+		"salutation" : "",
+		"firstName" : "",
+		"lastName" : "",
+		"country" : "",
+		"phone" : "",
+		"sector" : "",
+		"category" : "",
+		"extraChoice" : "",
+		"language" : "",
+		"selectedCustomerType" : "",
+		"termsAndUsage" : false,
+		"termsAndUsageIds" : "",
+		"lmsRedirectFrom" : "",
+		"lmsCourse" : "",
+		"registrationValidity": ""
+	};
 	@track errorMessage = "";
 	@track displayError = false;
 	@track displaySubmitError = false;
@@ -101,7 +101,6 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 	@track isFrozen = false;
 	@track countryOptions = [];
 	@track languageOptions = [];
-	//@track phoneInitialized = false;
 	@track isSelfRegistrationDisabled = false;
 	@track salutation = { label : "", options : [], display : false };
 	@track sector = { label : "", options : [], display : false };
@@ -114,6 +113,8 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
     phoneRegExp = /^\(?[+]\)?([()\d]*)$/
     @track rerender = false;
 	@track gcsPortalServiceId;
+	@track timeStamp;
+	@track canSubmit;
 
 
 	tcAcceptanceChanged(event){
@@ -231,12 +232,15 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 
 	connectedCallback() {
 
+		this._pageParams = getParamsFromPage();
+
 		const RegistrationUtilsJs = new RegistrationUtils();
 
 		RegistrationUtilsJs.checkUserIsSystemAdmin().then(result=> {
-			if(result == false && isGuest == false){
-				navigateToPage(CSP_PortalPath,{});
-				return;
+			if(!result && !isGuest){
+				let startUrl = this._pageParams.startURL;
+				delete this._pageParams.startURL;
+				navigateToPage(startUrl ? startUrl : CSP_PortalPath,this._pageParams);
 			}
 		});
 
@@ -275,44 +279,39 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 						if(this.isSelfRegistrationEnabled == false){
 							this.isSelfRegistrationDisabled = true;
 							this.isLoading = false;
-							return;
 						}else{
 							//check localStorage
 							if (localStorage != undefined && localStorage.length > 0) {
 								this._restoreState();
 							}else{
 
-								let pageParams = getParamsFromPage();
-								if(pageParams !== undefined){
-									if(pageParams.language !== undefined){
-										this.registrationForm.language = pageParams.language.toLowerCase();
+								if(this._pageParams){
+									if(this._pageParams.language){
+										this.registrationForm.language = this._pageParams.language.toLowerCase();
 									}
 
 									getGCSServiceId({portalServiceName:'Login T&C Checker'}).then(result => {
 										var gcsPortalServiceId = JSON.parse(JSON.stringify(result));
-										this.gcsPortalServiceId = gcsPortalServiceId;
-							
+										this.registrationForm.gcsPortalServiceId = gcsPortalServiceId;
+
 										getWrappedTermsAndConditions({portalServiceId: gcsPortalServiceId, language: this.registrationForm.language}).then(result2 => {
 											var tcs = JSON.parse(JSON.stringify(result2));
-			
+
 											var tcIds = [];
-							
+
 											for(let i = 0; i < tcs.length; i++){
 												tcIds.push(tcs[i].id);
 											}
 											this.registrationForm.termsAndUsageIds = tcIds.join();
 										});
 									});
-									if(pageParams.email !== undefined){
-										this.registrationForm.email = decodeURIComponent(pageParams.email);
-										//this.isEmailFieldReadOnly = true;
-										//this.displayContactForm = true;
-										//this._initializePhoneInput();
-										this.handleNext(null);
+									if(this._pageParams.email !== undefined){
+										this.registrationForm.email = decodeURIComponent(this._pageParams.email);
+										this.handleNext();
 									}
-									if(pageParams.lms !== '' && pageParams.lms !== undefined){
-										this.registrationForm.lmsRedirectFrom = pageParams.lms;
-										this.registrationForm.lmsCourse = pageParams.RelayState;
+									if(this._pageParams.lms){
+										this.registrationForm.lmsRedirectFrom = this._pageParams.lms;
+										this.registrationForm.lmsCourse = this._pageParams.RelayState;
 										this.registrationForm.lmsCourse = this.registrationForm.lmsCourse.replace(new RegExp('&', 'g'), '@_@').replace(new RegExp('%26', 'g'), '@_@').replace(new RegExp('%2526', 'g'), '@_@');
 									}
                    				}
@@ -321,12 +320,12 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
                         }
 					})
 					.catch(error => {
-						console.info('Error: ', JSON.parse(JSON.stringify(error)));
+                        console.error('Error: ', JSON.parse(JSON.stringify(error)));
 						this.isLoading = false;
 					});
 				}
-         	});
 
+			});
 		}.bind(this));
 
 	}
@@ -348,22 +347,15 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 
 	handleNavigateToLogin() {
 
-		if(this.userInfo.hasExistingUser){
-			if(this.userInfo.hasExistingUser == true && this.registrationForm.email.length > 0){
-				let params = {};
-				params.email = this.registrationForm.email;
-				params.redirect = 1;
-				navigateToPage(CSP_PortalPath + 'login',params);
-			}else{
-				navigateToPage(CSP_PortalPath + 'login');
-			}
-		}else{
-			navigateToPage(CSP_PortalPath + 'login');
+		if(this.userInfo.hasExistingUser && this.registrationForm.email){
+			this._pageParams.email = this.registrationForm.email;
+			this._pageParams.redirect = 1;
 		}
 
+		navigateToPage(CSP_PortalPath + 'login', this._pageParams);
 	}
 
-	handleChangeEmail(event){
+	handleChangeEmail(){
 		this.isEmailFieldReadOnly = false;
 		this.displayContactForm = false;
 		this.displayTermsAndUsage = false;
@@ -393,73 +385,81 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 	}
 
 
-	handleNext(event){
+	handleNext(){
 
 		this.isLoading = true;
 		const RegistrationUtilsJs = new RegistrationUtils();
+		this.handleStartTime();
 
 		RegistrationUtilsJs.checkEmailIsValid(`${this.registrationForm.email}`).then(result=> {
-
 			if(result == false){
 				this._showEmailValidationError(true, this.labels.CSP_Invalid_Email);
 				this.isLoading = false;
 			}else{
-				let anonymousEmail = 'iata' + this.registrationForm.email.substring(this.registrationForm.email.indexOf('@'));
-				RegistrationUtilsJs.checkEmailIsDisposable(`${anonymousEmail}`).then(result=> {
-					if(result == 'true'){
-					   //disposable email alert!
+				isDisposalEmail({email : this.registrationForm.email}).then(result => {
+					if(result == true){
 						this._showEmailValidationError(true, this.labels.CSP_Invalid_Email);
 						this.isLoading = false;
-					}else{
-						//check if the email address is associated to a contact and/or a user
-						//1) If there is an existing contact & user with that email -> The user is redirected to the login page,
-						//but the "E-Mail" field is pre-populated and, by default, not editable.
-						//The user can click a Change E-Mail link to empty the E-Mail field and set it editable again.
-						//2) If there is an existing contact but not a user with that email -> Terms and conditions and submit
-						//button is displayed on the form.
-						getUserInformationFromEmail({ email : this.registrationForm.email, LMSRedirectFrom: this.registrationForm.lmsRedirectFrom}).then(result => { 
-							let userInfo = JSON.parse(JSON.stringify(result));
-
-							this.userInfo = userInfo;
-							if(userInfo.hasExistingContact == true){
-								if(userInfo.hasExistingUser == true){
-									//display message of existing user
-									this._showEmailValidationError(true, this.labels.CSP_Registration_Existing_User_Message);
-									this.isLoading = false;
-								}else{
-									//show Terms and Usage field to proceed submit
-									this.displayTermsAndUsage = true;
-									this.isEmailFieldReadOnly = true;
-									this.isLoading = false;
-								}
+					}
+					else{
+						let anonymousEmail = 'iata' + this.registrationForm.email.substring(this.registrationForm.email.indexOf('@'));
+						RegistrationUtilsJs.checkEmailIsDisposable(`${anonymousEmail}`).then(result=> {
+							if(result == 'true'){
+							//disposable email alert!
+								this._showEmailValidationError(true, this.labels.CSP_Invalid_Email);
+								this.isLoading = false;
 							}else{
-								if(userInfo.hasExistingUser == true){
-									//display message of existing user
-									this._showEmailValidationError(true, this.labels.CSP_Registration_Existing_User_Message);
-									this.isLoading = false;
-								}else{
-									if(userInfo.isEmailAddressAvailable == true){
-											//show form
-										if(this.userCountry != ""){
-											this.registrationForm.country = this.userCountry;
+								//check if the email address is associated to a contact and/or a user
+								//1) If there is an existing contact & user with that email -> The user is redirected to the login page,
+								//but the "E-Mail" field is pre-populated and, by default, not editable.
+								//The user can click a Change E-Mail link to empty the E-Mail field and set it editable again.
+								//2) If there is an existing contact but not a user with that email -> Terms and conditions and submit
+								//button is displayed on the form.
+								getUserInformationFromEmail({ email : this.registrationForm.email, LMSRedirectFrom: this.registrationForm.lmsRedirectFrom}).then(result => {
+									let userInfo = JSON.parse(JSON.stringify(result));
+
+									this.userInfo = userInfo;
+									if(userInfo.hasExistingContact == true){
+										if(userInfo.hasExistingUser == true){
+											//display message of existing user
+											this._showEmailValidationError(true, this.labels.CSP_Registration_Existing_User_Message);
+											this.isLoading = false;
+										}else{
+											//show Terms and Usage field to proceed submit
+											this.displayTermsAndUsage = true;
+											this.isEmailFieldReadOnly = true;
+											this.isLoading = false;
 										}
-
-										this.displayContactForm = true;
-										this.isEmailFieldReadOnly = true;
-										this.isLoading = false;
-										this._initializePhoneInput();
-
 									}else{
-											//inform user to pick another email
-										this._showEmailValidationError(true, this.labels.CSP_Invalid_Email);
-										this.isLoading = false;
+										if(userInfo.hasExistingUser == true){
+											//display message of existing user
+											this._showEmailValidationError(true, this.labels.CSP_Registration_Existing_User_Message);
+											this.isLoading = false;
+										}else{
+											if(userInfo.isEmailAddressAvailable == true){
+													//show form
+												if(this.userCountry != ""){
+													this.registrationForm.country = this.userCountry;
+												}
+
+												this.displayContactForm = true;
+												this.isEmailFieldReadOnly = true;
+												this.isLoading = false;
+												this._initializePhoneInput();
+
+											}else{
+													//inform user to pick another email
+												this._showEmailValidationError(true, this.labels.CSP_Invalid_Email);
+												this.isLoading = false;
+											}
+										}
 									}
-								}
+								})
+								.catch(error => {
+									console.info('Error: ', error);
+									this.isLoading = false;
+								});
 							}
-						})
-						.catch(error => {
-                            console.info('Error: ', error);
-							this.isLoading = false;
 						});
 					}
 				});
@@ -467,8 +467,10 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 		});
 	}
 
-	handleSubmit(event){
+	handleSubmit(){
 
+		if(typeof this.canSubmit === 'undefined')
+			this.canSubmit = (Math.floor(Date.now() / 1000) - this.timeStamp <= 15) ?  false : true; //Check 15 sec to populate form
 		this.isLoading = true;
         if(this.registrationForm.phone.length < 5){
             this.registrationForm.phone = "";
@@ -476,31 +478,42 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 
 		var contactId = this.userInfo.contactId;
 		var accountId = this.userInfo.accountId;
+		
+		if(getQueryParameters().sourceService){
+			this.registrationForm.sourceService = getQueryParameters().sourceService;
+		}
 
-		register({ registrationForm : JSON.stringify(this.registrationForm),
-				   customerType : JSON.stringify(this.selectedMetadataCustomerType),
-				   contactId : contactId,
-				   accountId : accountId,
-				   userInfo : JSON.stringify(this.userInfo)
-				 }).then(result => {
-			var dataAux = JSON.parse(JSON.stringify(result));
+		if(this.registrationForm.registrationValidity == "" && this.canSubmit){ // Validate hidden field and Timer 
+			register({ registrationForm : JSON.stringify(this.registrationForm),
+				customerType : JSON.stringify(this.selectedMetadataCustomerType),
+				contactId : contactId,
+				accountId : accountId,
+				urlParams : this._pageParams,
+				userInfo : JSON.stringify(this.userInfo)
+			}).then(result => {
+				var dataAux = JSON.parse(JSON.stringify(result));
 
-			if(dataAux.isSuccess == true){
-				//todo: show success message
-				this.isRegistrationComplete = true;
-				this.isLoading = false;
-			}else{
-				this.isLoading = false;
+				if(dataAux.isSuccess == true){
+					//todo: show success message
+					this.isRegistrationComplete = true;
+					this.isLoading = false;
+				}else{
+					this.isLoading = false;
+					this._showSubmitError(true, 'Error Creating User');
+				}
+
+			})
+			.catch(error => {
+				var dataAux = JSON.parse(JSON.stringify(error));
+				console.info(dataAux);
 				this._showSubmitError(true, 'Error Creating User');
-			}
-
-		})
-		.catch(error => {
-			var dataAux = JSON.parse(JSON.stringify(error));
-            console.info(dataAux);
-			this._showSubmitError(true, 'Error Creating User');
+				this.isLoading = false;
+			});
+		}
+		else{
+			this.isRegistrationComplete = true; //Fake Success
 			this.isLoading = false;
-		});
+		}
 
 	}
 
@@ -732,7 +745,14 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 		this.displaySubmitError = false;
 	}
 
+	handleRegistrationValidity(event){
+		this.registrationForm.registrationValidity = event.target.value;
+	}
 
+	handleStartTime(event) {
+        // Set Time Start
+        this.timeStamp = Math.floor(Date.now() / 1000);
+    }
 	/* ==============================================================================================================*/
 	/* Helper Methods
 	/* ==============================================================================================================*/

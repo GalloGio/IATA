@@ -823,9 +823,64 @@
                     <label>New</label>
                 </value>
                 <value>
+                    <fullName>Airline Distribution</fullName>
+                    <default>false</default>
+                    <label>Airline Distribution</label>
+                </value>
+                <value>
+                    <fullName>Airport Infrastructure</fullName>
+                    <default>false</default>
+                    <label>Airport Infrastructure</label>
+                </value>
+                <value>
                     <fullName>Cargo</fullName>
                     <default>false</default>
                     <label>Cargo</label>
+                </value>
+                <value>
+                    <fullName>Dangerous-Goods</fullName>
+                    <default>false</default>
+                    <label>Dangerous-Goods</label>
+                </value>
+                <value>
+                    <fullName>Economics-and-Traffic-Results</fullName>
+                    <default>false</default>
+                    <label>Economics-and-Traffic-Results</label>
+                </value>
+                <value>
+                    <fullName>Finance-and-Accounting</fullName>
+                    <default>false</default>
+                    <label>Finance-and-Accounting</label>
+                </value>
+                <value>
+                    <fullName>Ground Operations</fullName>
+                    <default>false</default>
+                    <label>Ground Operations</label>
+                </value>
+                <value>
+                    <fullName>Legal-and-Regulatory</fullName>
+                    <default>false</default>
+                    <label>Legal-and-Regulatory</label>
+                </value>
+                <value>
+                    <fullName>Operations</fullName>
+                    <default>false</default>
+                    <label>Operations</label>
+                </value>
+                <value>
+                    <fullName>Passenger</fullName>
+                    <default>false</default>
+                    <label>Passenger</label>
+                </value>
+                <value>
+                    <fullName>Safety</fullName>
+                    <default>false</default>
+                    <label>Safety</label>
+                </value>
+                <value>
+                    <fullName>Security</fullName>
+                    <default>false</default>
+                    <label>Security</label>
                 </value>
                 <value>
                     <fullName>Coding</fullName>
@@ -858,11 +913,6 @@
                     <label>Finance</label>
                 </value>
                 <value>
-                    <fullName>Finance-and-Accounting</fullName>
-                    <default>false</default>
-                    <label>Finance-and-Accounting</label>
-                </value>
-                <value>
                     <fullName>Forecasts-and-Statistic</fullName>
                     <default>false</default>
                     <label>Forecasts-and-Statistic</label>
@@ -871,11 +921,6 @@
                     <fullName>Law-and-Regulations</fullName>
                     <default>false</default>
                     <label>Law-and-Regulations</label>
-                </value>
-                <value>
-                    <fullName>Passenger</fullName>
-                    <default>false</default>
-                    <label>Passenger</label>
                 </value>
                 <value>
                     <fullName>Regulations</fullName>
@@ -891,11 +936,6 @@
                     <fullName>Scheduling</fullName>
                     <default>false</default>
                     <label>Scheduling</label>
-                </value>
-                <value>
-                    <fullName>Security</fullName>
-                    <default>false</default>
-                    <label>Security</label>
                 </value>
                 <value>
                     <fullName>Standards-and-Recommended-Practices</fullName>
@@ -925,7 +965,11 @@
             </valueSetDefinition>
             <valueSettings>
                 <controllingFieldValue>publications</controllingFieldValue>
-                <valueName>New</valueName>
+                <valueName>Airline Distribution</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>publications</controllingFieldValue>
+                <valueName>Airport Infrastructure</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>publications</controllingFieldValue>
@@ -933,23 +977,11 @@
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>publications</controllingFieldValue>
-                <valueName>Coding</valueName>
+                <valueName>Dangerous-Goods</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>publications</controllingFieldValue>
-                <valueName>Directories</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>publications</controllingFieldValue>
-                <valueName>Economics</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>publications</controllingFieldValue>
-                <valueName>Exchange-Rates</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>publications</controllingFieldValue>
-                <valueName>Finance</valueName>
+                <valueName>Economics-and-Traffic-Results</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>publications</controllingFieldValue>
@@ -957,11 +989,15 @@
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>publications</controllingFieldValue>
-                <valueName>Forecasts-and-Statistic</valueName>
+                <valueName>Ground Operations</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>publications</controllingFieldValue>
-                <valueName>Law-and-Regulations</valueName>
+                <valueName>Legal-and-Regulatory</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>publications</controllingFieldValue>
+                <valueName>Operations</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>publications</controllingFieldValue>
@@ -969,35 +1005,11 @@
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>publications</controllingFieldValue>
-                <valueName>Regulations</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>publications</controllingFieldValue>
-                <valueName>Safety-and-Operations</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>publications</controllingFieldValue>
-                <valueName>Scheduling</valueName>
+                <valueName>Safety</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>publications</controllingFieldValue>
                 <valueName>Security</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>publications</controllingFieldValue>
-                <valueName>Standards-and-Recommended-Practices</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>publications</controllingFieldValue>
-                <valueName>Tax-Data</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>publications</controllingFieldValue>
-                <valueName>User-Charges</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>publications</controllingFieldValue>
-                <valueName>Baggage</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>data-and-statistics</controllingFieldValue>
@@ -2405,6 +2417,11 @@ SIS Charge Code Type.</description>
                     <label>Airlines. Magazine Subscription</label>
                 </value>
                 <value>
+                    <fullName>Airline Sustainability Reporting Handbook</fullName>
+                    <default>false</default>
+                    <label>Airline Sustainability Reporting Handbook</label>
+                </value>
+                <value>
                     <fullName>Airport Development Reference Manual</fullName>
                     <default>false</default>
                     <label>Airport Development Reference Manual</label>
@@ -2528,6 +2545,11 @@ SIS Charge Code Type.</description>
                     <fullName>DGR Training Books</fullName>
                     <default>false</default>
                     <label>DGR Training Books</label>
+                </value>
+                <value>
+                    <fullName>Disruption Management Manual</fullName>
+                    <default>false</default>
+                    <label>Disruption Management Manual</label>
                 </value>
                 <value>
                     <fullName>eAWBLink</fullName>
@@ -2725,6 +2747,11 @@ SIS Charge Code Type.</description>
                     <label>Other DGR Products</label>
                 </value>
                 <value>
+                    <fullName>Passenger Accessibility Operations Manual</fullName>
+                    <default>false</default>
+                    <label>Passenger Accessibility Operations Manual</label>
+                </value>
+                <value>
                     <fullName>Passenger Agency Conference Resolutions Manual</fullName>
                     <default>false</default>
                     <label>Passenger Agency Conference Resolutions Manual</label>
@@ -2733,6 +2760,11 @@ SIS Charge Code Type.</description>
                     <fullName>Passenger Data Exchange</fullName>
                     <default>false</default>
                     <label>Passenger Data Exchange</label>
+                </value>
+                <value>
+                    <fullName>Passenger Data Exchange Database</fullName>
+                    <default>false</default>
+                    <label>Passenger Data Exchange Database</label>
                 </value>
                 <value>
                     <fullName>Passenger Fare Construction Toolkit</fullName>
@@ -2783,6 +2815,11 @@ SIS Charge Code Type.</description>
                     <fullName>Revenue Accounting Manual</fullName>
                     <default>false</default>
                     <label>Revenue Accounting Manual</label>
+                </value>
+                <value>
+                    <fullName>Secured Simplified Borders Manual</fullName>
+                    <default>false</default>
+                    <label>Secured Simplified Borders Manual</label>
                 </value>
                 <value>
                     <fullName>Security Management System Manual</fullName>
@@ -5530,6 +5567,15 @@ The product will only appear on the Online Store when the date entered in this f
         <trackHistory>false</trackHistory>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Smart_Facility_Remote_Validation__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>This field has to be set manually to True for the product that matches Smart Facility Remote Validation</description>
+        <externalId>false</externalId>
+        <label>Smart Facility Remote Validation</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>Source__c</fullName>
@@ -13254,6 +13300,14 @@ The product will only appear on the Online Store when the date entered in this f
         <picklistValues>
             <picklist>Display_Ecom_Topic__c</picklist>
             <values>
+                <fullName>Airline Distribution</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport Infrastructure</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Baggage</fullName>
                 <default>false</default>
             </values>
@@ -13266,11 +13320,19 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Dangerous-Goods</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Directories</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Economics</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Economics-and-Traffic-Results</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -13294,11 +13356,23 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Ground Operations</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Law-and-Regulations</fullName>
                 <default>false</default>
             </values>
             <values>
+                <fullName>Legal-and-Regulatory</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>New</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Operations</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -13307,6 +13381,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Regulations</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Safety</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -14471,6 +14549,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Airline Sustainability Reporting Handbook</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Airlines Magazine Subscription</fullName>
                 <default>false</default>
             </values>
@@ -14572,6 +14654,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Dangerous Goods Regulations ES</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Disruption Management Manual</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -14727,11 +14813,19 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Passenger Accessibility Operations Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Passenger Agency Conference Resolutions Manual</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Passenger Data Exchange</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passenger Data Exchange Database</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -14772,6 +14866,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Revenue Accounting Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Secured Simplified Borders Manual</fullName>
                 <default>false</default>
             </values>
             <values>

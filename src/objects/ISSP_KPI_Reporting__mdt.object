@@ -48,6 +48,11 @@
                     <default>false</default>
                     <label>Send Email</label>
                 </value>
+                <value>
+                    <fullName>Pending Closure</fullName>
+                    <default>false</default>
+                    <label>Pending Closure</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -139,6 +144,11 @@
                     <fullName>Send Email</fullName>
                     <default>false</default>
                     <label>Send Email</label>
+                </value>
+                <value>
+                    <fullName>Task</fullName>
+                    <default>false</default>
+                    <label>Task</label>
                 </value>
             </valueSetDefinition>
         </valueSet>

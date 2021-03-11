@@ -1,11 +1,18 @@
 <template>
 
-        <template if:true={isExpired}>
+        <template if:true={displayExpiredMessage}>
             <!-- slds-m-vertical_small -->
             <article class="slds-card expiredCard"> 
                     <div class="slds-p-vertical_x-small;">
                             <!-- <p class="slds-p-horizontal_small text-xxxsmall">{labels.ISSP_Case_Closed_More_Than_2_Months}</p> -->
                         <p class="slds-p-horizontal_small caseClosed2W"><img src={infoIcon}> <span>{labels.ISSP_Case_Closed_More_Than_2_Months}</span></p>
+                    </div>
+            </article>
+        </template>
+        <template if:true={isExpiredDGR}>
+            <article class="slds-card expiredCard"> 
+                    <div class="slds-p-vertical_x-small;">
+                        <p class="slds-p-horizontal_small caseClosed2W"><img src={infoIcon}> <span>{labels.Case_Closed_For_DGR}</span></p>
                     </div>
             </article>
         </template>

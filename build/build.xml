@@ -239,6 +239,11 @@
 
   <target name="deployFlowStep">
     <antcall target="deployFlows" />
+    <antcall target="deployProfileStep" />
+  </target>
+
+  <target name="deployProfileStep">
+    <antcall target="deployProfiles" />
   </target>
 
 
@@ -288,7 +293,7 @@
   </target>
 
   <target name="deployLayouts">
-    <printlist list="${layout}" message="Deploying LAYOUT" />
+    <printlist list="${layout}" message="Deploying Layout, Custom Apps, Tabs, Custom Metadata" />
 
     <createDirectories folderList="${layout}" />
     <fecthFiles folderList="${layout}" packageName="layoutPackage" />
@@ -297,10 +302,19 @@
   </target>
 
   <target name="deployFlows">
-    <printlist list="${flow}" message="Deploying Flow" />
+    <printlist list="${flow}" message="Deploying Flow, Data Categories, Sharing Rules" />
 
     <createDirectories folderList="${flow}" />
     <fecthFiles folderList="${flow}" packageName="flowPackage" />
+
+    <deployCodeLocal deleteDirectories="true" />
+  </target>
+
+  <target name="deployProfiles">
+    <printlist list="${profile}" message="Deploying Profiles" />
+
+    <createDirectories folderList="${profile}" />
+    <fecthFiles folderList="${profile}" packageName="profilePackage" />
 
     <deployCodeLocal deleteDirectories="true" />
   </target>
@@ -404,6 +418,16 @@
     <mkdir dir="${basedir}/${sfdc.retrieveTarget}" />
     <sf:retrieve retrieveTarget="${basedir}/${sfdc.retrieveTarget}" username="${sfdc.username}" password="${sfdc.password}" serverurl="${sfdc.serverurl}" unpackaged="src/retrieveLabelPackage.xml" />
     <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/retrieveLabelPackage.xml" />
+    <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src" />
+  </target>
+
+  <target name="getProfiles">
+    <echo level="info">
+      Retrieving the server's version of Profiles
+    </echo>
+    <mkdir dir="${basedir}/${sfdc.retrieveTarget}" />
+    <sf:retrieve retrieveTarget="${basedir}/${sfdc.retrieveTarget}" username="${sfdc.username}" password="${sfdc.password}" serverurl="${sfdc.serverurl}" unpackaged="src/retrieveProfiles.xml" />
+    <move file="${basedir}/${sfdc.retrieveTarget}/package.xml" tofile="src/retrieveProfiles.xml" />
     <move file="${basedir}/${sfdc.retrieveTarget}" tofile="src" />
   </target>
 

@@ -282,7 +282,7 @@
         </values>
     </businessProcesses>
     <compactLayoutAssignment>SYSTEM</compactLayoutAssignment>
-    <enableFeeds>false</enableFeeds>
+    <enableFeeds>true</enableFeeds>
     <enableHistory>true</enableHistory>
     <externalSharingModel>Private</externalSharingModel>
     <fieldSets>
@@ -468,6 +468,7 @@
             </filterItems>
             <isOptional>false</isOptional>
         </lookupFilter>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
@@ -481,12 +482,14 @@
         <referenceTo>User</referenceTo>
         <relationshipName>Opportunities1</relationshipName>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
     <fields>
         <fullName>Amount</fullName>
+        <trackFeedHistory>true</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
     </fields>
@@ -496,6 +499,7 @@
         <description>We received the artwork from  the advertiser</description>
         <externalId>false</externalId>
         <label>Artwork Was Provided</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -506,6 +510,7 @@
         <description>Insertion and Billing information were received</description>
         <externalId>false</externalId>
         <label>Agreement or Billing Info Received</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -515,6 +520,7 @@
         <externalId>false</externalId>
         <label>Billing Date</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
@@ -525,6 +531,7 @@
         <description>Blocks alerts to specified users on opportunity updates.</description>
         <externalId>false</externalId>
         <label>Block alerts on updates</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -535,6 +542,7 @@
         <label>Booth Number</label>
         <length>100</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -542,6 +550,7 @@
     </fields>
     <fields>
         <fullName>CampaignId</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
@@ -555,17 +564,20 @@
         <relationshipLabel>Opportunities</relationshipLabel>
         <relationshipName>Opportunities</relationshipName>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
     <fields>
         <fullName>CloseDate</fullName>
+        <trackFeedHistory>true</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
     </fields>
     <fields>
         <fullName>ContractId</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
@@ -575,6 +587,7 @@
         <externalId>false</externalId>
         <label>Contract Expiry Date</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
@@ -584,6 +597,7 @@
         <externalId>false</externalId>
         <label>Country/Area Manager</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -863,6 +877,7 @@
         <externalId>false</externalId>
         <label>Country Manager</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -1179,6 +1194,7 @@
         <inlineHelpText>Select the country manager who referred the lead for this opportunity. If the list is not up-to-date, please ask your Salesforce administrator to make the necessary changes.</inlineHelpText>
         <label>Country Manager</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -1470,6 +1486,7 @@
     </fields>
     <fields>
         <fullName>CurrencyIsoCode</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
     </fields>
@@ -1479,6 +1496,7 @@
         <externalId>false</externalId>
         <label>Current Cycle End Date</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
@@ -1502,6 +1520,7 @@
         <label>Main Competitor(s)</label>
         <length>100</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -1514,6 +1533,7 @@
         <label>Order Number</label>
         <length>8</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -1558,6 +1578,7 @@
     </fields>
     <fields>
         <fullName>Description</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
     </fields>
@@ -1568,6 +1589,7 @@
         <externalId>false</externalId>
         <inlineHelpText>Only check this box if the contract is renewed early and the old contract is replaced before its end date.</inlineHelpText>
         <label>Early Renewal</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -1579,6 +1601,7 @@
         <label>Event Source</label>
         <length>25</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -1594,6 +1617,7 @@
         <relationshipLabel>Opportunities</relationshipLabel>
         <relationshipName>Opportunities</relationshipName>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
@@ -1612,6 +1636,7 @@
         <relationshipLabel>Opportunities (Future renewal)</relationshipLabel>
         <relationshipName>Opportunities1</relationshipName>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
@@ -1635,6 +1660,7 @@
         <label>Free Copy of Pub (Ad)</label>
         <length>30</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -1647,6 +1673,7 @@
         <label>GDI Offer Id</label>
         <length>255</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -1658,6 +1685,7 @@
         <externalId>false</externalId>
         <label>Geographic Region</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -1722,6 +1750,7 @@
         <externalId>false</externalId>
         <label>IATA country</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -3229,6 +3258,7 @@
         <label>Invoice Number</label>
         <length>100</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -3240,6 +3270,7 @@
         <externalId>false</externalId>
         <label>Invoice Post Date</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
@@ -3267,11 +3298,13 @@
     </fields>
     <fields>
         <fullName>IsPrivate</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
     </fields>
     <fields>
         <fullName>LeadSource</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -3295,6 +3328,7 @@
         <inlineHelpText>Please select the most representative value among the options available.</inlineHelpText>
         <label>Main Loss Reason</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -3388,6 +3422,7 @@
     </fields>
     <fields>
         <fullName>Name</fullName>
+        <trackFeedHistory>true</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
     </fields>
@@ -3400,6 +3435,7 @@
         <precision>18</precision>
         <required>false</required>
         <scale>2</scale>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
@@ -3407,6 +3443,7 @@
     </fields>
     <fields>
         <fullName>NextStep</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
     </fields>
@@ -3416,6 +3453,7 @@
         <externalId>false</externalId>
         <label>Offer exchange rate date</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
@@ -3439,6 +3477,7 @@
         <externalId>false</externalId>
         <label>Opportunity Segment</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -3483,6 +3522,7 @@
         <externalId>false</externalId>
         <label>Opportunity Notes</label>
         <length>32000</length>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
@@ -3513,6 +3553,7 @@
         <label>Order Number / CCF</label>
         <length>200</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -3520,12 +3561,14 @@
     </fields>
     <fields>
         <fullName>OwnerId</fullName>
+        <trackFeedHistory>true</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
     <fields>
         <fullName>PartnerAccountId</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
@@ -3536,6 +3579,7 @@
         <label>Payer SAP Number</label>
         <length>50</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -3547,6 +3591,7 @@
         <externalId>false</externalId>
         <label>Payment Status</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -3597,6 +3642,7 @@
     </fields>
     <fields>
         <fullName>Probability</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
     </fields>
@@ -3606,6 +3652,7 @@
         <externalId>false</externalId>
         <label>Product Family</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -3719,6 +3766,7 @@
         <referenceTo>User</referenceTo>
         <relationshipName>Opportunities</relationshipName>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
@@ -3729,6 +3777,7 @@
         <externalId>false</externalId>
         <label>RCRM Validation Status</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -3763,6 +3812,7 @@
         <externalId>false</externalId>
         <label>Region</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -3808,6 +3858,7 @@
         <externalId>false</externalId>
         <label>Rejection Reason</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>TextArea</type>
@@ -3821,6 +3872,7 @@
         <relationshipLabel>Opportunities</relationshipLabel>
         <relationshipName>Opportunities</relationshipName>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
@@ -3835,6 +3887,7 @@
         <relationshipLabel>Opportunities</relationshipLabel>
         <relationshipName>Opportunities</relationshipName>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
@@ -3845,6 +3898,7 @@
         <externalId>false</externalId>
         <label>Reminder date</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
@@ -3858,6 +3912,7 @@
         <precision>18</precision>
         <required>false</required>
         <scale>0</scale>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
@@ -3869,6 +3924,7 @@
         <description>Indicates whether it is the Sales Manager or the Product Manager who will handle the renewal of the contract. Used by the RCRM project.</description>
         <externalId>false</externalId>
         <label>Renewal under Sales Responsibility</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -3892,6 +3948,7 @@
         <label>SABA Order Number</label>
         <length>6</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -3903,6 +3960,7 @@
         <label>SAP Sold To #</label>
         <length>8</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -3913,6 +3971,7 @@
         <externalId>false</externalId>
         <label>SP All Areas</label>
         <length>32768</length>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
@@ -3925,6 +3984,7 @@
         <inlineHelpText>Used to add colaborators that played an important role in the opportunity. When the source is a Country Manager, please use the Lead Source field instead.</inlineHelpText>
         <label>Sales Collaborators</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
@@ -3962,9 +4022,19 @@
                     <label>Boris Padilla</label>
                 </value>
                 <value>
+                    <fullName>Bruno Roussel</fullName>
+                    <default>false</default>
+                    <label>Bruno Roussel</label>
+                </value>
+                <value>
                     <fullName>Burkhard Lahr</fullName>
                     <default>false</default>
                     <label>Burkhard Lahr</label>
+                </value>
+                <value>
+                    <fullName>Caroline Karanja</fullName>
+                    <default>false</default>
+                    <label>Caroline Karanja</label>
                 </value>
                 <value>
                     <fullName>Claudine Breton</fullName>
@@ -3985,6 +4055,11 @@
                     <fullName>Dominic Freienstein</fullName>
                     <default>false</default>
                     <label>Dominic Freienstein</label>
+                </value>
+                <value>
+                    <fullName>Ewemade Atake</fullName>
+                    <default>false</default>
+                    <label>Ewemade Atake</label>
                 </value>
                 <value>
                     <fullName>Gurjit Gill</fullName>
@@ -4030,6 +4105,11 @@
                     <fullName>Madeleine Dufour</fullName>
                     <default>false</default>
                     <label>Madeleine Dufour</label>
+                </value>
+                <value>
+                    <fullName>Mariem Agouzoul</fullName>
+                    <default>false</default>
+                    <label>Mariem Agouzoul</label>
                 </value>
                 <value>
                     <fullName>Michael Huntington</fullName>
@@ -4116,6 +4196,7 @@
         <externalId>false</externalId>
         <label>Sales Channel</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -4180,6 +4261,7 @@
         <externalId>false</externalId>
         <label>Sponsorship Description - Events</label>
         <length>32000</length>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
@@ -4187,6 +4269,7 @@
     </fields>
     <fields>
         <fullName>StageName</fullName>
+        <trackFeedHistory>true</trackFeedHistory>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -4197,17 +4280,20 @@
         <externalId>false</externalId>
         <label>Current Cycle Start Date</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
     <fields>
         <fullName>TotalOpportunityQuantity</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
     </fields>
     <fields>
         <fullName>Type</fullName>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -4217,6 +4303,7 @@
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
         <label>Will Renew</label>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
@@ -4228,6 +4315,7 @@
         <label>Current Generator(s)</label>
         <length>100</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -4239,6 +4327,7 @@
         <externalId>false</externalId>
         <label>Delivery/Installation Status</label>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
@@ -4270,6 +4359,7 @@
         <label>Main Competitor(s)</label>
         <length>100</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -4282,6 +4372,7 @@
         <label>Order Number</label>
         <length>8</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -4294,6 +4385,7 @@
         <label>Tracking Number</label>
         <length>12</length>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -4309,6 +4401,7 @@
         <relationshipLabel>Opportunities</relationshipLabel>
         <relationshipName>Opportunities</relationshipName>
         <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
@@ -4776,6 +4869,7 @@
         <label>SD AFR Opportunities</label>
         <language>en_US</language>
     </listViews>
+    <recordTypeTrackFeedHistory>false</recordTypeTrackFeedHistory>
     <recordTypeTrackHistory>false</recordTypeTrackHistory>
     <recordTypes>
         <fullName>FieldSales</fullName>
@@ -6491,7 +6585,15 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>Bruno Roussel</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Burkhard Lahr</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Caroline Karanja</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6508,6 +6610,10 @@
             </values>
             <values>
                 <fullName>Dominic Freienstein</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ewemade Atake</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6540,6 +6646,10 @@
             </values>
             <values>
                 <fullName>Madeleine Dufour</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mariem Agouzoul</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -8458,7 +8568,15 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>Bruno Roussel</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Burkhard Lahr</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Caroline Karanja</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -8475,6 +8593,10 @@
             </values>
             <values>
                 <fullName>Dominic Freienstein</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ewemade Atake</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -8507,6 +8629,10 @@
             </values>
             <values>
                 <fullName>Madeleine Dufour</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mariem Agouzoul</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -10293,7 +10419,19 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>Bruno Roussel</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Burkhard Lahr</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Caroline Karanja</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ewemade Atake</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -10306,6 +10444,10 @@
             </values>
             <values>
                 <fullName>Louise Denis</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mariem Agouzoul</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -12168,7 +12310,15 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>Bruno Roussel</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Burkhard Lahr</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Caroline Karanja</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -12181,6 +12331,10 @@
             </values>
             <values>
                 <fullName>Daniel Shemi</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ewemade Atake</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -12209,6 +12363,10 @@
             </values>
             <values>
                 <fullName>Madeleine Dufour</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mariem Agouzoul</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -14024,7 +14182,19 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>Bruno Roussel</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Burkhard Lahr</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Caroline Karanja</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ewemade Atake</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -14053,6 +14223,10 @@
             </values>
             <values>
                 <fullName>Madeleine Dufour</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mariem Agouzoul</fullName>
                 <default>false</default>
             </values>
             <values>

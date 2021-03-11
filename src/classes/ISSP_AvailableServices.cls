@@ -31,7 +31,8 @@ public with sharing class ISSP_AvailableServices{
 	public Boolean provError {get; set;}
 	public Integer failedCount  {get; set;}
 	public Map<String, String> helpTextPortalRoles {get; set;}
-
+	public Boolean isCNSAgency {get; private set;}
+	public Contact con {get; set;}
 	Integer count = 0;
 
 	//CNS
@@ -166,6 +167,11 @@ public with sharing class ISSP_AvailableServices{
 	}
 
 	public ISSP_AvailableServices(){
+
+		con = DAL_ISSP.getContact(DAL_ISSP.getUser(Userinfo.getUserId()).ContactId);
+
+		isCNSAgency = con.Account.Sector__c == AMS_Utils.SECTOR_CARGO && con.Account.IATA_ISO_Country__r.CNS_Country__c && con.Account.CNS_Account__c;
+
 		this.isModalErrorMessageEnable = false;
 
 		this.helpTextPortalRoles = new Map<String, String>();
@@ -750,8 +756,8 @@ public with sharing class ISSP_AvailableServices{
 		}
 
 		Boolean isAdmin = isPortalAdminUser();
-		Portal_Applications__c parentApp = [SELECT Id, Cannot_be_managed_by_portal_admin__c, Auto_approved_for__c FROM Portal_Applications__c WHERE Id=:applicationId];
-		if(isRequestableWithoutApproval(isAdmin,parentApp,currentPortalUser.Profile)) {
+		Portal_Applications__c parentApp = [SELECT Id, Cannot_be_managed_by_portal_admin__c, Auto_approved_for__c, Requires_Service_Admin_Approval__c FROM Portal_Applications__c WHERE Id=:applicationId];
+		if(isRequestableWithoutApproval(isAdmin,parentApp,currentPortalUser.Profile) || !parentApp.Requires_Service_Admin_Approval__c) {
 			appRight = 'Access Granted';
 			res = 'okauto';
 		}
@@ -770,7 +776,7 @@ public with sharing class ISSP_AvailableServices{
 		String res = 'ok';
 
 		String appRight = 'Access Requested';
-		if(applicationName=='Standards Setting Workspace')
+		if(applicationName=='Standards Setting Workspace' || applicationName == 'E&F APPS')
 			appRight = 'Access Granted';
 
 

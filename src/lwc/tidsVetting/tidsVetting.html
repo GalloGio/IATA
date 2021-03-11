@@ -1,0 +1,579 @@
+<template>
+	<div class="slds-tabs_default slds-tabs_card">
+		<template if:true={spinner}>
+			<lightning-spinner
+				alternative-text="Loading"
+				size="large"
+			></lightning-spinner>
+		</template>
+		<lightning-tabset variant="scoped" active-tab-value="">
+			<lightning-tab label="All" value="tab1" onactive={tabselect}>
+				<!-- Data Table Start -->
+				<table
+					class="slds-table slds-table_cell-buffer slds-table_bordered"
+					aria-describedby="all cases"
+				>
+					<thead>
+						<tr class="slds-line-height_reset">
+							<th class="" scope="col">
+								<div class="slds-truncate" title="Case Number">Case Number</div>
+							</th>
+							<th class="" scope="col">
+								<div class="slds-truncate" title="Case Owner">Case Owner</div>
+							</th>
+							<th class="" scope="col">
+								<div class="slds-truncate" title="Subject">Subject</div>
+							</th>
+							<th class="" scope="col">
+								<div class="slds-truncate" title="Account Name">
+									Account Name
+								</div>
+							</th>
+							<th class="" scope="col">
+								<div class="slds-truncate" title="Status">Status</div>
+							</th>
+							<th class="" scope="col">
+								<div class="slds-truncate" title="Actions">Actions</div>
+							</th>
+						</tr>
+					</thead>
+					<!-- Table Body Start -->
+					<tbody>
+						<template for:each={currentPageData} for:item="tidsCase">
+							<tr class="slds-hint-parent" key={tidsCase.Id}>
+								<th data-label="Case Number" scope="row">
+									<div class="slds-truncate" title="Case Number">
+										<div class="slds-truncate" title="Start Vetting">
+											<a
+												target="_self"
+												href="#"
+												onclick={navigateToView}
+												data-target-id={tidsCase.Id}
+												>{tidsCase.CaseNumber}</a
+											>
+										</div>
+									</div>
+								</th>
+								<th data-label="Owner Name" scope="row">
+									<div class="slds-truncate" title="Case Owner">
+										{tidsCase.Owner.Name}
+									</div>
+								</th>
+								<td data-label="Subject">
+									<div class="slds-truncate" title="Subject">
+										{tidsCase.Subject}
+									</div>
+								</td>
+								<td data-label="Account Name">
+									<div class="slds-truncate" title="Account Name">
+										{tidsCase.Account.Name}
+									</div>
+								</td>
+								<td data-label="Status">
+									<div class="slds-truncate" title="Status">
+										{tidsCase.Status}
+									</div>
+								</td>
+								<td data-label="Vetting">
+									<template if:true={tidsCase.allowvetting}>
+										<template if:true={tidsCase.startvetting}>
+											<div class="slds-truncate" title="Start Vetting">
+												<a
+													target="_self"
+													onclick={startVetting}
+													data-target-id={tidsCase.Id}
+													>Start Vetting</a
+												>
+											</div>
+										</template>
+										<template if:true={tidsCase.resumevetting}>
+											<div class="slds-truncate" title="Resume Vetting">
+												<a target="_blank" href={tidsCase.Url}
+													>Resume Vetting</a
+												>
+											</div>
+										</template>
+										<template if:true={tidsCase.assigntome}>
+											<div class="slds-truncate" title="Take Case Ownership">
+												<a
+													target="_blank"
+													href="#"
+													onclick={pickVetting}
+													data-target-id={tidsCase.Id}
+													>Take Case Ownership</a
+												>
+											</div>
+										</template>
+									</template>
+								</td>
+							</tr>
+						</template>
+					</tbody>
+					<!-- Table Body End -->
+				</table>
+			</lightning-tab>
+			<lightning-tab label="Pending Review" value="tab2" onactive={tabselect}>
+				<!-- Data Table Start -->
+				<table
+					class="slds-table slds-table_cell-buffer slds-table_bordered"
+					aria-describedby="all cases"
+				>
+					<thead>
+						<tr class="slds-line-height_reset">
+							<th class="" scope="col">
+								<div class="slds-truncate" title="Case Number">Case Number</div>
+							</th>
+							<th class="" scope="col">
+								<div class="slds-truncate" title="Case Owner">Case Owner</div>
+							</th>
+							<th class="" scope="col">
+								<div class="slds-truncate" title="Subject">Subject</div>
+							</th>
+							<th class="" scope="col">
+								<div class="slds-truncate" title="Account Name">
+									Account Name
+								</div>
+							</th>
+							<th class="" scope="col">
+								<div class="slds-truncate" title="Status">Status</div>
+							</th>
+							<th class="" scope="col">
+								<div class="slds-truncate" title="Actions">Actions</div>
+							</th>
+						</tr>
+					</thead>
+					<!-- Table Body Start -->
+					<tbody>
+						<template for:each={currentPageData} for:item="tidsCase">
+							<tr class="slds-hint-parent" key={tidsCase.Id}>
+								<th data-label="Case Number" scope="row">
+									<div class="slds-truncate" title="Case Number">
+										<div class="slds-truncate" title="Start Vetting">
+											<a
+												target="_self"
+												href="#"
+												onclick={navigateToView}
+												data-target-id={tidsCase.Id}
+												>{tidsCase.CaseNumber}</a
+											>
+										</div>
+									</div>
+								</th>
+								<th data-label="Owner Name" scope="row">
+									<div class="slds-truncate" title="Case Owner">
+										{tidsCase.Owner.Name}
+									</div>
+								</th>
+								<td data-label="Subject">
+									<div class="slds-truncate" title="Subject">
+										{tidsCase.Subject}
+									</div>
+								</td>
+								<td data-label="Account Name">
+									<div class="slds-truncate" title="Account Name">
+										{tidsCase.Account.Name}
+									</div>
+								</td>
+								<td data-label="Status">
+									<div class="slds-truncate" title="Status">
+										{tidsCase.Status}
+									</div>
+								</td>
+
+								<td data-label="Vetting">
+									<template if:true={tidsCase.allowvetting}>
+										<template if:true={tidsCase.startvetting}>
+											<div class="slds-truncate" title="Start Vetting">
+												<a
+													target="_self"
+													onclick={startVetting}
+													data-target-id={tidsCase.Id}
+													>Start Vetting</a
+												>
+											</div>
+										</template>
+										<template if:true={tidsCase.resumevetting}>
+											<div class="slds-truncate" title="Resume Vetting">
+												<a target="_blank" href={tidsCase.Url}
+													>Resume Vetting</a
+												>
+											</div>
+										</template>
+										<template if:true={tidsCase.assigntome}>
+											<div class="slds-truncate" title="Take Case Ownership">
+												<a
+													target="_blank"
+													href="#"
+													onclick={pickVetting}
+													data-target-id={tidsCase.Id}
+													>Take Case Ownership</a
+												>
+											</div>
+										</template>
+									</template>
+								</td>
+							</tr>
+						</template>
+					</tbody>
+					<!-- Table Body End -->
+				</table>
+			</lightning-tab>
+			<lightning-tab label="Pending Customer" value="tab3" onactive={tabselect}>
+				<!-- Data Table Start -->
+				<table
+					class="slds-table slds-table_cell-buffer slds-table_bordered"
+					aria-describedby="all Pending cases"
+				>
+					<thead>
+						<tr class="slds-line-height_reset">
+							<th class="" scope="col">
+								<div class="slds-truncate" title="Case Number">Case Number</div>
+							</th>
+							<th class="" scope="col">
+								<div class="slds-truncate" title="Case Owner">Case Owner</div>
+							</th>
+							<th class="" scope="col">
+								<div class="slds-truncate" title="Subject">Subject</div>
+							</th>
+							<th class="" scope="col">
+								<div class="slds-truncate" title="Account Name">
+									Account Name
+								</div>
+							</th>
+							<th class="" scope="col">
+								<div class="slds-truncate" title="Status">Status</div>
+							</th>
+							<th class="" scope="col">
+								<div class="slds-truncate" title="Actions">Actions</div>
+							</th>
+						</tr>
+					</thead>
+					<!-- Table Body Start -->
+					<tbody>
+						<template for:each={cases} for:item="tidsCase">
+							<tr class="slds-hint-parent" key={tidsCase.Id}>
+								<th data-label="Case Number" scope="row">
+									<div class="slds-truncate" title="Case Number">
+										<div class="slds-truncate" title="Start Vetting">
+											<a
+												target="_self"
+												href="#"
+												onclick={navigateToView}
+												data-target-id={tidsCase.Id}
+												>{tidsCase.CaseNumber}</a
+											>
+										</div>
+									</div>
+								</th>
+								<th data-label="Owner Name" scope="row">
+									<div class="slds-truncate" title="Case Owner">
+										{tidsCase.Owner.Name}
+									</div>
+								</th>
+								<td data-label="Subject">
+									<div class="slds-truncate" title="Subject">
+										{tidsCase.Subject}
+									</div>
+								</td>
+								<td data-label="Account Name">
+									<div class="slds-truncate" title="Account Name">
+										{tidsCase.Account.Name}
+									</div>
+								</td>
+								<td data-label="Status">
+									<div class="slds-truncate" title="Status">
+										{tidsCase.Status}
+									</div>
+								</td>
+
+								<td data-label="Vetting"></td>
+							</tr>
+						</template>
+					</tbody>
+					<!-- Table Body End -->
+				</table>
+			</lightning-tab>
+			<lightning-tab label="My Cases" value="tab4" onactive={tabselect}>
+				<!-- Data Table Start -->
+				<table
+					class="slds-table slds-table_cell-buffer slds-table_bordered"
+					aria-describedby="my cases"
+				>
+					<thead>
+						<tr class="slds-line-height_reset">
+							<th class="" scope="col">
+								<div class="slds-truncate" title="Case Number">Case Number</div>
+							</th>
+							<th class="" scope="col">
+								<div class="slds-truncate" title="Case Owner">Case Owner</div>
+							</th>
+							<th class="" scope="col">
+								<div class="slds-truncate" title="Subject">Subject</div>
+							</th>
+							<th class="" scope="col">
+								<div class="slds-truncate" title="Account Name">
+									Account Name
+								</div>
+							</th>
+							<th class="" scope="col">
+								<div class="slds-truncate" title="Status">Status</div>
+							</th>
+							<th class="" scope="col">
+								<div class="slds-truncate" title="Actions">Actions</div>
+							</th>
+						</tr>
+					</thead>
+					<!-- Table Body Start -->
+					<tbody>
+						<template for:each={currentPageData} for:item="tidsCase">
+							<tr class="slds-hint-parent" key={tidsCase.Id}>
+								<th data-label="Case Number" scope="row">
+									<div class="slds-truncate" title="Case Number">
+										<div class="slds-truncate" title="Start Vetting">
+											<a
+												target="_self"
+												href="#"
+												onclick={navigateToView}
+												data-target-id={tidsCase.Id}
+												>{tidsCase.CaseNumber}</a
+											>
+										</div>
+									</div>
+								</th>
+								<th data-label="Opportunity Name" scope="row">
+									<div class="slds-truncate" title="Case Owner">
+										{tidsCase.Owner.Name}
+									</div>
+								</th>
+								<td data-label="Account Name">
+									<div class="slds-truncate" title="Subject">
+										{tidsCase.Subject}
+									</div>
+								</td>
+								<td data-label="Close Date">
+									<div class="slds-truncate" title="Account Name">
+										{tidsCase.Account.Name}
+									</div>
+								</td>
+								<td data-label="Prospecting">
+									<div class="slds-truncate" title="Status">
+										{tidsCase.Status}
+									</div>
+								</td>
+								<td data-label="Confidence">
+									<template if:true={tidsCase.allowvetting}>
+										<template if:true={tidsCase.startvetting}>
+											<div class="slds-truncate" title="Start Vetting">
+												<a
+													target="_self"
+													onclick={startVetting}
+													data-target-id={tidsCase.Id}
+													>Start Vetting</a
+												>
+											</div>
+										</template>
+										<template if:true={tidsCase.resumevetting}>
+											<div class="slds-truncate" title="Resume Vetting">
+												<a target="_blank" href={tidsCase.Url}
+													>Resume Vetting</a
+												>
+											</div>
+										</template>
+										<template if:true={tidsCase.assigntome}>
+											<div class="slds-truncate" title="Take Case Ownership">
+												<a
+													target="_blank"
+													href="#"
+													onclick={pickVetting}
+													data-target-id={tidsCase.Id}
+													>Take Case Ownership</a
+												>
+											</div>
+										</template>
+									</template>
+								</td>
+							</tr>
+						</template>
+					</tbody>
+					<!-- Table Body End -->
+				</table>
+			</lightning-tab>
+			<lightning-tab label="TIDS Admin Role Assignment" value="tab5" onactive={tabselect}>
+				<div class="slds-m-top_small slds-m-bottom_medium">
+					<p class="slds-p-horizontal_small">Use this tool to assign the TIDS HO Primary Administrator to a Contact by providing the Salesforce Id’s of the target Account and Contact.</p>
+					<p class="slds-p-horizontal_small">Note the following conditions:</p>
+					<p class="slds-p-horizontal_small">- Account must be an Approved TIDS Head Office Account with no existing TIDS HO Primary Administrator</p>
+					<p class="slds-p-horizontal_small">- Contact must be under the selected account, with an email address and an Active Status</p>
+				</div>
+				<div class="slds-m-top_small slds-m-bottom_medium">
+					<lightning-input
+						type="text"
+						label="Account Id"
+						placeholder="Enter the Salesforce Account ID"
+						id="accountid"
+						name="accountid"
+						value={accountid}
+						onchange={changeField}
+						required=true
+					>
+					</lightning-input>
+					<lightning-input
+						type="text"
+						label="Contact Id"
+						placeholder="Enter the Salesforce Contact ID"
+						id="contactid"
+						name="contactid"
+						value={contactid}
+						onchange={changeField}
+						required=true
+					>
+					</lightning-input>
+				</div>
+				<lightning-card  title="Query">						
+					<p class="slds-p-horizontal_small"><Strong>
+						SELECT Id 
+						FROM Contact 
+						WHERE AccountId='{accountid}'
+							AND Id='{contactid}'
+							AND Email!=null
+							AND Status__c='Active'
+							AND (account.Location_Type__c='HO' 
+								and account.RecordType.DeveloperName='IATA_Agency'
+								and account.Status__c='Approved' 
+								and account.Location_Class__c='T')</Strong></p>
+				</lightning-card>
+				<!-- Base variant: Makes a button look like a link -->
+				<div class="slds-m-top_small slds-m-bottom_medium">
+					<lightning-button variant="Neutral" label="Verification" title="Verifies the validity of the account and contact" onclick={handleVerifcationClick} class="slds-m-left_x-small" disabled={verifybutton}></lightning-button>
+				</div>
+				<template if:true={isverifaction}>
+					<lightning-card  title="Account and Contact Info">						
+						<p class="slds-p-horizontal_small">Account Name:<Strong>{infocreaterole.accountname}</Strong></p>
+						<p class="slds-p-horizontal_small">Contact Name:<Strong>{infocreaterole.firstname} {infocreaterole.lastname}</Strong></p>
+					</lightning-card>						
+				</template>
+				<template if:true={isissue}>
+					<lightning-card  title="Issue">						
+						<p class="slds-p-horizontal_small"><Strong>{reasoncreaterole}</Strong></p>
+					</lightning-card>							
+				</template>
+				<template if:true={issucess}>
+					<lightning-card  title="Success">						
+						<p class="slds-p-horizontal_small"><Strong>The TIDS Primary HO Administrator has been assigned.</Strong></p>
+					</lightning-card>							
+				</template>					
+				<div class="slds-m-top_small slds-m-bottom_medium">
+					<lightning-button variant="Neutral" label="Assign Admin Role" title="Assigns The Admin Role" onclick={handleCreateClick} class="slds-m-left_x-small" disabled={createbutton}></lightning-button>
+					<lightning-button variant="Neutral" label="Reset" title="Resets the process" onclick={handleResetClick} class="slds-m-left_x-small" disabled={createbutton}></lightning-button>
+				</div>
+			</lightning-tab>
+			<lightning-tab label="TIDS Cascading Process" value="tab6" onactive={tabselect}>
+				<div class="slds-m-top_small slds-m-bottom_medium">
+					<p class="slds-p-horizontal_small">Use this tool to align corporate details between the Head Office and its branches.</p>
+					<p class="slds-p-horizontal_small">The tool will cascade corporate details (Legal Name + Company Type + Ownership Details + Location Address to VB's) from the Head Office to the BR's and VB's.</p> 
+					<p class="slds-p-horizontal_small">Note the following conditions:</p>
+					<p class="slds-p-horizontal_small">- Account must be an Approved TIDS Head Office Account</p>
+				</div>
+				<div class="slds-m-top_small slds-m-bottom_medium">
+					<lightning-input
+						type="text"
+						label="Account Id"
+						placeholder="Enter up to 20 Salesforce Account Id's, Semicolon separated"
+						id="accountlist"
+						name="accountlist"
+						value={accountlist}
+						onchange={changeCascadingField}
+						required=true
+					>
+					</lightning-input>
+					<lightning-input
+						type="password"
+						label="Password"
+						placeholder="Enter the Cascading Process password"
+						id="cascadingkey"
+						name="cascadingkey"
+						value={cascadingkey}
+						onchange={changeCascadingField}
+						required=true
+					>
+					</lightning-input>
+				</div>
+				<lightning-card  title="Query">						
+					<p class="slds-p-horizontal_small"><Strong>
+						SELECT Id 
+						FROM Account
+						WHERE Id='{accountlist}'
+							AND (Location_Type__c='HO' 
+								and RecordType.DeveloperName='IATA_Agency'
+								and Status__c='Approved' 
+								and Location_Class__c='T')</Strong></p>
+				</lightning-card>
+				<!-- Base variant: Makes a button look like a link -->
+				<div class="slds-m-top_small slds-m-bottom_medium">
+					<lightning-button variant="Neutral" label="Verification" title="Verifies the validity of the account" onclick={handleVerifcationCascadingClick} class="slds-m-left_x-small" disabled={verifycascadingbutton}></lightning-button>
+				</div>
+				<template if:true={isissuecascading}>
+					<lightning-card  title="Issue">						
+						<p class="slds-p-horizontal_small"><Strong>{reasoncascading}</Strong></p>
+					</lightning-card>							
+				</template>
+				<template if:true={issucesscascading}>
+					<lightning-card  title="Success">						
+						<p class="slds-p-horizontal_small"><Strong>The Cascading Process has executed successfully.</Strong></p>
+					</lightning-card>							
+				</template>					
+				<div class="slds-m-top_small slds-m-bottom_medium">
+					<lightning-button variant="Neutral" label="Run Cascading Process" title="" onclick={handleCreateCascadingClick} class="slds-m-left_x-small" disabled={createcascadingbutton}></lightning-button>
+					<lightning-button variant="Neutral" label="Reset" title="Resets the process" onclick={handleResetCascadingClick} class="slds-m-left_x-small" disabled={createcascadingbutton}></lightning-button>
+				</div>
+			</lightning-tab>
+		</lightning-tabset>
+		<!-- Data Table End -->
+		<!-- Pagination Code Beginning -->
+		<template if:true={needsPagination}>
+			<lightning-layout-item size="12" padding="around-medium">
+				<div class="slds-align_absolute-center">
+					<ul class="slds-button-group-row">
+						<li class="slds-button-group-item">
+							<button
+								class="slds-button slds-button_neutral"
+								onclick={onPrev}
+								disabled={hasPrev}
+							>
+								prev
+							</button>
+						</li>
+						<template for:each={pagesList} for:item="pageNumber">
+							<li class="slds-button-group-item" key={pageNumber.indexPage}>
+								<button
+									data-id={pageNumber.indexPage}
+									class="slds-button slds-button_neutral"
+									onclick={onPageClick}
+									disabled={pageNumber.isCurrentPage}
+								>
+									{pageNumber.indexPage}
+								</button>
+							</li>
+						</template>
+						<li class="slds-button-group-item">
+							<button
+								class="slds-button slds-button_neutral"
+								onclick={onNext}
+								disabled={hasNext}
+							>
+								next
+							</button>
+						</li>
+					</ul>
+				</div>
+			</lightning-layout-item>
+		</template>
+		<!-- Pagination Code Beginning -->
+	</div>
+	<c-tids-modal-msg
+		if:true={showConfimationModal}
+		open={showConfimationModal}
+		message={modalDefaultMessage}
+		action={modalAction}
+	></c-tids-modal-msg>
+</template>

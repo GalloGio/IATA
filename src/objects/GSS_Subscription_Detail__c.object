@@ -674,7 +674,7 @@
         <filters>
             <field>NAME</field>
             <operation>equals</operation>
-            <value>A-S00001256</value>
+            <value>A-S00013941</value>
         </filters>
         <label>01-Search by Subscription Number</label>
         <language>en_US</language>
@@ -739,9 +739,6 @@
         <columns>FileRecipent_iiNet_TDF_Recipient__c</columns>
         <columns>Calendar_Next_Submission_Date__c</columns>
         <columns>Calendar_New_Submission_Effective_Date__c</columns>
-        <columns>FileRecipientEmail__c</columns>
-        <columns>FileRecipientFirstName__c</columns>
-        <columns>FileRecipientLastName__c</columns>
         <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
@@ -788,7 +785,7 @@
         <filters>
             <field>NAME</field>
             <operation>equals</operation>
-            <value>A-S00003333</value>
+            <value>A-S00000594</value>
         </filters>
         <label>10-Search by File Subscription Details</label>
         <language>en_US</language>

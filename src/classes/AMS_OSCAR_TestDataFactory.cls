@@ -4,7 +4,7 @@ public class AMS_OSCAR_TestDataFactory
 	public static void createOSCARtestData()
 	{	
 		insert new Apex_Setting__c(Name='RT valid to reopen attachment trigger', Text_1__c='CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia, ComplaintIDFS,'
-                                           +  'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
+											+  'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
 		AMS_Person__c per = new AMS_Person__c(Name = 'teste', User__c = UserInfo.getUserId());
 		insert per;
 
@@ -312,8 +312,8 @@ public class AMS_OSCAR_TestDataFactory
 	public static void createCargoAgencyOSCARtestData()
 	{
 
-		IATA_ISO_Country__c ctry1 = new IATA_ISO_Country__c (Name='FR',ISO_Code__c='FR',AMS_Default_State__c = 'FR');
-		IATA_ISO_Country__c ctry2 = new IATA_ISO_Country__c (Name='AR',ISO_Code__c='AR',AMS_Default_State__c = 'AR');
+		IATA_ISO_Country__c ctry1 = new IATA_ISO_Country__c (Name='FR',ISO_Code__c='FR',AMS_Default_State__c = 'FR', Region__c = 'Americas');
+		IATA_ISO_Country__c ctry2 = new IATA_ISO_Country__c (Name='AR',ISO_Code__c='AR',AMS_Default_State__c = 'AR', Region__c = 'Europe');
 		insert new List<IATA_ISO_Country__c>{ctry1, ctry2};
 
 		AMS_Country_Specific_Attribute__c csa1 = new AMS_Country_Specific_Attribute__c(RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c', 'DGR_Minimum_Requirements'), Location_Class__c='R', Minimum_DGR_BR__c=1, Minimum_DGR_HO__c=1, IATA_ISO_Country__c=ctry1.Id);
@@ -332,11 +332,11 @@ public class AMS_OSCAR_TestDataFactory
 
 		insert cargoHO;
 
-		Account cargoBR = new Account(IATA_ISO_Country__c = ctry1.id, RecordTypeId = accountRT, IATACode__c='12345670001',
+		Account cargoBR = new Account(IATA_ISO_Country__c = ctry1.id, RecordTypeId = accountRT, IATACode__c='12345670002',
 									Name='Test Cargo BR',Short_Name__c='Test Cargo', Sector__c = AMS_Utils.SECTOR_CARGO,
 									Location_Class__c = 'C', Location_type__c = 'BR', Reason_for_creation__c = 'none', ParentId = cargoHO.Id,
 									Status__c = AMS_Utils.ACC_S9_APPROVED);
-        insert cargoBR;
+		insert cargoBR;
 
 		AMS_OSCAR__c OSCAR = new AMS_OSCAR__c(Account__c = cargoHO.id, RecordTypeId = AMS_Utils.RECTYPE_NEW, Process__c =AMS_Utils.new_HO);
 		insert OSCAR;
@@ -433,6 +433,154 @@ public class AMS_OSCAR_TestDataFactory
 		oscar.Oscar_Communication_Case_Id__c = oscarCase.Id;
 		OSCAR.AMS_Online_Accreditation__c = stagingArea.Id;
 		update oscar;
+
+	}
+
+	public static AMS_Settlement_System__c createOperationAndItsAttributes(string OperationName){
+		AMS_Settlement_System__c iss = new AMS_Settlement_System__c(Name = OperationName, RecordTypeId = AMS_Utils.RECTYPE_BSP);
+		insert iss;
+		insert createOperationAttributes(iss);
+		return iss;
+	}
+	
+	public static list<ANG_BSP_Attributes__c> createOperationAttributes(AMS_Settlement_System__c iss){
+		List<ANG_BSP_Attributes__c> bspAttrLst = new List<ANG_BSP_Attributes__c>();
+
+		bspAttrLst.add(
+			createBSPAttribute(
+				iss.Id,
+				ANG_RHCHelper.RECTYPE_CASH_CONDITION_CONFIG,
+				NULL,
+				NULL,
+				TRUE,
+				NULL, NULL, NULL, NULL, NULL, NULL, true
+			)
+		);
+
+		bspAttrLst.add(
+			createBSPAttribute(
+				iss.Id,
+				ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG,
+				ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_TIER,
+				'A',
+				false,
+				'1', double.valueof(2.00), double.valueof(0.00), double.valueof(0.00), double.valueof('-1000000000000000'), double.valueof(5000000.00), true
+			)
+		);
+
+		bspAttrLst.add(
+			createBSPAttribute(
+				iss.Id,
+				ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG,
+				ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_TIER,
+				'B',
+				false,
+				'1', double.valueof(1.5), double.valueof(0.00), double.valueof(0.00), double.valueof('-1000000000000000'), double.valueof(5000000.00), true
+			)
+		);
+
+		bspAttrLst.add(
+			createBSPAttribute(
+				iss.Id,
+				ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG,
+				ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_TIER,
+				'C',
+				false,
+				'1', double.valueof(1.00), double.valueof(0.00), double.valueof(0.00), double.valueof('-1000000000000000'), double.valueof(5000000.00), true
+			)
+		);
+
+		bspAttrLst.add(
+			createBSPAttribute(
+				iss.Id,
+				ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG,
+				ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_TIER,
+				'A',
+				false,
+				'2', double.valueof(1.5), double.valueof(9500000.00), double.valueof(5000000.00), double.valueof(5000000.00), double.valueof(10000000.00), true
+			)
+		);
+
+		bspAttrLst.add(
+			createBSPAttribute(
+				iss.Id,
+				ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG,
+				ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_TIER,
+				'B',
+				false,
+				'2', double.valueof(1.12), double.valueof(7000000.00), double.valueof(5000000.00), double.valueof(5000000.00), double.valueof(10000000.00), true
+			)
+		);
+
+		bspAttrLst.add(
+			createBSPAttribute(
+				iss.Id,
+				ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG,
+				ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_TIER,
+				'C',
+				false,
+				'2', double.valueof(1.00), double.valueof(0.00), double.valueof(0.00), double.valueof(5000000.00), double.valueof(10000000.00), true
+			)
+		);
+
+		bspAttrLst.add(
+			createBSPAttribute(
+				iss.Id,
+				ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG,
+				ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_TIER,
+				'A',
+				false,
+				'3', double.valueof(1.25), double.valueof(17000000.00), double.valueof(10000000.00), double.valueof(10000000.00), double.valueof('1000000000000000'), true
+			)
+		);
+
+		bspAttrLst.add(
+			createBSPAttribute(
+				iss.Id,
+				ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG,
+				ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_TIER,
+				'B',
+				false,
+				'3', double.valueof(1.05), double.valueof(12600000.00), double.valueof(10000000.00), double.valueof(10000000.00), double.valueof('1000000000000000'), true
+			)
+		);
+
+		bspAttrLst.add(
+			createBSPAttribute(
+				iss.Id,
+				ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG,
+				ANG_RHCHelper.RHC_AMOUNT_CALC_TYPE_TIER,
+				'C',
+				false,
+				'3', double.valueof(1.00), double.valueof(0.00), double.valueof(0.00), double.valueof(10000000.00), double.valueof('1000000000000000'), true
+			)
+		);
+
+		return bspAttrLst;
+	}
+
+	private static ANG_BSP_Attributes__c createBSPAttribute(String bspId, String recTypeId, String calcType, String riskStatus, Boolean limitCash
+															, string Tier, Double AmntAtRiskMult, Double TopUp, Double Deduct, Double AmntAtRiskFrom, Double AmntAtRiskTo, boolean bCreateSaamCase){
+
+		ANG_BSP_Attributes__c attr = new ANG_BSP_Attributes__c();
+
+		attr.BSP__c = bspId;
+		attr.RecordTypeId = recTypeId;
+		attr.RHC_Amnt_Calc_Type__c = calcType;
+		attr.FS_Percentage__c = 80;
+		attr.Limit_Cash_Condition__c = limitCash;
+
+		if(riskStatus != NULL){attr.Risk_Status__c =riskStatus;}
+
+		if(Tier != NULL){attr.Tier__c =Tier;}
+		if(AmntAtRiskMult != NULL){attr.Amount_At_Risk_Multiplier__c =AmntAtRiskMult;}
+		if(TopUp != NULL){attr.Tier_RHC_Formula_TopUp_USD__c =TopUp;}
+		if(Deduct != NULL){attr.Tier_RHC_Formula_Deduct_USD__c =Deduct;}
+		if(AmntAtRiskFrom != NULL){attr.Amount_At_Risk_From_USD__c =AmntAtRiskFrom;}
+		if(AmntAtRiskTo != NULL){attr.Amount_At_Risk_To_USD__c =AmntAtRiskTo;}
+		attr.create_SAAM_Case__c = bCreateSaamCase;
+
+		return attr;
 
 	}
 }

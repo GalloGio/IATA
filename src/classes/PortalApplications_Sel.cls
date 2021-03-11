@@ -18,13 +18,15 @@ public with sharing class PortalApplications_Sel extends Selector {
 			Portal_Applications__c.Not_ICH_Airline__c,
 			Portal_Applications__c.Record_type_for_App_Rigth__c,
 			Portal_Applications__c.Requestable__c,
+			Portal_Applications__c.Requires_Level2_Registration__c,
 			Portal_Applications__c.Restricted_App__c,
 			Portal_Applications__c.Visible__c,
 			Portal_Applications__c.Service_Description__c,
 			Portal_Applications__c.Cannot_be_managed_by_portal_admin__c,
 			Portal_Applications__c.Service_Description_Label__c,
 			Portal_Applications__c.ANG_Restrict_by_Agency_Sector__c,
-			Portal_Applications__c.ANG_Accredited_Agents_Only__c
+			Portal_Applications__c.ANG_Accredited_Agents_Only__c,
+			Portal_Applications__c.Requires_Service_Admin_Approval__c
 		};
 	}
 

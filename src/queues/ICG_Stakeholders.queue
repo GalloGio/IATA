@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Queue xmlns="http://soap.sforce.com/2006/04/metadata">
+    <doesSendEmailToMembers>false</doesSendEmailToMembers>
+    <name>OneSource Admins</name>
+    <queueMembers>
+        <users>
+            <user>sullivanb@iata.org</user>
+            <user>voelklm@iata.org</user>
+            <user>varelap@iata.org</user>
+        </users>
+    </queueMembers>
+    <queueSobject>
+        <sobjectType>ICG_Account_Role_Detail__c</sobjectType>
+    </queueSobject>
+    <queueSobject>
+        <sobjectType>ICG_Contact_Role_Detail__c</sobjectType>
+    </queueSobject>
+    <queueSobject>
+        <sobjectType>ICG_Notification__c</sobjectType>
+    </queueSobject>
+</Queue>

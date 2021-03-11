@@ -549,9 +549,11 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="label" width="50%">Does the Airline provide a Standard Commission?:<br/><br/><i>Standard Commission will be applied where AWB Billing record indicates Commission is to be paid on the billing file uploaded in CASSlink.</i></td>
-                    <td width="10%">{!newForm.Pay_Standard_Commission__c}</td>
-                    <td width="40%">{!IF(newForm.Pay_Standard_Commission__c =="Yes","the rate is ","")}{!IF(newForm.Pay_Standard_Commission__c =="Yes",newForm.Commission_Rate__c,"")}{!IF(newForm.Pay_Standard_Commission__c =="Yes","%","")}</td>
+                    <td width="40%">
+                        {!IF(newForm.Pay_Commission_to_agents__c =="Yes","the rate is ","")}
+                        {!IF(newForm.Pay_Commission_to_agents__c =="Yes",newForm.Commission_Rate__c,"")}
+                        {!IF(newForm.Pay_Commission_to_agents__c =="Yes","%","")}
+                    </td>
                 </tr>           
             </table>
             <br/>

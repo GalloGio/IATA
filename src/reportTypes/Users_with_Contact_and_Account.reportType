@@ -864,6 +864,16 @@
             <field>Contact.Account.RecordType</field>
             <table>User</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact.Account.CreatedDate</field>
+            <table>User</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Contact.Account.IATACode__c</field>
+            <table>User</table>
+        </columns>
         <masterLabel>Account</masterLabel>
     </sections>
     <sections>

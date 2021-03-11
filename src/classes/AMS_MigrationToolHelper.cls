@@ -826,10 +826,6 @@ public without sharing class AMS_MigrationToolHelper {
 			//  For IEP BANK Acc Setup force flag to false by default ('ISS Portal - Make case invisible' worflow cannot run for this process)
 			if(AMS_Utils.IEP_PROCESSES.contains(processType)){
 				caseToProcess.Visible_on_ISS_Portal__c = true;
-				 //assign to queue
-				 Database.DMLOptions dmo = new Database.DMLOptions();
-				 dmo.assignmentRuleHeader.useDefaultRule = true;
-				 caseToProcess.setOptions(dmo);
 			}else if (processType == AMS_Utils.NGGDI){
 				caseToProcess.Visible_on_ISS_Portal__c = false;
 			}
@@ -906,7 +902,7 @@ public without sharing class AMS_MigrationToolHelper {
 		'MSO Member Sales Office',
 		'GSA General Sales Agent',
 		'GSSA Cargo',
-		'Handling Agent'
+		'Airport Handling Agent'
 		};
 
 		Account acct = c.Account;
@@ -922,7 +918,7 @@ public without sharing class AMS_MigrationToolHelper {
 			return 'The process only starts if the account has the proper process / location class.';
 		if(acct.Category__c == 'TIDS Agent' && acct.Location_Class__c != 'T')
 			return 'The process only starts if the account has the proper process / location class.';
-		if(acct.Category__c == 'Handling Agent' && acct.Location_Class__c != 'X')
+		if(acct.Category__c == 'Airport Handling Agent' && acct.Location_Class__c != 'X')
 			return 'The process only starts if the account has the proper process / location class.';
 
 

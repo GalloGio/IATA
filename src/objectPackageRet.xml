@@ -24,6 +24,8 @@
         <members>OpportunityCompetitor</members>
         <members>OpportunityContactRole</members>
         <members>OpportunityLineItem</members>
+        <members>Order</members>
+        <members>OrderItem</members>
         <members>PartnerRole</members>
         <members>Pricebook2</members>
         <members>PricebookEntry</members>

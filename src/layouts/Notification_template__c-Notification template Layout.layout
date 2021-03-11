@@ -83,6 +83,10 @@
                 <behavior>Edit</behavior>
                 <field>Identifier__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>LanguageLocaleKey__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>

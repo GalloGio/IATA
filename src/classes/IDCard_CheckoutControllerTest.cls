@@ -93,9 +93,4 @@ public class IDCard_CheckoutControllerTest{
 		ctrl = new IDCard_CheckoutSingleApplication();
 		ctrl.updateRecord();
 	}
-
-
-	public static TestMethod void TestProcess(){
-		InitIDCard_CheckoutControllerTest();
-	}
 }

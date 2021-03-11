@@ -382,22 +382,15 @@
         <columns>System__c</columns>
         <columns>User__c</columns>
         <columns>Web_Service__c</columns>
+        <columns>Success__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>System__c</field>
             <operation>contains</operation>
             <value>bsplink</value>
         </filters>
-        <filters>
-            <field>Error_Code__c</field>
-            <operation>notEqual</operation>
-        </filters>
-        <filters>
-            <field>Web_Service__c</field>
-            <operation>equals</operation>
-            <value>ProcessBSPLinkFromCase</value>
-        </filters>
         <label>BSPlink</label>
+        <language>en_US</language>
     </listViews>
     <listViews>
         <fullName>Debug_View</fullName>
@@ -495,6 +488,29 @@
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>Platform_Events_Helper</fullName>
+        <columns>NAME</columns>
+        <columns>OBJECT_ID</columns>
+        <columns>Error_Message__c</columns>
+        <columns>Method__c</columns>
+        <columns>System__c</columns>
+        <columns>Web_Service__c</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>System__c</field>
+            <operation>contains</operation>
+            <value>Platform Events for</value>
+        </filters>
+        <filters>
+            <field>CREATED_DATE</field>
+            <operation>greaterThan</operation>
+            <value>1/1/2020 12:00 AM</value>
+        </filters>
+        <label>Platform Events Helper</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>SAP_syncCustomerWithSAP1</fullName>
         <columns>NAME</columns>
         <columns>Error_Code__c</columns>
@@ -573,6 +589,49 @@
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>Sidra_Case_Creation_External</fullName>
+        <columns>NAME</columns>
+        <filterScope>Everything</filterScope>
+        <label>Sidra Case Creation-External</label>
+    </listViews>
+    <listViews>
+        <fullName>Specific_Day</fullName>
+        <booleanFilter>1 AND 2 and 3</booleanFilter>
+        <columns>NAME</columns>
+        <columns>OBJECT_ID</columns>
+        <columns>Contact__c</columns>
+        <columns>Error_Code__c</columns>
+        <columns>Error_Message__c</columns>
+        <columns>Finished__c</columns>
+        <columns>Input_Description__c</columns>
+        <columns>Login_Ip__c</columns>
+        <columns>Method__c</columns>
+        <columns>Started__c</columns>
+        <columns>Success__c</columns>
+        <columns>System__c</columns>
+        <columns>Web_Service__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>CREATED_DATE</field>
+            <operation>equals</operation>
+            <value>3/2/2021 12:00 AM</value>
+        </filters>
+        <filters>
+            <field>Method__c</field>
+            <operation>notEqual</operation>
+            <value>checkIpCountry</value>
+        </filters>
+        <filters>
+            <field>Method__c</field>
+            <operation>notEqual</operation>
+            <value>PlatformEvents_Helper.publishEvents</value>
+        </filters>
+        <label>Specific Day</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>Today_errors_logs</fullName>
         <booleanFilter>1 AND (2 OR 3)</booleanFilter>
         <columns>NAME</columns>
@@ -631,7 +690,7 @@
         <filters>
             <field>CREATED_DATE</field>
             <operation>equals</operation>
-            <value>10/1/2019 12:00 AM</value>
+            <value>12/10/2020 12:00 AM</value>
         </filters>
         <filters>
             <field>Method__c</field>
@@ -656,7 +715,7 @@
         <filters>
             <field>CREATED_DATE</field>
             <operation>equals</operation>
-            <value>TODAY</value>
+            <value>1/18/2021 12:00 AM</value>
         </filters>
         <filters>
             <field>System__c</field>

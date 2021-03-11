@@ -79,6 +79,7 @@
         <columns>NAME</columns>
         <columns>Region__c</columns>
         <columns>Sectors__c</columns>
+        <columns>Topic__c</columns>
         <columns>Language__c</columns>
         <columns>ButtonId__c</columns>
         <columns>DeploymentId__c</columns>

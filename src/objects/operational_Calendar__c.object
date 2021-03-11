@@ -809,7 +809,7 @@
         <externalId>false</externalId>
         <label>Advice Day</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
     </fields>
@@ -858,7 +858,7 @@
         <externalId>false</externalId>
         <label>BSP Settlement Date</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -877,7 +877,7 @@
         <externalId>false</externalId>
         <label>Billing Output Generation</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
     </fields>
@@ -896,7 +896,7 @@
         <externalId>false</externalId>
         <label>Call Day</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
     </fields>
@@ -910,7 +910,7 @@
         <relationshipLabel>Operational Calendars</relationshipLabel>
         <relationshipName>Operational_Calendars</relationshipName>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -920,7 +920,7 @@
         <label>Cycle</label>
         <length>3</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -939,7 +939,7 @@
         <externalId>false</externalId>
         <label>Early Call Day</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
     </fields>
@@ -981,7 +981,7 @@
         <externalId>false</externalId>
         <label>ICCS Cycle Start Date</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -991,7 +991,7 @@
         <externalId>false</externalId>
         <label>ICCS Settlement Date</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -1120,7 +1120,7 @@
         <externalId>false</externalId>
         <label>Protest Deadline (ACH)</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
     </fields>
@@ -1129,7 +1129,7 @@
         <externalId>false</externalId>
         <label>Protest Deadline (IATA)</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
     </fields>
@@ -1138,7 +1138,7 @@
         <externalId>false</externalId>
         <label>Protest Deadline</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
     </fields>
@@ -1148,7 +1148,7 @@
         <externalId>false</externalId>
         <label>Rebill Period</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -1157,7 +1157,7 @@
         <externalId>false</externalId>
         <label>Recap Sheet Submission Deadline</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
     </fields>
@@ -1176,7 +1176,7 @@
         <externalId>false</externalId>
         <label>Settlement Day (ACH)</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
     </fields>
@@ -1185,7 +1185,7 @@
         <externalId>false</externalId>
         <label>Settlement Day (Associated Members)</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
     </fields>
@@ -1194,7 +1194,7 @@
         <externalId>false</externalId>
         <label>Settlement Day (IATA)</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
     </fields>
@@ -1212,7 +1212,7 @@
         <externalId>false</externalId>
         <label>Settlement Sheet Posting Date (IATA)</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
     </fields>
@@ -1222,7 +1222,7 @@
         <externalId>false</externalId>
         <label>Settlement Sheet Posting Date (ACH)</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
     </fields>
@@ -1232,7 +1232,7 @@
         <externalId>false</externalId>
         <label>Submission Deadline</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
     </fields>
@@ -1241,7 +1241,7 @@
         <externalId>false</externalId>
         <label>Submission Open</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
     </fields>
@@ -1250,7 +1250,7 @@
         <externalId>false</externalId>
         <label>Supporting Documents Link Deadline</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
     </fields>
@@ -1259,7 +1259,7 @@
         <externalId>false</externalId>
         <label>Suspension Day</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>DateTime</type>
     </fields>

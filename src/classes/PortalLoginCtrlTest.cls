@@ -1,11 +1,11 @@
-/**
- * Created by ukaya01 on 07/08/2019.
- */
 @isTest
 public with sharing class PortalLoginCtrlTest {
 
 	@isTest
 	static void unitTest() {
+
+		ISSP_CS__c cs=new ISSP_CS__c(name='PasswordResetPeriod',value__C='60');
+		insert cs;
 
 		IATA_ISO_Country__c israel = new IATA_ISO_Country__c(Name = 'Israel', ISO_Code__c = 'IL');
 		insert israel;
@@ -55,12 +55,13 @@ public with sharing class PortalLoginCtrlTest {
 		User portalUser3 = ISSP_ObjectFactory.createPortalUser(con3);
 
 		system.runAs(portalUser) {
+			Map<String, String> params = new Map<String, String>();
 			PortalLoginCtrl.LoginConfig loginConfig = PortalLoginCtrl.getInitialConfig();
-			PortalLoginCtrl.LoginResult loginResult = PortalLoginCtrl.login('contact1@bucketairline.com', 'password', '','');
-			loginResult = PortalLoginCtrl.login('contact2@bucketairline.com', 'password', Label.CSP_PortalPath + 'test','');
-			loginResult = PortalLoginCtrl.login('contact3@bucketairline.com', 'password', 'test','');
-			loginResult = PortalLoginCtrl.login('contact3@bucketairline.com', '', '','');
-			PortalLoginCtrl.reactivateUser(portalUser);
+			PortalLoginCtrl.LoginResult loginResult = PortalLoginCtrl.login('contact1@bucketairline.com', 'password', '',params);
+			loginResult = PortalLoginCtrl.login('contact2@bucketairline.com', 'password', Label.CSP_PortalPath + 'test',params);
+			loginResult = PortalLoginCtrl.login('contact3@bucketairline.com', 'password', 'test',params);
+			loginResult = PortalLoginCtrl.login('contact3@bucketairline.com', '', '',params);
+			PortalLoginCtrl.reactivateUser(portalUser, params);
 		}
 	}
 

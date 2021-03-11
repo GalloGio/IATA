@@ -175,7 +175,7 @@ private class AMS_OscarCaseTriggerHelper_Test {
 								Location_Class__c = 'C',
 								Status__c = 'Approved',
 								Company_Type__c = 'A',
-								IATACode__c = '100',
+								IATACode__c = '101',
 								IATA_ISO_Country__c = countryList[1].Id,
 								RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')
 			)
@@ -190,7 +190,7 @@ private class AMS_OscarCaseTriggerHelper_Test {
 								Location_Class__c = 'C',
 								Status__c = 'Approved',
 								Company_Type__c = 'A',
-								IATACode__c = '100',
+								IATACode__c = '102',
 								IATA_ISO_Country__c = countryList[2].Id,
 								RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')
 			)
@@ -205,7 +205,7 @@ private class AMS_OscarCaseTriggerHelper_Test {
 								Location_Class__c = 'C',
 								Status__c = 'Approved',
 								Company_Type__c = 'A',
-								IATACode__c = '100',
+								IATACode__c = '103',
 								IATA_ISO_Country__c = countryList[3].Id,
 								RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')
 			)
@@ -220,7 +220,7 @@ private class AMS_OscarCaseTriggerHelper_Test {
 								Location_Class__c = 'C',
 								Status__c = 'Approved',
 								Company_Type__c = 'A',
-								IATACode__c = '100',
+								IATACode__c = '104',
 								IATA_ISO_Country__c = countryList[4].Id,
 								RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')
 			)
@@ -235,7 +235,7 @@ private class AMS_OscarCaseTriggerHelper_Test {
 								Location_Class__c = 'C',
 								Status__c = 'Approved',
 								Company_Type__c = 'A',
-								IATACode__c = '100',
+								IATACode__c = '105',
 								IATA_ISO_Country__c = countryList[5].Id,
 								RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency')
 			)
@@ -449,12 +449,14 @@ private class AMS_OscarCaseTriggerHelper_Test {
 
 		AMS_OSCAR__c oscar = [SELECT Id, Accreditation_Process_Type__c, AMS_Online_Accreditation__r.SAAM_Case__c  FROM AMS_OSCAR__c WHERE AMS_Online_Accreditation__r.Abbreviated_name__c='Reset Dossier Reception Date' LIMIT 1];
 		oscar.Status__c = 'Closed_Rejected';
+		oscar.STEP18__c = 'Passed';
 		update oscar;
 
 		Case cse = new Case(
 			Id= oscar.AMS_Online_Accreditation__r.SAAM_Case__c,
 			Reason1__c= 'New HO',
-			Status= 'Closed_Rejected'
+			Status= 'Closed_Rejected',
+			OSCAR__c = oscar.Id
 		);
 		update cse;
 

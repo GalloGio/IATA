@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>This permission set is giving access to Higher Logic to partner users (no license limitations)</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>HL UsersAccess</label>
+</PermissionSet>

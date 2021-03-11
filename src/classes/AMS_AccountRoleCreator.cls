@@ -40,6 +40,10 @@ public with sharing class AMS_AccountRoleCreator
 		return toReturn.removeEnd(',');
 	}
 
+	public static Map<Id,OldAndNewOwners> runRoleCreatorForOnlineAccreditations(Map<Id,Set<Id>> aoMap, Boolean isCorrectionProcess, Boolean isToGenerateIATACode, Map<Id,AMS_OSCAR__c> oscars, Map<Id,String> locationTypeByOscar, Map<Id,Id> topParentByOscar) {
+		return runRoleCreatorForOnlineAccreditations(aoMap, isCorrectionProcess, isToGenerateIATACode, oscars, locationTypeByOscar, topParentByOscar, null);
+	}
+
 	/**
 	This method processes the staging area owners and contacts into the AMS Account roles in the affected agencies.
 	If an Accreditation Contact has a direct link to the AMS_Account_role, it tries to update.
@@ -47,7 +51,7 @@ public with sharing class AMS_AccountRoleCreator
 
 	The aoMap parameter has a map between the Accreditation Area and the Agencies (accounts) involved in the process.
 	*/
-	public static Map<Id,OldAndNewOwners> runRoleCreatorForOnlineAccreditations(Map<Id,Set<Id>> aoMap, Boolean isCorrectionProcess, Boolean isToGenerateIATACode, Map<Id,AMS_OSCAR__c> oscars, Map<Id,String> locationTypeByOscar, Map<Id,Id> topParentByOscar) {
+	public static Map<Id,OldAndNewOwners> runRoleCreatorForOnlineAccreditations(Map<Id,Set<Id>> aoMap, Boolean isCorrectionProcess, Boolean isToGenerateIATACode, Map<Id,AMS_OSCAR__c> oscars, Map<Id,String> locationTypeByOscar, Map<Id,Id> topParentByOscar, Map<ID, String> mapOscarOrigin) {
 
 		Map<Id,OldAndNewOwners> oldAndNewOwnersMap = new Map<Id,OldAndNewOwners>();
 		Set<Id> accountsToCloneOwnersFromHO = new Set<Id>(); //accounts from new br/sa processes
@@ -72,10 +76,16 @@ public with sharing class AMS_AccountRoleCreator
 		//check if the process should create new owners or if it's just to clone the owners from the HO
 		for(AMS_OSCAR__c osc: oscars.values()) {
 
-			if(processesBlockedToMigrateOwners.contains(osc.Process__c) && !allowedLocationTypesForNewProcesses.contains(locationTypeByOscar.get(osc.Id)) && isCorrectionProcess && osc.STEP10__c == 'Passed' && osc.STEP6__c == 'Passed') {
-
-				accountsToCloneOwnersFromHO.add(osc.Account__c);
-				newChildWithParent.put(osc.Account__c, topParentByOscar.get(osc.Id));
+			String caseOrigin = mapOscarOrigin != null ? mapOscarOrigin.get(osc.ID) : null;
+			
+			if(processesBlockedToMigrateOwners.contains(osc.Process__c) && !allowedLocationTypesForNewProcesses.contains(locationTypeByOscar.get(osc.Id)) && isCorrectionProcess && osc.STEP10__c == 'Passed' && osc.STEP6__c == 'Passed') { //Workaround to avoid duplicated contacts for process submited through Portal
+				//Avoid this if code, Case origin = Portal AND (FIN change code to be generated OR Step de Approval to Passed ) Should be only applied for Cargo???? TIDS - Passanger
+				if(caseOrigin != null && caseOrigin == AMS_Utils.CASE_ORIGIN_PORTAL && locationTypeByOscar.get(osc.Id) == AMS_Utils.BR && osc.Case_Reason__c == AMS_Utils.CASE_REASON_BR_IP){
+					accountToCheckOwners.add(osc.Account__c);
+				}else{
+					accountsToCloneOwnersFromHO.add(osc.Account__c);
+					newChildWithParent.put(osc.Account__c, topParentByOscar.get(osc.Id));
+				}
 
 			} else if(!processesBlockedToMigrateOwners.contains(osc.Process__c) && allowedLocationTypesForNewProcesses.contains(locationTypeByOscar.get(osc.Id)) && isToGenerateIATACode) {
 				accountsToCreateNewOwners.add(osc.Account__c);
@@ -111,12 +121,6 @@ public with sharing class AMS_AccountRoleCreator
 		Map<Id,List<AMS_Accreditation_Contact__c>> accreditationContactsPerAccount = new Map<Id,List<AMS_Accreditation_Contact__c>>();
 
 		for(AMS_Accreditation_Contact__c accCon : accreditationContactsToProcess.values()) {
-
-			if(!accreditationContactsPerAccount.containsKey(accCon.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c))
-				accreditationContactsPerAccount.put(accCon.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c, new List<AMS_Accreditation_Contact__c>());
-
-			accreditationContactsPerAccount.get(accCon.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c).add(accCon);
-
 			if(accCon.Contact__c != null)
 				contactToGetIds.add(accCon.Contact__c);
 		}
@@ -125,16 +129,6 @@ public with sharing class AMS_AccountRoleCreator
 		Map<Id,Contact> allContactsFromAccount = new Map<Id,Contact>([SELECT FirstName, LastName, Title, AccountId, Account.Location_Class__c, Membership_Main_Contact__c, Training_dangerous_goods_completed__c, list_Dangerous_Goods_Awareness__c, Phone, MobilePhone, Fax, BirthDate, Email, ISO_Country__c, RecordTypeId, Id, Name, Financial_Assessment_Contact__c, Authorized_Signatory__c, Designated_portal_admin__c, Invoicing_contact__c, OtherStreet, OtherCity, OtherPostalCode, OtherState, OtherCountry
 			FROM Contact
 			WHERE AccountId IN :accountIds OR Id IN :contactToGetIds]);
-
-		Map<Id,List<Contact>> contactsPerAccount = new Map<Id,List<Contact>>();
-
-		for(Contact con : allContactsFromAccount.values()) {
-
-			if(!contactsPerAccount.containsKey(con.AccountId))
-				contactsPerAccount.put(con.AccountId, new List<Contact>());
-
-			contactsPerAccount.get(con.AccountId).add(con);
-		}
 
 		//create a new bucket for each accreditation contact
 		Map<Id,AccreditationContactBucket> accConBucketList = new Map<Id,AccreditationContactBucket>();
@@ -146,7 +140,8 @@ public with sharing class AMS_AccountRoleCreator
 																				oscars.get(accreditationContact.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__c),
 																				accountsToCloneOwnersFromHO.contains(accreditationContact.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c),
 																				accountToCheckOwners.contains(accreditationContact.AMS_Pax_Accreditation_Form__r.SAAM_Case__r.OSCAR__r.Account__c));
-
+			
+						 
 			//select the contact or company for each accreditation contact
 			if(bucket.isCompany) {
 
@@ -231,6 +226,7 @@ public with sharing class AMS_AccountRoleCreator
 		//upsert contacts
 		AMS_Utils.runningContactInsertUpdateFromOSCAR = true;
 
+
 		if(!contactsToSearch.isEmpty()){
 			for(Contact c :[SELECT id, Email FROM CONTACT WHERE EMAIL IN :contactsToSearch.keyset()]){
 				contactsToUpsert.put(c.email, c);
@@ -246,7 +242,7 @@ public with sharing class AMS_AccountRoleCreator
 
 		upsert contactsToUpsert.values();
 		AMS_Utils.runningContactInsertUpdateFromOSCAR = false;
-
+		
 		//upsert companies
 		upsert companiesToUpsert.values();
 
@@ -327,13 +323,13 @@ public with sharing class AMS_AccountRoleCreator
 				if(!newRolesPerAccount.containsKey(accConBucket.accountId))
 					newRolesPerAccount.put(accConBucket.accountId, new List<AMS_Account_Role__c>());
 
-				newRolesPerAccount.get(accConBucket.accountId).add(accConBucket.newRole);
+				if(accConBucket.newRole != null) newRolesPerAccount.get(accConBucket.accountId).add(accConBucket.newRole); 
 			}
-
 		}
 
-		if(newRolesPerAccount.isEmpty() && accountsToCloneOwnersFromHO.isEmpty())
+		if(newRolesPerAccount.isEmpty() && accountsToCloneOwnersFromHO.isEmpty()){
 			return oldAndNewOwnersMap;
+		}			
 
 		//clone the roles for each account in the hierarchy
 		List<AMS_Account_Role__c> listClonesRoles = new List<AMS_Account_Role__c>();
@@ -564,7 +560,7 @@ public with sharing class AMS_AccountRoleCreator
 			role.RecordTypeId            = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
 			role.Account__c              = accountId;
 			role.Duty__c                 = accreditationContact.Job_Title__c;
-			role.Employee_Name__c        = accreditationContact.First_Name__c + ' ' + accreditationContact.Last_Name__c;
+			role.Employee_Name__c        = (accreditationContact.First_Name__c == null ? '' : accreditationContact.First_Name__c + ' ') + accreditationContact.Last_Name__c;
 			role.Hours__c                = String.valueOf(accreditationContact.Time_devoted_to_Agency_business__c);
 			role.IsManager__c            = accreditationContact.Agency_role__c;
 			role.Percentage__c           = accreditationContact.Financial_Interest__c;

@@ -1,4 +1,4 @@
-<apex:page controller="ISSP_CurrencyCenterCountriesMapCtrl" action="{!checkAccess}" standardStylesheets="false" showHeader="false" sidebar="false"  applyBodyTag="false" applyHtmlTag="false">
+<apex:page id="CCCountryMap" controller="ISSP_CurrencyCenterCountriesMapCtrl" action="{!checkAccess}" standardStylesheets="false" showHeader="false" sidebar="false"  applyBodyTag="false" applyHtmlTag="false">
 
 <html>
  	<c:ISSP_Header ></c:ISSP_Header>
@@ -18,35 +18,69 @@
 	      google.charts.setOnLoadCallback(drawRegionsMap);
 			  var chart;
 
-	      function drawRegionsMap() {
+        let LIST_COUNTRIES = {!LstCountriesJson};
+        let MAP_TYPES = new Map([
+          ['Blocked Funds', 0],
+          ['Watch List', 1],
+          ['All others', 2],
+          ['Draft', 3]
+        ]);
+
+        function drawRegionsMap() {
+          
+            var categoryFilter = document.getElementById("{!$Component.CCCountryMap.mainForm.categoryFilter}").value;
+            var regionFilter = document.getElementById("{!$Component.CCCountryMap.mainForm.regionFilter}").value;
 
             var dataTable = new google.visualization.DataTable();
             dataTable.addColumn('string', 'Country');
+            dataTable.addColumn('number','value');
             dataTable.addColumn({type: 'string', role: 'tooltip', 'p': {'html': true}});
 
-            dataTable.addRows([
-                    <apex:variable value="{!0}" var="rowIndex"/>
-                    <apex:repeat value="{!lstCountries}" var="country" >
-                        {! IF (rowIndex == 0, '', ',')}
-                        ['{!country.IsoCode}',
-                        '<h4>{!JSENCODE(country.Name)}</h4>'+
-                        '<div style="font-family: Arial, Helvetica, sans-serif; font-size: 11px; display: inline-block; white-space: nowrap;">'+
-                            '{!$Label.CurrencyCenter_Actual_Amount_Blocked}: <b>{!JSENCODE(country.AmtBlocked)}</b><br/>'+
-                            '{!$Label.CurrencyCenter_Issue_Started}: <b>{!country.IssueStarted}</b><br/>'+
-                            '{!$Label.CurrencyCenter_Number_of_Airlines_Reporting}: <b>{!country.NbAirlinesReporting}</b><br/>'+
-                            '{!IF($CurrentPage.parameters.type="All Others",
-                                $Label.CurrencyCenter_CASS_ICCS_Availability + ": <b>" + country.CASS_ICCS_Availability + "</b></br>" +
-                                $Label.CurrencyCenter_BSP_ICCS_Availability  + ": <b>" + country.BSP_ICCS_Availability  + "</b>"
-                            ,"")}'+
-                        '</div>']
-                        <apex:variable var="rowIndex" value="{!rowIndex + 1}"/>
-                    </apex:repeat>
-                ]);
+            var rows = [];
+            for (var i=0; i<LIST_COUNTRIES.length; i++) {
+              var country = LIST_COUNTRIES[i];
+              if (categoryFilter>"" && country.listType!= categoryFilter) continue;
+              if (regionFilter>"" && country.Region!= regionFilter) continue;
+              var row = [];
+              // first param, country code
+              row.push(country.IsoCode);
+              // second param, color code
+              row.push(MAP_TYPES.get(country.listType));
+              // third param, popup code
+              let popupText = "<h4>" + country.Name + "</h4>"+
+                "<div style='font-family: Arial, Helvetica, sans-serif; font-size: 11px; display: inline-block; white-space: nowrap;'>"+
+                "<b>" + country.listType + "</b><br/>";
+              if (country.listType == "Blocked Funds") {
+                popupText +=
+                  "{!$Label.CurrencyCenter_Actual_Amount_Blocked}: <b>" + country.AmtBlocked + "</b><br/>"+
+                  "{!$Label.CurrencyCenter_Issue_Started}: <b>" + country.IssueStarted + "</b><br/>"+
+                  "{!$Label.CurrencyCenter_Number_of_Airlines_Reporting}: <b>" + country.NbAirlinesReporting + "</b><br/>"
+              }
+              if (country.listType == "Watch List" || country.listType=="All others" ) {
+                popupText +=
+                  "{!$Label.CurrencyCenter_CASS_ICCS_Availability}: <b>" + country.CASS_ICCS_Availability + "</b></br>" +
+                  "{!$Label.CurrencyCenter_CASS_Launch_Date}: <b>" + country.CASS_Launch_Date + "</b></br>" +
+                  "{!$Label.CurrencyCenter_BSP_ICCS_Availability}: <b>" + country.BSP_ICCS_Availability  + "</b></br>" +
+                  "{!$Label.CurrencyCenter_BSP_Launch_Date}: <b>" + country.BSP_Launch_Date + "</b></br>" +
+                  "{!$Label.CurrencyCenter_Currency_Exchange_Rate}: <b>" + country.Currency_Exchange_Rate + "</b></br>" +
+                  "{!$Label.CurrencyCenter_Currency}: <b>" + country.Currency_x + "</b>";
+              }
+              popupText += "</div>";
+              row.push(popupText);
+              rows.push(row);
+            }
+
+            dataTable.addRows(rows);
 		        
 		        var options = {
               datalessRegionColor: '#D4D9DB',
-              defaultColor:'{! IF(listType == 'Blocked Funds', '#E4166D', IF(listType == 'Watch List', '#F19200', '#61B31B')) }',
+              defaultColor: '#F19200',
               backgroundColor: '#F5F5F5',
+              colorAxis: {
+                  colors: ['#E4166D', '#F19200','#6ABAEB','#D4D9DB'],
+                  values: [0,1,2,3]
+              },
+              legend: 'none',
               tooltip:{trigger: 'focus', isHtml: true, showTitle: false}
             }; 
 			
@@ -70,7 +104,8 @@
             google.visualization.events.addListener(chart, 'select', myClickHandler);
             
 
-		        chart.draw(dataTable, options);
+            chart.draw(dataTable, options);
+            refreshCountryList();
       	}
 
       	function highlightCountry(index) {
@@ -97,19 +132,31 @@
 
         <c:ISSP_CustomNavigation />
       
-      	<apex:form >  
-
+      	<apex:form id="mainForm">  
+          <apex:actionFunction name="refreshCountryList" action="{!null}" rerender="countryPanel"/>
 
         <div class="row">
-          <div class="col-xs-12 header-{! IF(listType == 'Blocked Funds', 'blocked-funds', IF(listType == 'Watch List', 'watch-list', 'all-others')) }">
+          <div class="col-xs-12 header-country-heat-map">
             
             <div class="row">
               <a href="/ISSP_CurrencyCenterHome" class="back-home-link">{!$Label.CurrencyCenter_Back_Home}</a>
             </div>
 
-            <div class="row page-title-wrapper {! IF(listType == 'Blocked Funds', 'blocked-funds', IF(listType == 'Watch List', 'watch-list', 'all-others')) }">
-              <div class="col-xs-12">
-                <div class="page-title">{! IF(listType == 'Blocked Funds', $Label.CurrencyCenter_Blocked_Funds_Countries, IF(listType == 'Watch List', $Label.CurrencyCenter_Watch_List_Countries, $Label.CurrencyCenter_All_Other_Countries)) }</div>
+            <div class="row page-title-wrapper country-heat-map">
+              <div class="col-xs-8">
+                <div class="page-title">{!$Label.CurrencyCenter_Country_Heat_Map}</div>
+              </div>
+              <div class="col-xs-2">
+                <apex:OutputLabel styleclass="filter-label" value="{!$Label.ICCS_Category_Label}"/>
+                <apex:selectList id="categoryFilter" value="{!selectedListType}" size="1" styleclass="form-control" onchange="drawRegionsMap();" label="Category">
+                  <apex:selectOptions value="{!ListTypeOptions}"/>
+                </apex:selectList>
+              </div>
+              <div class="col-xs-2">
+                <apex:OutputLabel styleclass="filter-label" value="{!$Label.Region}"/>
+                <apex:selectList id="regionFilter" value="{!selectedRegion}" size="1" styleclass="form-control" onchange="drawRegionsMap();" label="Region">
+                  <apex:selectOptions value="{!ListRegionOptions}"/>
+                </apex:selectList>
               </div>
             </div>
           </div>
@@ -131,20 +178,20 @@
                   {! $Label.CurrencyCenter_Select_Country }
                 </h4>
               </div>
-              <div class="panel-body countries-list">
+              <apex:outputPanel id="countryPanel" layout="block" styleclass="panel-body countries-list">
                   
                   <apex:variable value="{!-1}" var="rowIndex"/>
                   <!--LAST VISIT:{!previousVisit}-->
                   <apex:repeat value="{!lstCountries}" var="country" >
                     <apex:variable var="rowIndex" value="{!rowIndex + 1}"/>
-                    <div class="col-xs-12 country-list-item">
+
+                    <apex:outputPanel layout="block" styleclass="col-xs-12 country-list-item" rendered="{!AND(OR(selectedListType=='',selectedListType==country.listType),OR(selectedRegion=='',selectedRegion==country.Region))}">
                       <apex:outputLink value="/ISSP_CurrencyCenterCountry?Id={!country.Id}" onmouseover="highlightCountry({!rowIndex});" onmouseout="clearHighlight();"><img src="{!URLFOR($Resource.CurrencyCenter_Style, '/flags/' + country.IsoCode + '.png')}" />&nbsp;{!country.Name}</apex:outputLink>
                       <apex:outputText rendered="{!isChangedList[rowIndex]}">&#42;&#42;&#42;</apex:outputText>
-                                    
-                    </div>
+                    </apex:outputPanel>
                   </apex:repeat>
                 
-              </div>
+              </apex:outputPanel>
             </div>
 
           </div>

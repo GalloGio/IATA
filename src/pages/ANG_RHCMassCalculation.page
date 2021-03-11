@@ -16,12 +16,13 @@
 			for(var i = 0; i < checkboxes.length; i++) checkboxes[i].checked = source.checked;
 		}
 
-		function ResponseWrapper(bIsSuccess, ErrorDescription, RHCId, ANG_RHC_Amount_Forecasted, ANG_RHC_Amount_Provisional){
+		function ResponseWrapper(bIsSuccess, ErrorDescription, RHCId, ANG_RHC_Amount_Forecasted, ANG_RHC_Amount_Provisional, Forecasted_Tier){
 			this.bIsSuccess = bIsSuccess;
 			this.ErrorDescription = ErrorDescription;
 			this.RHCId = RHCId;
 			this.ANG_RHC_Amount_Forecasted = ANG_RHC_Amount_Forecasted;
 			this.ANG_RHC_Amount_Provisional = ANG_RHC_Amount_Provisional;
+			this.Forecasted_Tier = Forecasted_Tier
 		}
 
 		var lsResponseWrapper = [];
@@ -59,7 +60,7 @@
 				RHCId,
 				bCommitRHC,
 				function(result, event){
-					var tmpWrap = new ResponseWrapper(false, '', RHCId, null, null);
+					var tmpWrap = new ResponseWrapper(false, '', RHCId, null, null,null);
 					if(event.type == 'exception'){ 
 						tmpWrap.bIsSuccess = false;
 						tmpWrap.ErrorDescription = event.message;
@@ -68,6 +69,7 @@
 						tmpWrap.ErrorDescription = result.ErrorDescription;
 						tmpWrap.ANG_RHC_Amount_Forecasted = result.ANG_RHC_Amount_Forecasted;
 						tmpWrap.ANG_RHC_Amount_Provisional = result.ANG_RHC_Amount_Provisional;
+						tmpWrap.Forecasted_Tier = result.Forecasted_Tier;
 					}
 					nProcessed++;
 					lsResponseWrapper.push(tmpWrap);
@@ -184,24 +186,20 @@
 						</apex:outputText>
 					</apex:column>
 					
-					<apex:column value="{!agents[mapKey].rhcInfo.ANG_RHC_Effective_Date__c}" headerValue="{!$ObjectType.ANG_RHC_Information__c.Fields.ANG_RHC_Effective_Date__c.Label}"/>
+					<apex:column value="{!agents[mapKey].rhcInfo.ANG_RHC_Effective_Date__c}" headerValue="RHC Amnt Eff.Date"/>
+					<apex:column value="{!agents[mapKey].rhcInfo.ANG_AccountId__r.ANG_RiskStatus__c}" headerValue="Risk Status"/>
 					
+					<apex:column value="{!agents[mapKey].rhcInfo.Tier__c}" headerValue="{!$ObjectType.ANG_RHC_Information__c.Fields.Tier__c.Label}"/>
+
 					<apex:column  headerValue="{!$ObjectType.ANG_RHC_Information__c.Fields.ANG_RHC_Amount_Provisional__c.Label}">
 						<apex:outputText value="{!agents[mapKey].rhcInfo.CurrencyIsoCode} {0, number, ###,###,###,##0.00}" rendered="{!NOT(ISBLANK(agents[mapKey].ANG_RHC_Amount_Provisional))}">
 							<apex:param value="{!agents[mapKey].ANG_RHC_Amount_Provisional}"/>
 						</apex:outputText>
 					</apex:column>
-
+					
 					<apex:column  headerValue="{!$ObjectType.ANG_RHC_Information__c.Fields.ANG_RHC_Amount_Forecasted__c.Label}">
 						<apex:outputText value="{!agents[mapKey].rhcInfo.CurrencyIsoCode} {0, number, ###,###,###,##0.00}" rendered="{!NOT(ISBLANK(agents[mapKey].ANG_RHC_Amount_Forecasted))}">
 							<apex:param value="{!agents[mapKey].ANG_RHC_Amount_Forecasted}"/>
-						</apex:outputText>
-					</apex:column>
-					
-					<apex:column  headerValue="{!$ObjectType.ANG_RHC_Information__c.Fields.ANG_ConsumedRHC__c.Label}">
-						<apex:outputText escape="false" value="{!agents[mapKey].rhcInfo.CurrencyIsoCode} {0, number, ###,###,###,##0.00} <br/> ({1, number, ###,###,###,##0.00}%)" rendered="{!NOT(ISBLANK(agents[mapKey].rhcInfo.ANG_ConsumedRHC__c))}">
-							<apex:param value="{!agents[mapKey].rhcInfo.ANG_ConsumedRHC__c}"/>
-							<apex:param value="{!agents[mapKey].rhcInfo.ANG_ConsumedRHC_Percent__c}"/>
 						</apex:outputText>
 					</apex:column>
 					
@@ -209,6 +207,10 @@
 						<apex:outputText value="{0, number, ###,###,###,##0.00}%" rendered="{!NOT(ISBLANK(agents[mapKey].calculatedConsumedRHC))}">
 							<apex:param value="{!agents[mapKey].calculatedConsumedRHC}"/>
 						</apex:outputText>
+					</apex:column>
+
+					<apex:column headerValue="{!$ObjectType.ANG_RHC_Information__c.Fields.Forecasted_Tier__c.Label}">
+						<apex:outputText value="{!agents[mapKey].Forecasted_Tier}"/>
 					</apex:column>
 
 					<apex:column headerValue="Error">

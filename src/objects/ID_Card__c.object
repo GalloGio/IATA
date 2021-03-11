@@ -1750,6 +1750,34 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>Inactive_ID_Cards</fullName>
+        <columns>NAME</columns>
+        <columns>Agency_IATA_Code__c</columns>
+        <columns>Agency_Name__c</columns>
+        <columns>VER_Number__c</columns>
+        <columns>Json_Is_Active__c</columns>
+        <columns>Valid_To_Date__c</columns>
+        <columns>Card_Status__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Agency_Name__c</field>
+            <operation>startsWith</operation>
+            <value>SATO,SCHEDULED</value>
+        </filters>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>ID_Card__c.AIMS</value>
+        </filters>
+        <filters>
+            <field>Json_Is_Active__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>Inactive ID Cards</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>Must_Sync</fullName>
         <columns>NAME</columns>
         <columns>Related_Contact__c</columns>

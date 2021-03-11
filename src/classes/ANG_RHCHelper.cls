@@ -40,6 +40,7 @@ public class ANG_RHCHelper {
 
 	public static final String RHC_AMOUNT_CALC_TYPE_FIXED_PERC = 'Fixed Percentage';
 	public static final String RHC_AMOUNT_CALC_TYPE_FORMULA = 'Formula';
+	public static final String RHC_AMOUNT_CALC_TYPE_TIER = 'Tier';
 
 	private static final Set<String> skipPercentageCalcBspSet = new Set<String>{
 		'BSP-HK',
@@ -138,7 +139,8 @@ public class ANG_RHCHelper {
 
 		for(ANG_RHC_Information__c rhc : rhcInfo) accountsIds.add(rhc.ANG_AccountId__c);
 
-		Map<Id, String> accountsBspMap = new Map<Id, Id>();
+		Map<Id, id> accountsBspMap = new Map<Id, Id>();
+		set<id> setAllBSPInvolved = new set<id>();
 		Map<Id, Account> accountsMap = new Map<Id, Account>();
 		Map<Id, String> isoCountries = new Map<Id, String>();
 		Map<String, AMS_Country_Specific_Attribute__c> attributes = new Map<String, AMS_Country_Specific_Attribute__c>();
@@ -152,8 +154,12 @@ public class ANG_RHCHelper {
 							  WHERE Id IN :accountsIds]) {
 
 				if(!a.RHC_Informations__r.isEmpty() && !a.RHC_Informations__r[0].ANG_RHC_Amount_Equals_FS__c) 	isoCountries.put(a.Id, a.IATA_ISO_Country__r.Iso_Code__c);
-
-				accountsBspMap.put(a.Id, a.IATA_ISO_Country__r.AMS_Settlement_System__c);
+				
+				if(string.isNotEmpty(a.IATA_ISO_Country__r.AMS_Settlement_System__c)){
+					accountsBspMap.put(a.Id, a.IATA_ISO_Country__r.AMS_Settlement_System__c);
+					setAllBSPInvolved.add(a.IATA_ISO_Country__r.AMS_Settlement_System__c);
+				}
+				
 				accountsMap.put(a.Id, a);
 			}
 
@@ -170,9 +176,21 @@ public class ANG_RHCHelper {
 			}
 		}
 
-		Map<String, ANG_BSP_Attributes__c> bspAttributesMap = fetchBSPAttributesConfig(accountsBspMap.values());
+		Map<String, ANG_BSP_Attributes__c> bspAttributesMap = new Map<String, ANG_BSP_Attributes__c>();
+
+		BSPAttributesSingleton BSPAttrST = BSPAttributesSingleton.getInstance(setAllBSPInvolved, new set<string>{'RHC_Amount_Conf', 'Cash_Condition_Conf'});
+
+		for(Id AccntId:accountsBspMap.keyset()){
+			bspAttributesMap.putAll(BSPAttrST.getFullBSPMap(accountsBspMap.get(AccntId)));
+			//For RHC Amount Conf Rec Type the unique key is:
+			//BSP Id + BSP Attribute RecordType Id (RHC Amount Conf) + Tier + Agent Risk Status.
+			
+			//For Cash Condition Conf Rec Type the unique key is:
+			//BSP Id + Cash Condition Conf Record Type Id + Tier + Risk Status + Min FA Points
+		}
 
 		for(ANG_RHC_Information__c rhc : rhcInfo){
+			string Tier = determineTier(rhc.Amount_At_Risk_USD__c, bspAttributesMap.values());
 
 			Account acct = accountsMap.get(rhc.ANG_AccountId__c);
 
@@ -214,34 +232,21 @@ public class ANG_RHCHelper {
 				applyRhcAmountFsPercentage(rhc, fsAmount, fsPercentage);
 				continue;
 			}
-
-			//If we are processing a RHC information record
-			//related with a multicountry hierarchy
-			//jump into the formula calculation
-			if(isMulticountry){
-				System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] Apply formula calculation for multicountry agent');
-				applyRhcFormulaCalculations(rhc, fsAmount, isoCountries, attributes, ApplyRHC);
-				continue;
-			}
-
-			String currentBspAttrKey = (relatedBspId + RECTYPE_RHC_AMOUNT_CONFIG + acct.ANG_RiskStatus__c);
-
+			String currentBspAttrKey = (relatedBspId + RECTYPE_RHC_AMOUNT_CONFIG + Tier + (acct.ANG_RiskStatus__c==null || acct.ANG_RiskStatus__c =='Not Applicable'?'C':acct.ANG_RiskStatus__c));
 			ANG_BSP_Attributes__c bspAttrRhc = null;
-
 			//Find the correct BSP Attribute configuration based on
-			//BSP Id + BSP Attribute RecordType Id (RHC Amount Conf) + Agent Risk Status.
+			//BSP Id + BSP Attribute RecordType Id (RHC Amount Conf) + Tier + Agent Risk Status.
 			//If the agent contains Financial Assessment Points finds the BSP attribute
 			//that contains the interval [Min FA Points ~ Max FA Points]
 			for(ANG_BSP_Attributes__c bspAttr : bspAttributesMap.values()){
-
 				if(bspAttr.RecordTypeId == RECTYPE_CASH_CONDITION_CONFIG){
 					continue;
 				}
 
 				String bspAttrKey = (String.valueOf(bspAttr.BSP__c) +
 									 String.valueOf(bspAttr.RecordTypeId) +
+									 (string.isEmpty(bspAttr.Tier__c)?'1':bspAttr.Tier__c) + 
 									 bspAttr.Risk_Status__c);
-
 				//If the agent has financial assessment points
 				//considers the point interval from the configuration on BSP Attribute record.
 				//Otherwise assessment points interval are not considered
@@ -255,6 +260,17 @@ public class ANG_RHCHelper {
 					break;
 				}
 
+			}
+
+			//If we are processing a RHC information record
+			//related with a multicountry hierarchy
+			//jump into the formula calculation
+			if(isMulticountry){
+				System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] Apply formula calculation for multicountry agent');
+				if(bspAttrRhc!=null){
+					applyRhcFormulaCalculations(rhc, fsAmount, isoCountries, attributes, ApplyRHC, tier, bspAttrRhc);
+					continue;
+				}
 			}
 
 			System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] BSP Attribute to use: ' + bspAttrRhc);
@@ -272,6 +288,12 @@ public class ANG_RHCHelper {
 				fixedPercentageCalc &&
 				(acct.Financial_Assessment_Points__c == null) &&
 				skipPercentageCalcBspSet.contains(bspAttrRhc.BSP__r.Name);
+				
+				System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] fixedPercentageCalc ' + fixedPercentageCalc);
+				System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] Financial_Assessment_Points__c ' + acct.Financial_Assessment_Points__c);
+				System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] skipPercentageCalcBspSet ' + skipPercentageCalcBspSet);
+				System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] bspAttrRhc. ' + bspAttrRhc);
+				System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] skipFixedPercentageCalc? ' + skipFixedPercentageCalc);
 
 			if(fixedPercentageCalc && !skipFixedPercentageCalc){
 				System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] RHC Calculation Type: ' + RHC_AMOUNT_CALC_TYPE_FIXED_PERC);
@@ -280,7 +302,8 @@ public class ANG_RHCHelper {
 			}
 			else {
 				System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - calculateRHCAmount] RHC Calculation Type: Formula');
-				applyRhcFormulaCalculations(rhc, fsAmount, isoCountries, attributes, ApplyRHC);
+				if(bspAttrRhc!=null)
+					applyRhcFormulaCalculations(rhc, fsAmount, isoCountries, attributes, ApplyRHC, tier, bspAttrRhc);
 			}
 
 		}
@@ -295,15 +318,15 @@ public class ANG_RHCHelper {
 	 * @param  isoCountries               maps the Id with the ISO Country Code
 	 * @param  attributes                 country specific attributes of type 'Minimum RHC Amount'
 	 */
-	private static void applyRhcFormulaCalculations(ANG_RHC_Information__c rhc, Decimal fsAmount, Map<Id, String> isoCountries, Map<String, AMS_Country_Specific_Attribute__c> attributes, boolean ApplyRHC)
+	private static void applyRhcFormulaCalculations(ANG_RHC_Information__c rhc, Decimal fsAmount, Map<Id, String> isoCountries, Map<String, AMS_Country_Specific_Attribute__c> attributes, boolean ApplyRHC, string Tier, ANG_BSP_Attributes__c bspAttrRhc)
 	{
 		Decimal rmeAmount = rhc.ANG_RME_Amount__c == null ? 0 : rhc.ANG_RME_Amount__c;
-		Decimal provisional = rhc.ANG_RHC_Amount_Provisional__c == null ? 0 : rhc.ANG_RHC_Amount_Provisional__c;
+		Decimal AmountAtRiskUSD = rhc.ANG_RHC_Amount_Provisional__c == null ? 0 :ANG_Risk_Helper.currencyConverter(rhc.CurrencyIsoCode, rhc.ANG_RHC_Amount_Provisional__c, 'USD', null);// (rhc.ANG_RHC_Amount_Provisional__c);
 		Decimal minFs = rhc.ANG_Minimum_Financial_Security__c == null ? 0 : rhc.ANG_Minimum_Financial_Security__c;
 		Decimal fs = fsAmount;
 
 		System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - applyRhcFormulaCalculations] rmeAmount: ' + rmeAmount);
-		System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - applyRhcFormulaCalculations] provisionalRHC: ' + provisional);
+		System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - applyRhcFormulaCalculations] AmountAtRiskUSD: ' + AmountAtRiskUSD);
 		System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - applyRhcFormulaCalculations] minFs: ' + minFs);
 		System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - applyRhcFormulaCalculations] fs: ' + fs);
 
@@ -327,16 +350,28 @@ public class ANG_RHCHelper {
 
 		// MAX between FS, minimumRHCAmount and the new RHC ammount
 		// RHC amount = (rmeAmount|Provisional) + % of Exceeding FS * (rmeAmount|Provisional)
-		Decimal newRhcAmountForecasted = provisional + (percentageOfExceedingFs * provisional).setScale(0);
+		decimal Tiered_Provisional_Amount = (bspAttrRhc.Tier_RHC_Formula_TopUp_USD__c==null?0:bspAttrRhc.Tier_RHC_Formula_TopUp_USD__c)
+											 + (bspAttrRhc.Amount_At_Risk_Multiplier__c==null?1:bspAttrRhc.Amount_At_Risk_Multiplier__c)
+											 * (AmountAtRiskUSD - (bspAttrRhc.Tier_RHC_Formula_Deduct_USD__c==null?0:bspAttrRhc.Tier_RHC_Formula_Deduct_USD__c));
+
+		//Convert back the Tiered Provisional Amount from USD to RHC Currency
+		System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - applyRhcFormulaCalculations] Tiered_Provisional_Amount before conversion: ' + Tiered_Provisional_Amount);
+		Tiered_Provisional_Amount = (ANG_Risk_Helper.currencyConverter('USD', (Tiered_Provisional_Amount==null?0:Tiered_Provisional_Amount), rhc.CurrencyIsoCode, null));
+		System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - applyRhcFormulaCalculations] Tiered_Provisional_Amount after conversion: ' + Tiered_Provisional_Amount);
+		
+		rhc.Tiered_Provisional_Amount__c = Tiered_Provisional_Amount.setScale(2);
+		rhc.Forecasted_Tier__c = Tier;
+
+		Decimal newRhcAmountForecasted = Tiered_Provisional_Amount + (percentageOfExceedingFs * Tiered_Provisional_Amount).setScale(0);
 
 		System.debug(LoggingLevel.DEBUG, '____ [cls ANG_RHCHelper - applyRhcFormulaCalculations] newRhcAmountForecasted: ' + newRhcAmountForecasted);
 
 		Decimal newRHCForecastedValue = Math.Max(fs, Math.Max(newRhcAmountForecasted, minimumRHCAmount));
 		rhc.ANG_RHC_Amount_Forecasted__c = Math.min(newRHCForecastedValue, 9999999999999999.99);
-		rhc.ANG_Forecasted_RHC_Effective_date__c = null;
 
 		if(ApplyRHC){
-			Decimal newRHCAmount = rmeAmount + (percentageOfExceedingFs * rmeAmount).setScale(0);
+			rhc.Tier__c = rhc.Forecasted_Tier__c;
+			Decimal newRHCAmount = Tiered_Provisional_Amount + (percentageOfExceedingFs * Tiered_Provisional_Amount).setScale(0);
 
 			Decimal newRHCValue = Math.Max(fs, Math.Max(newRHCAmount, minimumRHCAmount));
 			rhc.ANG_RHC_Amount__c = Math.min(newRHCValue, 9999999999999999.99);
@@ -365,51 +400,6 @@ public class ANG_RHCHelper {
 		rhc.ANG_RHC_Amount__c = rhcAmount;
 
 		rhc.ANG_RHC_Amount_Forecasted__c = rhcAmount;
-		rhc.ANG_Forecasted_RHC_Effective_date__c = null;
-	}
-
-	/**
-	* Fetches the BSP Attributes configuration
-	* for a given set of BSP Ids
-	*
-	* @param bspIdSet: List<Id>
-	* @return bspAttributesLst: Map<String, ANG_BSP_Attributes__c>
-	*
-	*/
-	private static Map<String, ANG_BSP_Attributes__c> fetchBSPAttributesConfig(List<Id> bspIdSet){
-
-		Map<String, ANG_BSP_Attributes__c> bspAttributesMap = new Map<String, ANG_BSP_Attributes__c>();
-
-		if(bspIdSet.isEmpty()) return bspAttributesMap;
-
-		List<ANG_BSP_Attributes__c> bspAttributesLst = new List<ANG_BSP_Attributes__c>(
-			[SELECT
-				Id,
-				BSP__c,
-				BSP__r.Name,
-				UniqueKey__c,
-				RecordTypeId,
-				Risk_Status__c,
-				FS_Percentage__c,
-				Min_FA_Points__c,
-				Max_FA_Points__c,
-				RHC_Amnt_Calc_Type__c,
-				Limit_Cash_Condition__c
-			 FROM ANG_BSP_Attributes__c
-			 WHERE BSP__c IN :bspIdSet
-			]
-		);
-
-		for(ANG_BSP_Attributes__c bspAttr : bspAttributesLst){
-			//For RHC Amount Conf Rec Type the unique key is:
-			//	BSP Id + RHC Amount Conf Record Type Id
-			//For Cash Condition Conf Rec Type the unique key is:
-			//	BSP Id + Cash Condition Conf Record Type Id + Risk Status + Min FA Points
-			bspAttributesMap.put(bspAttr.UniqueKey__c, bspAttr);
-		}
-
-		return bspAttributesMap;
-
 	}
 
 	public static void handleRiskOrForecastedRhcAmountUpdates(Set<Id> accountIdSet){
@@ -484,7 +474,7 @@ public class ANG_RHCHelper {
 					riuw.rhcAmount = '';
 
 					if(rhc.ANG_RHC_Amount__c != NULL){
-						riuw.rhcAmount = rhc.ANG_RHC_Amount__c.format();
+						riuw.rhcAmount = rhc.ANG_RHC_Amount__c.setscale(2).format();
 					}
 
 					riuw.rhcEffectiveDate = '';
@@ -554,15 +544,13 @@ public class ANG_RHCHelper {
 
 			String htmlBody = template.HtmlValue;
 			htmlBody = htmlBody.replace('#RISK_STATUS#', wrap.riskStatus);
-			htmlBody = htmlBody.replace('#CASH_CONDITIONS#', wrap.cashConditions);
+			//ENHC0013943 htmlBody = htmlBody.replace('#CASH_CONDITIONS#', wrap.cashConditions);
 			htmlBody = htmlBody.replace('#RHC_AMOUNT#', String.valueOf(wrap.rhcAmount) + ' ' + wrap.CurrencyIsoCode);
-			//htmlBody = htmlBody.replace('#RHC_EFFECTIVE_DATE#', (wrap.rhcEffectiveDate == null ? '' :String.valueOf(wrap.rhcEffectiveDate)));
 
 			String plainBody = template.Body;
 			plainBody = plainBody.replace('#RISK_STATUS#', wrap.riskStatus);
-			plainBody = plainBody.replace('#CASH_CONDITIONS#', wrap.cashConditions);
+			//ENHC0013943 - plainBody = plainBody.replace('#CASH_CONDITIONS#', wrap.cashConditions);
 			plainBody = plainBody.replace('#RHC_AMOUNT#', String.valueOf(wrap.rhcAmount) + ' ' + wrap.CurrencyIsoCode);
-			//plainBody = plainBody.replace('#RHC_EFFECTIVE_DATE#', (wrap.rhcEffectiveDate == null ? '' :String.valueOf(wrap.rhcEffectiveDate)));
 
 			if(contactMap.containsKey(wrap.contactId) && !contactMap.get(wrap.contactId).IsEmailBounced && !contactMap.get(wrap.contactId).Email.endsWithIgnoreCase('.inactive'))
 				emailLst.add(new Email(wrap.contactId, wrap.accountId, template.Subject, plainBody, htmlBody));
@@ -697,5 +685,13 @@ public class ANG_RHCHelper {
 
 			update alerts;
 		}
+	}
+
+	private static string determineTier(decimal AmntAtRiskUSD, list<ANG_BSP_Attributes__c> lsBspAttr){
+		string Tier = '1'; //this is the default tier if, for any reason, we are unable to determine it. Statistically, 95% of the agency will fall into Tier 1
+		for(ANG_BSP_Attributes__c attr:lsBspAttr)
+			if(attr.recordTypeId == RECTYPE_RHC_AMOUNT_CONFIG && attr.RHC_Amnt_Calc_Type__c == RHC_AMOUNT_CALC_TYPE_TIER && AmntAtRiskUSD>=attr.Amount_At_Risk_From_USD__c && AmntAtRiskUSD<attr.Amount_At_Risk_To_USD__c)
+				return attr.Tier__c;
+		return Tier;
 	}
 }

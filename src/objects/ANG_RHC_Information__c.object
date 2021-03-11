@@ -193,7 +193,7 @@
         <relationshipName>RHC_Informations</relationshipName>
         <relationshipOrder>0</relationshipOrder>
         <reparentableMasterDetail>true</reparentableMasterDetail>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
         <writeRequiresMasterRead>false</writeRequiresMasterRead>
@@ -216,7 +216,7 @@
         <description>Reports the cash conditions of the account. This information is filled by the account trigger and should no be updated manually. It&apos;s used on the calculation of RHC Amount and Forecasted RHC Amount</description>
         <externalId>false</externalId>
         <label>Cash Conditions Equal to FS</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -300,16 +300,6 @@
         <type>Currency</type>
     </fields>
     <fields>
-        <fullName>ANG_Forecasted_RHC_Effective_date__c</fullName>
-        <description>Forecasted RHC Effective date based on the next 1st day of the Billing Period</description>
-        <externalId>false</externalId>
-        <label>Forecasted RHC Effective date</label>
-        <required>false</required>
-        <trackHistory>true</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Date</type>
-    </fields>
-    <fields>
         <fullName>ANG_IATA_Code__c</fullName>
         <externalId>false</externalId>
         <formula>ANG_AccountId__r.IATACode__c</formula>
@@ -336,9 +326,9 @@
         <fullName>ANG_Provisional_RHC_Last_Update__c</fullName>
         <description>The date of the Provisional RHC Amount last update. This information comes from an external system and should not be updated manually.</description>
         <externalId>false</externalId>
-        <label>Provisional RHC Amount Last Update</label>
+        <label>Amount At Risk Last Update</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -349,7 +339,7 @@
         <externalId>false</externalId>
         <inlineHelpText>If checked the RHC amount will be equal to the total Financial Securities</inlineHelpText>
         <label>RHC Amount Equals FS</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -369,7 +359,7 @@
         <fullName>ANG_RHC_Amount_Provisional__c</fullName>
         <description>Expected RHC Amount calculated by RME. The agent can request a new calculation via a button on the layout. The information comes from an external system and should not be updated manually.</description>
         <externalId>false</externalId>
-        <label>Provisional RHC Amount</label>
+        <label>Amount At Risk</label>
         <precision>18</precision>
         <required>false</required>
         <scale>4</scale>
@@ -458,6 +448,75 @@
         <unique>true</unique>
     </fields>
     <fields>
+        <fullName>Account_BSP__c</fullName>
+        <description>Pull the BSP of the account. Useful in trigger</description>
+        <externalId>false</externalId>
+        <formula>ANG_AccountId__r.IATA_ISO_Country__r.AMS_Settlement_System__c</formula>
+        <label>Account&apos;s BSP</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Agency_Risk_Status__c</fullName>
+        <description>Pull the agency risk status</description>
+        <externalId>false</externalId>
+        <formula>ANG_AccountId__r.ANG_RiskStatus__c</formula>
+        <label>Agency Risk Status</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Amount_At_Risk_USD__c</fullName>
+        <description>Amount At Risk (Provisional/2) exchanged from RHC currency into Org currency</description>
+        <externalId>false</externalId>
+        <formula>ANG_RHC_Amount_Provisional__c/CURRENCYRATE( TEXT(CurrencyIsoCode ))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Amount At Risk (USD)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
+    </fields>
+    <fields>
+        <fullName>Forecasted_Tier__c</fullName>
+        <description>What will be the Tier if the Confirm Forecasted RHC button is pressed</description>
+        <externalId>false</externalId>
+        <label>Forecasted Tier</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>1</fullName>
+                    <default>false</default>
+                    <label>1</label>
+                </value>
+                <value>
+                    <fullName>2</fullName>
+                    <default>false</default>
+                    <label>2</label>
+                </value>
+                <value>
+                    <fullName>3</fullName>
+                    <default>false</default>
+                    <label>3</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>RHC_Amount_Equals_FS_Percent__c</fullName>
         <description>Percentage of Financial Security to be applied on RHC calculation when &quot;RHC Amount Equals FS&quot; is true</description>
         <externalId>false</externalId>
@@ -465,9 +524,77 @@
         <precision>18</precision>
         <required>false</required>
         <scale>0</scale>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>RHC_Amount_USD__c</fullName>
+        <description>RHC Amount exchanged from RHC currency into Org currency</description>
+        <externalId>false</externalId>
+        <formula>ANG_RHC_Amount__c /CURRENCYRATE( TEXT(CurrencyIsoCode ))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>RHC Amount (USD)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Remarks__c</fullName>
+        <description>Used to add a comment whenever a user performs changes in RHC amount for a particular Agent</description>
+        <externalId>false</externalId>
+        <label>Remarks</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Tier__c</fullName>
+        <description>Indicates the Tier the agency belong to. Used to calculate the RHC</description>
+        <externalId>false</externalId>
+        <label>Tier</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>1</fullName>
+                    <default>false</default>
+                    <label>1</label>
+                </value>
+                <value>
+                    <fullName>2</fullName>
+                    <default>false</default>
+                    <label>2</label>
+                </value>
+                <value>
+                    <fullName>3</fullName>
+                    <default>false</default>
+                    <label>3</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Tiered_Provisional_Amount__c</fullName>
+        <description>Is the result of the Tier calculation</description>
+        <externalId>false</externalId>
+        <label>Tiered Provisional Amount</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Currency</type>
     </fields>
     <label>RHC Information</label>
     <nameField>
@@ -482,6 +609,36 @@
         <fullName>RHC_Information</fullName>
         <active>true</active>
         <label>RHC Information</label>
+        <picklistValues>
+            <picklist>Forecasted_Tier__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Tier__c</picklist>
+            <values>
+                <fullName>1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
     </recordTypes>
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
@@ -550,22 +707,16 @@ try{
 
 if(&apos;{!AND(NOT(CONTAINS(LOWER($Profile.Name), &apos;system administrator&apos;)), ANG_RHC_Information__c.ANG_CashCondition__c, OR(ANG_RHC_Information__c.ANG_Financial_Security__c = 0, ISNULL(ANG_RHC_Information__c.ANG_Financial_Security__c)))}&apos;.toLowerCase() == &apos;true&apos;){ 
 alert(&apos;Provisional RHC cannot be enforced as RHC amount because the agent has cash condition equal to FS. If the agent has no valid FS, please contact your administrator&apos;); 
-}else{ 
+}
+else{ 
 
-var rhcInfo = new sforce.SObject(&quot;ANG_RHC_Information__c&quot;); 
-rhcInfo.Id = &apos;{!ANG_RHC_Information__c.Id}&apos;; 
+var rhcID= &apos;{!ANG_RHC_Information__c.Id}&apos;;
+var result = sforce.apex.execute(&quot;AMS_OSCAR_Webservice&quot;,&quot;updateRME_Amount&quot;,{rhcID: rhcID});
 
-rhcInfo.ANG_RME_Amount__c = parseInt(&apos;{!ANG_RHC_Information__c.ANG_RHC_Amount_Provisional__c}&apos;.replace(/[^0-9\.]+/g,&apos;&apos;)); 
-
-var result = sforce.connection.update([rhcInfo]); 
-
-console.info(&quot;result&quot;); 
-console.info(result[0]); 
-
-if (result[0].success == &quot;true&quot;) { 
-window.location.reload(); 
+if (result != &apos;&apos;) { 
+   alert(result);
 } else { 
-alert(result[0].errors.message); 
+   window.location.reload(); 
 } 
 
 }//end if-else profile check</url>

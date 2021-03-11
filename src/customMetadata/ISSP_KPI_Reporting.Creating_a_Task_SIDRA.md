@@ -16,7 +16,7 @@
     </values>
     <values>
         <field>Points__c</field>
-        <value xsi:type="xsd:double">3.0</value>
+        <value xsi:type="xsd:double">1.0</value>
     </values>
     <values>
         <field>Reopening_Reason__c</field>
@@ -32,7 +32,7 @@
     </values>
     <values>
         <field>Type_of_Task__c</field>
-        <value xsi:type="xsd:string">Call</value>
+        <value xsi:type="xsd:string">Task</value>
     </values>
     <values>
         <field>Value_From__c</field>

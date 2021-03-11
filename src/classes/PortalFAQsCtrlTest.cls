@@ -250,4 +250,38 @@ public class PortalFAQsCtrlTest {
 		}
 		Test.stopTest();
 	}
+
+	@isTest static void testGetArticleShareableLink() {
+		
+		faq__kav article= [SELECT id,CS_Portal_link__c FROM faq__kav LIMIT 1];
+
+		String link=PortalFAQsCtrl.getShareableLink(article.id);
+		system.assertEquals(link,article.CS_Portal_link__c);
+
+
+	}
+	
+
+	@isTest static void testGetTroubleshootingArticle() {
+		
+		
+		User testUser = [SELECT Id FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
+
+		Test.startTest();
+		System.runAs(testUser) {
+			CSP_Utils.PagedResult result=PortalFAQsCtrl.getTroubleshootingArticle('en_US');
+			system.assertEquals(null,result);
+
+			ISSP_CS__c val= new ISSP_CS__c(
+				name='TroubleShootingArticleId',
+				value__C='Sample-Article-Portal-Test'
+			);
+			insert val;
+
+			result=PortalFAQsCtrl.getTroubleshootingArticle('en_US');
+			system.assertEquals(0,result.records.size());
+		}
+
+	}
+
 }

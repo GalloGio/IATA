@@ -2,7 +2,7 @@
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
         <fullName>ACCA_Notification_on_new_Application_Change_Request</fullName>
-        <ccEmails>accabspdevelop@acca.com.cn</ccEmails>
+        <ccEmails>accaisis2develop@acca.com.cn</ccEmails>
         <ccEmails>Jana_sun@163.com</ccEmails>
         <ccEmails>Cindy.acca@gmail.com</ccEmails>
         <ccEmails>xbkcw@126.com</ccEmails>
@@ -13,7 +13,6 @@
     </alerts>
     <alerts>
         <fullName>ACCA_Notification_on_new_Application_Change_Request_ISIS2_ISIS2D</fullName>
-        <ccEmails>accabspdevelop@acca.com.cn</ccEmails>
         <ccEmails>accaisis2develop@acca.com.cn</ccEmails>
         <description>ACCA: Notification on new Application Change Request ISIS2 &amp; ISIS2D</description>
         <protected>false</protected>
@@ -160,7 +159,7 @@
     </alerts>
     <alerts>
         <fullName>Approved_Ad_hoc_calendar_change</fullName>
-        <ccEmails>iccso@iata.org,efs@iata.org,efclient@iata.org,MADGDCCSMGR@iata.org</ccEmails>
+        <ccEmails>iccso@iata.org,efs@iata.org,efclient@iata.org,madcscmgr@iata.org,europs@iata.org</ccEmails>
         <description>Approved - Ad-hoc calendar change</description>
         <protected>false</protected>
         <recipients>
@@ -171,10 +170,6 @@
         </recipients>
         <recipients>
             <recipient>concessios@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>mohananb@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -255,6 +250,30 @@
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>All/CNS_Deadline_Date_Reached</template>
+    </alerts>
+    <alerts>
+        <fullName>Case_Closure_24Hours_Notification</fullName>
+        <description>Case Closure 24Hours Notification</description>
+        <protected>false</protected>
+        <recipients>
+            <field>ContactEmail</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>CS_Portal/Case_Closure_24H_Notification</template>
+    </alerts>
+    <alerts>
+        <fullName>Case_Closure_48Hours_Notification</fullName>
+        <description>Case Closure 48Hours Notification</description>
+        <protected>false</protected>
+        <recipients>
+            <field>ContactEmail</field>
+            <type>email</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>CS_Portal/Case_Closure_48H_Notification</template>
     </alerts>
     <alerts>
         <fullName>Case_changed</fullName>
@@ -772,7 +791,7 @@
         <description>Global approval of FAQ change - to GVA</description>
         <protected>false</protected>
         <recipients>
-            <recipient>gabriel@iata.org</recipient>
+            <recipient>oueidatg2@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
@@ -1386,156 +1405,24 @@
         <description>IDFS_SIDRA_DP01_KAM case created</description>
         <protected>false</protected>
         <recipients>
-            <recipient>abbadid@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>alyacoubz@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>armientoe@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>bokom@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>chiavonf@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>concessios@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>dovgano@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>garciatef@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>girondoe@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>guzmanro@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>haddada@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>ibrahimf@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>isicheic@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>jaradata@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>katkhudan@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>khalailehk@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>kutsera@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>lopezbaism@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>martinezd@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>martinyuks@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>moutany@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>naumenkoy@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>navar@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>ogandoi@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>ozkanm@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>paredesc@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>quliyevaa@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>rabahh@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>sanchezc@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>saremyt@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>shahb@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>sughayerm@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>suwal@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>taverasr@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>vidalk@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>yeboahm@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>zidans@iata.org</recipient>
-            <type>user</type>
+            <recipient>SIDRA_KAM_and_high_amount_notification_r</recipient>
+            <type>group</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>IDFS_SIDRA_cases_templates/IDFS_SIDRA_DP01</template>
+    </alerts>
+    <alerts>
+        <fullName>IDFS_SIDRA_DP01_KAM_case_created_assign_HA</fullName>
+        <description>IDFS_SIDRA_DP01_KAM case created - high amount</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>SIDRA_KAM_and_high_amount_notification_r</recipient>
+            <type>group</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>IDFS_SIDRA_cases_templates/IDFS_SIDRA_DP01_HIGH_AMOUNT</template>
     </alerts>
     <alerts>
         <fullName>IDFS_SIDRA_DP01_KAM_case_created_notify_mgmt</fullName>
@@ -2953,324 +2840,48 @@
         <description>SIDRA_DEF0101 Key account magament Tech DEF</description>
         <protected>false</protected>
         <recipients>
-            <recipient>abbadid@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>albuquerqd@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>armientoe@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>bokom@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>chiavonf@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>concessios@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>dovgano@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>garciatef@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>girondoe@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>haddada@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>ibrahimf@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>isicheic@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>jaradata@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>katkhudan@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>khalailehk@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>kutsera@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>lopezbaism@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>martinezd@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>martinyuks@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>moutany@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>mulai@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>ogandoi@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>paredesc@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>quliyevaa@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>rabahh@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>rodriguezja@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>sanchezc@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>saremyt@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>schuchardm@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>shahb@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>sughayerm@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>suwal@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>vidalk@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>yeboahm@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>zidans@iata.org</recipient>
-            <type>user</type>
+            <recipient>SIDRA_KAM_and_high_amount_notification_r</recipient>
+            <type>group</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>IDFS_SIDRA_cases_templates/IDFS_SIDRA_DEF05_KAMTECHDEF</template>
     </alerts>
     <alerts>
+        <fullName>SIDRA_DEF0101_Key_account_magament_Tech_DEF_HA</fullName>
+        <description>SIDRA_DEF0101 Key account magament Tech DEF - High Amount</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>SIDRA_KAM_and_high_amount_notification_r</recipient>
+            <type>group</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>IDFS_SIDRA_cases_templates/IDFS_SIDRA_DEF05_KAMTECHDEF_HIGH_AMOUNT</template>
+    </alerts>
+    <alerts>
         <fullName>SIDRA_DEF0102_Key_account_magament_NP_DEF</fullName>
         <description>SIDRA_DEF0102 Key account magament non payment DEF</description>
         <protected>false</protected>
         <recipients>
-            <recipient>abbadid@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>albuquerqd@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>alyacoubz@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>armientoe@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>bokom@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>chiavonf@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>concessios@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>dovgano@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>garciatef@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>girondoe@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>guzmanro@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>haddada@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>ibrahimf@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>isicheic@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>jaradata@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>katkhudan@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>khalailehk@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>kutsera@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>lopezbaism@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>martinezd@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>martinyuks@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>moutany@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>mulai@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>naumenkoy@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>navar@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>ogandoi@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>ozkanm@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>paredesc@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>quliyevaa@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>rabahh@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>rodriguezja@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>sanchezc@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>saremyt@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>schuchardm@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>shahb@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>sughayerm@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>suwal@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>taverasr@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>theryg@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>vidalk@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>yeboahm@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>zidans@iata.org</recipient>
-            <type>user</type>
+            <recipient>SIDRA_KAM_and_high_amount_notification_r</recipient>
+            <type>group</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>IDFS_SIDRA_cases_templates/IDFS_SIDRA_DEF06_KAMSPDEF</template>
+    </alerts>
+    <alerts>
+        <fullName>SIDRA_DEF0102_Key_account_magament_NP_DEF_HA</fullName>
+        <description>SIDRA_DEF0102 Key account magament non payment DEF - High Amount</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>SIDRA_KAM_and_high_amount_notification_r</recipient>
+            <type>group</type>
+        </recipients>
+        <senderAddress>noreply@iata.org</senderAddress>
+        <senderType>OrgWideEmailAddress</senderType>
+        <template>IDFS_SIDRA_cases_templates/IDFS_SIDRA_DEF06_KAMSPDEF_HIGH_AMOUNT</template>
     </alerts>
     <alerts>
         <fullName>SIDRA_DEF01_Tech_Def_detected_by_ACC</fullName>
@@ -4160,7 +3771,7 @@
         <description>TEST Email Alert on IS for AM</description>
         <protected>false</protected>
         <recipients>
-            <recipient>gabriel@iata.org</recipient>
+            <recipient>oueidatg2@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
@@ -5876,7 +5487,17 @@ IF(IsClosed, &quot;Closed&quot;, &quot;Open&quot;)</formula>
     <fieldUpdates>
         <fullName>IDFS_CREATED_BY_ROLE</fullName>
         <field>Created_By_Role__c</field>
-        <formula>(IF( 
+        <formula>(
+IF(
+  CONTAINS($UserRole.Name, &quot;WH CS&quot;),
+  &quot;WH Customer Service&quot;,
+IF(
+  CONTAINS($UserRole.Name, &quot;WH AGM&quot;),
+  &quot;WH Agency Management&quot;,
+IF(
+  CONTAINS($UserRole.Name, &quot;WH Airline Participation&quot;),
+  &quot;WH Airline Participation&quot;,
+IF( 
   CONTAINS($Profile.Name,&quot;ISS Portal DPC&quot;), 
   &quot;DPC External&quot;, 
   (IF( 
@@ -5961,7 +5582,7 @@ IF(IsClosed, &quot;Closed&quot;, &quot;Open&quot;)</formula>
   ),
     &quot;IATA System&quot;,
   
-  &quot;IATA Other&quot;))))))))))))))))))))))))))))))))))))))</formula>
+  &quot;IATA Other&quot;)))))))))))))))))))))))))))))))))))))))))</formula>
         <name>IDFS_CREATED_BY_ROLE</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
@@ -6801,7 +6422,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <fullName>SCE_Serial_Number_Allocation_owner_R_B</fullName>
         <description>Update case owner: Reporting &amp; Billing</description>
         <field>OwnerId</field>
-        <lookupValue>CasesReportingBilling</lookupValue>
+        <lookupValue>OperationalManagementHeadOffice</lookupValue>
         <lookupValueType>Queue</lookupValueType>
         <name>SCE:Serial Number Allocation owner R&amp;B</name>
         <notifyAssignee>true</notifyAssignee>
@@ -7843,6 +7464,15 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <description>This field update contains a formula based on User&apos;s profile and role, the result is stored in the case field &apos;Closed by Role&apos;</description>
         <field>Closed_by_Role__c</field>
         <formula>(IF(
+  CONTAINS($UserRole.Name, &quot;WH CS&quot;),
+  &quot;WH Customer Service&quot;,
+IF(
+  CONTAINS($UserRole.Name, &quot;WH AGM&quot;),
+  &quot;WH Agency Management&quot;,
+IF(
+  CONTAINS($UserRole.Name, &quot;WH Airline Participation&quot;),
+  &quot;WH Airline Participation&quot;,
+IF(
   CONTAINS($Profile.Name,&quot;ISS Portal DPC&quot;),
   &quot;DPC External&quot;,
 (IF(
@@ -7916,7 +7546,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
 (IF(
   CONTAINS($UserRole.Name, &quot;Distribution - Airline Management&quot;),
   &quot;Airline Management&quot;,
-  &quot;IATA Other&quot;))))))))))))))))))))))))))))))))))</formula>
+  &quot;IATA Other&quot;)))))))))))))))))))))))))))))))))))))</formula>
         <name>update closed by role field</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
@@ -9115,7 +8745,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         </actions>
         <active>true</active>
         <description>This workflow fill field &apos;Closed by Role&apos; with the user&apos;s role name who closed the case</description>
-        <formula>IsClosed = true</formula>
+        <formula>OR(IsClosed = true, ISPICKVAL(Status, &quot;Pending Closure&quot;))</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -13819,7 +13449,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <criteriaItems>
             <field>Case.BSPCountry__c</field>
             <operation>equals</operation>
-            <value>&quot;Macedonia, the former Yugoslav Republic of&quot;</value>
+            <value>Republic of North Macedonia</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.SIDRA_Lite_Reason__c</field>
@@ -14031,7 +13661,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
             <name>SIDRA_DEF0101_Key_account_magament_Tech_DEF</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 and 6</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -14071,7 +13701,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
             <name>SIDRA_DEF0102_Key_account_magament_NP_DEF</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 and 6 and 7</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -14427,7 +14057,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
             <name>Change_owner_to_ACC_EUR_Risk_queue</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 and  6 and 7 and 8 and 9</booleanFilter>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
@@ -18813,10 +18443,6 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
     <rules>
         <fullName>SIS Help Desk - New Case Except Web</fullName>
         <actions>
-            <name>SIS_Assign_Case_Record_Type</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
             <name>SIS_Assign_Case_to_SIS_Help_Desk_queue</name>
             <type>FieldUpdate</type>
         </actions>
@@ -18829,7 +18455,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6</booleanFilter>
+        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7</booleanFilter>
         <criteriaItems>
             <field>Case.CaseArea__c</field>
             <operation>equals</operation>
@@ -18838,7 +18464,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
         <criteriaItems>
             <field>Case.Origin</field>
             <operation>notEqual</operation>
-            <value>Web,Internal Case,Portal</value>
+            <value>Web,Internal Case,Portal,IATA Internal User</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.SuppliedEmail</field>
@@ -18859,6 +18485,11 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <field>Case.Subject</field>
             <operation>notContain</operation>
             <value>EXPIRED DELIVERY RETRY NOTIFICATION,FAILED,FAILURE NOTICE,NON REMIS,OUT OF OFFICE,OUT OF THE OFFICE,REMISE DIFFEREE,UNDELIVERABLE,VIOLATION,WARNING : EMAIL EXCEED MAXIMUM SIZE LIMIT</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Cases - SIS Help Desk</value>
         </criteriaItems>
         <triggerType>onCreateOnly</triggerType>
     </rules>

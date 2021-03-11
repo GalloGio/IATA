@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
     <sharingCriteriaRules>
+        <fullName>MROSmartHubExternalLeads</fullName>
+        <accessLevel>Read</accessLevel>
+        <label>MROSmartHubExternalLeads</label>
+        <sharedTo>
+            <group>MRO_SmartHub_External_Users</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Marketing leads</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
+        <fullName>MRO_Smarthub_Internal</fullName>
+        <accessLevel>Edit</accessLevel>
+        <description>Internal users access to MRO leads</description>
+        <label>MRO Smarthub Internal</label>
+        <sharedTo>
+            <group>MRO_SmartHub_Internal</group>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Marketing leads</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
         <fullName>Training_PM</fullName>
         <accessLevel>Edit</accessLevel>
         <label>Training PM</label>

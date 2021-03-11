@@ -453,7 +453,7 @@
         <label>Main Currency</label>
         <length>10</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -465,7 +465,7 @@
         <label>Secondary Currency</label>
         <length>10</length>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -487,6 +487,16 @@
         <externalId>false</externalId>
         <label>Favourite Service</label>
         <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Has_access_to_OAG__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Indicates if this user should also get access to the OAG Application which is related to the ‘IS’ set of Applications.</description>
+        <externalId>false</externalId>
+        <label>Has access to OAG?</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -761,6 +771,11 @@ Application_Name__c
                     <default>false</default>
                     <label>Pending</label>
                 </value>
+                <value>
+                    <fullName>Pending Provisioning</fullName>
+                    <default>false</default>
+                    <label>Pending Provisioning</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -886,16 +901,6 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
         <columns>Right__c</columns>
         <columns>LAST_UPDATE</columns>
         <filterScope>Everything</filterScope>
-        <filters>
-            <field>Restricted_App__c</field>
-            <operation>equals</operation>
-            <value>0</value>
-        </filters>
-        <filters>
-            <field>Portal_Application__c</field>
-            <operation>contains</operation>
-            <value>AVSEC</value>
-        </filters>
         <label>All</label>
         <sharedTo>
             <allPartnerUsers></allPartnerUsers>
@@ -920,6 +925,26 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
         </filters>
         <label>IFG Services Access</label>
         <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>IFTP</fullName>
+        <columns>NAME</columns>
+        <columns>Right__c</columns>
+        <columns>Account__c</columns>
+        <columns>Application_Name__c</columns>
+        <columns>Contact__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Application_Name__c</field>
+            <operation>contains</operation>
+            <value>IFTP</value>
+        </filters>
+        <filters>
+            <field>Right__c</field>
+            <operation>equals</operation>
+            <value>Access Granted</value>
+        </filters>
+        <label>IFTP</label>
     </listViews>
     <listViews>
         <fullName>Pending_approvals</fullName>
@@ -1079,6 +1104,10 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
             </values>
             <values>
                 <fullName>Access Granted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending Provisioning</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1256,6 +1285,12 @@ $User.Mgmt_Report_Team__c = false
         <errorMessage>The Access Status of this service can only be changed by IATA ‘Management Report’ team.</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>OAG_Access</fullName>
+        <active>true</active>
+        <errorConditionFormula>AND(Has_access_to_OAG__c = true,  NOT( TEXT(Portal_Application__r.Functional_Role__c) = &apos;Airport IS&apos;) )</errorConditionFormula>
+        <errorMessage>The &apos;Has Access to OAG&apos; field is only applicable for certain services. Check the Functional Role of the related Portal Service.</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Old_CassLink_not_available</fullName>
         <active>true</active>
         <errorConditionFormula>AND( 
@@ -1292,7 +1327,7 @@ NOT(BEGINS($Profile.Name, &apos;identity&apos;))
     </validationRules>
     <validationRules>
         <fullName>Restrict_IAC_request</fullName>
-        <active>true</active>
+        <active>false</active>
         <description>Internal users must not be able to assign an IATA Accreditation &amp; Changes portal service with Access Status = Access Requested to a contact under accounts registered as Freight Forwarders in a CNS country.</description>
         <errorConditionFormula>AND(
     OR(
@@ -1369,7 +1404,10 @@ $Profile.Name != &apos;ISS Portal Agency User (Partner)&apos;
     ),
     AND(
       Portal_Application__c = $Setup.ISSP_Portal_Service_Ids__c.SIS__c,
-      Contact__r.Account.RecordType.DeveloperName = &apos;IATA_Agency&apos;,
+      OR(
+        Contact__r.Account.RecordType.DeveloperName = &apos;IATA_Agency&apos;,
+        Contact__r.Account.RecordType.DeveloperName = &apos;Standard_Account&apos;
+      ),
       NOT(CONTAINS($Profile.Name,&quot;SIS Help Desk&quot;)),
       NOT($Permission.Grant_SIS_Service),
       $User.Profile_Name__c != &apos;IATA Portal Integration Profile&apos;
@@ -1377,6 +1415,7 @@ $Profile.Name != &apos;ISS Portal Agency User (Partner)&apos;
     AND(
       Portal_Application__c = $Setup.ISSP_Portal_Service_Ids__c.SIS__c,
       Contact__r.Account.RecordType.DeveloperName != &apos;IATA_Agency&apos;,
+      Contact__r.Account.RecordType.DeveloperName != &apos;Standard_Account&apos;,
       NOT(CONTAINS($Profile.Name,&quot;SIS Help Desk&quot;)),
       $User.Profile_Name__c != &apos;IATA Portal Integration Profile&apos;
     )

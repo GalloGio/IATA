@@ -36,6 +36,8 @@ private class ANG_AgentsNotificationRhcTest {
 
 		insert bspES;
 
+		insert AMS_OSCAR_TestDataFactory.createOperationAttributes(bspES);
+
 		Operational_Calendar__c opES = new Operational_Calendar__c(
 			ISS_Operation__c = bspES.id,
 			First_Day__c = Date.today().addDays(30),
@@ -177,8 +179,7 @@ private class ANG_AgentsNotificationRhcTest {
 		ANG_RHC_Information__c rhcInfo = new ANG_RHC_Information__c(
 			ANG_AccountId__c = acct.Id,
 			CurrencyIsoCode = 'EUR',
-			RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO,
-			ANG_Forecasted_RHC_Effective_date__c = System.today()
+			RecordTypeId = ANG_RHCHelper.RECTYPE_STDRHCINFO
 		);
 
 		insert rhcInfo;

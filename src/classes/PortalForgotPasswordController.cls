@@ -36,10 +36,10 @@ public without sharing class PortalForgotPasswordController {
 	}
 
 	@AuraEnabled
-	public static PortalPasswordHandler.resultWrapper handleResetPassword(String email){
+	public static PortalPasswordHandler.resultWrapper handleResetPassword(String email, Map<String,String> params){
 		PortalPasswordHandler.resultWrapper result = PortalPasswordHandler.handleResetPassword(email);
 		if(result.success == true){
-			String link                  = PortalPasswordHandler.generateUrl(result.user, result.password, 'resetPassword');
+			String link                  = PortalPasswordHandler.generateUrl(result.user, result.password, 'resetPassword', params);
 			Map<String, String> emailMap = PortalPasswordHandler.forgotPasswordEmailMap(result.user, link);
 			result.success               = PortalPasswordHandler.sendEmail(result.user.id, 'CSP_Forgot_Password_Email_VF', emailMap);
 		}

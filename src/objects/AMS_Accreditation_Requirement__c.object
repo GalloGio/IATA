@@ -470,6 +470,11 @@
                     <label>UK_MNY_LNDRNG_LG_FRM</label>
                 </value>
                 <value>
+                    <fullName>ULD_CER</fullName>
+                    <default>false</default>
+                    <label>ULD_CER</label>
+                </value>
+                <value>
                     <fullName>VAT_REG</fullName>
                     <default>false</default>
                     <label>VAT_REG</label>
@@ -741,6 +746,30 @@
         <picklistValues>
             <picklist>ANG_Accreditation_Model__c</picklist>
             <values>
+                <fullName>CASS Commercial Account BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASS Commercial Account HO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Endorsement BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Endorsement HO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Endorsement Independent BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Notice Of Change</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Cash</fullName>
                 <default>false</default>
             </values>
@@ -976,6 +1005,10 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>ULD_CER</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>VAT_REG</fullName>
                 <default>false</default>
             </values>
@@ -1122,6 +1155,30 @@
         <label>Change</label>
         <picklistValues>
             <picklist>ANG_Accreditation_Model__c</picklist>
+            <values>
+                <fullName>CASS Commercial Account BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASS Commercial Account HO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Endorsement BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Endorsement HO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Endorsement Independent BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Notice Of Change</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Cash</fullName>
                 <default>false</default>
@@ -2256,6 +2313,30 @@
         <label>Travel Agent</label>
         <picklistValues>
             <picklist>ANG_Accreditation_Model__c</picklist>
+            <values>
+                <fullName>CASS Commercial Account BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASS Commercial Account HO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Endorsement BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Endorsement HO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Endorsement Independent BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Notice Of Change</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Cash</fullName>
                 <default>false</default>

@@ -140,9 +140,9 @@ public class ANG_RHCMassCalculation {
 			selectAll = false;
 
 			String query = '' // 
-					+ ' SELECT Id , CurrencyIsoCode , ANG_AccountId__c , ANG_AccountId__r.IATACode__c , ANG_AccountId__r.IATA_ISO_Country__c, ' // 
+					+ ' SELECT Id , CurrencyIsoCode , ANG_AccountId__c , ANG_AccountId__r.IATACode__c , ANG_AccountId__r.IATA_ISO_Country__c, ANG_AccountId__r.ANG_RiskStatus__c, ' // 
 					+ '	ANG_RHC_Amount__c, ANG_RHC_Amount_Forecasted__c, ANG_RHC_Amount_Provisional__c, ANG_RHC_Effective_Date__c, ANG_ConsumedRHC_Percent__c, ' // 
-					+ '	ANG_Forecasted_RHC_Effective_date__c, ANG_ConsumedRHC__c, ANG_AccountId__r.Location_Type__c, ANG_Financial_Security__c ' // 
+					+ '	ANG_ConsumedRHC__c, ANG_AccountId__r.Location_Type__c, ANG_Financial_Security__c, Amount_At_Risk_USD__c, Forecasted_Tier__c, RHC_Amount_USD__c, Tier__c, Tiered_Provisional_Amount__c ' // 
 					+ ' FROM ANG_RHC_Information__c' // 
 					+ ' WHERE ANG_CashCondition__c = false' // 
 					+ ' 	AND ANG_AccountId__r.IATACode__c <> \'\' ' // 
@@ -228,6 +228,8 @@ public class ANG_RHCMassCalculation {
 		public decimal ANG_RHC_Amount_ProvisionalTMP	{get; set;}
 		public decimal ANG_RHC_Amount_Forecasted	{get; set;}
 		
+		public string Forecasted_Tier	{get; set;}
+		
 		private Agent(ANG_RHC_Information__c r){
 			this.selected = false;
 			this.bIsSuccess = false;
@@ -239,6 +241,7 @@ public class ANG_RHCMassCalculation {
 			this.ANG_RHC_Amount_Provisional = null;
 			this.ANG_RHC_Amount_ProvisionalTMP = null;
 			this.ANG_RHC_Amount_Forecasted = null;
+			this.Forecasted_Tier = null;
 		}
 	}
 
@@ -251,10 +254,12 @@ public class ANG_RHCMassCalculation {
 
 		ANG_RHC_Information__c theRHC = [SELECT Id , CurrencyIsoCode , ANG_AccountId__c , ANG_AccountId__r.IATACode__c , ANG_AccountId__r.IATA_ISO_Country__c, 
 											ANG_RHC_Amount__c, ANG_RHC_Amount_Forecasted__c, ANG_RHC_Amount_Provisional__c, ANG_RHC_Effective_Date__c,ANG_Financial_Security__c,
-											ANG_Forecasted_RHC_Effective_date__c, ANG_ConsumedRHC__c, ANG_AccountId__r.Location_Type__c, RHC_Amount_Equals_FS_Percent__c,
+											ANG_ConsumedRHC__c, ANG_AccountId__r.Location_Type__c, RHC_Amount_Equals_FS_Percent__c,
 											ANG_RHC_Amount_Equals_FS__c, ANG_CashCondition__c, ANG_RME_Amount__c, ANG_Account_Country_ISO_Code__c, ANG_ConsumedRHC_Percent__c, ANG_Consumed_RHC_Date__c,
 											ANG_ConsumedRHC_Last_Update__c, ANG_Enable_Calculation__c, ANG_Exceeding_Financial_Security__c, ANG_IATA_Code__c, ANG_Minimum_Financial_Security__c, 
-											ANG_Provisional_RHC_Last_Update__c, ANG_RME_Amount_Provisional__c, ANG_RME_Amount_Last_Update__c
+											ANG_Provisional_RHC_Last_Update__c, ANG_RME_Amount_Provisional__c, ANG_RME_Amount_Last_Update__c,
+											Amount_At_Risk_USD__c, Forecasted_Tier__c, RHC_Amount_USD__c, Tier__c, Tiered_Provisional_Amount__c,
+											ANG_AccountId__r.IATA_ISO_Country__r.AMS_Settlement_System__r.Enable_Provisional_RHC_Request__c
 										FROM ANG_RHC_Information__c where Id = :RHCId];
 		
 		boolean bProvSuccess = false;
@@ -283,6 +288,8 @@ public class ANG_RHCMassCalculation {
 					update theRHC;
 				}
 				
+				oResponse.Forecasted_Tier = theRHC.Forecasted_Tier__c;
+
 				oResponse.bIsSuccess = true;
 				oResponse.ErrorDescription = '';
 			}catch(Exception e){
@@ -290,7 +297,6 @@ public class ANG_RHCMassCalculation {
 				oResponse.ErrorDescription = e.getMessage();
 			}
 		}
-
 		return oResponse;
 	}
 
@@ -303,6 +309,7 @@ public class ANG_RHCMassCalculation {
 		public string RHCId {get; set;}
 		public decimal ANG_RHC_Amount_Forecasted {get; set;}
 		public decimal ANG_RHC_Amount_Provisional		{get; set;}
+		public string Forecasted_Tier		{get; set;}
 	}
 
 	public void AfterProcess(){
@@ -311,13 +318,13 @@ public class ANG_RHCMassCalculation {
 			list<ResponseWrapper> lsWrapper = (list<ResponseWrapper>)JSON.deserialize(theSerializedResponse, list<ResponseWrapper>.class);
 
 			for(ResponseWrapper wr:lsWrapper){
-				system.debug('DTULLO ProvisionalRMEWrapper --> ' + wr);
 				if(wr.RHCId!='' && agents.containsKey(wr.RHCId)){
 					agent ag = agents.get(wr.RHCId);
 
 					ag.bIsSuccess = wr.bIsSuccess;
 					ag.ANG_RHC_Amount_Forecasted = wr.ANG_RHC_Amount_Forecasted;
 					ag.ANG_RHC_Amount_Provisional = wr.ANG_RHC_Amount_Provisional;
+					ag.Forecasted_Tier = wr.Forecasted_Tier;
 					ag.ErrorDescription = wr.ErrorDescription;
 					
 					if(ag.rhcInfo.ANG_ConsumedRHC__c == null || ag.rhcInfo.ANG_ConsumedRHC__c ==0){

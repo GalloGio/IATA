@@ -94,6 +94,7 @@ global class AmsIataCodeGenerator{
 
 		Set<String> importAgentsCodePrograms = new Set<String>(); // new map to handle import agents
 		importAgentsCodePrograms.add('I-Cargo Agent');
+		importAgentsCodePrograms.add('L-Postal Service');
 
 		Map<String, String> programCategoryMap = AmsIataCodeGenerator.constructProgramCategoryMap();
 		Map<String, String> programSectorMap = AmsIataCodeGenerator.constructProgramSectorMap();
@@ -127,10 +128,10 @@ global class AmsIataCodeGenerator{
 			/*** AMSU-173 ***/
 			Boolean isGSA = theAccreditation.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.new_GSA || theAccreditation.SAAM_Case__r.OSCAR__r.Process__c == AMS_Utils.new_GSA_BSP;
 			if(AMS_Utils.CLASS_REQ_CASS_NUMBER.contains(theAccreditation.Location_Class__c) && !isGSA && theAccreditation.CASS_Number__c == null) { /*** AMSU-173 ***/
-				System.debug(LoggingLevel.ERROR,'[generatedAgencyIATACode] C, I, R, Q and G Location Types must have a CASS number defined before generating the IATA code.');
+				System.debug(LoggingLevel.ERROR,'[generatedAgencyIATACode] C, I, R, Q, G and L Location Types must have a CASS number defined before generating the IATA code.');
 
 				updaterObj.isFaulty=true;
-				updaterObj.errorMessage = 'C, I, R, Q and G Location Types must have a CASS number defined before generating the IATA code.';
+				updaterObj.errorMessage = 'C, I, R, Q, G and L Location Types must have a CASS number defined before generating the IATA code.';
 
 				return updaterObj;
 			}
@@ -650,7 +651,7 @@ global class AmsIataCodeGenerator{
 			agt.IATACode__c = agt.C_Code__c +agt.A_Code__c+agt.N_Code__c+agt.Chk_Dgt__c;
 			act.Site = agt.C_Code__c +agt.A_Code__c+agt.N_Code__c;
 		}
-		else if(agt.Location_Class__C.equalsIgnoreCase('C') || agt.Location_Class__C.equalsIgnoreCase('R') || agt.Location_Class__C.equalsIgnoreCase('Q') || agt.Location_Class__C.equalsIgnoreCase('I'))
+		else if(agt.Location_Class__C.equalsIgnoreCase('C') || agt.Location_Class__C.equalsIgnoreCase('R') || agt.Location_Class__C.equalsIgnoreCase('Q') || agt.Location_Class__C.equalsIgnoreCase('I') || agt.Location_Class__C.equalsIgnoreCase('L'))
 		{
 			agt.IATACode__c = agt.C_Code__c +agt.A_Code__c+agt.N_Code__c+agt.CASS_Number__c+agt.Chk_Dgt__c;
 			act.Site = agt.C_Code__c +agt.A_Code__c+agt.N_Code__c+agt.CASS_Number__c;
@@ -659,10 +660,6 @@ global class AmsIataCodeGenerator{
 		{
 			agt.IATACode__c = agt.C_Code__c +agt.A_Code__c+agt.N_Code__c+agt.CASS_Number__c+agt.Chk_Dgt__c;
 			act.Site = agt.C_Code__c +agt.A_Code__c+agt.N_Code__c+agt.CASS_Number__c;
-		}else if(agt.Location_Class__C.equalsIgnoreCase('L')){//PASS coding to be changed later
-			String passNumber=createPassNumber(agt);
-			agt.IATACode__c = agt.C_Code__c +agt.A_Code__c+agt.N_Code__c+passNumber+agt.Chk_Dgt__c;
-			act.Site = agt.C_Code__c +agt.A_Code__c+agt.N_Code__c+passNumber;
 		}
 		act.IATACode__c = agt.IATACode__c;
 
@@ -744,11 +741,6 @@ global class AmsIataCodeGenerator{
 			cCassNumber = resizeNumericString(agt.CASS_Number__c+'',3);
 		}
 
-		//PASS Specific scenario
-		if(agt.Location_Class__C.equalsIgnoreCase('L')){
-			cCassNumber=createPassNumber(agt);
-		}
-
 		// System.debug('****************** C, A, N, Cass: '+nCCode + ' - ' + nACode + ' - ' + cNCode + ' - ' + cCassNumber);
 		String code = nCCode + nACode + cNCode + cCassNumber ;
 		System.debug('**** [CHECKDIGIT] built '+code+' from Values'+nCCode   +'/'+nACode +'/'+cNCode +'/'+cCassNumber );
@@ -803,23 +795,10 @@ global class AmsIataCodeGenerator{
 		return mapToReturn;
 	}
 
-	//method to create the PASS Number to be used in the IATA Code:  HQ & BR indication, HQ is 000, BR= starting from 001
-	public static String createPassNumber(AMS_Pax_Accreditation_Form__c accreditationForm){
-		String passNumber='';
-		if(accreditationForm.Location_Type__c=='HO'){
-			passNumber=AmsIataCodeGenerator.resizeNumericString('0', 3);
-		}else if(accreditationForm.Location_Type__c=='BR'){
-			List<AMS_Pax_Accreditation_Form__c> otherAccreditationFormList = [SELECT Id FROM AMS_Pax_Accreditation_Form__c WHERE IATACode__c!='' AND HO_Account__c=:accreditationForm.HO_Account__c AND SAAM_Case__r.OSCAR__r.Process__c =:AMS_Utils.new_PASS_BR];
-
-			passNumber=AmsIataCodeGenerator.resizeNumericString(String.valueOf(otherAccreditationFormList.size()+1), 3);
-		}
-		return passNumber;
-	}
-
 	public static Map<String, String> constructProgramCategoryMap()
 	{
 		//PASS- Added new location class "L" in the Account picklist field related to the PASS process. The old Category value for the Location value L was "Non-IATA Locations", but now it was changed to "Postal Service"
-		Map<String,String> pcMap = new Map<String,String>{'A' => 'Airline Point of Sale', 'C' => 'IATA Cargo Agent', 'D' => 'Domestic Agent', 'F'=> 'ERSP (ELEC.RSVTN.SRV.PROVIDER)',  'I'=> 'Import Agent', 'K' => 'CATO', 'L' => 'Postal Operator', 'M' => 'MSO Member Sales Office', 'N' => 'NISI', 'O' => 'SATO', 'P' => 'IATA Passenger Sales Agent', 'Q' => 'Courier', 'R' => 'CASS Associate', 'S' => 'SSI', 'T' => 'TIDS Agent', 'U' => 'Puerto Rico And US Virgin IS', 'X' => 'Handling Agent', 'Y' => 'Associations', 'Z' => 'Travel Ind Suppliers'};
+		Map<String,String> pcMap = new Map<String,String>{'A' => 'Airline Point of Sale', 'C' => 'IATA Cargo Agent', 'D' => 'Domestic Agent', 'F'=> 'ERSP (ELEC.RSVTN.SRV.PROVIDER)',  'I'=> 'Import Agent', 'K' => 'CATO', 'L' => 'Postal Operator', 'M' => 'MSO Member Sales Office', 'N' => 'NISI', 'O' => 'SATO', 'P' => 'IATA Passenger Sales Agent', 'Q' => 'Courier', 'R' => 'CASS Associate', 'S' => 'SSI', 'T' => 'TIDS Agent', 'U' => 'Puerto Rico And US Virgin IS', 'X' => 'Airport Handling Agent', 'Y' => 'Associations', 'Z' => 'Travel Ind Suppliers'};
 		return pcMap;
 	}
 

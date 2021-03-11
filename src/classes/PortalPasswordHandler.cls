@@ -85,51 +85,40 @@ public without sharing class PortalPasswordHandler {
 		return result;
 	}
 
-	public static string generateUrl (User user, String password, String pageName){
+	public static string generateUrl (User user, String password, String pageName, Map<String,String> params){
 		String cleanUsername = user.userName.replace('+', plusReplacer);
-		String encodedPart = 'c=' + EncodingUtil.urlEncode(EncryptString(cleanUsername + SEPARATOR + password + SEPARATOR + user.uid__c + SEPARATOR + string.valueOf(system.now())), 'UTF-8');
+		String encodedPart = cleanUsername + SEPARATOR + password + SEPARATOR + user.uid__c + SEPARATOR + string.valueOf(system.now());
 
-		String languageParam = '';
-
-		if(user.contact.Preferred_Language__c != null){
-			for(Preferred_Language_on_ISS_Portal__c portalLang : Preferred_Language_on_ISS_Portal__c.getAll().values()){
-				if(user.contact.Preferred_Language__c == portalLang.language__c){
-					languageParam = 'language=' + portalLang.languageLocalKey__c + '&';
-					break;
-				}
-			}
-		}
-
-		String prefix = '';
-		List<Network> networkList = [Select id from Network where name =: 'CS Portal' Limit 1];
-		if(!test.isRunningTest()){
-			if(!networkList.isEmpty()) prefix = Network.getLoginURL(networkList.get(0).Id).substring(0,Network.getLoginURL(networkList.get(0).Id).lastIndexOf('/'));
-		}
-		String link = prefix + '/' + pageName + '?' + languageParam + encodedPart;
-		return link;
+		return CSP_Utils.generateURl(pageName, encodedPart, user.contact.Preferred_Language__c, params);
 	}
 
 	public static Map<String, String> forgotPasswordEmailMap(User user, String link){
 		//get contact information
-		Contact contactInfo = [SELECT Id,Email, firstName FROM Contact WHERE ID = :user.contactid limit 1];
+		Contact contactInfo = [SELECT Id,Email, firstName,Preferred_Language__c FROM Contact WHERE ID = :user.contactid limit 1];
 
 		String headerImageName = Label.CSP_Email_Header_Image;
 		String footerImageName = Label.CSP_Email_Footer_Image;
+		String buttonImageName = Label.CSP_Email_Link_Button_Image;
 
 		String headerImageUrl;
 		String footerImageUrl;
+		String docLangName=buttonImageName+' '+contactInfo.Preferred_Language__c;
 
 		Map<String,Id> docNameIdMap = new Map<String,Id>();
-		for(Document doc : [Select id, name From Document Where name = :headerImageName or name= :footerImageName]){
+		for(Document doc : [Select id, name From Document Where name in (:headerImageName,:footerImageName,:docLangName,:buttonImageName)]){
 			docNameIdMap.put(doc.name,doc.id);
 		}
+		String docKey =docNameIdMap.containsKey((buttonImageName+' '+contactInfo.Preferred_Language__c))?(buttonImageName+' '+contactInfo.Preferred_Language__c):buttonImageName;
 
+		
 		if(docNameIdMap.get(headerImageName) != null) headerImageUrl = URL.getSalesforceBaseUrl().getProtocol()+'://'+System.URL.getSalesforceBaseUrl().getHost().remove('-api' )+'/servlet/servlet.ImageServer?id='+docNameIdMap.get(headerImageName)+'&oid='+userinfo.getorganizationid();
 		if(docNameIdMap.get(footerImageName) != null) footerImageUrl = URL.getSalesforceBaseUrl().getProtocol()+'://'+System.URL.getSalesforceBaseUrl().getHost().remove('-api' )+'/servlet/servlet.ImageServer?id='+docNameIdMap.get(footerImageName)+'&oid='+userinfo.getorganizationid();
+		String buttonImageUrl=URL.getSalesforceBaseUrl().getProtocol()+'://'+System.URL.getSalesforceBaseUrl().getHost().remove('-api' )+'/servlet/servlet.ImageServer?id='+docNameIdMap.get(docKey)+'&oid='+userinfo.getorganizationid();
 
 		Map<String, String> mapBodyParams = new map<String, String>{
 				'{!HeaderUrl}'                                   => headerImageUrl,
 				'{!FooterUrl}'                                   => footerImageUrl,
+				'{!BtnUrl}'                                      => buttonImageUrl,
 				'{!Receiving_User.FirstName}'                    => contactInfo.Firstname,
 				'{!Community_Url}'                               => link,
 				'{!$Label.CSP_Email_Here}'                       => Label.CSP_Email_Here,

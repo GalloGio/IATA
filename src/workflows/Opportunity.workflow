@@ -20,15 +20,11 @@
     </alerts>
     <alerts>
         <fullName>MACS_alert_of_new_deals_over_10K_non_rcrm</fullName>
-        <ccEmails>rubioj@iata.org, walkers@iata.org, OdeleJ@iata.org</ccEmails>
+        <ccEmails>rubioj@iata.org, walkers@iata.org, OdeleJ@iata.org, CountrymanagersAME@iata.org</ccEmails>
         <description>MACS alert of new deals over 10K (non rcrm)</description>
         <protected>false</protected>
         <recipients>
             <type>owner</type>
-        </recipients>
-        <recipients>
-            <recipient>acostam@iata.org</recipient>
-            <type>user</type>
         </recipients>
         <recipients>
             <recipient>agouzoulm@iata.org</recipient>
@@ -36,6 +32,10 @@
         </recipients>
         <recipients>
             <recipient>alicia@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>apeshm@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -119,10 +119,6 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>hungerr@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>itania@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -140,10 +136,6 @@
         </recipients>
         <recipients>
             <recipient>kikanor@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>kilanim@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -199,10 +191,6 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>rossandj@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>schaaft@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -239,15 +227,11 @@
     </alerts>
     <alerts>
         <fullName>Marketingalertofnewdeals</fullName>
-        <ccEmails>rubioj@iata.org, walkers@iata.org, OdeleJ@iata.org</ccEmails>
-        <description>MACS alert of new deals over 10K</description>
+        <ccEmails>rubioj@iata.org,walkers@iata.org,OdeleJ@iata.org</ccEmails>
+        <description>MACS alert of new deals over 10K - TACT excluded</description>
         <protected>false</protected>
         <recipients>
             <type>owner</type>
-        </recipients>
-        <recipients>
-            <recipient>acostam@iata.org</recipient>
-            <type>user</type>
         </recipients>
         <recipients>
             <recipient>agouzoulm@iata.org</recipient>
@@ -342,10 +326,6 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>hungerr@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>itania@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -363,10 +343,6 @@
         </recipients>
         <recipients>
             <recipient>kikanor@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>kilanim@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -426,10 +402,6 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>rossandj@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>schaaft@iata.org</recipient>
             <type>user</type>
         </recipients>
@@ -459,6 +431,68 @@
         </recipients>
         <recipients>
             <recipient>zhangln@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>MarketingPAX/MMAlertonClosedDeals</template>
+    </alerts>
+    <alerts>
+        <fullName>Marketingalertofnewdeals_TACT</fullName>
+        <description>MACS alert of new deals over 10K - TACT</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <recipients>
+            <recipient>astridgec@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>burkem@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>chanj@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>hartonga@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>itania@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>leej@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>legerf@iata.org.prod</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>meuniera@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>padillab@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>schaaft@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>shemid2@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>szpyndam@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>week@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
@@ -571,20 +605,6 @@
             <timeLength>-90</timeLength>
             <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Africa Deal Alert</fullName>
-        <active>false</active>
-        <description>Identifies an opportunity closing in IATA&apos;s Africa RCT</description>
-        <formula>AND (     ISPICKVAL(Geographic_Region__c, &apos;Africa&apos;),     OwnerId = LastModifiedById, Amount   &gt;= 10000,      ISPICKVAL( StageName ,&apos;7. Closed Sales / Sold&apos;),      $User.Division = &apos;MACS&apos;            )</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Asia Pac Deal Alert</fullName>
-        <active>true</active>
-        <description>Identifies an opportunity closing in IATA&apos;s Asia Pacific RCT</description>
-        <formula>AND (          OR (                ISPICKVAL(Geographic_Region__c, &apos;Asia Pacific&apos;),                ISPICKVAL(Geographic_Region__c, &apos;South Asia&apos;),                ISPICKVAL(Geographic_Region__c, &apos;Oceania&apos;)                 ),      OwnerId = LastModifiedById, Amount   &gt;= 10000,      ISPICKVAL( StageName ,&apos;7. Closed Sales / Sold&apos;),      $User.Division = &apos;MACS&apos;            )</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>Big Deal Alert</fullName>
@@ -709,14 +729,25 @@
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>MACS - Close Deal Notification %28RCRM%29</fullName>
+        <fullName>MACS - Close Deal Notification %28RCRM - TACT excluded%29</fullName>
         <actions>
             <name>Marketingalertofnewdeals</name>
             <type>Alert</type>
         </actions>
         <active>true</active>
-        <description>Notifications sent to sales and marketing about closed deals over US$ 10,000</description>
-        <formula>AND(Amount &gt;= 10000, ISPICKVAL(StageName,&apos;7. Closed Sales / Sold&apos;), RecordType.Name = &quot;RCRM Opportunity&quot;,  Block_alerts_on_updates__c = false)</formula>
+        <description>Notifications sent to sales and marketing about closed deals over US$ 10,000 - TACT product family excluded</description>
+        <formula>AND(Amount &gt;= 10000, ISPICKVAL(StageName,&apos;7. Closed Sales / Sold&apos;), RecordType.Name = &quot;RCRM Opportunity&quot;,  Block_alerts_on_updates__c = false, NOT(ISPICKVAL(Product_Family__c,&apos;TACT&apos;)))</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>MACS - Close Deal Notification %28RCRM - TACT%29</fullName>
+        <actions>
+            <name>Marketingalertofnewdeals_TACT</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <description>Notifications sent to sales and marketing about closed deals over US$ 10,000 for TACT product family</description>
+        <formula>AND(Amount &gt;= 10000, ISPICKVAL(StageName,&apos;7. Closed Sales / Sold&apos;), RecordType.Name = &quot;RCRM Opportunity&quot;,  Block_alerts_on_updates__c = false, ISPICKVAL(Product_Family__c,&apos;TACT&apos;))</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -749,20 +780,6 @@ As it concerns non RCRM opps, the NBB is not included in the message</descriptio
             <value>7. Closed Sales / Sold</value>
         </criteriaItems>
         <description>Identifies an opportunity closing in IATA&apos;s MENA RCT</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>North America Deal Alert</fullName>
-        <active>true</active>
-        <description>Identifies an opportunity closing in IATA&apos;s North America RCT</description>
-        <formula>AND  (     ISPICKVAL(Geographic_Region__c, &apos;North America&apos;),     OwnerId = LastModifiedById, Amount   &gt;= 10000,      ISPICKVAL( StageName ,&apos;7. Closed Sales / Sold&apos;),      $User.Division = &apos;MACS&apos;            )</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>North Asia Deal Alert</fullName>
-        <active>true</active>
-        <description>Identifies an opportunity closing in IATA&apos;s North Asia RCT</description>
-        <formula>AND (       ISPICKVAL(Geographic_Region__c, &apos;North Asia&apos;),      OwnerId = LastModifiedById, Amount   &gt;= 10000,      ISPICKVAL( StageName ,&apos;7. Closed Sales / Sold&apos;),      $User.Division = &apos;MACS&apos;            )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -925,13 +942,6 @@ As it concerns non RCRM opps, the NBB is not included in the message</descriptio
         <active>true</active>
         <description>Notification sent to the SM when the PM validates a sale (a RCRM Opportunity). Not sent if the PM user validating the Opp is the owner (contract getting renewed by PM).</description>
         <formula>AND (   RecordType.DeveloperName = &apos;RCRM_Opportunity&apos;,   ISPICKVAL( RCRM_Validation_Status__c , &apos;Validated by PM&apos;),   OwnerId &lt;&gt;  $User.Id  )</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>The Americas Deal Alert</fullName>
-        <active>true</active>
-        <description>Identifies an opportunity closing in IATA&apos;s The Americas RCT</description>
-        <formula>AND (     ISPICKVAL(Geographic_Region__c, &apos;The Americas&apos;),     OwnerId = LastModifiedById, Amount   &gt;= 10000,      ISPICKVAL( StageName ,&apos;7. Closed Sales / Sold&apos;),      $User.Division = &apos;MACS&apos;            )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <tasks>

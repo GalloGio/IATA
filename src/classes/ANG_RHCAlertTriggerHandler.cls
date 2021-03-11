@@ -7,6 +7,8 @@ public class ANG_RHCAlertTriggerHandler{
 	@TestVisible
 	private static final String SMAP_EDS_SUBJECT_PREFIX = 'SMAP - EDS';
 
+	private static Map<Id, Id> countries = new Map<Id, Id>();
+
 	private class RegionNotificationWrapper {
 		public String region;
 		public Set<Id> userIdSet;
@@ -134,7 +136,7 @@ public class ANG_RHCAlertTriggerHandler{
 
 			//fecth AMS Country Specifc Attributes for the accounts/countries involved
 			accounts = new Map<Id, Account>();
-			Map<Id, Id> countries = new Map<Id, Id>();
+
 			for(ANG_Risk_Alert__c a : triggerNew) accounts.put(a.ANG_Account__c, null);
 
 			configs = new Map<String, AMS_Country_Specific_Attribute__c>();
@@ -148,11 +150,13 @@ public class ANG_RHCAlertTriggerHandler{
 											, (SELECT
 												ANG_Direction__c
 												, ANG_Percentage__c
-												, ANG_EmailTemplate_Legacy__c
 												, ANG_EmailTemplate_NG__c
+												, ANG_Send_Email_Agent__c
 												, ANG_PortalNotificationTemplate__c
 												, ANG_Create_Process_Case__c
 												, ANG_Block_Cut_Cash_Form_of_Payment__c
+												, Create_SMAP_Case__c
+												, Stakeholders_email_list__c
 												, Email_Template_Internal_Stakeholders__c //ACAMBAS - NEWGEN-4466
 												FROM AMS_Country_Specific_Attributes__r
 												WHERE RecordTypeId = :ANG_RHCHelper.RECTYPE_RHCATTRIBUTE)
@@ -180,7 +184,6 @@ public class ANG_RHCAlertTriggerHandler{
 				}
 				for(AMS_Country_Specific_Attribute__c att : c.AMS_Country_Specific_Attributes__r) configs.put((c.ISO_Code__c == DEFAULT_CODE ? c.ISO_Code__c : c.Id) + att.ANG_Direction__c + att.ANG_Percentage__c, att);
 			}
-
 			if(configs.isEmpty()) return; //no configurations set, no need to check further
 
 			//check if any of the risk alerts match the Country Specific Attributes and gather information to query other objects
@@ -207,8 +210,8 @@ public class ANG_RHCAlertTriggerHandler{
 					alertsToNotify.put(a, config);
 					riskAlertMap.put(a.ANG_Account__c, a);
 
-					if(String.isNotEmpty(config.ANG_EmailTemplate_Legacy__c)) emailTemplateNames.add(config.ANG_EmailTemplate_Legacy__c);
 					if(String.isNotEmpty(config.ANG_EmailTemplate_NG__c)) emailTemplateNames.add(config.ANG_EmailTemplate_NG__c);
+					if(String.isNotEmpty(config.Email_Template_Internal_Stakeholders__c)) emailTemplateNames.add(config.Email_Template_Internal_Stakeholders__c);
 				}
 			}
 
@@ -268,26 +271,17 @@ public class ANG_RHCAlertTriggerHandler{
 			Set<Id> notifiedAlerts = new Set<Id>();
 
 			for(ANG_Risk_Alert__c a : alertsToNotify.keySet()){
-
-				//LEGACY -----------------------------------------
-
-				AMS_Country_Specific_Attribute__c config = alertsToNotify.get(a);
-
-				if(portalAdmins.containsKey(a.ANG_Account__c) && !String.isEmpty(config.ANG_EmailTemplate_Legacy__c)){
-					for(Id contact : portalAdmins.get(a.ANG_Account__c)){
-						notifiedAlerts.add(a.Id);
-						mailList.add(new ANG_RHCHelper.Email(contact, rhcInfo.get(a.ANG_Account__c).Id, emailTemplates.get(config.ANG_EmailTemplate_Legacy__c)));
-					}
-				}
-
-				//NEWGEN -----------------------------------------
-
+				AMS_Country_Specific_Attribute__c config;
+				String key = countries.get(a.ANG_Account__c) + a.ANG_Direction__c + a.ANG_Threshold_Level__c;
+				if(!configs.containsKey(key)) key = DEFAULT_CODE + a.ANG_Direction__c + a.ANG_Threshold_Level__c;
+				if(configs.containsKey(key))	config = configs.get(key);
+				
 				String accountId = String.valueOf(a.ANG_Account__c).substring(0,15);
 				if(rhcContacts.containsKey(accountId) && (!String.isEmpty(config.ANG_EmailTemplate_NG__c) || !String.isEmpty(config.ANG_PortalNotificationTemplate__c))){
 					for(Id contact : rhcContacts.get(accountId)){
 						contactAccounts.put(contact, a.ANG_Account__c);
 
-						if(!String.isEmpty(config.ANG_EmailTemplate_NG__c)){
+						if(config.ANG_Send_Email_Agent__c && !String.isEmpty(config.ANG_EmailTemplate_NG__c)){
 							notifiedAlerts.add(a.Id);
 							mailList.add(new ANG_RHCHelper.Email(contact, rhcInfo.get(a.ANG_Account__c).Id, emailTemplates.get(config.ANG_EmailTemplate_NG__c)));
 						}
@@ -296,9 +290,7 @@ public class ANG_RHCAlertTriggerHandler{
 					}
 				}
 
-
 				//MULTICOUNTRY -----------------------------------------
-
 				//ACAMBAS - NEWGEN-4466 - Start
 				if(!String.isEmpty(config.Email_Template_Internal_Stakeholders__c)) {
 					//Ensure that the agency is a MC key
@@ -367,8 +359,9 @@ public class ANG_RHCAlertTriggerHandler{
 				if(!notifications.isEmpty()) insert notifications;
 			}
 		}catch(Exception e){
-			//ServiceNow_Helper.sendRequestToSNOW('Salesforce', 'ANG_RHCAlertTriggerHandler', 'sendAlertNotification', 'SFDC', 'SFDC',  e.getMessage(), 'false', 'System', 'Salesforce.com', 'Salesforce.com', 'Infrastructure Services', 'Salesforce Support', '2', '2', '2', 'Failure');
-			ServiceNow_Helper.sendRequestToSNOWSFDC('SNOW14',e);
+			set<string> setIdInvolved = new set<string>();
+			for(id i:trigger.newMap.keyset()) setIdInvolved.add(i);
+			ServiceNow_Helper.sendRequestToSNOWSFDC('JSD14',e, setIdInvolved);
 		}
 	}
 
@@ -570,12 +563,16 @@ public class ANG_RHCAlertTriggerHandler{
 		Id riskAlertRHCRecType = RecordTypeSingleton.getInstance().getRecordTypeId('ANG_Risk_Alert__c','Risk_Alert');
 		Id riskAlertRTSRecType = RecordTypeSingleton.getInstance().getRecordTypeId('ANG_Risk_Alert__c','Risk_Alert_RTS');
 		Id riskAlertEDSRecType = RecordTypeSingleton.getInstance().getRecordTypeId('ANG_Risk_Alert__c','Risk_Alert_EDS');
+		Id riskAlertGDSRecType = RecordTypeSingleton.getInstance().getRecordTypeId('ANG_Risk_Alert__c','RiskAlertGDS');
 		Id smapRecType = RecordTypeSingleton.getInstance().getRecordTypeId('Case','sMAP_sales_Monitoring_Alert_Process');
+		id GDSAlertSpecificAttr = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c','RiskAlertGDS');
+		id RTSAlertSpecificAttr = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c','RTS_Risk_Alert_Notification');
 
 		Set<Id> targetRecordTypesSet = new Set<Id>{
 			riskAlertRTSRecType,
 			riskAlertEDSRecType,
-			riskAlertRHCRecType
+			riskAlertRHCRecType,
+			riskAlertGDSRecType
 		};
 
 		set<id> accIdSet= new set<id>();
@@ -588,11 +585,16 @@ public class ANG_RHCAlertTriggerHandler{
 		if(accIdSet.isEmpty())return;
 
 		Map<String,AMS_Country_Specific_Attribute__c> rtsConfigMap= new Map<String,AMS_Country_Specific_Attribute__c>();//iso_countr_isoCode__c =>AMS_Country_Specific_Attribute__c
+		Map<String,AMS_Country_Specific_Attribute__c> GDSAlertConfigMap= new Map<String,AMS_Country_Specific_Attribute__c>();//iso_countr_isoCode__c =>AMS_Country_Specific_Attribute__c
 		for(AMS_Country_Specific_Attribute__c csa: [
 			SELECT IATA_ISO_Country__r.ISO_Code__c,ANG_Send_Email_Agent__c,ANG_Create_Sidra_Lite__c,ANG_Remove_Ticketing_Authority__c
+					, GDS_Alert_Type__c, Create_SAAM_Case__c, Email_Template_Internal_Stakeholders__c, Stakeholders_email_list__c, recordtypeId
 			FROM AMS_Country_Specific_Attribute__c
-			WHERE recordtypeId=: RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Country_Specific_Attribute__c','RTS_Risk_Alert_Notification') ]){
-			rtsConfigMap.put(csa.IATA_ISO_Country__r.ISO_Code__c,csa);
+			WHERE recordtypeId=: RTSAlertSpecificAttr OR recordtypeId=:GDSAlertSpecificAttr]){
+				if(csa.recordtypeId == RTSAlertSpecificAttr)
+					rtsConfigMap.put(csa.IATA_ISO_Country__r.ISO_Code__c,csa);
+				else
+					GDSAlertConfigMap.put(csa.IATA_ISO_Country__r.ISO_Code__c + csa.GDS_Alert_Type__c, csa);
 		}
 
 		//NEEDED QUERY BECAUSE WE WEREN'T GETTING ALL FIELDS NEEDED FROM TRIGGER
@@ -602,6 +604,8 @@ public class ANG_RHCAlertTriggerHandler{
 		List<ANG_Risk_Alert__c> edsAlerts = new List<ANG_Risk_Alert__c>();
 		Set<String> edsAllowedLocationTypesSet = new Set<String>{AMS_Utils.HE, AMS_Utils.HO, AMS_Utils.AO};
 
+		List<ANG_Risk_Alert__c> GDSAlerts = new List<ANG_Risk_Alert__c>();
+
 		List<ANG_Risk_Alert__c> rhcAlertsForExceptionalMonitoring = new List<ANG_Risk_Alert__c>();
 
 		for (Account acc : [SELECT id, Name, IATACode__c, Location_Class__c, ANG_IsNewGenAgency__c, Top_Parent__c, CurrencyIsoCode,
@@ -609,11 +613,12 @@ public class ANG_RHCAlertTriggerHandler{
 								Remittance_frequency__c, IATA_ISO_Country__c, IATA_ISO_Country__r.Name, IATA_ISO_Country__r.ISO_Code__c,
 								Region_formula__c, IATA_ISO_Country__r.AMS_Settlement_System__c, IATA_ISO_Country__r.AMS_Settlement_System__r.Name,
 								Status__c, Sector__c , Category__c, IATA_ISO_Country__r.AMS_Settlement_System__r.RHC_Exceptional_Monitoring__c,
-								IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, 
+								IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, Short_Name__c, ANG_Accreditation_Model__c, 
+								IATA_ISO_Country__r.AMS_Settlement_System__r.Exc_RHC_Monitoring_Alert__c,
 								(SELECT ID, Name, RecordTypeId, ANG_Account__c, CurrencyIsoCode, ANG_Sidra_Lite__c, ANG_Agent_Sales__c,
 									 ANG_Is_Case_Created__c, ANG_Direction__c, ANG_email_sent__c, ANG_EventId__c, ANG_RHC_Information__c,
 									 ANG_RME_Last_Update__c, ANG_Severity__c, ANG_Threshold_Level__c, ANG_Agent_current_standing__c,
-									 ANG_Open_Cash_Position__c, tolabel(ANG_Triggered_Rules__c)
+									 ANG_Open_Cash_Position__c, tolabel(ANG_Triggered_Rules__c), GDS_Alert_Type__c
 								 FROM Risk_Alerts__r
 								 WHERE ID IN :triggerNew
 									 AND recordTypeId IN :targetRecordTypesSet
@@ -629,21 +634,21 @@ public class ANG_RHCAlertTriggerHandler{
 				
 				if (!rtsConfigMap.isEmpty() && ra.RecordTypeId == riskAlertRTSRecType && ra.ANG_Severity__c == RTS_SEVERITY_RED) {
 					redAlerts.add(ra);
-					raAccMap.put(ra.id, acc);
 				} else if (ra.RecordTypeId == riskAlertEDSRecType && edsAllowedLocationTypesSet.contains(acc.Location_type__c)) {
 					edsAlerts.add(ra);
-					raAccMap.put(ra.id, acc);
 				} else if (isEligibleForRhcExceptionalMonitoring(riskAlertRHCRecType, ra, acc)) {
 					rhcAlertsForExceptionalMonitoring.add(ra);
-					raAccMap.put(ra.id, acc);
+				} else if (ra.RecordTypeId == riskAlertGDSRecType){
+					GDSAlerts.add(ra);
 				}
+				raAccMap.put(ra.id, acc);
 			}
 			
 			contactsPerAccount.put(acc.id, acc.contacts);
 			
 		}
 
-		if(edsAlerts.isEmpty() && redAlerts.isEmpty() && rhcAlertsForExceptionalMonitoring.isEmpty()){
+		if(edsAlerts.isEmpty() && redAlerts.isEmpty() && rhcAlertsForExceptionalMonitoring.isEmpty() && GDSAlerts.isEmpty()){
 			return;
 		}
 
@@ -727,7 +732,7 @@ public class ANG_RHCAlertTriggerHandler{
 							raAccMap.get(ra.id).IATA_ISO_Country__r.AMS_Settlement_System__r.Name+' and Remittance frequency: '+
 							raAccMap.get(ra.id).Remittance_frequency__c;
 
-						ServiceNow_Helper.sendRequestToSNOW(theBody, 'SNOW18');
+						ServiceNow_Helper.sendRequestToSNOW(theBody, 'JSD18', new set<string>{raAccMap.get(ra.id).IATACode__c});
 						System.debug('## Creating Red Alert Only - No case is created');
 						// We are not creating any case - just the alert
 						continue;
@@ -856,15 +861,32 @@ public class ANG_RHCAlertTriggerHandler{
 		if(!rhcAlertsForExceptionalMonitoring.isEmpty()) {
 
 			List<Case> smapCasesToInsertLst = new List<Case>();
+			map<id, list<string>> mapEmailPerAlert = new map<id, list<string>>();
+			map<id, string> mapTemplates = new map<id, string>();
 
 			for(ANG_Risk_Alert__c ra : rhcAlertsForExceptionalMonitoring){
-				Account acct = raAccMap.get(ra.Id);
-				String caseSubject = SMAP_NONNEWGEN_RHC_SUBJECT_PREFIX + ' - ' + acct.IATA_ISO_Country__r.ISO_Code__c + ' - ' + acct.IATACode__c;
-				smapCasesToInsertLst.add(
-					createSMAPCase(acct, smapRecType, AMS_Utils.CASE_REASON_NONNEWGEN_RHC,
-						caseSubject, contactsPerAccount, mapAccountOpCalendar, dmlOpts
-					)
-				);
+				String key = countries.get(ra.ANG_Account__c) + ra.ANG_Direction__c + ra.ANG_Threshold_Level__c;
+
+				if(configs.containsKey(key)){
+					AMS_Country_Specific_Attribute__c config = configs.get(key);
+
+					if(string.isNotBlank(config.Email_Template_Internal_Stakeholders__c))
+						mapTemplates.put(ra.id, config.Email_Template_Internal_Stakeholders__c);
+
+					if(string.IsNotBlank(config.Stakeholders_email_list__c)){
+						mapEmailPerAlert.put(ra.id, config.Stakeholders_email_list__c.split(','));
+					}
+
+					if(config.Create_SMAP_Case__c){
+						Account acct = raAccMap.get(ra.Id);
+						String caseSubject = SMAP_NONNEWGEN_RHC_SUBJECT_PREFIX + ' - ' + acct.IATA_ISO_Country__r.ISO_Code__c + ' - ' + acct.IATACode__c;
+						smapCasesToInsertLst.add(
+							createSMAPCase(acct, smapRecType, AMS_Utils.CASE_REASON_NONNEWGEN_RHC,
+								caseSubject, contactsPerAccount, mapAccountOpCalendar, dmlOpts
+							)
+						);
+					}
+				}
 			}
 
 			if(!smapCasesToInsertLst.isEmpty()){
@@ -872,7 +894,12 @@ public class ANG_RHCAlertTriggerHandler{
 				insert smapCasesToInsertLst;
 			}
 
-			emailLst.addAll(createRhcExceptionalMonitoringNotifications(rhcAlertsForExceptionalMonitoring, raAccMap));
+			emailLst.addAll(createRhcExceptionalMonitoringNotifications(rhcAlertsForExceptionalMonitoring, raAccMap, mapEmailPerAlert, mapTemplates));
+		}
+
+		//Process GDS Alerts
+		if(!GDSAlerts.isEmpty()){
+			processGDSAlerts(GDSAlerts, GDSAlertConfigMap, raAccMap);
 		}
 
 		if(!emailLst.isEmpty()){
@@ -883,6 +910,88 @@ public class ANG_RHCAlertTriggerHandler{
 			}
 		}
 
+	}
+
+
+	private void processGDSAlerts(List<ANG_Risk_Alert__c> GDSAlerts, Map<String,AMS_Country_Specific_Attribute__c> GDSAlertConfigMap, map<id,account> raAccMap){
+		list<case> SAAMToCreate = new list<case>();
+		Database.DMLOptions dmo = new Database.DMLOptions();
+		dmo.assignmentRuleHeader.useDefaultRule= true;
+
+		set<id> setAccntId = new set<id>();
+		for(ANG_Risk_Alert__c RS:GDSAlerts) setAccntId.add(RS.ANG_Account__c);
+
+		List<Portal_Applications__c> rhcServices = [SELECT Id FROM Portal_Applications__c WHERE Name =:ANG_RHCHelper.RISK_PROFILE_AND_RHC_PORTAL_SERVICE];
+		Map<String, Set<Id>> rhcContacts = ANG_ISSP_IEPMailRecipientsUtils.getRecipientsPortalServices(setAccntId, new Map<Id, Portal_Applications__c>(rhcServices).keySet()); //this sets use the 15 char id
+
+		map<id, AMS_Country_Specific_Attribute__c> mapAttrPerRiskAlert = new map<id, AMS_Country_Specific_Attribute__c>();
+
+		map<id, list<string>> mapEmailPerAlert = new map<id, list<string>>();
+		map<id, string> mapTemplates = new map<id, string>();
+
+		for(ANG_Risk_Alert__c RS:GDSAlerts){
+			string currMapKey = raAccMap.get(RS.Id).IATA_ISO_Country__r.ISO_Code__c + RS.GDS_Alert_Type__c;
+
+			AMS_Country_Specific_Attribute__c conf;
+			if(GDSAlertConfigMap.containsKey(currMapKey)) conf = GDSAlertConfigMap.get(currMapKey);
+			else if(GDSAlertConfigMap.containsKey(DEFAULT_CODE + RS.GDS_Alert_Type__c))  conf = GDSAlertConfigMap.get(DEFAULT_CODE + RS.GDS_Alert_Type__c);
+
+			//perform the actions only if there is a found configuration.
+			if(conf != null){
+				mapAttrPerRiskAlert.put(RS.id, conf);
+				//Check if there is a need to create a SAAM Case.
+				if(conf.Create_SAAM_Case__c){
+					Case c = new case();
+						c.RecordTypeId = AMS_Utils.RECTYPE_SAAM;
+						c.AccountId = RS.ANG_Account__c;
+						c.ContactId = rhcContacts.containsKey(RS.ANG_Account__c) ? new List<Id>(rhcContacts.get(RS.ANG_Account__c))[0] :
+									(rhcContacts.containsKey(string.valueOf(RS.ANG_Account__c).left(15)) ? new List<Id>(rhcContacts.get(string.valueOf(RS.ANG_Account__c).left(15)))[0] : null);
+						
+						c.Region__c = raAccMap.get(RS.Id).Region_formula__c;
+						c.Origin = ANG_Risk_Helper.CASE_ORIGIN_INTERNAL_CASE;
+						
+						
+						switch on RS.GDS_Alert_Type__c{
+							when 'CashlessGDSAlert'{
+								c.CaseArea__c = ANG_Risk_Helper.CASE_AREA_RISK_MANAGEMENT_PROCESS;
+								c.Subject = RS.GDS_Alert_Type__c + ' - ' + (String.isEmpty(raAccMap.get(RS.Id).Short_Name__c) ? raAccMap.get(RS.Id).Name.left(20) : raAccMap.get(RS.Id).Short_Name__c.left(20));
+								c.Reason1__c = RS.GDS_Alert_Type__c;
+							}
+							when 'CashGDSAlert'{
+								c.CaseArea__c = ANG_Risk_Helper.CASE_AREA_RISK_MANAGEMENT_PROCESS;
+								c.Subject = RS.GDS_Alert_Type__c + ' - ' + (String.isEmpty(raAccMap.get(RS.Id).Short_Name__c) ? raAccMap.get(RS.Id).Name.left(20) : raAccMap.get(RS.Id).Short_Name__c.left(20));
+								c.Reason1__c = RS.GDS_Alert_Type__c;
+							}
+							when 'TAGDSAlert'{
+								c.CaseArea__c = ANG_Risk_Helper.CASE_AREA_RISK_MANAGEMENT_PROCESS;
+								c.Subject = RS.GDS_Alert_Type__c + ' - ' + (String.isEmpty(raAccMap.get(RS.Id).Short_Name__c) ? raAccMap.get(RS.Id).Name.left(20) : raAccMap.get(RS.Id).Short_Name__c.left(20));
+								c.Reason1__c = RS.GDS_Alert_Type__c;
+							}
+						}
+						
+						
+						c.Visible_on_ISS_Portal__c = false;
+						c.setOptions(dmo);
+					SAAMToCreate.add(c);
+				}
+
+				//Check if there is a need to sent a notification to internal stakeholders.
+				
+				if(string.IsNotEmpty(conf.Email_Template_Internal_Stakeholders__c) && string.IsNotEmpty(conf.Stakeholders_email_list__c)){
+					mapTemplates.put(RS.id, conf.Email_Template_Internal_Stakeholders__c);
+					mapEmailPerAlert.put(RS.id, conf.Stakeholders_email_list__c.split(','));
+				}
+			}
+		}
+
+		if(!SAAMToCreate.isEmpty())	insert SAAMToCreate;
+		//Notify the internal stakeholders
+		if(!mapTemplates.isEmpty()){
+			List<Messaging.SingleEmailMessage> emailLst = createRhcExceptionalMonitoringNotifications(GDSAlerts, raAccMap, mapEmailPerAlert, mapTemplates);
+			if(!emailLst.isEmpty()){
+				Messaging.sendEmail(emailLst);
+			}
+		}
 	}
 
 	private Map<Id,operational_Calendar__c> fetchCalendar(List<ANG_Risk_Alert__c> ras){
@@ -1507,41 +1616,55 @@ public class ANG_RHCAlertTriggerHandler{
 	 * 
 	 */
 	@TestVisible
-	private List<Messaging.SingleEmailMessage> createRhcExceptionalMonitoringNotifications(List<ANG_Risk_Alert__c> raLst, Map<Id, Account> raAccountMap){
-
+	private List<Messaging.SingleEmailMessage> createRhcExceptionalMonitoringNotifications(List<ANG_Risk_Alert__c> raLst, Map<Id, Account> raAccountMap, map<id, list<string>> mapEmailAddrPerAlert, map<id, string> mapTemplates){
 		List<Messaging.SingleEmailMessage> emailLst = new List<Messaging.SingleEmailMessage>();
+		
+		set<string> emailAddressesLst = new set<string>();
+		map<String, EmailTemplate> EmailTemplate = new Map<String, EmailTemplate>();
+		map<string, user> mapUsers = new map<string, user>();//index:emailaddress
+		
 
-		List<String> emailAddressesLst = fetchRiskAlertStakeholdersAddresses(true);
+		for(ANG_Risk_Alert__c ra:raLst){
+			if(mapEmailAddrPerAlert.containsKey(ra.Id) && mapEmailAddrPerAlert.get(ra.id)<>null){
+				for(string s:mapEmailAddrPerAlert.get(ra.id))
+					emailAddressesLst.add(s);
+			}
+		}
 
 		if(emailAddressesLst.isEmpty()){
 			System.debug(LoggingLevel.WARN, '____ [cls ANG_RHCAlertTriggerHandler - createRhcExceptionalMonitoringNotifications] No RHC Exceptional Monitoring Stakeholder found');
 			return emailLst;
 		}
-
-		List<User> userLst = [
-			SELECT 
-				Id, Email
-			FROM User
-			WHERE IsActive = true
-				AND Email IN :emailAddressesLst
-		];
-
-		RegionNotificationWrapper notificationWrapper = new RegionNotificationWrapper(REGION_ALL);
-		notificationWrapper.emailAddressSet.addAll(emailAddressesLst);
-
-		for(User usr : userLst) {
-			notificationWrapper.userIdSet.add(usr.Id);
-			notificationWrapper.emailAddressSet.remove(usr.Email);
+		
+		for(EmailTemplate et : [SELECT Id,Body, Subject, HtmlValue, DeveloperName FROM EmailTemplate WHERE DeveloperName IN :mapTemplates.values()]){
+			EmailTemplate.put(et.DeveloperName, et);
 		}
 
-		EmailTemplate template = EMAIL_TEMPLATE_MAP.get(RHC_EXCEPTIONAL_MONITORING_SMAP_NOTIFICATION);
-
-		if(template == null){
-			System.debug(LoggingLevel.WARN, '____ [cls ANG_RHCAlertTriggerHandler - createRhcExceptionalMonitoringNotifications] No RHC Exceptional Monitoring SMAP Notification Template found');
-			return emailLst;
+		for(user u: [SELECT Id, Email FROM User WHERE IsActive = true AND Email IN :emailAddressesLst]){
+			mapUsers.put(u.email, u);
 		}
 
 		for (ANG_Risk_Alert__c ra : raLst) {
+			EmailTemplate template = EmailTemplate.get(mapTemplates.get(ra.id)); //RHC_EXCEPTIONAL_MONITORING_SMAP_NOTIFICATION
+
+			if(template == null){
+				System.debug(LoggingLevel.WARN, '____ [cls ANG_RHCAlertTriggerHandler - createRhcExceptionalMonitoringNotifications] No RHC Exceptional Monitoring SMAP Notification Template found');
+				continue; //skip to next element if no email template is found
+			}
+
+			RegionNotificationWrapper notificationWrapper = new RegionNotificationWrapper(REGION_ALL);
+			//notificationWrapper.emailAddressSet.addAll(mapEmailAddrPerAlert.get(ra.id));
+			
+			for(string sEmailAddr:mapEmailAddrPerAlert.get(ra.id)){
+				if(mapUsers.containsKey(sEmailAddr)){
+					user u = mapUsers.get(sEmailAddr);
+					if(u<>null)
+						notificationWrapper.userIdSet.add(u.Id);
+				}else{
+					notificationWrapper.emailAddressSet.add(sEmailAddr);
+				}
+			}
+
 			Account acct = raAccountMap.get(ra.Id);
 
 			String bspCurrency = acct.IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode;
@@ -1549,16 +1672,23 @@ public class ANG_RHCAlertTriggerHandler{
 			Decimal rhcAmount = ANG_Risk_Helper.currencyConverter(acct.CurrencyIsoCode, acct.Guaranteed_amount__c, bspCurrency);
 
 			String emailSubject = template.Subject;
-			emailSubject = emailSubject.replace('##IATA_CODE##', acct.IATACode__c);
-			emailSubject = emailSubject.replace('##AGENT_NAME##', acct.Name);
-			emailSubject = emailSubject.replace('##COUNTRY##', acct.IATA_ISO_Country__r.Name);
-
+			if(!string.isBlank(emailSubject)){
+				emailSubject = emailSubject.replace('##IATA_CODE##', acct.IATACode__c);
+				emailSubject = emailSubject.replace('##AGENT_NAME##', acct.Name);
+				emailSubject = emailSubject.replace('##COUNTRY##', acct.IATA_ISO_Country__r.Name);
+			}
+			
 			String htmlBody = template.HtmlValue;
-			htmlBody = htmlBody.replace('##AGENT_NAME##', acct.Name);
-			htmlBody = htmlBody.replace('##IATA_CODE##', acct.IATACode__c);
-			htmlBody = htmlBody.replace('##COUNTRY##', acct.IATA_ISO_Country__r.Name);
-			htmlBody = htmlBody.replace('##RHC_AMOUNT##', rhcAmount.format());
-			htmlBody = htmlBody.replace('##RHC_CURRENCY##', bspCurrency);
+			if(!string.isBlank(htmlBody)){
+				htmlBody = htmlBody.replace('##AGENT_NAME##', acct.Name);
+				htmlBody = htmlBody.replace('##IATA_CODE##', acct.IATACode__c);
+				htmlBody = htmlBody.replace('##ACCREDITATION_TYPE##', (acct.ANG_Accreditation_Model__c==null?'':acct.ANG_Accreditation_Model__c));
+				htmlBody = htmlBody.replace('##COUNTRY##', acct.IATA_ISO_Country__r.Name);
+				htmlBody = htmlBody.replace('##RHC_AMOUNT##', rhcAmount.format());
+				htmlBody = htmlBody.replace('##RHC_CURRENCY##', bspCurrency);
+				if(htmlBody.indexOf('##THRESHOLD##')>0)	htmlBody = htmlBody.replace('##THRESHOLD##', ra.ANG_Threshold_Level__c);
+				if(htmlBody.indexOf('##DIRECTION##')>0)	htmlBody = htmlBody.replace('##DIRECTION##', ra.ANG_Direction__c);
+			}
 
 			emailLst.addAll(createNotificationEmailMessages(null, htmlBody, ORG_WIDE_EMAILS.get(0).Id, emailSubject, notificationWrapper));
 		}
@@ -1568,8 +1698,9 @@ public class ANG_RHCAlertTriggerHandler{
 	}
 
 	private boolean isEligibleForRhcExceptionalMonitoring(Id riskAlertRHCRecType, ANG_Risk_Alert__c ra, Account acct) {
-		return ra.RecordTypeId == riskAlertRHCRecType && ra.ANG_Direction__c == ANG_RHCHelper.RISK_ALERT_DIRECTION_UP
-			&& ra.ANG_Threshold_Level__c == ANG_RHCHelper.RISK_ALERT_THRESHOLD_LEVEL_100
+		return ra.RecordTypeId == riskAlertRHCRecType 
+			&& string.isNotBlank(acct.IATA_ISO_Country__r.AMS_Settlement_System__r.Exc_RHC_Monitoring_Alert__c) 
+			&& acct.IATA_ISO_Country__r.AMS_Settlement_System__r.Exc_RHC_Monitoring_Alert__c.contains(ra.ANG_Threshold_Level__c + ra.ANG_Direction__c)
 			&& acct.IATA_ISO_Country__r.AMS_Settlement_System__r.RHC_Exceptional_Monitoring__c;
 	}
 

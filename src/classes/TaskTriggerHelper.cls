@@ -6,6 +6,7 @@
 public with sharing class TaskTriggerHelper {
 
 	public static final String CASE_ACTION_CREATING_A_TASK = 'Creating a Task';
+	public static final String CALL_SUCCESSFUL = 'CALL - SUCCESSFUL';
 	public static List<ISSP_KPI_Reporting__mdt> config = new List<ISSP_KPI_Reporting__mdt>();
 
 	public static void createKPIValues(Map<Id, Task> newMap, List<Task> newList, List<Task> oldList) {
@@ -26,7 +27,7 @@ public with sharing class TaskTriggerHelper {
 			return;
 		}
 
-		List<Task> tasks = [SELECT ID, WhatId, What.RecordType.DeveloperName, TaskSubType, What.RecordTypeId
+		List<Task> tasks = [SELECT ID, WhatId, What.RecordType.DeveloperName, TaskSubType, What.RecordTypeId, Subject
 							FROM Task WHERE What.RecordTypeId IN :confRTs AND ID IN :newList];
 
 
@@ -38,13 +39,12 @@ public with sharing class TaskTriggerHelper {
 		}
 		String kpiReportingId = kpiReporting.get(0).Id;
 		for(Task t : tasks) {
-
-			if(t.TaskSubType == configToPointsMap.get(CASE_ACTION_CREATING_A_TASK).Type_of_Task__c) {
-				System.debug('LW criteria are met - if 1');
-				String rtDevName = RecordTypeSingleton.getInstance().getRecordTypeById('Case', t.What.RecordTypeId).developerName;
-				KPI_Value__c valueToInsert = createKPIReportingValue(t.WhatId, Integer.valueOf(configMap.get(rtDevName).Points__c), kpiReportingId);
-				kpiValuesToInsert.add(valueToInsert);
-			}
+			String rtDevName = RecordTypeSingleton.getInstance().getRecordTypeById('Case', t.What.RecordTypeId).developerName;
+			Integer points = Integer.valueOf(configMap.get(rtDevName).Points__c);
+			if(String.isNotBlank(t.Subject) && t.Subject.toUpperCase() == CALL_SUCCESSFUL && rtDevName == 'SIDRA')
+				points = 2;
+			KPI_Value__c valueToInsert = createKPIReportingValue(t.WhatId, points, kpiReportingId);
+			kpiValuesToInsert.add(valueToInsert);
 		}
 
 

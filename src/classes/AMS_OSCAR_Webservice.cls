@@ -95,7 +95,7 @@ global class AMS_OSCAR_Webservice {
 
 			ID IFAPcaseRecordTypeID = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'IATA_Financial_Review');
 
-			List<AMS_OSCAR__c> oscarLst = [select Name, Account__c, Account__r.ANG_Accreditation_Model__c, Account__r.BillingCountry, Account__r.Type, Account__r.Name, Account__r.Sector__c, Account__r.Category__c from AMS_OSCAR__c where Id = : oscarId];
+			List<AMS_OSCAR__c> oscarLst = [select Name, Account__c, Process__c, Account__r.ANG_Accreditation_Model__c, Account__r.BillingCountry, Account__r.Type, Account__r.Name, Account__r.Sector__c, Account__r.Category__c from AMS_OSCAR__c where Id = : oscarId];
 			if (oscarLst != null && oscarLst.size() > 0) {
 
 				AMS_OSCAR__c oscar = oscarLst[0];
@@ -144,6 +144,14 @@ global class AMS_OSCAR_Webservice {
 					ifapCase.Subject = ifapCase.Subject.replace(AMS_Utils.CASE_REASON_HE_MULTICOUNTRY, AMS_Utils.NEW_HE_GOGLOBAL);
 					ifapCase.Deadline_Date__c = currentDate.addDays(60);
 					ifapCase.Financial_Review_Type__c = AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ADHOC;
+				}
+
+				if(AMS_Utils.oscarNewProcesses.contains(oscar.Process__c) || AMS_Utils.oscarNewGenNewAppProcesses.contains(oscar.Process__c)){
+					ifapCase.Financial_Review_Type__c = AMS_Utils.FINANCIAL_REVIEW_NEW_APPLICATION;
+				}
+
+				if(oscar.Process__c.contains(AMS_Utils.AGENCYCHANGES)){
+					ifapCase.Financial_Review_Type__c = AMS_Utils.FINANCIAL_REVIEW_MAJOR_CHANGES;
 				}
 
 				insert ifapCase;
@@ -602,6 +610,22 @@ global class AMS_OSCAR_Webservice {
 		}catch(Exception ex){
 			return AMS_Utils.errorMessageBeautifyer(ex);
 		}
+	}
+
+	/**
+	 * Method called by RHC Information custom buttom Confirm Forecasted RHC
+	 */
+	webservice static String updateRME_Amount(String rhcID){
+		ANG_RHC_Information__c rhcInfo = [SELECT Id, ANG_RHC_Amount_Provisional__c 
+										  FROM ANG_RHC_Information__c
+										  WHERE ID = :rhcID];
+		try{
+			rhcInfo.ANG_RME_Amount__c = rhcInfo.ANG_RHC_Amount_Provisional__c.round(System.RoundingMode.DOWN);
+			Database.update(rhcinfo);
+		}catch(Exception e){
+			return e.getMessage();
+		}
+		return '';
 	}
 	
 	private static Boolean isEligibleForRiskEventGeneration(AMS_OSCAR__c currentOscar) {

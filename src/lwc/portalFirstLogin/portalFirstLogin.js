@@ -6,7 +6,7 @@
 /* Utils & Apex & Platform
 /* ==============================================================================================================*/
 import { LightningElement, track, wire, api }     from 'lwc';
-import { navigateToPage, getParamsFromPage } from'c/navigationUtils';
+import { navigateToPage } from'c/navigationUtils';
 import { getRecord }                         from 'lightning/uiRecordApi';
 import userId                                from '@salesforce/user/Id';
 import getContactInfo                        from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getContactInfo';

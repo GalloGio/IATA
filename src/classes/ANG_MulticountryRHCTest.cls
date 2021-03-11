@@ -57,6 +57,12 @@ private class ANG_MulticountryRHCTest {
 
 		insert new List<AMS_Settlement_System__c>{bspPT, bspFR};
 
+		List<ANG_BSP_Attributes__c> bspAttrLst = new List<ANG_BSP_Attributes__c>();
+		for(AMS_Settlement_System__c iss:[select id, name from AMS_Settlement_System__c]){
+			bspAttrLst.addAll(AMS_OSCAR_TestDataFactory.createOperationAttributes(iss));
+		}
+		insert bspAttrLst;
+
 		List<Operational_Calendar__c> opCalendarList = new List<Operational_Calendar__c>();
 
 		Operational_Calendar__c ptCalendarWeekly = new Operational_Calendar__c(
@@ -813,8 +819,7 @@ private class ANG_MulticountryRHCTest {
 
 		rhcInfo = [SELECT Id,
 					ANG_RHC_Amount__c,
-					ANG_RHC_Amount_Forecasted__c,
-					ANG_Forecasted_RHC_Effective_date__c
+					ANG_RHC_Amount_Forecasted__c
 			 	   FROM ANG_RHC_Information__c
 			 	   WHERE ANG_AccountId__c = :accountGE.Id];
 

@@ -9,7 +9,8 @@ global class SCIMCreateUserPlugin extends UserProvisioning.UserProvisioningPlugi
 
 		describeResult.inputParameters = new List<Process.PluginDescribeResult.InputParameter>{
 			new Process.PluginDescribeResult.InputParameter(UserProvisioningUtils.PARAM_USERPAYLOAD, Process.PluginDescribeResult.ParameterType.STRING, true),
-			new Process.PluginDescribeResult.InputParameter(UserProvisioningUtils.PARAM_CALLPARAMS, Process.PluginDescribeResult.ParameterType.STRING, false)
+			new Process.PluginDescribeResult.InputParameter(UserProvisioningUtils.PARAM_CALLPARAMS, Process.PluginDescribeResult.ParameterType.STRING, false),
+			new Process.PluginDescribeResult.InputParameter(UserProvisioningUtils.PARAM_EXTERNAL_SYSTEM, Process.PluginDescribeResult.ParameterType.STRING, false)
 		};
 
 		return describeResult;
@@ -37,7 +38,7 @@ global class SCIMCreateUserPlugin extends UserProvisioning.UserProvisioningPlugi
 
 		try {
 			userProvUtils.init(uprId);
-			SCIMUsersUtility.endPoint = userProvUtils.getNamedCredential();
+			SCIMUsersUtility.endPoint = userProvUtils.getNamedCredential((String)request.inputParameters.get(UserProvisioningUtils.PARAM_EXTERNAL_SYSTEM), 'UserProvisioning_Create');
 
 			String params = (String)request.inputParameters.get(UserProvisioningUtils.PARAM_CALLPARAMS);
 			if(params != null) SCIMUsersUtility.createParams = (Map<String,String>)JSON.deserialize(params, Map<String, String>.class);

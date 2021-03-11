@@ -40,6 +40,7 @@ private class AMS_XML_GeneratorTest {
 		AMS_XML_Fields__c xml16 = new AMS_XML_Fields__c(Name = 'Account.Original_Approval_DAte__c', Operation_Type__c = 'include', Object__c = 'Account', Field__c = 'Original_Approval_DAte__c');
 		AMS_XML_Fields__c xml17 = new AMS_XML_Fields__c(Name = 'Account.GDS__c', Operation_Type__c = 'include', Object__c = 'Account', Field__c = 'GDS__c');
 		AMS_XML_Fields__c xml18 = new AMS_XML_Fields__c(Name = 'Account.GDP_Opt_In__c', Operation_Type__c = 'include', Object__c = 'Account', Field__c = 'GDP_Opt_In__c');
+		AMS_XML_Fields__c xml19 = new AMS_XML_Fields__c(Name = 'agency_ownership.percentage', Operation_Type__c = 'include', Object__c = 'AMS_Account_Role__c', Field__c = 'percentage__c');
 
 		List<AMS_XML_Fields__c> listofxml = new List<AMS_XML_Fields__c>();
 		listofxml.add(xml1);
@@ -60,6 +61,7 @@ private class AMS_XML_GeneratorTest {
 		listofxml.add(xml16);
 		listofxml.add(xml17);
 		listofxml.add(xml18);
+		listofxml.add(xml19);
 
 		insert listofxml;
 
@@ -82,10 +84,16 @@ private class AMS_XML_GeneratorTest {
 		settlementSystemList.add(sett_cass);
 		insert settlementSystemList;
 
+		List<ANG_BSP_Attributes__c> bspAttrLst = new List<ANG_BSP_Attributes__c>();
+		for(AMS_Settlement_System__c iss:settlementSystemList){
+			bspAttrLst.addAll(AMS_OSCAR_TestDataFactory.createOperationAttributes(iss));
+		}
+		insert bspAttrLst;
+
 		//Countries
 		List<IATA_ISO_Country__c> countrylist = new List<IATA_ISO_Country__c>();
 		IATA_ISO_Country__c ctr1 = new IATA_ISO_Country__c(Name = 'Test1 country', ISO_Code__c = 'PT', AMS_Settlement_System__c = sett_dpc.Id, AMS_Settlement_System_CASS__c = sett_cass.Id);
-		IATA_ISO_Country__c ctr2 = new IATA_ISO_Country__c(Name = 'Test2 country', ISO_Code__c = 'ES');
+		IATA_ISO_Country__c ctr2 = new IATA_ISO_Country__c(Name = 'Test2 country', ISO_Code__c = 'ES', AMS_Settlement_System__c = sett_dpc.Id, AMS_Settlement_System_CASS__c = sett_cass.Id);
 		IATA_ISO_Country__c ctr3 = new IATA_ISO_Country__c(Name = 'Test3 country', ISO_Code__c = 'UK', AMS_Settlement_System__c = sett_dpc.Id, AMS_Settlement_System_CASS__c = sett_cass.Id);
 		IATA_ISO_Country__c ctr4 = new IATA_ISO_Country__c(Name = 'Test4 country', ISO_Code__c = 'FR', AMS_Settlement_System__c = sett_dpc.Id, AMS_Settlement_System_CASS__c = sett_cass.Id);
 		countrylist.add(ctr1);
@@ -108,7 +116,7 @@ private class AMS_XML_GeneratorTest {
 		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name = 'US', ISO_Code__c = 'US', AMS_Settlement_System__c = sett_dpc.Id, AMS_Settlement_System_CASS__c = sett_cass.Id);
 		insert ctry ;
 
-		Account ag1 = new Account(Name = 'Test1 Account', IATA_ISO_Country__c = ctr1.id, Sector__c = 'Travel Agent', IATACode__c = '1234567', Phone = '+351000000000', Abbreviated_address__c = 'Abbreviated_address__c', BillingStreet = 'BillingStreet', ShippingStreet = 'ShippingStreet', ShippingState = 'Test1 state', ShippingCountry = 'Test1 country', Accreditation_date__c = Date.newInstance(2016, 11, 11), Original_Approval_DAte__c = Date.newInstance(2016, 11, 11), Status__c = 'Approved', TradeName__c = 'TradeName', Location_Category__c = 'A;B', GDS__c = 'A;B', Location_Type__c = 'HO', Type = 'IATA Passenger Sales Agent', GDP_Opt_In__c = True);
+		Account ag1 = new Account(Name = 'Test1 Account', IATA_ISO_Country__c = ctr1.id, Sector__c = 'Travel Agent', IATACode__c = 'P1909_0000000', Phone = '+351000000000', Abbreviated_address__c = 'Abbreviated_address__c', BillingStreet = 'BillingStreet', ShippingStreet = 'ShippingStreet', ShippingState = 'Test1 state', ShippingCountry = 'Test1 country', Accreditation_date__c = Date.newInstance(2016, 11, 11), Original_Approval_DAte__c = Date.newInstance(2016, 11, 11), Status__c = 'Approved', TradeName__c = 'TradeName', Location_Category__c = 'A;B', GDS__c = 'A;B', Location_Type__c = 'HO', Type = 'IATA Passenger Sales Agent', GDP_Opt_In__c = True, Purge_Flag__c = true, Old_IATA_Code__c='P1909_1');
 		Account ag2 = new Account(Name = 'Test2 Account', IATA_ISO_Country__c = ctr1.id, Sector__c = 'Travel Agent', IATACode__c = '1234567', Phone = '+351000000000000', Abbreviated_address__c = 'Abbreviated_address__c', BillingStreet = 'BillingStreet', ShippingStreet = 'ShippingStreet', ShippingState = 'Test1 state', ShippingCountry = 'Test1 country', Original_Approval_DAte__c = Date.newInstance(2016, 11, 11), Status__c = 'Approved', Fax = '+351911234567' );
 		Account ag3 = new Account(Name = 'Test3 Account', IATA_ISO_Country__c = ctr2.id, Sector__c = 'Travel Agent', IATACode__c = '12345678', Phone = '+351000000000000000000000', Abbreviated_address__c = 'Abbreviated_address__c', BillingStreet = 'BillingStreet', ShippingStreet = 'ShippingStreet', ShippingState = 'Test1 state', ShippingCountry = 'Test1 country', Accreditation_date__c = Date.newInstance(2016, 11, 11), Original_Approval_DAte__c = Date.newInstance(2016, 11, 11), Status__c = 'Terminated' );
 		Account ag4 = new Account(Name = 'Test4 Account', IATA_ISO_Country__c = ctr1.id, Sector__c = 'Cargo Agent', IATACode__c = '12345678', Abbreviated_address__c = 'Abbreviated_address__c', BillingStreet = 'BillingStreet', ShippingStreet = 'ShippingStreet', ShippingState = 'Test1 state', ShippingCountry = 'Test1 country', Status__c = 'Approved', CASS_Number__c = '02' );
@@ -231,10 +239,10 @@ private class AMS_XML_GeneratorTest {
 		insert personList;
 
 		List<AMS_Account_Role__c> employeeList = new List<AMS_Account_Role__c>();
-		AMS_Account_Role__c e1 = new AMS_Account_Role__c(Employee_Name__c = 'Test1 employee', RecordTypeId = rtAccRoleEmployee, Person__c = p1.Id, Employee_type__c = 'RG,CL', Account__c = ag1.Id, isManager__c = True, isTicketingAgent__c = True);
-		AMS_Account_Role__c e2 = new AMS_Account_Role__c(Employee_Name__c = 'Test2 employee', RecordTypeId = rtAccRoleEmployee, Person__c = p2.Id, Employee_type__c = 'RG,CL', Account__c = ag2.Id, isManager__c = True);
-		AMS_Account_Role__c e3 = new AMS_Account_Role__c(Employee_Name__c = 'Test3 employee', RecordTypeId = rtAccRoleEmployee, Person__c = p3.Id, Employee_type__c = 'RG,CL', Account__c = ag3.Id, isManager__c = True);
-		AMS_Account_Role__c e4 = new AMS_Account_Role__c(Employee_Name__c = 'Test4 employee', RecordTypeId = rtAccRoleEmployee, Contact__c = c4.Id, Employee_type__c = 'RG,CL', Account__c = ag4.Id, isManager__c = True);
+		AMS_Account_Role__c e1 = new AMS_Account_Role__c(Percentage__c = 12, Employee_Name__c = 'Test1 employee', RecordTypeId = rtAccRoleEmployee, Person__c = p1.Id, Employee_type__c = 'RG,CL', Account__c = ag1.Id, isManager__c = True, isTicketingAgent__c = True);
+		AMS_Account_Role__c e2 = new AMS_Account_Role__c(Percentage__c = 12, Employee_Name__c = 'Test2 employee', RecordTypeId = rtAccRoleEmployee, Person__c = p2.Id, Employee_type__c = 'RG,CL', Account__c = ag2.Id, isManager__c = True);
+		AMS_Account_Role__c e3 = new AMS_Account_Role__c(Percentage__c = 12, Employee_Name__c = 'Test3 employee', RecordTypeId = rtAccRoleEmployee, Person__c = p3.Id, Employee_type__c = 'RG,CL', Account__c = ag3.Id, isManager__c = True);
+		AMS_Account_Role__c e4 = new AMS_Account_Role__c(Percentage__c = 12, Employee_Name__c = 'Test4 employee', RecordTypeId = rtAccRoleEmployee, Contact__c = c4.Id, Employee_type__c = 'RG,CL', Account__c = ag4.Id, isManager__c = True);
 		employeeList.add(e1);
 		employeeList.add(e2);
 		employeeList.add(e3);
@@ -372,10 +380,12 @@ private class AMS_XML_GeneratorTest {
 		List<Agency_Authorization__c> authorizations = new List<Agency_Authorization__c>();
 
 		ID FormOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c', 'FormOfPayment');
+		ID BSPLinkRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c', 'BSPLink');
 
 		authorizations.add(new Agency_Authorization__c(Account__c = ag1.Id, ANG_FormOfPayment_ID__c = 'CC', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
 		authorizations.add(new Agency_Authorization__c(Account__c = ag1.Id, ANG_FormOfPayment_ID__c = 'CA', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
 		authorizations.add(new Agency_Authorization__c(Account__c = ag1.Id, ANG_FormOfPayment_ID__c = 'EP', Status__c = 'Active', RecordTypeId = FormOfPaymentRT));
+		authorizations.add(new Agency_Authorization__c(Account__c = ag1.Id, Email_Used_for_BSP_Creation__c = 'test@test.test', Status__c = 'Active', RecordTypeId = BSPLinkRT));
 
 		insert authorizations;
 
@@ -388,7 +398,7 @@ private class AMS_XML_GeneratorTest {
 
 		insert rhcInfo;
 
-		Account agTest1 = (Account)[SELECT Airline_Code__c, A_Code__c,
+		Account agTest1 = (Account)[SELECT Airline_Code__c, A_Code__c, Old_IATA_Code__c,
 									CASS_Number__c, Check_Digit__c, GDS__c,
 									BillingCity, BillingCountry, BillingPostalCode, BillingState, BillingStreet, Iso_State__c,
 									ShippingCity, ShippingCountry, ShippingPostalCode, ShippingState, ShippingStreet,
@@ -420,7 +430,7 @@ private class AMS_XML_GeneratorTest {
 		r[5] = ag1.Id + ',' + ag2.Id + ',' + ag3.Id + ',' + ag4.Id + ',' + ag5.Id;
 
 
-		List<Account> agTestN = [SELECT Airline_Code__c, A_Code__c,
+		List<Account> agTestN = [SELECT Airline_Code__c, A_Code__c, Old_IATA_Code__c,
 								 CASS_Number__c, Check_Digit__c, GDS__c,
 								 BillingCity, BillingCountry, BillingPostalCode, BillingState, BillingStreet, Iso_State__c,
 								 ShippingCity, ShippingCountry, ShippingPostalCode, ShippingState, ShippingStreet,

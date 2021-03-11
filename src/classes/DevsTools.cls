@@ -1,19 +1,4 @@
 public with sharing class DevsTools {
-
-
-		/**
-		* Returns the class name of a Sobject (or sobject subclass) instance
-		*
-		* @param anObject The object for which the class name is requested
-		* @return the class name
-		*/
-		public static String getClassName(Sobject anObject) {
-				if (anObject == null)
-						return null;
-				String value = String.valueOf(anObject);
-				return value.split(':')[0];
-		}
-
 	 /**
 	 *
 	 * return information about curernt environment

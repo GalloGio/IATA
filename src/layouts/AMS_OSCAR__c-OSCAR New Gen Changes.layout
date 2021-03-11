@@ -34,6 +34,10 @@
                 <behavior>Readonly</behavior>
                 <field>RecordTypeId</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Oscar_Communication_Case_Id__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -83,6 +87,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>New_docs_Received__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Type_of_change__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
@@ -493,6 +501,9 @@
         <layoutColumns/>
         <style>OneColumn</style>
     </layoutSections>
+    <relatedLists>
+        <relatedList>RelatedEntityHistoryList</relatedList>
+    </relatedLists>
     <relatedLists>
         <excludeButtons>New</excludeButtons>
         <fields>Change_Code__c</fields>

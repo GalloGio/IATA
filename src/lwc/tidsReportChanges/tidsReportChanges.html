@@ -1,0 +1,90 @@
+<template>
+	<div class="block office-informations branch-information">
+		<div if:true={spinner}>
+			<lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+		</div>
+		<header>
+			<h1>Report Changes</h1>
+		</header>
+		<main>
+			<div class="row">
+				<div class="col s12 office-code-status">
+					<div>
+						<div class="row">
+							<div class="col s7">
+								<h2>IATA Code: <span>{accountInfo.IATACode__c}</span></h2>
+							</div>
+							<div class="col s5">
+								<h2>Status: <span>{accountInfo.Status__c}</span></h2>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col s7 office-address">
+					<h2>Summary</h2>
+					<ul class="no-list">
+						<li>{accountInfo.Name}<br />DBA: {accountInfo.TradeName__c}</li>
+						<li>
+							{accountInfo.BillingStreet}<br />{accountInfo.BillingCity},
+							{accountInfo.BillingState}<br />{accountInfo.BillingPostalCode},&nbsp;{accountInfo.BillingCountry}
+						</li>
+					</ul>
+				</div>
+				<div class="col s5 office-contact">
+					<c-tids-view-administrators account-id={accountInfo.Id} branch-selected={branchSelected}></c-tids-view-administrators>
+					<h2>Contact</h2>
+					<ul class="no-list">
+						<li>Email:&nbsp;<lightning-formatted-email value={accountInfo.Email__c}  target="_blank" hide-icon></lightning-formatted-email></li>
+						<li>Phone:&nbsp;<lightning-formatted-phone value={accountInfo.Phone}  target="_blank"></lightning-formatted-phone></li>
+					</ul>
+				</div>
+				<div class="col s12 slds-m-top_x-large"><p>You are about to report changes for the location above.<br/>Please select a change type from the following categories:</p></div>
+				<div class="col s6">
+					<lightning-combobox
+						name="changeType"
+						label="Change type"
+						variant="label-hidden"
+						value={changeTypeSelected}
+						placeholder="Select change type"
+						options={changeTypeOptions}
+						onchange={handleChangeType}>
+					</lightning-combobox>
+				</div>
+				<div class="col s12" if:true={displayMessage}>
+					<p>Use this change type to report:</p>
+					<ul>
+						<template if:true={change1}>
+							<li>Change of Legal or Trade name</li>
+							<li>Change of Ownership (Head Office only)</li>
+							<li>Change of Company Type (Head Office only) </li>
+							<li>Change of License/Business Registration number</li>
+							<li>Change of Tax/VAT number</li>								
+						</template>
+						<template if:true={change2}>
+							<li>Change of Physical Address</li>
+							<li>Change of Mailing Address</li>
+							<li>Change of Phone, Email, Website</li>
+							<li>Change of Office Manager details</li>
+						</template>
+						<template if:true={change3}>
+							<li>Change of GDS</li>
+							<li>Change of Business Profile</li>
+							<li>Change of Market/Destination Focus </li>
+							<li>Change of Sales Activities</li>	
+						</template>
+					</ul>
+					<template if:true={change1}>
+						<p>When submitting this change type, supporting documentation reflecting the change(s) must be provided.</p>
+					</template>
+				</div>
+				<div class="col s12" if:true={caseInProgress}>
+					<p class="errorMessage">{changeTypeSelectedLabel} in progress</p>
+				</div>
+			</div>
+		</main>
+		<footer>
+			<button class="transparent" onclick={handleCancel}>Cancel</button>
+			<button onclick={handleProceed} disabled={disabledProceedButton}>Proceed</button>
+		</footer>
+	</div>
+</template>

@@ -540,6 +540,9 @@
         <style>OneColumn</style>
     </layoutSections>
     <relatedLists>
+        <relatedList>RelatedEntityHistoryList</relatedList>
+    </relatedLists>
+    <relatedLists>
         <excludeButtons>New</excludeButtons>
         <fields>Change_Code__c</fields>
         <fields>Reason_Code__c</fields>

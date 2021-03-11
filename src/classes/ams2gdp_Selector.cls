@@ -201,7 +201,7 @@ public class ams2gdp_Selector
 	{
 		Map<String, GDP_Reference_Table__c> result = new Map<String, GDP_Reference_Table__c>();
 
-		for(GDP_Reference_Table__c tbl : [SELECT Id, Code__c FROM GDP_Reference_Table__c WHERE Code__c IN : codes])	result.put(tbl.Code__c, tbl);
+		for(GDP_Reference_Table__c tbl : [SELECT Id, Code__c,Name FROM GDP_Reference_Table__c WHERE Code__c IN : codes])	result.put(tbl.Code__c, tbl);
 
 		return result;
 	}
@@ -210,7 +210,7 @@ public class ams2gdp_Selector
 	{
 		Map<String, GDP_Reference_Table__c> result = new Map<String, GDP_Reference_Table__c>();
 
-		for(GDP_Reference_Table__c tbl : [SELECT Id, Code__c, Table__c, Definition__c FROM GDP_Reference_Table__c WHERE Code__c IN : codes AND Table__c = :table])
+		for(GDP_Reference_Table__c tbl : [SELECT Id, Code__c, Table__c, Definition__c,Name FROM GDP_Reference_Table__c WHERE Code__c IN : codes AND Table__c = :table])
 			result.put(tbl.Code__c, tbl);
 
 		return result;
@@ -230,7 +230,7 @@ public class ams2gdp_Selector
 	{
 		Map<String, GDP_Reference_Table__c> result = new Map<String, GDP_Reference_Table__c>();
 
-		for(GDP_Reference_Table__c tbl : [SELECT Id, Code__c, Table__c, Definition__c FROM GDP_Reference_Table__c WHERE Name IN : descriptions AND Table__c = :table AND System__c = :sys])
+		for(GDP_Reference_Table__c tbl : [SELECT Id, Code__c, Table__c, Definition__c,Name FROM GDP_Reference_Table__c WHERE Name IN : descriptions AND Table__c = :table AND System__c = :sys])
 			result.put(tbl.Definition__c, tbl);
 
 		return result;
@@ -241,7 +241,7 @@ public class ams2gdp_Selector
 	{
 		Map<String,GDP_Reference_Table__c> result = new Map<String,GDP_Reference_Table__c>();
 
-		for(GDP_Reference_Table__c table : [SELECT Id, Code__c, Table__c FROM GDP_Reference_Table__c WHERE Code__c IN : codes])
+		for(GDP_Reference_Table__c table : [SELECT Id, Code__c, Table__c,Name FROM GDP_Reference_Table__c WHERE Code__c IN : codes])
 			result.put(table.Table__c+table.Code__c, table);
 
 			return result;

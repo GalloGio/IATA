@@ -558,6 +558,10 @@ IF (ISPICKVAL (Campaign_focus__c,&quot;Not Specific&quot;), &quot;NS-&quot; &amp
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>TenantId</fullName>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>TotalEmailsDelivered</fullName>
     </fields>
     <fields>
@@ -724,6 +728,27 @@ IF (ISPICKVAL (Campaign_focus__c,&quot;Not Specific&quot;), &quot;NS-&quot; &amp
         <language>en_US</language>
         <sharedTo>
             <group>MACSDirectSalesAll</group>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>MRO_SmartHub_Campaigns</fullName>
+        <columns>CAMPAIGN.NAME</columns>
+        <columns>CAMPAIGN.START_DATE</columns>
+        <columns>CAMPAIGN.END_DATE</columns>
+        <columns>CAMPAIGN.BUDGETED_COST</columns>
+        <columns>CAMPAIGN.ACTUAL_COST</columns>
+        <columns>CAMPAIGN.CAMPAIGN_TYPE</columns>
+        <columns>CAMPAIGN.STATUS</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>CAMPAIGN.NAME</field>
+            <operation>contains</operation>
+            <value>MRO SmartHub</value>
+        </filters>
+        <label>MRO SmartHub Campaigns</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>MRO_SmartHub_External_Users</group>
         </sharedTo>
     </listViews>
     <listViews>

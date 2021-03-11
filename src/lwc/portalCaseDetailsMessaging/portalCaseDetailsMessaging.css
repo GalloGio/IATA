@@ -26,36 +26,16 @@ textarea:focus{
     flex-direction: column;
 }
 
-.caseMessagesSelfBubbleContainer, .caseMessagesOtherBubbleContainer {
-    /* max-width: 60%; */
-    min-width: 30%;
+.arrowExpanded{
+    transform: rotate(90deg);
 }
 
-.caseMessagesSelfBubbleContainer {
-    align-self: flex-end;
-    display: flex; 
-    flex-direction: column; 
-    align-items: flex-end;
+.new-messages-spinner {
+    height: 3rem;
 }
 
-.caseMessagesOtherBubbleContainer {
-    align-self: flex-start; 
-    display: flex; 
-    flex-direction: column; 
-    align-items: flex-start;
-}
-
-.caseMessagesSelfBubble, .caseMessagesOtherBubble {
-    position: relative;   
-}
-
-.breakWord{
-    word-break: break-word;
-}
-
-.collapsed{
-    visibility: collapse;
-    display: none;
+.new-messages-spinner lightning-spinner {
+	background: transparent;
 }
 
 .arrowExpanded{

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataCategoryGroup xmlns="http://soap.sforce.com/2006/04/metadata">
+    <active>false</active>
+    <dataCategory>
+        <dataCategory>
+            <label>BSPlink</label>
+            <name>BSPlink</name>
+        </dataCategory>
+        <dataCategory>
+            <label>CASSlink</label>
+            <name>CASSlink</name>
+        </dataCategory>
+        <dataCategory>
+            <label>IATA Codes</label>
+            <name>IATA_Codes</name>
+        </dataCategory>
+        <dataCategory>
+            <label>myIATA</label>
+            <name>myIATA</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Portal Experience</label>
+            <name>Portal_Experience</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Products</label>
+            <name>Products</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Publications</label>
+            <name>Publications</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Ticketing</label>
+            <name>Ticketing</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Training</label>
+            <name>Training</name>
+        </dataCategory>
+        <dataCategory>
+            <label>Other</label>
+            <name>Other</name>
+        </dataCategory>
+        <label>All</label>
+        <name>All</name>
+    </dataCategory>
+    <description>Category for articles applicable to all kinds of customers</description>
+    <label>All Customers</label>
+    <objectUsage>
+        <object>KnowledgeArticleVersion</object>
+    </objectUsage>
+</DataCategoryGroup>

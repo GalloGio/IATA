@@ -206,7 +206,7 @@
                     </apex:panelGrid>
                         
                 <apex:panelGrid width="100%" cellpadding="10%" columnClasses="colNoC1RH,colNoC2RH" columns="2">
-                    <apex:outputLabel style="float:right" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Notify_Change_Legal_Details__c.Label}" />
+                    <apex:outputLabel style="float:right" value="{!IF(isCNSAgency, $Label.ISSP_AMS_Notify_Change_Legal_Details_CNS, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.Notify_Change_Legal_Details__c.Label)}" />
                     <apex:outputText ><img src="{!IF(newForm.Notify_Change_Legal_Details__c, '/img/checkbox_checked.gif', '/img/checkbox_unchecked.gif')}"/></apex:outputText>
                 </apex:panelGrid>
                            
@@ -239,12 +239,12 @@
                         <apex:outputPanel rendered="{!NOT(newForm.Notify_Change_Legal_Details__c)}"></apex:outputPanel>
                         
                         <apex:panelGrid width="100%" columnClasses="col1, col2" cellpadding="10%" columns="2">
-                                <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_Number_Input__c.Label}" style="font-weight:bold; font-size:110%"/>
+                                <apex:outputLabel value="{!IF(isCNSAgency, $Label.ISSP_PAX_Federal_EIN, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_Number_Input__c.Label)}" style="font-weight:bold; font-size:110%"/>
                                 <apex:outputField value="{!accountConcerned.VAT_Number__c}" />
                            </apex:panelGrid>
                           
                            <apex:panelGrid width="100%" columnClasses="col1, col2" cellpadding="10%" columns="2" rendered="{!newForm.Notify_Change_Legal_Details__c}">
-                                <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_Number_Input__c.Label}" style="font-weight:bold; font-size:110%"/>
+                                <apex:outputLabel value="{!IF(isCNSAgency, $Label.ISSP_PAX_Federal_EIN, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_VAT_Number_Input__c.Label)}" style="font-weight:bold; font-size:110%"/>
                                <apex:outputText value="{!IF(isEUcountry, newCase.IFAP_Country_ISO__c + newForm.ISSP_AMS_VAT_Number_Input__c,newForm.ISSP_AMS_VAT_Number_Input__c)}"/>
                            </apex:panelGrid>
                     </apex:panelGrid>
@@ -276,7 +276,7 @@
                     </apex:panelGrid>
                         
                 <apex:panelGrid width="100%" cellpadding="10%" columnClasses="colNoC1RH,colNoC2RH" columns="2">
-                    <apex:outputLabel style="float:right" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Notify_Change_Location__c.Label}" />
+                    <apex:outputLabel style="float:right" value="{!IF(isCNSAgency, $Label.ISSP_AMS_Notify_Change_Legal_Details_CNS, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.Notify_Change_Location__c.Label)}" />
                     <apex:outputText ><img src="{!IF(newForm.Notify_Change_Location__c, '/img/checkbox_checked.gif', '/img/checkbox_unchecked.gif')}"/></apex:outputText>
                 </apex:panelGrid>
                     <apex:panelGrid width="100%" columnClasses="col1, col2" cellpadding="10%" columns="2">
@@ -376,9 +376,9 @@
         <apex:pageBlockSection columns="1" collapsible="false">
                 <apex:facet name="header">
                     <apex:outputpanel >
-                        <apex:outputText rendered="{!!isAccreditationModelNotNullOrLegacy}">{!IF(newlabels, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding_New, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding)}</apex:outputText>
+                        <apex:outputText rendered="{!!isAccreditationModelNotNullOrLegacy}">{!IF(IsPostalOperator, $Label.ISSP_AMS_NoC_Change_Ownership_Legal_Status, IF(newlabels, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding_New, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding))}</apex:outputText>
                         <apex:outputText rendered="{!isAccreditationModelNotNullOrLegacy}">
-                            {!SUBSTITUTE(IF(newlabels, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding_New, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding), '3', '4')}
+                            {!SUBSTITUTE(IF(IsPostalOperator, $Label.ISSP_AMS_NoC_Change_Ownership_Legal_Status, IF(newlabels, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding_New, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding)), '3', '4')}
                         </apex:outputText>
                         <apex:commandButton styleclass="iatabtn iatabtn-default" action="{!goToStep3Section4}" value="{!$Label.ISSP_EditSection}" id="Edit-Section4" style="float:right"/>
                     </apex:outputpanel>                    
@@ -388,12 +388,12 @@
                 <apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)">{!$Label.ISSP_AMS_NoC_Legal_Status_After_Change}</apex:outputPanel>   
                 
                 <apex:panelGrid width="100%" cellpadding="10%" columnClasses="colNoC1RH,colNoC2RH" columns="2">
-                    <apex:outputLabel style="float:right" value="{!$Label.ISSP_AMS_NoC_Confirm_Ownership_details}" /><!--{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Confirm_Ownership_details_are_correct__c.Label}-->
+                    <apex:outputLabel style="float:right" value="{!IF(IsPostalOperator,$Label.ISSP_AMS_NoC_Confirm_Type_of_Entity,$Label.ISSP_AMS_NoC_Confirm_Ownership_details)}" /><!--{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Confirm_Ownership_details_are_correct__c.Label}-->
                     <apex:outputText ><img src="{!IF(newForm.Confirm_Ownership_details_are_correct__c, '/img/checkbox_checked.gif', '/img/checkbox_unchecked.gif')}"/></apex:outputText>
                 </apex:panelGrid>
                         
                 <apex:panelGrid width="100%" cellpadding="10%" columnClasses="colNoC1RH,colNoC2RH" columns="2">
-                    <apex:outputLabel style="float:right" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Notify_Change_Ownership__c.Label}" />
+                    <apex:outputLabel style="float:right" value="{!IF(isCNSAgency, $Label.ISSP_AMS_Notify_Change_Legal_Details_CNS, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.Notify_Change_Ownership__c.Label)}" />
                     <apex:outputText ><img src="{!IF(newForm.Notify_Change_Ownership__c, '/img/checkbox_checked.gif', '/img/checkbox_unchecked.gif')}"/></apex:outputText>
                 </apex:panelGrid>
             
@@ -426,7 +426,7 @@
                 </apex:outputPanel>
 
                 <apex:outputPanel ><!-- LHS --></apex:outputPanel>
-                <apex:outputPanel id="onlineAgencyPanel" styleClass="agencyOwnershipComponent" rendered="{!newForm.Notify_Change_Ownership__c}">
+                <apex:outputPanel id="onlineAgencyPanel" styleClass="agencyOwnershipComponent" rendered="{!AND(NOT(isCNSAgency), newForm.Notify_Change_Ownership__c, NOT(IsPostalOperator))}">
                   <apex:panelGrid width="100%" columnClasses="col1,col2" cellpadding="10%" columns="2">
                     <apex:outputLabel value="{!$Label.ISSP_AMS_NoC_Online_Agency}"/>
                     <apex:outputfield value="{!newForm.ISSP_AMS_Online_Agency_Application__c}" />
@@ -437,8 +437,8 @@
                     <apex:outputfield value="{!newForm.ISSP_AMS_Online_Agency_URL__c}"/>                             
                   </apex:panelGrid>
 
-                  <apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)">{!$Label.ISSP_AMS_NoC_Registered_Cargo_Agent}</apex:outputPanel>
-                  <apex:panelGrid width="100%" columnClasses="col1,col2" cellpadding="10%" columns="2">
+                  <apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)" rendered="{!!IsPostalOperator}">{!$Label.ISSP_AMS_NoC_Registered_Cargo_Agent}</apex:outputPanel>
+                  <apex:panelGrid width="100%" columnClasses="col1,col2" cellpadding="10%" columns="2" rendered="{!!IsPostalOperator}">
                     <apex:outputLabel value="{!$Label.ISSP_AMS_NoC_Registered_Cargo_Agent_Code}"/>
                     <apex:outputfield value="{!newForm.IATA_Cargo_Code__c}" />
                   </apex:panelGrid>
@@ -446,7 +446,7 @@
                 </apex:outputPanel>
                 <apex:outputPanel rendered="{!NOT(newForm.Notify_Change_Ownership__c)}"></apex:outputPanel>
                     
-                <apex:outputPanel >
+                <apex:outputPanel rendered="{!!IsPostalOperator}">
                     <apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)">{!$Label.ISSP_AMS_NoC_Current_Owners_Managers}</apex:outputPanel>
                         <apex:dataTable value="{!List_PreviousOwners}" var="agencycon" width="100%" cellpadding="3px" columnsWidth="25%,45%,30%">                    
                             <apex:column style="vertical-align: text-top;" headerClass="pdfHeader" styleClass="paddedCell">
@@ -455,7 +455,7 @@
                             </apex:column>
                             <apex:column style="vertical-align: text-top;" headerClass="pdfHeader" styleClass="paddedCell">
                                 <apex:facet name="header">{!$Label.ISSP_AMS_NoC_Q3_Contact_Details}</apex:facet>
-                                <span style="display:{!IF(agencycon.Financial_interest__c == null,'none','')}">{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_interest__c.Label}: {!agencycon.Financial_interest__c}</span><br/>
+                                <span style="display:{!IF(agencycon.Financial_interest__c == null,'none','')}">{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_interest__c.Label}: {!agencycon.Financial_Interest_Formated__c}</span><br/>
                                 <!--<span style="display:{!IF(agencycon.Number_Of_Shares__c == null,'none','')}">{!$ObjectType.AMS_Accreditation_Contact__c.fields.Number_Of_Shares__c.Label}: {!agencycon.Number_Of_Shares__c}</span><br/>-->
                                 <span style="display:{!IF(agencycon.Email__c == null,'none','')}">{!$ObjectType.Contact.fields.Email.Label}: {!agencycon.Email__c}</span><br/>
                                 
@@ -474,7 +474,7 @@
                         </apex:dataTable>
                 </apex:outputPanel>
                 
-                <apex:outputPanel style="display:{!IF(newform.Notify_Change_Ownership__c,'','none')}"  rendered="{!newForm.Notify_Change_Ownership__c}">
+                <apex:outputPanel style="display:{!IF(newform.Notify_Change_Ownership__c,'','none')}"  rendered="{!newForm.Notify_Change_Ownership__c && !IsPostalOperator}">
                         <apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)">{!$Label.ISSP_AMS_NOC_Updated_Owners_Managers}</apex:outputPanel>
                         <apex:dataTable value="{!List_CurrentOwners}" var="agencycon" width="100%"  cellpadding="3px" columnsWidth="25%,45%,30%">                            
                             <apex:column style="vertical-align: text-top;" headerClass="pdfHeader" styleClass="paddedCell">
@@ -483,7 +483,7 @@
                             </apex:column>
                             <apex:column style="vertical-align: text-top;" headerClass="pdfHeader" styleClass="paddedCell">
                                 <apex:facet name="header">{!$Label.ISSP_AMS_NoC_Q3_Contact_Details}</apex:facet>
-                                <span style="display:{!IF(agencycon.Financial_interest__c == null,'none','')}">{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_interest__c.Label}: {!agencycon.Financial_interest__c}</span><br/>
+                                <span style="display:{!IF(agencycon.Financial_interest__c == null,'none','')}">{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_interest__c.Label}: {!agencycon.Financial_Interest_Formated__c}</span><br/>
                                 <!--<span style="display:{!IF(agencycon.Number_Of_Shares__c == null,'none','')}">{!$ObjectType.AMS_Accreditation_Contact__c.fields.Number_Of_Shares__c.Label}: {!agencycon.Number_Of_Shares__c}</span><br/>-->
                                 <span style="display:{!IF(agencycon.Email__c == null,'none','')}">{!$ObjectType.Contact.fields.Email.Label}: {!agencycon.Email__c}</span><br/>
                                 
@@ -503,13 +503,13 @@
                   </apex:outputPanel>
                 <apex:outputPanel rendered="{!NOT(newForm.Notify_Change_Ownership__c)}"></apex:outputPanel>
                 
-                <apex:outputPanel id="previous-owners" style="display:{!IF(hqAccount.Company_Type__c!='S', '', 'none')}" rendered="{!NOT(hqAccount.Company_Type__c=='S')}">
+                <apex:outputPanel id="previous-owners" style="display:{!IF(hqAccount.Company_Type__c!='S', '', 'none')}" rendered="{!NOT(hqAccount.Company_Type__c=='S') && !isPostalOperator}">
                           <apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)">{!$Label.ISSP_AMS_NoC_Current_Companies}</apex:outputPanel>
                           <apex:dataTable styleClass="table-hover table table-condensed table-responsive" width="100%" columnsWidth="25%,25%,25%,25%" value="{!List_PreviousCompanies}" var="agencycon" >
                               <apex:column headerClass="pdfHeader" headerValue="{!$ObjectType.Account.fields.Legal_name__c.Label}" value="{!agencycon.Name}"/>
                               <apex:column headerClass="pdfHeader" headerValue="{!$ObjectType.AMS_Accreditation_Contact__c.fields.Registration_number__c.Label}" value="{!agencycon.Registration_number__c}"/>
                               <apex:column headerClass="pdfHeader" headerValue="{!$ObjectType.AMS_Accreditation_Contact__c.fields.IATACode__c.Label}" value="{!agencycon.IATACode__c}"/>
-                              <apex:column headerClass="pdfHeader" headerValue="{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_interest__c.Label}" value="{!agencycon.Financial_interest__c}"/>
+                              <apex:column headerClass="pdfHeader" headerValue="{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_interest__c.Label}" value="{!agencycon.Financial_Interest_Formated__c}"/>
                           </apex:dataTable>
                  </apex:outputPanel>
                 <apex:outputPanel rendered="{!hqAccount.Company_Type__c=='S'}"></apex:outputPanel>
@@ -520,13 +520,13 @@
                             <apex:column headerClass="pdfHeader" headerValue="{!$ObjectType.Account.fields.Legal_name__c.Label}" value="{!agencycon.Name}"/>
                             <apex:column headerClass="pdfHeader" headerValue="{!$ObjectType.AMS_Accreditation_Contact__c.fields.Registration_number__c.Label}" value="{!agencycon.Registration_number__c}"/>
                             <apex:column headerClass="pdfHeader" headerValue="{!$ObjectType.AMS_Accreditation_Contact__c.fields.IATACode__c.Label}" value="{!agencycon.IATACode__c}"/>
-                            <apex:column headerClass="pdfHeader" headerValue="{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_interest__c.Label}" value="{!agencycon.Financial_interest__c}"/>
+                            <apex:column headerClass="pdfHeader" headerValue="{!$ObjectType.AMS_Accreditation_Contact__c.fields.Financial_interest__c.Label}" value="{!agencycon.Financial_Interest_Formated__c}"/>
                         </apex:dataTable>
                     </apex:outputPanel>
                     <apex:outputPanel layout="block" rendered="{!NOT(AND(newForm.Notify_Change_Ownership__c,List_CurrentCompanies.size>0))}"><!--In case no new companies--></apex:outputPanel>
 
                     <apex:outputPanel ><!-- LHS--></apex:outputPanel>
-                    <apex:outputPanel rendered="{!newForm.Notify_Change_Ownership__c}">
+                    <apex:outputPanel rendered="{!AND(NOT(isCNSAgency), newForm.Notify_Change_Ownership__c, NOT(IsPostalOperator))}">
                         <apex:outputPanel layout="block" style="font-weight:bold; padding:5px 10px; font-size:110%;width:100%;background-color:rgb(195,225,240)">{!$Label.ISSP_AMS_NoC_Other_Owner}</apex:outputPanel>
 
                         <apex:panelGrid width="100%" cellpadding="10%" columnClasses="col1,col2" columns="2">
@@ -605,7 +605,8 @@
              </apex:panelGrid>
         </apex:pageBlockSection>
              </div>
-            <div style="page-break-after:always;margin-top:30px;display:{!IF(newform.Is_change_bank_account_details__c==false,'','none')}">
+
+            <apex:outputPanel layout="block" style="page-break-after:always;margin-top:30px;" rendered="{! !newform.Is_change_bank_account_details__c && !isPostalOperator}">
                     <apex:pageBlockSection columns="1" id="agencySection" rendered="{!newform.Is_change_bank_account_details__c==false}">
                             <apex:facet name="header">
                               <apex:outputpanel >
@@ -617,8 +618,8 @@
                               </apex:outputpanel>
                             </apex:facet>
                         <apex:panelGrid width="100%" cellpadding="10%" columnClasses="col1, col2" columns="2">
-                            <apex:outputLabel value="{!IF(isAccreditationModelNotNullOrLegacy, $Label.ISSP_NoC_Head_Entity_Becoming_a_AE, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.Is_this_Head_Office_becoming_a_Branch__c.Label)}" />
-                            <apex:outputText value="{!newForm.Is_this_Head_Office_becoming_a_Branch__c}"/>
+                            <apex:outputLabel value="{!IF(isAccreditationModelNotNullOrLegacy, $Label.ISSP_NoC_Head_Entity_Becoming_a_AE, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.Is_this_Head_Office_becoming_a_Branch__c.Label)}" rendered="{! NOT(isPostalOperator && newForm.Scope_of_Change__c == 'Selected Branches Only')}"/>
+                            <apex:outputText value="{!newForm.Is_this_Head_Office_becoming_a_Branch__c}" rendered="{! !isPostalOperator}"/>
                             
                             <apex:outputLabel value="{!$Label.ISSP_AMS_NoC_New_HO_Code}" rendered="{!newForm.Is_this_Head_Office_becoming_a_Branch__c=='Yes'}" />
                             <apex:outputText value="{!newForm.New_Head_Office_IATA_Code__c}" rendered="{!newForm.Is_this_Head_Office_becoming_a_Branch__c=='Yes'}" />  
@@ -661,11 +662,11 @@
                             <apex:outputLabel value="{!$Label.ISSP_AMS_NoC_Provide_Registeration_Or_License}"/>
                             <apex:outputLabel value="" />
                             
-                            <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Trade_Reg_No__c.Label}"/>
+                            <apex:outputLabel value="{!IF(newLabels, $Label.ISSP_AMS_Trade_Reg_Number_PASS, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Trade_Reg_No__c.Label)}"/>
                             <apex:outputfield value="{!newForm.ISSP_AMS_Trade_Reg_No__c}" />
                             <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Date_Registration_granted__c.Label}"/>
                             <apex:outputfield value="{!newForm.ISSP_AMS_Date_Registration_granted__c}" />
-                            <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_License_No__c.Label}"/>
+                            <apex:outputLabel value="{!IF(newLabels, $Label.ISSP_AMS_License_No_Company, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_License_No__c.Label)}"/>
                             <apex:outputfield value="{!newForm.ISSP_AMS_License_No__c}" />
                             <apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.ISSP_AMS_Date_license_granted__c.Label}"/>
                             <apex:outputfield value="{!newForm.ISSP_AMS_Date_license_granted__c}" />
@@ -674,7 +675,7 @@
                             <apex:outputfield value="{!newForm.Effective_Date_Of_Change__c}" />
                         </apex:panelGrid>
                      </apex:pageBlockSection>
-            </div>
+            </apex:outputPanel>
     </apex:pageBlock>    
     </apex:form>
     </html>

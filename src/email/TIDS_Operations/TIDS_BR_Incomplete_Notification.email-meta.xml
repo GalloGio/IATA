@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>TIDS - Branch Office Contact Applicant Notification</description>
+    <encodingKey>ISO-8859-1</encodingKey>
+    <name>TIDS_BR_Incomplete_Notification</name>
+    <style>none</style>
+    <subject>Your TIDS Branch Office Application is Incomplete</subject>
+    <textOnly>Your TIDS Application is Incomplete
+
+Your attention is required.
+
+Dear {!Contact.Name},
+
+We have reviewed your application for a Branch Office under the IATA TIDS Program. In order to proceed with your application, additional information is required.
+Please take a moment to review the comments below which explain where clarifications are needed.
+
+Supporting Case Number
+{!Case.CaseNumber}
+
+Request Status
+{!Case.Status}
+
+Information Requested
+
+{!Case.Last_Case_Comment}
+
+Kindly provide your response directly through Case Number {!Case.CaseNumber}, accessible via the IATA Customer Portal.
+
+Your application will remain open for 30 days. If we do not receive your response within this timeframe, you will be required to submit a new application.
+
+Please do not reply to this email as this inbox is not monitored.
+
+Thank you for choosing TIDS, IATA&apos;s program for standard identification of non-accredited travel sellers.
+
+The IATA TIDS Team
+
+This email was sent to {!Contact.Email}. Please do not reply to this email as this address is not monitored.
+International Air Transport Association. 800 Square Victoria, Montreal, H4Z 1M1, Canada
+© Copyright 2020. All rights reserved.
+https://www.iata.org</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
