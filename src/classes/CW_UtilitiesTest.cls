@@ -56,7 +56,8 @@ public class CW_UtilitiesTest {
 		System.debug(LoggingLevel.FINE, 'AB:: SETUP Account_Contact_Role__c = >' + acr.Id);
 
 		ISSP_CS__c icgUralBase = new ISSP_CS__c(Name = 'ICG_URL_Base', Value__c = 'https://theurl.com/s/');
-		insert icgUralBase;
+		ISSP_CS__c hotIEC = new ISSP_CS__c(Name = 'HostIEC', Value__c = 'customer-portal-iata.force.com');
+		insert new List<ISSP_CS__c>{icgUralBase, hotIEC};
 
 		List<Account_Role_Relationship__c> lstARR = new List<Account_Role_Relationship__c>();
 		Account_Role_Relationship__c arr = new Account_Role_Relationship__c(From__c = accRole.Id, To__c = accRole2.Id, Ops_Hierarchy_Group__c = 'Test');
