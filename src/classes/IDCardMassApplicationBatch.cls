@@ -31,7 +31,7 @@ global without sharing class IDCardMassApplicationBatch implements Schedulable {
 		}
 		IDCardUtilWithoutSharing.saveCommittedICAS(mapToCommit);
 		system.debug('[IDCardMassApplicationBatch] Start batch job for App '+batchName);
-		DevsTools.sendSFDevsAlertMessage('[IDCardMassApplicationBatch] Start batch job for App '+batchName,'' );
+		TransformationHelper.sendEmailSupport('[IDCardMassApplicationBatch] Start batch job for App '+batchName,'' );
 		/* Create case for Mass Application*/
 	}
 
@@ -63,7 +63,7 @@ global without sharing class IDCardMassApplicationBatch implements Schedulable {
 		try{
 			String SchJobId = system.schedule(batchName, s , app);
 			system.debug('[IDCardMassApplicationBatch] initiate SchJobId '+SchJobId);
-			DevsTools.sendSFDevsAlertMessage('[IDCardMassApplicationBatch] initiate SchJobId '+SchJobId, 'With param '+s);
+			TransformationHelper.sendEmailSupport('[IDCardMassApplicationBatch] initiate SchJobId '+SchJobId, 'With param '+s);
 		}catch(AsyncException e){
 			//This catch is doing nothing because if the job is already scheduled there is no need to perform other actions
 			system.debug(LoggingLevel.ERROR,'[IDCardMassApplicationBatch] ERROR: '+e);
@@ -71,7 +71,7 @@ global without sharing class IDCardMassApplicationBatch implements Schedulable {
 	}
 
 	global void execute(SchedulableContext sc) {
-		DevsTools.sendSFDevsAlertMessage('[IDCardMassApplicationBatch] Run batch job for App '+batchName,'' );
+		TransformationHelper.sendEmailSupport('[IDCardMassApplicationBatch] Run batch job for App '+batchName,'' );
 		/*
 		String SCHEDULE_NAME = 'test';
 		id cronid = System.schedule(SCHEDULE_NAME, '0 15 0-23 * * ?', new scheduledMaintenance());
@@ -81,7 +81,7 @@ global without sharing class IDCardMassApplicationBatch implements Schedulable {
 		if(singlesApps.size() ==0){
 			//kill current process
 			try{
-				DevsTools.sendSFDevsAlertMessage('[IDCardMassApplicationBatch] End of job for App '+batchName,'' );
+				TransformationHelper.sendEmailSupport('[IDCardMassApplicationBatch] End of job for App '+batchName,'' );
 				//up_date mass application: if previous status = Pending: go to Unpaid.
 				try{
 					if(this.massApplication.Application_Status__c.toLowerCase().equals('processing')){
@@ -102,14 +102,14 @@ global without sharing class IDCardMassApplicationBatch implements Schedulable {
 				try{
 					System.abortJob( SC.getTriggerId() );
 					system.debug('[IDCardMassApplicationBatch] definitively kill job  '+SC.getTriggerId());
-					DevsTools.sendSFDevsAlertMessage('[IDCardMassApplicationBatch]kill a job  '+SC.getTriggerId(), 'OK ');
+					TransformationHelper.sendEmailSupport('[IDCardMassApplicationBatch]kill a job  '+SC.getTriggerId(), 'OK ');
 				}catch(exception e){
 					system.debug('[IDCardMassApplicationBatch] Failed to stop anjob with Id '+SC.getTriggerId());
-					DevsTools.sendSFDevsAlertMessage('[IDCardMassApplicationBatch] Failed to stop anjob with Id '+SC.getTriggerId(), 'Cause: '+e.getMessage());
+					TransformationHelper.sendEmailSupport('[IDCardMassApplicationBatch] Failed to stop anjob with Id '+SC.getTriggerId(), 'Cause: '+e.getMessage());
 				}
 			}catch(Exception e){
 				system.debug('[IDCardMassApplicationBatch] Failed to stop an Id card mass batch '+batchName);
-				DevsTools.sendSFDevsAlertMessage('[IDCardMassApplicationBatch] Failed to stop an Id card mass batch '+batchName, 'Cause: '+e.getStackTraceString());
+				TransformationHelper.sendEmailSupport('[IDCardMassApplicationBatch] Failed to stop an Id card mass batch '+batchName, 'Cause: '+e.getStackTraceString());
 			}
 		}else {
 			system.debug('[IDCardMassApplicationBatch] start  job  '+SC.getTriggerId());
