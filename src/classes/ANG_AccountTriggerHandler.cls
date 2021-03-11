@@ -649,19 +649,6 @@ public class ANG_AccountTriggerHandler {
 		return accountIds;
 	}
 
-	private List<Account> getMulticountryAccounts(List<Account> accounts)
-	{
-		List<Account> ret = new List<Account>();
-
-		for (Account a : accounts)
-		{
-			if (ANG_MulticountryHelper.isMulticountryAccount(a))
-				ret.add(a);
-		}
-
-		return ret;
-	}
-
 	private void launchPlatformEventForMulticoutryDowngrade(Set<Id> geAccounts)
 	{
 		if (geAccounts.isEmpty())
