@@ -55,7 +55,7 @@ public without sharing class IDCard_CheckoutSingleApplication   extends IDCardAb
 		List<Managed_agency__c> managedAccountList = [select m.Id, m.Account__c, m.Contact__r.Email, m.Contact__r.IDcard_Email__c, m.Contact__r.IsEmailBounced,
 								m.Contact__r.Id,  m.Account__r.IATACode__c , m.delegate__c from Managed_agency__c m where m.Account__c = :account.Id ];
 		if (managedAccountList.size() == 0) {
-			DevsTools.sendSFDevsAlertMessage('ID Card purchase alert', 'No Key contact for account ' + account.Id + ' Id card application womn t be process: ' + applicationId);
+			TransformationHelper.sendEmailSupport('ID Card purchase alert', 'No Key contact for account ' + account.Id + ' Id card application womn t be process: ' + applicationId);
 			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.WARNING, 'We failed to contact your manager. Please contact IATA or your manager to validate your application1 '));
 			return ;
 		}
