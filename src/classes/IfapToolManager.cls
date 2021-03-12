@@ -130,16 +130,10 @@ global class IfapToolManager {
 			r.success = true;
 			System.debug(LoggingLevel.ERROR, '################# (WS) PWC REJECTION RESTITUISCE '+result);
 			System.debug(LoggingLevel.ERROR, '################# (WS) DOPO IL PARSER '+r);
-
-			 transformationHelper.sendEmailSupport('salvo 1 submitCaseQualityIssuesToMFT IFAPtoolManager',r + '    ' + result);
-
 			return r;
 
 		}catch ( Exception e ) {
-
-
-			transformationHelper.sendEmailSupport('salvo  2 submitCaseQualityIssuesToMFT IFAPtoolManager',e.getStackTraceString() + e.getMessage() );
-
+			transformationHelper.sendEmailSupport('[IFAPtoolManager] processPWCRejections - submitCaseQualityIssuesToMFT',e.getStackTraceString() + e.getMessage() );
 			System.debug('**** ERROR ' + e.getMessage());
 			return new PWCResponses(e);
 		}
@@ -247,14 +241,14 @@ global class IfapToolManager {
 
 			global class PWCResponse{
 
-							  public Boolean success{get;set;}
-							  public string caseNumber {get;set;}
-							  public string originalFileName {get;set;}
-							  public list<string> originalFileNames {get;set;} 
-							  public string xml{get;set;}
-							  public string message {get;set;}
+							public Boolean success{get;set;}
+							public string caseNumber {get;set;}
+							public string originalFileName {get;set;}
+							public list<string> originalFileNames {get;set;} 
+							public string xml{get;set;}
+							public string message {get;set;}
 
-				  }
+			}
 
 
 
