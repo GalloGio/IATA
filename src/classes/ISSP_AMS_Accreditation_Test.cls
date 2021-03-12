@@ -198,21 +198,7 @@ private class ISSP_AMS_Accreditation_Test {
 			Email__c='email@email.com'
 		);
 
-		Account accountTIDSAgent = new Account(
-			BillingCity = 'test',
-			Name = 'accountTIDSAgent',
-			Sector__c = AMS_Utils.SECTOR_PASSENGER,
-			Category__c=AMS_Utils.CATEGORY_TIDS,
-			Location_class__c = AMS_Utils.LC_TIDS,
-			GDS__c = 'ABAC;AGTD;AXSS',
-			IATA_ISO_Country__c = country3.Id,
-			ANG_FA_Opt_out__c=false,
-			RecordTypeId = rtIdBr,
-			Reason_for_creation__c='New agent',
-			Email__c='email@email.com'
-		);
-
-		insert new List<Account>{parentAccountTravel, parentAccountCargo, optOutAcc, parentAccIcc, basicParent, mcParentAcc, mcbranchAcc, cashParentAcc,accountchildAccreditation,accountParentAccreditation,accountTIDSAgent};
+		insert new List<Account>{parentAccountTravel, parentAccountCargo, optOutAcc, parentAccIcc, basicParent, mcParentAcc, mcbranchAcc, cashParentAcc,accountchildAccreditation,accountParentAccreditation};
 
 		Account childAccIcc = new Account(
 			BillingCity = 'test2',
@@ -299,11 +285,7 @@ private class ISSP_AMS_Accreditation_Test {
 		conPASSBR.AccountId = accountchildAccreditation.Id;
 		conPASSBR.Email = 'conPASSBR@test222.com';
 
-		Contact conTIDS = ISSP_ObjectFactory.createNewContact();
-		conTIDS.AccountId = accountTIDSAgent.Id;
-		conTIDS.Email = 'conTIDS@test222.com';
-
-		insert new List<Contact>{conTravel, conCargo, conChildIcc, conOptOut, conOptOutAdmin, conBasicChild, conMulticountry, conCash,conPASSHO,conPASSBR,conTIDS};
+		insert new List<Contact>{conTravel, conCargo, conChildIcc, conOptOut, conOptOutAdmin, conBasicChild, conMulticountry, conCash,conPASSHO,conPASSBR};
 
 		User userIcc = ISSP_ObjectFactory.createPortalUser(conChildIcc);
 		conChildIcc.OwnerId = userIcc.Id;
@@ -332,10 +314,7 @@ private class ISSP_AMS_Accreditation_Test {
 		User userPASSBR = ISSP_ObjectFactory.createPortalUser(conPASSBR);
 		conPASSBR.OwnerId = userPASSBR.Id;
 
-		User userTIDS = ISSP_ObjectFactory.createPortalUser(conTIDS);
-		conTIDS.OwnerId = userTIDS.Id;
-
-		update new List<Contact>{conChildIcc, conOptOut, conOptOutAdmin, conBasicChild, conMulticountry, conTravel, conCash, conPASSHO,conPASSBR,conTIDS};
+		update new List<Contact>{conChildIcc, conOptOut, conOptOutAdmin, conBasicChild, conMulticountry, conTravel, conCash, conPASSHO,conPASSBR};
 
 		mcbranchAcc.OwnerId = userMC.Id;
 		update mcbranchAcc;
@@ -4101,7 +4080,8 @@ Location_Type__c = 'BR');
 	private static User fetchUser(String email) {
 		return [SELECT Id, Alias, Email, Firstname, Lastname, Languagelocalekey, Localesidkey, ContactId, FederationIdentifier, Timezonesidkey,
 					Username, PortalRole, CommunityNickname, ProfileId, IsActive, Contact.Salutation, Contact.FirstName,
-					Contact.LastName, Contact.Phone, Contact.Email, Contact.Name, Contact.Title, Contact.Account.Id
+					Contact.LastName, Contact.Phone, Contact.Email, Contact.Name, Contact.Title, Contact.Account.Id,
+					Contact.Account.Location_class__c, Contact.Account.Sector__c, Contact.Account.Category__c, Contact.Account.GDS__c
 				FROM User
 				WHERE Contact.Email = :email];
 	}
@@ -5272,7 +5252,14 @@ Location_Type__c = 'BR');
 	}
 
 	@isTest static void ISSP_AMS_Accreditation_TIDS() {
-		User user = fetchUser('conTIDS@test222.com');
+		User user = fetchUser('parenttravel@test11.com');
+
+		Account account = user.Contact.Account;
+		account.Location_class__c = AMS_Utils.LC_TIDS;
+		account.Sector__c = AMS_Utils.SECTOR_PASSENGER;
+		account.Category__c = AMS_Utils.CATEGORY_TIDS;
+		account.GDS__c = 'ABAC;AGTD;AXSS';
+		update account;
 
 		Id rtOwnership = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
 		Id rtEmployee = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Employee');
@@ -5324,7 +5311,7 @@ Location_Type__c = 'BR');
 		}
 		Test.stopTest();
 
-		Account account = [
+		account = [
 			SELECT Id,Name, TradeName__c, BillingStreet, BillingCity, BillingState, IATA_ISO_Country__c, BillingPostalCode, Phone, Mobile__c, Fax, Email__c, Website, VAT_Number__c, Registration_Number__c, License_Number__c,
 				(SELECT Id FROM AMS_Accreditation_Contacts__r)
 			FROM Account
