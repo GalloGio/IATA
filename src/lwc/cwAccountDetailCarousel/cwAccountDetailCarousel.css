@@ -87,6 +87,7 @@
 
 .sliderbox{
     padding:0px !important;
+    max-width: -webkit-fill-available;
     border:none !important;
 }
 .slds-carousel__indicators{
@@ -100,7 +101,7 @@
 }
 
 .carousel-size{
-    width: fit-content;
+    width: -webkit-fill-available;
     padding-right: 0px;
     display: flex;
     align-items: center;

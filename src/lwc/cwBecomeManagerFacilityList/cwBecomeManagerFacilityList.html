@@ -40,6 +40,20 @@
             <br/>
             <div class="text-left"><span class="breadlink" onclick={showHideSelectedFacilities}>{showHideSelectedFacilitiesButtonText}</span></div>
             <br/>
-            <div class="inlineblock"><div class="text-left"><span if:true={showBackButton} class="breadlink backnext" onclick={back}>&lt;&nbsp;&nbsp;</span></div><div class="text-center"><span class="breadlink letterSelected" data-letter="ALL" onclick={unselectLetter} >{label.all}</span>&nbsp;&nbsp;<span class="breadlink" onclick={selectLetter} data-letter="A">A</span>&nbsp;<span class="breadlink" onclick={selectLetter} data-letter="B">B</span>&nbsp;<span class="breadlink" onclick={selectLetter} data-letter="C">C</span>&nbsp;<span class="breadlink" onclick={selectLetter} data-letter="D">D</span>&nbsp;<span class="breadlink" onclick={selectLetter} data-letter="E">E</span>&nbsp;<span class="breadlink" onclick={selectLetter} data-letter="F">F</span>&nbsp;<span class="breadlink" onclick={selectLetter} data-letter="G">G</span>&nbsp;<span class="breadlink" onclick={selectLetter} data-letter="H">H</span>&nbsp;<span class="breadlink" onclick={selectLetter} data-letter="I">I</span>&nbsp;<span class="breadlink" onclick={selectLetter} data-letter="J">J</span>&nbsp;<span class="breadlink" onclick={selectLetter} data-letter="K">K</span>&nbsp;<span class="breadlink" onclick={selectLetter} data-letter="L">L</span>&nbsp;<span class="breadlink" onclick={selectLetter} data-letter="M">M</span>&nbsp;<span class="breadlink" onclick={selectLetter} data-letter="N">N</span>&nbsp;<span class="breadlink" onclick={selectLetter} data-letter="O">O</span>&nbsp;<span class="breadlink" onclick={selectLetter} data-letter="P">P</span>&nbsp;<span class="breadlink" onclick={selectLetter} data-letter="Q">Q</span>&nbsp;<span class="breadlink" onclick={selectLetter} data-letter="R">R</span>&nbsp;<span class="breadlink" onclick={selectLetter} data-letter="S">S</span>&nbsp;<span class="breadlink" onclick={selectLetter} data-letter="T">T</span>&nbsp;<span class="breadlink" onclick={selectLetter} data-letter="U">U</span>&nbsp;<span class="breadlink" onclick={selectLetter} data-letter="V">V</span>&nbsp;<span class="breadlink" onclick={selectLetter} data-letter="W">W</span>&nbsp;<span class="breadlink" onclick={selectLetter} data-letter="X">X</span>&nbsp;<span class="breadlink" onclick={selectLetter} data-letter="Y">Y</span>&nbsp;<span class="breadlink" onclick={selectLetter} data-letter="Z">Z</span></div><div class="text-left"><span class="breadlink backnext" if:true={showNextButton} onclick={next}>&nbsp;&nbsp;&gt;</span></div></div>
+            <div class="inlineblock">
+                <div class="text-left">
+                    <span if:true={showBackButton} class="breadlink backnext" onclick={back}>&lt;&nbsp;&nbsp;</span>
+                </div>
+                <div class="text-center">
+                    <span class="breadlink letterSelected" data-letter="ALL" onclick={unselectLetter}>{label.all}</span>&nbsp;&nbsp;
+                    <span class="breadlink letterSelected" data-letter="0,1,2,3,4,5,6,7,8,9" onclick={selectLetter} >0-9</span>&nbsp;&nbsp;
+                    <template for:each={filterOptions} for:item="filterOption">
+                        <span key={filterOption} class="breadlink" onclick={selectLetter} data-letter={filterOption}>{filterOption}</span>&nbsp;
+                    </template>
+                </div>
+                <div class="text-left">
+                    <span class="breadlink backnext" if:true={showNextButton} onclick={next}>&nbsp;&nbsp;&gt;</span>
+                </div>
+            </div>
         </div>
     </template>
