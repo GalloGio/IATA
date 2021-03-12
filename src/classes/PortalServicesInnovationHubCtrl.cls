@@ -24,7 +24,7 @@ public without sharing class PortalServicesInnovationHubCtrl {
 
 		if(providerProfileForView != null){
 			propertiesAndLstCards.recordId = providerProfileForView.Id;
-			propertiesAndLstCards.lstCards = PortalServicesInnovationHubCtrl.getProviderProfileCards();
+			propertiesAndLstCards.lstCards = PortalServicesInnovationHubCtrl.getProviderDetailsPageCardDetails(providerProfileForView.Id);
 			propertiesAndLstCards.viewNavigation = true;
 			extraDetails.put('viewStatus', 'Published');
 		}else{
@@ -54,10 +54,12 @@ public without sharing class PortalServicesInnovationHubCtrl {
 	private static List<PortalWrapperClasses.FieldWrapper> getFieldsCompanyCard(List<PortalWrapperClasses.FieldWrapper> fieldWrapper, Boolean edit){
 
 		//COMPANY INFORMATION
-		fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Company_Name__c',true,true));
+
 		PortalWrapperClasses.FieldWrapper logo = new PortalWrapperClasses.FieldWrapper('Logo_File_Id__c',true,false);
 		logo.isLogo = true;
 		fieldWrapper.add(logo);
+
+		fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Company_Name__c',true,true));
 		fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Legal_Name__c',true,true));
 		fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Also_Known_As__c',true,true));
 		fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Company_Description__c',true,true));
@@ -134,20 +136,108 @@ public without sharing class PortalServicesInnovationHubCtrl {
 
 	}
 
-	private static List<PortalWrapperClasses.CardWrapper> getProviderProfileCards(){
-		//stores each card
-		List<PortalWrapperClasses.CardWrapper> lstCardWrapper = new List<PortalWrapperClasses.CardWrapper>();
+	private static List<PortalWrapperClasses.FieldWrapper> getFieldsAboutCard(List<PortalWrapperClasses.FieldWrapper> fieldWrapper, IH_Account_Role_Detail__c roleDetail){
 		
-		List<PortalWrapperClasses.FieldWrapper> lstfw1 = new List<PortalWrapperClasses.FieldWrapper>();
-		List<PortalWrapperClasses.FieldWrapper> lstfw2 = new List<PortalWrapperClasses.FieldWrapper>();
+		if(String.isNotBlank(roleDetail.Legal_Name__c)){
+			fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Legal_Name__c',true,true));
+		}
 
-		lstfw1 = getFieldsCompanyCard(lstfw1,false);	
-		lstfw2 = getFieldsServiceCard(lstfw2,false);
+		if(String.isNotBlank(roleDetail.Also_Known_As__c)){
+			fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Also_Known_As__c',true,true));
+		}
 
-		lstCardWrapper.add(new PortalWrapperClasses.CardWrapper('Company Information', lstfw1, false,'Company Information'));		
-		lstCardWrapper.add(new PortalWrapperClasses.CardWrapper('Service Information', lstfw2, false,'Service Information'));
+		if(String.isNotBlank(roleDetail.Location__c)){
+			fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Location__c',true,true));
+		}
 
-		return lstCardWrapper;
+		if(String.isNotBlank(roleDetail.Company_Description__c)){
+			PortalWrapperClasses.FieldWrapper companyDescription = new PortalWrapperClasses.FieldWrapper('Company_Description__c',true,false);
+			companyDescription.isFullColumn = true;
+			fieldWrapper.add(companyDescription);
+		}
+		
+		return fieldWrapper;
+	}
+
+	private static List<PortalWrapperClasses.FieldWrapper> getFieldsStartupOverviewCard(List<PortalWrapperClasses.FieldWrapper> fieldWrapper, IH_Account_Role_Detail__c roleDetail){
+
+		if(roleDetail.Founding_Date__c != null){
+			fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Founding_Date__c',true,true));
+		}
+
+		if(String.isNotBlank(roleDetail.Number_Of_Employees__c)){
+			fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Number_Of_Employees__c',true,true));
+		}
+
+		if(roleDetail.Funding_Amount__c != null){
+			fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Funding_Amount__c',true,true));
+		}
+
+		if(String.isNotBlank(roleDetail.Funding_Stage__c)){
+			fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Funding_Stage__c',true,true));
+		}
+
+		if(String.isNotBlank(roleDetail.Investors__c)){
+			fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Investors__c',true,true));
+		}
+
+		if(String.isNotBlank(roleDetail.Industry_Perspectives__c)){
+			fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Industry_Perspectives__c',true,true));
+		}
+
+		if(String.isNotBlank(roleDetail.Technology__c)){
+			PortalWrapperClasses.FieldWrapper technology = new PortalWrapperClasses.FieldWrapper('Technology__c',true,false,'',System.Label.CSP_Technology);
+			technology.isMultipick = true;
+			fieldWrapper.add(technology);
+		}
+		
+		return fieldWrapper;
+	}
+
+	private static List<PortalWrapperClasses.FieldWrapper> getFieldsBusinessSolutionsCard(List<PortalWrapperClasses.FieldWrapper> fieldWrapper, IH_Account_Role_Detail__c roleDetail){
+
+		if(String.isNotBlank(roleDetail.Focus_Areas__c)){
+			PortalWrapperClasses.FieldWrapper focusAreas = new PortalWrapperClasses.FieldWrapper('Focus_Areas__c',true,false,'',System.Label.CSP_FocusAreas);
+			focusAreas.isMultipick = true;
+			fieldWrapper.add(focusAreas);
+		}
+
+		if(String.isNotBlank(roleDetail.Tags_Of_Categories__c)){
+			PortalWrapperClasses.FieldWrapper tagsOfCategories = new PortalWrapperClasses.FieldWrapper('Tags_Of_Categories__c',true,false,'',System.Label.CSP_Categories);
+			tagsOfCategories.isMultipick = true;
+			fieldWrapper.add(tagsOfCategories);
+		}
+
+		if(String.isNotBlank(roleDetail.Solution__c)){
+			PortalWrapperClasses.FieldWrapper solution = new PortalWrapperClasses.FieldWrapper('Solution__c',true,false);
+			solution.isFullColumn = true;
+			fieldWrapper.add(solution);
+		}
+
+		if(String.isNotBlank(roleDetail.Competitive_Advantage__c)){
+			PortalWrapperClasses.FieldWrapper competitiveAdvantage = new PortalWrapperClasses.FieldWrapper('Competitive_Advantage__c',true,false);
+			competitiveAdvantage.isFullColumn = true;
+			fieldWrapper.add(competitiveAdvantage);
+		}
+
+		if(String.isNotBlank(roleDetail.Competition_Competitors__c)){
+			PortalWrapperClasses.FieldWrapper competitors = new PortalWrapperClasses.FieldWrapper('Competition_Competitors__c',true,false);
+			competitors.isFullColumn = true;
+			fieldWrapper.add(competitors);
+		}
+		
+		return fieldWrapper;
+	}
+
+	private static List<PortalWrapperClasses.FieldWrapper> getFieldsRecentNewsCard(List<PortalWrapperClasses.FieldWrapper> fieldWrapper, IH_Account_Role_Detail__c roleDetail){	
+
+		if(String.isNotBlank(roleDetail.Recent_News__c)){
+			PortalWrapperClasses.FieldWrapper recentNews = new PortalWrapperClasses.FieldWrapper('Recent_News__c',true,false);
+			recentNews.isFullColumn = true;
+			fieldWrapper.add(recentNews);
+		}
+		
+		return fieldWrapper;
 	}
 
 	@AuraEnabled (cacheable = false)
@@ -215,23 +305,39 @@ public without sharing class PortalServicesInnovationHubCtrl {
 		PortalWrapperClasses.ListCardsAndPropertiesWrapper propertiesAndLstCards = new PortalWrapperClasses.ListCardsAndPropertiesWrapper();
 		propertiesAndLstCards.objectAPIName = IH_ACCOUNT_ROLE_DETAIL;
 		propertiesAndLstCards.recordId = providerId;
-		propertiesAndLstCards.lstCards = PortalServicesInnovationHubCtrl.getProviderDetailsPageCardDetails();
-		propertiesAndLstCards.viewNavigation = false;
+		propertiesAndLstCards.lstCards = PortalServicesInnovationHubCtrl.getProviderDetailsPageCardDetails(providerId);
+		propertiesAndLstCards.viewNavigation = true;
 
 		return propertiesAndLstCards;
 	}
 
-	private static List<PortalWrapperClasses.CardWrapper> getProviderDetailsPageCardDetails(){
+	private static List<PortalWrapperClasses.CardWrapper> getProviderDetailsPageCardDetails(String providerId){
+
+		IH_Account_Role_Detail__c roleDetail = new IH_Account_Role_Detail__c();
+
+		if(String.isNotBlank(providerId)){
+			roleDetail = [SELECT Legal_Name__c,Also_Known_As__c,Location__c,Company_Description__c,Founding_Date__c,
+			Number_Of_Employees__c,Funding_Amount__c,Funding_Stage__c,Investors__c,Industry_Perspectives__c,Technology__c,
+			Recent_News__c,Focus_Areas__c,Tags_Of_Categories__c,Solution__c,Competitive_Advantage__c,Competition_Competitors__c
+			FROM IH_Account_Role_Detail__c WHERE Id = :providerId];
+		}
+
 		//stores each card
 		List<PortalWrapperClasses.CardWrapper> lstCardWrapper = new List<PortalWrapperClasses.CardWrapper>();
-
-		//COMPANY INFORMATION
-		List<PortalWrapperClasses.FieldWrapper> lstfw1 = new List<PortalWrapperClasses.FieldWrapper>();
+		List<PortalWrapperClasses.FieldWrapper> aboutCard = new List<PortalWrapperClasses.FieldWrapper>();
+		List<PortalWrapperClasses.FieldWrapper> startupOverviewCard = new List<PortalWrapperClasses.FieldWrapper>();
+		List<PortalWrapperClasses.FieldWrapper> businessSolutionsCard = new List<PortalWrapperClasses.FieldWrapper>();
+		List<PortalWrapperClasses.FieldWrapper> recentNewsCard = new List<PortalWrapperClasses.FieldWrapper>();
 		
-		lstfw1 = getFieldsCompanyCard(lstfw1,false);	
-		lstfw1 = getFieldsServiceCard(lstfw1,false);
+		aboutCard = getFieldsAboutCard(aboutCard, roleDetail);
+		startupOverviewCard = getFieldsStartupOverviewCard(startupOverviewCard, roleDetail);	
+		businessSolutionsCard = getFieldsBusinessSolutionsCard(businessSolutionsCard,roleDetail);	
+		recentNewsCard = getFieldsRecentNewsCard(recentNewsCard,roleDetail);
 
-		lstCardWrapper.add(new PortalWrapperClasses.CardWrapper('Provider Information', lstfw1, false,'Provider Information'));
+		lstCardWrapper.add(new PortalWrapperClasses.CardWrapper('About', aboutCard, false,'About'));
+		lstCardWrapper.add(new PortalWrapperClasses.CardWrapper('Startup Overview', startupOverviewCard, false,'Startup Overview'));
+		lstCardWrapper.add(new PortalWrapperClasses.CardWrapper('Business Solution(s)', businessSolutionsCard, false,'Business Solution(s)'));
+		lstCardWrapper.add(new PortalWrapperClasses.CardWrapper('Recent News', recentNewsCard, false,'Recent News'));
 
 		return lstCardWrapper;
 	}

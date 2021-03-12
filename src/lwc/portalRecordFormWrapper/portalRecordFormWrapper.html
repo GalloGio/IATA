@@ -154,8 +154,16 @@
                                 </div>
                             </template>
 
+                            <template if:true={field.isFullColumn}>
+                                <div key={field.fieldName} class="ihub text-small slds-col slds-size_1-of-1 slds-medium-size_2-of-2 slds-large-size_2-of-2">
+                                    <lightning-output-field class="labelValue textValue removeLinks"
+                                        field-name={field.fieldName}>
+                                    </lightning-output-field>
+                                </div>
+                            </template>
+
                             <template if:true={field.isLogo}>
-                                <div key={providerId} class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
+                                <div key={providerId} class="text-small slds-col slds-size_1-of-1 slds-medium-size_2-of-2 slds-large-size_2-of-2 ihubMarginLogo">
                                     <c-portal-record-view-edit-logo key={providerId} provider-id-api={providerId}></c-portal-record-view-edit-logo>
                                 </div>
                             </template>
@@ -166,6 +174,7 @@
                                     field-api={field.fieldName}>
                                     </c-portal-record-view-list>
                                 </div>
+
                             </template>
 
                             <template if:false={field.isAccessibility}>

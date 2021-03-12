@@ -10,18 +10,17 @@ export default class PortalServicesInnovationHubProviderDetailPage extends Light
 
     @track propertiesAndCardsList = {};
     @track componentLoading = true;
+    @track providerId;
 
     connectedCallback() {
-
-        let providerId = '';
         let pageParams = getParamsFromPage();
         if(pageParams !== undefined){
             if(pageParams.providerId !== undefined){
-                providerId = pageParams.providerId;
+                this.providerId = pageParams.providerId;
             }
         }
 
-        getProviderPropertiesAndCardsList({providerId: providerId})
+        getProviderPropertiesAndCardsList({providerId: this.providerId})
         .then(result => {
             this.propertiesAndCardsList = JSON.parse(JSON.stringify(result));
             this.componentLoading = false;

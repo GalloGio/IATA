@@ -108,6 +108,9 @@ public with sharing class PortalWrapperClasses {
 		public Boolean isLogo;
 
 		@AuraEnabled
+		public Boolean isFullColumn;
+
+		@AuraEnabled
 		public Boolean isTech;
 
 		@AuraEnabled

@@ -209,6 +209,10 @@ input[type="checkbox"] {
   letter-spacing: normal;
   color: #525252;
   padding-top: 5%;
-display: contents;
+  display: contents;
   max-width: none;
+}
+
+.ihubMarginLogo {
+  margin-bottom:10px;
 }
