@@ -73,6 +73,7 @@ import AccountSector from '@salesforce/schema/User.Contact.Account.Sector__c';
 import Portal_Registration_Required from '@salesforce/schema/User.Portal_Registration_Required__c';
 
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
+import getOneSourceLoginUrl from '@salesforce/apex/CW_LoginController.getLoginUrl';
 
 
 export default class PortalHeader extends NavigationMixin(LightningElement) {
@@ -609,7 +610,14 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
     //user logout
     logOut() {
-        navigateToPage("/secur/logout.jsp?retUrl=" + CSP_PortalPath + "login");
+        let oneSourceCommunity = window.location.href.includes('onesource');
+        if (oneSourceCommunity) {
+            getOneSourceLoginUrl().then(oneSourceLoginurl => {
+                navigateToPage("/secur/logout.jsp?retUrl=" + oneSourceLoginurl);
+            });
+        } else {
+            navigateToPage("/secur/logout.jsp?retUrl=" + CSP_PortalPath + "login");
+        }
     }
 
 

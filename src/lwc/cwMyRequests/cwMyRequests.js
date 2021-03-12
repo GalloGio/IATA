@@ -1,5 +1,6 @@
 import { LightningElement, api, track, wire } from 'lwc';
 import getFacilityManagerContactRolesFromStationListByUser from '@salesforce/apex/CW_Utilities.getFacilityManagerContactRolesFromStationListByUser';
+import getFacilityHistoryByUser from '@salesforce/apex/CW_Utilities.getFacilityHistoryByUser';
 import resources from '@salesforce/resourceUrl/ICG_Resources';
 import getUserInfo from "@salesforce/apex/CW_PrivateAreaController.getUserInfo";
 import { getCompanyTypeImage } from "c/cwUtilities";
@@ -40,7 +41,6 @@ export default class CwMyRequests extends LightningElement {
 	set userInfo(value){
 		if (value != null){
 			this.user = value;
-			this.setUserManagedFacilitiesJS();
 			this.setUserManagerRequests();
 		}
 	}
@@ -53,25 +53,6 @@ export default class CwMyRequests extends LightningElement {
 	set userFacilities(value){
 		this.adminRequest = [];
 		this.facilityList = value;
-		if (value){
-			this.facilityList.forEach(item =>{
-				if (item.isPendingCompanyAdmin){
-					let itemDTO = { 
-						Type: 'Admin Requests', 
-						Status: item.status,
-						Company: item.groupName, 
-						Station: '', 
-						HasStation: false, 
-						StationType: '',
-						CreatedDateDateFormat: item.createdDateDateFormat,
-						RequestedDate: item.createdDate,
-						Id: item.accountRoleDetailId
-					}; 
-					this.adminRequest.push(itemDTO);
-					this.filteredList.push(itemDTO);
-				}
-			});
-		}
 	}
 	
 	@api 
@@ -81,7 +62,6 @@ export default class CwMyRequests extends LightningElement {
 	
 	set userManagedFacilities(value){
 		this.userManagedFacilityList = value;
-		this.setUserManagedFacilitiesJS();
 	}
 
 	get getStationManagerRequest(){
@@ -92,49 +72,36 @@ export default class CwMyRequests extends LightningElement {
 		this.exportExcel = this.icons + this.label.xlsx_icon;
 	}
 
-	setUserManagedFacilitiesJS(){
-		if (this.user != null && this.userManagedFacilityList != null){
-
-			this.stationCreationRequest = [];
-			this.userManagedFacilityList.forEach(item =>{
-				if (item.isPendingApproval__c && item.CreatedById == this.user.Id){
-					let itemDTO = { 
-						Type: 'Station Creation Requests', 
-						Status: item.Status__c,
-						Company: item.groupName, 
-						Station: item.Name,  
-						HasStation: true, 
-						StationType: item.RecordType.Name,
-						ctypeimage: item.ctypeimage,
-						CreatedDateDateFormat: item.CreatedDateDateFormat,
-						RequestedDate: item.CreatedDate,
-						Id: item.Id
-					}; 
-					this.stationCreationRequest.push(itemDTO);
-					this.filteredList.push(itemDTO);
-				}
-			});
-		}
-	}
-
 	setUserManagerRequests(){
 		if (this.user != null && this.stationManagerRequest != null 
 			&& (this.stationManagerRequest.length === 0 || !this.stationManagerRequest) 
 			&& !this.facilitymanagercrinitialized){
 			 
 			this.stationManagerRequest = [];
-			getFacilityManagerContactRolesFromStationListByUser({userId : this.user.Id}).then(conRoles =>{
+			getFacilityHistoryByUser({userId : this.user.Id}).then(conRoles =>{
 				this.facilitymanagercrinitialized = true;
 				conRoles.forEach(item => {
-					if (item.isPendingApproval__c || (item.Status__c === 'Pending for Removal' && item.LastModifiedById === this.user.Id)){
-						var company = (item.Account_Contact_Role__r.Account__r != null) ? item.Account_Contact_Role__r.Account__r.Name : '';
-						var station = (item.ICG_Account_Role_Detail__r != null) ? item.ICG_Account_Role_Detail__r.Name : '';
-						var stationId = (item.ICG_Account_Role_Detail__r != null) ? item.ICG_Account_Role_Detail__r.Id : '';
-						var recordTypeName = (item.ICG_Account_Role_Detail__r != null && item.ICG_Account_Role_Detail__r.RecordType != null) ? item.ICG_Account_Role_Detail__r.RecordType.Name : '';
+                        var company = ''; 
+                        var station = ''; 
+                        var stationId = ''; 
+                        var recordTypeName = ''; 
 
+                        if (item.Type !== 'Station Creation Requests'){
+                            company = (item.ICG_Contact_Role_DetailR.Account_Contact_Role__r.Account__r != null) ? item.ICG_Contact_Role_DetailR.Account_Contact_Role__r.Account__r.Name : '';
+                            station = (item.ICG_Contact_Role_DetailR.ICG_Account_Role_Detail__r != null) ? item.ICG_Contact_Role_DetailR.ICG_Account_Role_Detail__r.Name : '';
+                            stationId = (item.ICG_Contact_Role_DetailR.ICG_Account_Role_Detail__r != null) ? item.ICG_Contact_Role_DetailR.ICG_Account_Role_Detail__r.Id : '';
+                            recordTypeName = (item.ICG_Contact_Role_DetailR.ICG_Account_Role_Detail__r != null && item.ICG_Contact_Role_DetailR.ICG_Account_Role_Detail__r.RecordType != null) ? item.ICG_Contact_Role_DetailR.ICG_Account_Role_Detail__r.RecordType.Name : '';
+                        }
+                        else {
+                            company = (item.ICG_Account_Role_DetailR != null && item.ICG_Account_Role_DetailR.Name.split(';').length > 0) ? item.ICG_Account_Role_DetailR.Name.split(';')[1] : '';
+                            station = (item.ICG_Account_Role_DetailR != null && item.ICG_Account_Role_DetailR.Name.split(';').length > 0) ? item.ICG_Account_Role_DetailR.Name.split(';')[0] : '';
+                            stationId = (item.ICG_Account_Role_DetailR != null) ? item.ICG_Account_Role_DetailR.Id : '';
+                            recordTypeName = (item.ICG_Account_Role_DetailR != null && item.ICG_Account_Role_DetailR.RecordType != null) ? item.ICG_Account_Role_DetailR.RecordType.Name : '';
+                        }
+                    
 						let itemDTO = { 
-							Type: 'Station Manager Requests', 
-							Status: item.Status__c,
+							Type: item.Type, 
+							Status: item.Status,
 							Company: company,
 							Station: station, 
 							StationType: recordTypeName,
@@ -146,7 +113,6 @@ export default class CwMyRequests extends LightningElement {
 						};
 						this.stationManagerRequest.push(itemDTO);
 						this.filteredList.push(itemDTO);
-					}
 				});
 			});
 		}
@@ -227,11 +193,8 @@ export default class CwMyRequests extends LightningElement {
 	}
 
 	handleMoreInfo(event) {
-		var type = event.currentTarget.getAttribute("data-type");
-		var pending = (type === 'Station Manager Requests') ? '#' : '?pending=true#';
-
-        let url =  window.location.pathname + pending + 'ID:' + event.currentTarget.getAttribute("data-id");
+		let url = '#ID:' + event.currentTarget.getAttribute("data-id");
 		window.location.href = url;
 		window.location.reload();
-    }
+	}
 }
