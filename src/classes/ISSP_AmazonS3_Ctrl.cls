@@ -514,7 +514,7 @@ global class ISSP_AmazonS3_Ctrl {
 
 			return true;
 		} catch ( Exception ex) {
-			TransformationHelper.sendEmailSupport('FATAL: ISSP_AmazonS3_Ctrl constructor createAmazonFileObject ' , '   STACKTRACE   ' + ex.getStackTraceString()  + '  '  + ex.getMessage());
+			System.debug(loggingLevel.FINE, '____ [cls ISSP_AmazonS3_Ctrl - createAmazonFileObject] STACKTRACE - ' + + ex.getStackTraceString()  + '  '  + ex.getMessage());
 			return false;
 		}
 	}

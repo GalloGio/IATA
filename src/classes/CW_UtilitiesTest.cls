@@ -77,7 +77,8 @@ public class CW_UtilitiesTest {
 		insert acr;
 
 		ISSP_CS__c icgUralBase = new ISSP_CS__c(Name = 'ICG_URL_Base', Value__c = 'https://theurl.com/s/');
-		insert icgUralBase;
+		ISSP_CS__c hotIEC = new ISSP_CS__c(Name = 'HostIEC', Value__c = 'customer-portal-iata.force.com');
+		insert new List<ISSP_CS__c>{icgUralBase, hotIEC};
 
 		IEC_Settings__c iecSettings = new IEC_Settings__c(Name = 'Test', Account_Owner_Id__c = '', CAC_Web_Service_API_Gateway__c = '0000000',
 														CAC_Web_Service_Usage_Url__c = 'https://test.saelsforce.com', Cart_cookie_session_timeout__c = -1,
