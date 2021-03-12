@@ -3,6 +3,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 	//Types of processes
 	private static String NEWBR_PV = 'NEW.BR';
 	private static String NEWHO_PV = 'NEW.HO.1.0';
+	private static String NEWPASS_BR = 'NEW.PASS.BR.1.0';
 	private static String BANK_ACCOUNT_CHANGES_PV = 'BANK.ACCOUNT.CHANGES';
 	private static String MAJOR_CHANGES_PV = 'MAJOR.CHANGES';
 	private static String DGR_DGA_PV = 'DGR.DGA';
@@ -100,7 +101,7 @@ global without sharing class AMS_RecordCreatorWebservice {
 				throw new CalloutException('There was an error on OSCAR object creation. Please check the logs or contact the System Administrator.');
 				//return 'There was an error on OSCAR object creation. Please check the logs or contact the System Administrator.';
 
-			if(typeOfProcess.equalsIgnoreCase(NEWBR_PV) || typeOfProcess.equalsIgnoreCase(NEWBRABRD_PV) || typeOfProcess.equalsIgnoreCase(NEWTIDS_PV) || typeOfProcess.equalsIgnoreCase(NEWSA_PV) || typeOfProcess.equalsIgnoreCase(NEWNAE) || typeOfProcess.equalsIgnoreCase(MCAE)){
+			if(typeOfProcess.equalsIgnoreCase(NEWBR_PV) || typeOfProcess.equalsIgnoreCase(NEWBRABRD_PV) || typeOfProcess.equalsIgnoreCase(NEWTIDS_PV) || typeOfProcess.equalsIgnoreCase(NEWSA_PV) || typeOfProcess.equalsIgnoreCase(NEWNAE) || typeOfProcess.equalsIgnoreCase(MCAE) || typeOfProcess.equalsIgnoreCase(NEWPASS_BR)){
 				if(!createHierarchy(realAccountId, typeOfProcess)){
 					Database.rollback(sp);
 					throw new CalloutException('There was an error on hierarchy object creation (does the account have a parent ?) . Please check the logs or contact the System Administrator.');
