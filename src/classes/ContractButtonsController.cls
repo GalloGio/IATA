@@ -11,7 +11,7 @@ public with sharing class ContractButtonsController {
 	public Boolean showSMRenewButtons {
 		public get {
 			String currentUserProfile = [SELECT Name FROM Profile WHERE Id = :UserInfo.getProfileId()].Name;
-			String allowedProfiles = 'MACS - Administrator,MACS - Customer Care,MACS - Direct Sales,MACS - Events - Worldtek,MACS - Field Sales,MACS - IATAN - TIESS,' +
+			String allowedProfiles = 'MACS - Administrator,IATA - Sales Director,MACS - Customer Care,MACS - Direct Sales,MACS - Events - Worldtek,MACS - Field Sales,MACS - IATAN - TIESS,' +
 					'MACS - Marketing & Publishing,MACS - Strategic Partnerships,MACS - Product,System Administrator';
 
 			// Only the Owner can see these buttons, if he/she is a SM and the renewal process has not already been started
