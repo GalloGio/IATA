@@ -29145,6 +29145,10 @@ IATAコードをお持ちでない場合は、［顧客タイプ］に［その�
         <name>icg_manage_documents</name>
     </customLabels>
     <customLabels>
+        <label><!-- icg manage documents --></label>
+        <name>icg_manage_obligations_documents</name>
+    </customLabels>
+    <customLabels>
         <label><!-- icg manage photos --></label>
         <name>icg_manage_photos</name>
     </customLabels>
