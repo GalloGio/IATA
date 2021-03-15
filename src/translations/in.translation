@@ -29150,6 +29150,10 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
         <name>icg_manage_documents</name>
     </customLabels>
     <customLabels>
+        <label><!-- icg manage documents --></label>
+        <name>icg_manage_obligations_documents</name>
+    </customLabels>
+    <customLabels>
         <label><!-- icg manage photos --></label>
         <name>icg_manage_photos</name>
     </customLabels>

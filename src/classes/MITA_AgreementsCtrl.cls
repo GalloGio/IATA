@@ -90,15 +90,20 @@ public with sharing class MITA_AgreementsCtrl {
 		// fill the agreements map
 		refreshAgreementList();
 
-		contacts = [
-			SELECT Id, Name, Title, Email, MITA_Contact_Type__c, MITA_Teletype__c
-			FROM Contact
-			WHERE id IN (
-				Select Contact__c
-				from Related_Contact__c
-				where Account__c = :acc.Id
-				and Contact__r.MITA_Contact__c = true)
-		];
+		map<id, contact> mapTmpContact = new map<id, contact>();
+
+		for(contact c: [SELECT Id, Name, Title, Email, MITA_Contact_Type__c, MITA_Teletype__c FROM Contact WHERE AccountId =:acc.Id and MITA_Contact__c = true])
+			mapTmpContact.put(c.Id, c);
+
+		for(contact c: [SELECT Id, Name, Title, Email, MITA_Contact_Type__c, MITA_Teletype__c FROM Contact WHERE Id IN (
+			Select Contact__c
+			from Related_Contact__c
+			where Account__c = :acc.Id
+			and Contact__r.MITA_Contact__c = true)]){
+				mapTmpContact.put(c.Id, c);
+			}
+		
+		contacts = mapTmpContact.values();
 	}
 
 	private void refreshAgreementList() {

@@ -39,7 +39,7 @@ export default class CwAccountDetailOverview extends LightningElement {
 	facilitySpaceRT = ["Cargo_Handling_Facility"];
 	onAirportRT = ["Cargo_Handling_Facility", "Ramp_Handler"];
 	trucksRT = ["Trucker", "Freight_Forwarder"];
-	directRampAccessRT = ["Airline"];
+	directRampAccessRT = ["Cargo_Handling_Facility", "Trucker", "Freight_Forwarder"];
 	overallAirportSizeRT = ["Airport_Operator"];
 	hideAll = [""];
 
@@ -84,6 +84,9 @@ export default class CwAccountDetailOverview extends LightningElement {
 	}
 	get showDirectRampAccess() {
 		return this.directRampAccessRT.includes(this.facility.recordTypeDevName);
+	}
+	get editOnDirectRampAccess() {
+		return false;
 	}
 
 	get facilitySizeFormatted() {

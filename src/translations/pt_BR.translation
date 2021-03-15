@@ -29143,6 +29143,10 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
         <name>icg_manage_documents</name>
     </customLabels>
     <customLabels>
+        <label><!-- icg manage documents --></label>
+        <name>icg_manage_obligations_documents</name>
+    </customLabels>
+    <customLabels>
         <label><!-- icg manage photos --></label>
         <name>icg_manage_photos</name>
     </customLabels>
