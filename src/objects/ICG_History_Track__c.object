@@ -154,15 +154,6 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>Private</externalSharingModel>
-    <label>OS History Track</label>
-    <nameField>
-        <label>History Track Name</label>
-        <type>Text</type>
-    </nameField>
-    <pluralLabel>OS History Track</pluralLabel>
-    <searchLayouts/>
-    <sharingModel>ReadWrite</sharingModel>
-    <visibility>Public</visibility>
     <fields>
         <fullName>Field__c</fullName>
         <description>This field is to store the Api Name of the field that we want to track.</description>
@@ -248,6 +239,12 @@
             </valueSetDefinition>
         </valueSet>
     </fields>
+    <label>OS History Track</label>
+    <nameField>
+        <label>History Track Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>OS History Track</pluralLabel>
     <recordTypes>
         <fullName>Changes_by_Type</fullName>
         <active>true</active>
@@ -268,4 +265,7 @@
             </values>
         </picklistValues>
     </recordTypes>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>
