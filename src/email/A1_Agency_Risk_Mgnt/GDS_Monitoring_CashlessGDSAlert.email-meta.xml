@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Template to notify stakeholders upon reception of GDS alert of type  CashlessGDSAlert</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>GDS Monitoring CashlessGDSAlert</name>
+    <style>none</style>
+    <subject>CashlessFOPAlert – ##COUNTRY## - ##AGENT_NAME## - ##IATA_CODE##</subject>
+    <textOnly>##COUNTRY## ##AGENT_NAME## ##IATA_CODE## ##ACCREDITATION_TYPE## has registered unauthorized Cash sales. A SAAM case has ben created for further investigation with the GDS</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

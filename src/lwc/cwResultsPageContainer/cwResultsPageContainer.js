@@ -557,19 +557,20 @@ export default class CwResultsPageContainer extends LightningElement {
 		return style;
 	}
 
-	get numberOfPages() {
+	get numberOfPages(){
 		let pageNumbers = 1;
 		if (this.mapData) {
-			if (this.companyTypeFilter && this.companyTypeFilter !== "All") {
+			if (this.companyTypeFilter && this.companyTypeFilter !== "All"){
 				let filteredData = this.mapData.filter(elem => {
-					return elem.dataType === this.companyTypeFilter;
+					return elem.dataTypeLabel === this.companyTypeFilter;
 				});
-				if (filteredData && filteredData.length > 0) pageNumbers = Math.ceil(filteredData.length / this.recordsPerPage);
-			} else {
+				if (filteredData && filteredData.length > 0){
+					 pageNumbers = Math.ceil(filteredData.length / this.recordsPerPage);
+				}
+			} else{
 				pageNumbers = Math.ceil(this.mapData.length / this.recordsPerPage);
 			}
 		}
-
 		return pageNumbers;
 	}
 
@@ -577,43 +578,46 @@ export default class CwResultsPageContainer extends LightningElement {
 		this.isLoading = true;
 		this.selectedPage++;
 		this.paginateLogic();
+		window.scrollTo(0, 0);
 	}
 	previouspage(event) {
 		this.isLoading = true;
 		this.selectedPage--;
 		this.paginateLogic();
+		window.scrollTo(0, 0);
 	}
 	gotopage(event) {
 		this.isLoading = true;
 		this.selectedPage = event.detail;
 		this.paginateLogic();
+		window.scrollTo(0, 0);
 	}
 
 	paginateLogic() {
 		if (this.searchList) {
 			let orderByOnAirport = this.determineOrderByOnAirport(this.searchList);
-
-			window.scrollTo({ top: 0, behavior: "smooth" });
 			const searchWrapper = this.manageDataSent(this.searchList);
+			
 			getResults({ attributes: JSON.stringify(searchWrapper),
 							getOpeningHours: false,
 							getHandledAirlines: false,
 							orderByOnAirport: orderByOnAirport,
 							isPendingApproval: false,
 							limitRecords: this.recordsPerPage,
-							offset: this.recordsPerPage * this.selectedPage - this.recordsPerPage })
-				.then(result => {
-					this.results = result ? JSON.parse(result) : null;
-					if (this.results) {
-						this.isLoading = false;
-					}
-				})
-				.catch(error => {
-					this.isLoading = false;
-					console.error("error", error);
-				});
+							offset: this.recordsPerPage * this.selectedPage - this.recordsPerPage,
+							isStrongFilter: false
+						}).then(result => {
+							this.results = result ? JSON.parse(result) : null;
+							if (this.results){						
+								this.isLoading = false;
+							}
+						}).catch(error => {
+							this.isLoading = false;
+							console.error("error", error);
+						});			
 		}
 	}
+
 	filterByLatLong(event) {
 		event.preventDefault();
 		this.customLocationFilter = JSON.parse(event.detail);

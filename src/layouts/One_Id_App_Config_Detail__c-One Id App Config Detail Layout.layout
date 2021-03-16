@@ -87,6 +87,11 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Identity_User__c</fields>
+        <fields>Provisioning_Status__c</fields>
+        <fields>Selected_Role__c</fields>
+        <fields>User_App_State__c</fields>
+        <fields>User_Provisioning_Request__c</fields>
         <relatedList>One_Id_User_Applications__c.Application__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
@@ -95,7 +100,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h4E000000FsRd</masterLabel>
+        <masterLabel>00hw000000hfWdk</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

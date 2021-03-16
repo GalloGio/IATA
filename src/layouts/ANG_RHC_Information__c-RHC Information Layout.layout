@@ -33,6 +33,10 @@
                 <behavior>Edit</behavior>
                 <field>CurrencyIsoCode</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Remarks__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -42,6 +46,10 @@
         <editHeading>true</editHeading>
         <label>RHC Information</label>
         <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Tier__c</field>
+            </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>ANG_RHC_Amount__c</field>
@@ -74,7 +82,7 @@
         <label>RME Information</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>ANG_RHC_Amount_Provisional__c</field>
             </layoutItems>
             <layoutItems>
@@ -83,6 +91,14 @@
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Tiered_Provisional_Amount__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Forecasted_Tier__c</field>
+            </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>ANG_RHC_Amount_Forecasted__c</field>

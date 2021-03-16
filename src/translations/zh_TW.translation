@@ -1689,6 +1689,10 @@
         <name>Airline_Daily_Sales_portal_service</name>
     </customLabels>
     <customLabels>
+        <label><!-- AirportAIS_Service_Description --></label>
+        <name>AirportAIS_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- All_Notifications_Notification --></label>
         <name>All_Notifications_Notification</name>
     </customLabels>
@@ -5471,6 +5475,10 @@
     <customLabels>
         <label><!-- Case Classification --></label>
         <name>Case_Classification</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Case Closed For DGR --></label>
+        <name>Case_Closed_For_DGR</name>
     </customLabels>
     <customLabels>
         <label><!-- Case_Closure_Error_Cannot_Close --></label>
@@ -13949,6 +13957,10 @@
         <name>ISSP_AMS_Case_Attach_Description</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP AMS Case Attach Description DGR --></label>
+        <name>ISSP_AMS_Case_Attach_Description_DGR</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP AMS Case Attach Limit --></label>
         <name>ISSP_AMS_Case_Attach_Limit</name>
     </customLabels>
@@ -18865,6 +18877,14 @@
         <name>ISSP_Certificate_Profile_Restriction</name>
     </customLabels>
     <customLabels>
+        <label><!-- ISSP Certificate is being uploaded --></label>
+        <name>ISSP_Certificate_is_being_uploaded</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP Certificate was uploaded satisfactory --></label>
+        <name>ISSP_Certificate_was_uploaded_satisfactory</name>
+    </customLabels>
+    <customLabels>
         <label><!-- ISSP_Certifications --></label>
         <name>ISSP_Certifications</name>
     </customLabels>
@@ -23483,6 +23503,18 @@
     <customLabels>
         <label><!-- ISSP cannot open the selected account --></label>
         <name>ISSP_cannot_open_the_selected_account</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP certificate Submit --></label>
+        <name>ISSP_certificate_Submit</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP certificate expiry date --></label>
+        <name>ISSP_certificate_expiry_date</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- ISSP certificate with the same --></label>
+        <name>ISSP_certificate_with_the_same</name>
     </customLabels>
     <customLabels>
         <label><!-- ISSP characters new password --></label>
@@ -29063,6 +29095,10 @@
     <customLabels>
         <label><!-- icg manage documents --></label>
         <name>icg_manage_documents</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg manage documents --></label>
+        <name>icg_manage_obligations_documents</name>
     </customLabels>
     <customLabels>
         <label><!-- icg manage photos --></label>
@@ -36513,6 +36549,19 @@
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Approval history for Exceptions --></description>
+        <label><!-- Approval history for Exceptions --></label>
+        <name>Approval_history_for_Exceptions</name>
+        <sections>
+            <label><!-- Process Instance --></label>
+            <name>Process Instance</name>
+        </sections>
+        <sections>
+            <label><!-- Process Instance Node --></label>
+            <name>Process Instance Node</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Approval process instances --></description>
         <label><!-- Approval process instances --></label>
         <name>Approval_process_instances</name>
@@ -37509,6 +37558,19 @@
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Country profile with IATA ISO Country --></description>
+        <label><!-- Country profile with IATA ISO Country --></label>
+        <name>Country_profile_with_IATA_ISO_Country</name>
+        <sections>
+            <label><!-- Country Profiles --></label>
+            <name>Country Profiles</name>
+        </sections>
+        <sections>
+            <label><!-- IATA ISO Countries --></label>
+            <name>IATA ISO Countries</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Country profile with surveys --></description>
         <label><!-- Country profile with surveys --></label>
         <name>Country_profile_with_surveys</name>
@@ -37743,6 +37805,15 @@
         <sections>
             <label><!-- EmailTemplates --></label>
             <name>EmailTemplates</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Exceptions with Approval history --></description>
+        <label><!-- Exceptions with Approval history --></label>
+        <name>Exceptions_with_Approval_history</name>
+        <sections>
+            <label><!-- Exceptions --></label>
+            <name>Exceptions</name>
         </sections>
     </reportTypes>
     <reportTypes>

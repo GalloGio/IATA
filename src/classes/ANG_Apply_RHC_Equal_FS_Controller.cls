@@ -1,6 +1,4 @@
 public class ANG_Apply_RHC_Equal_FS_Controller {
-	public static string RHCConfRT = RecordTypeSingleton.getInstance().getRecordTypeID('ANG_BSP_Attributes__c', 'RHC_Amount_Conf');
-	public static string CCConfRT = RecordTypeSingleton.getInstance().getRecordTypeID('ANG_BSP_Attributes__c', 'Cash_Condition_Conf');
 	public static Set<String> countrySpecificsList = new Set<String>{'BSP-HK','BSP-MO'};
 
 	public List<SelectOption> modes {get; private set;}
@@ -40,7 +38,7 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 		list <ANG_BSP_Attributes__c> temp = new list <ANG_BSP_Attributes__c>();
 		if(bspAttributes != null)
 			for (ANG_BSP_Attributes__c bsp :bspAttributes)
-				if (bsp.recordtypeid == RHCConfRT) temp.add(bsp);
+				if (bsp.recordtypeid == ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG) temp.add(bsp);
 
 		return temp;
 		 } private set;}
@@ -148,7 +146,7 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 				Boolean mayBeBlock = false;
 				for(ANG_BSP_Attributes__c bsp : bspAttributes){
 
-					if(bsp.RHC_Amnt_Calc_Type__c == 'Fixed Percentage' && bsp.recordtypeid == RHCConfRT){
+					if(bsp.RHC_Amnt_Calc_Type__c == 'Fixed Percentage' && bsp.recordtypeid == ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG){
 						mayBeBlock = true;
 						if(value == -1) value = bsp.FS_Percentage__c;
 
@@ -166,7 +164,7 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 				}
 				if(actionValue == 'Apply_RHC_per_RS' && showCountrySpecificColumns && bspAttributes.size() <= 4){
 				AMS_Settlement_System__c operation = [SELECT  id, name FROM AMS_Settlement_System__c WHERE name = :bspValue limit 1];
-				List<ANG_BSP_Attributes__c> listBspToInsert =  new List<ANG_BSP_Attributes__c>{new ANG_BSP_Attributes__c(Risk_Status__c = 'A', BSP__c = operation.id, recordtypeid = RHCConfRT), new ANG_BSP_Attributes__c(Risk_Status__c = 'B', BSP__c = operation.id, recordtypeid = RHCConfRT)};
+				List<ANG_BSP_Attributes__c> listBspToInsert =  new List<ANG_BSP_Attributes__c>{new ANG_BSP_Attributes__c(Risk_Status__c = 'A', BSP__c = operation.id, recordtypeid = ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG), new ANG_BSP_Attributes__c(Risk_Status__c = 'B', BSP__c = operation.id, recordtypeid = ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG)};
 						bspAttributes.addAll(listBspToInsert);
 
 						List<BSPAttributeWrapper> sortedBSPAttributeWrapper = new List<BSPAttributeWrapper>();
@@ -179,13 +177,12 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 			for(BSPAttributeWrapper bsp : sortedBSPAttributeWrapper){
 				bspAttributes.add(bsp.bspAttribute);
 			}
-				//insert new List<ANG_BSP_Attributes__c>{new ANG_BSP_Attributes__c(Risk_Status__c = 'A', BSP__c = operation.id, recordtypeid = RHCConfRT), new ANG_BSP_Attributes__c(Risk_Status__c = 'B', BSP__c = operation.id, recordtypeid = RHCConfRT)};
 			}
 
 
 			if(actionValue != 'Apply_RHC_regardless')
 				for(ANG_BSP_Attributes__c bsp : bspAttributes)
-					if (bsp.recordtypeid == CCConfRT) percentageFS = String.valueOf(bsp.FS_Percentage__c);
+					if (bsp.recordtypeid == ANG_RHCHelper.RECTYPE_CASH_CONDITION_CONFIG) percentageFS = String.valueOf(bsp.FS_Percentage__c);
 
 			} else if (modeValue == 'IATA_Code') {
 				agencies = [SELECT Id, ANG_RHC_Amount__c, ANG_Financial_Security__c, ANG_RHC_Amount_Equals_FS__c, ANG_AccountId__r.Id, ANG_AccountId__r.Name,
@@ -303,7 +300,7 @@ public class ANG_Apply_RHC_Equal_FS_Controller {
 			} else {
 				if(bspAttributes != null){
 					for (ANG_BSP_Attributes__c attribute : bspAttributes){
-						if(attribute.recordtypeid == RHCConfRT){
+						if(attribute.recordtypeid == ANG_RHCHelper.RECTYPE_RHC_AMOUNT_CONFIG){
 
 						attribute.FS_Percentage__c = (isRegardlessRisk ? (String.isEmpty(percentageFS) ? 0 : Decimal.valueOf(percentageFS)) : attribute.FS_Percentage__c);
 

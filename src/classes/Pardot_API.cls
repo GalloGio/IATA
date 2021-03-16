@@ -35,7 +35,7 @@ public without sharing class Pardot_API {
 	}
 
 	public static Pardot_Prospect getProspect(String email) {
-		String url = 'https://pi.pardot.com/api/prospect/version/'+pardotAPIVersion+'/do/read/email/'+EncodingUtil.urlEncode(email, 'UTF-8');
+		String url = 'https://pi.pardot.com/api/prospect/version/'+pardotAPIVersion+'/do/read/email/'+EncodingUtil.urlEncode(email, 'UTF-8')+'?limit_related_records=true';
 
 		Pardot_Prospect prospect;
 		try {

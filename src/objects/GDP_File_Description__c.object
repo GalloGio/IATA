@@ -907,6 +907,7 @@
     <listViews>
         <fullName>MDP_File_Descriptions</fullName>
         <columns>NAME</columns>
+        <columns>Atom__c</columns>
         <columns>Is_Reference__c</columns>
         <columns>Reference__c</columns>
         <columns>Class__c</columns>
@@ -1436,15 +1437,13 @@
     <listViews>
         <fullName>X90_GSS_ATOM_0_ALL</fullName>
         <columns>NAME</columns>
-        <columns>Is_Reference__c</columns>
+        <columns>File_Format__c</columns>
         <columns>Product_Type__c</columns>
         <columns>Reference__c</columns>
         <columns>Class__c</columns>
-        <columns>File_Format__c</columns>
         <columns>Frequency__c</columns>
         <columns>Magnitude__c</columns>
         <columns>Geo_Coverage_Definition__c</columns>
-        <columns>Order_By__c</columns>
         <columns>Atom__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
@@ -1457,7 +1456,97 @@
             <operation>equals</operation>
             <value>0</value>
         </filters>
-        <label>90 - GSS | ATOM 0 | ALL</label>
+        <filters>
+            <field>File_Format__c</field>
+            <operation>equals</operation>
+            <value>TXT</value>
+        </filters>
+        <label>90 - GSS | ATOM 0 | ALL TXT</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>X90_GSS_ATOM_0_ALL_XML</fullName>
+        <columns>NAME</columns>
+        <columns>File_Format__c</columns>
+        <columns>Product_Type__c</columns>
+        <columns>Reference__c</columns>
+        <columns>Class__c</columns>
+        <columns>Frequency__c</columns>
+        <columns>Magnitude__c</columns>
+        <columns>Geo_Coverage_Definition__c</columns>
+        <columns>Atom__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Product_Type__c</field>
+            <operation>equals</operation>
+            <value>GSS</value>
+        </filters>
+        <filters>
+            <field>Atom__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>File_Format__c</field>
+            <operation>equals</operation>
+            <value>XML</value>
+        </filters>
+        <label>92 - GSS | ATOM 0 | ALL XML</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>X90_MDP_ATOM_0_ALL</fullName>
+        <columns>NAME</columns>
+        <columns>File_Format__c</columns>
+        <columns>Product_Type__c</columns>
+        <columns>Reference__c</columns>
+        <columns>Class__c</columns>
+        <columns>Frequency__c</columns>
+        <columns>Magnitude__c</columns>
+        <columns>Geo_Coverage_Definition__c</columns>
+        <columns>Atom__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Product_Type__c</field>
+            <operation>equals</operation>
+            <value>MDP</value>
+        </filters>
+        <filters>
+            <field>Atom__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <label>93 - MDP | ATOM 0 | ALL</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>X91_GSS_ATOM_0_ALL_XLSX</fullName>
+        <columns>NAME</columns>
+        <columns>File_Format__c</columns>
+        <columns>Product_Type__c</columns>
+        <columns>Reference__c</columns>
+        <columns>Class__c</columns>
+        <columns>Frequency__c</columns>
+        <columns>Magnitude__c</columns>
+        <columns>Geo_Coverage_Definition__c</columns>
+        <columns>Atom__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Product_Type__c</field>
+            <operation>equals</operation>
+            <value>GSS</value>
+        </filters>
+        <filters>
+            <field>Atom__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>File_Format__c</field>
+            <operation>equals</operation>
+            <value>XLSX</value>
+        </filters>
+        <label>91 - GSS | ATOM 0 | ALL XLSX</label>
         <language>en_US</language>
     </listViews>
     <listViews>

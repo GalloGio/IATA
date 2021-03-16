@@ -103,6 +103,18 @@ public class TransformationHelper {
 		return result;
 	}
 
+	public static list<string> selectAllWritableFieldsByCurrentUser(String SObjectName) {
+		list<string> result = new list<string>();
+		Map<String, Schema.SObjectField> fieldMap = Schema.getGlobalDescribe().get(SObjectName).getDescribe().fields.getMap();
+		for (String f : fieldMap.keySet()) {
+			Schema.DescribeFieldResult field = fieldMap.get(f).getDescribe();
+			if (field.isCreateable())
+				result.add(field.getName());
+		}
+
+		return result;
+	}
+
 	public  static boolean triggerOnCaseNSerRen = false;
 
 	public static void setComingFromCase() {

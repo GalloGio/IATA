@@ -2,7 +2,7 @@
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
         <fullName>ACCA_Notification_on_new_Application_Change_Request</fullName>
-        <ccEmails>accabspdevelop@acca.com.cn</ccEmails>
+        <ccEmails>accaisis2develop@acca.com.cn</ccEmails>
         <ccEmails>Jana_sun@163.com</ccEmails>
         <ccEmails>Cindy.acca@gmail.com</ccEmails>
         <ccEmails>xbkcw@126.com</ccEmails>
@@ -13,7 +13,6 @@
     </alerts>
     <alerts>
         <fullName>ACCA_Notification_on_new_Application_Change_Request_ISIS2_ISIS2D</fullName>
-        <ccEmails>accabspdevelop@acca.com.cn</ccEmails>
         <ccEmails>accaisis2develop@acca.com.cn</ccEmails>
         <description>ACCA: Notification on new Application Change Request ISIS2 &amp; ISIS2D</description>
         <protected>false</protected>
@@ -171,22 +170,6 @@
         </recipients>
         <recipients>
             <recipient>concessios@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>enriquezj@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>gonzalezce@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>matepiner@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>mohananb@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -808,7 +791,7 @@
         <description>Global approval of FAQ change - to GVA</description>
         <protected>false</protected>
         <recipients>
-            <recipient>gabriel@iata.org</recipient>
+            <recipient>oueidatg2@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
@@ -3788,7 +3771,7 @@
         <description>TEST Email Alert on IS for AM</description>
         <protected>false</protected>
         <recipients>
-            <recipient>gabriel@iata.org</recipient>
+            <recipient>oueidatg2@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderType>CurrentUser</senderType>
@@ -6439,7 +6422,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <fullName>SCE_Serial_Number_Allocation_owner_R_B</fullName>
         <description>Update case owner: Reporting &amp; Billing</description>
         <field>OwnerId</field>
-        <lookupValue>CasesReportingBilling</lookupValue>
+        <lookupValue>OperationalManagementHeadOffice</lookupValue>
         <lookupValueType>Queue</lookupValueType>
         <name>SCE:Serial Number Allocation owner R&amp;B</name>
         <notifyAssignee>true</notifyAssignee>
@@ -18472,7 +18455,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6</booleanFilter>
+        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7</booleanFilter>
         <criteriaItems>
             <field>Case.CaseArea__c</field>
             <operation>equals</operation>
@@ -18481,7 +18464,7 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
         <criteriaItems>
             <field>Case.Origin</field>
             <operation>notEqual</operation>
-            <value>Web,Internal Case,Portal</value>
+            <value>Web,Internal Case,Portal,IATA Internal User</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.SuppliedEmail</field>
@@ -18502,6 +18485,11 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <field>Case.Subject</field>
             <operation>notContain</operation>
             <value>EXPIRED DELIVERY RETRY NOTIFICATION,FAILED,FAILURE NOTICE,NON REMIS,OUT OF OFFICE,OUT OF THE OFFICE,REMISE DIFFEREE,UNDELIVERABLE,VIOLATION,WARNING : EMAIL EXCEED MAXIMUM SIZE LIMIT</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>Case.RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Cases - SIS Help Desk</value>
         </criteriaItems>
         <triggerType>onCreateOnly</triggerType>
     </rules>

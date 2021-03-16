@@ -57,6 +57,12 @@ private class ANG_MulticountryRHCTest {
 
 		insert new List<AMS_Settlement_System__c>{bspPT, bspFR};
 
+		List<ANG_BSP_Attributes__c> bspAttrLst = new List<ANG_BSP_Attributes__c>();
+		for(AMS_Settlement_System__c iss:[select id, name from AMS_Settlement_System__c]){
+			bspAttrLst.addAll(AMS_OSCAR_TestDataFactory.createOperationAttributes(iss));
+		}
+		insert bspAttrLst;
+
 		List<Operational_Calendar__c> opCalendarList = new List<Operational_Calendar__c>();
 
 		Operational_Calendar__c ptCalendarWeekly = new Operational_Calendar__c(

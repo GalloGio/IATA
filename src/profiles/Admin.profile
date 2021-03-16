@@ -2376,6 +2376,22 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>AccountContactRoleSelector</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AccountContactRoleSelectorTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AccountContactRoles</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AccountContactRolesTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>AccountCreationCtrl</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -2440,6 +2456,18 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>AccountRoleSelector</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AccountRoleSelectorTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AccountRoles</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>AccountRolesAlignBatch</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -2456,7 +2484,19 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>AccountRolesTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>AccountRolesTriggerHandler</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AccountSelector</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AccountSelectorTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -2665,6 +2705,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>AirlineSuspensionUtil</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AirportISService</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AirportISServiceTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -2921,6 +2969,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>AzureRegistrationHandlerTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>BSPAttributesSingleton</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>BSPAttributesSingletonTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -3341,10 +3397,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>CW_ICG_Capability_Asgmt_Group_Test</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>CW_ICG_Facility_Queuable</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -3801,6 +3853,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>ContactRoleServiceAccessTriggerHandler</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>ContactSelector</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>ContactSelectorTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -4588,6 +4648,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>FunctionalRoleMetadataSelector</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>FutureProcessorControl</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -5140,6 +5204,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>IDCardUtilWithoutSharing</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>IDCardWebService</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -5321,6 +5389,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>IDCard_Refund</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IDCard_RefundTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -7272,10 +7344,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>ISSP_PortalUserStatusChangeHelper</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>ISSP_PortalUserStatusChangeTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -8452,7 +8520,31 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>PortalApplicationRightSelector</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>PortalApplicationRightSelectorTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>PortalApplicationRight_Sel</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>PortalApplicationRights</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>PortalApplicationRightsTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>PortalApplicationSelector</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>PortalApplicationSelectorTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -8689,6 +8781,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>PortalSearchFilterWrapperTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>PortalServiceAccessService</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>PortalServiceAccessServiceTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -9053,6 +9153,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>RecordSharingControllerTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>RecordTypeSelector</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -9913,6 +10017,34 @@
     </classAccesses>
     <classAccesses>
         <apexClass>TestData</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TestDataFactory_AccountContactRoles</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TestDataFactory_AccountRoles</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TestDataFactory_Accounts</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TestDataFactory_Contacts</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TestDataFactory_IATAISOCountries</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TestDataFactory_PortalApplicationRights</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TestDataFactory_PortalApplications</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -14086,6 +14218,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>AMS_Country_Specific_Attribute__c.Create_SAAM_Case__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>AMS_Country_Specific_Attribute__c.Create_SMAP_Case__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -14097,6 +14234,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>AMS_Country_Specific_Attribute__c.Email_Template_Internal_Stakeholders__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AMS_Country_Specific_Attribute__c.GDS_Alert_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -15562,7 +15704,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>AMS_OSCAR__c.KPI_Aux1__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -18231,6 +18373,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>AMS_Settlement_System__c.Enable_Provisional_RHC_Request__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>AMS_Settlement_System__c.Exc_RHC_Monitoring_Alert__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -18791,6 +18938,21 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>ANG_BSP_Attributes__c.Amount_At_Risk_From_USD__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ANG_BSP_Attributes__c.Amount_At_Risk_Multiplier__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ANG_BSP_Attributes__c.Amount_At_Risk_To_USD__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>ANG_BSP_Attributes__c.BSP__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -18850,8 +19012,33 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>ANG_BSP_Attributes__c.Tier_RHC_Formula_Deduct_USD__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ANG_BSP_Attributes__c.Tier_RHC_Formula_TopUp_USD__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ANG_BSP_Attributes__c.Tier_RHC_Formula__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ANG_BSP_Attributes__c.Tier__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>ANG_BSP_Attributes__c.UniqueKey__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ANG_BSP_Attributes__c.create_SAAM_Case__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -19045,8 +19232,48 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>ANG_RHC_Information__c.Account_BSP__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ANG_RHC_Information__c.Agency_Risk_Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ANG_RHC_Information__c.Amount_At_Risk_USD__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ANG_RHC_Information__c.Forecasted_Tier__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>ANG_RHC_Information__c.RHC_Amount_Equals_FS_Percent__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ANG_RHC_Information__c.RHC_Amount_USD__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ANG_RHC_Information__c.Remarks__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ANG_RHC_Information__c.Tier__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ANG_RHC_Information__c.Tiered_Provisional_Amount__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -19121,7 +19348,27 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>ANG_Risk_Alert__c.Additional_Alert_information__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ANG_Risk_Alert__c.GDS_Alert_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ANG_Risk_Alert__c.GDS__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>ANG_Risk_Alert__c.Monitored_Account__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ANG_Risk_Alert__c.Ticket_Number__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -23257,6 +23504,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Account_Contact_Role__c.Position__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account_Contact_Role__c.Service_Rendered__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -36405,199 +36657,199 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Customer_Invoice__c.Bank_Account_Name__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Customer_Invoice__c.Bank_Account_No__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Customer_Invoice__c.Bank_Code__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Customer_Invoice__c.Bank_Name__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Customer_Invoice__c.Billed_Member_Accounting_Code__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Customer_Invoice__c.Billed_Member_Designator_Code__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Customer_Invoice__c.Billed_Member_Name__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Customer_Invoice__c.Billing_Currency__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Customer_Invoice__c.Billing_Member_Accounting_Code__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Customer_Invoice__c.Billing_Member_Designator_Code__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Customer_Invoice__c.Billing_Member_Id__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Customer_Invoice__c.Billing_Member_Name__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Customer_Invoice__c.Branch_Code__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Customer_Invoice__c.CH_Agreement_Indicator__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Customer_Invoice__c.Charge_Category__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Customer_Invoice__c.Clearance_Currency__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Customer_Invoice__c.Currency_Code__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Customer_Invoice__c.Date_Basis__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Customer_Invoice__c.Description__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Customer_Invoice__c.Discount_Due_Date__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Customer_Invoice__c.Discount_Due_Days__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Customer_Invoice__c.Discount_Percent__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Customer_Invoice__c.Exchange_Rate__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Customer_Invoice__c.Fee_Codes_Display__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Customer_Invoice__c.Fee_Codes__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Customer_Invoice__c.Has_Attachments__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Customer_Invoice__c.IBAN__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Customer_Invoice__c.Invoice_Date__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Customer_Invoice__c.Invoice_Number__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Customer_Invoice__c.Net_Due_Date__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Customer_Invoice__c.Payment_Status_Billed_Member__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Customer_Invoice__c.Payment_Status_Billing_Member__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Customer_Invoice__c.Payment_Terms_Type__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Customer_Invoice__c.SWIFT__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Customer_Invoice__c.Settlement_Method__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Customer_Invoice__c.Settlement_Month_Period__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Customer_Invoice__c.Total_Amount__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Customer_Invoice__c.Transaction_Type__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Customer_Invoice__c.Type_Of_Service__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -43687,6 +43939,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>ICG_GxA_Integration_Mapping__c.SF_Target_Object__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ICG_History_Track__c.New_Value__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ICG_History_Track__c.Old_Value__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -52840,6 +53102,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Portal_Application_Right__c.Has_access_to_OAG__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Portal_Application_Right__c.IATA_Code__c</field>
         <readable>true</readable>
@@ -52890,9 +53157,9 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Portal_Application_Right__c.New_Role_Requested__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -53071,6 +53338,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Portal_Applications__c.Auto_grant_Account_Role__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Portal_Applications__c.Cannot_be_managed_by_portal_admin__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -53088,6 +53360,11 @@
         <editable>true</editable>
         <field>Portal_Applications__c.Confirm_Text__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Portal_Applications__c.Contact_Role_Detail_Name__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -53133,6 +53410,16 @@
         <editable>true</editable>
         <field>Portal_Applications__c.ICH_Airline__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Portal_Applications__c.Is_Async_Automated_User_Provisioning__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Portal_Applications__c.Is_Async_Manual_User_Provisioning__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -60636,6 +60923,10 @@
         <recordType>AMS_Country_Specific_Attribute__c.EasyPay_Model_Config</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>AMS_Country_Specific_Attribute__c-GDS Risk Alert</layout>
+        <recordType>AMS_Country_Specific_Attribute__c.RiskAlertGDS</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>AMS_Country_Specific_Attribute__c-Irregularity Threshold</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -61079,6 +61370,10 @@
     <layoutAssignments>
         <layout>ANG_Risk_Alert__c-Risk Alert EDS</layout>
         <recordType>ANG_Risk_Alert__c.Risk_Alert_EDS</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ANG_Risk_Alert__c-Risk Alert GDS</layout>
+        <recordType>ANG_Risk_Alert__c.RiskAlertGDS</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>ANG_Risk_Alert__c-Risk Alert Layout</layout>
@@ -62446,10 +62741,6 @@
         <layout>Contact-IATA Standard Contact</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Contact-MACS Sales Contact Layout</layout>
-        <recordType>Contact.MACSSales</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>Contact-Standard Contact</layout>
         <recordType>Contact.Standard_Contact</recordType>
     </layoutAssignments>
@@ -62461,6 +62752,9 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>ContactPointPhone-Contact Point Phone Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ContactPointTypeConsent-Contact Point Type Consent Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Contact_Endorsement__c-Contact Endorsement Layout</layout>
@@ -63189,6 +63483,13 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>ICG_GxA_Integration_Mapping__c-ONE Source GxA Integration Mapping Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ICG_History_Track__c-OS History Track Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ICG_History_Track__c-OS History Track Layout</layout>
+        <recordType>ICG_History_Track__c.Changes_by_Type</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>ICG_Notification__c-ONE Source Notification Layout</layout>
@@ -66914,6 +67215,15 @@
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>true</modifyAllRecords>
+        <object>ICG_History_Track__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
         <object>ICG_Notification__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
@@ -69485,10 +69795,6 @@
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>GCSDowntime2</apexPage>
-        <enabled>true</enabled>
-    </pageAccesses>
-    <pageAccesses>
         <apexPage>GDP_CACWebServiceActionWizard</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
@@ -71245,6 +71551,10 @@
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
+        <apexPage>site_robots</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>thai</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
@@ -71437,6 +71747,11 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>AMS_Country_Specific_Attribute__c.RTS_Risk_Alert_Notification</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>AMS_Country_Specific_Attribute__c.RiskAlertGDS</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
@@ -71815,14 +72130,20 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>ANG_Risk_Alert__c.RiskAlertGDS</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
         <default>true</default>
+        <personAccountDefault>true</personAccountDefault>
         <recordType>ANG_Risk_Alert__c.Risk_Alert</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>ANG_Risk_Alert__c.Risk_Alert_EDS</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
@@ -72729,11 +73050,6 @@
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>false</default>
-        <recordType>Contact.MACSSales</recordType>
-        <visible>false</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
         <default>true</default>
         <recordType>Contact.Standard_Contact</recordType>
         <visible>true</visible>
@@ -73122,6 +73438,11 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
+        <recordType>ICG_History_Track__c.Changes_by_Type</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
         <recordType>ICG_Notification__c.Audit</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
@@ -73382,6 +73703,7 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
+        <personAccountDefault>true</personAccountDefault>
         <recordType>Portal_Application_Right__c.Application_rigth</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>

@@ -28,8 +28,8 @@ export default class CwCompanyAdmins extends LightningElement {
 			})
 		}
 		groups.forEach(grname =>{
-			let group = {groupName : grname, companyAdmins : [], hasItem: false};
-			getCompanyAdminsContactsFromGroupName({groupName : grname}).then(contacts =>{
+			let group = {groupName : [grname], companyAdmins : [], hasItem: false};
+			getCompanyAdminsContactsFromGroupName({groupName : [grname]}).then(contacts =>{
                 group.companyAdmins = contacts;
                 group.hasItem = (group.companyAdmins.length > 0)
 			}).finally(()=>{

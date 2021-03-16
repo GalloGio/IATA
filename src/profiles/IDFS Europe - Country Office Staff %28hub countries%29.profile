@@ -2372,6 +2372,22 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>AccountContactRoleSelector</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AccountContactRoleSelectorTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AccountContactRoles</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AccountContactRolesTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>AccountCreationCtrl</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -2436,6 +2452,18 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>AccountRoleSelector</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AccountRoleSelectorTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AccountRoles</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>AccountRolesAlignBatch</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -2452,7 +2480,19 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>AccountRolesTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>AccountRolesTriggerHandler</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AccountSelector</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AccountSelectorTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -2661,6 +2701,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>AirlineSuspensionUtil</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AirportISService</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AirportISServiceTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -2917,6 +2965,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>AzureRegistrationHandlerTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>BSPAttributesSingleton</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>BSPAttributesSingletonTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -3337,10 +3393,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>CW_ICG_Capability_Asgmt_Group_Test</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>CW_ICG_Facility_Queuable</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -3797,6 +3849,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>ContactRoleServiceAccessTriggerHandler</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>ContactSelector</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>ContactSelectorTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -4584,6 +4644,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>FunctionalRoleMetadataSelector</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>FutureProcessorControl</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -5136,6 +5200,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>IDCardUtilWithoutSharing</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>IDCardWebService</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -5318,6 +5386,10 @@
     <classAccesses>
         <apexClass>IDCard_Refund</apexClass>
         <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IDCard_RefundTest</apexClass>
+        <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>IDCard_RenewalReminder_Batch</apexClass>
@@ -7268,10 +7340,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>ISSP_PortalUserStatusChangeHelper</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>ISSP_PortalUserStatusChangeTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -8448,7 +8516,31 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>PortalApplicationRightSelector</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>PortalApplicationRightSelectorTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>PortalApplicationRight_Sel</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>PortalApplicationRights</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>PortalApplicationRightsTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>PortalApplicationSelector</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>PortalApplicationSelectorTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -8685,6 +8777,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>PortalSearchFilterWrapperTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>PortalServiceAccessService</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>PortalServiceAccessServiceTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -9049,6 +9149,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>RecordSharingControllerTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>RecordTypeSelector</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -9909,6 +10013,34 @@
     </classAccesses>
     <classAccesses>
         <apexClass>TestData</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TestDataFactory_AccountContactRoles</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TestDataFactory_AccountRoles</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TestDataFactory_Accounts</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TestDataFactory_Contacts</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TestDataFactory_IATAISOCountries</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TestDataFactory_PortalApplicationRights</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TestDataFactory_PortalApplications</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -14086,6 +14218,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>AMS_Country_Specific_Attribute__c.Create_SAAM_Case__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>AMS_Country_Specific_Attribute__c.Create_SMAP_Case__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -14097,6 +14234,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>AMS_Country_Specific_Attribute__c.Email_Template_Internal_Stakeholders__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>AMS_Country_Specific_Attribute__c.GDS_Alert_Type__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -18231,6 +18373,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>AMS_Settlement_System__c.Enable_Provisional_RHC_Request__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>AMS_Settlement_System__c.Exc_RHC_Monitoring_Alert__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -18791,6 +18938,21 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>ANG_BSP_Attributes__c.Amount_At_Risk_From_USD__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ANG_BSP_Attributes__c.Amount_At_Risk_Multiplier__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ANG_BSP_Attributes__c.Amount_At_Risk_To_USD__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>ANG_BSP_Attributes__c.BSP__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -18851,7 +19013,32 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>ANG_BSP_Attributes__c.Tier_RHC_Formula_Deduct_USD__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ANG_BSP_Attributes__c.Tier_RHC_Formula_TopUp_USD__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ANG_BSP_Attributes__c.Tier_RHC_Formula__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ANG_BSP_Attributes__c.Tier__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>ANG_BSP_Attributes__c.UniqueKey__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ANG_BSP_Attributes__c.create_SAAM_Case__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -19046,8 +19233,48 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>ANG_RHC_Information__c.Account_BSP__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ANG_RHC_Information__c.Agency_Risk_Status__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ANG_RHC_Information__c.Amount_At_Risk_USD__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ANG_RHC_Information__c.Forecasted_Tier__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>ANG_RHC_Information__c.RHC_Amount_Equals_FS_Percent__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ANG_RHC_Information__c.RHC_Amount_USD__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ANG_RHC_Information__c.Remarks__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ANG_RHC_Information__c.Tier__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ANG_RHC_Information__c.Tiered_Provisional_Amount__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -19121,8 +19348,28 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>ANG_Risk_Alert__c.Additional_Alert_information__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ANG_Risk_Alert__c.GDS_Alert_Type__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ANG_Risk_Alert__c.GDS__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>ANG_Risk_Alert__c.Monitored_Account__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ANG_Risk_Alert__c.Ticket_Number__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -22677,7 +22924,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.Remittance_frequency__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -23258,6 +23505,11 @@
         <editable>false</editable>
         <field>Account_Contact_Role__c.Position__c</field>
         <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Account_Contact_Role__c.Service_Rendered__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -43691,6 +43943,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>ICG_History_Track__c.New_Value__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ICG_History_Track__c.Old_Value__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>ICG_Notification__c.Body__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -50277,12 +50539,12 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Action_Plan_Closed_Count__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Action_Plan_Count__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -50295,12 +50557,12 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Operational_Improvements__c.Africa_MENA_Countries_Concerned__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Operational_Improvements__c.Americas_Countries_Concerned__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -50317,10 +50579,10 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Approval_process_selector__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Operational_Improvements__c.Asia_Pacific_Countries_Concerned__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -50340,14 +50602,14 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Operational_Improvements__c.China_North_Asia_Countries_Concerned__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Closest_Action_Plan_due_date__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -50362,12 +50624,12 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Conclusion_Date__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Countries_OI__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -50387,17 +50649,17 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Date_Time_Closed__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Days_passed_until_submission_for_approva__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Days_since_submission_for_approval__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -50412,7 +50674,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Description__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -50425,7 +50687,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Operational_Improvements__c.Europe_Countries_Concerned__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -50437,12 +50699,12 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Extension_approved_date__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Extension_rejected_date__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -50457,25 +50719,25 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.If_Yes_please_indicate_the_number__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.If_other_please_explain__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.If_other_please_state_the_affected_proc__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Impact_Post_Improvements__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Operational_Improvements__c.Impact__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -50492,7 +50754,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Initiator__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -50527,7 +50789,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Likelihood_Post_Improvements__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -50537,32 +50799,32 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Machine_tool__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Man_people__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Material_inputs_outputs__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Measure_controls_and_KPIs__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Method_process__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Mother_Earth_force_majeure__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -50577,32 +50839,32 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.OI_Approval_date__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.OI_Status_WF__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.OI_Status_auto__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.OI_Type__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.OI_effective_age__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Open_Date__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -50610,7 +50872,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Operational_Improvements__c.Operation__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -50622,22 +50884,22 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Overall_Deadline__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Overall_effectiveness_of_improvements__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Operational_Improvements__c.Parent_OI__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Pending_eff_validation_date__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -50647,7 +50909,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Please_indicate_reasoning__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -50657,42 +50919,42 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Region__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Related_Case_Number__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Remarks__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Reporting_Frequency__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Reporting_Month__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Reputational_Impact__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Risk_Portfolio__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Risk_Significance_Level_of_initiative__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -50702,7 +50964,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Root_Cause_Analysis__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -50710,19 +50972,19 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Operational_Improvements__c.Section_Code__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Sequency_of_events__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Service_Impact__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -50732,37 +50994,37 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Status_Image__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Status_del__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Status_update__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Subject__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Submission_for_Approval_Date__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Submission_for_extension_date__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Terminated_Date__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -52841,6 +53103,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Portal_Application_Right__c.Has_access_to_OAG__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Portal_Application_Right__c.IATA_Code__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -53070,6 +53337,11 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Portal_Applications__c.Auto_grant_Account_Role__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Portal_Applications__c.Cannot_be_managed_by_portal_admin__c</field>
         <readable>true</readable>
@@ -53088,6 +53360,11 @@
         <editable>true</editable>
         <field>Portal_Applications__c.Confirm_Text__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Portal_Applications__c.Contact_Role_Detail_Name__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -53132,6 +53409,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Portal_Applications__c.ICH_Airline__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Portal_Applications__c.Is_Async_Automated_User_Provisioning__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Portal_Applications__c.Is_Async_Manual_User_Provisioning__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -60660,6 +60947,10 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>AMS_Country_Specific_Attribute__c-Irregularity Threshold</layout>
+        <recordType>AMS_Country_Specific_Attribute__c.RiskAlertGDS</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>AMS_Country_Specific_Attribute__c-Irregularity Threshold</layout>
         <recordType>AMS_Country_Specific_Attribute__c.ULD_Minimum_Requirements</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -61079,6 +61370,10 @@
     <layoutAssignments>
         <layout>ANG_Risk_Alert__c-Risk Alert EDS</layout>
         <recordType>ANG_Risk_Alert__c.Risk_Alert_EDS</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ANG_Risk_Alert__c-Risk Alert GDS</layout>
+        <recordType>ANG_Risk_Alert__c.RiskAlertGDS</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>ANG_Risk_Alert__c-Risk Alert Layout</layout>
@@ -62442,10 +62737,6 @@
         <layout>Contact-IATA Standard Contact</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Contact-IATA Standard Contact</layout>
-        <recordType>Contact.MACSSales</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>Contact-Standard Contact</layout>
         <recordType>Contact.Standard_Contact</recordType>
     </layoutAssignments>
@@ -62457,6 +62748,9 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>ContactPointPhone-Contact Point Phone Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ContactPointTypeConsent-Contact Point Type Consent Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Contact_Endorsement__c-Contact Endorsement Layout</layout>
@@ -63185,6 +63479,13 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>ICG_GxA_Integration_Mapping__c-ONE Source GxA Integration Mapping Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ICG_History_Track__c-OS History Track Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ICG_History_Track__c-OS History Track Layout</layout>
+        <recordType>ICG_History_Track__c.Changes_by_Type</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>ICG_Notification__c-ONE Source Notification Layout</layout>
@@ -64773,6 +65074,15 @@
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
+        <object>Instant_Surveys__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
         <object>Lead</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
@@ -64801,6 +65111,15 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>Meeting_Participant__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>Operational_Improvements__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
@@ -65937,10 +66256,6 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>GCSDowntime</apexPage>
-        <enabled>false</enabled>
-    </pageAccesses>
-    <pageAccesses>
-        <apexPage>GCSDowntime2</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
@@ -67700,6 +68015,10 @@
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
+        <apexPage>site_robots</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>thai</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
@@ -67891,6 +68210,11 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>AMS_Country_Specific_Attribute__c.RTS_Risk_Alert_Notification</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>AMS_Country_Specific_Attribute__c.RiskAlertGDS</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
@@ -68270,6 +68594,11 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
+        <recordType>ANG_Risk_Alert__c.RiskAlertGDS</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
         <recordType>ANG_Risk_Alert__c.Risk_Alert</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
@@ -68405,6 +68734,7 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
+        <personAccountDefault>true</personAccountDefault>
         <recordType>Account.Standard_Account</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -69179,11 +69509,6 @@
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>false</default>
-        <recordType>Contact.MACSSales</recordType>
-        <visible>false</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
         <default>true</default>
         <recordType>Contact.Standard_Contact</recordType>
         <visible>true</visible>
@@ -69570,6 +69895,11 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
+        <recordType>ICG_History_Track__c.Changes_by_Type</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
         <recordType>ICG_Notification__c.Audit</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
@@ -69620,6 +69950,7 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
+        <personAccountDefault>true</personAccountDefault>
         <recordType>Instant_Surveys__c.Espiritu_IS_Record_Type</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>

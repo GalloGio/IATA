@@ -64,7 +64,7 @@ input[disabled] {
 	cursor: not-allowed;
 }
 
-.slds-combobox_container input[role="textbox"]:not(:placeholder-shown) {
+.slds-combobox_container input[role="combobox"]:not(:placeholder-shown) {
     background-color: #f7f8fa;
 }
 

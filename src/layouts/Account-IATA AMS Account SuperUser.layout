@@ -92,6 +92,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Old_IATA_Code__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Airline_Code__c</field>
             </layoutItems>
             <layoutItems>
@@ -560,6 +564,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Sales_at_Risk__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
+                <field>CurrencyIsoCode</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>

@@ -115,6 +115,10 @@
                 <behavior>Edit</behavior>
                 <field>Is_On_Airport__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Is_Direct_Ramp_Access__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -209,10 +213,9 @@
     </layoutSections>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>Account_Name__c</fields>
-        <fields>ICG_Role__c</fields>
-        <fields>Account_Role__c</fields>
+        <fields>Contact_Email__c</fields>
         <fields>Contact_Name__c</fields>
+        <fields>ICG_Role__c</fields>
         <fields>Status__c</fields>
         <relatedList>ICG_Contact_Role_Detail__c.ICG_Account_Role_Detail__c</relatedList>
     </relatedLists>
