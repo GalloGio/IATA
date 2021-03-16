@@ -5845,6 +5845,26 @@ albam@iata.org</description>
         </sharedTo>
     </listViews>
     <listViews>
+        <fullName>CSC_Sales_Lead</fullName>
+        <columns>LEAD.RECORDTYPE</columns>
+        <columns>DSE__DS_Account__c</columns>
+        <columns>FULL_NAME</columns>
+        <columns>LEAD.COMPANY</columns>
+        <columns>LEAD.STATE</columns>
+        <columns>LEAD.EMAIL</columns>
+        <columns>LEAD.STATUS</columns>
+        <columns>LEAD.CREATED_DATE</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>LEAD.UNREAD</columns>
+        <filterScope>Queue</filterScope>
+        <label>CSC Sales</label>
+        <language>en_US</language>
+        <queue>CSC_Sales</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
         <fullName>Created_Online</fullName>
         <columns>FULL_NAME</columns>
         <columns>LEAD.COMPANY</columns>
@@ -6691,6 +6711,10 @@ albam@iata.org</description>
             <picklist>LeadSource</picklist>
             <values>
                 <fullName>Advertisement</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CSC Sales</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -7779,6 +7803,10 @@ albam@iata.org</description>
                 <default>false</default>
             </values>
             <values>
+                <fullName>CSC Sales</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Cold Call</fullName>
                 <default>false</default>
             </values>
@@ -8848,6 +8876,10 @@ albam@iata.org</description>
                 <default>false</default>
             </values>
             <values>
+                <fullName>CSC Sales</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Cold Call</fullName>
                 <default>false</default>
             </values>
@@ -9825,6 +9857,10 @@ albam@iata.org</description>
             <picklist>LeadSource</picklist>
             <values>
                 <fullName>Advertisement</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CSC Sales</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -11009,6 +11045,10 @@ albam@iata.org</description>
                 <default>false</default>
             </values>
             <values>
+                <fullName>CSC Sales</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Cold Call</fullName>
                 <default>false</default>
             </values>
@@ -12139,6 +12179,10 @@ albam@iata.org</description>
             <picklist>LeadSource</picklist>
             <values>
                 <fullName>Advertisement</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CSC Sales</fullName>
                 <default>false</default>
             </values>
             <values>
