@@ -4451,11 +4451,12 @@
         <filters>
             <field>OPPORTUNITY.LEAD_SOURCE</field>
             <operation>equals</operation>
-            <value>CS Portal</value>
+            <value>CSC Sales</value>
         </filters>
         <filters>
             <field>OPPORTUNITY.NAME</field>
-            <operation>equals</operation>
+            <operation>contains</operation>
+            <value>AvMP,WATS,PSCM</value>
         </filters>
         <label>CSC Sales Opportunities</label>
         <language>en_US</language>
