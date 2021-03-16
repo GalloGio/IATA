@@ -2661,7 +2661,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>AirlineSFundsManagementController</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>AirlineSFundsManagementControllerTest</apexClass>
@@ -3393,10 +3393,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>CW_ICG_Capability_Asgmt_Group_Test</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>CW_ICG_Facility_Queuable</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -65029,6 +65025,15 @@
         <modifyAllRecords>false</modifyAllRecords>
         <object>FDS_KPI_Reporting__c</object>
         <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>Funds_Management_Line__c</object>
+        <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>
