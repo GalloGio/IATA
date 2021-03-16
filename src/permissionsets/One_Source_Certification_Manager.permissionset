@@ -217,10 +217,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>CW_ICG_Facility_Queuable</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>CW_LandingSearchBarController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -393,6 +389,16 @@
         <name>ICG_GxA_Integration_Settings__c</name>
     </customSettingAccesses>
     <description>Permission Set to allow users to manage One Source Certification Manager</description>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.Airline_designator__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.ICAO_designator__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Account_Role_Detail_Capability__c.AULD_Number_Plug_in_Points__c</field>
@@ -1600,6 +1606,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>ICG_History_Track__c.New_Value__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ICG_History_Track__c.Old_Value__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>ICG_Notification__c.Body__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1755,6 +1771,15 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>ICG_Certification__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>ICG_History_Track__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
@@ -1928,6 +1953,10 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <recordType>ICG_Capability_Assignment_Group__c.Remote_Validation</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <recordType>ICG_History_Track__c.Changes_by_Type</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>

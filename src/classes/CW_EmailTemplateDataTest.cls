@@ -411,10 +411,13 @@ public with sharing class CW_EmailTemplateDataTest {
 		emailCtrl.contactRoleDetailId = [SELECT Id FROM ICG_Contact_Role_Detail__c LIMIT 1].Id;
 
 		Test.startTest();
-			String contactRoleAddress = emailCtrl.getContactRoleDetailUserAddress();
+			String contactRoleAddress = '';	
+			if(!emailCtrl.isCompanyAdmin){
+				contactRoleAddress = emailCtrl.getContactRoleDetailUserAddress();
+			}			
 		Test.stopTest();
 
-		System.assertEquals('', contactRoleAddress,'CW_EmailTemplateDataTest wrong contactRoleAddress: ' + contactRoleAddress);        
+		System.assertEquals('Test Street, 000000, Madrid, Spain', contactRoleAddress,'CW_EmailTemplateDataTest wrong contactRoleAddress: ' + contactRoleAddress);        
 	}
 
 	/*********************************************************************************************************

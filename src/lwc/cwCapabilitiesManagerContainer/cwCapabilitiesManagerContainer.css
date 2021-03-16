@@ -146,21 +146,21 @@
   .zui-scroller {
     overflow-x: auto;
     overflow-y: hidden;
-    margin-bottom: 15px;
+    margin-bottom: 50px;
   }
 
   .zui-sticky-col {
     left: 0;
     position: sticky;
     width: 25%;
-    z-index: 20;
+    z-index: 21;
     background-color: white;
   }
 
   .zui-sticky-col-right{
     position: sticky;
     right: 0;
-    z-index: 20;
+    z-index: 21;
     background-color: white;
   }
 
@@ -189,7 +189,7 @@
     left: 0;
     bottom: 0;
     width: 100%;
-    height: 7%;
+    height: 50px;
     text-align: center;
     background-color: currentColor;
     z-index: 21;
