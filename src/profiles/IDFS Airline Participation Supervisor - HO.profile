@@ -2661,7 +2661,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>AirlineSFundsManagementController</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>AirlineSFundsManagementControllerTest</apexClass>
@@ -65025,6 +65025,15 @@
         <modifyAllRecords>false</modifyAllRecords>
         <object>FDS_KPI_Reporting__c</object>
         <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>Funds_Management_Line__c</object>
+        <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>
