@@ -2547,6 +2547,11 @@ SIS Charge Code Type.</description>
                     <label>DGR Training Books</label>
                 </value>
                 <value>
+                    <fullName>Disruption Management Manual</fullName>
+                    <default>false</default>
+                    <label>Disruption Management Manual</label>
+                </value>
+                <value>
                     <fullName>eAWBLink</fullName>
                     <default>false</default>
                     <label>eAWBLink</label>
@@ -2810,6 +2815,11 @@ SIS Charge Code Type.</description>
                     <fullName>Revenue Accounting Manual</fullName>
                     <default>false</default>
                     <label>Revenue Accounting Manual</label>
+                </value>
+                <value>
+                    <fullName>Secured Simplified Borders Manual</fullName>
+                    <default>false</default>
+                    <label>Secured Simplified Borders Manual</label>
                 </value>
                 <value>
                     <fullName>Security Management System Manual</fullName>
@@ -14647,6 +14657,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>Disruption Management Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>EPIC</fullName>
                 <default>false</default>
             </values>
@@ -14852,6 +14866,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Revenue Accounting Manual</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Secured Simplified Borders Manual</fullName>
                 <default>false</default>
             </values>
             <values>

@@ -1,4 +1,4 @@
-public with sharing class IDCARD_VFEmailTemplateController {
+public without sharing class IDCARD_VFEmailTemplateController {
 
 
 	public String myID {

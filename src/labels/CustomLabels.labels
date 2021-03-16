@@ -2886,6 +2886,15 @@ SF Workflow Process</value>
 3- Your world-wide outstanding BSPLink refund authority request transactions, by country</value>
     </labels>
     <labels>
+        <fullName>AirportAIS_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AirportAIS_Service_Description</shortDescription>
+        <value>AirportIS is the most powerful market intelligence and analysis tool for the airports available today capturing 100% traffic around the world.
+
+AirportIS provides airports with the most accurate and reliable traffic data and timely schedule information, combining total market supply and demand in a single user-friendly on-line platform.</value>
+    </labels>
+    <labels>
         <fullName>All_Notifications_Notification</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -8655,7 +8664,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - Area2</shortDescription>
-        <value>Instructor-led Training (individual),	Instructor-led Training (groups),IATAN,ID Card,CheckACode,eBroadcast,Global Agency Directory,Travel Agency Data Products,Digital ID Card (Mobile App),IATA AgentExperience,Global System Solution,Weblink,NDClink,Treasury Dashboard,TIMATIC,Publications,TACT, YMQ Publications,Distance Learning,Agency Management,Transparency in Payments (TIP), New BSPlink,IDX - Incident Data Exchange</value>
+        <value>Instructor-led Training (individual),	Instructor-led Training (groups),IATAN,ID Card,CheckACode,eBroadcast,Global Agency Directory,Travel Agency Data Products,Digital ID Card (Mobile App),IATA AgentExperience,Global System Solution,Weblink,NDClink,Treasury Dashboard,TIMATIC,Publications,TACT, YMQ Publications,Distance Learning,Agency Management,Transparency in Payments (TIP), New BSPlink,IDX - Incident Data Exchange, MRO SmartHub</value>
     </labels>
     <labels>
         <fullName>CaseValidation_InDepthArea</fullName>
@@ -8698,6 +8707,14 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <protected>false</protected>
         <shortDescription>Case Classification</shortDescription>
         <value>Case Classification</value>
+    </labels>
+    <labels>
+        <fullName>Case_Closed_For_DGR</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case Closed For DGR</shortDescription>
+        <value>This case has been resolved, Please create a new query if you would like to contact us.</value>
     </labels>
     <labels>
         <fullName>Case_Closure_Error_Cannot_Close</fullName>
@@ -21835,6 +21852,14 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>You can upload additional files to support your accreditation application or notice of change at any time.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Case_Attach_Description_DGR</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Case Attach Description DGR</shortDescription>
+        <value>Please upload the documents to confirm the validity of your Certification</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Case_Attach_Limit</fullName>
         <categories>ISSP, Portal, AMS</categories>
         <language>en_US</language>
@@ -31362,6 +31387,22 @@ Can you please confirm which country you&apos;ve previously received support for
         <value>Product cannot be requested: please note that IATA certificates is only available to IATA accredited Passenger and Cargo Agents, that currently are approved. Terminated or defaulted agents under those groups, or other agent types like TIDS and CASS associates cannot request a certificate.</value>
     </labels>
     <labels>
+        <fullName>ISSP_Certificate_is_being_uploaded</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Certificate is being uploaded</shortDescription>
+        <value>Certificate is being uploaded</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Certificate_was_uploaded_satisfactory</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Certificate was uploaded satisfactory</shortDescription>
+        <value>Certificate was uploaded satisfactory</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Certifications</fullName>
         <categories>S11, Portal</categories>
         <language>en_US</language>
@@ -39868,7 +39909,7 @@ CNS Customer Services</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Topics To Exclude Country PL</shortDescription>
-        <value>AirSat__c,AirportIS__c,CargoIS__c,DDS__c,Flight_Data_Connect__c,IMX__c,IINet__c,ICH_Helpdesk__c,I_ASC__c,GAP__c,MarketIS__c,PaxIS__c,SIS_Helpdesk__c,SIS_Membership__c,CheckACode_Online_WebService__c,eBroadcast__c,FFP_Frequent_Flyer_Program__c,Flight_Data_Connect__c,Agency_Database_Files__c,Global_Agency_Directory__c,Agency_Data_Products__c,I_ASC_IATA_Safety_Culture_Survey__c,IATA_AgentExperience__c,IATA_net_rates__c,IATA_Store__c,Accreditation_IATAN_US__c,ID_Card_Print_Digital__c,IMX_Integrated_Management_Solutions__c,Instructor_led_training__c,IATA_Publications__c,Self_study_courses__c,Weblink__c,NDClink__c,TACT__c,IATA_Financial_Gateway_IFG__c,Timatic_Solutions__c, IDX_Incident_Data_Exchange__c</value>
+        <value>AirSat__c,AirportIS__c,CargoIS__c,DDS__c,Flight_Data_Connect__c,IMX__c,IINet__c,ICH_Helpdesk__c,I_ASC__c,GAP__c,MarketIS__c,PaxIS__c,SIS_Helpdesk__c,SIS_Membership__c,CheckACode_Online_WebService__c,eBroadcast__c,FFP_Frequent_Flyer_Program__c,Flight_Data_Connect__c,Agency_Database_Files__c,Global_Agency_Directory__c,Agency_Data_Products__c,I_ASC_IATA_Safety_Culture_Survey__c,IATA_AgentExperience__c,IATA_net_rates__c,IATA_Store__c,Accreditation_IATAN_US__c,ID_Card_Print_Digital__c,IMX_Integrated_Management_Solutions__c,Instructor_led_training__c,IATA_Publications__c,Self_study_courses__c,Weblink__c,NDClink__c,TACT__c,IATA_Financial_Gateway_IFG__c,Timatic_Solutions__c, IDX_Incident_Data_Exchange__c, MRO_SmartHub__c</value>
     </labels>
     <labels>
         <fullName>ISSP_Tracking_ID</fullName>
@@ -40411,6 +40452,32 @@ CNS Customer Services</value>
         <protected>false</protected>
         <shortDescription>ISSP cannot open the selected account</shortDescription>
         <value>Error in the system: cannot open the selected account</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_certificate_Submit</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP certificate Submit</shortDescription>
+        <value>Submit</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_certificate_expiry_date</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP certificate expiry date</shortDescription>
+        <value>Please take note that the Expiry date must be minimun 90 days from today</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_certificate_with_the_same</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP certificate with the same</shortDescription>
+        <value>Please take note:&lt;/br&gt;
+We are unable to accept your DGR update as the same information has been updated in our record.&lt;/br&gt;
+Please amend with new DGR information.</value>
     </labels>
     <labels>
         <fullName>ISSP_characters_new_password</fullName>
@@ -49948,7 +50015,15 @@ ONE Source is the industry platform for validated aviation capability and infras
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>icg manage documents</shortDescription>
-        <value>Manage Documents</value>
+        <value>Supporting Documentation</value>
+    </labels>
+    <labels>
+        <fullName>icg_manage_obligations_documents</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg manage documents</shortDescription>
+        <value>Obligation Documentation Link</value>
     </labels>
     <labels>
         <fullName>icg_manage_photos</fullName>
@@ -49956,7 +50031,7 @@ ONE Source is the industry platform for validated aviation capability and infras
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>icg manage photos</shortDescription>
-        <value>Manage Photos</value>
+        <value>Supporting Documentation</value>
     </labels>
     <labels>
         <fullName>icg_manage_remote_validations</fullName>

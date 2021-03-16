@@ -1,4 +1,4 @@
-public class IDCard_AdmUserForm extends IDCardAbstractController{
+public without sharing class IDCard_AdmUserForm extends IDCardAbstractController{
 	public Contact loggedContact {get;set;}
 	public Account mainAccount {get;set;}
 
@@ -27,6 +27,7 @@ public class IDCard_AdmUserForm extends IDCardAbstractController{
 	public ID_Card_Application__c app {get;set;}
 	public ID_Card_Application__c oldapp {get;set;}
 
+	public string appid {get; set;}
 
 	public IDCard_AdmUserForm (){
 			initialize(true);
@@ -74,7 +75,9 @@ public class IDCard_AdmUserForm extends IDCardAbstractController{
 																OR Application_Status__c = :IDcardUtil.APPlICATIONSTATUS_UNPAID)
 															ORDER BY CreatedDate DESC];
 				if(pendingapps.size()>=1){
-					app = pendingapps[0];
+					appid = pendingapps[0].Id;
+					app = IDCardUtilWithoutSharing.retrieveCommittedICA(appid);
+					system.debug(LoggingLevel.ERROR, 'DTULLO appid ' + appid);
 					oldapp = app.clone(true,true);
 					if(app.Type_of_application__c==IDCardUtil.APPLICATIONTYPE_NEW)
 						isEditNew = true;
@@ -302,7 +305,7 @@ public class IDCard_AdmUserForm extends IDCardAbstractController{
 			return null;
 		}
 
-system.debug(LoggingLevel.ERROR,'------- FINE STEP 1');
+		system.debug(LoggingLevel.ERROR,'------- FINE STEP 1');
 
 		// ############ STEP 2: ###############
 		// If it's a creation or name/surname/birthdate changed, I want to be sure that I'm not creating a duplicate
@@ -321,20 +324,13 @@ system.debug(LoggingLevel.ERROR,'------- FINE STEP 1');
 			}
 
 			for(ID_Card__c card : VERtoLastIDC.values()){
-				/*if(card.Blacklisted__c==true){
-					printerr('The applicant '+card.Name_on_ID_card__c+' existed and has been deleted so it\'s not possible to create it again. Please contact your key contact for more details ('+adminName+': '+adminEmail+').');
-					success = false;
-				}else if(card.Blacklisted__c==true || (card.Card_Status__c==IDCardUtil.CARDSTATUS_APPROVED && card.Valid_To_Date__c<=date.today())){
-					printerr('The applicant '+card.Name_on_ID_card__c+' already exists and has an active ID card');
-					success = false;
-				}*/
 				printerr('There is an existing record with the same name and date of birth. Please kindly contact ID Card Team (iataglobalidcardprogram@iata.org) for more information.');
 				return null;
 			}
 
 
-system.debug(LoggingLevel.ERROR,'------- FINE STEP 2 - Caso 1');
-system.debug(LoggingLevel.ERROR,'------- INIZIO STEP 2 - Caso 2 - '+app.First_Name__c+', '+app.Last_Name__c+', '+app.Date_of_Birth__c );
+			system.debug(LoggingLevel.ERROR,'------- FINE STEP 2 - Caso 1');
+			system.debug(LoggingLevel.ERROR,'------- INIZIO STEP 2 - Caso 2 - '+app.First_Name__c+', '+app.Last_Name__c+', '+app.Date_of_Birth__c );
 			// CASE 2:
 			// There is already an application pending for the same contact --> ERROR!!
 			for(ID_Card_Application__c idca : [SELECT VER_Number__c, Application_Status__c, Displayed_Name__c, Type_of_application__c
@@ -347,17 +343,13 @@ system.debug(LoggingLevel.ERROR,'------- INIZIO STEP 2 - Caso 2 - '+app.First_Na
 				printerr('There is an existing record with the same name and date of birth. Please kindly contact ID Card Team (iataglobalidcardprogram@iata.org) for more information.');
 				return null;
 			}
-
-system.debug(LoggingLevel.ERROR,'------- FINE STEP 2 - Caso 2');
-
+			system.debug(LoggingLevel.ERROR,'------- FINE STEP 2 - Caso 2');
 		}
 
 
 		// If the new app has not a VER (type=new without duplicates) I'll generate it
 		if(isNew){
 			app.VER_Number__c = IDCardUtil.generateTMPVER(myAcc);
-		 // SALVO   throw new transformationException(' app.VER_Number__c   '   +   app.VER_Number__c );
-			//nc.c.UIR__c = IDCardUtil.generateTMPUIR(myAcc);
 		}
 
 		if(!success)
@@ -365,39 +357,15 @@ system.debug(LoggingLevel.ERROR,'------- FINE STEP 2 - Caso 2');
 
 		// ############ STEP 4: ###############
 		// Now I can finally save the application!
-		database.UpsertResult result = database.upsert(app);
+		system.debug(LoggingLevel.ERROR, 'DTULLO appid2 ' + appid);
+		system.debug(LoggingLevel.ERROR, 'DTULLO app ' + app);
+		database.UpsertResult result = IDCardUtilWithoutSharing.dbUpsertCommittedICA(app, AppId);
 		if(!result.isSuccess()){
 			printErr('An error occurred. Please contact your key contact ('+adminName+': '+adminEmail+').'+result.getErrors()[0].getMessage() );
 			return null;
 		}
 
 		return Page.IDcard_AdmUserList;
-
-		//If i arrive from the picture page then I lost every variable concerning the old status!
-		//if(oldemail==null)
-		//    EditContact();
-
-		// If I am changing the email of the contact I must check that it wasn't the primary contact using that address.
-		// In this case I look for one of the secondary contacts and I make it primary
-		//
-		// Contact      Email   IDcard_Email__c                                 Contact         Email   IDcard_Email__c
-		// C1           email   email                                                C1      email2     email2
-		// C2                           email                           --->         C2                     email
-		// C3                           email                                        C3                                      email
-		/*
-		if(success && !isCreation && oldcp.c.email!=nc.c.email && !String.isBlank(oldcp.c.IDCard_Email__c)){
-				try{
-						Contact cwithidcardemail = [SELECT Email, IDCard_email__c FROM Contact WHERE IDcard_Email__c = :oldcp.c.email AND Email = null ];
-						cwithidcardemail.Email = cwithidcardemail.IDCard_email__c;
-						update cwithidcardemail;
-				}catch(Exception e){
-						system.debug('ERROR when trying to save a contact using the sam');
-				}
-		}
-		if(!success){
-			return null;
-		}
-		*/
 	}
 
 
@@ -414,7 +382,9 @@ system.debug(LoggingLevel.ERROR,'------- FINE STEP 2 - Caso 2');
 
 	public Pagereference Cancel(){
 		if(!isNew && !isEdit)
-			delete app;
+			if(appid!=null && appid!='')
+				IDCardUtilWithoutSharing.deleteApplications(new set<id>{appid});
+			//delete app;
 		return isEdit ? Page.IDCard_AdmPendingOps : Page.IDCard_AdmUserList;
 	}
 

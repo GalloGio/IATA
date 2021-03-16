@@ -185,6 +185,25 @@
         <type>Lookup</type>
     </fields>
     <listViews>
+        <fullName>Airport_IS</fullName>
+        <columns>SUBJECT</columns>
+        <columns>WHO_NAME</columns>
+        <columns>WHAT_NAME</columns>
+        <columns>DUE_DATE</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>PRIORITY</columns>
+        <columns>STATUS</columns>
+        <columns>UPDATEDBY_USER.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>SUBJECT</field>
+            <operation>contains</operation>
+            <value>Airport IS</value>
+        </filters>
+        <label>Airport IS</label>
+    </listViews>
+    <listViews>
         <fullName>CompletedTasks</fullName>
         <columns>SUBJECT</columns>
         <columns>WHO_NAME</columns>

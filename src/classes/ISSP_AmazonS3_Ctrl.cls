@@ -34,6 +34,9 @@ global class ISSP_AmazonS3_Ctrl {
 	public string message {get; private set;}
 	public boolean archived {get; private set;}
 	public boolean canUploadAndDelete {get{return true;} set;}
+	public AMS_Accreditation_Contact__c newAccreditationContact {get; set;}
+	public Id topParentIdHierarchy {get; set;}
+	public boolean isDGRForm {get; set;}
 
 	private static List<String> AMAZON_FILES_QUERY_FIELDS = new List<String>{
 		'Id',
@@ -106,12 +109,18 @@ global class ISSP_AmazonS3_Ctrl {
 		if(id== null)
 		 return;
 
+		 newAccreditationContact = new AMS_Accreditation_Contact__c();
+
 		this.cse = [Select id, Status,CaseNumber,ArchivedDate__c,account.type,
 				 account.IATA_ISO_Country__r.iso_code__c ,
-				 IFAP_Agent_Code__c,AccountId ,Financial_Review_Type__c,IsComplaint__c,
-				 Reason1__c, CaseArea__c, Owner.Name
+				 IFAP_Agent_Code__c, AccountId, Account.Top_Parent__c, Financial_Review_Type__c, IsComplaint__c,
+				 Reason1__c, CaseArea__c, Owner.Name, OSCAR__c, OSCAR__r.recordType.DeveloperName
 				 from Case where id = : this.id];
-
+		this.topParentIdHierarchy = this.cse.Account.Top_Parent__c != null ? this.cse.Account.Top_Parent__c : this.cse.AccountId;
+		this.isDGRForm = false;
+		if(this.cse.OSCAR__c != null && this.cse.OSCAR__r.recordType.DeveloperName == 'CERTIFICATION'){
+			this.isDGRForm = true;
+		}
 		calculePolicy('');
 		this.refreshAmazonFileMap();
 		this.refreshReviewStatusMap();
@@ -412,11 +421,50 @@ global class ISSP_AmazonS3_Ctrl {
 		return listAmazonFile.isEmpty();
 	}
 
+
+	/**
+		validation so a certificate cannot be created with the same Issued on, expiry date, first and last name 
+		within a hierarchy to avoid agencies using a DGR certificate for multiple locations in their hierarchy withe Location classe C or R
+	**/
+	@RemoteAction
+	global static string isFileInTheSameAccountHierarchy(Id parentID, String firstName, String lastName, String ExpiryDate, String certificateIssuedOn) {
+
+		if(Date.parse(ExpiryDate) <= Date.Today().addDays(90)){
+			return 'Date';
+		}
+
+		List<Account> accountListInHierarchy = [SELECT id, Location_Class__c 
+												FROM Account 
+												WHERE (Id =: parentID OR Top_Parent__c =: parentID) AND (Location_Class__c =: 'C' OR Location_Class__c =: 'R') ];
+
+		List<AMS_Agency_Regulation__c> agencyRegulationList = [SELECT id, First_Name__c, Last_Name__c, Issued_on__c, Expiry_Date__c
+																FROM AMS_Agency_Regulation__c 
+																WHERE Account__c IN: accountListInHierarchy];
+		
+		for (AMS_Agency_Regulation__c ag : agencyRegulationList) {
+			if(ag.First_Name__c.equalsIgnoreCase(firstName) && ag.Last_Name__c.equalsIgnoreCase(lastName) && ag.Issued_on__c == Date.parse(certificateIssuedOn)  && ag.Expiry_Date__c == Date.parse(ExpiryDate)){
+				return 'fields';
+			}
+		}
+
+		List<AMS_Accreditation_Contact__c> amsAccreditationContact = [SELECT First_Name__c, Last_Name__c, Certificate_Issued_on__c, Valid_until__c, AMS_Pax_Accreditation_Form__c , AMS_Pax_Accreditation_Form__r.SAAM_Case__r.AccountId
+											FROM AMS_Accreditation_Contact__c
+											WHERE AMS_Pax_Accreditation_Form__r.SAAM_Case__r.AccountId IN: accountListInHierarchy];
+
+		for (AMS_Accreditation_Contact__c af : amsAccreditationContact) {
+			if(af.First_Name__c.equalsIgnoreCase(firstName) && af.Last_Name__c.equalsIgnoreCase(lastName) && af.Certificate_Issued_on__c == Date.parse(certificateIssuedOn) && af.Valid_until__c == Date.parse(ExpiryDate)){
+				return 'fields';
+			}
+		}
+
+		return '';
+	}
+
 	/**
 		Creates a new Amazon file record for the related Case
 	**/
 	@RemoteAction
-	global static Boolean createAmazonFileObject(Id caseId, String filename, String formId, Long fielsize, String fileid) {
+	global static Boolean createAmazonFileObject(Id caseId, String filename, String formId, Long fielsize, String fileid, String firstName, String lastName, String certificateIssuedOn, String ExpiryDate, String issuedBy, boolean isDGRForm) {
 		try {
 			Case cse = [SELECT Id, Status FROM Case WHERE Id = :caseId];
 
@@ -445,9 +493,28 @@ global class ISSP_AmazonS3_Ctrl {
 				cse.New_Attachment_From_Portal_User__c = true;
 				update cse;
 			}
+
+			if(isDGRForm){
+				AMS_Pax_Accreditation_Form__c paf = [SELECT id FROM AMS_Pax_Accreditation_Form__c WHERE SAAM_Case__c = :caseId LIMIT 1];
+	
+				AMS_Accreditation_Contact__c accContact = new AMS_Accreditation_Contact__c(
+					Name = firstName + ' ' + lastName,
+					First_Name__c = firstName,
+					Last_Name__c = lastName,
+					Certificate_issued_on__c = Date.parse(certificateIssuedOn),
+					Valid_until__c = Date.parse(ExpiryDate),
+					AMS_Pax_Accreditation_Form__c = paf.id,
+					Type_Of_Certificate__c = AMS_Utils.CERT_DGR,
+					Certificate_Issuer__c = issuedBy,
+					recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Contact__c', 'Trained_Staff')
+				);
+
+				insert accContact;
+			}
+
 			return true;
 		} catch ( Exception ex) {
-			TransformationHelper.sendEmailSupport('FATAL: ISSP_AmazonS3_Ctrl constructor createAmazonFileObject ' , '   STACKTRACE   ' + ex.getStackTraceString()  + '  '  + ex.getMessage());
+			System.debug(loggingLevel.FINE, '____ [cls ISSP_AmazonS3_Ctrl - createAmazonFileObject] STACKTRACE - ' + + ex.getStackTraceString()  + '  '  + ex.getMessage());
 			return false;
 		}
 	}

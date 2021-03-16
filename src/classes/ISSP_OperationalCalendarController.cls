@@ -99,6 +99,8 @@ global without sharing class ISSP_OperationalCalendarController {
 		}
 	}
 
+	public String communityName{ get{ return ISSP_Utilities.isCNS()? 'CNS':'ISS'; }set;}
+
 	private transient list<EventWrapper> listEvents;
 	private transient list<Operational_Calendar__c> listOperations;
 	private User user;
@@ -1184,7 +1186,7 @@ global without sharing class ISSP_OperationalCalendarController {
 				FileWrapper countryFile = filesByCountryOp.get(country.Name);
 				if(countryFile == null) {
 					String fileName = Label.ISSP_OperationalCalendar + ' ' + country.Name + '-' + operationType + ' ' + billingPeriod;
-					countryFile = new FileWrapper(fileName, orientation, fieldsListSelected, country.Name, operationType);
+					countryFile = new FileWrapper(fileName, orientation, fieldsListSelected, country.Name, country.ISO_Code__c, operationType);
 					filesByCountryOp.put(country.Name, countryFile);
 				}
 				if(countryFile.lastModifiedDate < opc.LastModifiedDate.date()) {
@@ -1217,7 +1219,7 @@ global without sharing class ISSP_OperationalCalendarController {
 				fieldsList.addAll(getDescriptionFieldSet(IS_AIRLINE, 'ICCS').getFields());
 			}
 			// get field names from firld sets
-			set<String> setFieldNames = new set<String>{'Id','Country__c','Country__r.Name'};
+			set<String> setFieldNames = new set<String>{'Id','Country__c','Country__r.Name','Country__r.ISO_Code__c'};
 			for (Schema.FieldSetMember member: fieldsList) {
 				setFieldNames.add(member.getFieldPath());
 			}
@@ -1244,7 +1246,7 @@ global without sharing class ISSP_OperationalCalendarController {
 			for(Operational_Calendar__c opc : Database.query(queryStr)) {
 				// create row using the operational calendar record
 				String fileName = Label.ISSP_OperationalCalendar + ' ' + opc.Country__r.Name + ' - ' + operation + ' ' + billingPeriod;
-				FileWrapper countryFile = new FileWrapper(fileName, orientation, fieldsList, opc.Country__r.Name, operation);
+				FileWrapper countryFile = new FileWrapper(fileName, orientation, fieldsList, opc.Country__r.Name, opc.Country__r.ISO_Code__c, operation);
 				List<CellWrapper> row = createRow(opc, fieldsList, 'tableBodyOdd');
 				countryFile.table.body.add(row);
 
@@ -1267,7 +1269,7 @@ global without sharing class ISSP_OperationalCalendarController {
 		if(option == 'allservices') {
 			List<Services_Rendered__c> services = [SELECT ISO_Country_Code__c
 													 FROM Services_Rendered__c
-													 WHERE Services_Rendered_to_Airline__c = :accountId AND ISO_Country_Code__c <> null];
+													 WHERE Services_Rendered_By__c = :accountId AND ISO_Country_Code__c <> null];
 			Set<String> countryCodes = new Set<String>();
 			for(Services_Rendered__c service : services) {
 				countryCodes.add(service.ISO_Country_Code__c);
@@ -1363,12 +1365,14 @@ global without sharing class ISSP_OperationalCalendarController {
 		public String operationType {get;set;}
 		public String fileName {get;set;}
 		public String countryName {get;set;}
+		public String countryISO {get;set;}
 		public String orientation {get;set;}
 		public TableBodyWrapper table {get;set;}
 
-		public FileWrapper(String fileName, String orientation, List<Schema.FieldSetMember> fieldsList, String countryName, String operationType) {
+		public FileWrapper(String fileName, String orientation, List<Schema.FieldSetMember> fieldsList, String countryName, String countryISO, String operationType) {
 			this.fileName = fileName;
 			this.countryName = countryName;
+			this.countryISO = countryISO;
 			this.orientation = orientation;
 			this.table = new TableBodyWrapper(fieldsList);
 			this.lastModifiedDate = Date.newInstance(1900, 1, 1);

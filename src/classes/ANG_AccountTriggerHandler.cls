@@ -194,9 +194,7 @@ public class ANG_AccountTriggerHandler {
 		try{
 			if(!newCases.isEmpty()) insert newCases;
 		}catch(Exception e){
-			set<string> setString = new set<string>();
-			for(Id i:trigger.newMap.keyset()) setString.add(i);
-			ServiceNow_Helper.sendRequestToSNOWSFDC('JSD10',e, setString);
+			TransformationHelper.sendEmailSupport('ANG_AccountTriggerHandler - manageDowngrades ','\n MESSAGE: '+ e.getMessage() +'\n STACKTRACE ' + e.getStackTraceString());
 		}
 
 		//Get all account data that we need to make the validations requested.
@@ -632,7 +630,7 @@ public class ANG_AccountTriggerHandler {
 
 			update oscars;
 		}catch(Exception e){
-			ServiceNow_Helper.sendRequestToSNOWSFDC('JSD11',e, setIdInvolved);
+			TransformationHelper.sendEmailSupport('ANG_AccountTriggerHandler - createVMFROscars ','\n MESSAGE: '+ e.getMessage() +'\n STACKTRACE ' + e.getStackTraceString());
 		}
 	}
 
@@ -649,19 +647,6 @@ public class ANG_AccountTriggerHandler {
 
 		// look for the child HE accounts
 		return accountIds;
-	}
-
-	private List<Account> getMulticountryAccounts(List<Account> accounts)
-	{
-		List<Account> ret = new List<Account>();
-
-		for (Account a : accounts)
-		{
-			if (ANG_MulticountryHelper.isMulticountryAccount(a))
-				ret.add(a);
-		}
-
-		return ret;
 	}
 
 	private void launchPlatformEventForMulticoutryDowngrade(Set<Id> geAccounts)
@@ -730,7 +715,7 @@ public class ANG_AccountTriggerHandler {
 			//insert cases
 			insert cases;
 		}catch(Exception e){
-			ServiceNow_Helper.sendRequestToSNOWSFDC('JSD12',e, setIdInvolved);
+			TransformationHelper.sendEmailSupport('ANG_AccountTriggerHandler - CreateFOPOscar ','\n MESSAGE: '+ e.getMessage() +'\n STACKTRACE ' + e.getStackTraceString());
 		}
 	}
 
