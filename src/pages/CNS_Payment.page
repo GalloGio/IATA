@@ -50,7 +50,9 @@
 						<apex:inputText id="amount" label="Amount (USD)" value="{!Amount}" required="true" maxlength="10"/>
 					</apex:pageBlockSection>
 
-					<apex:commandButton value="Continue" onclick="submitToCyberSource()" rerender="tstpopup" />
+					<div align="center" draggable="false">
+						<apex:commandButton value="Continue" onclick="submitToCyberSource()" rerender="tstpopup" />
+					</div>
 
 				</apex:form>
 			</apex:pageBlock>
