@@ -92,10 +92,10 @@
     <relatedLists>
         <fields>NAME</fields>
         <fields>Company_FOR__c</fields>
+        <fields>RECORDTYPE</fields>
         <fields>Street_Nr_FOR__c</fields>
         <fields>City_FOR__c</fields>
         <fields>Country_FOR__c</fields>
-        <fields>RECORDTYPE</fields>
         <fields>Status__c</fields>
         <relatedList>ICG_Account_Role_Detail__c.Account_Role__c</relatedList>
     </relatedLists>
