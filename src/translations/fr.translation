@@ -1533,7 +1533,7 @@
         <name>ANG_RHC_RHCAmountTooltip</name>
     </customLabels>
     <customLabels>
-        <label>Déterminé par les antécédents de risques des agents et les résultats de leur examen financier</label>
+        <label>Votre statut de risque est basé sur les résultats de la dernière évaluation financière et de l'évaluation de l'historique des risques.</label>
         <name>ANG_RHC_RiskStatusTooltip</name>
     </customLabels>
     <customLabels>
