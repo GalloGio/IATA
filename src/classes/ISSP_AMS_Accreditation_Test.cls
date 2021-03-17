@@ -5262,7 +5262,6 @@ Location_Type__c = 'BR');
 		update account;
 
 		Id rtOwnership = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
-		Id rtEmployee = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Employee');
 		AMS_Account_Role__c ar1 = new AMS_Account_Role__c(
 			Account__c = user.Contact.Account.Id,
 			Employee_Name__c = 'test1',
@@ -5277,6 +5276,7 @@ Location_Type__c = 'BR');
 			RecordTypeId = rtOwnership);
 		AMS_Account_Role__c ar2 = new AMS_Account_Role__c(
 			Account__c = user.Contact.Account.Id,
+			Contact__c = user.Contact.Id,
 			Employee_Name__c = 'test2',
 			Employee_type__c = 'CL',
 			Owner_Name__c = 'owner test2',
@@ -5286,7 +5286,7 @@ Location_Type__c = 'BR');
 			Termination_Date__c = null,
 			Title__c = 'owner',
 			Owner_Account__c = null,
-			RecordTypeId = rtEmployee);
+			RecordTypeId = rtOwnership);
 		list<AMS_Account_Role__c> listAccountRole = new list<AMS_Account_Role__c>{ar1,ar2};
 		insert listAccountRole;
 
@@ -5312,8 +5312,7 @@ Location_Type__c = 'BR');
 		Test.stopTest();
 
 		account = [
-			SELECT Id,Name, TradeName__c, BillingStreet, BillingCity, BillingState, IATA_ISO_Country__c, BillingPostalCode, Phone, Mobile__c, Fax, Email__c, Website, VAT_Number__c, Registration_Number__c, License_Number__c,
-				(SELECT Id FROM AMS_Accreditation_Contacts__r)
+			SELECT Id,Name, TradeName__c, BillingStreet, BillingCity, BillingState, IATA_ISO_Country__c, BillingPostalCode, Phone, Mobile__c, Fax, Email__c, Website, VAT_Number__c, Registration_Number__c, License_Number__c
 			FROM Account
 			WHERE Id = :ctrl.con.Account.Id
 		];
@@ -5335,5 +5334,8 @@ Location_Type__c = 'BR');
 		System.assertEquals(ctrl.newForm.ISSP_AMS_License_No__c, account.License_Number__c);
 		System.assertEquals(ctrl.newForm.ISSP_AMS_GDS_with_signed_contract__c, 'Abacus;Amadeus;Axess');
 		System.assertEquals(ctrl.newForm.Link_agent_name__c, account.Id);
+
+		list<AMS_Accreditation_Contact__c> listContacts = [SELECT Id FROM AMS_Accreditation_Contact__c WHERE AMS_Pax_Accreditation_Form__c = :ctrl.newForm.Id];
+		System.assertEquals(2,listContacts.size());
 	}
 }

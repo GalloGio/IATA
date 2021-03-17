@@ -2943,7 +2943,9 @@ public without sharing class ISSP_AMS_Accreditation {
 	private void copyOwnersFromTIDSAccount(Account account, Id formId) {
 		List<AMS_Accreditation_Contact__c> newContacts = new List<AMS_Accreditation_Contact__c>();
 		for (AMS_Account_Role__c accountRole:
-				[SELECT Id, Name, Owner_Name__c, Percentage__c, Contact__c, Owner_Account__c
+				[SELECT Id, Name, Owner_Name__c, Percentage__c,
+					Owner_Account__c, Owner_Account__r.Name, Owner_Account__r.IATACode__c,
+					Contact__c,Contact__r.FirstName, Contact__r.LastName
 				FROM AMS_Account_Role__c
 				WHERE Valid__c = true
 				AND Active__c = true
@@ -2953,24 +2955,27 @@ public without sharing class ISSP_AMS_Accreditation {
 		) {
 			AMS_Accreditation_Contact__c contact = new AMS_Accreditation_Contact__c();
 
-			if (accountRole.Owner_Account__c == null) {
+			if (accountRole.Contact__c != null) {
 				contact.RecordTypeId = AMS_Utils.AccreditationContactPersonRT;
 				contact.Name = accountRole.Owner_Name__c;
-				contact.Last_name__c = accountRole.Owner_Name__c;
-			} else {
+				contact.Contact__c = accountRole.Contact__c;
+				contact.First_name__c = accountRole.Contact__r.FirstName;
+				contact.Last_name__c = accountRole.Contact__r.LastName;
+			}
+			if (accountRole.Owner_Account__c != null) {
 				contact.RecordTypeId = AMS_Utils.AccreditationContactCompanyRT;
-				contact.Name = account.Name;
-				contact.Last_name__c = account.Name;
+				contact.Name = accountRole.Owner_Account__r.Name;
+				contact.Last_name__c = accountRole.Owner_Account__r.Name;
+				contact.IATACode__c = accountRole.Owner_Account__r.IATACode__c;
 			}
 			contact.AMS_Pax_Accreditation_Form__c = formId;
 			contact.Agency_owner__c = true;
 			contact.Financial_interest__c = accountRole.Percentage__c;
-			contact.Contact__c = accountRole.Contact__c;
 
 			newContacts.add(contact);
 		}
 
-		insert newContacts;
+		Database.insert(newContacts,false);
 	}
 
 	private String fetchHEAgency(String countryBSP) {
