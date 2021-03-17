@@ -478,7 +478,7 @@ private class ProcessIDCardMassApplicationsTest {
 
 		insert userList;
 
-		DevsTools.sendSFDevsAlertMessage('Title test', 'Message Test');
+		TransformationHelper.sendEmailSupport('Title test', 'Message Test');
 
 		Integer invocations = Limits.getEmailInvocations();
 		

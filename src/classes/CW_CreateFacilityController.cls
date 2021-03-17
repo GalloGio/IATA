@@ -14,8 +14,7 @@ public without sharing class CW_CreateFacilityController {
 			sp = CW_DBTransactionHandler.setSavepoint();
 			
 			ICG_Account_Role_Detail__c ard = (ICG_Account_Role_Detail__c) JSON.deserialize(station, ICG_Account_Role_Detail__c.class);			
-			ard.Account_Role__c = CW_CreateFacilityController.getAccountRoleForAccount(accountId);
-			
+			ard.Account_Role__c = CW_CreateFacilityController.getAccountRoleForAccount(accountId, false);
 			if(ard.Account_Role__c == null) {
 				res.success = false;
 				res.message = 'This account has no available Role to be parent of a station';
@@ -91,10 +90,12 @@ public without sharing class CW_CreateFacilityController {
 		List<Messaging.SingleEmailMessage> emailsToBeSent = new List<Messaging.SingleEmailMessage>();
 		List<ICG_Notification__c> notifications = new List<ICG_Notification__c>();
 
-		emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails(templateName, facility.Id, whoIdsAdmins));
-		templateName = (isNewAccount || !accountAlreadyApproved) ? STATION_CREATION_REQ_CONF_NEW_ACCOUNT : STATION_CREATION_REQ_CONF_TO_REQUESTOR;
-		emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails(templateName, facility.Id, whoIdsRequestor));
-		
+		if(!isInternalUser){
+			emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails(templateName, facility.Id, whoIdsAdmins));
+			templateName = (isNewAccount || !accountAlreadyApproved) ? STATION_CREATION_REQ_CONF_NEW_ACCOUNT : STATION_CREATION_REQ_CONF_TO_REQUESTOR;
+			emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails(templateName, facility.Id, whoIdsRequestor));
+		}
+				
 		String subject = 'Station Creation request submitted';
 		String body = subject;
 		contactIds.add(createdArd.CreatedBy.ContactId);
@@ -111,8 +112,10 @@ public without sharing class CW_CreateFacilityController {
 		if (!String.isBlank(ardRelIds)) {
 			List<ICG_Account_Role_Detail_Relationship__c> ardrelationship = new List<ICG_Account_Role_Detail_Relationship__c>();
 			for (String airId : ardRelIds.split(';')) {
-				//Handled airline points to Account, ICG ARD points to Account Role Detail.
-				ardrelationship.add(new ICG_Account_Role_Detail_Relationship__c(ICG_Account_Role_Detail__c = facilityId, Handled_Airline__c = airId.startsWith('001') ? airId : null));
+			//Handled airline points to Account, ICG ARD points to Account Role Detail.
+				if(String.isNotBlank(airId) && Id.valueOf(airId).getSobjectType() == Schema.Account.SObjectType) {
+					ardrelationship.add(new ICG_Account_Role_Detail_Relationship__c(ICG_Account_Role_Detail__c = facilityId, Handled_Airline__c = airId));
+				}
 			}
 			if (!ardrelationship.isEmpty()) {
 				insert ardrelationship;
@@ -132,12 +135,23 @@ public without sharing class CW_CreateFacilityController {
 		return null;
 	}
 
-	private static Id getAccountRoleForAccount(String accountId) {
+	private static Id getAccountRoleForAccount(String accountId, Boolean isCreateCompanyMode) {
 		List<Account_Role__c> aroles = [SELECT id FROM Account_Role__c WHERE Account__c = :accountId AND Functional_Role__c = :ONESOURCE];
 		if (aroles.isEmpty()) {
 			try {
 				Account_Role__c ar = createOneSourceAccRole(accountId);
 				insert ar;
+
+				if (!isCreateCompanyMode){
+					Account acc = [SELECT Name FROM Account WHERE Id = :accountId];
+
+					Account_Role_Relationship__c newArr = new Account_Role_Relationship__c();
+					newArr.From__c = ar.Id;
+					newArr.Ops_Hierarchy_Group__c = acc.Name;
+					
+					insert newArr;
+				}
+
 				return ar.Id;
 			} catch (Exception ex) {
 				return null;
@@ -221,7 +235,7 @@ public without sharing class CW_CreateFacilityController {
 				else{
 					User usr = [Select Id, AccountId, Account.Name from User where Id = :UserInfo.getUserId() limit 1];
 					String accountId = usr.AccountId;
-					Id userAccRole = getAccountRoleForAccount(accountId);
+					Id userAccRole = getAccountRoleForAccount(accountId, true);
 					List<Account_Role_Relationship__c> userarr = [Select id, From__c, To__c, Relationship_Name__c, Ops_Hierarchy_Group__c from Account_Role_Relationship__c Where From__r.Account__c =:accountId];
 					String userGroup;
 					for(Account_Role_Relationship__c arr : userarr){

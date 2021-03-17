@@ -43,7 +43,8 @@
                         if:false={editOn}
                         value={facility.website}
                         label={facility.website} 
-                        target="_blank" class="text-truncate display-block width-100"></lightning-formatted-url>
+                        target="_blank" class="text-truncate display-block width-100">
+                    </lightning-formatted-url>
                     <template if:true={editMode}>
                         <lightning-input class="input width-100" if:true={editOn} name="website" value={facility.website} variant="label-hidden" onblur={handleContactInfoValueChange}></lightning-input>
                     </template>
@@ -79,14 +80,17 @@
                             <b>{label.online_booking}</b>
                         </p>
                         <div class="slds-grid">
-                            <a href={facility.onlineBooking} class="link-blue slds-truncate" if:false={editOn} target="_blank">{facility.onlineBooking}</a>
+                            <lightning-formatted-url 
+                                value={facility.onlineBooking}
+                                label={label.onlineBooking}
+                                target="_blank" if:false={editOn} ></lightning-formatted-url>
                         </div>
                         <lightning-input class="input" if:true={editOn} name="onlineBooking" value={facility.onlineBooking} variant="label-hidden" onblur={handleContactInfoValueChange}></lightning-input>
                     </template>
 
                     <template if:false={editMode}>
                         <template if:true={facility.onlineBooking}>
-                            <div class="slds-grid">
+                            <div if:false={emptyOnlineBooking} class="slds-grid">
                                 <lightning-formatted-url 
                                     value={facility.onlineBooking}
                                     label={label.online_booking}

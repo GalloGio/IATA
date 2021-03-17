@@ -1,4 +1,4 @@
-public with sharing  class IDCard_CheckoutSingleApplication   extends IDCardAbstractController  {
+public without sharing class IDCard_CheckoutSingleApplication   extends IDCardAbstractController  {
 
 	private ID_Card_Application__c idCardApplication;
 
@@ -55,8 +55,7 @@ public with sharing  class IDCard_CheckoutSingleApplication   extends IDCardAbst
 		List<Managed_agency__c> managedAccountList = [select m.Id, m.Account__c, m.Contact__r.Email, m.Contact__r.IDcard_Email__c, m.Contact__r.IsEmailBounced,
 								m.Contact__r.Id,  m.Account__r.IATACode__c , m.delegate__c from Managed_agency__c m where m.Account__c = :account.Id ];
 		if (managedAccountList.size() == 0) {
-			DevsTools.sendSFDevsAlertMessage('ID Card purchase alert', 'No Key contact for account ' + account.Id + ' Id card application womn t be process: ' + idCardApplication.Id);
-			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.WARNING, 'We failed to contact your manager. Please contact IATA or your manager to validate your application1 '));
+			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.WARNING, 'We failed to contact your manager. Please contact IATA or your manager to validate your application. '));
 			return ;
 		}
 
@@ -81,7 +80,7 @@ public with sharing  class IDCard_CheckoutSingleApplication   extends IDCardAbst
 					Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
 					email.setTargetObjectId(c.Contact__r.Id);
 					email.setToAddresses(new List<String>{c.Contact__r.IDcard_Email__c});
-					email.setWhatId(idCardApplication.Id);
+					email.setWhatId(applicationId);
 					email.setTreatTargetObjectAsRecipient(false);
 					email.setTemplateId(et.Id);
 					lstEmails.add(email);

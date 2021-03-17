@@ -154,10 +154,6 @@
                 <behavior>Readonly</behavior>
                 <field>Nearest_Airport_Code__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Station_Geo_Coordinates__c</field>
-            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -205,10 +201,9 @@
     </layoutSections>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>Account_Name__c</fields>
-        <fields>ICG_Role__c</fields>
-        <fields>Account_Role__c</fields>
+        <fields>Contact_Email__c</fields>
         <fields>Contact_Name__c</fields>
+        <fields>ICG_Role__c</fields>
         <fields>Status__c</fields>
         <relatedList>ICG_Contact_Role_Detail__c.ICG_Account_Role_Detail__c</relatedList>
     </relatedLists>

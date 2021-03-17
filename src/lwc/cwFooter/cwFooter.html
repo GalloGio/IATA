@@ -157,7 +157,7 @@
 								</ul>
 							</template>
 						</div>
-						<div class="col-3">
+						<div class="col-3 ml-45">
 							<template if:true={metadataAviation.data}>
 								<h3>{AviationName}</h3>
 								<ul>
@@ -165,35 +165,46 @@
 								</ul>
 							</template>
 						</div>
-						<div class="col-2">
+						<div class="col-2 ml-2">
 							<a href="mailto:onesource@iata.org"><h3>{label.contact_us}</h3></a>							
 						</div>
 						<div class="col social">
 							<div class="row">
-								<template if:true={metadataTwitter.data}>
-									<div class="social-item"><a title={twitterName} href={twitterURL}
-											target="_blank"><img src={twitter} alt="Twitter" class="img-fluid"></a>
-									</div>
-								</template>
-								<template if:true={metadataFacebook.data}>
-									<div class="social-item"><a title={FacebookName} href={FacebookURL}
-											target="_blank"><img src={facebook} alt="Facebook" class="img-fluid"></a>
-									</div>
-								</template>
-								<template if:true={metadataLinkedIn.data}>
-									<div class="social-item"><a title={LinkedinName} href={LinkedinURL}
-											target="_blank"><img src={linkedin} alt="LinkedIn" class="img-fluid"></a>
-									</div>
-								</template>
-								<template if:true={metadataYoutube.data}>
-									<div class="social-item"><a title={YoutubeName} href={YoutubeURL}
-											target="_blank"><img src={youtube} alt="YouTube" class="img-fluid"></a>
-									</div>
-								</template>
-								<template if:true={metadataRSS.data}>
-									<div class="social-item"><a title={RSSName} href={RSSURL} target="_blank"><img
-												src={rss} alt="RSS" class="img-fluid"></a></div>
-								</template>
+
+								<div class="col-offset-2 col-2 text-center">
+									<template if:true={metadataTwitter.data}>
+										<div class="social-item"><a title={twitterName} href={twitterURL}
+												target="_blank"><img src={twitter} alt="Twitter" class="img-fluid"></a>
+										</div>
+									</template>
+								</div>
+								<div class="col-2 text-center">
+									<template if:true={metadataFacebook.data}>
+										<div class="social-item"><a title={FacebookName} href={FacebookURL}
+												target="_blank"><img src={facebook} alt="Facebook" class="img-fluid"></a>
+										</div>
+									</template>
+								</div>
+								<div class="col-2 text-center">
+									<template if:true={metadataLinkedIn.data}>
+										<div class="social-item"><a title={LinkedinName} href={LinkedinURL}
+												target="_blank"><img src={linkedin} alt="LinkedIn" class="img-fluid"></a>
+										</div>
+									</template>
+								</div>
+								<div class="col-2 text-center">
+									<template if:true={metadataYoutube.data}>
+										<div class="social-item"><a title={YoutubeName} href={YoutubeURL}
+												target="_blank"><img src={youtube} alt="YouTube" class="img-fluid"></a>
+										</div>
+									</template>
+								</div>
+								<div class="col-2 text-center">
+									<template if:true={metadataRSS.data}>
+										<div class="social-item"><a title={RSSName} href={RSSURL} target="_blank"><img
+													src={rss} alt="RSS" class="img-fluid"></a></div>
+									</template>
+								</div>
 							</div>
 						</div>
 					</div>

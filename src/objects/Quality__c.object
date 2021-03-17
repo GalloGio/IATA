@@ -13473,7 +13473,9 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
         <sharedTo>
             <group>CFDS_SVP</group>
             <role>A_P_Business_Delivery_Manager</role>
+            <role>China_N_Asia_Business_Delivery_Staff</role>
             <role>Distribution_Business_Delivery_HO</role>
+            <role>MADHubACCstaff</role>
             <role>MAD_Hub_Business_Delivery_Manager</role>
         </sharedTo>
     </listViews>

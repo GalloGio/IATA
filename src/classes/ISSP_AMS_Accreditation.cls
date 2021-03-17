@@ -1739,6 +1739,7 @@ public without sharing class ISSP_AMS_Accreditation {
 	}
 
 	public List<SelectOption> getOfficeTypes() {
+		newCase.IFAP_Country_ISO__c = (newCase != null && String.isNotEmpty(newCase.IFAP_Country_ISO__c) ? newCase.IFAP_Country_ISO__c : con.Account.IATA_ISO_Country__r.ISO_Code__c);
 		Boolean isUKTerritory = (newCase.IFAP_Country_ISO__c == 'GB' || newCase.IFAP_Country_ISO__c == 'GI' || newCase.IFAP_Country_ISO__c == 'GG' || newCase.IFAP_Country_ISO__c == 'IM' || newCase.IFAP_Country_ISO__c == 'JE' || newCase.IFAP_Country_ISO__c == 'SH' || newCase.IFAP_Country_ISO__c == 'PN');
 
 		List<SelectOption> options = new List<SelectOption>();
@@ -6858,24 +6859,6 @@ public without sharing class ISSP_AMS_Accreditation {
 			if(trainedStaffList.size() < 1 && (newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_IP || newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_INDEPENDENT)){
 				ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_CNS_DGR_Trained_Staff_Members_Alert_BR));
 				errorFound = true;
-			}
-			if (isNoticeOfChange && !isBankAccountChange) {
-				if (String.isBlank(newForm.ISSP_AMS_Trade_Reg_No__c)) {
-					newForm.ISSP_AMS_Trade_Reg_No__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				}
-				if (newForm.ISSP_AMS_Date_Registration_granted__c == null) {
-					newForm.ISSP_AMS_Date_Registration_granted__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				}
-				if (String.isBlank(newForm.ISSP_AMS_License_No__c)) {
-					newForm.ISSP_AMS_License_No__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				}
-				if (newForm.ISSP_AMS_Date_license_granted__c == null) {
-					newForm.ISSP_AMS_Date_license_granted__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				}
 			}
 		}						
 

@@ -13,8 +13,6 @@ import getOpsHierarchyNameFromStationId from '@salesforce/apex/CW_Utilities.getO
 import getOpsHierarchyNameFromAccountId from '@salesforce/apex/CW_Utilities.getOpsHierarchyNameFromAccountId';
 
 import getUserInfo from "@salesforce/apex/CW_PrivateAreaController.getUserInfo";
-import saveAirlinesHandled from "@salesforce/apex/CW_HandledAirlinesController.saveAirlinesHandled";
-import saveHiddenOperatingStations from "@salesforce/apex/CW_HandledAirlinesController.saveHiddenOperatingStations";
 import setFacilityInfo_ from "@salesforce/apex/CW_FacilityContactInfoController.setFacilityInfo";
 import { refreshApex } from "@salesforce/apex";
 import updateFacility_ from "@salesforce/apex/CW_CreateFacilityController.updateFacility";
@@ -78,38 +76,23 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 	@track showModal = false;
 	@track modalMessage = "When you perform an action, this modal appears with extra info.";
 	@track modalImage = this.CHECKED_IMAGE;
-	@track editAirlines = true;
 	@track editAirport = true;
-	@track editCargoHandling = true;
-	@track editRampHandlers = true;
 	checkedImage = this.CHECKED_IMAGE;
 	@track loaded;
 	@track overviewValid = true;
 	@track contactInfoValid = true;
 	@track editOn = false;
-	@track editOnAirline = false;
-	@track editOnCargoHandling = false;
-	@track editOnRampHandlers = false;
 	@track editOnAirport = false;
 
-	// Airlines Handlers
-	@track airlineHandlers = [];
-	@track airlineHandlerSelectedEvent = [];
-	@track airlineHandlersToAdd = [];
-	@track airlineHandlersToDel = [];
-	@track airlineHandlersFilterText;
+	//  Params to manage child component cwHandlerDetail
+	@track airlineHandlers;
+	@track readOnlyHandlersAirline = true;
 
-	// Cargo Handlers
 	@track cargoHandlers = [];
-	@track cargoHandlerToAdd = [];
-	@track cargoHandlerToDel = [];
-	@track cargoHandlersFilterText;
+	@track readOnlyHandlersCargo = true;
 
-	// Ramp Handlers
 	@track rampHandlers = [];
-	@track rampHandlerToAdd = [];
-	@track rampHandlerToDel = [];
-	@track rampHandlersFilterText;
+	@track readOnlyHandlersRamp = true;
 	
 	@track airportSearchValue = '';
 	@track predictiveValues;
@@ -120,6 +103,7 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 	@track isairportboxfocus;
 	
 	sendActionToSave = false;
+	isEditSectionCapabMangment = false;
 	isSaveCapabMangmn = false;
 	@track isSaveGeoLocation = false;
 	isPendingApproval = false;
@@ -142,6 +126,7 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 	searchbylocation = this.icons + "search-by-location.svg";
 	urlResultPage;
 	urlSharePage;
+	urlStationProfile;
 	initialized = false;
 
 	@api spinnerPosition = 'position-fixed';
@@ -197,6 +182,13 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 		}
 	}
 
+	@wire(getURL, { page: "URL_ICG_FacilityPage" })
+	wiredURLStationProfilePage({ data }) {
+		if (data) {
+			this.urlStationProfile = data;
+		}
+	}
+	
 	connectedCallback() {
 		if (window.LZString === undefined) {
 			Promise.all([loadScript(this, resources + "/js/lz-string.js")]);
@@ -257,13 +249,9 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 		return iconair;
 	}
 
-	get getListAirIcon() {
-		return resources + "/icons/company_type/cargo_com_airline.jpg";
-	}
-
 	get getIATAIcon() {
 		if (this.facility) {
-			return getIataSrc(this.facility.recordTypeDevName, this.facility.location, this.facility.locationClass, resources);
+			return getIataSrc(this.facility.IATA_icon, this.facility.recordTypeDevName, this.facility.location, this.facility.locationClass, resources);
 		}
 		return "";
 	}
@@ -272,7 +260,7 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 		let style = "";
 		if (this.facility) {
 			if (this.facility.IATA_icon) {
-				let image = getIataSrc(this.facility.recordTypeDevName, this.facility.location, this.facility.locationClass, resources);
+				let image = getIataSrc(this.facility.IATA_icon, this.facility.recordTypeDevName, this.facility.location, this.facility.locationClass, resources);
 				let cssClass = " align-middle ml-2";
 				if (image.includes("cns-endorsed-agent")) {
 					cssClass += " height-20";
@@ -356,6 +344,13 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 					this.cargoHandlers = [];
 					this.rampHandlers = [];
 					this.airlineHandlers = this.facility.handledAirlines;
+					if (this.airlineHandlers.length == 0) {
+						this.template.querySelectorAll("c-cw-handler-detail").forEach(element => {
+							if(element.handlerType === 'airline'){
+								element.setDefaultHandlerData();
+							}
+						});
+					}
 					if(this.facility.recordTypeDevName === "Airport_Operator" || this.facility.recordTypeDevName === "Airline"){
 						this.facility.onAirportStations.forEach(facility => {
 							this.populateOperatingStations(facility);
@@ -373,7 +368,6 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 				this.loaded = true;
 			})
 			.catch(error => {
-				console.error("error", error);
 				this.setLoadedStatus();
 			});
 	}
@@ -394,7 +388,6 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 		})
 		
 		.catch(err => {
-			console.error("error", err);
 			this.companyAdmins = [];
 		});
 		this.companyAdminsChecked = true;
@@ -411,7 +404,6 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 			}
 		})
 		.catch(err => {
-			console.error("error", err);
 			this.facilityManagers = [];
 		});
 	}
@@ -512,7 +504,6 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 			this.loaded = true;
 		})
 		.catch(err => {
-			console.error('Error', err);
 			this.modalMessage = this.label.icg_error_message;
 			this.modalImage = this.ERROR_IMAGE;
 			this.showModal = true;
@@ -536,7 +527,6 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 				this.showModal = true;
 			})
 			.catch(err => {
-				console.error('Error', err);
 				this.modalMessage = this.label.icg_error_message;
 				this.modalImage = this.ERROR_IMAGE;
 				this.showModal = true;
@@ -564,7 +554,6 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 				this.showModal = true;
 			})
 			.catch(err => {
-				console.error('Error', err);
 				this.modalMessage = this.label.icg_error_message;
 				this.modalImage = this.ERROR_IMAGE;
 				this.showModal = true;
@@ -579,147 +568,6 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 		this.showModal = false;
 	}
 
-	setSelectedAirlineHadnlers(event) {
-		if (this.airlineHandlers && event.detail) {
-			this.airlineHandlersToDel = [];
-			this.airlineHandlersToAdd = [];
-
-			this.airlineHandlers.forEach(airline => {
-				if (!event.detail.find(val => val.value === airline.value)) {
-					this.airlineHandlersToDel.push(airline.value);
-				}
-			});
-			event.detail.forEach(airline => {
-				if (!this.airlineHandlers.find(val => val.value === airline.value)) {
-					this.airlineHandlersToAdd.push(airline.value);
-				}
-			});
-			this.airlineHandlerSelectedEvent = JSON.parse(JSON.stringify(event.detail));
-			this.setFacilityInfo(this.facility.Id, "handledAirlines", "newSelectedAirlines");
-		}
-	}
-	saveSelectedAirlines() {
-		if (this.airlineHandlersToAdd.length > 0 || this.airlineHandlersToDel.length > 0) {
-			saveAirlinesHandled({
-				addList: JSON.stringify(this.airlineHandlersToAdd),
-				deleteList: JSON.stringify(this.airlineHandlersToDel),
-				facilityId: this.facility.Id
-			})
-				.then(result => {
-					this.airlineHandlers = this.airlineHandlerSelectedEvent;
-				})
-				.catch(err => {
-					this.showToast("Save", "Something went wrong", "error");
-				});
-		}
-	}
-
-	setSelectedHandlers(event) {
-		let handlerType = event.target.dataset.target;
-		let allowedHandlerTypes = ["cargo", "ramp"];
-		if (!handlerType || allowedHandlerTypes.indexOf(handlerType) < 0) {
-			return;
-		}
-
-		if (this[handlerType + "Handlers"] && event.detail) {
-			this[handlerType + "HandlerToDel"] = [];
-			this[handlerType + "HandlerToAdd"] = [];
-			this[handlerType + "HandlerSelectedEvent"] = JSON.parse(JSON.stringify(event.detail));
-
-			this[handlerType + "Handlers"].forEach(currentHandler => {
-				let found = false;
-				let x = 0;
-				while (this[handlerType + "HandlerSelectedEvent"] && x < this[handlerType + "HandlerSelectedEvent"].length && !found) {
-					found = currentHandler.value == this[handlerType + "HandlerSelectedEvent"][x].value && this[handlerType + "HandlerSelectedEvent"][x].selected;
-					x++;
-				}
-				if (!currentHandler.selected && found) {
-					this[handlerType + "HandlerToAdd"].push(currentHandler.value);
-				} else if (currentHandler.selected && !found) {
-					this[handlerType + "HandlerToDel"].push(currentHandler.value);
-				}
-			});
-
-			this.setFacilityInfo(this.facility.Id, "handled" + handlerType.charAt(0).toUpperCase() + handlerType.slice(1) + "Stations", "new" + handlerType.charAt(0).toUpperCase() + handlerType.slice(1) + "Stations");
-		}
-	}
-
-	saveHandlers(handlerType) {
-		let allowedHandlerTypes = ["cargo", "ramp"];
-		if (allowedHandlerTypes.indexOf(handlerType) < 0) {
-			return;
-		}
-
-		if (this[handlerType + "HandlerToAdd"].length > 0 || this[handlerType + "HandlerToDel"].length > 0) {
-			if (this.facility.recordTypeDevName === "Airport_Operator") {
-				this.updateHiddenOperatingStations();
-			} else if (this.facility.recordTypeDevName === "Airline") {
-				saveAirlinesHandled({
-					addList: JSON.stringify(this[handlerType + "HandlerToAdd"]),
-					deleteList: JSON.stringify(this[handlerType + "HandlerToDel"]),
-					facilityId: this.facility.Id
-				})
-					.then(result => {
-						this[handlerType + "Handlers"].forEach(currentHandler => {
-							let found = false;
-							let x = 0;
-							while (this[handlerType + "HandlerSelectedEvent"] && x < this[handlerType + "HandlerSelectedEvent"].length && !found) {
-								found = currentHandler.value == this[handlerType + "HandlerSelectedEvent"][x].value && this[handlerType + "HandlerSelectedEvent"][x].selected;
-								x++;
-							}
-							currentHandler.selected = found;
-						});
-					})
-					.catch(err => {
-						this.showToast("Save", "Something went wrong saving " + handlerType + " handling facilities", "error");
-					});
-			}
-		}
-	}
-
-	updateHiddenOperatingStations() {
-		let handlerToBeHide = ["cargo", "ramp"];
-		let hiddenOperatingStations = "";
-
-		handlerToBeHide.forEach(handlerType => {
-			let idsToHide = [];
-
-			this[handlerType + "Handlers"].forEach(currentHandler => {
-				let found = false;
-				let x = 0;
-				while (this[handlerType + "HandlerSelectedEvent"] && x < this[handlerType + "HandlerSelectedEvent"].length && !found) {
-					found = currentHandler.value == this[handlerType + "HandlerSelectedEvent"][x].value && this[handlerType + "HandlerSelectedEvent"][x].selected;
-					x++;
-				}
-				if (!found) {
-					idsToHide.push(currentHandler.value);
-				}
-			});
-			if (idsToHide.length > 0) {
-				hiddenOperatingStations += "Operating" + handlerType.charAt(0).toUpperCase() + handlerType.slice(1) + ":" + idsToHide.join(",") + "|";
-			}
-		});
-
-		saveHiddenOperatingStations({ hiddenOperatingStations: hiddenOperatingStations, facilityId: this.facility.Id })
-			.then(result => {
-				if (!result) {
-					this.showToast("Error", this.label.icg_error_update_facility, "error");
-				}
-			})
-			.catch(exception => {
-				this.showToast("Error", this.label.icg_error_update_facility, "error");
-			});
-	}
-
-	filterAirlinesHandled(event) {
-		this.airlineHandlersFilterText = event.detail;
-	}
-	filterOperatingCHF(event) {
-		this.cargoHandlersFilterText = event.detail;
-	}
-	filterRampH(event) {
-		this.rampHandlersFilterText = event.detail;
-	}
 	get isGuest() {
 		return this.userRole === "Guest" || !this.userRole;
 	}
@@ -917,7 +765,6 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 				})
 				.catch(error => {
 					this.loaded = true;
-					console.error("error", error);
 				});
 		} else {
 			this.facility[key] = value;
@@ -936,10 +783,13 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 
 	handleSaveSuccesfull(event){
 		this.sendActionToSave = false;
+		this.isEditSectionCapabMangment = false;
+		this.handleSaveChanges();
 	}
 
 	handleSaveAction(event){
 		this.isSaveCapabMangmn = event.detail.data;
+		this.isEditSectionCapabMangment = event.detail.data;
 	}
 
 	get isSaveActionCapabMangemnt(){
@@ -969,11 +819,28 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 
 	checkRequiredFields(){
 		let returnValue=true;
+		let obligationLinkField = 'more_info_link__c';
+		let uploadDocumentationField = 'more_info_document__c';
+
 		this.listCapabilitiesRow.forEach(element => {
 			element.fields.forEach(field => {
 				if(field.required.toString() === "true" ){
 					if(field.value === ""){
-						returnValue = false;
+
+						if(field.field === obligationLinkField || field.field === uploadDocumentationField){
+							if(field.field === obligationLinkField){
+								let selectField = element.fields.filter(row => row.field === uploadDocumentationField);
+								returnValue = selectField[0].value != "" ? true :  false;
+							}
+							else if(field.field === uploadDocumentationField){
+								let selectField = element.fields.filter(row => row.field === obligationLinkField);
+								returnValue = selectField[0].value != "" ? true :  false;
+							}
+						}						
+						else{
+							returnValue = false;
+						}
+						
 					}					
 				}
 			});
@@ -983,104 +850,164 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 	}
 
 	handleSaveChanges() {
-
-		let saveBtn = this.template.querySelector('[data-tosca="saveBtn"]');
-		if(saveBtn){
-			const btnClasses = saveBtn.classList.value;
-			if (btnClasses.includes("disabled")) {
-				this.showToast("Warning", this.label.icg_facility_invalid_info, "warning");
+		if (this.readOnlyHandlersAirline === false || this.readOnlyHandlersCargo === false || this.readOnlyHandlersRamp === false) {
+			this.template.querySelectorAll("c-cw-handler-detail").forEach(element => {
+				if (element.handlerType === 'airline' && this.readOnlyHandlersAirline === false){
+					element.saveHandlerItems();
+				}
+				else if (element.handlerType === 'cargo' && this.readOnlyHandlersCargo === false){
+					element.saveHandlerItems();
+				}
+				else if (element.handlerType === 'ramp' && this.readOnlyHandlersRamp === false){
+					element.saveHandlerItems();
+				}
+			});
+		} else if(this.isEditSectionCapabMangment === true){
+			if(!this.checkRequiredFields()){
+				this.showToast("Error", "Complete required fields", "error");
 				return;
 			}
+			this.sendActionToSave = true;
 		}
+		else{
+			let saveBtn = this.template.querySelector('[data-tosca="saveBtn"]');
+			if(saveBtn){
+				const btnClasses = saveBtn.classList.value;
+				if (btnClasses.includes("disabled")) {
+					this.showToast("Warning", this.label.icg_facility_invalid_info, "warning");
+					return;
+				}
+			}
 
-		if(!this.checkRequiredFields()){
-			this.showToast("Error", "Complete required fields", "error");
+			if (this.facility.supportedLanguages && Array.isArray(this.facility.supportedLanguages)) {
+				this.facility.supportedLanguages = JSON.parse(JSON.stringify(this.facility.supportedLanguages))
+					.sort()
+					.join(";");
+			}
+
+			let objToSave = {
+				Number_of_Employees__c: this.facility.NumberEmployees,
+				Overall_Facility_Size_m2__c: this.facility.recordTypeDevName === 'Cargo_Handling_Facility' ? this.facility.FacilitySize : 0,
+				Overall_Airport_Size__c: this.facility.recordTypeDevName === 'Airport_Operator' ? this.facility.overallAirportSize : 0,
+				Fleet__c: this.facility.fleet,
+				Is_On_Airport__c: this.facility.IsOnAirport,
+				Is_Direct_Ramp_Access__c: this.facility.DirectRampAccess,
+				Road_Feeder_Services__c: this.facility.roadFeederServices,
+				Customer_Service_Email__c: this.facility.email,
+				Customer_Service_Phone_Number__c: this.facility.phone,
+				Website__c: this.facility.website,
+				Online_Booking_System_Link__c: this.facility.onlineBooking,
+				Opening_Hours__c : JSON.stringify(this.facility.openingHours),
+				Available_Languages__c: this.facility.supportedLanguages,
+				General_Cargo__c: this.facility.generalCargo,
+				Live_Animals__c: this.facility.liveAnimals,
+				Dangerous_Goods__c: this.facility.dangerousGoods,
+				Airmail__c: this.facility.airmail,
+				Perishables__c: this.facility.perishables,
+				Pharmaceuticals__c: this.facility.pharmaceuticals,
+				Secondary_Address__c: this.facility.secondAddress,
+				name: this.facility.name,
+				Id: this.facility.Id,
+				Pilot_Information__c: this.facility.pilotInformation
+			}
+				
+			if (this.facility.nearestAirportObj != null){
+				this.facility.Nearest_Airport__c = this.facility.nearestAirportObj;
+				objToSave.Nearest_Airport__c = this.facility.nearestAirportObj;
+			}
+			
+			let jsonInput = JSON.stringify(objToSave);
+
+			this.loaded = false;
+			updateFacility_({ jsonInput, logoInfo: JSON.stringify(this.logoInfoObject), geoLocationInfo: JSON.stringify(this.geoLocationInfoObject) })
+				.then(response => {
+					if (response.result.status == "OK") {
+						this.showToast("Success", this.label.icg_successful_save_facility, "success");
+
+						let facilityId = this.facilityid ? this.facilityid : this.facility.Id;
+						if(facilityId){
+							this.getData(facilityId);
+							if(this.logoInfoObject){
+								this.editOn = false;
+							}
+							this.loaded = true;
+						}
+						else{
+							this.loaded = true;
+						}
+					} else if (response.result.status == "error") {
+						this.showToast("Error", this.label.icg_error_update_facility, "error");
+						this.loaded = true;
+					}
+				})
+				.catch(error => {
+					this.loaded = true;
+				});
+			this.editOn = false;
+			this.editOnAirport = false;
+
+			this.template.querySelectorAll('.cmpEditable').forEach(elem =>{
+				elem.editOff();
+			})
+
+		}
+	}
+
+	manageChildEvent(event) {
+		let eventData = event.detail
+		if (eventData.error) {
+			this.showToast("Error", this.label.icg_error_update_facility, "error");
 			return;
 		}
-		this.sendActionToSave = true;
-
-		if (this.facility.supportedLanguages && Array.isArray(this.facility.supportedLanguages)) {
-			this.facility.supportedLanguages = JSON.parse(JSON.stringify(this.facility.supportedLanguages))
-				.sort()
-				.join(";");
-		}
-
-		let objToSave = {
-			Number_of_Employees__c: this.facility.NumberEmployees,
-			Overall_Facility_Size_m2__c: this.facility.recordTypeDevName === 'Cargo_Handling_Facility' ? this.facility.overallAirportSize : 0,
-			Overall_Airport_Size__c: this.facility.recordTypeDevName === 'Airport_Operator' ? this.facility.overallAirportSize : 0,
-			Fleet__c: this.facility.fleet,
-			Is_On_Airport__c: this.facility.IsOnAirport,
-			Is_Direct_Ramp_Access__c: this.facility.DirectRampAccess,
-			Road_Feeder_Services__c: this.facility.roadFeederServices,
-			Customer_Service_Email__c: this.facility.email,
-			Customer_Service_Phone_Number__c: this.facility.phone,
-			Website__c: this.facility.website,
-			Online_Booking_System_Link__c: this.facility.onlineBooking,
-			Opening_Hours__c : JSON.stringify(this.facility.openingHours),
-			Available_Languages__c: this.facility.supportedLanguages,
-			General_Cargo__c: this.facility.generalCargo,
-			Live_Animals__c: this.facility.liveAnimals,
-			Dangerous_Goods__c: this.facility.dangerousGoods,
-			Airmail__c: this.facility.airmail,
-			Perishables__c: this.facility.perishables,
-			Pharmaceuticals__c: this.facility.pharmaceuticals,
-			Secondary_Address__c: this.facility.secondAddress,
-			name: this.facility.name,
-			Id: this.facility.Id,
-			Pilot_Information__c: this.facility.pilotInformation
-		}
-			   
-		if (this.facility.nearestAirportObj != null){
-			this.facility.Nearest_Airport__c = this.facility.nearestAirportObj;
-			objToSave.Nearest_Airport__c = this.facility.nearestAirportObj;
-		}
 		
-		let jsonInput = JSON.stringify(objToSave);
-
-		this.loaded = false;
-		updateFacility_({ jsonInput, logoInfo: JSON.stringify(this.logoInfoObject), geoLocationInfo: JSON.stringify(this.geoLocationInfoObject) })
-			.then(response => {
-				if (response.result.status == "OK") {
-					this.showToast("Success", this.label.icg_successful_save_facility, "success");
-
-					let facilityId = this.facilityid ? this.facilityid : this.facility.Id;
-					if(facilityId){
-						this.getData(facilityId);
-						if(this.logoInfoObject){
-							this.editOn = false;
-						}
-						this.loaded = true;
-					}
-					else{
-						this.loaded = true;
-					}
-				} else if (response.result.status == "error") {
-					this.showToast("Error", this.label.icg_error_update_facility, "error");
-					this.loaded = true;
-				}
-			})
-			.catch(error => {
-				this.loaded = true;
-				console.error("error", error);
-			});
-		this.saveSelectedAirlines();
-		this.saveHandlers("cargo");
-		this.saveHandlers("ramp");
-		this.editOn = false;
-		this.editOnAirport = false;
-		
-		this.editOnAirline = false;
-		this.editAirlines = true;
-		
-		this.editOnCargoHandling = false;
-		this.editCargoHandling = true;
-
-		this.editOnRampHandlers = false;
-		this.editRampHandlers = true;
-		this.template.querySelectorAll('.cmpEditable').forEach(elem =>{
-			elem.editOff();
-		})		
+		if (eventData.name === 'save') {
+			this.saveChildEvent(eventData);
+		} else if (eventData.name === 'changeReadOnly') {
+			this.changeReadOnlyChildEvent(eventData);
+		} else if (eventData.name === 'selectItem') {
+			this.onSelectItemChildEvent(eventData);
+		}
+	}
+	saveChildEvent(eventData) {
+		// Save event
+		if (eventData.name === 'save' && eventData.handlerType === 'airline') {
+			this.airlineHandlers = eventData.handlerData;
+			this.readOnlyHandlersAirline = true;
+		}
+		if (eventData.name === 'save' && eventData.handlerType === 'cargo') {
+			this.cargoHandlers = eventData.handlerData;
+			this.readOnlyHandlersCargo = true;
+		}
+		if (eventData.name === 'save' && eventData.handlerType === 'ramp') {
+			this.rampHandlers = eventData.handlerData;
+			this.readOnlyHandlersRamp = true;
+		}
+		if (eventData.name === 'save' && this.readOnlyHandlersAirline === true && this.readOnlyHandlersCargo === true && this.readOnlyHandlersRamp === true) {
+			this.handleSaveChanges();
+		}
+	}
+	changeReadOnlyChildEvent(eventData) {
+		// Change read only event
+		if (eventData.name === 'changeReadOnly' && eventData.handlerType === 'airline') {
+			this.readOnlyHandlersAirline = eventData.isReadOnly;
+		}
+		if (eventData.name === 'changeReadOnly' && eventData.handlerType === 'cargo') {
+			this.readOnlyHandlersCargo = eventData.isReadOnly;
+		}
+		if (eventData.name === 'changeReadOnly' && eventData.handlerType === 'ramp') {
+			this.readOnlyHandlersRamp = eventData.isReadOnly;
+		}
+	}
+	onSelectItemChildEvent(eventData) {
+		// On select item event
+		if (eventData.name === 'selectItem' && eventData.handlerType === 'airline') {
+			this.setFacilityInfo(this.facility.Id, "handledAirlines", "newSelectedAirlines");
+		}
+		if (eventData.name === 'selectItem' && (eventData.handlerType === 'cargo' || eventData.handlerType === 'ramp')) {
+			this.setFacilityInfo(
+				this.facility.Id, 
+				"handled" + eventData.handlerType.charAt(0).toUpperCase() + eventData.handlerType.slice(1) + "Stations", "new" + eventData.handlerType.charAt(0).toUpperCase() + eventData.handlerType.slice(1) + "Stations");
+		}
 	}
 
 	hideBarCancelSave(){
@@ -1122,7 +1049,7 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 
 	tooltipText() {
 		if (this.facility && this.label) {
-			return getIataTooltip(this.facility.recordTypeDevName, this.facility.location, this.facility.locationClass, this.label);
+			return getIataTooltip(this.facility.IATA_icon, this.facility.recordTypeDevName, this.facility.location, this.facility.locationClass, this.label);
 		}
 
 		return "";
@@ -1216,14 +1143,6 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 		}
 	}
 
-	showInputAirlines(event){
-		this.editOnAirline = !this.editOnAirline;
-		if(this.editOnAirline){
-			this.editAirlines = false;
-		}else{
-			this.editAirlines = true;
-		}
-	}
 
 	showInputAirport(event){
 		this.editOnAirport = !this.editOnAirport;
@@ -1231,24 +1150,6 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 			this.editAirport = false;
 		}else{
 			this.editAirport = true;
-		}
-	}
-
-	showInputCargoHandling(event){
-		this.editOnCargoHandling = !this.editOnCargoHandling;
-		if(this.editOnCargoHandling){
-			this.editCargoHandling = false;
-		}else{
-			this.editCargoHandling = true;
-		}
-	}
-
-	showInputRampHandlers(event){
-		this.editOnRampHandlers = !this.editOnRampHandlers;
-		if(this.editOnRampHandlers){
-			this.editRampHandlers = false;
-		}else{
-			this.editRampHandlers = true;
 		}
 	}
 

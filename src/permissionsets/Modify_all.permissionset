@@ -8337,10 +8337,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>ISSP_PortalUserStatusChangeHelper</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>ISSP_PortalUserStatusChangeTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -77149,6 +77145,15 @@
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>true</modifyAllRecords>
+        <object>ICG_History_Track__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
         <object>ICG_Notification__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
@@ -81478,10 +81483,6 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>GCSDowntime</apexPage>
-        <enabled>true</enabled>
-    </pageAccesses>
-    <pageAccesses>
-        <apexPage>GCSDowntime2</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
