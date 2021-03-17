@@ -29136,6 +29136,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>icg_manage_documents</name>
     </customLabels>
     <customLabels>
+        <label><!-- icg manage documents --></label>
+        <name>icg_manage_obligations_documents</name>
+    </customLabels>
+    <customLabels>
         <label><!-- icg manage photos --></label>
         <name>icg_manage_photos</name>
     </customLabels>

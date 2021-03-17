@@ -149,10 +149,6 @@
                 <behavior>Readonly</behavior>
                 <field>Nearest_Airport_Code__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Station_Geo_Coordinates__c</field>
-            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -215,6 +211,7 @@
         <fields>Expiration_Date__c</fields>
         <fields>CEIV_Scope_List__c</fields>
         <fields>SFOC_Scope__c</fields>
+        <fields>Status__c</fields>
         <relatedList>ICG_Capability_Assignment_Group__c.ICG_Account_Role_Detail__c</relatedList>
     </relatedLists>
     <relatedLists>

@@ -3396,10 +3396,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>CW_ICG_Facility_Queuable</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>CW_LandingSearchBarController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -43955,6 +43951,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>ICG_History_Track__c.New_Value__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ICG_History_Track__c.Old_Value__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>ICG_Notification__c.Body__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -63483,6 +63489,13 @@
         <layout>ICG_GxA_Integration_Mapping__c-ONE Source GxA Integration Mapping Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>ICG_History_Track__c-OS History Track Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ICG_History_Track__c-OS History Track Layout</layout>
+        <recordType>ICG_History_Track__c.Changes_by_Type</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>ICG_Notification__c-ONE Source Notification Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -70348,6 +70361,11 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
+        <recordType>ICG_History_Track__c.Changes_by_Type</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
         <recordType>ICG_Notification__c.Audit</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
@@ -71101,7 +71119,7 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>Apply_RHC_Equal_to_FS</tab>
-        <visibility>Hidden</visibility>
+        <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>Area_Counter__c</tab>

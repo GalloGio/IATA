@@ -96,26 +96,42 @@ export default class CwPurchaseRemoteValidation extends LightningElement {
 	}
 
 	_setListToPurchase() {
-		if(this.lstProductsRemoteVal && this._userManagedFacilities && !this.facilitiesToPurchase && this.mapRemValAlreadyPurchased) {
-			this.facilitiesToPurchase = [];
+		this.facilitiesToPurchase = [];
+		let allowedRt = (availablerecordtypes) ? availablerecordtypes.split(',') : [];
+		let rvProduct = (this.lstProductsRemoteVal && this.lstProductsRemoteVal[0]) ? this.lstProductsRemoteVal[0] : undefined;
 
-			this._userManagedFacilities.forEach(potPurchase => {
-				if(potPurchase.isApproved__c === true && !this.mapRemValAlreadyPurchased.has(potPurchase.Id) && availablerecordtypes && availablerecordtypes.split(',').includes(potPurchase.RecordType.DeveloperName) && this.lstProductsRemoteVal[0]) {
-					getEcommerceUrlBase({})
-					.then(res => {
-						const ecommerceUrlBase = res;
-						let potPur = JSON.parse(JSON.stringify(potPurchase));
-						if (this.stationsWithOpenRemoteValidations.indexOf(potPurchase.Id) > -1) {
-							potPur.openRemoteValidations = true;
-						} else {
-							potPur.linkToPurchase = this.lstProductsRemoteVal[0].SAP_Material_Number__c
-								? ecommerceUrlBase + '/IEC_ProductDetails?id=' + this.lstProductsRemoteVal[0].SAP_Material_Number__c + '&fid=' + potPurchase.Id
-								: 'Product not available';
+		if(allowedRt.length > 0 && rvProduct && this._userManagedFacilities && this.stationsWithOpenRemoteValidations) {
+			let items = [];
+			let ecommerceUrlRequired = (this.stationsWithOpenRemoteValidations.length == 0);
+
+			this._userManagedFacilities.forEach(currentRecord => {
+				if (currentRecord.isApproved__c === true && allowedRt.includes(currentRecord.RecordType.DeveloperName)) {
+						let newItem = JSON.parse(JSON.stringify(currentRecord));
+						newItem.openRemoteValidations = (this.stationsWithOpenRemoteValidations.indexOf(currentRecord.Id) > -1);
+						if (!ecommerceUrlRequired) {
+							ecommerceUrlRequired = newItem.openRemoteValidations;
 						}
-						this.facilitiesToPurchase.push(potPur);
-					});
+						items.push(newItem);
 				}
-			})
+			});
+			
+			if (ecommerceUrlRequired) {
+				getEcommerceUrlBase({})
+					.then(ecommerceUrlBase => {
+						items.forEach(currentItem => {
+							if (!currentItem.openRemoteValidations) {
+								currentItem.linkToPurchase = rvProduct.SAP_Material_Number__c
+								? ecommerceUrlBase + '/IEC_ProductDetails?id=' + rvProduct.SAP_Material_Number__c + '&fid=' + currentItem.Id
+								: 'Product not available';
+							}
+							this.facilitiesToPurchase.push(currentItem);
+						});
+						this.initialized = true;
+					});
+			} else {
+				this.initialized = true;
+			}
+		} else {
 			this.initialized = true;
 		}
 	}

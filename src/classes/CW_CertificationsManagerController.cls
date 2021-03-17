@@ -171,7 +171,7 @@ public with sharing class CW_CertificationsManagerController {
 	 ****************************************************************************/
 	@AuraEnabled
 	public static string getFacilityNotActiveCertifications(string facilityId, string certificationId, String groupId, String statusInput, String stationRT) {
-		
+
 		String query = 'SELECT Id, Certification_Id__c, Status__c, Issue_Date__c, Expiration_Date__c, ToLabel(CEIV_Scope_List__c), ToLabel(SFOC_Scope__c),ToLabel(IENVA_Scope__c), ICG_Certification__r.Name, ICG_Certification__r.Label__c, ICG_Certification__r.CreatedDate, ICG_Certification__r.Certification_Type__c,ICG_Certification__r.Expiration_Period__c,ICG_Account_Role_Detail__r.RecordType.DeveloperName '+
 			 'FROM ICG_Capability_Assignment_Group__c WHERE ICG_Account_Role_Detail__c =\''+ facilityId +'\' AND ICG_Certification__c =\''+ certificationId +'\' AND RecordTypeId =\''+ RT_CERTIFICATION +'\' AND Is_Active__c = false AND Status__c IN ('+statusInput+') AND Id !=\''+ groupId +'\' Order by CreatedDate desc';
 		List<ICG_Capability_Assignment_Group__c> firtsList = (List<ICG_Capability_Assignment_Group__c>) Database.query(query);
@@ -188,6 +188,7 @@ public with sharing class CW_CertificationsManagerController {
 	@AuraEnabled
 	public static string getAllCertifications(String stationRT) {
 		List<String> lstDepts = CW_CapabilitiesUtilities.getCertificationsAllowedByDepartments(stationRT);
+
 		return (JSON.serialize([SELECT id,Name, Label__c,Certification_Type__c, Applicable_to__c,Expiration_Period__c FROM ICG_Certification__c WHERE Name IN: lstDepts]));
 		
 	}
@@ -199,7 +200,7 @@ public with sharing class CW_CertificationsManagerController {
 	 * @Returns			: List<tring>> certificationList - contains all certification without capabilities
 	 ****************************************************************************/
 	@AuraEnabled
-	public static List<ICG_Certification__c> getCertificationWithoutCapabilities(String recordId) {
+	public static List<ICG_Certification__c> getCertificationWithoutCapabilities(String recordId) {		
 		// Get the record type of the station and the categories availables fot this record type
 		String stationRT = [SELECT RecordType.DeveloperName FROM ICG_Account_Role_Detail__c WHERE Id =: recordId].RecordType.DeveloperName.toLowerCase();
 		Map<String, List<String>> categoriesByAccountRoleDetailRecordType = CW_FacilityCapabilitiesController.getMapCategoriesByAccountRoleDetailRecordType();
@@ -267,7 +268,7 @@ public with sharing class CW_CertificationsManagerController {
 	 ****************************************************************************/
 	@AuraEnabled
 	public static string getNextCertificationID(String certiSelected, String recordId) {
-		String nextCertificationID;
+		String nextCertificationID = '';
 		String parseYearSub = String.valueOf(Date.today().year()).substring(2);
 		String parseYearAll = String.valueOf(Date.today().year());
 		String initValue = '0001';

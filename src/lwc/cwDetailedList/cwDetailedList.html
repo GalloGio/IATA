@@ -28,8 +28,14 @@
                                                     <div class="col-md-6 offset-md-1 col-sm-12 reg-today-txt"><b
                                                             class="bannerText">{label.icg_resultpage_banner_text}</b></div>
                                                     <div class="col-md-4 col-sm-12 reg-today-btn">
-                                                        <button type="button" onclick={goToPreregister}
-                                                            class="btn btn-primary mt-0 width-100">{label.icg_resultpage_banner_button}</button>
+                                                        <template if:true={isbeta}>
+                                                            <button type="button" onclick={goToPreregister}
+                                                                class="btn btn-primary mt-0 width-100">{label.icg_resultpage_banner_button}</button>
+                                                        </template>
+                                                        <template if:false={isbeta}>
+                                                            <button type="button" onclick={goToLogin}
+                                                                class="btn btn-primary mt-0 width-100">{label.btn_register_now}</button>
+                                                        </template>
                                                     </div>
                                                 </div>
                                             </div>

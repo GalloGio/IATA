@@ -3400,10 +3400,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>CW_ICG_Facility_Queuable</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>CW_LandingSearchBarController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -43955,6 +43951,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>ICG_History_Track__c.New_Value__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ICG_History_Track__c.Old_Value__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>ICG_Notification__c.Body__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -63487,6 +63493,13 @@
         <layout>ICG_GxA_Integration_Mapping__c-ONE Source GxA Integration Mapping Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>ICG_History_Track__c-OS History Track Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ICG_History_Track__c-OS History Track Layout</layout>
+        <recordType>ICG_History_Track__c.Changes_by_Type</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>ICG_Notification__c-ONE Source Notification Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -65322,11 +65335,11 @@
     <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
-        <allowEdit>false</allowEdit>
+        <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>Participation_Application_Requirement__c</object>
-        <viewAllRecords>false</viewAllRecords>
+        <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
         <allowCreate>false</allowCreate>
@@ -69957,6 +69970,11 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
+        <recordType>ICG_History_Track__c.Changes_by_Type</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
         <recordType>ICG_Notification__c.Audit</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
@@ -70186,24 +70204,25 @@
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>false</default>
+        <default>true</default>
+        <personAccountDefault>true</personAccountDefault>
         <recordType>Participation_Online_Application__c.Accounting_or_Prefix_Code</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Participation_Online_Application__c.Baggage_Code</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Participation_Online_Application__c.Designator_Code</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Participation_Online_Application__c.Location_Code</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>

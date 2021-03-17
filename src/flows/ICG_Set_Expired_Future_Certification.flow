@@ -48,10 +48,34 @@
             <name>myRule_1</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>formula_myRule_1</leftValueReference>
-                <operator>EqualTo</operator>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Date</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Date</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>Date</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Formula</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.Expiration_Date__c</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
                 <rightValue>
-                    <booleanValue>true</booleanValue>
+                    <elementReference>formula_2_myRule_1_0509918699</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -98,10 +122,34 @@
             <name>myPreWaitRule_myWait_myRule_1</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>formula_myRule_1</leftValueReference>
-                <operator>EqualTo</operator>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Date</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Date</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>Date</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Formula</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.Expiration_Date__c</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
                 <rightValue>
-                    <booleanValue>true</booleanValue>
+                    <elementReference>formula_2_myRule_1_0509918699</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -138,10 +186,34 @@
             <name>myRule_1_pmetrule</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>formula_myRule_1_pmetrule</leftValueReference>
-                <operator>EqualTo</operator>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Date</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Date</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>Date</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Formula</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_old.Expiration_Date__c</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
                 <rightValue>
-                    <booleanValue>true</booleanValue>
+                    <elementReference>formula_3_myRule_1_pmetrule_1933523057</elementReference>
                 </rightValue>
             </conditions>
             <label>Previously Met - Prev</label>
@@ -152,40 +224,36 @@
         <processMetadataValues>
             <name>originalFormula</name>
             <value>
+                <stringValue>Today()</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_2_myRule_1_0509918699</name>
+        <dataType>Date</dataType>
+        <expression>Today()</expression>
+    </formulas>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>Today()</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_3_myRule_1_pmetrule_1933523057</name>
+        <dataType>Date</dataType>
+        <expression>Today()</expression>
+    </formulas>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
                 <stringValue>TODAY()  - 1</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_2_myWaitEvent_myWait_myRule_1_event_0_SA1_8615166267</name>
+        <name>formula_4_myWaitEvent_myWait_myRule_1_event_0_SA1_3980973934</name>
         <dataType>Date</dataType>
         <expression>TODAY()  - 1</expression>
     </formulas>
-    <formulas>
-        <processMetadataValues>
-            <name>originalFormula</name>
-            <value>
-                <stringValue>(ISNEW() || ISCHANGED([ICG_Capability_Assignment_Group__c].Expiration_Date__c))
-&amp;&amp; TODAY() &lt;= [ICG_Capability_Assignment_Group__c].Expiration_Date__c</stringValue>
-            </value>
-        </processMetadataValues>
-        <name>formula_myRule_1</name>
-        <dataType>Boolean</dataType>
-        <expression>(ISNEW() || ISCHANGED({!myVariable_current.Expiration_Date__c}))
-&amp;&amp; TODAY() &lt;= {!myVariable_current.Expiration_Date__c}</expression>
-    </formulas>
-    <formulas>
-        <processMetadataValues>
-            <name>originalFormula</name>
-            <value>
-                <stringValue>(ISNEW() || ISCHANGED([ICG_Capability_Assignment_Group__c].Expiration_Date__c))
-&amp;&amp; TODAY() &lt;= [ICG_Capability_Assignment_Group__c].Expiration_Date__c</stringValue>
-            </value>
-        </processMetadataValues>
-        <name>formula_myRule_1_pmetrule</name>
-        <dataType>Boolean</dataType>
-        <expression>(ISNEW() || ISCHANGED({!myVariable_old.Expiration_Date__c}))
-&amp;&amp; TODAY() &lt;= {!myVariable_old.Expiration_Date__c}</expression>
-    </formulas>
-    <interviewLabel>ICG_Set_Expired_Future_Certification-1_InterviewLabel</interviewLabel>
+    <interviewLabel>ICG_Set_Expired_Future_Certification-2_InterviewLabel</interviewLabel>
     <label>ONE Source Set Expired Future Certification</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -248,6 +316,19 @@
             <processMetadataValues>
                 <name>implicit</name>
                 <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </processMetadataValues>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>myVariable_current.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <processMetadataValues>
+                <name>implicit</name>
+                <value>
                     <booleanValue>false</booleanValue>
                 </value>
             </processMetadataValues>
@@ -290,20 +371,7 @@
             <field>Expiration_Date__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>formula_2_myWaitEvent_myWait_myRule_1_event_0_SA1_8615166267</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <processMetadataValues>
-                <name>implicit</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </processMetadataValues>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>myVariable_current.Id</elementReference>
+                <elementReference>formula_4_myWaitEvent_myWait_myRule_1_event_0_SA1_3980973934</elementReference>
             </value>
         </filters>
         <filters>

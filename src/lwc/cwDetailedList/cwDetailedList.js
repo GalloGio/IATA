@@ -7,6 +7,7 @@ export default class CwDetailedList extends LightningElement {
     @api label;
     @api isLoading;
     @api urlResultPage;
+    @api isbeta;
 
     icons = resources + "/icons/";
     exportExcel;
@@ -102,6 +103,11 @@ export default class CwDetailedList extends LightningElement {
 			variant: variant
         });
         this.dispatchEvent(event);
-	}
+    }
+    goToLogin(event){
+        event.preventDefault();
+        this.dispatchEvent( new CustomEvent('gotologin'));
+    }
+    
 
 }
