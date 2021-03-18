@@ -89,6 +89,14 @@
                 <behavior>Readonly</behavior>
                 <field>ANG_Provisional_RHC_Last_Update__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ANG_RHC_Amount_Equals_FS__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>RHC_Amount_Equals_FS_Percent__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

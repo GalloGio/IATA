@@ -248,7 +248,7 @@
         <externalId>false</externalId>
         <label>Expiration Date</label>
         <required>true</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -258,7 +258,7 @@
         <description>Field to track whether expired notification is sent or not</description>
         <externalId>false</externalId>
         <label>Expired Notification Sent</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -441,7 +441,7 @@
         <description>Checkbox to specify if the record is active</description>
         <externalId>false</externalId>
         <label>Is Active</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -461,7 +461,7 @@
         <description>Checkbox to specify if the record is expired</description>
         <externalId>false</externalId>
         <label>Is Expired</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -598,7 +598,7 @@
         <description>Field to keep track of notification sent for upcoming expiration notification</description>
         <externalId>false</externalId>
         <label>Upcoming Expiration Notification Sent</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
