@@ -1533,7 +1533,7 @@
         <name>ANG_RHC_RHCAmountTooltip</name>
     </customLabels>
     <customLabels>
-        <label>يحددها تاريخ المخاطر المستمرة للوكلاء ونتيجة مراجعاتهم المالية</label>
+        <label>تعتمد حالة المخاطر الخاصة بك على نتائج كل من التقييم المالي الأخير وتقييم تاريخ المخاطر.</label>
         <name>ANG_RHC_RiskStatusTooltip</name>
     </customLabels>
     <customLabels>
@@ -37914,7 +37914,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- GDP Product Accounts with Email Exclusions --></label>
         <name>GDP_Product_Accounts_with_Email_Exclusions</name>
         <sections>
-            <label><!-- EBC Email Exclusion Relations --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>EBC Email Exclusion Relations</name>
         </sections>
         <sections>
@@ -37962,7 +37962,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
             <name>IATA Geonames Cities</name>
         </sections>
         <sections>
-            <label><!-- IATA ISO States --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>IATA ISO States</name>
         </sections>
     </reportTypes>
@@ -38743,7 +38743,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
             <name>Account Roles</name>
         </sections>
         <sections>
-            <label><!-- Accounts --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>Accounts</name>
         </sections>
         <sections>
@@ -38940,7 +38940,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Opportunities with Contracts --></label>
         <name>Opportunities_with_Contracts</name>
         <sections>
-            <label><!-- Contracts --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>Contracts</name>
         </sections>
         <sections>
@@ -38953,7 +38953,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Opportunities with or without RSL --></label>
         <name>Opportunities_with_or_without_RSL</name>
         <sections>
-            <label><!-- Opportunities --></label>
+            <label>التقارير</label>
             <name>Opportunities</name>
         </sections>
         <sections>
@@ -39048,7 +39048,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
             <name>Contacts</name>
         </sections>
         <sections>
-            <label><!-- Participants --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>Participants</name>
         </sections>
     </reportTypes>
