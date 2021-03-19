@@ -38844,6 +38844,19 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- OS Stations with Certification and Managers --></description>
+        <label><!-- OS Stations with Certification and Managers --></label>
+        <name>OS_Stations_Cert_Mana</name>
+        <sections>
+            <label><!-- ONE Source Contact Role Details --></label>
+            <name>ONE Source Contact Role Details</name>
+        </sections>
+        <sections>
+            <label><!-- OS Stations --></label>
+            <name>OS Stations</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Objective with Comments --></description>
         <label><!-- Objective with Comments --></label>
         <name>Objective_with_Comments</name>
