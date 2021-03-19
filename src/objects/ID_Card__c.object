@@ -1166,25 +1166,15 @@ two record types:
         <fullName>Is_Active_Card__c</fullName>
         <description>Check if the card is active</description>
         <externalId>false</externalId>
-        <formula>IF
-(
-RecordType.DeveloperName = &apos;AIMS&apos; ,
-AND
-(
-Valid_From_Date__c &lt;= TODAY(),
-Valid_To_Date__c &gt; TODAY(),
-ISNULL(Cancellation_Date__c)
-)
-,
-IF
-(
+        <formula>IF (
+AND(Valid_To_Date__c &gt;= TODAY(),
+NOT(OR (
 ISPICKVAL(Card_Status__c, &apos;Cancelled ID Card&apos;),
-FALSE,
-(
-IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
+ISPICKVAL(Card_Status__c, &apos;Cancelled&apos;)
 )
 )
-)</formula>
+)
+, True, False)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Is Active Card</label>
         <trackHistory>false</trackHistory>
