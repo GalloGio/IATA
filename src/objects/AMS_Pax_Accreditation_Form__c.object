@@ -3599,7 +3599,7 @@ If(LEN( SAAM_Case__r.Account.ShippingCountry) &gt;0, SAAM_Case__r.Account.Shippi
     <fields>
         <fullName>ISSP_AMS_Date_Registration_granted__c</fullName>
         <externalId>false</externalId>
-        <label>* Date Registration was Granted</label>
+        <label>Date Registration was Granted</label>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -3617,7 +3617,7 @@ If(LEN( SAAM_Case__r.Account.ShippingCountry) &gt;0, SAAM_Case__r.Account.Shippi
     <fields>
         <fullName>ISSP_AMS_Date_license_granted__c</fullName>
         <externalId>false</externalId>
-        <label>* Date License was Granted</label>
+        <label>Date License was Granted</label>
         <required>false</required>
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
@@ -3971,7 +3971,7 @@ If(LEN( SAAM_Case__r.Account.ShippingCountry) &gt;0, SAAM_Case__r.Account.Shippi
     <fields>
         <fullName>ISSP_AMS_License_No__c</fullName>
         <externalId>false</externalId>
-        <label>* License Number of the Agency</label>
+        <label>License Number of the Agency</label>
         <length>20</length>
         <required>false</required>
         <trackHistory>true</trackHistory>
@@ -4273,7 +4273,7 @@ If(LEN( SAAM_Case__r.Account.ShippingCountry) &gt;0, SAAM_Case__r.Account.Shippi
     <fields>
         <fullName>ISSP_AMS_Trade_Reg_No__c</fullName>
         <externalId>false</externalId>
-        <label>* Trade Registration Number of Agency</label>
+        <label>Trade Registration Number of Agency</label>
         <length>30</length>
         <required>false</required>
         <trackHistory>true</trackHistory>

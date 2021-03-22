@@ -40,9 +40,14 @@ export default class PortalCaseDetailsPage extends LightningElement {
     }
 
 	@track isExpired;
+    @track isExpiredDGR;
 
     handleExpired(event) {
     	this.isExpired = event.detail;
+	}
+
+    handleExpiredDGR(event) {
+    	this.isExpiredDGR = event.detail;
 	}
 	  
 	handleUpdatedCase(event) {

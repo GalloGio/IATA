@@ -161,7 +161,7 @@
         <externalId>false</externalId>
         <label>Account Contact Role</label>
         <referenceTo>Account_Contact_Role__c</referenceTo>
-        <relationshipLabel>ONE Source Contact Role Details</relationshipLabel>
+        <relationshipLabel>ONE Source Station Managers/Admins</relationshipLabel>
         <relationshipName>ICG_Contact_Role_Details</relationshipName>
         <required>true</required>
         <trackHistory>false</trackHistory>

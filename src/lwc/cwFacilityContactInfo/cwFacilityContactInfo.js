@@ -27,15 +27,18 @@ export default class CwFacilityContactInfo extends LightningElement {
 	set facility(value){
 		this._facility = JSON.parse(JSON.stringify(value));
 
-		if(!Array.isArray(this._facility.supportedLanguages) && this._facility.supportedLanguages.includes(';')){
-			this._facility.supportedLanguages = this._facility.supportedLanguages.split(';');
-		}
-
 		if (this._facility.supportedLanguages) {
+
+			if(!Array.isArray(this._facility.supportedLanguages)){
+				this._facility.supportedLanguages = this._facility.supportedLanguages.split(';');
+			}
+
 			this._facility.supportedLanguages.forEach(lang => {
 				let picklistValue = (this._facility.availableLanguages.filter(elem => {return elem.value === lang}));
-				if(picklistValue.length > 0 && lang && lang !== '') this.langCalculator(lang, picklistValue[0].label);
-			})
+				if(picklistValue.length > 0 && lang && lang !== '') {
+					this.langCalculator(lang, picklistValue[0].label);
+				}
+			});
 		}
 	}
 	@api editMode = false;
@@ -64,6 +67,14 @@ export default class CwFacilityContactInfo extends LightningElement {
 
 	get showOnlineBooking() {
 		return this.facility.recordTypeDevName !== "Airport_Operator" && (this.facility.onlineBooking || this.editOn);
+	}
+
+	get emptyOnlineBooking(){
+		let emptyBook = true;
+		if(this.facility.onlineBooking != '' && this.facility.onlineBooking != 'http://' && this.facility.onlineBooking != 'https://') {
+			emptyBook = false;
+		}
+		return emptyBook;
 	}
 
 	showImportHours() {

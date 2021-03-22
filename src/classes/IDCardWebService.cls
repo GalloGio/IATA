@@ -47,9 +47,9 @@ global with sharing class IDCardWebService {
 					
 					c.VER_Number_2__c = IdcardUtil.generateVER(account);
 					c.UIR__c = IdcardUtil.generateUIR(account);
-					IDCardUtilWithoutSharing.upsertGenericObject('Contact', (sObject)(c), c.Id, c.getPopulatedFieldsAsMap().keyset());
+					database.UpsertResult sr = IDCardUtilWithoutSharing.upsertGenericObject('Contact', (sObject)(c), c.Id, c.getPopulatedFieldsAsMap().keyset());
 
-					system.debug(LoggingLevel.ERROR,'[processKeyAccountSingleApplication] upserted the contact:'+c.id+' with ver = '+c.VER_Number_2__c);
+					system.debug(LoggingLevel.ERROR,'[processKeyAccountSingleApplication] upserted the contact: Succes: ' + sr.isSuccess() + '. ID: ' + (sr.isSuccess()?sr.getId():'') + ' with ver = '+c.VER_Number_2__c);
 					singleApp.VER_Number__c = c.VER_Number_2__c ;
 					singleApp.UIR__c = c.UIR__c ;
 					String picName = singleApp.Photo__c;
@@ -101,7 +101,6 @@ global with sharing class IDCardWebService {
 				*/
 
 				result[0] = 'Success';
-				DevsTools.sendSFDevsAlertMessage('Successfull processing of ID card :'+id, 'Cause : \n ');
 				System.debug(LoggingLevel.ERROR,'[processKeyAccountSingleApplication]  The case has status' +aCase.status );
 			}
 			else  {
@@ -110,7 +109,7 @@ global with sharing class IDCardWebService {
 			}
 		}catch(Exception e){
 			system.debug(LoggingLevel.ERROR,'[processKeyAccountSingleApplication] Failed to process a Single Id card application with Id  :'+id+ ' Cause : \n '+e.getMessage()+'\n'+e.getStackTraceString());
-			DevsTools.sendSFDevsAlertMessage('Failed to process a Single Id card application with Id  :'+id, 'Cause : \n '+e.getStackTraceString());
+			TransformationHelper.sendEmailSupport('Failed to process a Single Id card application with Id  :'+id, 'Cause : \n '+e.getStackTraceString());
 			if( singleApp !=null){
 				singleApp.Single_Application_Processing_Step__c = IDCardUtil.single_application_status_waiting;
 				IDCardUtilWithoutSharing.saveCommittedICA(singleApp, id);
