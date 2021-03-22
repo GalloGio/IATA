@@ -26327,10 +26327,6 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
         <name>Reset_your_password</name>
     </customLabels>
     <customLabels>
-        <label><!-- Resource Center Service Description --></label>
-        <name>Resource_Center_Service_Description</name>
-    </customLabels>
-    <customLabels>
         <label><!-- Response message --></label>
         <name>Response_message</name>
     </customLabels>
@@ -38834,6 +38830,19 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
         <sections>
             <label><!-- OSCARs --></label>
             <name>OSCARs</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- OS Stations with Certification and Managers --></description>
+        <label><!-- OS Stations with Certification and Managers --></label>
+        <name>OS_Stations_Cert_Mana</name>
+        <sections>
+            <label><!-- ONE Source Contact Role Details --></label>
+            <name>ONE Source Contact Role Details</name>
+        </sections>
+        <sections>
+            <label><!-- OS Stations --></label>
+            <name>OS Stations</name>
         </sections>
     </reportTypes>
     <reportTypes>
