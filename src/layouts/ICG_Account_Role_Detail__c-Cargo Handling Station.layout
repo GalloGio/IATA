@@ -257,6 +257,10 @@
         <relatedList>ICG_Account_Role_Detail_Relationship__c.ICG_ARD__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>ICG_Account_Role_Capability_Assignment__c.ICG_Account_Role_Detail__c</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>TASK.SUBJECT</fields>
         <fields>TASK.WHO_NAME</fields>
         <fields>ACTIVITY.TASK</fields>
