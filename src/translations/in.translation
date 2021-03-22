@@ -26334,10 +26334,6 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
         <name>Reset_your_password</name>
     </customLabels>
     <customLabels>
-        <label><!-- Resource Center Service Description --></label>
-        <name>Resource_Center_Service_Description</name>
-    </customLabels>
-    <customLabels>
         <label><!-- Response message --></label>
         <name>Response_message</name>
     </customLabels>

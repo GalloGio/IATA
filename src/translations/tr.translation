@@ -26330,10 +26330,6 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <name>Reset_your_password</name>
     </customLabels>
     <customLabels>
-        <label><!-- Resource Center Service Description --></label>
-        <name>Resource_Center_Service_Description</name>
-    </customLabels>
-    <customLabels>
         <label>The attachments transfer operation completed with {0} success(es) and {1} error(s).
 
 &lt;a href=&quot;/{2}&quot; onClick=&quot;testCloseTab()&quot;&gt;Click here&lt;/a&gt; to return to the case.&apos;</label>
