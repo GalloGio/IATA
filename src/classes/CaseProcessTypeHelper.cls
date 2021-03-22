@@ -11,7 +11,7 @@ public with sharing class CaseProcessTypeHelper {
 		get {
 			if (CLOSED_STATUSES==null) {
 				CLOSED_STATUSES = new Set<String>();
-				for (CaseStatus status : [SELECT ApiName  FROM CaseStatus WHERE IsClosed = true AND ApiName != 'Abandoned']) {
+				for (CaseStatus status : [SELECT ApiName  FROM CaseStatus WHERE IsClosed = true AND ApiName NOT IN ('Abandoned','Closed_Rejected','Closed_Withdrawn','Closed_ Not Accepted')]) {
 					CLOSED_STATUSES.add(status.ApiName);
 				}
 			}
