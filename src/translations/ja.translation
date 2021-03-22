@@ -26329,10 +26329,6 @@ IATAコードをお持ちでない場合は、［顧客タイプ］に［その�
         <name>Reset_your_password</name>
     </customLabels>
     <customLabels>
-        <label><!-- Resource Center Service Description --></label>
-        <name>Resource_Center_Service_Description</name>
-    </customLabels>
-    <customLabels>
         <label><!-- Response message --></label>
         <name>Response_message</name>
     </customLabels>
