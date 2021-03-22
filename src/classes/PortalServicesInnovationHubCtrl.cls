@@ -513,7 +513,7 @@ public without sharing class PortalServicesInnovationHubCtrl {
 	@AuraEnabled(cacheable = false)
 	public static List<IH_Account_Role_Detail__c> getProviderFieldLists(String providerId,String field) {
 
-		if(providerId == null || providerId == '' ){
+		if(String.isNotBlank(providerId)){
 			providerId = getUserIHAccountRoleDetailWithStatus('').Id;
 		}
 
@@ -521,6 +521,20 @@ public without sharing class PortalServicesInnovationHubCtrl {
 		queryAux += '\'' + providerId + '\'' + ' LIMIT 1';	
 
 		List<IH_Account_Role_Detail__c> detail = Database.query(queryAux); 	
+
+		return detail;
+
+	}
+
+	@AuraEnabled(cacheable = false)
+	public static IH_Account_Role_Detail__c getProviderHeaderFields(String providerId) {
+		IH_Account_Role_Detail__c detail = new IH_Account_Role_Detail__c();
+
+		if(String.isNotBlank(providerId)){
+			detail = [SELECT Company_Name__c,Facebook__c,Instagram__c,Twitter__c,LinkedIn__c,Telegram__c,
+			GitHub__c,Website__c,Contact_info_of_startup__c,Contact_Position__c,Contact_Email__c,
+			Contact_Phone_Number__c FROM IH_Account_Role_Detail__c WHERE Id = :providerId LIMIT 1];
+		}	
 
 		return detail;
 

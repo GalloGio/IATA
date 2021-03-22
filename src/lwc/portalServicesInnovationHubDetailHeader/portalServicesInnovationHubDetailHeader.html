@@ -1,0 +1,74 @@
+<template>
+
+    <c-portal-page-container style-class="dark">
+        <span slot="componentContent">
+            <div>
+
+                <!-- Breadcrumbs -->
+                <div class="breadcrumbsPosition">
+                    <c-portal-breadcrumbs></c-portal-breadcrumbs>
+                </div>
+
+                <!-- Header -->
+                <div class="headerPosition">
+                    <template if:true={loading}>
+                        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                    </template>
+
+                    <template if:false={loading}>
+                        <div class="coverBand" style={backgroundStyle}></div>
+
+                        <div class="myProfileHeader">
+
+                            <!-- Header Provider Detail -->
+                            <div class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_x-large headerMyProfile" >
+                                
+                                <div class="headerProfileContent">
+
+                                    <!-- Labels -->
+                                    <div class="slds-col slds-size_1-of-4 slds-medium-size_1-of-4 slds-large-size_1-of-4 contentItem">
+                                        <c-portal-record-view-edit-logo provider-id-api={providerId}></c-portal-record-view-edit-logo>  
+                                    </div>
+                                    <div class="slds-col slds-size_2-of-4 slds-medium-size_2-of-4 slds-large-size_2-of-4 contentItem fieldMargin">
+                                        <div class="ihub text-small">
+                                            <span class="slds-form-element__label labelValue textValue">{labels.ISSP_CompanyName}</span> 
+                                        </div>
+                                        <div class="fieldValue">
+                                            <span class="companyName">{headerFields.Company_Name__c}</span>
+                                        </div>
+
+                                        <div class="slds-grid slds-wrap slds-gutters_medium" >
+                                            <div class="slds-col slds-size_1-of-10 slds-medium-size_1-of-10 slds-large-size_1-of-10">1</div>
+                                            <div class="slds-col slds-size_1-of-10 slds-medium-size_1-of-10 slds-large-size_1-of-10">2</div>
+                                            <div class="slds-col slds-size_1-of-10 slds-medium-size_1-of-10 slds-large-size_1-of-10">3</div>
+                                            <div class="slds-col slds-size_1-of-10 slds-medium-size_1-of-10 slds-large-size_1-of-10">4</div>
+                                            <div class="slds-col slds-size_1-of-10 slds-medium-size_1-of-10 slds-large-size_1-of-10">5</div>
+                                        </div>
+
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-4 slds-medium-size_1-of-4 slds-large-size_1-of-4 contentItem fieldMargin">
+                                        <div class="ihub text-small">
+                                            <span class="slds-form-element__label labelValue textValue">{labels.ISSP_Contact}</span>
+                                        </div>
+                                        <div class="text-small"> 
+                                            <div>{headerFields.Contact_info_of_startup__c}</div>
+                                            <div>{headerFields.Contact_Position__c}</div>
+                                            <div>
+                                                <lightning-formatted-email class="blueLink" value={headerFields.Contact_Email__c} hide-icon></lightning-formatted-email>
+                                            </div>
+                                            <div>
+                                                Tel: <lightning-formatted-phone value={headerFields.Contact_Phone_Number__c}></lightning-formatted-phone>
+                                            </div>                     
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+
+        </span>
+    </c-portal-page-container>
+
+</template>
