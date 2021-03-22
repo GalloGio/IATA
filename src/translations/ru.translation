@@ -26345,10 +26345,6 @@ GSA - 3 буквы.
         <name>Reset_your_password</name>
     </customLabels>
     <customLabels>
-        <label><!-- Resource Center Service Description --></label>
-        <name>Resource_Center_Service_Description</name>
-    </customLabels>
-    <customLabels>
         <label>The attachments transfer operation completed with {0} success(es) and {1} error(s).
 
 &lt;a href=&quot;/{2}&quot; onClick=&quot;testCloseTab()&quot;&gt;Click here&lt;/a&gt; to return to the case.&apos;</label>
@@ -38864,6 +38860,19 @@ GSA - 3 буквы.
         <sections>
             <label><!-- OSCARs --></label>
             <name>OSCARs</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- OS Stations with Certification and Managers --></description>
+        <label><!-- OS Stations with Certification and Managers --></label>
+        <name>OS_Stations_Cert_Mana</name>
+        <sections>
+            <label><!-- ONE Source Contact Role Details --></label>
+            <name>ONE Source Contact Role Details</name>
+        </sections>
+        <sections>
+            <label><!-- OS Stations --></label>
+            <name>OS Stations</name>
         </sections>
     </reportTypes>
     <reportTypes>

@@ -286,11 +286,6 @@
         <label>Paypal</label>
     </customValue>
     <customValue>
-        <fullName>Resource Center</fullName>
-        <default>false</default>
-        <label>Resource Center</label>
-    </customValue>
-    <customValue>
         <fullName>Risk Profile and RHC</fullName>
         <default>false</default>
         <label>Risk Profile and RHC</label>

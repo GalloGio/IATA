@@ -1533,7 +1533,7 @@
         <name>ANG_RHC_RHCAmountTooltip</name>
     </customLabels>
     <customLabels>
-        <label>Déterminé par les antécédents de risques des agents et les résultats de leur examen financier</label>
+        <label>Votre statut de risque est basé sur les résultats de la dernière évaluation financière et de l&apos;évaluation de l&apos;historique des risques.</label>
         <name>ANG_RHC_RiskStatusTooltip</name>
     </customLabels>
     <customLabels>
@@ -26370,10 +26370,6 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         <name>Reset_your_password</name>
     </customLabels>
     <customLabels>
-        <label><!-- Resource Center Service Description --></label>
-        <name>Resource_Center_Service_Description</name>
-    </customLabels>
-    <customLabels>
         <label><!-- Response message --></label>
         <name>Response_message</name>
     </customLabels>
@@ -38880,6 +38876,19 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- OS Stations with Certification and Managers --></description>
+        <label><!-- OS Stations with Certification and Managers --></label>
+        <name>OS_Stations_Cert_Mana</name>
+        <sections>
+            <label><!-- ONE Source Contact Role Details --></label>
+            <name>ONE Source Contact Role Details</name>
+        </sections>
+        <sections>
+            <label><!-- OS Stations --></label>
+            <name>OS Stations</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Objective with Comments --></description>
         <label><!-- Objective with Comments --></label>
         <name>Objective_with_Comments</name>
@@ -38938,7 +38947,7 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         <label><!-- Objectives (Account Management) --></label>
         <name>Objectives_Account_Management</name>
         <sections>
-            <label><!-- Account Information --></label>
+            <label>Fichiers</label>
             <name>Account Information</name>
         </sections>
         <sections>

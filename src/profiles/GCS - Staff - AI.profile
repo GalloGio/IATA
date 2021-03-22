@@ -11816,6 +11816,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <custom>true</custom>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>ISSP_KPI_Reporting__mdt</name>
+    </customMetadataTypeAccesses>
     <customPermissions>
         <enabled>true</enabled>
         <name>Grant_SIS_Service</name>

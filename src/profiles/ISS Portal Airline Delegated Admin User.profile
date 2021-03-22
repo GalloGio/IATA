@@ -20603,24 +20603,24 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>AP_Process_Form__c.HOT_File_Recipient_Remove_Email_1__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>AP_Process_Form__c.HOT_File_Recipient_Remove_Email_2__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>AP_Process_Form__c.HOT_File_Recipient_Remove_Email_3__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>AP_Process_Form__c.HOT_File_Recipient_Remove_Email_4__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
