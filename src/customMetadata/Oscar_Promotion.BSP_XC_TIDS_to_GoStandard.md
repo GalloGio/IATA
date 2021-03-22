@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>Other_Conditions__c</field>
-        <value xsi:type="xsd:string">Account.RecordType.DeveloperName IN (&apos;IATA_Agency&apos;) AND Account.Location_Class__c IN (&apos;T&apos;) AND Account.IATA_Iso_Country_Name__c IN (&apos;Canada&apos;)</value>
+        <value xsi:type="xsd:string">Contact.Account.RecordType.DeveloperName IN (&apos;IATA_Agency&apos;) AND Contact.Account.Location_Class__c IN (&apos;T&apos;) AND Contact.Account.IATA_Iso_Country_Name__c IN (&apos;Canada&apos;)</value>
     </values>
     <values>
         <field>Promotion_Name__c</field>

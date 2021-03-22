@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>BSP XC TIDS to GoLite</label>
+    <label>TIDS to GoLite (free)</label>
     <protected>false</protected>
     <values>
         <field>End_Date__c</field>
-        <value xsi:type="xsd:date">2021-06-30</value>
+        <value xsi:type="xsd:date">2020-12-31</value>
     </values>
     <values>
         <field>Oscar_Process__c</field>
@@ -12,14 +12,14 @@
     </values>
     <values>
         <field>Other_Conditions__c</field>
-        <value xsi:type="xsd:string">Contact.Account.RecordType.DeveloperName IN (&apos;IATA_Agency&apos;) AND Contact.Account.Location_Class__c IN (&apos;T&apos;) AND Contact.Account.IATA_Iso_Country_Name__c IN (&apos;Canada&apos;)</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>Promotion_Name__c</field>
-        <value xsi:type="xsd:string">BSP_XC_TIDS_to_GoLite</value>
+        <value xsi:type="xsd:string">TIDS_to_GoLite</value>
     </values>
     <values>
         <field>Start_Date__c</field>
-        <value xsi:type="xsd:date">2021-03-12</value>
+        <value xsi:type="xsd:date">2020-07-01</value>
     </values>
 </CustomMetadata>
