@@ -66,9 +66,19 @@ global class AutoAssignmentEngineSF implements Database.Batchable<sObject> {
 
 		boolean isFirstBusinessDayInPast;
 		List<Case> cId = new List<Case> {};
+		dateTime firstBusinessDay;
+		
 		for (Case c : aCases) {
-			if (c.First_Business_Day__c != null) {
-				if (System.currentTimeMillis() - c.First_Business_Day__c.getTime() >= 0)
+
+			if(businessHours.isWithin(c.businessHoursId, c.CreatedDate) && businessHours.isWithin(c.businessHoursId, c.CreatedDate.addHours(1))){
+				firstBusinessDay = c.CreatedDate;
+			}
+			else {
+				firstBusinessDay =  businessHours.nextStartDate( c.businessHoursId, c.CreatedDate.addHours(1));
+			}
+
+			if (firstBusinessDay != null) {
+				if (System.currentTimeMillis() - firstBusinessDay.getTime() >= 0)
 					isFirstBusinessDayInPast = true;
 				else
 					isFirstBusinessDayInPast = false;
