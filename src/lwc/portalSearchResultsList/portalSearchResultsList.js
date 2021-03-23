@@ -21,6 +21,8 @@ import CSP_Documents from '@salesforce/label/c.CSP_Documents';
 import ICCS_Profile from '@salesforce/label/c.ICCS_Profile';
 import csp_My_Profile_Company from '@salesforce/label/c.csp_My_Profile_Company';
 import ISSP_Contact from '@salesforce/label/c.ISSP_Contact';
+import redirectfromPortalHeader from '@salesforce/apex/CSP_Utils.redirectfromPortalHeader';
+
 
 export default class PortalSearchResultList extends NavigationMixin(LightningElement) {
 
@@ -63,7 +65,14 @@ export default class PortalSearchResultList extends NavigationMixin(LightningEle
         if (this.searchText !== '') {
             params.searchText = this.filteringObject.searchText;
         }
-        navigateToPage(CSP_PortalPath+'advanced-search', params);
+        let oneSourceCommunity = window.location.href.includes('onesource');
+        if(oneSourceCommunity){
+            redirectfromPortalHeader({ pageName: 'advanced-search?searchText=' + params.searchText}).then(result => {
+                window.location.href = result;
+            });
+        }else{
+            navigateToPage(CSP_PortalPath+'advanced-search', params);
+        }
     }
 
     @api advancedSearch = false;
@@ -464,14 +473,21 @@ export default class PortalSearchResultList extends NavigationMixin(LightningEle
         let category = event.target.attributes.getNamedItem('data-category').value;
         let thePage=CSP_PortalPath;
         let params = {};
-      
+        let oneSourceCommunity = window.location.href.includes('onesource');
+
         if (category === this.label.CSP_Breadcrumb_FAQ_Title) {
-             this[NavigationMixin.Navigate]({
-                type: 'standard__knowledgeArticlePage',
-                attributes: {
-                    urlName: url
-                } 
-            }); 
+            if(oneSourceCommunity){
+                redirectfromPortalHeader({ pageName: 'article/'+url }).then(result => {
+                    window.location.href = result;
+                });
+            }else{
+                this[NavigationMixin.Navigate]({
+                    type: 'standard__knowledgeArticlePage',
+                    attributes: {
+                        urlName: url
+                    } 
+                }); 
+            }
         }else{
             
             if (category === this.label.CSP_Cases) {
@@ -505,7 +521,14 @@ export default class PortalSearchResultList extends NavigationMixin(LightningEle
                     thePage += 'my-profile';
                 }
             }
-            navigateToPage(thePage, params);
+            if(oneSourceCommunity){
+                thePage = thePage.replaceAll(CSP_PortalPath,'');
+                redirectfromPortalHeader({ pageName: thePage }).then(result => {
+                    window.location.href = result;
+                });
+            }else{
+                navigateToPage(thePage, params);
+            }
         }
     }
 }

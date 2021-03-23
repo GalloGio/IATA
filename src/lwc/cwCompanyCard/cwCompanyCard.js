@@ -41,11 +41,11 @@ export default class CwCompanyCard extends LightningElement {
 	}
 
 	get getIATAIcon() {
-		return getIataSrc(this.input.recordTypeDevName, this.input.location, this.input.locationClass, resources);
+		return getIataSrc(this.input.IATA_icon, this.input.recordTypeDevName, this.input.location, this.input.locationClass, resources);
 	}
 
 	get getIATAIconCss() {
-		let image = getIataSrc(this.input.recordTypeDevName, this.input.location, this.input.locationClass, resources);
+		let image = getIataSrc(this.input.IATA_icon, this.input.recordTypeDevName, this.input.location, this.input.locationClass, resources);
 		let cssClass = "align-middle ml-2";
 		if (image.includes("cns-endorsed-agent")) {
 			cssClass += " height-20";
@@ -74,7 +74,7 @@ export default class CwCompanyCard extends LightningElement {
 
 	tooltipText() {
 		if (this.input && this.label) {
-			return getIataTooltip(this.input.recordTypeDevName, this.input.location, this.input.locationClass, this.label);
+			return getIataTooltip(this.input.IATA_icon, this.input.recordTypeDevName, this.input.location, this.input.locationClass, this.label);
 		}
 
 		return "";

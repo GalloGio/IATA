@@ -45851,13 +45851,6 @@ respect to decisions and/or actions affecting Agents and applicants under the IA
         <value>Reset your password?</value>
     </labels>
     <labels>
-        <fullName>Resource_Center_Service_Description</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Resource Center Service Description</shortDescription>
-        <value>Through the Resource Center, you will gain access to all required documentation from IATA. The Resource Center contains key information for agencies interested in becoming IATA Accredited.</value>
-    </labels>
-    <labels>
         <fullName>Response_message</fullName>
         <categories>TransferAttachmentToCase</categories>
         <language>en_US</language>
@@ -50015,7 +50008,15 @@ ONE Source is the industry platform for validated aviation capability and infras
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>icg manage documents</shortDescription>
-        <value>Manage Documents</value>
+        <value>Supporting Documentation</value>
+    </labels>
+    <labels>
+        <fullName>icg_manage_obligations_documents</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg manage documents</shortDescription>
+        <value>Obligation Documentation Link</value>
     </labels>
     <labels>
         <fullName>icg_manage_photos</fullName>
@@ -50023,7 +50024,7 @@ ONE Source is the industry platform for validated aviation capability and infras
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>icg manage photos</shortDescription>
-        <value>Manage Photos</value>
+        <value>Supporting Documentation</value>
     </labels>
     <labels>
         <fullName>icg_manage_remote_validations</fullName>
