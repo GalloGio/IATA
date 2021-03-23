@@ -18,39 +18,49 @@
                     <template if:false={loading}>
                         <div class="coverBand" style={backgroundStyle}></div>
 
-                        <div class="myProfileHeader">
+                        <div class="myProviderHeader">
 
                             <!-- Header Provider Detail -->
-                            <div class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_x-large headerMyProfile" >
+                            <div class="slds-grid slds-wrap slds-p-vertical_x-large headerDetailProvider" >
                                 
-                                <div class="headerProfileContent">
+                                <div class="headerProviderContent">
 
                                     <!-- Labels -->
-                                    <div class="slds-col slds-size_1-of-4 slds-medium-size_1-of-4 slds-large-size_1-of-4 contentItem">
+                                    <div class="slds-col slds-size_1-of-6 slds-medium-size_1-of-6 slds-large-size_1-of-6 contentItem">
                                         <c-portal-record-view-edit-logo provider-id-api={providerId}></c-portal-record-view-edit-logo>  
                                     </div>
-                                    <div class="slds-col slds-size_2-of-4 slds-medium-size_2-of-4 slds-large-size_2-of-4 contentItem fieldMargin">
+                                    <div class="slds-col slds-size_3-of-6 slds-medium-size_3-of-6 slds-large-size_3-of-6 contentItem fieldMargin">
                                         <div class="ihub text-small">
                                             <span class="slds-form-element__label labelValue textValue">{labels.ISSP_CompanyName}</span> 
                                         </div>
-                                        <div class="fieldValue">
+                                        <div class="text-xlarge text-bold">
                                             <span class="companyName">{headerFields.Company_Name__c}</span>
                                         </div>
 
-                                        <div class="slds-grid slds-wrap slds-gutters_medium" >
-                                            <div class="slds-col slds-size_1-of-10 slds-medium-size_1-of-10 slds-large-size_1-of-10">1</div>
-                                            <div class="slds-col slds-size_1-of-10 slds-medium-size_1-of-10 slds-large-size_1-of-10">2</div>
-                                            <div class="slds-col slds-size_1-of-10 slds-medium-size_1-of-10 slds-large-size_1-of-10">3</div>
-                                            <div class="slds-col slds-size_1-of-10 slds-medium-size_1-of-10 slds-large-size_1-of-10">4</div>
-                                            <div class="slds-col slds-size_1-of-10 slds-medium-size_1-of-10 slds-large-size_1-of-10">5</div>
+                                        <div class="slds-grid slds-wrap slds-gutters_x-small socialMediaMargin" >
+                                            <div if:true={hasFB} class="slds-col slds-size_1-of-20 slds-medium-size_1-of-20 slds-large-size_1-of-20">
+                                                <a href={facebookUrl} target="_blank"><span><img src={facebookIcon} width="40" height="40"/></span></a>
+                                            </div>
+                                            <div if:true={hasTwitter} class="slds-col slds-size_1-of-20 slds-medium-size_1-of-20 slds-large-size_1-of-20">
+                                                <a href={twitterUrl} target="_blank"><span><img src={twitterIcon} width="40" height="40"/></span></a>
+                                            </div>
+                                            <div if:true={hasLinkedIn} class="slds-col slds-size_1-of-20 slds-medium-size_1-of-20 slds-large-size_1-of-20">
+                                                <a href={linkedInUrl} target="_blank"><span><img src={linkedInIcon} width="40" height="40"/></span></a>
+                                            </div>
+                                            <div if:false={hasLinkedIn} class="slds-col slds-size_1-of-20 slds-medium-size_1-of-20 slds-large-size_1-of-20">
+                                                <a href={linkedInUrl} target="_blank"><span><img src={linkedInIcon} width="40" height="40"/></span></a>
+                                            </div>
+                                            <div if:false={hasLinkedIn} class="slds-col slds-size_1-of-20 slds-medium-size_1-of-20 slds-large-size_1-of-20">
+                                                <a href={linkedInUrl} target="_blank"><span><img src={linkedInIcon} width="40" height="40"/></span></a>
+                                            </div>
                                         </div>
 
                                     </div>
-                                    <div class="slds-col slds-size_1-of-4 slds-medium-size_1-of-4 slds-large-size_1-of-4 contentItem fieldMargin">
+                                    <div class="slds-col slds-size_1-of-6 slds-medium-size_1-of-6 slds-large-size_1-of-6 contentItem fieldMargin">
                                         <div class="ihub text-small">
                                             <span class="slds-form-element__label labelValue textValue">{labels.ISSP_Contact}</span>
                                         </div>
-                                        <div class="text-small"> 
+                                        <div class="text-small text-bold"> 
                                             <div>{headerFields.Contact_info_of_startup__c}</div>
                                             <div>{headerFields.Contact_Position__c}</div>
                                             <div>

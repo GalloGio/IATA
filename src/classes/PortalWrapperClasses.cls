@@ -111,6 +111,12 @@ public with sharing class PortalWrapperClasses {
 		public Boolean isFullColumn;
 
 		@AuraEnabled
+		public Boolean isBold;
+
+		@AuraEnabled
+		public Boolean isRecentNews;
+
+		@AuraEnabled
 		public Boolean isTech;
 
 		@AuraEnabled

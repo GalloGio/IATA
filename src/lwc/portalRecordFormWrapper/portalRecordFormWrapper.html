@@ -152,6 +152,22 @@
                                         <div key={emptyStaticServices} class="text-xsmall"></div>
                                     </template>
                                 </div>
+                            </template>                           
+
+                            <template if:true={field.isRecentNews}>
+                                <div key={field.fieldName} class="ihub text-small slds-col slds-size_1-of-1 slds-medium-size_2-of-2 slds-large-size_2-of-2">
+                                    <lightning-output-field variant='label-hidden' class="textValue removeLinks"
+                                        field-name={field.fieldName}>
+                                    </lightning-output-field>
+                                </div>
+                            </template>
+
+                            <template if:true={field.isBold}>
+                                <div key={field.fieldName} class="ihub text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
+                                    <lightning-output-field class="valueBold labelValue textValue removeLinks"
+                                        field-name={field.fieldName}>
+                                    </lightning-output-field>
+                                </div>
                             </template>
 
                             <template if:true={field.isFullColumn}>

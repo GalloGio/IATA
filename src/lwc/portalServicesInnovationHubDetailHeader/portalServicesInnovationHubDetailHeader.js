@@ -13,6 +13,10 @@ import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 export default class PortalServicesInnovationHubDetailHeader extends LightningElement {
 
     @track backgroundIcon = CSP_PortalPath + 'CSPortal/Images/Backgrounds/MyProfileBackground.jpg';
+    
+    facebookIcon = CSP_PortalPath + 'CSPortal/Images/Icons/facebook-icon.svg';
+    twitterIcon = CSP_PortalPath + 'CSPortal/Images/Icons/twitter-icon.svg';
+    linkedInIcon = CSP_PortalPath + 'CSPortal/Images/Icons/linkedin-icon.svg';
 
     //Loading && Error
     @track loading = false;
@@ -22,6 +26,12 @@ export default class PortalServicesInnovationHubDetailHeader extends LightningEl
     @track contact = {};
     @track providerId;
     @track headerFields = {};
+    @track facebookUrl = '';
+    @track instagramUrl = '';
+    @track twitterUrl = '';
+    @track linkedInUrl = '';
+    @track gitHubUrl = '';
+    @track telegramUrl = '';
 
     _labels = {
         ISSP_CompanyName,
@@ -34,6 +44,30 @@ export default class PortalServicesInnovationHubDetailHeader extends LightningEl
 
     set labels(value) {
         this._labels = value;
+    }
+
+    get hasFB() {
+        return this.facebookUrl != '' && this.facebookUrl != undefined;
+    }
+
+    get hasFB() {
+        return this.instagramUrl != '' && this.instagramUrl != undefined;
+    }
+
+    get hasTwitter() {
+        return this.twitterUrl != '' && this.twitterUrl != undefined;
+    }
+
+    get hasLinkedIn() {
+        return this.linkedInUrl != '' && this.linkedInUrl != undefined;
+    }
+
+    get hasGitHub() {
+        return this.gitHubUrl != '' && this.gitHubUrl != undefined;
+    }
+
+    get hasTelegram() {
+        return this.telegramUrl != '' && this.telegramUrl != undefined;
     }
 
     connectedCallback() {
@@ -49,14 +83,17 @@ export default class PortalServicesInnovationHubDetailHeader extends LightningEl
         
         getProviderHeaderFields({ providerId: this.providerId}).then(result => {
             this.headerFields = result;
-            console.log(this.headerFields);
+
+            this.facebookUrl  = this.headerFields.Facebook__c;
+            this.instagramUrl = this.headerFields.Instagram__c;
+            this.twitterUrl   = this.headerFields.Twitter__c;
+            this.linkedInUrl  = this.headerFields.LinkedIn__c;
+            this.gitHubUrl    = this.headerFields.GitHub__c;
+            this.telegramUrl  = this.headerFields.Telegram__c;
+
         });
         
 
-    }
-
-    closeAlreadyL2Popup(){
-        navigateToPage(CSP_PortalPath,{});
     }
 
 }
