@@ -92,7 +92,7 @@
                                                                 <span class="ml-1 mr-1">{facilityStreetNr}</span>
                                                             </div>  
                                                             <div class="col-3 text-center col-no-padding">
-                                                                <input class="width-100" name="secondAddress" value={facility.secondAddress}
+                                                                <input class="width-100" name="secondAddress" placeholder={label.icg_second_address} value={facility.secondAddress}
                                                                     onblur={handleSecondAddressChange}/>
                                                             </div>  
                                                             <div class="col-4 pt-1">
@@ -174,7 +174,7 @@
                                                     <div class="col-11 offset-1 pt-1 pl-0">
                                                         <span class="ml-1">
                                                             <span if:false={editOn}>{facility.secondAddress} </span>
-                                                            <input class="mr-3" if:true={editOn} name="secondAddress" value={facility.secondAddress} onblur={handleSecondAddressChange}/>
+                                                            <input class="mr-3" if:true={editOn} name="secondAddress" placeholder={label.icg_second_address} value={facility.secondAddress} onblur={handleSecondAddressChange}/>
                                                         </span>
                                                     </div>  
                                                     <div class="col-11 offset-1 pt-1 pl-0">
@@ -354,100 +354,44 @@
 
                                 <!-- Airlines Handlers -->
                                 <template if:true={showAirlines}>
-                                    <div class="row-home">
-                                        <div class="col-12">
-                                            <p class="title-airlines-handled">
-                                                <b if:true={showListAirlines}>{label.list_airlines_handled}</b>
-                                                <b if:true={showOperatingAirlines}>{label.operating_airlines}</b>
-                                                <img class="img-list-airline" src={getListAirIcon} alt="type"
-                                                    title={label.information_not_verified} />
-                                                    <template if:true={editMode}>
-                                                        <lightning-icon icon-name="utility:close" class="ml-4 cursor-pt" if:true={editOnAirline} variant="error" title={label.close} onclick={showInputAirlines} size="x-small"></lightning-icon>
-                                                        <lightning-icon icon-name="utility:edit" class="ml-4 cursor-pt" if:false={editOnAirline} title={label.icg_capab_magmnt_edit} onclick={showInputAirlines} size="x-small"></lightning-icon>
-                                                    </template>  
-                                            </p>
-                                            <hr class="yellow-underline mt-2">
-                                            <div class="form-row">
-                                                <div class="col-6 text-right">
-                                                    <c-cw-search-in-list label={label} onfilterinlist={filterAirlinesHandled}>
-                                                    </c-cw-search-in-list>
-                                                </div>
-                                            </div>
-                                            <br />
-                                            <div class="form-row">
-                                                <div class="col">
-                                                    <c-cw-handled-airlines label={label} preselected-airlines={airlineHandlers} 
-                                                        isreadonly={editAirlines} filter-text={airlineHandlersFilterText} data-target="airline" 
-                                                        onselectairlines={setSelectedAirlineHadnlers}></c-cw-handled-airlines>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <c-cw-handler-detail 
+                                        station-profile={facility} 
+                                        handler-type="airline"
+                                        url-base-to-station-profile={urlStationProfile}
+                                        handler-data={airlineHandlers}
+                                        is-edit-mode-available={editMode}
+                                        is-read-only={readOnlyHandlersAirline}
+                                        onevent={manageChildEvent}
+                                        label={label}>
+                                    </c-cw-handler-detail>
                                 </template>
 
                                 <!-- Cargo Handlers -->
                                 <template if:true={showOperatingCHFandRampH}>
-                                    <div class="row-home">
-                                        <div class="col-12">
-                                            <p class="title-airlines-handled">
-                                                <b class="slds-truncate">{label.operating_cargo_handling_facilities}</b>
-                                                <img class="img-list-airline" src={getListAirIcon} alt="type"
-                                                    title={label.information_not_verified} />
-                                                    <template if:true={editMode}>
-                                                        <lightning-icon icon-name="utility:close" class="ml-4 cursor-pt" if:true={editOnCargoHandling} variant="error" title={label.close} onclick={showInputCargoHandling} size="x-small"></lightning-icon>
-                                                        <lightning-icon icon-name="utility:edit" class="ml-4 cursor-pt" if:false={editOnCargoHandling} title={label.icg_capab_magmnt_edit} onclick={showInputCargoHandling} size="x-small"></lightning-icon>
-                                                    </template>  
-                                            </p>
-                                            <hr class="yellow-underline mt-2">
-                                            <div class="form-row">
-                                                <div class="col-6 text-right">
-                                                    <c-cw-search-in-list label={label} onfilterinlist={filterOperatingCHF}>
-                                                    </c-cw-search-in-list>
-                                                </div>
-                                            </div>
-                                            <br />
-                                            <div class="form-row">
-                                                <div class="col">
-                                                    <c-cw-handled-airlines label={label} raw-data={cargoHandlers} isreadonly={editCargoHandling}
-                                                        filter-text={cargoHandlersFilterText} data-target="cargo" onselectairlines={setSelectedHandlers} 
-                                                        class="cmpOperatingCHF"></c-cw-handled-airlines>
-                                                
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <c-cw-handler-detail 
+                                        station-profile={facility}
+                                        handler-type="cargo"
+                                        url-base-to-station-profile={urlStationProfile}
+                                        handler-data={cargoHandlers}
+                                        is-edit-mode-available={editMode}
+                                        is-read-only={readOnlyHandlersCargo}
+                                        onevent={manageChildEvent}
+                                        label={label}>
+                                    </c-cw-handler-detail>
                                 </template>
 
                                 <!-- Ramp Handlers -->
                                 <template if:true={showOperatingCHFandRampH}>
-                                    <div class="row-home">
-                                        <div class="col-12">
-                                            <p class="title-airlines-handled">
-                                                <b>{label.operating_ramp_handler}</b>
-                                                <img class="img-list-airline" src={getListAirIcon} alt="type"
-                                                    title={label.information_not_verified} />
-                                                <template if:true={editMode}>
-                                                    <lightning-icon icon-name="utility:close" class="ml-4 cursor-pt" variant="error" if:true={editOnRampHandlers} title={label.close}  onclick={showInputRampHandlers} size="x-small"></lightning-icon>
-                                                    <lightning-icon icon-name="utility:edit" class="ml-4 cursor-pt" title={label.icg_capab_magmnt_edit} if:false={editOnRampHandlers} onclick={showInputRampHandlers} size="x-small"></lightning-icon>
-                                                </template> 
-                                            </p>
-                                            <hr class="yellow-underline mt-2">
-                                            <div class="form-row">
-                                                <div class="col-6 text-right">
-                                                    <c-cw-search-in-list label={label} onfilterinlist={filterRampH}>
-                                                    </c-cw-search-in-list>
-                                                </div>
-                                            </div>
-                                            <br />
-                                            <div class="form-row">
-                                                <div class="col">
-                                                    <c-cw-handled-airlines label={label} raw-data={rampHandlers} isreadonly={editRampHandlers}
-                                                        filter-text={rampHandlersFilterText} data-target="ramp" onselectairlines={setSelectedHandlers} 
-                                                        class="cmpRampHandlers"></c-cw-handled-airlines>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <c-cw-handler-detail 
+                                        station-profile={facility}
+                                        handler-type="ramp"
+                                        url-base-to-station-profile={urlStationProfile}
+                                        handler-data={rampHandlers}
+                                        is-edit-mode-available={editMode}
+                                        is-read-only={readOnlyHandlersRamp}
+                                        onevent={manageChildEvent}
+                                        label={label}>
+                                    </c-cw-handler-detail>
                                 </template>
 
                                 <div class="row">

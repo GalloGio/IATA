@@ -9,7 +9,7 @@
         <script src="https://code.jquery.com/jquery-2.2.4.min.js"/>
         <script src="{!urlfor($Resource.TitleAlert)}" type="text/javascript"/>
             
-            <script>
+            <script type="text/javascript">
             
             
             
@@ -226,7 +226,7 @@
             
             var languages = '';
             if(userLanguages){
-                Object.keys(userLanguages).forEach(key => {
+                Object.keys(userLanguages).forEach(function(key) {
                     if(!key.includes('{!language}')){
                     if(languages.length == 0){
                     languages = userLanguages[key];
@@ -1188,7 +1188,9 @@
             }
             
             .liveAgentEndButtonTopHeader {
+            border: transparent; /* IE 11 */
             border: unset;
+            background: transparent; /* IE 11 */
             background: unset;
             color: #fff;
             font-size: 14px;

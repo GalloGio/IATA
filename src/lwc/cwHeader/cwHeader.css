@@ -136,22 +136,12 @@ button.sign-up-btn:hover {
 }
 
 @media (max-width: 1199px) and (min-width: 1026px) {
-	.account-btn {
-		display: none;
-	}
-
 	.nav-link-custom {
 		font-size: 12px !important;
 	}
 
 	.logged-in-icon {
 		margin-right: 20px;
-	}
-}
-
-@media (min-width: 1200px) {
-	.account-icon {
-		display: none;
 	}
 }
 

@@ -743,10 +743,6 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
                 <default>false</default>
             </values>
             <values>
-                <fullName>Resource Center</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Risk Profile and RHC</fullName>
                 <default>false</default>
             </values>
@@ -1072,10 +1068,6 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
                 <default>false</default>
             </values>
             <values>
-                <fullName>Resource Center</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Risk Profile and RHC</fullName>
                 <default>false</default>
             </values>
@@ -1398,10 +1390,6 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
                 <default>false</default>
             </values>
             <values>
-                <fullName>Resource Center</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Risk Profile and RHC</fullName>
                 <default>false</default>
             </values>
@@ -1717,10 +1705,6 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
             </values>
             <values>
                 <fullName>Paypal</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Resource Center</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2050,10 +2034,6 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
             </values>
             <values>
                 <fullName>Paypal</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Resource Center</fullName>
                 <default>false</default>
             </values>
             <values>

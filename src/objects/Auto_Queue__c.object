@@ -329,6 +329,20 @@
         <language>en_US</language>
     </listViews>
     <listViews>
+        <fullName>Global_Auto_Queues</fullName>
+        <columns>NAME</columns>
+        <columns>Region__c</columns>
+        <columns>Active__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Region__c</field>
+            <operation>equals</operation>
+            <value>Global</value>
+        </filters>
+        <label>Global Auto Queues</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>IATAN_Agency_Management</fullName>
         <columns>NAME</columns>
         <columns>Active__c</columns>

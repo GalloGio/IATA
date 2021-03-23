@@ -543,19 +543,9 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <columns>CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>Bulletin_Memo_Text__c</field>
-            <operation>contains</operation>
-            <value>IN PROCESS</value>
-        </filters>
-        <filters>
-            <field>Used_By_CNS__c</field>
-            <operation>equals</operation>
-            <value>1</value>
-        </filters>
-        <filters>
             <field>Change_Code__c</field>
-            <operation>notEqual</operation>
-            <value>NEW,CTB</value>
+            <operation>equals</operation>
+            <value>MCH</value>
         </filters>
         <label>AMS_debug</label>
         <language>en_US</language>
