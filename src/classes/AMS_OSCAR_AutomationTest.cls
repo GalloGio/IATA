@@ -7,7 +7,9 @@ private class AMS_OSCAR_AutomationTest {
 
 	@testSetup static void createData() {
 		AMS_OSCAR_TestDataFactory.createOSCARtestData();
-		Portal_Applications__c pa = new Portal_Applications__c(name = 'Risk Profile and RHC');
+		Portal_Applications__c pa = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		pa.Name = 'Risk Profile and RHC';
+		pa.Functional_Role__c = 'Risk Profile and RHC';
 		insert pa;
 	}
 

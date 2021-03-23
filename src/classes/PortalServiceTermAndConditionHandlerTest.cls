@@ -3,9 +3,8 @@ private class PortalServiceTermAndConditionHandlerTest {
 
 	@TestSetup
 	static void createData(){
-		Portal_Applications__c pa = new Portal_Applications__c(
-			Name = 'Portal Application Test'
-		);
+		Portal_Applications__c pa = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		pa.Name = 'Portal Application Test';
 		insert pa;
 
 		Term_and_Condition__c tc = new Term_and_Condition__c(

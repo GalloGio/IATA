@@ -2,7 +2,7 @@
 private class IATAPayServiceTest {
 	@TestSetup
 	static void makeData(){
-		List<Account> accountList = TestDataFactory_Accounts.createStandardAccounts(1);
+		List<Account> accountList = TestDataFactory_Accounts.createDefaultAccounts(1);
 		insert accountList;
 		List<Contact> contactList = TestDataFactory_Contacts.createDefaultContact(accountList.get(0).Id, 2);
 		insert contactList;
