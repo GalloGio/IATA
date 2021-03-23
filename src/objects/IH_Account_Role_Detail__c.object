@@ -188,7 +188,7 @@
     <fields>
         <fullName>Also_Known_As__c</fullName>
         <externalId>false</externalId>
-        <label>Also known as</label>
+        <label>Also Known As</label>
         <length>255</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -211,7 +211,7 @@
         <fullName>Company_Description__c</fullName>
         <description>Description of the company</description>
         <externalId>false</externalId>
-        <label>Company Description</label>
+        <label>Company Overview</label>
         <length>32768</length>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -222,7 +222,7 @@
         <fullName>Company_Name__c</fullName>
         <description>Name of the company</description>
         <externalId>false</externalId>
-        <label>Company name</label>
+        <label>Company Name</label>
         <length>255</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -304,7 +304,7 @@
         <fullName>Contact_info_of_startup__c</fullName>
         <description>Contact information of startup</description>
         <externalId>false</externalId>
-        <label>Startup Contact</label>
+        <label>Contact Person</label>
         <length>255</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -314,9 +314,9 @@
     </fields>
     <fields>
         <fullName>Description__c</fullName>
-        <description>Description of the provider/consumer</description>
+        <description>History of the company</description>
         <externalId>false</externalId>
-        <label>Description</label>
+        <label>Company History</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -335,7 +335,7 @@
         <fullName>Focus_Areas__c</fullName>
         <description>Fields of action</description>
         <externalId>false</externalId>
-        <label>Focus Areas</label>
+        <label>Industry Focus Areas</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -600,7 +600,7 @@
         <fullName>Internal_Comments__c</fullName>
         <description>Observations</description>
         <externalId>false</externalId>
-        <label>Internal comments</label>
+        <label>Internal Comments</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -700,7 +700,7 @@
         <fullName>Number_Of_Employees__c</fullName>
         <description>Number of employees</description>
         <externalId>false</externalId>
-        <label>Number of employees</label>
+        <label>Number Of Employees</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -799,7 +799,7 @@
         <fullName>Tags_Of_Categories__c</fullName>
         <description>Categories</description>
         <externalId>false</externalId>
-        <label>IATA touchpoints</label>
+        <label>IATA Touchpoints</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
