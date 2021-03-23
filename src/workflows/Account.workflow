@@ -105,19 +105,19 @@
         <description>FDS Coding - AOC Expiry alert 2</description>
         <protected>false</protected>
         <recipients>
-            <recipient>amerz@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>bricenoa@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>gonzalezce@iata.org</recipient>
+            <recipient>kaddafo@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
             <recipient>pietranget@iata.org.prod</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>sanchezc@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
@@ -129,19 +129,19 @@
         <description>FDS Coding AOC Expiry date alert 10 Days before</description>
         <protected>false</protected>
         <recipients>
-            <recipient>amerz@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
             <recipient>bricenoa@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>gonzalezce@iata.org</recipient>
+            <recipient>kaddafo@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
             <recipient>pietranget@iata.org.prod</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>sanchezc@iata.org</recipient>
             <type>user</type>
         </recipients>
         <senderAddress>noreply@iata.org</senderAddress>
