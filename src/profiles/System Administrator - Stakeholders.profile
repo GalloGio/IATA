@@ -74910,7 +74910,7 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>Recommendations_Visibility__c</tab>
-        <visibility>Hidden</visibility>
+        <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>Release_Task__c</tab>
