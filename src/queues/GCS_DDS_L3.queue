@@ -6,6 +6,9 @@
         <publicGroups>
             <publicGroup>GCS_BIS_Direct_Data_Solutions_L3</publicGroup>
         </publicGroups>
+        <users>
+            <user>charkovad@iata.org</user>
+        </users>
     </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
