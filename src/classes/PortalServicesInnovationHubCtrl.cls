@@ -523,7 +523,7 @@ public without sharing class PortalServicesInnovationHubCtrl {
 	@AuraEnabled(cacheable = false)
 	public static List<IH_Account_Role_Detail__c> getProviderFieldLists(String providerId,String field) {
 
-		if(String.isNotBlank(providerId)){
+		if(String.isBlank(providerId)){
 			providerId = getUserIHAccountRoleDetailWithStatus('').Id;
 		}
 
