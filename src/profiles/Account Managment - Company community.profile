@@ -69969,7 +69969,7 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>Cases_IFAP_Portal_Tab</tab>
-        <visibility>Hidden</visibility>
+        <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>Certification__c</tab>
