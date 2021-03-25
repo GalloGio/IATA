@@ -10313,6 +10313,21 @@ To comunitacate an issue, use ISSUE-Quality</inlineHelpText>
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Parent__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Lookup to another exception to allow a hierarchy system in exceptions</description>
+        <externalId>false</externalId>
+        <label>Parent Exception</label>
+        <referenceTo>Quality__c</referenceTo>
+        <relationshipLabel>Exceptions</relationshipLabel>
+        <relationshipName>Exceptions</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Pending_Evidences_to_be_Collected__c</fullName>
         <externalId>false</externalId>
         <label>Pending Evidences to be Collected</label>
@@ -11023,7 +11038,7 @@ TEXT( Related_Case_Number__r.Region__c))</formula>
         <label>Related Case Number</label>
         <referenceTo>Case</referenceTo>
         <relationshipName>Quality</relationshipName>
-        <required>true</required>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
