@@ -26,6 +26,7 @@ export default class PortalServicesInnovationHubDetailHeader extends LightningEl
     @track contact = {};
     @track providerId;
     @track headerFields = {};
+    @track websiteUrl = '';
     @track facebookUrl = '';
     @track instagramUrl = '';
     @track twitterUrl = '';
@@ -46,11 +47,15 @@ export default class PortalServicesInnovationHubDetailHeader extends LightningEl
         this._labels = value;
     }
 
+    get hasWebsite() {
+        return this.websiteUrl != '' && this.websiteUrl != undefined;
+    }
+
     get hasFB() {
         return this.facebookUrl != '' && this.facebookUrl != undefined;
     }
 
-    get hasFB() {
+    get hasInstagram() {
         return this.instagramUrl != '' && this.instagramUrl != undefined;
     }
 
@@ -71,6 +76,7 @@ export default class PortalServicesInnovationHubDetailHeader extends LightningEl
     }
 
     connectedCallback() {
+        this.loading = true;
         let pageParams = getParamsFromPage();
         if(pageParams !== undefined){
             if(pageParams.providerId !== undefined){
@@ -84,12 +90,15 @@ export default class PortalServicesInnovationHubDetailHeader extends LightningEl
         getProviderHeaderFields({ providerId: this.providerId}).then(result => {
             this.headerFields = result;
 
+            this.websiteUrl = this.headerFields.Website__c;
             this.facebookUrl  = this.headerFields.Facebook__c;
             this.instagramUrl = this.headerFields.Instagram__c;
             this.twitterUrl   = this.headerFields.Twitter__c;
             this.linkedInUrl  = this.headerFields.LinkedIn__c;
             this.gitHubUrl    = this.headerFields.GitHub__c;
             this.telegramUrl  = this.headerFields.Telegram__c;
+
+            this.loading = false;
 
         });
         

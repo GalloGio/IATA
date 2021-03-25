@@ -38,20 +38,26 @@
                                         </div>
 
                                         <div class="slds-grid slds-wrap slds-gutters_x-small socialMediaMargin" >
+                                            <div if:true={hasWebsite} class="slds-col slds-size_1-of-20 slds-medium-size_1-of-20 slds-large-size_1-of-20">
+                                                <a href={websiteUrl} target="_blank"><span><img src={facebookIcon} width="30" height="30"/></span></a>
+                                            </div>
                                             <div if:true={hasFB} class="slds-col slds-size_1-of-20 slds-medium-size_1-of-20 slds-large-size_1-of-20">
-                                                <a href={facebookUrl} target="_blank"><span><img src={facebookIcon} width="40" height="40"/></span></a>
+                                                <a href={facebookUrl} target="_blank"><span><img src={facebookIcon} width="30" height="30"/></span></a>
+                                            </div>
+                                            <div if:true={hasInstagram} class="slds-col slds-size_1-of-20 slds-medium-size_1-of-20 slds-large-size_1-of-20">
+                                                <a href={instagramUrl} target="_blank"><span><img src={facebookIcon} width="30" height="30"/></span></a>
                                             </div>
                                             <div if:true={hasTwitter} class="slds-col slds-size_1-of-20 slds-medium-size_1-of-20 slds-large-size_1-of-20">
-                                                <a href={twitterUrl} target="_blank"><span><img src={twitterIcon} width="40" height="40"/></span></a>
+                                                <a href={twitterUrl} target="_blank"><span><img src={twitterIcon} width="30" height="30"/></span></a>
                                             </div>
                                             <div if:true={hasLinkedIn} class="slds-col slds-size_1-of-20 slds-medium-size_1-of-20 slds-large-size_1-of-20">
-                                                <a href={linkedInUrl} target="_blank"><span><img src={linkedInIcon} width="40" height="40"/></span></a>
+                                                <a href={linkedInUrl} target="_blank"><span><img src={linkedInIcon} width="30" height="30"/></span></a>
                                             </div>
-                                            <div if:false={hasLinkedIn} class="slds-col slds-size_1-of-20 slds-medium-size_1-of-20 slds-large-size_1-of-20">
-                                                <a href={linkedInUrl} target="_blank"><span><img src={linkedInIcon} width="40" height="40"/></span></a>
+                                            <div if:false={hasGitHub} class="slds-col slds-size_1-of-20 slds-medium-size_1-of-20 slds-large-size_1-of-20">
+                                                <a href={gitHubUrl} target="_blank"><span><img src={linkedInIcon} width="30" height="30"/></span></a>
                                             </div>
-                                            <div if:false={hasLinkedIn} class="slds-col slds-size_1-of-20 slds-medium-size_1-of-20 slds-large-size_1-of-20">
-                                                <a href={linkedInUrl} target="_blank"><span><img src={linkedInIcon} width="40" height="40"/></span></a>
+                                            <div if:false={hasTelegram} class="slds-col slds-size_1-of-20 slds-medium-size_1-of-20 slds-large-size_1-of-20">
+                                                <a href={telegramUrl} target="_blank"><span><img src={linkedInIcon} width="30" height="30"/></span></a>
                                             </div>
                                         </div>
 

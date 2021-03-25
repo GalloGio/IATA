@@ -200,6 +200,10 @@ public without sharing class PortalServicesInnovationHubCtrl {
 			technology.isMultipick = true;
 			fieldWrapper.add(technology);
 		}
+
+		if(String.isNotBlank(roleDetail.Description__c)){
+			fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Description__c',true,true));
+		}
 		
 		return fieldWrapper;
 	}
@@ -326,7 +330,7 @@ public without sharing class PortalServicesInnovationHubCtrl {
 		IH_Account_Role_Detail__c roleDetail = new IH_Account_Role_Detail__c();
 
 		if(String.isNotBlank(providerId)){
-			roleDetail = [SELECT Legal_Name__c,Also_Known_As__c,Location__c,Company_Description__c,Founding_Date__c,
+			roleDetail = [SELECT Legal_Name__c,Also_Known_As__c,Location__c,Company_Description__c,Founding_Date__c,Description__c,
 			Number_Of_Employees__c,Funding_Amount__c,Funding_Stage__c,Investors__c,Industry_Perspectives__c,Technology__c,
 			Recent_News__c,Focus_Areas__c,Tags_Of_Categories__c,Solution__c,Competitive_Advantage__c,Competition_Competitors__c
 			FROM IH_Account_Role_Detail__c WHERE Id = :providerId];
