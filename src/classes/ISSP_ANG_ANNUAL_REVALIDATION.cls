@@ -49,7 +49,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
 	private static Id ownershipId = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
 
-	public static String DEFAULT_ICON { get{ return 'glyphicon glyphicon-refresh text-primary';} set;}
+	public static String DEFAULT_ICON { get{ return 'glyphicon glyphicon-refresh text-primary-2';} set;}
 	public static String OK_ICON { get{ return 'glyphicon glyphicon-ok text-success';} set;}
 	public static String CONFIRMED_ICON { get{ return 'glyphicon glyphicon-flag text-danger';} set;}
 	public static String PROGRESS_ICON { get{ return 'glyphicon glyphicon-edit text-danger';} set;}
@@ -77,7 +77,12 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 	public Set<Id> parents {get; set;}
 	public Set<Id> childs {get; set;}
 	public Account headEntity {get; set;}
-	List<Account> childsAccounts {get; set;}
+	public List<Account> childsAccounts {get; set;}
+	public List<childsAccountsWrapper> childsAccountsWrapperList {get; set;}
+	public Set<String> ListOfCountries {get; set;}
+	public Boolean allChildsAccountsWrapperSelected {get; set;}
+	public List<String> countriesSelected {get; set;}
+	public String countrySelected {get; set;}
 	public String tree {get {return jsonTree;} set;}
 	public ANG_AnnualRevCurrentAccount currentAccount {get; set;}
 	public String caseId {get; set;}
@@ -142,6 +147,15 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		}
 		return formsToCopyOwnersTo;
 	}set;}
+	public boolean displayPopup {get;set;} 
+    public void closePopup() 
+    {
+        displayPopup = false; 
+    } 
+    public void showPopup() 
+    {
+        displayPopup = true; 
+    } 
 
 	public List<SelectOption> relatedAccounts {get {
 
@@ -405,7 +419,21 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		aux.addAll(childs);
 
 		List<Account> allAccounts = fetchAccounts(aux, AMS_Utils.RECTYPE_IATAAGENCY, statusSet, locationTypeSet, Ams_Utils.SECTOR_PASSENGER);
+		Set<Id> allAccountsIds = new Set<Id>();
+		for(Account a : allAccounts) {
+			allAccountsIds.add(a.id);
+		}
+		List<AMS_Account_Role__c> arList = [SELECT Percentage__c, Percentage_Formated__c, Account__c
+											FROM AMS_Account_Role__c
+											WHERE Account__c In: allAccountsIds
+											AND Active__c = true
+											AND RecordTypeId = :ownershipId 
+											AND Percentage__c>0];
 
+		allChildsAccountsWrapperSelected = false;
+		countriesSelected = new List<String>();
+		childsAccountsWrapperList = new List<childsAccountsWrapper>();
+		ListOfCountries = new Set<String>();
 		Boolean found = false;
 		for(Account a : allAccounts) {
 			this.isoCodes.add(a.Country_ISO_Code__c);
@@ -415,12 +443,129 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 				found = true;
 			} else {
 				this.childsAccounts.add(a);
+				Decimal percentage = 0;
+				for (AMS_Account_Role__c ar : arList) {
+					if(ar.Account__c == a.Id ){
+						percentage += ar.Percentage__c;
+					}
+				}
+				childsAccountsWrapperList.add(new childsAccountsWrapper(a, getIcon(a.IATACode__c), percentage == 100));
+				ListOfCountries.add(a.IATA_ISO_Country__r.Name);
 			}
 		}
+
+		childsAccountsWrapperList.sort();
 
 		//The hierarchy does not have an HE
 		if(!found) { throw new AnnualRevException('The hierarchy does not have an HE!'); }
 	}
+
+
+	public String csvAccountsExport {
+        get {
+			List<String[]> allAccounts = new List<String[]>();
+            for (Account a : this.childsAccounts) {
+				String[] locations = new String[] {};
+                locations.add(a.IATACode__c);
+				locations.add(a.Name);
+				locations.add(a.TradeName__c);
+				locations.add(a.VAT_Number__c);
+				locations.add(a.BillingStreet);
+				locations.add(a.BillingCity);
+				locations.add(a.BillingState);
+				locations.add(a.BillingPostalCode);
+				locations.add(a.BillingCountry);
+				locations.add(a.ShippingStreet);
+				locations.add(a.ShippingCity);
+				locations.add(a.ShippingState);
+				locations.add(a.ShippingPostalCode);
+				locations.add(a.ShippingCountry);
+				locations.add(a.Email__c);
+				locations.add(a.Website);
+				locations.add(a.Phone);
+				locations.add(a.Mobile__c);
+				locations.add(a.Fax);
+				Integer controlOnwersSize = 0;
+				for (AMS_Account_Role__c ar : amsOwners) {
+					if(ar.Account__c == a.Id && controlOnwersSize < 10){
+						locations.add(ar.Owner_Name__c != '' ? ar.Owner_Name__c : ar.owner_account__r.name);
+						locations.add(''+ar.Percentage__c);
+					}
+					controlOnwersSize++;
+				}
+				allAccounts.add(locations);
+            }
+            return JSON.serialize(allAccounts);
+        }
+    }
+
+	public List<SelectOption> getCountriesByChildsAccounts() {
+		List<SelectOption> options = new List<SelectOption>();
+		if(!ListOfCountries.isEmpty()){
+			for(String ct: ListOfCountries){
+				options.add(new SelectOption(ct,ct));
+			}
+		}
+		return options;
+	}
+
+	public class childsAccountsWrapper implements Comparable{
+
+		public Boolean checked{ get; set; }
+		public Boolean isGE  { get; set;}
+		public Boolean isHE  { get; set;}
+		public Boolean isAE  { get; set;}
+		public Id accountId  { get; set;}
+		public String accountName  { get; set;}
+		public String IATACode  { get; set;}
+		public String status  { get; set;}
+		public String BSP  { get; set;}
+		public String ISOCountryName  { get; set;}
+		public String icon  { get; set;}
+		public Boolean isOwnershipCompleted  { get; set;}
+			
+
+		public childsAccountsWrapper(account c, String iconClass, Boolean isCompleted){
+			isGE = c.Location_Type__c == 'GE' ? true : false;
+			isHE = c.Location_Type__c == 'HE' ? true : false;
+			isAE = c.Location_Type__c == 'AE' ? true : false;
+			accountId = c.Id;
+			accountName = c.Name;
+			IATACode = c.IATACode__c;
+			status = c.Status__c;
+			BSP = c.IATA_ISO_Country__r.AMS_Settlement_System__r.Name;
+			ISOCountryName = c.IATA_ISO_Country__r.Name;
+			checked = false;
+			icon = iconClass;
+			isOwnershipCompleted = isCompleted;
+		}
+		
+		public Integer compareTo(Object objToCompare) {
+			return ISOCountryName.compareTo(((childsAccountsWrapper)objToCompare).ISOCountryName);
+		}
+	}
+		
+	public void checkAllChildsAccountsWrapper() {
+		for(childsAccountsWrapper acc: childsAccountsWrapperList){
+			if(acc.isOwnershipCompleted && acc.icon != OK_ICON){
+				acc.checked = allChildsAccountsWrapperSelected;
+			}
+		}
+	}
+
+
+	public void checkAllChildsAccountsByCountry() {
+		for(childsAccountsWrapper acc: childsAccountsWrapperList){
+			if(acc.isOwnershipCompleted && acc.icon != OK_ICON){
+				if(countriesSelected.contains(acc.ISOCountryName)){
+					acc.checked = true;
+				}else{
+					acc.checked = false;
+				}
+			}
+		}
+	}
+		
 
 	public void setFormsMap() {
 		formsMap = new Map<String, ANG_AnnualRevFormWrapper>();
@@ -477,7 +622,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 					ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity,
 					Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c,
 					Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Sector__c, Category__c,
-					License_Number__c, GDS__c, Site,
+					License_Number__c, GDS__c, Site, Status__c, IATA_ISO_Country__r.Name, IATA_ISO_Country__r.AMS_Settlement_System__r.Name,
 					IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c, Geoname_Billing_City__c, Geoname_Shipping_City__c
 				From Account
 				Where Id in :accountIds
@@ -495,6 +640,19 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		return (al.size() != 0) ? al[0] : null;
 	}
 
+	public void addValueCountry() {
+		countriesSelected.add(countrySelected);
+		checkAllChildsAccountsByCountry();
+	}
+	public void removeValueCountry() {
+		for (Integer i = (countriesSelected.size()-1) ; i>= 0 ; i--){
+			if(countriesSelected[i] == countrySelected){
+				countriesSelected.remove(i);
+			}
+		} 
+		checkAllChildsAccountsByCountry();
+	}
+
 	public PageReference loadIataCode() {
 		resetErrors();
 
@@ -509,7 +667,42 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		}
 		return null;
 	}
+	public void massConfirmDetails() {
+		displayPopup = false;
+		for(childsAccountsWrapper acc: childsAccountsWrapperList){
+			if(acc.checked){
+				if(this.oscar.IATA_Codes_OK__c == null || this.oscar.IATA_Codes_OK__c == '') {
+					this.oscar.IATA_Codes_OK__c = acc.IATACode;
+				} else {
+					this.oscar.IATA_Codes_OK__c += ',' + acc.IATACode;
+				}
+			}
+		}
 
+		try {
+			update oscar;
+			for(childsAccountsWrapper acc: childsAccountsWrapperList){
+				if(acc.checked){
+					iataCodesOk.add(acc.IATACode);
+					currentAccount = new ANG_AnnualRevCurrentAccount(accountsMap.get(acc.IATACode),
+															getStatus(acc.IATACode),
+															getForm(acc.IATACode),
+															getIsoCountry(accountsMap.get(acc.IATACode).Country_ISO_Code__c),
+															(acc.IATACode == heIataCode));
+					
+					currentAccount.status = COMPLETED_STATUS;
+					acc.icon = OK_ICON;
+					acc.checked = false;
+				}
+			}
+
+			jsonTree = generateTree();
+
+		} catch(DmlException de) { 
+			/* All stays the same. */ 
+		}
+	}
+	
 	public PageReference confirmDetails() {
 		resetErrors();
 
@@ -1081,7 +1274,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 			}
 		}
 	}
-
+	public List<AMS_Account_Role__c> amsOwners {get;set;}
 	// This method is only beeing called for the accounts in states OPEN or completed.
 	// All the other accounts have already a staging area saved therefore the owners are alreasdy there.
 	public List<AMS_Accreditation_Contact__c> getAllAMS_Account_Role(Set<Id> accounts){
@@ -1089,7 +1282,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
 		Id rtAccRoleOwnership = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
 
-		List<AMS_Account_Role__c> amsOwners = [Select Account__c, Active__c, Employee_Name__c,Employee_type__c, Id,
+		amsOwners = [Select Account__c, Active__c, Employee_Name__c,Employee_type__c, Id,
 													Owner_Account__c, Owner_Account__r.Name, Owner_Account__r.IATACode__c,
 													Owner_Account__r.Email__c, Owner_Name__c,Percentage__c, Position__c,
 													RecordTypeId, Title__c, Valid__c, Person__c, Person__r.First_Name__c,
@@ -1197,24 +1390,43 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		return aux;
 	}
 
+	public HeadEntity he {get;set;}
+
 	private String generateTree() {
 		String currentIataCode = '';
 		JsonValue jsonValue;
 
+		
+
 		if(currentAccount != null) {
 			currentIataCode = currentAccount.account.IataCode__c;
 		}
+		
+		List<AssociateCountryEntity> topChildren = new List<AssociateCountryEntity>();
 
-		List<AssociateEntity> children = new List<AssociateEntity>();
 
-		for(Account c : childsAccounts) {
-			if(currentIataCode == c.IATACode__c) {
-				jsonValue = SELECTED_TRUE;
-			} else {
-				jsonValue = SELECTED_FALSE;
+		for(String cc : ListOfCountries) {
+			topChildren.add(new AssociateCountryEntity(cc,null));
+		}
+
+		for(AssociateCountryEntity tc : topChildren) {
+			List<AssociateEntity> children = new List<AssociateEntity>();
+			for(Account c : childsAccounts) {
+				if(currentIataCode == c.IATACode__c) {
+					jsonValue = SELECTED_TRUE;
+				} else {
+					jsonValue = SELECTED_FALSE;
+				}
+				if(tc.text == c.IATA_ISO_Country__r.Name){
+					children.add(new AssociateEntity(c.IATACode__c, getIcon(c.IATACode__c), jsonValue));
+				}
+				for(childsAccountsWrapper acc: childsAccountsWrapperList){
+					if(acc.IATACode == c.IATACode__c){
+						acc.icon = getIcon(c.IATACode__c);
+					}
+				}
 			}
-
-			children.add(new AssociateEntity(c.IATACode__c, getIcon(c.IATACode__c), jsonValue));
+			tc.children = children;
 		}
 
 		JSONGenerator gen = JSON.createGenerator(true);
@@ -1227,7 +1439,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 			jsonValue = OPENED_TRUE;
 		}
 
-		HeadEntity he = new HeadEntity(headEntity.IATACode__c, getIcon(headEntity.IATACode__c), children, jsonValue);
+		he = new HeadEntity(headEntity.IATACode__c, getIcon(headEntity.IATACode__c), topChildren, jsonValue, headEntity.IATA_ISO_Country__r.Name);
 
 		if(this.setHe) {
 			this.currentAccount = new ANG_AnnualRevCurrentAccount(accountsMap.get(headEntity.IATACode__c),
@@ -1617,13 +1829,15 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 	public class HeadEntity {
 		public String text {get; set;}
 		public String icon {get; set;}
+		public String countryName {get; set;}
 		public JsonValue state {get; set;}
-		public List<AssociateEntity> children {get; set;}
+		public List<AssociateCountryEntity> topChildren {get; set;}
 
-		public HeadEntity (String text, String icon, List<AssociateEntity> children, JsonValue state) {
+		public HeadEntity (String text, String icon, List<AssociateCountryEntity> children, JsonValue state, String countryName) {
 			this.text = text;
 			this.icon = icon;
-			this.children = children;
+			this.countryName = countryName;
+			this.topChildren = children;
 			this.state = state;
 		}
 	}
@@ -1637,6 +1851,17 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 			this.text = text;
 			this.icon = icon;
 			this.state = state;
+		}
+	}
+
+
+	public class AssociateCountryEntity {
+		public String text {get; set;}
+		public List<AssociateEntity> children {get; set;}
+
+		public AssociateCountryEntity (String text, List<AssociateEntity> children) {
+			this.text = text;
+			this.children = children;
 		}
 	}
 
