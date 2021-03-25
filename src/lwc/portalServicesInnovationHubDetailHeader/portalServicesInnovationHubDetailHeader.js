@@ -14,12 +14,17 @@ export default class PortalServicesInnovationHubDetailHeader extends LightningEl
 
     @track backgroundIcon = CSP_PortalPath + 'CSPortal/Images/Backgrounds/MyProfileBackground.jpg';
     
-    facebookIcon = CSP_PortalPath + 'CSPortal/Images/Icons/facebook-icon.svg';
-    twitterIcon = CSP_PortalPath + 'CSPortal/Images/Icons/twitter-icon.svg';
-    linkedInIcon = CSP_PortalPath + 'CSPortal/Images/Icons/linkedin-icon.svg';
+    webIcon = CSP_PortalPath + 'CSPortal/Images/Icons/web_60x60.png';
+    facebookIcon = CSP_PortalPath + 'CSPortal/Images/Icons/facebook_60x60.png';
+    instagramIcon = CSP_PortalPath + 'CSPortal/Images/Icons/instagram_60x60.png';
+    twitterIcon = CSP_PortalPath + 'CSPortal/Images/Icons/twitter_60x60.png';
+    linkedInIcon = CSP_PortalPath + 'CSPortal/Images/Icons/linkedin_60x60.png';
+    gitHubIcon = CSP_PortalPath + 'CSPortal/Images/Icons/github_60x60.png';
+    telegramIcon = CSP_PortalPath + 'CSPortal/Images/Icons/telegram_60x60.png';
 
     //Loading && Error
     @track loading = false;
+    @track loadingContent = false;
     @track backgroundStyle;
     @track profileDivStyle;
     @track iconLink;
@@ -76,7 +81,7 @@ export default class PortalServicesInnovationHubDetailHeader extends LightningEl
     }
 
     connectedCallback() {
-        this.loading = true;
+        this.loadingContent = true;
         let pageParams = getParamsFromPage();
         if(pageParams !== undefined){
             if(pageParams.providerId !== undefined){
@@ -98,7 +103,7 @@ export default class PortalServicesInnovationHubDetailHeader extends LightningEl
             this.gitHubUrl    = this.headerFields.GitHub__c;
             this.telegramUrl  = this.headerFields.Telegram__c;
 
-            this.loading = false;
+            this.loadingContent = false;
 
         });
         

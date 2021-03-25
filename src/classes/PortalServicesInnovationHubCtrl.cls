@@ -168,7 +168,7 @@ public without sharing class PortalServicesInnovationHubCtrl {
 	private static List<PortalWrapperClasses.FieldWrapper> getFieldsStartupOverviewCard(List<PortalWrapperClasses.FieldWrapper> fieldWrapper, IH_Account_Role_Detail__c roleDetail){
 
 		if(roleDetail.Founding_Date__c != null){
-			PortalWrapperClasses.FieldWrapper foundingDate = new PortalWrapperClasses.FieldWrapper('Founding_Date__c',true,false);
+			PortalWrapperClasses.FieldWrapper foundingDate = new PortalWrapperClasses.FieldWrapper('Founding_Year_Display__c',true,false);
 			foundingDate.isBold = true;
 			fieldWrapper.add(foundingDate);
 		}

@@ -1576,7 +1576,7 @@ lightning-datatable .slds-th__action {
 }
 
 .ihub .slds-form-element__label {
-  font-size: 16px;
+  font-size: 18px;
   font-style: normal;
   font-stretch: normal;
   line-height: 1.43;

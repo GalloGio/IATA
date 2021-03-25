@@ -1,17 +1,13 @@
 import { LightningElement, api, track } from 'lwc';
 import getLogoUrl from '@salesforce/apex/PortalServicesInnovationHubCtrl.getProviderImgURLById';
-import CSP_No_Logo_Available from '@salesforce/label/c.CSP_No_Logo_Available';
+import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
 export default class PortalRecordViewEditLogo extends LightningElement {
 
     @track providerId;
     @track logoId;
     @track logoCSS = '';
-    @track showLogo = true;
-
-    labels = {
-        CSP_No_Logo_Available,
-    }
+    @track logoNotAvailable = CSP_PortalPath + 'CSPortal/Images/Icons/logoNotAvailable.png';
 
     @api 
     get providerIdApi(){
@@ -26,10 +22,9 @@ export default class PortalRecordViewEditLogo extends LightningElement {
         .then(results => {
             if(results !== null){
                 this.logoCSS = 'background: url(' + '"' + results + '"' + ');';
-                this.showLogo = true;
             }
             else{
-                this.showLogo = false;
+                this.logoCSS = 'background: url(' + '"' + this.logoNotAvailable + '"' + ');';
             }
         });
     }

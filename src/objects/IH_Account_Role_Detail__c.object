@@ -447,7 +447,6 @@
         <fullName>Founding_Date__c</fullName>
         <description>Founding Year</description>
         <externalId>false</externalId>
-        <inlineHelpText>Format(YYYY)</inlineHelpText>
         <label>Founding Year</label>
         <precision>4</precision>
         <required>false</required>
@@ -455,6 +454,18 @@
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Founding_Year_Display__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(Founding_Date__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Founding Year</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
         <unique>false</unique>
     </fields>
     <fields>
@@ -677,7 +688,7 @@
         <fullName>Logo__c</fullName>
         <description>Logo</description>
         <externalId>false</externalId>
-        <formula>IMAGE(&apos;/sfc/servlet.shepherd/version/download/&apos; + Logo_File_Id__c, &quot;&quot;)</formula>
+        <formula>IMAGE(&apos;/sfc/servlet.shepherd/version/download/&apos; + Logo_File_Id__c, &quot;&quot;,-1,220)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Logo</label>
         <required>false</required>

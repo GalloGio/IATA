@@ -11,14 +11,15 @@
 
                 <!-- Header -->
                 <div class="headerPosition">
-                    <template if:true={loading}>
-                        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
-                    </template>
 
                     <template if:false={loading}>
                         <div class="coverBand" style={backgroundStyle}></div>
 
-                        <div class="myProviderHeader">
+                        <div if:true={loadingContent}>
+                            <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                        </div>
+
+                        <div if:false={loadingContent} class="myProviderHeader">
 
                             <!-- Header Provider Detail -->
                             <div class="slds-grid slds-wrap slds-p-vertical_x-large headerDetailProvider" >
@@ -39,13 +40,13 @@
 
                                         <div class="slds-grid slds-wrap slds-gutters_x-small socialMediaMargin" >
                                             <div if:true={hasWebsite} class="slds-col slds-size_1-of-20 slds-medium-size_1-of-20 slds-large-size_1-of-20">
-                                                <a href={websiteUrl} target="_blank"><span><img src={facebookIcon} width="30" height="30"/></span></a>
+                                                <a href={websiteUrl} target="_blank"><span><img src={webIcon} width="30" height="30"/></span></a>
                                             </div>
                                             <div if:true={hasFB} class="slds-col slds-size_1-of-20 slds-medium-size_1-of-20 slds-large-size_1-of-20">
                                                 <a href={facebookUrl} target="_blank"><span><img src={facebookIcon} width="30" height="30"/></span></a>
                                             </div>
                                             <div if:true={hasInstagram} class="slds-col slds-size_1-of-20 slds-medium-size_1-of-20 slds-large-size_1-of-20">
-                                                <a href={instagramUrl} target="_blank"><span><img src={facebookIcon} width="30" height="30"/></span></a>
+                                                <a href={instagramUrl} target="_blank"><span><img src={instagramIcon} width="30" height="30"/></span></a>
                                             </div>
                                             <div if:true={hasTwitter} class="slds-col slds-size_1-of-20 slds-medium-size_1-of-20 slds-large-size_1-of-20">
                                                 <a href={twitterUrl} target="_blank"><span><img src={twitterIcon} width="30" height="30"/></span></a>
@@ -53,11 +54,11 @@
                                             <div if:true={hasLinkedIn} class="slds-col slds-size_1-of-20 slds-medium-size_1-of-20 slds-large-size_1-of-20">
                                                 <a href={linkedInUrl} target="_blank"><span><img src={linkedInIcon} width="30" height="30"/></span></a>
                                             </div>
-                                            <div if:false={hasGitHub} class="slds-col slds-size_1-of-20 slds-medium-size_1-of-20 slds-large-size_1-of-20">
-                                                <a href={gitHubUrl} target="_blank"><span><img src={linkedInIcon} width="30" height="30"/></span></a>
+                                            <div if:true={hasGitHub} class="slds-col slds-size_1-of-20 slds-medium-size_1-of-20 slds-large-size_1-of-20">
+                                                <a href={gitHubUrl} target="_blank"><span><img src={gitHubIcon} width="30" height="30"/></span></a>
                                             </div>
-                                            <div if:false={hasTelegram} class="slds-col slds-size_1-of-20 slds-medium-size_1-of-20 slds-large-size_1-of-20">
-                                                <a href={telegramUrl} target="_blank"><span><img src={linkedInIcon} width="30" height="30"/></span></a>
+                                            <div if:true={hasTelegram} class="slds-col slds-size_1-of-20 slds-medium-size_1-of-20 slds-large-size_1-of-20">
+                                                <a href={telegramUrl} target="_blank"><span><img src={telegramIcon} width="30" height="30"/></span></a>
                                             </div>
                                         </div>
 
