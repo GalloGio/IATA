@@ -282,7 +282,7 @@ public without sharing class ShareObjectsToExternalUsers {
 		Map<Id, List<Id>> usersByRoles = new Map<Id, List<Id>>();
 
 		Map<Id, Id> contactToUser = new Map<Id, Id>();
-		for (User u : [SELECT Id, ContactId FROM User Where ContactId IN :contactIds]) {
+		for (User u : [SELECT Id, ContactId FROM User Where ContactId IN :contactIds and isActive = true]) {
 			contactToUser.put(u.ContactId, u.Id);
 		}
 
