@@ -508,7 +508,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     }
 
     get isIHUB() {
-        return window.location.pathname.includes('service-innovationhub');
+        return window.location.pathname.includes('service-startuphotlist');
     }
 
     //WMO-699 - ACAMBAS: Begin

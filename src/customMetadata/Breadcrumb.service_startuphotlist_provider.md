@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>ParentPage__c</field>
-        <value xsi:type="xsd:string">service_innovationhub</value>
+        <value xsi:type="xsd:string">service_startuphotlist</value>
     </values>
     <values>
         <field>Replace_With_Param__c</field>

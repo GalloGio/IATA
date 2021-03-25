@@ -34,7 +34,7 @@ export default class PortalServicesInnovationHubProviderCard extends NavigationM
         this[NavigationMixin.GenerateUrl]({
             type: "standard__namedPage",
             attributes: {
-                pageName: "service-innovationhub-provider"
+                pageName: "service-startuphotlist-provider"
 			},
 			state: {
                 providerId: this.provider.id
