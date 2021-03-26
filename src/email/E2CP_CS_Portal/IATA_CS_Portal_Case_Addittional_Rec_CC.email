@@ -1,5 +1,5 @@
 <messaging:emailTemplate subject="{!$Label.CS_Portal_Addittional_Recipients_Subject} {!relatedTo.CaseNumber}" 
-        recipientType="Contact" relatedToType="Case">
+        recipientType="Contact" relatedToType="Case" language="{!CASE(recipient.Preferred_Language__c, 'Arabic', 'ar', 'Chinese','zh_CN', 'English','en_US', 'German','de', 'French','fr', 'Italian','it', 'Indonesian', 'in', 'Japanese','ja',  'Korean', 'ko', 'Portuguese','pt_BR', 'Spanish', 'es', 'Thai', 'th', 'Vietnamese', 'vi', 'en_US')}">
     <messaging:emailHeader name="CaseId">
         {!relatedTo.Id}
     </messaging:emailHeader>
@@ -21,6 +21,10 @@
                     <a style="font-size:20px;text-align:center;font-weight:bold;background-color:#0A4279;color:white;padding:5px;text-decoration:none;border-collapse: separate!important;border-top-left-radius: 5px;border-top-right-radius: 5px;border-bottom-right-radius: 5px;border-bottom-left-radius: 5px;"
                             href="{!$Label.ISSP_Email_PortalUrl}s/case-details?caseId={!relatedTo.id}">{!$Label.CS_Portal_Addittional_Recipients_URL_Description}</a>
                 </center>
+            </apex:outputPanel>
+            <apex:outputPanel >
+                <br/>
+                <apex:outputText style="color: #1e32fa;font-size: large;" value="{!$Label.CSP_IATA_CSC_Email_Greetings}" escape="false"></apex:outputText>
             </apex:outputPanel>
         </div>
     </messaging:htmlEmailBody>

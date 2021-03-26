@@ -5398,6 +5398,22 @@ Daha fazla ayrıntı için, Müşteri Portalı&apos;nda &quot;Resolution 812&quo
         <name>CSP_selectReason</name>
     </customLabels>
     <customLabels>
+        <label>duruma bir katılımcısı olarak ekledi</label>
+        <name>CS_Portal_Addittional_Recipients_Body</name>
+    </customLabels>
+    <customLabels>
+        <label>Sayın</label>
+        <name>CS_Portal_Addittional_Recipients_Introduction</name>
+    </customLabels>
+    <customLabels>
+        <label>IATA Müşteri Portalı - Dava eklendi</label>
+        <name>CS_Portal_Addittional_Recipients_Subject</name>
+    </customLabels>
+    <customLabels>
+        <label>Buraya Tıkla Tüm ayrıntıları görüntüleyebilir ve iletişimde bulunmak için portal gitmek için.</label>
+        <name>CS_Portal_Addittional_Recipients_URL_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Campaign already created --></label>
         <name>Campaign_already_created</name>
     </customLabels>

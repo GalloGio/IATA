@@ -5401,6 +5401,22 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_selectReason</name>
     </customLabels>
     <customLabels>
+        <label>thêm bạn là người tham gia vào vụ án</label>
+        <name>CS_Portal_Addittional_Recipients_Body</name>
+    </customLabels>
+    <customLabels>
+        <label>Kính thưa</label>
+        <name>CS_Portal_Addittional_Recipients_Introduction</name>
+    </customLabels>
+    <customLabels>
+        <label>IATA khách hàng Portal - Bạn đã được bổ sung vào trường hợp</label>
+        <name>CS_Portal_Addittional_Recipients_Subject</name>
+    </customLabels>
+    <customLabels>
+        <label>Bấm vào đây để đi đến cổng thông tin để xem chi tiết đầy đủ và tham gia vào các giao tiếp.</label>
+        <name>CS_Portal_Addittional_Recipients_URL_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Campaign already created --></label>
         <name>Campaign_already_created</name>
     </customLabels>
