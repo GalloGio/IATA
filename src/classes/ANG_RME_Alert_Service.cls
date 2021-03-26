@@ -188,9 +188,9 @@ global class ANG_RME_Alert_Service {
 			else {
 				Account acct = accs[0];
 
-				boolean bIsOperationWithoutIEP = (acc.IATA_ISO_Country__r.ANG_Enable_NewGen__c 
-													&& string.isBlank(acc.IATA_ISO_Country__r.ANG_Portal_Service__c) 
-													&& acc.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASHLESS);
+				boolean bIsOperationWithoutIEP = (acct.IATA_ISO_Country__r.ANG_Enable_NewGen__c 
+													&& string.isBlank(acct.IATA_ISO_Country__r.ANG_Portal_Service__c) 
+													&& acct.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASHLESS);
 
 				switch on req.eventType {
 					when 'RTSAlert'{ //move to static final above when Salesforce decides is a good idea to release it https://trailblazer.salesforce.com/ideaView?id=0873A000000lLkNQAU
@@ -212,7 +212,7 @@ global class ANG_RME_Alert_Service {
 							}
 						}else{
 							if(bIsOperationWithoutIEP){
-								saveAlert(req, rhcInfo.ANG_AccountId__c, rhcInfo.Id);
+								saveAlert(req, acct.Id, null);
 							}else{
 								//check if the agency is CASHLESS and the operation is without IEP vendor
 								if(acct.RHC_Informations__r.isEmpty()) {

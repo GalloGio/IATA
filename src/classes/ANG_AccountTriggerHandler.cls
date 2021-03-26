@@ -850,7 +850,7 @@ public class ANG_AccountTriggerHandler {
 				//INC516962 - When FOP Cash & Acc Model = Cashless - Status Non-Active
 				else if(aa.ANG_FormOfPayment_ID__c == AMS_Utils.CA && currentAccount.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASHLESS)
 					//Country active in Newgen but withoyut IEP should have Active CA form of payment
-					if(aa.Account__r.IATA_ISO_Country__r.ANG_Enable_NewGen__c && string.isBlank(Account__r.IATA_ISO_Country__r.ANG_Portal_Service__c)) aa.Status__c = 'Active';
+					if(aa.Account__r.IATA_ISO_Country__r.ANG_Enable_NewGen__c && string.isBlank(aa.Account__r.IATA_ISO_Country__r.ANG_Portal_Service__c)) aa.Status__c = 'Active';
 					else aa.Status__c = 'Non-Active';
  
 				else aa.Status__c = 'Active';
