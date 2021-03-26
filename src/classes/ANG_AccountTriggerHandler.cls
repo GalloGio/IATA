@@ -264,9 +264,12 @@ public class ANG_AccountTriggerHandler {
 					Name, BillingState, BillingCity, IATA_ISO_Country__c, Email__c, Fax, Phone, BillingPostalCode,
 					BillingStreet, CASS_Number__c, IATACode__c, Iso_State__c, License_Number__c, VAT_Number__c,
 					Is_your_firm_handling_Dangerous_Goods__c, Location_Class__c, Location_Type__c, Mobile__c,
+					IATA_ISO_Country__r.ANG_Enable_NewGen__c, IATA_ISO_Country__r.ANG_Portal_Service__c, //for the NewGen operation without a IEP Provider
 					Operation__c, ShippingCity, ShippingCountry, ShippingPostalCode, ShippingState, ShippingStreet,
 					Short_Name__c, Solicitation_Flag__c, TradeName__c, VAT_Number_2__c, Website, Company_Type__c, ANG_RiskStatus__c, ANG_Accreditation_Model__c,
-					(SELECT Id, Account__c, ANG_FormOfPayment_ID__c, Authority__c, Status__c, ISO_Country__c FROM Agency_Authorizations__r WHERE RecordTypeId = :aaRTId)
+					(SELECT Id, Account__c, ANG_FormOfPayment_ID__c, Authority__c, Status__c, ISO_Country__c,
+					Account__r.IATA_ISO_Country__r.ANG_Enable_NewGen__c, Account__r.IATA_ISO_Country__r.ANG_Portal_Service__c //for the NewGen operation without a IEP Provider
+					 FROM Agency_Authorizations__r WHERE RecordTypeId = :aaRTId)
 					from Account where Id in :accountIds]);
 	}
 
@@ -843,9 +846,12 @@ public class ANG_AccountTriggerHandler {
 					if (currentAccount.Is_PCI_compliant__c == 'No' ) aa.Status__c = 'Non-Active';
 					if (currentAccount.Is_PCI_compliant__c == 'Nil CC' ) aa.Status__c = 'Not Authorized';
 				}
-
+				
 				//INC516962 - When FOP Cash & Acc Model = Cashless - Status Non-Active
-				else if(aa.ANG_FormOfPayment_ID__c == AMS_Utils.CA && currentAccount.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASHLESS) aa.Status__c = 'Non-Active';
+				else if(aa.ANG_FormOfPayment_ID__c == AMS_Utils.CA && currentAccount.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASHLESS)
+					//Country active in Newgen but withoyut IEP should have Active CA form of payment
+					if(aa.Account__r.IATA_ISO_Country__r.ANG_Enable_NewGen__c && string.isBlank(Account__r.IATA_ISO_Country__r.ANG_Portal_Service__c)) aa.Status__c = 'Active';
+					else aa.Status__c = 'Non-Active';
  
 				else aa.Status__c = 'Active';
 
