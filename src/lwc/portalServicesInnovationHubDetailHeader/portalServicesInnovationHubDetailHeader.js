@@ -102,13 +102,15 @@ export default class PortalServicesInnovationHubDetailHeader extends LightningEl
         getProviderHeaderFields({ providerId: this.providerId}).then(result => {
             this.headerFields = result;
 
-            this.websiteUrl = this.headerFields.Website__c;
-            this.facebookUrl  = this.headerFields.Facebook__c;
-            this.instagramUrl = this.headerFields.Instagram__c;
-            this.twitterUrl   = this.headerFields.Twitter__c;
-            this.linkedInUrl  = this.headerFields.LinkedIn__c;
-            this.gitHubUrl    = this.headerFields.GitHub__c;
-            this.telegramUrl  = this.headerFields.Telegram__c;
+            if(this.headerFields != null){
+                this.websiteUrl = this.headerFields.Website__c;
+                this.facebookUrl  = this.headerFields.Facebook__c;
+                this.instagramUrl = this.headerFields.Instagram__c;
+                this.twitterUrl   = this.headerFields.Twitter__c;
+                this.linkedInUrl  = this.headerFields.LinkedIn__c;
+                this.gitHubUrl    = this.headerFields.GitHub__c;
+                this.telegramUrl  = this.headerFields.Telegram__c;
+            }
 
             this.loadingContent = false;
 
