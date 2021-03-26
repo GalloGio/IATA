@@ -547,8 +547,12 @@ public without sharing class PortalServicesInnovationHubCtrl {
 		if(String.isNotBlank(providerId)){
 			detail = [SELECT Company_Name__c,Facebook__c,Instagram__c,Twitter__c,LinkedIn__c,Telegram__c,
 			GitHub__c,Website__c,Contact_info_of_startup__c,Contact_Position__c,Contact_Email__c,
-			Contact_Phone_Number__c FROM IH_Account_Role_Detail__c WHERE Id = :providerId LIMIT 1];
-		}	
+			Contact_Phone_Number__c,Published__c,Status__c FROM IH_Account_Role_Detail__c WHERE Id = :providerId LIMIT 1];
+		}
+		
+		else{
+			detail = getLatestPublishedProviderUserIHAccountRoleDetail();
+		}
 
 		return detail;
 
@@ -569,7 +573,10 @@ public without sharing class PortalServicesInnovationHubCtrl {
 	public static IH_Account_Role_Detail__c getLatestPublishedProviderUserIHAccountRoleDetail(){
 		//get the users account role detail
 		User currentUser = CSP_Utils.getLoggedUser();
-		List<IH_Account_Role_Detail__c> lstAccountRoles = [SELECT Id, Internal_comments__c, Status__c, Marked_For_Review__c 
+		List<IH_Account_Role_Detail__c> lstAccountRoles = [SELECT Id,Company_Name__c,Contact_info_of_startup__c,Contact_Position__c,
+															Contact_Phone_Number__c,Contact_Email__c,Website__c,Facebook__c,Instagram__c,
+															Twitter__c,LinkedIn__c,GitHub__c,Telegram__c,Published__c,
+														    Internal_comments__c, Status__c, Marked_For_Review__c 
 															FROM IH_Account_Role_Detail__c 
 															WHERE Account_Role__r.Account__c = :currentUser.Contact.AccountId
 															AND (RecordTypeId = :accountRoleDetailProviderRecordTypeId OR 

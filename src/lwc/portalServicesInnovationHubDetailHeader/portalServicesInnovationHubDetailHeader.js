@@ -9,10 +9,11 @@ import getProviderHeaderFields from '@salesforce/apex/PortalServicesInnovationHu
 import ISSP_CompanyName from '@salesforce/label/c.ISSP_CompanyName';
 import ISSP_Contact from '@salesforce/label/c.ISSP_Contact';
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
+import CSP_Service_InnovationHub_Title from '@salesforce/label/c.CSP_Service_InnovationHub_Title';
 
 export default class PortalServicesInnovationHubDetailHeader extends LightningElement {
 
-    @track backgroundIcon = CSP_PortalPath + 'CSPortal/Images/Backgrounds/MyProfileBackground.jpg';
+    @track backgroundIcon = CSP_PortalPath + 'CSPortal/Images/Backgrounds/ServiceInnovationHubBackground.jpg';
     
     webIcon = CSP_PortalPath + 'CSPortal/Images/Icons/web_60x60.png';
     facebookIcon = CSP_PortalPath + 'CSPortal/Images/Icons/facebook_60x60.png';
@@ -25,6 +26,7 @@ export default class PortalServicesInnovationHubDetailHeader extends LightningEl
     //Loading && Error
     @track loading = false;
     @track loadingContent = false;
+    @track viewPublishedRecord = false;
     @track backgroundStyle;
     @track profileDivStyle;
     @track iconLink;
@@ -42,6 +44,7 @@ export default class PortalServicesInnovationHubDetailHeader extends LightningEl
     _labels = {
         ISSP_CompanyName,
         ISSP_Contact,
+        CSP_Service_InnovationHub_Title
     };
 
     get labels() {
@@ -50,6 +53,10 @@ export default class PortalServicesInnovationHubDetailHeader extends LightningEl
 
     set labels(value) {
         this._labels = value;
+    }
+
+    get providerAndPublishedRecord(){
+        return this.headerFields != null && this.headerFields.Published__c && this.headerFields.Status__c == 'Approved';
     }
 
     get hasWebsite() {
