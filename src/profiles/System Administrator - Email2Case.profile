@@ -31494,6 +31494,11 @@ Also used as default WF, Lead, Case</description>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Case.Related_Exception__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Case.Related_ID_Card_Application__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -55858,6 +55863,11 @@ Also used as default WF, Lead, Case</description>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Quality__c.Parent__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Quality__c.Pending_Evidences_to_be_Collected__c</field>
         <readable>true</readable>
@@ -55910,6 +55920,11 @@ Also used as default WF, Lead, Case</description>
     <fieldPermissions>
         <editable>true</editable>
         <field>Quality__c.Regional_Quality__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Quality__c.Related_Case_Number__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
