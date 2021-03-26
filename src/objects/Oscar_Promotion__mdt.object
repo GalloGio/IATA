@@ -27,7 +27,7 @@
         <externalId>false</externalId>
         <fieldManageability>DeveloperControlled</fieldManageability>
         <label>Other Conditions</label>
-        <length>2000</length>
+        <length>60000</length>
         <type>LongTextArea</type>
         <visibleLines>3</visibleLines>
     </fields>
