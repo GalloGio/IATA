@@ -270,11 +270,6 @@
         <columns>Cash_after__c</columns>
         <columns>Credit_Card_after__c</columns>
         <filterScope>Everything</filterScope>
-        <filters>
-            <field>Action_in_FoP_OSCAR__c</field>
-            <operation>equals</operation>
-            <value>Restrict Credit Card</value>
-        </filters>
         <label>All</label>
         <language>en_US</language>
     </listViews>
