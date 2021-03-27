@@ -16488,6 +16488,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.Additional_Financial_Security_needed__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.Additional_requirements_form_received__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -16957,7 +16962,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Case.Case_Items__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -17668,6 +17673,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.E2CP__AdditionalAvailable__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.E2CP__AdditionalBCC__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -17709,6 +17719,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.E2CP__Knowledge_Base_URL__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.E2CP__Latest_Inbound_BH__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -17834,6 +17849,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.Evaluation_Effort__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Exception__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Exception_approved_on__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -18527,6 +18552,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.KPI_Calculation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Case.KPI_NewApp__c</field>
         <readable>true</readable>
@@ -18574,6 +18604,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.L2_Support_Team_Account__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Language</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -19058,6 +19093,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.Portal_Closure_Link__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Portal_Closure_Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.Post_billing_Dispute_Amount__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -19353,6 +19398,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Case.RecordTypeDeveloperName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Case.RecordType__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -19404,6 +19454,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.Rejection_Withdrawal_remarks__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.Related_Exception__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -19619,6 +19674,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.Settlement_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.Settlement_Model__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -20084,6 +20144,66 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.dgAI2__DG_Time_Upper__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.dgAI3__DG_Automated__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.dgAI3__DG_Completed__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.dgAI3__DG_Fill_Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.dgAI3__DG_Incorrect_Automation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.dgAI3__DG_Intent__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.dgAI3__DG_Language__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.dgAI3__DG_Notes_Rich__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.dgAI3__DG_Notes__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.dgAI3__DG_ThreadId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.dgAI3__DG_Use_Case__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.dgAI3__Is_Processed_by_Flow_Insert__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.dgAI3__Is_Processed_by_Flow_Update__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -44448,6 +44568,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Quality__c.Parent__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Quality__c.Pending_Evidences_to_be_Collected__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -44499,6 +44624,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Quality__c.Regional_Quality__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Quality__c.Related_Case_Number__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
