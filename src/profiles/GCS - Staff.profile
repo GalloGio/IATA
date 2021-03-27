@@ -31501,6 +31501,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Case.Related_Exception__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Case.Related_ID_Card_Application__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -55865,6 +55870,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Quality__c.Parent__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Quality__c.Pending_Evidences_to_be_Collected__c</field>
         <readable>true</readable>
@@ -55917,6 +55927,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Quality__c.Regional_Quality__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Quality__c.Related_Case_Number__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -63953,10 +63968,6 @@
         <recordType>Operational_Improvements__c.Operational_Improvements</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Opportunity-Direct Sales -SO</layout>
-        <recordType>Opportunity.FieldSales</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>Opportunity-Field Sales</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -65461,13 +65472,13 @@
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
-        <allowCreate>false</allowCreate>
+        <allowCreate>true</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>Opportunity</object>
-        <viewAllRecords>false</viewAllRecords>
+        <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>
@@ -70351,9 +70362,10 @@
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>false</default>
+        <default>true</default>
+        <personAccountDefault>true</personAccountDefault>
         <recordType>Opportunity.FieldSales</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
@@ -70371,8 +70383,7 @@
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
+        <default>false</default>
         <recordType>Opportunity.SalesOrder</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
