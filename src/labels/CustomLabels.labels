@@ -8565,6 +8565,38 @@ IATA Customer Portal</value>
         <value>Select Reason</value>
     </labels>
     <labels>
+        <fullName>CS_Portal_Annual_Revalidation_Countries_PickList_Value</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CS Portal Annual Revalidation Countries PickList Value</shortDescription>
+        <value>Select few Countries</value>
+    </labels>
+    <labels>
+        <fullName>CS_Portal_Annual_Revalidation_Download_csv</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CS Portal Annual Revalidation Download csv</shortDescription>
+        <value>Download CSV</value>
+    </labels>
+    <labels>
+        <fullName>CS_Portal_Annual_Revalidation_Mass_Confirm_Details_Button</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CS Portal Annual Revalidation Mass Confirm Details Button</shortDescription>
+        <value>Mass Confirm Details</value>
+    </labels>
+    <labels>
+        <fullName>CS_Portal_Annual_Revalidation_Popup_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CS Portal Annual Revalidation Popup Title</shortDescription>
+        <value>Mass Confirm Details</value>
+    </labels>
+    <labels>
         <fullName>Campaign_already_created</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -29834,7 +29866,7 @@ This service is free of charge.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>STEP 1 - Annual Revalidation</shortDescription>
-        <value>STEP A - Confirm Agency Details</value>
+        <value>&lt;span class=&quot;progress-tab-step&quot;&gt;A&lt;/span&gt;Confirm Agency Details</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_Step1_HE</fullName>
@@ -29872,7 +29904,7 @@ This service is free of charge.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>STEP 2 - Annual Revalidation</shortDescription>
-        <value>STEP B - Submit to IATA</value>
+        <value>&lt;span class=&quot;progress-tab-step&quot;&gt;B&lt;/span&gt;Submit to IATA</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_Step2_Owned_by_OtherOrg_Branch</fullName>

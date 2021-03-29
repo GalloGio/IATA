@@ -473,20 +473,20 @@
                                 </apex:outputPanel>
                                 <apex:pageBlock id="step1Block" mode="edit">
                                     <div>
-                                        <apex:commandButton  styleClass="iatabtn iatabtn-default" value="Mass Confirm Details" action="{!showPopup}" rerender="tstpopup" rendered="{!caseAccount.Location_Type__c == 'GE'}"/>
-                                        <apex:commandButton  styleClass="iatabtn iatabtn-default" value="Download CSV" onclick="download_csv_file();return false;" rendered="{!caseAccount.Location_Type__c == 'GE'}"/>
+                                        <apex:commandButton  styleClass="iatabtn iatabtn-default" value="{!$Label.CS_Portal_Annual_Revalidation_Mass_Confirm_Details_Button}" action="{!showPopup}" rerender="tstpopup" rendered="{!caseAccount.Location_Type__c == 'GE'}"/>
+                                        <apex:commandButton  styleClass="iatabtn iatabtn-default" value="{!$Label.CS_Portal_Annual_Revalidation_Download_csv}" onclick="download_csv_file();return false;" rendered="{!caseAccount.Location_Type__c == 'GE'}"/>
                                         <apex:outputPanel id="tstpopup" style="margin-top: 100px;"> 
                                             <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!displayPopUp}"/> 
                                             <apex:outputPanel styleClass="custPopup" layout="block" rendered="{!displayPopUp}"> 
                                                 <div class="section-header">
-                                                    <h3 class="panel-title">Mass Confirm Details</h3>
+                                                    <h3 class="panel-title">{!$Label.CS_Portal_Annual_Revalidation_Popup_Title}</h3>
                                                 </div>
                                                 <apex:pageBlock>
 
                                                     <apex:inputHidden id="countrySelected" value="{!countrySelected}"/>
                                                     <dl class="dropdownCountry"> <dt>
                                                         <a href="#">
-                                                          <span class="hida" style="color: #ffffff;">- - Select few Countries - -</span>    
+                                                          <span class="hida" style="color: #ffffff;">{!$Label.CS_Portal_Annual_Revalidation_Countries_PickList_Value}</span>    
                                                           <span class="multiSel" style="color:bisque;"></span>  
                                                         </a>
                                                         </dt>
@@ -591,8 +591,8 @@
                                                     </apex:dataTable>
                                                 </apex:OutputPanel>
                                                 <div align="center" draggable="false" style="margin-top : 20px;">
-                                                    <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-left" status="WaitingStatus" value="Cancel" action="{!closePopup}" rerender="tstpopup"/> 
-                                                    <apex:commandButton styleClass="iatabtn iatabtn-default iatabtn-right" status="WaitingStatus" value="Submit" action="{!massConfirmDetails}" reRender="mytreeArea, tstpopup"/> 
+                                                    <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-left" status="WaitingStatus" value="{!$Label.ISSP_Cancel}" action="{!closePopup}" rerender="tstpopup"/> 
+                                                    <apex:commandButton styleClass="iatabtn iatabtn-default iatabtn-right" status="WaitingStatus" value="{!$Label.ISSP_Submit}" action="{!massConfirmDetails}" reRender="mytreeArea, tstpopup"/> 
                                                 </div>
                                             </apex:outputPanel> 
                                         </apex:outputPanel> 
