@@ -216,9 +216,9 @@
         <label>IFTP</label>
     </customValue>
     <customValue>
-        <fullName>InnovationHub CRM</fullName>
+        <fullName>Startup Hotlist</fullName>
         <default>false</default>
-        <label>InnovationHub CRM</label>
+        <label>Startup Hotlist</label>
     </customValue>
     <customValue>
         <fullName>Insurance Providers</fullName>

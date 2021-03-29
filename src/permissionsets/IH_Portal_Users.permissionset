@@ -65,6 +65,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>IH_Account_Role_Detail__c.Contact__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>IH_Account_Role_Detail__c.Contact_info_of_startup__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -249,6 +254,15 @@
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
+        <object>Document</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
         <object>IATA_ISO_Country__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
@@ -261,10 +275,6 @@
         <object>IH_Account_Role_Detail__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
-    <recordTypeVisibilities>
-        <recordType>Account_Role__c.Innovation_Hub</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
     <recordTypeVisibilities>
         <recordType>IH_Account_Role_Detail__c.Consumer</recordType>
         <visible>true</visible>

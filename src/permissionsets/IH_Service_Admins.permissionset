@@ -17,6 +17,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>ISSP_InnovationHubController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>PortalServicesInnovationHubCtrl</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -228,6 +232,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>IH_Account_Role_Detail__c.Contact__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>IH_Account_Role_Detail__c.Contact_info_of_startup__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -249,6 +258,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>IH_Account_Role_Detail__c.Founding_Date__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>IH_Account_Role_Detail__c.Founding_Year_Display__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -851,10 +865,6 @@
         <apexPage>ISSP_EditPortalService_InlinePage</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
-    <recordTypeVisibilities>
-        <recordType>Account_Role__c.Innovation_Hub</recordType>
-        <visible>true</visible>
-    </recordTypeVisibilities>
     <recordTypeVisibilities>
         <recordType>Contact.Standard_Contact</recordType>
         <visible>true</visible>

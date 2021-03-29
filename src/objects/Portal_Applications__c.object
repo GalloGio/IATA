@@ -1868,6 +1868,10 @@ IF(OR(
                 <default>false</default>
             </values>
             <values>
+                <fullName>Startup Hotlist</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>TIDS</fullName>
                 <default>false</default>
             </values>

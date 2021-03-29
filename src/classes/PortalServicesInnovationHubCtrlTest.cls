@@ -9,6 +9,8 @@ public class PortalServicesInnovationHubCtrlTest {
 		Id iHubDetailProAndConsRT = RecordTypeSingleton.getInstance().getRecordTypeId('IH_Account_Role_Detail__c', 'Consumer_and_Provider');
 		Id accountRoleRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'Default');
 	   
+		IATA_ISO_Country__c country = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR', ANG_Enable_NewGen__c = true);
+		insert country;
 		Account newAcc1 = new Account(Name='Account Test Airline 1', Site = 'Site Test 1', Sector__c = 'Airline',IATACode__c = '123', RecordTypeId = accountAirlineRT);
 		Account newAcc2 = new Account(Name='Account Test Airline 2', Site = 'Site Test 2', Sector__c = 'Airline',IATACode__c = '1234', RecordTypeId = accountAirlineRT);
 		Account newAcc3 = new Account(Name='Account Test Airline 3', Site = 'Site Test 3', Sector__c = 'Airline',IATACode__c = '12345', RecordTypeId = accountAirlineRT);
@@ -25,10 +27,10 @@ public class PortalServicesInnovationHubCtrlTest {
 		Contact newCon6 = new Contact(AccountId = newAcc6.Id, FirstName = 'John', LastName = 'Doe', Email = 'testemail6@csp.testclass', User_Portal_Status__c = 'Approved Admin', Status__c = 'Active');
 		insert new List<Contact>{newCon1, newCon2, newCon3, newCon4, newCon5, newCon6};
 		
-		Account_Role__c ar1 = new Account_Role__c(Account__c = newAcc1.Id,Account_Name__c = 'Test Role 1', Functional_Role__c = 'InnovationHub CRM', RecordtypeId = accountRoleRecordTypeId);
-		Account_Role__c ar2 = new Account_Role__c(Account__c = newAcc2.Id,Account_Name__c = 'Test Role 2', Functional_Role__c = 'InnovationHub CRM', RecordtypeId = accountRoleRecordTypeId);
-		Account_Role__c ar3 = new Account_Role__c(Account__c = newAcc3.Id,Account_Name__c = 'Test Role 3', Functional_Role__c = 'InnovationHub CRM', RecordtypeId = accountRoleRecordTypeId);
-		Account_Role__c ar4 = new Account_Role__c(Account__c = newAcc4.Id,Account_Name__c = 'Test Role 4', Functional_Role__c = 'InnovationHub CRM', RecordtypeId = accountRoleRecordTypeId);
+		Account_Role__c ar1 = new Account_Role__c(Account__c = newAcc1.Id,Account_Name__c = 'Test Role 1', Functional_Role__c = 'Startup Hotlist', RecordtypeId = accountRoleRecordTypeId);
+		Account_Role__c ar2 = new Account_Role__c(Account__c = newAcc2.Id,Account_Name__c = 'Test Role 2', Functional_Role__c = 'Startup Hotlist', RecordtypeId = accountRoleRecordTypeId);
+		Account_Role__c ar3 = new Account_Role__c(Account__c = newAcc3.Id,Account_Name__c = 'Test Role 3', Functional_Role__c = 'Startup Hotlist', RecordtypeId = accountRoleRecordTypeId);
+		Account_Role__c ar4 = new Account_Role__c(Account__c = newAcc4.Id,Account_Name__c = 'Test Role 4', Functional_Role__c = 'Startup Hotlist', RecordtypeId = accountRoleRecordTypeId);
 		insert new List<Account_Role__c>{ar1, ar2, ar3, ar4};
 		
 		IH_Account_Role_Detail__c ihubDetail1 = new IH_Account_Role_Detail__c(Account_Role__c = ar1.Id,Company_name__c = 'Test Provider',
@@ -41,8 +43,7 @@ public class PortalServicesInnovationHubCtrlTest {
 		IH_Account_Role_Detail__c ihubDetail3 = new IH_Account_Role_Detail__c(Account_Role__c = ar3.Id,Company_name__c = 'Test Consumer & Provider',
 																			  Published__c = true, RecordTypeId = iHubDetailProAndConsRT, Status__c='Approved');
 		IH_Account_Role_Detail__c ihubDetail4 = new IH_Account_Role_Detail__c(Account_Role__c = ar4.Id,Company_name__c = 'Account Test Airline 4',
-																			  Funding_Stage__c = 'Seed',Focus_Areas__c = 'Marketing',
-																			  Tags_of_categories__c = 'Health',Technology__c = 'IOT',
+																			  Funding_Stage__c = 'Seed',Focus_Areas__c = 'Marketing', Legal_Name__c = 'ABC', Also_Known_As__c = 'ABC', Location__c = country.Id, Company_Description__c = 'ABC',Founding_Date__c = 2018, Number_Of_Employees__c = '1-10', Funding_Amount__c = 123, Investors__c = 'ABC',Industry_Perspectives__c = 'ABC', Description__c = 'ABC', Solution__c = 'ABC', Competitive_Advantage__c = 'ABC', Competition_Competitors__c = 'ABC', Recent_News__c = 'ABC', Tags_of_categories__c = 'Health',Technology__c = 'IOT',
 																			  Logo_File_Id__c = 'test', RecordTypeId = iHubDetailProviderRT, Status__c='Draft');
 
 		insert new List<IH_Account_Role_Detail__c>{ihubDetail1, ihubDetail2, ihubDetail3, ihubDetail4};
@@ -178,50 +179,50 @@ public class PortalServicesInnovationHubCtrlTest {
 			System.assertEquals(lcpw4.lstCards.size(),1);
 			answer = (Map<String, String>) JSON.deserialize( lcpw5.extraDetails, Map<String, String>.class);
 			System.assertEquals(answer.get('viewStatus'),'Published');
-			System.assertEquals(lcpw5.lstCards.size(),2);
+			System.assertEquals(lcpw5.lstCards.size(),4);
 			System.assertEquals(lcpw6.extraDetails,null);
-			System.assertEquals(lcpw6.lstCards.size(),1);
+			System.assertEquals(lcpw6.lstCards.size(),4);
 		}
 		
 		Test.stopTest();
 	}
 	@isTest 
 	static void testCreateAccountRoleAndAccountRoleDetailsAirline() {
-		Portal_Applications__c pa = new Portal_Applications__c(Name = 'Innovation Hub');
+		Portal_Applications__c pa = new Portal_Applications__c(Name = 'Startup Hotlist', Functional_Role__c = 'Startup Hotlist');
 		insert pa;
 		Contact con = [SELECT Id, AccountId, FirstName,LastName, Email, User_Portal_Status__c, Status__c FROM Contact WHERE Email = 'testemail4@csp.testclass' LIMIT 1];
 		User newUser1 = ISSP_ObjectFactory.createPortalUser(con);
 		Test.startTest();
-			System.runAs(newUser1){
+		System.runAs(newUser1){
 			Portal_Application_Right__c par = new Portal_Application_Right__c(Contact__c = con.Id, Portal_Application__c = pa.Id, Right__c = 'Access Granted');
 			insert par;
 		}
 		Test.stopTest();
-		List<Account_Role__c> arList = [SELECT Id FROM Account_Role__c WHERE Account__c = :con.AccountId AND Functional_Role__c = 'InnovationHub CRM'];
-		System.assertEquals(arList.size(), 1);
+		List<Account_Role__c> arList = [SELECT Id FROM Account_Role__c WHERE Account__c = :con.AccountId AND Functional_Role__c = 'Startup Hotlist'];
+		System.assertEquals(1, arList.size());
 		List<IH_Account_Role_Detail__c> ardList = [SELECT Id FROM IH_Account_Role_Detail__c WHERE Account_Role__r.Account__c = :con.AccountId];
-		System.assertEquals(ardList.size(), 1);
+		System.assertEquals(1, ardList.size());
 		List<PermissionSetAssignment> psList = [SELECT Id FROM PermissionSetAssignment WHERE PermissionSet.Name = 'IH_Portal_Users' and Assignee.ContactId = :con.Id];
-		System.assertEquals(psList.size(), 1);
+		System.assertEquals(1, psList.size());
 	}
 	@isTest 
 	static void testCreateAccountRoleAndAccountRoleDetailsProvider() {
-		Portal_Applications__c pa = new Portal_Applications__c(Name = 'Innovation Hub');
+		Portal_Applications__c pa = new Portal_Applications__c(Name = 'Startup Hotlist',Functional_Role__c = 'Startup Hotlist');
 		insert pa;
 		Contact con = [SELECT Id, AccountId, FirstName,LastName, Email, User_Portal_Status__c, Status__c FROM Contact WHERE Email = 'testemail6@csp.testclass' LIMIT 1];
 		User newUser1 = ISSP_ObjectFactory.createPortalUser(con);
 		Test.startTest();
-			System.runAs(newUser1){
+		System.runAs(newUser1){
 			Portal_Application_Right__c par = new Portal_Application_Right__c(Contact__c = con.Id, Portal_Application__c = pa.Id, Right__c = 'Access Granted');
 			insert par;
 		}
 		Test.stopTest();
-		List<Account_Role__c> arList = [SELECT Id FROM Account_Role__c WHERE Account__c = :con.AccountId AND Functional_Role__c = 'InnovationHub CRM'];
-		System.assertEquals(arList.size(), 1);
+		List<Account_Role__c> arList = [SELECT Id FROM Account_Role__c WHERE Account__c = :con.AccountId AND Functional_Role__c = 'Startup Hotlist'];
+		System.assertEquals(1, arList.size());
 		List<IH_Account_Role_Detail__c> ardList = [SELECT Id FROM IH_Account_Role_Detail__c WHERE Account_Role__r.Account__c = :con.AccountId];
-		System.assertEquals(ardList.size(), 1);
+		System.assertEquals(1, ardList.size());
 		List<PermissionSetAssignment> psList = [SELECT Id FROM PermissionSetAssignment WHERE PermissionSet.Name = 'IH_Portal_Users' and Assignee.ContactId = :con.Id];
-		System.assertEquals(psList.size(), 1);
+		System.assertEquals(1, psList.size());
 	}
 
 	@isTest 
