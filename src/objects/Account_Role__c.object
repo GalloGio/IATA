@@ -215,7 +215,7 @@ The Account Role record should be named after the functional capability for whic
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
-        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+        <writeRequiresMasterRead>true</writeRequiresMasterRead>
     </fields>
     <fields>
         <fullName>Any_Other_Information__c</fullName>
@@ -730,10 +730,6 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
                 <default>false</default>
             </values>
             <values>
-                <fullName>Resource Center</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Risk Profile and RHC</fullName>
                 <default>false</default>
             </values>
@@ -1052,10 +1048,6 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
             </values>
             <values>
                 <fullName>Paypal</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Resource Center</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1381,10 +1373,6 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
                 <default>false</default>
             </values>
             <values>
-                <fullName>Resource Center</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Risk Profile and RHC</fullName>
                 <default>false</default>
             </values>
@@ -1700,10 +1688,6 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
             </values>
             <values>
                 <fullName>Paypal</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Resource Center</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2029,10 +2013,6 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
             </values>
             <values>
                 <fullName>Paypal</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Resource Center</fullName>
                 <default>false</default>
             </values>
             <values>

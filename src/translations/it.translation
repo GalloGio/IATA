@@ -18178,7 +18178,7 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_ANG_View_Owners_Tooltip</name>
     </customLabels>
     <customLabels>
-        <label>Cessione volontaria</label>
+        <label>Chiusura volontaria</label>
         <name>ISSP_ANG_Voluntary_Relinquishment</name>
     </customLabels>
     <customLabels>
@@ -26331,10 +26331,6 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
     <customLabels>
         <label><!-- Reset your password? --></label>
         <name>Reset_your_password</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Resource Center Service Description --></label>
-        <name>Resource_Center_Service_Description</name>
     </customLabels>
     <customLabels>
         <label><!-- Response message --></label>
@@ -38840,6 +38836,19 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
         <sections>
             <label><!-- OSCARs --></label>
             <name>OSCARs</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- OS Stations with Certification and Managers --></description>
+        <label><!-- OS Stations with Certification and Managers --></label>
+        <name>OS_Stations_Cert_Mana</name>
+        <sections>
+            <label><!-- ONE Source Contact Role Details --></label>
+            <name>ONE Source Contact Role Details</name>
+        </sections>
+        <sections>
+            <label><!-- OS Stations --></label>
+            <name>OS Stations</name>
         </sections>
     </reportTypes>
     <reportTypes>
