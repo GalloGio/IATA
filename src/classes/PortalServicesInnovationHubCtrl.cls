@@ -51,7 +51,7 @@ public without sharing class PortalServicesInnovationHubCtrl {
 		return propertiesAndLstCards;
 	}
 
-	private static List<PortalWrapperClasses.FieldWrapper> getFieldsCompanyCard(List<PortalWrapperClasses.FieldWrapper> fieldWrapper, Boolean edit){
+	private static List<PortalWrapperClasses.FieldWrapper> getFieldsCompanyCard(List<PortalWrapperClasses.FieldWrapper> fieldWrapper){
 
 		//COMPANY INFORMATION
 
@@ -65,17 +65,9 @@ public without sharing class PortalServicesInnovationHubCtrl {
 		fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Company_Description__c',true,true));
 		fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Location__c',true,true));
 	
-
-		if(edit){
-			PortalWrapperClasses.FieldWrapper focusAreas = new PortalWrapperClasses.FieldWrapper('Focus_Areas__c',true,true);	
-			focusAreas.isMultipick = true;
-			fieldWrapper.add(focusAreas);
-		}
-		else{
-			PortalWrapperClasses.FieldWrapper focusAreas = new PortalWrapperClasses.FieldWrapper('Focus_Areas__c',true,false,'',System.Label.CSP_FocusAreas);
-			focusAreas.isMultipick = true;
-			fieldWrapper.add(focusAreas);
-		}
+		PortalWrapperClasses.FieldWrapper focusAreas = new PortalWrapperClasses.FieldWrapper('Focus_Areas__c',true,true);	
+		focusAreas.isMultipick = true;
+		fieldWrapper.add(focusAreas);
 		
 		fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Founding_Date__c',true,true));
 		fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Number_Of_Employees__c',true,true));
@@ -95,33 +87,19 @@ public without sharing class PortalServicesInnovationHubCtrl {
 
 	}
 
-	private static List<PortalWrapperClasses.FieldWrapper> getFieldsServiceCard(List<PortalWrapperClasses.FieldWrapper> fieldWrapper, Boolean edit){
+	private static List<PortalWrapperClasses.FieldWrapper> getFieldsServiceCard(List<PortalWrapperClasses.FieldWrapper> fieldWrapper){
 
 		//SERVICE INFORMATION
 		
 		fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Solution__c',true,true));
 
-		if(edit){
-			PortalWrapperClasses.FieldWrapper technology = new PortalWrapperClasses.FieldWrapper('Technology__c',true,true);
-			technology.isMultipick = true;
-			fieldWrapper.add(technology);
-		}
-		else{
-			PortalWrapperClasses.FieldWrapper technology = new PortalWrapperClasses.FieldWrapper('Technology__c',true,false,'',System.Label.CSP_Technology);
-			technology.isMultipick = true;
-			fieldWrapper.add(technology);
-		}
+		PortalWrapperClasses.FieldWrapper technology = new PortalWrapperClasses.FieldWrapper('Technology__c',true,true);
+		technology.isMultipick = true;
+		fieldWrapper.add(technology);
 
-		if(edit){
-			PortalWrapperClasses.FieldWrapper tagsOfCategories = new PortalWrapperClasses.FieldWrapper('Tags_Of_Categories__c',true,true);
-			tagsOfCategories.isMultipick = true;
-			fieldWrapper.add(tagsOfCategories);
-		}
-		else{
-			PortalWrapperClasses.FieldWrapper tagsOfCategories = new PortalWrapperClasses.FieldWrapper('Tags_Of_Categories__c',true,false,'',System.Label.CSP_Categories);
-			tagsOfCategories.isMultipick = true;
-			fieldWrapper.add(tagsOfCategories);
-		}
+		PortalWrapperClasses.FieldWrapper tagsOfCategories = new PortalWrapperClasses.FieldWrapper('Tags_Of_Categories__c',true,true);
+		tagsOfCategories.isMultipick = true;
+		fieldWrapper.add(tagsOfCategories);
 
 		fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Description__c',true,true));
 		fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Industry_Perspectives__c',true,true));
@@ -301,8 +279,8 @@ public without sharing class PortalServicesInnovationHubCtrl {
 		//COMPANY INFORMATION
 		List<PortalWrapperClasses.FieldWrapper> lstfw1 = new List<PortalWrapperClasses.FieldWrapper>();
 		
-		lstfw1 = getFieldsCompanyCard(lstfw1,true);	
-		lstfw1 = getFieldsServiceCard(lstfw1,true);
+		lstfw1 = getFieldsCompanyCard(lstfw1);	
+		lstfw1 = getFieldsServiceCard(lstfw1);
 
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Status__c',true,false));
 		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Id',true,false));
