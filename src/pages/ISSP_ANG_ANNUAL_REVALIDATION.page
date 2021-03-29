@@ -400,11 +400,9 @@
                 var etop = $('[id$=errorMessages]').offset().top;
                 $(window).scrollTop(etop);
             }
-        
-        //$(document).ready(function() {
-        //	$('[id$="contactStateList"]').attr('style', 'display: none;');
-        //}
-
+            $( document ).ready(function() {
+                $( ".pbTitle" ).remove();
+            });
         </script>
 
 
@@ -576,7 +574,7 @@
                                                             <apex:facet name="footer"></apex:facet>
                                                         </apex:column>
                                                         <apex:column styleClass="col" style="{!IF(a.showMe,'', 'display:none;')}">
-                                                            <apex:facet name="header">Lead Name</apex:facet>            
+                                                            <apex:facet name="header">Legal Name</apex:facet>            
                                                             <apex:outputText value="{!a.accountName}"/>
                                                             <apex:facet name="footer"></apex:facet>
                                                         </apex:column>
@@ -593,15 +591,15 @@
                                                     </apex:dataTable>
                                                 </apex:OutputPanel>
                                                 <div align="center" draggable="false" style="margin-top : 20px;">
+                                                    <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-left" status="WaitingStatus" value="Cancel" action="{!closePopup}" rerender="tstpopup"/> 
                                                     <apex:commandButton styleClass="iatabtn iatabtn-default iatabtn-right" status="WaitingStatus" value="Submit" action="{!massConfirmDetails}" reRender="mytreeArea, tstpopup"/> 
-                                                    <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-right" status="WaitingStatus" value="Cancel" action="{!closePopup}" rerender="tstpopup"/> 
                                                 </div>
                                             </apex:outputPanel> 
                                         </apex:outputPanel> 
                                         <style type="text/css"> 
 
                                             .align-icon-center {
-                                                text-align: center;
+                                                text-align: center!important;
                                             }
                                             .dropdownCountry dd, .dropdown dt {
                                                 margin:0px;
@@ -895,7 +893,7 @@
 
                                                                 <div class="center" style="display:{!IF(currentAccount.status == 'UP','inline-block','none')}">
 
-                                                                    <apex:commandButton styleclass="btn btn-default"
+                                                                    <apex:commandButton styleclass="iatabtn iatabtn-default"
                                                                         action="{!saveDraft}" onclick="if (stateMap[$('[id$=ShippingCountryList]').val()] == undefined) {copyStateInputBox();} else { copyStateListSelection();}"
                                                                         status="WaitingStatus"
                                                                         reRender="componentsArea, buttonsArea"
@@ -915,14 +913,14 @@
 
                                                                     <div class="center" style="display:{!IF(currentAccount.status == 'O','inline-block','none')}">
                                                                         <apex:pageMessage summary="{!$Label.ISSP_ANG_ANNUAL_REV_OWNERSHIP_NO_UPDATE}" severity="error" strength="3" rendered="{!NOT(ownershipCompleted)}"/>
-                                                                        <apex:commandButton styleclass="btn btn-default"
+                                                                        <apex:commandButton styleclass="iatabtn iatabtn-default"
                                                                             action="{!confirmDetails}" onclick=""
                                                                             status="WaitingStatus"
                                                                             reRender="mytreeArea, treeArea, componentsArea, buttonsArea"
                                                                             value="{! $Label.ISSP_ANG_ANNUAL_REV_CONFIRM_BTN}"
                                                                             disabled="{!NOT(ownershipCompleted)}"/>
 
-                                                                        <apex:commandButton styleclass="btn btn-default"
+                                                                        <apex:commandButton styleclass="iatabtn iatabtn-default"
                                                                             action="{!updateDetails}" onclick=""
                                                                             status="WaitingStatus"
                                                                             reRender="mytreeArea, treeArea, componentsArea, buttonsArea"
@@ -930,13 +928,13 @@
                                                                     </div>
 
                                                                     <div class="center" style="display:{!IF(currentAccount.status == 'UP','inline-block','none')}">
-                                                                        <apex:commandButton styleclass="btn btn-default"
+                                                                        <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-right"
                                                                             action="{!confirmUpdate}" onclick="if (stateMap[$('[id$=ShippingCountryList]').val()] == undefined) {copyStateInputBox();} else { copyStateListSelection();}" oncomplete="if(!{!errorFound}) {rerenderTreeArea();rerenderOldTreeArea();} else {scrollToErrors()}"
                                                                             status="WaitingStatus"
                                                                             reRender="componentsArea, buttonsArea"
                                                                             value="{!$Label.ISSP_ANG_ANNUAL_REV_CONFIRM_UPD_BTN}"/>
 
-                                                                        <apex:commandButton styleclass="btn btn-default"
+                                                                        <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-left"
                                                                             onclick="cancelUpdateConfirm();"
                                                                             rerender="currentIataCode"
                                                                             value="{!$Label.ISSP_ANG_ANNUAL_REV_CANCEL_UPD_BTN}"/>
@@ -960,18 +958,18 @@
                                         <apex:actionStatus id="buttonLoadingStep1">
                                             <apex:facet name="stop">
                                                 <apex:outputPanel >
-                                                    <apex:commandButton styleclass="btn btn-default" style="margin-right:8px" action="{!cancel}" value="{!$Label.ISSP_Cancel}"
+                                                    <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-left" style="margin-right:8px" action="{!cancel}" value="{!$Label.ISSP_Cancel}"
                                                         immediate="true" status="buttonLoadingStep1" reRender="step1Form" />
-                                                    <apex:commandButton styleclass="btn btn-default" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '2');"
+                                                    <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-right" action="{!save}" onclick="gotoStep1('{!$Component.step1Form.step1Block.operationType}', '2');"
                                                         value="{!$Label.ISSP_Next}" status="buttonLoadingStep1" reRender="step1Form"
                                                     />
                                                 </apex:outputPanel>
                                             </apex:facet>
                                             <apex:facet name="start">
                                                 <apex:outputPanel >
-                                                    <apex:commandButton styleclass="btn btn-default" style="margin-right:8px" value="{!$Label.ISSP_Cancel}..." disabled="true"
+                                                    <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-left" style="margin-right:8px" value="{!$Label.ISSP_Cancel}..." disabled="true"
                                                         reRender="step1Form" />
-                                                    <apex:commandButton styleclass="btn btn-default" value="{!$Label.ISSP_Next}..." disabled="true" reRender="step1Form" />
+                                                    <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-right" value="{!$Label.ISSP_Next}..." disabled="true" reRender="step1Form" />
                                                 </apex:outputPanel>
                                             </apex:facet>
                                         </apex:actionStatus>
@@ -1017,14 +1015,14 @@
                         <!--apex:pageMessages /-->
 
                         <apex:pageBlock >
-                            <apex:pageBlockButtons location="bottom" style="padding-left:100px">
+                            <apex:pageBlockButtons location="bottom">
                                 <apex:actionStatus id="buttonLoadingStep3">
                                     <apex:facet name="stop">
                                         <apex:outputPanel >
-                                            <apex:commandButton styleclass="btn btn-default" style="margin-right:8px" action="{!goToStep1}" value="{!$Label.ISSP_Back}"
+                                            <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-left" style="margin-right:8px" action="{!goToStep1}" value="{!$Label.ISSP_Previous}"
                                                 immediate="true" status="buttonLoadingStep3" reRender="tCondiForm" />
 
-                                            <apex:commandButton styleclass="btn btn-default" action="{!submitForm}" value="{!$Label.ISSP_AMS_Submit_IATA}" status="buttonLoadingStep3"
+                                            <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-right" action="{!submitForm}" value="{!$Label.ISSP_AMS_Submit_IATA}" status="buttonLoadingStep3"
                                                 disabled="{! NOT(submitHelper.allowSubmit)}"
                                                 reRender="tCondiForm" />
 
@@ -1032,8 +1030,8 @@
                                     </apex:facet>
                                     <apex:facet name="start">
                                         <apex:outputPanel >
-                                            <apex:commandButton styleclass="btn btn-default" style="margin-right:8px" value="{!$Label.ISSP_Back}..." disabled="true" reRender="tCondiForm" />
-                                            <apex:commandButton styleclass="btn btn-default" value="{!$Label.ISSP_AMS_Submit_IATA}..." disabled="true" reRender="tCondiForm"/>
+                                            <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-left" style="margin-right:8px" value="{!$Label.ISSP_Previous}..." disabled="true" reRender="tCondiForm" />
+                                            <apex:commandButton styleclass="iatabtn iatabtn-default iatabtn-right" value="{!$Label.ISSP_AMS_Submit_IATA}..." disabled="true" reRender="tCondiForm"/>
                                         </apex:outputPanel>
                                     </apex:facet>
                                 </apex:actionStatus>
@@ -1324,13 +1322,13 @@
                     
 
                     <div class="modal-footer">
-                        <apex:commandButton action="{!createAgencyContact}" status="WaitingStatus" id="submitBut" styleClass="btn btn-default" value="{!$Label.ISSP_Submit}"
+                        <apex:commandButton action="{!createAgencyContact}" status="WaitingStatus" id="submitBut" styleClass="iatabtn iatabtn-default iatabtn-right" value="{!$Label.ISSP_Submit}"
                             oncomplete="if ({!contactSaved==true}){hideNewContactDialog(); cancelAgentUpdate();} this.removeAttribute('disabled');"
                             onclick="copyState(); this.disabled='disabled';"
                             reRender="currContactList, theMessages, ownershipMessage, noUpdateMessage">
                             <apex:param value="Current Owner" name="ownertype" assignTo="{!contactType}" />
                         </apex:commandButton>&nbsp;
-                        <button type="button" class="btn btn-default" onclick="cancelAgentUpdate(); return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
+                        <button type="button" class="iatabtn iatabtn-danger iatabtn-left" onclick="cancelAgentUpdate(); return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
                     </div>
 
                     <script>
@@ -1478,12 +1476,12 @@
                     </div>
 
                     <div class="modal-footer">
-                        <apex:commandButton action="{!NULL}" id="companySubmitBut" styleClass="btn btn-default" value="{!$Label.ISSP_Submit}"
+                        <apex:commandButton action="{!NULL}" id="companySubmitBut" styleClass="iatabtn iatabtn-default iatabtn-right" value="{!$Label.ISSP_Submit}"
                             oncomplete="createAgencyCompany(companyOwnerRecType);"
                             reRender="companyMessages"
                             onclick="this.disabled='disabled';">
                         </apex:commandButton>&nbsp;
-                    <button type="button" class="btn btn-default" onclick="cancelCompanyUpdate(); return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
+                    <button type="button" class="iatabtn iatabtn-danger iatabtn-left" onclick="cancelCompanyUpdate(); return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
                     </div>
                     <!--/apex:actionRegion-->
                 </div>
@@ -1509,12 +1507,12 @@
                             <br/><h4 class="modal-title" id="myModalLabel">{!$Label.ISSP_AMS_Copy_Ownership_Warning}</h4>
                         </div>
                         <div class="modal-footer">
-                            <apex:commandButton action="{!copyOwnership}" id="copyOwnersSubmitBut" styleClass="btn btn-default" value="{!$Label.Save}"
+                            <apex:commandButton action="{!copyOwnership}" id="copyOwnersSubmitBut" styleClass="iatabtn iatabtn-default iatabtn-right" value="{!$Label.Save}"
                                                 oncomplete="hideCopyOwnershipDialog(); this.removeAttr('disabled');"
                                                 reRender=""
                                                 onclick="this.disabled='disabled';">
                             </apex:commandButton>&nbsp;
-                            <button type="button" class="btn btn-default" onclick="return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
+                            <button type="button" class="iatabtn iatabtn-danger iatabtn-left" onclick="return false;" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">{!$Label.ISSP_Cancel}</span></button>
                         </div>
                     </div>
                 </div>
