@@ -288,55 +288,53 @@ private static void createCaseTeamMemberList(Case cse, list<Contact> listContact
 	}
 	if(!emailAddressesLst.isEmpty()){
 		wrapFilterContactsAndUsers listContactAndUsers = new wrapFilterContactsAndUsers(emailAddressesLst, mapContacts);
-		if(!listContactAndUsers.setTargetObjectIdUsers.isEmpty()){
-			sendEmailUsers(listContactAndUsers.setTargetObjectIdUsers, cse);
-		}
-		if(!listContactAndUsers.setToAddressesContacts.isEmpty()){
-			sendEmailContatcs(listContactAndUsers.setToAddressesContacts, cse);
-		}
+		sendEmailToAdditionalRecipients(listContactAndUsers, cse);
 	}
 	insert listCaseTeam;
 }
 
-public static void sendEmailUsers(List<Id>  userIDs, Case cse) {
+
+// Send a notification email to users or contacts added on the podotal contact us page.
+public static void sendEmailToAdditionalRecipients(wrapFilterContactsAndUsers listContacts, Case cse) {
 	List<Messaging.SingleEmailMessage> emailsToSend = new List<Messaging.SingleEmailMessage>();
-	String templateId = [SELECT Id FROM EmailTemplate WHERE DeveloperName = 'IATA_CS_Portal_Case_Addittional_Rec_Us'].Id;
+	String templateUsersId = [SELECT Id FROM EmailTemplate WHERE DeveloperName = 'IATA_CS_Portal_Case_Addittional_Rec_Us'].Id;
+	String templateContactsId = [SELECT Id FROM EmailTemplate WHERE DeveloperName = 'IATA_CS_Portal_Case_Addittional_Rec_CC'].Id;
 
 	try {
-		for (ID userId : userIDs) {
+		for (ID userId : listContacts.setTargetObjectIdUsers) {
 			Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 			mail.setTargetObjectId(userId);
 			mail.setSaveAsActivity(false);
-			mail.setTemplateId(templateId);
+			mail.setTemplateId(templateUsersId);
 			mail.setWhatId(cse.Id);
 			emailsToSend.add(mail);
 		}
-		Messaging.sendEmail(emailsToSend);
-	} catch (Exception  e) {
-		system.debug('Failed to send email to users');
-	}
-
-}
-
-public static void sendEmailContatcs(List<String> receivers, Case cse) {
-	try {
-		List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
-		Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-		String templateId = [SELECT Id FROM EmailTemplate WHERE DeveloperName = 'IATA_CS_Portal_Case_Addittional_Rec_CC'].Id;
-		for (String cc : receivers) {
-			mail.setTargetObjectId(cc);
-			mail.setToAddresses(receivers) ;
-			mail.setTemplateId(templateId);
-			mail.setWhatId(cse.Id);
-			emails.add(mail);
+		if(!emailsToSend.isEmpty()){
+			if (!Test.isRunningTest() ) Messaging.sendEmail(emailsToSend);
 		}
-		Messaging.sendEmail(emails);
+		emailsToSend = new List<Messaging.SingleEmailMessage>();
+		for (String cc : listContacts.setToAddressesContacts) {
+			Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+			mail.setTargetObjectId(cc);
+			mail.setToAddresses(listContacts.setToAddressesContacts) ;
+			mail.setTemplateId(templateContactsId);
+			mail.setWhatId(cse.Id);
+			emailsToSend.add(mail);
+		}
+		if(!emailsToSend.isEmpty()){
+			if (!Test.isRunningTest() ) Messaging.sendEmail(emailsToSend);
+		}
+
+
 	} catch (Exception  e) {
-		system.debug('Failed to send email to Contacts');
+		TransformationHelper.sendEmailSupport( 'PortalSupportReachUsCreateNewCaseCtrl sendEmailUsers() Exception', 'Exception: ' + e + ' || StackTrace: ' + e.getStackTraceString());
 	}
+
 }
 
-
+//This wrapper aims to validate whether an email has a user or just a contact.
+//If you have a user, the email will be sent to that same user, making that email not count towards the limits.
+//If there is no user, send it to the contact
 public without sharing class wrapFilterContactsAndUsers {
 	public List<Id> setTargetObjectIdUsers {get; set;}
 	public List<String> setToAddressesContacts {get; set;}

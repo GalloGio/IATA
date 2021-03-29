@@ -5406,10 +5406,6 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CS_Portal_Addittional_Recipients_Body</name>
     </customLabels>
     <customLabels>
-        <label>親愛な</label>
-        <name>CS_Portal_Addittional_Recipients_Introduction</name>
-    </customLabels>
-    <customLabels>
         <label>IATAカスタマーポータル - あなたはケースに追加されました</label>
         <name>CS_Portal_Addittional_Recipients_Subject</name>
     </customLabels>

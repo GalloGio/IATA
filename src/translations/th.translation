@@ -5403,10 +5403,6 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CS_Portal_Addittional_Recipients_Body</name>
     </customLabels>
     <customLabels>
-        <label>ที่รัก</label>
-        <name>CS_Portal_Addittional_Recipients_Introduction</name>
-    </customLabels>
-    <customLabels>
         <label>IATA ลูกค้าพอร์ทัล - คุณถูกเพิ่มเข้าไปในกรณี</label>
         <name>CS_Portal_Addittional_Recipients_Subject</name>
     </customLabels>

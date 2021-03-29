@@ -5408,10 +5408,6 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CS_Portal_Addittional_Recipients_Body</name>
     </customLabels>
     <customLabels>
-        <label>Chère</label>
-        <name>CS_Portal_Addittional_Recipients_Introduction</name>
-    </customLabels>
-    <customLabels>
         <label>IATA Portail client - Vous avez été ajouté au cas</label>
         <name>CS_Portal_Addittional_Recipients_Subject</name>
     </customLabels>

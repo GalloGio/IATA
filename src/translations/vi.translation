@@ -5405,10 +5405,6 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CS_Portal_Addittional_Recipients_Body</name>
     </customLabels>
     <customLabels>
-        <label>Kính thưa</label>
-        <name>CS_Portal_Addittional_Recipients_Introduction</name>
-    </customLabels>
-    <customLabels>
         <label>IATA khách hàng Portal - Bạn đã được bổ sung vào trường hợp</label>
         <name>CS_Portal_Addittional_Recipients_Subject</name>
     </customLabels>

@@ -5408,10 +5408,6 @@ und &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
         <name>CS_Portal_Addittional_Recipients_Body</name>
     </customLabels>
     <customLabels>
-        <label>Sehr geehrter</label>
-        <name>CS_Portal_Addittional_Recipients_Introduction</name>
-    </customLabels>
-    <customLabels>
         <label>IATA-Kundenportal - Sie wurden zu Fall hinzugefügt</label>
         <name>CS_Portal_Addittional_Recipients_Subject</name>
     </customLabels>

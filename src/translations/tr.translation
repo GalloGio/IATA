@@ -5402,10 +5402,6 @@ Daha fazla ayrıntı için, Müşteri Portalı&apos;nda &quot;Resolution 812&quo
         <name>CS_Portal_Addittional_Recipients_Body</name>
     </customLabels>
     <customLabels>
-        <label>Sayın</label>
-        <name>CS_Portal_Addittional_Recipients_Introduction</name>
-    </customLabels>
-    <customLabels>
         <label>IATA Müşteri Portalı - Dava eklendi</label>
         <name>CS_Portal_Addittional_Recipients_Subject</name>
     </customLabels>

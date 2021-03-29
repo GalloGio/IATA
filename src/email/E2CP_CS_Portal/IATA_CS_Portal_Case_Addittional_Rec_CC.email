@@ -11,7 +11,7 @@
                 <br/>
             </span>
             <apex:outputPanel >
-                <p>{!$Label.CS_Portal_Addittional_Recipients_Introduction} {!recipient.FirstName} {!recipient.LastName},</p>
+                <p>{!$Label.CSP_Dear} {!recipient.FirstName} {!recipient.LastName},</p>
                 <p>{!relatedTo.contact.FirstName} {!relatedTo.contact.LastName} {!$Label.CS_Portal_Addittional_Recipients_Body} {!relatedTo.CaseNumber}:</p>
                 <br/>
                 <p>{!relatedTo.Subject}</p>

@@ -5406,10 +5406,6 @@ dan &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
         <name>CS_Portal_Addittional_Recipients_Body</name>
     </customLabels>
     <customLabels>
-        <label>Terhormat</label>
-        <name>CS_Portal_Addittional_Recipients_Introduction</name>
-    </customLabels>
-    <customLabels>
         <label>IATA Pelanggan Portal - Anda ditambahkan ke kasus</label>
         <name>CS_Portal_Addittional_Recipients_Subject</name>
     </customLabels>

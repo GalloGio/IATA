@@ -5413,10 +5413,6 @@
         <name>CS_Portal_Addittional_Recipients_Body</name>
     </customLabels>
     <customLabels>
-        <label>Уважаемый</label>
-        <name>CS_Portal_Addittional_Recipients_Introduction</name>
-    </customLabels>
-    <customLabels>
         <label>ИАТА Customer Portal - Вы были добавлены в случае</label>
         <name>CS_Portal_Addittional_Recipients_Subject</name>
     </customLabels>

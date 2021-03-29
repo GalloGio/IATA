@@ -5402,10 +5402,6 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CS_Portal_Addittional_Recipients_Body</name>
     </customLabels>
     <customLabels>
-        <label>عزيزي</label>
-        <name>CS_Portal_Addittional_Recipients_Introduction</name>
-    </customLabels>
-    <customLabels>
         <label>وأضاف أن لحالة - IATA بوابة العملاء</label>
         <name>CS_Portal_Addittional_Recipients_Subject</name>
     </customLabels>

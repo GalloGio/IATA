@@ -8573,14 +8573,6 @@ IATA Customer Portal</value>
         <value>added you as a participant to case</value>
     </labels>
     <labels>
-        <fullName>CS_Portal_Addittional_Recipients_Introduction</fullName>
-        <categories>CS Portal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CS Portal Addittional Recipients Introduction</shortDescription>
-        <value>Dear</value>
-    </labels>
-    <labels>
         <fullName>CS_Portal_Addittional_Recipients_Subject</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
