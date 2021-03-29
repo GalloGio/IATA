@@ -1,5 +1,5 @@
 @IsTest
-private class AirportISServiceTest {
+private class IATAPayServiceTest {
 	@TestSetup
 	static void makeData(){
 		List<Account> accountList = TestDataFactory_Accounts.createStandardAccounts(1);
@@ -18,12 +18,12 @@ private class AirportISServiceTest {
 		Test.stopTest();
 
 		//test onboarding
-		AirportISService.manageUserOnboarding(new Set<Contact>{contact, contact2}, PortalApplicationRights.ACCESSGRANTED);
+		IATAPayService.manageUserOnboarding(new Set<Contact>{contact, contact2}, PortalApplicationRights.ACCESSGRANTED);
 		//test contact role assignment
-		Map<Id,Account_Contact_Role__c> accountContactRoleMap = AccountContactRoleSelector.selectMapByServiceAndContactIdSet(AirportISService.FUNCTIONALROLE, new Set<Id>{contact.Id, contact2.Id});
+		Map<Id,Account_Contact_Role__c> accountContactRoleMap = AccountContactRoleSelector.selectMapByServiceAndContactIdSet(IATAPayService.FUNCTIONALROLE, new Set<Id>{contact.Id, contact2.Id});
 		System.assertEquals(2, accountContactRoleMap.size(), 'Expected 2 Account Contact Roles');
 		//test account role assignment
-		List<Account_Role__c> accountRoleList = AccountRoleSelector.selectByAccountIdSetAndRole(new Set<Id>{account.Id}, AirportISService.FUNCTIONALROLE);
+		List<Account_Role__c> accountRoleList = AccountRoleSelector.selectByAccountIdSetAndRole(new Set<Id>{account.Id}, IATAPayService.FUNCTIONALROLE);
 		System.assertEquals(1, accountRoleList.size(), 'Expected 1 Account Role');
 	}
 
@@ -33,21 +33,21 @@ private class AirportISServiceTest {
 		Account account = AccountSelector.selectIdByNames(new Set<String>{TestDataFactory_Accounts.DEFAULTNAME + ' 0'}).get(0);
 		Contact contact = ContactSelector.selectByEmails(new Set<String>{TestDataFactory_Contacts.DEFAULTEMAIL + '0'}).get(0);
 		Contact contact2 = ContactSelector.selectByEmails(new Set<String>{TestDataFactory_Contacts.DEFAULTEMAIL + '1'}).get(0);
-		AirportISService.manageUserOnboarding(new Set<Contact>{contact, contact2}, PortalApplicationRights.ACCESSGRANTED);
+		IATAPayService.manageUserOnboarding(new Set<Contact>{contact, contact2}, PortalApplicationRights.ACCESSGRANTED);
 		Test.stopTest();
 
 		//test offboarding
-		AirportISService.manageUserOnboarding(new Set<Contact>{contact}, PortalApplicationRights.ACCESSDENIED);
+		IATAPayService.manageUserOnboarding(new Set<Contact>{contact}, PortalApplicationRights.ACCESSDENIED);
 		//test account contact role unassignment
-		Map<Id,Account_Contact_Role__c> accountContactRoleMap = AccountContactRoleSelector.selectMapByServiceAndContactIdSet(AirportISService.FUNCTIONALROLE, new Set<Id>{contact.Id, contact2.Id});
+		Map<Id,Account_Contact_Role__c> accountContactRoleMap = AccountContactRoleSelector.selectMapByServiceAndContactIdSet(IATAPayService.FUNCTIONALROLE, new Set<Id>{contact.Id, contact2.Id});
 		System.assertEquals(1, accountContactRoleMap.size(), 'There should still be 1 Contact with the role');
-		List<Account_Role__c> accountRoleList = AccountRoleSelector.selectByAccountIdSetAndRole(new Set<Id>{account.Id}, AirportISService.FUNCTIONALROLE);
+		List<Account_Role__c> accountRoleList = AccountRoleSelector.selectByAccountIdSetAndRole(new Set<Id>{account.Id}, IATAPayService.FUNCTIONALROLE);
 		System.assertEquals(1, accountRoleList.size(), 'Expected 1 Account Role');
-		AirportISService.manageUserOnboarding(new Set<Contact>{contact2}, PortalApplicationRights.ACCESSDENIED);
-		accountContactRoleMap = AccountContactRoleSelector.selectMapByServiceAndContactIdSet(AirportISService.FUNCTIONALROLE, new Set<Id>{contact.Id, contact2.Id});
+		IATAPayService.manageUserOnboarding(new Set<Contact>{contact2}, PortalApplicationRights.ACCESSDENIED);
+		accountContactRoleMap = AccountContactRoleSelector.selectMapByServiceAndContactIdSet(IATAPayService.FUNCTIONALROLE, new Set<Id>{contact.Id, contact2.Id});
 		System.assertEquals(0, accountContactRoleMap.size(), 'There should still be no Contacts with the role');
 		//test account role unassignment
-		accountRoleList = AccountRoleSelector.selectByAccountIdSetAndRole(new Set<Id>{account.Id}, AirportISService.FUNCTIONALROLE);
+		accountRoleList = AccountRoleSelector.selectByAccountIdSetAndRole(new Set<Id>{account.Id}, IATAPayService.FUNCTIONALROLE);
 		System.assertEquals(0, accountRoleList.size(), 'Expected 0 Account Roles');
 	}
 }
