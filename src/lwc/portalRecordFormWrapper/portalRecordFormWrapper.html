@@ -193,6 +193,15 @@
 
                             </template>
 
+                            <template if:true={field.isTech}>
+                                <div key={providerId} class="text-small slds-col slds-size_1-of-1 slds-medium-size_2-of-2 slds-large-size_2-of-2">
+                                    <c-portal-record-view-list key={providerId} label-api={field.label} provider-id-api={providerId}
+                                    field-api={field.fieldName}>
+                                    </c-portal-record-view-list>
+                                </div>
+
+                            </template>
+
                             <template if:false={field.isAccessibility}>
                                 <template if:false={field.isContactServices}>
                                     <template if:false={field.isJobFunction}>

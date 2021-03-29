@@ -5,7 +5,7 @@ public without sharing class PortalServicesInnovationHubCtrl {
 	private static String IH_ACCOUNT_ROLE_DETAILS_STATUS_SUBMITTED = 'Submitted';
 	private static String IH_ACCOUNT_ROLE_DETAILS_STATUS_APPROVED = 'Approved';
 	private static String IH_LOGO_PATH = '/sfc/servlet.shepherd/version/download/';
-	private static String IH_FUNCTIONAL_ROLE = 'InnovationHub CRM';
+	private static String IH_FUNCTIONAL_ROLE = 'Startup Hotlist';
 	private static String accountRoleRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'Default');
 	private static String accountRoleDetailConsumerRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('IH_Account_Role_Detail__c', 'Consumer');
 	private static String accountRoleDetailProviderRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('IH_Account_Role_Detail__c', 'Provider');
@@ -197,7 +197,7 @@ public without sharing class PortalServicesInnovationHubCtrl {
 
 		if(String.isNotBlank(roleDetail.Technology__c)){
 			PortalWrapperClasses.FieldWrapper technology = new PortalWrapperClasses.FieldWrapper('Technology__c',true,false,'',System.Label.CSP_Technology);
-			technology.isMultipick = true;
+			technology.isTech = true;
 			fieldWrapper.add(technology);
 		}
 
@@ -401,7 +401,7 @@ public without sharing class PortalServicesInnovationHubCtrl {
 		List<Account> accs = [Select Id, Sector__c FROM Account WHERE Id IN :accWoArd];
 		lstAccountRoleDetails.clear();
 		for(Account acc : accs){
-			if(acc.Sector__c == 'Airline' || acc.Sector__c == 'Airline Supplier'){
+			if(acc.Sector__c == 'Airline'){
 				lstAccountRoleDetails.add(new IH_Account_Role_Detail__c(Account_Role__c = mapAccRoles.get(acc.Id),
 																	RecordTypeId = accountRoleDetailConsumerRecordTypeId,
 																	Status__c = 'Approved'));
@@ -512,7 +512,7 @@ public without sharing class PortalServicesInnovationHubCtrl {
 	@AuraEnabled(cacheable = false)
 	public static String getProviderImgURLById(String providerId) {
 		String logoId = '';
-		if(providerId != null && providerId != ''){
+		if(String.isNotBlank(providerId)){
 			logoId = [SELECT Logo_File_Id__c FROM IH_Account_Role_Detail__c 
 					 WHERE Id = :providerId LIMIT 1].Logo_File_Id__c;
 		}
