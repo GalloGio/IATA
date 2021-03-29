@@ -1080,14 +1080,14 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 			ctrl.childsAccountsWrapperList[0].checked = true;
 			ctrl.childsAccountsWrapperList[0].isOwnershipCompleted = true;
 			ctrl.childsAccountsWrapperList[0].icon = 'test';
+			ctrl.childsAccountsWrapperList[0].showMe = true;
 			ctrl.allChildsAccountsWrapperSelected = true;
-			String test = ctrl.csvAccountsExport;
+			ctrl.csvAccountsExport();
 			ctrl.ListOfCountries.add('test');
 			ctrl.getCountriesByChildsAccounts();
 			ctrl.closePopup();
 			ctrl.showPopup();
 			ctrl.checkAllChildsAccountsWrapper();
-			ctrl.checkAllChildsAccountsByCountry();
 			ctrl.countrySelected = 'test';
 			ctrl.addValueCountry();
 			ctrl.massConfirmDetails();

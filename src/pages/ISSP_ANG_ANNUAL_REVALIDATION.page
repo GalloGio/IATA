@@ -423,15 +423,16 @@
                         </div>
                         <div class="panel-body" id="body-enquiries">
                             <apex:form id="step1Form" styleClass="form-horizontal">
-
+                                
                                 <apex:inputHidden id="currentIataCode" value="{!currentIataCode}"/>
+                                <apex:inputHidden id="csvAccountsExportDatahidden" value="{!csvAccountsExportData}"/>
 
                                 <apex:actionFunction name="addValueCountry" action="{!addValueCountry}" status="WaitingStatus" rerender="theTable"/>
                                 <apex:actionFunction name="removeValueCountry" action="{!removeValueCountry}" status="WaitingStatus" rerender="theTable"/>
 
                                 <apex:actionFunction name="loadIataCode" action="{!loadIataCode}" status="WaitingStatus" rerender="componentsArea, buttonsArea" />
-                                <apex:actionFunction name="cancelUpdate" action="{!cancelUpdate}" status="WaitingStatus" reRender="mytreeArea, componentsArea, buttonsArea, ownershipMessage, noUpdateMessage" />
-                                <apex:actionFunction name="discardDetails" action="{!discardDetails}" status="WaitingStatus" reRender="mytreeArea, componentsArea, buttonsArea, ownershipMessage, noUpdateMessage" />
+                                <apex:actionFunction name="cancelUpdate" action="{!cancelUpdate}" status="WaitingStatus" reRender="mytreeArea, treeArea, componentsArea, buttonsArea, ownershipMessage, noUpdateMessage" />
+                                <apex:actionFunction name="discardDetails" action="{!discardDetails}" status="WaitingStatus" reRender="mytreeArea, treeArea, componentsArea, buttonsArea, ownershipMessage, noUpdateMessage" />
 
                                 <apex:actionFunction name="bodyRerender" status="WaitingStatus" rerender="componentsArea, buttonsArea" />
                                 
@@ -456,6 +457,7 @@
                                 <apex:actionFunction name="copyOwnershipAction" action="{!cleanOwnership}" rerender="" />
 
                                 <apex:actionFunction name="rerenderTreeArea" rerender="mytreeArea" />
+                                <apex:actionFunction name="rerenderOldTreeArea" rerender="treeArea" />
                                 
                                 <apex:actionFunction name="changeContactStateOptions" reRender="contactStateList" action="{!getContactStates}">
                                     <apex:param id="country" name="countryName" value="" />
@@ -473,8 +475,8 @@
                                 </apex:outputPanel>
                                 <apex:pageBlock id="step1Block" mode="edit">
                                     <div>
-                                        <apex:commandButton  styleClass="iatabtn iatabtn-default" value="Mass Confirm Details" action="{!showPopup}" rerender="tstpopup"/>
-                                        <apex:commandButton  styleClass="iatabtn iatabtn-default" value="Download CSV" onclick="download_csv_file();return false;"/>
+                                        <apex:commandButton  styleClass="iatabtn iatabtn-default" value="Mass Confirm Details" action="{!showPopup}" rerender="tstpopup" rendered="{!caseAccount.Location_Type__c == 'GE'}"/>
+                                        <apex:commandButton  styleClass="iatabtn iatabtn-default" value="Download CSV" onclick="download_csv_file();return false;" rendered="{!caseAccount.Location_Type__c == 'GE'}"/>
                                         <apex:outputPanel id="tstpopup" style="margin-top: 100px;"> 
                                             <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!displayPopUp}"/> 
                                             <apex:outputPanel styleClass="custPopup" layout="block" rendered="{!displayPopUp}"> 
@@ -486,7 +488,7 @@
                                                     <apex:inputHidden id="countrySelected" value="{!countrySelected}"/>
                                                     <dl class="dropdownCountry"> <dt>
                                                         <a href="#">
-                                                          <span class="hida">- - Select few Countries - -</span>    
+                                                          <span class="hida" style="color: #ffffff;">- - Select few Countries - -</span>    
                                                           <span class="multiSel" style="color:bisque;"></span>  
                                                         </a>
                                                         </dt>
@@ -530,12 +532,17 @@
                                                                 var html = '<span title="' + title + '">' + title + '</span>';
                                                                 $('.multiSel').append(html);
                                                                 $(".hida").hide();
+                                                                $(".dropdownCountry dd ul").hide();
                                                                 addValueCountry();
                                                             } else {
                                                                 $('span[title="' + title + '"]').remove();
                                                                 var ret = $(".hida");
                                                                 $('.dropdownCountry dt a').append(ret);
+                                                                $(".dropdownCountry dd ul").hide();
                                                                 removeValueCountry();
+                                                                if('{!countriesSelected.size}'){
+                                                                    $(".hida").hide();
+                                                                }
                                                             }
                                                         });
                                                     </script>
@@ -543,9 +550,9 @@
                                                 <apex:outputPanel id="tstpopuptable"  layout="block" style="overflow-y: scroll;height:350px" >
                                                     <apex:dataTable value="{!childsAccountsWrapperList}" var="a" id="theTable" headerClass="theHead"
                                                         rowClasses="odd,even" styleClass="tableClass">     
-                                                        <apex:column  styleClass="col">
+                                                        <apex:column  styleClass="col" style="{!IF(a.showMe,'', 'display:none;')}">
                                                             <apex:facet name="header">
-                                                                <apex:inputCheckbox value="{!allChildsAccountsWrapperSelected}" >
+                                                                <apex:inputCheckbox value="{!allChildsAccountsWrapperSelected}">
                                                                     <apex:actionSupport event="onchange" action="{!checkAllChildsAccountsWrapper}" rerender="theTable" >
                                                                     </apex:actionSupport>
                                                                 </apex:inputCheckbox>
@@ -553,32 +560,32 @@
                                                             <apex:inputCheckbox disabled="{!OR(NOT(a.isOwnershipCompleted), a.icon == 'glyphicon glyphicon-ok text-success')}" value="{!a.checked}"/>
                                                             <apex:facet name="footer"></apex:facet>
                                                         </apex:column>
-                                                        <apex:column  styleClass="col">
-                                                            <apex:facet name="header">Info</apex:facet>            
+                                                        <apex:column  styleClass="col align-icon-center" style="{!IF(a.showMe,'', 'display:none;')}">
+                                                            <apex:facet name="header">Status</apex:facet>            
                                                             <i class="{!a.icon}" role="presentation"></i>
                                                             <apex:facet name="footer"></apex:facet>
                                                         </apex:column>
-                                                        <apex:column styleClass="col">
+                                                        <apex:column styleClass="col" style="{!IF(a.showMe,'', 'display:none;')}">
                                                             <apex:facet name="header">HE</apex:facet>            
                                                             <apex:inputCheckbox disabled="true" value="{!a.isHE}"/>
                                                             <apex:facet name="footer"></apex:facet>
                                                         </apex:column>
-                                                        <apex:column styleClass="col">
+                                                        <apex:column styleClass="col" style="{!IF(a.showMe,'', 'display:none;')}">
                                                             <apex:facet name="header">AE</apex:facet>            
                                                             <apex:inputCheckbox disabled="true" value="{!a.isAE}"/>
                                                             <apex:facet name="footer"></apex:facet>
                                                         </apex:column>
-                                                        <apex:column styleClass="col">
-                                                            <apex:facet name="header">AccountName</apex:facet>            
+                                                        <apex:column styleClass="col" style="{!IF(a.showMe,'', 'display:none;')}">
+                                                            <apex:facet name="header">Lead Name</apex:facet>            
                                                             <apex:outputText value="{!a.accountName}"/>
                                                             <apex:facet name="footer"></apex:facet>
                                                         </apex:column>
-                                                        <apex:column styleClass="col">
+                                                        <apex:column styleClass="col" style="{!IF(a.showMe,'', 'display:none;')}">
                                                             <apex:facet name="header">IATA Code</apex:facet>            
                                                             <apex:outputText value="{!a.IATACode}"/>
                                                             <apex:facet name="footer"></apex:facet>
                                                         </apex:column>
-                                                        <apex:column styleClass="col">
+                                                        <apex:column styleClass="col" style="{!IF(a.showMe,'', 'display:none;')}">
                                                             <apex:facet name="header">ISO Country Name</apex:facet>            
                                                             <apex:outputText value="{!a.ISOCountryName}"/>
                                                             <apex:facet name="footer"></apex:facet>
@@ -593,6 +600,9 @@
                                         </apex:outputPanel> 
                                         <style type="text/css"> 
 
+                                            .align-icon-center {
+                                                text-align: center;
+                                            }
                                             .dropdownCountry dd, .dropdown dt {
                                                 margin:0px;
                                                 padding:0px;
@@ -698,12 +708,12 @@
                                     <!--Step Progress bar End -->
 
                                     <apex:outputPanel id="panel1">
-                                        <div class="customTable" style="margin-top: 20px;">
+                                        <div class="customTable" style="{!IF(caseAccount.Location_Type__c != 'GE', '', 'margin-top: 20px;')}">
                                             <!-- --------------- -->
                                             <!-- IATA CODES TREE -->
                                             <!-- --------------- -->
                                             <div>
-                                                <apex:outputPanel id="mytreeArea">
+                                                <apex:outputPanel id="mytreeArea" rendered="{!caseAccount.Location_Type__c == 'GE'}">
                                                     <ul id="myUL">
                                                         <li><a class="click-on-me do-hover myUL-clicked isFather" href="#" style="color: #1e32fa!important;text-decoration: none;" data-myval="{!he.text}"><i class="{!he.icon} align-icon-myUL" role="presentation"></i>{!he.text}</a>
                                                             <apex:repeat value="{!he.topChildren}" var="tc">
@@ -722,25 +732,6 @@
                                                         </li>
                                                     </ul>
                                                     <script>
-                                                        function download_csv_file() {  
-
-                                                            var csvFileData = JSON.parse('{!csvAccountsExport}');
-                                                            
-                                                            var csv = '"Agency Code";"Legal / Registered Name";"Trade Name";"VAT Number";"Billing Street";"Billing City";"Billing State/Province";"Billing Zip/Postal Code";"Billing Country";"Shipping Street";"Shipping City";"Shipping State/Province";"Shipping Zip/Postal Code";"Shipping Country";"Office Email";"Website";"Business Phone";"Mobile Phone";"Fax";"Owner name 1";"Owner1 %";"Owner name 2";"Owner2 %";"Owner name 3";"Owner3 %";"Owner name 4";"Owner4 %";"Owner name 5";"Owner5 %";"Owner name 6";"Owner6 %";"Owner name 7";"Owner7 %";"Owner name 8";"Owner8 %";"Owner name 9";"Owner9 %";"Owner name 10";"Owner10 %"\n';  
-
-                                                            csvFileData.forEach(function(row) {  
-                                                                    csv += row.join(';');  
-                                                                    csv += "\n";  
-                                                            });  
-                                                            var hiddenElement = document.createElement('a');  
-                                                            hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);  
-                                                            hiddenElement.target = '_blank';  
-                                                            
-                                                            hiddenElement.download = 'Annual Revalidation Locations for ' + '{!he.text}' + '.csv';  
-                                                            hiddenElement.click();  
-                                                        }  
-
-
                                                         var toggler = document.getElementsByClassName("caret-myUL");
                                                         var i;
 
@@ -772,6 +763,50 @@
                                                             loadIataCode();
                                                         });
                                                         $j(document).ready(function () {
+                                                            $('.pbBottomButtons').css('margin-top',-10);
+                                                        });
+
+                                                        function download_csv_file() {  
+                                                            var csvFileData = JSON.parse($('[id$=csvAccountsExportDatahidden]').val());
+                                                            var csv = '"Agency Code","Legal / Registered Name","Trade Name","VAT Number","Billing Street","Billing City","Billing State/Province","Billing Zip/Postal Code","Billing Country","Shipping Street","Shipping City","Shipping State/Province","Shipping Zip/Postal Code","Shipping Country","Office Email","Website","Business Phone","Mobile Phone","Fax","Owner name 1","Owner1 %","Owner name 2","Owner2 %","Owner name 3","Owner3 %","Owner name 4","Owner4 %","Owner name 5","Owner5 %","Owner name 6","Owner6 %","Owner name 7","Owner7 %","Owner name 8","Owner8 %","Owner name 9","Owner9 %","Owner name 10","Owner10 %"\n';
+
+                                                            csvFileData.forEach(function(row) {  
+                                                                    csv += row.join(',');  
+                                                                    csv += "\n";  
+                                                            });  
+                                                            var hiddenElement = document.createElement('a');  
+                                                            hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);  
+                                                            hiddenElement.target = '_blank';  
+                                                            
+                                                            hiddenElement.download = 'Annual Revalidation Locations for ' + '{!he.text}' + '.csv';  
+                                                            hiddenElement.click(); 
+                                                        }  
+                                                    </script>
+                                                </apex:outputPanel>
+                                                <apex:outputPanel id="treeArea" rendered="{!caseAccount.Location_Type__c != 'GE'}">
+-                                                    <div id="frmt">
+-                                                    </div>
+                                                    <script>
+                                                        //
+                                                        // This flag is to prevent from running the loadIataCode 2 times on page load.
+                                                        // This whould made the components load twice and therefore flick.
+                                                        //
+                                                        var flag = 0;
+
+                                                        $j('#frmt').on("changed.jstree", function (e, data) {
+                                                            if(data.selected.length == 1 && flag == 1) {
+                                                                var iataCode = data.instance.get_node(data.selected[0]).text;
+
+                                                                $('[id$=currentIataCode]').val(iataCode);
+
+                                                                loadIataCode();
+                                                            }
+                                                        });
+                                                        $j('#frmt').jstree(JSON.parse('{!tree}'));
+
+                                                        $j(document).ready(function () {
+                                                            flag = 1;
+                                                            bodyRerender();
                                                             $('.pbBottomButtons').css('margin-top',-10);
                                                         });
                                                     </script>
@@ -883,20 +918,20 @@
                                                                         <apex:commandButton styleclass="btn btn-default"
                                                                             action="{!confirmDetails}" onclick=""
                                                                             status="WaitingStatus"
-                                                                            reRender="mytreeArea, componentsArea, buttonsArea"
+                                                                            reRender="mytreeArea, treeArea, componentsArea, buttonsArea"
                                                                             value="{! $Label.ISSP_ANG_ANNUAL_REV_CONFIRM_BTN}"
                                                                             disabled="{!NOT(ownershipCompleted)}"/>
 
                                                                         <apex:commandButton styleclass="btn btn-default"
                                                                             action="{!updateDetails}" onclick=""
                                                                             status="WaitingStatus"
-                                                                            reRender="mytreeArea, componentsArea, buttonsArea"
+                                                                            reRender="mytreeArea, treeArea, componentsArea, buttonsArea"
                                                                             value="{! $Label.ISSP_ANG_ANNUAL_REV_UPDATE_BTN}"/>
                                                                     </div>
 
                                                                     <div class="center" style="display:{!IF(currentAccount.status == 'UP','inline-block','none')}">
                                                                         <apex:commandButton styleclass="btn btn-default"
-                                                                            action="{!confirmUpdate}" onclick="if (stateMap[$('[id$=ShippingCountryList]').val()] == undefined) {copyStateInputBox();} else { copyStateListSelection();}" oncomplete="if(!{!errorFound}) {rerenderTreeArea();} else {scrollToErrors()}"
+                                                                            action="{!confirmUpdate}" onclick="if (stateMap[$('[id$=ShippingCountryList]').val()] == undefined) {copyStateInputBox();} else { copyStateListSelection();}" oncomplete="if(!{!errorFound}) {rerenderTreeArea();rerenderOldTreeArea();} else {scrollToErrors()}"
                                                                             status="WaitingStatus"
                                                                             reRender="componentsArea, buttonsArea"
                                                                             value="{!$Label.ISSP_ANG_ANNUAL_REV_CONFIRM_UPD_BTN}"/>
@@ -1129,7 +1164,6 @@
             }
 
             function toggleUpdatedLegalStatus(myValue) {
-                //console.log(myValue);
 
                 var theValue = document.getElementById(myValue).value;
 
