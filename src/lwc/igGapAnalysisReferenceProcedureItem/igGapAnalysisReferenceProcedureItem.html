@@ -1,0 +1,95 @@
+<template>
+
+    <div class={mainDivClass} onclick={mainDivClick}>
+
+        <div class="slds-grid slds-size_1-of-1">
+
+            <div if:true={isVariation} class="icon-col slds-size_1-of-12 slds-align_absolute-center slds-grid slds-wrap" style="height: 100%;">
+                <div class="slds-size_12-of-12">
+                    <svg if:true={isCriticalVariation} xmlns="http://www.w3.org/2000/svg" width="16" height="16">
+                        <use xlink:href={resources.icons.alert}></use>
+                    </svg>
+                    <svg if:true={isNonCriticalVariation} xmlns="http://www.w3.org/2000/svg" width="16" height="16">
+                        <use xlink:href={resources.icons.alert2}></use>
+                    </svg>
+                </div>
+            </div>
+
+            <div if:false={isVariation} class="slds-size_1-of-12"></div>
+
+            <div class="procedure-col slds-size_3-of-12 slds-p-right_medium">
+                <div class="text-box slds-truncate" title={gapAnalysisItem.userProvisionDocument}>{userProvisionDocument}</div>
+            </div>
+
+            <div class="procedure-col slds-size_4-of-12">
+                <div class="text-box slds-truncate" title={gapAnalysisItem.userProvisionProcedure}>{userProvisionProcedure}</div>
+            </div>
+
+            <div class="procedure-col slds-size_2-of-12 slds-align_absolute-center">
+                <button class={statusClass}>{statusText}</button>
+            </div>
+
+            <div class="procedure-actions slds-p-left_small slds-size_2-of-12 slds-grid" onclick={toggleDetails}>
+                <span class={pendingReviewClass} title="Mark as reviewed" onclick={markAsReviewed}>
+                    <svg class={attachmentClass} xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+                        <use xlink:href={resources.icons.markAsReviewed}></use>
+                    </svg>
+                </span>
+                <span class="slds-col cursor-pt slds-align_absolute-center slds-text-align_center" title="Comments">
+                    <svg class={commentClass} xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+                        <use xlink:href={resources.icons.comment}></use>
+                    </svg>
+                </span>
+                <span class="slds-col cursor-pt slds-align_absolute-center slds-text-align_center" title="Attachments">
+                    <svg class={attachmentClass} xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+                        <use xlink:href={resources.icons.attachment}></use>
+                    </svg>
+                </span>
+                <span class="slds-col slds-align_absolute-center slds-text-align_center">
+                    <svg if:true={folded} class={foldIconClass} xmlns="http://www.w3.org/2000/svg" width="12" height="12">
+                        <use xlink:href={resources.icons.unfold}></use>
+                    </svg>
+                    <svg if:false={folded} class={foldIconClass} xmlns="http://www.w3.org/2000/svg" width="12" height="12">
+                        <use xlink:href={resources.icons.fold}></use>
+                    </svg>
+                </span>
+            </div>
+        </div>
+
+        <div if:false={folded} class="procedure-details slds-size_1-of-1 slds-grid">
+            <div class="slds-size_1-of-12"></div>
+            <div class="slds-size_11-of-12">
+                <template if:true={hasNotes}>
+                    <p class="label slds-m-top_medium">{label.custom.ig_comments}</p>
+                    <textarea class="text-box slds-size_1-of-1" disabled>
+                        {gapAnalysisItem.notes}
+                    </textarea>
+                </template>
+                <template if:true={hasComments}>
+                    <p class="label slds-m-top_medium">{label.custom.ig_variation_description}</p>
+                    <textarea class="text-box slds-size_1-of-1" disabled>
+                        {gapAnalysisItem.variationComments}
+                    </textarea>
+                </template>
+                <template if:true={hasCommentsInOtherLanguage}>
+                    <p class="label slds-m-top_medium">{variationDescriptionInLangMsg}</p>
+                    <textarea class="text-box slds-size_1-of-1" disabled>
+                        {gapAnalysisItem.variationAlternativeComments}
+                    </textarea>
+                </template>
+                <template if:true={hasAttachments}>
+                    <p class="label slds-m-top_medium">{label.custom.ig_attachments} ({attachmentNum})</p>
+                    <template for:each={gapAnalysisItem.attachments} for:item="attachment">
+                        <div key={attachment.Id} class="file slds-p-around_medium">
+                            <a class="cursor-pt" data-id={attachment.Id} data-name={attachment.Name} onclick={downloadAttachment}>
+                                <svg class="slds-m-right_medium" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+                                <use xlink:href={resources.icons.attachment}></use>
+                            </svg>{attachment.Name}</a>
+                        </div>
+                    </template>
+                </template>
+            </div>
+        </div>
+    </div>
+    
+</template>

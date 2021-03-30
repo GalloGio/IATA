@@ -1,0 +1,97 @@
+<template>
+	<template if:false={stationDetail}>
+		<div class="col-12 pl-5 pr-5 pt-4 height-100">
+			<div class="col-12 mt-4 p-0">
+				<h4><b>General Overview</b></h4>
+			</div>
+			<div class="content slds-m-vertical_medium">
+				<c-ig-adaptable-table 
+					page-size="3" 
+					table-data={stationList}
+					table-config={stationListConfig} 
+					table-class="box-shadow-col"
+					onlinkclick={goToStationDetail}
+					onchangedshownids={changedShownStationIds}></c-ig-adaptable-table>
+			</div>
+			<div class="col-12">
+				<div class="col-4">
+					<c-ig-report-chart if:true={statusPerStationWiredChartable} 
+						type="pie" 
+						name="Status for all stations"
+						info={statusPerStationWiredChartable}
+						allow-detail-toggle="true">
+						<lightning-datatable
+							key-field="id"
+							data={statusPerStationData}
+							columns={statusPerStationColumns}
+							hide-checkbox-column="true">
+						</lightning-datatable>
+					</c-ig-report-chart>
+				</div>
+			</div>
+		</div>
+	</template>
+	<template if:true={stationDetail}>
+		<template if:true={actualGapAnalyses}>
+			<c-ig-station-gap-analysis-selector 
+				go-back-label="Go back to overview"
+				is-go-back-visible="true"
+				station={selectedStation} 
+				compliance-review-list={actualGapAnalyses.data}
+				onback={leaveStationDetail}
+				onchange={gapAnalaysisChangeHandler}>
+			</c-ig-station-gap-analysis-selector>
+		</template>
+
+		<div class="col-12 pl-5 pr-5 pt-4 bg-white height-100">
+			<div class="row mb-4">
+				<div class="col-12">
+					<c-ig-report-chart if:true={acknowledgementsOnVariationChartable} 
+						type="bar" 
+						name="Acknowledgements per variation"
+						info={acknowledgementsOnVariationChartable}
+						options={acknowledgementsOnVariationChartOptions}
+						ondataselect={acknowledgementsOnVariationDataSelectHandler}>
+
+						<template if:true={acknowledgementsOnVariationDetail}>
+							<p><b>Procedure:</b> {acknowledgementsOnVariationDetail.procedure}</p>
+							<div style=" border: 1px solid lightgray;">
+								<lightning-datatable
+									data={acknowledgementsOnVariationDetail.data}
+									columns={acknowledgementsOnVariationDetail.columns}
+									key-field="id"
+									hide-checkbox-column="true">
+								</lightning-datatable>
+							</div>
+						</template>
+
+					</c-ig-report-chart>
+				</div>
+			</div>
+			<div class="row mb-4">
+				<div class="col-4">
+					<c-ig-report-chart if:true={variationStatusPerChapterChartable} 
+						type="bar" 
+						name="Status of variations per chapter"
+						info={variationStatusPerChapterChartable}
+						options={variationStatusPerChapterOptions}>
+					</c-ig-report-chart>
+				</div>
+				<div class="col-4">
+					<c-ig-report-chart if:true={variationStatusAllChartable} 
+						type="pie" 
+						name="All status variations"
+						info={variationStatusAllChartable}>
+					</c-ig-report-chart>
+				</div>
+				<div class="col-4">
+					<c-ig-report-chart if:true={itemStatusAllChartable} 
+						type="pie" 
+						name="All item statuses"
+						info={itemStatusAllChartable}>
+					</c-ig-report-chart>
+				</div>
+			</div>
+		</div>
+	</template>
+</template>

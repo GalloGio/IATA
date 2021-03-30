@@ -1,0 +1,27 @@
+<template>
+    <li class={mainLiClass}>
+        <div class="notification-li">
+            <div class="col-1 text-center"><img src={resources.icons.lufthansaIcon}/></div>
+            <div class="col-8 text-left">
+                <span class="notification-subject">{notification.notificationSubject}</span>
+                <span class="text-blue pl-4 cursor-pt" onclick={viewDetail}>{toggleDetailText}</span>
+            </div>
+            <div class="col-2 text-right">
+                <span class="light-text" title={readableDate}>{timeAgo}</span>
+            </div>
+            <div class="col-1 text-center">
+                <img if:true={isRead} src={resources.icons.read}/>
+                <img if:false={isRead} class="cursor-pt" src={resources.icons.unread} onclick={markAsRead}/>
+            </div>
+        </div>
+        <div if:true={showDetail} class="row-no-margin pb-4 pt-2">
+            <div class="col-11 offset-1">
+                <p>{notification.notificationBody}</p>
+                <p if:true={notification.procedureComplianceAsString} class="mt-2">
+                    <b>Related reference: </b>
+                    {notification.procedureComplianceAsString}
+                </p>
+            </div>
+        </div>
+    </li>
+</template>

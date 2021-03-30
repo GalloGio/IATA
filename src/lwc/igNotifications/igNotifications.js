@@ -1,0 +1,172 @@
+import { LightningElement, track, wire, api } from 'lwc';
+import { constants, resources } from 'c/igUtility';
+import { refreshApex } from '@salesforce/apex';
+import getNotifications from '@salesforce/apex/IGOMNotificationUtil.getNotifications';
+import markAsRead from '@salesforce/apex/IGOMNotificationUtil.markAsRead';
+import getOwnStations from '@salesforce/apex/IGOMStationUtil.getOwnStations';
+
+export default class IgNotifications extends LightningElement {
+
+    // Exposed properties
+
+    @api stationId;
+
+    // Tracked properties
+
+    @track severityFilter = '';
+    @track selectedAirlinesFilter = [];
+    @track showFilters = false;
+
+    @wire(getNotifications, { stationId : '$stationId' })
+    notifications;
+
+    @wire(getOwnStations)
+    ownStations;
+
+    // Internal properties
+
+    resources = resources;
+    constants = constants;
+
+    // Main logic
+
+    selectTab(event) {
+        const clickedTab = event.target.closest('.notification-section');
+        this.severityFilter = clickedTab.dataset.tab;
+    }
+
+    
+    toggleAirlineFilters() {
+        this.showFilters = !this.showFilters;
+    }
+
+    closeFilters() {
+        this.showFilters = false;
+    }
+    
+    addFilter(event) {
+        event.stopPropagation();
+        const divElement = event.target.closest('.form-check');
+        const isFilterChecked = divElement.querySelector('input[type="checkbox"]').checked;
+        const airlineId = divElement.dataset.id;
+        if (!isFilterChecked) {
+            const station = this.ownStations.data[airlineId];
+            this.selectedAirlinesFilter.push(station);
+        } else {
+            const index = this.selectedAirlinesFilter.findIndex(station => station.id == airlineId);
+            if (index > -1) {
+                this.selectedAirlinesFilter.splice(index, 1);
+            }
+        }
+    }
+
+    deleteFilter(event) {
+        event.stopPropagation();
+        const itemToDeleteId = event.currentTarget.getAttribute('data-id');
+        const index = this.selectedAirlinesFilter.findIndex(station => station.id == itemToDeleteId);
+        if (index > -1) {
+            this.selectedAirlinesFilter.splice(index, 1);
+        }
+    }
+
+    removedPill(event) {
+        event.stopPropagation();
+    }
+
+    // Apex calls
+
+    markAsReadEvent(event) {
+        this.readNotification(event.detail);
+    }
+
+    async readNotification(id) {
+        await markAsRead({
+            notificationId: id
+        });
+        refreshApex(this.notifications);
+    }
+
+    // Logical properties
+
+    get areNotificationsQueried() { 
+        return this.notifications && this.notifications.data;
+    }
+    get notificationQuantity() { 
+        return this.areNotificationsQueried ? this.notifications.data.length : '-';
+    }
+    get notificationActionRequiredQuantity() { 
+        return this.areNotificationsQueried ? this.notifications.data.filter(noti => noti.severity === constants.NOTIFICATION.SEVERITY.VALUES.ACTION_REQUIRED).length : '-';
+    }
+    get notificationRecommendedQuantity() { 
+        return this.areNotificationsQueried ? this.notifications.data.filter(noti => noti.severity === constants.NOTIFICATION.SEVERITY.VALUES.RECOMMENDED).length : '-';
+    }
+    get notificationInformativeQuantity() { 
+        return this.areNotificationsQueried ? this.notifications.data.filter(noti => noti.severity === constants.NOTIFICATION.SEVERITY.VALUES.INFORMATIVE).length : '-';
+    }
+
+    // Data properties
+
+    get notificationsFiltered() {
+        let notifications = this.notifications.data;
+        // 1. Filter by severity
+        if (this.severityFilter !== '') {
+            notifications = notifications.filter(noti => noti.severity === this.severityFilter);
+        }
+        // 2. Filter by content
+        if (this.selectedAirlinesFilter.length > 0) {
+            const idFilters = this.selectedAirlinesFilter.map(airline => airline.accountRoleId);
+            notifications = notifications.filter(noti => idFilters.includes(noti.accountRoleId));
+        }
+        return notifications;
+    }
+
+    get notifiedAirlines() {
+        if (this.ownStations && this.ownStations.data && this.notifications && this.notifications.data) {
+            const notifiableAirlines = Object.values(this.ownStations.data).filter(station => this.notifications.data.some(noti => noti.accountRoleId === station.accountRoleId));
+            return notifiableAirlines.map(airline => ({...airline, checked: this.selectedAirlinesFilter.some(filter => filter.id === airline.id)}));
+        }
+        return [];
+    }
+
+    // Style properties
+
+    get tabAllClass() { 
+        let classes = ['notification-section'];
+        if (this.severityFilter === '') { 
+            classes.push('notification-selected');
+        }
+        return classes.join(' ');
+    }
+    get tabActionRequiredClass() { 
+        let classes = ['notification-section'];
+        if (this.severityFilter === constants.NOTIFICATION.SEVERITY.VALUES.ACTION_REQUIRED) { 
+            classes.push('notification-selected');
+        }
+        return classes.join(' ');
+    }
+    get tabRecommendedClass() { 
+        let classes = ['notification-section'];
+        if (this.severityFilter === constants.NOTIFICATION.SEVERITY.VALUES.RECOMMENDED) { 
+            classes.push('notification-selected');
+        }
+        return classes.join(' ');
+    }
+    get tabInformativeClass() { 
+        let classes = ['notification-section'];
+        if (this.severityFilter === constants.NOTIFICATION.SEVERITY.VALUES.INFORMATIVE) { 
+            classes.push('notification-selected');
+        }
+        return classes.join(' ');
+    }
+    get filterAirlineClass() { 
+        let classes = ['filters-airline'];
+        if (!this.showFilters) { 
+            classes.push('hidden');
+        }
+        return classes.join(' ');
+    }
+    get placeHolderInputFilters() {
+        return this.selectedAirlinesFilter.length === 0 ? 'Filter by airline' : '';
+    }
+
+}

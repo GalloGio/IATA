@@ -479,6 +479,19 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
         <label>All</label>
         <language>en_US</language>
     </listViews>
+    <listViews>
+        <fullName>Innovation_Hub</fullName>
+        <columns>NAME</columns>
+        <columns>Account_Name__c</columns>
+        <columns>Status__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Functional_Role__c</field>
+            <operation>equals</operation>
+            <value>InnovationHub CRM</value>
+        </filters>
+        <label>Innovation Hub</label>
+    </listViews>
     <nameField>
         <displayFormat>AR-{0000}</displayFormat>
         <label>Account Role Name</label>
@@ -958,6 +971,10 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
                 <fullName>IATA EasyPay %28MSTS%29</fullName>
                 <default>false</default>
             </values>
+			<values>
+                <fullName>IATA Pay</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>IATA Postal Accounts Settlement System</fullName>
                 <default>false</default>
@@ -996,6 +1013,14 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
             </values>
             <values>
                 <fullName>IFTP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IGOM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>InnovationHub CRM</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1961,6 +1986,10 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
             </values>
             <values>
                 <fullName>IFTP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>InnovationHub CRM</fullName>
                 <default>false</default>
             </values>
             <values>

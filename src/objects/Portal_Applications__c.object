@@ -657,10 +657,11 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
             <restricted>true</restricted>
             <valueSetName>Contact_Role_Details</valueSetName>
             <valueSettings>
+                <controllingFieldValue>One Source</controllingFieldValue>
                 <controllingFieldValue>E&amp;F</controllingFieldValue>
                 <controllingFieldValue>MedAire</controllingFieldValue>
                 <controllingFieldValue>Training</controllingFieldValue>
-                <controllingFieldValue>One Source</controllingFieldValue>
+                <controllingFieldValue>IGOM</controllingFieldValue>
                 <valueName>Operational Contact</valueName>
             </valueSettings>
         </valueSet>
@@ -1021,7 +1022,7 @@ Name
 &quot;Simplified Interline Settlement&quot;, $Label.ISSP_SIS_1_Description, 
 &quot;SIS&quot;, $Label.ISSP_SIS_3_Description, 
 &quot;Payment Link&quot;, $Label.ISSP_Payment_Link_Description, 
-&quot;Paypal&quot;, $Label.ISSP_Payment_Link_Description_CNS, 
+&quot;Credit Card Link&quot;, $Label.ISSP_Payment_Link_Description_CNS,
 &quot;Standards Setting Workspace&quot;, $Label.Standards_Setting_Workspace, 
 &quot;IATA EasyPay (WEX)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
 &quot;IATA EasyPay (EDENRED)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
@@ -1793,6 +1794,10 @@ IF(OR(
             </values>
             <values>
                 <fullName>IFTP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IGOM</fullName>
                 <default>false</default>
             </values>
             <values>

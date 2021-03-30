@@ -1,0 +1,12 @@
+.critical-variation {
+    border: 1px solid #E3240D;
+}
+
+.non-critical-variation {
+    border: 1px solid #ED9C00;
+}
+
+.add-new-reference {
+    font-size: 12px;
+    white-space: nowrap;
+}

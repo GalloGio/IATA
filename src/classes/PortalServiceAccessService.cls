@@ -159,7 +159,13 @@ public with sharing class PortalServiceAccessService {
 			} catch(Exception e){
 				throw new PortalServiceAccessServiceException('Error managing user onboarding for ' + IATAPayService.FUNCTIONALROLE, e);
 			}	
-		}
+        } else if (functionalRoleName.equals(IGOMService.FUNCTIONALROLE)) {
+            try{
+				IGOMService.manageUserOnboarding(contactSet, accessStatus);
+			} catch(Exception e){
+				throw new PortalServiceAccessServiceException('Error managing user onboarding for ' + IGOMService.FUNCTIONALROLE, e);
+			}
+        }
 	}
 
 	// represents a single contact for the functional role and access status specified

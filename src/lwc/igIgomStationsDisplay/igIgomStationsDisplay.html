@@ -1,0 +1,21 @@
+<template>
+    <table>
+        <tr>
+            <template for:each={_columns} for:item="header">
+                <th key={header.value} width={header.width}>{header.label}</th>
+            </template>
+        </tr>
+        <template for:each={stations} for:item="station">
+            <tr key={station.id}>
+                <td>{station.logoURL}</td>
+                <td>{station.airline}</td>
+                <td>{station.city}</td>
+                <td>{station.country}</td>
+                <td>{station.lastGapAnalysis}</td>
+                <td>{station.variations}</td>
+                <td>{station.acknowledgementsDone}/{station.acknowledgementsTotal} ({station.acknowledgementsPercentage}%)</td>
+                <td><a key={station.id} href={station.id}>View detail</a></td>
+            </tr>
+        </template>
+      </table>
+</template>

@@ -1,0 +1,30 @@
+.notification-li{
+
+    min-height: 50px;
+    align-items: center;
+    display: inline-flex;
+    width: 100%;
+}
+
+.red-li{
+    border-left: 4px solid #E3240D;
+    border-bottom: 1px solid #E3ECF9;
+}
+
+.yellow-li{
+    border-left: 4px solid #d5e30d;
+    border-bottom: 1px solid #E3ECF9;
+}
+
+.blue-li{
+    border-left: 4px solid #5A14A0;
+    border-bottom: 1px solid #E3ECF9;
+}
+
+.unread{
+    background-color: rgba(30, 50, 250, 0.05);
+}
+
+.unread .notification-subject{
+    font-weight: bold;
+}

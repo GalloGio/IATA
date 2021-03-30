@@ -1,0 +1,13 @@
+<template>
+
+    <template if:true={section}>
+
+        <template for:each={section.subprocedures} for:item="subsection">
+            
+            <c-ig-igom-reader-chapter-display-subsection key={subsection.procedure.Id} subsection={subsection}></c-ig-igom-reader-chapter-display-subsection>
+
+        </template>
+
+    </template>
+
+</template>

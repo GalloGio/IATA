@@ -1,0 +1,116 @@
+<template>
+    <div class="col-10 offset-1 p-4">
+        <div class="go-back-crumb cursor-pt" onclick={goToGapAnalysis}>
+            <img src={resources.icons.back}/><span class="pl-3">Go back</span>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <template if:false={asTemplate}>
+                    <h4><b>{label.custom.ig_publish_a_gap}</b></h4>
+                </template>
+                <template if:true={asTemplate}>
+                    <h4><b>{label.custom.ig_publish_a_template}</b></h4>
+                </template>
+            </div>
+        </div>
+    </div>
+
+    <div if:true={availableChapters} class="col-10 offset-1 p-5 row">
+        
+        <div class="col-6">
+            <h3 class="mb-1">{label.custom.ig_chapters_to_publish}</h3>
+            <template if:true={asTemplate}>
+                <span class="small-font">{label.custom.ig_corporate_gap_message}</span>
+            </template>
+            <ul class="chapter-list p-2">
+                <li class={selectAllClass} onclick={toggleAllChaptersSelection}>
+                    <div class="col-2 text-center">
+                        <img if:false={areAllChaptersSelected} src={resources.icons.unchecked} class="all-icon width-25"/>
+                        <img if:true={areAllChaptersSelected} src={resources.icons.png.checked} class="all-icon width-25"/>
+                    </div>
+                    <div class="col-10 text-left m-auto">
+                        <b>{label.custom.ig_select_evey_chapter}</b>
+                    </div>                   
+                </li>
+                <template for:each={availableChapters} for:item="chapter">
+                    <li key={chapter.id} data-id={chapter.id} class="chapter row mb-1 pt-2 pb-2 cursor-pt" onclick={toggleChapterSelection}>
+                        <template if:true={chapter.isAvailable}>
+                            <div class="col-2 text-center">
+                                <img if:false={chapter.isSelected} src={resources.icons.unchecked} class="chapter-icon width-25"/>
+                                <img if:true={chapter.isSelected} src={resources.icons.png.checked} class="chapter-icon width-25"/>
+                            </div>
+                            <div class="col-10 text-left m-auto">
+                                <img src={chapter.iconUrl} width="32" class="pr-1"/><span>{chapter.name}</span>
+                            </div>  
+                        </template> 
+                        <template if:false={chapter.isAvailable}>
+                            <div class="col-2 text-center disabled-filter">
+                                <img src={resources.icons.unchecked} class="chapter-icon width-25"/>
+                            </div>
+                            <div class="col-10 text-left m-auto disabled-filter">
+                                <img src={chapter.iconUrl} width="32" class="pr-1"/><span>{chapter.name} <a class="text-yellow" title={label.custom.ig_chapter_not_publishable_err}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16">
+                                    <use xlink:href={resources.icons.alert}></use>
+                                </svg></a></span>
+                            </div>  
+    
+                        </template>                
+                    </li>
+                </template>
+            </ul>
+        </div>
+
+        <div class="col-6">
+            <h3>{label.custom.ig_publishing_information}</h3>
+            <div class="mt-3">
+                <label for="effective-date" class="small-font">{label.custom.ig_effective_date}: </label>
+                <input id="effective-date" class="form-control width-100" type="date" onchange={setEffectiveDate} min={minimumDate} max={maximumDate} />
+            </div>
+            <div class="mt-3">
+                <label for="reminder-date" class="small-font">{label.custom.ig_reminder_date} </label><a class="text-blue" title={label.custom.ig_reminder_date_info_msg}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12">
+                    <use xlink:href={resources.icons.info}></use>
+                </svg></a>
+                <input id="reminder-date" class="form-control width-100" disabled={isReminderDateDisabled} data-for="reminderDate" type="date" onchange={setReminderDate} min={minimumDate} max={maximumReminderDate}/>
+                <span if:false={canUseReminderDate} class="small-font">{label.custom.ig_reminder_date_error_msg}</span>
+            </div>
+            <div class="mt-4">
+                <label class="small-font">{label.custom.ig_users_to_notify} <a class="text-blue" title={label.custom.ig_notification_info_msg}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12">
+                    <use xlink:href={resources.icons.info}></use>
+                </svg></a></label>
+
+                <lightning-tabset>
+                    <lightning-tab id={label.custom.ig_action_required} label={label.custom.ig_action_required} if:true={_notifiableUsersActReq}>
+                        <lightning-datatable
+                            key-field="id"
+                            data-name="users-to-notify-action-req"
+                            data={_notifiableUsersActReq.data}
+                            columns={_notifiableUsersActReq.columns}>
+                        </lightning-datatable>
+                    </lightning-tab>
+                    <lightning-tab id={label.custom.ig_informative} label={label.custom.ig_informative} if:true={_notifiableUsersInform}>
+                        <lightning-datatable
+                            key-field="id"
+                            data-name="users-to-notify-informative"
+                            data={_notifiableUsersInform.data}
+                            columns={_notifiableUsersInform.columns}>
+                        </lightning-datatable>
+                    </lightning-tab>
+                </lightning-tabset>
+            </div>
+        </div>
+
+        <div class="col-12 mt-5 text-center">
+            <button class={publishButtonClass} disabled={isPublishButtonDisabled} onclick={publishChapters}>{label.custom.ig_publish}</button>
+        </div>
+
+    </div>
+
+    <div if:true={loading} class="col-12">
+        <div class="slds-spinner_container">
+            <lightning-spinner alternative-text="Loading" size="medium" variant="inverse" class="slds-spinner_delayed"></lightning-spinner>
+        </div>
+    </div>
+
+</template>
