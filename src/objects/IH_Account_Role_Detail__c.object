@@ -224,7 +224,7 @@
         <externalId>false</externalId>
         <label>Company Name</label>
         <length>255</length>
-        <required>true</required>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -257,7 +257,7 @@
         <externalId>false</externalId>
         <label>Contact Email</label>
         <length>255</length>
-        <required>true</required>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -269,7 +269,7 @@
         <externalId>false</externalId>
         <label>Contact Phone Number</label>
         <length>255</length>
-        <required>true</required>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -281,7 +281,7 @@
         <externalId>false</externalId>
         <label>Contact Position</label>
         <length>255</length>
-        <required>true</required>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
@@ -306,7 +306,7 @@
         <externalId>false</externalId>
         <label>Contact Person</label>
         <length>255</length>
-        <required>true</required>
+        <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
