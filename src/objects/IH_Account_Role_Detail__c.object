@@ -458,6 +458,7 @@
     </fields>
     <fields>
         <fullName>Founding_Year_Display__c</fullName>
+        <description>Founding Year displayed in the portal</description>
         <externalId>false</externalId>
         <formula>TEXT(Founding_Date__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
