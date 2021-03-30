@@ -6,17 +6,17 @@ public class AccountRoleSelector {
 		}
 		// cannot create Functional Role picklist value set in tests so ignore
 		if(Test.isRunningTest())
-			return selectQuery('Id', 'Account__c', accountIdSet);
+			return selectQuery('Id, Account__c, Status__c', 'Account__c', accountIdSet);
 
-		return selectQuery('Id', 'Functional_Role__c = \'' + functionalRoleName + '\' AND Account__c', accountIdSet);
+		return selectQuery('Id, Account__c, Status__c', 'Functional_Role__c = \'' + functionalRoleName + '\' AND Account__c', accountIdSet);
 	}
 
-	public static List<Account_Role__c> selectAccountIdByAccountsAndRole(Set<Id>  accountIdSet, String functionalRoleName){
+	public static List<Account_Role__c> selectByAccountIdSetAndRole(Set<Id>  accountIdSet, String functionalRoleName){
 		// cannot create Functional Role picklist value set in tests so ignore
 		if(Test.isRunningTest())
-			return selectQuery('Id, Account__c', 'Account__c', accountIdSet);
+			return selectQuery('Id, Account__c, Status__c', 'Account__c', accountIdSet);
 
-		return selectQuery('Id, Account__c', 'Functional_Role__c = \'' + functionalRoleName + '\' AND Account__c', accountIdSet);
+		return selectQuery('Id, Account__c, Status__c', 'Functional_Role__c = \'' + functionalRoleName + '\' AND Account__c', accountIdSet);
 	}
 
 	private static List<Account_Role__c> selectQuery(String fields, String conditions, Set<Id> conditionInputSet){
