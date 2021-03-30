@@ -769,6 +769,10 @@
                                                             var csv = '"Agency Code","Legal / Registered Name","Trade Name","VAT Number","Billing Street","Billing City","Billing State/Province","Billing Zip/Postal Code","Billing Country","Shipping Street","Shipping City","Shipping State/Province","Shipping Zip/Postal Code","Shipping Country","Office Email","Website","Business Phone","Mobile Phone","Fax","Owner name 1","Owner1 %","Owner name 2","Owner2 %","Owner name 3","Owner3 %","Owner name 4","Owner4 %","Owner name 5","Owner5 %","Owner name 6","Owner6 %","Owner name 7","Owner7 %","Owner name 8","Owner8 %","Owner name 9","Owner9 %","Owner name 10","Owner10 %"\n';
 
                                                             csvFileData.forEach(function(row) {  
+                                                                    /*var rowString = JSON.stringify(row);
+                                                                    rowString= rowString.slice(1, -1);
+                                                                    rowString = rowString.replaceAll('null','');
+                                                                    csv += rowString.replaceAll('"','"""');*/
                                                                     csv += row.join(',');  
                                                                     csv += "\n";  
                                                             });  
@@ -906,7 +910,9 @@
                                                                 <c:ISSP_ANG_ANNUAL_REV_RO ca="{! currentAccount}" id="readonly" rendered="{!mode == 'readOnly'}"/>
 
                                                                 <c:ISSP_ANG_ANNUAL_REV_UPDATE caParam="{! currentAccount}" id="update" rendered="{!mode == 'update'}"/>
-
+                                                                <script>
+                                                                    $(".section-header").css('background-color', '#1e32fa');
+                                                                </script>
                                                             </apex:outputPanel>
 
                                                             <apex:outputPanel id="buttonsArea">

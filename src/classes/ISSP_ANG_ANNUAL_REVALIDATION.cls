@@ -470,7 +470,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		List<String[]> allAccounts = new List<String[]>();
 		for (Account a : this.childsAccounts) {
 			String[] locations = new String[] {};
-			locations.add(a.IATACode__c);
+			locations.add(a.IATACode__c + ' ');
 			locations.add(a.Name);
 			locations.add(a.TradeName__c);
 			locations.add(a.VAT_Number__c);
@@ -635,6 +635,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 	public void addValueCountry() {
 		countriesSelected.add(countrySelected);
 		updateChildsAccountsWrapper();
+		allChildsAccountsWrapperSelected = false;
 	}
 	public void removeValueCountry() {
 		for (Integer i = (countriesSelected.size()-1) ; i>= 0 ; i--){
@@ -642,6 +643,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 				countriesSelected.remove(i);
 			}
 		} 
+		allChildsAccountsWrapperSelected = false;
 		updateChildsAccountsWrapper();
 	}
 
