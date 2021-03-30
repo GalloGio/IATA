@@ -3,9 +3,6 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <description>Platform event definition to be used for Portal Service Access record changes that require an integration with middleware to support User provisioning processes.</description>
     <eventType>HighVolume</eventType>
-    <label>Portal Service Access PE</label>
-    <pluralLabel>Portal Service Accesses PE</pluralLabel>
-    <publishBehavior>PublishAfterCommit</publishBehavior>
     <fields>
         <fullName>EventType__c</fullName>
         <description>The type of operation that resulted in the platform event being fired (Create, Update, Delete, Undelete).</description>
@@ -58,4 +55,7 @@
         <type>Text</type>
         <unique>false</unique>
     </fields>
+    <label>Portal Service Access PE</label>
+    <pluralLabel>Portal Service Accesses PE</pluralLabel>
+    <publishBehavior>PublishAfterCommit</publishBehavior>
 </CustomObject>

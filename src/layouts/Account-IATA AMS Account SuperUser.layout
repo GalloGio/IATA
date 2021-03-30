@@ -52,6 +52,9 @@
             </containers>
         </subtabComponents>
     </customConsoleComponents>
+    <excludeButtons>DataDotComAccountInsights</excludeButtons>
+    <excludeButtons>DataDotComClean</excludeButtons>
+    <excludeButtons>DataDotComCompanyHierarchy</excludeButtons>
     <excludeButtons>DisablePartnerPortalAccount</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
     <layoutSections>
@@ -287,6 +290,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>ANG_RiskHistoryAssessment__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ANG_Limit_Cash_Condition__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
