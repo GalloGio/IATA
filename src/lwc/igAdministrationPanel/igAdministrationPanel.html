@@ -80,7 +80,6 @@
                                     <div class="slds-row slds-grid slds-p-horizontal_xx-large slds-p-vertical_small">
                                         <div class="slds-col slds-size_2-of-3 slds-p-top_x-small">
                                             <span>• {request.stationInfo.name}</span>
-                                            <span if:true={request.isParentRelationship}>&nbsp;{label.custom.ig_parent_request}</span>
                                             <span if:true={request.isChildRelationship}>&nbsp;{label.custom.ig_child_request}</span>
                                             <span if:true={request.isGroupRelationship}>&nbsp;{label.custom.ig_group_request}</span>
                                         </div>
@@ -186,10 +185,6 @@
                                                 <div class="slds-col slds-p-top_x-small">
                                                     <lightning-input checked type="checkbox" title="Request notifications?"
                                                     data-stationid={station.stationInfo.id}></lightning-input>
-                                                </div>
-                                                <div class="slds-col">
-                                                    <lightning-button-icon icon-name="utility:up" title="Ask station to be parent in the relationship"
-                                                    data-stationid={station.stationInfo.id} onclick={requestParentRelationship} variant="border-filled"></lightning-button-icon>
                                                 </div>
                                                 <div class="slds-col">
                                                     <lightning-button-icon icon-name="utility:down" title="Ask station to be child in the relationship"

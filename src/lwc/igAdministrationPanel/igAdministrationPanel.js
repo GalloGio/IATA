@@ -261,12 +261,6 @@ export default class IgAdministrationPanel extends LightningElement {
 		refreshApex(this.unrelatedStationsWiredResult);
 	}
 
-	requestParentRelationship(event){
-		let selectedRelationshipRow = event.target.closest('.slds-row');
-		let checkboxLightningInput = selectedRelationshipRow.querySelector('lightning-input');
-		this.relationshipRequest(constants.ACCOUNT_ROLE_RELATIONSHIP.TYPE.VALUES.PARENT, event.target.dataset.stationid, checkboxLightningInput.checked);
-	}
-
 	requestChildRelationship(event){
 		let selectedRelationshipRow = event.target.closest('.slds-row');
 		let checkboxLightningInput = selectedRelationshipRow.querySelector('lightning-input');
