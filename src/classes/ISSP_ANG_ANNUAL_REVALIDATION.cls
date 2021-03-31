@@ -465,12 +465,11 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		if(!found) { throw new AnnualRevException('The hierarchy does not have an HE!'); }
 	}
 
-
-	public void csvAccountsExport() {
+	public PageReference csvAccountsExport() {
 		List<String[]> allAccounts = new List<String[]>();
 		for (Account a : this.childsAccounts) {
 			String[] locations = new String[] {};
-			locations.add(a.IATACode__c + ' ');
+			locations.add('"' + a.IATACode__c + '"');
 			locations.add(a.Name);
 			locations.add(a.TradeName__c);
 			locations.add(a.VAT_Number__c);
@@ -494,12 +493,19 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 				if(ar.Account__c == a.Id && controlOnwersSize < 10){
 					locations.add(ar.Owner_Name__c != '' ? ar.Owner_Name__c : ar.owner_account__r.name);
 					locations.add(''+ar.Percentage__c);
+					controlOnwersSize++;
 				}
-				controlOnwersSize++;
+			}
+			if(controlOnwersSize < 10){
+				for(Integer i = controlOnwersSize; i < 10; i++){
+					locations.add(null);
+					locations.add(null);
+				}
 			}
 			allAccounts.add(locations);
 		}
-		csvAccountsExportData = JSON.serialize(allAccounts);
+		this.csvAccountsExportData = JSON.serialize(allAccounts);
+		return null;
     }
 
 	public List<SelectOption> getCountriesByChildsAccounts() {
@@ -1246,8 +1252,6 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		if(newForm.ISSP_AMS_Legal_Status__c == null) {
 			newForm.ISSP_AMS_Legal_Status__c = '';
 		}
-
-		this.csvAccountsExport();
 		return newForm;
 	}
 

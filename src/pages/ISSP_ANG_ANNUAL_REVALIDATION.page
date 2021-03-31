@@ -425,6 +425,7 @@
                                 <apex:inputHidden id="currentIataCode" value="{!currentIataCode}"/>
                                 <apex:inputHidden id="csvAccountsExportDatahidden" value="{!csvAccountsExportData}"/>
 
+                                <apex:actionFunction name="csvAccountsExport" action="{!csvAccountsExport}" status="WaitingStatus" rerender="csvAccountsExportDatahidden" oncomplete="doNewDownloadCSV();return false;"/>
                                 <apex:actionFunction name="addValueCountry" action="{!addValueCountry}" status="WaitingStatus" rerender="theTable"/>
                                 <apex:actionFunction name="removeValueCountry" action="{!removeValueCountry}" status="WaitingStatus" rerender="theTable"/>
 
@@ -764,30 +765,41 @@
                                                             $('.pbBottomButtons').css('margin-top',-10);
                                                         });
 
-                                                        function download_csv_file() {  
-                                                            var csvFileData = JSON.parse($('[id$=csvAccountsExportDatahidden]').val());
-                                                            var csv = '"Agency Code","Legal / Registered Name","Trade Name","VAT Number","Billing Street","Billing City","Billing State/Province","Billing Zip/Postal Code","Billing Country","Shipping Street","Shipping City","Shipping State/Province","Shipping Zip/Postal Code","Shipping Country","Office Email","Website","Business Phone","Mobile Phone","Fax","Owner name 1","Owner1 %","Owner name 2","Owner2 %","Owner name 3","Owner3 %","Owner name 4","Owner4 %","Owner name 5","Owner5 %","Owner name 6","Owner6 %","Owner name 7","Owner7 %","Owner name 8","Owner8 %","Owner name 9","Owner9 %","Owner name 10","Owner10 %"\n';
+                                                        function download_csv_file() { 
+                                                            csvAccountsExport(); 
+                                                        }  
 
-                                                            csvFileData.forEach(function(row) {  
-                                                                    /*var rowString = JSON.stringify(row);
-                                                                    rowString= rowString.slice(1, -1);
-                                                                    rowString = rowString.replaceAll('null','');
-                                                                    csv += rowString.replaceAll('"','"""');*/
-                                                                    csv += row.join(',');  
-                                                                    csv += "\n";  
-                                                            });  
-                                                            var hiddenElement = document.createElement('a');  
-                                                            hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);  
-                                                            hiddenElement.target = '_blank';  
-                                                            
-                                                            hiddenElement.download = 'Annual Revalidation Locations for ' + '{!he.text}' + '.csv';  
-                                                            hiddenElement.click(); 
+                                                        function doNewDownloadCSV() { 
+                                                            if($('[id$=csvAccountsExportDatahidden]').val() != ''){
+                                                           
+                                                                var myHeader = JSON.parse('["Agency Code","Legal / Registered Name","Trade Name","VAT Number","Billing Street","Billing City","Billing State/Province","Billing Zip/Postal Code","Billing Country","Shipping Street","Shipping City","Shipping State/Province","Shipping Zip/Postal Code","Shipping Country","Office Email","Website","Business Phone","Mobile Phone","Fax","Owner name 1","Owner1 %","Owner name 2","Owner2 %","Owner name 3","Owner3 %","Owner name 4","Owner4 %","Owner name 5","Owner5 %","Owner name 6","Owner6 %","Owner name 7","Owner7 %","Owner name 8","Owner8 %","Owner name 9","Owner9 %","Owner name 10","Owner10 %"]');
+                                                                var myData = $('[id$=csvAccountsExportDatahidden]').val();
+                                                                var removeNull = myData.replaceAll(null, '""');
+                                                                var removeCha = removeNull.replaceAll('#', '');
+                                                                console.log('1');
+                                                                const rows = JSON.parse(removeCha);
+                                                                console.log('2');
+                                                                rows.unshift(myHeader);
+                                                                console.log('3');
+                                                                let csvContent = "data:text/csv;charset=utf-8,";
+                                                                rows.forEach(function(rowArray) {
+                                                                    let row = rowArray.join(",");
+                                                                    csvContent += row + "\r\n";
+                                                                });
+                                                                
+                                                                var encodedUri = encodeURI(csvContent);
+                                                                var link = document.createElement("a");
+                                                                link.setAttribute("href", encodedUri);
+                                                                link.setAttribute("download", 'Annual Revalidation Locations for ' + '{!he.text}' + '.csv');
+                                                                document.body.appendChild(link); // Required for FF
+                                                                link.click();
+                                                            }
                                                         }  
                                                     </script>
                                                 </apex:outputPanel>
                                                 <apex:outputPanel id="treeArea" rendered="{!caseAccount.Location_Type__c != 'GE'}">
--                                                    <div id="frmt">
--                                                    </div>
+                                                    <div id="frmt">
+                                                    </div>
                                                     <script>
                                                         //
                                                         // This flag is to prevent from running the loadIataCode 2 times on page load.
