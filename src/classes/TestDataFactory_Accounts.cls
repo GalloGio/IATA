@@ -23,17 +23,4 @@ public class TestDataFactory_Accounts {
 		}
 		return accountList;
 	}
-
-	public static List<Account> createStandardAccounts (Integer numberOfRecords, Id iataISOCountryId){
-		//get standard record type
-		Id recordTypeId = RecordTypeSelector.selectIdBySObjectAndName('Account', 'Others');
-		
-		//create and return Account List
-		List<Account> accountList = new List<Account>();
-		for (Integer x = 0; x < numberOfRecords; x ++){
-			Account account = new Account(Name = DEFAULTNAME + ' ' + x, RecordTypeId = recordTypeId, IATA_ISO_Country__c = iataISOCountryId);
-			accountList.add(account);
-		}
-		return accountList;
-	}
 }
