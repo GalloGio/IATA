@@ -19,7 +19,6 @@ import ig_comments from '@salesforce/label/c.ig_comments';
 import ig_complete from '@salesforce/label/c.ig_complete';
 import ig_completition from '@salesforce/label/c.ig_completition';
 import ig_conformity from '@salesforce/label/c.ig_conformity';
-import ig_confirm from '@salesforce/label/c.ig_confirm';
 import ig_continue from '@salesforce/label/c.ig_continue';
 import ig_continue_draft from '@salesforce/label/c.ig_continue_draft';
 import ig_corporate_gap_message from '@salesforce/label/c.ig_corporate_gap_message';
@@ -97,6 +96,7 @@ import ig_variation_description from '@salesforce/label/c.ig_variation_descripti
 import ig_variation_description_alt from '@salesforce/label/c.ig_variation_description_alt';
 import ig_variation_description_in_lang from '@salesforce/label/c.ig_variation_description_in_lang';
 import ig_variation_report from '@salesforce/label/c.ig_variation_report';
+import issp_confirm from '@salesforce/label/c.ISSP_Confirm';
 
 import { constants } from 'c/igConstants';
 
@@ -123,7 +123,6 @@ const label = {
         ig_complete: ig_complete,
         ig_completition: ig_completition,
         ig_conformity: ig_conformity,
-        ig_confirm: ig_confirm,
         ig_continue: ig_continue,
         ig_continue_draft: ig_continue_draft,
         ig_corporate_gap_message: ig_corporate_gap_message,
@@ -200,7 +199,8 @@ const label = {
         ig_variation_description: ig_variation_description,
         ig_variation_description_alt: ig_variation_description_alt,
         ig_variation_description_in_lang: ig_variation_description_in_lang,
-        ig_variation_report: ig_variation_report
+        ig_variation_report: ig_variation_report,
+        issp_confirm: issp_confirm
     },
     object: {}
 };

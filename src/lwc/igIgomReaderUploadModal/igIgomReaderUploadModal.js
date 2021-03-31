@@ -86,7 +86,7 @@ export default class IgIgomReaderUploadModal extends LightningElement {
 
     get uploadModalButtonLabel() {
         if (this.modalState === UPLOAD_MODAL_STATES.UPLOAD_SUCCESSFUL) {
-            return label.custom.ig_save;
+            return label.custom.issp_confirm;
         } else if (this.modalState === UPLOAD_MODAL_STATES.UPLOAD_FAILED) {
             return label.custom.ig_close;
         }

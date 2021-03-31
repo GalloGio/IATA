@@ -161,14 +161,6 @@
         <value>Completition</value>
     </labels>
     <labels>
-        <fullName>ig_confirm</fullName>
-        <categories>IATA IGOM Report</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ig_confirm</shortDescription>
-        <value>Confirm</value>
-    </labels>
-    <labels>
         <fullName>ig_conformity</fullName>
         <categories>IATA IGOM Report</categories>
         <language>en_US</language>
@@ -791,5 +783,13 @@
         <protected>false</protected>
         <shortDescription>ig variation report</shortDescription>
         <value>Variation report</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Confirm</fullName>
+        <categories>ISSP, services</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_Confirm</shortDescription>
+        <value>Confirm</value>
     </labels>
 </CustomLabels>
