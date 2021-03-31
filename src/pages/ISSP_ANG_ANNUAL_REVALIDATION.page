@@ -776,14 +776,12 @@
                                                                 var myData = $('[id$=csvAccountsExportDatahidden]').val();
                                                                 var removeNull = myData.replaceAll(null, '""');
                                                                 var removeCha = removeNull.replaceAll('#', '');
-                                                                console.log('1');
                                                                 const rows = JSON.parse(removeCha);
-                                                                console.log('2');
                                                                 rows.unshift(myHeader);
-                                                                console.log('3');
                                                                 let csvContent = "data:text/csv;charset=utf-8,";
                                                                 rows.forEach(function(rowArray) {
                                                                     let row = rowArray.join(",");
+                                                                    row = row.replaceAll('_', ',')
                                                                     csvContent += row + "\r\n";
                                                                 });
                                                                 
