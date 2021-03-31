@@ -40,7 +40,12 @@ public without sharing class IGOMComplianceReviewUtil {
 			this.completedProcedureNumber = 0;
 			this.totalChildrenProcedures = 0;
 			if (complianceReview.Document__r != null) {
-				this.complianceDocumentVersion = complianceReview.Document__r.Version__c;
+				this.complianceDocumentVersion = IGOMDocumentUtil.getDocumentReference(new Document__c(
+					Abbreviated_Name__c = complianceReview.Document__r.Abbreviated_Name__c,
+					Edition__c = complianceReview.Document__r.Edition__c,
+					Version__c = complianceReview.Document__r.Version__c,
+					Revision__c = complianceReview.Document__r.Revision__c
+				));
 				this.effectiveDate = complianceReview.Document__r.Effective_Date__c;
 			}
 		}
@@ -111,8 +116,8 @@ public without sharing class IGOMComplianceReviewUtil {
 	 */
 	public static ComplianceReview queryGapAnalysisById(Id gapAnalysisId) {
 		return new ComplianceReview(
-			[SELECT Id, Name, Effective_Date__c, Publish_Status__c, Document__c,
-				   Document__r.Effective_Date__c, Title__c, Station__c, Document__r.Version__c
+			[SELECT Id, Name, Effective_Date__c, Publish_Status__c, Document__c, Document__r.Effective_Date__c, Title__c, Station__c,
+				   Document__r.Abbreviated_Name__c, Document__r.Edition__c, Document__r.Version__c, Document__r.Revision__c
 			FROM Compliance_Review__c
 			WHERE Id = :gapAnalysisId AND RecordType.Name = :IGOMConstants.COMPLIANCE_REVIEW.RECORD_TYPE.IGOM
 			LIMIT 1].get(0));
@@ -124,7 +129,8 @@ public without sharing class IGOMComplianceReviewUtil {
 	 * @return		Compliance_Review__c <Complete Compliance_Review__c object with every reference>
 	 */
 	private static Compliance_Review__c queryFullGapAnalysisById(Id gapAnalysisId) {
-		return [SELECT Id, Name, Publish_Status__c, Document__c, Document__r.Effective_Date__c, Title__c, Document__r.Version__c, Effective_Date__c, Station__c
+		return [SELECT Id, Name, Publish_Status__c, Document__c, Document__r.Effective_Date__c, Title__c, Document__r.Abbreviated_Name__c,
+		Document__r.Edition__c, Document__r.Version__c, Document__r.Revision__c, Effective_Date__c, Station__c
 			FROM Compliance_Review__c
 			WHERE Id = :gapAnalysisId AND RecordType.Name = :IGOMConstants.COMPLIANCE_REVIEW.RECORD_TYPE.IGOM
 			LIMIT 1];
@@ -160,7 +166,7 @@ public without sharing class IGOMComplianceReviewUtil {
 
 		List<Compliance_Review__c> allDraftGapAnalysis =
 			[SELECT Id, Name, Effective_Date__c, Publish_Status__c, Station__c, Document__c,
-					Document__r.Effective_Date__c, Title__c, Document__r.Version__c
+					Document__r.Effective_Date__c, Title__c, Document__r.Abbreviated_Name__c, Document__r.Edition__c, Document__r.Version__c, Document__r.Revision__c
 			 FROM Compliance_Review__c
 			 WHERE Publish_Status__c = :IGOMConstants.COMPLIANCE_REVIEW.STATUS.DRAFT AND Station__c = :ownStation.accountRoleId AND Document__r.Is_Active__c = true];
 
@@ -306,7 +312,7 @@ public without sharing class IGOMComplianceReviewUtil {
 		// Retrieve every published gap analysis related to the station and templates from parent stations
 		List<Compliance_Review__c> allPublishedGapAnalysis =
 			[SELECT Id, Name, Effective_Date__c, Publish_Status__c, Station__c,
-					Document__c, Document__r.Effective_Date__c, Title__c, Document__r.Version__c
+					Document__c, Document__r.Effective_Date__c, Title__c, Document__r.Abbreviated_Name__c, Document__r.Edition__c, Document__r.Version__c, Document__r.Revision__c
 			 FROM Compliance_Review__c
 			 WHERE (Publish_Status__c = :IGOMConstants.COMPLIANCE_REVIEW.STATUS.PUBLISHED AND
 			 	   Station__c = :ownStation.accountRoleId) OR (Publish_Status__c = :IGOMConstants.COMPLIANCE_REVIEW.STATUS.TEMPLATE AND
@@ -674,7 +680,7 @@ public without sharing class IGOMComplianceReviewUtil {
 		List<ComplianceReview> complianceReviews = new List<ComplianceReview>();
 		for (Compliance_Review__c sfComplianceReview :
 			 [SELECT Id, Name, Effective_Date__c, Publish_Status__c, Document__c,
-					  Document__r.Effective_Date__c, Title__c, Station__c, Document__r.Version__c
+					  Document__r.Effective_Date__c, Title__c, Station__c, Document__r.Abbreviated_Name__c, Document__r.Edition__c, Document__r.Version__c, Document__r.Revision__c
 			  FROM Compliance_Review__c
 			  WHERE Station__c = :stationId AND Document__r.Is_Active__c = true
 			  ORDER BY Effective_Date__c DESC])
@@ -699,7 +705,7 @@ public without sharing class IGOMComplianceReviewUtil {
 		List<ComplianceReview> complianceReviews = new List<ComplianceReview>();
 		for (Compliance_Review__c sfComplianceReview :
 			 [SELECT Id, Name, Effective_Date__c, Publish_Status__c, Document__c,
-					  Document__r.Effective_Date__c, Title__c, Station__c, Document__r.Version__c
+					  Document__r.Effective_Date__c, Title__c, Station__c,  Document__r.Abbreviated_Name__c, Document__r.Edition__c, Document__r.Version__c, Document__r.Revision__c
 			  FROM Compliance_Review__c
 			  WHERE Station__c = :accountRoleId AND Publish_Status__c = :IGOMConstants.COMPLIANCE_REVIEW.STATUS.PUBLISHED
 			  ORDER BY Effective_Date__c DESC])

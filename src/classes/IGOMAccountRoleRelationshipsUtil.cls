@@ -166,8 +166,8 @@ public without sharing class IGOMAccountRoleRelationshipsUtil {
 				IGOMStationUtil.RelatedStation relatedStation = new IGOMStationUtil.RelatedStation((IGOM_Account_Role_Detail__c)
 				getFromMap(roleDetailsByRoleId, idStation), closenessLv, relationship);
 				if(type != 'Group'){
-					relatedStation.isChildRelationship = type != 'Child';
-					relatedStation.isParentRelationship = type != 'Parent';
+					relatedStation.isChildRelationship = type == 'Child';
+					relatedStation.isParentRelationship = type == 'Parent';
 				}
 				switch on type {
 					when 'Child' {

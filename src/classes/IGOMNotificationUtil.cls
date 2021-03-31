@@ -177,6 +177,7 @@ public without sharing class IGOMNotificationUtil {
 		List<IGOMComplianceReviewPartUtil.ComplianceReviewPart> newParts = IGOMComplianceReviewPartUtil.getComplianceReviewPartByComplianceReview(new List<Id>{ gapAnalysisId });
 		for (Integer i = (newParts.size()-1); i >= 0; i--) {
 			IGOMComplianceReviewPartUtil.ComplianceReviewPart newPart = newParts[i];
+			//TODO - missing propper notification logic
 			if (newPart.variationStatus != IGOMConstants.PROCEDURE_COMPLIANCE.STATUS.VARIATION) {
 				newParts.remove(i);
 			}
