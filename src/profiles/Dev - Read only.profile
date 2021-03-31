@@ -23498,7 +23498,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Account_Contact_Role__c.Functional_Role__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -24323,7 +24323,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Account_Role__c.Functional_Role__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -53413,7 +53413,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Portal_Applications__c.Functional_Role__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
