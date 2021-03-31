@@ -8,7 +8,7 @@ public class TestDataFactory_Accounts {
 		insert iataISOCountryList;
 	}
 
-	public static List<Account> createDefaultAccounts (Integer numberOfRecords){
+	public static List<Account> createStandardAccounts (Integer numberOfRecords){
 		//create dependent data
 		makeData();
 		//get standard record type
