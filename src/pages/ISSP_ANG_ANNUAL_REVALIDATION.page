@@ -479,6 +479,19 @@
                                         <apex:outputPanel id="tstpopup" style="margin-top: 100px;"> 
                                             <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!displayPopUp}"/> 
                                             <apex:outputPanel styleClass="custPopup" layout="block" rendered="{!displayPopUp}"> 
+                                                <div style="display:none;" id="custPopupLoading">
+                                                    <div class="popupBackground" />
+                                                    <div class="PopupPanel">
+                                                        <table border="0" width="100%" height="100%">
+                                                            <tr>
+                                                                <td align="center"><b>Please Wait</b></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td align="center"><img width="60px" height="60px" src="{!URLFOR($Resource.ISSP_WaitingStatusResource,'IMAGES/loading3.gif')}"/></td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
                                                 <div class="section-header">
                                                     <h3 class="panel-title">{!$Label.CS_Portal_Annual_Revalidation_Popup_Title}</h3>
                                                 </div>
@@ -522,6 +535,10 @@
                                                             if (!$clicked.parents().hasClass("dropdownCountry")) $(".dropdownCountry dd ul").hide();
                                                         });
 
+                                                        function massConfirmDetailsShowPopupLoading() {
+                                                            $("#custPopupLoading").show();
+                                                            massConfirmDetails();
+                                                        }
 
                                                         $('.mutliSelect input[type="checkbox"]').on('click', function () {
                                                             var title = $(this).closest('.mutliSelect').find('input[type="checkbox"]').val(),
@@ -593,7 +610,8 @@
                                                 </apex:OutputPanel>
                                                 <div align="center" draggable="false" style="margin-top : 20px;">
                                                     <apex:commandButton styleclass="iatabtn iatabtn-danger iatabtn-left" status="WaitingStatus" value="{!$Label.ISSP_Cancel}" action="{!closePopup}" rerender="tstpopup"/> 
-                                                    <apex:commandButton styleClass="iatabtn iatabtn-default iatabtn-right" status="WaitingStatus" value="{!$Label.ISSP_Submit}" action="{!massConfirmDetails}" reRender="mytreeArea, tstpopup"/> 
+                                                    <apex:commandButton styleClass="iatabtn iatabtn-default iatabtn-right" status="WaitingStatus" value="{!$Label.ISSP_Submit}" onclick="massConfirmDetailsShowPopupLoading(); return false;"/> 
+                                                    <apex:actionFunction name="massConfirmDetails" action="{!massConfirmDetails}" rerender="mytreeArea, tstpopup" />
                                                 </div>
                                             </apex:outputPanel> 
                                         </apex:outputPanel> 
@@ -781,7 +799,7 @@
                                                                 let csvContent = "data:text/csv;charset=utf-8,";
                                                                 rows.forEach(function(rowArray) {
                                                                     let row = rowArray.join(",");
-                                                                    row = row.replaceAll('_', ',')
+                                                                    row = row.replaceAll('._.', ',')
                                                                     csvContent += row + "\r\n";
                                                                 });
                                                                 
