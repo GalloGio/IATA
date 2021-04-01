@@ -369,6 +369,11 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
                     <default>false</default>
                     <label>Model B+</label>
                 </value>
+                <value>
+                    <fullName>Pre-Payment (NO IEP)</fullName>
+                    <default>false</default>
+                    <label>Pre-Payment (NO IEP)</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -3335,6 +3340,11 @@ Enabled: Sufficient for Agents to simply upload scanned copy to online applicati
         <filters>
             <field>ANG_Portal_Service__c</field>
             <operation>equals</operation>
+        </filters>
+        <filters>
+            <field>ANG_IEP_Model__c</field>
+            <operation>equals</operation>
+            <value>Pre-Payment (NO IEP)</value>
         </filters>
         <label>NGISS enabled Countries Without EasyPay</label>
         <language>en_US</language>
