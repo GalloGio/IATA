@@ -121,9 +121,17 @@ export default class PortalServicesInnovationHubEditTab extends LightningElement
         this.showEditModal = false;
     }
 
-    handleSaveButtonClick(event){
+    handleSaveDraftButtonClick(event){
         var buttonName = event.target.dataset.name;
 
+        //set the mode for success popup text
+        this.displaySaveTextSuccessModal = buttonName === 'save';
+        this.mode = buttonName;
+    }
+
+    handleSaveButtonClick(event){
+        var buttonName = event.target.dataset.name;
+        this.isSaving = true;
         //set the mode for success popup text
         this.displaySaveTextSuccessModal = buttonName === 'save';
         this.mode = buttonName;

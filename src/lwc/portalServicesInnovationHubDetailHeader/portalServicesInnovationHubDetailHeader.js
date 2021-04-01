@@ -30,7 +30,6 @@ export default class PortalServicesInnovationHubDetailHeader extends LightningEl
     @track backgroundStyle;
     @track profileDivStyle;
     @track iconLink;
-    @track contact = {};
     @track providerId;
     @track headerFields = {};
     @track websiteUrl = '';
@@ -56,7 +55,23 @@ export default class PortalServicesInnovationHubDetailHeader extends LightningEl
     }
 
     get providerAndPublishedRecord(){
-        return this.headerFields != null && this.headerFields.Published__c && this.headerFields.Status__c == 'Approved';
+        return this.headerFields != null && this.headerFields.Published__c != null && this.headerFields.Status__c != null && this.headerFields.Published__c && this.headerFields.Status__c == 'Approved';
+    }
+
+    get hasContactName(){
+        return this.headerFields != null && this.headerFields.Contact_info_of_startup__c != null && this.headerFields.Contact_info_of_startup__c != '';
+    }
+
+    get hasContactPosition(){
+        return this.headerFields != null && this.headerFields.Contact_Position__c != null && this.headerFields.Contact_Position__c != '';
+    }
+
+    get hasContactEmail(){
+        return this.headerFields != null && this.headerFields.Contact_Email__c != null && this.headerFields.Contact_Email__c != '';
+    }
+
+    get hasContactPhone(){
+        return this.headerFields != null && this.headerFields.Contact_Phone_Number__c != null && this.headerFields.Contact_Phone_Number__c != '';
     }
 
     get hasWebsite() {

@@ -38,6 +38,7 @@
   .myProviderHeader {
     width: 100%;
     min-height: 150px;
+    max-height: 200px;
     background-color: #fff;
   }
   
@@ -97,11 +98,15 @@
   }
 
   .fieldMargin{
-    margin-top: 10px;
+    margin-top: 20px;
   }
 
   .socialMediaMargin{
     margin-top: 15px;
+  }
+
+  .logoMargin{
+    margin-right: 50px;
   }
 
   .headerFieldsText{

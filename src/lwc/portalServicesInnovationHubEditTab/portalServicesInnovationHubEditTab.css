@@ -200,3 +200,7 @@
     line-height: 1;
     vertical-align: text-top;
   }
+
+  .logoCenter {
+    text-align: center;
+  }
