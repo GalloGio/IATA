@@ -558,7 +558,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		
 	public void checkAllChildsAccountsWrapper() {
 		for(childsAccountsWrapper acc: childsAccountsWrapperList){
-			if(acc.isOwnershipCompleted && acc.icon != OK_ICON && acc.showMe){
+			if(acc.isOwnershipCompleted && acc.icon != OK_ICON && acc.icon != CONFIRMED_ICON && acc.showMe){
 				acc.checked = allChildsAccountsWrapperSelected;
 			}
 		}

@@ -573,7 +573,7 @@
                                                                     </apex:actionSupport>
                                                                 </apex:inputCheckbox>
                                                             </apex:facet>   
-                                                            <apex:inputCheckbox disabled="{!OR(NOT(a.isOwnershipCompleted), a.icon == 'glyphicon glyphicon-ok text-success')}" value="{!a.checked}"/>
+                                                            <apex:inputCheckbox disabled="{!OR(NOT(a.isOwnershipCompleted), a.icon == 'glyphicon glyphicon-flag text-danger', a.icon == 'glyphicon glyphicon-ok text-success')}" value="{!a.checked}"/>
                                                             <apex:facet name="footer"></apex:facet>
                                                         </apex:column>
                                                         <apex:column  styleClass="col align-icon-center" style="{!IF(a.showMe,'', 'display:none;')}">
