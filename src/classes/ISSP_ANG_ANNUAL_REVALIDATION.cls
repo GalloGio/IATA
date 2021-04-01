@@ -470,28 +470,28 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		for (Account a : this.childsAccounts) {
 			String[] locations = new String[] {};
 			locations.add('"' + a.IATACode__c + '"');
-			locations.add(a.Name != null ? '"' +  a.Name.replace(',','_') + '"': null);
-			locations.add(a.TradeName__c != null ? '"' +  a.TradeName__c.replace(',','_') + '"': null);
-			locations.add(a.VAT_Number__c != null ? '"' +  a.VAT_Number__c.replace(',','_') + '"': null);
-			locations.add(a.BillingStreet != null ? '"' +  a.BillingStreet.replace(',','_') + '"': null);
-			locations.add(a.BillingCity != null ? '"' +  a.BillingCity.replace(',','_') + '"': null);
-			locations.add(a.BillingState != null ? '"' +  a.BillingState.replace(',','_') + '"': null);
-			locations.add(a.BillingPostalCode != null ? '"' +  a.BillingPostalCode.replace(',','_') + '"': null);
-			locations.add(a.BillingCountry != null ? '"' +  a.BillingCountry.replace(',','_') + '"': null);
-			locations.add(a.ShippingStreet != null ? '"' +  a.ShippingStreet.replace(',','_') + '"': null);
-			locations.add(a.ShippingCity != null ? '"' +  a.ShippingCity.replace(',','_') + '"': null);
-			locations.add(a.ShippingState != null ? '"' +  a.ShippingState.replace(',','_') + '"': null);
-			locations.add(a.ShippingPostalCode != null ? '"' +  a.ShippingPostalCode.replace(',','_') + '"': null);
-			locations.add(a.ShippingCountry != null ? '"' +  a.ShippingCountry.replace(',','_') + '"': null);
-			locations.add(a.Email__c != null ? '"' +  a.Email__c.replace(',','_') + '"': null);
-			locations.add(a.Website != null ? '"' +  a.Website.replace(',','_') + '"': null);
-			locations.add(a.Phone != null ? '"' +  a.Phone.replace(',','_') + '"': null);
-			locations.add(a.Mobile__c != null ? '"' +  a.Mobile__c.replace(',','_') + '"': null);
-			locations.add(a.Fax != null ? '"' +  a.Fax.replace(',','_') + '"': null);
+			locations.add(a.Name != null ? '"' +  a.Name.replace(',','._.') + '"': null);
+			locations.add(a.TradeName__c != null ? '"' +  a.TradeName__c.replace(',','._.') + '"': null);
+			locations.add(a.VAT_Number__c != null ? '"' +  a.VAT_Number__c.replace(',','._.') + '"': null);
+			locations.add(a.BillingStreet != null ? '"' +  a.BillingStreet.replace(',','._.') + '"': null);
+			locations.add(a.BillingCity != null ? '"' +  a.BillingCity.replace(',','._.') + '"': null);
+			locations.add(a.BillingState != null ? '"' +  a.BillingState.replace(',','._.') + '"': null);
+			locations.add(a.BillingPostalCode != null ? '"' +  a.BillingPostalCode.replace(',','._.') + '"': null);
+			locations.add(a.BillingCountry != null ? '"' +  a.BillingCountry.replace(',','._.') + '"': null);
+			locations.add(a.ShippingStreet != null ? '"' +  a.ShippingStreet.replace(',','._.') + '"': null);
+			locations.add(a.ShippingCity != null ? '"' +  a.ShippingCity.replace(',','._.') + '"': null);
+			locations.add(a.ShippingState != null ? '"' +  a.ShippingState.replace(',','._.') + '"': null);
+			locations.add(a.ShippingPostalCode != null ? '"' +  a.ShippingPostalCode.replace(',','._.') + '"': null);
+			locations.add(a.ShippingCountry != null ? '"' +  a.ShippingCountry.replace(',','._.') + '"': null);
+			locations.add(a.Email__c != null ? '"' +  a.Email__c.replace(',','._.') + '"': null);
+			locations.add(a.Website != null ? '"' +  a.Website.replace(',','._.') + '"': null);
+			locations.add(a.Phone != null ? '"' +  a.Phone.replace(',','._.') + '"': null);
+			locations.add(a.Mobile__c != null ? '"' +  a.Mobile__c.replace(',','._.') + '"': null);
+			locations.add(a.Fax != null ? '"' +  a.Fax.replace(',','._.') + '"': null);
 			Integer controlOnwersSize = 0;
 			for (AMS_Account_Role__c ar : amsOwners) {
 				if(ar.Account__c == a.Id && controlOnwersSize < 10){
-					locations.add(ar.Owner_Name__c != '' ? '"' +  ar.Owner_Name__c.replace(',','_') + '"' : '"' +  ar.owner_account__r.name.replace(',','_') + '"');
+					locations.add(ar.Owner_Name__c != '' ? '"' +  ar.Owner_Name__c.replace(',','._.') + '"' : '"' +  ar.owner_account__r.name.replace(',','._.') + '"');
 					locations.add('"' + ar.Percentage__c + '"');
 					controlOnwersSize++;
 				}
