@@ -23,7 +23,7 @@ private class AirportISServiceTest {
 		Map<Id,Account_Contact_Role__c> accountContactRoleMap = AccountContactRoleSelector.selectMapByServiceAndContactIdSet(AirportISService.FUNCTIONALROLE, new Set<Id>{contact.Id, contact2.Id});
 		System.assertEquals(2, accountContactRoleMap.size(), 'Expected 2 Account Contact Roles');
 		//test account role assignment
-		List<Account_Role__c> accountRoleList = AccountRoleSelector.selectAccountIdByAccountsAndRole(new Set<Id>{account.Id}, AirportISService.FUNCTIONALROLE);
+		List<Account_Role__c> accountRoleList = AccountRoleSelector.selectByAccountIdSetAndRole(new Set<Id>{account.Id}, AirportISService.FUNCTIONALROLE);
 		System.assertEquals(1, accountRoleList.size(), 'Expected 1 Account Role');
 	}
 
@@ -41,13 +41,13 @@ private class AirportISServiceTest {
 		//test account contact role unassignment
 		Map<Id,Account_Contact_Role__c> accountContactRoleMap = AccountContactRoleSelector.selectMapByServiceAndContactIdSet(AirportISService.FUNCTIONALROLE, new Set<Id>{contact.Id, contact2.Id});
 		System.assertEquals(1, accountContactRoleMap.size(), 'There should still be 1 Contact with the role');
-		List<Account_Role__c> accountRoleList = AccountRoleSelector.selectAccountIdByAccountsAndRole(new Set<Id>{account.Id}, AirportISService.FUNCTIONALROLE);
+		List<Account_Role__c> accountRoleList = AccountRoleSelector.selectByAccountIdSetAndRole(new Set<Id>{account.Id}, AirportISService.FUNCTIONALROLE);
 		System.assertEquals(1, accountRoleList.size(), 'Expected 1 Account Role');
 		AirportISService.manageUserOnboarding(new Set<Contact>{contact2}, PortalApplicationRights.ACCESSDENIED);
 		accountContactRoleMap = AccountContactRoleSelector.selectMapByServiceAndContactIdSet(AirportISService.FUNCTIONALROLE, new Set<Id>{contact.Id, contact2.Id});
 		System.assertEquals(0, accountContactRoleMap.size(), 'There should still be no Contacts with the role');
 		//test account role unassignment
-		accountRoleList = AccountRoleSelector.selectAccountIdByAccountsAndRole(new Set<Id>{account.Id}, AirportISService.FUNCTIONALROLE);
+		accountRoleList = AccountRoleSelector.selectByAccountIdSetAndRole(new Set<Id>{account.Id}, AirportISService.FUNCTIONALROLE);
 		System.assertEquals(0, accountRoleList.size(), 'Expected 0 Account Roles');
 	}
 }
