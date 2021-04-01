@@ -152,8 +152,9 @@ private class ANG_financialReviewOnCaseTest {
 		Test.startTest();
 			Case c = [SELECT Id,Financial_Review_Result__c, ContactId FROM Case LIMIT 1];
 
-			Portal_Applications__c par = new Portal_Applications__c (Name = ANG_RHCHelper.RISK_PROFILE_AND_RHC_PORTAL_SERVICE);
-			insert par;
+            Portal_Applications__c par = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+			par.Name = ANG_RHCHelper.RISK_PROFILE_AND_RHC_PORTAL_SERVICE;
+            insert par;
 
 			insert new Portal_Application_Right__c(Portal_Application__c = par.Id, Right__c = 'Access Granted', Contact__c = c.ContactId);
 

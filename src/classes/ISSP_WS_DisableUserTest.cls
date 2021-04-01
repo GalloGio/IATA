@@ -22,9 +22,9 @@ private class ISSP_WS_DisableUserTest {
 		insert listError;
 
 		//insert Portal apps
-		list<Portal_Applications__c> listApps = new list<Portal_Applications__c>();
-		for (String appname: LIST_APP_NAMES) {
-			listApps.add(new Portal_Applications__c(Name = appname));
+		list<Portal_Applications__c> listApps = TestDataFactory_PortalApplications.createDefaultPortalApplication(LIST_APP_NAMES.size());
+		for (Integer x = 0; x < LIST_APP_NAMES.size(); x++) {
+			listApps.get(x).Name = LIST_APP_NAMES.get(0);
 		}
 		insert listApps;
 		APP_IDS = new ISSP_Portal_Service_Ids__c(Name='Apps');

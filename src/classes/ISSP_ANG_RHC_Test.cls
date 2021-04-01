@@ -11,22 +11,20 @@ public class ISSP_ANG_RHC_Test {
 	}
 
 	public static testMethod void test1() {
-				Portal_Applications__c s1 = new Portal_Applications__c (
-				Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED,
-				ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-				ANG_Accredited_Agents_Only__c = false,
-				Agency__c = true
-			);
+		List<Portal_Applications__c> portalApplicationsList = TestDataFactory_PortalApplications.createDefaultPortalApplication(2);
+		Portal_Applications__c s1 = portalApplicationsList.get(0);
+		s1.Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED;
+		s1.ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT;
+		s1.ANG_Accredited_Agents_Only__c = false;
+		s1.Agency__c = true;
 
-		Portal_Applications__c s2 = new Portal_Applications__c (
-				Name = ISSP_ANG_RHC.ICE_SERVICE,
-				ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-				ANG_Accredited_Agents_Only__c = false,
-				Agency__c = true
-			);
+		Portal_Applications__c s2 = portalApplicationsList.get(1);
+		s2.Name = ISSP_ANG_RHC.ICE_SERVICE;
+		s2.ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT;
+		s2.ANG_Accredited_Agents_Only__c = false;
+		s2.Agency__c = true;
 
-
-		insert new List<Portal_Applications__c>{s1,s2};
+		insert portalApplicationsList;
 
 		IATA_ISO_Country__c portugal = new IATA_ISO_Country__c (
 				Name = 'Portugal_test',
@@ -142,22 +140,20 @@ public class ISSP_ANG_RHC_Test {
 	}
 
 	public static testMethod void test2() {
-		Portal_Applications__c s1 = new Portal_Applications__c (
-				Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED,
-				ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-				ANG_Accredited_Agents_Only__c = false,
-				Agency__c = true
-			);
+		List<Portal_Applications__c> portalApplicationsList = TestDataFactory_PortalApplications.createDefaultPortalApplication(2);
+		Portal_Applications__c s1 = portalApplicationsList.get(0);
+		s1.Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED;
+		s1.ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT;
+		s1.ANG_Accredited_Agents_Only__c = false;
+		s1.Agency__c = true;
 
-		Portal_Applications__c s2 = new Portal_Applications__c (
-				Name = ISSP_ANG_RHC.ICE_SERVICE,
-				ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-				ANG_Accredited_Agents_Only__c = false,
-				Agency__c = true
-			);
+		Portal_Applications__c s2 = portalApplicationsList.get(1);
+		s2.Name = ISSP_ANG_RHC.ICE_SERVICE;
+		s2.ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT;
+		s2.ANG_Accredited_Agents_Only__c = false;
+		s2.Agency__c = true;
 
-
-		insert new List<Portal_Applications__c>{s1,s2};
+		insert portalApplicationsList;
 
 		IATA_ISO_Country__c portugal = new IATA_ISO_Country__c (
 				Name = 'Portugal_test',
@@ -281,22 +277,20 @@ public class ISSP_ANG_RHC_Test {
 	}
 
 	public static testMethod void test3() {
-		Portal_Applications__c s1 = new Portal_Applications__c (
-				Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED,
-				ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-				ANG_Accredited_Agents_Only__c = false,
-				Agency__c = true
-			);
+		List<Portal_Applications__c> portalApplicationList = TestDataFactory_PortalApplications.createDefaultPortalApplication(2);
+		Portal_Applications__c s1 = portalApplicationList.get(0);
+		s1.Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED;
+		s1.ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT;
+		s1.ANG_Accredited_Agents_Only__c = false;
+		s1.Agency__c = true;
 
-		Portal_Applications__c s2 = new Portal_Applications__c (
-				Name = ISSP_ANG_RHC.ICE_SERVICE,
-				ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-				ANG_Accredited_Agents_Only__c = false,
-				Agency__c = true
-			);
+		Portal_Applications__c s2 = portalApplicationList.get(0);
+		s2.Name = ISSP_ANG_RHC.ICE_SERVICE;
+		s2.ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT;
+		s2.ANG_Accredited_Agents_Only__c = false;
+		s2.Agency__c = true;
 
-
-		insert new List<Portal_Applications__c>{s1,s2};
+		insert portalApplicationList;
 
 		IATA_ISO_Country__c indonesia = new IATA_ISO_Country__c (
 				Name = 'Indonesia',
@@ -421,20 +415,18 @@ public class ISSP_ANG_RHC_Test {
 	}
 
 	public static testMethod void test4() {
-				Portal_Applications__c s1 = new Portal_Applications__c (
-				Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED,
-				ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-				ANG_Accredited_Agents_Only__c = false,
-				Agency__c = true
-			);
+		List<Portal_Applications__c> portalApplicationList = TestDataFactory_PortalApplications.createDefaultPortalApplication(2);
+		Portal_Applications__c s1 = portalApplicationList.get(0);
+		s1.Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED;
+		s1.ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT;
+		s1.ANG_Accredited_Agents_Only__c = false;
+		s1.Agency__c = true;
 
-		Portal_Applications__c s2 = new Portal_Applications__c (
-				Name = ISSP_ANG_RHC.ICE_SERVICE,
-				ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-				ANG_Accredited_Agents_Only__c = false,
-				Agency__c = true
-			);
-
+		Portal_Applications__c s2 = portalApplicationList.get(1);
+		s2.Name = ISSP_ANG_RHC.ICE_SERVICE;
+		s2.ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT;
+		s2.ANG_Accredited_Agents_Only__c = false;
+		s2.Agency__c = true;
 
 		insert new List<Portal_Applications__c>{s1,s2};
 
@@ -536,22 +528,20 @@ public class ISSP_ANG_RHC_Test {
 	}
 
 	public static testMethod void test5() {
-				Portal_Applications__c s1 = new Portal_Applications__c (
-				Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED,
-				ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-				ANG_Accredited_Agents_Only__c = false,
-				Agency__c = true
-			);
+		List<Portal_Applications__c> portalApplicationsList = TestDataFactory_PortalApplications.createDefaultPortalApplication(2);
+		Portal_Applications__c s1 = portalApplicationsList.get(0);
+		s1.Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED;
+		s1.ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT;
+		s1.ANG_Accredited_Agents_Only__c = false;
+		s1.Agency__c = true;
 
-		Portal_Applications__c s2 = new Portal_Applications__c (
-				Name = ISSP_ANG_RHC.ICE_SERVICE,
-				ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-				ANG_Accredited_Agents_Only__c = false,
-				Agency__c = true
-			);
+		Portal_Applications__c s2 = portalApplicationsList.get(1);
+		s2.Name = ISSP_ANG_RHC.ICE_SERVICE;
+		s2.ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT;
+		s2.ANG_Accredited_Agents_Only__c = false;
+		s2.Agency__c = true;
 
-
-		insert new List<Portal_Applications__c>{s1,s2};
+		insert portalApplicationsList;
 
 		IATA_ISO_Country__c china = new IATA_ISO_Country__c (
 				Name = 'China_test',

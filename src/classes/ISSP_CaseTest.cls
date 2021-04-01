@@ -114,7 +114,7 @@ public class ISSP_CaseTest {
 		c.CaseArea__c = 'test';
 		c.Reason1__c = 'test';
 		insert c;
-		Portal_Applications__c newApp = new Portal_Applications__c();
+		Portal_Applications__c app = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
 		newApp.Name = 'TEST';
 		insert newApp;
 		Portal_Application_Right__c newAppRight = new Portal_Application_Right__c();
@@ -751,13 +751,14 @@ public class ISSP_CaseTest {
 		c.status = TIP_Utils.CASE_STATUS_DRAFT;
 		c.CaseArea__c = TIP_Utils.CASE_AREA_TRANSPARENCY_IN_PAYMENTS;
 		c.Visible_on_ISS_Portal__c = true;
+		
+		User user = ISSP_ObjectFactory.createPortalUser(con);
 
-	   User user = ISSP_ObjectFactory.createPortalUser(con);
+		Portal_Applications__c pa = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		pa.Name = TIP_Utils.PORTAL_SERVICE_NAME_TIP;
+		insert pa;
 
-	   Portal_Applications__c pa = new Portal_Applications__c(name = TIP_Utils.PORTAL_SERVICE_NAME_TIP);
-	   insert pa;
-
-		  ISSP_Portal_Service_Ids__c psi = new ISSP_Portal_Service_Ids__c(
+		ISSP_Portal_Service_Ids__c psi = new ISSP_Portal_Service_Ids__c(
 
 		TIP_Portal_Service_Id__c=pa.id
 		);

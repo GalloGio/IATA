@@ -26,7 +26,8 @@ private class ISSP_CurrCenterReportingActionsCtrlTest {
 
 		User portalUser = [SELECT Id, ContactId FROM User WHERE ContactId in (SELECT Id FROM Contact)][0];
 
-		Portal_Applications__c currencyCenter = new Portal_Applications__c(name = 'Currency Center');
+		Portal_Applications__c currencyCenter = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		currencyCenter.name = 'Currency Center';
 		insert currencyCenter;
 
 		System.RunAs(portalUser) {

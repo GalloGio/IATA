@@ -8,7 +8,8 @@ public class ANG_ExposeAccountInfo_Masterdata_Test {
 
 		Test.startTest();
 
-		Portal_Applications__c pa = new Portal_Applications__c (Name='TEST');
+		Portal_Applications__c pa = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		pa.Name='TEST';
 		insert pa;
 
 		AMS_Settlement_System__c bspPT = new AMS_Settlement_System__c(

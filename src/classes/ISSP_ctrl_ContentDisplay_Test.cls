@@ -24,7 +24,8 @@ private class ISSP_ctrl_ContentDisplay_Test {
 					insert con2;
 
 			//Create portal applications
-				Portal_Applications__c app = new Portal_Applications__c(Name = 'test app');
+				Portal_Applications__c app = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+			app.Name = 'test app';
 					insert app;
 					Portal_Application_Right__c appRight = new Portal_Application_Right__c(Contact__c = con2.Id, Portal_Application__c = app.Id, Right__c = 'Access Granted');
 					insert appRight;

@@ -152,13 +152,17 @@ private class GlobalContactTriggerTest {
 
 		Test.startTest();
 
-		Portal_Applications__c app1 = new Portal_Applications__c(Name = 'MyTest', Critical_Service__c = true);
+		List<Portal_Applications__c> portalApplicationsList = TestDataFactory_PortalApplications.createDefaultPortalApplication(2);
+		Portal_Applications__c app1 = portalApplicationsList.get(0);
+		app1.Name = 'MyTest';
+		app1.Critical_Service__c = true;
 		insert app1;
 		Portal_Application_Right__c appRight11 = new Portal_Application_Right__c(Contact__c = con.Id, Portal_Application__c = app1.Id, Right__c = 'Access Granted');
 		insert appRight11;
 		Portal_Application_Right__c appRight12 = new Portal_Application_Right__c(Contact__c = con2.Id, Portal_Application__c = app1.Id, Right__c = 'Access Granted');
 		insert appRight12;
-		Portal_Applications__c app2 = new Portal_Applications__c(Name = 'MyTest2');
+		Portal_Applications__c app2 = portalApplicationsList.get(1);
+        app2.Name = 'MyTest2';
 		insert app2;
 		Portal_Application_Right__c appRight21 = new Portal_Application_Right__c(Contact__c = con.Id, Portal_Application__c = app2.Id, Right__c = 'Access Granted');
 		insert appRight21;
@@ -449,15 +453,13 @@ private class GlobalContactTriggerTest {
 
 			Test.startTest();
 
-			list<Portal_Applications__c> listApps = new list<Portal_Applications__c>();
-			Portal_Applications__c PA = new Portal_Applications__c(
-				Name = 'Test'
-			);
+			List<Portal_Applications__c> listApps = TestDataFactory_PortalApplications.createDefaultPortalApplication(2);
+			Portal_Applications__c PA = listApps.get(0);
+			PA.Name = 'Test';
 			listApps.add(PA);
 
-			Portal_Applications__c PA2 = new Portal_Applications__c(
-				Name = 'Standards Setting Workspace'
-			);
+			Portal_Applications__c PA2 = listApps.get(1);
+			PA2.Name = 'Standards Setting Workspace';
 			listApps.add(PA2);
 			insert listApps;
 

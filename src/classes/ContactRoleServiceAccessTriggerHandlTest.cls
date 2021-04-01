@@ -38,7 +38,7 @@ public class ContactRoleServiceAccessTriggerHandlTest {
 		contactRoles4.Name = 'GADM Data Consumer';
 		insert contactRoles4;
 
-		Portal_Applications__c portalApplications = new Portal_Applications__c();
+		Portal_Applications__c portalApplications = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
 		portalApplications.Name = 'GADM';
 		insert portalApplications;
 
@@ -197,7 +197,7 @@ public class ContactRoleServiceAccessTriggerHandlTest {
 
 		List<Account_Contact_Role__c> accountContactRole = [SELECT Id, Name FROM Account_Contact_Role__c];
 
-		Portal_Applications__c portalApplication = new Portal_Applications__c();
+		Portal_Applications__c portalApplications = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
 		portalApplication.Name = 'ISSP';
 		insert portalApplication;
 
@@ -229,7 +229,7 @@ public class ContactRoleServiceAccessTriggerHandlTest {
 
 		User testUser = [SELECT Id FROM User WHERE Email = 'testContactRoleServiceAccessTrigger@test.com'];
 
-		Portal_Applications__c portalApplication = new Portal_Applications__c();
+		Portal_Applications__c portalApplications = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
 		portalApplication.Name = 'ISSP';
 		insert portalApplication;
 
@@ -266,7 +266,7 @@ public class ContactRoleServiceAccessTriggerHandlTest {
 
 		User testUser = [SELECT Id FROM User WHERE Email = 'testContactRoleServiceAccessTrigger@test.com'];
 
-		Portal_Applications__c portalApplication = new Portal_Applications__c();
+		Portal_Applications__c portalApplications = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
 		portalApplication.Name = 'ISSP';
 		insert portalApplication;
 

@@ -51,7 +51,7 @@ public class File_Upload_Lookup_CTRL_TEST {
 		contactRole2.Service_Rendered__c = 'GADM';
 		insert contactRole2;
 
-		Portal_Applications__c service = new Portal_Applications__c();
+		Portal_Applications__c portalApplications = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
 		service.Name = 'GADM';
 		insert service;
 

@@ -133,9 +133,9 @@ private class ANG_MasterData_Interface_test {
 
 				insert con1;
 
-				List<Portal_Applications__c> pas = new List<Portal_Applications__c>();
-				pas.add(new Portal_Applications__c(Name = 'IATA EasyPay (EDENRED)'));
-				pas.add(new Portal_Applications__c(Name = 'IATA EasyPay (MSTS)'));
+				List<Portal_Applications__c> pas = TestDataFactory_PortalApplications.createDefaultPortalApplication(2);
+				pas.get(0).Name = 'IATA EasyPay (EDENRED)';
+				pas.get(1).Name = 'IATA EasyPay (MSTS)';
 				insert pas;
 
 				Portal_Application_Right__c par = new Portal_Application_Right__c(
