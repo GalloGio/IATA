@@ -2111,10 +2111,10 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		List<Agency_Authorization__c> toUpsert = new List<Agency_Authorization__c>();
 
-		For(Agency_Authorization__c aa: [Select Id , Status__c, Account__r.IATA_ISO_Country__r.ANG_Enable_NewGen__c, Account__r.IATA_ISO_Country__r.ANG_Portal_Service__c
+		For(Agency_Authorization__c aa: [Select Id , Status__c, Account__r.IATA_ISO_Country__r.ANG_Enable_NewGen__c, Account__r.IATA_ISO_Country__r.ANG_Portal_Service__c, Account__r.IATA_ISO_Country__r.ANG_IEP_Model__c
 										from Agency_Authorization__c 
 										where Account__c in:accountsAffected and ANG_FormOfPayment_ID__c = 'CA' and Status__c != 'Not Authorized' and RecordType.DeveloperName = 'FormOfPayment']){
-			if(aa.Account__r.IATA_ISO_Country__r.ANG_Enable_NewGen__c && string.isNotBlank(aa.Account__r.IATA_ISO_Country__r.ANG_Portal_Service__c)){
+			if(aa.Account__r.IATA_ISO_Country__r.ANG_Enable_NewGen__c && aa.Account__r.IATA_ISO_Country__r.ANG_IEP_Model__c!=AMS_Utils.IEPModel_PrePayment){
 				aa.Status__c = 'Not Authorized';
 				toUpsert.add(aa);
 			}
