@@ -1064,13 +1064,13 @@ lightning-datatable .slds-th__action {
 /* ############################################## */
 /* Combobox */
 
-.slds-combobox_container input[role="combobox"] {
+.slds-combobox_container input {
 	height: 52px;
     border-radius: 1px;
     cursor: pointer;
 }
 
-.slds-combobox_container input[role="combobox"]:not(:placeholder-shown) {
+.slds-combobox_container input:not(:placeholder-shown) {
     background-color: #f7f8fa;
 }
 .slds-combobox_container .slds-input__icon_right lightning-primitive-icon svg{
@@ -2810,11 +2810,11 @@ html {
 }
 
 
-.specialPickList .slds-combobox_container input[role="combobox"]:not(:placeholder-shown) {
+.specialPickList .slds-combobox_container input:not(:placeholder-shown) {
     background-color: white;
 }
 
-.specialPickList .slds-combobox_container input[role="combobox"]{
+.specialPickList .slds-combobox_container input{
   border-color:#1e32fa;
 }
 .MaxModalContainerDim{

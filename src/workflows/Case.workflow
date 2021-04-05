@@ -159,7 +159,7 @@
     </alerts>
     <alerts>
         <fullName>Approved_Ad_hoc_calendar_change</fullName>
-        <ccEmails>iccso@iata.org,efs@iata.org,efclient@iata.org,madcscmgr@iata.org,europs@iata.org</ccEmails>
+        <ccEmails>iccso@iata.org,madcscmgr@iata.org,europs@iata.org,EF_CS@iata.org,EF_IA@iata.org</ccEmails>
         <description>Approved - Ad-hoc calendar change</description>
         <protected>false</protected>
         <recipients>
