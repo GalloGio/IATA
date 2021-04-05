@@ -61,7 +61,7 @@ private class LightningRegistrationProcess_Test {
 		insert c1;
 
 		checkedEmail = LightningRegistrationProcess.checkemail(c1.email);
-		System.assertEquals('create_contactanduser', checkedEmail);
+		System.assertEquals('create_user', checkedEmail);
 
 		userId = LightningRegistrationProcess.createContactAndAccount(c1, oAccount, 'Airline');
 

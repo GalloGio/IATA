@@ -1848,10 +1848,6 @@ IF(OR(
                 <default>false</default>
             </values>
             <values>
-                <fullName>Resource Center</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Risk Profile and RHC</fullName>
                 <default>false</default>
             </values>

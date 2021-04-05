@@ -146,7 +146,7 @@
                 </template>
 
                 <template if:true={isDetailed}>
-                    <c-cw-detailed-list label={label} url-result-page={urlResultPage} facilities={filteredFacilities}></c-cw-detailed-list>
+                    <c-cw-detailed-list label={label} url-result-page={urlResultPage} facilities={filteredFacilities} isbeta={isbeta} ongotologin={showJoinNowPopUp}></c-cw-detailed-list>
                 </template>
             </template>
             <template if:false={searchResults}>

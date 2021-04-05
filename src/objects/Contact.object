@@ -14516,18 +14516,6 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
         </sharedTo>
     </listViews>
     <listViews>
-        <fullName>FuelContacts</fullName>
-        <columns>ACCOUNT.NAME</columns>
-        <columns>FULL_NAME</columns>
-        <columns>CONTACT.PHONE5</columns>
-        <columns>CONTACT.EMAIL</columns>
-        <filterScope>Everything</filterScope>
-        <label>Fuel Contacts</label>
-        <sharedTo>
-            <group>MGRFuelServices</group>
-        </sharedTo>
-    </listViews>
-    <listViews>
         <fullName>IATAContacts</fullName>
         <columns>FULL_NAME</columns>
         <columns>ACCOUNT.NAME</columns>
@@ -15227,26 +15215,6 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
             <group>IATASISCustomerSupport</group>
             <group>IATASISHelpDeskAgent</group>
             <group>IATASISOperations</group>
-        </sharedTo>
-    </listViews>
-    <listViews>
-        <fullName>TTBS_Contacts</fullName>
-        <columns>FULL_NAME</columns>
-        <columns>ACCOUNT.NAME</columns>
-        <columns>CONTACT.TITLE</columns>
-        <columns>CONTACT.PHONE1</columns>
-        <columns>CONTACT.EMAIL</columns>
-        <columns>CORE.USERS.ALIAS</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>CONTACT.RECORDTYPE</field>
-            <operation>equals</operation>
-            <value>01220000000Q3kL</value>
-        </filters>
-        <label>TTBS Contacts</label>
-        <language>en_US</language>
-        <sharedTo>
-            <group>IATATTBS</group>
         </sharedTo>
     </listViews>
     <recordTypeTrackHistory>true</recordTypeTrackHistory>
@@ -18902,11 +18870,11 @@ $UserRole.Name &lt;&gt; &quot;IATAN Manager&quot;
 
 or(
 $User.Profile_Name__c &lt;&gt; &quot;GCS - Management&quot;, 
-$UserRole.Name &lt;&gt; &quot;Americas Customer Service Manager&quot;	
+$UserRole.Name &lt;&gt; &quot;Americas Customer Service Manager&quot;
 ), 
 
-$User.Profile_Name__c &lt;&gt; &quot;System Administrator&quot;,				
-
+$User.Profile_Name__c &lt;&gt; &quot;System Administrator&quot;,
+$User.Profile_Name__c &lt;&gt; &quot;IATA IDCard Profile&quot;,
 ISCHANGED(ID_Card_Holder__c)
 )</errorConditionFormula>
         <errorMessage>Your Salesforce profile is restricted to change the ID Card Holder checkbox. Please contact the ID Card team.</errorMessage>

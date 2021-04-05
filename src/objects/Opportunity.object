@@ -14402,8 +14402,7 @@ NOT(OR($Profile.Name=&quot;IATA IDFS - IDO Sales&quot;, $Profile.Name=&quot;IATA
     )
   ),
   $Profile.Name &lt;&gt; &apos;System Administrator&apos;,
-  $Profile.Name &lt;&gt; &apos;Developer&apos;,
-  $Profile.Name &lt;&gt; &apos;MACS - Administrator&apos;
+  !$Permission.Can_reopen_opportunities
 )</errorConditionFormula>
         <errorMessage>Closed opportunities can no longer be modified. Please contact Support or a System Administrator for help.</errorMessage>
     </validationRules>

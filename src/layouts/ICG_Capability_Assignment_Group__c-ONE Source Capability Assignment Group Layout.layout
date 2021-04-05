@@ -23,6 +23,14 @@
                 <behavior>Required</behavior>
                 <field>Issue_Date__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Expired_Notification_Sent__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Upcoming_Expiration_Notification_Sent__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -36,6 +44,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Is_Active__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Is_Expired__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>

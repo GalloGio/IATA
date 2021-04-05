@@ -57,7 +57,7 @@ public class OneId_NDCMatchmakerController_Test {
 							 EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
 							 LocalesIdKey='en_US', ProfileId = p, Country='United States', IsActive =true,
 							 ContactId = cont.Id,
-							 TimeZonesIdKey='America/Los_Angeles', Username='testuser@example.com', License_Cost_Center__c = 'ISF005CH01');
+							 TimeZonesIdKey='America/Los_Angeles', Username='testuser@example.com'+DateTime.now().getTime(), License_Cost_Center__c = 'ISF005CH01');
 
 		insert user;
 		return user;
@@ -74,7 +74,7 @@ public class OneId_NDCMatchmakerController_Test {
 		User userWithRole = new User(alias = 'Guest', email = 'identity@example.com', userroleid = r.id,
 									 emailencodingkey='UTF-8', lastname='identity Site Guest User', languagelocalekey='en_US',
 									 localesidkey='en_US', profileid = pf.Id,
-									 timezonesidkey='America/Los_Angeles', username = 'identity@example.com', License_Cost_Center__c = 'ISF005CH01');
+									 timezonesidkey='America/Los_Angeles', username = 'identity@example.com'+DateTime.now().getTime(), License_Cost_Center__c = 'ISF005CH01');
 
 		insert userWithRole;
 
@@ -100,7 +100,7 @@ public class OneId_NDCMatchmakerController_Test {
 		User userWithRole = new User(alias = 'Guest', email = 'identity@example.com', userroleid = r.id,
 									 emailencodingkey='UTF-8', lastname='identity Site Guest User', languagelocalekey='en_US',
 									 localesidkey='en_US', profileid = pf.Id,
-									 timezonesidkey='America/Los_Angeles', username = 'identity@example.com', License_Cost_Center__c = 'ISF005CH01');
+									 timezonesidkey='America/Los_Angeles', username = 'identity@example.com'+DateTime.now().getTime(), License_Cost_Center__c = 'ISF005CH01');
 
 		insert userWithRole;
 
