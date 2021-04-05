@@ -8,6 +8,10 @@
     flex: 1 0 auto;
 }
 
+.ihubBlue {
+    color: #1e32fa;
+}
+
 fullWidth.{
     width:100%;
 }

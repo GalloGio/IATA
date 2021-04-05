@@ -117,21 +117,15 @@ public without sharing class PortalServicesInnovationHubCtrl {
 	private static List<PortalWrapperClasses.FieldWrapper> getFieldsAboutCard(List<PortalWrapperClasses.FieldWrapper> fieldWrapper, IH_Account_Role_Detail__c roleDetail){
 		
 		if(String.isNotBlank(roleDetail.Legal_Name__c)){
-			PortalWrapperClasses.FieldWrapper legalName = new PortalWrapperClasses.FieldWrapper('Legal_Name__c',true,false);
-			legalName.isBold = true;
-			fieldWrapper.add(legalName);
+			fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Legal_Name__c',true,true));
 		}
 
 		if(String.isNotBlank(roleDetail.Also_Known_As__c)){
-			PortalWrapperClasses.FieldWrapper AlsoKnownAs = new PortalWrapperClasses.FieldWrapper('Also_Known_As__c',true,false);
-			AlsoKnownAs.isBold = true;
-			fieldWrapper.add(AlsoKnownAs);
+			fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Also_Known_As__c',true,true));
 		}
 
 		if(String.isNotBlank(roleDetail.Location__c)){
-			PortalWrapperClasses.FieldWrapper location = new PortalWrapperClasses.FieldWrapper('Location__c',true,false);
-			location.isBold = true;
-			fieldWrapper.add(location);
+			fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Location__c',true,true));
 		}
 
 		if(String.isNotBlank(roleDetail.Company_Description__c)){
@@ -146,15 +140,11 @@ public without sharing class PortalServicesInnovationHubCtrl {
 	private static List<PortalWrapperClasses.FieldWrapper> getFieldsStartupOverviewCard(List<PortalWrapperClasses.FieldWrapper> fieldWrapper, IH_Account_Role_Detail__c roleDetail){
 
 		if(roleDetail.Founding_Date__c != null){
-			PortalWrapperClasses.FieldWrapper foundingDate = new PortalWrapperClasses.FieldWrapper('Founding_Year_Display__c',true,false);
-			foundingDate.isBold = true;
-			fieldWrapper.add(foundingDate);
+			fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Founding_Year_Display__c',true,true));
 		}
 
 		if(String.isNotBlank(roleDetail.Number_Of_Employees__c)){
-			PortalWrapperClasses.FieldWrapper numEmp = new PortalWrapperClasses.FieldWrapper('Number_Of_Employees__c',true,false);
-			numEmp.isBold = true;
-			fieldWrapper.add(numEmp);
+			fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Number_Of_Employees__c',true,true));
 		}
 
 		if(roleDetail.Funding_Amount__c != null){
@@ -166,11 +156,15 @@ public without sharing class PortalServicesInnovationHubCtrl {
 		}
 
 		if(String.isNotBlank(roleDetail.Investors__c)){
-			fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Investors__c',true,true));
+			PortalWrapperClasses.FieldWrapper investors = new PortalWrapperClasses.FieldWrapper('Investors__c',true,false);
+			investors.isFullColumn = true;
+			fieldWrapper.add(investors);
 		}
 
 		if(String.isNotBlank(roleDetail.Industry_Perspectives__c)){
-			fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Industry_Perspectives__c',true,true));
+			PortalWrapperClasses.FieldWrapper industry = new PortalWrapperClasses.FieldWrapper('Industry_Perspectives__c',true,false);
+			industry.isFullColumn = true;
+			fieldWrapper.add(industry);
 		}
 
 		if(String.isNotBlank(roleDetail.Technology__c)){
@@ -180,7 +174,9 @@ public without sharing class PortalServicesInnovationHubCtrl {
 		}
 
 		if(String.isNotBlank(roleDetail.Description__c)){
-			fieldWrapper.add(new PortalWrapperClasses.FieldWrapper('Description__c',true,true));
+			PortalWrapperClasses.FieldWrapper history = new PortalWrapperClasses.FieldWrapper('Description__c',true,false);
+			history.isFullColumn = true;
+			fieldWrapper.add(history);
 		}
 		
 		return fieldWrapper;
