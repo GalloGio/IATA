@@ -3396,10 +3396,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>CW_ICG_Facility_Queuable</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>CW_LandingSearchBarController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -5389,6 +5385,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>IDCard_Refund</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IDCard_RefundTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -19259,6 +19259,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>ANG_RHC_Information__c.Remarks__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>ANG_RHC_Information__c.Tier__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -31475,6 +31480,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.Rejection_Withdrawal_remarks__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Case.Related_Exception__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -43934,6 +43944,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>ICG_History_Track__c.New_Value__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ICG_History_Track__c.Old_Value__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>ICG_Notification__c.Body__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -55833,6 +55853,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Quality__c.Parent__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Quality__c.Pending_Evidences_to_be_Collected__c</field>
         <readable>true</readable>
@@ -55885,6 +55910,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Quality__c.Regional_Quality__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Quality__c.Related_Case_Number__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -63366,6 +63396,13 @@
         <layout>ICG_GxA_Integration_Mapping__c-ONE Source GxA Integration Mapping Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>ICG_History_Track__c-OS History Track Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ICG_History_Track__c-OS History Track Layout</layout>
+        <recordType>ICG_History_Track__c.Changes_by_Type</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>ICG_Notification__c-ONE Source Notification Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -69282,6 +69319,11 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>ICG_Capability_Assignment_Group__c.Remote_Validation</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>ICG_History_Track__c.Changes_by_Type</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>

@@ -47,8 +47,8 @@ private class CW_AccountDetailCertificationListTest {
 		Map<Boolean, List<CW_AccountDetailCertificationList.wrapperCert>> resultMap = CW_AccountDetailCertificationList.getCertificationList(acc.Id, acc.RecordType.DeveloperName);
 		List<CW_AccountDetailCertificationList.wrapperCert> certList = resultMap.get(false);
 		System.assertEquals('Airline', acc.RecordType.DeveloperName, 'Account rt incorrect');
-		System.assertEquals(2, resultMap.keyset().size(), 'The amount of keys in the map is incorrect' + resultMap.keySet().size());
-		System.assertEquals('TestCert2', certList[0].Name, 'The certification is incorrect' + certList[0].Name);
+		System.assertEquals(1, resultMap.keyset().size(), 'The amount of keys in the map is incorrect' + resultMap.keySet().size());
+		System.assertEquals('TestCert', certList[0].Name, 'The certification is incorrect' + certList[0].Name);
 	}
 
 	/*

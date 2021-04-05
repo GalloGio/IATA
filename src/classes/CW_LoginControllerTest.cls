@@ -18,6 +18,7 @@ public with sharing class CW_LoginControllerTest {
 		CW_LoginController login = new CW_LoginController();
 		System.assertNotEquals(login.serviceId, null, 'srvcId is null');
 		System.assertNotEquals(login.portalUrl, null, 'login is null');
+		System.assertNotEquals(login.loginUrl, null, 'loginUrl is null');
 		System.assertNotEquals(login.selfRegisterUrl, null, 'selfRegisterUrl is null');
 		Test.stopTest();
 	}

@@ -30,8 +30,7 @@ export default class CwPendingUserApprovals extends LightningElement {
 		this.fillPendingForApprovalContactRoles();
 	}
 	handleMoreInfo(event) {
-		let url = window.location.pathname + '?#ID:' +
-			event.currentTarget.getAttribute("data-id");
+		let url = '#ID:' + event.currentTarget.getAttribute("data-id");
 		window.location.href = url;
 		window.location.reload();
 	}

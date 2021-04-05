@@ -1,7 +1,15 @@
 public without sharing class CW_HandledAirlinesController {
 	@AuraEnabled(cacheable = true)
 	public static string getAllAirlines() {
-		return (JSON.serialize([SELECT Id, Name, Airline_designator__c, ICAO_designator__c FROM Account WHERE Recordtype.Name IN ('Airline Headquarters', 'Operator') and Airline_designator__c != 'XB' and Airline_designator__c != 'XB*' ORDER BY Name ASC NULLS LAST])); //and Membership_Status__c = 'IATA member'
+		List<CW_SearchEngine.HandledElement> handledItems = new List<CW_SearchEngine.HandledElement>();
+		for (Account currentItem : [SELECT  Id, Name FROM Account  WHERE Recordtype.DeveloperName IN ('IATA_Airline', 'Operator') AND Airline_designator__c != 'XB' AND Airline_designator__c != 'XB*' ORDER BY Name ASC NULLS LAST]) {
+			CW_SearchEngine.HandledElement handleItemToAdd = new CW_SearchEngine.HandledElement();
+			handleItemToAdd.selected = false;
+			handleItemToAdd.value = currentItem.Id;
+			handleItemToAdd.label = currentItem.Name;
+			handledItems.add(handleItemToAdd);
+		}
+		return JSON.serialize(handledItems);
 	}
 
 	@AuraEnabled(cacheable = true)
@@ -61,11 +69,49 @@ public without sharing class CW_HandledAirlinesController {
 
 	@AuraEnabled
 	public static Boolean saveHiddenOperatingStations(String hiddenOperatingStations, Id facilityId){
-		ICG_Account_Role_Detail__c ard = new ICG_Account_Role_Detail__c(
-			Id = facilityId,
-			Hidden_Operating_Stations__c = hiddenOperatingStations
-		);
-		update ard;
+		String hiddenOperatingStationType;
+		if (String.isNotBlank(hiddenOperatingStations) && String.isNotBlank(facilityId)) {
+			hiddenOperatingStationType = hiddenOperatingStations.substringBefore(':');
+			if (hiddenOperatingStationType != 'OperatingCargo' && hiddenOperatingStationType != 'OperatingRamp') {
+				hiddenOperatingStationType = null;
+			}
+		}
+
+		if (String.isBlank(hiddenOperatingStationType)) {
+			return false;
+		}
+
+		ICG_Account_Role_Detail__c stationProfile;
+		for (ICG_Account_Role_Detail__c currentRow : [SELECT Id, Hidden_Operating_Stations__c FROM ICG_Account_Role_Detail__c WHERE Id = :facilityId FOR UPDATE]) {
+			if (stationProfile == null) {
+				stationProfile = currentRow;
+			}
+		}
+
+		if (stationProfile == null) {
+			return false;
+		}
+
+		if (String.isBlank(stationProfile.Hidden_Operating_Stations__c)) {
+			stationProfile.Hidden_Operating_Stations__c = hiddenOperatingStations;
+		} else {
+			List<String> newTypeAndValues = new List<String>();
+			Boolean added = false;
+
+			for (String currentTypeAndValues : stationProfile.Hidden_Operating_Stations__c.split('\\|')){
+				if (currentTypeAndValues.startsWith(hiddenOperatingStationType)) {
+					newTypeAndValues.add(hiddenOperatingStations);
+					added = true;
+				} else if (String.isNotBlank(currentTypeAndValues)){
+					newTypeAndValues.add(currentTypeAndValues);
+				}
+			}
+			if (!added) {
+				newTypeAndValues.add(hiddenOperatingStations);
+			}
+			stationProfile.Hidden_Operating_Stations__c = String.join(newTypeAndValues, '|');
+		}
+		update stationProfile;
 		return true;
 	}
 }

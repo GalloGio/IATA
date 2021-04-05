@@ -40,6 +40,13 @@ public class CW_FacilityCapabilitiesControllerTest {
 
 		Account_Role_Detail_Capability__c ardCap = CW_TestDataFactory.createAccountRoleDetailCapability('Beneficial_Insects_Bees', 'Live_Animals_Capacities_1', null);
 		insert ardCap;
+		
+		ICG_Certification__c cert = CW_TestDataFactory.newCertification();
+		cert.Name = 'cert';
+		insert cert;
+		ICG_Certification__c cert2 = CW_TestDataFactory.newCertification();
+		cert2.Name = 'cert2';
+		insert cert2;
 
 		ICG_Capability_Assignment_Group__c capvalcert = new ICG_Capability_Assignment_Group__c();
 		capvalcert.Issue_Date__c = Date.today().addDays(-1);
@@ -48,6 +55,13 @@ public class CW_FacilityCapabilitiesControllerTest {
 		capvalcert.RecordTypeId = RT_CERTIFICATION;
 		insert capvalcert;
 
+		ICG_Capability_Assignment_Group__c capvalcertRV = new ICG_Capability_Assignment_Group__c();
+		capvalcertRV.Issue_Date__c = Date.today().addDays(-1);
+		capvalcertRV.Expiration_Date__c = Date.today().addDays(1);
+		capvalcertRV.ICG_Account_Role_Detail__c = ard.Id;
+		capvalcertRV.RecordTypeId = RT_REMOTE_VALIDATION;
+		insert capvalcertRV;
+		
 		ICG_Account_Role_Capability_Assignment__c assignment = CW_TestDataFactory.createIcgAccountRoleCapabilityAssignment(ard.Id, ardCap.Id);
 		assignment.ICG_Capability_Assignment_Group__c = capvalcert.Id;
 		insert assignment;
@@ -113,18 +127,12 @@ public class CW_FacilityCapabilitiesControllerTest {
 		Id rtId = [SELECT id FROM RecordType WHERE SObjectType = 'Account_Role_Detail_Capability__c' AND developername = 'System_For_Mail_Tracking_And_Reporting' LIMIT 1].id;
 		Id rtColdRoomsId = [SELECT id FROM RecordType WHERE SObjectType = 'Account_Role_Detail_Capability__c' AND developername = 'Cold_Room_Standard_Temperature_Ranges' LIMIT 1].id;
 
-		ICG_Certification__c cert = CW_TestDataFactory.newCertification();
-		insert cert;
-		ICG_Certification__c cert2 = CW_TestDataFactory.newCertification();
-		cert2.Name = 'cert2';
-		insert cert2;
-		ICG_Capability_Assignment_Group__c ardcert = new ICG_Capability_Assignment_Group__c();
-		ardcert.ICG_Certification__c = cert.id;
-		ardcert.ICG_Account_Role_Detail__c = ardid;
-		ardcert.Issue_Date__c = date.today().addDays(-1);
-		ardcert.Expiration_Date__c = date.today().addDays(1);
-		ardcert.RecordTypeId = RT_CERTIFICATION;
-		insert ardcert;
+		ICG_Certification__c cert = [SELECT id FROM ICG_Certification__c WHERE Name ='cert'];
+		
+		ICG_Capability_Assignment_Group__c ardcert = [SELECT id,ICG_Certification__c FROM ICG_Capability_Assignment_Group__c WHERE RecordTypeId =: RT_CERTIFICATION];
+
+		ICG_Capability_Assignment_Group__c capvalcert = [SELECT id FROM ICG_Capability_Assignment_Group__c WHERE RecordTypeId =: RT_REMOTE_VALIDATION];
+		
 		Account_Role_Detail_Capability__c cap = new Account_Role_Detail_Capability__c();
 		cap.GSE_ULD_Compatibility_Type_AKE__c = true;
 		cap.ESC_Name__c = 'whatever';
@@ -134,12 +142,6 @@ public class CW_FacilityCapabilitiesControllerTest {
 		cap.Category__c = 'System_For_Mail_Tracking_And_Reporting';
 		cap.Equipment__c = 'CARDIT';
 		insert cap;
-		ICG_Capability_Assignment_Group__c capvalcert = new ICG_Capability_Assignment_Group__c();
-		capvalcert.Issue_Date__c = Date.today().addDays(-1);
-		capvalcert.Expiration_Date__c = Date.today().addDays(1);
-		capvalcert.ICG_Account_Role_Detail__c = ardid;
-		capvalcert.RecordTypeId = RT_REMOTE_VALIDATION;
-		insert capvalcert;
 
 		Account_Role_Detail_Capability__c capWithBadPhotos = new Account_Role_Detail_Capability__c();
 		capWithBadPhotos.GSE_ULD_Compatibility_Type_AKE__c = true;
@@ -166,18 +168,11 @@ public class CW_FacilityCapabilitiesControllerTest {
 		Id rtId = [SELECT id FROM RecordType WHERE SObjectType = 'Account_Role_Detail_Capability__c' AND developername = 'System_For_Mail_Tracking_And_Reporting' LIMIT 1].id;
 		Id rtColdRoomsId = [SELECT id FROM RecordType WHERE SObjectType = 'Account_Role_Detail_Capability__c' AND developername = 'Cold_Room_Standard_Temperature_Ranges' LIMIT 1].id;
 
-		ICG_Certification__c cert = CW_TestDataFactory.newCertification();
-		insert cert;
-		ICG_Certification__c cert2 = CW_TestDataFactory.newCertification();
-		cert2.Name = 'cert2';
-		insert cert2;
-		ICG_Capability_Assignment_Group__c ardcert = new ICG_Capability_Assignment_Group__c();
-		ardcert.ICG_Certification__c = cert.id;
-		ardcert.ICG_Account_Role_Detail__c = ardid;
-		ardcert.Issue_Date__c = date.today().addDays(-1);
-		ardcert.Expiration_Date__c = date.today().addDays(1);
-		ardcert.RecordTypeId = RT_CERTIFICATION;
-		insert ardcert;
+		ICG_Certification__c cert = [SELECT id FROM ICG_Certification__c WHERE Name ='cert'];
+		
+		ICG_Capability_Assignment_Group__c ardcert = [SELECT id,ICG_Certification__c FROM ICG_Capability_Assignment_Group__c WHERE RecordTypeId =: RT_CERTIFICATION];
+
+		ICG_Capability_Assignment_Group__c capvalcert = [SELECT id FROM ICG_Capability_Assignment_Group__c WHERE RecordTypeId =: RT_REMOTE_VALIDATION];
 
 		Account_Role_Detail_Capability__c cap = new Account_Role_Detail_Capability__c();
 		cap.GSE_ULD_Compatibility_Type_AKE__c = true;
@@ -188,13 +183,6 @@ public class CW_FacilityCapabilitiesControllerTest {
 		cap.Category__c = 'System_For_Mail_Tracking_And_Reporting';
 		cap.Equipment__c = 'CARDIT';
 		insert cap;
-
-		ICG_Capability_Assignment_Group__c capvalcert = new ICG_Capability_Assignment_Group__c();
-		capvalcert.Issue_Date__c = Date.today().addDays(-1);
-		capvalcert.Expiration_Date__c = Date.today().addDays(1);
-		capvalcert.ICG_Account_Role_Detail__c = ardid;
-		capvalcert.RecordTypeId = RT_REMOTE_VALIDATION;
-		insert capvalcert;
 
 		Account_Role_Detail_Capability__c capWithBadPhotos = new Account_Role_Detail_Capability__c();
 		capWithBadPhotos.GSE_ULD_Compatibility_Type_AKE__c = true;
@@ -270,20 +258,11 @@ public class CW_FacilityCapabilitiesControllerTest {
 		Id rtId = [SELECT id FROM RecordType WHERE SObjectType = 'Account_Role_Detail_Capability__c' AND developername = 'System_For_Mail_Tracking_And_Reporting' LIMIT 1].id;
 		Id rtColdRoomsId = [SELECT id FROM RecordType WHERE SObjectType = 'Account_Role_Detail_Capability__c' AND developername = 'Cold_Room_Standard_Temperature_Ranges' LIMIT 1].id;
 
-		ICG_Certification__c cert = CW_TestDataFactory.newCertification();
-		insert cert;
+		ICG_Certification__c cert = [SELECT id FROM ICG_Certification__c WHERE Name ='cert'];
+		
+		ICG_Capability_Assignment_Group__c ardcert = [SELECT id,ICG_Certification__c FROM ICG_Capability_Assignment_Group__c WHERE RecordTypeId =: RT_CERTIFICATION];
 
-		ICG_Certification__c cert2 = CW_TestDataFactory.newCertification();
-		cert2.Name = 'cert2';
-		insert cert2;
-
-		ICG_Capability_Assignment_Group__c ardcert = new ICG_Capability_Assignment_Group__c();
-		ardcert.ICG_Certification__c = cert.id;
-		ardcert.ICG_Account_Role_Detail__c = ardid;
-		ardcert.Issue_Date__c = date.today().addDays(-1);
-		ardcert.Expiration_Date__c = date.today().addDays(1);
-		ardcert.RecordTypeId = RT_CERTIFICATION;
-		insert ardcert;
+		ICG_Capability_Assignment_Group__c capvalcert = [SELECT id FROM ICG_Capability_Assignment_Group__c WHERE RecordTypeId =: RT_REMOTE_VALIDATION];
 
 		Account_Role_Detail_Capability__c cap = new Account_Role_Detail_Capability__c();
 		cap.GSE_ULD_Compatibility_Type_AKE__c = true;
@@ -294,13 +273,6 @@ public class CW_FacilityCapabilitiesControllerTest {
 		cap.Category__c = 'System_For_Mail_Tracking_And_Reporting';
 		cap.Equipment__c = 'CARDIT';
 		insert cap;
-
-		ICG_Capability_Assignment_Group__c capvalcert = new ICG_Capability_Assignment_Group__c();
-		capvalcert.Issue_Date__c = Date.today().addDays(-1);
-		capvalcert.Expiration_Date__c = Date.today().addDays(1);
-		capvalcert.ICG_Account_Role_Detail__c = ardid;
-		capvalcert.RecordTypeId = RT_REMOTE_VALIDATION;
-		insert capvalcert;
 
 		Account_Role_Detail_Capability__c capWithBadPhotos = new Account_Role_Detail_Capability__c();
 		capWithBadPhotos.GSE_ULD_Compatibility_Type_AKE__c = true;
@@ -323,24 +295,24 @@ public class CW_FacilityCapabilitiesControllerTest {
 		assignment.ICG_Capability_Assignment_Group__c = capvalcert.id;
 		insert assignment;
 
-		List<CW_FacilityCapabilitiesController.CapabilityWrapper> listCap = new List<CW_FacilityCapabilitiesController.CapabilityWrapper>();
+		List<CW_Utilities.CapabilityWrapper> listCap = new List<CW_Utilities.CapabilityWrapper>();
 		List<Account_Role_Detail_Capability__c> listCapWrapper = new List<Account_Role_Detail_Capability__c>();
 		listCapWrapper.add(cap);
 		listCapWrapper.add(capWithBadPhotos);
 
 		for (Account_Role_Detail_Capability__c capItem : listCapWrapper) {
-			CW_FacilityCapabilitiesController.CapabilityWrapper convertItem = new CW_FacilityCapabilitiesController.CapabilityWrapper();
+			CW_Utilities.CapabilityWrapper convertItem = new CW_Utilities.CapabilityWrapper();
 			convertItem.rtypeId = capItem.RecordTypeId;
 			convertItem.category = capItem.Category__c;
 			convertItem.equipment = capItem.Equipment__c;
 
-			convertItem.fields = new List<CW_FacilityCapabilitiesController.CapabilityFieldsWrapper>();
-			CW_FacilityCapabilitiesController.CapabilityFieldsWrapper fieldDate = new CW_FacilityCapabilitiesController.CapabilityFieldsWrapper();
-			CW_FacilityCapabilitiesController.CapabilityFieldsWrapper fieldDateEmpty = new CW_FacilityCapabilitiesController.CapabilityFieldsWrapper();
-			CW_FacilityCapabilitiesController.CapabilityFieldsWrapper fieldDouble = new CW_FacilityCapabilitiesController.CapabilityFieldsWrapper();
-			CW_FacilityCapabilitiesController.CapabilityFieldsWrapper fieldDoubleEmpty = new CW_FacilityCapabilitiesController.CapabilityFieldsWrapper();
-			CW_FacilityCapabilitiesController.CapabilityFieldsWrapper fieldBoolena = new CW_FacilityCapabilitiesController.CapabilityFieldsWrapper();
-			CW_FacilityCapabilitiesController.CapabilityFieldsWrapper fieldElse = new CW_FacilityCapabilitiesController.CapabilityFieldsWrapper();
+			convertItem.fields = new List<CW_Utilities.CapabilityFieldsWrapper>();
+			CW_Utilities.CapabilityFieldsWrapper fieldDate = new CW_Utilities.CapabilityFieldsWrapper();
+			CW_Utilities.CapabilityFieldsWrapper fieldDateEmpty = new CW_Utilities.CapabilityFieldsWrapper();
+			CW_Utilities.CapabilityFieldsWrapper fieldDouble = new CW_Utilities.CapabilityFieldsWrapper();
+			CW_Utilities.CapabilityFieldsWrapper fieldDoubleEmpty = new CW_Utilities.CapabilityFieldsWrapper();
+			CW_Utilities.CapabilityFieldsWrapper fieldBoolena = new CW_Utilities.CapabilityFieldsWrapper();
+			CW_Utilities.CapabilityFieldsWrapper fieldElse = new CW_Utilities.CapabilityFieldsWrapper();
 
 			fieldDate.field = 'Expiry_Date__c';
 			fieldDate.Value = string.valueOf(Date.today().addDays(1));
@@ -373,8 +345,8 @@ public class CW_FacilityCapabilitiesControllerTest {
 		String jsonRes = CW_FacilityCapabilitiesController.createRelationshipsForNewCapabilities(ardid, listCap);
 		String jsonResError = CW_FacilityCapabilitiesController.createRelationshipsForNewCapabilities(ardid, null);
 		
-		CW_FacilityCapabilitiesController.ResponseBody res = (CW_FacilityCapabilitiesController.ResponseBody) JSON.deserialize(jsonRes, CW_FacilityCapabilitiesController.ResponseBody.class);
-		CW_FacilityCapabilitiesController.ResponseBody resError = (CW_FacilityCapabilitiesController.ResponseBody) JSON.deserialize(jsonResError, CW_FacilityCapabilitiesController.ResponseBody.class);
+		CW_Utilities.ResponseBody res = (CW_Utilities.ResponseBody) JSON.deserialize(jsonRes, CW_Utilities.ResponseBody.class);
+		CW_Utilities.ResponseBody resError = (CW_Utilities.ResponseBody) JSON.deserialize(jsonResError, CW_Utilities.ResponseBody.class);
 
 		system.assertEquals(res.success, true);
 		system.assertEquals(resError.success, false);
@@ -387,7 +359,7 @@ public class CW_FacilityCapabilitiesControllerTest {
 		Id ardcid = [SELECT id FROM Account_Role_Detail_Capability__c LIMIT 1].id;
 
 		Test.startTest();
-		Object returnJson = CW_FacilityCapabilitiesController.setVisibilityPhotos(ardcid, 'test');
+		Object returnJson = CW_FacilityCapabilitiesController.setVisibilityPhotos(ardcid,'photos__c', 'test');
 		system.assertNotEquals(null, returnJson);
 		Test.stopTest();
 	}
@@ -438,8 +410,8 @@ public class CW_FacilityCapabilitiesControllerTest {
 	public static void AsgmtGroupWrapperCompareTest() {
 		Test.startTest();
 		
-		CW_FacilityCapabilitiesController.AsgmtGroupWrapper asgmtGroupToAdd1 = new CW_FacilityCapabilitiesController.AsgmtGroupWrapper();
-		CW_FacilityCapabilitiesController.AsgmtGroupWrapper asgmtGroupToAdd2 = new CW_FacilityCapabilitiesController.AsgmtGroupWrapper();
+		CW_Utilities.AsgmtGroupWrapper asgmtGroupToAdd1 = new CW_Utilities.AsgmtGroupWrapper();
+		CW_Utilities.AsgmtGroupWrapper asgmtGroupToAdd2 = new CW_Utilities.AsgmtGroupWrapper();
 		
 		Integer result = asgmtGroupToAdd1.compareTo(asgmtGroupToAdd2);
 		system.assertEquals(result, 0);

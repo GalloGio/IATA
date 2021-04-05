@@ -58,18 +58,22 @@ global without sharing class IDCardUtilWithoutSharing {
 		return database.upsert(ICAToCommit);
 	}
 
-	public static void upsertGenericObject(string objName, sObject sObjFrom, id recordId, set<string> lsFields){
+	public static database.UpsertResult upsertGenericObject(string objName, sObject sObjFrom, id recordId, set<string> lsFields){
 		set<string> setBooleanFields = new set<string>();
+		Map<String, Schema.SObjectField> fieldMap = Schema.getGlobalDescribe().get(objName).getDescribe().fields.getMap();
+
 		for(string s:lsFields)
-			if(string.ValueOf(Schema.getGlobalDescribe().get(objName).getDescribe().fields.getMap().get(s).getDescribe().getType())=='BOOLEAN')
-				setBooleanFields.add(s);
+			if(fieldMap.keyset().contains(s.toLowerCase()))
+				if(string.ValueOf(fieldMap.get(s.toLowerCase()).getDescribe().getType())=='BOOLEAN')
+					setBooleanFields.add(s);
 
 		sObject sObjToCommit = Schema.getGlobalDescribe().get(objName).newSObject();
 		for(string field:lsFields){
-			if(setBooleanFields.contains(field.toUpperCase()) && ( string.isblank(string.valueOf(sObjFrom.get(field)))))
-				sObjToCommit.put(field, false);
-			else
-				sObjToCommit.put(field, sObjFrom.get(field));
+			if(fieldMap.keyset().contains(field.toLowerCase()))
+				if(setBooleanFields.contains(field.toUpperCase()) && ( string.isblank(string.valueOf(sObjFrom.get(field)))))
+					sObjToCommit.put(field, false);
+				else
+					sObjToCommit.put(field, sObjFrom.get(field));
 		}
 
 		if(recordId!=null)
@@ -80,7 +84,10 @@ global without sharing class IDCardUtilWithoutSharing {
 			dmo.assignmentRuleHeader.useDefaultRule= true;
 			sObjToCommit.setOptions(dmo);
 		}
-		database.upsert(sObjToCommit);
+
+		database.UpsertResult idcur = database.upsert(sObjToCommit);
+
+		return idCur;
 	}
 
 	public static void updateCheckoutCase(id idCardAppId){
@@ -95,14 +102,18 @@ global without sharing class IDCardUtilWithoutSharing {
 	
 	public static void deleteApplications(set<id> setToDelete){
 		system.debug(LoggingLevel.ERROR,'IDCardUtilWithoutSharing.deleteApplication setToDelete = ' + setToDelete);
-		List<ID_Card_Application__c> lsToDelete = [select id from ID_Card_Application__c where id in:setToDelete];
+		deleteGenericsObject(setToDelete, 'ID_Card_Application__c');
+	}
+
+	public static void deleteGenericsObject(set<id> setToDelete, string sObjectName){
+		system.debug(LoggingLevel.ERROR,'IDCardUtilWithoutSharing.deleteGenericsObject setToDelete = ' + setToDelete);
+		List<sObject> lsToDelete = database.query('select id from ' + sObjectName + ' where id in:setToDelete');
 		if(!lsToDelete.isEmpty()) delete lsToDelete;
 	}
 
 	public static void deleteContacts(set<id> setToDelete){
 		system.debug(LoggingLevel.ERROR,'IDCardUtilWithoutSharing.deleteContacts setToDelete = ' + setToDelete);
-		List<Contact> lsToDelete = [select id from Contact where id in:setToDelete];
-		if(!lsToDelete.isEmpty()) delete lsToDelete;
+		deleteGenericsObject(setToDelete, 'Contact');
 	}
 
 	public static void saveCommittedICAS(map<id, ID_Card_Application__c> mapToCommit){

@@ -2245,7 +2245,33 @@ public without sharing class ISSP_AMS_Accreditation {
 
 					newForm.Branch_Office_Country__c = isocountry.Id;
 
-					if(newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_IP || newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_ABROAD || (newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD || newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_BR || isMultiCountryNewAE)) {
+					Set<String> setTidsLocationTypeDefaultValues = new Set<String>{AMS_Utils.TYPE_HE_ST_CASH, AMS_Utils.TYPE_HE_LITE_NO_CASH};
+					if (con.Account.Location_class__c == AMS_Utils.LC_TIDS && setTidsLocationTypeDefaultValues.contains(amsLocationType) ) {
+						newForm.Account_Name__c = con.Account.Name;
+						newForm.TradeName__c = con.Account.TradeName__c;
+						newForm.Trade_Name__c = con.Account.TradeName__c;
+						newForm.Branch_Office_Street_name_number__c = con.Account.BillingStreet;
+						newForm.Branch_Office_City__c = con.Account.BillingCity;
+						newForm.Billing_State__c = con.Account.BillingState;
+						newForm.State_Province__c = con.Account.BillingState;
+						newForm.Branch_Office_Country__c = con.Account.IATA_ISO_Country__c;
+						newForm.Branch_Office_Postal_code__c = con.Account.BillingPostalCode;
+						newForm.Branch_Office_Phone__c = con.Account.Phone;
+						newForm.Mobile__c = con.Account.Mobile__c;
+						newForm.Branch_Office_FAX__c = con.Account.Fax;
+						newForm.Branch_Office_Email__c = con.Account.Email__c;
+						newForm.Website__c = con.Account.Website;
+						newForm.ISSP_AMS_VAT_Number_Input__c = con.Account.VAT_Number__c;
+						newForm.ISSP_AMS_Trade_Reg_No__c = con.Account.Registration_Number__c;
+						newForm.ISSP_AMS_License_No__c = con.Account.License_Number__c;
+						newForm.ISSP_AMS_GDS_with_signed_contract__c = AMS_Utils.transformGDSAccountToForm(con.Account.GDS__c);
+						newForm.ISSP_AMS_Legal_Status__c = AMS_Utils.transformLegalStatus(con.Account.Company_Type__c);
+						newForm.Link_agent_name__c = con.Account.Id;
+	
+						saveAMSForm();
+						copyOwnersFromTIDSAccount(con.Account, newForm.Id);
+
+					} else if(newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_IP || newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_ABROAD || (newCase.Reason1__c == AMS_UTILS.CASE_REASON_ASSOCIATE_ENTITY_STANDARD || newCase.Reason1__c == AMS_Utils.CASE_REASON_NEW_BR || isMultiCountryNewAE)) {
 						newForm.ISSP_AMS_Legal_Status__c = mapCompanyTypes(hqAccount.Company_Type__c);
 						//NEWGEN-6033-BUGFIX Do not inherit remittance frequency from parent account for BSP Brazil
 						if(!hqAccount.IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c) newForm.Remittance_frequency__c = hqAccount.Remittance_frequency__c;
@@ -2913,6 +2939,44 @@ public without sharing class ISSP_AMS_Accreditation {
 		}
 
 		insert copiedOwners;
+	}
+
+	private void copyOwnersFromTIDSAccount(Account account, Id formId) {
+		List<AMS_Accreditation_Contact__c> newContacts = new List<AMS_Accreditation_Contact__c>();
+		for (AMS_Account_Role__c accountRole:
+				[SELECT Id, Name, Owner_Name__c, Percentage__c,
+					Owner_Account__c, Owner_Account__r.Name, Owner_Account__r.IATACode__c,
+					Contact__c,Contact__r.FirstName, Contact__r.LastName
+				FROM AMS_Account_Role__c
+				WHERE Valid__c = true
+				AND Active__c = true
+				AND RecordTypeId = :AMS_Utils.AccountRoleOwnershipRT
+				AND Percentage__c > 0
+				AND Account__c = :account.Id]
+		) {
+			AMS_Accreditation_Contact__c contact = new AMS_Accreditation_Contact__c();
+
+			if (accountRole.Contact__c != null) {
+				contact.RecordTypeId = AMS_Utils.AccreditationContactPersonRT;
+				contact.Name = accountRole.Owner_Name__c;
+				contact.Contact__c = accountRole.Contact__c;
+				contact.First_name__c = accountRole.Contact__r.FirstName;
+				contact.Last_name__c = accountRole.Contact__r.LastName;
+			}
+			if (accountRole.Owner_Account__c != null) {
+				contact.RecordTypeId = AMS_Utils.AccreditationContactCompanyRT;
+				contact.Name = accountRole.Owner_Account__r.Name;
+				contact.Last_name__c = accountRole.Owner_Account__r.Name;
+				contact.IATACode__c = accountRole.Owner_Account__r.IATACode__c;
+			}
+			contact.AMS_Pax_Accreditation_Form__c = formId;
+			contact.Agency_owner__c = true;
+			contact.Financial_interest__c = accountRole.Percentage__c;
+
+			newContacts.add(contact);
+		}
+
+		Database.insert(newContacts,false);
 	}
 
 	private String fetchHEAgency(String countryBSP) {
@@ -6795,24 +6859,6 @@ public without sharing class ISSP_AMS_Accreditation {
 			if(trainedStaffList.size() < 1 && (newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_IP || newCase.Reason1__c == AMS_Utils.CASE_REASON_BR_INDEPENDENT)){
 				ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_CNS_DGR_Trained_Staff_Members_Alert_BR));
 				errorFound = true;
-			}
-			if (isNoticeOfChange && !isBankAccountChange) {
-				if (String.isBlank(newForm.ISSP_AMS_Trade_Reg_No__c)) {
-					newForm.ISSP_AMS_Trade_Reg_No__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				}
-				if (newForm.ISSP_AMS_Date_Registration_granted__c == null) {
-					newForm.ISSP_AMS_Date_Registration_granted__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				}
-				if (String.isBlank(newForm.ISSP_AMS_License_No__c)) {
-					newForm.ISSP_AMS_License_No__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				}
-				if (newForm.ISSP_AMS_Date_license_granted__c == null) {
-					newForm.ISSP_AMS_Date_license_granted__c.addError(Label.ISSP_YouMustEnter);
-					errorFound = true;
-				}
 			}
 		}						
 

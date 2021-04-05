@@ -49,7 +49,7 @@ export default class CwLatestICGUpdatesContainer extends LightningElement {
             let result = JSON.parse(JSON.stringify(data));
             let certificationList = [];
             let index = 0;
-            let panelClass = 'slds-carousel__panel cursor-txt swipediv';
+            let panelClass = 'slds-carousel__panel cursor-txt';
             let indicatorClass = 'slds-carousel__indicator-action';
 
             for (let i = 0; i < result.length; i++) {
