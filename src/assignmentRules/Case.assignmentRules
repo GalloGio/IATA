@@ -4518,7 +4518,8 @@ RecordType.Name = &quot;Cases - Global&quot;
 ),
 or (
 ISPICKVAL(Topic__c, &quot;Weblink&quot;) ,
-ISPICKVAL(Topic__c, &quot;NDC – New Distribution Capability&quot;)
+ISPICKVAL(Topic__c, &quot;NDC – New Distribution Capability&quot;),
+ISPICKVAL(Topic__c, &quot;NDCLink&quot;)
 )
 )</formula>
         </ruleEntry>
