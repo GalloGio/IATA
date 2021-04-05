@@ -40,9 +40,11 @@
                     </template>
 
                     <template if:true={column.isLink} for:each={column.values} for:item="value">
-                        <div key={value.key} data-link={value.val} class={value.class}>
+                        <div if:false={value.hidden} key={value.key} data-link={value.val} class={value.class}>
                             <span>{column.name}</span>
                         </div>
+                        
+                        <div if:true={value.hidden} key={value.key} class={value.class}><span>&nbsp;</span></div>
                     </template>
 
                 </div>

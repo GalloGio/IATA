@@ -43,7 +43,8 @@ const styleClass = {
         },
         link: {
             base: 'faux-data clickable link',
-            highlighted: 'faux-data clickable link highlighted'
+            highlighted: 'faux-data clickable link highlighted',
+            unclickable: 'faux-data',
         }
     }
 };
@@ -213,7 +214,9 @@ export default class IgAdaptableTable extends LightningElement {
                     .map(el => ({ 
                         val: (el[col] === undefined || el[col] === '') ? '-' : el[col], 
                         key: `${el.id}:${col}`,
-                        class: (this._selectable && el.id === this._selectedId) ? styleClass.cell[colType].highlighted : styleClass.cell[colType].base
+                        class: (this._selectable && el.id === this._selectedId) ? styleClass.cell[colType].highlighted : 
+                        (el[col] === undefined || el[col] === null) && colType === type.link ? styleClass.cell[colType].unclickable : styleClass.cell[colType].base,
+                        hidden: (el[col] === undefined || el[col] === null) ? true : false
                     }))
                     .slice(this._firstElement, this._lastElement+1),
                 isImage: colType === type.image,

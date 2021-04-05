@@ -291,7 +291,7 @@ export default class IgGapAnalysisDocuments extends LightningElement {
                 publishDate: doc.publishDate ? doc.publishDate.split('T')[0] : undefined,
                 reviewDate: doc.reviewDate ? doc.reviewDate.split('T')[0] : undefined,
                 effectiveDate: doc.effectiveDate ? doc.effectiveDate.split('T')[0] : undefined,
-                [LISTVIEW_ACTION.EDIT]: doc.id,
+                [LISTVIEW_ACTION.EDIT]: doc.abbreviation === 'IGOM' ? null : doc.id,
                 [LISTVIEW_ACTION.DELETE]: doc.id
             }))
         } else {
