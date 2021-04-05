@@ -219,9 +219,9 @@ public without sharing class IGOMAccountRoleRelationshipsUtil {
 			  FROM IGOM_Contact_Role_Detail__c WHERE Account_Role_Detail__c = :stationObjId AND Role__c = :IGOMConstants.ROLES.ADMIN]){
 				Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
 				email.setTargetObjectId(contactRoleDetail.Account_Contact_Role__r.Contact__c);
-				email.setSubject(ownStation.name + ': New relationship request on IGOM');
-				email.setPlainTextBody('You have received a request from \n' + contactRoleDetail.Account_Role_Detail__r.Account_Role__r.Account__r.Name +
-				'.\nPlease log into IGOM portal to manage this request: ' + IGOMConstants.METADATA.COMMUNITY_URL);
+				email.setSubject(contactRoleDetail.Account_Role_Detail__r.Account_Role__r.Account__r.Name + ': New relationship request on IGOM');
+				email.setPlainTextBody('You have received a request from ' + ownStation.name +
+				'.\n\nPlease log into IGOM portal to manage this request: ' + IGOMConstants.METADATA.COMMUNITY_URL);
 				emails.add(email);
 		}
 
