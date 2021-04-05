@@ -12,7 +12,7 @@ The recently published GAP requires your attention regarding the following GAP A
 
 {!Notifications}
 
-To acknowledge every item please go to this link: {!ConfirmationLink}</textOnly>
+{!ConfirmationText}</textOnly>
     <type>custom</type>
     <uiType>Aloha</uiType>
 </EmailTemplate>

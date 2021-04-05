@@ -96,7 +96,7 @@ export default class IgGapAnalysisPublish extends LightningElement {
 		return availableChapters;
     }
     
-    @wire(getGAPNotifiableContacts, { gapAnalysisId: '$gapAnalysisId', notificationType: 'ACTION REQUIRED' })
+    @wire(getGAPNotifiableContacts, { gapAnalysisId: '$gapAnalysisId', notificationType: constants.NOTIFICATION.SEVERITY.VALUES.ACTION_REQUIRED })
     getGAPNotifiableContactsActReq({ data, error }) {
         if (data) {
             this._notifiableUsersActReq = {
@@ -106,7 +106,7 @@ export default class IgGapAnalysisPublish extends LightningElement {
         }
 	}
     
-    @wire(getGAPNotifiableContacts, { gapAnalysisId: '$gapAnalysisId', notificationType: 'INFORMATIVE' })
+    @wire(getGAPNotifiableContacts, { gapAnalysisId: '$gapAnalysisId', notificationType: constants.NOTIFICATION.SEVERITY.VALUES.INFORMATIVE })
     getGAPNotifiableContactsInformative({ data, error }) {
         if (data) {
             this._notifiableUsersInform = {
@@ -174,8 +174,7 @@ export default class IgGapAnalysisPublish extends LightningElement {
         const usersDataTableActReq = this.template.querySelector('[data-name="users-to-notify-action-req"]');
         const selectedInfoUserIds = usersDataTableInfo.getSelectedRows().map(row => row.contactId);
         const selectedActReqUserIds = usersDataTableActReq.getSelectedRows().map(row => row.contactId);
-        const selectedUserIds = {'INFORMATIVE':selectedInfoUserIds, 'ACTION REQUIRED':selectedActReqUserIds};
-        console.log('Total selected users per selection type ' + JSON.stringify(selectedUserIds));
+        const selectedUserIds = {'Informative':selectedInfoUserIds, 'Action Required':selectedActReqUserIds};
         this.loading = true;
         this.dispatchEvent(new CustomEvent('publish', { 
             detail: { 
