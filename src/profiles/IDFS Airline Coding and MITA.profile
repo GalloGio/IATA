@@ -5025,6 +5025,14 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>IATAPayService</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IATAPayServiceTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>IATA_ServiceList_CTRL</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -21294,6 +21302,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.Airline_IATAPay_Participations__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.Airline_Model_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -22231,6 +22244,11 @@
         <editable>false</editable>
         <field>Account.IATA_Membership_status_all_levels__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.IATA_Pay_Participant_formula__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -25460,6 +25478,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Airline_Suspension__c.HQ_Reqion_SVP_Agree__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Airline_Suspension__c.IATA_Pay_Participations_locked__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
