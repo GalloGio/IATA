@@ -18,6 +18,8 @@ public without sharing class IGOMConstants {
 		public final String COMMUNITY_PERMISSION_SET { get { return 'IGOM_Portal'; } }
 		public final String COMMUNITY_PROFILE { get { return 'ISS Portal (Partner)'; } }
 		public final String XML_ENCAPSULATOR_NAME { get { return 'Chapter'; } }
+		public final String XML_ENCAPSULATOR_NAME_ES { get { return 'Capítulo'; } }
+		public final String XML_ENCAPSULATOR_NAME_FR { get { return 'Chapitre'; } }
 		public final String LANGUAGE_ENGLISH { get { return 'English'; } }
 		public final String PROFILE_NAME_CONTACT_SIMULATION { get { return 'System Administrator'; } }
 		// Default fields values for the service

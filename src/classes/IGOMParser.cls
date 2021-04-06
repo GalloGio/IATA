@@ -258,8 +258,10 @@ public without sharing class IGOMParser {
 	 */
 	private static Integer getIndex(String str){
 		try {
-			if(str.contains(IGOMConstants.GLOBALS.XML_ENCAPSULATOR_NAME)){
-				return Integer.valueOf(str.substringBetween(' ', ':'));
+			if(str.contains(IGOMConstants.GLOBALS.XML_ENCAPSULATOR_NAME) ||
+			str.contains(IGOMConstants.GLOBALS.XML_ENCAPSULATOR_NAME_ES) ||
+			str.contains(IGOMConstants.GLOBALS.XML_ENCAPSULATOR_NAME_FR)){
+				return Integer.valueOf(str.substringBetween(' ', ':').replaceAll( '\\s+', ''));
 			}else{
 				return Integer.valueOf(str.substringAfterLast('.'));
 			}
