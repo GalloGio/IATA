@@ -38,8 +38,8 @@ global class ANG_PCIComplianceRenewalBatch implements Database.Batchable<Account
 				'AND ANG_PCI_compliance_expiry_date__c = :triggerRenewalDate '+
 				'AND Location_Class__c IN (\'P\',\'D\') '+
 				'AND Status__c IN :ACTIVE_ACC_STATUS '+
-				'AND accreditation_type__c = :AMS_Utils.AGENTTYPE_MULTICOUNTRY '+ 
-				'AND location_type__c IN :GOGLOBAL_LOCATIONS_TYPE '+
+				'AND accreditation_type__c != :AMS_Utils.AGENTTYPE_MULTICOUNTRY '+ 
+				'AND location_type__c NOT IN :GOGLOBAL_LOCATIONS_TYPE '+
 				'AND Id NOT IN (SELECT AccountId FROM Case WHERE RecordTypeId = :OSCARCOMMRTID '+
 					'AND Reason1__c = \'FoP Management\' AND IsClosed = false)';
 
