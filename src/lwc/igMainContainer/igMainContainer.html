@@ -34,8 +34,8 @@
                             <div if:true={showLanguageSelector} class="slds-show_inline-block mr-4">
                                 <div class="slds-form-element__control">
                                     <div class="slds-select_container">
-                                        <select if:true={igomLanguages.data} class="slds-select" onchange={changeLanguage}>
-                                            <template for:each={igomLanguages.data} for:item="language">
+                                        <select if:true={igomLanguages} class="slds-select" onchange={changeLanguage}>
+                                            <template for:each={igomLanguages} for:item="language">
                                                 <option key={language.value} value={language.value}>{language.label}</option>
                                             </template>
                                         </select>

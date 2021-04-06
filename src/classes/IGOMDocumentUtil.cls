@@ -238,7 +238,7 @@ public without sharing class IGOMDocumentUtil {
 	@AuraEnabled(cacheable=true)
 	public static List<String> getCurrentIGOMLanguages() {
 		List<String> availableLanguages = new List<String>();
-		for (Document__c activeManual : [SELECT Id, Language__c FROM Document__c WHERE Is_Active__c = true AND RecordType.Name = :IGOMConstants.DOCUMENT.RECORD_TYPE.IGOM]) {
+		for (Document__c activeManual : [SELECT Id, Language__c FROM Document__c WHERE Is_Active__c = true AND RecordType.Name = :IGOMConstants.DOCUMENT.RECORD_TYPE.IGOM ORDER BY Language__c]) {
 			availableLanguages.add(activeManual.Language__c);
 		}
 		return availableLanguages;
@@ -273,7 +273,7 @@ public without sharing class IGOMDocumentUtil {
 		// Retrieve all active manual ids
 		Map<String, Id> activeManualIdsByLanguage = new Map<String, Id>();
 		Document__c mainActiveManual;
-		for (Document__c activeManual : [SELECT Id, Language__c, Is_Active__c FROM Document__c WHERE Is_Active__c = true AND RecordType.Name = :IGOMConstants.DOCUMENT.RECORD_TYPE.IGOM]) {
+		for (Document__c activeManual : [SELECT Id, Language__c, Is_Active__c, Edition__c FROM Document__c WHERE Is_Active__c = true AND RecordType.Name = :IGOMConstants.DOCUMENT.RECORD_TYPE.IGOM]) {
 			activeManualIdsByLanguage.put(activeManual.Language__c, activeManual.Id);
 			if (activeManual.Is_Active__c && activeManual.Language__c == IGOMConstants.GLOBALS.LANGUAGE_ENGLISH) {
 				mainActiveManual = activeManual;
@@ -508,7 +508,7 @@ public without sharing class IGOMDocumentUtil {
 		}
 		// Create the manual object
 		List<Document__c> sfManual = 
-			[SELECT Document_Name__c, Published_Date__c, Effective_Date__c, Review_Date__c, Version__c 
+			[SELECT Document_Name__c, Published_Date__c, Effective_Date__c, Review_Date__c, Version__c, Edition__c
 			 FROM Document__c 
 			 WHERE Id = :manualId AND RecordType.Name = :IGOMConstants.DOCUMENT.RECORD_TYPE.IGOM LIMIT 1];
 		if (sfManual.isEmpty()) {
@@ -562,7 +562,7 @@ public without sharing class IGOMDocumentUtil {
 	@AuraEnabled(cacheable=true)
 	public static List<Document__c> getIGOMManuals() {
 		return 
-			[SELECT Id, Document_Name__c, Version__c, CreatedDate 
+			[SELECT Id, Document_Name__c, Edition__c, Version__c, CreatedDate 
 			 FROM Document__c
 			 WHERE RecordType.Name = :IGOMConstants.DOCUMENT.RECORD_TYPE.IGOM
 			 ORDER BY CreatedDate DESC];

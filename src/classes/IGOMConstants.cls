@@ -21,6 +21,8 @@ public without sharing class IGOMConstants {
 		public final String XML_ENCAPSULATOR_NAME_ES { get { return 'Capítulo'; } }
 		public final String XML_ENCAPSULATOR_NAME_FR { get { return 'Chapitre'; } }
 		public final String LANGUAGE_ENGLISH { get { return 'English'; } }
+		public final String LANGUAGE_SPANISH { get { return 'Spanish'; } }
+		public final String LANGUAGE_FRENCH { get { return 'French'; } }
 		public final String PROFILE_NAME_CONTACT_SIMULATION { get { return 'System Administrator'; } }
 		// Default fields values for the service
 		public final String FUNCTIONAL_ROLE_SERVICE { get { return 'IGOM'; } }

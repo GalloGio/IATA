@@ -8,7 +8,8 @@ public without sharing class IGOMParser {
 
 	private static Map<String, String> mapISOCodeToLang = new Map<String, String>{
 		'en' => IGOMConstants.GLOBALS.LANGUAGE_ENGLISH,
-		'es' => 'Spanish'
+		'es' => IGOMConstants.GLOBALS.LANGUAGE_SPANISH,
+		'fr' => IGOMConstants.GLOBALS.LANGUAGE_FRENCH
 	};
 
 	private static Map<String, String> mapRevisionStringToEnum = new Map<String, String>{
@@ -139,7 +140,8 @@ public without sharing class IGOMParser {
 					Index__c = section.index,
 					Is_Safety_Critical__c = section.isSafetyCritical,
 					Version_Change_Status__c = section.revision,
-					Document__c = manual.Id
+					Document__c = manual.Id,
+					Language__c = language_doc
 				);
 
 				permIdToAuditableProcedure.put(section.permId, procedure);

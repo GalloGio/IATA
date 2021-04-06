@@ -51,7 +51,7 @@ export default class IgMainContainer extends LightningElement {
 	@track modifiedProcedures;
 	@track _gapAnalysisInUse;
 	@track availableStations;
-	@track selectedAccountRoleDetailId;	
+	@track selectedAccountRoleDetailId;
 
 	@track igomLanguages;
 	@wire(getCurrentIGOMLanguages)
@@ -152,7 +152,7 @@ export default class IgMainContainer extends LightningElement {
 	}
 
 	get igomVersion() {
-		return this.igomManual ? 'IGOM version ' + this.igomManual.manual.Version__c : '';
+			return this.igomManual ? 'IGOM version ' + this.igomManual.manual.Edition__c : '';
 	}
 
 	async refreshManual() {
@@ -359,7 +359,7 @@ export default class IgMainContainer extends LightningElement {
 		return this.menuItemSelected === 'Station administration';
 	}
 	get showLanguageSelector() {
-		return this.igomLanguages && this.igomLanguages.data && this.igomLanguages.data.length > 1;
+		return this.igomLanguages && this.igomLanguages.length > 1;
 	}
 	get showStationSelector() {
 		return this.menuItemSelected !== 'GAP Analysis - Publish' &&
