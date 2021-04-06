@@ -691,28 +691,23 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 			}
 		}
 
-		try {
-			update oscar;
-			for(childsAccountsWrapper acc: childsAccountsWrapperList){
-				if(acc.checked){
-					iataCodesOk.add(acc.IATACode);
-					currentAccount = new ANG_AnnualRevCurrentAccount(accountsMap.get(acc.IATACode),
-															getStatus(acc.IATACode),
-															getForm(acc.IATACode),
-															getIsoCountry(accountsMap.get(acc.IATACode).Country_ISO_Code__c),
-															(acc.IATACode == heIataCode));
-					
-					currentAccount.status = COMPLETED_STATUS;
-					acc.icon = OK_ICON;
-					acc.checked = false;
-				}
+		update oscar;
+		for(childsAccountsWrapper acc: childsAccountsWrapperList){
+			if(acc.checked){
+				iataCodesOk.add(acc.IATACode);
+				currentAccount = new ANG_AnnualRevCurrentAccount(accountsMap.get(acc.IATACode),
+														getStatus(acc.IATACode),
+														getForm(acc.IATACode),
+														getIsoCountry(accountsMap.get(acc.IATACode).Country_ISO_Code__c),
+														(acc.IATACode == heIataCode));
+				
+				currentAccount.status = COMPLETED_STATUS;
+				acc.icon = OK_ICON;
+				acc.checked = false;
 			}
-
-			jsonTree = generateTree();
-
-		} catch(DmlException de) { 
-			/* All stays the same. */ 
 		}
+
+		jsonTree = generateTree();
 	}
 	
 	public PageReference confirmDetails() {
@@ -724,16 +719,14 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 			this.oscar.IATA_Codes_OK__c += ',' + currentAccount.account.IataCode__c;
 		}
 
-		try {
-			update oscar;
+		update oscar;
 
-			iataCodesOk.add(currentAccount.account.IataCode__c);
+		iataCodesOk.add(currentAccount.account.IataCode__c);
 
-			currentAccount.status = COMPLETED_STATUS;
+		currentAccount.status = COMPLETED_STATUS;
 
-			jsonTree = generateTree();
+		jsonTree = generateTree();
 
-		} catch(DmlException de) { /* All stays the same. */ }
 
 		return null;
 	}

@@ -1098,6 +1098,7 @@ private class ISSP_ANG_ANNUAL_REVALIDATION_Test {
 			system.assertEquals(AMS_Utils.CASE_STATUS_CLOSED, ctrl.oscar.Status__c, 'Case should be closed after all accounts be confirmed and submited.');
 		}
 
+		Test.stopTest();
 	}
 
 }
