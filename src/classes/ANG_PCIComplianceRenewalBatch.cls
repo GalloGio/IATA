@@ -6,7 +6,6 @@ global class ANG_PCIComplianceRenewalBatch implements Database.Batchable<Account
 	private static final String OSCARCOMMRTID = AMS_Utils.RECTYPE_OSCARCOMM;
 	private static final Set<String> ACTIVE_ACC_STATUS = new Set<String>{AMS_Utils.ACC_S9_APPROVED, AMS_Utils.ACC_S8_CHANGESPROCESSED, AMS_Utils.ACC_S7_UNDERREVIEW,
 																		AMS_Utils.ACC_S6_CASHWITHCOMMISSION, AMS_Utils.ACC_S5_CASHNOCOMMISSION, AMS_Utils.ACC_S4_LISTED, 'Review'};
-	private static final Set<String> GOGLOBAL_LOCATIONS_TYPE = new Set<String>{AMS_Utils.HE, AMS_Utils.AE};
 	private static final String AGENTTYPEMULTICOUNTRY = AMS_Utils.AGENTTYPE_MULTICOUNTRY;
 
 	private Date triggerRenewalDate;
@@ -39,8 +38,7 @@ global class ANG_PCIComplianceRenewalBatch implements Database.Batchable<Account
 				'AND ANG_PCI_compliance_expiry_date__c = :triggerRenewalDate '+
 				'AND Location_Class__c IN (\'P\',\'D\') '+
 				'AND Status__c IN :ACTIVE_ACC_STATUS '+
-				'AND ANG_Accreditation_Model__c != :AGENTTYPEMULTICOUNTRY '+ 
-				'AND location_type__c NOT IN :GOGLOBAL_LOCATIONS_TYPE '+
+				'AND ((ANG_Accreditation_Model__c != :AGENTTYPEMULTICOUNTRY) OR (ANG_Accreditation_Model__c = :AGENTTYPEMULTICOUNTRY AND location_type__c = \'GE\')) '+
 				'AND Id NOT IN (SELECT AccountId FROM Case WHERE RecordTypeId = :OSCARCOMMRTID '+
 					'AND Reason1__c = \'FoP Management\' AND IsClosed = false)';
 
