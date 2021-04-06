@@ -310,6 +310,10 @@
                 <behavior>Readonly</behavior>
                 <field>KPI_Prod__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Service_Level__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
