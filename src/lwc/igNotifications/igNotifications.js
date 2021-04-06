@@ -16,6 +16,7 @@ export default class IgNotifications extends LightningElement {
     @track severityFilter = '';
     @track selectedAirlinesFilter = [];
     @track showFilters = false;
+    @track showManualNotif = false;
 
     @wire(getNotifications, { stationId : '$stationId' })
     notifications;
@@ -73,6 +74,14 @@ export default class IgNotifications extends LightningElement {
         event.stopPropagation();
     }
 
+    showModalNotification(){
+        this.template.querySelector('c-ig-modal.manual-notification-modal').show();
+    }
+
+    sendManualNotification(){
+        this.template.querySelector('c-ig-modal.manual-notification-modal').hide();
+    }
+
     // Apex calls
 
     markAsReadEvent(event) {
@@ -84,6 +93,10 @@ export default class IgNotifications extends LightningElement {
             notificationId: id
         });
         refreshApex(this.notifications);
+    }
+
+    sendManualNotification(event){
+        console.log('Sending manual notification');
     }
 
     // Logical properties
@@ -156,6 +169,10 @@ export default class IgNotifications extends LightningElement {
         if (this.severityFilter === constants.NOTIFICATION.SEVERITY.VALUES.INFORMATIVE) { 
             classes.push('notification-selected');
         }
+        return classes.join(' ');
+    }
+    get tabButtonClass() { 
+        let classes = ['button-section'];
         return classes.join(' ');
     }
     get filterAirlineClass() { 

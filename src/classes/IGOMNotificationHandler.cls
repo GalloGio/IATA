@@ -43,7 +43,6 @@ public without sharing class IGOMNotificationHandler
 			contactRoleDetailIdToNotificationTypes.put(notification.IGOM_Contact_Role_Detail__c, notifTypes);
 		}
 
-		System.debug('Types of notifications per contact role detail ' + contactRoleDetailIdToNotificationTypes);
 		// Map for the station names
 		Map<Id, String> contactRoleDetailIdToStationName = new Map<Id, String>();
 		// Query the related igom contact role details

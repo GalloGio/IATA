@@ -294,11 +294,26 @@ public without sharing class IGOMNotificationUtil {
 		if (gapAnalysis.stationId == null) {
 			throw new AuraHandledException(String.format(IGOMConstants.ERRORS.NO_ITEM_FOR_ID_ERROR, new List<Object>{'IGOM Station', gapAnalysisId + ' for the GAP analysis'}));
 		}
+		return getStationNotifiableContacts(gapAnalysis.stationId, notificationType);
+	}
+
+	/**
+	 * @description	Method to retrieve every notifiable contact for a specific station.
+	 * @param		stationId <Id of the station, it must be checked if it is an account role id or an IGOM account role detail id>
+	 * @param		notificationType <Type of the notification, being available INFORMATIVE and ACTION REQUIRED, as of now ACTION REQUIRED is not used>
+	 * @return		Map<Id, NotifiableContact> <Map containing the id of the contact and the data for each notifiable contact>
+	 */
+	@AuraEnabled(cacheable=true)
+	public static Map<Id, NotifiableContact> getStationNotifiableContacts(Id stationId, String notificationType){
+		Id accRoleId = stationId;
+		if(stationId.getSObjectType().getDescribe().getName() == 'IGOM_Account_Role_Detail__c'){
+			accRoleId = [SELECT Account_Role__c FROM IGOM_Account_Role_Detail__c WHERE Id = :stationId LIMIT 1].Account_Role__c;
+		}
 		// Query the station
 		IGOM_Account_Role_Detail__c station = 
 			[SELECT Id, Account_Role__r.Account__r.Name, RecordType.Name, Account_Role__c, Account_Role__r.Account__c, City__c, Country__c
 			 FROM IGOM_Account_Role_Detail__c 
-			 WHERE Account_Role__c = :gapAnalysis.stationId];
+			 WHERE Account_Role__c = :accRoleId];
 		IGOMStationUtil.Station ownStation = new IGOMStationUtil.Station(station);
 		// Get the related station's admins as they are all notifiable if they wish to be
 		IGOMAccountRoleRelationshipsUtil.AllRelationships allRelationships = IGOMAccountRoleRelationshipsUtil.getAllRelationships(station.Id);
@@ -361,7 +376,8 @@ public without sharing class IGOMNotificationUtil {
 		if (currentContactRoleDetail == null || !IGOMConstants.PERMISSIONS.ROLE_TO_PERMISSIONS.get(currentContactRoleDetail.Role__c).contains(IGOMConstants.PERMISSIONS.PUBLISH_GAP)) {
 			throw new AuraHandledException(String.format(IGOMConstants.ERRORS.REQUIRED_PERMISSIONS_MISSING_ERROR, new List<Object>{'publish a GAP'}));
 		}
+
 		return notifiableContacts;
 	}
-
+	
 }

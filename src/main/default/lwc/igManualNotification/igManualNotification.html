@@ -1,0 +1,23 @@
+<template>
+    <div class="col-12 pl-5 pr-5">
+        <div class="col-10 offset-1 p-2">
+            <h3>Select users to notify</h3>
+        </div>
+        <div class="col-10 offset-1 p-4" if:true={_notifiableUsersInform}>
+            <lightning-datatable
+                key-field="id"
+                data-name="users-to-notify-informative"
+                data={_notifiableUsersInform.data}
+                columns={_notifiableUsersInform.columns}>
+            </lightning-datatable>
+        </div>
+        <div class="col-10 offset-1 p-4">
+            <label class="small-font">Subject</label>
+            <input type="text" class="form-control width-100" onkeyup={newFilenameKeyUp} value={filenameForNew}/>
+        </div>
+        <div class="col-10 offset-1 p-4">
+            <label class="small-font">Body</label>
+            <textarea class="form-control" rows="3" data-field="notes" oninput={notificationBodyUpdate}></textarea>
+        </div>
+    </div>
+</template>

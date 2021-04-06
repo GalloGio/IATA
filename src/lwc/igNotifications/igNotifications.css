@@ -92,3 +92,9 @@
 	margin: 0px 4px;
     align-items: inherit;
 }
+
+.button-section {
+    width: auto;
+    margin: 0 0 0 auto;
+    padding: 1px 0 0 0;
+}
