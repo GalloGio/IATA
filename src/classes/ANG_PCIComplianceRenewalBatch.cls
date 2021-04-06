@@ -7,6 +7,7 @@ global class ANG_PCIComplianceRenewalBatch implements Database.Batchable<Account
 	private static final Set<String> ACTIVE_ACC_STATUS = new Set<String>{AMS_Utils.ACC_S9_APPROVED, AMS_Utils.ACC_S8_CHANGESPROCESSED, AMS_Utils.ACC_S7_UNDERREVIEW,
 																		AMS_Utils.ACC_S6_CASHWITHCOMMISSION, AMS_Utils.ACC_S5_CASHNOCOMMISSION, AMS_Utils.ACC_S4_LISTED, 'Review'};
 	private static final Set<String> GOGLOBAL_LOCATIONS_TYPE = new Set<String>{AMS_Utils.HE, AMS_Utils.AE};
+	private static final String AGENTTYPEMULTICOUNTRY = AMS_Utils.AGENTTYPE_MULTICOUNTRY;
 
 	private Date triggerRenewalDate;
 	private Integer daysBeforeExpiry;
@@ -28,7 +29,7 @@ global class ANG_PCIComplianceRenewalBatch implements Database.Batchable<Account
 
 		triggerRenewalDate = Date.today().addDays(daysBeforeExpiry != null ? daysBeforeExpiry : 90);
 
-			String query = 'SELECT Id, Name, IataCode__c, BillingCountry, Region_formula__c,ANG_Accreditation_Model__c, Legal_name__c, accreditation_type__c, location_type__c, '+
+			String query = 'SELECT Id, Name, IataCode__c, BillingCountry, Region_formula__c,ANG_Accreditation_Model__c, Legal_name__c, location_type__c, '+
 				'(SELECT Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c, User_Portal_Status__c, New_BSPLink_Contact__c, AccountId '+
 					'FROM Contacts WHERE Status__c = \'Active\' AND (User_Portal_Status__c = \'Approved Admin\' OR Financial_Assessment_Contact__c = true OR BSP_CASS_Payment_contact__c = true) and IsEmailBounced = false) '+
 				'FROM Account '+
@@ -38,7 +39,7 @@ global class ANG_PCIComplianceRenewalBatch implements Database.Batchable<Account
 				'AND ANG_PCI_compliance_expiry_date__c = :triggerRenewalDate '+
 				'AND Location_Class__c IN (\'P\',\'D\') '+
 				'AND Status__c IN :ACTIVE_ACC_STATUS '+
-				'AND accreditation_type__c != :AMS_Utils.AGENTTYPE_MULTICOUNTRY '+ 
+				'AND ANG_Accreditation_Model__c != :AGENTTYPEMULTICOUNTRY '+ 
 				'AND location_type__c NOT IN :GOGLOBAL_LOCATIONS_TYPE '+
 				'AND Id NOT IN (SELECT AccountId FROM Case WHERE RecordTypeId = :OSCARCOMMRTID '+
 					'AND Reason1__c = \'FoP Management\' AND IsClosed = false)';
