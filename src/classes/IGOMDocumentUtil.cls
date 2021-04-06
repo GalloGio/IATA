@@ -508,7 +508,7 @@ public without sharing class IGOMDocumentUtil {
 		}
 		// Create the manual object
 		List<Document__c> sfManual = 
-			[SELECT Document_Name__c, Published_Date__c, Review_Date__c, Version__c 
+			[SELECT Document_Name__c, Published_Date__c, Effective_Date__c, Review_Date__c, Version__c 
 			 FROM Document__c 
 			 WHERE Id = :manualId AND RecordType.Name = :IGOMConstants.DOCUMENT.RECORD_TYPE.IGOM LIMIT 1];
 		if (sfManual.isEmpty()) {
