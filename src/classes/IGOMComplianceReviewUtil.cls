@@ -306,8 +306,8 @@ public without sharing class IGOMComplianceReviewUtil {
 			parentStationIds.add(parentStation.stationInfo.accountRoleId);
 		}
 
-		// TODO - Decide with Massimo if this should be included - Recover the template compliance revs. from the same station
-		// parentStationIds.add(ownStation.accountRoleId);
+		// Recover the template compliance revs. from the same station
+		parentStationIds.add(ownStation.accountRoleId);
 		
 		// Retrieve every published gap analysis related to the station and templates from parent stations
 		List<Compliance_Review__c> allPublishedGapAnalysis =
