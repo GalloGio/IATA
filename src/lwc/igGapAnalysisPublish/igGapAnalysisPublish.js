@@ -172,8 +172,14 @@ export default class IgGapAnalysisPublish extends LightningElement {
     publishChapters(event) {
         const usersDataTableInfo = this.template.querySelector('[data-name="users-to-notify-informative"]');
         const usersDataTableActReq = this.template.querySelector('[data-name="users-to-notify-action-req"]');
-        const selectedInfoUserIds = usersDataTableInfo.getSelectedRows().map(row => row.contactId);
-        const selectedActReqUserIds = usersDataTableActReq.getSelectedRows().map(row => row.contactId);
+        var selectedInfoUserIds;
+        if(usersDataTableInfo){
+            selectedInfoUserIds = usersDataTableInfo.getSelectedRows().map(row => row.contactId);
+        }
+        var selectedActReqUserIds;
+        if(usersDataTableActReq){
+            selectedActReqUserIds = usersDataTableActReq.getSelectedRows().map(row => row.contactId);
+        }
         const selectedUserIds = {'Informative':selectedInfoUserIds, 'Action Required':selectedActReqUserIds};
         this.loading = true;
         this.dispatchEvent(new CustomEvent('publish', { 
