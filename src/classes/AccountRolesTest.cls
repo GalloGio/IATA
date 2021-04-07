@@ -7,32 +7,30 @@ private class AccountRolesTest {
 	}
 
 	@IsTest
-	static void testAssignRole(){
-		Test.startTest();
-		Set<Id> accountIdSet = AccountSelector.selectIdMapByName(new Set<String>{TestDataFactory_Accounts.DEFAULTNAME + ' 0'}).keySet();
-		Test.stopTest();
-
+	static void testCreate(){
 		AccountRoles accountRoles = new AccountRoles();
-		try{
-			accountRoles.assignRole(accountIdSet, 'FAKE ROLE');
-		} catch(Exception e){
-			System.assertEquals('AccountRoles.AccountRoleDomainException', e.getTypeName(), 'Expected AccountRoleDomainException to be thrown but instead got ' + e.getTypeName());
-		}
+		Account account = AccountSelector.selectIdByNames(new Set<String>{TestDataFactory_Accounts.DEFAULTNAME + ' 0'}).get(0);
+		List<Account_Role__c> accountRoleList = accountRoles.create(new Set<Id>{account.Id}, 'TEST ROLE');
+		System.assertEquals(1, accountRoleList.size(), 'Expected 1 Account Role');
 	}
 
 	@IsTest
-	static void testUnassignRole(){
-		Test.startTest();
-		Set<Id> accountIdSet = AccountSelector.selectIdMapByName(new Set<String>{TestDataFactory_Accounts.DEFAULTNAME + ' 0'}).keySet();
+	static void testActivate(){
+		String activeStatus = AccountRoles.STATUSACTIVE;
 		AccountRoles accountRoles = new AccountRoles();
-		insert accountRoles.assignRole(accountIdSet, 'FAKE ROLE');
-		Test.stopTest();
+		Account account = AccountSelector.selectIdByNames(new Set<String>{TestDataFactory_Accounts.DEFAULTNAME + ' 0'}).get(0);
+		accountRoles.create(new Set<Id>{account.Id}, 'TEST ROLE');
+		accountRoles.activate();
+		System.assertEquals(activeStatus, accountRoles.records.get(0).Status__c, 'Expected an Active Account Role');
+	}
 
-		try{
-			List<Account_Role__c> accountRoleList = accountRoles.unAssignRole(accountIdSet , 'FAKE ROLE');
-			System.assertEquals(1, accountRoleList.size(), 'Expected 1 Account Role');
-		} catch(Exception e){
-			System.assertEquals('AccountRoles.AccountRoleDomainException', e.getTypeName(), 'Expected AccountRoleDomainException to be thrown but instead got ' + e.getTypeName());
-		}
+	@IsTest
+	static void testInactivate(){
+		String inactiveStatus = AccountRoles.STATUSINACTIVE;
+		AccountRoles accountRoles = new AccountRoles();
+		Account account = AccountSelector.selectIdByNames(new Set<String>{TestDataFactory_Accounts.DEFAULTNAME + ' 0'}).get(0);
+		accountRoles.create(new Set<Id>{account.Id}, 'TEST ROLE');
+		accountRoles.inactivate();
+		System.assertEquals(inactiveStatus, accountRoles.records.get(0).Status__c, 'Expected an Inactive Account Role');
 	}
 }

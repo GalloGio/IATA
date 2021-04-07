@@ -1645,7 +1645,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>ANG_ConversionToolController</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>ANG_ConversionToolControllerTest</apexClass>
@@ -1873,7 +1873,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>ANG_Migration_MassRMECallout</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>ANG_Migration_MassRMECallout_test</apexClass>
@@ -5025,6 +5025,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>IATAIsoStateDAO_Test</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IATAPayService</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IATAPayServiceTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -21305,6 +21313,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Account.Airline_IATAPay_Participations__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Account.Airline_Model_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -22241,6 +22254,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.IATA_Membership_status_all_levels__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.IATA_Pay_Participant_formula__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -25472,6 +25490,11 @@
         <editable>true</editable>
         <field>Airline_Suspension__c.HQ_Reqion_SVP_Agree__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Airline_Suspension__c.IATA_Pay_Participations_locked__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -32554,9 +32577,9 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Case_Detail__c.Interest_Amount__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -53399,9 +53422,9 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Portal_Applications__c.Functional_Role__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -68076,6 +68099,15 @@
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>PortalServiceAccess__e</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>true</allowDelete>
         <allowEdit>true</allowEdit>
@@ -69328,7 +69360,7 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>ANG_ConversionTool</apexPage>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>ANG_ConversionToolDetail</apexPage>
@@ -69344,7 +69376,7 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>ANG_Migration_MassRMECallout</apexPage>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>ANG_MulticountryAccountCreator</apexPage>
