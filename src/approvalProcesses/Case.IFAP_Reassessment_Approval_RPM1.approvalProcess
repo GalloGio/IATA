@@ -53,10 +53,6 @@
                 <name>widjajan@iata.org</name>
                 <type>user</type>
             </approver>
-            <approver>
-                <name>wongsf@iata.org</name>
-                <type>user</type>
-            </approver>
             <whenMultipleApprovers>FirstResponse</whenMultipleApprovers>
         </assignedApprover>
         <entryCriteria>
