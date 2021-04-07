@@ -1645,7 +1645,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>ANG_ConversionToolController</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>ANG_ConversionToolControllerTest</apexClass>
@@ -1873,7 +1873,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>ANG_Migration_MassRMECallout</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>ANG_Migration_MassRMECallout_test</apexClass>
@@ -69360,7 +69360,7 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>ANG_ConversionTool</apexPage>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>ANG_ConversionToolDetail</apexPage>
@@ -69376,7 +69376,7 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>ANG_Migration_MassRMECallout</apexPage>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>ANG_MulticountryAccountCreator</apexPage>

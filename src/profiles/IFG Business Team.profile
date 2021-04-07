@@ -21153,7 +21153,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.ANG_IsNewGenAgency__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -21163,7 +21163,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.ANG_PCI_compliance_expiry_date__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
