@@ -1,6 +1,10 @@
 @isTest
 public class NewLocalGroupMeetingCtrlTest{
 
+	@testSetup static void testSetup() {
+		insert new Apex_Setting__c(Name='RT valid to reopen attachment trigger', Text_1__c='CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia, ComplaintIDFS,'
+                                           +  'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
+	}
 	public static LocalGovernance__c lg;
 	public static List<Contact> conts;
 	public static List<Participant__c> parts;
@@ -65,7 +69,7 @@ public class NewLocalGroupMeetingCtrlTest{
 
 			parts = new List<Participant__c>();
 			for(Integer i = 0; i<NRECORDS; i++)
-				parts.add(new Participant__c(Contact__c=conts[i].Id, Local_Governance__c=lg.Id));
+				parts.add(new Participant__c(Contact__c=conts[i].Id, Local_Governance__c=lg.Id, Local_Group_Type__c = 'APJC'));
 			insert parts;
 
 	}
@@ -372,8 +376,6 @@ public class NewLocalGroupMeetingCtrlTest{
 
 	static testmethod void testForInactiveGroup(){
 		Integer NRECORDS = 1;
-		insert new Apex_Setting__c(Name='RT valid to reopen attachment trigger', Text_1__c='CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia, ComplaintIDFS,'
-                                           +  'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
 		System.runAs(testUser){
 			initTestData(NRECORDS);
 
