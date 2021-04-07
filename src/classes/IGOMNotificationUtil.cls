@@ -81,7 +81,7 @@ public without sharing class IGOMNotificationUtil {
 			this.id = contactDetail.Id;
 			this.contactId = contactDetail.Account_Contact_Role__r.Contact__c;
 			this.fullname = contactDetail.Account_Contact_Role__r.Contact__r.Name;
-			this.stationName = contactDetail.Account_Role_Detail__r.Name;
+			this.stationName = contactDetail.Account_Contact_Role__r.Account__r.Name;
 			this.origin = origin;
 		}
 	}
@@ -343,7 +343,7 @@ public without sharing class IGOMNotificationUtil {
 		IGOM_Contact_Role_Detail__c currentContactRoleDetail;
 		// Get all the contacts from the same station, every parent stations (admin and acknowledger) contacts and the current contact
 		for (IGOM_Contact_Role_Detail__c contactRoleDetail : 
-			 [SELECT Id, Account_Contact_Role__r.Contact__r.Name, Account_Contact_Role__r.Contact__c, Account_Contact_Role__r.Contact__r.Id, Account_Role_Detail__r.Name, Account_Role_Detail__c, Account_Role_Detail__r.Account_Role__c, Role__c
+			 [SELECT Id, Account_Contact_Role__r.Contact__r.Name, Account_Contact_Role__r.Contact__c, Account_Contact_Role__r.Contact__r.Id, Account_Contact_Role__r.Account__r.Name, Account_Role_Detail__c, Account_Role_Detail__r.Account_Role__c, Role__c
 			  FROM IGOM_Contact_Role_Detail__c 
 			  WHERE (Role__c = :IGOMConstants.ROLES.ADMIN OR Role__c = :IGOMConstants.ROLES.ACKNOWLEDGER) AND (Account_Role_Detail__c = :station.Id
 			  		OR (Account_Role_Detail__r.Account_Role__c IN :notifiableAccountRoleIdToStation.keySet()))]) 
