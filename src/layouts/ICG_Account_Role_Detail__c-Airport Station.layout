@@ -154,6 +154,10 @@
                 <behavior>Readonly</behavior>
                 <field>Nearest_Airport_Code__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Station_Geo_Coordinates__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
