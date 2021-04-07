@@ -456,11 +456,10 @@ private class GlobalContactTriggerTest {
 			List<Portal_Applications__c> listApps = TestDataFactory_PortalApplications.createDefaultPortalApplication(2);
 			Portal_Applications__c PA = listApps.get(0);
 			PA.Name = 'Test';
-			listApps.add(PA);
 
 			Portal_Applications__c PA2 = listApps.get(1);
 			PA2.Name = 'Standards Setting Workspace';
-			listApps.add(PA2);
+			PA2.Functional_Role__c = 'Standards Setting Workspace';
 			insert listApps;
 
 			list<Portal_Application_Right__c> listAppRights = new list<Portal_Application_Right__c>();

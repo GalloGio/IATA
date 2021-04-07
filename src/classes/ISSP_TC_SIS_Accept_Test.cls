@@ -122,7 +122,8 @@ private class ISSP_TC_SIS_Accept_Test {
 		update myUser;
 		system.runAs(myUser){
 		PortalServiceAccessTriggerHandler.avoidAppTrigger = true;
-		Portal_Applications__c app = new Portal_Applications__c(Name = 'SIS');
+		Portal_Applications__c app = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		app.Name = 'SIS'; 
 		insert app;
 		Portal_Application_Right__c appRight = new Portal_Application_Right__c(Contact__c = con.Id, Portal_Application__c = app.Id, Right__c = 'Access Granted');
 		insert appRight;
