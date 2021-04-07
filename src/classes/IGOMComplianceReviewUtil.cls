@@ -12,6 +12,7 @@ public without sharing class IGOMComplianceReviewUtil {
 		@AuraEnabled public String name { get; set; }
 		@AuraEnabled public Id manualId { get; set; }
 		@AuraEnabled public Id stationId { get; set; }
+		@AuraEnabled public Id previousVersionId { get; set; }
 		@AuraEnabled public String status { get; set; }
 		@AuraEnabled public List<IGOMComplianceReviewPartUtil.ComplianceReviewPart> references { get; set; }
 		// Read-only
@@ -33,6 +34,7 @@ public without sharing class IGOMComplianceReviewUtil {
 			this.id = complianceReview.Id;
 			this.manualId = complianceReview.Document__c;
 			this.stationId = complianceReview.Station__c;
+			this.previousVersionId = complianceReview.Previous_Version__c;
 			this.name = complianceReview.Title__c;
 			this.status = complianceReview.Publish_Status__c;
 			this.publishDate = complianceReview.Effective_Date__c;
@@ -57,7 +59,8 @@ public without sharing class IGOMComplianceReviewUtil {
 				Publish_Status__c = this.status,
 				Title__c = this.name,
 				Document__c = this.manualId,
-				Station__c = this.stationId
+				Station__c = this.stationId,
+				Previous_Version__c = this.previousVersionId
 			);
 		}
 	}
@@ -117,7 +120,7 @@ public without sharing class IGOMComplianceReviewUtil {
 	public static ComplianceReview queryGapAnalysisById(Id gapAnalysisId) {
 		return new ComplianceReview(
 			[SELECT Id, Name, Effective_Date__c, Publish_Status__c, Document__c, Document__r.Effective_Date__c, Title__c, Station__c,
-				   Document__r.Abbreviated_Name__c, Document__r.Edition__c, Document__r.Version__c, Document__r.Revision__c
+				   Previous_Version__c, Document__r.Abbreviated_Name__c, Document__r.Edition__c, Document__r.Version__c, Document__r.Revision__c
 			FROM Compliance_Review__c
 			WHERE Id = :gapAnalysisId AND RecordType.Name = :IGOMConstants.COMPLIANCE_REVIEW.RECORD_TYPE.IGOM
 			LIMIT 1].get(0));
@@ -128,9 +131,9 @@ public without sharing class IGOMComplianceReviewUtil {
 	 * @param		gapAnalysisId <Id of the compliance review>
 	 * @return		Compliance_Review__c <Complete Compliance_Review__c object with every reference>
 	 */
-	private static Compliance_Review__c queryFullGapAnalysisById(Id gapAnalysisId) {
+	public static Compliance_Review__c queryFullGapAnalysisById(Id gapAnalysisId) {
 		return [SELECT Id, Name, Publish_Status__c, Document__c, Document__r.Effective_Date__c, Title__c, Document__r.Abbreviated_Name__c,
-		Document__r.Edition__c, Document__r.Version__c, Document__r.Revision__c, Effective_Date__c, Station__c
+		Document__r.Edition__c, Document__r.Version__c, Document__r.Revision__c, Effective_Date__c, Station__c, Previous_Version__c
 			FROM Compliance_Review__c
 			WHERE Id = :gapAnalysisId AND RecordType.Name = :IGOMConstants.COMPLIANCE_REVIEW.RECORD_TYPE.IGOM
 			LIMIT 1];
@@ -165,7 +168,7 @@ public without sharing class IGOMComplianceReviewUtil {
 		IGOMStationUtil.Station ownStation =IGOMStationUtil.getOwnStation(stationId);
 
 		List<Compliance_Review__c> allDraftGapAnalysis =
-			[SELECT Id, Name, Effective_Date__c, Publish_Status__c, Station__c, Document__c,
+			[SELECT Id, Name, Effective_Date__c, Publish_Status__c, Station__c, Document__c, Previous_Version__c,
 					Document__r.Effective_Date__c, Title__c, Document__r.Abbreviated_Name__c, Document__r.Edition__c, Document__r.Version__c, Document__r.Revision__c
 			 FROM Compliance_Review__c
 			 WHERE Publish_Status__c = :IGOMConstants.COMPLIANCE_REVIEW.STATUS.DRAFT AND Station__c = :ownStation.accountRoleId AND Document__r.Is_Active__c = true];
@@ -311,12 +314,13 @@ public without sharing class IGOMComplianceReviewUtil {
 		
 		// Retrieve every published gap analysis related to the station and templates from parent stations
 		List<Compliance_Review__c> allPublishedGapAnalysis =
-			[SELECT Id, Name, Effective_Date__c, Publish_Status__c, Station__c,
+			[SELECT Id, Name, Effective_Date__c, Publish_Status__c, Station__c, Previous_Version__c,
 					Document__c, Document__r.Effective_Date__c, Title__c, Document__r.Abbreviated_Name__c, Document__r.Edition__c, Document__r.Version__c, Document__r.Revision__c
 			 FROM Compliance_Review__c
 			 WHERE (Publish_Status__c = :IGOMConstants.COMPLIANCE_REVIEW.STATUS.PUBLISHED AND
 			 	   Station__c = :ownStation.accountRoleId) OR (Publish_Status__c = :IGOMConstants.COMPLIANCE_REVIEW.STATUS.TEMPLATE AND
-			 	   Station__c IN :parentStationIds)];
+			 	   Station__c IN :parentStationIds)
+			 ORDER BY CreatedDate DESC];
 
 		List<ComplianceReview> gapAnalysisList = new List<ComplianceReview>();
 		for (Compliance_Review__c cr : allPublishedGapAnalysis) {
@@ -531,6 +535,7 @@ public without sharing class IGOMComplianceReviewUtil {
 		newGapAnalysis.name = name;
 		newGapAnalysis.manualId = IGOMDocumentUtil.getLastActiveIGOMManual().id;
 		newGapAnalysis.stationId = station.Account_Role__c;
+		newGapAnalysis.previousVersionId = importableGapAnalysis.Previous_Version__c;
 		// Insert the new gap analysis
 		Compliance_Review__c gapAnalysisNew = newGapAnalysis.toSalesforce(false);
 		insert gapAnalysisNew;
@@ -560,7 +565,7 @@ public without sharing class IGOMComplianceReviewUtil {
 					newReference.document = oldDocIdToUsedDoc.get(reference.Document__c).Id;
 				}
 				newReference.igomAuditableProcedureId = newManualPartId;
-				newReference.variationStatus = modifiedAuditableProcedures.contains(newManualPartId) ? IGOMConstants.PROCEDURE_COMPLIANCE.STATUS.VARIATION : reference.Status__c;
+				newReference.variationStatus = modifiedAuditableProcedures.contains(newManualPartId) && importableGapAnalysis.Publish_Status__c == IGOMConstants.COMPLIANCE_REVIEW.STATUS.PUBLISHED ? IGOMConstants.PROCEDURE_COMPLIANCE.STATUS.VARIATION : reference.Status__c;
 				newReference.gapAnalysisId = gapAnalysisNew.Id;
 				// When importing from a published gap analysis, the references are pending review
 				if (importableGapAnalysis.Publish_Status__c == IGOMConstants.COMPLIANCE_REVIEW.STATUS.PUBLISHED) {
@@ -704,7 +709,7 @@ public without sharing class IGOMComplianceReviewUtil {
 		Id accountRoleId = [SELECT Account_Role__c FROM IGOM_Account_Role_Detail__c WHERE Id = :stationId].Account_Role__c;
 		List<ComplianceReview> complianceReviews = new List<ComplianceReview>();
 		for (Compliance_Review__c sfComplianceReview :
-			 [SELECT Id, Name, Effective_Date__c, Publish_Status__c, Document__c,
+			 [SELECT Id, Name, Effective_Date__c, Publish_Status__c, Document__c, Previous_Version__c,
 					  Document__r.Effective_Date__c, Title__c, Station__c,  Document__r.Abbreviated_Name__c, Document__r.Edition__c, Document__r.Version__c, Document__r.Revision__c
 			  FROM Compliance_Review__c
 			  WHERE Station__c = :accountRoleId AND Publish_Status__c = :IGOMConstants.COMPLIANCE_REVIEW.STATUS.PUBLISHED

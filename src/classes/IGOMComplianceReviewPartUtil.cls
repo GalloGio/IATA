@@ -79,6 +79,13 @@ public without sharing class IGOMComplianceReviewPartUtil {
 			this.index = index;
 		}
 
+		//Method to check if the current compliance review part is notifiable
+		public Boolean isNotifiable(ComplianceReviewPart other) {
+			return this.variationStatus == IGOMConstants.PROCEDURE_COMPLIANCE.STATUS.VARIATION ||
+			other?.variationStatus == IGOMConstants.PROCEDURE_COMPLIANCE.STATUS.VARIATION ||
+			(other != null && other?.variationStatus != IGOMConstants.PROCEDURE_COMPLIANCE.STATUS.VARIATION && this.variationStatus != other?.variationStatus);
+		}
+
 		public Compliance_Review_Part__c toSalesforce(Boolean keepId) {
 			Compliance_Review_Part__c sfObject = new Compliance_Review_Part__c(
 				Id = keepId ? this.id : null,
@@ -281,4 +288,90 @@ public without sharing class IGOMComplianceReviewPartUtil {
 		return stations.get(0).Id;
 	}
 
+
+	/**
+	 * @description		Recover a list of ComplianceReviewPart objects from their related compliance review ids.
+	 * @param			complianceReviewIds <List of ids of compliance review parts>
+	 * @return			List<ComplianceReviewPart> <List of ComplianceReviewPart objects>
+	 */
+	public static List<ComplianceReviewPart> getComplianceReviewParts(List<Id> complianceReviewIds) {
+		return fromList(
+			[SELECT Id, Name, Comments__c,  Document__c, Document__r.Edition__c, Document__r.Version__c, Document__r.Revision__c,
+					Validity__c, Status__c, Variation_Comments__c, Variation_Alternative__c,Document__r.Abbreviated_Name__c,
+					Comment_Language__c, Compliance_Review__c, User_Provision_Procedure__c, Standard_Document_Part__r.External_Reference_ID__c ,
+					Standard_Document_Part__c, Standard_Document_Part__r.Category__c, Standard_Document_Part__r.Name__c, Standard_Document_Part__r.Version_Change_Status__c,
+					Standard_Document_Part__r.Document__r.Abbreviated_Name__c, Standard_Document_Part__r.Document__r.Edition__c,
+					Standard_Document_Part__r.Document__r.Version__c, Standard_Document_Part__r.Document__r.Revision__c,
+					Standard_Document_Part__r.Is_Safety_Critical__c, Is_Reviewed__c, Standard_Document_Part__r.Document__c
+			FROM Compliance_Review_Part__c
+			WHERE Compliance_Review__c IN :complianceReviewIds]
+		);
+	}
+
+	/**
+	 * @description Compares two different compliance reviews and return the compliance review parts of the new one that can be notified based on
+	 * the modifications found between these compliance reviews
+	 * note: parts of the old one that don't appear in the new one won't be returned, as only the parts from the new one will be returned.
+	 * @param		complianceReviewOldId <Id of the old compliance review>
+	 * @param		complianceReviewNewId <Id of the new compliance review>
+	 * @return		List<ComplianceReviewPart> <List of compliance review parts that can be notified>
+	 */
+	public static List<ComplianceReviewPart> getNotifiableParts(Id complianceReviewOldId, Id complianceReviewNewId) {
+		List<ComplianceReviewPart> complianceReviewPartsToNotify = new List<ComplianceReviewPart>();
+		// Get every compliance review part of the compliance reviews
+		List<ComplianceReviewPart> complianceReviewPartsOld = getComplianceReviewParts(new List<Id>{complianceReviewOldId});
+		List<ComplianceReviewPart> complianceReviewPartsNew = getComplianceReviewParts(new List<Id>{complianceReviewNewId});
+		// Group the compliance review parts by the permid
+		Map<String, List<ComplianceReviewPart>> permIdToComplianceReviewPartOld = new Map<String, List<ComplianceReviewPart>>();
+		for (ComplianceReviewPart part : complianceReviewPartsOld) {
+			List<ComplianceReviewPart> complianceReviewParts = permIdToComplianceReviewPartOld.get(part.documentPartPermId);
+			if (complianceReviewParts == null) {
+				complianceReviewParts = new List<ComplianceReviewPart>();
+				permIdToComplianceReviewPartOld.put(part.documentPartPermId, complianceReviewParts);
+			}
+			complianceReviewParts.add(part);
+		}
+		Map<String, List<ComplianceReviewPart>> permIdToComplianceReviewPartNew = new Map<String, List<ComplianceReviewPart>>();
+		for (ComplianceReviewPart part : complianceReviewPartsNew) {
+			List<ComplianceReviewPart> complianceReviewParts = permIdToComplianceReviewPartNew.get(part.documentPartPermId);
+			if (complianceReviewParts == null) {
+				complianceReviewParts = new List<ComplianceReviewPart>();
+				permIdToComplianceReviewPartNew.put(part.documentPartPermId, complianceReviewParts);
+			}
+			complianceReviewParts.add(part);
+		}
+		// Compare the content
+		for (String permId : permIdToComplianceReviewPartNew.keySet()) {
+			final List<ComplianceReviewPart> newComplianceReviewParts = permIdToComplianceReviewPartNew.get(permId);
+			Boolean isNotifiable = areComplianceReviewPartContentsNotifiable(newComplianceReviewParts, permIdToComplianceReviewPartOld.get(permId));
+			if (isNotifiable) {
+				complianceReviewPartsToNotify.addAll(newComplianceReviewParts);
+			}
+		}
+		// Return the content with the differences
+		return complianceReviewPartsToNotify;
+	}
+
+	/**
+	 * @description Helper function to compare the content of two Compliance review part lists and know if first compliance review parts are notifiable.
+	 * @param		first <List of compliance review parts to be compared>
+	 * @param		second <List of compliance review parts to be compared>
+	 * @return		Boolean <Result that states if the compliance review part is notifiable>
+	 */
+	private static Boolean areComplianceReviewPartContentsNotifiable(List<ComplianceReviewPart> first, List<ComplianceReviewPart> second) {
+		for (ComplianceReviewPart part1 : first) {
+			if(second != null){
+				for (ComplianceReviewPart part2 : second) {
+					if(part1.isNotifiable(part2)){
+						return true;
+					}
+				}
+			}else{
+				if(part1.isNotifiable(null)){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 }

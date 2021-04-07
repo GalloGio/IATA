@@ -186,6 +186,19 @@
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Previous_Version__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>The Compliance Review that is used as base for this compliance review.</description>
+        <externalId>false</externalId>
+        <label>Previous Version</label>
+        <referenceTo>Compliance_Review__c</referenceTo>
+        <relationshipLabel>Newer Version</relationshipLabel>
+        <relationshipName>Newer_Version</relationshipName>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Publish_Status__c</fullName>
         <description>Status of the Compliance Review regarding it&apos;s publication.</description>
         <externalId>false</externalId>

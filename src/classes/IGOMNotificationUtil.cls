@@ -174,14 +174,9 @@ public without sharing class IGOMNotificationUtil {
 			throw new AuraHandledException(IGOMConstants.ERRORS.CONTACT_DETAILS_NOT_NOTIFIABLE_ERROR);
 		}
 		// Get the variation compliance review parts from the gap analysis
-		List<IGOMComplianceReviewPartUtil.ComplianceReviewPart> newParts = IGOMComplianceReviewPartUtil.getComplianceReviewPartByComplianceReview(new List<Id>{ gapAnalysisId });
-		for (Integer i = (newParts.size()-1); i >= 0; i--) {
-			IGOMComplianceReviewPartUtil.ComplianceReviewPart newPart = newParts[i];
-			//TODO - missing propper notification logic
-			if (newPart.variationStatus != IGOMConstants.PROCEDURE_COMPLIANCE.STATUS.VARIATION) {
-				newParts.remove(i);
-			}
-		}
+		Id gapToCompareToId = IGOMComplianceReviewUtil.queryFullGapAnalysisById(gapAnalysisId).Previous_Version__c;
+		List<IGOMComplianceReviewPartUtil.ComplianceReviewPart> newParts = IGOMComplianceReviewPartUtil.getNotifiableParts(gapToCompareToId, gapAnalysisId);
+
 		// Create a notification object for each reference 
 		List<IGOM_Contact_Role_Procedure_Compliance__c> notifications = new List<IGOM_Contact_Role_Procedure_Compliance__c>();
 		for (Id contactDetailId : allContactDetailIds) {
@@ -379,5 +374,4 @@ public without sharing class IGOMNotificationUtil {
 
 		return notifiableContacts;
 	}
-	
 }
