@@ -735,32 +735,10 @@ global without sharing class AMS_RecordCreatorWebservice {
 		AMS_ChangeCodes__c cta = AMS_ChangeCodes__c.getInstance('CTA');
 
 		toReturn.name = cta.Change_Code__c;
-		toReturn.memoText = cta.Bulletin_Memo_Text__c;//createMemoText(accountChanges);
+		toReturn.memoText = cta.Bulletin_Memo_Text__c;
 
 		return toReturn;
 	}
-
-	private static String createMemoText(List<AMS_RecordCreatorWebservice.AccountChanges> accountChanges){
-
-		String type='Account';
-		Map<String, Schema.SObjectType> schemaMap = Schema.getGlobalDescribe();
-		Schema.SObjectType leadSchema = schemaMap.get(type);
-		Map<String, Schema.SObjectField> fieldMap = leadSchema.getDescribe().fields.getMap();
-
-		String bulletinInformation = 'Changes requested via Portal with the following values: \r\n\r\n';
-
-		for(AMS_RecordCreatorWebservice.AccountChanges change: accountChanges){
-
-			String label = fieldMap.get(change.accountFieldAPI).getDescribe().getLabel();
-
-			bulletinInformation += 'Field:'+label+' || Old Value:'+change.oldValue+ ' || New Value:' +change.newValue + '\r\n\r\n';
-
-		}
-
-		return bulletinInformation;
-	}
-
-
 
 	global class AccountChanges {
 
@@ -891,48 +869,6 @@ global without sharing class AMS_RecordCreatorWebservice {
 
 		return accreditationObj;
 	}
-
-	public static AMS_Pax_Accreditation_Form__c createAccreditationObjectForMC(Account accountMC, Case caseObj){
-
-		AMS_Pax_Accreditation_Form__c accreditationObj = new AMS_Pax_Accreditation_Form__c();
-
-		accreditationObj.SAAM_Case__c = caseObj.Id;
-		accreditationObj.Account_Name__c = accountMC.Name;
-		accreditationObj.Short_Name__c = accountMC.Short_Name__c;
-		accreditationObj.Abbreviated_name__c = accountMC.Abbreviated_name__c;
-		accreditationObj.Trade_Name__c = accountMC.TradeName__c;
-		accreditationObj.ISSP_AMS_Legal_Status__c = AMS_MigrationToolHelper.decode(accountMC.Company_Type__c);
-
-		accreditationObj.Shipping_City__c = accountMC.ShippingCity;
-		accreditationObj.Shipping_Country__c = accountMC.ShippingCountry;
-		accreditationObj.Shipping_ISO_Country__c = accountMC.IATA_ISO_Shipping_Country__c;
-		accreditationObj.Shipping_ISO_State__c = accountMC.IATA_ISO_Shipping_State__c;
-		accreditationObj.Shipping_Postal_Code__c = accountMC.ShippingPostalCode;
-		accreditationObj.Shipping_State__c = accountMC.ShippingState;
-		accreditationObj.Shipping_Street__c = accountMC.ShippingStreet;
-
-		accreditationObj.Branch_Office_Country__c = accountMC.IATA_ISO_Country__c;
-		accreditationObj.ISO_Country__c = accountMC.IATA_ISO_Country__c;
-		accreditationObj.IATA_ISO_State__c = accountMC.Iso_State__c;
-		accreditationObj.Billing_State__c = accountMC.BillingState;
-		accreditationObj.Abbreviated_Address__c = accountMC.Abbreviated_Address__c;
-		accreditationObj.Website__c = accountMC.Website;
-		accreditationObj.Branch_Office_Phone__c = accountMC.Phone;
-		accreditationObj.Branch_Office_Email__c = accountMC.Email__c;
-		accreditationObj.Branch_Office_FAX__c = accountMC.Fax;
-		accreditationObj.Location_Type__c = accountMC.Location_Type__c;
-		accreditationObj.Location_Class__c = accountMC.Location_Class__c;
-		accreditationObj.Branch_Office_Street_name_number__c = accountMC.BillingStreet;
-		accreditationObj.Branch_Office_Postal_code__c = accountMC.BillingPostalCode;
-		accreditationObj.Branch_Office_City__c = accountMC.BillingCity;
-		accreditationObj.Operation_Type__c = accountMC.Sector__c.replace(' ','_');
-
-
-		insert accreditationObj;
-
-		return accreditationObj;
-	}
-
 
 	public static Account createSAAccount(Account parentAccount){
 
