@@ -37223,6 +37223,15 @@ Wenn Sie Ihr Passwort zurücksetzen möchten, gehen Sie bitte zum Log-in-Bildsch
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Cases with user details --></description>
+        <label><!-- Cases with user details --></label>
+        <name>Cases_with_user_details</name>
+        <sections>
+            <label><!-- Cases --></label>
+            <name>Cases</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Certificate requests --></description>
         <label><!-- Certificate requests --></label>
         <name>Certificate_requests</name>
