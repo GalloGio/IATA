@@ -57,7 +57,7 @@ public class File_Upload_CTRL_TEST {
 		insert contactRole;
 
 		//for Test Account
-		Portal_Applications__c portalApplications = new Portal_Applications__c();
+		Portal_Applications__c portalApplications = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
 		portalApplications.Name = 'GADM';
 		insert portalApplications;
 

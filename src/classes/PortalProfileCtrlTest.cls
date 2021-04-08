@@ -231,13 +231,12 @@ public with sharing class PortalProfileCtrlTest {
 
 		User usr = [SELECT Id,ContactId FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
 
-		Portal_Applications__c serviceTest = new Portal_Applications__c (
-			Name = 'serviceTest3',
-			requestable__c=true,
-			Agency__c = true,
-			Hide_on_Homepage__c = false,
-			Critical_Service__c = true
-		);
+		Portal_Applications__c serviceTest = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		serviceTest.Name = 'serviceTest3';
+		serviceTest.requestable__c = true;
+		serviceTest.Agency__c = true;
+		serviceTest.Hide_on_Homepage__c = false;
+		serviceTest.Critical_Service__c = true;
 		insert serviceTest;
 
 		Portal_Application_Right__c appRight = new Portal_Application_Right__c(

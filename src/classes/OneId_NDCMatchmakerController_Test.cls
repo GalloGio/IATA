@@ -290,7 +290,8 @@ public class OneId_NDCMatchmakerController_Test {
 			Contact con = new Contact(LastName ='Con',AccountId = ac.Id, Email='testuser@example.com');
 			insert con;
 
-			Portal_Applications__c pa = new Portal_Applications__c(Name = 'One Id NDC Matchmaker');
+			Portal_Applications__c pa = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+			pa.Name = 'One Id NDC Matchmaker';
 			insert pa;
 
 			Account_Role_Services__c arss = new Account_Role_Services__c(Account_Roles__c = ars.Id, Portal_Service__c = pa.Id);
@@ -347,7 +348,8 @@ public class OneId_NDCMatchmakerController_Test {
 			Account_Role__c rol = new Account_Role__c (Account__c = ac.Id, RecordTypeId = roleRecordTypeId, Account_Roles__c = ars.Id);
 			insert rol;
 
-			Portal_Applications__c pa = new Portal_Applications__c(Name = 'One Id NDC Matchmaker');
+			Portal_Applications__c pa = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+			pa.Name = 'One Id NDC Matchmaker';
 			insert pa;
 
 			Account_Role_Services__c arss = new Account_Role_Services__c(Account_Roles__c = ars.Id, Portal_Service__c = pa.Id);
@@ -420,7 +422,8 @@ public class OneId_NDCMatchmakerController_Test {
 			Contact con = new Contact(LastName ='Con',AccountId = ac.Id, Email='testuser@example.com');
 			insert con;
 
-			Portal_Applications__c pa = new Portal_Applications__c(Name = 'One Id NDC Matchmaker');
+			Portal_Applications__c pa = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+			pa.Name = 'One Id NDC Matchmaker';
 			insert pa;
 
 			Account_Role_Services__c arss = new Account_Role_Services__c(Account_Roles__c = ars.Id, Portal_Service__c = pa.Id);

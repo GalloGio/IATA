@@ -14,7 +14,8 @@ private class ANG_ContactHandlerTest {
 		Contact c = new Contact(accountId = a1.id, FirstName = 'Test' , LastName = 'test 1');
 		insert c;
 
-		Portal_Applications__c ps = new Portal_Applications__c ( ANG_Cannot_move_contact_between_Agencies__c = true);
+		Portal_Applications__c ps = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		ps.ANG_Cannot_move_contact_between_Agencies__c = true;
 		insert ps;
 		Portal_Application_Right__c pa = new Portal_Application_Right__c(Contact__c = c.id,Portal_Application__c = ps.id,Right__c = 'Access Requested');
 		insert pa;

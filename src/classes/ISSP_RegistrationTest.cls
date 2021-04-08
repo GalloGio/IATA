@@ -533,7 +533,7 @@ private class ISSP_RegistrationTest {
 		acc.IATACode__c = '12345678';
 		insert acc;
 
-		Portal_Applications__c newApp = new Portal_Applications__c();
+		Portal_Applications__c newApp = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
 		newApp.Name = 'TEST';
 		insert newApp;
 

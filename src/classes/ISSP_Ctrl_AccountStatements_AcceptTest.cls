@@ -20,10 +20,9 @@ public class ISSP_Ctrl_AccountStatements_AcceptTest {
 	}
 
 	public static Portal_Applications__c createAccountStatementApp(User user) {
-		Portal_Applications__c app = new Portal_Applications__c(
-			Name = ISSP_Ctrl_AccountStatements.APP_NAME
-		);
-		insert app;
+		Portal_Applications__c app = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		app.Name = ISSP_Ctrl_AccountStatements.APP_NAME;
+        insert app;
 		Portal_Application_Right__c appRight = new Portal_Application_Right__c(
 			Portal_Application__c = app.Id,
 			Right__c = 'Access Granted',

@@ -5,7 +5,8 @@ private class ANG_MulticountryHelperTest {
 
 		Test.startTest();
 
-		Portal_Applications__c pa = new Portal_Applications__c(name = 'Risk Profile and RHC');
+		Portal_Applications__c pa = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		pa.Name = 'Risk Profile and RHC';
 		insert pa;
 
 		AMS_Settlement_System__c bspPT = new AMS_Settlement_System__c(
