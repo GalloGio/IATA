@@ -17,7 +17,28 @@
         <fieldManageability>DeveloperControlled</fieldManageability>
         <label>Oscar Process</label>
         <length>255</length>
-        <required>false</required>
+        <required>true</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Other_Conditions__c</fullName>
+        <description>Contains a SOQL-like to evaluate if this record is applied</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Other Conditions</label>
+        <length>60000</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Promotion_Name__c</fullName>
+        <description>Promotion name to apply</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Promotion Name</label>
+        <length>255</length>
+        <required>true</required>
         <type>Text</type>
         <unique>false</unique>
     </fields>
@@ -31,6 +52,18 @@
         <type>Date</type>
     </fields>
     <label>Oscar Promotion</label>
+    <listViews>
+        <fullName>All_Promotions</fullName>
+        <columns>DeveloperName</columns>
+        <columns>Promotion_Name__c</columns>
+        <columns>Start_Date__c</columns>
+        <columns>End_Date__c</columns>
+        <columns>Oscar_Process__c</columns>
+        <columns>Other_Conditions__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All Promotions</label>
+        <language>en_US</language>
+    </listViews>
     <pluralLabel>Oscar Promotions</pluralLabel>
     <visibility>Public</visibility>
 </CustomObject>
