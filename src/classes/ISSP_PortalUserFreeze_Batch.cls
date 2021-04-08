@@ -48,7 +48,7 @@ global class ISSP_PortalUserFreeze_Batch implements Database.Batchable<SOBJECT>,
 											]);
 		}
 		else{
-			return Database.getQueryLocator([SELECT Id, ContactId, Email, LastLoginDate, CreatedDate
+			return Database.getQueryLocator([SELECT Id, ContactId, Email, LastLoginDate, CreatedDate, Contact.Account.RecordType.Name
 	 										FROM User WHERE
 	 										Email = 'ISSPPortalUserFreezeBatchTest@ISSPPortalUserFreezeBatchTest.com'
 											]);
@@ -64,9 +64,11 @@ global class ISSP_PortalUserFreeze_Batch implements Database.Batchable<SOBJECT>,
 		//String template75Id = [SELECT Id FROM EmailTemplate WHERE DeveloperName = 'ISSP_75_days_warning'].Id;
 		List<User> userList = scope;
 		List<Messaging.SingleEmailMessage> mailsToSend = new List<Messaging.SingleEmailMessage>();
+        Boolean inactive30 = false;
+		Boolean inactive90 = false;
 		for(User thisUser : userList) {
-			Boolean inactive30 = false;
-			Boolean inactive90 = false;
+			inactive30 = false;
+            inactive90 = false;
 			if (test.isRunningtest()){
 				inactive90 = true;
 				inactive30 = true;
@@ -74,8 +76,7 @@ global class ISSP_PortalUserFreeze_Batch implements Database.Batchable<SOBJECT>,
 
 			if (thisUser.LastLoginDate < minus90days || (thisUser.LastLoginDate == null && thisUser.CreatedDate < minus90days)){
 				inactive90 = true;
-			}else if(thisUser.Contact.Account.RecordType.Name == 'Standard Account' && (thisUser.LastLoginDate < minus90days || 
-			(thisUser.LastLoginDate == null && thisUser.CreatedDate < minus90days))){
+			}else if(thisUser.Contact.Account.RecordType.Name == 'Standard Account' && (thisUser.LastLoginDate < minus90days || (thisUser.LastLoginDate == null && thisUser.CreatedDate < minus90days))){
 				inactive30 = true;
 			}
 
@@ -84,6 +85,7 @@ global class ISSP_PortalUserFreeze_Batch implements Database.Batchable<SOBJECT>,
 				thisUser.IsActive = false;
 				thisUser.Portal_User_Frozen_Checkbox__c = true;
 			}
+            
 		}
 		Database.saveResult[] userResult;
 		userResult = Database.update(userList, false);
