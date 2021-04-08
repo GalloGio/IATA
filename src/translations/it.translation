@@ -18178,7 +18178,7 @@ la funzione &quot;Password dimenticata?&quot;</label>
         <name>ISSP_ANG_View_Owners_Tooltip</name>
     </customLabels>
     <customLabels>
-        <label>Cessione volontaria</label>
+        <label>Chiusura volontaria</label>
         <name>ISSP_ANG_Voluntary_Relinquishment</name>
     </customLabels>
     <customLabels>
@@ -37222,6 +37222,15 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
         <sections>
             <label><!-- Tracked Emails --></label>
             <name>Tracked Emails</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Cases with user details --></description>
+        <label><!-- Cases with user details --></label>
+        <name>Cases_with_user_details</name>
+        <sections>
+            <label><!-- Cases --></label>
+            <name>Cases</name>
         </sections>
     </reportTypes>
     <reportTypes>

@@ -711,11 +711,13 @@
         <columns>Success__c</columns>
         <columns>Error_Message__c</columns>
         <columns>User__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>CREATED_DATE</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>CREATED_DATE</field>
             <operation>equals</operation>
-            <value>1/18/2021 12:00 AM</value>
+            <value>TODAY</value>
         </filters>
         <filters>
             <field>System__c</field>

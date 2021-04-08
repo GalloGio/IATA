@@ -947,6 +947,20 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
         <label>IFTP</label>
     </listViews>
     <listViews>
+        <fullName>ONE_Source</fullName>
+        <columns>NAME</columns>
+        <columns>Right__c</columns>
+        <columns>Contact__c</columns>
+        <columns>Portal_Application__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Portal_Application__c</field>
+            <operation>startsWith</operation>
+            <value>One S</value>
+        </filters>
+        <label>ONE Source</label>
+    </listViews>
+    <listViews>
         <fullName>Pending_approvals</fullName>
         <columns>Contact__c</columns>
         <columns>Portal_Application__c</columns>
@@ -1104,6 +1118,10 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
             </values>
             <values>
                 <fullName>Access Granted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Access Requested</fullName>
                 <default>false</default>
             </values>
             <values>
