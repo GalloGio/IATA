@@ -670,7 +670,7 @@ public static Contact contactInfo = new Contact();
 
 		String fieldsetBasic;
 		String fieldsetContact;
-		if(rType == 'IATA_Airline_BR' || rType == 'IATA_Airline'){
+		if(rType == 'IATA_Airline_BR' || rType == 'IATA_Airline' || rType == 'Operator'){
 			fieldsetBasic = FIELDSET_AIRLINE;
 			fieldsetContact = FIELDSET_CONTACT_AIRLINE;
 		}
