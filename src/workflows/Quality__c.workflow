@@ -1108,6 +1108,16 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Closed</fullName>
+        <description>RPM has rejected/cancelled this Exception. No Further Action.</description>
+        <field>Status__c</field>
+        <literalValue>Closed</literalValue>
+        <name>Closed</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Literal</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Closed_Expired</fullName>
         <field>Status__c</field>
         <literalValue>Closed - Expired</literalValue>
@@ -2735,19 +2745,12 @@
             <name>Exception_Closed</name>
             <type>Alert</type>
         </actions>
+        <actions>
+            <name>Closed</name>
+            <type>FieldUpdate</type>
+        </actions>
         <active>true</active>
-        <formula>AND(
-  ISCHANGED(Status__c),
-  OR(
-    ISPICKVAL(Status__c,&apos;Closed&apos;),
-    ISPICKVAL(Status__c,&apos;Closed - Rejected&apos;),
-    ISPICKVAL(Status__c,&apos;Closed - Error&apos;),
-    ISPICKVAL(Status__c,&apos;Closed - Extended&apos;),
-    ISPICKVAL(Status__c,&apos;Closed - Not required&apos;),
-    ISPICKVAL(Status__c,&apos;Closed - Expired&apos;),
-    ISPICKVAL(Status__c,&apos;Expired&apos;)
-  )
-)</formula>
+        <formula>AND(   ISCHANGED(Status__c),   OR(     ISPICKVAL(Status__c,&apos;Closed&apos;),     ISPICKVAL(Status__c,&apos;Closed - Rejected&apos;),     ISPICKVAL(Status__c,&apos;Closed - Error&apos;),     ISPICKVAL(Status__c,&apos;Closed - Extended&apos;),     ISPICKVAL(Status__c,&apos;Closed - Not required&apos;),     ISPICKVAL(Status__c,&apos;Closed - Expired&apos;),     ISPICKVAL(Status__c,&apos;Expired&apos;)   ) )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
