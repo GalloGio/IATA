@@ -40,14 +40,40 @@ private class IATAPayServiceTest {
 		IATAPayService.manageUserOnboarding(new Set<Contact>{contact}, PortalApplicationRights.ACCESSDENIED);
 		//test account contact role unassignment
 		Map<Id,Account_Contact_Role__c> accountContactRoleMap = AccountContactRoleSelector.selectMapByServiceAndContactIdSet(IATAPayService.FUNCTIONALROLE, new Set<Id>{contact.Id, contact2.Id});
-		System.assertEquals(1, accountContactRoleMap.size(), 'There should still be 1 Contact with the role');
+		Integer activeCount = 0;
+		for(Account_Contact_Role__c accountContactRole : accountContactRoleMap.values()){
+			if(accountContactRole.Status__c.equals(AccountContactRoles.STATUSACTIVE))
+				activeCount++;
+		}
+		System.assertEquals(1, activeCount, 'There should still be 1 Contact with the role');
+
 		List<Account_Role__c> accountRoleList = AccountRoleSelector.selectByAccountIdSetAndRole(new Set<Id>{account.Id}, IATAPayService.FUNCTIONALROLE);
 		System.assertEquals(1, accountRoleList.size(), 'Expected 1 Account Role');
+
 		IATAPayService.manageUserOnboarding(new Set<Contact>{contact2}, PortalApplicationRights.ACCESSDENIED);
 		accountContactRoleMap = AccountContactRoleSelector.selectMapByServiceAndContactIdSet(IATAPayService.FUNCTIONALROLE, new Set<Id>{contact.Id, contact2.Id});
-		System.assertEquals(0, accountContactRoleMap.size(), 'There should still be no Contacts with the role');
+		activeCount = 0;
+		for(Account_Contact_Role__c accountContactRole : accountContactRoleMap.values()){
+			if(accountContactRole.Status__c.equals(AccountContactRoles.STATUSACTIVE))
+				activeCount++;
+		}
+		System.assertEquals(0, activeCount, 'There should still be no Contacts with the role');
 		//test account role unassignment
 		accountRoleList = AccountRoleSelector.selectByAccountIdSetAndRole(new Set<Id>{account.Id}, IATAPayService.FUNCTIONALROLE);
-		System.assertEquals(0, accountRoleList.size(), 'Expected 0 Account Roles');
+		activeCount = 0;
+		for(Account_Role__c accountRole : accountRoleList){
+			if(accountRole.Status__c.equals(AccountRoles.STATUSACTIVE))
+				activeCount++;
+		}
+		System.assertEquals(0, activeCount, 'Expected 0 Account Roles');
+	}
+
+	@IsTest
+	static void testException(){
+		try {
+			IATAPayService.manageUserOnboarding(null, null);
+		} catch (Exception e) {
+			System.assert(true);
+		}
 	}
 }

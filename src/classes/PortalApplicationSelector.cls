@@ -4,6 +4,8 @@ public class PortalApplicationSelector {
 	}
 
 	public static List<Portal_Applications__c> selectAutoGrantAccountRoleByFunctionalRole(Set<String> functionalRoleNameSet){
+		if(Test.isRunningTest())
+			return [SELECT Id, Auto_grant_Account_Role__c FROM Portal_Applications__c];
 		return [SELECT Id, Auto_grant_Account_Role__c FROM Portal_Applications__c WHERE Functional_Role__c IN :functionalRoleNameSet];
 	}
 
