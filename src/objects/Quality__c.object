@@ -74981,6 +74981,14 @@ ISPICKVAL( Status__c , &quot;Closed&quot;), ISNULL(DA_Closure_Date__c)
         <errorMessage>Closure date can not be higher than Deadline for alignment</errorMessage>
     </validationRules>
     <validationRules>
+        <fullName>Closure_date_higher_than_today</fullName>
+        <active>true</active>
+        <description>Closure date cannot be higher than today</description>
+        <errorConditionFormula>DA_Closure_Date__c &gt; TODAY()</errorConditionFormula>
+        <errorDisplayField>DA_Closure_Date__c</errorDisplayField>
+        <errorMessage>Closure date can not be higher than TODAY</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Compensation_Control_Present_No</fullName>
         <active>true</active>
         <errorConditionFormula>AND( ISPICKVAL(Compensation_Control_Present__c, &quot;NO&quot;), ISBLANK( Reason_for_lack_of_Compensation_Control__c ))</errorConditionFormula>
