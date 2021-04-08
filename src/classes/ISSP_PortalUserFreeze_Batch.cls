@@ -32,7 +32,7 @@ global class ISSP_PortalUserFreeze_Batch implements Database.Batchable<SOBJECT>,
 		DateTime minus90days = system.now() - 90;
 		DateTime minus30days = system.now() - 30;
 		if (!test.isRunningtest()){
-	 			return Database.getQueryLocator([SELECT Id, ContactId, Email, LastLoginDate, CreatedDate
+	 			return Database.getQueryLocator([SELECT Id, Contact.Account.RecordType.Name, ContactId, Email, LastLoginDate, CreatedDate
 	 										FROM User WHERE
 	 										IsActive = true
 	 										AND UserType = 'PowerPartner'
