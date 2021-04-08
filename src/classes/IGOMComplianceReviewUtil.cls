@@ -684,7 +684,7 @@ public without sharing class IGOMComplianceReviewUtil {
 		// validate permissions
 		List<ComplianceReview> complianceReviews = new List<ComplianceReview>();
 		for (Compliance_Review__c sfComplianceReview :
-			 [SELECT Id, Name, Effective_Date__c, Publish_Status__c, Document__c,
+			 [SELECT Id, Name, Effective_Date__c, Publish_Status__c, Document__c, Previous_Version__c,
 					  Document__r.Effective_Date__c, Title__c, Station__c, Document__r.Abbreviated_Name__c, Document__r.Edition__c, Document__r.Version__c, Document__r.Revision__c
 			  FROM Compliance_Review__c
 			  WHERE Station__c = :stationId AND Document__r.Is_Active__c = true

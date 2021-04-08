@@ -198,7 +198,7 @@ public without sharing class IGOMNotificationUtil {
 				for (IGOMComplianceReviewPartUtil.ComplianceReviewPart part : newParts) {
 					Notification noti = new Notification();
 					noti.contactRoleDetailId = notifiableContact.Id;
-					noti.procedureComplianceId = part.Id;
+					noti.procedureComplianceId = part.id;
 					noti.notificationSubject = IGOMConstants.METADATA.NOTIFICATION_NEW_GAP_SUBJECT;
 					noti.notificationBody = IGOMConstants.METADATA.NOTIFICATION_NEW_GAP_BODY;
 					noti.severity = IGOMConstants.NOTIFICATION.SEVERITY.ACTION_REQUIRED;
@@ -252,6 +252,33 @@ public without sharing class IGOMNotificationUtil {
 	}
 
 	/**
+	 * @description Method to send a notification to every admin regarding the availability of a new IGOM.
+	 * @param		contactDetailIds <List of the contact role detail ids>
+	 * @param		subject <Subject of the notification>
+	 * @param		body <Body of the notification>
+	 */
+	@AuraEnabled
+	public static void sendManualNotifications(Id stationId, List<Id> contactDetailIds, String subject, String body) {
+		Map<Id, NotifiableContact> notifiableContactsManual = getStationNotifiableContacts(stationId, IGOMConstants.NOTIFICATION.SEVERITY.MANUAL);
+		
+		if(!validateNotifiableContacts(contactDetailIds, notifiableContactsManual)){
+			throw new AuraHandledException(IGOMConstants.ERRORS.CONTACT_DETAILS_NOT_NOTIFIABLE_ERROR);
+		}
+		List<IGOM_Contact_Role_Procedure_Compliance__c> notifications = new List<IGOM_Contact_Role_Procedure_Compliance__c>();
+		for (Id contactDetailId : contactDetailIds) {
+			//Be able to create a notification for each type of notification allowing a contact to receive notification of both types
+			final NotifiableContact notifiableContact = notifiableContactsManual.get(contactDetailId);
+			Notification noti = new Notification();
+			noti.contactRoleDetailId = notifiableContact.Id;
+			noti.notificationSubject = subject;
+			noti.notificationBody = body;
+			noti.severity = IGOMConstants.NOTIFICATION.SEVERITY.MANUAL;
+			notifications.add(noti.toSalesforce());
+		}
+		insert notifications;
+	}
+
+	/**
 	 * @description Method to mark every notification regarding a GAP Analysis as read (acknowledged)
 	 * @param		gapAnalysisId <Id of the gap analysis>
 	 */
@@ -277,7 +304,8 @@ public without sharing class IGOMNotificationUtil {
 	@AuraEnabled(cacheable=true)
 	public static Map<Id, NotifiableContact> getGAPNotifiableContacts(Id gapAnalysisId, String notificationType) {
 		// Validate the notification type
-		if (notificationType != IGOMConstants.NOTIFICATION.SEVERITY.INFORMATIVE && notificationType != IGOMConstants.NOTIFICATION.SEVERITY.ACTION_REQUIRED) {
+		if (notificationType != IGOMConstants.NOTIFICATION.SEVERITY.INFORMATIVE && notificationType != IGOMConstants.NOTIFICATION.SEVERITY.ACTION_REQUIRED
+		|| notificationType == IGOMConstants.NOTIFICATION.SEVERITY.MANUAL) {
 			notificationType = IGOMConstants.NOTIFICATION.SEVERITY.INFORMATIVE;
 		}
 		// Validate gapAnalysisId content
@@ -319,7 +347,7 @@ public without sharing class IGOMNotificationUtil {
 		allHierarchichalRelationships.addAll(allRelationships.parentStations);
 		// Apply the rules of notification as seen in the document "IGOM Portal Roles and Hierarchies"
 		for (IGOMStationUtil.RelatedStation relatedStation : allHierarchichalRelationships) {
-			if (notificationType == IGOMConstants.NOTIFICATION.SEVERITY.INFORMATIVE) {
+			if (notificationType == IGOMConstants.NOTIFICATION.SEVERITY.INFORMATIVE || notificationType == IGOMConstants.NOTIFICATION.SEVERITY.MANUAL) {
 				// Specify the cases in which the notification will be sendable
 				if (!(relatedStation.stationInfo.type == 'Airline' && !relatedStation.acceptsNotifications)) {
 					notifiableAccountRoleIdToStation.put(relatedStation.stationInfo.accountRoleId, relatedStation.stationInfo);

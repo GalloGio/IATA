@@ -389,6 +389,7 @@ public without sharing class IGOMConstants {
 	public class NotificationSeverity_Constants {
 		public final String INFORMATIVE { get { return 'Informative'; } }
 		public final String ACTION_REQUIRED { get { return 'Action Required'; } }
+		public final String MANUAL { get { return 'Manual'; } }
 	}
 
 	// Document

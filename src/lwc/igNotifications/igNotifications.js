@@ -1,7 +1,10 @@
 import { LightningElement, track, wire, api } from 'lwc';
 import { constants, resources } from 'c/igUtility';
 import { refreshApex } from '@salesforce/apex';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+
 import getNotifications from '@salesforce/apex/IGOMNotificationUtil.getNotifications';
+import sendManualNotifications from '@salesforce/apex/IGOMNotificationUtil.sendManualNotifications';
 import markAsRead from '@salesforce/apex/IGOMNotificationUtil.markAsRead';
 import getOwnStations from '@salesforce/apex/IGOMStationUtil.getOwnStations';
 
@@ -78,10 +81,6 @@ export default class IgNotifications extends LightningElement {
         this.template.querySelector('c-ig-modal.manual-notification-modal').show();
     }
 
-    sendManualNotification(){
-        this.template.querySelector('c-ig-modal.manual-notification-modal').hide();
-    }
-
     // Apex calls
 
     markAsReadEvent(event) {
@@ -95,8 +94,54 @@ export default class IgNotifications extends LightningElement {
         refreshApex(this.notifications);
     }
 
-    sendManualNotification(event){
-        console.log('Sending manual notification');
+    async sendManualNotification(){
+        const manualNotifElem = this.template.querySelector("c-ig-manual-notification");
+        manualNotifElem.setLoading(true);
+        const emailInfo = manualNotifElem.getNotificationInformation();
+        var message;
+        var variant = 'error';
+        if(emailInfo.selectedUsers.length === 0){
+            this.template.querySelector('c-ig-modal.manual-notification-modal').hide();
+            manualNotifElem.setLoading(false);
+            return;
+        }
+
+        var emptyFields = [];
+        if(!emailInfo.subject){
+            emptyFields.push('subject');
+        }
+
+        if(!emailInfo.body){
+            emptyFields.push('body');
+        }
+
+        if(emptyFields.length > 0){
+            manualNotifElem.markFieldsAsEmpty(emptyFields);
+            manualNotifElem.setLoading(false);
+            return;
+        }
+
+		try {
+			await sendManualNotifications({ 
+				stationId: this.stationId,
+				contactDetailIds: emailInfo.selectedUsers, 
+				subject: emailInfo.subject,
+				body: emailInfo.body
+			});
+            message = 'Success';
+            variant = 'success';
+            manualNotifElem.setLoading(false);
+		} catch (error) {
+			util.debug.error(error);
+            manualNotifElem.setLoading(false);
+		}
+
+        this.template.querySelector('c-ig-modal.manual-notification-modal').hide();
+        const toastEv = new ShowToastEvent({
+            message: message,
+            variant: variant,
+        });
+        this.dispatchEvent(toastEv);
     }
 
     // Logical properties

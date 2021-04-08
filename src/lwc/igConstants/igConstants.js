@@ -30,7 +30,8 @@ const constants = {
             VALUES: {
                 ACTION_REQUIRED: 'Action Required',
                 RECOMMENDED: 'Recommended',
-                INFORMATIVE: 'Informative'
+                INFORMATIVE: 'Informative',
+                MANUAL: 'Manual'
             }
         }
     },

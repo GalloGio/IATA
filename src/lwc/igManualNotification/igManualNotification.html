@@ -1,5 +1,5 @@
 <template>
-    <div class="col-12 pl-5 pr-5">
+    <div class="col-12 pl-5 pr-5" if:false={isLoading}>
         <div class="col-10 offset-1 p-2">
             <h3>Select users to notify</h3>
         </div>
@@ -12,12 +12,16 @@
             </lightning-datatable>
         </div>
         <div class="col-10 offset-1 p-4">
-            <label class="small-font">Subject</label>
-            <input type="text" class="form-control width-100" onkeyup={newFilenameKeyUp}/>
+            <label class="small-font">Subject</label><span class="required-asterisk"> *</span></label>
+            <input data-id="subject" type="text" class="form-control width-100" required oninput={notificationSubjectUpdate}/>
         </div>
         <div class="col-10 offset-1 p-4">
-            <label class="small-font">Body</label>
-            <textarea class="form-control" rows="3" data-field="notes" oninput={notificationBodyUpdate}></textarea>
+            <label class="small-font">Body</label><span class="required-asterisk"> *</span></label>
+            <textarea data-id="body" class="form-control" rows="3" data-field="notes" required oninput={notificationBodyUpdate}></textarea>
         </div>
+    </div>
+
+    <div class="spinner" if:true={isLoading}>
+        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
     </div>
 </template>
