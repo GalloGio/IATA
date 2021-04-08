@@ -53,8 +53,10 @@ export default class PortalProfilePageHeader extends LightningElement {
         }
 
         get isAirlineUser(){
-            if(!this.loggedUser.Customer_type__c || 0 === this.loggedUser.Customer_type__c.length) return false;  
-            else return this.loggedUser.Customer_type__c.toLowerCase() == 'airline' || this.loggedUser.Customer_type__c.toLowerCase() == 'airlineich';             
+            if(!this.loggedUser.Contact_Account_Record_Type__c || 0 === this.loggedUser.Contact_Account_Record_Type__c.length) return false;  
+                else return (this.loggedUser.Contact_Account_Record_Type__c.toLowerCase() == 'iata_airline' || 
+                            this.loggedUser.Contact_Account_Record_Type__c.toLowerCase() == 'iata_airline_br' || 
+                            this.loggedUser.Contact_Account_Record_Type__c.toLowerCase() == 'operator');             
         }
 
         connectedCallback() {
