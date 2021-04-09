@@ -266,6 +266,11 @@
                     <default>false</default>
                     <label>Recommended</label>
                 </value>
+                <value>
+                    <fullName>Manual</fullName>
+                    <default>false</default>
+                    <label>Manual</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>

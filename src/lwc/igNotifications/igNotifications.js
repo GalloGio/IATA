@@ -134,7 +134,7 @@ export default class IgNotifications extends LightningElement {
             variant = 'success';
             manualNotifElem.setLoading(false);
 		} catch (error) {
-			util.debug.error(error);
+			console.error(error);
             manualNotifElem.setLoading(false);
 		}
 
