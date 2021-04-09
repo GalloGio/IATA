@@ -13190,7 +13190,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
             <name>IDFS_Complaint_out_of_query</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
