@@ -17,7 +17,6 @@ trigger CaseComment on CaseComment (before insert, before update, before delete,
 				}
 			}
 			handler.processCaseItems(Trigger.new);
-			Unbabel_CaseCommentRequestTranslation.requestTranslation(Trigger.new);
 		} else if(Trigger.isUpdate){
 			handler.doAfterUpdate(Trigger.newMap, Trigger.oldMap);
 		} else if(Trigger.isDelete){

@@ -22,7 +22,6 @@
     <tabs>unbabelapi__Unbabel_Translation_Request__c</tabs>
     <tabs>unbabelapi__Unbabel_Configuration_Menu</tabs>
     <tabs>Mass_Reminder_Email</tabs>
-    <tabs>unbabelsc__Unbabel_SC_Configuration_Menu</tabs>
     <tabs>standard-ContentSubscriptions</tabs>
     <tabs>Financial_Security_Request</tabs>
     <tabs>standard-Portal</tabs>

@@ -1138,11 +1138,11 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 	}
 
 	public class CustomerTypePicklist{
-		@AuraEnabled String picklistName {get; set;}
+		@AuraEnabled public String picklistName {get; set;}
 
-		@AuraEnabled String picklistLabel { get; private set; }
+		@AuraEnabled public String picklistLabel { get; private set; }
 
-		@AuraEnabled List<CustomerTypePicklistOption> picklistOptions { get; private set; }
+		@AuraEnabled public List<CustomerTypePicklistOption> picklistOptions { get; private set; }
 
 		public CustomerTypePicklist(String picklistLabel){
 			this.picklistLabel = picklistLabel;
@@ -1151,11 +1151,11 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 	}
 
 	public class CustomerTypePicklistOption{
-		@AuraEnabled String key { get; private set; }
+		@AuraEnabled public String key { get; private set; }
 
-		@AuraEnabled String label { get; private set; }
+		@AuraEnabled public String label { get; private set; }
 
-		@AuraEnabled Boolean isSelected { get; private set; }
+		@AuraEnabled public Boolean isSelected { get; private set; }
 
 		public CustomerTypePicklistOption(String key, String label, Boolean isSelected){
 			this.key = key;

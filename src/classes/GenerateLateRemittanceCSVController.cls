@@ -17,11 +17,17 @@ public without sharing class GenerateLateRemittanceCSVController {
 		} private set;
 	}
 
-	private Date startDate {get; set;}
-	private Date endDate {get; set;}
+	public Case dummyStart {get;set;}
+	public Case dummyEnd {get;set;}
 
-	public String strStartDate {get; set;}
-	public String strEndDate {get; set;}
+	private Date startDate {
+		get {return dummyStart.Bank_Guarantee_deadline__c;}
+		set;
+	}
+	private Date endDate {
+		get{return dummyEnd.Bank_Guarantee_deadline__c;}
+		set;
+	}
 
 	public String contentType {public get; private set;}
 	public Boolean filterView {public get; private set;}
@@ -33,8 +39,9 @@ public without sharing class GenerateLateRemittanceCSVController {
 
 	public GenerateLateRemittanceCSVController() {
 		// initialize the report dates to the first day and last day of the current month
-		strStartDate = Date.today().toStartOfMonth().format();
-		strEndDate = Date.today().toStartOfMonth().addMonths(1).addDays(-1).format();
+
+		this.dummyStart = new Case(Bank_Guarantee_deadline__c = Date.today());
+		this.dummyEnd = new Case(Bank_Guarantee_deadline__c = Date.today().toStartOfMonth().addMonths(1).addDays(-1));
 
 		// initialize the page in the view filter mode
 		filterView = true;
@@ -43,7 +50,7 @@ public without sharing class GenerateLateRemittanceCSVController {
 		// initialize the default extracted filename
 		strFileName = 'Late_Payment_Fee_Report.csv';
 
-		system.debug('### Start date: ' + strStartDate + '; End date: ' + strEndDate);
+		system.debug('### Start date: ' + this.startDate.format() + '; End date: ' + this.endDate.format());
 
 		this.listExcludedCountries = new list<String>();
 		for (Late_Payment_Fees_CASS_ISO_Countries_Exc__c country: Late_Payment_Fees_CASS_ISO_Countries_Exc__c.getall().values()) {
@@ -55,8 +62,6 @@ public without sharing class GenerateLateRemittanceCSVController {
 	public void GenerateCSV () {
 		contentType = 'application/octet-stream#' + (strFileName != '' ? strFileName : 'Late_Payment_Fee_Report.csv');
 		filterView = false;
-		startDate = Date.parse(strStartDate);
-		endDate = Date.parse(strEndDate);
 
 		system.debug('### Parsed dates for the CSV generation >>> Start date: ' + startDate + '; End date: ' + endDate);
 	}
@@ -201,174 +206,6 @@ public without sharing class GenerateLateRemittanceCSVController {
 			strCSVReport += '\n' + cw.toCSV();
 		}
 
-
-		/* REPORT 2 - Reinstatement fee report */
-		tmpListCases = [SELECT Id, Account.IATA_ISO_Country__r.SAP_Sales_Org__c, IFAP_Agent_Code__c, Short_Payment_Amount__c, Short_Payment_Date__c, Late_Payment_Date__c,
-								Remittance_Date__c, Remittance_Period__c, Currency__c, BSP_CASS__c, CaseNumber, Region__c, Account.IATA_ISO_Country__r.Name, Confirm_ALL_Outstanding_Amounts_Paid__c
-						FROM Case
-						WHERE RecordType.DeveloperName = 'SIDRA'
-						AND Update_AIMS_REI_DEFWITH__c <> null
-						AND (
-							DEF_Withdrawal_Reason__c = null
-							OR DEF_Withdrawal_Reason__c IN ('Bank error', 'Agent error')
-						)
-						AND (
-							BSP_CASS__c = 'BSP'
-							OR (
-								BSP_CASS__c = 'CASS'
-								AND Account.Category__c IN ('CASS Associate')
-								AND Account.IATA_ISO_Country__r.ISO_Code__c NOT IN :listExcludedCountries
-							)
-						)
-						AND BSPCountry__c NOT IN ('Israel', 'Russia & CIS')
-						AND Update_AIMS_DEF__c <> null
-
-						AND Account.IATA_ISO_Country__r.SAP_Sales_Org__c != null
-						AND Update_AIMS_REI_DEFWITH__c >= :startDate
-						AND Update_AIMS_REI_DEFWITH__c <= :endDate
-						AND Region__c = :strRegion
-						ORDER BY Id];
-
-		for (Case c : tmpListCases) {
-			// create the case wrapper for: Late payment fix fee
-			CaseWrapper cw = new CaseWrapper();
-			cw.DocType = 'ZO01';
-			cw.SalesOrg = c.Account.IATA_ISO_Country__r.SAP_Sales_Org__c;
-			cw.DistChan = '01';
-			cw.Division = '51';
-			cw.SalesOffice = '';
-			cw.CustName = '';
-			cw.AgentCode = c.IFAP_Agent_Code__c != null ? c.IFAP_Agent_Code__c : '';
-			cw.ContractNo = '';
-			cw.Ponumber = '';
-			cw.Podate = '';
-			cw.Sodesc = '';
-			cw.DocCurr = '';
-			cw.PayMethod = '';
-			cw.BillingDate = '';
-			cw.TextPrint = '';
-			cw.InternalRemark = '';
-			//cw.Material = '800395';
-			if (c.BSP_CASS__c == 'BSP') {
-				cw.Material = '800395';
-			}
-			if (c.BSP_CASS__c == 'CASS') {
-				cw.Material = '800931';
-			}
-			cw.MatDesc = 'Late Remittance Recovery ' + c.Remittance_Period__c;
-			cw.Quantity = '1';
-			cw.UnitPrice = '';
-			cw.UnitPriceCurr = '';
-			cw.DateFrom = startDate.format().replace('/','.');
-			cw.DateTo = endDate.format().replace('/','.');
-			cw.CaseNumber = c.CaseNumber;
-			cw.Region = c.Region__c;
-			cw.IATACountry = c.Account.IATA_ISO_Country__r.Name;
-
-			strCSVReport += '\n' + cw.toCSV();
-
-			// create the case wrapper for: Late payment variable fee
-			cw = new CaseWrapper();
-			cw.DocType = 'ZO01';
-			cw.SalesOrg = c.Account.IATA_ISO_Country__r.SAP_Sales_Org__c;
-			cw.DistChan = '01';
-			cw.Division = '51';
-			cw.SalesOffice = '';
-			cw.CustName = '';
-			cw.AgentCode = c.IFAP_Agent_Code__c != null ? c.IFAP_Agent_Code__c : '';
-			cw.ContractNo = '';
-			cw.Ponumber = '';
-			cw.Podate = '';
-			cw.Sodesc = '';
-			cw.DocCurr = '';
-			cw.PayMethod = '';
-			cw.BillingDate = '';
-			cw.TextPrint = '';
-			cw.InternalRemark = '';
-			//cw.Material = '800394';
-			if (c.BSP_CASS__c == 'BSP') {
-				cw.Material = '800394';
-			}
-			if (c.BSP_CASS__c == 'CASS') {
-				cw.Material = '801185';
-			}
-			cw.MatDesc = 'Late Remittance Interest ' + c.Remittance_Period__c;
-			//WMO-778 - ACAMBAS - Begin
-			Datetime tempDatetime;
-			Date confirmAllOutstandingAmountsPaid;
-
-			if(c.Confirm_ALL_Outstanding_Amounts_Paid__c != null) {
-				tempDatetime = c.Confirm_ALL_Outstanding_Amounts_Paid__c;
-				confirmAllOutstandingAmountsPaid = Date.newinstance(tempDatetime.year(), tempDatetime.month(), tempDatetime.day());
-			}
-
-			//cw.Quantity = (c.Late_Payment_Date__c != null && c.Remittance_Date__c != null) ? String.valueOf(c.Remittance_Date__c.daysBetween(c.Late_Payment_Date__c)) : 'ERROR: Remittance Date or Late Payment Date missing';
-			if(c.Late_Payment_Date__c != null && c.Remittance_Date__c != null) {
-				cw.Quantity = String.valueOf(c.Remittance_Date__c.daysBetween(c.Late_Payment_Date__c));
-			}
-			else {
-				if(c.Remittance_Date__c != null && c.Confirm_ALL_Outstanding_Amounts_Paid__c != null) {
-					cw.Quantity = String.valueOf(c.Remittance_Date__c.daysBetween(confirmAllOutstandingAmountsPaid));
-				}
-				else {
-					cw.Quantity = 'ERROR: Remittance Date or Late Payment Date/Confirm ALL Outst. Amounts Paid missing';
-				}
-			}
-			//WMO-778 - ACAMBAS - End
-			cw.UnitPrice = c.Short_Payment_Amount__c != null ? String.valueOf(c.Short_Payment_Amount__c) : '';
-			cw.UnitPriceCurr = c.Currency__c != null ? c.Currency__c : '';
-			cw.DateFrom = c.Remittance_Date__c != null ? c.Remittance_Date__c.format().replace('/','.') : ''; // Short_Payment_Date__c
-			//WMO-778 - ACAMBAS - Begin
-			//cw.DateTo = c.Late_Payment_Date__c != null ? c.Late_Payment_Date__c.format().replace('/','.') : '';
-			if(c.Late_Payment_Date__c != null) {
-				cw.DateTo = c.Late_Payment_Date__c.format().replace('/','.');
-			}
-			else if(c.Confirm_ALL_Outstanding_Amounts_Paid__c != null) {
-				cw.DateTo = confirmAllOutstandingAmountsPaid.format().replace('/','.');
-			}
-			else {
-				cw.DateTo = '';
-			}
-			//WMO-778 - ACAMBAS - End
-			cw.CaseNumber = c.CaseNumber;
-			cw.Region = c.Region__c;
-			cw.IATACountry = c.Account.IATA_ISO_Country__r.Name;
-
-			strCSVReport += '\n' + cw.toCSV();
-
-			// create the case wrapper for: Reinstatement fee
-			cw = new CaseWrapper();
-			cw.DocType = 'ZO01';
-			cw.SalesOrg = c.Account.IATA_ISO_Country__r.SAP_Sales_Org__c;
-			cw.DistChan = '01';
-			cw.Division = '51';
-			cw.SalesOffice = '';
-			cw.CustName = '';
-			cw.AgentCode = c.IFAP_Agent_Code__c != null ? c.IFAP_Agent_Code__c : '';
-			cw.ContractNo = '';
-			cw.Ponumber = '';
-			cw.Podate = '';
-			cw.Sodesc = '';
-			cw.DocCurr = '';
-			cw.PayMethod = '';
-			cw.BillingDate = '';
-			cw.TextPrint = '';
-			cw.InternalRemark = '';
-			cw.Material = '800402';
-			cw.MatDesc = '';
-			cw.Quantity = '1';
-			cw.UnitPrice = '';
-			cw.UnitPriceCurr = '';
-			cw.DateFrom = startDate.format().replace('/','.');
-			cw.DateTo = endDate.format().replace('/','.');
-			cw.CaseNumber = c.CaseNumber;
-			cw.Region = c.Region__c;
-			cw.IATACountry = c.Account.IATA_ISO_Country__r.Name;
-
-			strCSVReport += '\n' + cw.toCSV();
-		}
-
-
 		/* REPORT 3 - Minor error policy (IFAP) */
 		tmpListCases = [SELECT Id, Account.IATA_ISO_Country__r.SAP_Sales_Org__c, IFAP_Agent_Code__c, CaseNumber, Region__c, Account.IATA_ISO_Country__r.Name
 						FROM Case
@@ -377,12 +214,12 @@ public without sharing class GenerateLateRemittanceCSVController {
 						AND Account.IATA_ISO_Country__r.SAP_Sales_Org__c != null
 						AND (
 							(   RecordType.DeveloperName = 'IATA_Financial_Review'
-								AND Deadline_Date__c >= :date.newinstance(startDate.year(), startDate.month(), startDate.day())
-								AND Deadline_Date__c <= :date.newinstance(endDate.year(), endDate.month(), endDate.day())
+								AND Deadline_Date__c >= :startDate
+								AND Deadline_Date__c <= :endDate
 							) OR (
 								RecordType.DeveloperName = 'ProcessEuropeSCE'
-								AND Bank_Guarantee_deadline__c >= :date.newinstance(startDate.year(), startDate.month(), startDate.day())
-								AND Bank_Guarantee_deadline__c <= :date.newinstance(endDate.year(), endDate.month(), endDate.day())
+								AND Bank_Guarantee_deadline__c >= :startDate
+								AND Bank_Guarantee_deadline__c <= :endDate
 							)
 						)
 						AND Region__c = :strRegion
@@ -418,6 +255,73 @@ public without sharing class GenerateLateRemittanceCSVController {
 			cw.IATACountry = c.Account.IATA_ISO_Country__r.Name;
 
 			strCSVReport += '\n' + cw.toCSV();
+		}
+
+		/* REPORT 4 - Interest invoices/charges  */
+		tmpListCases = 
+			[SELECT Id, Account.IATA_ISO_Country__r.SAP_Sales_Org__c, IFAP_Agent_Code__c, Short_Payment_Amount__c, Short_Payment_Date__c, Late_Payment_Date__c,
+				Remittance_Date__c, Remittance_Period__c, Currency__c, BSP_CASS__c, CaseNumber, Region__c, Account.IATA_ISO_Country__r.Name, Confirm_ALL_Outstanding_Amounts_Paid__c,
+				(SELECT Id, Interest_Amount__c FROM Case_Details__r WHERE RecordType.DeveloperName = 'Repayment_Instalment_Details' LIMIT 1)
+			FROM Case
+			WHERE RecordType.DeveloperName = 'SIDRA'
+			AND Update_AIMS_REI_DEFWITH__c <> null
+			AND Update_AIMS_Repayment_agreed__c <> null
+			AND (
+				(
+					BSP_CASS__c = 'BSP'
+					AND Account.Location_Class__c = 'P'
+				)OR (
+					BSP_CASS__c = 'CASS'
+					AND Account.Category__c IN ('CASS Associate', 'IATA Cargo Agent')
+					AND Account.IATA_ISO_Country__r.ISO_Code__c NOT IN :listExcludedCountries
+				)
+			)
+			AND BSPCountry__c NOT IN ('Israel', 'Russia & CIS')
+			AND Account.IATA_ISO_Country__r.SAP_Sales_Org__c != null
+			AND Update_AIMS_REI_DEFWITH__c >= :startDate
+			AND Update_AIMS_REI_DEFWITH__c <= :endDate
+			AND Region__c = :strRegion
+			ORDER BY Id];
+
+		for (Case c : tmpListCases) {
+			// only records with interest will be included in the csv
+			if ( c.Case_Details__r.size()>0) {
+				// create the case wrapper for: Late payment fix fee
+				CaseWrapper cw = new CaseWrapper();
+				cw.DocType = 'ZO01';
+				cw.SalesOrg = c.Account.IATA_ISO_Country__r.SAP_Sales_Org__c;
+				cw.DistChan = '01';
+				cw.Division = '51';
+				cw.SalesOffice = '';
+				cw.CustName = '';
+				cw.AgentCode = c.IFAP_Agent_Code__c != null ? c.IFAP_Agent_Code__c : '';
+				cw.ContractNo = '';
+				cw.Ponumber = '';
+				cw.Podate = '';
+				cw.Sodesc = '';
+				cw.DocCurr = '';
+				cw.PayMethod = '';
+				cw.BillingDate = '';
+				cw.TextPrint = '';
+				cw.InternalRemark = '';
+				if (c.BSP_CASS__c == 'BSP') {
+					cw.Material = '801330';
+				}
+				if (c.BSP_CASS__c == 'CASS') {
+					cw.Material = '801331';
+				}
+				cw.MatDesc = 'Repayment Interest ' + c.BSP_CASS__c;
+				cw.Quantity = '1';
+				cw.UnitPrice = String.ValueOf(c.Case_Details__r[0].Interest_Amount__c);
+				cw.UnitPriceCurr = c.Currency__c;
+				cw.DateFrom = startDate.format().replace('/','.');
+				cw.DateTo = endDate.format().replace('/','.');
+				cw.CaseNumber = c.CaseNumber;
+				cw.Region = c.Region__c;
+				cw.IATACountry = c.Account.IATA_ISO_Country__r.Name;
+	
+				strCSVReport += '\n' + cw.toCSV();
+			}
 		}
 
 		return strCSVReport;

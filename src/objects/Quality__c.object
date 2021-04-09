@@ -12061,6 +12061,11 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
                     <default>false</default>
                     <label>Closed - Extended</label>
                 </value>
+                <value>
+                    <fullName>Closed - Not required</fullName>
+                    <default>false</default>
+                    <label>Closed - Not required</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -19632,6 +19637,10 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
                 <default>false</default>
             </values>
             <values>
+                <fullName>Closed - Not required</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Under Investigation</fullName>
                 <default>true</default>
             </values>
@@ -25136,6 +25145,10 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
             <values>
                 <fullName>Closed - Extended</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed - Not required</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -30670,6 +30683,10 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
                 <default>false</default>
             </values>
             <values>
+                <fullName>Closed - Not required</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Closed - Rejected</fullName>
                 <default>false</default>
             </values>
@@ -36042,6 +36059,10 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
         <picklistValues>
             <picklist>Status__c</picklist>
             <values>
+                <fullName>Closed - Not required</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Under Investigation</fullName>
                 <default>true</default>
             </values>
@@ -41406,6 +41427,10 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
             <values>
                 <fullName>Closed - Extended</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed - Not required</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -46921,6 +46946,10 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
         <picklistValues>
             <picklist>Status__c</picklist>
             <values>
+                <fullName>Closed - Not required</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Under Investigation</fullName>
                 <default>true</default>
             </values>
@@ -52425,6 +52454,10 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
             <values>
                 <fullName>Closed - Extended</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed - Not required</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -57959,6 +57992,10 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
                 <default>false</default>
             </values>
             <values>
+                <fullName>Closed - Not required</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Closed - Rejected</fullName>
                 <default>false</default>
             </values>
@@ -63439,6 +63476,10 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
         <picklistValues>
             <picklist>Status__c</picklist>
             <values>
+                <fullName>Closed - Not required</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Under Investigation</fullName>
                 <default>true</default>
             </values>
@@ -68911,6 +68952,10 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
             <values>
                 <fullName>Closed - Extended</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed - Not required</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -74413,6 +74458,10 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
                 <default>false</default>
             </values>
             <values>
+                <fullName>Closed - Not required</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Closed - Rejected</fullName>
                 <default>false</default>
             </values>
@@ -74916,12 +74965,20 @@ ISPICKVAL(Exception_Classification_Type__c, &quot;Services Conference&quot;)
     </validationRules>
     <validationRules>
         <fullName>Closure_Date_cannot_be_deleted</fullName>
-        <active>true</active>
+        <active>false</active>
         <errorConditionFormula>AND(
 ISPICKVAL( Status__c , &quot;Closed&quot;), ISNULL(DA_Closure_Date__c)
 )</errorConditionFormula>
         <errorDisplayField>DA_Closure_Date__c</errorDisplayField>
         <errorMessage>Closure Date cannot be deleted</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Closure_date_higher_than_alignment</fullName>
+        <active>false</active>
+        <description>Closure date cannot be higher than Deadline for alignment</description>
+        <errorConditionFormula>DA_Closure_Date__c &gt; Deadline_for_Alignment__c</errorConditionFormula>
+        <errorDisplayField>DA_Closure_Date__c</errorDisplayField>
+        <errorMessage>Closure date can not be higher than Deadline for alignment</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Closure_date_higher_than_today</fullName>

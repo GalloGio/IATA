@@ -342,19 +342,18 @@ public without sharing class OneId_Fred_AccountSelection_CTRL {
 	}
 
 	public class InitParam {
-		@AuraEnabled Boolean isGuest {get; set;}
-		@AuraEnabled Boolean isFredPrimaryUser {get; set;}
-		@AuraEnabled String primaryUserId {get; set;}
-		@AuraEnabled Account partnerAccount {get; set;}
-		@AuraEnabled Boolean isAlreadyPartner {get; set;}
-		@AuraEnabled Boolean createPrimary {get; set;}
-		@AuraEnabled Boolean isInvitation {get; set;}
+		@AuraEnabled public Boolean isGuest {get; set;}
+		@AuraEnabled public Boolean isFredPrimaryUser {get; set;}
+		@AuraEnabled public String primaryUserId {get; set;}
+		@AuraEnabled public Account partnerAccount {get; set;}
+		@AuraEnabled public Boolean isAlreadyPartner {get; set;}
+		@AuraEnabled public Boolean createPrimary {get; set;}
+		@AuraEnabled public Boolean isInvitation {get; set;}
 	}
 
 
 	@AuraEnabled
 	public static SearchWrap getAccountsByType(String customerType, String userInput) {
-		system.debug(customerType+' => '+userInput);
 		SearchWrap sw = new SearchWrap();
 
 		String recordTypeSearch = customerType;
