@@ -11,6 +11,14 @@
         <value xsi:type="xsd:string">ANG.NEW.HE.LITE.1.0</value>
     </values>
     <values>
+        <field>Other_Conditions__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Promotion_Name__c</field>
+        <value xsi:type="xsd:string">TIDS_to_GoLite</value>
+    </values>
+    <values>
         <field>Start_Date__c</field>
         <value xsi:type="xsd:date">2020-07-01</value>
     </values>
