@@ -3,6 +3,7 @@ import { constants, resources } from 'c/igUtility';
 import { refreshApex } from '@salesforce/apex';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { label } from 'c/igLabels';
+import { util } from 'c/igUtility';
 
 import getNotifications from '@salesforce/apex/IGOMNotificationUtil.getNotifications';
 import sendManualNotifications from '@salesforce/apex/IGOMNotificationUtil.sendManualNotifications';
@@ -134,7 +135,7 @@ export default class IgNotifications extends LightningElement {
             variant = 'success';
             manualNotifElem.setLoading(false);
 		} catch (error) {
-			console.error(error);
+			util.debug.error(error);
             manualNotifElem.setLoading(false);
 		}
 
