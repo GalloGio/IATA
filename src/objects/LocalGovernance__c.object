@@ -1920,19 +1920,6 @@ NOT($Permission.Modify_Local_Group_Owners)
         <errorMessage>You are not allowed to delete participants from this group</errorMessage>
     </validationRules>
     <validationRules>
-        <fullName>Either_a_Division_or_a_Region</fullName>
-        <active>false</active>
-        <errorConditionFormula>AND(
-  RecordType.DeveloperName = &quot;Reg_Div_Groups&quot;,
-
-   NOT(ISPICKVAL(Region__c, &quot;N/A&quot;)),
-   NOT(ISPICKVAL(Division__c, &quot;N/A&quot;))
-
-
-)</errorConditionFormula>
-        <errorMessage>The group can have either a Division or a Region - but not both at the same time</errorMessage>
-    </validationRules>
-    <validationRules>
         <fullName>Industry_Group_Ownership</fullName>
         <active>true</active>
         <description>Avoid users from changing owner of Local groups since queue ownership is being used email alerts for Local group meetings</description>

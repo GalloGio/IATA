@@ -1597,13 +1597,6 @@ RIGHT(LEFT(TEXT( Termination_Date__c ), 4),2)
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <validationRules>
-        <fullName>Employee_Validation</fullName>
-        <active>false</active>
-        <errorConditionFormula>AND(RecordType.DeveloperName = &quot;Employee&quot;,OR(ISBLANK(Account__c),ISBLANK(Contact__c)),ISBLANK(Legacy_External_ID__c)
-)</errorConditionFormula>
-        <errorMessage>For &quot;Employee&quot; Account Role please fill the Account, Contact and Person.</errorMessage>
-    </validationRules>
-    <validationRules>
         <fullName>Ownership_Validation</fullName>
         <active>true</active>
         <errorConditionFormula>AND(

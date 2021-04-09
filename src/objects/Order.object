@@ -1571,11 +1571,4 @@
         <searchResultsAdditionalFields>ORDERS.ORDER_NUMBER</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
-    <validationRules>
-        <fullName>Order_Date_in_Future</fullName>
-        <active>false</active>
-        <errorConditionFormula>EffectiveDate &lt;  TODAY()</errorConditionFormula>
-        <errorDisplayField>EffectiveDate</errorDisplayField>
-        <errorMessage>Order Start Date should not in the past</errorMessage>
-    </validationRules>
 </CustomObject>
