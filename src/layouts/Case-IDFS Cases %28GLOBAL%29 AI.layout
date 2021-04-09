@@ -6,8 +6,6 @@
     <customButtons>Log_Phone_Case</customButtons>
     <customButtons>Change_Routing</customButtons>
     <customButtons>Move_to_Recycle_Bin</customButtons>
-    <customButtons>unbabelsc__Unbabel_Translate_Case</customButtons>
-    <customButtons>Translate_Last_Customer_Comment</customButtons>
     <customConsoleComponents>
         <subtabComponents>
             <containers>
@@ -66,14 +64,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Description</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>unbabelsc__Unbabel_Language__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>unbabelsc__Unbabel_Translated_Description__c</field>
             </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>
@@ -453,6 +443,11 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
+            <actionName>Case.New_Comment_Key_Customer_Alert</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>0</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>Case.Log_Phone_Case_Key_Customer_Alert</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>1</sortOrder>
@@ -461,11 +456,6 @@
             <actionName>Case.Escalate_within_IATA_Key_Customer_Alert</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>2</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Case.New_Comment_Key_Customer_Alert</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>0</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <quickActionList/>
