@@ -1867,11 +1867,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>unbabelsc__Unbabel_Always_check_language__c</field>
-            <table>Case</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>Case_Queue_ID__c</field>
             <table>Case</table>
         </columns>
@@ -1927,11 +1922,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>unbabelsc__Unbabel_Language__c</field>
-            <table>Case</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>Type_of_REI_WD__c</field>
             <table>Case</table>
         </columns>
@@ -1978,11 +1968,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Action__c</field>
-            <table>Case</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>unbabelsc__Unbabel_Translated_Description__c</field>
             <table>Case</table>
         </columns>
         <columns>
