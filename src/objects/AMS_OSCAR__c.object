@@ -4143,6 +4143,16 @@ Promotions defined in Custom Metadata &apos;Oscar_Promotion__mdt&apos;</descript
                     <default>false</default>
                     <label>TIDS to GoLite (free)</label>
                 </value>
+                <value>
+                    <fullName>BSP_XC_TIDS_to_GoLite</fullName>
+                    <default>false</default>
+                    <label>BSP XC TIDS to GoLite (free)</label>
+                </value>
+                <value>
+                    <fullName>BSP_XC_TIDS_to_GoStandard</fullName>
+                    <default>false</default>
+                    <label>BSP XC TIDS to GoStandard (free)</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
         <visibleLines>4</visibleLines>
@@ -57064,6 +57074,14 @@ The values selected by the analyst will determine the reason why the application
         </picklistValues>
         <picklistValues>
             <picklist>Promotions__c</picklist>
+            <values>
+                <fullName>BSP_XC_TIDS_to_GoLite</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BSP_XC_TIDS_to_GoStandard</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>TIDS_to_GoLite</fullName>
                 <default>false</default>
