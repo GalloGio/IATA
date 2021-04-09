@@ -85,7 +85,7 @@
 ) </stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_2_myRule_1_A1_9398473341</name>
+        <name>formula_2_myRule_1_A1_2896423478</name>
         <dataType>String</dataType>
         <expression>CASE({!myVariable_current.Region__c} ,
   &apos;Europe&apos;, &apos;00G1r000002xKTB&apos;,
@@ -108,7 +108,7 @@
                 <stringValue>&quot;#C &quot; + TEXT([Case].Region__c) + &quot;-&quot; + [Case].CaseNumber + &quot; &quot; + [Case].Subject</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_3_myRule_1_A1_1950704668</name>
+        <name>formula_3_myRule_1_A1_9433525747</name>
         <dataType>String</dataType>
         <expression>&quot;#C &quot; + TEXT({!myVariable_current.Region__c}) + &quot;-&quot; + {!myVariable_current.CaseNumber} + &quot; &quot; + {!myVariable_current.Subject}</expression>
     </formulas>
@@ -118,7 +118,15 @@
             <value>
                 <stringValue>AND(
   NOT(ISNEW()),
-  [Case].IsComplaint__c
+  [Case].IsComplaint__c,
+  OR(
+    [Case].RecordTypeDeveloperName__c=&apos;ProcessEuropeSCE&apos;,
+    [Case].RecordTypeDeveloperName__c=&apos;SIDRA&apos;,
+    [Case].RecordTypeDeveloperName__c=&apos;IATA_Financial_Review&apos;,
+    [Case].RecordTypeDeveloperName__c=&apos;CS_Process_IDFS_ISS&apos;,
+    [Case].RecordTypeDeveloperName__c=&apos;SIDRA_Lite&apos;,
+    [Case].RecordTypeDeveloperName__c=&apos;OSCAR_Communication&apos;
+   )
 )</stringValue>
             </value>
         </processMetadataValues>
@@ -126,7 +134,15 @@
         <dataType>Boolean</dataType>
         <expression>AND(
   NOT(ISNEW()),
-  {!myVariable_current.IsComplaint__c}
+  {!myVariable_current.IsComplaint__c},
+  OR(
+    {!myVariable_current.RecordTypeDeveloperName__c}=&apos;ProcessEuropeSCE&apos;,
+    {!myVariable_current.RecordTypeDeveloperName__c}=&apos;SIDRA&apos;,
+    {!myVariable_current.RecordTypeDeveloperName__c}=&apos;IATA_Financial_Review&apos;,
+    {!myVariable_current.RecordTypeDeveloperName__c}=&apos;CS_Process_IDFS_ISS&apos;,
+    {!myVariable_current.RecordTypeDeveloperName__c}=&apos;SIDRA_Lite&apos;,
+    {!myVariable_current.RecordTypeDeveloperName__c}=&apos;OSCAR_Communication&apos;
+   )
 )</expression>
     </formulas>
     <formulas>
@@ -135,7 +151,15 @@
             <value>
                 <stringValue>AND(
   NOT(ISNEW()),
-  [Case].IsComplaint__c
+  [Case].IsComplaint__c,
+  OR(
+    [Case].RecordTypeDeveloperName__c=&apos;ProcessEuropeSCE&apos;,
+    [Case].RecordTypeDeveloperName__c=&apos;SIDRA&apos;,
+    [Case].RecordTypeDeveloperName__c=&apos;IATA_Financial_Review&apos;,
+    [Case].RecordTypeDeveloperName__c=&apos;CS_Process_IDFS_ISS&apos;,
+    [Case].RecordTypeDeveloperName__c=&apos;SIDRA_Lite&apos;,
+    [Case].RecordTypeDeveloperName__c=&apos;OSCAR_Communication&apos;
+   )
 )</stringValue>
             </value>
         </processMetadataValues>
@@ -143,10 +167,18 @@
         <dataType>Boolean</dataType>
         <expression>AND(
   NOT(ISNEW()),
-  {!myVariable_old.IsComplaint__c}
+  {!myVariable_old.IsComplaint__c},
+  OR(
+    {!myVariable_old.RecordTypeDeveloperName__c}=&apos;ProcessEuropeSCE&apos;,
+    {!myVariable_old.RecordTypeDeveloperName__c}=&apos;SIDRA&apos;,
+    {!myVariable_old.RecordTypeDeveloperName__c}=&apos;IATA_Financial_Review&apos;,
+    {!myVariable_old.RecordTypeDeveloperName__c}=&apos;CS_Process_IDFS_ISS&apos;,
+    {!myVariable_old.RecordTypeDeveloperName__c}=&apos;SIDRA_Lite&apos;,
+    {!myVariable_old.RecordTypeDeveloperName__c}=&apos;OSCAR_Communication&apos;
+   )
 )</expression>
     </formulas>
-    <interviewLabel>Case_Complaints_Creation-7_InterviewLabel</interviewLabel>
+    <interviewLabel>Case_Complaints_Creation-2_InterviewLabel</interviewLabel>
     <label>Case Complaints Creation</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -421,7 +453,7 @@
             </processMetadataValues>
             <field>OwnerId</field>
             <value>
-                <elementReference>formula_2_myRule_1_A1_9398473341</elementReference>
+                <elementReference>formula_2_myRule_1_A1_2896423478</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -565,7 +597,7 @@
             </processMetadataValues>
             <field>Subject</field>
             <value>
-                <elementReference>formula_3_myRule_1_A1_1950704668</elementReference>
+                <elementReference>formula_3_myRule_1_A1_9433525747</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -703,7 +735,7 @@
         <object>Case</object>
     </recordCreates>
     <startElementReference>myDecision</startElementReference>
-    <status>Obsolete</status>
+    <status>Active</status>
     <variables>
         <name>myVariable_current</name>
         <dataType>SObject</dataType>

@@ -16,7 +16,7 @@
         <inputParameters>
             <name>emailBody</name>
             <value>
-                <stringValue>The IATA_Pay_User_Access-5 invocable process failed to start because no records in your org match the record Id specified. In the entities that invoke IATA_Pay_User_Access-5, such as other processes, check the value for this input: SObjectId.</stringValue>
+                <stringValue>The IATA_Pay_User_Access-2 invocable process failed to start because no records in your org match the record Id specified. In the entities that invoke IATA_Pay_User_Access-2, such as other processes, check the value for this input: SObjectId.</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -42,7 +42,7 @@
         <inputParameters>
             <name>emailBody</name>
             <value>
-                <stringValue>The IATA_Pay_User_Access-5 invocable process failed to start because a valid value wasn&apos;t found. This can happen when entities that invoke IATA_Pay_User_Access-5, such as other processes, don&apos;t have values for either the SObject or SObjectId. For example: 
+                <stringValue>The IATA_Pay_User_Access-2 invocable process failed to start because a valid value wasn&apos;t found. This can happen when entities that invoke IATA_Pay_User_Access-2, such as other processes, don&apos;t have values for either the SObject or SObjectId. For example: 
 -An SObject or SObject ID wasn&apos;t specified.
 -A value might have been included, but it was null at runtime. </stringValue>
             </value>
@@ -845,7 +845,7 @@
         </rules>
     </decisions>
     <description>Manages User Access to IATA Pay via Permission Set. This is an invoked process.</description>
-    <interviewLabel>IATA_Pay_User_Access-5_InterviewLabel</interviewLabel>
+    <interviewLabel>IATA_Pay_User_Access-2_InterviewLabel</interviewLabel>
     <label>IATA Pay User Access</label>
     <processMetadataValues>
         <name>ObjectType</name>

@@ -10240,26 +10240,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>UnbabelCaseCommentTranslationTest</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>UnbabelTranslateCaseCommentController</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>UnbabelTranslationUtils</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>Unbabel_CaseCommentRequestTranslation</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>Unbabel_CaseCommentTranslationHandler</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>UnitOfWork</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -23498,7 +23478,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Account_Contact_Role__c.Functional_Role__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -24323,7 +24303,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Account_Role__c.Functional_Role__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -32328,21 +32308,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.secondFSnonComplianceDate__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Case.unbabelsc__Unbabel_Always_check_language__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Case.unbabelsc__Unbabel_Language__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Case.unbabelsc__Unbabel_Translated_Description__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -51672,7 +51637,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Oscar_Promotion__mdt.Oscar_Process__c</field>
+        <field>Oscar_Promotion__mdt.Other_Conditions__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -53413,7 +53378,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Portal_Applications__c.Functional_Role__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -70576,10 +70541,6 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>Unauthorized</apexPage>
-        <enabled>false</enabled>
-    </pageAccesses>
-    <pageAccesses>
-        <apexPage>UnbabelTranslateCaseComment</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
