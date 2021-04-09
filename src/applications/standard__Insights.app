@@ -19,8 +19,6 @@
     <tabs>ICCS_Checklist__c</tabs>
     <tabs>Local_Bank_Mandate_Checklist__c</tabs>
     <tabs>Skill_Types__c</tabs>
-    <tabs>unbabelapi__Unbabel_Translation_Request__c</tabs>
-    <tabs>unbabelapi__Unbabel_Configuration_Menu</tabs>
     <tabs>Mass_Reminder_Email</tabs>
     <tabs>standard-ContentSubscriptions</tabs>
     <tabs>Financial_Security_Request</tabs>
