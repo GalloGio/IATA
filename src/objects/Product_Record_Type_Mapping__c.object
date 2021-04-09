@@ -228,12 +228,5 @@
         <excludedStandardButtons>Forward</excludedStandardButtons>
     </searchLayouts>
     <sharingModel>Read</sharingModel>
-    <validationRules>
-        <fullName>Division_Sales_Channel_Required</fullName>
-        <active>false</active>
-        <description>Validate that both fields Division and Sales Channel are NOT empty</description>
-        <errorConditionFormula>AND(ISBLANK(Division__c), ISBLANK(Sales_Channel__c))</errorConditionFormula>
-        <errorMessage>Division or Sales Channel or both must be specified</errorMessage>
-    </validationRules>
     <visibility>Public</visibility>
 </CustomObject>
