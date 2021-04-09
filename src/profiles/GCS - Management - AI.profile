@@ -10240,26 +10240,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>UnbabelCaseCommentTranslationTest</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>UnbabelTranslateCaseCommentController</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>UnbabelTranslationUtils</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>Unbabel_CaseCommentRequestTranslation</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>Unbabel_CaseCommentTranslationHandler</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>UnitOfWork</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -32350,21 +32330,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Case.unbabelsc__Unbabel_Always_check_language__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Case.unbabelsc__Unbabel_Language__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Case.unbabelsc__Unbabel_Translated_Description__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>false</editable>
         <field>Case_Agent_To_Queue_Assignment_Timeout__mdt.Region__c</field>
         <readable>false</readable>
@@ -51691,7 +51656,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Oscar_Promotion__mdt.Oscar_Process__c</field>
+        <field>Oscar_Promotion__mdt.Other_Conditions__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -68309,10 +68274,6 @@
     <pageAccesses>
         <apexPage>Unauthorized</apexPage>
         <enabled>false</enabled>
-    </pageAccesses>
-    <pageAccesses>
-        <apexPage>UnbabelTranslateCaseComment</apexPage>
-        <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>UnderConstruction</apexPage>
