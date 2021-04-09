@@ -2,6 +2,7 @@ import { LightningElement, track, wire, api } from 'lwc';
 import { constants, resources } from 'c/igUtility';
 import { refreshApex } from '@salesforce/apex';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import { label } from 'c/igLabels';
 
 import getNotifications from '@salesforce/apex/IGOMNotificationUtil.getNotifications';
 import sendManualNotifications from '@salesforce/apex/IGOMNotificationUtil.sendManualNotifications';
@@ -9,6 +10,7 @@ import markAsRead from '@salesforce/apex/IGOMNotificationUtil.markAsRead';
 import getOwnStations from '@salesforce/apex/IGOMStationUtil.getOwnStations';
 
 export default class IgNotifications extends LightningElement {
+	@track label = label;
 
     // Exposed properties
 

@@ -1,3 +1,4 @@
+import body from '@salesforce/label/c.Body';
 import ig_IGOM_document_description from '@salesforce/label/c.ig_IGOM_document_description';
 import ig_IGOM_version from '@salesforce/label/c.ig_IGOM_version';
 import ig_IGOM_version_used from '@salesforce/label/c.ig_IGOM_version_used';
@@ -9,6 +10,7 @@ import ig_add_variation_in_other_lang from '@salesforce/label/c.ig_add_variation
 import ig_are_you_sure_delete_msg from '@salesforce/label/c.ig_are_you_sure_delete_msg';
 import ig_attachments from '@salesforce/label/c.ig_attachments';
 import ig_available_stations from '@salesforce/label/c.ig_available_stations';
+import ig_blank_field from '@salesforce/label/c.ig_blank_field';
 import ig_browse_files from '@salesforce/label/c.ig_browse_files';
 import ig_chapter_not_publishable_err from '@salesforce/label/c.ig_chapter_not_publishable_err';
 import ig_chapters_to_publish from '@salesforce/label/c.ig_chapters_to_publish';
@@ -80,6 +82,7 @@ import ig_selected_gap_analsis from '@salesforce/label/c.ig_selected_gap_analsis
 import ig_select_another_igom from '@salesforce/label/c.ig_select_another_igom';
 import ig_select_evey_chapter from '@salesforce/label/c.ig_select_evey_chapter';
 import ig_select_section_to_add_reference from '@salesforce/label/c.ig_select_section_to_add_reference';
+import ig_send_manual_notification from '@salesforce/label/c.ig_send_manual_notification';
 import ig_station_administration from '@salesforce/label/c.ig_station_administration';
 import ig_station_management from '@salesforce/label/c.ig_station_management';
 import ig_station_relationships from '@salesforce/label/c.ig_station_relationships';
@@ -97,11 +100,13 @@ import ig_variation_description_alt from '@salesforce/label/c.ig_variation_descr
 import ig_variation_description_in_lang from '@salesforce/label/c.ig_variation_description_in_lang';
 import ig_variation_report from '@salesforce/label/c.ig_variation_report';
 import issp_confirm from '@salesforce/label/c.ISSP_Confirm';
+import issp_subject from '@salesforce/label/c.ISSP_Subject';
 
 import { constants } from 'c/igConstants';
 
 const label = {
     custom: {
+        body: body,
         ig_IGOM_document_description: ig_IGOM_document_description,
         ig_IGOM_version: ig_IGOM_version,
         ig_IGOM_version_used: ig_IGOM_version_used,
@@ -113,6 +118,7 @@ const label = {
         ig_are_you_sure_delete_msg: ig_are_you_sure_delete_msg,
         ig_attachments: ig_attachments,
         ig_available_stations: ig_available_stations,
+        ig_blank_field: ig_blank_field,
         ig_browse_files: ig_browse_files,
         ig_chapter_not_publishable_err: ig_chapter_not_publishable_err,
         ig_chapters_to_publish: ig_chapters_to_publish,
@@ -184,6 +190,7 @@ const label = {
         ig_select_another_igom: ig_select_another_igom,
         ig_select_evey_chapter: ig_select_evey_chapter,
         ig_select_section_to_add_reference: ig_select_section_to_add_reference,
+        ig_send_manual_notification: ig_send_manual_notification,
         ig_station_administration: ig_station_administration,
         ig_station_management: ig_station_management,
         ig_station_relationships: ig_station_relationships,
@@ -200,7 +207,8 @@ const label = {
         ig_variation_description_alt: ig_variation_description_alt,
         ig_variation_description_in_lang: ig_variation_description_in_lang,
         ig_variation_report: ig_variation_report,
-        issp_confirm: issp_confirm
+        issp_confirm: issp_confirm,
+        issp_subject: issp_subject
     },
     object: {}
 };

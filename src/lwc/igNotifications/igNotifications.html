@@ -14,7 +14,7 @@
                 INFORMATIVE ({notificationInformativeQuantity})
             </div>
             <div class={tabButtonClass}>
-                <lightning-button class="slds-float_right" label="Send manual notification" onclick={showModalNotification}></lightning-button>
+                <lightning-button class="slds-float_right" label={label.custom.ig_send_manual_notification} onclick={showModalNotification}></lightning-button>
             </div>
         </div>
         <div class="col-12 box-shadow-col p-3 mt-4 mb-4">
@@ -54,7 +54,7 @@
         </div>
     </div>
 
-    <c-ig-modal class="manual-notification-modal" header="Manual notification generation"
+    <c-ig-modal class="manual-notification-modal" header={label.custom.ig_send_manual_notification}
     onaccept={sendManualNotification} accept-button-label="Send">
         <c-ig-manual-notification station-id={stationId}></c-ig-manual-notification>
     </c-ig-modal>

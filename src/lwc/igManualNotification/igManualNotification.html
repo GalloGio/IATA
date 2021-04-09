@@ -12,11 +12,11 @@
             </lightning-datatable>
         </div>
         <div class="col-10 offset-1 p-4">
-            <label class="small-font">Subject</label><span class="required-asterisk"> *</span></label>
+            <label class="small-font">{label.custom.issp_subject}</label><span class="required-asterisk"> *</span></label>
             <input data-id="subject" type="text" class="form-control width-100" required oninput={notificationSubjectUpdate}/>
         </div>
         <div class="col-10 offset-1 p-4">
-            <label class="small-font">Body</label><span class="required-asterisk"> *</span></label>
+            <label class="small-font">{label.custom.body}</label><span class="required-asterisk"> *</span></label>
             <textarea data-id="body" class="form-control" rows="3" data-field="notes" required oninput={notificationBodyUpdate}></textarea>
         </div>
     </div>

@@ -75,7 +75,7 @@ export default class IgManualNotification extends LightningElement {
         for (var i = 0; i < fields.length; i++) {
             let targetId = fields[i];
             let target = this.template.querySelector('[data-id="' + targetId + '"]');
-            target.setCustomValidity('This field cannot be left blank');
+            target.setCustomValidity(this.label.custom.ig_blank_field);
             target.reportValidity();
         }
         this._loading = false;
