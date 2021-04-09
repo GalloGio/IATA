@@ -1066,13 +1066,6 @@
     <searchLayouts/>
     <sharingModel>ControlledByParent</sharingModel>
     <validationRules>
-        <fullName>KPI_No_entry_after_the_deadline_in_10d</fullName>
-        <active>false</active>
-        <errorConditionFormula>TODAY() &gt;   Deadline__c +10</errorConditionFormula>
-        <errorDisplayField>KPI_Value__c</errorDisplayField>
-        <errorMessage>You can not update this record after 10 days of the deadline. Please contact your administrator</errorMessage>
-    </validationRules>
-    <validationRules>
         <fullName>KPI_No_entry_after_the_deadline_in_3d</fullName>
         <active>true</active>
         <errorConditionFormula>TODAY() &gt;   Deadline__c +3 &amp;&amp; $User.ProfileId &lt;&gt; &quot;00ew0000001R6uT&quot; &amp;&amp; $User.ProfileId &lt;&gt; &quot;00e20000000h0gF&quot; &amp;&amp; $User.Id &lt;&gt; &quot;0051r000007mhLq&quot;</errorConditionFormula>
@@ -1091,13 +1084,6 @@
         <errorConditionFormula>AND (Value_Type__c  = &apos;Percentage&apos;, NOT(ISNULL(KPI_Value__c)))</errorConditionFormula>
         <errorDisplayField>KPI_Value__c</errorDisplayField>
         <errorMessage>This KPI is a percentage, please update the &quot;Value Percentage&quot; field</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>Perce_No_entry_after_the_deadline_in_10d</fullName>
-        <active>false</active>
-        <errorConditionFormula>TODAY() &gt;  Deadline__c +10</errorConditionFormula>
-        <errorDisplayField>Value_Percentage__c</errorDisplayField>
-        <errorMessage>You can not update this record after 10 days of the deadline. Please contact your administrator</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Perce_No_entry_after_the_deadline_in_3d</fullName>
