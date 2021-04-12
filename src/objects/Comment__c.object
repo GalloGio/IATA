@@ -2940,15 +2940,6 @@ Object to store comments related to objectives, or independent comments that we 
         <errorConditionFormula>(RecordType.DeveloperName = &quot;Objective_Independent&quot;) &amp;&amp; ((Divisional_News__c = FALSE) &amp;&amp; (Country_News__c = FALSE))</errorConditionFormula>
         <errorMessage>Please specify the type of comment</errorMessage>
     </validationRules>
-    <validationRules>
-        <fullName>Type_of_related_comment</fullName>
-        <active>false</active>
-        <description>Type of comment is mandatory.
-Non specified means that it is an internal comment</description>
-        <errorConditionFormula>(RecordType.DeveloperName = &quot;Objective Related&quot;) &amp;&amp; ((Divisional_News__c = FALSE) &amp;&amp; (Country_News__c = FALSE) &amp;&amp; (Achievement__c = FALSE))</errorConditionFormula>
-        <errorDisplayField>Achievement__c</errorDisplayField>
-        <errorMessage>Please specify the type of comment</errorMessage>
-    </validationRules>
     <visibility>Public</visibility>
     <webLinks>
         <fullName>New_Comment</fullName>
