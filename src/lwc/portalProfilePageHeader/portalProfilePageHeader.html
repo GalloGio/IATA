@@ -53,10 +53,12 @@
                                                     <div class="fieldValue">{userAccount.IATACode__c}</div>
                                                 </div>
                                             </template>
-                                            <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-2 slds-medium-size_1-of-3">
-                                                <div class="fieldLabel">{labels.csp_Profile_CompanyEmail}</div>
-                                                <div class="fieldValue">{userAccount.Email__c}</div>
-                                            </div>
+                                            <template if:false={isAirlineUser}>
+                                                <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-2 slds-medium-size_1-of-3">
+                                                    <div class="fieldLabel">{labels.csp_Profile_CompanyEmail}</div>
+                                                    <div class="fieldValue">{userAccount.Email__c}</div>
+                                                </div>
+                                            </template>
                                         </div>
                                     </div>
                                 </template>
