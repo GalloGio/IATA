@@ -158,9 +158,6 @@ export default class IgNotifications extends LightningElement {
     get notificationActionRequiredQuantity() { 
         return this.areNotificationsQueried ? this.notifications.data.filter(noti => noti.severity === constants.NOTIFICATION.SEVERITY.VALUES.ACTION_REQUIRED).length : '-';
     }
-    get notificationRecommendedQuantity() { 
-        return this.areNotificationsQueried ? this.notifications.data.filter(noti => noti.severity === constants.NOTIFICATION.SEVERITY.VALUES.RECOMMENDED).length : '-';
-    }
     get notificationInformativeQuantity() { 
         return this.areNotificationsQueried ? this.notifications.data.filter(noti => noti.severity === constants.NOTIFICATION.SEVERITY.VALUES.INFORMATIVE).length : '-';
     }
@@ -201,13 +198,6 @@ export default class IgNotifications extends LightningElement {
     get tabActionRequiredClass() { 
         let classes = ['notification-section'];
         if (this.severityFilter === constants.NOTIFICATION.SEVERITY.VALUES.ACTION_REQUIRED) { 
-            classes.push('notification-selected');
-        }
-        return classes.join(' ');
-    }
-    get tabRecommendedClass() { 
-        let classes = ['notification-section'];
-        if (this.severityFilter === constants.NOTIFICATION.SEVERITY.VALUES.RECOMMENDED) { 
             classes.push('notification-selected');
         }
         return classes.join(' ');

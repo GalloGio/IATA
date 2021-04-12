@@ -29,7 +29,6 @@ const constants = {
         SEVERITY: {
             VALUES: {
                 ACTION_REQUIRED: 'Action Required',
-                RECOMMENDED: 'Recommended',
                 INFORMATIVE: 'Informative',
                 MANUAL: 'Manual'
             }

@@ -49,9 +49,6 @@ export default class IgNotificationsItem extends LightningElement {
     get isInformative() { 
         return this.notification.severity === constants.NOTIFICATION.SEVERITY.VALUES.INFORMATIVE;
     }
-    get isRecommended() { 
-        return this.notification.severity === constants.NOTIFICATION.SEVERITY.VALUES.RECOMMENDED;
-    }
     get isActionRequired() { 
         return this.notification.severity === constants.NOTIFICATION.SEVERITY.VALUES.ACTION_REQUIRED;
     }
@@ -65,8 +62,6 @@ export default class IgNotificationsItem extends LightningElement {
         let classes = [];
         if (this.isInformative) { 
             classes.push('blue-li');
-        } else if (this.isRecommended) { 
-            classes.push('yellow-li');
         } else if (this.isActionRequired) { 
             classes.push('red-li');
         }

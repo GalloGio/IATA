@@ -295,11 +295,10 @@ IF( Is_Reviewed__c , &apos;Reviewed&apos;, null))</formula>
         <description>Comments to explain a variation.</description>
         <externalId>false</externalId>
         <label>Variation Comments</label>
-        <length>255</length>
-        <required>false</required>
+        <length>131072</length>
         <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
     </fields>
     <label>Compliance Review Part</label>
     <listViews>
