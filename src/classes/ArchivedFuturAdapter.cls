@@ -33,7 +33,7 @@ public with sharing class ArchivedFuturAdapter {
 			system.debug('[Attachment Migration Process debug]AWS Call yith parameters : '+ArchivedFuturAdapter.bucket+ ' /  '+ ArchivedFuturAdapter.default_permission+ '   /   '+anAttachement.Id+'_'+ anAttachement.Name + ' ***** ' +anAttachement.Body.size() + 'lenth = '+ anAttachement.BodyLength );
 			if((Limits.getHeapSize() + anAttachement.BodyLength) > Limits.getLimitHeapSize()) {
 				// Do something else
-				DevsTools.sendSFDevsAlertMessage('Top big file request for attachement '+a.Id, ' Size: '+(Limits.getHeapSize() + a.BodyLength )+' compare to  '+Limits.getLimitHeapSize());
+				TransformationHelper.sendEmailSupport('Top big file request for attachement '+a.Id, ' Size: '+(Limits.getHeapSize() + a.BodyLength )+' compare to  '+Limits.getLimitHeapSize());
 				return null;
 			}
 			system.debug(' Size: '+(Limits.getHeapSize() + anAttachement.BodyLength )+' compare to '+Limits.getLimitHeapSize());

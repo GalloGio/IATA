@@ -4,7 +4,7 @@ private class AccountRoleSelectorTest {
 	static void makeData(){
 		List<Account> accountList = TestDataFactory_Accounts.createStandardAccounts(1);
 		insert accountList;
-		List<Account_Role__c> accountRole = TestDataFactory_AccountRoles.createDefaultAccountRoles(accountList);
+		List<Account_Role__c> accountRole = TestDataFactory_AccountRoles.createBaseAccountRoles(accountList);
 		insert accountRole;
 	}
 
@@ -19,10 +19,10 @@ private class AccountRoleSelectorTest {
 	}
 
 	@IsTest
-	static void testSelectAccountIdByAccountsAndRole(){
+	static void testSelectByAccountIdSetAndRole(){
 		Test.startTest();
 		Account account = AccountSelector.selectIdByNames(new Set<String>{TestDataFactory_Accounts.DEFAULTNAME + ' 0'}).get(0);
-		List<Account_Role__c> accountRoleList = AccountRoleSelector.selectAccountIdByAccountsAndRole(new Set<Id>{account.Id}, '');
+		List<Account_Role__c> accountRoleList = AccountRoleSelector.selectByAccountIdSetAndRole(new Set<Id>{account.Id}, '');
 		Test.stopTest();
 
 		System.assertEquals(1, accountRoleList.size(), 'Expected 1 Account_Role__c record');

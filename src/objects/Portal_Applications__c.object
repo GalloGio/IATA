@@ -1752,6 +1752,10 @@ IF(OR(
                 <default>false</default>
             </values>
             <values>
+                <fullName>IATA Pay</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>IATA Postal Accounts Settlement System</fullName>
                 <default>false</default>
             </values>
@@ -1845,10 +1849,6 @@ IF(OR(
             </values>
             <values>
                 <fullName>Paypal</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Resource Center</fullName>
                 <default>false</default>
             </values>
             <values>

@@ -26,7 +26,9 @@ public without sharing class CW_AccountDetailCarousel {
 			}
 
 			//Read photos alocated in salesforce
-			for (ContentDocumentLink currentItem : [SELECT ContentDocumentId FROM ContentDocumentLink WHERE LinkedEntityId =: recordId]) {
+			for (ContentDocumentLink currentItem : [SELECT ContentDocumentId 
+				FROM ContentDocumentLink 
+				WHERE LinkedEntityId =: recordId AND ContentDocumentId NOT IN :listCapabPhotoId]) {
 				if(!listCapabPhotoId.contains(currentItem.ContentDocumentId)){
 					listId.add(currentItem.ContentDocumentId);
 				}

@@ -3047,7 +3047,7 @@ ISPICKVAL(BSPCountry__c, &quot;Albania&quot;),
 ISPICKVAL(BSPCountry__c, &quot;Bosnia and Herzegovina&quot;), 
 ISPICKVAL(BSPCountry__c, &quot;Croatia&quot;), 
 ISPICKVAL(BSPCountry__c, &quot;Kosovo&quot;) , 
-ISPICKVAL(BSPCountry__c, &quot;Macedonia, the former Yugoslav Republic of&quot;), 
+ISPICKVAL(BSPCountry__c, &quot;Republic of North Macedonia&quot;), 
 ISPICKVAL(BSPCountry__c, &quot;Montenegro&quot;), 
 ISPICKVAL(BSPCountry__c, &quot;Serbia&quot;), 
 ISPICKVAL(BSPCountry__c, &quot;Slovenia&quot;) 
@@ -4518,7 +4518,8 @@ RecordType.Name = &quot;Cases - Global&quot;
 ),
 or (
 ISPICKVAL(Topic__c, &quot;Weblink&quot;) ,
-ISPICKVAL(Topic__c, &quot;NDC – New Distribution Capability&quot;)
+ISPICKVAL(Topic__c, &quot;NDC – New Distribution Capability&quot;),
+ISPICKVAL(Topic__c, &quot;NDCLink&quot;)
 )
 )</formula>
         </ruleEntry>
@@ -6882,7 +6883,7 @@ ISPICKVAL(Reason1__c,&quot;Support escalation&quot;),ISPICKVAL(Reason1__c,&quot;
             <criteriaItems>
                 <field>Case.Country_concerned_by_the_query__c</field>
                 <operation>equals</operation>
-                <value>Albania,Bosnia and Herzegovina,Croatia,Kosovo,Latvia,&quot;Macedonia, the former Yugoslav Republic of&quot;,Montenegro,Netherlands,Serbia,Slovenia,Suriname</value>
+                <value>Albania,Bosnia and Herzegovina,Croatia,Kosovo,Latvia,Republic of North Macedonia,Montenegro,Netherlands,Serbia,Slovenia,Suriname</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -6963,7 +6964,7 @@ ISPICKVAL(Reason1__c,&quot;Support escalation&quot;),ISPICKVAL(Reason1__c,&quot;
             <criteriaItems>
                 <field>Case.Country_concerned_by_the_query__c</field>
                 <operation>equals</operation>
-                <value>Latvia,Liechtenstein,Lithuania,Luxembourg,&quot;Macedonia, the former Yugoslav Republic of&quot;,Malta,&quot;Moldova, Republic of&quot;,Montenegro,Netherlands,Norway,Poland,Portugal,Romania,Russian Federation,Serbia,Slovakia,Slovenia,Spain,Sweden</value>
+                <value>Latvia,Liechtenstein,Lithuania,Luxembourg,Republic of North Macedonia,Malta,&quot;Moldova, Republic of&quot;,Montenegro,Netherlands,Norway,Poland,Portugal,Romania,Russian Federation,Serbia,Slovakia,Slovenia,Spain,Sweden</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Country_concerned_by_the_query__c</field>
@@ -10483,7 +10484,7 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
             <criteriaItems>
                 <field>Case.BSPCountry__c</field>
                 <operation>equals</operation>
-                <value>Albania,Bosnia and Herzegovina,Croatia,Kosovo,&quot;Macedonia, the former Yugoslav Republic of&quot;,Montenegro,Serbia,Slovenia</value>
+                <value>Albania,Bosnia and Herzegovina,Croatia,Kosovo,Republic of North Macedonia,Montenegro,Serbia,Slovenia</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Origin</field>
@@ -10498,7 +10499,7 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
             <criteriaItems>
                 <field>Case.Subject</field>
                 <operation>contains</operation>
-                <value>Albania,Bosnia and Herzegovina,Croatia,Kosovo,&quot;Macedonia, the former Yugoslav Republic of&quot;,Montenegro,Serbia,Slovenia,Macedonia,Bosnia,Herzegovina</value>
+                <value>Albania,Bosnia and Herzegovina,Croatia,Kosovo,Macedonia,Montenegro,Serbia,Slovenia,Bosnia,Herzegovina</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Subtopic__c</field>

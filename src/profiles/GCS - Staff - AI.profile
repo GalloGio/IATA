@@ -3400,10 +3400,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>CW_ICG_Facility_Queuable</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>CW_LandingSearchBarController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -5025,6 +5021,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>IATAIsoStateDAO_Test</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IATAPayService</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IATAPayServiceTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -10236,26 +10240,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>UnbabelCaseCommentTranslationTest</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>UnbabelTranslateCaseCommentController</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>UnbabelTranslationUtils</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>Unbabel_CaseCommentRequestTranslation</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>Unbabel_CaseCommentTranslationHandler</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>UnitOfWork</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -11820,6 +11804,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <custom>true</custom>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>ISSP_KPI_Reporting__mdt</name>
+    </customMetadataTypeAccesses>
     <customPermissions>
         <enabled>true</enabled>
         <name>Grant_SIS_Service</name>
@@ -21309,6 +21297,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account.Airline_IATAPay_Participations__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account.Airline_Model_Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -22246,6 +22239,11 @@
         <editable>false</editable>
         <field>Account.IATA_Membership_status_all_levels__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.IATA_Pay_Participant_formula__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -25475,6 +25473,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Airline_Suspension__c.HQ_Reqion_SVP_Agree__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Airline_Suspension__c.IATA_Pay_Participations_locked__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -31504,6 +31507,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Case.Related_Exception__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Case.Related_ID_Card_Application__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -32315,21 +32323,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.secondFSnonComplianceDate__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Case.unbabelsc__Unbabel_Always_check_language__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Case.unbabelsc__Unbabel_Language__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Case.unbabelsc__Unbabel_Translated_Description__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -43959,6 +43952,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>ICG_History_Track__c.New_Value__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ICG_History_Track__c.Old_Value__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>ICG_Notification__c.Body__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -51649,7 +51652,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Oscar_Promotion__mdt.Oscar_Process__c</field>
+        <field>Oscar_Promotion__mdt.Other_Conditions__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -55858,6 +55861,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>Quality__c.Parent__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Quality__c.Pending_Evidences_to_be_Collected__c</field>
         <readable>true</readable>
@@ -55910,6 +55918,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Quality__c.Regional_Quality__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Quality__c.Related_Case_Number__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -59723,21 +59736,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
-        <field>User.unbabelapi__Agent_Brand__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>User.unbabelapi__Unbabel_Known_Languages__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>User.unbabelapi__Unbabel_Language__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>false</editable>
         <field>User_History__c.ApiName__c</field>
         <readable>false</readable>
@@ -63491,6 +63489,13 @@
         <layout>ICG_GxA_Integration_Mapping__c-ONE Source GxA Integration Mapping Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>ICG_History_Track__c-OS History Track Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>ICG_History_Track__c-OS History Track Layout</layout>
+        <recordType>ICG_History_Track__c.Changes_by_Type</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>ICG_Notification__c-ONE Source Notification Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -63949,10 +63954,6 @@
     <layoutAssignments>
         <layout>Operational_Improvements__c-Operational improvement Tracking Layout</layout>
         <recordType>Operational_Improvements__c.Operational_Improvements</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Opportunity-Direct Sales -SO</layout>
-        <recordType>Opportunity.FieldSales</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Opportunity-Field Sales</layout>
@@ -65495,13 +65496,13 @@
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
-        <allowCreate>false</allowCreate>
+        <allowCreate>true</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>Opportunity</object>
-        <viewAllRecords>false</viewAllRecords>
+        <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>
@@ -68202,10 +68203,6 @@
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>UnbabelTranslateCaseComment</apexPage>
-        <enabled>true</enabled>
-    </pageAccesses>
-    <pageAccesses>
         <apexPage>UnderConstruction</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
@@ -70187,6 +70184,11 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
+        <recordType>ICG_History_Track__c.Changes_by_Type</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
         <recordType>ICG_Notification__c.Audit</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
@@ -70381,9 +70383,10 @@
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>false</default>
+        <default>true</default>
+        <personAccountDefault>true</personAccountDefault>
         <recordType>Opportunity.FieldSales</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
@@ -70401,8 +70404,7 @@
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>true</default>
-        <personAccountDefault>true</personAccountDefault>
+        <default>false</default>
         <recordType>Opportunity.SalesOrder</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>

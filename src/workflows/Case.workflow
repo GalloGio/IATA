@@ -159,7 +159,7 @@
     </alerts>
     <alerts>
         <fullName>Approved_Ad_hoc_calendar_change</fullName>
-        <ccEmails>iccso@iata.org,efs@iata.org,efclient@iata.org,madcscmgr@iata.org,europs@iata.org</ccEmails>
+        <ccEmails>iccso@iata.org,madcscmgr@iata.org,europs@iata.org,EF_CS@iata.org,EF_IA@iata.org</ccEmails>
         <description>Approved - Ad-hoc calendar change</description>
         <protected>false</protected>
         <recipients>
@@ -13190,7 +13190,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
             <name>IDFS_Complaint_out_of_query</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Case.RecordTypeId</field>
             <operation>equals</operation>
@@ -13577,7 +13577,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <formula>AND ( 		 		SIDRA_exchange_rate_updated__c,    		 		TEXT(IRR_Withdrawal_Reason__c)  &lt;&gt;  &apos;IATA Charges&apos;,  		 		OR(  			 			RecordType.DeveloperName = &apos;SIDRA&apos;,         			 			RecordType.DeveloperName = &apos;SIDRA_BR&apos;  		 			),  		 		CreatedDate &gt; DATETIMEVALUE( &quot;2012-09-30 00:00:00&quot;),  		 		Short_Payment_Amount_USD__c &gt; 1,    		OR( 			AND(ROUND(Short_Payment_Amount_USD__c,2) &lt;= 50, ISPICKVAL( BSP_CASS__c , &quot;CASS&quot;)), 			AND(ROUND(Short_Payment_Amount_USD__c,2) &lt;= 50, ISPICKVAL( BSP_CASS__c , &quot;BSP&quot;),  Settlement_Model__c = &quot;Funds Received&quot;),  			AND(ROUND(Short_Payment_Amount_USD__c,2) &lt;= 1000, ISPICKVAL( BSP_CASS__c , &quot;BSP&quot;), Settlement_Model__c = &quot;Reported Sales&quot;)   			)   		 		 		)</formula>
+        <formula>AND ( 		 		SIDRA_exchange_rate_updated__c,NOT(Action_needed_Small_Amount__c),TEXT(IRR_Withdrawal_Reason__c)  &lt;&gt;  &apos;IATA Charges&apos;,  		 		OR(  			 			RecordType.DeveloperName = &apos;SIDRA&apos;,         			 			RecordType.DeveloperName = &apos;SIDRA_BR&apos;  		 			),  		 		CreatedDate &gt; DATETIMEVALUE( &quot;2012-09-30 00:00:00&quot;),  		 		Short_Payment_Amount_USD__c &gt; 1,    		OR( 			AND(ROUND(Short_Payment_Amount_USD__c,2) &lt;= 50, ISPICKVAL( BSP_CASS__c , &quot;CASS&quot;)), 			AND(ROUND(Short_Payment_Amount_USD__c,2) &lt;= 50, ISPICKVAL( BSP_CASS__c , &quot;BSP&quot;),  Settlement_Model__c = &quot;Funds Received&quot;),  			AND(ROUND(Short_Payment_Amount_USD__c,2) &lt;= 1000, ISPICKVAL( BSP_CASS__c , &quot;BSP&quot;), Settlement_Model__c = &quot;Reported Sales&quot;)   			)   		 		 		)</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>

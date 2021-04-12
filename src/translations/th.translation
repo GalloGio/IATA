@@ -26328,10 +26328,6 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Reset_your_password</name>
     </customLabels>
     <customLabels>
-        <label><!-- Resource Center Service Description --></label>
-        <name>Resource_Center_Service_Description</name>
-    </customLabels>
-    <customLabels>
         <label><!-- Response message --></label>
         <name>Response_message</name>
     </customLabels>
@@ -29144,6 +29140,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>icg_manage_documents</name>
     </customLabels>
     <customLabels>
+        <label><!-- icg manage documents --></label>
+        <name>icg_manage_obligations_documents</name>
+    </customLabels>
+    <customLabels>
         <label><!-- icg manage photos --></label>
         <name>icg_manage_photos</name>
     </customLabels>
@@ -30310,370 +30310,6 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- select all --></label>
         <name>select_all</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Config Success --></label>
-        <name>unbabelapi__Unbabel_Config_Success</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Configurations --></label>
-        <name>unbabelapi__Unbabel_Configurations</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Error Parsing --></label>
-        <name>unbabelapi__Unbabel_Error_Parsing</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Error Received Translation Request Updated --></label>
-        <name>unbabelapi__Unbabel_Error_Received_Translation_Request_Updated</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Error Updating Translation Request --></label>
-        <name>unbabelapi__Unbabel_Error_Updating_Translation_Request</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Invalid Options --></label>
-        <name>unbabelapi__Unbabel_Invalid_Options</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Invalid Response --></label>
-        <name>unbabelapi__Unbabel_Invalid_Response</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Loading Wait --></label>
-        <name>unbabelapi__Unbabel_Loading_Wait</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Namespace and Class 404 --></label>
-        <name>unbabelapi__Unbabel_Namespace_and_Class_404</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Pages Configuration --></label>
-        <name>unbabelapi__Unbabel_Pages_Configuration</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Permission Error --></label>
-        <name>unbabelapi__Unbabel_Permission_Error</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Server Error --></label>
-        <name>unbabelapi__Unbabel_Server_Error</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Translation Request 404 --></label>
-        <name>unbabelapi__Unbabel_Translation_Request_404</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Configuration Not Found --></label>
-        <name>unbabelapi__Unbabel_config_404</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- HTML Email Body Empty Error Message --></label>
-        <name>unbabelsc__HTML_Email_Body_Empty_Error_Message</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- HTML Email Body Exceeds Size --></label>
-        <name>unbabelsc__HTML_Email_Body_Exceeds_Size</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- SubjectErrorMessage --></label>
-        <name>unbabelsc__SubjectError</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - To --></label>
-        <name>unbabelsc__Unabel_To</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Additional To Lookup --></label>
-        <name>unbabelsc__Unbabel_Additional_To_Lookup</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Additional to --></label>
-        <name>unbabelsc__Unbabel_Additional_to</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Attach File --></label>
-        <name>unbabelsc__Unbabel_Attach_File</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Attachment Upload Error --></label>
-        <name>unbabelsc__Unbabel_Attachment_Upload_Error</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Back to Case --></label>
-        <name>unbabelsc__Unbabel_Back_to_Case</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Back to EmailMessage --></label>
-        <name>unbabelsc__Unbabel_Back_to_EmailMessage</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - CC Lookup --></label>
-        <name>unbabelsc__Unbabel_CC_Lookup</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Case Attachments --></label>
-        <name>unbabelsc__Unbabel_Case_Attachments</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Case Custom Fields --></label>
-        <name>unbabelsc__Unbabel_Case_Custom_Fields</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Case Detail Translation --></label>
-        <name>unbabelsc__Unbabel_Case_Detail_Translation</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel Case Feed Configurations --></label>
-        <name>unbabelsc__Unbabel_Case_Feed_Configurations</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Change? --></label>
-        <name>unbabelsc__Unbabel_Change</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Config OWED --></label>
-        <name>unbabelsc__Unbabel_Config_OWED</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Service Cloud Configurations Menu --></label>
-        <name>unbabelsc__Unbabel_Configurations_Menu</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Corrupted Reference (Attachment) --></label>
-        <name>unbabelsc__Unbabel_Corrupted_Reference_Attachment</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Corrupted Reference (EmailMessage) --></label>
-        <name>unbabelsc__Unbabel_Corrupted_Reference_EmailMessage</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Corrupted Reference (File) --></label>
-        <name>unbabelsc__Unbabel_Corrupted_Reference_File</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Delete --></label>
-        <name>unbabelsc__Unbabel_Delete</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Dont Understand Translation --></label>
-        <name>unbabelsc__Unbabel_Dont_Understand_Translation</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Edit Email --></label>
-        <name>unbabelsc__Unbabel_Edit_Email</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Email Custom Fields --></label>
-        <name>unbabelsc__Unbabel_Email_Custom_Fields</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel Email Publisher Load Error --></label>
-        <name>unbabelsc__Unbabel_Email_Publisher_Load_Error</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Email format --></label>
-        <name>unbabelsc__Unbabel_Email_format</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel Error missing translated content --></label>
-        <name>unbabelsc__Unbabel_Error_missing_translated_content</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel Error requesting translation --></label>
-        <name>unbabelsc__Unbabel_Error_requesting_translation</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Explain OWED Setup --></label>
-        <name>unbabelsc__Unbabel_Explain_OWED_Setup</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Failed Request --></label>
-        <name>unbabelsc__Unbabel_Failed_Request</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - File Size Limit Exceeded --></label>
-        <name>unbabelsc__Unbabel_File_Size_Limit_Exceeded</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Forward --></label>
-        <name>unbabelsc__Unbabel_Forward</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - From --></label>
-        <name>unbabelsc__Unbabel_From</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel HTML Click To Reveal --></label>
-        <name>unbabelsc__Unbabel_HTML_Click_To_Reveal</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Languages - Not Found --></label>
-        <name>unbabelsc__Unbabel_Languages_404</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Message Content Translation --></label>
-        <name>unbabelsc__Unbabel_Message_Content_Translation</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - My Computer --></label>
-        <name>unbabelsc__Unbabel_My_Computer</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - No Attachments --></label>
-        <name>unbabelsc__Unbabel_No_Attachments</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Original Message --></label>
-        <name>unbabelsc__Unbabel_Original_Message</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Pages: CaseTranslator --></label>
-        <name>unbabelsc__Unbabel_Pages_CaseTranslator</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Pages: ConfigMenu --></label>
-        <name>unbabelsc__Unbabel_Pages_ConfigMenu</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Pages: emailMessageTranslator --></label>
-        <name>unbabelsc__Unbabel_Pages_emailMessageTranslator</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Pages: sendEmail --></label>
-        <name>unbabelsc__Unbabel_Pages_sendEmail</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Pending Translation Request --></label>
-        <name>unbabelsc__Unbabel_Pending_Translation_Request</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Permission Error --></label>
-        <name>unbabelsc__Unbabel_Permission_Error</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Permissions not found --></label>
-        <name>unbabelsc__Unbabel_Permissions_404</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Preview --></label>
-        <name>unbabelsc__Unbabel_Preview</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Provide Id --></label>
-        <name>unbabelsc__Unbabel_Provide_Id</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Recipient Null --></label>
-        <name>unbabelsc__Unbabel_Recipient_Null</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Related To --></label>
-        <name>unbabelsc__Unbabel_Related_To</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel  - Reply --></label>
-        <name>unbabelsc__Unbabel_Reply</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Reply to All --></label>
-        <name>unbabelsc__Unbabel_Reply_to_All</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Request Error --></label>
-        <name>unbabelsc__Unbabel_Request_Error</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Request Human Translation --></label>
-        <name>unbabelsc__Unbabel_Request_Human_Translation</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel Same Lang --></label>
-        <name>unbabelsc__Unbabel_Same_Lang</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Select Files --></label>
-        <name>unbabelsc__Unbabel_Select_Files</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Select to Attach --></label>
-        <name>unbabelsc__Unbabel_Select_to_Attach</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Send --></label>
-        <name>unbabelsc__Unbabel_Send</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel Send Email --></label>
-        <name>unbabelsc__Unbabel_Send_Email</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Send an Email with Translation --></label>
-        <name>unbabelsc__Unbabel_Send_an_Email_with_Translation</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Switch to HTML --></label>
-        <name>unbabelsc__Unbabel_Switch_to_HTML</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Switch to Text-Only --></label>
-        <name>unbabelsc__Unbabel_Switch_to_Text_Only</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Task Description --></label>
-        <name>unbabelsc__Unbabel_Task_Description</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Text-only --></label>
-        <name>unbabelsc__Unbabel_Text_only</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Translate To --></label>
-        <name>unbabelsc__Unbabel_Translate_To</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel Translated Content Info --></label>
-        <name>unbabelsc__Unbabel_Translated_Content_Info</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel Translated Content  on Translated Email --></label>
-        <name>unbabelsc__Unbabel_Translated_Content_on_Translated_Email</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Translated From --></label>
-        <name>unbabelsc__Unbabel_Translated_From</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Translated by Human --></label>
-        <name>unbabelsc__Unbabel_Translated_by_Human</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel_Unsupported_Language --></label>
-        <name>unbabelsc__Unbabel_Unsupported_Language</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel Unsupported Language Pair --></label>
-        <name>unbabelsc__Unbabel_Unsupported_Language_Pair</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Unsupported Object --></label>
-        <name>unbabelsc__Unbabel_Unsupported_Object</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Upload File --></label>
-        <name>unbabelsc__Unbabel_Upload_File</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel Waiting for translation --></label>
-        <name>unbabelsc__Unbabel_Waiting_for_translation</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- viewHtmlBody --></label>
-        <name>unbabelsc__viewHtmlBody</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- viewHtmlBodyNewWindow --></label>
-        <name>unbabelsc__viewHtmlBodyNewWindow</name>
     </customLabels>
     <customLabels>
         <label><!-- wire transfer payment msg --></label>
@@ -37220,6 +36856,15 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Cases with user details --></description>
+        <label><!-- Cases with user details --></label>
+        <name>Cases_with_user_details</name>
+        <sections>
+            <label><!-- Cases --></label>
+            <name>Cases</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Certificate requests --></description>
         <label><!-- Certificate requests --></label>
         <name>Certificate_requests</name>
@@ -38831,6 +38476,19 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <sections>
             <label><!-- OSCARs --></label>
             <name>OSCARs</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- OS Stations with Certification and Managers --></description>
+        <label><!-- OS Stations with Certification and Managers --></label>
+        <name>OS_Stations_Cert_Mana</name>
+        <sections>
+            <label><!-- ONE Source Contact Role Details --></label>
+            <name>ONE Source Contact Role Details</name>
+        </sections>
+        <sections>
+            <label><!-- OS Stations --></label>
+            <name>OS Stations</name>
         </sections>
     </reportTypes>
     <reportTypes>

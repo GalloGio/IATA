@@ -14402,8 +14402,7 @@ NOT(OR($Profile.Name=&quot;IATA IDFS - IDO Sales&quot;, $Profile.Name=&quot;IATA
     )
   ),
   $Profile.Name &lt;&gt; &apos;System Administrator&apos;,
-  $Profile.Name &lt;&gt; &apos;Developer&apos;,
-  $Profile.Name &lt;&gt; &apos;MACS - Administrator&apos;
+  !$Permission.Can_reopen_opportunities
 )</errorConditionFormula>
         <errorMessage>Closed opportunities can no longer be modified. Please contact Support or a System Administrator for help.</errorMessage>
     </validationRules>
@@ -14466,13 +14465,6 @@ NOT(OR($Profile.Name=&quot;IATA IDFS - IDO Sales&quot;, $Profile.Name=&quot;IATA
         <errorConditionFormula>AND (
   ISPICKVAL(  LeadSource , &apos;Event&apos; ),  Event_Source_lk__c =&apos;&apos; )</errorConditionFormula>
         <errorMessage>If the lead source was an event you need to specify the event</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>Opportujnity_products_required</fullName>
-        <active>false</active>
-        <description>Opportunity products are required before saving changes to an existing opportunity</description>
-        <errorConditionFormula>NOT(OR(ISNEW(),HasOpportunityLineItem))</errorConditionFormula>
-        <errorMessage>You must add products to this opportunity before saving.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>PM_Validation_for_Closing</fullName>

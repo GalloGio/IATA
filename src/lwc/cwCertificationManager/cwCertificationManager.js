@@ -145,7 +145,7 @@ export default class CwCertificationManager extends LightningElement {
 	}
 
 	get isCanSave() {
-		return this.selectedScope === "" ? true : false;
+		return this.selectedScope === '' ? true : false;
 	}
 
 	renderedCallback() {

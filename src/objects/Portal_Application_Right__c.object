@@ -947,6 +947,20 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
         <label>IFTP</label>
     </listViews>
     <listViews>
+        <fullName>ONE_Source</fullName>
+        <columns>NAME</columns>
+        <columns>Right__c</columns>
+        <columns>Contact__c</columns>
+        <columns>Portal_Application__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Portal_Application__c</field>
+            <operation>startsWith</operation>
+            <value>One S</value>
+        </filters>
+        <label>ONE Source</label>
+    </listViews>
+    <listViews>
         <fullName>Pending_approvals</fullName>
         <columns>Contact__c</columns>
         <columns>Portal_Application__c</columns>
@@ -1104,6 +1118,10 @@ ISPICKVAL( Right__c , &apos;Access Granted&apos;))</formula>
             </values>
             <values>
                 <fullName>Access Granted</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Access Requested</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1274,17 +1292,6 @@ NOT(BEGINS($Profile.Name, &apos;System Administrator&apos;))
         <errorMessage>Management Information Report portal service can only be granted for users under airline accounts.</errorMessage>
     </validationRules>
     <validationRules>
-        <fullName>MR_cannot_be_approved_by_admin</fullName>
-        <active>false</active>
-        <errorConditionFormula>AND( 
-OR (ISCHANGED(Right__c) , ISNEW() ), 
-Application_Name__c = &apos;Management Information Report&apos;, 
-OR(ISPICKVAL(Right__c, &apos;Access Granted&apos;), ISPICKVAL(Right__c, &apos;Access Denied&apos;)), 
-$User.Mgmt_Report_Team__c = false 
-)</errorConditionFormula>
-        <errorMessage>The Access Status of this service can only be changed by IATA ‘Management Report’ team.</errorMessage>
-    </validationRules>
-    <validationRules>
         <fullName>OAG_Access</fullName>
         <active>true</active>
         <errorConditionFormula>AND(Has_access_to_OAG__c = true,  NOT( TEXT(Portal_Application__r.Functional_Role__c) = &apos;Airport IS&apos;) )</errorConditionFormula>
@@ -1326,22 +1333,6 @@ NOT(BEGINS($Profile.Name, &apos;identity&apos;))
         <errorMessage>Access to the TIP Portal Service can only be granted to contacts of a Payment Provider account.</errorMessage>
     </validationRules>
     <validationRules>
-        <fullName>Restrict_IAC_request</fullName>
-        <active>false</active>
-        <description>Internal users must not be able to assign an IATA Accreditation &amp; Changes portal service with Access Status = Access Requested to a contact under accounts registered as Freight Forwarders in a CNS country.</description>
-        <errorConditionFormula>AND(
-    OR(
-    Text(Right__c) = &apos;Access Requested&apos;,
-    Text(Right__c) = &apos;Access Granted&apos;),
-    CONTAINS(Application_Name__c, &apos;IATA Accreditation &amp; Changes&apos;),
-    OR(Contact__r.Account.CNS_Account__c ,Contact__r.Account.CNS_Agency__c),
-    OR(Contact__r.Account.RecordType.DeveloperName =&apos;IATA_Agency&apos;,Contact__r.Account.RecordType.DeveloperName =&apos;Standard_Account&apos;),
-    ISPICKVAL(Contact__r.Account.Sector__c,&apos;Cargo Agent&apos;),
-    NOT(BEGINS($Profile.Name, &apos;System Administrator&apos;))
-    )</errorConditionFormula>
-        <errorMessage>Access to an IATA IATA Accreditation &amp; Changes portal service cannot be requested internally to a contact under accounts registered as Freight Forwarders in a CNS country.</errorMessage>
-    </validationRules>
-    <validationRules>
         <fullName>Restrict_IEP_request</fullName>
         <active>true</active>
         <description>Internal users must not be able to assign an IATA EasyPay portal service with Access Status = Access Requested to a contact.</description>
@@ -1372,17 +1363,6 @@ $Profile.Name != &apos;ISS Portal Agency User (Partner)&apos;
 	)
 )</errorConditionFormula>
         <errorMessage>Access to this portal service cannot be assigned internally. Please ask the portal user to request access, or their Portal Admin to add the user to this service.</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>SIS_cannot_be_approved_by_admin</fullName>
-        <active>false</active>
-        <errorConditionFormula>AND(
- OR (ISCHANGED(Right__c) , ISNEW() ),
- Application_Name__c = &apos;SIS&apos;,
- OR(ISPICKVAL(Right__c, &apos;Access Granted&apos;), ISPICKVAL(Right__c, &apos;Access Denied&apos;)),
-  $User.SIS_Team__c = false
-)</errorConditionFormula>
-        <errorMessage>The Access Status of this service can only be changed by IATA ‘SiS help desk&apos; team.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>SSO_cannot_be_approved_by_admin</fullName>

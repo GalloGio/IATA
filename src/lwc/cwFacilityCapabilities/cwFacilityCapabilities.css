@@ -5,14 +5,14 @@
 .capability-header {
 	background-color: rgb(238, 238, 238);
 	color: #333;
-	/* width: 100%; */
-	height: 60px;
+	height: auto;
 	border: none;
 	text-align: left;
 	align-content: center;
 	font-weight: bold;
 	outline: none;
 	font-size: 15px;
+	padding: 5px 0px !important;
 }
 .capability-header div {
 	margin: auto;
