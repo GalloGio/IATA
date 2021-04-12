@@ -8,6 +8,8 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
 	public string txtHelpTaxNumber {get; set;}
 	public String vatNumber {get; set;}
 	public String vatNumber2 {get; set;}
+	public boolean isValError {get; set;}
+	public boolean namEnabled {get; set;}
 
 	public boolean chsb{get;set;}
 	public boolean chss{get;set;}
@@ -152,6 +154,7 @@ public with sharing class ISSP_ANG_ANNUAL_REV_UPDATE {
 	}
 
 	public ISSP_ANG_ANNUAL_REV_UPDATE() {
+		isValError = true;
 		applyLanguage = UserInfo.getLanguage();
 
 		String fldName = 'ISSP_AMS_HelpText_' + applyLanguage + '__c';
