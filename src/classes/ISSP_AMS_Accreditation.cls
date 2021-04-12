@@ -6901,10 +6901,8 @@ public without sharing class ISSP_AMS_Accreditation {
 				newForm.Effective_Date_Of_Change__c.addError(Label.ISSP_YouMustEnter);
 				errorFound = true;
 			}
-			if(this.showNDCQuestion){
-				if(validateNDC()) {
+			if(this.showNDCQuestion && validateNDC()){
 					errorFound = true;
-				}
 			}
 
 			if (newForm.Will_such_change_affect_the_managers__c == null) {
