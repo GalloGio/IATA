@@ -30316,62 +30316,6 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <name>select_all</name>
     </customLabels>
     <customLabels>
-        <label><!-- Unbabel - Config Success --></label>
-        <name>unbabelapi__Unbabel_Config_Success</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Configurations --></label>
-        <name>unbabelapi__Unbabel_Configurations</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Error Parsing --></label>
-        <name>unbabelapi__Unbabel_Error_Parsing</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Error Received Translation Request Updated --></label>
-        <name>unbabelapi__Unbabel_Error_Received_Translation_Request_Updated</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Error Updating Translation Request --></label>
-        <name>unbabelapi__Unbabel_Error_Updating_Translation_Request</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Invalid Options --></label>
-        <name>unbabelapi__Unbabel_Invalid_Options</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Invalid Response --></label>
-        <name>unbabelapi__Unbabel_Invalid_Response</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Loading Wait --></label>
-        <name>unbabelapi__Unbabel_Loading_Wait</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Namespace and Class 404 --></label>
-        <name>unbabelapi__Unbabel_Namespace_and_Class_404</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Pages Configuration --></label>
-        <name>unbabelapi__Unbabel_Pages_Configuration</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Permission Error --></label>
-        <name>unbabelapi__Unbabel_Permission_Error</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Server Error --></label>
-        <name>unbabelapi__Unbabel_Server_Error</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Translation Request 404 --></label>
-        <name>unbabelapi__Unbabel_Translation_Request_404</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Configuration Not Found --></label>
-        <name>unbabelapi__Unbabel_config_404</name>
-    </customLabels>
-    <customLabels>
         <label><!-- wire transfer payment msg --></label>
         <name>wire_transfer_payment_msg</name>
     </customLabels>
