@@ -10,7 +10,7 @@
             <div class={tabInformativeClass} data-tab={constants.NOTIFICATION.SEVERITY.VALUES.INFORMATIVE} onclick={selectTab}>
                 INFORMATIVE ({notificationInformativeQuantity})
             </div>
-            <div class={tabButtonClass}>
+            <div if:true={isVisibleManualNotifications} class={tabButtonClass}>
                 <lightning-button class="slds-float_right" label={label.custom.ig_send_manual_notification} onclick={showModalNotification}></lightning-button>
             </div>
         </div>

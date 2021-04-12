@@ -1,10 +1,11 @@
 import { LightningElement, track, wire, api } from 'lwc';
-import { constants, resources } from 'c/igUtility';
+import { constants, resources, util } from 'c/igUtility';
+import { permissions } from 'c/igConstants';
 import { refreshApex } from '@salesforce/apex';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { label } from 'c/igLabels';
-import { util } from 'c/igUtility';
 
+import getPermissionsApex from '@salesforce/apex/IGOMPermissions.getPermissions';
 import getNotifications from '@salesforce/apex/IGOMNotificationUtil.getNotifications';
 import sendManualNotifications from '@salesforce/apex/IGOMNotificationUtil.sendManualNotifications';
 import markAsRead from '@salesforce/apex/IGOMNotificationUtil.markAsRead';
@@ -14,11 +15,9 @@ export default class IgNotifications extends LightningElement {
 	@track label = label;
 
     // Exposed properties
-
     @api stationId;
 
     // Tracked properties
-
     @track severityFilter = '';
     @track selectedAirlinesFilter = [];
     @track showFilters = false;
@@ -29,6 +28,10 @@ export default class IgNotifications extends LightningElement {
 
     @wire(getOwnStations)
     ownStations;
+
+    
+    @wire(getPermissionsApex, { stationId: '$stationId' })
+    userPermissions;
 
     // Internal properties
 
@@ -223,5 +226,7 @@ export default class IgNotifications extends LightningElement {
     get placeHolderInputFilters() {
         return this.selectedAirlinesFilter.length === 0 ? 'Filter by airline' : '';
     }
-
+    get isVisibleManualNotifications() {
+        return this.userPermissions.data && this.userPermissions.data[permissions.NOTIFY_GAP];
+    }
 }
