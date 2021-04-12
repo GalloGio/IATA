@@ -604,7 +604,7 @@ public without sharing class IGOMComplianceReviewUtil {
 				gapItem.Attachments.addAll(newReferenceIdToAttachments.get(ref.Id));
 			}
 			// Fill the formulas (userProvisionDocument) since they are not queried
-			gapItem.userProvisionDocument = oldDocIdToUsedDoc.get(newReferenceIdToOldReference.get(ref.Id).Document__c).reference;
+			gapItem.userProvisionDocument = newReferenceIdToOldReference.get(ref.Id).Document__c != null ? oldDocIdToUsedDoc.get(newReferenceIdToOldReference.get(ref.Id).Document__c).reference : '-';
 			gapAnalysisApex.references.add(gapItem);
 		}
 		return gapAnalysisApex;
