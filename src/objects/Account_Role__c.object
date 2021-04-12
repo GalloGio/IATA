@@ -2186,13 +2186,6 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
         <errorDisplayField>Effective_To_Date__c</errorDisplayField>
         <errorMessage>Effective To Date needs to be greater then Effective From Date</errorMessage>
     </validationRules>
-    <validationRules>
-        <fullName>Validate_Providers_Accreditation_Date</fullName>
-        <active>false</active>
-        <description>Can’t have active Payment Providers with Effective date From in the future</description>
-        <errorConditionFormula>AND(RecordType.DeveloperName=&quot;TIP_Payment_Provider&quot;, TEXT(Status__c)=&quot;Active&quot;, Effective_From_Date__c&gt;Today())</errorConditionFormula>
-        <errorMessage>Can’t have active Payment Providers with Effective date From in the future</errorMessage>
-    </validationRules>
     <visibility>Public</visibility>
     <webLinks>
         <fullName>Terminate_Provider_Account</fullName>

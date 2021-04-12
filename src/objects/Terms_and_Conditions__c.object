@@ -291,12 +291,5 @@
         <searchFilterFields>LAST_UPDATE</searchFilterFields>
     </searchLayouts>
     <sharingModel>ControlledByParent</sharingModel>
-    <validationRules>
-        <fullName>IEC_Cant_change_TnC_when_Final</fullName>
-        <active>false</active>
-        <description>The T&amp;C can&apos;t be edited when the status is Final</description>
-        <errorConditionFormula>ISNEW()==false &amp;&amp; ISPICKVAL(PRIORVALUE(Status__c), &apos;Final&apos;) &amp;&amp;  ISCHANGED(Is_Current__c)==false</errorConditionFormula>
-        <errorMessage>The T&amp;Cs cannot be edit when the status is Final</errorMessage>
-    </validationRules>
     <visibility>Public</visibility>
 </CustomObject>

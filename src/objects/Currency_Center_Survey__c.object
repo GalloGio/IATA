@@ -2152,16 +2152,5 @@
     </recordTypes>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
-    <validationRules>
-        <fullName>Percentage_Validation</fullName>
-        <active>false</active>
-        <description>To verify if the percentage is greater then 100 or opposite</description>
-        <errorConditionFormula>OR(
-   Type_Of_Operations_Percentage__c &gt; 1.0,
-   Type_Of_Operations_Percentage__c &lt; 0.0
-)</errorConditionFormula>
-        <errorDisplayField>Type_Of_Operations_Percentage__c</errorDisplayField>
-        <errorMessage>Type of Operations percentage must be between 0 and 100%.</errorMessage>
-    </validationRules>
     <visibility>Public</visibility>
 </CustomObject>

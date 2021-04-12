@@ -205,6 +205,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 	public Boolean batchStatusBool{get;set;}
 	public AsyncApexJob batchJob{get;set;}
 	public Boolean pollerBool{get;set;}
+	public Boolean showNDCQuestion{get;set;}
 	public Integer progressBar{get;set;}
 
 	public static Map<String, IATA_ISO_Country__c> countryInfoByCountryNameMap {
@@ -248,6 +249,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		if (caseId != null && caseId != '') {
 			newCase = fetchCase(caseid);
 		}
+		this.showNDCQuestion = false;
 
 		if (newCase != null) {
 			// This is only for annual revalidation cases.
@@ -256,6 +258,10 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 			}
 
 			this.caseAccount = fetchCaseAccount(newCase.AccountId);
+
+			if(newCase.Account.Location_Class__c == 'P' || newCase.Account.Location_Class__c == 'D'){
+				this.showNDCQuestion = true;
+			}
 
 			oscar = fetchOscar(newCase.Oscar__c);
 
@@ -488,7 +494,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 	}
 
 	private static Account fetchCaseAccount(Id accountId) {
-		List<Account> al = [SELECT Id
+		List<Account> al = [SELECT Id, Location_Class__c
 							FROM Account
 							WHERE Id = :accountId];
 
@@ -935,8 +941,8 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 	}
 
 	private static Case fetchCase(String caseId) {
-		List<Case> newCases = [Select Id, CaseNumber, Reason1__c, CaseArea__c, Status, BSPCountry__c, Country_concerned_by_the_query__c, Oscar__c,
-									Contact.Name, Account.Id, Description, Subject, Account_Concerned__c, Account_Concerned__r.Top_Parent__c, Account.Name,
+		List<Case> newCases = [Select Id, CaseNumber, Reason1__c, CaseArea__c, Status, BSPCountry__c, Country_concerned_by_the_query__c, Oscar__c, Account.Location_Class__c,
+									Contact.Name, Account.Id, Description, Subject, Account_Concerned__c, Account_Concerned__r.Top_Parent__c, Account.Name, Account.IATA_ISO_Country__r.ANG_Enable_NewGen__c,
 									Account.Billing_Address_formated__c, Verification__c, IFAP_Country_ISO__c, Case_Language__c, Region__c, Applicable_to_Which_Version_s__c,
 									Owner.Name, Visible_on_ISS_Portal__c
 								From Case
@@ -1321,7 +1327,15 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 			}
 			}
 
-			if (currentAccount.fw.newform.ISSP_AMS_GDS_with_signed_contract__c == null) {
+			if (newCase.Account.IATA_ISO_Country__r.ANG_Enable_NewGen__c && this.showNDCQuestion) {
+				if(currentAccount.fw.newform.NDC_Transactions__c == null) {
+					currentAccount.fw.newform.NDC_Transactions__c.addError(Label.ISSP_YouMustEnter);
+					errorFound = true;
+				} else if (currentAccount.fw.newform.NDC_Transactions__c == 'No' && currentAccount.fw.newform.ISSP_AMS_GDS_with_signed_contract__c == null) {
+					currentAccount.fw.newform.ISSP_AMS_GDS_with_signed_contract__c.addError(Label.ISSP_AMS_Step3_Indicate_GDSs_Short);
+					errorFound = true;
+				}
+			} else if (currentAccount.fw.newform.ISSP_AMS_GDS_with_signed_contract__c == null && this.showNDCQuestion) {
 				currentAccount.fw.newform.ISSP_AMS_GDS_with_signed_contract__c.addError(Label.ISSP_YouMustEnter);
 				errorFound = true;
 			}
