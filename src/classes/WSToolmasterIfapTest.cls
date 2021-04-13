@@ -120,7 +120,7 @@ public with sharing class WSToolmasterIfapTest {
 		ifapToolMaster.mergeAllPDFForCase(null, null, null);
 		ifapToolMaster.submitCaseQualityIssuesToMFT(null, null, null, null);
 		ifapToolMaster.deletePWCResults(null, null);
-		ifapToolMaster.deletePWCdocumentsGXA(null, null);
+		//ifapToolMaster.deletePWCdocumentsGXA(null, null);
 		ifapToolMaster.deletePWCRejections(null, null);
 		ifapToolMaster.submitCaseCancellationToMFT(null, null, null, null);
 		ifapToolMaster.submitCaseParametersToMFT(null, null, null, null);

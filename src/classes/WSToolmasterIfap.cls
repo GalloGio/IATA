@@ -125,6 +125,14 @@ public class WSToolmasterIfap {
 				private String[] apex_schema_type_info = new String[]{webserviceURL,'true','false'};
 				private String[] field_order_type_info = new String[]{'deletePWCResultsReturn'};
 		}
+
+		public class deletePWCdocumentsGXAResponse_element {
+			public String deletePWCdocumentsGXAReturn;
+			private String[] deletePWCdocumentsGXAReturn_type_info = new String[]{'deletePWCdocumentsGXAReturn',webserviceURL,null,'1','1','false'};
+			private String[] apex_schema_type_info = new String[]{webserviceURL,'true','false'};
+			private String[] field_order_type_info = new String[]{'deletePWCdocumentsGXAReturn'};
+		}
+
 		public class submitCaseParametersToMFTResponse_element {
 				public String submitCaseParametersToMFTReturn;
 				private String[] submitCaseParametersToMFTReturn_type_info = new String[]{'submitCaseParametersToMFTReturn',webserviceURL,null,'1','1','false'};
@@ -294,8 +302,8 @@ public class WSToolmasterIfap {
 					WSToolmasterIfap.deletePWCResults_element request_x = new WSToolmasterIfap.deletePWCResults_element();
 					request_x.confName = confName;
 					request_x.jsonFileNames = jsonFileNames;
-					WSToolmasterIfap.deletePWCResultsResponse_element response_x;
-					Map<String, WSToolmasterIfap.deletePWCResultsResponse_element> response_map_x = new Map<String, WSToolmasterIfap.deletePWCResultsResponse_element>();
+					WSToolmasterIfap.deletePWCdocumentsGXAResponse_element response_x;
+					Map<String, WSToolmasterIfap.deletePWCdocumentsGXAResponse_element> response_map_x = new Map<String, WSToolmasterIfap.deletePWCdocumentsGXAResponse_element>();
 					response_map_x.put('response_x', response_x);
 					WebServiceCallout.invoke(
 					this,
@@ -306,11 +314,11 @@ public class WSToolmasterIfap {
 					webserviceURL,
 					'deletePWCdocumentsGXA',
 					webserviceURL,
-					'deletePWCResultsResponse',
-					'WSToolmasterIfap.deletePWCResultsResponse_element'}
+					'deletePWCdocumentsGXAResponse',
+					'WSToolmasterIfap.deletePWCdocumentsGXAResponse_element'}
 					);
 					response_x = response_map_x.get('response_x');
-					return response_x.deletePWCResultsReturn;
+					return response_x.deletePWCdocumentsGXAReturn;
 				}
 				public String deletePWCRejections(String confName,String jsonFileNames) {
 						WSToolmasterIfap.deletePWCRejections_element request_x = new WSToolmasterIfap.deletePWCRejections_element();
