@@ -246,6 +246,7 @@ public without sharing class IGOMNotificationUtil {
 			noti.contactRoleDetailId = contactDetailId;
 			noti.notificationSubject = IGOMConstants.METADATA.NOTIFICATION_NEW_IGOM_SUBJECT;
 			noti.notificationBody = String.format(IGOMConstants.METADATA.NOTIFICATION_NEW_IGOM_BODY, new List<Object>{ igomDocument.name, igomDocument.publishDate });
+			noti.severity = IGOMConstants.NOTIFICATION.SEVERITY.INFORMATIVE;
 			notifications.add(noti.toSalesforce());
 		}
 		insert notifications;
