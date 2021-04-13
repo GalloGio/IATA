@@ -15,7 +15,7 @@ public without sharing class IGOMConstants {
 	}
 
 	public class Globals_Constants {
-		public final String COMMUNITY_PERMISSION_SET { get { return 'IGOM_Portal'; } }
+		// public final String COMMUNITY_PERMISSION_SET { get { return 'IGOM_Portal'; } }
 		public final String COMMUNITY_PROFILE { get { return 'ISS Portal (Partner)'; } }
 		public final String XML_ENCAPSULATOR_NAME { get { return 'Chapter'; } }
 		public final String XML_ENCAPSULATOR_NAME_ES { get { return 'Capítulo'; } }
@@ -27,7 +27,7 @@ public without sharing class IGOMConstants {
 		// Default fields values for the service
 		public final String FUNCTIONAL_ROLE_SERVICE { get { return 'IGOM'; } }
 		public final String SERVICE_RENDERED_NAME { get { return 'IGOM'; } }
-		public final String ACCOUNT_CONTACT_ROLE_RECORD_TYPE { get { return 'Functional'; } }
+		// public final String ACCOUNT_CONTACT_ROLE_RECORD_TYPE { get { return 'Functional'; } }
 		public final String NONE { get { return 'None'; } }
 		public final String EMAIL_TEMPLATE_GAP_ANALYSIS { get { return 'IGOM_Notification_New_GAP_Analysis_published'; } }
 		public final String EMAIL_TEMPLATE_GAP_REMINDER { get { return 'IGOM_Reminder_GAP_reminder'; } }
@@ -206,8 +206,8 @@ public without sharing class IGOMConstants {
 	}
 
 	public class Error_Constants {
-		public final String FROM_GH_TO_AIRLINE_ERROR { get { return '\"From\" account role can not be a Ground Handler and have the \"To\" account role be an Airline.'; } }
-		public final String CORPORATE_NO_RELATIONSHIP_ERROR { get { return 'Corporate account roles do not have a relationship with other account roles.'; } }
+		// public final String FROM_GH_TO_AIRLINE_ERROR { get { return '\"From\" account role can not be a Ground Handler and have the \"To\" account role be an Airline.'; } }
+		// public final String CORPORATE_NO_RELATIONSHIP_ERROR { get { return 'Corporate account roles do not have a relationship with other account roles.'; } }
 		public final String RELATIONSHIP_ALREADY_EXISTS_ERROR { get { return 'There is already an active relationship between stations.'; } }
 		public final String MAP_NO_ID_ERROR { get { return 'Map does not contain the requested Id {0}.'; } }
 		public final String METHOD_ONLY_FOR_ATTACHMENTS_ERROR { get { return 'The method only works for Attachment objects.'; } }
@@ -215,7 +215,7 @@ public without sharing class IGOMConstants {
 		public final String CANT_MIX_REFERENCES_FROM_DIFF_GAPS_ERROR { get { return 'References to different GAP Analysis can not be mixed together.'; } }
 		public final String AN_ERROR_OCURRED_WHILE_ERROR { get { return 'An error ocurred while {0}. {1}.'; } }
 		public final String REQUIRED_PERMISSIONS_MISSING_ERROR { get { return 'You don\'t have the required permissions to {0}.'; } }
-		public final String NO_ROLE_TO_REMOVE_ERROR { get { return 'No role to remove from {0} please add a role first.'; } }
+		// public final String NO_ROLE_TO_REMOVE_ERROR { get { return 'No role to remove from {0} please add a role first.'; } }
 		public final String NO_ROLE_IN_STATION_FOR_USER_ERROR { get { return 'No role in the station with id {0} for the running user ({1}).'; } }
 		public final String DOCUMENT_WRONG_TYPE_ERROR { get { return 'The document specified can only be of type {0}.'; } }
 		public final String NO_ACTIVE_MANUAL_ERROR { get { return 'No active manual found.'; } }
@@ -227,14 +227,14 @@ public without sharing class IGOMConstants {
 		public final String NO_ACTIVE_AND_MAIN_MANUAL_ERROR { get { return 'No manual available as both Active and Main in the system.'; } }
 		public final String PROCEDURE_WITH_NO_TRANSLATION_IN_MANUAL_ERROR { get { return 'The procedure with the permId {0} does not contain a translation procedure in the manual {1}.'; } }
 		public final String LV_WITHOUT_CATEGORY_ERROR { get { return 'Level {0} is not related to a category, please make sure that the category has the propper values and that a constant has been created for them.'; } }
-		public final String IGOM_PROCESSING_ERROR { get { return 'An error took place on IGOM processing: {0}'; } }
-		public final String NO_CATEGORY_ERROR { get { return 'Category {0} does not exist.'; } }
-		public final String INVALID_PARAM_ERROR { get { return 'Invalid {0} type for the parameter {1}.'; } }
+		// public final String IGOM_PROCESSING_ERROR { get { return 'An error took place on IGOM processing: {0}'; } }
+		// public final String NO_CATEGORY_ERROR { get { return 'Category {0} does not exist.'; } }
+		// public final String INVALID_PARAM_ERROR { get { return 'Invalid {0} type for the parameter {1}.'; } }
 		public final String CONTACT_DETAILS_NOT_NOTIFIABLE_ERROR { get { return 'Some of the contact detail ids specified are not notifiable.'; } }
 		public final String USER_WITHOUT_CONTACT_ERROR { get { return 'The currentUser.contactId is null for the running user ({0}) with profile {1}.'; } }
 		public final String NO_ROLE_FOR_USER_AND_STATION_ERROR { get { return 'No Account Contact Role or IGOM Contact Role Detail record related to the running user\'s ({0}) associated contact ({1}) own stations.'; } }
 		public final String STATION_NOT_RELATED_TO_USER_ERROR { get { return 'The station with id {0} is not among the related stations to the current user.'; } }
-		public final String NO_TRIGGER_HANDLER_ERROR { get { return 'No Trigger Handler registered for Object Type: {0}.'; } }
+		// public final String NO_TRIGGER_HANDLER_ERROR { get { return 'No Trigger Handler registered for Object Type: {0}.'; } }
 		public final String INVALID_PAGE { get { return 'Invalid page specified.'; } }
 		public final String INVALID_ATTACHMENT_PARENT { get { return 'The attachment\'s parent is not a valid object type.'; } }
 		public final String NO_ACCESS_TO_NOTIFICATION { get { return 'The notification accessed does not belong to the running user.'; } }
@@ -267,13 +267,13 @@ public without sharing class IGOMConstants {
 	public class ProcedureComplianceVariationStatus_Constants {
 		public final String CONFORMITY { get { return 'Conforms'; } }
 		public final String VARIATION { get { return 'Varies'; } }
-		public final String OUT_OF_SCOPE { get { return 'Out of Scope'; } }
+		// public final String OUT_OF_SCOPE { get { return 'Out of Scope'; } }
 	}
 
 	public class ProcedureComplianceStatusValue_Constants {
 		public final String REVIEWED { get { return 'Reviewed'; } }
-		public final String OUT_OF_DATE { get { return 'Out of Date'; } }
-		public final String EXPIRED { get { return 'Expired'; } }
+		// public final String OUT_OF_DATE { get { return 'Out of Date'; } }
+		// public final String EXPIRED { get { return 'Expired'; } }
 	}
 
 	// Compliance Review
@@ -349,13 +349,13 @@ public without sharing class IGOMConstants {
 	public class StationRelationshipStatus_Constants {
 		public final String ACTIVE { get { return 'Active'; } }
 		public final String PENDING { get { return 'Pending'; } }
-		public final String INACTIVE { get { return 'Inactive'; } }
+		// public final String INACTIVE { get { return 'Inactive'; } }
 	}
 
 	public class StationType_Constants {
 		public final String AIRLINE { get { return 'Airline'; } }
 		public final String GROUND_HANDLER_HQ { get { return 'Ground_Handler_HQ'; } }
-		public final String GROUND_HANDLER_STATION { get { return 'Ground_Handler_Station'; } }
+		// public final String GROUND_HANDLER_STATION { get { return 'Ground_Handler_Station'; } }
 	}
 
 	// Notification
@@ -401,17 +401,12 @@ public without sharing class IGOMConstants {
 	}
 
 	private static DocumentRecordType_Constants documentRecordTypeNameConstants;
-	private static DocumentField_Constants documentFieldNameConstants;
+	// private static DocumentField_Constants documentFieldNameConstants;
 	private static DocumentType_Constants documentTypeConstants;
 	public class Document_Constants {
 		public DocumentRecordType_Constants RECORD_TYPE {
 			get { if (documentRecordTypeNameConstants == null) { documentRecordTypeNameConstants = new DocumentRecordType_Constants(); }
 				return documentRecordTypeNameConstants;
-			}
-		}
-		public DocumentField_Constants FIELD {
-			get { if (documentFieldNameConstants == null) { documentFieldNameConstants = new DocumentField_Constants(); }
-				return documentFieldNameConstants;
 			}
 		}
 		public DocumentType_Constants TYPE {
@@ -426,15 +421,9 @@ public without sharing class IGOMConstants {
 		public final String GOM { get { return 'GOM'; } }
 	}
 
-	public class DocumentField_Constants {
-		public final String EDITION { get { return 'Edition'; } }
-		public final String VERSION { get { return 'Version'; } }
-		public final String REVISION { get { return 'Revision'; } }
-	}
-
 	public class DocumentType_Constants {
-		public final String ONLINE { get { return 'Online'; } }
-		public final String SOFTWARE { get { return 'Software'; } }
+		// public final String ONLINE { get { return 'Online'; } }
+		// public final String SOFTWARE { get { return 'Software'; } }
 		public final String FILES { get { return 'Files'; } }
 	}
 
