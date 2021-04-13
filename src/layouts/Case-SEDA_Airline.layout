@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customButtons>New_Case_Comment</customButtons>
+    <customButtons>Log_Phone_Case</customButtons>
     <customButtons>Accept_Case</customButtons>
     <customButtons>Reset_New_interactions</customButtons>
     <customButtons>Escalate_within_IATA</customButtons>
@@ -154,6 +156,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Settlement_Model__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Late_Payment_Date__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -429,6 +435,24 @@
         </layoutColumns>
         <style>OneColumn</style>
     </layoutSections>
+    <platformActionList>
+        <actionListContext>Record</actionListContext>
+        <platformActionListItems>
+            <actionName>Case.Log_Phone_Case_Key_Customer_Alert</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>2</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Case.New_Comment_Key_Customer_Alert</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>0</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Case.Escalate_within_IATA_Key_Customer_Alert</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>1</sortOrder>
+        </platformActionListItems>
+    </platformActionList>
     <relatedContent>
         <relatedContentItems>
             <layoutItem>

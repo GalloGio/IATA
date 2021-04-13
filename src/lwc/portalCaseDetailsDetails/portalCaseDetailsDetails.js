@@ -30,9 +30,11 @@ import CSP_Case_hasInvoicePaid from '@salesforce/label/c.CSP_Case_hasInvoicePaid
 /* PDF Labels */
 import ISSP_AMS_Download_PDF_Copy from '@salesforce/label/c.ISSP_AMS_Download_PDF_Copy';
 import ISSP_AMS_Download_PDF_NOC from '@salesforce/label/c.ISSP_AMS_Download_PDF_NOC';
+import ISSP_Certificate_was_uploaded_satisfactory from '@salesforce/label/c.ISSP_Certificate_was_uploaded_satisfactory';
 
 
 import PDFICON from '@salesforce/resourceUrl/PDF_icon_large';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 const newAE = 'New AE';
 const newHE = 'New HE';
@@ -55,6 +57,7 @@ export default class PortalCaseDetailsDetails extends LightningElement {
     @track showNewDescriptionSection = false;
     @track isCollapsedWhenNewDescriptionInPlace = "slds-p-around_medium ";
     @track trackedIsExpired = false;
+    @track trackedIsExpiredDGR = false;
     @track isICollectionCase;
 
     @api
@@ -63,6 +66,13 @@ export default class PortalCaseDetailsDetails extends LightningElement {
     }
     set isexpired(value) {
         this.trackedIsExpired = value;
+	}
+    @api
+    get isexpireddgr() {
+        return this.trackedIsExpiredDGR;
+    }
+    set isexpireddgr(value) {
+        this.trackedIsExpiredDGR = value;
 	}
 	@track israelCase;
 	
@@ -75,6 +85,7 @@ export default class PortalCaseDetailsDetails extends LightningElement {
         RelatedAccount,
         Open,
         ISSP_AMS_Download_PDF_Copy,
+        ISSP_Certificate_was_uploaded_satisfactory,
         ISSP_AMS_Download_PDF_NOC,
         Email,
         CSP_Remittantce_Date,
@@ -89,6 +100,8 @@ export default class PortalCaseDetailsDetails extends LightningElement {
     };
 
     acceptedFormats = '.pdf, .jpeg, .jpg, .png, .ppt, .pptx, .xls, .xlsx, .tif, .tiff, .zip, .doc, .docx';
+
+    @track certificateUploaded = false;
 
     connectedCallback() {
         //get the parameters for this page
@@ -111,6 +124,10 @@ export default class PortalCaseDetailsDetails extends LightningElement {
                 }
 
             });
+        }
+        
+        if(this.pageParams.uploaded !== undefined && this.pageParams.uploaded == "true"){
+            this.certificateUploaded = true;
         }
         
 	}
@@ -140,6 +157,15 @@ export default class PortalCaseDetailsDetails extends LightningElement {
                         });
 
                     this.loading = false;
+
+                    if(this.certificateUploaded == true){
+                        const evt = new ShowToastEvent({
+                            message: this.labels.ISSP_Certificate_was_uploaded_satisfactory,
+                            variant: "success",
+                            mode: 'dismissable'
+                        });
+                        this.dispatchEvent(evt);
+                    }
                     
                 })
                 .catch(error => {

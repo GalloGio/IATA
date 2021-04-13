@@ -38,6 +38,18 @@
         <locationY>280</locationY>
         <apexClass>SCIMCreateUserPlugin</apexClass>
         <inputParameters>
+            <name>CallParams</name>
+            <value>
+                <elementReference>CallParams</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>ExternalSystem</name>
+            <value>
+                <elementReference>ExternalSystem</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>userPayload</name>
             <value>
                 <elementReference>UserPayload</elementReference>
@@ -49,27 +61,13 @@
                 <elementReference>UserProvisioningRequest.Id</elementReference>
             </value>
         </inputParameters>
-        <inputParameters>
-            <name>CallParams</name>
-            <value>
-                <elementReference>CallParams</elementReference>
-            </value>
-        </inputParameters>
-        <outputParameters>
-            <assignToReference>Status</assignToReference>
-            <name>Status</name>
-        </outputParameters>
         <outputParameters>
             <assignToReference>Details</assignToReference>
             <name>Details</name>
         </outputParameters>
         <outputParameters>
-            <assignToReference>ExternalUserId</assignToReference>
-            <name>ExternalUserId</name>
-        </outputParameters>
-        <outputParameters>
-            <assignToReference>ExternalUsername</assignToReference>
-            <name>ExternalUsername</name>
+            <assignToReference>ExternalEmail</assignToReference>
+            <name>ExternalEmail</name>
         </outputParameters>
         <outputParameters>
             <assignToReference>ExternalFirstName</assignToReference>
@@ -80,8 +78,16 @@
             <name>ExternalLastName</name>
         </outputParameters>
         <outputParameters>
-            <assignToReference>ExternalEmail</assignToReference>
-            <name>ExternalEmail</name>
+            <assignToReference>ExternalUserId</assignToReference>
+            <name>ExternalUserId</name>
+        </outputParameters>
+        <outputParameters>
+            <assignToReference>ExternalUsername</assignToReference>
+            <name>ExternalUsername</name>
+        </outputParameters>
+        <outputParameters>
+            <assignToReference>Status</assignToReference>
+            <name>Status</name>
         </outputParameters>
     </apexPluginCalls>
     <apexPluginCalls>
@@ -153,24 +159,30 @@
         <locationY>707</locationY>
         <apexClass>SCIMDeleteUserPlugin</apexClass>
         <inputParameters>
-            <name>userProvisioningRequestId</name>
-            <value>
-                <elementReference>UserProvisioningRequest.Id</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
             <name>CallParams</name>
             <value>
                 <elementReference>CallParams</elementReference>
             </value>
         </inputParameters>
-        <outputParameters>
-            <assignToReference>Status</assignToReference>
-            <name>Status</name>
-        </outputParameters>
+        <inputParameters>
+            <name>ExternalSystem</name>
+            <value>
+                <elementReference>ExternalSystem</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>userProvisioningRequestId</name>
+            <value>
+                <elementReference>UserProvisioningRequest.Id</elementReference>
+            </value>
+        </inputParameters>
         <outputParameters>
             <assignToReference>Details</assignToReference>
             <name>Details</name>
+        </outputParameters>
+        <outputParameters>
+            <assignToReference>Status</assignToReference>
+            <name>Status</name>
         </outputParameters>
         <outputParameters>
             <assignToReference>UPAStatus</assignToReference>
@@ -211,6 +223,18 @@
         <locationY>487</locationY>
         <apexClass>SCIMUpdateUserPlugin</apexClass>
         <inputParameters>
+            <name>CallParams</name>
+            <value>
+                <elementReference>CallParams</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>ExternalSystem</name>
+            <value>
+                <elementReference>ExternalSystem</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>userPayload</name>
             <value>
                 <elementReference>UserPayload</elementReference>
@@ -222,19 +246,13 @@
                 <elementReference>UserProvisioningRequest.Id</elementReference>
             </value>
         </inputParameters>
-        <inputParameters>
-            <name>CallParams</name>
-            <value>
-                <elementReference>CallParams</elementReference>
-            </value>
-        </inputParameters>
-        <outputParameters>
-            <assignToReference>Status</assignToReference>
-            <name>Status</name>
-        </outputParameters>
         <outputParameters>
             <assignToReference>Details</assignToReference>
             <name>Details</name>
+        </outputParameters>
+        <outputParameters>
+            <assignToReference>Status</assignToReference>
+            <name>Status</name>
         </outputParameters>
     </apexPluginCalls>
     <apexPluginCalls>
@@ -293,6 +311,14 @@
             <name>userPayload</name>
         </outputParameters>
     </apexPluginCalls>
+    <constants>
+        <description>contains the name of the external system to invoke. Used while getting resource for named credential</description>
+        <name>ExternalSystem</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>IEP</stringValue>
+        </value>
+    </constants>
     <decisions>
         <name>Operation</name>
         <label>Operation</label>
@@ -400,20 +426,8 @@
         <name>CallParams</name>
         <dataType>String</dataType>
         <expression>&apos;{&apos;+
-&apos; &quot;externalSystems&quot; : &quot;&apos; + {!UserFields.Contact.Account.IATA_ISO_Country__r.ANG_Portal_Service__r.Name}  + &apos;&quot;, &apos; +
-&apos; &quot;client_secret&quot; : &quot;&apos; + {!client_secret}  + &apos;&quot;, &apos; +
-&apos; &quot;client_id&quot; : &quot;&apos; + {!client_id}  + &apos;&quot; &apos; +
+&apos; &quot;externalSystems&quot; : &quot;&apos; + {!UserFields.Contact.Account.IATA_ISO_Country__r.ANG_Portal_Service__r.Name}  + &apos;&quot;&apos; +
 &apos;}&apos;</expression>
-    </formulas>
-    <formulas>
-        <name>client_id</name>
-        <dataType>String</dataType>
-        <expression>&apos;691343569caf4c80aa09d835fc3b700e&apos;</expression>
-    </formulas>
-    <formulas>
-        <name>client_secret</name>
-        <dataType>String</dataType>
-        <expression>&apos;3787a2F55B8c4c39aEA11a36ad69d66e&apos;</expression>
     </formulas>
     <formulas>
         <description>Formula to determine if a UserProvisioningRequest indicates enabling a user.</description>
@@ -455,6 +469,12 @@
         <name>BuilderType</name>
         <value>
             <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processType>UserProvisioningFlow</processType>

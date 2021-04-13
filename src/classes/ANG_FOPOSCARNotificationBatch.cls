@@ -26,7 +26,6 @@ global class ANG_FOPOSCARNotificationBatch implements Database.Batchable<Case>, 
 	// Portal Notification and Email templates identifiers
 	public static final String FOP_REMINDER_TEMPLATE_ID = 'ANG_Mass_FOP_OSCAR_Reminder';
 	public static final String FOP_NONCOMPLIANCE_TEMPLATE_ID = 'ANG_Mass_FOP_OSCAR_NonCompliance';
-	public static final String RENEWAL_FOP_REMINDER_TEMPLATE_ID = 'ANG_PCI_RENEWAL_Reminder';
 	public static final String RENEWAL_FOP_NONCOMPLIANCE_TEMPLATE_ID = 'ANG_PCI_RENEWAL_NonCompliance';
 	public static final String ANNUAL_REV_REMINDER = 'ANG_Annual_Revalidation_Reminder';
 	public static final String ANNUAL_REV_DEADLINE_REMINDER = 'ANG_Annual_Revalidation_Deadline_Reminder';
@@ -34,7 +33,6 @@ global class ANG_FOPOSCARNotificationBatch implements Database.Batchable<Case>, 
 	public static final Set<String> emailTemplates = new Set<String>{
 		FOP_REMINDER_TEMPLATE_ID,
 		FOP_NONCOMPLIANCE_TEMPLATE_ID,
-		RENEWAL_FOP_REMINDER_TEMPLATE_ID,
 		RENEWAL_FOP_NONCOMPLIANCE_TEMPLATE_ID,
 		ANNUAL_REV_REMINDER,
 		ANNUAL_REV_DEADLINE_REMINDER
@@ -130,8 +128,6 @@ global class ANG_FOPOSCARNotificationBatch implements Database.Batchable<Case>, 
 			if (dt == DATE_REMINDER_15 || cse.OSCAR__r.ANG_Administrative_non_compliance_date__c == DATE_REMINDER_15) {
 				if(cse.origin == MASSIVE_FOP_ORIGIN) {
 					populateTemplateMap(reminderCases, cse, FOP_REMINDER_TEMPLATE_ID, templateContIdMap);
-				} else if (cse.origin == AUTOMATIC_RENEWAL_FOP_ORIGIN) {
-					populateTemplateMap(renewalReminderCases, cse, RENEWAL_FOP_REMINDER_TEMPLATE_ID, templateContIdMap);
 				} else if (cse.Reason1__c == ANN_REV_REASON) {
 					populateAnnualRevalidationTemplateMap(annualRevDeadlineReminderCases, annualRevReminderCases, cse, templateContIdMap);
 				}
@@ -154,10 +150,6 @@ global class ANG_FOPOSCARNotificationBatch implements Database.Batchable<Case>, 
 
 		if(!nonComplianceCases.isEmpty()) {
 			casesByTemplateName.put(notificationTemplates.get(FOP_NONCOMPLIANCE_TEMPLATE_ID),nonComplianceCases);
-		}
-
-		if(!renewalReminderCases.isEmpty()) {
-			casesByTemplateName.put(notificationTemplates.get(RENEWAL_FOP_REMINDER_TEMPLATE_ID),renewalReminderCases);
 		}
 
 		if(!renewalNonComplianceCases.isEmpty()) {

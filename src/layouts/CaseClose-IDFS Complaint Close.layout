@@ -91,10 +91,6 @@
                 <behavior>Required</behavior>
                 <field>Complaint_Sub_Category__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Required</behavior>
-                <field>Complaint_Reason__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -117,10 +113,6 @@
             <layoutItems>
                 <behavior>Required</behavior>
                 <field>Complaint_Analysis__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Required</behavior>
-                <field>Complaint_Closure__c</field>
             </layoutItems>
         </layoutColumns>
         <style>OneColumn</style>

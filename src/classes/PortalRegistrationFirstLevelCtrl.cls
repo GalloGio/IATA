@@ -359,13 +359,6 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 	public static Boolean checkIsUsernameIsAvailableInGlobalSalesforce(String email, List<Contact> conList) {
 		// Method to test if another user existin in all SF instances to avoid having an error at the end of the process
 		Savepoint sp = Database.setSavepoint();
-		List<Profile> profileList = [SELECT Id, Name FROM Profile];
-		map<ID, Profile> profileMap = new map<ID, Profile> (
-		[SELECT Id, Name,
-				UserLicenseId,
-				UserLicense.Name
-		FROM Profile
-		WHERE (UserLicense.Name = 'Partner Community' OR UserLicense.Name = 'Identity')]);
 
 		Contact[] recordCont = [SELECT Id FROM Contact WHERE Id NOT IN (SELECT ContactId FROM User) LIMIT 1];
 
@@ -1145,11 +1138,11 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 	}
 
 	public class CustomerTypePicklist{
-		@AuraEnabled String picklistName {get; set;}
+		@AuraEnabled public String picklistName {get; set;}
 
-		@AuraEnabled String picklistLabel { get; private set; }
+		@AuraEnabled public String picklistLabel { get; private set; }
 
-		@AuraEnabled List<CustomerTypePicklistOption> picklistOptions { get; private set; }
+		@AuraEnabled public List<CustomerTypePicklistOption> picklistOptions { get; private set; }
 
 		public CustomerTypePicklist(String picklistLabel){
 			this.picklistLabel = picklistLabel;
@@ -1158,11 +1151,11 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 	}
 
 	public class CustomerTypePicklistOption{
-		@AuraEnabled String key { get; private set; }
+		@AuraEnabled public String key { get; private set; }
 
-		@AuraEnabled String label { get; private set; }
+		@AuraEnabled public String label { get; private set; }
 
-		@AuraEnabled Boolean isSelected { get; private set; }
+		@AuraEnabled public Boolean isSelected { get; private set; }
 
 		public CustomerTypePicklistOption(String key, String label, Boolean isSelected){
 			this.key = key;

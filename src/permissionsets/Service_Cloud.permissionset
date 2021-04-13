@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <applicationVisibilities>
+        <application>standard__ServiceConsole</application>
+        <visible>true</visible>
+    </applicationVisibilities>
+    <description>Enables user for Service Cloud setting and gives access to Service Cloud Console</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Service Cloud</label>
+    <license>Salesforce</license>
+</PermissionSet>

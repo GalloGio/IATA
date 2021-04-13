@@ -115,6 +115,10 @@
                 <behavior>Edit</behavior>
                 <field>Is_On_Airport__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Is_Direct_Ramp_Access__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -157,6 +161,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Nearest_Airport_Code__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Station_Geo_Coordinates__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -205,10 +213,9 @@
     </layoutSections>
     <relatedLists>
         <fields>NAME</fields>
-        <fields>Account_Name__c</fields>
-        <fields>ICG_Role__c</fields>
-        <fields>Account_Role__c</fields>
+        <fields>Contact_Email__c</fields>
         <fields>Contact_Name__c</fields>
+        <fields>ICG_Role__c</fields>
         <fields>Status__c</fields>
         <relatedList>ICG_Contact_Role_Detail__c.ICG_Account_Role_Detail__c</relatedList>
     </relatedLists>
@@ -221,6 +228,7 @@
         <fields>Expiration_Date__c</fields>
         <fields>CEIV_Scope_List__c</fields>
         <fields>SFOC_Scope__c</fields>
+        <fields>Status__c</fields>
         <relatedList>ICG_Capability_Assignment_Group__c.ICG_Account_Role_Detail__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -247,6 +255,10 @@
     <relatedLists>
         <fields>NAME</fields>
         <relatedList>ICG_Account_Role_Detail_Relationship__c.ICG_ARD__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>ICG_Account_Role_Capability_Assignment__c.ICG_Account_Role_Detail__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>TASK.SUBJECT</fields>

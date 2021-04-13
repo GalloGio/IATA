@@ -149,19 +149,19 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
 		List<id> completedForms = new List<id>();
 		for(AMS_Pax_Accreditation_Form__c accForm : [SELECT Id, IATACode__c, HO_Account__c
-													 FROM AMS_Pax_Accreditation_Form__c
-													 WHERE RecordTypeId =: rtAnnualRevalidation
-													 AND Status__c =: 'completed'
-													 AND SAAM_Case__c =: currentAccount.fw.newForm.SAAM_Case__c
-													 AND Id !=: currentAccount.fw.newForm.Id]){
-														 completedForms.add(accForm.HO_Account__c);
-													 }
+													FROM AMS_Pax_Accreditation_Form__c
+													WHERE RecordTypeId =: rtAnnualRevalidation
+													AND Status__c =: 'completed'
+													AND SAAM_Case__c =: currentAccount.fw.newForm.SAAM_Case__c
+													AND Id !=: currentAccount.fw.newForm.Id]){
+														completedForms.add(accForm.HO_Account__c);
+													}
 
 		
 
 		List<AMS_Agencies_relationhip__c> accountsList = new List<AMS_Agencies_relationhip__c>();
 
-   		for(Id key : getAccountsHierarchiesMap.keySet()) {
+		for(Id key : getAccountsHierarchiesMap.keySet()) {
 			accountsList.addAll(getAccountsHierarchiesMap.get(key));
 		}
 
@@ -205,6 +205,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 	public Boolean batchStatusBool{get;set;}
 	public AsyncApexJob batchJob{get;set;}
 	public Boolean pollerBool{get;set;}
+	public Boolean showNDCQuestion{get;set;}
 	public Integer progressBar{get;set;}
 
 	public static Map<String, IATA_ISO_Country__c> countryInfoByCountryNameMap {
@@ -248,6 +249,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		if (caseId != null && caseId != '') {
 			newCase = fetchCase(caseid);
 		}
+		this.showNDCQuestion = false;
 
 		if (newCase != null) {
 			// This is only for annual revalidation cases.
@@ -256,6 +258,10 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 			}
 
 			this.caseAccount = fetchCaseAccount(newCase.AccountId);
+
+			if(newCase.Account.Location_Class__c == 'P' || newCase.Account.Location_Class__c == 'D'){
+				this.showNDCQuestion = true;
+			}
 
 			oscar = fetchOscar(newCase.Oscar__c);
 
@@ -356,14 +362,14 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 	private Boolean checkPreviousOwnership() {
 		Decimal percentage = 0;
 
-		for (AMS_Account_Role__c ar: [SELECT Percentage__c
-									  FROM AMS_Account_Role__c
-									  WHERE Account__c = :currentAccount.account.Id
-									  AND Active__c = true
-									  AND RecordTypeId = :ownershipId 
-									  AND Percentage__c>0]) {
+		for (AMS_Account_Role__c ar: [SELECT Percentage__c, Percentage_Formated__c
+									FROM AMS_Account_Role__c
+									WHERE Account__c = :currentAccount.account.Id
+									AND Active__c = true
+									AND RecordTypeId = :ownershipId 
+									AND Percentage__c>0]) {
 											percentage += ar.Percentage__c;
-									  }
+									}
 
 		return percentage == 100;
 	}
@@ -372,7 +378,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
 		List<AMS_Agencies_relationhip__c> accountsList = new List<AMS_Agencies_relationhip__c>();
 
-   		for(Id key : getAccountsHierarchiesMap.keySet()) {
+		for(Id key : getAccountsHierarchiesMap.keySet()) {
 			accountsList.addAll(getAccountsHierarchiesMap.get(key));
 		}
 
@@ -429,7 +435,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		Map<String, Schema.SObjectField> objectFields = Schema.getGlobalDescribe().get('AMS_Pax_Accreditation_Form__c').getDescribe().fields.getMap();
 
 		for(String field : objectFields.keySet()) {
-		   query += field + ', ';
+			query += field + ', ';
 		}
 
 		query += 'HO_Account__r.IATACode__c, Branch_Office_Country__r.Name, SAAM_Case__r.Reason1__c ';
@@ -452,10 +458,10 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
 			for (AMS_Pax_Accreditation_Form__c newForm : newForms) {
 				formsMap.put(newForm.IATACode__c, new ANG_AnnualRevFormWrapper(newForm,
-																			   getFormOwners(newForm.id, auxPreviousOwners),
-																			   getFormOwners(newForm.id, auxCurrentOwners),
-																			   getFormOwners(newForm.id, auxCurrentCompanies),
-																			   getFormOwners(newForm.id, auxPreviousCompanies)));
+																			getFormOwners(newForm.id, auxPreviousOwners),
+																			getFormOwners(newForm.id, auxCurrentOwners),
+																			getFormOwners(newForm.id, auxCurrentCompanies),
+																			getFormOwners(newForm.id, auxPreviousCompanies)));
 			}
 		}
 	}
@@ -470,25 +476,25 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
 	private static List<Account> fetchAccounts(Set<Id> accountIds, String recordType, Set<String> statusSet, Set<String> locationTypeSet, String sector) {
 		return [Select Id, Name, TradeName__c, IATACode__c, ANG_Accreditation_Model__c,
-					   BillingStreet, BillingCity, BillingState, BillingCountry, Email__c,
-					   Website, Phone, Mobile__c, Fax, BillingPostalCode, Company_Type__c,
-					   Country_ISO_Code__c, VAT_Number__c, Short_Name__c, Location_Class__c,
-					   Location_Type__c, IATA_ISO_Country__c, Iso_State__c, ShippingCountry,
-					   ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity,
-					   Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c,
-					   Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Sector__c, Category__c,
-					   License_Number__c, GDS__c, Site,
-					   IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c, Geoname_Billing_City__c, Geoname_Shipping_City__c
-				  From Account
-				 Where Id in :accountIds
-				   And RecordTypeId = :recordType
-				   And Status__c in :statusSet
-				   And Location_Type__c in :locationTypeSet
-				   And Sector__c = :sector];
+					BillingStreet, BillingCity, BillingState, BillingCountry, Email__c,
+					Website, Phone, Mobile__c, Fax, BillingPostalCode, Company_Type__c,
+					Country_ISO_Code__c, VAT_Number__c, Short_Name__c, Location_Class__c,
+					Location_Type__c, IATA_ISO_Country__c, Iso_State__c, ShippingCountry,
+					ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity,
+					Abbreviated_name__c, Abbreviated_Address__c, Remittance_frequency__c,
+					Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Sector__c, Category__c,
+					License_Number__c, GDS__c, Site,
+					IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_State__c, Geoname_Billing_City__c, Geoname_Shipping_City__c
+				From Account
+				Where Id in :accountIds
+				And RecordTypeId = :recordType
+				And Status__c in :statusSet
+				And Location_Type__c in :locationTypeSet
+				And Sector__c = :sector];
 	}
 
 	private static Account fetchCaseAccount(Id accountId) {
-		List<Account> al = [SELECT Id
+		List<Account> al = [SELECT Id, Location_Class__c
 							FROM Account
 							WHERE Id = :accountId];
 
@@ -499,10 +505,10 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		resetErrors();
 
 		this.currentAccount = new ANG_AnnualRevCurrentAccount(accountsMap.get(currentIataCode),
-															  getStatus(currentIataCode),
-															  getForm(currentIataCode),
-															  getIsoCountry(accountsMap.get(currentIataCode).Country_ISO_Code__c),
-															  (currentIataCode == heIataCode));
+															getStatus(currentIataCode),
+															getForm(currentIataCode),
+															getIsoCountry(accountsMap.get(currentIataCode).Country_ISO_Code__c),
+															(currentIataCode == heIataCode));
 		ownershipCompleted = checkPreviousOwnership();
 		if(currentAccount.fw.newform.Copy_Ownership_Records__c != null) {
 			formsToCopyOwnersTo = currentAccount.fw.newform.Copy_Ownership_Records__c.split(',');
@@ -935,12 +941,12 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 	}
 
 	private static Case fetchCase(String caseId) {
-		List<Case> newCases = [Select Id, CaseNumber, Reason1__c, CaseArea__c, Status, BSPCountry__c, Country_concerned_by_the_query__c, Oscar__c,
-								   	   Contact.Name, Account.Id, Description, Subject, Account_Concerned__c, Account_Concerned__r.Top_Parent__c, Account.Name,
-								   	   Account.Billing_Address_formated__c, Verification__c, IFAP_Country_ISO__c, Case_Language__c, Region__c, Applicable_to_Which_Version_s__c,
-									   Owner.Name, Visible_on_ISS_Portal__c
-								  From Case
-								 Where Id = :caseId];
+		List<Case> newCases = [Select Id, CaseNumber, Reason1__c, CaseArea__c, Status, BSPCountry__c, Country_concerned_by_the_query__c, Oscar__c, Account.Location_Class__c,
+									Contact.Name, Account.Id, Description, Subject, Account_Concerned__c, Account_Concerned__r.Top_Parent__c, Account.Name, Account.IATA_ISO_Country__r.ANG_Enable_NewGen__c,
+									Account.Billing_Address_formated__c, Verification__c, IFAP_Country_ISO__c, Case_Language__c, Region__c, Applicable_to_Which_Version_s__c,
+									Owner.Name, Visible_on_ISS_Portal__c
+								From Case
+								Where Id = :caseId];
 
 		return (!newCases.isEmpty()) ? newCases[0] : null;
 	}
@@ -1090,18 +1096,18 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		Id rtAccRoleOwnership = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
 
 		List<AMS_Account_Role__c> amsOwners = [Select Account__c, Active__c, Employee_Name__c,Employee_type__c, Id,
-													  Owner_Account__c, Owner_Account__r.Name, Owner_Account__r.IATACode__c,
-													  Owner_Account__r.Email__c, Owner_Name__c,Percentage__c, Position__c,
-													  RecordTypeId, Title__c, Valid__c, Person__c, Person__r.First_Name__c,
-													  Person__r.Lastname__c, Person__r.Email__c, Contact__c, Contact__r.FirstName,
-													  Contact__r.LastName, Contact__r.Email, Contact__r.Phone, Contact__r.OtherStreet,
-													  Contact__r.OtherCity, Contact__r.OtherPostalCode, Contact__r.OtherCountry, Legacy_External_ID__c,
-													  Contact__r.OtherState
-												 From AMS_Account_Role__c
+													Owner_Account__c, Owner_Account__r.Name, Owner_Account__r.IATACode__c,
+													Owner_Account__r.Email__c, Owner_Name__c,Percentage__c, Position__c,
+													RecordTypeId, Title__c, Valid__c, Person__c, Person__r.First_Name__c,
+													Person__r.Lastname__c, Person__r.Email__c, Contact__c, Contact__r.FirstName,
+													Contact__r.LastName, Contact__r.Email, Contact__r.Phone, Contact__r.OtherStreet,
+													Contact__r.OtherCity, Contact__r.OtherPostalCode, Contact__r.OtherCountry, Legacy_External_ID__c,
+													Contact__r.OtherState, Percentage_Formated__c
+												From AMS_Account_Role__c
 												where Account__c in :accounts
-												  and RecordTypeId = :rtAccRoleOwnership
-												  and Active__c = true
-												  and Percentage__c > 0];
+												and RecordTypeId = :rtAccRoleOwnership
+												and Active__c = true
+												and Percentage__c > 0];
 
 		for(AMS_Account_Role__c accRole : amsOwners) {
 			AMS_Accreditation_Contact__c c1 = ISSP_AMS_Accreditation.setAccreditationContact(accRole, null, rtAccreditContPreviousOwner, rtAccreditContPreviousCompanyOwner);
@@ -1127,7 +1133,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 	}
 
 	private static List<AMS_Accreditation_Contact__c> dynamicAccredContactListQuery(AccredContactEnum paramCodeWhere, Set<Id> newFormIds) {
-		String query = 'SELECT Id, AMS_Pax_Accreditation_Form__c, Name, First_name__c, Last_name__c, Salutation__c, Agency_owner__c, ';
+		String query = 'SELECT Id, Financial_Interest_Formated__c, AMS_Pax_Accreditation_Form__c, Name, First_name__c, Last_name__c, Salutation__c, Agency_owner__c, ';
 		query += 'Agency_role__c, Email__c,Phone__c, Financial_interest__c, Contact_Id__c, Contact__c, AMS_OwnershipId__c, AMS_ContactId__c,';
 		query += 'Local_First_name__c, Local_Last_name__c, Number_Of_Shares__c, AddressStreet__c, AddressCity__c, AddressState__c, AddressCountry__c, AddressPostcode__c,';
 		query += 'Time_devoted_to_Agency_business__c, IATAcode__c, Registration_number__c, PhoneNational__c, FAX__c, Company_Name_Local__c ';
@@ -1231,10 +1237,10 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
 		if(this.setHe) {
 			this.currentAccount = new ANG_AnnualRevCurrentAccount(accountsMap.get(headEntity.IATACode__c),
-																  getStatus(headEntity.IATACode__c),
-																  getForm(headEntity.IATACode__c),
-																  getIsoCountry(accountsMap.get(headEntity.IATACode__c).Country_ISO_Code__c),
-																  true);
+																getStatus(headEntity.IATACode__c),
+																getForm(headEntity.IATACode__c),
+																getIsoCountry(accountsMap.get(headEntity.IATACode__c).Country_ISO_Code__c),
+																true);
 
 			heIataCode = headEntity.IATACode__c;
 		}
@@ -1308,7 +1314,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 					currentAccount.fw.newform.ISSP_AMS_VAT_Number_Input__c.addError(Label.ISSP_PAX_Validating_VAT_Number_error);
 					errorFound = true;
 				}
-		   	 	}
+				}
 
 				if (currentAccount.isocountry.Hide_Tax_Number_2_VAT_field_2__c == false) {
 				if (currentAccount.fw.newform.ISSP_AMS_VAT_Number_2_Input__c == null && currentAccount.isocountry.Tax_Number_2_VAT_field_2_mandatory__c) {
@@ -1321,7 +1327,15 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 			}
 			}
 
-			if (currentAccount.fw.newform.ISSP_AMS_GDS_with_signed_contract__c == null) {
+			if (newCase.Account.IATA_ISO_Country__r.ANG_Enable_NewGen__c && this.showNDCQuestion) {
+				if(currentAccount.fw.newform.NDC_Transactions__c == null) {
+					currentAccount.fw.newform.NDC_Transactions__c.addError(Label.ISSP_YouMustEnter);
+					errorFound = true;
+				} else if (currentAccount.fw.newform.NDC_Transactions__c == 'No' && currentAccount.fw.newform.ISSP_AMS_GDS_with_signed_contract__c == null) {
+					currentAccount.fw.newform.ISSP_AMS_GDS_with_signed_contract__c.addError(Label.ISSP_AMS_Step3_Indicate_GDSs_Short);
+					errorFound = true;
+				}
+			} else if (currentAccount.fw.newform.ISSP_AMS_GDS_with_signed_contract__c == null && this.showNDCQuestion) {
 				currentAccount.fw.newform.ISSP_AMS_GDS_with_signed_contract__c.addError(Label.ISSP_YouMustEnter);
 				errorFound = true;
 			}
@@ -1691,7 +1705,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		}
 
 		cntOwners = [SELECT COUNT() FROM AMS_Accreditation_Contact__c
-					 WHERE AMS_Pax_Accreditation_Form__c = :this.currentAccount.fw.newForm.Id AND Agency_owner__c = true AND Id != :currentAccount.newContact.Id And RecordType.Name = :contactType];
+					WHERE AMS_Pax_Accreditation_Form__c = :this.currentAccount.fw.newForm.Id AND Agency_owner__c = true AND Id != :currentAccount.newContact.Id And RecordType.Name = :contactType];
 
 		refreshCntIFAPContacts();
 
@@ -1928,10 +1942,10 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
 	public void refreshCntIFAPContacts() {
 		cntIFAPContacts = [Select count()
-							 From AMS_Accreditation_Contact__c
+							From AMS_Accreditation_Contact__c
 							Where AMS_Pax_Accreditation_Form__c = : this.currentAccount.fw.newForm.Id
-							  And Financial_Assessment_Contact__c = true
-							  And Id != :currentAccount.newContact.Id];
+							And Financial_Assessment_Contact__c = true
+							And Id != :currentAccount.newContact.Id];
 	}
 
 	public Boolean validateCharactersInCompanyWindow() {
@@ -2111,13 +2125,13 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 			List<String> idlist = currentAccount.fw.newform.Copy_Ownership_Records__c.split(',');
 			List<id> completedForms = new List<id>();
 			for(AMS_Pax_Accreditation_Form__c accForm : [SELECT Id, IATACode__c, HO_Account__c
-														 FROM AMS_Pax_Accreditation_Form__c
-														 WHERE RecordTypeId =: rtAnnualRevalidation
-														 AND Status__c =: 'completed'
-														 AND SAAM_Case__c =: currentAccount.fw.newForm.SAAM_Case__c
-														 AND HO_Account__c =: idlist]){
-															 completedForms.add(accForm.HO_Account__c);
-														 }
+														FROM AMS_Pax_Accreditation_Form__c
+														WHERE RecordTypeId =: rtAnnualRevalidation
+														AND Status__c =: 'completed'
+														AND SAAM_Case__c =: currentAccount.fw.newForm.SAAM_Case__c
+														AND HO_Account__c =: idlist]){
+															completedForms.add(accForm.HO_Account__c);
+														}
 			for(Integer i = idlist.size() - 1; i >= 0; i--) {
 				for(Id completedId : completedForms){
 					if(idlist[i] == completedId)
@@ -2130,7 +2144,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 			currentAccount.fw.newform.Copy_Ownership_Records__c = string.join(idlist,',');
 
 			if(currentAccount.fw.newform.Copy_Ownership_Records__c != '') {
-				List<AMS_Accreditation_Contact__c> contacts = [SELECT Id, AMS_Pax_Accreditation_Form__c, Name, First_name__c, Last_name__c, Salutation__c, Agency_owner__c,
+				List<AMS_Accreditation_Contact__c> contacts = [SELECT Id, Financial_Interest_Formated__c, AMS_Pax_Accreditation_Form__c, Name, First_name__c, Last_name__c, Salutation__c, Agency_owner__c,
 															Agency_role__c, Email__c,Phone__c, Financial_interest__c, Contact_Id__c, Contact__c, AMS_OwnershipId__c, AMS_ContactId__c,
 															Local_First_name__c, Local_Last_name__c, Number_Of_Shares__c, AddressStreet__c, AddressCity__c, AddressState__c, AddressCountry__c, AddressPostcode__c,
 															Time_devoted_to_Agency_business__c, IATAcode__c, Registration_number__c, PhoneNational__c, FAX__c, Company_Name_Local__c

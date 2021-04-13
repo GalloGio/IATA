@@ -772,21 +772,6 @@
         </sharedTo>
     </listViews>
     <listViews>
-        <fullName>IDCard_Email_Templates</fullName>
-        <columns>NAME</columns>
-        <columns>Template_Language__c</columns>
-        <columns>Template_Type__c</columns>
-        <columns>OBJECT_ID</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>RECORDTYPE</field>
-            <operation>equals</operation>
-            <value>EmailTemplate__c.ID_Card_Application</value>
-        </filters>
-        <label>ID Card Email Templates</label>
-        <language>en_US</language>
-    </listViews>
-    <listViews>
         <fullName>ID_Card_Email_Templates</fullName>
         <columns>Email_Template_Number__c</columns>
         <columns>NAME</columns>
@@ -1350,13 +1335,6 @@
         <description>The field FA Result is mandatory if the Template Type is Financial Security Request</description>
         <errorConditionFormula>ISPICKVAL(Template_Type__c,&apos;FS - Financial Security&apos;)  &amp;&amp; ISPICKVAL(FA_Result__c,&apos;&apos;)</errorConditionFormula>
         <errorMessage>The field FA Result is mandatory when the Template Type is &apos;FS - Financial Security&apos;</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>ISO_Country_is_mandatory</fullName>
-        <active>false</active>
-        <errorConditionFormula>ISNULL( IATA_ISO_Country__c)</errorConditionFormula>
-        <errorDisplayField>Agent_Type__c</errorDisplayField>
-        <errorMessage>Please select IATA ISO Country.</errorMessage>
     </validationRules>
     <visibility>Public</visibility>
 </CustomObject>

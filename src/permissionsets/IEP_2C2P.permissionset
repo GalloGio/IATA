@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Used for granting SSO access to 2C2P EasyPay Vendor via connected app.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>IATA EasyPay (2C2P)</label>
+</PermissionSet>

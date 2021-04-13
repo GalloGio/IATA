@@ -1,5 +1,6 @@
 <apex:component controller="ISSP_AmazonS3_Ctrl" allowDML="true">
     <c:ISSP_WaitingStatus />
+    <c:Loading />
     <apex:attribute name="reqCnt" type="Integer" required="true" description="requirement item count" />
     <apex:attribute name="reqRequired" type="String" required="true" description="Mandatory, Optional" />
     <apex:attribute name="reqName" type="String" required="true" description="Requirement name" />
@@ -9,7 +10,46 @@
 
     <script src="{!URLFOR($Resource.jquery_file_upload, '/jQuery-File-Upload-9.11.2/js/jquery.fileupload.js')}" />
 
+    <head>
+        <style>
+            .alert {
+                padding: 20px;
+                background-color: #f44336;
+                color: white;
+            }
+            
+            .closebtn {
+                margin-left: 15px;
+                color: white;
+                font-weight: bold;
+                float: right;
+                font-size: 22px;
+                line-height: 20px;
+                cursor: pointer;
+                transition: 0.3s;
+            }
+            
+            .closebtn:hover {
+                color: black;
+            }
+        </style>
+    </head>
+    <div class="alert" style="display:none">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+        <span class="addText"></span> 
+    </div>
     <div class="well">
+        <apex:form rendered="{!isDGRForm}">
+            <apex:pageblock >
+                <apex:pageBlockSection columns="1">
+                        <apex:inputField value="{!newAccreditationContact.First_name__c}" styleClass="First_Name" required="true"/>
+                        <apex:inputField value="{!newAccreditationContact.Last_name__c}" styleClass="Last_Name" required="true"/>
+                        <apex:inputField value="{!newAccreditationContact.Certificate_Issuer__c}" styleClass="Certificate_Issuer" required="true"/>
+                        <apex:inputField value="{!newAccreditationContact.Certificate_Issued_on__c}" styleClass="Certificate_issued_on" required="true"/>
+                        <apex:inputField value="{!newAccreditationContact.Valid_until__c}" styleClass="Expiry_Date" required="true"/>
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+        </apex:form>
         <form action="{!AMAZONURL}" method="POST" enctype="multipart/form-data" class="direct-upload-{!reqCnt}">
             <!-- Note: Order of these is Important -->
             <input type="hidden" class="FileInput-{!reqCnt}" name="key" value="{!storageFolder}"/>
@@ -18,6 +58,7 @@
             <input type="hidden" name="success_action_status" value="201"/>
             <input type="hidden" name="policy" value="{!policy}"/>
             <input type="hidden" name="signature" value="{!signedPolicy}"/>
+            <input type="hidden" id="topParentIdHierarchy" value="{!topParentIdHierarchy}"/>
 
             <apex:outputPanel id="mainblock" layout="block" styleclass="row">
                 <!-- Progress Bar to show upload completion percentage -->
@@ -49,11 +90,15 @@
                         </apex:outputText>
                     </apex:outputText>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-2"  style="display: {!IF(isDGRForm, 'none', 'block')};">
                     {!CASE(reqRequired, 'Mandatory', '*', 'Optional', '(', '')}{!CASE(reqRequired, 'Mandatory', $Label.ISSP_Mandatory, 'Optional', $Label.ISSP_Optional, '')}{!CASE(reqRequired, 'Optional', ')', '')}
+                </div>
+                <div class="col-md-2" style="display: {!IF(isDGRForm, 'block', 'none')};">
+                    {!$Label.ISSP_Mandatory}                
                 </div>
             </apex:outputPanel>
             <div class="progress" style="height:8px;display:{!IF(reqRequired!=null,'','none')}"><div class="uploadbar-{!reqCnt} progress-bar progress-bar-success progress-bar-striped"></div></div>
+            <button type="button" onClick="submitCertificate();return false;" style="float: right;display: {!IF(isDGRForm, 'block', 'none')}">{!$Label.ISSP_certificate_Submit}</button>
         </form>
         <div class="row">
             <div class="col-md-4">&nbsp;</div>
@@ -114,7 +159,16 @@
   </div>
 
     <script>
+    var executeDataUpload;
+    var fileUploaded = false;
+    var firstName = '';
+    var lastName = '';
+    var certificateIssuedOn = '';
+    var validField = '';
+    var certificateIssuer = '';
     var folderInit = '{!storageFolder}';
+    var isDGRForm = false;
+    var expiryDate = '';
 
     function isIE(){
         if (/MSIE/.test(navigator.userAgent)){
@@ -163,7 +217,7 @@
         );
     }
 
-    function createAmazonFileObject(caseId, filename, formId, fielsize, fileid, callback) {
+    function createAmazonFileObject(caseId, filename, formId, fielsize, fileid, firstName, lastName, certificateIssuedOn, ExpiryDate, certificateIssuer, isDGRForm, callback) {
         Visualforce.remoting.Manager.invokeAction(
             '{!$RemoteAction.ISSP_AmazonS3_Ctrl.createAmazonFileObject}',
             caseId,
@@ -171,6 +225,12 @@
             formId,
             fielsize,
             fileid,
+            firstName,
+            lastName,
+            certificateIssuedOn,
+            ExpiryDate,
+            certificateIssuer,
+            isDGRForm,
             function(result, event){
                 if (event.status) {
                     callback(result);
@@ -183,6 +243,156 @@
         );
     }
 
+
+    function isFileInTheSameAccountHierarchy(topParentIdHierarchy, firstName, lastName, expiryDate, certificateIssuedOn, callback) {
+        Visualforce.remoting.Manager.invokeAction(
+            '{!$RemoteAction.ISSP_AmazonS3_Ctrl.isFileInTheSameAccountHierarchy}',
+            topParentIdHierarchy,
+            firstName,
+            lastName,
+            expiryDate,
+            certificateIssuedOn,
+            function(result, event){
+                if (event.status) {
+                    callback(result);
+                } else {
+                    console.error("ERROR: " + event.message);
+                    callback(false);
+                }
+            },
+            {escape: true}
+        );
+    }
+
+    function submitCertificate(){
+        var validField = true;
+        if('{!isDGRForm}' == 'true'){
+            isDGRForm = true;
+        }
+        if(isDGRForm == true){
+            firstName = document.getElementsByClassName('First_Name')[0].value;
+            lastName = document.getElementsByClassName('Last_Name')[0].value;
+            certificateIssuedOn = document.getElementsByClassName('Certificate_issued_on')[0].value;
+            expiryDate = document.getElementsByClassName('Expiry_Date')[0].value;
+            certificateIssuer = document.getElementsByClassName('Certificate_Issuer')[0].value;
+
+            if(firstName == ''){
+                document.getElementsByClassName('First_Name')[0].style.borderColor = "red";
+                validField = false;
+            }else{
+                document.getElementsByClassName('First_Name')[0].style.borderColor = "";
+            }
+
+            if(lastName == ''){
+                document.getElementsByClassName('Last_Name')[0].style.borderColor = "red";
+                validField = false;
+            }else{
+                document.getElementsByClassName('Last_Name')[0].style.borderColor = "";
+            }
+
+            if(certificateIssuedOn == ''){
+                document.getElementsByClassName('Certificate_issued_on')[0].style.borderColor = "red";
+                validField = false;
+            }else{
+                document.getElementsByClassName('Certificate_issued_on')[0].style.borderColor = "";
+            }
+
+            if(expiryDate == ''){
+                document.getElementsByClassName('Expiry_Date')[0].style.borderColor = "red";
+                validField = false;
+            }else{
+                document.getElementsByClassName('Expiry_Date')[0].style.borderColor = "";
+            }
+
+            if(certificateIssuer == ''){
+                document.getElementsByClassName('Certificate_Issuer')[0].style.borderColor = "red";
+                validField = false;
+            }else{
+                document.getElementsByClassName('Certificate_Issuer')[0].style.borderColor = "";
+            }
+            
+            if( document.getElementById("input-{!reqCnt}").files.length == 0  && fileUploaded == false){
+                var element = document.getElementById("{!$Component.mainblock}");
+                element.style.border = "solid 1px red";
+                validField = false;
+            }else{
+                var element = document.getElementById("{!$Component.mainblock}");
+                element.style.border = "";
+            }
+
+            if(!validField){
+                return;
+            }
+
+            document.getElementsByClassName('addText')[0].textContent = '';
+            document.getElementsByClassName('alert')[0].style.display = 'none';
+
+            isFileInTheSameAccountHierarchy(
+                document.getElementById('topParentIdHierarchy').value,
+                firstName,
+                lastName,
+                expiryDate,
+                certificateIssuedOn,
+                function(result) {
+                    document.getElementsByClassName('Expiry_Date')[0].style.borderColor = "";
+                    if(result != ''){
+                        if(result == 'fields'){
+                            setTimeout(function(){ 
+                                $( ".addText" ).append('{!JSEncode($Label.ISSP_certificate_with_the_same)}');
+                                document.getElementsByClassName('alert')[0].style.display = 'block';
+                            }, 500);
+                            document.getElementsByClassName('First_Name')[0].style.borderColor = "red";
+                            document.getElementsByClassName('Last_Name')[0].style.borderColor = "red";
+                            document.getElementsByClassName('Expiry_Date')[0].style.borderColor = "red";
+                            document.getElementsByClassName('Certificate_Issuer')[0].style.borderColor = "red";
+                        }else{
+                            document.getElementsByClassName('addText')[0].textContent = '';
+                            document.getElementsByClassName('alert')[0].style.display = 'none';
+                            document.getElementsByClassName('First_Name')[0].style.borderColor = "";
+                            document.getElementsByClassName('Last_Name')[0].style.borderColor = "";
+                            document.getElementsByClassName('Expiry_Date')[0].style.borderColor = "";
+                            document.getElementsByClassName('Certificate_Issuer')[0].style.borderColor = "";
+                        }
+                        if(result == 'Date'){
+                            $( ".addText" ).append('{!JSEncode($Label.ISSP_certificate_expiry_date)}');
+                            document.getElementsByClassName('alert')[0].style.display = 'block';
+                            document.getElementsByClassName('Expiry_Date')[0].style.borderColor = "red";
+                        }else{
+                            document.getElementsByClassName('addText')[0].textContent = '';
+                            document.getElementsByClassName('alert')[0].style.display = 'none';
+                            document.getElementsByClassName('Expiry_Date')[0].style.borderColor = "";
+                        }
+                    }else{
+                        $('[id*="Loading"]').children().each(function () {
+                            $(this).html( $(this).html().replace("Work in progress..",'{!JSEncode($Label.ISSP_Certificate_is_being_uploaded)}') );
+                        });
+                        $('[id*="Loading"]').show();
+                        executeDataUpload.submit();
+                    }
+                }
+            );
+
+        }else{
+            if( document.getElementById("input-{!reqCnt}").files.length == 0  && fileUploaded == false){
+                var element = document.getElementById("{!$Component.mainblock}");
+                element.style.border = "solid 1px red";
+                validField = false;
+            }else{
+                var element = document.getElementById("{!$Component.mainblock}");
+                element.style.border = "";
+            }
+
+            if(!validField){
+                return;
+            }
+            $('[id*="Loading"]').children().each(function () {
+                $(this).html( $(this).html().replace("Work in progress..",'{!JSEncode($Label.ISSP_Certificate_is_being_uploaded)}') );
+            });
+            $('[id*="Loading"]').show();
+            executeDataUpload.submit();
+        }
+
+    }
     $(document).ready( function() {
         $('.direct-upload-{!reqCnt}').each( function() {
             var form = $(this);
@@ -194,14 +404,16 @@
                 forceIframeTransport: isIE(),
 
                 add: function (event, data) {
+                    document.getElementsByClassName('addText')[0].textContent = '';
+                    document.getElementsByClassName('alert')[0].style.display = 'none';
                     // Message on unLoad.
                     window.onbeforeunload = function() {
                         return 'You have unsaved changes.';
                     };
 
-                   if(isIE()) {
-                    $("#loading-{!reqCnt}").show();
-                   }
+                    if(isIE()) {
+                        $("#loading-{!reqCnt}").show();
+                    }
 
                     var uploadErrors = [];
                     var acceptFileTypes = {!allowedExtensions};
@@ -217,46 +429,59 @@
                         $(".FileInput-{!reqCnt}").val($(".FileInput-{!reqCnt}").val() + fn);
 
                     // and then Submit
-                        data.submit();
+                        executeDataUpload = data;
+                        fileUploaded = true;
                         $("#input-{!reqCnt}").attr('disabled', 'disabled');
                     } else {
 
-                    if((data.originalFiles[0]['type'].length && !acceptFileTypes.test(data.originalFiles[0]['type'])) || (data.originalFiles[0]['type']=='')) {
-                        uploadErrors.push('{!JSEncode($Label.ISSP_File_Extension)}');
-                        window.onbeforeunload = null;
-                    }
-
-                    if(data.originalFiles[0]['size'] && data.originalFiles[0]['size'] > {!maxFileSize}) {
-                        uploadErrors.push('Filesize is too big');
-                        window.onbeforeunload = null;
-                    }
-
-                    if(data.originalFiles[0]['name'] && data.originalFiles[0]['name'].length > 80) {
-                        uploadErrors.push('Filename is too long (Max. 80 characters)');
-                        window.onbeforeunload = null;
-                    }
-
-
-                    if(uploadErrors.length > 0) {
-                        alert(uploadErrors.join("\n"));
-                        $("#input-{!reqCnt}").removeAttr('disabled');
-                        if(isIE()) {
-                            $("#loading-{!reqCnt}").hide();
-                        }
-                    } else {
-                        $(".FileInput-{!reqCnt}").val($(".FileInput-{!reqCnt}").val() + fn);
-                        checkIfFileExists('{!$CurrentPage.parameters.caseId}',fn, '{!$CurrentPage.parameters.formId}', function(result) {
-                          if (result) {
-                            // and then Submit
-                            data.submit();
-                            $("#input-{!reqCnt}").attr('disabled', 'disabled');
-                          } else {
-                            alert('{!JSEncode($Label.ISSP_File_Exists)}');
+                        if((data.originalFiles[0]['type'].length && !acceptFileTypes.test(data.originalFiles[0]['type'])) || (data.originalFiles[0]['type']=='')) {
+                            uploadErrors.push('{!JSEncode($Label.ISSP_File_Extension)}');
                             window.onbeforeunload = null;
-                          }
-                        });
+                        }
+
+                        if(data.originalFiles[0]['size'] && data.originalFiles[0]['size'] > {!maxFileSize}) {
+                            uploadErrors.push('Filesize is too big');
+                            window.onbeforeunload = null;
+                        }
+
+                        if(data.originalFiles[0]['name'] && data.originalFiles[0]['name'].length > 80) {
+                            uploadErrors.push('Filename is too long (Max. 80 characters)');
+                            window.onbeforeunload = null;
+                        }
+
+
+                        if(uploadErrors.length > 0) {
+                            alert(uploadErrors.join("\n"));
+                            $("#input-{!reqCnt}").removeAttr('disabled');
+                            if(isIE()) {
+                                $("#loading-{!reqCnt}").hide();
+                            }
+                            $('[id*="Loading"]').hide();
+                        } else {
+                            $(".FileInput-{!reqCnt}").val($(".FileInput-{!reqCnt}").val() + fn);
+                            checkIfFileExists('{!$CurrentPage.parameters.caseId}',fn, '{!$CurrentPage.parameters.formId}', function(result) {
+                                if (result) {
+                                    // and then Submit
+                                    if('{!isDGRForm}' == 'true'){
+                                        executeDataUpload = data;
+                                        fileUploaded = true;
+                                    }else{
+                                        data.submit();
+                                    }
+                                    $("#input-{!reqCnt}").attr('disabled', 'disabled');
+                                } else {
+                                    if('{!isDGRForm}' == 'true'){
+                                        $( ".addText" ).append('{!JSEncode($Label.ISSP_File_Exists)}');
+                                        document.getElementsByClassName('alert')[0].style.display = 'block';
+                                        $('[id*="Loading"]').hide();
+                                    }else{
+                                        alert('{!JSEncode($Label.ISSP_File_Exists)}');
+                                    }
+                                    window.onbeforeunload = null;
+                                }
+                            });
+                        }
                     }
-                  }
                 },
                 progress: function(e, data){
                     // This is what makes everything really cool, thanks to that callback
@@ -270,6 +495,7 @@
                     window.onbeforeunload = null;
                     $('.uploadbar-{!reqCnt}').css('width', '100%').addClass('progress-bar progress-bar-danger progress-bar-striped');
                     console.error("fail section");
+                    $('[id*="Loading"]').hide();
                 },
                 done: function (event, data) {
                     //Remove any special characters from file name
@@ -284,6 +510,12 @@
                         '{!$CurrentPage.parameters.formId}',
                         data.originalFiles[0].size,
                         "{!reqIdentifier}",
+                        firstName,
+                        lastName,
+                        certificateIssuedOn,
+                        expiryDate,
+                        certificateIssuer,
+                        isDGRForm,
                         function(result) {
                             if (!result) {
                                 alert('{!JSEncode($Label.ISSP_File_Exists)}');
@@ -296,14 +528,12 @@
                                 $("#loading-{!reqCnt}").hide();
                             }
                             window.onbeforeunload = null;
-                            location.reload();
+                            $('[id*="Loading"]').hide();
+                            if('{!isDGRForm}' == 'true'){
+                                window.location.href = document.location.origin+ '/csportal/s/case-details?caseId=' + '{!$CurrentPage.parameters.caseId}' + '&uploaded=true';
+                            }
                         }
                     );
-
-
-                    // Fill the name field with the file's name.
-                    //$('#upload_original_name').val(data.originalFiles[0].name);
-                    ///$('#upload_custom_name').val(data.originalFiles[0].name);
                 },
             });
         });

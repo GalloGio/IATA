@@ -594,6 +594,16 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
         <visibleLines>4</visibleLines>
     </fields>
     <fields>
+        <fullName>Auto_grant_Account_Role__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Determines if the Account Role is automatically granted when the first user is granted access to this service and also removed when the last user is denied access to the service.</description>
+        <externalId>false</externalId>
+        <label>Auto grant Account Role?</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Cannot_be_managed_by_portal_admin__c</fullName>
         <defaultValue>true</defaultValue>
         <description>If true do not allow portal admin to manage service</description>
@@ -633,6 +643,27 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
         <trackTrending>false</trackTrending>
         <type>Html</type>
         <visibleLines>25</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Contact_Role_Detail_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Contact Role Detail Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <controllingField>Functional_Role__c</controllingField>
+            <restricted>true</restricted>
+            <valueSetName>Contact_Role_Details</valueSetName>
+            <valueSettings>
+                <controllingFieldValue>E&amp;F</controllingFieldValue>
+                <controllingFieldValue>MedAire</controllingFieldValue>
+                <controllingFieldValue>Training</controllingFieldValue>
+                <controllingFieldValue>One Source</controllingFieldValue>
+                <valueName>Operational Contact</valueName>
+            </valueSettings>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Country_Visibility_Control__c</fullName>
@@ -748,6 +779,26 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
         <inlineHelpText>Tick if this is the application for the ICH Airline type of customer.</inlineHelpText>
         <label>ICH Airline</label>
         <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Is_Async_Automated_User_Provisioning__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>If checked (true), this service requires Automated User provisioning steps to be completed before access is granted to Users.</description>
+        <externalId>false</externalId>
+        <label>Is Async Automated User Provisioning</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Is_Async_Manual_User_Provisioning__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>If checked (true), this service requires manual User provisioning steps to be completed before access is granted to Users.</description>
+        <externalId>false</externalId>
+        <label>Is Async Manual User Provisioning</label>
+        <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>
     </fields>
@@ -1537,6 +1588,21 @@ IF(OR(
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Contact_Role_Detail_Name__c</picklist>
+            <values>
+                <fullName>Authorized Signatory</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Decision maker</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Operational Contact</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Country_Visibility_Control__c</picklist>
             <values>
                 <fullName>HIDE</fullName>
@@ -1554,7 +1620,211 @@ IF(OR(
         <picklistValues>
             <picklist>Functional_Role__c</picklist>
             <values>
+                <fullName>ASD</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Access BOP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Daily Sales</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airline Default Summary Report</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Airport IS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BSP %2F CASS Change Request</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BSP %2F CASS Change of Bank details</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BSPLink</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Biller Direct</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASSLink Analytics</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASSLink Export</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASSLink Import</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS CassLink</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Website</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>COVID-19 Agencies Updates</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>COVID-19 Airlines Updates</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CassLink</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Country Requirements</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Currency Center</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Deduction Notice</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>E%26F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E%26F APPS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E-Bulletin</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Financial Securities</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GADM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Global Default Insurance %28GDI%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Accreditation %26 Changes</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Airlines and Location Codes</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Certificates</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Code Search</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA EasyPay %282C2P%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA EasyPay %28EDENRED%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA EasyPay %28MSTS%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Pay</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Postal Accounts Settlement System</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Store</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATAN Online Services</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICCS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICE %E2%80%93 IATA Customer E-Statement</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ID Card Online Platform</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IFAP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IFG Production</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IFG Sandbox</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IFTP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Insurance Providers</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Interline agreements</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Join BSP %2F CASS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Join SIS e-Invoicing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Local Industry Groups</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Login T%26C Checker</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MSO Management</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Management Information Report</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1562,11 +1832,75 @@ IF(OR(
                 <default>false</default>
             </values>
             <values>
+                <fullName>One Id NDC Matchmaker</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>One Source</fullName>
                 <default>false</default>
             </values>
             <values>
+                <fullName>PASSlink Single Sign-On</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Payment Link</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Paypal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Risk Profile and RHC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SIS Help Desk</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Smart Lite</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standards Setting Workspace</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIDS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIP Reports</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Trained Staff Certification</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Training</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Training Platform %28LMS%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Transparency in Payments %28TIP%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Treasury Dashboard</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Treasury Dashboard - Premium</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

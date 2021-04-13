@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Edit rights on the Airline Credit Risk Manager field on Contact</description>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.Airline_Credit_Risk_Manager__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Contact Airline Credit Risk Manager</label>
+</PermissionSet>

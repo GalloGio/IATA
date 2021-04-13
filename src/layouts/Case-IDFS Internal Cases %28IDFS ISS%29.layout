@@ -5,6 +5,9 @@
     <customButtons>Move_to_Recycle_Bin</customButtons>
     <customButtons>Reset_New_interactions</customButtons>
     <customButtons>EasyUpload</customButtons>
+    <customButtons>New_Case_Comment</customButtons>
+    <customButtons>Escalate_within_IATA</customButtons>
+    <customButtons>Log_Phone_Case</customButtons>
     <emailDefault>false</emailDefault>
     <excludeButtons>CloseCase</excludeButtons>
     <excludeButtons>Delete</excludeButtons>
@@ -363,6 +366,16 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
+            <actionName>MassAccept</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>3</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Case.Send_to_Recycle_Bin</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>4</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>Edit</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>0</sortOrder>
@@ -378,16 +391,6 @@
             <sortOrder>2</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>MassAccept</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>3</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Case.Send_to_Recycle_Bin</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>4</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
             <actionName>EasyUpload</actionName>
             <actionType>CustomButton</actionType>
             <sortOrder>5</sortOrder>
@@ -398,9 +401,19 @@
             <sortOrder>6</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Escalate_within_IATA</actionName>
-            <actionType>CustomButton</actionType>
+            <actionName>Case.New_Comment_Key_Customer_Alert</actionName>
+            <actionType>QuickAction</actionType>
             <sortOrder>7</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Case.Escalate_within_IATA_Key_Customer_Alert</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>8</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Case.Log_Phone_Case_Key_Customer_Alert</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>9</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <quickActionList/>
@@ -462,6 +475,7 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Extension__c</fields>
         <fields>Exe_Category_New__c</fields>
         <fields>Exception_Type__c</fields>
         <fields>SOP_Type__c</fields>

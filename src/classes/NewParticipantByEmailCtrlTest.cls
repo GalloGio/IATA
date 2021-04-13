@@ -10,8 +10,8 @@ public class NewParticipantByEmailCtrlTest {
 	public static Account hq;
 	public static Account branch;
 	public static Account ot;
-
-	public static void prepareData(){
+	@TestSetup
+	private static void prepareData(){
 
 		List<User> users = [SELECT Id FROM User WHERE isActive = true AND Profile.Name = 'System Administrator' LIMIT 2 ];
 
@@ -94,9 +94,9 @@ public class NewParticipantByEmailCtrlTest {
 		insert psa;
 
 		System.runAs(u) {
-			prepareData();
 			Test.startTest();
 
+			List<IATA_ISO_Country__c> isocs = [SELECT Id, Name, ISS_Office_Location__c, Country_Manager__c FROM IATA_ISO_Country__c];
 			NewLocalGroupCtrl lgctrl = new NewLocalGroupCtrl(new ApexPages.StandardController(new LocalGovernance__c()));
 
 
@@ -153,7 +153,7 @@ public class NewParticipantByEmailCtrlTest {
 			lg = [SELECT Id, Name, Region__c, IATA_Local_Office__c, Group_Owner__c, Local_Governance_type__c, Active__c
 				  					 FROM LocalGovernance__c WHERE Id = :lgctrl.lg.ID];
 			system.assertEquals(true, lg.Active__c);
-
+			Contact contincomplete = [SELECT id, AccountId, FirstName, LastName, Email FROM Contact WHERE FirstName = 'Incomplete' LIMIT 1];
 			contincomplete.Title = 'theBoss';
 			update contincomplete;
 			ctrl.MySave();
@@ -161,9 +161,52 @@ public class NewParticipantByEmailCtrlTest {
 			// Now a new participant should be created
 			parts = [SELECT ID FROM Participant__c];
 			//system.assertEquals(1, parts.size());
+		}
+	}
+
+
+	static testmethod void testLocalGroups2(){
+		String uniqueUserName = 'standarduser' + DateTime.now().getTime() + '@testorg.com';
+		Profile p = [SELECT Id FROM Profile WHERE Name='Account management team'];
+		User u = new User(Alias = 'standt', Email='standarduser@testorg.com',
+			EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
+			LocaleSidKey='en_US', ProfileId = p.Id,
+			TimeZoneSidKey='America/Los_Angeles',
+			UserName=uniqueUserName, License_Cost_Center__c = 'ISF005CH01');
+
+		insert u;
+
+		PermissionSet myPermissionSet = [SELECT ID from permissionSet where Name = 'Local_group_owners'];
+		PermissionSetAssignment psa = new PermissionSetAssignment (PermissionSetId = myPermissionSet.Id, AssigneeId = u.Id);
+		insert psa;
+
+		System.runAs(u) {
+			Test.startTest();
+			List<IATA_ISO_Country__c> isocs = [SELECT Id, Name, ISS_Office_Location__c, Country_Manager__c FROM IATA_ISO_Country__c];
+			NewLocalGroupCtrl lgctrl = new NewLocalGroupCtrl(new ApexPages.StandardController(new LocalGovernance__c()));
+			lgctrl.lg.Cargo_Passenger__c = 'BSP';
+			lgctrl.lg.Local_Governance_type__c = 'APJC';
+			lgctrl.lg.Country__c = isocs[0].ID;
+			lgctrl.lg.Active__c = true;
+			lgctrl.MySave();
+			LocalGovernance__c lg = [SELECT Id, Name, Region__c, IATA_Local_Office__c, Group_Owner__c, Local_Governance_type__c, Active__c
+				  					 FROM LocalGovernance__c WHERE Id = :lgctrl.lg.ID];
+			system.assertEquals(isocs[0].Name + ' - '+lg.Local_Governance_type__c, lg.Name);
+			system.assertEquals(isocs[0].ISS_Office_Location__c, lg.IATA_Local_Office__c);
+			system.assertEquals(isocs[0].Country_Manager__c, lg.Group_Owner__c);
+			system.assertEquals(true, lg.Active__c);
+
+			lg.Group_Owner__c = UserInfo.getUserId();
+			lg.Name = 'DifferentName';
+			update lg;
+
+			lg = [SELECT Id, Name, Region__c, IATA_Local_Office__c, Group_Owner__c, Local_Governance_type__c
+				  FROM LocalGovernance__c WHERE Id = :lg.ID];
+			system.assertEquals(isocs[0].Name + ' - '+lg.Local_Governance_type__c, lg.Name);
+			system.assertEquals(UserInfo.getUserId(), lg.Group_Owner__c);
 
 			ApexPages.currentPage().getParameters().put('retURL', '/' + lg.Id);
-			ctrl = new NewParticipantByEmailCtrl(
+			NewParticipantByEmailCtrl ctrl = new NewParticipantByEmailCtrl(
 				new ApexPages.StandardController(
 					new Participant__c(Local_Governance__c = lg.Id)
 				)
@@ -172,8 +215,8 @@ public class NewParticipantByEmailCtrlTest {
 			ctrl.MySave();
 
 			// I can't insert twice the same participant
-			parts = [SELECT ID FROM Participant__c];
-			system.assertEquals(1, parts.size());
+			List<Participant__c> parts = [SELECT ID FROM Participant__c];
+			system.assertEquals(0, parts.size());
 
 			// now there are two contacts with this email so I'll need to choose one of them
 			ctrl.c.Email = 'myCompany@test.com';
@@ -181,11 +224,12 @@ public class NewParticipantByEmailCtrlTest {
 
 			system.assertEquals(true,ctrl.chooseContact);
 
+			Contact contcomplete = [SELECT id, AccountId, FirstName, LastName, Email, Title FROM Contact WHERE FirstName = 'Complete' LIMIT 1];
 			System.currentPageReference().getParameters().put('contactId',contcomplete.ID);
 			ctrl.chooseContact();
 
 			parts = [SELECT ID FROM Participant__c];
-			system.assertEquals(2, parts.size());
+			system.assertEquals(1, parts.size());
 
 
 			// try again to insert an email shared by 2 contacts and choose one of them who is incomplete
@@ -200,28 +244,29 @@ public class NewParticipantByEmailCtrlTest {
 
 			system.assertEquals(true,ctrl.chooseContact);
 
+			Contact contduplicate = [SELECT id, AccountId, FirstName, LastName, Email, title FROM Contact WHERE FirstName = 'Duplicate' LIMIT 1];
 			System.currentPageReference().getParameters().put('contactId',contduplicate.ID);
 			ctrl.chooseContact();
 
 			parts = [SELECT ID FROM Participant__c];
-			system.assertEquals(2, parts.size());
+			system.assertEquals(1, parts.size());
 
 			Contact testContact =
 				[SELECT Id, Account.RecordTypeId, Account.Top_Parent__c, Account.ParentId
 				FROM Contact WHERE Email='others@test.com' LIMIT 1];
 			NewParticipantByEmailCtrl.calculateMainAccount(testContact);
+			
 		}
 	}
 
 
 
 
-
-
 	static testmethod void testLocalGroupsWithClusters(){
-		prepareData();
 		Test.startTest();
 
+		List<IATA_ISO_Country__c> isocs = [SELECT Id, Name, ISS_Office_Location__c, Country_Manager__c FROM IATA_ISO_Country__c];
+		List<Cluster__c> cls = [SELECT id, Name, IATA_Local_Office__c, Country_Manager__c FROM Cluster__c];
 		NewLocalGroupCtrl ctrl = new NewLocalGroupCtrl(new ApexPages.StandardController(new LocalGovernance__c()));
 
 
@@ -262,89 +307,5 @@ public class NewParticipantByEmailCtrlTest {
 
 
 		NewLocalGroupCtrl.deactivateLocalGroup(lg.id);
-
-
-		/*
-		lg.Group_Owner__c = UserInfo.getUserId();
-		lg.Name = 'DifferentName';
-		update lg;
-
-		lg = [SELECT Id, Name, Region__c, IATA_Local_Office__c, Group_Owner__c, Local_Governance_type__c
-			  FROM LocalGovernance__c WHERE Id = :lg.ID];
-		system.assertEquals(isocs[0].Name + ' - '+lg.Local_Governance_type__c, lg.Name);
-		system.assertEquals(UserInfo.getUserId(), lg.Group_Owner__c);
-
-
-		Test.setCurrentPage(new PageReference('NewParticipantByEmail'));
-		NewParticipantByEmailCtrl ctrl = new NewParticipantByEmailCtrl(
-											new ApexPages.StandardController(
-												new Participant__c(Local_Governance__c = lg.Id)
-											)
-										);
-
-
-		ctrl.MySave();
-		// Nothing happens: I need to choose the contact!
-		List<Participant__c> parts = [SELECT ID FROM Participant__c];
-		system.assertEquals(0, parts.size());
-
-		ctrl.c.Email = 'firstcontact@test.com';
-		ctrl.MySave();
-
-		// Nothing happens: The contact is incomplete
-		parts = [SELECT ID FROM Participant__c];
-		system.assertEquals(0, parts.size());
-
-		contincomplete.Title = 'theBoss';
-		update contincomplete;
-		ctrl.MySave();
-
-		// Now a new participant should be created
-		parts = [SELECT ID FROM Participant__c];
-		system.assertEquals(1, parts.size());
-
-
-		ctrl = new NewParticipantByEmailCtrl(
-			new ApexPages.StandardController(
-				new Participant__c(Local_Governance__c = lg.Id)
-			)
-		);
-		ctrl.c.Email = 'firstcontact@test.com';
-		ctrl.MySave();
-
-		// I can't insert twice the same participant
-		parts = [SELECT ID FROM Participant__c];
-		system.assertEquals(1, parts.size());
-
-		// now there are two contacts with this email so I'll need to choose one of them
-		ctrl.c.Email = 'myCompany@test.com';
-		ctrl.MySave();
-
-		system.assertEquals(true,ctrl.chooseContact);
-
-		System.currentPageReference().getParameters().put('contactId',contcomplete.ID);
-		ctrl.chooseContact();
-
-		parts = [SELECT ID FROM Participant__c];
-		system.assertEquals(2, parts.size());
-
-
-		// try again to insert an email shared by 2 contacts and choose one of them who is incomplete
-		ctrl = new NewParticipantByEmailCtrl(
-			new ApexPages.StandardController(
-				new Participant__c(Local_Governance__c = lg.Id)
-			)
-		);
-		ctrl.c.Email = 'myCompany@test.com';
-		ctrl.MySave();
-
-		system.assertEquals(true,ctrl.chooseContact);
-
-		System.currentPageReference().getParameters().put('contactId',contduplicate.ID);
-		ctrl.chooseContact();
-
-		parts = [SELECT ID FROM Participant__c];
-		system.assertEquals(2, parts.size());
-		*/
 	}
 }

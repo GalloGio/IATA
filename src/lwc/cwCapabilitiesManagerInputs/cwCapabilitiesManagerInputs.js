@@ -208,7 +208,7 @@ export default class CwCapabilitiesManagerInputs extends LightningElement {
 		if(!this.editMode)
 		{
 			this.consData.rowIndex = this.getRowIndex.toString();
-			this.consData.equipment = this.item["equipment_value"];
+			this.consData.equipment = this.item["equipment"];
 			this.consData.field = this.propertyName;
 			
 			if(type === "checkbox")

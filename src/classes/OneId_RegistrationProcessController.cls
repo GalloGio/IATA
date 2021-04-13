@@ -160,21 +160,21 @@ public without sharing class OneId_RegistrationProcessController {
 
 	public class UserInformation {
 		@AuraEnabled
-		Boolean isGuest {get; set;}
+		public Boolean isGuest {get; set;}
 		@AuraEnabled
-		Boolean isEmailAddressAvailable {get; set;}
+		public Boolean isEmailAddressAvailable {get; set;}
 		@AuraEnabled
-		Boolean isContactInserted {get; set;}
+		public Boolean isContactInserted {get; set;}
 		@AuraEnabled
-		Boolean isServiceUser {get; set;}
+		public Boolean isServiceUser {get; set;}
 		@AuraEnabled
-		Boolean isServiceEligible {get; set;}
+		public Boolean isServiceEligible {get; set;}
 		@AuraEnabled
-		Contact con {get;set;}
+		public Contact con {get;set;}
 		@AuraEnabled
-		Account acc {get;set;}
+		public Account acc {get;set;}
 		@AuraEnabled
-		Boolean accessRequested {get; set;}
+		public Boolean accessRequested {get; set;}
 	}
 
 	@AuraEnabled

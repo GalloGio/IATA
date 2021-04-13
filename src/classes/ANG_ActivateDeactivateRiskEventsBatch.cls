@@ -79,7 +79,7 @@ global class ANG_ActivateDeactivateRiskEventsBatch implements Database.Batchable
 			RecordUpdater updater = new RecordUpdater(scope, true);
 			updater.schedule(System.now().addSeconds(2));
 		}catch(Exception e){
-			ServiceNow_Helper.sendRequestToSNOWSFDC('JSD13',e, setInvolvedIds);
+			TransformationHelper.sendEmailSupport('ANG_ActivateDeactivateRiskEventsBatch - execute ','\n MESSAGE: '+ e.getMessage() +'\n STACKTRACE ' + e.getStackTraceString());
 		}
 	}
 

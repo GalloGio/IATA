@@ -323,6 +323,10 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Give_SIS_Membership__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>EF_SIS_Code__c</field>
             </layoutItems>
             <layoutItems>
@@ -777,6 +781,7 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Status__c</fields>
         <fields>Functional_Role__c</fields>
         <fields>Account_Roles__c</fields>
         <relatedList>Account_Role__c.Account__c</relatedList>

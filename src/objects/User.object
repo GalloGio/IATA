@@ -2514,47 +2514,6 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         <trackFeedHistory>false</trackFeedHistory>
         <type>Hierarchy</type>
     </fields>
-    <fields>
-        <fullName>unbabelapi__Agent_Brand__c</fullName>
-        <deprecated>false</deprecated>
-        <description>This field contains the Agent Brand to which he/she responds to the customers</description>
-        <externalId>false</externalId>
-        <label>Agent Brand</label>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <type>Picklist</type>
-        <valueSet>
-            <restricted>true</restricted>
-            <valueSetName>unbabelapi__Brands</valueSetName>
-        </valueSet>
-    </fields>
-    <fields>
-        <fullName>unbabelapi__Unbabel_Known_Languages__c</fullName>
-        <deprecated>false</deprecated>
-        <externalId>false</externalId>
-        <label>Unbabel Known Languages</label>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <type>MultiselectPicklist</type>
-        <valueSet>
-            <restricted>true</restricted>
-            <valueSetName>unbabelapi__Languages</valueSetName>
-        </valueSet>
-        <visibleLines>4</visibleLines>
-    </fields>
-    <fields>
-        <fullName>unbabelapi__Unbabel_Language__c</fullName>
-        <deprecated>false</deprecated>
-        <externalId>false</externalId>
-        <label>Unbabel Main Language</label>
-        <required>false</required>
-        <trackFeedHistory>false</trackFeedHistory>
-        <type>Picklist</type>
-        <valueSet>
-            <restricted>true</restricted>
-            <valueSetName>unbabelapi__Languages</valueSetName>
-        </valueSet>
-    </fields>
     <listViews>
         <fullName>AI_Users</fullName>
         <columns>FULL_NAME</columns>
@@ -2644,9 +2603,9 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         <columns>CORE.USERS.EMAIL</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>CORE.USERS.EMAIL</field>
+            <field>FULL_NAME</field>
             <operation>contains</operation>
-            <value>howj@iata.org</value>
+            <value>armiento</value>
         </filters>
         <label>User with name</label>
         <language>en_US</language>
@@ -3762,6 +3721,37 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         <sharedTo>
             <group>IATATTBS</group>
         </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>WebHelp_users_Active</fullName>
+        <booleanFilter>1 AND (2 or 3)</booleanFilter>
+        <columns>FULL_NAME</columns>
+        <columns>CORE.USERS.EMAIL</columns>
+        <columns>CORE.USERS.USERNAME</columns>
+        <columns>CORE.USER_ROLE.NAME</columns>
+        <columns>CORE.USERS.ACTIVE</columns>
+        <columns>CORE.PROFILE.NAME</columns>
+        <columns>MANAGER</columns>
+        <columns>Comments__c</columns>
+        <columns>IS_FROZEN</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>CORE.USERS.ACTIVE</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <filters>
+            <field>CORE.USER_ROLE.NAME</field>
+            <operation>startsWith</operation>
+            <value>KL WH</value>
+        </filters>
+        <filters>
+            <field>CORE.USER_ROLE.NAME</field>
+            <operation>startsWith</operation>
+            <value>BU WH</value>
+        </filters>
+        <label>WebHelp users (Active)</label>
+        <language>en_US</language>
     </listViews>
     <searchLayouts>
         <lookupDialogsAdditionalFields>FULL_NAME</lookupDialogsAdditionalFields>

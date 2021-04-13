@@ -161,6 +161,10 @@ public without sharing class AMS_Utils {
 	public static final String accountReasonForCreationPASS = 'New Airline joining PASS';
 	public static final String passSSOPortalService = 'PASSlink Single Sign-On';
 
+	//Process IATA Pay
+	public static final String iataPayParticipation  = 'IATA Pay Participation';
+	public static final String iataPayCountryAggregator  = 'IATA Pay Country Aggregator';
+
 	public static final Set<String> setAMS = new Set<String> {HO, BR, SA, AO};
 	public static final Set<String> setNewGen = new Set<String> {HE, AE, GE};
 
@@ -312,6 +316,7 @@ public without sharing class AMS_Utils {
 
 	public static final String FINANCIAL_REVIEW_ANNUAL = 'Annual';
 	public static final String FINANCIAL_REVIEW_MAJOR_CHANGES = 'Major Changes';
+	public static final String FINANCIAL_REVIEW_NEW_APPLICATION = 'New applications';
 
 	public static final String FINANCIAL_REVIEW_MULTICOUNTRY_ANNUAL = 'Multicountry Annual';
 	public static final String FINANCIAL_REVIEW_MULTICOUNTRY_ADHOC = 'Multicountry Adhoc';
@@ -368,6 +373,7 @@ public without sharing class AMS_Utils {
 	public static final String CASE_TYPE_OF_CUSTOMER_IATA_TRAVEL_AGENT = 'IATA Travel Agent';
 
 	public static final String CATEGORY_TRAVEL_AGENT = 'Travel Agent';// To replaces uses with SECTOR_PASSENGER
+	public static final String CATEGORY_TIDS = 'TIDS Agent';
 	public static final String CATEGORY_PASSENGER_SALES_AGENT = 'IATA Passenger Sales Agent';
 	public static final String CATEGORY_NON_IATA_PASSENGER = 'Non-IATA Passenger Agent';
 	public static final String CATEGORY_NON_IATA_TRAVEL = 'Non-IATA Travel Agent';
@@ -433,6 +439,7 @@ public without sharing class AMS_Utils {
 	//Account - Location_Class__c
 	public static final String LC_PASSENGER = 'P';
 	public static final String LC_POSTAL_OPERATOR = 'L';
+	public static final String LC_TIDS = 'T';
 
 	//CNS new PROCESS Location Type requested
 	public static final String CNS_LOCATION_TYPE_REQUESTED_CNS_ENDORSEMENT_NEW_BRANCH = 'New BR / IP - CNS Endorsement';
@@ -1989,6 +1996,41 @@ public without sharing class AMS_Utils {
 
 		return result;
 
+	}
+
+	private static final map<String,String> MAP_GDS_ACCOUNT_TO_FORM  = new map<String,String>{
+		'ABAC' => 'Abacus',
+		'AGTD' => 'Amadeus',
+		'AXSS' => 'Axess',
+		'CMAS' => 'Kiu System',
+		'DERD' => 'Deutsche Reiseburo',
+		'FLGX' => 'Farelogix',
+		'GDSL' => 'Travelport (Galileo)',
+		'INFI' => 'Infini',
+		'KOTI' => 'Kotis Travel Info SE',
+		'MINS' => 'Travelsky',
+		'RESI' => 'Resiber',
+		'SABR' => 'Sabre',
+		'SITA' => 'SITA',
+		'STRA' => 'Sirena',
+		'TOPAS' => 'Topas',
+		'UALA' => 'Travelport (Apollo)',
+		'WSPN' => 'Travelport (Worldspan)'
+	};
+	/**
+		Method to transform values from Account.GDS__c to AMS_Accreditaion_Form__c.ISSP_AMS_GDS_with_signed_contract__c
+	*/
+	public static String transformGDSAccountToForm(String gdsString) {
+		if (String.isBlank(gdsString)) return '';
+
+		Set<String> setResult = new Set<String>();
+		for (String value: gdsString.split(';')) {
+			setResult.add(MAP_GDS_ACCOUNT_TO_FORM.get(value));
+		}
+
+		list<String> listResult = new list<String>(setResult);
+		listResult.sort();
+		return String.join(listResult,';');
 	}
 
 	public static String errorMessageBeautifyer(Exception ex) {

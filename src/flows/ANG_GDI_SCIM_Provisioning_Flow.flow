@@ -3,7 +3,7 @@
     <apexPluginCalls>
         <name>SCIM_Collect_Users</name>
         <label>SCIM Collect Users</label>
-        <locationX>250</locationX>
+        <locationX>390</locationX>
         <locationY>134</locationY>
         <apexClass>SCIMCollectUsersPlugin</apexClass>
         <inputParameters>
@@ -34,9 +34,21 @@
     <apexPluginCalls>
         <name>SCIM_Create_User</name>
         <label>SCIM Create User</label>
-        <locationX>831</locationX>
+        <locationX>971</locationX>
         <locationY>131</locationY>
         <apexClass>SCIMCreateUserPlugin</apexClass>
+        <inputParameters>
+            <name>CallParams</name>
+            <value>
+                <elementReference>CallParams</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>ExternalSystem</name>
+            <value>
+                <elementReference>ExternalSystem</elementReference>
+            </value>
+        </inputParameters>
         <inputParameters>
             <name>userPayload</name>
             <value>
@@ -49,27 +61,13 @@
                 <elementReference>UserProvisioningRequest.Id</elementReference>
             </value>
         </inputParameters>
-        <inputParameters>
-            <name>CallParams</name>
-            <value>
-                <elementReference>CallParams</elementReference>
-            </value>
-        </inputParameters>
-        <outputParameters>
-            <assignToReference>Status</assignToReference>
-            <name>Status</name>
-        </outputParameters>
         <outputParameters>
             <assignToReference>Details</assignToReference>
             <name>Details</name>
         </outputParameters>
         <outputParameters>
-            <assignToReference>ExternalUserId</assignToReference>
-            <name>ExternalUserId</name>
-        </outputParameters>
-        <outputParameters>
-            <assignToReference>ExternalUsername</assignToReference>
-            <name>ExternalUsername</name>
+            <assignToReference>ExternalEmail</assignToReference>
+            <name>ExternalEmail</name>
         </outputParameters>
         <outputParameters>
             <assignToReference>ExternalFirstName</assignToReference>
@@ -80,14 +78,22 @@
             <name>ExternalLastName</name>
         </outputParameters>
         <outputParameters>
-            <assignToReference>ExternalEmail</assignToReference>
-            <name>ExternalEmail</name>
+            <assignToReference>ExternalUserId</assignToReference>
+            <name>ExternalUserId</name>
+        </outputParameters>
+        <outputParameters>
+            <assignToReference>ExternalUsername</assignToReference>
+            <name>ExternalUsername</name>
+        </outputParameters>
+        <outputParameters>
+            <assignToReference>Status</assignToReference>
+            <name>Status</name>
         </outputParameters>
     </apexPluginCalls>
     <apexPluginCalls>
         <name>SCIM_Create_User_Generator</name>
         <label>SCIM Create User Generator</label>
-        <locationX>671</locationX>
+        <locationX>811</locationX>
         <locationY>130</locationY>
         <apexClass>SCIMUserAttributeGeneratorPlugin</apexClass>
         <connector>
@@ -149,28 +155,34 @@
     <apexPluginCalls>
         <name>SCIM_Delete_User</name>
         <label>SCIM Delete user</label>
-        <locationX>450</locationX>
+        <locationX>590</locationX>
         <locationY>243</locationY>
         <apexClass>SCIMDeleteUserPlugin</apexClass>
-        <inputParameters>
-            <name>userProvisioningRequestId</name>
-            <value>
-                <elementReference>UserProvisioningRequest.Id</elementReference>
-            </value>
-        </inputParameters>
         <inputParameters>
             <name>CallParams</name>
             <value>
                 <elementReference>CallParams</elementReference>
             </value>
         </inputParameters>
-        <outputParameters>
-            <assignToReference>Status</assignToReference>
-            <name>Status</name>
-        </outputParameters>
+        <inputParameters>
+            <name>ExternalSystem</name>
+            <value>
+                <elementReference>ExternalSystem</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>userProvisioningRequestId</name>
+            <value>
+                <elementReference>UserProvisioningRequest.Id</elementReference>
+            </value>
+        </inputParameters>
         <outputParameters>
             <assignToReference>Details</assignToReference>
             <name>Details</name>
+        </outputParameters>
+        <outputParameters>
+            <assignToReference>Status</assignToReference>
+            <name>Status</name>
         </outputParameters>
         <outputParameters>
             <assignToReference>UPAStatus</assignToReference>
@@ -180,7 +192,7 @@
     <apexPluginCalls>
         <name>SCIM_Toggle_User</name>
         <label>SCIM Toggle User</label>
-        <locationX>250</locationX>
+        <locationX>390</locationX>
         <locationY>241</locationY>
         <apexClass>SCIMToggleUserPlugin</apexClass>
         <inputParameters>
@@ -207,9 +219,21 @@
     <apexPluginCalls>
         <name>SCIM_Update_User</name>
         <label>SCIM Update User</label>
-        <locationX>834</locationX>
+        <locationX>974</locationX>
         <locationY>249</locationY>
         <apexClass>SCIMUpdateUserPlugin</apexClass>
+        <inputParameters>
+            <name>CallParams</name>
+            <value>
+                <elementReference>CallParams</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>ExternalSystem</name>
+            <value>
+                <elementReference>ExternalSystem</elementReference>
+            </value>
+        </inputParameters>
         <inputParameters>
             <name>userPayload</name>
             <value>
@@ -222,25 +246,19 @@
                 <elementReference>UserProvisioningRequest.Id</elementReference>
             </value>
         </inputParameters>
-        <inputParameters>
-            <name>CallParams</name>
-            <value>
-                <elementReference>CallParams</elementReference>
-            </value>
-        </inputParameters>
-        <outputParameters>
-            <assignToReference>Status</assignToReference>
-            <name>Status</name>
-        </outputParameters>
         <outputParameters>
             <assignToReference>Details</assignToReference>
             <name>Details</name>
+        </outputParameters>
+        <outputParameters>
+            <assignToReference>Status</assignToReference>
+            <name>Status</name>
         </outputParameters>
     </apexPluginCalls>
     <apexPluginCalls>
         <name>SCIM_Update_User_Generator</name>
         <label>SCIM Update User Generator</label>
-        <locationX>674</locationX>
+        <locationX>814</locationX>
         <locationY>249</locationY>
         <apexClass>SCIMUserAttributeGeneratorPlugin</apexClass>
         <connector>
@@ -293,10 +311,18 @@
             <name>userPayload</name>
         </outputParameters>
     </apexPluginCalls>
+    <constants>
+        <description>contains the name of the external system to invoke. Used while getting resource for named credential</description>
+        <name>ExternalSystem</name>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>GDI</stringValue>
+        </value>
+    </constants>
     <decisions>
         <name>Operation</name>
         <label>Operation</label>
-        <locationX>450</locationX>
+        <locationX>590</locationX>
         <locationY>134</locationY>
         <defaultConnectorLabel>[Default Outcome]</defaultConnectorLabel>
         <rules>
@@ -377,21 +403,7 @@
     <formulas>
         <name>CallParams</name>
         <dataType>String</dataType>
-        <expression>&apos;{&apos;+
-&apos; &quot;externalSystems&quot; : &quot;Global Default Insurance&quot;, &apos; +
-&apos; &quot;client_secret&quot; : &quot;&apos; + {!client_secret}  + &apos;&quot;, &apos; +
-&apos; &quot;client_id&quot; : &quot;&apos; + {!client_id}  + &apos;&quot; &apos; +
-&apos;}&apos;</expression>
-    </formulas>
-    <formulas>
-        <name>client_id</name>
-        <dataType>String</dataType>
-        <expression>&apos;691343569caf4c80aa09d835fc3b700e&apos;</expression>
-    </formulas>
-    <formulas>
-        <name>client_secret</name>
-        <dataType>String</dataType>
-        <expression>&apos;3787a2F55B8c4c39aEA11a36ad69d66e&apos;</expression>
+        <expression>&apos;{&quot;externalSystems&quot; : &quot;Global Default Insurance&quot;}&apos;</expression>
     </formulas>
     <formulas>
         <description>Formula to determine if a UserProvisioningRequest indicates enabling a user.</description>
@@ -429,11 +441,23 @@
     </formulas>
     <interviewLabel>ANG IEP SCIM Provisioning Flow {!$Flow.CurrentDateTime}</interviewLabel>
     <label>ANG GDI SCIM Provisioning Flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
     <processType>UserProvisioningFlow</processType>
     <recordLookups>
         <name>Fetch_More_User_Info</name>
         <label>Fetch More User Info</label>
-        <locationX>255</locationX>
+        <locationX>395</locationX>
         <locationY>41</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -456,7 +480,7 @@
     <recordLookups>
         <name>Fetch_Portal_Service_Request</name>
         <label>Fetch Portal Service Request</label>
-        <locationX>451</locationX>
+        <locationX>591</locationX>
         <locationY>42</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -482,7 +506,13 @@
         <queriedFields>Portal_Application__c</queriedFields>
         <queriedFields>Application_Name__c</queriedFields>
     </recordLookups>
-    <startElementReference>Fetch_More_User_Info</startElementReference>
+    <start>
+        <locationX>50</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>Fetch_More_User_Info</targetReference>
+        </connector>
+    </start>
     <status>Active</status>
     <variables>
         <name>Details</name>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <applicationVisibilities>
+        <application>standard__AppLauncher</application>
+        <visible>true</visible>
+    </applicationVisibilities>
+    <description>This permission set is giving access to Kavi to identity license users</description>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>User.ContactKaviId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>User.Is_Kavi_Internal_User__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>KaviIdentityUsersAccess</label>
+    <license>Identity</license>
+</PermissionSet>

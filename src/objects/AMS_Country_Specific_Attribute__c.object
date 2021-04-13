@@ -336,6 +336,16 @@
         <unique>true</unique>
     </fields>
     <fields>
+        <fullName>Create_SAAM_Case__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>if true, instruct the system to create a SAAM case when processing the alert received</description>
+        <externalId>false</externalId>
+        <inlineHelpText>if true, creates a SAAM case when processing the alert received</inlineHelpText>
+        <label>Create SAAM Case</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Create_SMAP_Case__c</fullName>
         <defaultValue>false</defaultValue>
         <description>If flagged, instruct the system to create a SMAP case when the alert matching direction and percentage is processed</description>
@@ -366,6 +376,36 @@
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>GDS_Alert_Type__c</fullName>
+        <description>is the type of alert received by GDS Failsafe interface for which we need to specify the actions</description>
+        <externalId>false</externalId>
+        <label>GDS Alert Type</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>CashlessGDSAlert</fullName>
+                    <default>false</default>
+                    <label>Cashless GDS Alert</label>
+                </value>
+                <value>
+                    <fullName>CashGDSAlert</fullName>
+                    <default>false</default>
+                    <label>Cash GDS Alert</label>
+                </value>
+                <value>
+                    <fullName>TAGDSAlert</fullName>
+                    <default>false</default>
+                    <label>TA GDS Alert</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>IATA_ISO_Country__c</fullName>
@@ -686,6 +726,21 @@ J-Joint Vent</description>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>GDS_Alert_Type__c</picklist>
+            <values>
+                <fullName>CashGDSAlert</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CashlessGDSAlert</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TAGDSAlert</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Location_Class__c</picklist>
             <values>
                 <fullName>A</fullName>
@@ -791,6 +846,21 @@ J-Joint Vent</description>
             <picklist>ANG_RTS_Severity__c</picklist>
             <values>
                 <fullName>Yellow</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>GDS_Alert_Type__c</picklist>
+            <values>
+                <fullName>CashGDSAlert</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CashlessGDSAlert</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TAGDSAlert</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -912,6 +982,21 @@ J-Joint Vent</description>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>GDS_Alert_Type__c</picklist>
+            <values>
+                <fullName>CashGDSAlert</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CashlessGDSAlert</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TAGDSAlert</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Location_Class__c</picklist>
             <values>
                 <fullName>D</fullName>
@@ -953,6 +1038,21 @@ J-Joint Vent</description>
             <picklist>ANG_RTS_Severity__c</picklist>
             <values>
                 <fullName>Yellow</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>GDS_Alert_Type__c</picklist>
+            <values>
+                <fullName>CashGDSAlert</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CashlessGDSAlert</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TAGDSAlert</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1062,6 +1162,21 @@ J-Joint Vent</description>
             <picklist>ANG_RTS_Severity__c</picklist>
             <values>
                 <fullName>Yellow</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>GDS_Alert_Type__c</picklist>
+            <values>
+                <fullName>CashGDSAlert</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CashlessGDSAlert</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TAGDSAlert</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1183,6 +1298,21 @@ J-Joint Vent</description>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>GDS_Alert_Type__c</picklist>
+            <values>
+                <fullName>CashGDSAlert</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CashlessGDSAlert</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TAGDSAlert</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Location_Class__c</picklist>
             <values>
                 <fullName>A</fullName>
@@ -1296,6 +1426,21 @@ J-Joint Vent</description>
             </values>
             <values>
                 <fullName>Yellow</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>GDS_Alert_Type__c</picklist>
+            <values>
+                <fullName>CashGDSAlert</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CashlessGDSAlert</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TAGDSAlert</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1418,6 +1563,21 @@ J-Joint Vent</description>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>GDS_Alert_Type__c</picklist>
+            <values>
+                <fullName>CashGDSAlert</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CashlessGDSAlert</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TAGDSAlert</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Location_Class__c</picklist>
             <values>
                 <fullName>A</fullName>
@@ -1532,6 +1692,21 @@ J-Joint Vent</description>
             </values>
             <values>
                 <fullName>Yellow</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>GDS_Alert_Type__c</picklist>
+            <values>
+                <fullName>CashGDSAlert</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CashlessGDSAlert</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TAGDSAlert</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1653,6 +1828,21 @@ J-Joint Vent</description>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>GDS_Alert_Type__c</picklist>
+            <values>
+                <fullName>CashGDSAlert</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CashlessGDSAlert</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TAGDSAlert</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Location_Class__c</picklist>
             <values>
                 <fullName>A</fullName>
@@ -1766,6 +1956,21 @@ J-Joint Vent</description>
             </values>
             <values>
                 <fullName>Yellow</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>GDS_Alert_Type__c</picklist>
+            <values>
+                <fullName>CashGDSAlert</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CashlessGDSAlert</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TAGDSAlert</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1887,9 +2092,157 @@ J-Joint Vent</description>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>GDS_Alert_Type__c</picklist>
+            <values>
+                <fullName>CashGDSAlert</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CashlessGDSAlert</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TAGDSAlert</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Location_Class__c</picklist>
             <values>
                 <fullName>A</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Reason__c</picklist>
+            <values>
+                <fullName>Adhoc review</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Financial Security Request</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>RiskAlertGDS</fullName>
+        <active>true</active>
+        <description>used by Cashless failsafe GDS Alerts</description>
+        <label>Risk Alert GDS</label>
+        <picklistValues>
+            <picklist>ANG_Direction__c</picklist>
+            <values>
+                <fullName>DOWN</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>UP</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ANG_RTS_Severity__c</picklist>
+            <values>
+                <fullName>Orange</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Red</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yellow</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>GDS_Alert_Type__c</picklist>
+            <values>
+                <fullName>CashGDSAlert</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CashlessGDSAlert</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TAGDSAlert</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Location_Class__c</picklist>
+            <values>
+                <fullName>A</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>C</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>D</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>E</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>G</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>I</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>J</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>K</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>M</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>O</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>P</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Q</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>R</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>S</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>T</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>V</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>X</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1932,6 +2285,21 @@ J-Joint Vent</description>
             </values>
             <values>
                 <fullName>Yellow</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>GDS_Alert_Type__c</picklist>
+            <values>
+                <fullName>CashGDSAlert</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CashlessGDSAlert</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TAGDSAlert</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -2042,6 +2410,21 @@ J-Joint Vent</description>
             <picklist>ANG_RTS_Severity__c</picklist>
             <values>
                 <fullName>Yellow</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>GDS_Alert_Type__c</picklist>
+            <values>
+                <fullName>CashGDSAlert</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CashlessGDSAlert</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TAGDSAlert</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

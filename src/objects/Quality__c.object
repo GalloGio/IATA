@@ -10313,6 +10313,21 @@ To comunitacate an issue, use ISSUE-Quality</inlineHelpText>
         <type>Lookup</type>
     </fields>
     <fields>
+        <fullName>Parent__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <description>Lookup to another exception to allow a hierarchy system in exceptions</description>
+        <externalId>false</externalId>
+        <label>Parent Exception</label>
+        <referenceTo>Quality__c</referenceTo>
+        <relationshipLabel>Exceptions</relationshipLabel>
+        <relationshipName>Exceptions</relationshipName>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>Pending_Evidences_to_be_Collected__c</fullName>
         <externalId>false</externalId>
         <label>Pending Evidences to be Collected</label>
@@ -11023,7 +11038,7 @@ TEXT( Related_Case_Number__r.Region__c))</formula>
         <label>Related Case Number</label>
         <referenceTo>Case</referenceTo>
         <relationshipName>Quality</relationshipName>
-        <required>true</required>
+        <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -12045,6 +12060,11 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
                     <fullName>Closed - Extended</fullName>
                     <default>false</default>
                     <label>Closed - Extended</label>
+                </value>
+                <value>
+                    <fullName>Closed - Not required</fullName>
+                    <default>false</default>
+                    <label>Closed - Not required</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -13445,6 +13465,39 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
         </filters>
         <label>EXE2014 - All Pending Approval</label>
         <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>EXE2014_All_Pending_Approval_SVP</fullName>
+        <columns>NAME</columns>
+        <columns>Status__c</columns>
+        <columns>Related_Case_Number__c</columns>
+        <columns>Exe_Category_New__c</columns>
+        <columns>Exe_Category__c</columns>
+        <columns>Exception_Type__c</columns>
+        <columns>Region__c</columns>
+        <columns>IATA_Country__c</columns>
+        <columns>Deadline_for_Approval__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>contains</operation>
+            <value>Pending Approval</value>
+        </filters>
+        <filters>
+            <field>Exe_Category_New__c</field>
+            <operation>contains</operation>
+            <value>Resolution</value>
+        </filters>
+        <label>EXE2014 - All Pending Approval - SVP</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>CFDS_SVP</group>
+            <role>A_P_Business_Delivery_Manager</role>
+            <role>China_N_Asia_Business_Delivery_Staff</role>
+            <role>Distribution_Business_Delivery_HO</role>
+            <role>MADHubACCstaff</role>
+            <role>MAD_Hub_Business_Delivery_Manager</role>
+        </sharedTo>
     </listViews>
     <listViews>
         <fullName>EXE2014_All_Pending_Closure</fullName>
@@ -19584,6 +19637,10 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
                 <default>false</default>
             </values>
             <values>
+                <fullName>Closed - Not required</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Under Investigation</fullName>
                 <default>true</default>
             </values>
@@ -25088,6 +25145,10 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
             <values>
                 <fullName>Closed - Extended</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed - Not required</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -30622,6 +30683,10 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
                 <default>false</default>
             </values>
             <values>
+                <fullName>Closed - Not required</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Closed - Rejected</fullName>
                 <default>false</default>
             </values>
@@ -35994,6 +36059,10 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
         <picklistValues>
             <picklist>Status__c</picklist>
             <values>
+                <fullName>Closed - Not required</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Under Investigation</fullName>
                 <default>true</default>
             </values>
@@ -41358,6 +41427,10 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
             <values>
                 <fullName>Closed - Extended</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed - Not required</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -46873,6 +46946,10 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
         <picklistValues>
             <picklist>Status__c</picklist>
             <values>
+                <fullName>Closed - Not required</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Under Investigation</fullName>
                 <default>true</default>
             </values>
@@ -52377,6 +52454,10 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
             <values>
                 <fullName>Closed - Extended</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed - Not required</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -57911,6 +57992,10 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
                 <default>false</default>
             </values>
             <values>
+                <fullName>Closed - Not required</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Closed - Rejected</fullName>
                 <default>false</default>
             </values>
@@ -63391,6 +63476,10 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
         <picklistValues>
             <picklist>Status__c</picklist>
             <values>
+                <fullName>Closed - Not required</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Under Investigation</fullName>
                 <default>true</default>
             </values>
@@ -68863,6 +68952,10 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
             </values>
             <values>
                 <fullName>Closed - Extended</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Closed - Not required</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -74365,6 +74458,10 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
                 <default>false</default>
             </values>
             <values>
+                <fullName>Closed - Not required</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Closed - Rejected</fullName>
                 <default>false</default>
             </values>
@@ -74867,13 +74964,12 @@ ISPICKVAL(Exception_Classification_Type__c, &quot;Services Conference&quot;)
         <errorMessage>Please select the correct value for the &quot;Exception Classification Type&quot;.</errorMessage>
     </validationRules>
     <validationRules>
-        <fullName>Closure_Date_cannot_be_deleted</fullName>
-        <active>true</active>
-        <errorConditionFormula>AND(
-ISPICKVAL( Status__c , &quot;Closed&quot;), ISNULL(DA_Closure_Date__c)
-)</errorConditionFormula>
+        <fullName>Closure_date_higher_than_alignment</fullName>
+        <active>false</active>
+        <description>Closure date cannot be higher than Deadline for alignment</description>
+        <errorConditionFormula>DA_Closure_Date__c &gt; Deadline_for_Alignment__c</errorConditionFormula>
         <errorDisplayField>DA_Closure_Date__c</errorDisplayField>
-        <errorMessage>Closure Date cannot be deleted</errorMessage>
+        <errorMessage>Closure date can not be higher than Deadline for alignment</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Closure_date_higher_than_today</fullName>
@@ -74904,14 +75000,6 @@ ISNULL( Deadline_for_Alignment__c )
 )</errorConditionFormula>
         <errorDisplayField>Deadline_for_Alignment__c</errorDisplayField>
         <errorMessage>For Temporary exception, you must enter a Deadline for Alignment date</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>Description_Information</fullName>
-        <active>false</active>
-        <description>Description must be filled</description>
-        <errorConditionFormula>Description__c = NULL</errorConditionFormula>
-        <errorDisplayField>Description__c</errorDisplayField>
-        <errorMessage>Enter Description Information</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Exception_Classification_Type</fullName>
@@ -74973,103 +75061,16 @@ AND(Requested_Sec__c= TRUE, OR(ISBLANK( Deadline_for_Input_Sec__c ), ISBLANK( Se
         <errorMessage>A Key Control is Mandatory when &quot;Key Control&quot; is chosen in the &quot;Exception Classification Type&quot;</errorMessage>
     </validationRules>
     <validationRules>
-        <fullName>Mandatory_Central_or_Regional_Quality</fullName>
-        <active>false</active>
-        <errorConditionFormula>AND( Mandatory_RQ__c = &quot;YES&quot;,  Requested_RQ__c = FALSE,  Agree_Bypass__c  = FALSE)</errorConditionFormula>
-        <errorMessage>Mandatory Regional Quality Input are not optional.</errorMessage>
-    </validationRules>
-    <validationRules>
         <fullName>Mandatory_Central_or_Regional_Quality_2</fullName>
         <active>true</active>
         <errorConditionFormula>AND( Mandatory_CQ__c = &quot;YES&quot;,  Requested_CQ__c = FALSE,  Agree_Bypass__c = FALSE)</errorConditionFormula>
         <errorMessage>Mandatory  Central Quality Input are not optional.</errorMessage>
     </validationRules>
     <validationRules>
-        <fullName>New_Quality_Object_Status_Under_Investig</fullName>
-        <active>false</active>
-        <description>New object can only has &quot;Under Investigation&quot; status</description>
-        <errorConditionFormula>NOT( ISPICKVAL( Status__c , &quot;Under Investigation&quot;) )</errorConditionFormula>
-        <errorDisplayField>Status__c</errorDisplayField>
-        <errorMessage>Select status as &quot;Under Investigation&quot;</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>Process_Map_Mandatory</fullName>
-        <active>false</active>
-        <errorConditionFormula>AND(OR(Exe_Category_New__c = &quot;Minor&quot;, Exe_Category_New__c = &quot;Exception to Resolution&quot;), 
-ISBLANK(TEXT( Map__c )),TEXT( Sub_Process__c ) &lt;&gt; &quot;Other&quot;)</errorConditionFormula>
-        <errorMessage>A Process Map is mandatory</errorMessage>
-    </validationRules>
-    <validationRules>
         <fullName>Process_Map_Other</fullName>
         <active>true</active>
         <errorConditionFormula>AND( ISPICKVAL(  Map__c  , &quot;Other&quot;),  ISBLANK( Map_Other__c ))</errorConditionFormula>
         <errorMessage>When &quot;Process Map&quot; is other, it needs to be specified in the &quot;Process Map Other&quot; field</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>Responsible_CQT_GPO</fullName>
-        <active>false</active>
-        <errorConditionFormula>OR(
-
-AND(
-ISPICKVAL(  Status__c  , &quot;Pending CQT Review&quot;),
-OR( Responsible_CQT__c = NULL, Responsible_GPO__c = NULL)
-),
-
-AND(
-ISPICKVAL( Key_Control_Type__c , &quot;HQ&quot;),
-OR( Responsible_CQT__c = NULL, Responsible_GPO__c = NULL)
-)
-)</errorConditionFormula>
-        <errorMessage>Inform Responsible CQT and GPO</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>Responsible_RD_AD_ISS</fullName>
-        <active>false</active>
-        <description>For Regional, One-Off and Urgent exception</description>
-        <errorConditionFormula>AND(
-ISPICKVAL(Key_Control_Type__c , &quot;Regional&quot;),
-ISPICKVAL(Exception_Type__c , &quot;One-off&quot;),
-Priority__c = &quot;Urgent&quot;,
-Responsible_RD_AD_ISS__c = &quot;&quot;
-)</errorConditionFormula>
-        <errorDisplayField>Responsible_RD_AD_ISS__c</errorDisplayField>
-        <errorMessage>Inform the Responsible RD/AD ISS</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>Responsible_RPM_RQM</fullName>
-        <active>false</active>
-        <errorConditionFormula>AND(
-ISPICKVAL( Key_Control_Type__c , &quot;Regional&quot;),
-OR( Responsible_RPM__c = NULL, Responsible_RQM__c = NULL)
-)</errorConditionFormula>
-        <errorMessage>Inform Responsible RPM and RQM</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>SOP_Information</fullName>
-        <active>false</active>
-        <description>SOP check</description>
-        <errorConditionFormula>AND(
-NOT(ISPICKVAL(  SOP_Type__c  , &quot;Agency Management (AM)&quot; )), 
-NOT(ISPICKVAL(  SOP_Type__c  , &quot;Agency Risk Management (ARM)&quot; )), 
-NOT(ISPICKVAL(  SOP_Type__c  , &quot;Airline Participation (AP)&quot; )), 
-NOT(ISPICKVAL(  SOP_Type__c  , &quot;Airline Suspension (AS)&quot; )), 
-NOT(ISPICKVAL(  SOP_Type__c  , &quot;Banking Services (BS)&quot; )), 
-NOT(ISPICKVAL(  SOP_Type__c  , &quot;Billing &amp; Reporting (BR)&quot; )), 
-NOT(ISPICKVAL(  SOP_Type__c  , &quot;Code Transfers &amp; Mergers (CTM)&quot; )), 
-NOT(ISPICKVAL(  SOP_Type__c  , &quot;Customer Service (CS)&quot; )), 
-NOT(ISPICKVAL(  SOP_Type__c  , &quot;Funds Management (FM)&quot; )), 
-NOT(ISPICKVAL(  SOP_Type__c  , &quot;Governance - Cargo (GOV CGO)&quot; )), 
-NOT(ISPICKVAL(  SOP_Type__c  , &quot;Governance - Passenger (GOV PAX)&quot; )), 
-NOT(ISPICKVAL(  SOP_Type__c  , &quot;IATA-IATAN ID Cards (IDC)&quot; )), 
-NOT(ISPICKVAL(  SOP_Type__c  , &quot;IBCS&quot; )), 
-NOT(ISPICKVAL(  SOP_Type__c  , &quot;Invoicing &amp; Collection (IC)&quot; )), 
-NOT(ISPICKVAL(  SOP_Type__c  , &quot;ISS Fee Management (IFM)&quot; )), 
-NOT(ISPICKVAL(  SOP_Type__c  , &quot;New ISS Deployment (NID)&quot; )), 
-NOT(ISPICKVAL(  SOP_Type__c  , &quot;Post-Termination Recovery (PTR)&quot; )), 
-NOT(ISPICKVAL(  SOP_Type__c  , &quot;Remittance &amp; Settlement (RS)&quot; ))
-)</errorConditionFormula>
-        <errorDisplayField>SOP_Type__c</errorDisplayField>
-        <errorMessage>Select SOP Type.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Sub_Process_Other</fullName>

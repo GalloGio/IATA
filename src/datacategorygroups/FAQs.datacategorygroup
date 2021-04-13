@@ -5,6 +5,18 @@
         <dataCategory>
             <dataCategory>
                 <dataCategory>
+                    <label>Participation</label>
+                    <name>IATA_Pay_Participation</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>General Information</label>
+                    <name>IATA_Pay_General_Information</name>
+                </dataCategory>
+                <label>IATA Pay</label>
+                <name>IATA_Pay</name>
+            </dataCategory>
+            <dataCategory>
+                <dataCategory>
                     <label>General Information</label>
                     <name>General_Information_Accreditation_IATAN_US</name>
                 </dataCategory>
@@ -1850,6 +1862,30 @@
                 </dataCategory>
                 <label>Weblink</label>
                 <name>Weblink</name>
+            </dataCategory>
+            <dataCategory>
+                <dataCategory>
+                    <label>General Information</label>
+                    <name>General_Information_MRO</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>Payment</label>
+                    <name>Payment_MRO</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>Sign Up / Join</label>
+                    <name>Sign_Up_Join_MRO</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>Technical Issue</label>
+                    <name>Technical_Issue_MRO</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>User Management</label>
+                    <name>User_Management_MRO</name>
+                </dataCategory>
+                <label>MRO SmartHub</label>
+                <name>MRO_SmartHub</name>
             </dataCategory>
             <label>Platforms</label>
             <name>Platforms</name>

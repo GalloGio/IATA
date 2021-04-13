@@ -188,11 +188,11 @@ public with sharing class AMS_XML_Generator {
 		}
 
 		for (Case c : [SELECT Id, OSCAR__c
-					   FROM Case
-					   WHERE RecordTypeId = :AMS_Utils.RECTYPE_OSCARCOMM
-						   AND OSCAR__c IN :changeCodeOscarMap.keySet()
-						   AND (ParentId = null
-								OR Parent.RecordTypeId != :AMS_Utils.RECTYPE_OSCARCOMM)]) {
+					FROM Case
+					WHERE RecordTypeId = :AMS_Utils.RECTYPE_OSCARCOMM
+					AND OSCAR__c IN :changeCodeOscarMap.keySet()
+					AND (ParentId = null
+						OR Parent.RecordTypeId != :AMS_Utils.RECTYPE_OSCARCOMM)]) {
 			changeCodeCaseNumber.put(changeCodeOscarMap.get(c.OSCAR__c), c.Id);
 		}
 
@@ -737,7 +737,7 @@ public with sharing class AMS_XML_Generator {
 		//REFERENCE
 		lAccount = [SELECT Airline_Code__c,A_Code__c,
 					CASS_Number__c,Check_Digit__c,GDS__c,
-					Company_Type__c,C_Code__c,IATACode__c,Id,Location_Type__c,
+					Company_Type__c,C_Code__c,IATACode__c,Old_IATA_Code__c,Id,Location_Type__c,
 					Last_Inspection_Date__c,Last_synchronization__c,
 					License_Number__c,Location_Category__c,Location_Class__c,Name,GDP_Opt_In__c,
 					N_Code__c,Organization_Last_Change_Date__c,
@@ -1283,7 +1283,6 @@ public with sharing class AMS_XML_Generator {
 						}
 					}
 					if(lEmployee.size() > 0){
-
 						List<AMS_Account_Role__c> lEmpXML = mAg_VS_Employees.get(ag.Id);
 
 						if(lEmpXML == Null){    //to avoid Null value
@@ -1858,6 +1857,15 @@ public with sharing class AMS_XML_Generator {
 			getElementNode(agencyNode, 'iep_status',agency.ANG_IEP_Status_FF__c);
 			getElementNode(agencyNode, 'segmentation',agency.Segmentation__c);
 			getElementNode(agencyNode, 'purge_code',agency.Purge_Flag__c ? 'true' : 'false');
+			if(!agency.Purge_Flag__c){
+				getElementNode(agencyNode, 'iatacode_purged',null);
+			}else if( agency.Old_IATA_Code__c != null
+					&& agency.Old_IATA_Code__c.substring(0,1) == 'P'
+					&& agency.Old_IATA_Code__c.substring(agency.Old_IATA_Code__c.length() - 1) == '_'){
+				getElementNode(agencyNode, 'iatacode_purged',agency.Old_IATA_Code__c+agency.IATACode__c);
+			}else{
+				getElementNode(agencyNode, 'iatacode_purged',agency.IATACode__c);
+			}
 			getElementNode(agencyNode, 'is_branch_abroad',agency.Is_Branch_Abroad__c);
 
 
@@ -2161,9 +2169,7 @@ public with sharing class AMS_XML_Generator {
 			lOrdered.addAll(M.keySet());
 
 			lOrdered.sort(); //Order fields in order to be consisted on all environments and to match the order of the XSD
-
 			for (String f : lOrdered){
-
 				displayFieldName = f;
 
 
@@ -2172,7 +2178,6 @@ public with sharing class AMS_XML_Generator {
 
 				String sToExclude = f;
 				sToExclude = sToExclude.toLowerCase();
-
 
 				//validate if the field is on the exclude list and also on the include list
 				if(!sFieldsToExclude.contains(sToExclude) && sFieldsToInclude.contains(sToInclude)){
@@ -2262,7 +2267,13 @@ public with sharing class AMS_XML_Generator {
 										auxNode.addTextNode(getPersonLanguageOfCorrespondence(String.valueOf(obj.get(f) ) ) );
 
 									}else{
-										auxNode.addTextNode(String.valueOf(obj.get(f) ) );
+										if(sObjectName == 'AMS_Account_Role__c' && displayFieldName.equalsIgnoreCase('percentage')){
+											Decimal auxPercentage = (Decimal)obj.get(f);
+											auxPercentage = auxPercentage.SetScale(2);
+											auxNode.addTextNode(String.valueOf(String.valueOf(auxPercentage)));
+										}else{
+											auxNode.addTextNode(String.valueOf(obj.get(f) ) );
+										}
 									}
 								}
 
