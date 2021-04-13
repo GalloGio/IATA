@@ -118,20 +118,27 @@ export default class PortalServicesInnovationHubDetailHeader extends LightningEl
             this.headerFields = result;
 
             if(this.headerFields != null){
-                this.websiteUrl = this.headerFields.Website__c;
-                this.facebookUrl  = this.headerFields.Facebook__c;
-                this.instagramUrl = this.headerFields.Instagram__c;
-                this.twitterUrl   = this.headerFields.Twitter__c;
-                this.linkedInUrl  = this.headerFields.LinkedIn__c;
-                this.gitHubUrl    = this.headerFields.GitHub__c;
-                this.telegramUrl  = this.headerFields.Telegram__c;
+                this.websiteUrl = this.absoluteLink(this.headerFields.Website__c);
+                this.facebookUrl = this.absoluteLink(this.headerFields.Facebook__c); 
+                this.instagramUrl = this.absoluteLink(this.headerFields.Instagram__c);
+                this.twitterUrl = this.absoluteLink(this.headerFields.Twitter__c);
+                this.linkedInUrl = this.absoluteLink(this.headerFields.LinkedIn__c);
+                this.gitHubUrl = this.absoluteLink(this.headerFields.GitHub__c);
+                this.telegramUrl  = this.absoluteLink(this.headerFields.Telegram__c);
             }
 
             this.loadingContent = false;
 
         });
-        
 
+    }
+
+    absoluteLink(field){
+        if(!field.startsWith('http')){   
+            return 'http://' + field; 
+        }
+
+        return field;
     }
 
 }
