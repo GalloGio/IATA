@@ -260,7 +260,7 @@ public without sharing class IGOMNotificationUtil {
 	@AuraEnabled
 	public static void sendManualNotifications(Id stationId, List<Id> contactDetailIds, String subject, String body) {
 		Map<Id, NotifiableContact> notifiableContactsManual = getStationNotifiableContacts(stationId, IGOMConstants.NOTIFICATION.SEVERITY.MANUAL);
-		
+
 		if(!validateNotifiableContacts(contactDetailIds, notifiableContactsManual)){
 			throw new AuraHandledException(IGOMConstants.ERRORS.CONTACT_DETAILS_NOT_NOTIFIABLE_ERROR);
 		}

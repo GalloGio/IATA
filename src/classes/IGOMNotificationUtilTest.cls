@@ -1,6 +1,9 @@
 @isTest
 private class IGOMNotificationUtilTest {
 
+    private static final String SUBJECT = 'Test subject';
+    private static final String BODY = 'Test body';
+
 	@TestSetup
 	static void makeData() {
 		// Generate stations
@@ -999,4 +1002,54 @@ private class IGOMNotificationUtilTest {
         System.assertEquals('Test name 1', notifiableContacts.get(parentStationContactRoleDetail.Account_Contact_Role__r.Contact__c).stationName);
     }
 
+
+    @isTest
+    private static void testSendManualNotifications_Success(){
+        Id stationId = [SELECT Id FROM IGOM_Account_Role_Detail__c LIMIT 1].Id;
+
+        Set<Id> contactIds = new Set<Id>();
+        Set<Id> contactRoleIds = new Set<Id>();
+        for(IGOM_Contact_Role_Detail__c contactRole : [SELECT Id, Account_Contact_Role__r.Contact__c
+         FROM IGOM_Contact_Role_Detail__c 
+         WHERE Account_Role_Detail__c = :stationId AND (Role__c = :IGOMConstants.ROLES.ADMIN OR Role__c = :IGOMConstants.ROLES.ACKNOWLEDGER)]){
+           contactIds.add(contactRole.Account_Contact_Role__r.Contact__c);
+           contactRoleIds.add(contactRole.Id);
+        }
+        
+        Test.startTest();
+        IGOMNotificationUtil.sendManualNotifications(stationId, new List<Id>(contactIds), SUBJECT, BODY);
+        Test.stopTest();
+
+        List<IGOM_Contact_Role_Procedure_Compliance__c> notifications = [SELECT Id, Notification_Subject__c, Notification_Body__c FROM IGOM_Contact_Role_Procedure_Compliance__c
+         WHERE IGOM_Contact_Role_Detail__c IN :contactRoleIds AND Severity__c = :IGOMConstants.NOTIFICATION.SEVERITY.MANUAL];
+        
+        System.assertEquals(contactIds.size(), notifications.size());
+        for(IGOM_Contact_Role_Procedure_Compliance__c notif : notifications){
+            System.assertEquals(SUBJECT, notif.Notification_Subject__c);
+            System.assertEquals(BODY, notif.Notification_Body__c);
+        }
+    }
+
+    @isTest
+    private static void testSendManualNotifications_Error(){
+        Id stationId = [SELECT Id FROM IGOM_Account_Role_Detail__c LIMIT 1].Id;
+		Map<Id, IGOMNotificationUtil.NotifiableContact> notifiableContactsManual = IGOMNotificationUtil.getStationNotifiableContacts(stationId, IGOMConstants.NOTIFICATION.SEVERITY.MANUAL);
+
+        Set<Id> contactIds = new Set<Id>();
+        for(IGOM_Contact_Role_Detail__c contactRole : [SELECT Id, Account_Contact_Role__r.Contact__c
+         FROM IGOM_Contact_Role_Detail__c 
+         WHERE Account_Role_Detail__c = :stationId AND Account_Contact_Role__r.Contact__c NOT IN :notifiableContactsManual.keySet()]){
+           contactIds.add(contactRole.Account_Contact_Role__r.Contact__c);
+        }
+        
+        Test.startTest();
+        try{
+            IGOMNotificationUtil.sendManualNotifications(stationId, new List<Id>(contactIds), SUBJECT, BODY);
+        } catch (AuraHandledException error) {
+            System.assert(true);
+        } catch (Exception error) {
+            System.assert(false, 'Unexpected exception catched ' + error);
+        }
+        Test.stopTest();
+    }
 }
