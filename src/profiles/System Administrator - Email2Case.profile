@@ -64122,6 +64122,9 @@ Also used as default WF, Lead, Case</description>
         <layout>Priority_Mapping__c-Priority Mapping Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>ProcessException-Process Exception Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Product2-Product Layout - For everyone</layout>
     </layoutAssignments>
     <layoutAssignments>
