@@ -64049,6 +64049,9 @@
         <layout>Priority_Mapping__c-Priority Mapping Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>ProcessException-Process Exception Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Product2-Product Layout - NewGen Accreditation</layout>
         <recordType>Product2.NewGen_Accreditation</recordType>
     </layoutAssignments>

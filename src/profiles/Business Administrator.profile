@@ -64104,6 +64104,9 @@
         <layout>Priority_Mapping__c-Priority Mapping Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>ProcessException-Process Exception Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Product2-Product Layout - ICCS</layout>
     </layoutAssignments>
     <layoutAssignments>

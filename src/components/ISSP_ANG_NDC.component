@@ -1,11 +1,12 @@
 <apex:component>
     <apex:attribute name="validationError" description="Error on form." type="Boolean" required="true"/>
     <apex:attribute name="ndcValue" type="String" description="NDC Value From Page" required="true"/>
+    <apex:attribute name="applyNewStyle" type="boolean" description="NDC Value From Page" default="false"/>
 
     <apex:pageBlockSection collapsible="false" columns="1">
-        <apex:pageblocksectionitem >
-            <apex:outputlabel value="{!$Label.ISSP_NDC_Transaction_Question} *" />
-            <apex:selectradio style="width: 100px;" value="{!ndcValue}" id="ndcQuestion">
+        <apex:pageblocksectionitem labelStyle="{!IF(applyNewStyle, 'width:50%', '')}">
+            <apex:outputlabel value="{!$Label.ISSP_NDC_Transaction_Question} *" styleClass="ndcQuestionLabel"/>
+            <apex:selectradio style="width: 100px;" value="{!ndcValue}" id="ndcQuestion" styleClass="moveMe">
                 <apex:selectoption itemvalue="Yes" itemlabel="{!$Label.ISSP_Yes}" />
                 <apex:selectoption itemvalue="No" itemlabel="{!$Label.ISSP_No}" />
             </apex:selectradio>
@@ -13,7 +14,7 @@
 	</apex:pageBlockSection>
 	
 	<apex:pageBlockSection collapsible="false" columns="1">
-		<apex:pageblocksectionitem >
+		<apex:pageblocksectionitem labelStyle="{!IF(applyNewStyle, 'width:50%', '')}">
 			<apex:outputlabel value="{!$Label.ISSP_NDC_Transaction_Info}" />
 			<apex:inputHidden id="ndc-empty"></apex:inputHidden>
 		</apex:pageblocksectionitem>
