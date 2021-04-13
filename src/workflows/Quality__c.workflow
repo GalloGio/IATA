@@ -2750,20 +2750,7 @@
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <criteriaItems>
-            <field>Quality__c.DA_Closure_Date__c</field>
-            <operation>lessOrEqual</operation>
-            <value>TODAY</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Quality__c.DA_Closure_Date__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Quality__c.Status__c</field>
-            <operation>notEqual</operation>
-            <value>Closed,Closed - Rejected,Expired,Closed - Error</value>
-        </criteriaItems>
+        <formula>AND(   ISCHANGED(Status__c),   OR(     ISPICKVAL(Status__c,&apos;Closed&apos;),     ISPICKVAL(Status__c,&apos;Closed - Rejected&apos;),     ISPICKVAL(Status__c,&apos;Closed - Error&apos;),     ISPICKVAL(Status__c,&apos;Closed - Extended&apos;),     ISPICKVAL(Status__c,&apos;Closed - Not required&apos;),     ISPICKVAL(Status__c,&apos;Closed - Expired&apos;),     ISPICKVAL(Status__c,&apos;Expired&apos;)   ) )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>

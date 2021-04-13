@@ -2894,13 +2894,6 @@ ISPICKVAL(Card_Status__c, &apos;Cancelled&apos;)
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <startsWith>Vowel</startsWith>
-    <validationRules>
-        <fullName>IDCard_DontSaveIfSenttoAIMS</fullName>
-        <active>false</active>
-        <description>Dont allow the user to modify if the card is already sent to AIMS</description>
-        <errorConditionFormula>AND(PRIORVALUE(MustSyncWithAIMS__c) == true, NOT(CONTAINS($Profile.Name ,&apos;System Administrator&apos;) ) ,NOT(CONTAINS($Profile.Name , &apos;idcard portal profile&apos; )))</errorConditionFormula>
-        <errorMessage>Card has been already sent to AIMS. It can not be modified anymore.</errorMessage>
-    </validationRules>
     <visibility>Public</visibility>
     <webLinks>
         <fullName>Cancel_Card</fullName>

@@ -782,21 +782,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>unbabelapi__Agent_Brand__c</field>
-            <table>User</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>unbabelapi__Unbabel_Known_Languages__c</field>
-            <table>User</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>unbabelapi__Unbabel_Language__c</field>
-            <table>User</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>Is_Account_s_sector_General_Public__c</field>
             <table>User</table>
         </columns>
