@@ -1,7 +1,7 @@
 import { LightningElement,track, api } from 'lwc';
 
 //import apex methods
-import getLabelPicklistValuesAndSelected from '@salesforce/apex/PortalServicesInnovationHubCtrl.getLabelPicklistValuesAndSelected';
+import getLabelPicklistValuesAndSelected from '@salesforce/apex/PortalServicesStartupHotlistCtrl.getLabelPicklistValuesAndSelected';
 
 export default class PortalRecordViewEditMultipicklistSelector extends LightningElement {
 

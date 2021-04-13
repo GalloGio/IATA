@@ -1,5 +1,5 @@
 import { LightningElement, api, track } from 'lwc';
-import getLogoUrl from '@salesforce/apex/PortalServicesInnovationHubCtrl.getProviderImgURLById';
+import getLogoUrl from '@salesforce/apex/PortalServicesStartupHotlistCtrl.getProviderImgURLById';
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
 export default class PortalRecordViewEditLogo extends LightningElement {

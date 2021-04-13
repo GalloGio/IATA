@@ -122,7 +122,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     @track otherPhone;
     @track providerId;
     @track logoId;
-    @track IHubListFields;
+    @track SHListFields;
 
     timeout = null;
 

@@ -155,7 +155,7 @@
                             </template>                           
 
                             <template if:true={field.isRecentNews}>
-                                <div key={field.fieldName} class="ihub text-small slds-col slds-size_1-of-1 slds-medium-size_2-of-2 slds-large-size_2-of-2">
+                                <div key={field.fieldName} class="SH text-small slds-col slds-size_1-of-1 slds-medium-size_2-of-2 slds-large-size_2-of-2">
                                     <lightning-output-field variant='label-hidden' class="textValue removeLinks"
                                         field-name={field.fieldName}>
                                     </lightning-output-field>
@@ -163,7 +163,7 @@
                             </template>
 
                             <template if:true={field.isBold}>
-                                <div key={field.fieldName} class="ihub text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
+                                <div key={field.fieldName} class="SH text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
                                     <lightning-output-field class="valueBold labelValue textValue removeLinks"
                                         field-name={field.fieldName}>
                                     </lightning-output-field>
@@ -171,7 +171,7 @@
                             </template>
 
                             <template if:true={field.isFullColumn}>
-                                <div key={field.fieldName} class="ihub text-small slds-col slds-size_1-of-1 slds-medium-size_2-of-2 slds-large-size_2-of-2">
+                                <div key={field.fieldName} class="SH text-small slds-col slds-size_1-of-1 slds-medium-size_2-of-2 slds-large-size_2-of-2">
                                     <lightning-output-field class="labelValue textValue removeLinks"
                                         field-name={field.fieldName}>
                                     </lightning-output-field>
@@ -179,7 +179,7 @@
                             </template>
 
                             <template if:true={field.isLogo}>
-                                <div key={providerId} class="text-small slds-col slds-size_1-of-1 slds-medium-size_2-of-2 slds-large-size_2-of-2 ihubMarginLogo">
+                                <div key={providerId} class="text-small slds-col slds-size_1-of-1 slds-medium-size_2-of-2 slds-large-size_2-of-2 SHMarginLogo">
                                     <c-portal-record-view-edit-logo key={providerId} provider-id-api={providerId}></c-portal-record-view-edit-logo>
                                 </div>
                             </template>
@@ -235,7 +235,7 @@
                                                                         <lightning-output-field class="labelValue textValue" field-name={field.fieldName}></lightning-output-field>      
                                                                     </div>
                                                                     <div if:true={isIHUB}>
-                                                                        <lightning-output-field class="ihub textValue" field-name={field.fieldName}></lightning-output-field>      
+                                                                        <lightning-output-field class="SH textValue" field-name={field.fieldName}></lightning-output-field>      
                                                                     </div>
                                                                 </template>
                                                                 <!--WMO-699 - ACAMBAS: End -->
