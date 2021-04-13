@@ -5,6 +5,18 @@
         <dataCategory>
             <dataCategory>
                 <dataCategory>
+                    <label>Participation</label>
+                    <name>IATA_Pay_Participation</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>General Information</label>
+                    <name>IATA_Pay_General_Information</name>
+                </dataCategory>
+                <label>IATA Pay</label>
+                <name>IATA_Pay</name>
+            </dataCategory>
+            <dataCategory>
+                <dataCategory>
                     <label>General Information</label>
                     <name>General_Information_Accreditation_IATAN_US</name>
                 </dataCategory>

@@ -8657,14 +8657,14 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - Area</shortDescription>
-        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,iiNet,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration, TASF, E&amp;F Services,E&amp;F Operations,Easy Pay,NewGen ISS,E&amp;F,SIS,ICH,iiNet,AirportIS,SIS Dispute/Correspondence,SIS e-Invoicing,SIS Fees,SIS File Submission,SIS Invoice Creation,SIS ISPG,SIS Receive invoices/Files,SIS Release Notes,SIS Reports,SIS User Guide,CargoIS,Direct Data Solutions (DDS),GAP,MarketIS,PaxIS,Airline Joining,Airline Leaving,New application - forms, procedures, fees,Agency Risk Management,Airline and Location Coding,ICCS,IMX</value>
+        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,iiNet,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration, TASF, E&amp;F Services,E&amp;F Operations,Easy Pay,NewGen ISS,E&amp;F,SIS,ICH,iiNet,AirportIS,SIS Dispute/Correspondence,SIS e-Invoicing,SIS Fees,SIS File Submission,SIS Invoice Creation,SIS ISPG,SIS Receive invoices/Files,SIS Release Notes,SIS Reports,SIS User Guide,CargoIS,Direct Data Solutions (DDS),GAP,MarketIS,PaxIS,Airline Joining,Airline Leaving,New application - forms, procedures, fees,Agency Risk Management,Airline and Location Coding,ICCS,IMX,IATA Pay</value>
     </labels>
     <labels>
         <fullName>CaseValidation_Area2</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - Area2</shortDescription>
-        <value>Instructor-led Training (individual),	Instructor-led Training (groups),IATAN,ID Card,CheckACode,eBroadcast,Global Agency Directory,Travel Agency Data Products,Digital ID Card (Mobile App),IATA AgentExperience,Global System Solution,Weblink,NDClink,Treasury Dashboard,TIMATIC,Publications,TACT, YMQ Publications,Distance Learning,Agency Management,Transparency in Payments (TIP), New BSPlink,IDX - Incident Data Exchange</value>
+        <value>Instructor-led Training (individual),	Instructor-led Training (groups),IATAN,ID Card,CheckACode,eBroadcast,Global Agency Directory,Travel Agency Data Products,Digital ID Card (Mobile App),IATA AgentExperience,Global System Solution,Weblink,NDClink,Treasury Dashboard,TIMATIC,Publications,TACT, YMQ Publications,Distance Learning,Agency Management,Transparency in Payments (TIP), New BSPlink,IDX - Incident Data Exchange, MRO SmartHub, IATA Travel Pass</value>
     </labels>
     <labels>
         <fullName>CaseValidation_InDepthArea</fullName>
@@ -8707,6 +8707,14 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <protected>false</protected>
         <shortDescription>Case Classification</shortDescription>
         <value>Case Classification</value>
+    </labels>
+    <labels>
+        <fullName>Case_Closed_For_DGR</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case Closed For DGR</shortDescription>
+        <value>This case has been resolved, Please create a new query if you would like to contact us.</value>
     </labels>
     <labels>
         <fullName>Case_Closure_Error_Cannot_Close</fullName>
@@ -21844,6 +21852,14 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>You can upload additional files to support your accreditation application or notice of change at any time.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Case_Attach_Description_DGR</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Case Attach Description DGR</shortDescription>
+        <value>Please upload the documents to confirm the validity of your Certification</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Case_Attach_Limit</fullName>
         <categories>ISSP, Portal, AMS</categories>
         <language>en_US</language>
@@ -31371,6 +31387,22 @@ Can you please confirm which country you&apos;ve previously received support for
         <value>Product cannot be requested: please note that IATA certificates is only available to IATA accredited Passenger and Cargo Agents, that currently are approved. Terminated or defaulted agents under those groups, or other agent types like TIDS and CASS associates cannot request a certificate.</value>
     </labels>
     <labels>
+        <fullName>ISSP_Certificate_is_being_uploaded</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Certificate is being uploaded</shortDescription>
+        <value>Certificate is being uploaded</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Certificate_was_uploaded_satisfactory</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Certificate was uploaded satisfactory</shortDescription>
+        <value>Certificate was uploaded satisfactory</value>
+    </labels>
+    <labels>
         <fullName>ISSP_Certifications</fullName>
         <categories>S11, Portal</categories>
         <language>en_US</language>
@@ -40422,6 +40454,32 @@ CNS Customer Services</value>
         <value>Error in the system: cannot open the selected account</value>
     </labels>
     <labels>
+        <fullName>ISSP_certificate_Submit</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP certificate Submit</shortDescription>
+        <value>Submit</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_certificate_expiry_date</fullName>
+        <categories>ISSP</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP certificate expiry date</shortDescription>
+        <value>Please take note that the Expiry date must be minimun 90 days from today</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_certificate_with_the_same</fullName>
+        <categories>ISSP, AMS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP certificate with the same</shortDescription>
+        <value>Please take note:&lt;/br&gt;
+We are unable to accept your DGR update as the same information has been updated in our record.&lt;/br&gt;
+Please amend with new DGR information.</value>
+    </labels>
+    <labels>
         <fullName>ISSP_characters_new_password</fullName>
         <categories>ISSP_ChangePassword</categories>
         <language>en_US</language>
@@ -45793,13 +45851,6 @@ respect to decisions and/or actions affecting Agents and applicants under the IA
         <value>Reset your password?</value>
     </labels>
     <labels>
-        <fullName>Resource_Center_Service_Description</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Resource Center Service Description</shortDescription>
-        <value>Through the Resource Center, you will gain access to all required documentation from IATA. The Resource Center contains key information for agencies interested in becoming IATA Accredited.</value>
-    </labels>
-    <labels>
         <fullName>Response_message</fullName>
         <categories>TransferAttachmentToCase</categories>
         <language>en_US</language>
@@ -49957,7 +50008,15 @@ ONE Source is the industry platform for validated aviation capability and infras
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>icg manage documents</shortDescription>
-        <value>Manage Documents</value>
+        <value>Supporting Documentation</value>
+    </labels>
+    <labels>
+        <fullName>icg_manage_obligations_documents</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg manage documents</shortDescription>
+        <value>Obligation Documentation Link</value>
     </labels>
     <labels>
         <fullName>icg_manage_photos</fullName>
@@ -49965,7 +50024,7 @@ ONE Source is the industry platform for validated aviation capability and infras
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>icg manage photos</shortDescription>
-        <value>Manage Photos</value>
+        <value>Supporting Documentation</value>
     </labels>
     <labels>
         <fullName>icg_manage_remote_validations</fullName>

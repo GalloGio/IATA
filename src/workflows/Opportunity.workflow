@@ -20,7 +20,7 @@
     </alerts>
     <alerts>
         <fullName>MACS_alert_of_new_deals_over_10K_non_rcrm</fullName>
-        <ccEmails>rubioj@iata.org, walkers@iata.org, OdeleJ@iata.org, CountrymanagersAME@iata.org</ccEmails>
+        <ccEmails>OdeleJ@iata.org, CountrymanagersAME@iata.org, albakri@iata.org</ccEmails>
         <description>MACS alert of new deals over 10K (non rcrm)</description>
         <protected>false</protected>
         <recipients>
@@ -227,7 +227,218 @@
     </alerts>
     <alerts>
         <fullName>Marketingalertofnewdeals</fullName>
-        <description>MACS alert of new deals over 10K</description>
+        <ccEmails>OdeleJ@iata.org,albakri@iata.org</ccEmails>
+        <description>MACS alert of new deals over 10K - TACT excluded</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <recipients>
+            <recipient>agouzoulm@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>alicia@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>astridgec@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>atakee@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>barrocasb@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>blondeelm@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>bradshawde@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>bretonc@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>brissetc@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>burkem@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>chanda@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>chanj@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>debonol2@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>deghelderc@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>dehiav@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>dursune@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>eldiabm@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>gennaouip@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>greenwayt@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>hanj@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>heinickem@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>herrerak@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>hoychin@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>itania@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>jiangy@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>jimenezw@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>karanjac@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>kikanor@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>krishnanh@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>legerf@iata.org.prod</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>lis@iata.org.prod</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>loupasisv2@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>luolu@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>malika1@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>marafonc@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>mattal@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>mccorleys@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>murrayhaydena@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>nitkowskit@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>padillab@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>pellegrint@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>raickovics@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>schaaft@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>shemid2@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>siouffis@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>solorzanoj@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>tomalaj@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>wangw@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>wattc@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>zhangln@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>MarketingPAX/MMAlertonClosedDeals</template>
+    </alerts>
+    <alerts>
+        <fullName>Marketingalertofnewdeals_TACT</fullName>
+        <description>MACS alert of new deals over 10K - TACT</description>
         <protected>false</protected>
         <recipients>
             <type>owner</type>
@@ -246,6 +457,10 @@
         </recipients>
         <recipients>
             <recipient>hartonga@iata.org</recipient>
+            <type>user</type>
+        </recipients>
+        <recipients>
+            <recipient>itania@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -514,13 +729,24 @@
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>MACS - Close Deal Notification %28RCRM%29</fullName>
+        <fullName>MACS - Close Deal Notification %28RCRM - TACT excluded%29</fullName>
         <actions>
             <name>Marketingalertofnewdeals</name>
             <type>Alert</type>
         </actions>
         <active>true</active>
-        <description>Notifications sent to sales and marketing about closed deals over US$ 10,000</description>
+        <description>Notifications sent to sales and marketing about closed deals over US$ 10,000 - TACT product family excluded</description>
+        <formula>AND(Amount &gt;= 10000, ISPICKVAL(StageName,&apos;7. Closed Sales / Sold&apos;), RecordType.Name = &quot;RCRM Opportunity&quot;,  Block_alerts_on_updates__c = false, NOT(ISPICKVAL(Product_Family__c,&apos;TACT&apos;)))</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
+        <fullName>MACS - Close Deal Notification %28RCRM - TACT%29</fullName>
+        <actions>
+            <name>Marketingalertofnewdeals_TACT</name>
+            <type>Alert</type>
+        </actions>
+        <active>true</active>
+        <description>Notifications sent to sales and marketing about closed deals over US$ 10,000 for TACT product family</description>
         <formula>AND(Amount &gt;= 10000, ISPICKVAL(StageName,&apos;7. Closed Sales / Sold&apos;), RecordType.Name = &quot;RCRM Opportunity&quot;,  Block_alerts_on_updates__c = false, ISPICKVAL(Product_Family__c,&apos;TACT&apos;))</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>

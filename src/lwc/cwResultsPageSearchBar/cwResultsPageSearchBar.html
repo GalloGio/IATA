@@ -146,9 +146,11 @@
             </template>
         </div>
     </div>
-    <div class="panel-filter-result"><button class="collapsible active">
-            <label class="filters-label">{label.station_types}</label><img src={chevronup}
-                class="expand-collapse-filter" /></button>
+    <div class="panel-filter-result">
+        <button class="collapsible active">
+            <label class="filters-label">{label.station_types}</label>
+            <img src={chevronup} class="expand-collapse-filter" />
+        </button>
         <div class="content max-height-100">
             <template for:each={companyTypes} for:item="item">
                 <template if:true={item.enabled}>

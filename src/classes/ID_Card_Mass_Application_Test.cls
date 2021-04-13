@@ -211,9 +211,6 @@ public class  ID_Card_Mass_Application_Test {
 
 	}
 
-
-
-
 	 static testMethod void testManualThings(){
 		initData();
 		test.startTest();
@@ -284,5 +281,39 @@ public class  ID_Card_Mass_Application_Test {
 
 	 }
 
+	 static testMethod void testPaymentDetailsPage(){
+		initData();
+		test.startTest();
+		//If contact Id is not passed it should not find any contact
+		IDCard_AdmPendingOpsController ctrl = new IDCard_AdmPendingOpsController();
+		Id rtidca = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Mass_Order_Application');
 
+
+		// now it should work
+		Test.setCurrentPage(new PageReference('IDCard_AdmPendingOps'));
+		List<Cookie> cookies = new List<Cookie>();
+		cookies.add(new Cookie(IDCardUtil.PARAM_IATACODE,'76543210',null,-1,false));
+		cookies.add(new Cookie(IDCardUtil.PARAM_VER,'111',null,-1,false));
+		ApexPages.currentPage().setCookies(cookies);
+		ctrl = new IDCard_AdmPendingOpsController();
+		system.assertNotEquals(null,ApexPages.currentPage().getCookies().get(IDCardUtil.PARAM_IATACODE));
+		ctrl.validateAllApplication();
+
+		ctrl.createMassUpdateIdCardApplication();
+		ctrl.paymentMode = 'credit card';
+		ctrl.createMassUpdateIdCardApplication();
+
+
+		ID_Card_Application__c massUpdateApp = [select Id, Application_Status__c from ID_Card_Application__c where RecordTypeId = :rtidca limit 1];
+		massUpdateApp.Application_Status__c = 'Paid';
+		update massUpdateApp;
+
+		PageReference pageRef = Page.IDCard_Refund;
+		pageRef.getParameters().put('Id', massUpdateApp.id);
+		Test.setCurrentPage(pageRef);
+		
+		IDCard_DetailsAdmPaymentsCtrl ctrl2 = new IDCard_DetailsAdmPaymentsCtrl();
+		
+		//system.assertNotEquals(null,ApexPages.currentPage().getCookies().get(IDCardUtil.PARAM_IATACODE));
+	}
 }

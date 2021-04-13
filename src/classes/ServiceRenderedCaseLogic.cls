@@ -446,9 +446,11 @@ public class ServiceRenderedCaseLogic {
 			if  (!setSRAccountIds.isEmpty()) {
 					// for these accounts, search for the airline HQ (might be the account itself)
 					map<Id, Account> mapHQAccountsPerId = new map<Id, Account>();
-					list<Account> lstTriggerAccountsAndParents = [SELECT Id, ParentId, RecordType.DeveloperName, Airline_BSP_Participations__c, Airline_CASS_Participations__c,
-																		 Parent.Airline_BSP_Participations__c, Parent.Airline_CASS_Participations__c, Parent.RecordType.DeveloperName, Airline_PASS_Participations__c
-																	FROM Account WHERE Id IN :setSRAccountIds];
+					list<Account> lstTriggerAccountsAndParents =
+						[SELECT Id, ParentId, RecordType.DeveloperName, Airline_BSP_Participations__c, Airline_CASS_Participations__c,
+						Parent.Airline_BSP_Participations__c, Parent.Airline_CASS_Participations__c, Parent.RecordType.DeveloperName,
+						Airline_PASS_Participations__c, Airline_IATAPay_Participations__c
+						FROM Account WHERE Id IN :setSRAccountIds];
 
 					for (Account a : lstTriggerAccountsAndParents) {
 						if (a.RecordType.DeveloperName == 'IATA_Airline') {
@@ -472,11 +474,13 @@ public class ServiceRenderedCaseLogic {
 							a.Airline_BSP_Participations__c = 0;
 							a.Airline_CASS_Participations__c = 0;
 							a.Airline_PASS_Participations__c = 0;
+							a.Airline_IATAPay_Participations__c = 0;
 					}
 
 					set<String> setCASSParticipationNames = new set<String>{'CASS Participation', 'CASS Representation', 'CASS via GSSA', 'CASS Export Direct Participation', 'CASS Import Direct Participation', 'CASS Export via GSSA', 'CASS Import via GHA'};
 					set<String> setBSPParticipationNames = new set<String>{'BSP Participation', 'BSP via IBCS'};
 					set<String> setPASSParticipationNames = new set<String>{AMS_Utils.passAirlineCaseReason, AMS_Utils.passCountryCaseReason,AMS_Utils.passAggregatorCaseReason};
+					set<String> setIATAPayParticipationNames = new set<String>{AMS_Utils.iataPayParticipation, AMS_Utils.iataPayCountryAggregator};
 
 					// count the participations by type
 					for (Services_Rendered__c sr : lstParticipations) {
@@ -494,6 +498,9 @@ public class ServiceRenderedCaseLogic {
 							}
 							if (setPASSParticipationNames.contains(sr.Services_Rendered_Type__c)) {
 								mapHQAccountsPerId.get(HQAccountId).Airline_PASS_Participations__c  += 1;
+							}
+							if (setIATAPayParticipationNames.contains(sr.Services_Rendered_Type__c)) {
+								mapHQAccountsPerId.get(HQAccountId).Airline_IATAPay_Participations__c  += 1;
 							}
 					}
 

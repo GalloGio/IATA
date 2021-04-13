@@ -198,7 +198,6 @@ private class ISSP_AMS_Accreditation_Test {
 			Email__c='email@email.com'
 		);
 
-
 		insert new List<Account>{parentAccountTravel, parentAccountCargo, optOutAcc, parentAccIcc, basicParent, mcParentAcc, mcbranchAcc, cashParentAcc,accountchildAccreditation,accountParentAccreditation};
 
 		Account childAccIcc = new Account(
@@ -998,6 +997,7 @@ private class ISSP_AMS_Accreditation_Test {
 			ctrl.newform.Accept_terms_and_conditions__c = true;
 
 			ctrl.goToFinalStep();
+			ctrl.getOwnersFromMainLegalEntity();
 		}
 	}
 
@@ -3010,6 +3010,8 @@ Location_Type__c = 'BR');
 			ctrl.newform.Agent_Type__c = AMS_UTILS.NEWFORM_AGENTTYPE_NO_CASH;
 
 			Pagereference pr1 = ctrl.goToFinalStep();
+			Pagereference saveAndNavigateToOwnersForm = ctrl.saveAndNavigateToOwnersForm();
+			Pagereference checkLegalStatus = ctrl.checkLegalStatus();
 
 			ApexPages.currentPage().getParameters().put('caseId', testCase2.Id);
 			ISSP_AMS_Accreditation ctrl2 = new ISSP_AMS_Accreditation();
@@ -3150,6 +3152,7 @@ Top_Parent__c = parent.Id);
 
 			ctrl.newForm.Agency_Codes_Concerned__c = 'a;b;c';
 			List<SelectOption> lsoAgencyCodesConcerned = ctrl.getAgencyCodesConcerned();
+			Boolean boolMultipleCountriesSelected = ctrl.multipleCountriesSelected;
 
 			ctrl.updateNoCAgencyLegalDetails();
 		}
@@ -4081,7 +4084,8 @@ Location_Type__c = 'BR');
 	private static User fetchUser(String email) {
 		return [SELECT Id, Alias, Email, Firstname, Lastname, Languagelocalekey, Localesidkey, ContactId, FederationIdentifier, Timezonesidkey,
 					Username, PortalRole, CommunityNickname, ProfileId, IsActive, Contact.Salutation, Contact.FirstName,
-					Contact.LastName, Contact.Phone, Contact.Email, Contact.Name, Contact.Title, Contact.Account.Id
+					Contact.LastName, Contact.Phone, Contact.Email, Contact.Name, Contact.Title, Contact.Account.Id,
+					Contact.Account.Location_class__c, Contact.Account.Sector__c, Contact.Account.Category__c, Contact.Account.GDS__c
 				FROM User
 				WHERE Contact.Email = :email];
 	}
@@ -4181,8 +4185,6 @@ Location_Type__c = 'BR');
 
 			ctrl.newForm.Branch_Office_Phone__c = '123123';
 			ctrl.newForm.Branch_Office_Email__c = 'qwe@qwe.pt';
-			ctrl.newForm.Shipping_City__c = 'City';
-			ctrl.newForm.Shipping_Country__c = 'PORTUGAL';
 			ctrl.newForm.Shipping_ISO_Country__c = fetchCountry('Portugal').Id;
 
 			Date newDate = Date.today();
@@ -4221,6 +4223,9 @@ Location_Type__c = 'BR');
 			ctrl.newForm.IATA_Registered_IATAN_Agent__c = 'No';
 			ctrl.newForm.ISSP_AMS_GDS_with_signed_contract__c = 'Amadeus';
 
+			ctrl.newForm.Shipping_City__c = 'City';
+			ctrl.saveAMSFormAndGoForward();
+			ctrl.newForm.Shipping_Country__c = 'PORTUGAL';
 			ctrl.saveAMSFormAndGoForward();
 		}
 		Test.stopTest();
@@ -4307,7 +4312,6 @@ Location_Type__c = 'BR');
 			ctrl.newCase.IFAP_Country_ISO__c = 'pt';
 			ctrl.mcformCountryISO = 'pt';
 
-			//ctrl.getLegalNameOptions();
 			String hierarchyIsoCodesString = ctrl.hierarchyIsoCodesString;
 
 			ctrl.save();
@@ -4420,6 +4424,7 @@ Location_Type__c = 'BR');
 			aeForms[0].Status__c = 'Completed';
 			aeForms[1].Status__c = 'Completed';
 			aeForms[2].Status__c = 'Completed';
+			aeForms[2].AE_separate_Legal_Entity__c = 'No';
 
 			insert heForm;
 			insert aeForms[0];
@@ -4435,9 +4440,8 @@ Location_Type__c = 'BR');
 
 			ctrl.mcFormIdToDelete = aeForms[2].Id;
 			ctrl.deleteMCForm();
-
 			ctrl.termsAndConditionsMC = true;
-
+			ctrl.getLegalNameOptions();
 			ctrl.submitMultiCountryApplication();
 		}
 		Test.stopTest();
@@ -4547,6 +4551,7 @@ Location_Type__c = 'BR');
 		User mcUser = fetchUser('multicountry@test11.com');
 
 		Account mcAccount = fetchSingleAccount('MultiCountry');
+		mcAccount.Location_Class__c = 'Q';
 		mcAccount.IATACode__c = '98989898';
 		mcAccount.Status__c = 'Approved';
 
@@ -4999,6 +5004,8 @@ Location_Type__c = 'BR');
 			ctrl.Previous();
 			ctrl.Next();
 			ctrl.selectAllCountries();
+			ctrl.allCountriesSelected = true;
+			ctrl.selectAllCountries();
 
 			Test.stopTest();
 		}
@@ -5251,4 +5258,91 @@ Location_Type__c = 'BR');
 
 	}
 
+	@isTest static void ISSP_AMS_Accreditation_TIDS() {
+		User user = fetchUser('parenttravel@test11.com');
+
+		Account account = user.Contact.Account;
+		account.Location_class__c = AMS_Utils.LC_TIDS;
+		account.Sector__c = AMS_Utils.SECTOR_PASSENGER;
+		account.Category__c = AMS_Utils.CATEGORY_TIDS;
+		account.GDS__c = 'ABAC;AGTD;AXSS';
+		update account;
+
+		Id rtOwnership = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
+		AMS_Account_Role__c ar1 = new AMS_Account_Role__c(
+			Account__c = user.Contact.Account.Id,
+			Employee_Name__c = 'test1',
+			Employee_type__c = 'CL',
+			Owner_Name__c = 'owner test1',
+			Percentage__c = 50,
+			Position__c = 'A',
+			Valid__c = true,
+			Termination_Date__c = null,
+			Title__c = 'owner',
+			Owner_Account__c = user.Contact.Account.Id,
+			RecordTypeId = rtOwnership);
+		AMS_Account_Role__c ar2 = new AMS_Account_Role__c(
+			Account__c = user.Contact.Account.Id,
+			Contact__c = user.Contact.Id,
+			Employee_Name__c = 'test2',
+			Employee_type__c = 'CL',
+			Owner_Name__c = 'owner test2',
+			Percentage__c = 50,
+			Position__c = 'B',
+			Valid__c = true,
+			Termination_Date__c = null,
+			Title__c = 'owner',
+			Owner_Account__c = null,
+			RecordTypeId = rtOwnership);
+		list<AMS_Account_Role__c> listAccountRole = new list<AMS_Account_Role__c>{ar1,ar2};
+		insert listAccountRole;
+
+		ISSP_AMS_Accreditation ctrl;
+
+		Test.startTest();
+		System.runAs(user) { //STEP A
+			PageReference pageRef = Page.ISSP_AMS_Accreditation;
+			pageRef.getParameters().put('sectorValue', AMS_Utils.SECTOR_TRAVEL_AGENT);
+			pageRef.getParameters().put('accredType', AMS_Utils.TYPE_HE_ST_CASH);
+			pageRef.getParameters().put('step', '1');
+
+			Test.setCurrentPage(pageRef);
+
+			ctrl = new ISSP_AMS_Accreditation();
+
+			ctrl.getOfficeTypes();
+			ctrl.amsIsGSA = 'NO';
+
+			ctrl.save();
+
+		}
+		Test.stopTest();
+
+		account = [
+			SELECT Id,Name, TradeName__c, BillingStreet, BillingCity, BillingState, IATA_ISO_Country__c, BillingPostalCode, Phone, Mobile__c, Fax, Email__c, Website, VAT_Number__c, Registration_Number__c, License_Number__c
+			FROM Account
+			WHERE Id = :ctrl.con.Account.Id
+		];
+		System.assertEquals(ctrl.newForm.Account_Name__c, account.Name);
+		System.assertEquals(ctrl.newForm.TradeName__c, account.TradeName__c);
+		System.assertEquals(ctrl.newForm.Trade_Name__c, account.TradeName__c);
+		System.assertEquals(ctrl.newForm.Branch_Office_Street_name_number__c, account.BillingStreet);
+		System.assertEquals(ctrl.newForm.Branch_Office_City__c, account.BillingCity);
+		System.assertEquals(ctrl.newForm.Billing_State__c, account.BillingState);
+		System.assertEquals(ctrl.newForm.Branch_Office_Country__c, account.IATA_ISO_Country__c);
+		System.assertEquals(ctrl.newForm.Branch_Office_Postal_code__c, account.BillingPostalCode);
+		System.assertEquals(ctrl.newForm.Branch_Office_Phone__c, account.Phone);
+		System.assertEquals(ctrl.newForm.Mobile__c, account.Mobile__c);
+		System.assertEquals(ctrl.newForm.Branch_Office_FAX__c, account.Fax);
+		System.assertEquals(ctrl.newForm.Branch_Office_Email__c, account.Email__c);
+		System.assertEquals(ctrl.newForm.Website__c, account.Website);
+		System.assertEquals(ctrl.newForm.ISSP_AMS_VAT_Number_Input__c, account.VAT_Number__c);
+		System.assertEquals(ctrl.newForm.ISSP_AMS_Trade_Reg_No__c, account.Registration_Number__c);
+		System.assertEquals(ctrl.newForm.ISSP_AMS_License_No__c, account.License_Number__c);
+		System.assertEquals(ctrl.newForm.ISSP_AMS_GDS_with_signed_contract__c, 'Abacus;Amadeus;Axess');
+		System.assertEquals(ctrl.newForm.Link_agent_name__c, account.Id);
+
+		list<AMS_Accreditation_Contact__c> listContacts = [SELECT Id FROM AMS_Accreditation_Contact__c WHERE AMS_Pax_Accreditation_Form__c = :ctrl.newForm.Id];
+		System.assertEquals(2,listContacts.size());
+	}
 }

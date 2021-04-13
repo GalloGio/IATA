@@ -169,6 +169,7 @@ export default class CwCertificationsManagerContainer extends LightningElement {
 	}
 
 	getFacilityCertifications(recordId,stationRT){
+
 		getFacilityCertifications_({ facilityId: recordId, stationRT: stationRT }).then(data =>{
 			if(data){
 				let dataParsed = JSON.parse(data);
@@ -206,7 +207,7 @@ export default class CwCertificationsManagerContainer extends LightningElement {
 	}
 
 	get isCanSave(){
-		return this.selectedScope === '' ? true : false;
+		return this.selectedScope === ''  ? true : false;
 	}
 
 	get getCertificationName(){
@@ -323,8 +324,9 @@ export default class CwCertificationsManagerContainer extends LightningElement {
 				this.formatedExpireDate = this.getExpirationDateByCertification(this.formatedIssuedDate,selectedCertification[0].Expiration_Period__c);
 			}
 			else{
-				this.scope = []
+				this.scope = this.ceivScope;
 				this.showScope = false;
+				this.scopeToUse = "SFOC_Scope__c";
 			}
 			this.newCertificationId = nextCertiID;
 			this.certificationName = selectedCertification[0].Label__c;

@@ -215,7 +215,7 @@ The Account Role record should be named after the functional capability for whic
         <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MasterDetail</type>
-        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+        <writeRequiresMasterRead>true</writeRequiresMasterRead>
     </fields>
     <fields>
         <fullName>Any_Other_Information__c</fullName>
@@ -730,10 +730,6 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
                 <default>false</default>
             </values>
             <values>
-                <fullName>Resource Center</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Risk Profile and RHC</fullName>
                 <default>false</default>
             </values>
@@ -963,6 +959,10 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
                 <default>false</default>
             </values>
             <values>
+                <fullName>IATA Pay</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>IATA Postal Accounts Settlement System</fullName>
                 <default>false</default>
             </values>
@@ -1052,10 +1052,6 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
             </values>
             <values>
                 <fullName>Paypal</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Resource Center</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1381,10 +1377,6 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
                 <default>false</default>
             </values>
             <values>
-                <fullName>Resource Center</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Risk Profile and RHC</fullName>
                 <default>false</default>
             </values>
@@ -1700,10 +1692,6 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
             </values>
             <values>
                 <fullName>Paypal</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Resource Center</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2032,10 +2020,6 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
                 <default>false</default>
             </values>
             <values>
-                <fullName>Resource Center</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Risk Profile and RHC</fullName>
                 <default>false</default>
             </values>
@@ -2168,13 +2152,6 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
         <errorConditionFormula>AND(RecordType.DeveloperName=&quot;TIP_Payment_Provider&quot;,  Effective_From_Date__c &gt; Effective_To_Date__c )</errorConditionFormula>
         <errorDisplayField>Effective_To_Date__c</errorDisplayField>
         <errorMessage>Effective To Date needs to be greater then Effective From Date</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>Validate_Providers_Accreditation_Date</fullName>
-        <active>false</active>
-        <description>Can’t have active Payment Providers with Effective date From in the future</description>
-        <errorConditionFormula>AND(RecordType.DeveloperName=&quot;TIP_Payment_Provider&quot;, TEXT(Status__c)=&quot;Active&quot;, Effective_From_Date__c&gt;Today())</errorConditionFormula>
-        <errorMessage>Can’t have active Payment Providers with Effective date From in the future</errorMessage>
     </validationRules>
     <visibility>Public</visibility>
     <webLinks>

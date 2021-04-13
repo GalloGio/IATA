@@ -171,6 +171,11 @@
         <label>IATAN Online Services</label>
     </customValue>
     <customValue>
+        <fullName>IATA Pay</fullName>
+        <default>false</default>
+        <label>IATA Pay</label>
+    </customValue>
+    <customValue>
         <fullName>IATA Postal Accounts Settlement System</fullName>
         <default>false</default>
         <label>IATA Postal Accounts Settlement System</label>
@@ -284,11 +289,6 @@
         <fullName>Paypal</fullName>
         <default>false</default>
         <label>Paypal</label>
-    </customValue>
-    <customValue>
-        <fullName>Resource Center</fullName>
-        <default>false</default>
-        <label>Resource Center</label>
     </customValue>
     <customValue>
         <fullName>Risk Profile and RHC</fullName>
