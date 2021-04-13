@@ -367,15 +367,27 @@ private class AMS_OSCARTriggerHandlerTest {
 		insert cse;
 
 		// adding fake metadata for testing
-		Oscar_Promotion__mdt promotion = new Oscar_Promotion__mdt(
-			DeveloperName = 'TIDS_to_GoLite',
+		Oscar_Promotion__mdt promotion1 = new Oscar_Promotion__mdt(
+			DeveloperName = 'TIDS_to_GoLite1',
+			Promotion_Name__c = 'TIDS_to_GoLite1',
 			Oscar_Process__c = 'PROCESS',
 			Start_Date__c = Date.today(),
-			End_Date__c = Date.today()
+			End_Date__c = Date.today(),
+			Other_Conditions__c = ''
 		);
+		Oscar_Promotion__mdt promotion2 = new Oscar_Promotion__mdt(
+			DeveloperName = 'TIDS_to_GoLite2',
+			Promotion_Name__c = 'TIDS_to_GoLite',
+			Oscar_Process__c = 'PROCESS',
+			Start_Date__c = Date.today(),
+			End_Date__c = Date.today(),
+			Other_Conditions__c = 'Account.RecordType.DeveloperName IN (\'IATA_Agency\') AND Account.Location_Class__c IN (\'T\')'
+		);
+
+		list<Oscar_Promotion__mdt> listPromotion = new list<Oscar_Promotion__mdt>{promotion1, promotion2};
 		
-		AMS_OSCARTriggerHandler.getMapActivePromotions();
-		AMS_OSCARTriggerHandler.MAP_PROMOTIONS.put(promotion.Oscar_Process__c, promotion);
+		AMS_OSCARTriggerHandler.MAP_PROMOTIONS = new map<String,list<Oscar_Promotion__mdt>>();
+		AMS_OSCARTriggerHandler.MAP_PROMOTIONS.put(promotion1.Oscar_Process__c, listPromotion);
 		AMS_OSCAR__c oscar = new AMS_OSCAR__c(
 			Process__c = 'PROCESS',
 			Account__c = account.Id,
@@ -386,7 +398,7 @@ private class AMS_OSCARTriggerHandlerTest {
 		Test.stopTest();
 
 		AMS_OSCAR__c result = [SELECT Id, Promotions__c FROM AMS_OSCAR__c WHERE Id = :oscar.Id];
-		System.assertEquals(promotion.DeveloperName, result.Promotions__c);
+		System.assertEquals(promotion2.Promotion_Name__c, result.Promotions__c);
 	}
 
 	@isTest static void testLocationTypeIsNewGenPass() {

@@ -47,11 +47,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>unbabelapi__Agent_Brand__c</field>
-            <table>User</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>Air_Transport_Expertise__c</field>
             <table>User</table>
         </columns>
@@ -793,16 +788,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>UID__c</field>
-            <table>User</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>unbabelapi__Unbabel_Known_Languages__c</field>
-            <table>User</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>unbabelapi__Unbabel_Language__c</field>
             <table>User</table>
         </columns>
         <columns>

@@ -102,6 +102,10 @@
         <object>Case</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
+    <pageAccesses>
+        <apexPage>CaseAttachmentsView</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
     <recordTypeVisibilities>
         <recordType>Case.InternalCasesEuropeSCE</recordType>
         <visible>true</visible>
