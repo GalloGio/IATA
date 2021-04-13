@@ -72,14 +72,14 @@
         <processMetadataValues>
             <name>flowSelection</name>
             <value>
-                <stringValue>Innovation Hub User Access</stringValue>
+                <stringValue>Startup Hotlist User Access</stringValue>
             </value>
         </processMetadataValues>
         <name>myRule_13_A1</name>
         <label>Startup Hotlist User Access</label>
         <locationX>1300</locationX>
         <locationY>200</locationY>
-        <actionName>Innovation_Hub_User_Access</actionName>
+        <actionName>Startup_Hotlist_User_Access</actionName>
         <actionType>flow</actionType>
         <inputParameters>
             <processMetadataValues>

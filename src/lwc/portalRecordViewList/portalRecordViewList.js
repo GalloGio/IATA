@@ -1,5 +1,5 @@
 import { LightningElement, api, track } from 'lwc';
-import getIHubLists from '@salesforce/apex/PortalServicesInnovationHubCtrl.getProviderFieldLists';
+import getSHLists from '@salesforce/apex/PortalServicesStartupHotlistCtrl.getProviderFieldLists';
 
 export default class PortalRecordViewList extends LightningElement {
 
@@ -33,7 +33,7 @@ export default class PortalRecordViewList extends LightningElement {
     }
 
     connectedCallback() {
-        getIHubLists({ providerId: this.providerId, field: this.field }).then(result => {
+        getSHLists({ providerId: this.providerId, field: this.field }).then(result => {
             switch (this.field) {
                 case 'Technology__c':
                     if(result[0].Technology__c != undefined){

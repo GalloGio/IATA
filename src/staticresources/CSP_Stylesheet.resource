@@ -1575,7 +1575,7 @@ lightning-datatable .slds-th__action {
     max-width: none;
 }
 
-.ihub .slds-form-element__label {
+.SH .slds-form-element__label {
   font-size: 18px;
   font-weight: 500;
   font-style: normal;
@@ -1588,11 +1588,11 @@ lightning-datatable .slds-th__action {
   max-width: none;
 }
 
-.ihub .slds-form-element__control .slds-form-element__static {
+.SH .slds-form-element__control .slds-form-element__static {
   color: grey;
 }
 
-.ihub .slds-form-element__control .slds-form-element__static a {
+.SH .slds-form-element__control .slds-form-element__static a {
   color: grey;
 }
 

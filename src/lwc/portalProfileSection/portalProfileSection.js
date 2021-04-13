@@ -11,7 +11,7 @@ export default class PortalProfileSection extends LightningElement {
 
     connectedCallback() {
         if(window.location.pathname.includes('service-startuphotlist')){
-            this.titleClass = 'text-medium text-bold ihubBlue' ;   
+            this.titleClass = 'text-medium text-bold SHBlue' ;   
         }
     }
 }

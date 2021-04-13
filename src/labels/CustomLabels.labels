@@ -3782,19 +3782,19 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>Home</value>
     </labels>
     <labels>
-        <fullName>CSP_Breadcrumb_Service_InnovationHub</fullName>
+        <fullName>CSP_Breadcrumb_Service_StartupHotlist</fullName>
         <categories>CSPortal</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>CSP Breadcrumb IH Service title</shortDescription>
+        <shortDescription>CSP Breadcrumb SH Service title</shortDescription>
         <value>Startup Hotlist</value>
     </labels>
     <labels>
-        <fullName>CSP_Breadcrumb_Service_InnovationHub_Pro</fullName>
+        <fullName>CSP_Breadcrumb_Service_StartupHotlist_Pro</fullName>
         <categories>CSPortal</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>CSP Breadcrumb IH Service Provider identification</shortDescription>
+        <shortDescription>CSP Breadcrumb SH Service Provider identification</shortDescription>
         <value>Provider</value>
     </labels>
     <labels>
@@ -3983,7 +3983,7 @@ If you are already CNS Endorsed, you can use this service to update information 
         <fullName>CSP_Categories</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>CSP IH Service Card Key Label</shortDescription>
+        <shortDescription>CSP SH Service Card Key Label</shortDescription>
         <value>IATA touchpoints</value>
     </labels>
     <labels>
@@ -4996,7 +4996,7 @@ If you are already CNS Endorsed, you can use this service to update information 
         <fullName>CSP_FocusAreas</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>CSP IH Service Card Key Label</shortDescription>
+        <shortDescription>CSP SH Service Card Key Label</shortDescription>
         <value>Focus Areas</value>
     </labels>
     <labels>
@@ -5074,7 +5074,7 @@ If you are already CNS Endorsed, you can use this service to update information 
         <fullName>CSP_FundingStage</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>CSP IH Service Card Key Label</shortDescription>
+        <shortDescription>CSP SH Service Card Key Label</shortDescription>
         <value>Funding Stage</value>
     </labels>
     <labels>
@@ -5251,11 +5251,11 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>Accepted file types are: png, jpeg</value>
     </labels>
     <labels>
-        <fullName>CSP_IHub_ChooseAny</fullName>
+        <fullName>CSP_SH_ChooseAny</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>CSP IH text label</shortDescription>
+        <shortDescription>CSP SH text label</shortDescription>
         <value>Choose any option(s)</value>
     </labels>
     <labels>
@@ -7514,7 +7514,7 @@ You can easily create a company account in two steps</value>
         <fullName>CSP_ResetFilters</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>CSP IH Service Reset Filters Label</shortDescription>
+        <shortDescription>CSP SH Service Reset Filters Label</shortDescription>
         <value>Reset Filters</value>
     </labels>
     <labels>
@@ -7610,7 +7610,7 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <fullName>CSP_SearchByName</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>CSP IH Service Search Label</shortDescription>
+        <shortDescription>CSP SH Service Search Label</shortDescription>
         <value>Search By Name</value>
     </labels>
     <labels>
@@ -7855,34 +7855,34 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <value>Airline Daily Sales Dashboard</value>
     </labels>
     <labels>
-        <fullName>CSP_Service_InnovationHub_NoAccess</fullName>
+        <fullName>CSP_Service_StartupHotlist_NoAccess</fullName>
         <categories>CSPortal</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>CSP IH Service Access Denied Label</shortDescription>
+        <shortDescription>CSP SH Service Access Denied Label</shortDescription>
         <value>Sorry, you don&apos;t have access to service. Please contact administrator if you need to get access to this service.</value>
     </labels>
     <labels>
-        <fullName>CSP_Service_InnovationHub_ProviderProfileTab</fullName>
+        <fullName>CSP_Service_StartupHotlist_ProviderProfileTab</fullName>
         <categories>CSPortal</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>CSP IH Service Provider Profile Label</shortDescription>
+        <shortDescription>CSP SH Service Provider Profile Label</shortDescription>
         <value>Provider Profile</value>
     </labels>
     <labels>
-        <fullName>CSP_Service_InnovationHub_SearchTab</fullName>
+        <fullName>CSP_Service_StartupHotlist_SearchTab</fullName>
         <categories>CSPortal</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>CSP IH Service Search Label</shortDescription>
+        <shortDescription>CSP SH Service Search Label</shortDescription>
         <value>Search</value>
     </labels>
     <labels>
-        <fullName>CSP_Service_InnovationHub_Title</fullName>
+        <fullName>CSP_Service_StartupHotlist_Title</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>CSP IH Service Title</shortDescription>
+        <shortDescription>CSP SH Service Title</shortDescription>
         <value>Startup Hotlist</value>
     </labels>
     <labels>
@@ -8289,7 +8289,7 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <fullName>CSP_Technology</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>CSP IH Service Card Key Label</shortDescription>
+        <shortDescription>CSP SH Service Card Key Label</shortDescription>
         <value>Technology</value>
     </labels>
     <labels>
