@@ -550,10 +550,10 @@
                                                                 </div>
 
                                                                 <!-- components -->
-
+                                                                    
                                                                 <c:ISSP_ANG_ANNUAL_REV_RO ca="{! currentAccount}" id="readonly" rendered="{!mode == 'readOnly'}"/>
 
-                                                                <c:ISSP_ANG_ANNUAL_REV_UPDATE caParam="{! currentAccount}" id="update" rendered="{!mode == 'update'}"/>
+                                                                <c:ISSP_ANG_ANNUAL_REV_UPDATE  newGen="{!newCase.Account.IATA_ISO_Country__r.ANG_Enable_NewGen__c}" caParam="{! currentAccount}" id="update" rendered="{!mode == 'update'}"/>
 
                                                             </apex:outputPanel>
 

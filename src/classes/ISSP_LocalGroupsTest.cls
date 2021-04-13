@@ -82,7 +82,8 @@ public class ISSP_LocalGroupsTest {
 				listParticipant.add(
 					new Participant__c(
 						Local_Governance__c = listLocalGroups.get(i).Id,
-						Contact__c = listContacts.get(i).Id
+						Contact__c = listContacts.get(i).Id,
+						Local_Group_Type__c = 'APJC'
 					)
 				);
 			}
