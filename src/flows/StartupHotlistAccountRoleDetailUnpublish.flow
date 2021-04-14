@@ -63,26 +63,6 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordLookups>
-        <name>getSHDetailProvider</name>
-        <label>getSHDetailProvider</label>
-        <locationX>176</locationX>
-        <locationY>230</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Unpublish</targetReference>
-        </connector>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>recordId</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>SH_Account_Role_Detail__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
         <name>getProviderUpdated</name>
         <label>getProviderUpdated</label>
         <locationX>633</locationX>
@@ -102,6 +82,26 @@
         <object>SH_Account_Role_Detail__c</object>
         <queriedFields>Id</queriedFields>
         <queriedFields>Published__c</queriedFields>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>getSHDetailProvider</name>
+        <label>getSHDetailProvider</label>
+        <locationX>176</locationX>
+        <locationY>230</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Unpublish</targetReference>
+        </connector>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>recordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>SH_Account_Role_Detail__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>

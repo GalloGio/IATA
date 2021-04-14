@@ -159,18 +159,6 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ReadWrite</externalSharingModel>
-    <label>IH Account Role Detail</label>
-    <nameField>
-        <displayFormat>IHARD-{000000}</displayFormat>
-        <label>Startup Hotlist Account Role Detail Name</label>
-        <trackHistory>false</trackHistory>
-        <type>AutoNumber</type>
-    </nameField>
-    <pluralLabel>IH Account Role Details</pluralLabel>
-    <recordTypeTrackHistory>false</recordTypeTrackHistory>
-    <searchLayouts/>
-    <sharingModel>ReadWrite</sharingModel>
-    <visibility>Public</visibility>
     <fields>
         <fullName>Account_Role__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
@@ -178,7 +166,6 @@
         <externalId>false</externalId>
         <label>Account Role</label>
         <referenceTo>Account_Role__c</referenceTo>
-        <relationshipLabel>IH Account Role Details</relationshipLabel>
         <relationshipName>SH_Account_Role_Details</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -293,7 +280,6 @@
         <externalId>false</externalId>
         <label>Contact</label>
         <referenceTo>Contact</referenceTo>
-        <relationshipLabel>IH Account Role Details</relationshipLabel>
         <relationshipName>SH_Account_Role_Details</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -642,18 +628,18 @@
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>LinkedIn__c</fullName>
+        <fullName>Link_to_Social_Media_Accounts__c</fullName>
         <externalId>false</externalId>
-        <label>LinkedIn</label>
+        <label>Link to Social Media accounts</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Url</type>
     </fields>
     <fields>
-        <fullName>Link_to_Social_Media_Accounts__c</fullName>
+        <fullName>LinkedIn__c</fullName>
         <externalId>false</externalId>
-        <label>Link to Social Media accounts</label>
+        <label>LinkedIn</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -666,7 +652,6 @@
         <externalId>false</externalId>
         <label>Location</label>
         <referenceTo>IATA_ISO_Country__c</referenceTo>
-        <relationshipLabel>IH Account Role Details</relationshipLabel>
         <relationshipName>SH_Account_Role_Details</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -1077,6 +1062,120 @@
         <trackTrending>false</trackTrending>
         <type>Url</type>
     </fields>
+    <label>SH Account Role Detail</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Company_Name__c</columns>
+        <columns>RECORDTYPE</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>Status__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>Consumers</fullName>
+        <columns>NAME</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>SH_Account_Role_Detail__c.Consumer,SH_Account_Role_Detail__c.Consumer_and_Provider</value>
+        </filters>
+        <label>All Consumers</label>
+    </listViews>
+    <listViews>
+        <fullName>Draft</fullName>
+        <columns>NAME</columns>
+        <columns>Company_Name__c</columns>
+        <columns>CREATED_DATE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Draft</value>
+        </filters>
+        <label>Draft</label>
+    </listViews>
+    <listViews>
+        <fullName>For_Approval</fullName>
+        <columns>NAME</columns>
+        <columns>Company_Name__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Submitted</value>
+        </filters>
+        <label>Submitted</label>
+    </listViews>
+    <listViews>
+        <fullName>Providers</fullName>
+        <columns>NAME</columns>
+        <columns>Company_Name__c</columns>
+        <columns>Status__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>SH_Account_Role_Detail__c.Provider,SH_Account_Role_Detail__c.Consumer_and_Provider</value>
+        </filters>
+        <label>All Providers</label>
+    </listViews>
+    <listViews>
+        <fullName>Providers_to_Publish</fullName>
+        <columns>NAME</columns>
+        <columns>Company_Name__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Approved</value>
+        </filters>
+        <filters>
+            <field>Published__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <label>Providers to Publish</label>
+    </listViews>
+    <listViews>
+        <fullName>Published_Providers</fullName>
+        <columns>NAME</columns>
+        <columns>Company_Name__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Approved</value>
+        </filters>
+        <filters>
+            <field>Published__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>Published Providers</label>
+    </listViews>
+    <nameField>
+        <displayFormat>IHARD-{000000}</displayFormat>
+        <label>Startup Hotlist Account Role Detail Name</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>SH Account Role Details</pluralLabel>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
     <recordTypes>
         <fullName>Consumer</fullName>
         <active>true</active>
@@ -2091,115 +2190,13 @@
             </values>
         </picklistValues>
     </recordTypes>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
     <validationRules>
         <fullName>canPublish</fullName>
         <active>true</active>
         <errorConditionFormula>AND(NOT(ISPICKVAL(Status__c, &apos;Approved&apos;)),Published__c,ISCHANGED(Published__c))</errorConditionFormula>
         <errorMessage>This provider profile cannot be published because it&apos;s not approved.</errorMessage>
     </validationRules>
-    <listViews>
-        <fullName>All</fullName>
-        <columns>NAME</columns>
-        <columns>Company_Name__c</columns>
-        <columns>RECORDTYPE</columns>
-        <columns>CREATED_DATE</columns>
-        <columns>Status__c</columns>
-        <filterScope>Everything</filterScope>
-        <label>All</label>
-    </listViews>
-    <listViews>
-        <fullName>Consumers</fullName>
-        <columns>NAME</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>RECORDTYPE</field>
-            <operation>equals</operation>
-            <value>SH_Account_Role_Detail__c.Consumer,SH_Account_Role_Detail__c.Consumer_and_Provider</value>
-        </filters>
-        <label>All Consumers</label>
-    </listViews>
-    <listViews>
-        <fullName>Draft</fullName>
-        <columns>NAME</columns>
-        <columns>Company_Name__c</columns>
-        <columns>CREATED_DATE</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Status__c</field>
-            <operation>equals</operation>
-            <value>Draft</value>
-        </filters>
-        <label>Draft</label>
-    </listViews>
-    <listViews>
-        <fullName>For_Approval</fullName>
-        <columns>NAME</columns>
-        <columns>Company_Name__c</columns>
-        <columns>CREATED_DATE</columns>
-        <columns>LAST_UPDATE</columns>
-        <columns>UPDATEDBY_USER</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Status__c</field>
-            <operation>equals</operation>
-            <value>Submitted</value>
-        </filters>
-        <label>Submitted</label>
-    </listViews>
-    <listViews>
-        <fullName>Providers</fullName>
-        <columns>NAME</columns>
-        <columns>Company_Name__c</columns>
-        <columns>Status__c</columns>
-        <columns>CREATED_DATE</columns>
-        <columns>LAST_UPDATE</columns>
-        <columns>UPDATEDBY_USER</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>RECORDTYPE</field>
-            <operation>equals</operation>
-            <value>SH_Account_Role_Detail__c.Provider,SH_Account_Role_Detail__c.Consumer_and_Provider</value>
-        </filters>
-        <label>All Providers</label>
-    </listViews>
-    <listViews>
-        <fullName>Providers_to_Publish</fullName>
-        <columns>NAME</columns>
-        <columns>Company_Name__c</columns>
-        <columns>CREATED_DATE</columns>
-        <columns>LAST_UPDATE</columns>
-        <columns>UPDATEDBY_USER</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Status__c</field>
-            <operation>equals</operation>
-            <value>Approved</value>
-        </filters>
-        <filters>
-            <field>Published__c</field>
-            <operation>equals</operation>
-            <value>0</value>
-        </filters>
-        <label>Providers to Publish</label>
-    </listViews>
-    <listViews>
-        <fullName>Published_Providers</fullName>
-        <columns>NAME</columns>
-        <columns>Company_Name__c</columns>
-        <columns>CREATED_DATE</columns>
-        <columns>LAST_UPDATE</columns>
-        <columns>UPDATEDBY_USER</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Status__c</field>
-            <operation>equals</operation>
-            <value>Approved</value>
-        </filters>
-        <filters>
-            <field>Published__c</field>
-            <operation>equals</operation>
-            <value>1</value>
-        </filters>
-        <label>Published Providers</label>
-    </listViews>
+    <visibility>Public</visibility>
 </CustomObject>

@@ -5251,14 +5251,6 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>Accepted file types are: png, jpeg</value>
     </labels>
     <labels>
-        <fullName>CSP_SH_ChooseAny</fullName>
-        <categories>CS Portal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP SH text label</shortDescription>
-        <value>Choose any option(s)</value>
-    </labels>
-    <labels>
         <fullName>CSP_IMPORTANT</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -7584,6 +7576,14 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <value>Restricted Login</value>
     </labels>
     <labels>
+        <fullName>CSP_SH_ChooseAny</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP SH text label</shortDescription>
+        <value>Choose any option(s)</value>
+    </labels>
+    <labels>
         <fullName>CSP_Save</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -7855,6 +7855,22 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <value>Airline Daily Sales Dashboard</value>
     </labels>
     <labels>
+        <fullName>CSP_Service_SmartLite_NoAccess</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Service_SmartLite_NoAccess</shortDescription>
+        <value>You do not have access to SMART Lite service.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Service_SmartLite_Title</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_Service_SmartLite_Title</shortDescription>
+        <value>SMART Lite</value>
+    </labels>
+    <labels>
         <fullName>CSP_Service_StartupHotlist_NoAccess</fullName>
         <categories>CSPortal</categories>
         <language>en_US</language>
@@ -7884,22 +7900,6 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <protected>false</protected>
         <shortDescription>CSP SH Service Title</shortDescription>
         <value>Startup Hotlist</value>
-    </labels>
-    <labels>
-        <fullName>CSP_Service_SmartLite_NoAccess</fullName>
-        <categories>CSPortal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_Service_SmartLite_NoAccess</shortDescription>
-        <value>You do not have access to SMART Lite service.</value>
-    </labels>
-    <labels>
-        <fullName>CSP_Service_SmartLite_Title</fullName>
-        <categories>CSPortal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_Service_SmartLite_Title</shortDescription>
-        <value>SMART Lite</value>
     </labels>
     <labels>
         <fullName>CSP_Service_TIPReports_AmazonType</fullName>

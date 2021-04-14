@@ -140,7 +140,7 @@
             <processMetadataValues>
                 <name>objectType</name>
                 <value>
-                    <stringValue/>
+                    <stringValue></stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
@@ -182,7 +182,7 @@
             <processMetadataValues>
                 <name>objectType</name>
                 <value>
-                    <stringValue/>
+                    <stringValue></stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
@@ -238,7 +238,7 @@
             <processMetadataValues>
                 <name>objectType</name>
                 <value>
-                    <stringValue/>
+                    <stringValue></stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
@@ -336,7 +336,7 @@
             <processMetadataValues>
                 <name>objectType</name>
                 <value>
-                    <stringValue/>
+                    <stringValue></stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
@@ -378,7 +378,7 @@
             <processMetadataValues>
                 <name>objectType</name>
                 <value>
-                    <stringValue/>
+                    <stringValue></stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
@@ -597,7 +597,7 @@
         <queriedFields>Contact__c</queriedFields>
     </recordLookups>
     <startElementReference>sobjectInputCheckDecision</startElementReference>
-    <status>Active</status>
+    <status>Draft</status>
     <variables>
         <name>SObject</name>
         <dataType>SObject</dataType>

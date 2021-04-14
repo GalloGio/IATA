@@ -1020,10 +1020,6 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
                 <default>false</default>
             </values>
             <values>
-                <fullName>Startup Hotlist</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Insurance Providers</fullName>
                 <default>false</default>
             </values>
@@ -1093,6 +1089,10 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
             </values>
             <values>
                 <fullName>Standards Setting Workspace</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Startup Hotlist</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1997,10 +1997,6 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
                 <default>false</default>
             </values>
             <values>
-                <fullName>Startup Hotlist</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Insurance Providers</fullName>
                 <default>false</default>
             </values>
@@ -2070,6 +2066,10 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
             </values>
             <values>
                 <fullName>Standards Setting Workspace</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Startup Hotlist</fullName>
                 <default>false</default>
             </values>
             <values>

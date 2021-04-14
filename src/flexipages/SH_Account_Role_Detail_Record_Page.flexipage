@@ -108,7 +108,7 @@
         <name>sidebar</name>
         <type>Region</type>
     </flexiPageRegions>
-    <masterLabel>IH Account Role Detail Record Page</masterLabel>
+    <masterLabel>SH Account Role Detail Record Page</masterLabel>
     <parentFlexiPage>flexipage__default_rec_L</parentFlexiPage>
     <sobjectType>SH_Account_Role_Detail__c</sobjectType>
     <template>
