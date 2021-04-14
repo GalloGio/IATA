@@ -18342,34 +18342,34 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>AMS_Settlement_System__c.Allow_multiple_remittances__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>AMS_Settlement_System__c.BSP_Billing__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>AMS_Settlement_System__c.CASS_facilities__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>AMS_Settlement_System__c.DPC_System__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>AMS_Settlement_System__c.DPC__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>AMS_Settlement_System__c.Domestic_Only__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -18382,14 +18382,14 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>AMS_Settlement_System__c.ISS_Joining_fee_cluster__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>AMS_Settlement_System__c.ISS_Region__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -18417,7 +18417,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>AMS_Settlement_System__c.Settlement_Model__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -61258,15 +61258,15 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>AMS_Settlement_System__c-AMS DSP Layout</layout>
+        <recordType>AMS_Settlement_System__c.PASS</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>AMS_Settlement_System__c-AMS Settlement System Layout</layout>
         <recordType>AMS_Settlement_System__c.BSP</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>AMS_Settlement_System__c-AMS DSP Layout</layout>
+        <layout>AMS_Settlement_System__c-AMS Settlement System Layout</layout>
         <recordType>AMS_Settlement_System__c.CASS</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>AMS_Settlement_System__c-AMS DSP Layout</layout>
-        <recordType>AMS_Settlement_System__c.PASS</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>AMS_Territory__c-AMS Territory Layout</layout>
@@ -72062,6 +72062,7 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
+        <personAccountDefault>true</personAccountDefault>
         <recordType>AMS_Settlement_System__c.CASS</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
