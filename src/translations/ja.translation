@@ -149,6 +149,14 @@
         <name>Service_l1l2</name>
     </customApplications>
     <customApplications>
+        <label><!-- Startup Hotlist --></label>
+        <name>Startup_Hotlist</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- Startup Hotlist --></label>
+        <name>Startup_Hotlist_lightning</name>
+    </customApplications>
+    <customApplications>
         <label><!-- TIDS --></label>
         <name>TIDS</name>
     </customApplications>
@@ -2969,6 +2977,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Breadcrumb_Home_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Breadcrumb SH Service title --></label>
+        <name>CSP_Breadcrumb_Service_StartupHotlist</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Breadcrumb SH Service Provider identification --></label>
+        <name>CSP_Breadcrumb_Service_StartupHotlist_Pro</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Breadcrumb_Service_TIPReports --></label>
         <name>CSP_Breadcrumb_Service_TIPReports</name>
     </customLabels>
@@ -3063,6 +3079,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>案件</label>
         <name>CSP_Cases</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP SH Service Card Key Label --></label>
+        <name>CSP_Categories</name>
     </customLabels>
     <customLabels>
         <label>メールを変更する</label>
@@ -3267,6 +3287,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- EF Invoices --></label>
         <name>CSP_EF_Invoices</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_EditProviderDetails --></label>
+        <name>CSP_EditProviderDetails</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_EditTrainingDetails --></label>
+        <name>CSP_EditTrainingDetails</name>
     </customLabels>
     <customLabels>
         <label>メール</label>
@@ -3573,6 +3601,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_First_Login_Title_IE</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP SH Service Card Key Label --></label>
+        <name>CSP_FocusAreas</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_ForMoreInfo --></label>
+        <name>CSP_ForMoreInfo</name>
+    </customLabels>
+    <customLabels>
         <label>あなた様に</label>
         <name>CSP_ForYou</name>
     </customLabels>
@@ -3603,6 +3639,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>セキュリティ上の理由から、新しいパスワードを設定するためのメールを送信しました。</label>
         <name>CSP_Frozen_User_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP SH Service Card Key Label --></label>
+        <name>CSP_FundingStage</name>
     </customLabels>
     <customLabels>
         <label>フィードバックをする</label>
@@ -3687,6 +3727,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>IDカードVER番号</label>
         <name>CSP_IDCard_Ver_Number</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_IHUB_LogoFileTypes --></label>
+        <name>CSP_IHUB_LogoFileTypes</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_IMPORTANT --></label>
@@ -4509,6 +4553,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Manage_Services_NoIEPAccount</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_MarkedForReview --></label>
+        <name>CSP_MarkedForReview</name>
+    </customLabels>
+    <customLabels>
         <label>案件一覧を表示</label>
         <name>CSP_MyCases</name>
     </customLabels>
@@ -4678,6 +4726,26 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Profile_PrivacyManagement_URL</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_ProviderDraftSaved --></label>
+        <name>CSP_ProviderDraftSaved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_ProviderReviewComments --></label>
+        <name>CSP_ProviderReviewComments</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_ProviderSaveAndSubmit --></label>
+        <name>CSP_ProviderSaveAndSubmit</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_ProviderWrongSubmit --></label>
+        <name>CSP_ProviderWrongSubmit</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_PublishedRecordPreview --></label>
+        <name>CSP_PublishedRecordPreview</name>
+    </customLabels>
+    <customLabels>
         <label>案件はどの様なもので、いつそちらが必要になりますか。</label>
         <name>CSP_Question1</name>
     </customLabels>
@@ -4806,6 +4874,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Resend_Verification_Email</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP SH Service Reset Filters Label --></label>
+        <name>CSP_ResetFilters</name>
+    </customLabels>
+    <customLabels>
         <label>パスワードを再設定する</label>
         <name>CSP_Reset_Password</name>
     </customLabels>
@@ -4838,12 +4910,24 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Restricted_Login_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP SH text label --></label>
+        <name>CSP_SH_ChooseAny</name>
+    </customLabels>
+    <customLabels>
         <label>保存する</label>
         <name>CSP_Save</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_SaveAndSubmit --></label>
+        <name>CSP_SaveAndSubmit</name>
+    </customLabels>
+    <customLabels>
         <label>保存してログイン</label>
         <name>CSP_Save_Login</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP SH Service Search Label --></label>
+        <name>CSP_SearchByName</name>
     </customLabels>
     <customLabels>
         <label>文書の詳細で検索する</label>
@@ -4976,6 +5060,22 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- CSP_Service_SmartLite_Title --></label>
         <name>CSP_Service_SmartLite_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP SH Service Access Denied Label --></label>
+        <name>CSP_Service_StartupHotlist_NoAccess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP SH Service Provider Profile Label --></label>
+        <name>CSP_Service_StartupHotlist_ProviderProfileTab</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP SH Service Search Label --></label>
+        <name>CSP_Service_StartupHotlist_SearchTab</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP SH Service Title --></label>
+        <name>CSP_Service_StartupHotlist_Title</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_Service_TIPReports_AmazonType --></label>
@@ -5170,6 +5270,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Task</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP SH Service Card Key Label --></label>
+        <name>CSP_Technology</name>
+    </customLabels>
+    <customLabels>
         <label>定期的な更新の一環として、当社の規約にいくつかの変更を加えています。この文書を完全にお読みになることをお勧めします。</label>
         <name>CSP_Terms_Updated_Message</name>
     </customLabels>
@@ -5300,6 +5404,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- CSP_Verification_L3_Email_UE_3_LMS --></label>
         <name>CSP_Verification_L3_Email_UE_3_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_WaitingApproval --></label>
+        <name>CSP_WaitingApproval</name>
     </customLabels>
     <customLabels>
         <label>IATAカスタマーポータルへようこそ</label>
