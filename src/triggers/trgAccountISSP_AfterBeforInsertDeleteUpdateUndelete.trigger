@@ -27,8 +27,7 @@ after update, before delete, before insert, before update) {
 			if(!acctToUpdate.isEmpty())
 				ISSP_FillTopParent.accountsBeforeUpdateTopParent(acctToUpdate);
 		}
-	}
-	else if(trigger.isUpdate && trigger.isAfter){
+
 		acctToUpdate = ISSP_FillTopParent.getAcctsToUpdate(trigger.newMap, trigger.oldMap);
 		if(!acctToUpdate.isEmpty())
 			ISSP_FillTopParent.accountsAfterUpdateTopParent(acctToUpdate, trigger.oldMap);
