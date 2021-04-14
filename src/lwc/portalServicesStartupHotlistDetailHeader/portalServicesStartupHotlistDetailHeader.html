@@ -1,0 +1,90 @@
+<template>
+
+    <c-portal-page-container style-class="dark">
+        <span slot="componentContent">
+            <div>
+
+                <!-- Breadcrumbs -->
+                <div class="breadcrumbsPosition">
+                    <c-portal-breadcrumbs></c-portal-breadcrumbs>
+                </div>
+
+                <!-- Header -->
+                <div class="headerPosition">
+
+                    <template if:false={loading}>
+                        <div class="coverBand" style={backgroundStyle}>
+                            <div class="titleAlign slds-p-left_small slds-p-vertical_x-small text-white text-large text-bold">{labels.CSP_Service_StartupHotlist_Title}</div>
+                        </div>
+
+                        <div if:true={loadingContent}>
+                            <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                        </div>
+
+                        <div if:true={providerAndPublishedRecord}>
+
+                            <div if:false={loadingContent} class="myProviderHeader">
+
+                                <!-- Header Provider Detail -->
+                                <div class="slds-grid slds-wrap slds-p-vertical_x-large headerDetailProvider" >
+                                    
+                                    <div class="headerProviderContent">
+
+                                        <!-- Labels -->
+                                        <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-6 slds-large-size_1-of-6 logoMargin">
+                                            <c-portal-record-view-edit-logo provider-id-api={providerId} edit="true"></c-portal-record-view-edit-logo>  
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-6 slds-large-size_3-of-6 contentItem fieldMargin">
+                                            <div class="text-xlarge text-bold">
+                                                <span class="companyName">{headerFields.Company_Name__c}</span>
+                                            </div>
+
+                                            <div class="slds-grid slds-wrap slds-gutters_xx-small socialMediaMargin">
+                                                <div if:true={hasWebsite} class="slds-col slds-size_1-of-20 slds-medium-size_1-of-20 slds-large-size_1-of-20">
+                                                    <a href={websiteUrl} target="_blank"><span><img src={webIcon} width="20" height="20"/></span></a>
+                                                </div>
+                                                <div if:true={hasFB} class="slds-col slds-size_1-of-20 slds-medium-size_1-of-20 slds-large-size_1-of-20">
+                                                    <a href={facebookUrl} target="_blank"><span><img src={facebookIcon} width="20" height="20"/></span></a>
+                                                </div>
+                                                <div if:true={hasInstagram} class="slds-col slds-size_1-of-20 slds-medium-size_1-of-20 slds-large-size_1-of-20">
+                                                    <a href={instagramUrl} target="_blank"><span><img src={instagramIcon} width="20" height="20"/></span></a>
+                                                </div>
+                                                <div if:true={hasTwitter} class="slds-col slds-size_1-of-20 slds-medium-size_1-of-20 slds-large-size_1-of-20">
+                                                    <a href={twitterUrl} target="_blank"><span><img src={twitterIcon} width="20" height="20"/></span></a>
+                                                </div>
+                                                <div if:true={hasLinkedIn} class="slds-col slds-size_1-of-20 slds-medium-size_1-of-20 slds-large-size_1-of-20">
+                                                    <a href={linkedInUrl} target="_blank"><span><img src={linkedInIcon} width="20" height="20"/></span></a>
+                                                </div>
+                                                <div if:true={hasGitHub} class="slds-col slds-size_1-of-20 slds-medium-size_1-of-20 slds-large-size_1-of-20">
+                                                    <a href={gitHubUrl} target="_blank"><span><img src={gitHubIcon} width="20" height="20"/></span></a>
+                                                </div>
+                                                <div if:true={hasTelegram} class="slds-col slds-size_1-of-20 slds-medium-size_1-of-20 slds-large-size_1-of-20">
+                                                    <a href={telegramUrl} target="_blank"><span><img src={telegramIcon} width="20" height="20"/></span></a>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-6 contentItem fieldMargin">
+                                            <div class="text-small text-bold"> 
+                                                <div if:true={hasContactName}>{headerFields.Contact_info_of_startup__c}</div>
+                                                <div if:true={hasContactPosition}>{headerFields.Contact_Position__c}</div>
+                                                <div if:true={hasContactEmail}>
+                                                    <lightning-formatted-email class="blueLink" value={headerFields.Contact_Email__c} hide-icon></lightning-formatted-email>
+                                                </div>
+                                                <div if:true={hasContactPhone}>
+                                                    Tel: <lightning-formatted-phone value={headerFields.Contact_Phone_Number__c}></lightning-formatted-phone>
+                                                </div>                     
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </div>
+
+        </span>
+    </c-portal-page-container>
+
+</template>

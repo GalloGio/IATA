@@ -1,0 +1,83 @@
+<template>
+
+    <!-- SHOW LOADING -->
+    <div if:true={componentLoading} class="spinnerContainer">
+        <lightning-spinner class="background-superLightGray" alternative-text="Loading"></lightning-spinner>
+    </div>
+
+    <div if:false={componentLoading}>
+
+        <!-- NO ACCESS TO SERVICE -->
+        <div if:false={viewTabs}>
+            <c-portal-page-container>
+                <span slot="componentContent">
+                    <c-portal-services-startup-hotlist-home-tab></c-portal-services-startup-hotlist-home-tab>
+                </span>
+            </c-portal-page-container>
+        </div>
+
+        <!-- ACCESS TO SERVICE - VIEW CONTENTS -->
+        <div if:true={viewTabs}>
+
+            <!-- TAB SELECTOR -->
+            <div class="brackground-silverGray">
+                <c-portal-page-container>
+                    <span slot="componentContent">
+                        <div class="slds-grid slds-wrap slds-gutters_direct-medium">
+                            
+                            <!-- Services Component -->
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-p-vertical_medium slds-scrollable_x" >
+
+                                <template for:each={lstTabs} for:item="tab">
+
+                                    <span key={tab.tabId} if:false={tab.tabIsHidden} class="slds-p-right_small text-small">
+
+                                        <!-- Active tab -->
+                                        <span if:true={tab.tabIsActive} data-item={tab.tabId} class="slds-p-around_small text-bold selectedTab itemTab">
+                                            {tab.tabLabel}
+                                        </span>
+
+                                        <!-- Inactive tab -->
+                                        <span if:false={tab.tabIsActive} data-item={tab.tabId} style={tab.tabStyle} onmouseenter={onmouseenterTab} 
+                                                    onmouseleave={onmouseleaveTab} onclick={onclickTab} class="slds-p-around_small cursorPointer text-darkGray itemTab" >
+                                            {tab.tabLabel}
+                                        </span>
+
+                                    </span>
+                                </template>
+
+                            </div>
+
+                        </div>
+                    </span>
+                </c-portal-page-container>
+            </div>
+
+            <!-- SELECTED TAB CONTENT -->
+            <c-portal-page-container>
+                <span slot="componentContent">
+                    <div class="slds-grid slds-wrap slds-gutters_direct-medium slds-p-top_small">
+                        
+                        <!-- Startup Hotlist service content -->
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1 slds-large-size_1-of-1 slds-m-vertical_medium" >
+                            
+                            <!-- Search for provider -->
+                            <div if:true={tab0Active} >
+                                <c-portal-services-startup-hotlist-search-tab></c-portal-services-startup-hotlist-search-tab>
+                            </div>
+
+                            <!-- Edit provider -->
+                            <div if:true={tab1Active} >
+                                <c-portal-services-startup-hotlist-edit-tab></c-portal-services-startup-hotlist-edit-tab>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </span>
+            </c-portal-page-container>
+
+        </div>
+    </div>
+
+</template>

@@ -199,3 +199,20 @@ input[type="checkbox"] {
   line-height: 1;
   vertical-align: text-top;
 }
+
+.SH .slds-form-element__label {
+  font-size: 14px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.43;
+  letter-spacing: normal;
+  color: #525252;
+  padding-top: 5%;
+  display: contents;
+  max-width: none;
+}
+
+.SHMarginLogo {
+  margin-bottom:10px;
+}

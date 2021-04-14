@@ -479,6 +479,19 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
         <label>All</label>
         <language>en_US</language>
     </listViews>
+    <listViews>
+        <fullName>Startup_Hotlist</fullName>
+        <columns>NAME</columns>
+        <columns>Account_Name__c</columns>
+        <columns>Status__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Functional_Role__c</field>
+            <operation>equals</operation>
+            <value>Startup Hotlist</value>
+        </filters>
+        <label>Startup Hotlist</label>
+    </listViews>
     <nameField>
         <displayFormat>AR-{0000}</displayFormat>
         <label>Account Role Name</label>
@@ -750,6 +763,10 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
                 <default>false</default>
             </values>
             <values>
+                <fullName>Startup Hotlist</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>TIDS</fullName>
                 <default>false</default>
             </values>
@@ -1000,6 +1017,10 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
             </values>
             <values>
                 <fullName>IFTP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Startup Hotlist</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1397,6 +1418,10 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
                 <default>false</default>
             </values>
             <values>
+                <fullName>Startup Hotlist</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>TIDS</fullName>
                 <default>false</default>
             </values>
@@ -1715,6 +1740,10 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
                 <default>false</default>
             </values>
             <values>
+                <fullName>Startup Hotlist</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>TIDS</fullName>
                 <default>false</default>
             </values>
@@ -1965,6 +1994,10 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
             </values>
             <values>
                 <fullName>IFTP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Startup Hotlist</fullName>
                 <default>false</default>
             </values>
             <values>
