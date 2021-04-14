@@ -3,6 +3,7 @@ import { LightningElement, api, track } from 'lwc';
 //navigation
 import { NavigationMixin } from 'lightning/navigation';
 import { navigateToPage } from 'c/navigationUtils';
+import { getParamsFromPage } from 'c/navigationUtils';
 
 import isAdmin from '@salesforce/apex/CSP_Utils.isAdmin';
 import getPickListValues from '@salesforce/apex/CSP_Utils.getPickListValues';
@@ -25,6 +26,12 @@ import ServicesTitle from '@salesforce/label/c.CSP_Services_Title';
 import InvalidValue from '@salesforce/label/c.csp_InvalidPhoneValue';
 import CompleteField from '@salesforce/label/c.csp_CompleteField';
 import RelocateAccount from '@salesforce/label/c.ISSP_Relocate_Contact';
+import CSP_Technology from '@salesforce/label/c.CSP_Technology';
+import CSP_FocusAreas from '@salesforce/label/c.CSP_FocusAreas';
+import CSP_Categories from '@salesforce/label/c.CSP_Categories';
+import CSP_ForMoreInfo from '@salesforce/label/c.CSP_ForMoreInfo';
+import Edit from '@salesforce/label/c.Edit';
+import CSP_EditTrainingDetails from '@salesforce/label/c.CSP_EditTrainingDetails';
 
 import IdCard from '@salesforce/label/c.CSP_Id_Card';
 import IdCardNumber from '@salesforce/label/c.CSP_IDCard_Ver_Number';
@@ -47,7 +54,6 @@ import CSP_Travel_Agent_Accreditation_Changes_Request from '@salesforce/label/c.
 import CSP_Airline_Changes_Access from '@salesforce/label/c.CSP_Airline_Changes_Access';
 import See_Bank_Account_Details from '@salesforce/label/c.See_Bank_Account_Details'; //WMO-699 - ACAMBAS
 import Credit_Card_Payment_Link from '@salesforce/label/c.Credit_Card_Payment_Link'; //WMO-699 - ACAMBAS
-import Link_To_SIS from '@salesforce/label/c.Link_To_SIS'; //WMO-736 - ACAMBAS
 
 // GCSDI
 import CSP_L2_Business_Address_Information_LMS from '@salesforce/label/c.CSP_L2_Business_Address_Information_LMS';
@@ -114,6 +120,9 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     @track sisPage;
     @track additionalEmail;
     @track otherPhone;
+    @track providerId;
+    @track logoId;
+    @track SHListFields;
 
     timeout = null;
 
@@ -161,6 +170,12 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         CSP_Travel_Agent_Accreditation_Changes_Request,
         CSP_Airline_Changes_Access,
         CSP_CompanyAdministration_Link,
+        CSP_Technology,
+        CSP_FocusAreas,
+        CSP_Categories,
+        CSP_ForMoreInfo,
+        Edit,
+        CSP_EditTrainingDetails,
         IdCardName,
         IdCardPhoto,
         IdCardStatus,
@@ -221,6 +236,13 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     emptyServices = 'emptyServices';
 
     connectedCallback() {
+
+        let pageParams = getParamsFromPage();
+        if(pageParams !== undefined){
+            if(pageParams.providerId !== undefined){
+                this.providerId = pageParams.providerId;
+            }
+        }
 
         if (this.isContact) {
             getPickListValues({ sobj: 'Contact', field: 'Area__c' }).then(result => {
@@ -483,6 +505,10 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
 
     get isContact() {
         return this.objectName != null && this.objectName.toLowerCase() == 'contact';
+    }
+
+    get isIHUB() {
+        return window.location.pathname.includes('service-startuphotlist');
     }
 
     //WMO-699 - ACAMBAS: Begin
