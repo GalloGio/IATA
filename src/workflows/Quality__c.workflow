@@ -1118,8 +1118,9 @@
     </fieldUpdates>
     <fieldUpdates>
         <fullName>Description_based_on_Related_Case_Descr</fullName>
+        <description>Set the description of the parent Exception</description>
         <field>Description_Internal_Case__c</field>
-        <formula>Related_Case_Number__r.Description</formula>
+        <formula>Parent__r.Description_Internal_Case__c</formula>
         <name>Description based on Related Case Descr</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
@@ -2598,11 +2599,12 @@
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <criteriaItems>
-            <field>Quality__c.Status__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <description>Retrieve Description information based on Internal Case.</description>
+        <description>Retrieve Description information based on Related Exception Case</description>
+        <formula>AND(
+  NOT(ISBLANK(TEXT(Status__c))),
+  NOT(ISBLANK(Parent__c)),
+  Extension__c 
+)</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
