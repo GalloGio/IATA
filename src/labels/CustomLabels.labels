@@ -3782,6 +3782,22 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>Home</value>
     </labels>
     <labels>
+        <fullName>CSP_Breadcrumb_Service_StartupHotlist</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Breadcrumb SH Service title</shortDescription>
+        <value>Startup Hotlist</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Breadcrumb_Service_StartupHotlist_Pro</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Breadcrumb SH Service Provider identification</shortDescription>
+        <value>Provider</value>
+    </labels>
+    <labels>
         <fullName>CSP_Breadcrumb_Service_TIPReports</fullName>
         <categories>CSPortal</categories>
         <language>en_US</language>
@@ -3962,6 +3978,13 @@ If you are already CNS Endorsed, you can use this service to update information 
         <protected>false</protected>
         <shortDescription>CSP_Cases</shortDescription>
         <value>Cases</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Categories</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP SH Service Card Key Label</shortDescription>
+        <value>IATA touchpoints</value>
     </labels>
     <labels>
         <fullName>CSP_Change_Email</fullName>
@@ -4360,6 +4383,20 @@ If you are already CNS Endorsed, you can use this service to update information 
         <protected>false</protected>
         <shortDescription>EF Invoices</shortDescription>
         <value>E&amp;F Invoices</value>
+    </labels>
+    <labels>
+        <fullName>CSP_EditProviderDetails</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_EditProviderDetails</shortDescription>
+        <value>Edit Provider Details</value>
+    </labels>
+    <labels>
+        <fullName>CSP_EditTrainingDetails</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_EditTrainingDetails</shortDescription>
+        <value>Edit Training Details</value>
     </labels>
     <labels>
         <fullName>CSP_Email</fullName>
@@ -4956,6 +4993,20 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>Improve Your Experience</value>
     </labels>
     <labels>
+        <fullName>CSP_FocusAreas</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP SH Service Card Key Label</shortDescription>
+        <value>Focus Areas</value>
+    </labels>
+    <labels>
+        <fullName>CSP_ForMoreInfo</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_ForMoreInfo</shortDescription>
+        <value>For more information about this invoice</value>
+    </labels>
+    <labels>
         <fullName>CSP_ForYou</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -5018,6 +5069,13 @@ If you are already CNS Endorsed, you can use this service to update information 
         <protected>false</protected>
         <shortDescription>CSP Frozen User Message</shortDescription>
         <value>For security reasons, we have sent you an email to set a new password.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_FundingStage</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP SH Service Card Key Label</shortDescription>
+        <value>Funding Stage</value>
     </labels>
     <labels>
         <fullName>CSP_Give_Feedback_ButtonLabel</fullName>
@@ -5184,6 +5242,13 @@ If you are already CNS Endorsed, you can use this service to update information 
         <protected>false</protected>
         <shortDescription>CSP IDCard Ver Number</shortDescription>
         <value>ID Card VER Number</value>
+    </labels>
+    <labels>
+        <fullName>CSP_IHUB_LogoFileTypes</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_IHUB_LogoFileTypes</shortDescription>
+        <value>Accepted file types are: png, jpeg</value>
     </labels>
     <labels>
         <fullName>CSP_IMPORTANT</fullName>
@@ -6817,6 +6882,13 @@ You can easily create a company account in two steps</value>
         <value>Your IATA Easy Pay Status is not &quot;Open&quot;. Please contact Support.</value>
     </labels>
     <labels>
+        <fullName>CSP_MarkedForReview</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_MarkedForReview</shortDescription>
+        <value>The submited profile was marked for review. Click on the edit button to view more details.</value>
+    </labels>
+    <labels>
         <fullName>CSP_MyCases</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -7147,6 +7219,41 @@ You can easily create a company account in two steps</value>
         <value>/dataprivacy/s/landing</value>
     </labels>
     <labels>
+        <fullName>CSP_ProviderDraftSaved</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_ProviderDraftSaved</shortDescription>
+        <value>Provider profile draft saved successfully. Once it&apos;s ready for submit click on the &apos;Save and Submit&apos; button.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_ProviderReviewComments</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_ProviderReviewComments</shortDescription>
+        <value>Please review the comments and submit again.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_ProviderSaveAndSubmit</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_ProviderSaveAndSubmit</shortDescription>
+        <value>The provider profile was saved and submitted for approval. A notification will be send with further instructions.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_ProviderWrongSubmit</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_ProviderWrongSubmit</shortDescription>
+        <value>Something went wrong during the submission process. Please contact your administrator for more details.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_PublishedRecordPreview</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_PublishedRecordPreview</shortDescription>
+        <value>There is no published record to preview.</value>
+    </labels>
+    <labels>
         <fullName>CSP_Question1</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -7396,6 +7503,13 @@ You can easily create a company account in two steps</value>
         <value>Resend Verification Mail</value>
     </labels>
     <labels>
+        <fullName>CSP_ResetFilters</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP SH Service Reset Filters Label</shortDescription>
+        <value>Reset Filters</value>
+    </labels>
+    <labels>
         <fullName>CSP_Reset_Password</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -7462,6 +7576,14 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <value>Restricted Login</value>
     </labels>
     <labels>
+        <fullName>CSP_SH_ChooseAny</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP SH text label</shortDescription>
+        <value>Choose any option(s)</value>
+    </labels>
+    <labels>
         <fullName>CSP_Save</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -7470,12 +7592,26 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <value>Save</value>
     </labels>
     <labels>
+        <fullName>CSP_SaveAndSubmit</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_SaveAndSubmit</shortDescription>
+        <value>Save and Submit</value>
+    </labels>
+    <labels>
         <fullName>CSP_Save_Login</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Save Login</shortDescription>
         <value>Save &amp; Login</value>
+    </labels>
+    <labels>
+        <fullName>CSP_SearchByName</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP SH Service Search Label</shortDescription>
+        <value>Search By Name</value>
     </labels>
     <labels>
         <fullName>CSP_SearchDocuments</fullName>
@@ -7733,6 +7869,37 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <protected>false</protected>
         <shortDescription>CSP_Service_SmartLite_Title</shortDescription>
         <value>SMART Lite</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Service_StartupHotlist_NoAccess</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP SH Service Access Denied Label</shortDescription>
+        <value>Sorry, you don&apos;t have access to service. Please contact administrator if you need to get access to this service.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Service_StartupHotlist_ProviderProfileTab</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP SH Service Provider Profile Label</shortDescription>
+        <value>Provider Profile</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Service_StartupHotlist_SearchTab</fullName>
+        <categories>CSPortal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP SH Service Search Label</shortDescription>
+        <value>Search</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Service_StartupHotlist_Title</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP SH Service Title</shortDescription>
+        <value>Startup Hotlist</value>
     </labels>
     <labels>
         <fullName>CSP_Service_TIPReports_AmazonType</fullName>
@@ -8119,6 +8286,13 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <value>Task</value>
     </labels>
     <labels>
+        <fullName>CSP_Technology</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP SH Service Card Key Label</shortDescription>
+        <value>Technology</value>
+    </labels>
+    <labels>
         <fullName>CSP_Terms_Updated_Message</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -8376,6 +8550,13 @@ Click &lt;a href=&quot;https://www.iata.org/en/contact-support/contactus-v2/&quo
         <protected>false</protected>
         <shortDescription>CSP_Verification_L3_Email_UE_3_LMS</shortDescription>
         <value>Your training record will be maintained under this merged user. &lt;b&gt;From now on you will only be able to login with your work email address.&lt;/b&gt;&lt;br/&gt;</value>
+    </labels>
+    <labels>
+        <fullName>CSP_WaitingApproval</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_WaitingApproval</shortDescription>
+        <value>There is already a profile update waiting to be approved. You cannot create a new request until the ongoing is rejected or approved.</value>
     </labels>
     <labels>
         <fullName>CSP_Welcome_Email_Subject</fullName>
