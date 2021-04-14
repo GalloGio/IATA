@@ -62,7 +62,7 @@
             </value>
         </processMetadataValues>
         <name>myRule_1_A1</name>
-        <label>Assign IH Permission Set</label>
+        <label>Assign SH Permission Set</label>
         <locationX>100</locationX>
         <locationY>200</locationY>
         <actionName>PermissionSetAssignments</actionName>
@@ -261,7 +261,7 @@
             </value>
         </processMetadataValues>
         <name>myRule_3_A1</name>
-        <label>Unassign IH Permission Set</label>
+        <label>Unassign SH Permission Set</label>
         <locationX>300</locationX>
         <locationY>200</locationY>
         <actionName>PermissionSetAssignments</actionName>
