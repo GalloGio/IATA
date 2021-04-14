@@ -474,7 +474,7 @@
                                 </apex:outputPanel>
                                 <apex:pageBlock id="step1Block" mode="edit">
                                     <div>
-                                        <apex:commandButton  styleClass="iatabtn iatabtn-default" value="{!$Label.CS_Portal_Annual_Revalidation_Mass_Confirm_Details_Button}" action="{!showPopup}" rerender="tstpopup" rendered="{!caseAccount.Location_Type__c == 'GE'}"/>
+                                        <apex:commandButton  styleClass="iatabtn iatabtn-default" value="{!$Label.CS_Portal_Annual_Revalidation_Popup_Title}" action="{!showPopup}" rerender="tstpopup" rendered="{!caseAccount.Location_Type__c == 'GE'}"/>
                                         <apex:commandButton  styleClass="iatabtn iatabtn-default" value="{!$Label.CS_Portal_Annual_Revalidation_Download_csv}" onclick="download_csv_file();return false;" rendered="{!caseAccount.Location_Type__c == 'GE'}"/>
                                         <apex:outputPanel id="tstpopup" style="margin-top: 100px;"> 
                                             <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!displayPopUp}"/> 

@@ -8570,7 +8570,7 @@ IATA Customer Portal</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CS Portal Annual Revalidation Countries PickList Value</shortDescription>
-        <value>Select few Countries</value>
+        <value>View per Market(s)</value>
     </labels>
     <labels>
         <fullName>CS_Portal_Annual_Revalidation_Download_csv</fullName>
@@ -8578,15 +8578,7 @@ IATA Customer Portal</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CS Portal Annual Revalidation Download csv</shortDescription>
-        <value>Download CSV</value>
-    </labels>
-    <labels>
-        <fullName>CS_Portal_Annual_Revalidation_Mass_Confirm_Details_Button</fullName>
-        <categories>CS Portal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CS Portal Annual Revalidation Mass Confirm Details Button</shortDescription>
-        <value>Mass Confirm Details</value>
+        <value>Extract details for all locations to CSV file</value>
     </labels>
     <labels>
         <fullName>CS_Portal_Annual_Revalidation_Popup_Title</fullName>
@@ -8594,7 +8586,7 @@ IATA Customer Portal</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CS Portal Annual Revalidation Popup Title</shortDescription>
-        <value>Mass Confirm Details</value>
+        <value>Confirm details for Multiple Locations</value>
     </labels>
     <labels>
         <fullName>Campaign_already_created</fullName>
