@@ -76,7 +76,7 @@ global class ISSP_PortalUserFreeze_Batch implements Database.Batchable<SOBJECT>,
 
 			if (thisUser.LastLoginDate < minus90days || (thisUser.LastLoginDate == null && thisUser.CreatedDate < minus90days)){
 				inactive90 = true;
-			}else if(thisUser.Contact.Account.RecordType.Name == 'Standard Account' && (thisUser.LastLoginDate < minus90days || (thisUser.LastLoginDate == null && thisUser.CreatedDate < minus90days))){
+			}else if(thisUser.Contact.Account.RecordType.Name == 'Standard Account' && (thisUser.LastLoginDate < minus30days || (thisUser.LastLoginDate == null && thisUser.CreatedDate < minus30days))){
 				inactive30 = true;
 			}
 
