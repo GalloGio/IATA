@@ -597,7 +597,7 @@
         <queriedFields>Contact__c</queriedFields>
     </recordLookups>
     <startElementReference>sobjectInputCheckDecision</startElementReference>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>SObject</name>
         <dataType>SObject</dataType>
