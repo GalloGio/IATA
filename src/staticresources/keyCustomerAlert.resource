@@ -7,29 +7,26 @@ function displayKeyCustomerAlert(targetURL, popupTitle, popupText, newWindow) {
 		jQuery('head').append('<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>');
 
 		//Create the HTML(DIV Tag) for the Dialog.
-		var html = '<div id="dialog" title="' + popupTitle + '">';
+		var html = '<dialog id = "keyAlert"><div id="dialog" title="' + popupTitle + '">';
 		html += '<div style="float: left; width: 30%; padding-top: 3%;"><img src="/resource/1552412186000/keyCustomerIcon" width="60px" height="60px"></div>';
-		html += '<div style="float: left; width: 70%;">' + popupText + '</div></div>';
+		html += '<div style="float: left; width: 70%;">' + popupText + '</div>';
+        html += '<button id = "ok"> OK </button></div></dialog>';
 
 		//Check if the Dialog(DIV Tag) already exists if not then Append the same to the Body tag.
 		if(!jQuery('[id=dialog]').size()){
 			jQuery('body').append(html);
 		}
 
-		//Open the jQuery Dialog.
-		jQuery("#dialog").dialog({
-			//position: ['center', 200],
-			autoOpen: true,
-			modal: true,
-			buttons: {
-				"Ok": function() {
-					if(targetURL != null) {
-						goToURL(targetURL, newWindow);
-					}
-					jQuery(this).dialog("close");
-				}
-			}
-		});
+		var dialog  = document.getElementById('keyAlert');
+        var button = document.getElementById('ok');
+        button.addEventListener('click', function(){
+            if(targetURL != null) {
+                goToURL(targetURL, newWindow);
+            }
+            dialog.close('keyAlert');
+        });
+        
+        dialog.showModal();
 	});
 };
 

@@ -90,7 +90,7 @@ public with sharing class EmailMessageHandler {
 				FROM Case
 				WHERE id IN :mapCaseIdEmail.keyset()
 				AND RecordType.DeveloperName IN :LIST_VALID_RT
-				AND Contact.IsEmailBounced = false AND (NOT Contact.Email LIKE '%.inactive')]
+				AND ContactId != null AND Contact.IsEmailBounced = false AND (NOT Contact.Email LIKE '%.inactive')]
 				) {
 			if (cse.ClosedDate < Date.today().addDays(-14)) {
 				mapCases.put(cse.Id, cse);

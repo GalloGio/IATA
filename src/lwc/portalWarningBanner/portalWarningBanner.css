@@ -1,0 +1,12 @@
+.WarningRectangle {
+    height: 40px;
+    border-radius: 1px;
+    background-color: rgba(250, 200, 50, 0.32);
+    align-items: center;
+    display: inline-flex;
+    width: 100%;
+}
+
+.text-uppercase {
+    text-transform: uppercase;
+}
