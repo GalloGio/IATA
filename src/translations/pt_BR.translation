@@ -38679,6 +38679,23 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Operational hierarchies (From) --></description>
+        <label><!-- Operational hierarchies (From) --></label>
+        <name>Operational_hierarchies_from</name>
+        <sections>
+            <label><!-- Account Role Relationships (From) --></label>
+            <name>Account Role Relationships (From)</name>
+        </sections>
+        <sections>
+            <label><!-- Account Roles --></label>
+            <name>Account Roles</name>
+        </sections>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Opportunities w and w/o activities --></description>
         <label><!-- Opportunities w and w/o activities --></label>
         <name>Opportunities_w_and_w_o_activities</name>
