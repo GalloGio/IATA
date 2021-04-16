@@ -15,7 +15,6 @@ public without sharing class IGOMConstants {
 	}
 
 	public class Globals_Constants {
-		// 
 		public final String COMMUNITY_PROFILE { get { return 'ISS Portal (Partner)'; } }
 		public final String XML_ENCAPSULATOR_NAME { get { return 'Chapter'; } }
 		public final String XML_ENCAPSULATOR_NAME_ES { get { return 'Capítulo'; } }
