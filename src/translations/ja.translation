@@ -149,6 +149,14 @@
         <name>Service_l1l2</name>
     </customApplications>
     <customApplications>
+        <label><!-- Startup Hotlist --></label>
+        <name>Startup_Hotlist</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- Startup Hotlist --></label>
+        <name>Startup_Hotlist_lightning</name>
+    </customApplications>
+    <customApplications>
         <label><!-- TIDS --></label>
         <name>TIDS</name>
     </customApplications>
@@ -2969,6 +2977,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Breadcrumb_Home_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP Breadcrumb SH Service title --></label>
+        <name>CSP_Breadcrumb_Service_StartupHotlist</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP Breadcrumb SH Service Provider identification --></label>
+        <name>CSP_Breadcrumb_Service_StartupHotlist_Pro</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_Breadcrumb_Service_TIPReports --></label>
         <name>CSP_Breadcrumb_Service_TIPReports</name>
     </customLabels>
@@ -3063,6 +3079,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>案件</label>
         <name>CSP_Cases</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP SH Service Card Key Label --></label>
+        <name>CSP_Categories</name>
     </customLabels>
     <customLabels>
         <label>メールを変更する</label>
@@ -3267,6 +3287,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- EF Invoices --></label>
         <name>CSP_EF_Invoices</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_EditProviderDetails --></label>
+        <name>CSP_EditProviderDetails</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_EditTrainingDetails --></label>
+        <name>CSP_EditTrainingDetails</name>
     </customLabels>
     <customLabels>
         <label>メール</label>
@@ -3573,6 +3601,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_First_Login_Title_IE</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP SH Service Card Key Label --></label>
+        <name>CSP_FocusAreas</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_ForMoreInfo --></label>
+        <name>CSP_ForMoreInfo</name>
+    </customLabels>
+    <customLabels>
         <label>あなた様に</label>
         <name>CSP_ForYou</name>
     </customLabels>
@@ -3603,6 +3639,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>セキュリティ上の理由から、新しいパスワードを設定するためのメールを送信しました。</label>
         <name>CSP_Frozen_User_Message</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP SH Service Card Key Label --></label>
+        <name>CSP_FundingStage</name>
     </customLabels>
     <customLabels>
         <label>フィードバックをする</label>
@@ -3687,6 +3727,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>IDカードVER番号</label>
         <name>CSP_IDCard_Ver_Number</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_IHUB_LogoFileTypes --></label>
+        <name>CSP_IHUB_LogoFileTypes</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_IMPORTANT --></label>
@@ -4509,6 +4553,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Manage_Services_NoIEPAccount</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_MarkedForReview --></label>
+        <name>CSP_MarkedForReview</name>
+    </customLabels>
+    <customLabels>
         <label>案件一覧を表示</label>
         <name>CSP_MyCases</name>
     </customLabels>
@@ -4678,6 +4726,26 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Profile_PrivacyManagement_URL</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_ProviderDraftSaved --></label>
+        <name>CSP_ProviderDraftSaved</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_ProviderReviewComments --></label>
+        <name>CSP_ProviderReviewComments</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_ProviderSaveAndSubmit --></label>
+        <name>CSP_ProviderSaveAndSubmit</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_ProviderWrongSubmit --></label>
+        <name>CSP_ProviderWrongSubmit</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_PublishedRecordPreview --></label>
+        <name>CSP_PublishedRecordPreview</name>
+    </customLabels>
+    <customLabels>
         <label>案件はどの様なもので、いつそちらが必要になりますか。</label>
         <name>CSP_Question1</name>
     </customLabels>
@@ -4806,6 +4874,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Resend_Verification_Email</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP SH Service Reset Filters Label --></label>
+        <name>CSP_ResetFilters</name>
+    </customLabels>
+    <customLabels>
         <label>パスワードを再設定する</label>
         <name>CSP_Reset_Password</name>
     </customLabels>
@@ -4838,12 +4910,24 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Restricted_Login_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP SH text label --></label>
+        <name>CSP_SH_ChooseAny</name>
+    </customLabels>
+    <customLabels>
         <label>保存する</label>
         <name>CSP_Save</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_SaveAndSubmit --></label>
+        <name>CSP_SaveAndSubmit</name>
+    </customLabels>
+    <customLabels>
         <label>保存してログイン</label>
         <name>CSP_Save_Login</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP SH Service Search Label --></label>
+        <name>CSP_SearchByName</name>
     </customLabels>
     <customLabels>
         <label>文書の詳細で検索する</label>
@@ -4976,6 +5060,22 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- CSP_Service_SmartLite_Title --></label>
         <name>CSP_Service_SmartLite_Title</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP SH Service Access Denied Label --></label>
+        <name>CSP_Service_StartupHotlist_NoAccess</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP SH Service Provider Profile Label --></label>
+        <name>CSP_Service_StartupHotlist_ProviderProfileTab</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP SH Service Search Label --></label>
+        <name>CSP_Service_StartupHotlist_SearchTab</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP SH Service Title --></label>
+        <name>CSP_Service_StartupHotlist_Title</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_Service_TIPReports_AmazonType --></label>
@@ -5170,6 +5270,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Task</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP SH Service Card Key Label --></label>
+        <name>CSP_Technology</name>
+    </customLabels>
+    <customLabels>
         <label>定期的な更新の一環として、当社の規約にいくつかの変更を加えています。この文書を完全にお読みになることをお勧めします。</label>
         <name>CSP_Terms_Updated_Message</name>
     </customLabels>
@@ -5300,6 +5404,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- CSP_Verification_L3_Email_UE_3_LMS --></label>
         <name>CSP_Verification_L3_Email_UE_3_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_WaitingApproval --></label>
+        <name>CSP_WaitingApproval</name>
     </customLabels>
     <customLabels>
         <label>IATAカスタマーポータルへようこそ</label>
@@ -30313,370 +30421,6 @@ IATAコードをお持ちでない場合は、［顧客タイプ］に［その�
         <name>select_all</name>
     </customLabels>
     <customLabels>
-        <label><!-- Unbabel - Config Success --></label>
-        <name>unbabelapi__Unbabel_Config_Success</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Configurations --></label>
-        <name>unbabelapi__Unbabel_Configurations</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Error Parsing --></label>
-        <name>unbabelapi__Unbabel_Error_Parsing</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Error Received Translation Request Updated --></label>
-        <name>unbabelapi__Unbabel_Error_Received_Translation_Request_Updated</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Error Updating Translation Request --></label>
-        <name>unbabelapi__Unbabel_Error_Updating_Translation_Request</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Invalid Options --></label>
-        <name>unbabelapi__Unbabel_Invalid_Options</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Invalid Response --></label>
-        <name>unbabelapi__Unbabel_Invalid_Response</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Loading Wait --></label>
-        <name>unbabelapi__Unbabel_Loading_Wait</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Namespace and Class 404 --></label>
-        <name>unbabelapi__Unbabel_Namespace_and_Class_404</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Pages Configuration --></label>
-        <name>unbabelapi__Unbabel_Pages_Configuration</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Permission Error --></label>
-        <name>unbabelapi__Unbabel_Permission_Error</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Server Error --></label>
-        <name>unbabelapi__Unbabel_Server_Error</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Translation Request 404 --></label>
-        <name>unbabelapi__Unbabel_Translation_Request_404</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Configuration Not Found --></label>
-        <name>unbabelapi__Unbabel_config_404</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- HTML Email Body Empty Error Message --></label>
-        <name>unbabelsc__HTML_Email_Body_Empty_Error_Message</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- HTML Email Body Exceeds Size --></label>
-        <name>unbabelsc__HTML_Email_Body_Exceeds_Size</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- SubjectErrorMessage --></label>
-        <name>unbabelsc__SubjectError</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - To --></label>
-        <name>unbabelsc__Unabel_To</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Additional To Lookup --></label>
-        <name>unbabelsc__Unbabel_Additional_To_Lookup</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Additional to --></label>
-        <name>unbabelsc__Unbabel_Additional_to</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Attach File --></label>
-        <name>unbabelsc__Unbabel_Attach_File</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Attachment Upload Error --></label>
-        <name>unbabelsc__Unbabel_Attachment_Upload_Error</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Back to Case --></label>
-        <name>unbabelsc__Unbabel_Back_to_Case</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Back to EmailMessage --></label>
-        <name>unbabelsc__Unbabel_Back_to_EmailMessage</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - CC Lookup --></label>
-        <name>unbabelsc__Unbabel_CC_Lookup</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Case Attachments --></label>
-        <name>unbabelsc__Unbabel_Case_Attachments</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Case Custom Fields --></label>
-        <name>unbabelsc__Unbabel_Case_Custom_Fields</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Case Detail Translation --></label>
-        <name>unbabelsc__Unbabel_Case_Detail_Translation</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel Case Feed Configurations --></label>
-        <name>unbabelsc__Unbabel_Case_Feed_Configurations</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Change? --></label>
-        <name>unbabelsc__Unbabel_Change</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Config OWED --></label>
-        <name>unbabelsc__Unbabel_Config_OWED</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Service Cloud Configurations Menu --></label>
-        <name>unbabelsc__Unbabel_Configurations_Menu</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Corrupted Reference (Attachment) --></label>
-        <name>unbabelsc__Unbabel_Corrupted_Reference_Attachment</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Corrupted Reference (EmailMessage) --></label>
-        <name>unbabelsc__Unbabel_Corrupted_Reference_EmailMessage</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Corrupted Reference (File) --></label>
-        <name>unbabelsc__Unbabel_Corrupted_Reference_File</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Delete --></label>
-        <name>unbabelsc__Unbabel_Delete</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Dont Understand Translation --></label>
-        <name>unbabelsc__Unbabel_Dont_Understand_Translation</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Edit Email --></label>
-        <name>unbabelsc__Unbabel_Edit_Email</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Email Custom Fields --></label>
-        <name>unbabelsc__Unbabel_Email_Custom_Fields</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel Email Publisher Load Error --></label>
-        <name>unbabelsc__Unbabel_Email_Publisher_Load_Error</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Email format --></label>
-        <name>unbabelsc__Unbabel_Email_format</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel Error missing translated content --></label>
-        <name>unbabelsc__Unbabel_Error_missing_translated_content</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel Error requesting translation --></label>
-        <name>unbabelsc__Unbabel_Error_requesting_translation</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Explain OWED Setup --></label>
-        <name>unbabelsc__Unbabel_Explain_OWED_Setup</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Failed Request --></label>
-        <name>unbabelsc__Unbabel_Failed_Request</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - File Size Limit Exceeded --></label>
-        <name>unbabelsc__Unbabel_File_Size_Limit_Exceeded</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Forward --></label>
-        <name>unbabelsc__Unbabel_Forward</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - From --></label>
-        <name>unbabelsc__Unbabel_From</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel HTML Click To Reveal --></label>
-        <name>unbabelsc__Unbabel_HTML_Click_To_Reveal</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Languages - Not Found --></label>
-        <name>unbabelsc__Unbabel_Languages_404</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Message Content Translation --></label>
-        <name>unbabelsc__Unbabel_Message_Content_Translation</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - My Computer --></label>
-        <name>unbabelsc__Unbabel_My_Computer</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - No Attachments --></label>
-        <name>unbabelsc__Unbabel_No_Attachments</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Original Message --></label>
-        <name>unbabelsc__Unbabel_Original_Message</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Pages: CaseTranslator --></label>
-        <name>unbabelsc__Unbabel_Pages_CaseTranslator</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Pages: ConfigMenu --></label>
-        <name>unbabelsc__Unbabel_Pages_ConfigMenu</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Pages: emailMessageTranslator --></label>
-        <name>unbabelsc__Unbabel_Pages_emailMessageTranslator</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Pages: sendEmail --></label>
-        <name>unbabelsc__Unbabel_Pages_sendEmail</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Pending Translation Request --></label>
-        <name>unbabelsc__Unbabel_Pending_Translation_Request</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Permission Error --></label>
-        <name>unbabelsc__Unbabel_Permission_Error</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Permissions not found --></label>
-        <name>unbabelsc__Unbabel_Permissions_404</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Preview --></label>
-        <name>unbabelsc__Unbabel_Preview</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Provide Id --></label>
-        <name>unbabelsc__Unbabel_Provide_Id</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Recipient Null --></label>
-        <name>unbabelsc__Unbabel_Recipient_Null</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Related To --></label>
-        <name>unbabelsc__Unbabel_Related_To</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel  - Reply --></label>
-        <name>unbabelsc__Unbabel_Reply</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Reply to All --></label>
-        <name>unbabelsc__Unbabel_Reply_to_All</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Request Error --></label>
-        <name>unbabelsc__Unbabel_Request_Error</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Request Human Translation --></label>
-        <name>unbabelsc__Unbabel_Request_Human_Translation</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel Same Lang --></label>
-        <name>unbabelsc__Unbabel_Same_Lang</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Select Files --></label>
-        <name>unbabelsc__Unbabel_Select_Files</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Select to Attach --></label>
-        <name>unbabelsc__Unbabel_Select_to_Attach</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Send --></label>
-        <name>unbabelsc__Unbabel_Send</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel Send Email --></label>
-        <name>unbabelsc__Unbabel_Send_Email</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Send an Email with Translation --></label>
-        <name>unbabelsc__Unbabel_Send_an_Email_with_Translation</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Switch to HTML --></label>
-        <name>unbabelsc__Unbabel_Switch_to_HTML</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Switch to Text-Only --></label>
-        <name>unbabelsc__Unbabel_Switch_to_Text_Only</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Task Description --></label>
-        <name>unbabelsc__Unbabel_Task_Description</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Text-only --></label>
-        <name>unbabelsc__Unbabel_Text_only</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Translate To --></label>
-        <name>unbabelsc__Unbabel_Translate_To</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel Translated Content Info --></label>
-        <name>unbabelsc__Unbabel_Translated_Content_Info</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel Translated Content  on Translated Email --></label>
-        <name>unbabelsc__Unbabel_Translated_Content_on_Translated_Email</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Translated From --></label>
-        <name>unbabelsc__Unbabel_Translated_From</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Translated by Human --></label>
-        <name>unbabelsc__Unbabel_Translated_by_Human</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel_Unsupported_Language --></label>
-        <name>unbabelsc__Unbabel_Unsupported_Language</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel Unsupported Language Pair --></label>
-        <name>unbabelsc__Unbabel_Unsupported_Language_Pair</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Unsupported Object --></label>
-        <name>unbabelsc__Unbabel_Unsupported_Object</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel - Upload File --></label>
-        <name>unbabelsc__Unbabel_Upload_File</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- Unbabel Waiting for translation --></label>
-        <name>unbabelsc__Unbabel_Waiting_for_translation</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- viewHtmlBody --></label>
-        <name>unbabelsc__viewHtmlBody</name>
-    </customLabels>
-    <customLabels>
-        <label><!-- viewHtmlBodyNewWindow --></label>
-        <name>unbabelsc__viewHtmlBodyNewWindow</name>
-    </customLabels>
-    <customLabels>
         <label><!-- wire transfer payment msg --></label>
         <name>wire_transfer_payment_msg</name>
     </customLabels>
@@ -38934,6 +38678,23 @@ IATAコードをお持ちでない場合は、［顧客タイプ］に［その�
         <sections>
             <label><!-- User Provisioning Requests --></label>
             <name>User Provisioning Requests</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Operational hierarchies (From) --></description>
+        <label><!-- Operational hierarchies (From) --></label>
+        <name>Operational_hierarchies_from</name>
+        <sections>
+            <label><!-- Account Role Relationships (From) --></label>
+            <name>Account Role Relationships (From)</name>
+        </sections>
+        <sections>
+            <label><!-- Account Roles --></label>
+            <name>Account Roles</name>
+        </sections>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
         </sections>
     </reportTypes>
     <reportTypes>

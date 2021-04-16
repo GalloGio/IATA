@@ -6,8 +6,6 @@
     <customButtons>Log_Phone_Case</customButtons>
     <customButtons>Change_Routing</customButtons>
     <customButtons>Move_to_Recycle_Bin</customButtons>
-    <customButtons>unbabelsc__Unbabel_Translate_Case</customButtons>
-    <customButtons>Translate_Last_Customer_Comment</customButtons>
     <customButtons>Reset_New_interactions</customButtons>
     <customConsoleComponents>
         <subtabComponents>
@@ -493,21 +491,6 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
-            <actionName>Clone</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>5</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Share</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>6</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Move_to_Recycle_Bin_SIS_HD</actionName>
-            <actionType>CustomButton</actionType>
-            <sortOrder>7</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
             <actionName>Case.New_Comment_Key_Customer_Alert</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>0</sortOrder>
@@ -531,6 +514,21 @@
             <actionName>Case.Close_Case_lightning</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>4</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Clone</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>5</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Share</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>6</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Move_to_Recycle_Bin_SIS_HD</actionName>
+            <actionType>CustomButton</actionType>
+            <sortOrder>7</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <quickActionList/>

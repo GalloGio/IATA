@@ -54,7 +54,7 @@
                             <div class="slds-col slds-size_1-of-12 slds-p-top_small slds-p-bottom_small">
                                 <div>
                                     <div>
-                                        For more information about this invoice
+                                        {labels.CSP_ForMoreInfo}
                                     </div>
                                 </div>
                                 <div>
@@ -152,9 +152,55 @@
                                         <div key={emptyStaticServices} class="text-xsmall"></div>
                                     </template>
                                 </div>
+                            </template>                           
+
+                            <template if:true={field.isRecentNews}>
+                                <div key={field.fieldName} class="SH text-small slds-col slds-size_1-of-1 slds-medium-size_2-of-2 slds-large-size_2-of-2">
+                                    <lightning-output-field variant='label-hidden' class="textValue removeLinks"
+                                        field-name={field.fieldName}>
+                                    </lightning-output-field>
+                                </div>
                             </template>
 
+                            <template if:true={field.isBold}>
+                                <div key={field.fieldName} class="SH text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
+                                    <lightning-output-field class="valueBold labelValue textValue removeLinks"
+                                        field-name={field.fieldName}>
+                                    </lightning-output-field>
+                                </div>
+                            </template>
 
+                            <template if:true={field.isFullColumn}>
+                                <div key={field.fieldName} class="SH text-small slds-col slds-size_1-of-1 slds-medium-size_2-of-2 slds-large-size_2-of-2">
+                                    <lightning-output-field class="labelValue textValue removeLinks"
+                                        field-name={field.fieldName}>
+                                    </lightning-output-field>
+                                </div>
+                            </template>
+
+                            <template if:true={field.isLogo}>
+                                <div key={providerId} class="text-small slds-col slds-size_1-of-1 slds-medium-size_2-of-2 slds-large-size_2-of-2 SHMarginLogo">
+                                    <c-portal-record-view-edit-logo key={providerId} provider-id-api={providerId}></c-portal-record-view-edit-logo>
+                                </div>
+                            </template>
+
+                            <template if:true={field.isMultipick}>
+                                <div key={providerId} class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2">
+                                    <c-portal-record-view-list key={providerId} label-api={field.label} provider-id-api={providerId}
+                                    field-api={field.fieldName}>
+                                    </c-portal-record-view-list>
+                                </div>
+
+                            </template>
+
+                            <template if:true={field.isTech}>
+                                <div key={providerId} class="text-small slds-col slds-size_1-of-1 slds-medium-size_2-of-2 slds-large-size_2-of-2">
+                                    <c-portal-record-view-list key={providerId} label-api={field.label} provider-id-api={providerId}
+                                    field-api={field.fieldName}>
+                                    </c-portal-record-view-list>
+                                </div>
+
+                            </template>
 
                             <template if:false={field.isAccessibility}>
                                 <template if:false={field.isContactServices}>
@@ -185,7 +231,12 @@
                                                                     <b><lightning-output-field field-name={field.fieldName}></lightning-output-field></b>
                                                                 </template>
                                                                 <template if:false={isCustomerInvoice}>
-                                                                    <lightning-output-field class="labelValue textValue" field-name={field.fieldName}></lightning-output-field>      
+                                                                    <div if:false={isIHUB}>
+                                                                        <lightning-output-field class="labelValue textValue" field-name={field.fieldName}></lightning-output-field>      
+                                                                    </div>
+                                                                    <div if:true={isIHUB}>
+                                                                        <lightning-output-field class="SH textValue" field-name={field.fieldName}></lightning-output-field>      
+                                                                    </div>
                                                                 </template>
                                                                 <!--WMO-699 - ACAMBAS: End -->
                                                             </template>
@@ -199,6 +250,7 @@
                                                                             onclick={openChangeUserPortalStatus}>
                                                                         </lightning-icon>
                                                                 </template>
+                                                                
                                                             <lightning-output-field class="labelValue textValue removeLinks"
                                                                     field-name={field.fieldName}>
                                                             </lightning-output-field>
@@ -513,7 +565,7 @@
                 <div class="customPopupInteriorHalfScreenCenteredShippingAddress">
                     <!-- Popup Header -->
                     <div class="slds-p-horizontal_large slds-p-vertical_medium editIcon">
-                        <span>Edit Training Details</span>
+                        <span>{labels.CSP_EditTrainingDetails}</span>
                         <span class="slds-float_right slds-m-horizontal_x-small close-mark" onclick={closeModal}>
                             <template if:false={isSaving}>
                                 <lightning-icon icon-name="utility:close" size="x-small" class="cursorPointer"
@@ -541,7 +593,7 @@
         <template if:false={isTrainingInfo}>
             <c-portal-popup-container size="half">
                 <span slot="modalHeader">
-                    <span>Edit {objectName}</span>
+                    <span>{labels.Edit} {objectName}</span>
                     <span class="slds-float_right slds-m-horizontal_x-small close-mark" onclick={closeModal}>
                         <template if:false={isSaving}>
                             <lightning-icon icon-name="utility:close" size="x-small" class="cursorPointer"

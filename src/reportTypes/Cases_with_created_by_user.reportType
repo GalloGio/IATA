@@ -318,11 +318,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>unbabelsc__Unbabel_Always_check_language__c</field>
-            <table>Case</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>Amount__c</field>
             <table>Case</table>
         </columns>
@@ -3794,16 +3789,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>UAT_results_recevied_Date__c</field>
-            <table>Case</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>unbabelsc__Unbabel_Language__c</field>
-            <table>Case</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>unbabelsc__Unbabel_Translated_Description__c</field>
             <table>Case</table>
         </columns>
         <columns>

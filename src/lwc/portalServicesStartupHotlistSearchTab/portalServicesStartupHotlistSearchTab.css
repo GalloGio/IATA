@@ -1,0 +1,40 @@
+.fullWidth{
+  width:100%;
+}
+
+.displayFlex {
+display: flex;
+}
+
+.inputFilter {
+  display: flex;
+  align-items: center;
+}
+
+.inputFilter lightning-input {
+  width: 100%;
+  margin-top: -1px;
+}
+
+.rotateIcon {
+  transform: rotate(45deg);
+}
+
+.smallSearchSpinner {
+  position: relative;
+  display: inline-block;
+  margin-left: 35px;
+  vertical-align: middle;
+  height: 100%;
+}
+
+.providerSpinner {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  height: 100%;
+}
+
+.alignCheckboxes {
+  vertical-align: -2px;
+}

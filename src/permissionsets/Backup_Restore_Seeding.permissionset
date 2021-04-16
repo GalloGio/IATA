@@ -20283,21 +20283,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Case.unbabelsc__Unbabel_Always_check_language__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Case.unbabelsc__Unbabel_Language__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Case.unbabelsc__Unbabel_Translated_Description__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Case_Daily_Workload__c.Assigned_Alias__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -28479,56 +28464,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>EmailMessage.dgec__DG_Channel__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>EmailMessage.unbabelsc__Unbabel_Draft_Email__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>EmailMessage.unbabelsc__Unbabel_Language__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>EmailMessage.unbabelsc__Unbabel_Original_Message_Id_Formula__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>EmailMessage.unbabelsc__Unbabel_Original_Message_Id__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>EmailMessage.unbabelsc__Unbabel_Temporary__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>EmailMessage.unbabelsc__Unbabel_Translated_HtmlBody__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>EmailMessage.unbabelsc__Unbabel_Translated_Message_Id_Formula__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>EmailMessage.unbabelsc__Unbabel_Translated_Message_Id__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>EmailMessage.unbabelsc__Unbabel_Translated_Subject__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>EmailMessage.unbabelsc__Unbabel_Translated_TextBody__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -51822,211 +51757,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
-        <field>unbabelapi__Unbabel_Archived_Translation_Request__b.unbabelapi__Unbabel_Class__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>unbabelapi__Unbabel_Archived_Translation_Request__b.unbabelapi__Unbabel_Error_Log__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>unbabelapi__Unbabel_Archived_Translation_Request__b.unbabelapi__Unbabel_From_Language__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>unbabelapi__Unbabel_Archived_Translation_Request__b.unbabelapi__Unbabel_Languages__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>unbabelapi__Unbabel_Archived_Translation_Request__b.unbabelapi__Unbabel_Last_Modified_Datetime__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>unbabelapi__Unbabel_Archived_Translation_Request__b.unbabelapi__Unbabel_Namespace__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>unbabelapi__Unbabel_Archived_Translation_Request__b.unbabelapi__Unbabel_Origin_Subcategory__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>unbabelapi__Unbabel_Archived_Translation_Request__b.unbabelapi__Unbabel_Origin__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>unbabelapi__Unbabel_Archived_Translation_Request__b.unbabelapi__Unbabel_System_Field__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>unbabelapi__Unbabel_Archived_Translation_Request__b.unbabelapi__Unbabel_To_Language__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>unbabelapi__Unbabel_Archived_Translation_Request__b.unbabelapi__Unbabel_Translation_Delay__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>unbabelapi__Unbabel_Archived_Translation_Request__b.unbabelapi__Unbabel_Translation_Received_Datetime__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>unbabelapi__Unbabel_Archived_Translation_Request__b.unbabelapi__Unbabel_Translation_Success__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>unbabelapi__Unbabel_Archived_Translation_Request__b.unbabelapi__Unbabel_Translation_Type__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>unbabelapi__Unbabel_Archived_Translation_Request__b.unbabelapi__Unbabel_sObject_Id__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>unbabelapi__Unbabel_Archived_Translation_Request__b.unbabelapi__Unbabel_sObject_Parent_Id__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>unbabelapi__Unbabel_Archived_Translation_Request__b.unbabelapi__Unbabel_sObject_Parent__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>unbabelapi__Unbabel_Translation_Request__c.unbabelapi__Brand__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>unbabelapi__Unbabel_Translation_Request__c.unbabelapi__Go_to_the_Translation__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>unbabelapi__Unbabel_Translation_Request__c.unbabelapi__Unbabel_Brand_uid__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>unbabelapi__Unbabel_Translation_Request__c.unbabelapi__Unbabel_Class__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>unbabelapi__Unbabel_Translation_Request__c.unbabelapi__Unbabel_Error_Log__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>unbabelapi__Unbabel_Translation_Request__c.unbabelapi__Unbabel_From_Language__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>unbabelapi__Unbabel_Translation_Request__c.unbabelapi__Unbabel_Languages__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>unbabelapi__Unbabel_Translation_Request__c.unbabelapi__Unbabel_Last_Modified_Datetime__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>unbabelapi__Unbabel_Translation_Request__c.unbabelapi__Unbabel_Namespace__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>unbabelapi__Unbabel_Translation_Request__c.unbabelapi__Unbabel_Origin_Subcategory__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>unbabelapi__Unbabel_Translation_Request__c.unbabelapi__Unbabel_Origin__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>unbabelapi__Unbabel_Translation_Request__c.unbabelapi__Unbabel_Status__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>unbabelapi__Unbabel_Translation_Request__c.unbabelapi__Unbabel_System_Field__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>unbabelapi__Unbabel_Translation_Request__c.unbabelapi__Unbabel_To_Language__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>unbabelapi__Unbabel_Translation_Request__c.unbabelapi__Unbabel_Translation_Delay__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>unbabelapi__Unbabel_Translation_Request__c.unbabelapi__Unbabel_Translation_Received_Datetime__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>unbabelapi__Unbabel_Translation_Request__c.unbabelapi__Unbabel_Translation_Requested_Datetime__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>unbabelapi__Unbabel_Translation_Request__c.unbabelapi__Unbabel_Translation_Success__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>unbabelapi__Unbabel_Translation_Request__c.unbabelapi__Unbabel_Translation_Type__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>unbabelapi__Unbabel_Translation_Request__c.unbabelapi__Unbabel_sObject_Id__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>unbabelapi__Unbabel_Translation_Request__c.unbabelapi__Unbabel_sObject_Parent_Id__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>unbabelapi__Unbabel_Translation_Request__c.unbabelapi__Unbabel_sObject_Parent__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>unbabelapi__Unbabel_Translation_Request__c.unbabelapi__Unbabel_sObject__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>unbabelsc__Unbabel_Log__c.unbabelsc__Log__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>false</editable>
         <field>xtma_Email_Result__c.Bounce_Rate__c</field>
         <readable>true</readable>
@@ -60636,6 +60366,15 @@
         <allowDelete>true</allowDelete>
         <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>ProcessException</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>Product2</object>
         <viewAllRecords>false</viewAllRecords>
@@ -61070,6 +60809,15 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>true</modifyAllRecords>
         <object>SFDC_Strategy__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>SH_Account_Role_Detail__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
@@ -62078,33 +61826,6 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>true</modifyAllRecords>
         <object>pi__Pardot_Scoring_Category__c</object>
-        <viewAllRecords>true</viewAllRecords>
-    </objectPermissions>
-    <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>true</allowDelete>
-        <allowEdit>false</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>false</modifyAllRecords>
-        <object>unbabelapi__Unbabel_Archived_Translation_Request__b</object>
-        <viewAllRecords>false</viewAllRecords>
-    </objectPermissions>
-    <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>true</allowDelete>
-        <allowEdit>true</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>true</modifyAllRecords>
-        <object>unbabelapi__Unbabel_Translation_Request__c</object>
-        <viewAllRecords>true</viewAllRecords>
-    </objectPermissions>
-    <objectPermissions>
-        <allowCreate>true</allowCreate>
-        <allowDelete>true</allowDelete>
-        <allowEdit>true</allowEdit>
-        <allowRead>true</allowRead>
-        <modifyAllRecords>true</modifyAllRecords>
-        <object>unbabelsc__Unbabel_Log__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>

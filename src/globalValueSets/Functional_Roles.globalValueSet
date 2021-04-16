@@ -221,6 +221,11 @@
         <label>IFTP</label>
     </customValue>
     <customValue>
+        <fullName>Startup Hotlist</fullName>
+        <default>false</default>
+        <label>Startup Hotlist</label>
+    </customValue>
+    <customValue>
         <fullName>Insurance Providers</fullName>
         <default>false</default>
         <label>Insurance Providers</label>

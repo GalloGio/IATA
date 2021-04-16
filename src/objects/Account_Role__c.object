@@ -479,6 +479,19 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
         <label>All</label>
         <language>en_US</language>
     </listViews>
+    <listViews>
+        <fullName>Startup_Hotlist</fullName>
+        <columns>NAME</columns>
+        <columns>Account_Name__c</columns>
+        <columns>Status__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Functional_Role__c</field>
+            <operation>equals</operation>
+            <value>Startup Hotlist</value>
+        </filters>
+        <label>Startup Hotlist</label>
+    </listViews>
     <nameField>
         <displayFormat>AR-{0000}</displayFormat>
         <label>Account Role Name</label>
@@ -747,6 +760,10 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
             </values>
             <values>
                 <fullName>Standards Setting Workspace</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Startup Hotlist</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1075,6 +1092,10 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
                 <default>false</default>
             </values>
             <values>
+                <fullName>Startup Hotlist</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>TIDS</fullName>
                 <default>false</default>
             </values>
@@ -1397,6 +1418,10 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
                 <default>false</default>
             </values>
             <values>
+                <fullName>Startup Hotlist</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>TIDS</fullName>
                 <default>false</default>
             </values>
@@ -1712,6 +1737,10 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
             </values>
             <values>
                 <fullName>Standards Setting Workspace</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Startup Hotlist</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -2040,6 +2069,10 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
                 <default>false</default>
             </values>
             <values>
+                <fullName>Startup Hotlist</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>TIDS</fullName>
                 <default>false</default>
             </values>
@@ -2152,13 +2185,6 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
         <errorConditionFormula>AND(RecordType.DeveloperName=&quot;TIP_Payment_Provider&quot;,  Effective_From_Date__c &gt; Effective_To_Date__c )</errorConditionFormula>
         <errorDisplayField>Effective_To_Date__c</errorDisplayField>
         <errorMessage>Effective To Date needs to be greater then Effective From Date</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>Validate_Providers_Accreditation_Date</fullName>
-        <active>false</active>
-        <description>Can’t have active Payment Providers with Effective date From in the future</description>
-        <errorConditionFormula>AND(RecordType.DeveloperName=&quot;TIP_Payment_Provider&quot;, TEXT(Status__c)=&quot;Active&quot;, Effective_From_Date__c&gt;Today())</errorConditionFormula>
-        <errorMessage>Can’t have active Payment Providers with Effective date From in the future</errorMessage>
     </validationRules>
     <visibility>Public</visibility>
     <webLinks>

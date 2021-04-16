@@ -652,16 +652,5 @@ PRIORVALUE(ANG_Expired__c)))&amp;&amp;( $User.Id != &apos;005w0000004fo0x&apos;)
         <errorDisplayField>ANG_Risk_Type__c</errorDisplayField>
         <errorMessage>You can&apos;t change the Risk Event Type</errorMessage>
     </validationRules>
-    <validationRules>
-        <fullName>Unique_Source_Validation</fullName>
-        <active>false</active>
-        <description>Only one source field can be filled</description>
-        <errorConditionFormula>(
-  IF(NOT(ISBLANK(ANG_CaseId__c)) , 1, 0) +
-  IF(NOT(ISBLANK(ANG_ChangeCode__c)) , 1, 0) +
-  IF(NOT(ISBLANK(ANG_OscarId__c)) , 1, 0)
-) &gt; 1</errorConditionFormula>
-        <errorMessage>Please, fill only one of the source fields</errorMessage>
-    </validationRules>
     <visibility>Public</visibility>
 </CustomObject>
