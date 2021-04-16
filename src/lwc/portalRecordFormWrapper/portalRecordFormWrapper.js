@@ -5,6 +5,7 @@ import { NavigationMixin } from 'lightning/navigation';
 import { navigateToPage } from 'c/navigationUtils';
 import { getParamsFromPage } from 'c/navigationUtils';
 
+import isTidsAccount from '@salesforce/apex/PortalProfileCtrl.isTidsAccount';
 import isAdmin from '@salesforce/apex/CSP_Utils.isAdmin';
 import getPickListValues from '@salesforce/apex/CSP_Utils.getPickListValues';
 import goToPrivacyPortal from '@salesforce/apex/PortalProfileCtrl.goToPrivacyPortal';
@@ -195,6 +196,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     };
 
     @api tabName;
+    @track isTids = false;
     @track isAdminUser = false;
     @track isAirline=false;
     @track linkToDoChanges='';
@@ -341,7 +343,10 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
             }
 
         }
-        
+        this.isTids=false;
+        isTidsAccount().then(result =>{
+            this.isTids=result;
+        });
         isAdmin().then(result => {
             this.showEditTrack = result && this.showEditTrack;
             if (this.tabName && this._labels.CompanyInformation.trim() === this.tabName.trim()){	
