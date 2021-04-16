@@ -264,8 +264,9 @@
         <visibility>NONE</visibility>
     </categoryGroupVisibilities>
     <categoryGroupVisibilities>
+        <dataCategories>IATA_Travel_Pass</dataCategories>
         <dataCategoryGroup>FAQs</dataCategoryGroup>
-        <visibility>NONE</visibility>
+        <visibility>CUSTOM</visibility>
     </categoryGroupVisibilities>
     <classAccesses>
         <apexClass>ACliMassUpdate</apexClass>
