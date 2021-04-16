@@ -46729,6 +46729,22 @@ Through this service, you can directly access TIP Reports.</value>
         <value>IATA: International Air Transport Association</value>
     </labels>
     <labels>
+        <fullName>TIDS_Redirect_Link</fullName>
+        <categories>TIDS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TIDS_Redirect_Link</shortDescription>
+        <value>Click here to access the &lt;a href=&quot;/tids&quot; target=&quot;_self&quot;&gt;TIDS Service&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>TIDS_Redirect_Message</fullName>
+        <categories>TIDS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TIDS_Redirect_Message</shortDescription>
+        <value>Please report changes to your company details via the TIDS Service</value>
+    </labels>
+    <labels>
         <fullName>Total_Amount</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -52480,21 +52496,5 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <protected>false</protected>
         <shortDescription>wire transfer payment msg</shortDescription>
         <value>Your wire transfer payment has been received.</value>
-    </labels>
-    <labels>
-        <fullName>TIDS_Redirect_Link</fullName>
-        <categories>TIDS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>TIDS_Redirect_Link</shortDescription>
-        <value>Click here to access the &lt;a href=&quot;/tids&quot; target=&quot;_self&quot;&gt;TIDS Service&lt;/a&gt;</value>
-    </labels>
-    <labels>
-        <fullName>TIDS_Redirect_Message</fullName>
-        <categories>TIDS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>TIDS_Redirect_Message</shortDescription>
-        <value>Please report changes to your company details via the TIDS Service</value>
     </labels>
 </CustomLabels>
