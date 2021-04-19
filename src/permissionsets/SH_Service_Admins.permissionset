@@ -802,7 +802,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>IH Service Admins</label>
+    <label>SH Service Admins</label>
     <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>true</allowDelete>
