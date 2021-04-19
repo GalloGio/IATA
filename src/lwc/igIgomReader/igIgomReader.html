@@ -4,7 +4,7 @@
         <header class="header slds-grid slds-wrap slds-p-around_medium">
             <div class="slds-size_1-of-2">
                 <template if:true={igom}>
-                    <h1 class="header-title slds-m-right_medium">{igom.manual.Document_Name__c}</h1>
+                    <h1 class="header-title slds-m-right_medium">{igom.manual.Document_Name__c} Ed.{igom.manual.Edition__c}</h1>
                     <a if:true={showAllManuals} onclick={showManualSelectorModal} class="text-blue">{label.custom.ig_select_another_igom}</a>
                 </template>
                 <template if:false={igom}>
@@ -18,7 +18,7 @@
                         <use xlink:href={resources.icons.info}></use>
                     </svg>
                 </a>
-                <lightning-button if:true={allowManualUpload} onclick={showUploadModal} label={label.custom.ig_upload_new_igom} variant="brand"></lightning-button>
+                <button if:true={allowManualUpload} class="button btn-ig-primary upload-igom-btn" onclick={showUploadModal}>{label.custom.ig_upload_new_igom}</button>
             </div>
             <div class="slds-size_1-of-1">
                 <template if:true={igom}>
