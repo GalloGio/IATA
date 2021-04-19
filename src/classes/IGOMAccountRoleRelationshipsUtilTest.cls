@@ -92,8 +92,12 @@ private class IGOMAccountRoleRelationshipsUtilTest
 		IGOM_Account_Role_Detail__c station1 = (IGOM_Account_Role_Detail__c) objectsStation1.get(5);
 		IGOM_Account_Role_Detail__c station2 = (IGOM_Account_Role_Detail__c) objectsStation2.get(5);
 
+		Id contactId = [SELECT Account_Contact_Role__r.Contact__c FROM IGOM_Contact_Role_Detail__c LIMIT 1].Account_Contact_Role__r.Contact__c;
+		User user = [SELECT Id FROM User WHERE ContactId = :contactId LIMIT 1];
 		Test.startTest();
-		IGOMAccountRoleRelationshipsUtil.requestStationRelationship(IGOMConstants.STATION.RELATIONSHIP_TYPE.GROVP, station1.Id, station2.Id, false);
+		System.runAs(user){
+			IGOMAccountRoleRelationshipsUtil.requestStationRelationship(IGOMConstants.STATION.RELATIONSHIP_TYPE.GROVP, station1.Id, station2.Id, false);
+		}
 		Test.stopTest();
 
 		List<IGOM_Account_Role_Relationship__c> relationshipList = [SELECT Id, From__c, To__c, Requested_By__c, Status__c, Type__c FROM IGOM_Account_Role_Relationship__c
@@ -115,8 +119,12 @@ private class IGOMAccountRoleRelationshipsUtilTest
 		IGOM_Account_Role_Detail__c station1 = (IGOM_Account_Role_Detail__c) objectsStation1.get(5);
 		IGOM_Account_Role_Detail__c station2 = (IGOM_Account_Role_Detail__c) objectsStation2.get(5);
 
+		Id contactId = [SELECT Account_Contact_Role__r.Contact__c FROM IGOM_Contact_Role_Detail__c LIMIT 1].Account_Contact_Role__r.Contact__c;
+		User user = [SELECT Id FROM User WHERE ContactId = :contactId LIMIT 1];
 		Test.startTest();
-		IGOMAccountRoleRelationshipsUtil.requestStationRelationship(IGOMConstants.STATION.RELATIONSHIP_TYPE.CHILD, station1.Id, station2.Id, false);
+		System.runAs(user){
+			IGOMAccountRoleRelationshipsUtil.requestStationRelationship(IGOMConstants.STATION.RELATIONSHIP_TYPE.CHILD, station1.Id, station2.Id, false);
+		}
 		Test.stopTest();
 
 		List<IGOM_Account_Role_Relationship__c> relationshipList = [SELECT Id, From__c, To__c, Requested_By__c, Status__c, Type__c FROM IGOM_Account_Role_Relationship__c
@@ -139,8 +147,12 @@ private class IGOMAccountRoleRelationshipsUtilTest
 		IGOM_Account_Role_Detail__c station1 = (IGOM_Account_Role_Detail__c) objectsStation1.get(5);
 		IGOM_Account_Role_Detail__c station2 = (IGOM_Account_Role_Detail__c) objectsStation2.get(5);
 
+		Id contactId = [SELECT Account_Contact_Role__r.Contact__c FROM IGOM_Contact_Role_Detail__c LIMIT 1].Account_Contact_Role__r.Contact__c;
+		User user = [SELECT Id FROM User WHERE ContactId = :contactId LIMIT 1];
 		Test.startTest();
-		IGOMAccountRoleRelationshipsUtil.requestStationRelationship(IGOMConstants.STATION.RELATIONSHIP_TYPE.GROVP, station1.Id, station2.Id, false);
+		System.runAs(user){
+			IGOMAccountRoleRelationshipsUtil.requestStationRelationship(IGOMConstants.STATION.RELATIONSHIP_TYPE.GROVP, station1.Id, station2.Id, false);
+		}
 		Test.stopTest();
 
 		List<IGOM_Account_Role_Relationship__c> relationshipList = [SELECT Id, From__c, To__c, Requested_By__c, Status__c, Type__c FROM IGOM_Account_Role_Relationship__c

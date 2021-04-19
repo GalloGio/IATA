@@ -61,7 +61,11 @@ public inherited sharing class IGOMDocumentUtilTest {
 		section2_1.Parent__c = chapter2.Id;
 		update documentParts;
 
+		IGOMTestFactory.generateIGOMUserFactory(1, IGOMConstants.ROLES.ADMIN, IGOMConstants.STATION.TYPE.GROUND_HANDLER_HQ);
+
 		List<SObject> stationObjects = IGOMTestFactory.generateIGOMUserFactory(1, IGOMConstants.ROLES.ADMIN, IGOMConstants.STATION.TYPE.GROUND_HANDLER_HQ).get(0);
+		insert new Apex_Setting__c(Name='RT valid to reopen attachment trigger', Text_1__c='CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia, ComplaintIDFS,'
+                                           +  'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
 	}
 
     
@@ -613,9 +617,13 @@ public inherited sharing class IGOMDocumentUtilTest {
 			Body = Blob.valueOf('Test body for the attachment'),
 			ParentId = doc.Id
 		);
-
+		
+		Id contactId = [SELECT Account_Contact_Role__r.Contact__c FROM IGOM_Contact_Role_Detail__c WHERE  Role__c = :IGOMConstants.ROLES.ADMIN LIMIT 1].Account_Contact_Role__r.Contact__c;
+		User user = [SELECT Id FROM User WHERE ContactId = :contactId LIMIT 1];
 		Test.startTest();
-		IGOMDocumentUtil.deleteGomDocument(doc.Id);
+		System.runAs(user){
+			IGOMDocumentUtil.deleteGomDocument(doc.Id);
+		}
 		Test.stopTest();
 
         List<Document__c> docs = [SELECT Id FROM Document__c];
@@ -737,12 +745,15 @@ public inherited sharing class IGOMDocumentUtilTest {
 		
 		Document__c oldIgom = [SELECT Id FROM Document__c WHERE RecordType.DeveloperName = :IGOMConstants.DOCUMENT.RECORD_TYPE.IGOM LIMIT 1];
 		Id igomId;
-		IGOM_Contact_Role_Detail__c contactRole = [SELECT Id FROM IGOM_Contact_Role_Detail__c LIMIT 1];
+		IGOM_Contact_Role_Detail__c contactRole = [SELECT Id, Account_Contact_Role__r.Contact__c FROM IGOM_Contact_Role_Detail__c LIMIT 1];
 		contactRole.Role__c = IGOMConstants.ROLES.IATA_PERSONNEL;
 		update contactRole;
-		User user = [SELECT Id FROM User LIMIT 1];
+		Id contactId = contactRole.Account_Contact_Role__r.Contact__c;
+		User user = [SELECT Id FROM User WHERE ContactId = :contactId LIMIT 1];
 		Test.startTest();
-		igomId = IGOMDocumentUtil.uploadIGOMDocument(xmlFile);
+		System.runAs(user){
+			igomId = IGOMDocumentUtil.uploadIGOMDocument(xmlFile);
+		}
 		Test.stopTest();
 
 		System.assertNotEquals(null, igomId);
@@ -754,10 +765,10 @@ public inherited sharing class IGOMDocumentUtilTest {
 	 */
 	@isTest
 	public static void uploadIGOMDocumentTest_NoPermission(){
-		IGOM_Contact_Role_Detail__c contactRole = [SELECT Id FROM IGOM_Contact_Role_Detail__c LIMIT 1];
+		IGOM_Contact_Role_Detail__c contactRole = [SELECT Id, Account_Contact_Role__r.Contact__c FROM IGOM_Contact_Role_Detail__c LIMIT 1];
 		contactRole.Role__c = IGOMConstants.ROLES.VIEWER;
 		update contactRole;
-		User user = [SELECT Id FROM User LIMIT 1];
+		User user = [SELECT Id FROM User WHERE ContactId = :contactRole.Account_Contact_Role__r.Contact__c LIMIT 1];
 		
 		String xmlFile = '<?xmlversion="1.0" encoding="utf-8"?><Chapter permid="igom-gap-1" id="igom-gap-1" edition="10" xml:lang="en"><Section1 permid="igom-permid_0.4171466117622492" id="igom-1" xml:lang="en"><Section1Number>Chapter 1:</Section1Number><Section1Heading>PassengerHandlingProcedures</Section1Heading><Section2 permid="igom-permid_0.7857337828998681" id="igom-1-1.1"><Section2Number>1.1</Section2Number><Section2Heading>PassengerDeparture</Section2Heading><Section3 permid="igom-permid_0.6496767700095887" id="igom-1-1.1.1"><Section3Number>1.1.1</Section3Number><Section3Heading>Pre-DepartureActivities</Section3Heading><Section4 permid="igom-permid_0.6146238625670233" id="igom-1-1.1.1.1" rev="changed"><Section4Number>1.1.1.1</Section4Number><Section4Heading>TicketSalesCounter</Section4Heading></Section4><Section4 permid="igom-permid_0.6487040525387596" id="igom-1-1.1.1.2" rev="deleted"><Section4Number>1.1.1.2</Section4Number><Section4Heading>PassengerPre-FlightPreparation</Section4Heading></Section4></Section3></Section2></Section1></Chapter>';
 		Id igomId;

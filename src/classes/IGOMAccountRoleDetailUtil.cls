@@ -8,9 +8,14 @@ public without sharing class IGOMAccountRoleDetailUtil {
 		Id recordTypeAirline = recordTypeIdsByName.get(IGOMConstants.STATION.TYPE.AIRLINE);
 		Id recordTypeGH_HQ = recordTypeIdsByName.get(IGOMConstants.STATION.TYPE.GROUND_HANDLER_HQ);
 
+		Set<Id> accountRoleDetailIds = new Set<Id>();
+		for(IGOM_Account_Role_Detail__c accRoleDetail: accountRoleDetails){
+			accountRoleDetailIds.add(accRoleDetail.Id);
+		}
+
 		Set<Id> accountRoleIds = new Set<Id>();
 		List<IGOM_Account_Role_Detail__c> accountRoleDetailsToUpdate = new List<IGOM_Account_Role_Detail__c>();
-		for(IGOM_Account_Role_Detail__c accRoleDetail : accountRoleDetails){
+		for(IGOM_Account_Role_Detail__c accRoleDetail : [SELECT Id, Account_Role__c FROM IGOM_Account_Role_Detail__c WHERE Id IN :accountRoleDetailIds]){
 			if (accRoleDetail.Account_Role__c != null) {
 				accountRoleIds.add(accRoleDetail.Account_Role__c);
 				accountRoleDetailsToUpdate.add(accRoleDetail);
