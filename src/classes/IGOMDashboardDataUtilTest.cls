@@ -27,8 +27,9 @@ private class IGOMDashboardDataUtilTest {
 		Id contactId = [SELECT Account_Contact_Role__r.Contact__c FROM IGOM_Contact_Role_Detail__c WHERE  Role__c = :IGOMConstants.ROLES.ADMIN LIMIT 1].Account_Contact_Role__r.Contact__c;
 		User user = [SELECT Id FROM User WHERE ContactId = :contactId LIMIT 1];
 		Test.startTest();
+		Map<Id, IGOMDashboardDataUtil.StationSummary> stationIdToSummary;
 		System.runAs(user){
-			Map<Id, IGOMDashboardDataUtil.StationSummary> stationIdToSummary = IGOMDashboardDataUtil.getStationSummary(accountRoleNameToId.values());
+			stationIdToSummary = IGOMDashboardDataUtil.getStationSummary(accountRoleNameToId.values());
 		}
 		Test.stopTest();
 
@@ -56,9 +57,10 @@ private class IGOMDashboardDataUtilTest {
 		Id contactId = [SELECT Account_Contact_Role__r.Contact__c FROM IGOM_Contact_Role_Detail__c WHERE  Role__c = :IGOMConstants.ROLES.ADMIN LIMIT 1].Account_Contact_Role__r.Contact__c;
 		User user = [SELECT Id FROM User WHERE ContactId = :contactId LIMIT 1];
 		Test.startTest();
+		Map<String, Map<String, String>> result;
 		System.runAs(user){
 			String userAcknowledgements = IGOMDashboardDataUtil.userToProcedureToAcknowledgementStatus(complianceReview2Id);
-			Map<String, Map<String, String>> result = (Map<String, Map<String, String>>)JSON.deserialize(userAcknowledgements, Map<String, Map<String, String>>.class);
+			result = (Map<String, Map<String, String>>)JSON.deserialize(userAcknowledgements, Map<String, Map<String, String>>.class);
 		}
 		Test.stopTest();
 
@@ -118,8 +120,9 @@ private class IGOMDashboardDataUtilTest {
 		Id contactId = [SELECT Account_Contact_Role__r.Contact__c FROM IGOM_Contact_Role_Detail__c WHERE  Role__c = :IGOMConstants.ROLES.ADMIN LIMIT 1].Account_Contact_Role__r.Contact__c;
 		User user = [SELECT Id FROM User WHERE ContactId = :contactId LIMIT 1];
 		Test.startTest();
+		Map<String, String> statusPerStation;
 		System.runAs(user){
-			Map<String, String> statusPerStation = IGOMDashboardDataUtil.statusPerStation();
+			statusPerStation = IGOMDashboardDataUtil.statusPerStation();
 		}
 		Test.stopTest();
 
@@ -293,8 +296,9 @@ private class IGOMDashboardDataUtilTest {
 		Id contactId = [SELECT Account_Contact_Role__r.Contact__c FROM IGOM_Contact_Role_Detail__c WHERE  Role__c = :IGOMConstants.ROLES.ADMIN LIMIT 1].Account_Contact_Role__r.Contact__c;
 		User user = [SELECT Id FROM User WHERE ContactId = :contactId LIMIT 1];
 		Test.startTest();
+		Map<String, Map<Object, Integer>> itemStatusPerChapter;
 		System.runAs(user){
-			Map<String, Map<Object, Integer>> itemStatusPerChapter = IGOMDashboardDataUtil.itemStatusPerChapter(complianceReview2Id);
+			itemStatusPerChapter = IGOMDashboardDataUtil.itemStatusPerChapter(complianceReview2Id);
 		}
 		Test.stopTest();
 
