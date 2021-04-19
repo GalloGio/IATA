@@ -247,9 +247,16 @@ private class IGOMDashboardDataUtilTest {
 	private static void testVariationStatusPerChapterOk() {
 		Id complianceReview2Id = [SELECT Id FROM Compliance_Review__c WHERE Title__c = 'Compliance Review 2'].Id;
 		
+		IGOM_Contact_Role_Detail__c contactRoleDetail = [SELECT Id, Account_Contact_Role__r.Contact__c FROM IGOM_Contact_Role_Detail__c LIMIT 1];
+		contactRoleDetail.Role__c = IGOMConstants.ROLES.ADMIN;
+		update contactRoleDetail;
+		User user = [SELECT Id FROM User WHERE ContactId = :contactRoleDetail.Account_Contact_Role__r.Contact__c LIMIT 1];
 		Test.startTest();
 
-		Map<String, Map<Object, Integer>> variationStatusPerChapter = IGOMDashboardDataUtil.variationStatusPerChapter(complianceReview2Id);
+		Map<String, Map<Object, Integer>> variationStatusPerChapter;
+		System.runAs(user){
+			variationStatusPerChapter = IGOMDashboardDataUtil.variationStatusPerChapter(complianceReview2Id);
+		}
 
 		Test.stopTest();
 

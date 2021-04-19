@@ -744,12 +744,13 @@ public inherited sharing class IGOMDocumentUtilTest {
 		String xmlFile = '<?xmlversion="1.0" encoding="utf-8"?><Chapter permid="igom-gap-1" id="igom-gap-1" edition="10" xml:lang="en"><Section1 permid="igom-permid_0.4171466117622492" id="igom-1" xml:lang="en"><Section1Number>Chapter 1:</Section1Number><Section1Heading>PassengerHandlingProcedures</Section1Heading><Section2 permid="igom-permid_0.7857337828998681" id="igom-1-1.1"><Section2Number>1.1</Section2Number><Section2Heading>PassengerDeparture</Section2Heading><Section3 permid="igom-permid_0.6496767700095887" id="igom-1-1.1.1"><Section3Number>1.1.1</Section3Number><Section3Heading>Pre-DepartureActivities</Section3Heading><Section4 permid="igom-permid_0.6146238625670233" id="igom-1-1.1.1.1" rev="changed"><Section4Number>1.1.1.1</Section4Number><Section4Heading>TicketSalesCounter</Section4Heading></Section4><Section4 permid="igom-permid_0.6487040525387596" id="igom-1-1.1.1.2" rev="deleted"><Section4Number>1.1.1.2</Section4Number><Section4Heading>PassengerPre-FlightPreparation</Section4Heading></Section4></Section3></Section2></Section1></Chapter>';
 		
 		Document__c oldIgom = [SELECT Id FROM Document__c WHERE RecordType.DeveloperName = :IGOMConstants.DOCUMENT.RECORD_TYPE.IGOM LIMIT 1];
-		Id igomId;
 		IGOM_Contact_Role_Detail__c contactRole = [SELECT Id, Account_Contact_Role__r.Contact__c FROM IGOM_Contact_Role_Detail__c LIMIT 1];
 		contactRole.Role__c = IGOMConstants.ROLES.IATA_PERSONNEL;
 		update contactRole;
 		Id contactId = contactRole.Account_Contact_Role__r.Contact__c;
 		User user = [SELECT Id FROM User WHERE ContactId = :contactId LIMIT 1];
+		
+		Id igomId;
 		Test.startTest();
 		System.runAs(user){
 			igomId = IGOMDocumentUtil.uploadIGOMDocument(xmlFile);

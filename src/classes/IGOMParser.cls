@@ -296,6 +296,10 @@ public without sharing class IGOMParser {
 		cv.VersionData = EncodingUtil.base64Decode(base64);
 		cv.Title = filename;
 		cv.PathOnClient = filename;
+		if (Test.isRunningTest()) {
+			Id networkId = [SELECT Id FROM Network WHERE Name LIKE '%CS Portal%' LIMIT 1].Id;
+			cv.NetworkId = networkId;
+		}
 		try {
 			insert cv;
 			return cv;

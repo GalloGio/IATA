@@ -442,9 +442,16 @@ public inherited sharing class IGOMComplianceReviewUtilTest {
 			ParentId = complianceRevPartToAddAttachment.Id
 		);
 
+		IGOM_Contact_Role_Detail__c contactRoleDetail = [SELECT Id, Account_Contact_Role__r.Contact__c FROM IGOM_Contact_Role_Detail__c LIMIT 1];
+		contactRoleDetail.Role__c = IGOMConstants.ROLES.ADMIN;
+		update contactRoleDetail;
+		User user = [SELECT Id FROM User WHERE ContactId = :contactRoleDetail.Account_Contact_Role__r.Contact__c LIMIT 1];
+
 		IGOMComplianceReviewUtil.ComplianceReview compRev;
 		Test.startTest();
-		compRev = IGOMComplianceReviewUtil.getFullGapAnalysis(gap.Id);
+		System.runAs(user){
+			compRev = IGOMComplianceReviewUtil.getFullGapAnalysis(gap.Id);
+		}
 		Test.stopTest();
 
 		System.assertEquals(3, compRev.references.size());

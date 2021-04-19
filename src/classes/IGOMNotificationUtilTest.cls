@@ -1036,8 +1036,14 @@ private class IGOMNotificationUtilTest {
 
 	@isTest
 	private static void testSendManualNotifications_Error(){
+		Id contactId = [SELECT Account_Contact_Role__r.Contact__c FROM IGOM_Contact_Role_Detail__c WHERE  Role__c = :IGOMConstants.ROLES.ADMIN LIMIT 1].Account_Contact_Role__r.Contact__c;
+		User user = [SELECT Id FROM User WHERE ContactId = :contactId LIMIT 1];
+
 		Id stationId = [SELECT Id FROM IGOM_Account_Role_Detail__c LIMIT 1].Id;
-		Map<Id, IGOMNotificationUtil.NotifiableContact> notifiableContactsManual = IGOMNotificationUtil.getStationNotifiableContacts(stationId, IGOMConstants.NOTIFICATION.SEVERITY.MANUAL);
+		Map<Id, IGOMNotificationUtil.NotifiableContact> notifiableContactsManual;
+		System.runAs(user){
+			notifiableContactsManual = IGOMNotificationUtil.getStationNotifiableContacts(stationId, IGOMConstants.NOTIFICATION.SEVERITY.MANUAL);
+		}
 
 		Set<Id> contactIds = new Set<Id>();
 		for(IGOM_Contact_Role_Detail__c contactRole : [SELECT Id, Account_Contact_Role__r.Contact__c
@@ -1046,8 +1052,6 @@ private class IGOMNotificationUtilTest {
 		   contactIds.add(contactRole.Account_Contact_Role__r.Contact__c);
 		}
 		
-		Id contactId = [SELECT Account_Contact_Role__r.Contact__c FROM IGOM_Contact_Role_Detail__c WHERE  Role__c = :IGOMConstants.ROLES.ADMIN LIMIT 1].Account_Contact_Role__r.Contact__c;
-		User user = [SELECT Id FROM User WHERE ContactId = :contactId LIMIT 1];
 		Test.startTest();
 		try{
 			System.runAs(user){
