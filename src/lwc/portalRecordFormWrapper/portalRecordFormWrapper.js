@@ -67,6 +67,9 @@ import CSP_L2_Street from '@salesforce/label/c.CSP_L2_Street';
 import CSP_L3_PersonalEmail_LMS from '@salesforce/label/c.CSP_L3_PersonalEmail_LMS';
 import CSP_L_WorkPhone_LMS from '@salesforce/label/c.CSP_L_WorkPhone_LMS';
 
+// TIDS
+import TIDS_Redirect_Message from '@salesforce/label/c.TIDS_Redirect_Message';
+import TIDS_Redirect_Link from '@salesforce/label/c.TIDS_Redirect_Link';
 
 
 export default class PortalRecordFormWrapper extends NavigationMixin(LightningElement) {
@@ -151,6 +154,8 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     }
 
     _labels = {
+        TIDS_Redirect_Link,
+        TIDS_Redirect_Message,
         SaveLabel,
         CancelLabel,
         MembershipFunction,
