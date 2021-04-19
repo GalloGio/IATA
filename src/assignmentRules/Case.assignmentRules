@@ -1491,7 +1491,7 @@ and(RecordType.Name = &quot;Process&quot;,ISPICKVAL(Reason1__c,&quot;Report issu
 
 ISPICKVAL(CaseArea__c, &quot;ICCS&quot;),
 
-or(ISPICKVAL(Reason1__c,&quot;Content inquiry / issue&quot;),ISPICKVAL(Reason1__c,&quot;ISS Calendar Maintenance&quot;),ISPICKVAL(Reason1__c,&quot;Settlement related query&quot;),ISPICKVAL(Reason1__c,&quot;Task request&quot;)
+or(ISPICKVAL(Reason1__c,&quot;Content inquiry / issue&quot;),ISPICKVAL(Reason1__c,&quot;ISS Calendar Maintenance&quot;),ISPICKVAL(Reason1__c,&quot;Settlement related query&quot;),ISPICKVAL(Reason1__c,&quot;Task request&quot;),ISPICKVAL(Reason1__c,&quot;Internal Support&quot;)
 
 ))</formula>
             <template>All/IDFS_Caseassignmentqueue</template>
@@ -6146,7 +6146,7 @@ ISPICKVAL(Reason1__c, &quot;Credit Card Deletion&quot;)
             <criteriaItems>
                 <field>Case.Reason1__c</field>
                 <operation>equals</operation>
-                <value>Billing Query,Billing rerun</value>
+                <value>Billing Query,Billing rerun,Customer Charge Request</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -9090,7 +9090,7 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
             <criteriaItems>
                 <field>Case.Reason1__c</field>
                 <operation>equals</operation>
-                <value>Customer Charge Request</value>
+                <value>Customer Charge Request,Commercial Products</value>
             </criteriaItems>
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
