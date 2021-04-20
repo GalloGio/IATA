@@ -3,6 +3,13 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>noreply@iata.org</email>
     <name>L3 Publications AMS CDS</name>
+    <queueMembers>
+        <users>
+            <user>ganeaa@iata.org</user>
+            <user>szpyndam@iata.org</user>
+            <user>mckayt@iata.org</user>
+        </users>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>
