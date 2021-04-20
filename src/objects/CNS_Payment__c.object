@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <description>Used to stored the url and keys for CNS CyberSource integration</description>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>PROD_AccessKey__c</fullName>
+        <description>production key for cybersource configuration</description>
+        <externalId>false</externalId>
+        <label>PROD AccessKey</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PROD_ProfileId__c</fullName>
+        <description>production profile id for cybersource configuration</description>
+        <externalId>false</externalId>
+        <label>PROD ProfileId</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PROD_SecurityKey_2__c</fullName>
+        <description>production security key for cybersource configuration (part 2)</description>
+        <externalId>false</externalId>
+        <label>PROD SecurityKey 2</label>
+        <length>200</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PROD_SecurityKey__c</fullName>
+        <description>production security key for cybersource configuration</description>
+        <externalId>false</externalId>
+        <label>PROD SecurityKey</label>
+        <length>200</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PROD_URL__c</fullName>
+        <description>production url for cybersource configuration</description>
+        <externalId>false</externalId>
+        <label>PROD URL</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>QA_AccessKey__c</fullName>
+        <description>sandbox key for cybersource configuration</description>
+        <externalId>false</externalId>
+        <label>QA AccessKey</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>QA_ProfileId__c</fullName>
+        <description>sandbox profile id for cybersource configuration</description>
+        <externalId>false</externalId>
+        <label>QA ProfileId</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>QA_SecurityKey_2__c</fullName>
+        <description>sandbox security key for cybersource configuration (part 2)</description>
+        <externalId>false</externalId>
+        <label>QA SecurityKey 2</label>
+        <length>200</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>QA_SecurityKey__c</fullName>
+        <description>sandbox security key for cybersource configuration</description>
+        <externalId>false</externalId>
+        <label>QA SecurityKey</label>
+        <length>200</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>QA_URL__c</fullName>
+        <description>sandbox url for cybersource configuration</description>
+        <externalId>false</externalId>
+        <label>QA URL</label>
+        <length>255</length>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>CNS Payment</label>
+    <visibility>Public</visibility>
+</CustomObject>
