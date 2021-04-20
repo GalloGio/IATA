@@ -10,6 +10,10 @@
         <type>user</type>
     </allowedSubmitters>
     <allowedSubmitters>
+        <submitter>dsaj@iata.org</submitter>
+        <type>user</type>
+    </allowedSubmitters>
+    <allowedSubmitters>
         <submitter>garciate@iata.org</submitter>
         <type>user</type>
     </allowedSubmitters>
