@@ -348,7 +348,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>isChangedDecision14_myRule_13_Right_c</targetReference>
+            <targetReference>myDecision</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
@@ -369,41 +369,9 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>isChangedDecision14_myRule_13_Right_c</targetReference>
-            </connector>
-            <label>isChangedRule_15_myRule_14_Right_c</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>isChangedDecision14_myRule_13_Right_c</name>
-        <label>isChangedDecision14_myRule_13_Right_c</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <defaultConnector>
-            <targetReference>myDecision</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>default</defaultConnectorLabel>
-        <rules>
-            <name>isChangedRule_14_myRule_13_Right_c</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>myVariable_old</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>myVariable_old.Right__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <elementReference>myVariable_current.Right__c</elementReference>
-                </rightValue>
-            </conditions>
-            <connector>
                 <targetReference>myDecision</targetReference>
             </connector>
-            <label>isChangedRule_14_myRule_13_Right_c</label>
+            <label>isChangedRule_15_myRule_14_Right_c</label>
         </rules>
     </decisions>
     <decisions>
