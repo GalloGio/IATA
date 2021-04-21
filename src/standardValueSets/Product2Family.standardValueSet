@@ -346,4 +346,9 @@
         <default>false</default>
         <label>Training - OnSite</label>
     </standardValue>
+    <standardValue>
+        <fullName>Travel Pass</fullName>
+        <default>false</default>
+        <label>Travel Pass</label>
+    </standardValue>
 </StandardValueSet>
