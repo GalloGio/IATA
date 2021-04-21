@@ -346,6 +346,7 @@ public without sharing class IGOMNotificationUtil {
 		Map<Id, IGOMStationUtil.Station> notifiableAccountRoleIdToStation = new Map<Id, IGOMStationUtil.Station>();
 		allHierarchichalRelationships.addAll(allRelationships.childStations);
 		allHierarchichalRelationships.addAll(allRelationships.parentStations);
+		allHierarchichalRelationships.addAll(allRelationships.groupStations);
 		// Apply the rules of notification as seen in the document "IGOM Portal Roles and Hierarchies"
 		for (IGOMStationUtil.RelatedStation relatedStation : allHierarchichalRelationships) {
 			if (notificationType == IGOMConstants.NOTIFICATION.SEVERITY.INFORMATIVE || notificationType == IGOMConstants.NOTIFICATION.SEVERITY.MANUAL) {
