@@ -3140,6 +3140,14 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>CNS_Payment</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>CNS_Payment_Test</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>COPASCIMMessageEnhancer</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -69100,6 +69108,10 @@ Also used as default WF, Lead, Case</description>
     </pageAccesses>
     <pageAccesses>
         <apexPage>CNS_EBulletin</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>CNS_Payment</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
