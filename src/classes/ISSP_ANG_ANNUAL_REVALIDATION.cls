@@ -701,6 +701,10 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		for(childsAccountsWrapper acc: childsAccountsWrapperList){
 			if(acc.checked){
 				iataCodesOk.add(acc.IATACode);
+				
+				if(getForm(acc.IATACode)==null)
+					createForm(acc.IATACode);
+
 				currentAccount = new ANG_AnnualRevCurrentAccount(accountsMap.get(acc.IATACode),
 														getStatus(acc.IATACode),
 														getForm(acc.IATACode),
