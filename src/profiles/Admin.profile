@@ -3144,6 +3144,14 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>CNS_Payment</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>CNS_Payment_Test</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>COPASCIMMessageEnhancer</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -69731,6 +69739,10 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>CNS_EBulletin</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>CNS_Payment</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
