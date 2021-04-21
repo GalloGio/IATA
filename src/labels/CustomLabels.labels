@@ -46734,7 +46734,7 @@ Through this service, you can directly access TIP Reports.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>TIDS_Redirect_Link</shortDescription>
-        <value>Click here to access the &lt;a href=&quot;/tids&quot; target=&quot;_self&quot;&gt;TIDS Service&lt;/a&gt;</value>
+        <value>Click here to access the &lt;a href=&quot;/s/tids&quot; target=&quot;_self&quot;&gt;TIDS Service&lt;/a&gt;</value>
     </labels>
     <labels>
         <fullName>TIDS_Redirect_Message</fullName>

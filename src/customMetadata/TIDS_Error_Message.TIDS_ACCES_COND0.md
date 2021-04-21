@@ -60,7 +60,7 @@ User does not have a TIDS Service record assigned.
     </values>
     <values>
         <field>Visit_URL__c</field>
-        <value xsi:type="xsd:string">https://gdp2-customer-portal-iata.cs107.force.com/csportal/s/services</value>
+        <value xsi:type="xsd:string">https://portal.iata.org/s/services</value>
     </values>
     <values>
         <field>Yellow_Section_Header__c</field>
