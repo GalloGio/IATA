@@ -1,0 +1,19 @@
+<template>
+    <div class="SH slds-form-element slds-form-element_stacked textValue">
+        <span class="slds-form-element__label">{label}</span>
+
+        <div class="slds-form-element__control">
+            <div class="slds-form-element__static">
+                <ul class ="slds-list_dotted">
+                    <template for:each={list} for:item="item">
+                        <li key={item}>
+                            {item}
+                        </li>
+                    </template>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+    
+</template>

@@ -17,8 +17,26 @@ export default class PortalServicesCardContainer extends LightningElement {
         }
     }
 
+    @api
+    get numButtons() {
+        return this.numButtons;
+    }
+
+    set numButtons(value) { 
+        if(value === 'one'){
+            this.oneButton = true;
+        }
+
+    }
+
+    get hasOneButton() {
+        return this.numButtons == 'one';
+    }
+
     @track backgroundClass = '';
     @track fadeClass = '';
+    @track oneButton = false;
+
 
 
 }

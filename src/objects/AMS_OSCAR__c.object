@@ -52217,6 +52217,10 @@ The values selected by the analyst will determine the reason why the application
                 <default>false</default>
             </values>
             <values>
+                <fullName>Pending Reconsideration</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Pending Validation</fullName>
                 <default>false</default>
             </values>
@@ -59433,6 +59437,10 @@ The values selected by the analyst will determine the reason why the application
             </values>
             <values>
                 <fullName>Pending Approval</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending Reconsideration</fullName>
                 <default>false</default>
             </values>
             <values>
