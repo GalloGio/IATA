@@ -1,0 +1,47 @@
+<template>
+
+    <!-- SHOW LOADING -->
+    <div if:true={componentLoading} class="spinnerContainer">
+        <lightning-spinner class="background-superLightGray" alternative-text="Loading"></lightning-spinner>
+    </div>
+
+    <div if:false={componentLoading}>
+
+        <div if:true={showNavigation}>
+            <div class="slds-grid slds-wrap slds-gutters_medium slds-p-vertical_x-large slds-grid_align-center">
+
+                <!-- Sticky navigation -->
+                <div class="stickyNavigation slds-col slds-size_1-of-3">
+                    <c-portal-company-profile-info-nav class="slds-large-show" onnavigate={handleNavigation}>
+                    </c-portal-company-profile-info-nav>
+                </div>
+        
+                <!-- Profile sections -->
+                <div class="slds-col slds-size_1-of-1 slds-large-size_2-of-3 slds-float_right">
+                    <template for:each={propertiesAndCardsList.lstCards} for:item="card">
+                        <c-portal-record-form-wrapper key={card.key} object-name={propertiesAndCardsList.objectAPIName}
+                            record-id={propertiesAndCardsList.recordId} fields={card.lstFieldWrapper} show-edit={card.isEditable} edit-basics="false" edit-id-card="false"
+                            id-card-redirection-url={card.idCardRedirectionUrl} class="section" section-title={card.cardTitle} data-name={card.cardKey} section-name={card.cardKey}
+                            onrefreshview={refreshview} is-for-edit="false" showfunction={card.showfunction}
+                            section-class="slds-p-vertical_xx-large slds-p-horizontal_x-large customBorderlessCardWhite slds-m-bottom_medium section">
+                        </c-portal-record-form-wrapper>
+                    </template>
+                </div>
+            </div>
+        </div>
+
+        <div if:false={showNavigation}>
+             <!-- Profile sections -->
+            <template for:each={propertiesAndCardsList.lstCards} for:item="card">
+                <c-portal-record-form-wrapper key={card.key} object-name={propertiesAndCardsList.objectAPIName}
+                record-id={propertiesAndCardsList.recordId} fields={card.lstFieldWrapper} show-edit={card.isEditable} edit-basics="false" edit-id-card="false"
+                    id-card-redirection-url={card.idCardRedirectionUrl} class="section" section-title={card.cardTitle} data-name={card.cardKey} section-name={card.cardKey}
+                    onrefreshview={refreshview} is-for-edit="false" showfunction={card.showfunction}
+                    section-class="slds-p-vertical_xx-large slds-p-horizontal_x-large customBorderlessCardWhite slds-m-bottom_medium section">
+                </c-portal-record-form-wrapper>
+            </template>
+        </div>
+
+    </div>
+    
+</template>

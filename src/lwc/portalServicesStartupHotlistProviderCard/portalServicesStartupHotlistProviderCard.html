@@ -1,0 +1,34 @@
+<template>
+
+    <c-portal-services-card-container background-variant="white" num-buttons = "one">
+
+        <div slot="serviceImage" class="fullHeight fullWidth">
+            <template if:true={hasIcon}>
+                <div class="fullHeight fullWidth cardImageProperties" style={provider.imageCSS}>&nbsp;</div>
+            </template>
+        </div>
+
+        <span slot="serviceName">
+            {provider.name}
+        </span>
+        <span slot="serviceDescription">
+            <lightning-formatted-rich-text value={provider.description} class="breakWord">
+            </lightning-formatted-rich-text>
+        </span>
+
+        <span slot="rightButton">
+            <lightning-button label="View Detail" class="containedButtonSlim"
+                onclick={openProviderDetails}>
+            </lightning-button>
+        </span>
+
+        <div data-id="spinnerId" class="slds-spinner_container spinnerContainer" if:true={isLoading}>
+            <div class="slds-spinner slds-spinner_medium" role="status">
+                <span class="slds-assistive-text">Loading</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+            </div>
+        </div>        
+    </c-portal-services-card-container>
+
+</template>

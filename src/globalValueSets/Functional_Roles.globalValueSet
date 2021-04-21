@@ -221,6 +221,11 @@
         <label>IGOM</label>
     </customValue>
     <customValue>
+        <fullName>Startup Hotlist</fullName>
+        <default>false</default>
+        <label>Startup Hotlist</label>
+    </customValue>
+    <customValue>
         <fullName>Insurance Providers</fullName>
         <default>false</default>
         <label>Insurance Providers</label>
@@ -291,11 +296,6 @@
         <label>Paypal</label>
     </customValue>
     <customValue>
-        <fullName>Resource Center</fullName>
-        <default>false</default>
-        <label>Resource Center</label>
-    </customValue>
-    <customValue>
         <fullName>Risk Profile and RHC</fullName>
         <default>false</default>
         <label>Risk Profile and RHC</label>
@@ -364,11 +364,6 @@
         <fullName>IATA Pay</fullName>
         <default>false</default>
         <label>IATA Pay</label>
-    </customValue>
-    <customValue>
-        <fullName>InnovationHub CRM</fullName>
-        <default>false</default>
-        <label>InnovationHub CRM</label>
     </customValue>
     <description>Functional Roles</description>
     <masterLabel>Functional Roles</masterLabel>

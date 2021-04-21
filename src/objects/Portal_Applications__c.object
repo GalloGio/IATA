@@ -1022,7 +1022,7 @@ Name
 &quot;Simplified Interline Settlement&quot;, $Label.ISSP_SIS_1_Description, 
 &quot;SIS&quot;, $Label.ISSP_SIS_3_Description, 
 &quot;Payment Link&quot;, $Label.ISSP_Payment_Link_Description, 
-&quot;Credit Card Link&quot;, $Label.ISSP_Payment_Link_Description_CNS,
+&quot;Credit Card Link&quot;, $Label.ISSP_Payment_Link_Description_CNS, 
 &quot;Standards Setting Workspace&quot;, $Label.Standards_Setting_Workspace, 
 &quot;IATA EasyPay (WEX)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
 &quot;IATA EasyPay (EDENRED)&quot;, $Label.ANG_ISSP_IATA_EasyPay, 
@@ -1874,6 +1874,10 @@ IF(OR(
             </values>
             <values>
                 <fullName>Standards Setting Workspace</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Startup Hotlist</fullName>
                 <default>false</default>
             </values>
             <values>
