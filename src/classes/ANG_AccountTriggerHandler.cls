@@ -2,7 +2,9 @@ public class ANG_AccountTriggerHandler {
 
 	public List<Account> triggerNew = (List<Account>) Trigger.new;
 	public List<Account> triggerOld = (List<Account>) Trigger.old;
-
+	private static final Set<String> VALID_CHANGE_CODES = new Set<String>{'CHA','CWD'};
+	private static final String CHA_CHANGE_CODES = 'CHA';
+	private static final String CWD_CHANGE_CODES = 'CWD';
 	public Map<Id, Account> newMap = (Map<Id,Account>) Trigger.newMap;
 	public Map<Id, Account> oldMap = (Map<Id,Account>) Trigger.oldMap;
 
@@ -386,10 +388,13 @@ public class ANG_AccountTriggerHandler {
 		set<Id> inactiveAccsIdSet = new set<Id>();
 		set<Id> activeAccsIdSet = new set<Id>();
 		set<Id> inactivateAcctsSet = new set<Id>();
+		set<Id> reActivateAcctsSet = new set<Id>();
 
 		List<ANG_Agency_Risk_Event__c> riskEventsToInactiveList = new List<ANG_Agency_Risk_Event__c>();
 		List<ANG_Agency_Risk_Event__c> riskEventsToActiveList = new List<ANG_Agency_Risk_Event__c>();
 		List<ANG_Agency_Risk_Event__c> upsertRiskEventsList = new List<ANG_Agency_Risk_Event__c>();
+		map<Id,list<Agency_Applied_Change_code__c>> mapOfchangeCodesByAccount = new map<Id,list<Agency_Applied_Change_code__c>>();
+		map<String, Agency_Applied_Change_code__c> mapOfchangeCodesCWDByCaseNumber = new map<String, Agency_Applied_Change_code__c>();
 
 		//get just account ids where status changed to Terminated
 		for(Account a : triggerNew){
@@ -399,8 +404,33 @@ public class ANG_AccountTriggerHandler {
 				activeAccsIdSet.add(a.id);
 
 			/*When changing accreditation type from Cash to Cashless, any active Risk Event should be updated to status "Inactive_Cashless"*/
-			if(oldMap.get(a.id).ANG_Accreditation_Model__c == 'Cash' && a.ANG_Accreditation_Model__c == 'Cashless')
+			if(oldMap.get(a.id).ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH && a.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASHLESS)
 				inactivateAcctsSet.add(a.id);
+
+			/*When changing accreditation type from Cashless To Cash, any inactive_cashless Risk Event should be updated to status "Active"*/
+			if(oldMap.get(a.id).ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASHLESS && a.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH)
+				reActivateAcctsSet.add(a.id);
+		}
+
+		// get all change codes to control update on related risk Events When changing accreditation type from Cash to Cashless
+		if(!inactivateAcctsSet.isEmpty()){
+			for( Agency_Applied_Change_code__c cc : [SELECT id, Account__c, Bulletin_Information__c, Change_Code__c, OSCAR__r.Name, OSCAR__r.ANG_Type_Of_Change__c, 
+															OSCAR__r.AMS_Online_Accreditation__r.ANG_Accreditation_Model_to_Change__c, SIDRA_Case__r.CaseNumber, CreatedDate 
+														FROM Agency_Applied_Change_code__c 
+														WHERE (Account__c IN : inactivateAcctsSet OR Account__c IN : reActivateAcctsSet)
+															AND Change_Code__c in : VALID_CHANGE_CODES 
+															AND CreatedDate <: Date.today().addYears(-2)
+															ORDER BY CreatedDate DESC]){
+				if(cc.Change_Code__c == CHA_CHANGE_CODES){
+					if(mapOfchangeCodesByAccount.get(cc.Account__c) == null) {
+						mapOfchangeCodesByAccount.put(cc.Account__c, new List<Agency_Applied_Change_code__c>{cc});
+					}else{
+						mapOfchangeCodesByAccount.get(cc.Account__c).add(cc);
+					}
+				}else{
+					mapOfchangeCodesCWDByCaseNumber.put(cc.SIDRA_Case__r.CaseNumber, cc);
+				}
+			}
 		}
 
 
@@ -412,23 +442,61 @@ public class ANG_AccountTriggerHandler {
 		//get all related risk Events
 		if(accIdSet.isEmpty())
 			return;
-
-		List<ANG_Agency_Risk_Event__c> reToUpdateList=[select Id,ang_event_status__c,ANG_Issued_Date__c,ANG_AccountId__c from ANG_Agency_Risk_Event__c where ANG_AccountId__c in :accIdSet and  ang_event_status__c in (:ANG_Risk_Helper.STATUS_ACTIVE, :ANG_Risk_Helper.STATUS_INACTIVE, :ANG_Risk_Helper.STATUS_TERMINATED)];
+			
+		List<ANG_Agency_Risk_Event__c> reToUpdateList=[select Id,ang_event_status__c,ANG_Issued_Date__c,ANG_AccountId__c, Applicable_for_re_activation__c, ANG_AccountId__r.Accreditation_date__c from ANG_Agency_Risk_Event__c where ANG_AccountId__c in :accIdSet and  ang_event_status__c in (:ANG_Risk_Helper.STATUS_ACTIVE, :ANG_Risk_Helper.STATUS_INACTIVE, :ANG_Risk_Helper.STATUS_TERMINATED, :ANG_Risk_Helper.STATUS_INACTIVE_CASHLESS)];
 
 		for(ANG_Agency_Risk_Event__c re : reToUpdateList){
-			if(inactiveAccsIdSet.contains(re.ANG_AccountId__c)
-				&& (re.ang_event_status__c == ANG_Risk_Helper.STATUS_ACTIVE || (re.ang_event_status__c == ANG_Risk_Helper.STATUS_INACTIVE && re.ANG_Issued_Date__c > system.Today()))){
-					re.ang_event_status__c = ANG_Risk_Helper.STATUS_TERMINATED;
-
-			} else if (activeAccsIdSet.contains(re.ANG_AccountId__c) && re.ang_event_status__c == ANG_Risk_Helper.STATUS_TERMINATED){
-				re.ang_event_status__c = ANG_Risk_Helper.STATUS_ACTIVE;
-			}else if( inactivateAcctsSet.contains(re.ANG_AccountId__c) && re.ang_event_status__c <> ANG_Risk_Helper.STATUS_INACTIVE_CASHLESS){
-				re.ang_event_status__c = ANG_Risk_Helper.STATUS_INACTIVE_CASHLESS;
+			if(re.ang_event_status__c != ANG_Risk_Helper.STATUS_INACTIVE_CASHLESS){
+				if(inactiveAccsIdSet.contains(re.ANG_AccountId__c)
+					&& (re.ang_event_status__c == ANG_Risk_Helper.STATUS_ACTIVE || (re.ang_event_status__c == ANG_Risk_Helper.STATUS_INACTIVE && re.ANG_Issued_Date__c > system.Today()))){
+						re.ang_event_status__c = ANG_Risk_Helper.STATUS_TERMINATED;
+	
+				} else if (activeAccsIdSet.contains(re.ANG_AccountId__c) && re.ang_event_status__c == ANG_Risk_Helper.STATUS_TERMINATED){
+					re.ang_event_status__c = ANG_Risk_Helper.STATUS_ACTIVE;
+				}else if( inactivateAcctsSet.contains(re.ANG_AccountId__c) && re.ang_event_status__c <> ANG_Risk_Helper.STATUS_INACTIVE_CASHLESS){
+					re.ang_event_status__c = ANG_Risk_Helper.STATUS_INACTIVE_CASHLESS;
+					re = updateRiskEventCashAndCashless(mapOfchangeCodesByAccount, re, AMS_Utils.ACCREDITATIONMODEL_CASH, mapOfchangeCodesCWDByCaseNumber);
+				}
+			}else if(reActivateAcctsSet.contains(re.ANG_AccountId__c)){
+				re = updateRiskEventCashAndCashless(mapOfchangeCodesByAccount, re, AMS_Utils.ACCREDITATIONMODEL_CASHLESS, mapOfchangeCodesCWDByCaseNumber);
 			}
 
 		}
 
 		update reToUpdateList;
+	}
+
+	public ANG_Agency_Risk_Event__c updateRiskEventCashAndCashless(map<Id,list<Agency_Applied_Change_code__c>> mapCCByAccount, ANG_Agency_Risk_Event__c re, String typrOfChangeCode, map<String, Agency_Applied_Change_code__c> mapOfchangeCodesCWDByCaseNumber){
+		
+		Date checkCreatedDateRE = null;
+
+		if(typrOfChangeCode == AMS_Utils.ACCREDITATIONMODEL_CASH){
+			checkCreatedDateRE = Date.today().addYears(-2);
+		}else{
+			checkCreatedDateRE = Date.today().addMonths(-6);
+		}
+		
+		if(mapCCByAccount.get(re.ANG_AccountId__c) == null && typrOfChangeCode == AMS_Utils.ACCREDITATIONMODEL_CASH){
+			if(re.ANG_AccountId__r.Accreditation_date__c < = checkCreatedDateRE){
+				re.Applicable_for_re_activation__c = true;
+			}
+		}else{
+			for(Integer index = 0; index < mapCCByAccount.get(re.ANG_AccountId__c).size(); index ++){
+				if(mapCCByAccount.get(re.ANG_AccountId__c)[index].Change_Code__c == CHA_CHANGE_CODES 
+						&& mapCCByAccount.get(re.ANG_AccountId__c)[index].OSCAR__r.ANG_Type_Of_Change__c == AMS_Utils.ANG_ACCREDITATION_TYPE
+						&& mapCCByAccount.get(re.ANG_AccountId__c)[index].OSCAR__r.AMS_Online_Accreditation__r.ANG_Accreditation_Model_to_Change__c == typrOfChangeCode
+						&& ((mapCCByAccount.get(re.ANG_AccountId__c)[index].CreatedDate < = checkCreatedDateRE && typrOfChangeCode == AMS_Utils.ACCREDITATIONMODEL_CASH) 
+						|| mapCCByAccount.get(re.ANG_AccountId__c)[index].CreatedDate > = checkCreatedDateRE && typrOfChangeCode == AMS_Utils.ACCREDITATIONMODEL_CASHLESS)){
+							
+					if(typrOfChangeCode == AMS_Utils.ACCREDITATIONMODEL_CASH && mapOfchangeCodesCWDByCaseNumber.get(mapCCByAccount.get(re.ANG_AccountId__c)[index].SIDRA_Case__r.CaseNumber) == null){
+						re.Applicable_for_re_activation__c = true;
+					}else if(typrOfChangeCode == AMS_Utils.ACCREDITATIONMODEL_CASHLESS){
+						re.ang_event_status__c = ANG_Risk_Helper.STATUS_ACTIVE;
+					}
+				}
+			}
+		}
+		return re;
 	}
 
 	private void updateRHCInformation() {
