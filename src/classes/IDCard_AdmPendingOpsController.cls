@@ -134,10 +134,16 @@ global without sharing class IDCard_AdmPendingOpsController extends IDCardAbstra
 
 	private  Map<String, String> accountTypesPerIATACode = new Map<String, String>();
 
+	public Map<String, Promotion__c> mapPromotion {get; set;}
 
 	/*Constructor*/
 	public IDCard_AdmPendingOpsController() {
 		initialize(true);
+		mapPromotion = new Map<String, Promotion__c>();
+		List<Promotion__c> listPromotion = [Select Promotion_Value__c, Promotion_Duration_Valid_Up_to__c, Promotion_Duration_Valid_From__c, Promotion_Code__c, Type_of_Application__c From Promotion__c LIMIT 50000];
+		for(Promotion__c p : listPromotion) {
+			mapPromotion.put(p.Promotion_Code__c, p);
+		}
 		selectall = false;
 		//init vars
 		appsCurrency = '-';
@@ -819,14 +825,12 @@ global without sharing class IDCard_AdmPendingOpsController extends IDCardAbstra
 		// validate the promotion
 		// Promotion code must exists, must be associated to the corresponding Price Table and be between the validity period
 		if (promotion.Promotion_Code__c != null && promotion.Promotion_Code__c != '') {
-
-			Promotion__c[] listPromotion = [Select Promotion_Value__c, Promotion_Duration_Valid_Up_to__c, Promotion_Duration_Valid_From__c, Promotion_Code__c, Type_of_Application__c From Promotion__c where Promotion_Code__c = :promotion.Promotion_Code__c];
-			if (listPromotion == null || listPromotion.size() == 0) {
+			Promotion__c promo = mapPromotion.get(promotion.Promotion_Code__c);
+			if (promo == null) {
 				ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, String.Format(Label.ID_Card_Invalid_Promotion_Code, new String[] {promotion.Promotion_Code__c})));
 				return null;
 			}
-
-			 String[] typeOfAppInPromoCode =  listPromotion[0].Type_of_Application__c.split(';');
+			 String[] typeOfAppInPromoCode =  promo.Type_of_Application__c.split(';');
 
 				for(String typeOfApp : typeOfAppInPromoCode){
 					if(typeOfApp == app.Type_of_Application__c) {
@@ -835,10 +839,10 @@ global without sharing class IDCard_AdmPendingOpsController extends IDCardAbstra
 					}
 				}
 
-			if (listPromotion[0].Promotion_Duration_Valid_Up_to__c < Date.today()) {
+			if (promo.Promotion_Duration_Valid_Up_to__c < Date.today()) {
 				ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ID_Card_Promotion_Code_No_Longer_Valid));
 				return null;
-			} else if (listPromotion[0].Promotion_Duration_Valid_From__c > Date.today()) {
+			} else if (promo.Promotion_Duration_Valid_From__c > Date.today()) {
 				ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ID_Card_Promotion_Code_Not_Yet_Valid));
 				return null;
 			}
@@ -846,7 +850,7 @@ global without sharing class IDCard_AdmPendingOpsController extends IDCardAbstra
 				ApexPages.addMessage(new ApexPages.message(ApexPages.severity.WARNING, String.Format(Label.ID_Card_Invalid_Promotion_Code_3, new String[] {promotion.Promotion_Code__c})));
 				return null;
 			}
-			return listPromotion[0];
+			return promo;
 		}
 		return null;
 	}
