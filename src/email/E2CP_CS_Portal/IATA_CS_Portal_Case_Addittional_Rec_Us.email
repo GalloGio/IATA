@@ -22,7 +22,7 @@
                 <p>---------------------------------------------------------------------------------------</p><br/>
                 <p><b><a href="{!$Label.ISSP_Email_PortalUrl}s/case-details?caseId={!relatedTo.id}">{!$Label.CS_Portal_Addittional_Recipients_URL_Click_Here}</a></b> {!$Label.CS_Portal_Addittional_Recipients_URL_Description}.</p>
             </apex:outputPanel>
-            <apex:outputText value="{!$Label.CSP_IATA_CSC_Email_Greetings}" escape="false" />
+            <b><apex:outputText value="{!$Label.CSP_IATA_CSC_Email_Greetings}" escape="false" /></b>
             <br/>
             <br/>
             <apex:outputPanel>
