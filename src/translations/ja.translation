@@ -5410,7 +5410,11 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CS_Portal_Addittional_Recipients_Subject</name>
     </customLabels>
     <customLabels>
-        <label>ここをクリック 完全な詳細情報を表示し、通信に従事するポータルに移動します。</label>
+        <label>ここをクリック</label>
+        <name>CS_Portal_Addittional_Recipients_URL_Click_Here</name>
+    </customLabels>
+    <customLabels>
+        <label>完全な詳細情報を表示し、通信に従事するポータルに移動します。</label>
         <name>CS_Portal_Addittional_Recipients_URL_Description</name>
     </customLabels>
     <customLabels>

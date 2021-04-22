@@ -3649,7 +3649,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_IATAN_Register_Info</name>
     </customLabels>
     <customLabels>
-        <label>Salam, &amp;lt;br/&amp;gt; Pusat Layanan Pelanggan IATA</label>
+        <label>Salam, &lt;br/&gt; Pusat Layanan Pelanggan IATA</label>
         <name>CSP_IATA_CSC_Email_Greetings</name>
     </customLabels>
     <customLabels>
@@ -5410,7 +5410,11 @@ dan &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
         <name>CS_Portal_Addittional_Recipients_Subject</name>
     </customLabels>
     <customLabels>
-        <label>Klik disini untuk pergi ke portal untuk melihat rincian lengkap dan terlibat dalam komunikasi.</label>
+        <label>Klik disini</label>
+        <name>CS_Portal_Addittional_Recipients_URL_Click_Here</name>
+    </customLabels>
+    <customLabels>
+        <label>untuk pergi ke portal untuk melihat rincian lengkap dan terlibat dalam komunikasi.</label>
         <name>CS_Portal_Addittional_Recipients_URL_Description</name>
     </customLabels>
     <customLabels>

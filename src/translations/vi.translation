@@ -3649,7 +3649,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_IATAN_Register_Info</name>
     </customLabels>
     <customLabels>
-        <label>Trân trọng, &amp;lt;br/&amp;gt; Trung tâm Dịch vụ Khách hàng IATA</label>
+        <label>Trân trọng, &lt;br/&gt; Trung tâm Dịch vụ Khách hàng IATA</label>
         <name>CSP_IATA_CSC_Email_Greetings</name>
     </customLabels>
     <customLabels>
@@ -5409,7 +5409,11 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CS_Portal_Addittional_Recipients_Subject</name>
     </customLabels>
     <customLabels>
-        <label>Bấm vào đây để đi đến cổng thông tin để xem chi tiết đầy đủ và tham gia vào các giao tiếp.</label>
+        <label>Bấm vào đây</label>
+        <name>CS_Portal_Addittional_Recipients_URL_Click_Here</name>
+    </customLabels>
+    <customLabels>
+        <label>để đi đến cổng thông tin để xem chi tiết đầy đủ và tham gia vào các giao tiếp.</label>
         <name>CS_Portal_Addittional_Recipients_URL_Description</name>
     </customLabels>
     <customLabels>

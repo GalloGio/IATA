@@ -8581,12 +8581,20 @@ IATA Customer Portal</value>
         <value>IATA Customer Portal - You were added to case</value>
     </labels>
     <labels>
+        <fullName>CS_Portal_Addittional_Recipients_URL_Click_Here</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CS_Portal_Addittional_Recipients_URL_Click_Here</shortDescription>
+        <value>Click here</value>
+    </labels>
+    <labels>
         <fullName>CS_Portal_Addittional_Recipients_URL_Description</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CS_Portal_Addittional_Recipients_URL_Description</shortDescription>
-        <value>Click here to go to the portal to view the full details and engage in the communication.</value>
+        <value>to go to the portal to view the full details and engage in the communication.</value>
     </labels>
     <labels>
         <fullName>Campaign_already_created</fullName>

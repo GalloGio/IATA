@@ -299,10 +299,12 @@ public static void sendEmailToAdditionalRecipients(wrapFilterContactsAndUsers li
 	List<Messaging.SingleEmailMessage> emailsToSend = new List<Messaging.SingleEmailMessage>();
 	String templateUsersId = [SELECT Id FROM EmailTemplate WHERE DeveloperName = 'IATA_CS_Portal_Case_Addittional_Rec_Us'].Id;
 	String templateContactsId = [SELECT Id FROM EmailTemplate WHERE DeveloperName = 'IATA_CS_Portal_Case_Addittional_Rec_CC'].Id;
+	OrgWideEmailAddress orgAddress = [SELECT Id FROM OrgWideEmailAddress WHERE Address = : Label.ISSP_CaseCommentEmail];
 
 	try {
 		for (ID userId : listContacts.setTargetObjectIdUsers) {
 			Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+			mail.setOrgWideEmailAddressId(orgAddress.Id);
 			mail.setTargetObjectId(userId);
 			mail.setSaveAsActivity(false);
 			mail.setTemplateId(templateUsersId);
@@ -315,6 +317,7 @@ public static void sendEmailToAdditionalRecipients(wrapFilterContactsAndUsers li
 		emailsToSend = new List<Messaging.SingleEmailMessage>();
 		for (String cc : listContacts.setToAddressesContacts) {
 			Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+			mail.setOrgWideEmailAddressId(orgAddress.Id);
 			mail.setTargetObjectId(cc);
 			mail.setToAddresses(listContacts.setToAddressesContacts) ;
 			mail.setTemplateId(templateContactsId);

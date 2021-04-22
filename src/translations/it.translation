@@ -3650,7 +3650,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_IATAN_Register_Info</name>
     </customLabels>
     <customLabels>
-        <label>Cordiali saluti,;br/&amp;gt;Centro assistenza clienti IATA</label>
+        <label>Cordiali saluti,&lt;br/&gt;Centro assistenza clienti IATA</label>
         <name>CSP_IATA_CSC_Email_Greetings</name>
     </customLabels>
     <customLabels>
@@ -5411,7 +5411,11 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CS_Portal_Addittional_Recipients_Subject</name>
     </customLabels>
     <customLabels>
-        <label>Clicca qui andare al portale per visualizzare i dettagli e impegnarsi nella comunicazione.</label>
+        <label>Clicca qui</label>
+        <name>CS_Portal_Addittional_Recipients_URL_Click_Here</name>
+    </customLabels>
+    <customLabels>
+        <label>andare al portale per visualizzare i dettagli e impegnarsi nella comunicazione.</label>
         <name>CS_Portal_Addittional_Recipients_URL_Description</name>
     </customLabels>
     <customLabels>

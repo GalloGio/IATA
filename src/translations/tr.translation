@@ -3646,7 +3646,7 @@ Daha fazla ayrıntı için, Müşteri Portalı&apos;nda &quot;Resolution 812&quo
         <name>CSP_IATAN_Register_Info</name>
     </customLabels>
     <customLabels>
-        <label>Saygılarımızla, &amp;lt;br/&amp;gt; IATA Customer Service Center</label>
+        <label>Saygılarımızla, &lt;br/&gt; IATA Customer Service Center</label>
         <name>CSP_IATA_CSC_Email_Greetings</name>
     </customLabels>
     <customLabels>
@@ -5406,7 +5406,11 @@ Daha fazla ayrıntı için, Müşteri Portalı&apos;nda &quot;Resolution 812&quo
         <name>CS_Portal_Addittional_Recipients_Subject</name>
     </customLabels>
     <customLabels>
-        <label>Buraya Tıkla Tüm ayrıntıları görüntüleyebilir ve iletişimde bulunmak için portal gitmek için.</label>
+        <label>Buraya Tıkla</label>
+        <name>CS_Portal_Addittional_Recipients_URL_Click_Here</name>
+    </customLabels>
+    <customLabels>
+        <label>Tüm ayrıntıları görüntüleyebilir ve iletişimde bulunmak için portal gitmek için.</label>
         <name>CS_Portal_Addittional_Recipients_URL_Description</name>
     </customLabels>
     <customLabels>
