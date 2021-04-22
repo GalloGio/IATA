@@ -843,11 +843,7 @@ public with sharing class PortalCasesCtrl {
 
 		Case caseToFirstComment = [SELECT Id, Description, CreatedBy.Name, CreatedDate,RecordType__c FROM Case WHERE Id =:caseId];
 
-		List<CaseComment> lstCaseCommentsAux = [SELECT Id, ParentId, CommentBody, IsPublished,
-												CreatedDate, CreatedById, CreatedBy.Name, IsDeleted
-												FROM CaseComment
-												WHERE ParentId = :caseId AND IsDeleted = false
-																						ORDER BY CreatedDate ASC];
+		List<CaseComment> lstCaseCommentsAux = PortalCaseClosureController.getCaseComments(caseId);
 
 		String caseDescription = caseToFirstComment.Description != null && CaseRecordTypesDescriptionVisibleSet.contains(caseToFirstComment.RecordType__c) ? caseToFirstComment.Description : '';
 
@@ -1228,5 +1224,5 @@ public with sharing class PortalCasesCtrl {
 
 	}
 
-
 }
+

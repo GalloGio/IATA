@@ -78,6 +78,16 @@ public without sharing class PortalCaseClosureController {
 		return oneTimeUrl;
 	}
 
+	public static List<CaseComment> getCaseComments(String caseId){
+		List<CaseComment> lstCaseComments =	[SELECT Id, ParentId, CommentBody, IsPublished,
+											CreatedDate, CreatedById, CreatedBy.Name, IsDeleted
+											FROM CaseComment
+											WHERE ParentId = :caseId AND IsDeleted = false
+																					ORDER BY CreatedDate ASC];
+
+		return lstCaseComments;
+	}
+
 	public class CloseCaseLinkParams {
 		public String caseId {get; set;}
 		public String contactId {get; set;}
