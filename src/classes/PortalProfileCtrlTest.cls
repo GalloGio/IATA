@@ -75,13 +75,13 @@ public with sharing class PortalProfileCtrlTest {
 
 			System.assert (airline.Id == MyAirline.Id);
 
-			List<PortalProfileCtrl.CardWrapper> contactWrappers = PortalProfileCtrl.getFieldsMap('MyProfile');
+			List<PortalWrapperClasses.CardWrapper> contactWrappers = PortalProfileCtrl.getFieldsMap('MyProfile');
 			System.assert (!contactWrappers.isEmpty());
 
-			List<PortalProfileCtrl.CardWrapper> companyWrappers = PortalProfileCtrl.getFieldsMap('CompanyProfile');
+			List<PortalWrapperClasses.CardWrapper> companyWrappers = PortalProfileCtrl.getFieldsMap('CompanyProfile');
 			System.assert (!companyWrappers.isEmpty());
 
-			List<PortalProfileCtrl.CardWrapper> contactAccWrappers = PortalProfileCtrl.getFieldsMap('MyProfileAccFields');
+			List<PortalWrapperClasses.CardWrapper> contactAccWrappers = PortalProfileCtrl.getFieldsMap('MyProfileAccFields');
 			System.assert (!contactAccWrappers.isEmpty());
 
 		}
@@ -136,9 +136,9 @@ public with sharing class PortalProfileCtrlTest {
 		Account acc = [SELECT Id,IsPartner,Name FROM Account WHERE Id = :con.AccountId];
 		System.runAs(usr){
 
-			Map<String, List<PortalProfileCtrl.FieldWrapper>> branchFields = PortalProfileCtrl.getBranchesListFields();
-			Map<String, List<PortalProfileCtrl.FieldWrapper>> contactFields = PortalProfileCtrl.getContactsListFields();
-			List<PortalProfileCtrl.FieldWrapper> createContactFields = PortalProfileCtrl.getContactFieldsToInsert();
+			Map<String, List<PortalWrapperClasses.FieldWrapper>> branchFields = PortalProfileCtrl.getBranchesListFields();
+			Map<String, List<PortalWrapperClasses.FieldWrapper>> contactFields = PortalProfileCtrl.getContactsListFields();
+			List<PortalWrapperClasses.FieldWrapper> createContactFields = PortalProfileCtrl.getContactFieldsToInsert();
 
 			PortalProfileCtrl.CompanyInformationContactsFiltersWrapper cfw = new PortalProfileCtrl.CompanyInformationContactsFiltersWrapper();
 			cfw.searchInput = '';
@@ -327,7 +327,7 @@ public with sharing class PortalProfileCtrlTest {
 		insert newInv;
 
 		System.runAs(portalUser) {
-			Map<String, List<PortalProfileCtrl.FieldWrapper>> branchFields = PortalProfileCtrl.getInvoicesListFields(PortalProfileCtrl.IATA_INVOICE_TYPE);
+			Map<String, List<PortalWrapperClasses.FieldWrapper>> branchFields = PortalProfileCtrl.getInvoicesListFields(PortalProfileCtrl.IATA_INVOICE_TYPE);
 			List<Customer_Invoice__c> invoices = PortalProfileCtrl.getCustomerInvoices();
 			PortalProfileCtrl.isCountryEligibleForPaymentLink();
 

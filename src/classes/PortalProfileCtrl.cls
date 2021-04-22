@@ -426,74 +426,48 @@ public static Contact contactInfo = new Contact();
 		public Boolean selected;
 	}
 
-	public class CardWrapper{
-
-		@AuraEnabled
-		public String cardTitle;
-
-		@AuraEnabled
-		public List<FieldWrapper> lstFieldWrapper;
-
-		@AuraEnabled
-		public Boolean isEditable;
-
-		@AuraEnabled
-		public String idCardUrl;
-
-		@AuraEnabled
-		public String cardKey;
-
-		public CardWrapper(String cardTitleAux, List<FieldWrapper> lstFieldWrapperAux, Boolean isEditableAux, String cardKeyAux){
-			this.cardTitle = cardTitleAux;
-			this.lstFieldWrapper = lstFieldWrapperAux;
-			this.isEditable = isEditableAux;
-			this.cardKey = cardKeyAux;
-			this.idCardUrl = '';
-		}
-
-		public CardWrapper(String cardTitleAux, List<FieldWrapper> lstFieldWrapperAux, Boolean isEditableAux, String cardKeyAux, String idCardUrl){
-			this.cardTitle = cardTitleAux;
-			this.lstFieldWrapper = lstFieldWrapperAux;
-			this.isEditable = isEditableAux;
-			this.cardKey = cardKeyAux;
-			this.idCardUrl = idCardUrl;
-		}
-
-	}
-
-
 	// OBJECT - FIELD NAME - EDITABLE - VISIBLE - SECTION;
-	public static List<CardWrapper> ContactFields() {
+	public static List<PortalWrapperClasses.CardWrapper> ContactFields() {
 
 		User loggedUser = CSP_Utils.getLoggedUser();
 		contactInfo = DAL_ISSP.getContact(loggedUser.contactId);
 
 		//stores each card
-		List<CardWrapper> lstCardWrapper = new List<CardWrapper>();
+		List<PortalWrapperClasses.CardWrapper> lstCardWrapper = new List<PortalWrapperClasses.CardWrapper>();
 
 		//BASICS CARD
-		List<FieldWrapper> lstfw1 = new List<FieldWrapper>();
-		lstfw1.add(new FieldWrapper('Name',true,true));
-		lstfw1.add(new FieldWrapper('Birthdate',true,true));
-		lstfw1.add(new FieldWrapper('Title',true,true));
-		lstfw1.add(new FieldWrapper('Preferred_Language__c',true,true));
-		lstCardWrapper.add(new CardWrapper(LABEL_BASICS, lstfw1, true,LABEL_EN_BASICS));
+		List<PortalWrapperClasses.FieldWrapper> lstfw1 = new List<PortalWrapperClasses.FieldWrapper>();
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Name',true,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Birthdate',true,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Title',true,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Preferred_Language__c',true,true));
+		lstCardWrapper.add(new PortalWrapperClasses.CardWrapper(LABEL_BASICS, lstfw1, true,LABEL_EN_BASICS));
 
 		//PERSONAL CARD
-		List<FieldWrapper> lstfw2 = new List<FieldWrapper>();
-		lstfw2.add(new FieldWrapper('Email',false,true));
-		FieldWrapper fw;
-		fw = new FieldWrapper('Phone',true,true);
+		List<PortalWrapperClasses.FieldWrapper> lstfw2 = new List<PortalWrapperClasses.FieldWrapper>();
+		lstfw2.add(new PortalWrapperClasses.FieldWrapper('Email',false,true));
+		PortalWrapperClasses.FieldWrapper fw;
+		fw = new PortalWrapperClasses.FieldWrapper('Phone',true,true);
 		fw.isRequired = true;
 		lstfw2.add(fw);
-		lstfw2.add(new FieldWrapper('MobilePhone',true,true));
-		lstCardWrapper.add(new CardWrapper(LABEL_PERSONAL_CONTACT, lstfw2, true,LABEL_EN_PERSONAL_CONTACT));
+		lstfw2.add(new PortalWrapperClasses.FieldWrapper('MobilePhone',true,true));
+		lstCardWrapper.add(new PortalWrapperClasses.CardWrapper(LABEL_PERSONAL_CONTACT, lstfw2, true,LABEL_EN_PERSONAL_CONTACT));
 
 		//ACCESSIBILITY CARD
-		List<FieldWrapper> lstfw3 = new List<FieldWrapper>();
-		lstfw3.add(new FieldWrapper('User_Portal_Status__c',false,true));
-		lstfw3.add(new FieldWrapper('Authorization',false,true));
-		lstCardWrapper.add(new CardWrapper(LABEL_ACCESSIBILITY, lstfw3, true,LABEL_EN_ACCESSIBILITY));
+		List<PortalWrapperClasses.FieldWrapper> lstfw3 = new List<PortalWrapperClasses.FieldWrapper>();
+		lstfw3.add(new PortalWrapperClasses.FieldWrapper('User_Portal_Status__c',false,true));
+		fw = new PortalWrapperClasses.FieldWrapper('Authorization',false,true);
+		fw.accessibilityList = new List<PortalWrapperClasses.AccessibilityWrapper>{
+				new PortalWrapperClasses.AccessibilityWrapper((Boolean) contactInfo.get('Invoicing_Contact__c'), LABEL_INVOICE_CONTACT, 'Invoicing_Contact__c'),
+				new PortalWrapperClasses.AccessibilityWrapper((Boolean) contactInfo.get('Authorized_Signatory__c'), LABEL_AUTHORISED_SIGNATORY, 'Authorized_Signatory__c'),
+				new PortalWrapperClasses.AccessibilityWrapper((Boolean) contactInfo.get('BSP_CASS_Payment_contact__c'), LABEL_PAYMENT_CONTACT, 'BSP_CASS_Payment_contact__c')
+		};
+		lstfw3.add(fw);
+		if ( myUser.profile.Name.touppercase().contains('AIRLINE') ) {
+			fw.accessibilityList.add(new PortalWrapperClasses.AccessibilityWrapper((Boolean) contactInfo.get('Airline_Credit_Risk_Manager__c'), LABEL_AGENT_CREDIT_RISK, 'Airline_Credit_Risk_Manager__c'));
+		}
+
+		lstCardWrapper.add(new PortalWrapperClasses.CardWrapper(LABEL_ACCESSIBILITY, lstfw3, true,LABEL_EN_ACCESSIBILITY));
 
 		//TRAINING DETAILS CARD
 		List<Training_Contact_Role_Details__c> trainingList = [SELECT Id
@@ -503,24 +477,24 @@ public static Contact contactInfo = new Contact();
 
 		//we are only expecting to have a unique account contact role with contact role name equal to trainee
 		if(!trainingList.isEmpty()){
-			List<FieldWrapper> lstfw3_1 = new List<FieldWrapper>();
-			fw = new FieldWrapper('TRAINING',true,true,true);
+			List<PortalWrapperClasses.FieldWrapper> lstfw3_1 = new List<PortalWrapperClasses.FieldWrapper>();
+			fw = new PortalWrapperClasses.FieldWrapper('TRAINING',true,true,true);
 			fw.isTrainingInfo = true;
 			lstfw3_1.add(fw);
-			lstCardWrapper.add(new CardWrapper(LABEL_BASICS_TRAINING, lstfw3_1, true, LABEL_EN_BASICS_TRAINING)); //ADDED NEEDS TO BE REVIEWED BY FERNANDO MOUZINHO
+			lstCardWrapper.add(new PortalWrapperClasses.CardWrapper(LABEL_BASICS_TRAINING, lstfw3_1, true, LABEL_EN_BASICS_TRAINING)); //ADDED NEEDS TO BE REVIEWED BY FERNANDO MOUZINHO
 		}
 
 		//PROFESSIONAL CARD
-		List<FieldWrapper> lstfw4 = new List<FieldWrapper>();
-		fw = new FieldWrapper('Membership_Function__c',false,true,true);
+		List<PortalWrapperClasses.FieldWrapper> lstfw4 = new List<PortalWrapperClasses.FieldWrapper>();
+		fw = new PortalWrapperClasses.FieldWrapper('Membership_Function__c',false,true,true);
 		fw.isJobFunction = true;
 		lstfw4.add(fw);
-		lstCardWrapper.add(new CardWrapper(LABEL_PROFESSIONAL, lstfw4, true,LABEL_EN_PROFESSIONAL));
+		lstCardWrapper.add(new PortalWrapperClasses.CardWrapper(LABEL_PROFESSIONAL, lstfw4, true,LABEL_EN_PROFESSIONAL));
 
 		//ID CARD
 		if(contactInfo.ID_Card_Holder__c == true){
-			List<FieldWrapper> lstfw6 = new List<FieldWrapper>();
-			fw = new FieldWrapper('ID_CARD',false,true,true);
+			List<PortalWrapperClasses.FieldWrapper> lstfw6 = new List<PortalWrapperClasses.FieldWrapper>();
+			fw = new PortalWrapperClasses.FieldWrapper('ID_CARD',false,true,true);
 			fw.isIdCardInfo = true;
 			lstfw6.add(fw);
 
@@ -543,56 +517,56 @@ public static Contact contactInfo = new Contact();
 			}
 
 			if(cs != null) redirectionUrl = cs.value__c;
-			lstCardWrapper.add(new CardWrapper(LABEL_IDCARD, lstfw6, false, LABEL_EN_IDCARD, redirectionUrl));
+			lstCardWrapper.add(new PortalWrapperClasses.CardWrapper(LABEL_IDCARD, lstfw6, false, LABEL_EN_IDCARD, redirectionUrl));
 		}
 
 		//PRIVACY CARD
-		List<FieldWrapper> lstfw5 = new List<FieldWrapper>();
-		lstfw5.add(new FieldWrapper(LABEL_PRIVACYMANAGEMENTTITLE, LABEL_PRIVACYMANAGEMENTTEXT, LABEL_PRIVACYMANAGEMENTLINK ));
-		lstCardWrapper.add(new CardWrapper(LABEL_PRIVACYMANAGEMENTTITLE, lstfw5, false,LABEL_EN_PRIVACYMANAGEMENTTITLE));
+		List<PortalWrapperClasses.FieldWrapper> lstfw5 = new List<PortalWrapperClasses.FieldWrapper>();
+		lstfw5.add(new PortalWrapperClasses.FieldWrapper(LABEL_PRIVACYMANAGEMENTTITLE, LABEL_PRIVACYMANAGEMENTTEXT, LABEL_PRIVACYMANAGEMENTLINK ));
+		lstCardWrapper.add(new PortalWrapperClasses.CardWrapper(LABEL_PRIVACYMANAGEMENTTITLE, lstfw5, false,LABEL_EN_PRIVACYMANAGEMENTTITLE));
 
 		return lstCardWrapper;
 	}
 
 	// OBJECT - FIELD NAME - EDITABLE - VISIBLE - SECTION;
-	public static List<CardWrapper> ContactFieldsAcc() {
+	public static List<PortalWrapperClasses.CardWrapper> ContactFieldsAcc() {
 
 		//stores each card
-		List<CardWrapper> lstCardWrapper = new List<CardWrapper>();
+		List<PortalWrapperClasses.CardWrapper> lstCardWrapper = new List<PortalWrapperClasses.CardWrapper>();
 
 		//BASICS CARD
-		List<FieldWrapper> lstfw1 = new List<FieldWrapper>();
-		lstfw1.add(new FieldWrapper('Phone_Number__c',true,true));
-		lstfw1.add(new FieldWrapper('Phone',true,true));
-		lstfw1.add(new FieldWrapper('Fax',true,true));
-		lstfw1.add(new FieldWrapper('BillingCountry',false,true));
-		lstfw1.add(new FieldWrapper('BillingState',false,true));
-		lstfw1.add(new FieldWrapper('BillingStreet',false,true));
-		lstfw1.add(new FieldWrapper('BillingPostalCode',false,true));
-		lstCardWrapper.add(new CardWrapper(LABEL_BUSINESS_CONTACT, lstfw1, true,LABEL_EN_BUSINESS_CONTACT));
+		List<PortalWrapperClasses.FieldWrapper> lstfw1 = new List<PortalWrapperClasses.FieldWrapper>();
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Phone_Number__c',true,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Phone',true,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('Fax',true,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('BillingCountry',false,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('BillingState',false,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('BillingStreet',false,true));
+		lstfw1.add(new PortalWrapperClasses.FieldWrapper('BillingPostalCode',false,true));
+		lstCardWrapper.add(new PortalWrapperClasses.CardWrapper(LABEL_BUSINESS_CONTACT, lstfw1, true,LABEL_EN_BUSINESS_CONTACT));
 
 		return lstCardWrapper;
 	}
 
 	@AuraEnabled
-	public static List<FieldWrapper> getContactFieldsToInsert() {
-		return new List<FieldWrapper>{
-				new FieldWrapper('FirstName', false),
-				new FieldWrapper('LastName', false),
-				new FieldWrapper('Email', false),
-				new FieldWrapper('MobilePhone', false),
-				new FieldWrapper('Phone', false),
-				new FieldWrapper('Preferred_Language__c', false)
+	public static List<PortalWrapperClasses.FieldWrapper> getContactFieldsToInsert() {
+		return new List<PortalWrapperClasses.FieldWrapper>{
+				new PortalWrapperClasses.FieldWrapper('FirstName', false),
+				new PortalWrapperClasses.FieldWrapper('LastName', false),
+				new PortalWrapperClasses.FieldWrapper('Email', false),
+				new PortalWrapperClasses.FieldWrapper('MobilePhone', false),
+				new PortalWrapperClasses.FieldWrapper('Phone', false),
+				new PortalWrapperClasses.FieldWrapper('Preferred_Language__c', false)
 		};
 
 	}
 
-	public static List<CardWrapper> AccountFields() { return getFieldsByRecordType();}
+	public static List<PortalWrapperClasses.CardWrapper> AccountFields() { return getFieldsByRecordType();}
 
 	@AuraEnabled
-	public static List<CardWrapper> getFieldsMap (String type){
+	public static List<PortalWrapperClasses.CardWrapper> getFieldsMap (String type){
 		// CHECK IF ITS AN ACCOUNT OR CONTACT!!
-		List<CardWrapper> sectionMap = new  List<CardWrapper>();
+		List<PortalWrapperClasses.CardWrapper> sectionMap = new  List<PortalWrapperClasses.CardWrapper>();
 
 		List<String[]> fieldsList = new List<String[]>();
 		if ( type == 'MyProfile' ){
@@ -662,7 +636,7 @@ public static Contact contactInfo = new Contact();
 	* Field access should be handled by field-level security, here it can be only more restrictive
 	*                   with 'editable' attribute when editable by FL security.
 	* */
-	private static List<CardWrapper> getFieldsByRecordType(){
+	private static List<PortalWrapperClasses.CardWrapper> getFieldsByRecordType(){
 
 		String rType = myContact.Account.RecordType.DeveloperName;
 		Boolean newGen = myContact.Account.ANG_IsNewGenAgency__c;
@@ -698,10 +672,10 @@ public static Contact contactInfo = new Contact();
 
 
 		//stores each card
-		List<CardWrapper> lstCardWrapper = new List<CardWrapper>();
+		List<PortalWrapperClasses.CardWrapper> lstCardWrapper = new List<PortalWrapperClasses.CardWrapper>();
 
 		//BASICS CARD
-		List<FieldWrapper> lstfw1 = new List<FieldWrapper>();
+		List<PortalWrapperClasses.FieldWrapper> lstfw1 = new List<PortalWrapperClasses.FieldWrapper>();
 		for(Schema.FieldSetMember f : basicsFields) {
 			Boolean editable = true;
 			String fieldName = f.getFieldPath();
@@ -715,17 +689,17 @@ public static Contact contactInfo = new Contact();
 			}
 
 			if(f.getFieldPath() == 'Legal_Name__c' && !String.isBlank(legalName) || f.getFieldPath() != 'Legal_Name__c'){
-				lstfw1.add(new FieldWrapper(f.getFieldPath(),editable,true));
+				lstfw1.add(new PortalWrapperClasses.FieldWrapper(f.getFieldPath(),editable,true));
 			}
 		}
-		lstCardWrapper.add(new CardWrapper(LABEL_BASICS, lstfw1, true,LABEL_EN_BASICS));
+		lstCardWrapper.add(new PortalWrapperClasses.CardWrapper(LABEL_BASICS, lstfw1, true,LABEL_EN_BASICS));
 
 		if (isAccountDomain) {
-			lstfw1.add(new FieldWrapper('AccountDomainPermission',false,false));
+			lstfw1.add(new PortalWrapperClasses.FieldWrapper('AccountDomainPermission',false,false));
 		}
 
 		//COMPANY CONTACT CARD
-		List<FieldWrapper> lstfw2 = new List<FieldWrapper>();
+		List<PortalWrapperClasses.FieldWrapper> lstfw2 = new List<PortalWrapperClasses.FieldWrapper>();
 		for(Schema.FieldSetMember f : contactFields) {
 			Boolean editable = true;
 
@@ -737,180 +711,22 @@ public static Contact contactInfo = new Contact();
 				editable = false;
 			}
 
-			lstfw2.add(new FieldWrapper(f.getFieldPath(), editable, true));
+			lstfw2.add(new PortalWrapperClasses.FieldWrapper(f.getFieldPath(), editable, true));
 		}
 
 		if(isGDPOptInDisplayed()){
-			lstfw2.add(new FieldWrapper('GDP_Opt_In__c',true,true));
+			lstfw2.add(new PortalWrapperClasses.FieldWrapper('GDP_Opt_In__c',true,true));
 		}
-		lstCardWrapper.add(new CardWrapper(LABEL_COMPANY_CONTACT, lstfw2, true,LABEL_EN_COMPANY_CONTACT));
+		lstCardWrapper.add(new PortalWrapperClasses.CardWrapper(LABEL_COMPANY_CONTACT, lstfw2, true,LABEL_EN_COMPANY_CONTACT));
 
 		return lstCardWrapper;
 
 	}
 
-
-	/** FIELD WRAPPER HELPER CLASS */
-	public class FieldWrapper{
-		@AuraEnabled
-		public String fieldName;
-
-		@AuraEnabled
-		public Boolean editable;
-
-		@AuraEnabled
-		public Boolean visible;
-
-		@AuraEnabled
-		public Boolean fullSize;
-
-		@AuraEnabled
-		public String className;
-
-		@AuraEnabled 
-		public String gridClassName;
-
-		@AuraEnabled
-		public String label;
-
-		@AuraEnabled
-		public Boolean labeled;
-
-		@AuraEnabled
-		public Boolean outputOnly;
-
-		@AuraEnabled
-		public Boolean changeUserStatus;
-
-		@AuraEnabled
-		public Boolean isAccessibility;
-
-		@AuraEnabled
-		public Boolean isJobFunction;
-
-		@AuraEnabled
-		public Boolean isIdCardInfo;
-
-		@AuraEnabled
-		public Boolean isTrainingInfo;
-
-		@AuraEnabled
-		public Boolean isContactServices;
-
-		@AuraEnabled
-		public Boolean isLastLogin;
-
-		@AuraEnabled
-		public Boolean isRequired;
-
-		@AuraEnabled
-		public List<accessibilityWrapper> accessibilityList;
-
-
-		@AuraEnabled
-		public String link;
-
-		@AuraEnabled
-		public Boolean isPrivacyManagement;
-
-		@AuraEnabled
-		public Boolean isAccountDomainPermission;
-
-		public FieldWrapper(String title, String label, String link){
-			this.label = label;
-			this.link = link;
-			this.isPrivacyManagement = true;
-		}
-
-		public FieldWrapper (String fieldName, Boolean fullSize) {
-			this.fieldName = fieldName;
-			this.fullSize = fullSize;
-			this.labeled = false;
-		}
-
-		public FieldWrapper (String fieldName, Boolean editable, Boolean visible,Boolean output){
-			this.fieldName = fieldName;
-			this.editable = editable;
-			this.visible = visible;
-			this.outputOnly = output;
-			this.labeled = false;
-
-			if (fieldName == 'User_Portal_Status__c') {
-				this.changeUserStatus = true;
-			} else {
-				this.changeUserStatus = false;
-			}
-		}
-
-		public FieldWrapper (String fieldName, Boolean editable, Boolean visible){
-			this.fieldName = fieldName;
-			this.editable = editable;
-			this.visible = visible;
-			this.labeled = false;
-			this.isAccessibility = (fieldName == 'Authorization' ? true : false);
-			this.isAccountDomainPermission = (fieldName == 'AccountDomainPermission' ? true : false);
-			if (fieldName == 'Authorization') {
-				this.accessibilityList = new List<accessibilityWrapper>{
-						new accessibilityWrapper(false, LABEL_INVOICE_CONTACT, 'Invoicing_Contact__c'),
-						new accessibilityWrapper(false, LABEL_AUTHORISED_SIGNATORY, 'Authorized_Signatory__c'),
-						new accessibilityWrapper(false, LABEL_PAYMENT_CONTACT, 'BSP_CASS_Payment_contact__c')
-				};
-
-				if ( myUser.profile.Name.touppercase().contains('AIRLINE') ) {
-					this.accessibilityList.add(new accessibilityWrapper(false, LABEL_AGENT_CREDIT_RISK, 'Airline_Credit_Risk_Manager__c'));
-				}
-			}
-
-			if (fieldName == 'User_Portal_Status__c') {
-				this.changeUserStatus = true;
-			} else {
-				this.changeUserStatus = false;
-			}
-
-			this.isContactServices = fieldName == 'ContactServices' ? true : false;
-
-		}
-		public FieldWrapper (String fieldName, Boolean editable, Boolean visible,String className, String label){
-			this.fieldName = fieldName;
-			this.editable = editable;
-			this.visible = visible;
-			this.className = className;
-			this.label = label;
-
-			if(!String.isEmpty(label)){
-				this.labeled = true;
-			}else{
-				this.labeled = false;
-			}
-		}
-
-	}
-
-	/* checked: false, label: this.labels.Portal_Administrator, APINAME: "PortalAdmin" */
-
-	public class accessibilityWrapper{
-
-		@AuraEnabled
-		public Boolean checked;
-
-		@AuraEnabled
-		public String label;
-
-		@AuraEnabled
-		public String APINAME;
-
-		public accessibilityWrapper (Boolean checked, String label, String APINAME){
-			this.checked = (Boolean) contactInfo.get(APINAME);
-			this.label = label;
-			this.APINAME = APINAME;
-		}
-	}
-
-
 	/** Contacts & Branches Sections */
 
 	@AuraEnabled
-	public static Map<String,List<FieldWrapper>> getContactsListFields(){
+	public static Map<String,List<PortalWrapperClasses.FieldWrapper>> getContactsListFields(){
 
 		String rType = myContact.Account.RecordType.DeveloperName;
 
@@ -936,7 +752,7 @@ public static Contact contactInfo = new Contact();
 
 		Map<String,String> fieldLabels = new Map<String,String>();
 
-		FieldWrapper fw;
+		PortalWrapperClasses.FieldWrapper fw;
 
 		fieldLabels.put('FirstName',LABEL_FIRST_NAME);
 		fieldLabels.put('LastName',LABEL_LAST_NAME);
@@ -951,66 +767,66 @@ public static Contact contactInfo = new Contact();
 		}
 
 
-		Map<String,List<FieldWrapper>> wrapperMap = new Map<String,List<FieldWrapper>>();
+		Map<String,List<PortalWrapperClasses.FieldWrapper>> wrapperMap = new Map<String,List<PortalWrapperClasses.FieldWrapper>>();
 
-		wrapperMap.put(rowsFields,new List<FieldWrapper>());
+		wrapperMap.put(rowsFields,new List<PortalWrapperClasses.FieldWrapper>());
 		for(String fieldName : toRowWithGridClasses.keySet()){
-			FieldWrapper fieldWrapperAux = new FieldWrapper(fieldName,true,true,'inactive cursorPointer slds-truncate',fieldLabels.get(fieldName));
+			PortalWrapperClasses.FieldWrapper fieldWrapperAux = new PortalWrapperClasses.FieldWrapper(fieldName,true,true,'inactive cursorPointer slds-truncate',fieldLabels.get(fieldName));
 			fieldWrapperAux.gridClassName = toRowWithGridClasses.get(fieldName);
 			wrapperMap.get(rowsFields).add(fieldWrapperAux);
 		}
 
-		wrapperMap.put(viewFields,new List<FieldWrapper>());
-		wrapperMap.put(editFields,new List<FieldWrapper>());
+		wrapperMap.put(viewFields,new List<PortalWrapperClasses.FieldWrapper>());
+		wrapperMap.put(editFields,new List<PortalWrapperClasses.FieldWrapper>());
 
 		//VIEW
-		wrapperMap.get(viewFields).add(new FieldWrapper('ISSP_Account_Name__c',true,true,true));
-		wrapperMap.get(viewFields).add(new FieldWrapper('MobilePhone',true,true));
-		wrapperMap.get(viewFields).add(new FieldWrapper('Phone',true,true));
-		wrapperMap.get(viewFields).add(new FieldWrapper('User_Portal_Status__c',false,true,true));
+		wrapperMap.get(viewFields).add(new PortalWrapperClasses.FieldWrapper('ISSP_Account_Name__c',true,true,true));
+		wrapperMap.get(viewFields).add(new PortalWrapperClasses.FieldWrapper('MobilePhone',true,true));
+		wrapperMap.get(viewFields).add(new PortalWrapperClasses.FieldWrapper('Phone',true,true));
+		wrapperMap.get(viewFields).add(new PortalWrapperClasses.FieldWrapper('User_Portal_Status__c',false,true,true));
 
-		fw = new FieldWrapper('Membership_Function__c',false,true,true);
+		fw = new PortalWrapperClasses.FieldWrapper('Membership_Function__c',false,true,true);
 		fw.isJobFunction = true;
 		wrapperMap.get(viewFields).add(fw);
-		wrapperMap.get(viewFields).add(new FieldWrapper('ContactServices',false,true));
+		wrapperMap.get(viewFields).add(new PortalWrapperClasses.FieldWrapper('ContactServices',false,true));
 
 		//For Airlines & agencies only
 		if((rType == 'IATA_Airline_BR' || rType == 'IATA_Airline') || rType == 'IATA_Agency') {
-			wrapperMap.get(viewFields).add(new FieldWrapper('BSP_CASS_Payment_contact__c', true, true));
-			wrapperMap.get(viewFields).add(new FieldWrapper('Invoicing_Contact__c', true, true));
+			wrapperMap.get(viewFields).add(new PortalWrapperClasses.FieldWrapper('BSP_CASS_Payment_contact__c', true, true));
+			wrapperMap.get(viewFields).add(new PortalWrapperClasses.FieldWrapper('Invoicing_Contact__c', true, true));
 		}
 
-		wrapperMap.get(viewFields).add(new FieldWrapper('Authorized_Signatory__c',true,true));
+		wrapperMap.get(viewFields).add(new PortalWrapperClasses.FieldWrapper('Authorized_Signatory__c',true,true));
 
-		fw = new FieldWrapper('LastLogin',false,true,true);
+		fw = new PortalWrapperClasses.FieldWrapper('LastLogin',false,true,true);
 		fw.isLastLogin = true;
 		wrapperMap.get(viewFields).add(fw);
 
 
 		//EDIT
-		wrapperMap.get(editFields).add(new FieldWrapper('ISSP_Account_Name__c',true,true,true));
-		//wrapperMap.get(editFields).add(new FieldWrapper('Salutation',true,true)); - Salesforce bug, salutation picklist not loading values
-		//wrapperMap.get(editFields).add(new FieldWrapper('ISO_Country__c',true,true,true));
-		wrapperMap.get(editFields).add(new FieldWrapper('FirstName',true,true));
-		wrapperMap.get(editFields).add(new FieldWrapper('LastName',true,true));
-		wrapperMap.get(editFields).add(new FieldWrapper('Title',true,true));
-		wrapperMap.get(editFields).add(new FieldWrapper('Email',false,true));
-		wrapperMap.get(editFields).add(new FieldWrapper('MobilePhone',true,true));
-		fw = new FieldWrapper('Phone',true,true);
+		wrapperMap.get(editFields).add(new PortalWrapperClasses.FieldWrapper('ISSP_Account_Name__c',true,true,true));
+		//wrapperMap.get(editFields).add(new PortalWrapperClasses.FieldWrapper('Salutation',true,true)); - Salesforce bug, salutation picklist not loading values
+		//wrapperMap.get(editFields).add(new PortalWrapperClasses.FieldWrapper('ISO_Country__c',true,true,true));
+		wrapperMap.get(editFields).add(new PortalWrapperClasses.FieldWrapper('FirstName',true,true));
+		wrapperMap.get(editFields).add(new PortalWrapperClasses.FieldWrapper('LastName',true,true));
+		wrapperMap.get(editFields).add(new PortalWrapperClasses.FieldWrapper('Title',true,true));
+		wrapperMap.get(editFields).add(new PortalWrapperClasses.FieldWrapper('Email',false,true));
+		wrapperMap.get(editFields).add(new PortalWrapperClasses.FieldWrapper('MobilePhone',true,true));
+		fw = new PortalWrapperClasses.FieldWrapper('Phone',true,true);
 		fw.isRequired = true;
 		wrapperMap.get(editFields).add(fw);
 
 		//For Airlines & agencies only
 		if((rType == 'IATA_Airline_BR' || rType == 'IATA_Airline') || rType == 'IATA_Agency') {
-			wrapperMap.get(editFields).add(new FieldWrapper('BSP_CASS_Payment_contact__c', true, true));
-			wrapperMap.get(editFields).add(new FieldWrapper('Invoicing_Contact__c', true, true));
+			wrapperMap.get(editFields).add(new PortalWrapperClasses.FieldWrapper('BSP_CASS_Payment_contact__c', true, true));
+			wrapperMap.get(editFields).add(new PortalWrapperClasses.FieldWrapper('Invoicing_Contact__c', true, true));
 		}
 
-		wrapperMap.get(editFields).add(new FieldWrapper('Authorized_Signatory__c',true,true));
+		wrapperMap.get(editFields).add(new PortalWrapperClasses.FieldWrapper('Authorized_Signatory__c',true,true));
 
 		//Airline only
 		if(rType == 'IATA_Airline_BR' || rType == 'IATA_Airline'){
-			wrapperMap.get(editFields).add(new FieldWrapper('Airline_Credit_Risk_Manager__c',true,true));
+			wrapperMap.get(editFields).add(new PortalWrapperClasses.FieldWrapper('Airline_Credit_Risk_Manager__c',true,true));
 		}
 
 		return wrapperMap;
@@ -1018,7 +834,7 @@ public static Contact contactInfo = new Contact();
 	}
 
 	@AuraEnabled
-	public static Map<String,List<FieldWrapper>> getBranchesListFields(){
+	public static Map<String,List<PortalWrapperClasses.FieldWrapper>> getBranchesListFields(){
 		String rowsFields = 'ROWS'; //Fields to display in columns of a closed accordion/record list
 		String viewFields = 'VIEW'; //Fields to display in open accordion section/record detail
 		String editFields = 'EDITS'; //Fields to display/edit in record edit modal dialog
@@ -1037,17 +853,17 @@ public static Contact contactInfo = new Contact();
 		toRowWithGridClasses.put('Status__c', 'slds-col slds-size_1-of-5');
 		List<String> toEdit = new List<String>{'Name','Status__c'};
 
-		Map<String,List<FieldWrapper>> wrapperMap = new Map<String,List<FieldWrapper>>();
+		Map<String,List<PortalWrapperClasses.FieldWrapper>> wrapperMap = new Map<String,List<PortalWrapperClasses.FieldWrapper>>();
 		Map<String,String> fieldLabels = new Map<String,String>();
 
 
-		wrapperMap.put(rowsFields,new List<FieldWrapper>());
-		wrapperMap.put(viewFields,new List<FieldWrapper>());
-		wrapperMap.put(editFields,new List<FieldWrapper>());
+		wrapperMap.put(rowsFields,new List<PortalWrapperClasses.FieldWrapper>());
+		wrapperMap.put(viewFields,new List<PortalWrapperClasses.FieldWrapper>());
+		wrapperMap.put(editFields,new List<PortalWrapperClasses.FieldWrapper>());
 
 
-		wrapperMap.put(sectionBranchContact,new List<FieldWrapper>());
-		wrapperMap.put(sectionBasic,new List<FieldWrapper>());
+		wrapperMap.put(sectionBranchContact,new List<PortalWrapperClasses.FieldWrapper>());
+		wrapperMap.put(sectionBasic,new List<PortalWrapperClasses.FieldWrapper>());
 
 		fieldLabels.put('Name',LABEL_NAME);
 		fieldLabels.put('TradeName__c',LABEL_TRADE_NAME);
@@ -1071,36 +887,36 @@ public static Contact contactInfo = new Contact();
 		}
 
 
-		wrapperMap.get(sectionBasic).add(new FieldWrapper('Legal_name__c',false,true));
-		wrapperMap.get(sectionBasic).add(new FieldWrapper('Sector__c',false,true));
-		wrapperMap.get(sectionBasic).add(new FieldWrapper('Category__c',false,true));
-		wrapperMap.get(sectionBasic).add(new FieldWrapper('Location_Type__c',false,true));
+		wrapperMap.get(sectionBasic).add(new PortalWrapperClasses.FieldWrapper('Legal_name__c',false,true));
+		wrapperMap.get(sectionBasic).add(new PortalWrapperClasses.FieldWrapper('Sector__c',false,true));
+		wrapperMap.get(sectionBasic).add(new PortalWrapperClasses.FieldWrapper('Category__c',false,true));
+		wrapperMap.get(sectionBasic).add(new PortalWrapperClasses.FieldWrapper('Location_Type__c',false,true));
 
-		wrapperMap.get(sectionBranchContact).add(new FieldWrapper('Email__c',true,true));
-		wrapperMap.get(sectionBranchContact).add(new FieldWrapper('Website',true,true));
-		wrapperMap.get(sectionBranchContact).add(new FieldWrapper('Phone',true,true));
-		wrapperMap.get(sectionBranchContact).add(new FieldWrapper('Fax',true,true));
+		wrapperMap.get(sectionBranchContact).add(new PortalWrapperClasses.FieldWrapper('Email__c',true,true));
+		wrapperMap.get(sectionBranchContact).add(new PortalWrapperClasses.FieldWrapper('Website',true,true));
+		wrapperMap.get(sectionBranchContact).add(new PortalWrapperClasses.FieldWrapper('Phone',true,true));
+		wrapperMap.get(sectionBranchContact).add(new PortalWrapperClasses.FieldWrapper('Fax',true,true));
 
-		wrapperMap.get(sectionBranchContact).add(new FieldWrapper('BillingState',(rType == 'Standard_Account'),true));
-		wrapperMap.get(sectionBranchContact).add(new FieldWrapper('BillingStreet',(rType == 'Standard_Account'),true));
-		wrapperMap.get(sectionBranchContact).add(new FieldWrapper('BillingPostalCode',(rType == 'Standard_Account'),true));
-		wrapperMap.get(sectionBranchContact).add(new FieldWrapper('BillingCountry',false,true));
+		wrapperMap.get(sectionBranchContact).add(new PortalWrapperClasses.FieldWrapper('BillingState',(rType == 'Standard_Account'),true));
+		wrapperMap.get(sectionBranchContact).add(new PortalWrapperClasses.FieldWrapper('BillingStreet',(rType == 'Standard_Account'),true));
+		wrapperMap.get(sectionBranchContact).add(new PortalWrapperClasses.FieldWrapper('BillingPostalCode',(rType == 'Standard_Account'),true));
+		wrapperMap.get(sectionBranchContact).add(new PortalWrapperClasses.FieldWrapper('BillingCountry',false,true));
 
 		for(String fieldName : toRowWithGridClasses.keySet()){
-			FieldWrapper fieldWrapperAux = new FieldWrapper(fieldName,true,true,'inactive cursorPointer',fieldLabels.get(fieldName));
+			PortalWrapperClasses.FieldWrapper fieldWrapperAux = new PortalWrapperClasses.FieldWrapper(fieldName,true,true,'inactive cursorPointer',fieldLabels.get(fieldName));
 			fieldWrapperAux.gridClassName = toRowWithGridClasses.get(fieldName);
 			wrapperMap.get(rowsFields).add(fieldWrapperAux);
 		}
 
 
-		wrapperMap.put(viewFields,new List<FieldWrapper>());
+		wrapperMap.put(viewFields,new List<PortalWrapperClasses.FieldWrapper>());
 		for(String fieldName : toView){
-			wrapperMap.get(viewFields).add(new FieldWrapper(fieldName,true,true,'inactive cursorPointer',fieldLabels.get(fieldName)));
+			wrapperMap.get(viewFields).add(new PortalWrapperClasses.FieldWrapper(fieldName,true,true,'inactive cursorPointer',fieldLabels.get(fieldName)));
 		}
 
-		wrapperMap.put(editFields,new List<FieldWrapper>());
+		wrapperMap.put(editFields,new List<PortalWrapperClasses.FieldWrapper>());
 		for(String fieldName : toEdit){
-			wrapperMap.get(editFields).add(new FieldWrapper(fieldName,true,true,'inactive cursorPointer',fieldLabels.get(fieldName)));
+			wrapperMap.get(editFields).add(new PortalWrapperClasses.FieldWrapper(fieldName,true,true,'inactive cursorPointer',fieldLabels.get(fieldName)));
 		}
 
 		return wrapperMap;
@@ -1328,7 +1144,7 @@ public static Contact contactInfo = new Contact();
 	/** Outstanding Invoices section */
 
 	@AuraEnabled
-	public static Map<String,List<FieldWrapper>> getInvoicesListFields(String invoiceType) {
+	public static Map<String,List<PortalWrapperClasses.FieldWrapper>> getInvoicesListFields(String invoiceType) {
 
 		String rowsFields = 'ROWS'; //Fields to display in columns of a closed accordion/record list
 		String viewFields = 'VIEW'; //Fields to display in open accordion section/record detail
@@ -1355,24 +1171,24 @@ public static Contact contactInfo = new Contact();
 		fieldLabels.put('Invoice_Date__c', LABEL_INVOICE_DATE);
 		fieldLabels.put('Fee_Codes_Display__c', LABEL_FEE_CODES);
 
-		Map<String,List<FieldWrapper>> wrapperMap = new Map<String,List<FieldWrapper>>();
+		Map<String,List<PortalWrapperClasses.FieldWrapper>> wrapperMap = new Map<String,List<PortalWrapperClasses.FieldWrapper>>();
 
-		wrapperMap.put(rowsFields,new List<FieldWrapper>());
+		wrapperMap.put(rowsFields,new List<PortalWrapperClasses.FieldWrapper>());
 		for(String fieldName : toRow){
-			wrapperMap.get(rowsFields).add(new FieldWrapper(fieldName,true,true,'underLinded inactive cursorPointer',fieldLabels.get(fieldName)));
+			wrapperMap.get(rowsFields).add(new PortalWrapperClasses.FieldWrapper(fieldName,true,true,'underLinded inactive cursorPointer',fieldLabels.get(fieldName)));
 		}
 
-		wrapperMap.put(viewFields,new List<FieldWrapper>());
-		wrapperMap.put(editFields,new List<FieldWrapper>());
+		wrapperMap.put(viewFields,new List<PortalWrapperClasses.FieldWrapper>());
+		wrapperMap.put(editFields,new List<PortalWrapperClasses.FieldWrapper>());
 
 		//VIEW
-		wrapperMap.get(viewFields).add(new FieldWrapper('Bank_Name__c',true,true,true));
-		wrapperMap.get(viewFields).add(new FieldWrapper('IBAN__c',true,true));
-		wrapperMap.get(viewFields).add(new FieldWrapper('SWIFT__c',true,true));
-		wrapperMap.get(viewFields).add(new FieldWrapper('Bank_Code__c',false,true,true));
-		wrapperMap.get(viewFields).add(new FieldWrapper('Branch_Code__c',false,true,true));
-		wrapperMap.get(viewFields).add(new FieldWrapper('Bank_Account_No__c',false,true,true));
-		wrapperMap.get(viewFields).add(new FieldWrapper('Bank_Account_Name__c',false,true,true));
+		wrapperMap.get(viewFields).add(new PortalWrapperClasses.FieldWrapper('Bank_Name__c',true,true,true));
+		wrapperMap.get(viewFields).add(new PortalWrapperClasses.FieldWrapper('IBAN__c',true,true));
+		wrapperMap.get(viewFields).add(new PortalWrapperClasses.FieldWrapper('SWIFT__c',true,true));
+		wrapperMap.get(viewFields).add(new PortalWrapperClasses.FieldWrapper('Bank_Code__c',false,true,true));
+		wrapperMap.get(viewFields).add(new PortalWrapperClasses.FieldWrapper('Branch_Code__c',false,true,true));
+		wrapperMap.get(viewFields).add(new PortalWrapperClasses.FieldWrapper('Bank_Account_No__c',false,true,true));
+		wrapperMap.get(viewFields).add(new PortalWrapperClasses.FieldWrapper('Bank_Account_Name__c',false,true,true));
 
 		return wrapperMap;
 	}

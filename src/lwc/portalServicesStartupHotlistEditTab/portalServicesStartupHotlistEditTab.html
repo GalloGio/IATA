@@ -1,0 +1,245 @@
+<template>
+
+    <!-- SHOW LOADING -->
+    <div if:true={componentLoading} class="spinnerContainer">
+        <lightning-spinner class="background-superLightGray" alternative-text="Loading"></lightning-spinner>
+    </div>
+
+    <div if:false={componentLoading}>
+
+        <div class="slds-grid slds-wrap slds-gutters_medium slds-grid--vertical-stretch">
+            
+            <div if:true={viewSubmitWarning} class="slds-p-vertical_xx-small slds-col slds-size_1-of-1"> 
+                <c-portal-warning-banner label-input={labels.CSP_WaitingApproval}>
+                </c-portal-warning-banner>
+            </div>
+
+            <div if:true={markedForReview} class="slds-p-vertical_xx-small slds-col slds-size_1-of-1"> 
+                <c-portal-warning-banner label-input={labels.CSP_MarkedForReview}>
+                </c-portal-warning-banner>
+            </div>
+            
+            <div if:false={viewSubmitWarning} class="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-large-size_1-of-4 slds-col_bump-left">
+                <lightning-button class="baseButton newContainedButton buttonMinHeightMedium text-xsmall fullWidth" label={labels.Edit}
+                                    variant="neutral" onclick={handleOpenEditModalButtonClick}></lightning-button>
+            </div>
+
+            <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1">
+                <template if:true={viewPublishedRecord}>
+                    <c-portal-record-view-edit-cards-and-navigation properties-and-cards-list-api={propertiesAndAndCardsList}>
+                    </c-portal-record-view-edit-cards-and-navigation>
+                </template>
+                <template if:false={viewPublishedRecord}>
+                    <div class="slds-p-vertical_xx-large slds-p-horizontal_x-large customBorderlessCardWhite slds-m-bottom_medium section">
+                        <lightning-formatted-rich-text                       
+                            value={labels.PublishedRecordPreview}>
+                        </lightning-formatted-rich-text>
+                    </div>
+                </template>
+            </div>
+
+        </div>
+
+        <div if:true={showSuccessModal}>
+            <c-portal-generic-popup-window show-close variant="success">
+                <span slot="bodycontent" >
+                    <div>
+                        <div class="slds-p-around--medium text-bold text-small">                   
+                            <span class="slds-float_right slds-m-horizontal_xx-small" onclick={handleCloseSuccessPopup} >
+                                <lightning-icon icon-name="utility:close" size="x-small" class="cursorPointer blackIcon"></lightning-icon>
+                            </span>
+                        </div>
+                        <div class="slds-p-around_large"> 
+                            <p class="slds-text-align_center slds-p-vertical_x-small text-small">
+                                <template if:true={displaySaveTextSuccessModal}>
+                                    <lightning-formatted-rich-text                       
+                                        value={labels.CSP_ProviderDraftSaved}>
+                                    </lightning-formatted-rich-text>
+                                </template>
+                                <template if:false={displaySaveTextSuccessModal}>
+                                    <lightning-formatted-rich-text                       
+                                        value={labels.CSP_ProviderSaveAndSubmit}>
+                                    </lightning-formatted-rich-text>
+                                </template>
+                            </p> 
+                        </div>
+        
+                        <div class="slds-m-top--xxx-small slds-m-bottom--large slds-text-align--center customWhiteBackground slds-clearfix">
+                            <slot name="ButtonSection">
+                                &nbsp;
+                            </slot>
+                        </div>
+                    </div>
+                </span>
+            </c-portal-generic-popup-window>
+        </div>
+
+        <div if:true={showErrorModal}>
+            <c-portal-generic-popup-window show-close variant="warning">
+                <span slot="bodycontent" >
+                    <div>
+                        <div class="slds-p-around--medium text-bold text-small">                   
+                            <span class="slds-float_right slds-m-horizontal_xx-small" onclick={handleCloseErrorPopup} >
+                                <lightning-icon icon-name="utility:close" size="x-small" class="cursorPointer blackIcon" ></lightning-icon>
+                            </span>
+                        </div>
+                        <div class="slds-p-around_large">
+                            <p class="slds-text-align_center slds-p-vertical_x-small text-small">
+                                <lightning-formatted-rich-text                       
+                                    value={labels.CSP_ProviderWrongSubmit}>
+                                </lightning-formatted-rich-text>
+                            </p>
+                        </div>
+        
+                        <div class="slds-m-top--xxx-small slds-m--bottom-large slds-text-align--center customWhiteBackground slds-clearfix">
+                            <slot name="ButtonSection">   
+                                &nbsp;
+                            </slot>
+                        </div>
+                    </div>
+                </span>
+            </c-portal-generic-popup-window>
+        </div>
+
+        <!-- EDIT MODAL -->
+        <div if:true={showEditModal} >
+
+            <c-portal-popup-container size="threeQuarters">
+                <span slot="modalHeader">
+                    <span>{labels.CSP_EditProviderDetails}</span>
+                    <span class="slds-float_right slds-m-horizontal_x-small close-mark" onclick={handleCancelButtonEditModal}>
+                        <template if:false={isSaving}>
+                            <lightning-icon icon-name="utility:close" size="x-small" class="cursorPointer"
+                                onclick={handleCancelButtonEditModal}></lightning-icon>
+                        </template>
+                    </span>
+                </span>
+
+                <span slot="modalBody">
+
+                    <div if:true={viewComments} class="slds-p-vertical_xx-small slds-col slds-size_1-of-1">
+                        <c-portal-warning-banner label-input={labels.CSP_ProviderReviewComments}>
+                        </c-portal-warning-banner>
+                        <div class="slds-p-vertical_xx-large slds-p-horizontal_x-large customBorderlessCardWhite slds-m-bottom_medium section">
+                            <div class="slds-form-element__label">{labels.CSP_CaseMessage_MessageTitle}</div>
+                            <div class="text-xxxsmall">{comments}</div>
+                        </div>
+                    </div>
+
+                    <lightning-record-edit-form record-id={propertiesAndCardsListEdit.recordId} object-api-name={propertiesAndCardsListEdit.objectAPIName}
+                                onsubmit={handleSubmitForm} density="comfy">
+
+                        <template if:true={isSaving}>
+                            <div class="modalSpinnerContainer">
+                                <lightning-spinner alternative-text="Loading" size="medium">
+                                </lightning-spinner>
+                            </div>
+                        </template>
+
+                        <template if:true={hasError}>
+                            <div class="whiteIcon text-xxsmall errorBox">
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-m-left_medium slds-size_12-of-13">
+                                        {labels.CSP_Error_Message_Mandatory_Fields_Contact}
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+
+                        <template if:false={isLoadingEdit}>
+                            <div class="slds-grid slds-wrap slds-gutters_direct-medium slds-p-vertical_x-large">
+
+                                <lightning-messages class="toastMessage"></lightning-messages>
+
+                                <template for:each={propertiesAndCardsListEdit.lstCards} for:item="card">
+
+                                    <template for:each={card.lstFieldWrapper} for:item="field">
+                                        <div key={field.fieldName} if:false={field.visible} class="slds-hide">
+                                            <lightning-input-field field-name={field.fieldName}>
+                                            </lightning-input-field>
+                                        </div>
+                                        <div key={field.fieldName} if:true={field.visible} class="text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-m-bottom_medium">
+                                            <template if:false={field.outputOnly}>
+                                                <template if:true={field.editable}>
+                                                    <template if:true={field.isMultipick}>
+                                                        <c-portal-record-view-edit-multipicklist-selector 
+                                                            record-id-input={propertiesAndCardsListEdit.recordId} 
+                                                            object-name-input={propertiesAndCardsListEdit.objectAPIName}
+                                                            field-name-input={field.fieldName} 
+                                                            onupdatemultipickvalue={handleMultipickUpdate}>
+                                                        </c-portal-record-view-edit-multipicklist-selector>
+                                                    </template>
+                                                    <template if:false={field.isMultipick}>
+                                                        <lightning-input-field
+                                                            onchange={styleInputs}
+                                                            class="labelValue textValue"
+                                                            field-name={field.fieldName}>
+                                                        </lightning-input-field>
+                                                    </template>
+                                                    <template if:true={field.invalid}>
+                                                        <div
+                                                            class="slds-form-element__help invalidValueLabel">
+                                                            {labels.InvalidValue}</div>
+                                                    </template>
+                                                    <template if:true={field.missing}>
+                                                        <div
+                                                            class="slds-form-element__help invalidValueLabel">
+                                                            {labels.CompleteField}</div>
+                                                    </template>
+                                                </template>
+                                                <template if:false={field.editable}>
+                                                    <lightning-input-field
+                                                        class="labelValue textValue disabledValue disabledInput"
+                                                        field-name={field.fieldName} disabled>
+                                                    </lightning-input-field>
+                                                </template>
+                                            </template>
+
+                                            <template if:true={field.outputOnly}>
+                                                <lightning-output-field
+                                                    class="labelValue textValue removeLinks"
+                                                    field-name={field.fieldName}>
+                                                </lightning-output-field>
+                                            </template>
+                                        </div>
+                                        
+                                    </template>
+
+                                    <div class="logoCenter text-small slds-col slds-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-m-bottom_medium" key={card.cardTitle}>
+                                        <div class="text-small">Logo</div>
+                                        
+                                        <div class="slds-m-top_x-large">
+                                            <c-portal-record-view-edit-logo key={propertiesAndCardsListEdit.recordId} provider-id-api={propertiesAndCardsListEdit.recordId}></c-portal-record-view-edit-logo>
+                                        </div>
+
+                                        <lightning-input class="slds-m-top_large labelValue textValue" type="file" accept=".png, .jpg" title={labels.CSP_IHUB_LogoFileTypes} onchange={openfileUpload}></lightning-input>
+                                                               
+                                        <lightning-input if:true={hasFileToUpload} class="fullWidth labelValue textValue disabledValue disabledInput" label={labels.Upload_File} placeholder={fileToUpload} disabled></lightning-input>
+                                    </div>
+
+                                </template>
+                            </div>
+                        </template>
+
+                        <div class="slds-grid slds-wrap slds-gutters_medium slds-grid--vertical-stretch">
+                            <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-large-size_1-of-3">    
+                                <lightning-button class="baseButton newContainedButton buttonMinHeightMedium text-xsmall fullWidth" label={labels.Cancel} 
+                                                    variant="neutral" onclick={handleCancelButtonEditModal} disabled={isSaving}></lightning-button>
+                            </div>
+                            <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-large-size_1-of-3">    
+                                <lightning-button class="baseButton newContainedButton buttonMinHeightMedium text-xsmall fullWidth" label={labels.Save} 
+                                                    variant="neutral" data-name="save" type="submit" onclick={handleSaveDraftButtonClick} disabled={isSaving}></lightning-button>
+                            </div>
+                            <div class="slds-p-vertical_xx-small slds-col slds-size_1-of-1 slds-medium-size_1-of-3 slds-large-size_1-of-3">
+                                <lightning-button class="baseButton newContainedButton buttonMinHeightMedium text-xsmall fullWidth" label={labels.CSP_SaveAndSubmit} 
+                                                    variant="neutral" data-name="submit" type="submit" onclick={handleSaveButtonClick} disabled={isSaving}></lightning-button>
+                            </div>
+                        </div>
+                    </lightning-record-edit-form>
+                </span>
+            </c-portal-popup-container>
+        </div>
+
+    </div>
+
+</template>
