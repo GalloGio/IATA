@@ -465,7 +465,7 @@ global without sharing class IDCard_AdmPendingOpsController extends IDCardAbstra
 		cyberSrcData.put('transaction_uuid', String.ValueOf(massUpdateApplication.Id) + DateTime.now().format('yyyy-MM-dd\'T\'HH:mm:ss\'Z\''));
 
 		cyberSrcData.put('currency', massUpdateApplication.CurrencyIsoCode);
-		cyberSrcData.put('amount', String.valueOf(massUpdateApplication.Applicable_Fee__c != null ? massUpdateApplication.Applicable_Fee__c : 0));
+		cyberSrcData.put('amount', String.valueOf(massUpdateApplication.Applicable_Fee__c != null ? massUpdateApplication.Applicable_Fee__c.setscale(2) : 0));
 		cyberSrcData.put('reference_number', orderNumber);
 
 		// hardcoded values
