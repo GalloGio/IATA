@@ -413,13 +413,12 @@ public class ANG_AccountTriggerHandler {
 		}
 
 		// get all change codes to control update on related risk Events When changing accreditation type from Cash to Cashless
-		if(!inactivateAcctsSet.isEmpty()){
+		if(!inactivateAcctsSet.isEmpty() || !reActivateAcctsSet.isEmpty()){
 			for( Agency_Applied_Change_code__c cc : [SELECT id, Account__c, Bulletin_Information__c, Change_Code__c, OSCAR__r.Name, OSCAR__r.ANG_Type_Of_Change__c, 
 															OSCAR__r.AMS_Online_Accreditation__r.ANG_Accreditation_Model_to_Change__c, SIDRA_Case__r.CaseNumber, CreatedDate 
 														FROM Agency_Applied_Change_code__c 
 														WHERE (Account__c IN : inactivateAcctsSet OR Account__c IN : reActivateAcctsSet)
 															AND Change_Code__c in : VALID_CHANGE_CODES 
-															AND CreatedDate <: Date.today().addYears(-2)
 															ORDER BY CreatedDate DESC]){
 				if(cc.Change_Code__c == CHA_CHANGE_CODES){
 					if(mapOfchangeCodesByAccount.get(cc.Account__c) == null) {
@@ -482,8 +481,7 @@ public class ANG_AccountTriggerHandler {
 			}
 		}else{
 			for(Integer index = 0; index < mapCCByAccount.get(re.ANG_AccountId__c).size(); index ++){
-				if(mapCCByAccount.get(re.ANG_AccountId__c)[index].Change_Code__c == CHA_CHANGE_CODES 
-						&& mapCCByAccount.get(re.ANG_AccountId__c)[index].OSCAR__r.ANG_Type_Of_Change__c == AMS_Utils.ANG_ACCREDITATION_TYPE
+				if(mapCCByAccount.get(re.ANG_AccountId__c)[index].OSCAR__r.ANG_Type_Of_Change__c == AMS_Utils.ANG_ACCREDITATION_TYPE
 						&& mapCCByAccount.get(re.ANG_AccountId__c)[index].OSCAR__r.AMS_Online_Accreditation__r.ANG_Accreditation_Model_to_Change__c == typrOfChangeCode
 						&& ((mapCCByAccount.get(re.ANG_AccountId__c)[index].CreatedDate < = checkCreatedDateRE && typrOfChangeCode == AMS_Utils.ACCREDITATIONMODEL_CASH) 
 						|| mapCCByAccount.get(re.ANG_AccountId__c)[index].CreatedDate > = checkCreatedDateRE && typrOfChangeCode == AMS_Utils.ACCREDITATIONMODEL_CASHLESS)){
