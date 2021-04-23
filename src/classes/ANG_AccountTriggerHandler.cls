@@ -415,7 +415,7 @@ public class ANG_AccountTriggerHandler {
 		// get all change codes to control update on related risk Events When changing accreditation type from Cash to Cashless
 		if(!inactivateAcctsSet.isEmpty() || !reActivateAcctsSet.isEmpty()){
 			for( Agency_Applied_Change_code__c cc : [SELECT id, Account__c, Bulletin_Information__c, Change_Code__c, OSCAR__r.Name, OSCAR__r.ANG_Type_Of_Change__c, 
-															OSCAR__r.AMS_Online_Accreditation__r.ANG_Accreditation_Model_to_Change__c, SIDRA_Case__r.CaseNumber, CreatedDate 
+															OSCAR__r.AMS_Online_Accreditation__r.ANG_Accreditation_Model_to_Change__c, CreatedDate 
 														FROM Agency_Applied_Change_code__c 
 														WHERE (Account__c IN : inactivateAcctsSet OR Account__c IN : reActivateAcctsSet)
 															AND Change_Code__c in : VALID_CHANGE_CODES 
@@ -427,7 +427,7 @@ public class ANG_AccountTriggerHandler {
 						mapOfchangeCodesByAccount.get(cc.Account__c).add(cc);
 					}
 				}else{
-					mapOfchangeCodesCWDByCaseNumber.put(cc.SIDRA_Case__r.CaseNumber, cc);
+					mapOfchangeCodesCWDByCaseNumber.put(cc.OSCAR__r.Name, cc);
 				}
 			}
 		}
@@ -486,7 +486,7 @@ public class ANG_AccountTriggerHandler {
 						&& ((mapCCByAccount.get(re.ANG_AccountId__c)[index].CreatedDate < = checkCreatedDateRE && typrOfChangeCode == AMS_Utils.ACCREDITATIONMODEL_CASH) 
 						|| mapCCByAccount.get(re.ANG_AccountId__c)[index].CreatedDate > = checkCreatedDateRE && typrOfChangeCode == AMS_Utils.ACCREDITATIONMODEL_CASHLESS)){
 							
-					if(typrOfChangeCode == AMS_Utils.ACCREDITATIONMODEL_CASH && mapOfchangeCodesCWDByCaseNumber.get(mapCCByAccount.get(re.ANG_AccountId__c)[index].SIDRA_Case__r.CaseNumber) == null){
+					if(typrOfChangeCode == AMS_Utils.ACCREDITATIONMODEL_CASH && mapOfchangeCodesCWDByCaseNumber.get(mapCCByAccount.get(re.ANG_AccountId__c)[index].OSCAR__r.Name) == null){
 						re.Applicable_for_re_activation__c = true;
 					}else if(typrOfChangeCode == AMS_Utils.ACCREDITATIONMODEL_CASHLESS){
 						re.ang_event_status__c = ANG_Risk_Helper.STATUS_ACTIVE;
