@@ -35,10 +35,13 @@ private class ANG_PortalApplicationRightTest {
 
 		insert new List<Contact>{contact, contact2, contact3, contactShare};
 
-		Portal_Applications__c app = new Portal_Applications__c(Name = 'IATA EasyPay - Tester');
-		Portal_Applications__c app2 = new Portal_Applications__c(Name = 'IATA EasyPay');
+		List<Portal_Applications__c> portalApplicationList = TestDataFactory_PortalApplications.createDefaultPortalApplication(2);
+		Portal_Applications__c app = portalApplicationList.get(0);
+		app.Name = 'IATA EasyPay - Tester';
+		Portal_Applications__c app2 = portalApplicationList.get(1);
+		app2.Name = 'IATA EasyPay';
 
-		insert new List<Portal_Applications__c>{app, app2};
+		insert portalApplicationList;
 
 		ConnectedApplication capp;
 

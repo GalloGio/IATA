@@ -59,7 +59,8 @@ private class ISSP_CurrencyCenterHomeControllerTest {
 		con.Community__c = 'ISS Customer Portal';
 		update con;
 
-		Portal_Applications__c app = new Portal_Applications__c(Application_URL__c='/ISSP_TDNavigation');
+		Portal_Applications__c app = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		app.Application_URL__c='/ISSP_TDNavigation';
 		insert app;
 
 		Portal_Application_Right__c par =

@@ -928,14 +928,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>AMS_IataCodeRangesLoaderCtrl2</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>AMS_IataCodeRangesLoaderCtrl3</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>AMS_IataCodeRangesLoaderCtrlTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -53392,11 +53384,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Portal_Applications__c.Description__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Portal_Applications__c.Functional_Role__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>

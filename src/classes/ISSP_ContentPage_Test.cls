@@ -35,7 +35,8 @@ private class ISSP_ContentPage_Test {
 				User newUser2 = ISSP_ObjectFactory.createPortalUser(con2);
 				con2.OwnerId = newUser2.Id;
 				update con2;
-				Portal_Applications__c app = new Portal_Applications__c(Name = 'test app');
+				Portal_Applications__c app = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+				app.Name = 'test app'; 
 				insert app;
 				Portal_Application_Right__c appRight = new Portal_Application_Right__c(Contact__c = con2.Id, Portal_Application__c = app.Id, Right__c = 'Access Granted');
 				insert appRight;
