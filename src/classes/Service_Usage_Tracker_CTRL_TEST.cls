@@ -37,7 +37,7 @@ public class Service_Usage_Tracker_CTRL_TEST {
 		User testUser = createUser(testContact, profileId);
 
 		//GADM service
-		Portal_Applications__c portalApplications = new Portal_Applications__c();
+		Portal_Applications__c portalApplications = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
 		portalApplications.Name = 'GADM';
 		insert portalApplications;
 
@@ -288,7 +288,6 @@ public class Service_Usage_Tracker_CTRL_TEST {
 		Test.startTest();
 		presentInCache = Service_Usage_Tracker_CTRL.saveNewCacheEntry(UserInfo.getUserId(), 'checkSessionCacheCoverageTest');
 		Test.stopTest();
-		System.assertEquals(false, presentInCache, 'Key is not preset in cache');
+		System.assertEquals(true, presentInCache, 'Key is not preset in cache');
 	}
-
 }

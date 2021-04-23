@@ -30,12 +30,12 @@ public class PortalRegistrationThirdLevelLMSCtrlTest{
 		Training_Contact_Role_Details__c tcrd = new Training_Contact_Role_Details__c(Account_Contact_Role__c = acr.Id, RecordTypeId = RECTYPE_Trainee_YASContDet);
 		insert tcrd;
 
-		Portal_Applications__c pa = new Portal_Applications__c(Name = 'Training Platform (LMS)');
+		Portal_Applications__c pa = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		pa.Name = 'Training Platform (LMS)';
 		insert pa;
 
 		Term_and_Condition__c tos = new Term_and_Condition__c(NewGenApp_PortalService__c = pa.Id, Is_Latest__c = true, Status__c = 'Final', Effective_Start_Date__c = Date.today());
 		insert tos;
-
 	}
 
 	@isTest

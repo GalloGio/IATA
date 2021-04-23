@@ -26,7 +26,7 @@ private class ISSP_WS_Test {
 		con.Community__c = 'ISSP';
 		insert con;
 
-		Portal_Applications__c newApp = new Portal_Applications__c();
+		Portal_Applications__c newApp = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
 		newApp.Name = 'CASS01';
 		insert newApp;
 
@@ -96,7 +96,7 @@ private class ISSP_WS_Test {
 		con.Email = 'test.issp.interface@testisspinterface.com';
 		insert con;
 
-		Portal_Applications__c newApp = new Portal_Applications__c();
+		Portal_Applications__c newApp = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
 		newApp.Name = 'CASS01';
 		insert newApp;
 
@@ -159,7 +159,7 @@ private class ISSP_WS_Test {
 
 		User thisUser = ISSP_ObjectFactory.createPortalUser(con);
 
-		Portal_Applications__c newApp = new Portal_Applications__c();
+		Portal_Applications__c newApp = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
 		newApp.Name = 'CASS01';
 		insert newApp;
 
@@ -211,7 +211,7 @@ private class ISSP_WS_Test {
 
 		User thisUser = ISSP_ObjectFactory.createPortalUser(con);
 
-		Portal_Applications__c newApp = new Portal_Applications__c();
+		Portal_Applications__c newApp = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
 		newApp.Name = 'MYTEST';
 		insert newApp;
 
@@ -260,7 +260,7 @@ private class ISSP_WS_Test {
 		con.Email = 'test.issp.interface@testisspinterface.com';
 		insert con;
 
-		Portal_Applications__c newApp = new Portal_Applications__c();
+		Portal_Applications__c newApp = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
 		newApp.Name = 'MYTEST';
 		insert newApp;
 
@@ -311,7 +311,7 @@ private class ISSP_WS_Test {
 
 		User thisUser = ISSP_ObjectFactory.createPortalUser(con);
 
-		Portal_Applications__c newApp = new Portal_Applications__c();
+		Portal_Applications__c newApp = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
 		newApp.Name = 'MYTEST';
 		insert newApp;
 
@@ -377,7 +377,7 @@ private class ISSP_WS_Test {
 
 		User thisUser = ISSP_ObjectFactory.createPortalUser(con);
 
-		Portal_Applications__c newApp = new Portal_Applications__c();
+		Portal_Applications__c newApp = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
 		newApp.Name = 'MYTEST';
 		insert newApp;
 
@@ -437,7 +437,7 @@ private class ISSP_WS_Test {
 
 		User thisUser = ISSP_ObjectFactory.createPortalUser(con);
 
-		Portal_Applications__c newApp = new Portal_Applications__c();
+		Portal_Applications__c newApp = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
 		newApp.Name = 'MYTEST';
 		insert newApp;
 
@@ -518,7 +518,7 @@ private class ISSP_WS_Test {
 
 		User thisUser = ISSP_ObjectFactory.createPortalUser(con);
 
-		Portal_Applications__c newApp = new Portal_Applications__c();
+		Portal_Applications__c newApp = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
 		newApp.Name = 'MYTEST';
 		insert newApp;
 
@@ -578,7 +578,7 @@ private class ISSP_WS_Test {
 
 		User thisUser = ISSP_ObjectFactory.createPortalUser(con);
 
-		Portal_Applications__c newApp = new Portal_Applications__c();
+		Portal_Applications__c newApp = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
 		newApp.Name = 'MYTEST';
 		insert newApp;
 
@@ -655,7 +655,7 @@ private class ISSP_WS_Test {
 		acc2.RecordTypeId = recordTypeId;
 		insert acc2;
 
-		Portal_Applications__c newApp = new Portal_Applications__c();
+		Portal_Applications__c newApp = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
 		newApp.Name = 'MYTEST';
 		insert newApp;
 
@@ -735,7 +735,7 @@ private class ISSP_WS_Test {
 		acc2.RecordTypeId = recordTypeId;
 		insert acc2;
 
-		Portal_Applications__c newApp = new Portal_Applications__c();
+		Portal_Applications__c newApp = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
 		newApp.Name = 'MYTEST';
 		insert newApp;
 
@@ -809,7 +809,7 @@ private class ISSP_WS_Test {
 		acc.RecordTypeId = recordTypeId;
 		insert acc;
 
-		Portal_Applications__c newApp = new Portal_Applications__c();
+		Portal_Applications__c newApp = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
 		newApp.Name = 'MYTEST';
 		insert newApp;
 
@@ -861,7 +861,7 @@ private class ISSP_WS_Test {
 		acc.RecordTypeId = recordTypeId;
 		insert acc;
 
-		Portal_Applications__c newApp = new Portal_Applications__c();
+		Portal_Applications__c newApp = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
 		newApp.Name = 'MYTEST';
 		insert newApp;
 

@@ -216,12 +216,14 @@ private class ANG_AnnualRevCaseCreationTest {
 	@isTest 
 	static void createAnualRevalCaseCreationForMajorChanges(){
 		insert new ANG_AgencyChangesConfig__c(Name = 'ChangeName', 
-			TC_Location_type__c = false, TC_Legal_status__c = false, TC_Location__c = false,
-			TC_Minor_Shareholding__c = false, TC_Legal_Name__c = true, TC_Ownership__c = false, TC_Hierarchy__c = false,
-			TC_Major_Shareholding__c = false,  TC_VMFR__c = false, TCA_Sanity_check__c = 'CHN', TCA_Application_withdrawal__c = 'CWD',
-			Valid_Accreditation_Models__c = 'ALL');
+		TC_Location_type__c = false, TC_Legal_status__c = false, TC_Location__c = false,
+		TC_Minor_Shareholding__c = false, TC_Legal_Name__c = true, TC_Ownership__c = false, TC_Hierarchy__c = false,
+		TC_Major_Shareholding__c = false,  TC_VMFR__c = false, TCA_Sanity_check__c = 'CHN', TCA_Application_withdrawal__c = 'CWD',
+		Valid_Accreditation_Models__c = 'ALL');
 
-		insert new Portal_Applications__c(name = 'Risk Profile and RHC');
+		Portal_Applications__c portalApplication = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		portalApplication.name = 'Risk Profile and RHC';
+		insert portalApplication;
 		
 		Account he = null;
 		Account ae1 = null;
