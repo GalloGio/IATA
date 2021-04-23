@@ -932,14 +932,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>AMS_IataCodeRangesLoaderCtrl2</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>AMS_IataCodeRangesLoaderCtrl3</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>AMS_IataCodeRangesLoaderCtrlTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -62593,6 +62585,10 @@
         <recordType>Case.NDC_Management</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>CaseClose-ACCA Bug Fix Close</layout>
+        <recordType>Case.TIDS</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>CaseClose-ACCA Close Case - Extended</layout>
         <recordType>Case.Cases_IFG</recordType>
     </layoutAssignments>
@@ -69925,6 +69921,7 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
+        <personAccountDefault>true</personAccountDefault>
         <recordType>Case.InternalCasesEuropeSCE</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>

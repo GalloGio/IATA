@@ -944,14 +944,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>AMS_IataCodeRangesLoaderCtrl2</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>AMS_IataCodeRangesLoaderCtrl3</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>AMS_IataCodeRangesLoaderCtrlTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
