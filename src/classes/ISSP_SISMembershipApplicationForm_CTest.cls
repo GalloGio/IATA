@@ -51,8 +51,9 @@ private class ISSP_SISMembershipApplicationForm_CTest {
 		con.OwnerId = newUser.Id;
 		update con;
 
-		Portal_Applications__c SISapp = new Portal_Applications__c(Name = ISSP_SISMembershipApplication_Ctrl.APP_NAME);
-		insert SISapp;
+		Portal_Applications__c SISapp = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		SISapp.Name = ISSP_SISMembershipApplication_Ctrl.APP_NAME;
+    	insert SISapp;
 
 		Portal_Application_Right__c right = new Portal_Application_Right__c(
 			Contact__c = con.Id,

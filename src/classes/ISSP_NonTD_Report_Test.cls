@@ -29,7 +29,8 @@ private class ISSP_NonTD_Report_Test {
 		update myUser;
 		myUser = [ select Id from User where Id = :UserInfo.getUserId() ];
 		PortalServiceAccessTriggerHandler.avoidAppTrigger = true;
-		Portal_Applications__c app = new Portal_Applications__c(Name = 'Treasury Dashboard');
+		Portal_Applications__c app = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		app.Name = 'Treasury Dashboard';
 		insert app;
 		Portal_Application_Right__c appRight = new Portal_Application_Right__c(Contact__c = con.Id, Portal_Application__c = app.Id, Right__c = 'Access Granted');
 		insert appRight;
@@ -125,7 +126,8 @@ private class ISSP_NonTD_Report_Test {
 			insert contact;
 			User newUser = ISSP_ObjectFactory.createPortalUser(contact);
 			PortalServiceAccessTriggerHandler.avoidAppTrigger = true;
-			Portal_Applications__c app = new Portal_Applications__c(Name = 'Treasury Dashboard');
+			Portal_Applications__c app = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+			app.Name = 'Treasury Dashboard';
 			insert app;
 			Portal_Application_Right__c appRight = new Portal_Application_Right__c(Contact__c = contact.Id, Portal_Application__c = app.Id, Right__c = 'Access Granted');
 			insert appRight;
@@ -173,7 +175,8 @@ private class ISSP_NonTD_Report_Test {
 			contact.AccountId = acc.Id;
 			insert contact;
 			PortalServiceAccessTriggerHandler.avoidAppTrigger = true;
-			Portal_Applications__c app = new Portal_Applications__c(Name = 'Treasury Dashboard');
+			Portal_Applications__c app = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+			app.Name = 'Treasury Dashboard';
 			insert app;
 			Portal_Application_Right__c appRight = new Portal_Application_Right__c(Contact__c = contact.Id, Portal_Application__c = app.Id, Right__c = 'Access Granted');
 			insert appRight;
@@ -234,7 +237,8 @@ private class ISSP_NonTD_Report_Test {
 		ISSP_WS_Create_NonTD_Reports.createNonTDReport(myInput);
 
 		PortalServiceAccessTriggerHandler.avoidAppTrigger = true;
-		Portal_Applications__c app = new Portal_Applications__c(Name = 'Treasury Dashboard');
+		Portal_Applications__c app = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		app.Name = 'Treasury Dashboard';
 		insert app;
 		Portal_Application_Right__c appRight = new Portal_Application_Right__c(Contact__c = con.Id, Portal_Application__c = app.Id, Right__c = 'Access Granted');
 		insert appRight;

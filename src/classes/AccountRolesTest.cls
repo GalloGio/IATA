@@ -2,7 +2,7 @@
 private class AccountRolesTest {
 	@TestSetup
 	static void makeData(){
-		Account account = TestDataFactory_Accounts.createStandardAccounts(1).get(0);
+		Account account = TestDataFactory_Accounts.createDefaultAccounts(1).get(0);
 		insert account;
 	}
 

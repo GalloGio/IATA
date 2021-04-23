@@ -40,7 +40,8 @@ public class OneId_NDCRelationsController_Test {
 			Account_Roles__c ars = new Account_Roles__c(Name = 'Airline - Passenger only', Sector__c = 'Airline', Category__c = 'Passenger only');
 			insert ars;
 
-			Portal_Applications__c pa = new Portal_Applications__c(Name = 'One Id NDC Matchmaker');
+			Portal_Applications__c pa = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+			pa.Name = 'One Id NDC Matchmaker';
 			insert pa;
 
 			One_Id_Service_Provider_Config__c oneIdService = new One_Id_Service_Provider_Config__c(Portal_Service__c = pa.Id, Service_Provider_Name__c = 'NDCMM', RecordTypeId = sProviderRecordTypeId);
@@ -88,7 +89,8 @@ public class OneId_NDCRelationsController_Test {
 			Account_Roles__c ars = new Account_Roles__c(Name = 'Travel Agent - Non-IATA Travel Agent', Sector__c = 'Travel Agent', Category__c = 'Non-IATA Travel Agent');
 			insert ars;
 
-			Portal_Applications__c pa = new Portal_Applications__c(Name = 'One Id NDC Matchmaker');
+			Portal_Applications__c pa = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+			pa.Name = 'One Id NDC Matchmaker';
 			insert pa;
 
 			One_Id_Service_Provider_Config__c oneIdService = new One_Id_Service_Provider_Config__c(Portal_Service__c = pa.Id, Service_Provider_Name__c = 'NDCMM', RecordTypeId = sProviderRecordTypeId);

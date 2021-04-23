@@ -17,6 +17,10 @@ private class ISSP_EditPortalServiceAccessExt_Test {
 		testUser.TD_Team__c = true;
 		testUser.ProfileId = [SELECT Id FROM Profile WHERE Name='ISS Portal Agency Delegated Admin User'].Id;
 		insert testUser;
+
+		Portal_Applications__c portalApplication = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		portalApplication.Name = 'Treasury Dashboard';
+		insert portalApplication;
 	}
 
 
@@ -37,8 +41,7 @@ private class ISSP_EditPortalServiceAccessExt_Test {
 				Email = 'testiata@yopmail.com');
 			insert c;
 
-			Portal_Applications__c par = new Portal_Applications__c(Name = 'Treasury Dashboard');
-			insert par;
+			Portal_Applications__c par = PortalApplicationSelector.selectIdByName(new Set<String>{'Treasury Dashboard'}).get(0);
 
 			Portal_Application_Right__c portalAppRight = new Portal_Application_Right__c(Portal_Application__c = par.Id, Right__c = 'Access Granted', Contact__c = c.Id);
 			insert portalAppRight;
@@ -78,8 +81,7 @@ private class ISSP_EditPortalServiceAccessExt_Test {
 			 						Email = 'testiata@yopmail.com', Community__c = 'Community test');
 			insert c;
 
-			Portal_Applications__c par = new Portal_Applications__c(Name = 'Treasury Dashboard');
-			insert par;
+			Portal_Applications__c par = PortalApplicationSelector.selectIdByName(new Set<String>{'Treasury Dashboard'}).get(0);
 
 			Portal_Application_Right__c portalAppRight = new Portal_Application_Right__c(Portal_Application__c = par.Id, Right__c = 'Access Granted', Contact__c = c.Id);
 			insert portalAppRight;
@@ -117,8 +119,7 @@ private class ISSP_EditPortalServiceAccessExt_Test {
 			 						Email = 'testiata@yopmail.com', Community__c = 'Community test');
 			insert c;
 
-			Portal_Applications__c par = new Portal_Applications__c(Name = 'Treasury Dashboard');
-			insert par;
+			Portal_Applications__c par = PortalApplicationSelector.selectIdByName(new Set<String>{'Treasury Dashboard'}).get(0);
 
 			Portal_Application_Right__c portalAppRight = new Portal_Application_Right__c(Portal_Application__c = par.Id, Right__c = 'Access Granted', Contact__c = c.Id);
 			insert portalAppRight;
@@ -147,12 +148,12 @@ private class ISSP_EditPortalServiceAccessExt_Test {
 		ISSP_EditPortalServiceAccessExt controller;
 
 		User testUser = New User(
-		    Alias = 's13andt', Email='standarduser@testorg.com.invalid134',
-		    EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
-		    LocaleSidKey='en_US', ProfileId = [Select Id from Profile where name = 'System Administrator'].ID,
-		    TimeZoneSidKey='America/Los_Angeles', UserName='test.username@test.com.invalid198fadoin',
-		    License_Cost_Center__c = 'ISF005CH01', UserRoleID = [Select Id From UserRole Where PortalType = 'None' Limit 1].ID,
-		    IsActive = true, TD_Team__c = true
+			Alias = 's13andt', Email='standarduser@testorg.com.invalid134',
+			EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
+			LocaleSidKey='en_US', ProfileId = [Select Id from Profile where name = 'System Administrator'].ID,
+			TimeZoneSidKey='America/Los_Angeles', UserName='test.username@test.com.invalid198fadoin',
+			License_Cost_Center__c = 'ISF005CH01', UserRoleID = [Select Id From UserRole Where PortalType = 'None' Limit 1].ID,
+			IsActive = true, TD_Team__c = true
 		);
 		insert testUser;
 		
@@ -166,8 +167,7 @@ private class ISSP_EditPortalServiceAccessExt_Test {
 			 						Email = String.valueof(Datetime.now()).replace(' ','').replace(':','').replace('-','') + 'testiata@yopmail.com', Community__c = 'Community test');
 			insert c;
 
-			Portal_Applications__c par = new Portal_Applications__c(Name = 'Treasury Dashboard');
-			insert par;
+			Portal_Applications__c par = PortalApplicationSelector.selectIdByName(new Set<String>{'Treasury Dashboard'}).get(0);
 
 			Portal_Application_Right__c portalAppRight = new Portal_Application_Right__c(Portal_Application__c = par.Id, Right__c = 'Access Granted', Contact__c = c.Id);
 			insert portalAppRight;
