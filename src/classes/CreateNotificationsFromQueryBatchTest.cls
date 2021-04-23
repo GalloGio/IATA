@@ -108,9 +108,8 @@ private class CreateNotificationsFromQueryBatchTest {
 
 		insert (new List<User>{newUser,newUser2});
 
-		Portal_Applications__c portalApp = new Portal_Applications__c(
-			Name = 'testService'
-		);
+		Portal_Applications__c portalApp = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		portalApp.Name = 'testService';
 
 		insert portalApp;
 

@@ -36,7 +36,8 @@ private class portalProfileCustomBoxCtrlTest {
 		insert newAcc3;
 		insert newAcc4;
 
-		Portal_Applications__c pa = new Portal_Applications__c(name = 'Risk Profile and RHC');
+		Portal_Applications__c pa = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		pa.Name = 'Risk Profile and RHC';
 		insert pa;
 	}
 
@@ -67,7 +68,7 @@ private class portalProfileCustomBoxCtrlTest {
 	static void testCreatePortalApplicationRigth(){
 
 		Contact con = [SELECT Id FROM Contact WHERE LastName = 'Doe' LIMIT 1];
-		Portal_Applications__c pa = [SELECT Id FROM Portal_Applications__c WHERE name = 'Risk Profile and RHC' LIMIT 1];
+		Portal_Applications__c pa = PortalApplicationSelector.selectIdByName(new Set<String>{'Risk Profile and RHC'}).get(0);
 
 		Test.startTest();
 			Boolean inserted = portalProfileCustomBoxCtrl.createPortalApplicationRigth(con.Id,new List<Id>{pa.Id});
@@ -85,7 +86,7 @@ private class portalProfileCustomBoxCtrlTest {
 	static void testCreatePortalApplicationRigthFail(){
 
 		Contact con = [SELECT Id FROM Contact WHERE LastName = 'Doe' LIMIT 1];
-		Portal_Applications__c pa = [SELECT Id FROM Portal_Applications__c WHERE name = 'Risk Profile and RHC' LIMIT 1];
+		Portal_Applications__c pa = PortalApplicationSelector.selectIdByName(new Set<String>{'Risk Profile and RHC'}).get(0);
 
 		String Id = (String) pa.Id;
 		id = id.substring(0, id.length() - 1);

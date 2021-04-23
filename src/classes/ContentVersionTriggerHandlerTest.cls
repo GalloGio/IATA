@@ -21,7 +21,7 @@ private class ContentVersionTriggerHandlerTest {
 
 		User newUser = ISSP_ObjectFactory.createPortalBasicAirlineUser(con);
 
-		Portal_Applications__c papp = new Portal_Applications__c();
+		Portal_Applications__c papp = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
 		papp.Application_URL__c = '/ISSP_CurrencyCenterHome';
 		papp.Name= 'Currency Center';
 		insert papp;

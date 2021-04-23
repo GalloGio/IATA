@@ -4,7 +4,8 @@ private class EF_PortalApplicationRightHandlerTest {
 	@TestSetup
 	static void makeData(){
 
-		Portal_Applications__c efApps = new Portal_Applications__c(Name = 'E&F APPS');
+		Portal_Applications__c efApps = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		efApps.Name = 'E&F APPS';
 		insert efApps;
 
 		Account acc = new Account();

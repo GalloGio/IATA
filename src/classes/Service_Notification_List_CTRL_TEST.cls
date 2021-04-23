@@ -37,7 +37,7 @@ public class Service_Notification_List_CTRL_TEST {
 		contactRoles3.Name = 'Account Sharing';
 		insert contactRoles3;
 
-		Portal_Applications__c portalApplications = new Portal_Applications__c();
+		Portal_Applications__c portalApplications = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
 		portalApplications.Name = 'GADM';
 		insert portalApplications;
 
@@ -230,9 +230,5 @@ public class Service_Notification_List_CTRL_TEST {
 		Test.stopTest();
 
 		System.assertEquals(0, testMessages.size(), 'Incorrect number of valid messages retrieved!');
-
 	}
-
-
-
 }

@@ -4,7 +4,9 @@ public class ISSP_ICCS_HomepageControllerTest {
 	private static User createPartnerUser(String serviceStatus){
 		// Create ICCS portal application if it doesn't exist
 		if(ISSP_ICCS_Utils.getIccsPortalApplication() == null){
-			insert new Portal_Applications__c(Name = 'ICCS');
+			Portal_Applications__c portalApplicstion = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+			portalApplicstion.Name = 'ICCS';
+			insert portalApplicstion;
 		}
 
 		// Create missing ICCS Notification Templates

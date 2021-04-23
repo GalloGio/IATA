@@ -32,7 +32,7 @@ public class IATA_ServiceList_CTRL_TEST {
 
 		//Create service
 		Id serviceRTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Portal_Applications__c', 'ISS_Portal_Application');
-		Portal_Applications__c portalApp = new Portal_Applications__c();
+		Portal_Applications__c portalApp = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
 		portalApp.Name = 'app test 1';
 		portalApp.GDPR_PrivacyStatement__c = 'https://www.saleforce.com';
 		portalApp.RecordTypeId = serviceRTypeId;

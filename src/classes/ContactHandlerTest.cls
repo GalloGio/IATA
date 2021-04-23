@@ -277,9 +277,8 @@ private class ContactHandlerTest {
 		System.assert(visibility.Parent__r.MasterLabel!=null);
 
 		// create app
-		Portal_Applications__c app = new Portal_Applications__c(
-			Name=visibility.Parent__r.MasterLabel
-		);
+		Portal_Applications__c app = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		app.Name=visibility.Parent__r.MasterLabel;
 		insert app;
 
 		Test.startTest();
@@ -334,9 +333,8 @@ private class ContactHandlerTest {
 		System.assert(visibility.Parent__r.MasterLabel!=null);
 
 		// create app
-		Portal_Applications__c app = new Portal_Applications__c(
-			Name=visibility.Parent__r.MasterLabel
-		);
+		Portal_Applications__c app = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		app.Name=visibility.Parent__r.MasterLabel;
 		insert app;
 
 		Contact contact = new Contact(

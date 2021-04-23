@@ -100,7 +100,8 @@ private class ISSP_TIP_Home_Controller_Test {
 		update con;
 
 		system.debug('##HERE: ' + [select id, CaseArea__c, reason1__c, AccountId,RecordTypeid,Status from case]);
-		Portal_Applications__c pa = new Portal_Applications__c(name = TIP_Utils.PORTAL_SERVICE_NAME_TIP);
+		Portal_Applications__c pa = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		pa.Name = TIP_Utils.PORTAL_SERVICE_NAME_TIP;
 		insert pa;
 
 		parent.Account_Role__c = 'Payment Provider';

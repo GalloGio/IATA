@@ -144,13 +144,11 @@ global class AMS_OSCAR_Webservice {
 					ifapCase.Subject = ifapCase.Subject.replace(AMS_Utils.CASE_REASON_HE_MULTICOUNTRY, AMS_Utils.NEW_HE_GOGLOBAL);
 					ifapCase.Deadline_Date__c = currentDate.addDays(60);
 					ifapCase.Financial_Review_Type__c = AMS_Utils.FINANCIAL_REVIEW_MULTICOUNTRY_ADHOC;
-				}
-
-				if(AMS_Utils.oscarNewProcesses.contains(oscar.Process__c) || AMS_Utils.oscarNewGenNewAppProcesses.contains(oscar.Process__c)){
+				}else 
+					if(AMS_Utils.oscarNewProcesses.contains(oscar.Process__c) || AMS_Utils.oscarNewGenNewAppProcesses.contains(oscar.Process__c)){
 					ifapCase.Financial_Review_Type__c = AMS_Utils.FINANCIAL_REVIEW_NEW_APPLICATION;
-				}
-
-				if(oscar.Process__c.contains(AMS_Utils.AGENCYCHANGES)){
+				}else 
+					if(oscar.Process__c.contains(AMS_Utils.AGENCYCHANGES)){
 					ifapCase.Financial_Review_Type__c = AMS_Utils.FINANCIAL_REVIEW_MAJOR_CHANGES;
 				}
 

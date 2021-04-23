@@ -39,7 +39,7 @@ public class PowerBI_Embedded_Container_CTRL_TEST {
 		insert usersToInsert;
 
 		//GADM service
-		Portal_Applications__c portalApplications = new Portal_Applications__c();
+		Portal_Applications__c portalApplications = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
 		portalApplications.Name = 'GADM';
 		insert portalApplications;
 
@@ -352,7 +352,7 @@ public class PowerBI_Embedded_Container_CTRL_TEST {
 		Test.stopTest();
 		System.assertEquals(false, presentInCache, 'Key is not preset in cache');
 	}
-
+	
 	@IsTest
 	private static void checkSessionContainerCacheCoverageTest() {
 		//can not be tested during deployment as session cache does not exist. Making coverage
