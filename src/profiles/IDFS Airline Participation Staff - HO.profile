@@ -53387,11 +53387,6 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
-        <field>Portal_Applications__c.Functional_Role__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>false</editable>
         <field>Portal_Applications__c.GDPR_PrivacyStatement__c</field>
         <readable>false</readable>
