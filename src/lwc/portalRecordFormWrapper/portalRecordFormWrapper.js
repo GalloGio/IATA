@@ -450,8 +450,13 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         if(this.sectionName === 'Portal Accessibility' && !this.isSuccess){
             this.fields = this.initialList;
         }
+
         this.isSuccess = false;
         this.showEditModal = false; 
+
+        if(this.sectionName === 'Basics'){
+            setTimeout(function(){ location.reload(); }, 7000);
+        }
     }
 
 

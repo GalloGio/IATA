@@ -932,14 +932,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>AMS_IataCodeRangesLoaderCtrl2</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>AMS_IataCodeRangesLoaderCtrl3</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>AMS_IataCodeRangesLoaderCtrlTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -3141,6 +3133,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>CNS_EBulletin</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>CNS_Payment</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>CNS_Payment_Test</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -31711,9 +31711,9 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Case.ServiceContractId</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -53392,11 +53392,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Portal_Applications__c.Functional_Role__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Portal_Applications__c.GDPR_PrivacyStatement__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -62561,6 +62556,22 @@
         <recordType>Case.ACCA_Bug_Fix</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>CaseClose-ACCA Bug Fix Close</layout>
+        <recordType>Case.CNS_Collection_Process</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CaseClose-ACCA Bug Fix Close</layout>
+        <recordType>Case.GDPR_Request</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CaseClose-ACCA Bug Fix Close</layout>
+        <recordType>Case.NDC_Management</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CaseClose-ACCA Bug Fix Close</layout>
+        <recordType>Case.TIDS</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>CaseClose-ACCA Close Case - Extended</layout>
         <recordType>Case.CS_Process_IDFS_ISS</recordType>
     </layoutAssignments>
@@ -66122,6 +66133,10 @@
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
+        <apexPage>CNS_Payment</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>CNS_Template</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
@@ -69550,6 +69565,7 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
+        <personAccountDefault>true</personAccountDefault>
         <recordType>Case.InternalCasesEuropeSCE</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>

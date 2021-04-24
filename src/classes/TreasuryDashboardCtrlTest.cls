@@ -3,12 +3,10 @@ public class TreasuryDashboardCtrlTest {
 
 	@TestSetup
 	private static void setup() {
-
 		PowerBI_Cred__c cred = new PowerBI_Cred__c();
 		cred.Name = 'TreasuryDashboard';
 		cred.Dev_Configuration__c = 'TreasuryDashboard_PowerBI_Dev';
 		cred.Prod_Configuration__c = 'TreasuryDashboard_PowerBI_Production';
-
 		insert cred;
 
 		List<PowerBI_Config__c> configsToInsert = new List<PowerBI_Config__c>();
@@ -75,21 +73,19 @@ public class TreasuryDashboardCtrlTest {
 		ISSP_Record_Type_Mgmt__c rtMgmt = new ISSP_Record_Type_Mgmt__c (Name = 'Treasury Dashboard', Record_Type_Name__c = 'FDS_ICCS_Email_to_Case');
 		insert rtMgmt;
 
-		Portal_Applications__c portalApplication = new Portal_Applications__c();
+		List<Portal_Applications__c> portalApplicationList = TestDataFactory_PortalApplications.createDefaultPortalApplication(2);
+		Portal_Applications__c portalApplication = portalApplicationList.get(0);
 		portalApplication.Name = 'Treasury Dashboard';
 		portalApplication.TD_Included_Dashboards__c = 'ISSP_TD_1;ISSP_TD_2;ISSP_TD_3;ISSP_TD_4';
-		insert portalApplication;
-
-		Portal_Applications__c portalApplications2 = new Portal_Applications__c();
+		Portal_Applications__c portalApplications2 = portalApplicationList.get(1);
 		portalApplications2.Name = 'Treasury Dashboard - Premium';
 		portalApplications2.TD_Included_Dashboards__c = 'ISSP_TD_1;ISSP_TD_2;ISSP_TD_3;ISSP_TD_4;ISSP_TD_5';
-		insert portalApplications2;
+		insert portalApplicationList;
 
 		Portal_Application_Right__c right1 = new Portal_Application_Right__c();
 		right1.Contact__c = testContact.Id;
 		right1.Portal_Application__c = portalApplication.Id;
 		right1.Right__c = '	Access Requested';
-
 		insert right1;
 
 

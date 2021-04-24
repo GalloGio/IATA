@@ -80,7 +80,7 @@ private class ISSP_TC_Accept_Test {
 						FROM User
 						WHERE Contact.Email = 'testing@test.com'];
 
-		Portal_Applications__c newApp = new Portal_Applications__c();
+		Portal_Applications__c newApp = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
 		newApp.Name = 'TEST';
 		insert newApp;
 		Portal_Application_Right__c newAppRight = new Portal_Application_Right__c();

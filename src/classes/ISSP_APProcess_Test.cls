@@ -8,9 +8,12 @@ private class ISSP_APProcess_Test
 	@testSetup
 	static void insertCustomSetting() {
 
-		Portal_Applications__c portalApp = new Portal_Applications__c(Name = 'Stuff');
-		Portal_Applications__c portalAppEasyPay = new Portal_Applications__c(Name = 'EasyPay');
-		insert new list<Portal_Applications__c>{portalApp, portalAppEasyPay};
+		List<Portal_Applications__c> portalApplicationList = TestDataFactory_PortalApplications.createDefaultPortalApplication(2);
+		Portal_Applications__c portalApp = portalApplicationList.get(0);
+		portalApp.Name = 'Stuff';
+		Portal_Applications__c portalAppEasyPay = portalApplicationList.get(1);
+		portalAppEasyPay.Name = 'EasyPay';
+		insert portalApplicationList;
 
 		List<ISSP_CS__c> settings = new List<ISSP_CS__c> {
 			new ISSP_CS__c(Name = 'EasyPay Opt-In Days', Value__c = '0'),

@@ -587,7 +587,10 @@ private class AMS_UtilsTest {
 		Contact iepContact = new Contact(FirstName = 'test', LastName = 'test', email = 'IEP_test@test.test', AccountId = acct.Id);
 		insert iepContact;
 
-		Portal_Applications__c portalApp = new Portal_Applications__c(Name='IATA EasyPay (EDENRED)' );
+		
+		Portal_Applications__c portalApp = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		portalApp.Name='IATA EasyPay (EDENRED)';
+		portalApp.Functional_Role__c = 'IATA EasyPay (EDENRED)';
 		insert portalApp;
 
 		Portal_Application_Right__c portalRight = new Portal_Application_Right__c(Portal_Application__c = portalApp.Id, ANG_Portal_Service_Role__c= 'IEP Admin', Right__c = 'Access Granted', Contact__c = iepContact.Id);
