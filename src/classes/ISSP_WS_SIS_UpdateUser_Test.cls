@@ -20,7 +20,8 @@ private class ISSP_WS_SIS_UpdateUser_Test {
 		insert listError;
 
 		//insert SIS app
-		Portal_Applications__c SISapp = new Portal_Applications__c(Name = 'SIS');
+		Portal_Applications__c SISapp = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		SISapp.Name = 'SIS';
 		insert SISapp;
 
 		// insert Portal service CS

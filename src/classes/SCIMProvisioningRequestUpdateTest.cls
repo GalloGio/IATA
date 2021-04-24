@@ -1,7 +1,7 @@
 @IsTest(SeeAllData = false)
 public with sharing class SCIMProvisioningRequestUpdateTest {
 
-	private static final String PERM_SET_PROV='IFG_Provisioning_Prod';
+    private static final String PERM_SET_PROV='IFG_Provisioning_Prod';
 	private static final String PERM_SET_SSO='IFG_SSO_Production';
 	private static final String CON_APP_PROV='IFG Provisioning PreProd Conn App';
 
@@ -100,13 +100,11 @@ public with sharing class SCIMProvisioningRequestUpdateTest {
 		//////////////////////////////
 		// Create SCIM application to handle access
 		/////////////////////////////
-		Portal_Applications__c portApp = new Portal_Applications__c(
-				Name = 'My Test App',
-				Provisioning_Type__c =SCIMServProvManager.PROV_TYP_SCIM,
-				SCIM_App_Name__c = SCIMServProvManager.PRE_PROD_SRV_PROV
-		);
+		Portal_Applications__c portApp = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		portApp.Name = 'My Test App';
+		portApp.Provisioning_Type__c =SCIMServProvManager.PROV_TYP_SCIM;
+		portApp.SCIM_App_Name__c = SCIMServProvManager.PRE_PROD_SRV_PROV;
 		insert portApp;
-		system.debug('basto1p portApp='+portApp);
 	}
 
 
@@ -205,13 +203,11 @@ public with sharing class SCIMProvisioningRequestUpdateTest {
 				SCIM_App_Name__c =:SCIMServProvManager.PRE_PROD_SRV_PROV];
 
 		//Xreate app with same SCIM key name but is a diferent app in Portal_Applications__c
-		Portal_Applications__c portApp2 = new Portal_Applications__c(
-				Name = 'My Test App2',
-				Provisioning_Type__c =SCIMServProvManager.PROV_TYP_SCIM,
-				SCIM_App_Name__c = SCIMServProvManager.PRE_PROD_SRV_PROV
-		);
+		Portal_Applications__c portApp2 = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		portApp2.Name = 'My Test App2';
+		portApp2.Provisioning_Type__c =SCIMServProvManager.PROV_TYP_SCIM;
+		portApp2.SCIM_App_Name__c = SCIMServProvManager.PRE_PROD_SRV_PROV;
 		insert portApp2;
-		system.debug('basto1p portApp='+portApp2);
 
 		//INSERT row in portal apllciation rights contact 1
 		Portal_Application_Right__c PortAccessRigthItem= new Portal_Application_Right__c();
