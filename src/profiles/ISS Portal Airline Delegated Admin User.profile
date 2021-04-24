@@ -264,8 +264,9 @@
         <visibility>NONE</visibility>
     </categoryGroupVisibilities>
     <categoryGroupVisibilities>
+        <dataCategories>IATA_Travel_Pass</dataCategories>
         <dataCategoryGroup>FAQs</dataCategoryGroup>
-        <visibility>NONE</visibility>
+        <visibility>CUSTOM</visibility>
     </categoryGroupVisibilities>
     <classAccesses>
         <apexClass>ACliMassUpdate</apexClass>
@@ -937,14 +938,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>AMS_IataCodeRangesLoaderCtrl</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>AMS_IataCodeRangesLoaderCtrl2</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>AMS_IataCodeRangesLoaderCtrl3</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -3149,6 +3142,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>CNS_EBulletin</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>CNS_Payment</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>CNS_Payment_Test</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -53404,11 +53405,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Portal_Applications__c.Functional_Role__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Portal_Applications__c.GDPR_PrivacyStatement__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -66279,6 +66275,10 @@
     <pageAccesses>
         <apexPage>CNS_EBulletin</apexPage>
         <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>CNS_Payment</apexPage>
+        <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>CNS_Template</apexPage>

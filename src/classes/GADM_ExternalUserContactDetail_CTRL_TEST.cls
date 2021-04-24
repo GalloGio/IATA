@@ -78,7 +78,7 @@ public class GADM_ExternalUserContactDetail_CTRL_TEST {
 		User testUser2 = createUser(testContact2, profileId);
 
 		//GADM service
-		Portal_Applications__c portalApplications = new Portal_Applications__c();
+		Portal_Applications__c portalApplications = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
 		portalApplications.Name = 'GADM';
 		insert portalApplications;
 

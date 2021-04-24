@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>Created_Account_Category__c</field>
-        <value xsi:type="xsd:string">System Solution Provider</value>
+        <value xsi:type="xsd:string">System Solutions Provider</value>
     </values>
     <values>
         <field>Created_Account_Sector__c</field>

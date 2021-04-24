@@ -944,14 +944,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>AMS_IataCodeRangesLoaderCtrl2</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>AMS_IataCodeRangesLoaderCtrl3</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>AMS_IataCodeRangesLoaderCtrlTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -3153,6 +3145,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>CNS_EBulletin</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>CNS_Payment</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>CNS_Payment_Test</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -53400,11 +53400,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Portal_Applications__c.Functional_Role__c</field>
-        <readable>false</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Portal_Applications__c.GDPR_PrivacyStatement__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -65219,6 +65214,10 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>CNS_EBulletin</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>CNS_Payment</apexPage>
         <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>

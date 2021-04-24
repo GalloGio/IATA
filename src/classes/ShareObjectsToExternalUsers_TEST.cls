@@ -30,8 +30,9 @@ public class ShareObjectsToExternalUsers_TEST {
 		insert usersToInsert;
 
 		//GADM service
-		Portal_Applications__c portalApplications = new Portal_Applications__c();
+		Portal_Applications__c portalApplications = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
 		portalApplications.Name = 'GADM';
+		portalApplications.Functional_Role__c = 'GADM';
 		insert portalApplications;
 
 		//GADM Participang Account Role
@@ -184,9 +185,6 @@ public class ShareObjectsToExternalUsers_TEST {
 		User testUser = [SELECT Id FROM User WHERE Email = 'petr.novak.test@somedomain.com'];
 
 		List<Contact_Role_Service__c> services = [SELECT Id, Name FROM Contact_Role_Service__c];
-		system.debug(services);
-		system.debug('permissions');
-		system.debug([SELECT Id, Contact_Role_Service__r.Name FROM Contact_Role_Service_Permission__c]);
 		List<Contact_Role_Service_Permission__Share> sharing = [SELECT Id FROM Contact_Role_Service_Permission__Share WHERE UserOrGroupId = :testUser.Id];
 		System.assertEquals(true, sharing.size() == 1, 'One sharing records should be present.' + sharing.size());
 

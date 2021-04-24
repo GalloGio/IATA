@@ -483,11 +483,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Portal_Applications__c.Functional_Role__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Portal_Applications__c.GDPR_PrivacyStatement__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -802,7 +797,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <hasActivationRequired>false</hasActivationRequired>
-    <label>IH Service Admins</label>
+    <label>SH Service Admins</label>
     <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>true</allowDelete>

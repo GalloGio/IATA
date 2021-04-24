@@ -12,7 +12,7 @@ private class NewGen_Rest_ToggleFavouriteService_Test
 		c.Email = 'ISSP_test@test.test';
 		insert c;
 
-		p = new Portal_Applications__c();
+		p = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
 		insert p;
 
 		String appRight = 'Access Granted';

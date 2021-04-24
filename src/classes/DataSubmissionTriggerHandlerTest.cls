@@ -132,7 +132,7 @@ private class DataSubmissionTriggerHandlerTest {
 
 		insert contactRolesToInsert;
 
-		Portal_Applications__c portalApplications = new Portal_Applications__c();
+		Portal_Applications__c portalApplications = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
 		portalApplications.Name = 'GADM';
 		insert portalApplications;
 

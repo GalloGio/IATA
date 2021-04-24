@@ -376,8 +376,8 @@
 
                         <div class="row" style="padding-top: 20px">
                             <div class="col-md-12 padded-on-top">
-                                <input type="button" style="display:{!IF(NOT(isHOAccredited),'','none')};" class="iatabtn" onClick="newnAccreditationApplicationNavigateTo();" value="{!IF(communityName=='CNS', $Label.ISSP_AMS_Step0_New_Application_CNS, IF(namPaxAgent, $Label.ISSP_AMS_Apply_New_Head_Entity, $Label.ISSP_AMS_Apply_New_Office))}"/>
-                                <input type="button" style="display:{!IF(isHOAccredited,'','none')};" class="iatabtn" onClick="newnAccreditationApplicationNavigateTo();" value="{!IF(namPaxAgent, $Label.ISSP_AMS_Apply_New_Associate_Entity, $Label.ISSP_AMS_Apply_New_Branch_Office)}"/>
+                                <input type="button" style="display:{!IF(NOT(AND(isHOAccredited, con.Account.Location_Class__c != 'T')),'','none')};" class="iatabtn" onClick="newnAccreditationApplicationNavigateTo();" value="{!IF(communityName=='CNS', $Label.ISSP_AMS_Step0_New_Application_CNS, IF(namPaxAgent, $Label.ISSP_AMS_Apply_New_Head_Entity, $Label.ISSP_AMS_Apply_New_Office))}"/>
+                                <input type="button" style="display:{!IF(AND(isHOAccredited, con.Account.Location_Class__c != 'T'),'','none')};" class="iatabtn" onClick="newnAccreditationApplicationNavigateTo();" value="{!IF(namPaxAgent, $Label.ISSP_AMS_Apply_New_Associate_Entity, $Label.ISSP_AMS_Apply_New_Branch_Office)}"/>
                                 <br/>
                                 <apex:outputText value="{!IF(isPassAccreditation,$Label.ISSP_AMS_Step0_Intro_Accred_PASS,if(communityName=='CNS', $Label.ISSP_AMS_Step0_Intro_Accred_CNS, IF(newlabels, $Label.ISSP_AMS_Step0_Intro_Accred_New, $Label.ISSP_AMS_Step0_Intro_Accred)))}" escape="false"/>
                                 <apex:image value="/img/msg_icons/info16.png" title="{!$Label.ISSP_AMS_Step0_Intro_Accred_Msg}" html-data-html="true" html-data-placement="right" html-data-toggle="tooltip" /><br/>
