@@ -5,9 +5,8 @@ public class PortalRegistrationFirstLevelCtrlTest {
 
 	@testSetup
 	static void setup(){
-		Portal_Applications__c pa = new Portal_Applications__c(
-			Name = 'Login T&C Checker'
-		);
+		Portal_Applications__c pa = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		pa.Name = 'Login T&C Checker';
 		insert pa;
 
 		Term_and_Condition__c tc = new Term_and_Condition__c(
@@ -171,9 +170,6 @@ public class PortalRegistrationFirstLevelCtrlTest {
 		User portalUser1 = ISSP_ObjectFactory.createPortalUser(con1);
 		User portalUser2 = ISSP_ObjectFactory.createPortalUser(con4);
 		User portalUser3 = ISSP_ObjectFactory.createPortalUser(con5);
-
-
-
 	}
 
 	@isTest

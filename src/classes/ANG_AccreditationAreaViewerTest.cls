@@ -53,7 +53,8 @@ private class ANG_AccreditationAreaViewerTest {
 
 		insert new List<AMS_Agencies_relationhip__c>{r1,r2,r3};
 
-		Portal_Applications__c pa = new Portal_Applications__c(name = 'Risk Profile and RHC');
+		Portal_Applications__c pa = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		pa.Name = 'Risk Profile and RHC';
 		insert pa;
 
 		List<ANG_AgencyChangesConfig__c> customsettings = new List<ANG_AgencyChangesConfig__c>();

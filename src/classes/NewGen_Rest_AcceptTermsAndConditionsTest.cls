@@ -32,7 +32,7 @@ private class NewGen_Rest_AcceptTermsAndConditionsTest
 	con.Email = 'NewGen_Rest_Accept@test11.com';
 	insert con;
 
-	Portal_Applications__c app = new Portal_Applications__c();
+	Portal_Applications__c app = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
 	app.NewGenAPP_ShortName__c = 'NewGen';
 	insert app;
 

@@ -95,11 +95,12 @@ private class ISSP_Financial_Institutions_Test {
 		spanish.OwnerId = esUser.Id;
 		update spanish;
 
-		Portal_Applications__c portalApp = new Portal_Applications__c(Name = ISSP_Financial_Institutions.GDI_PORTAL_SERVICE,
-																	  ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-																	  ANG_Accredited_Agents_Only__c = false,
-																	  ANG_Restrict_by_Agency_Category__c = 'Domestic Agent;IATA Passenger Sales Agent',
-																	  Agency__c = true); 
+		Portal_Applications__c portalApp = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		portalApp.Name = ISSP_Financial_Institutions.GDI_PORTAL_SERVICE;
+		portalApp.ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT;
+		portalApp.ANG_Accredited_Agents_Only__c = false;
+		portalApp.ANG_Restrict_by_Agency_Category__c = 'Domestic Agent;IATA Passenger Sales Agent';
+		portalApp.Agency__c = true;
 		insert portalApp;
 
 		List<Financial_Institution__c> financialInstitutions = new List<Financial_Institution__c>();

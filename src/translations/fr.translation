@@ -24691,6 +24691,10 @@ Si vous souhaitez réinitialiser votre mot de passe, retournez à l&apos;écran 
         <name>Notions_Essentl_Tarif_Billet_Description</name>
     </customLabels>
     <customLabels>
+        <label><!-- OAG_Service_Description --></label>
+        <name>OAG_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OSCAR_RISK_WARNING --></label>
         <name>OSCAR_RISK_WARNING</name>
     </customLabels>

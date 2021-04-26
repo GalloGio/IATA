@@ -1,6 +1,5 @@
 @isTest
 public class AMS_AgencyChangesTest {
-
 	public static Account HO1, HO2, BR1, BR2, BR3, BR4, BR5, BR6;
 	public static Contact C1, C2, OW1, OW2, OW3, OW4, OW5, OW6;
 	public static AMS_OSCAR__c theOscar;
@@ -23,7 +22,7 @@ public class AMS_AgencyChangesTest {
 
 	public static void init2Hierarchies(boolean isPax){
 		insert new Apex_Setting__c(Name='RT valid to reopen attachment trigger', Text_1__c='CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia, ComplaintIDFS,'
-                                           +  'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
+										   +  'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
 
 		List<AMS_AgencyChangesConfig__c> customsettings = new List<AMS_AgencyChangesConfig__c>();
 		customsettings.add(new AMS_AgencyChangesConfig__c(Process__c = 'AMS', Name = 'Combination08', TC_Location_type__c = true, TCA_Fields_to_Migrate__c = 'ChangeOfLocation',
@@ -232,17 +231,11 @@ public class AMS_AgencyChangesTest {
 
 		// After finalization HO1 should be transformed to a branch
 		HO1 = [SELECT RecordTypeId, Name, IATAcode__c, Location_Class__c, Location_Type__c, ParentId FROM Account WHERE ID = :HO1.Id];
-		//REVIEW after R3 - commented to get code coverage
-				//system.assertEquals(null,HO1.ParentId, 'Change of Location Type: after finalization the old HO should be a BR (Parent id = new HO\'s id)');
 		system.assertEquals('BR',HO1.Location_Type__c, 'Change of Location Type: after finalization the old BR should be the new HO (Location type = BR)');
 
 		// After finalization the hierarchies should link the branches to the new head office
 		List<AMS_Agencies_relationhip__c> rels = [SELECT Id,Child_Account__r.IATAcode__c FROM AMS_Agencies_relationhip__c WHERE Parent_Account__r.IATAcode__c = '1111111' ORDER BY Child_Account__r.IATAcode__c];
 		system.assertEquals(3,rels.size(), 'Change of Location Type: after finalization there should be 3 hierarchy relationships with parent = the new head office');
-		//REVIEW after R3 - commented to get code coverage
-				//system.assertEquals('1111110',rels[0].Child_Account__r.IATAcode__c, 'Change of Location Type: after finalization there should be a hierarchy relationship to link the old HO to the new head office (BR1)');
-		//system.assertEquals('1111112',rels[0].Child_Account__r.IATAcode__c, 'Change of Location Type: after finalization there should be a hierarchy relationship to link BR2 to the new head office (BR1)');
-		//system.assertEquals('1111113',rels[0].Child_Account__r.IATAcode__c, 'Change of Location Type: after finalization there should be a hierarchy relationship to link BR3 to the new head office (BR1)');
 
 		Test.stopTest();
 	}
@@ -253,22 +246,11 @@ public class AMS_AgencyChangesTest {
 	// At the end the hierarchy is not changed, only the owners should be changed for everybody
 	@isTest
 	static void testChangeOfOwnershipNonIATABuysAllHierarchy(){
-
+		Test.startTest();
 		// Initialize the hierarchy and create an OSCAR
-
 		init2Hierarchies(true);
 		createOSCAR(HO1, C1, CHANGEOWNERSHIPNONIATA, null);
 
-		Test.startTest();
-
-		// Add to the OSCAR the list of accounts involved in the change
-		ID rtAgencyInvolved = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Process_Detail__c', 'Agency_Involved');
-
-		/*List<AMS_Process_Detail__c> agenciesinvolved = new List<AMS_Process_Detail__c>();
-		agenciesinvolved.add(new AMS_Process_Detail__c(RecordTypeId = rtAgencyInvolved, Oscar__c = theOscar.Id, Account__c = BR1.Id));
-		agenciesinvolved.add(new AMS_Process_Detail__c(RecordTypeId = rtAgencyInvolved, Oscar__c = theOscar.Id, Account__c = BR2.Id));
-		agenciesinvolved.add(new AMS_Process_Detail__c(RecordTypeId = rtAgencyInvolved, Oscar__c = theOscar.Id, Account__c = BR3.Id));
-		insert agenciesinvolved;*/
 		AMS_OSCAR__c oscar = [SELECT ID, STEP10__c, STEP6__c, Account__c, Account__r.Location_Type__c, Account__r.Top_Parent__r.Id, AMS_Online_Accreditation__c, AMS_Online_Accreditation__r.Id, RecordTypeId, RecordType.DeveloperName, Process__c, Is_PCI_compliant__c FROM AMS_OSCAR__c LIMIT 1];
 		AMS_Pax_Accreditation_Form__c staging = [SELECT Id FROM AMS_Pax_Accreditation_Form__c];
 		oscar.AMS_Online_Accreditation__c = staging.Id;
@@ -276,6 +258,7 @@ public class AMS_AgencyChangesTest {
 		update oscar;
 
 		AMS_HierarchyHelper.createProcessDetailForFullHierarchy(oscar.Id, oscar.Account__c);
+		Test.stopTest();
 
 		List<AMS_Process_Detail__c> accountsToMigrate = [SELECT Id FROM AMS_Process_Detail__c WHERE Oscar__c =: oscar.Id];
 		system.assertEquals(3,accountsToMigrate.size(), 'All Accounts in the hierarchy (excluding the one related to the oscar) should be added to the Process Detail');
@@ -310,43 +293,5 @@ public class AMS_AgencyChangesTest {
 		system.assertEquals('1111111',changecodes[1].Account__r.IATAcode__c, 'Change of Ownership S1: when manager approves a CHF change code should be created the Branch BR1');
 		system.assertEquals('1111112',changecodes[2].Account__r.IATAcode__c, 'Change of Ownership S1: when manager approves a CHF change code should be created the Branch BR2');
 		system.assertEquals('1111113',changecodes[3].Account__r.IATAcode__c, 'Change of Ownership S1: when manager approves a CHF change code should be created the Branch BR3');
-
-		// The finalization should not change anything on the hierarchy relationships
-		List<AMS_Agencies_relationhip__c> rels = [SELECT Id FROM AMS_Agencies_relationhip__c WHERE Parent_Account__r.IATAcode__c = '1111110' ORDER BY Child_Account__r.IATAcode__c];
-		//REVIEW after R3 - commented to get code coverage
-		//system.assertEquals(3,rels.size(), 'Change of Ownership S1: after finalization hierarchy relationships shouldn\'t be changed');
-
-
-		// After finalization the old owners should be inactivated
-		// Each agency in the hierarcy was owned by OW1 and OW2
-		ID rtOwner = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Account_Role__c', 'Ownership');
-		List<Account> H1 = new List<Account>{HO1, BR1, BR2, BR3};
-		List<Contact> oldowners = new List<Contact>{OW1,OW2};
-		List<Contact> newowners = new List<Contact>{OW5,OW6};
-
-		List<AMS_Account_Role__c> roles = [SELECT Id FROM AMS_Account_Role__c
-											 WHERE RecordTypeId = :rtOwner AND Termination_Date__c = :Date.today()
-											 AND Account__c IN :H1 AND Contact__c IN :oldowners
-											 ORDER BY Account__r.IATAcode__c, Contact__r.Email];
-
-		//REVIEW after R3 - commented to get code coverage
-		//system.assertEquals(8,changecodes.size(), 'Change of Ownership S1: when the change is finalized owners OW1 and OW2 should be deactivated for all the hierarchy');
-
-		for(Account acc : new List<Account>{HO1, BR1, BR2, BR3}){
-			roles.add(new AMS_Account_Role__c(RecordTypeId = rtOwner, Account__c = acc.Id, Contact__c = OW1.Id, Percentage__c= 50));
-			roles.add(new AMS_Account_Role__c(RecordTypeId = rtOwner, Account__c = acc.Id, Contact__c = OW2.Id, Percentage__c= 50));
-		}
-
-		// After finalization the new owners should be applied to all the agencies involved
-		// Each agency in the hierarcy should be owned now by OW5 and OW6
-		roles = [SELECT Id FROM AMS_Account_Role__c
-				 WHERE RecordTypeId = :rtOwner AND Termination_Date__c = null
-				 AND Account__c IN :H1 AND Contact__c IN :newowners
-				 ORDER BY Account__r.IATAcode__c, Contact__r.Email];
-		//REVIEW after R3 - commented to get code coverage
-		//system.assertEquals(8,changecodes.size(), 'Change of Ownership S1: when the change is finalized owners OW5 and OW6 should be linked to all the hierarchy');
-
-		Test.stopTest();
 	}
-
 }

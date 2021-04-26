@@ -176,6 +176,7 @@ public with sharing class createToscaData_V2{
 			fieldsOfObject.put('Name','IATA Accreditation & Changes');
 			fieldsOfObject.put('Critical_Service__c',true);
 			fieldsOfObject.put('Agency__c',true);
+			fieldsOfObject.put('Functional_Role__c','IATA Accreditation & Changes');
 
 			portalApplications = TOSCAUTILS.createPortalApplication(fieldsOfObject);
 			insert portalApplications;

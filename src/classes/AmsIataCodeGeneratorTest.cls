@@ -95,10 +95,6 @@ public class  AmsIataCodeGeneratorTest
 
 				//Load range from Controller
 				if(usingController){
-						AMS_IataCodeRangesLoaderCtrl2 ctrl = new AMS_IataCodeRangesLoaderCtrl2();
-						ctrl.importCSVFile();
-						ctrl.saveRecord();
-
 						AMS_SettlementsAndOperationLoaderCtrl ctrl2 = new AMS_SettlementsAndOperationLoaderCtrl();
 						ctrl2.fileLoaderType = ctrl2.getItems().get(0).getLabel();
 						ctrl2.selected=true;

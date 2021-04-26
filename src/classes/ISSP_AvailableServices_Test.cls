@@ -3,43 +3,38 @@ public class ISSP_AvailableServices_Test {
 
 	@testSetup
 	static void setup() {
+		List<Portal_Applications__c> portalApplicationList = TestDataFactory_PortalApplications.createDefaultPortalApplication(5);
+		Portal_Applications__c easyPay1 = portalApplicationList.get(0);
+		easyPay1.Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED;
+		easyPay1.ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT;
+		easyPay1.ANG_Accredited_Agents_Only__c = false;
+		easyPay1.Agency__c = true;
 
-		Portal_Applications__c easyPay1 = new Portal_Applications__c (
-				Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED,
-				ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-				ANG_Accredited_Agents_Only__c = false,
-				Agency__c = true
-			);
+		Portal_Applications__c easyPay2 = portalApplicationList.get(1);
+		easyPay2.Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_MSTS;
+		easyPay2.ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT;
+		easyPay2.ANG_Accredited_Agents_Only__c = false;
+		easyPay2.Agency__c = true;
 
-		Portal_Applications__c easyPay2 = new Portal_Applications__c (
-				Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_MSTS,
-				ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-				ANG_Accredited_Agents_Only__c = false,
-				Agency__c = true
-			);
+		Portal_Applications__c easyPay3 = portalApplicationList.get(2);
+		easyPay3.Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_WEX;
+		easyPay3.ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT;
+		easyPay3.ANG_Accredited_Agents_Only__c = true;
+		easyPay3.Agency__c = true;
 
-		Portal_Applications__c easyPay3 = new Portal_Applications__c (
-				Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_WEX,
-				ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-				ANG_Accredited_Agents_Only__c = true,
-				Agency__c = true
-			);
+		Portal_Applications__c serviceTest = portalApplicationList.get(3);
+		serviceTest.Name = 'serviceTest';
+		serviceTest.ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT;
+		serviceTest.ANG_Accredited_Agents_Only__c = false;
+		serviceTest.Agency__c = true;
 
-		Portal_Applications__c serviceTest = new Portal_Applications__c (
-				Name = 'serviceTest',
-				ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-				ANG_Accredited_Agents_Only__c = false,
-				Agency__c = true
-			);
+		Portal_Applications__c serviceTest2 = portalApplicationList.get(4);
+		serviceTest2.Name = 'serviceTest2';
+		serviceTest2.ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT;
+		serviceTest2.ANG_Accredited_Agents_Only__c = false;
+		serviceTest2.Agency__c = true;
 
-		Portal_Applications__c serviceTest2 = new Portal_Applications__c (
-				Name = 'serviceTest2',
-				ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-				ANG_Accredited_Agents_Only__c = false,
-				Agency__c = true
-			);
-
-		insert new List<Portal_Applications__c>{easyPay1,easyPay2,easyPay3,serviceTest,serviceTest2};
+		insert portalApplicationList;
 
 		IATA_ISO_Country__c portugal = new IATA_ISO_Country__c (
 				Name = 'Portugal_test',
@@ -169,7 +164,8 @@ public class ISSP_AvailableServices_Test {
 				Mgmt_Report_Team__c = true
 		);
 
-		Portal_Applications__c app = new Portal_Applications__c(Name = 'Management Information Report');
+		Portal_Applications__c app = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		app.Name = 'Management Information Report';
 		insert app;
 
 		System.runAs(testeUser1) {
@@ -268,7 +264,8 @@ public class ISSP_AvailableServices_Test {
 				Mgmt_Report_Team__c = true
 		);
 
-		Portal_Applications__c app = new Portal_Applications__c(Name = 'Management Information Report');
+		Portal_Applications__c app = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		app.Name = 'Management Information Report';
 		insert app;
 
 		System.runAs(testeUser1) {
@@ -315,10 +312,12 @@ public class ISSP_AvailableServices_Test {
 			cs.Permission_set__c = '0PS200000004CryGAE';
 			insert cs;
 
-			Portal_Applications__c app = new Portal_Applications__c(Name = '--Management Information Report');
+			Portal_Applications__c app = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+			app.Name = '--Management Information Report';
 			insert app;
 
-			Portal_Applications__c app2 = new Portal_Applications__c(Name = '--Treasury Dashboard - Premium');
+			Portal_Applications__c app2 = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+			app2.Name = '--Treasury Dashboard - Premium';
 			insert app2;
 
 			Portal_Application_Right__c appRight = new Portal_Application_Right__c(
@@ -398,7 +397,8 @@ public class ISSP_AvailableServices_Test {
 			cs.Permission_set__c = '0PS200000004CryGAE';
 			insert cs;
 
-			Portal_Applications__c app = new Portal_Applications__c(Name = 'Management Information Report');
+			Portal_Applications__c app = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+			app.Name = 'Management Information Report';
 			insert app;
 
 			cttr.initialization();
@@ -461,7 +461,8 @@ public class ISSP_AvailableServices_Test {
 			cs.Permission_set__c = '0PS200000004CryGAE';
 			insert cs;
 
-			Portal_Applications__c app = new Portal_Applications__c(Name = 'Management Information Report');
+			Portal_Applications__c app = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+			app.Name = 'Management Information Report';
 			insert app;
 
 			cttr.initialization();
@@ -519,7 +520,8 @@ public class ISSP_AvailableServices_Test {
 			cs.Permission_set__c = '0PS200000004CryGAE';
 			insert cs;
 
-			Portal_Applications__c app = new Portal_Applications__c(Name = 'Management Information Report');
+			Portal_Applications__c app = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+			app.Name = 'Management Information Report';
 			insert app;
 
 			cttr.initialization();
@@ -553,7 +555,8 @@ public class ISSP_AvailableServices_Test {
 				Mgmt_Report_Team__c = true
 			);
 
-		Portal_Applications__c app = new Portal_Applications__c(Name = 'Management Information Report');
+		Portal_Applications__c app = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		app.Name = 'Management Information Report';
 		insert app;
 
 		System.runAs(testeUser1){
@@ -607,7 +610,8 @@ public class ISSP_AvailableServices_Test {
 			cs.Permission_set__c = '0PS200000004CryGAE';
 			insert cs;
 
-			Portal_Applications__c app = new Portal_Applications__c(Name = 'Management Information Report');
+			Portal_Applications__c app = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+			app.Name = 'Management Information Report';
 			insert app;
 
 			cttr.initialization();
@@ -625,10 +629,11 @@ public class ISSP_AvailableServices_Test {
 
 
 
-		Portal_Applications__c app = new Portal_Applications__c(Name = 'Standards Setting Workspace',
-				ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-				ANG_Accredited_Agents_Only__c = false,
-				Agency__c = true);
+		Portal_Applications__c app = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		app.Name = 'Standards Setting Workspace';
+		app.ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT;
+		app.ANG_Accredited_Agents_Only__c = false;
+		app.Agency__c = true;
 		insert app;
 	}
 
@@ -899,12 +904,11 @@ public class ISSP_AvailableServices_Test {
 
 			insert new List<Connected_App_Roles__c>{car, car2};
 
-			Portal_Applications__c easyPay1 = new Portal_Applications__c (
-					Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED,
-					ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-					ANG_Accredited_Agents_Only__c = false,
-					Agency__c = true
-				);
+			Portal_Applications__c easyPay1 = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+			easyPay1.Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED;
+			easyPay1.ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT;
+			easyPay1.ANG_Accredited_Agents_Only__c = false;
+			easyPay1.Agency__c = true;
 
 			insert easyPay1;
 
@@ -971,12 +975,11 @@ public class ISSP_AvailableServices_Test {
 			);
 			insert car;
 
-			Portal_Applications__c easyPay1 = new Portal_Applications__c (
-					Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED,
-					ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-					ANG_Accredited_Agents_Only__c = false,
-					Agency__c = true
-				);
+			Portal_Applications__c easyPay1 = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+			easyPay1.Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED;
+			easyPay1.ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT;
+			easyPay1.ANG_Accredited_Agents_Only__c = false;
+			easyPay1.Agency__c = true;
 
 			insert easyPay1;
 
@@ -994,9 +997,13 @@ public class ISSP_AvailableServices_Test {
 	}
 
 	public static testMethod void testGetVisibleApplications() {
-		list<Portal_Applications__c> listApps = new list<Portal_Applications__c>();
-		listApps.add(new Portal_Applications__c(Name='Join SIS e-Invoicing',Requestable__c=true));
-		listApps.add(new Portal_Applications__c(Name='testApp',Requestable__c=true));
+		list<Portal_Applications__c> listApps = TestDataFactory_PortalApplications.createDefaultPortalApplication(2);
+		Portal_Applications__c portalApplication1 = listApps.get(0);
+		portalApplication1.Name = 'Join SIS e-Invoicing';
+		portalApplication1.Requestable__c = true;
+		Portal_Applications__c portalApplication2 = listApps.get(1);
+		portalApplication2.Name='testApp';
+		portalApplication2.Requestable__c=true;
 		insert listApps;
 
 		Account account = new Account(

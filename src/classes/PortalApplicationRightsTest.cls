@@ -4,7 +4,7 @@ private class PortalApplicationRightsTest {
 	static void makeData(){
 		Portal_Applications__c portalApplication = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
 		insert portalApplication;
-		Account account = TestDataFactory_Accounts.createStandardAccounts(1).get(0);
+		Account account = TestDataFactory_Accounts.createDefaultAccounts(1).get(0);
 		insert account;
 		Contact contact = TestDataFactory_Contacts.createDefaultContact(account.Id, 1).get(0);
 		insert contact;
