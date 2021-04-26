@@ -38,7 +38,7 @@ public with sharing class ANG_ISSP_AfpWrapper {
 
 	public boolean isCashlessAgencyUsingCash{
 		get {
-			return (Account.IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c && (Account.ANG_Accreditation_Model__c == ams_utils.ACCREDITATION_GOLITE));
+			return (Account.IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c && Account.ANG_Accreditation_Model__c == ams_utils.ACCREDITATIONMODEL_CASHLESS);
 		}
 		private set;
 	}
