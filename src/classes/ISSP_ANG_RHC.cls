@@ -93,6 +93,7 @@ public without sharing class ISSP_ANG_RHC {
 											Account.IATA_ISO_Country__r.ANG_IEP_Model__c,
 											Account.IATA_ISO_Country__r.Name,
 											Account.IATA_ISO_Country__r.ISO_Code__c,
+											Account.IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c,
 											Account.Category__c,
 											Account.Location_Class__c
 										 FROM Contact
