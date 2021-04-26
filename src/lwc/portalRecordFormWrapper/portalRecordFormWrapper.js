@@ -5,6 +5,7 @@ import { NavigationMixin } from 'lightning/navigation';
 import { navigateToPage } from 'c/navigationUtils';
 import { getParamsFromPage } from 'c/navigationUtils';
 
+import isTidsAccount from '@salesforce/apex/PortalProfileCtrl.isTidsAccount';
 import isAdmin from '@salesforce/apex/CSP_Utils.isAdmin';
 import getPickListValues from '@salesforce/apex/CSP_Utils.getPickListValues';
 import goToPrivacyPortal from '@salesforce/apex/PortalProfileCtrl.goToPrivacyPortal';
@@ -66,6 +67,9 @@ import CSP_L2_Street from '@salesforce/label/c.CSP_L2_Street';
 import CSP_L3_PersonalEmail_LMS from '@salesforce/label/c.CSP_L3_PersonalEmail_LMS';
 import CSP_L_WorkPhone_LMS from '@salesforce/label/c.CSP_L_WorkPhone_LMS';
 
+// TIDS
+import TIDS_Redirect_Message from '@salesforce/label/c.TIDS_Redirect_Message';
+import TIDS_Redirect_Link from '@salesforce/label/c.TIDS_Redirect_Link';
 
 
 export default class PortalRecordFormWrapper extends NavigationMixin(LightningElement) {
@@ -150,6 +154,8 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     }
 
     _labels = {
+        TIDS_Redirect_Link,
+        TIDS_Redirect_Message,
         SaveLabel,
         CancelLabel,
         MembershipFunction,
@@ -195,6 +201,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     };
 
     @api tabName;
+    @track isTids = false;
     @track isAdminUser = false;
     @track isAirline=false;
     @track linkToDoChanges='';
@@ -341,7 +348,10 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
             }
 
         }
-        
+        this.isTids=false;
+        isTidsAccount().then(result =>{
+            this.isTids=result;
+        });
         isAdmin().then(result => {
             this.showEditTrack = result && this.showEditTrack;
             if (this.tabName && this._labels.CompanyInformation.trim() === this.tabName.trim()){	

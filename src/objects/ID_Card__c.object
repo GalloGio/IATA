@@ -1102,6 +1102,33 @@ two record types:
         </valueSet>
     </fields>
     <fields>
+        <fullName>Harmonized_Position__c</fullName>
+        <description>Harmonized Positions based on values used by SFDC and Webstar</description>
+        <externalId>false</externalId>
+        <formula>IF(ISBLANK(Position__c),&quot;Employee&quot;,
+CASE(LOWER(Position__c),
+&quot;manager&quot;,&quot;Manager&quot;,
+&quot;partner&quot;,&quot;Owner&quot;,
+&quot;shareholder&quot;,&quot;Owner&quot;,
+&quot;sole owner&quot;,&quot;Owner&quot;,
+&quot;sole proprietor&quot;,&quot;Owner&quot;,
+&quot;stockholder&quot;,&quot;Owner&quot;,
+&quot;account admin&quot;,&quot;Verified Admin&quot;,
+&quot;independent consultant/broker&quot;,&quot;Contractor&quot;,
+&quot;independent contractor&quot;,&quot;Contractor&quot;,
+&quot;director&quot;,&quot;Director&quot;,
+&quot;employee&quot;,&quot;Employee&quot;,
+&quot; &quot;)
+)</formula>
+        <inlineHelpText>Harmonized Positions based on values used by SFDC and Webstar</inlineHelpText>
+        <label>Harmonized Position</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>HourWorkedCode__c</fullName>
         <externalId>false</externalId>
         <formula>CASE( Hours_per_week__c , 
