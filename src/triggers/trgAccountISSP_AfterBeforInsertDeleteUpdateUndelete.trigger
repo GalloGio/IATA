@@ -29,9 +29,20 @@ after update, before delete, before insert, before update) {
 		}
 	}
 	else if(trigger.isUpdate && trigger.isAfter){
+
 		acctToUpdate = ISSP_FillTopParent.getAcctsToUpdate(trigger.newMap, trigger.oldMap);
-		if(!acctToUpdate.isEmpty())
+
+		if(!acctToUpdate.isEmpty() && System.isFuture() || System.isBatch()){
 			ISSP_FillTopParent.accountsAfterUpdateTopParent(acctToUpdate, trigger.oldMap);
+
+		} else if(!acctToUpdate.isEmpty()){
+
+			List<Id> acctsToUpdateIds = new List<Id>();
+			for(Account acc : acctToUpdate){
+				acctsToUpdateIds.add(acc.Id);
+			}
+			ISSP_FillTopParent.accountsAfterUpdateTopParentFuture(acctsToUpdateIds, JSON.serialize(Trigger.oldMap));
+		}
 	}
 
 	set<Id> accIdSet = new set<Id>();
