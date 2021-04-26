@@ -635,6 +635,7 @@ public with sharing class ISSP_PortalUserStatusChange {
 															'Polish' =>'pl',
 															'Norweigian' =>'no',
 															'Chinese' =>'zh_CN',
+															'Turkish' =>'tr',
 															'Japanese' =>'ja',
 															'Portuguese' =>'pt_BR'
 													};

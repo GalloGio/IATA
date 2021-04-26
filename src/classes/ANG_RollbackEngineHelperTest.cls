@@ -397,7 +397,8 @@ private class ANG_RollbackEngineHelperTest {
 		con1.Financial_Assessment_Contact__c = true;
 		update con1;
 
-		Portal_Applications__c pApp = new Portal_Applications__c(Name = 'IFAP');
+		Portal_Applications__c pApp = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		pApp.Name = 'IFAP';
 		insert pApp;
 		
 		insert new Portal_Application_Right__c(Portal_Application__c = pApp.Id, 

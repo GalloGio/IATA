@@ -76,11 +76,12 @@ public with sharing class TIDS_Test {
 		createUser(profileId);
 		
 		//TIDS service
-		portalApplications = new Portal_Applications__c();
+		portalApplications = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
 		portalApplications.Name = TIDS_Constant.TIDSVALUE;
 		portalApplications.TIDS_Total_Ownership_Minimum__c=1;
 		portalApplications.TIDS_Total_Ownership_Maximum__c=100;
 		portalApplications.TIDS_Non_Eligible_Location_Countries__c='CA';
+		portalApplications.Functional_Role__c = 'TIDS';
 		insert portalApplications;
 
 		List<Code_Range__c>  lrange  = new List<Code_Range__c>();

@@ -2,15 +2,18 @@
 private class ISSP_HomepageTest {
 
 	@testSetup static void customSettingSetup() {
-		Portal_Applications__c insuranceApp = new Portal_Applications__c(Name = 'Insurance Providers',
-																		ANG_Restrict_by_Agency_Category__c = 'IATA Passenger Sales Agent; IATA Cargo Agent',
-																		Agency__c = true);
+		List<Portal_Applications__c> portalApplicationList = TestDataFactory_PortalApplications.createDefaultPortalApplication(2);
+		Portal_Applications__c insuranceApp = portalApplicationList.get(0);
+		insuranceApp.Name = 'Insurance Providers';
+		insuranceApp.ANG_Restrict_by_Agency_Category__c = 'IATA Passenger Sales Agent; IATA Cargo Agent';
+		insuranceApp.Agency__c = true;
 
-		Portal_Applications__c otherApp = new Portal_Applications__c(Name = 'Other',
-																	Agency__c = true,
-																	ANG_Accredited_Agents_Only__c = true,
-																	ANG_Restrict_by_Agency_Sector__c = 'Travel Agent');
-		insert new List<Portal_Applications__c>{insuranceApp, otherApp};
+		Portal_Applications__c otherApp = portalApplicationList.get(1);
+		otherApp.Name = 'Other';
+		otherApp.Agency__c = true;
+		otherApp.ANG_Accredited_Agents_Only__c = true;
+		otherApp.ANG_Restrict_by_Agency_Sector__c = 'Travel Agent';
+		insert portalApplicationList;
 	}
 
 	@isTest static void testServiceList() {
@@ -149,7 +152,8 @@ private class ISSP_HomepageTest {
 			//kbv2.compareTo(kbv1);
 			//kbv1.compareTo(kbv2);
 
-			Portal_Applications__c app = new Portal_Applications__c(Name = 'Test Method App');
+			Portal_Applications__c app = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+			app.Name = 'Test Method App';
 			insert app;
 			ISSP_Homepage.newAppsRequest(app.Id, con.Id);
 			Notification__c noti = new Notification__c(Contact__c=con.Id);
@@ -211,7 +215,8 @@ private class ISSP_HomepageTest {
 
 		User newUser2 = ISSP_ObjectFactory.createPortalUser(con2);
 		update con2;
-		Portal_Applications__c app = new Portal_Applications__c(Name = 'test app');
+		Portal_Applications__c app = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		app.Name = 'test app';
 		insert app;
 		Portal_Application_Right__c appRight = new Portal_Application_Right__c(Contact__c = con2.Id, Portal_Application__c = app.Id, Right__c = 'Access Granted');
 		insert appRight;
