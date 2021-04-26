@@ -601,6 +601,12 @@ public static Contact contactInfo = new Contact();
 		String rType = myContact.Account.RecordType.DeveloperName;
 		return rType == 'IATA_Agency';
 	}
+	
+	@AuraEnabled
+	public static Boolean isTidsAccount(){
+		String rType = myContact.Account.RecordType.DeveloperName;
+        return (myContact.Account.Location_Class__c=='T' && myContact.Account.Status__c=='Approved' && rType == 'IATA_Agency');
+	}
 
 	@AuraEnabled
 	public static Boolean hasAnnualRevalidation(){

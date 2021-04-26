@@ -62,12 +62,6 @@ export default class TidsConditions extends NavigationMixin(LightningElement) {
       }
     }
     let TIDSportalService = 'TIDS';
-    getPortalServiceDetails({ serviceName: TIDSportalService }).then(result => {
-        let portalService = JSON.parse(JSON.stringify(result));
-        if (portalService !== undefined && portalService !== '' && portalService.recordService !== undefined && portalService.recordService !== '') {
-            this.portalUrl  = portalService.recordService.Application_URL__c;
-        }
-    });
     this.tidsCase = getCase();
   }
 
