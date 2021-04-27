@@ -32,3 +32,11 @@ table tbody tr td {
 .information {
     fill: #1E32FA;
 }
+
+input:focus {
+    border: 1px solid black;
+}
+
+input[type="date"]{
+    cursor: pointer;
+}
