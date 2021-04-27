@@ -26739,6 +26739,14 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>TECH_GDPR_Network_Name</name>
     </customLabels>
     <customLabels>
+        <label><!-- TIDS_Redirect_Link --></label>
+        <name>TIDS_Redirect_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- TIDS_Redirect_Message --></label>
+        <name>TIDS_Redirect_Message</name>
+    </customLabels>
+    <customLabels>
         <label><!-- TIP Reports Service Description --></label>
         <name>TIP_Reports_Service_Description</name>
     </customLabels>
