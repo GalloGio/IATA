@@ -9,24 +9,20 @@ public class tgrUserCreateUpdateRightsTest {
 
 		Contact contact = ISSP_ObjectFactory.createNewContact();
 		contact.AccountId = acc.Id;
-		contact.User_Portal_Status__c = 'Pending Approval';
+		contact.User_Portal_Status__c = 'Pending Approval';        
 		insert contact;
 
-		Portal_Applications__c easyPay1 = new Portal_Applications__c (
-				Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED,
-				ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-				ANG_Accredited_Agents_Only__c = false,
-				Agency__c = true
-			);
+		List<Portal_Applications__c> portalApplicationList = TestDataFactory_PortalApplications.createDefaultPortalApplication(2);		
+		Portal_Applications__c easyPay1 = portalApplicationList.get(0);
+		easyPay1.Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED;
+		easyPay1.ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT;
+		easyPay1.ANG_Accredited_Agents_Only__c = false;
+		easyPay1.Agency__c = true;
+		easyPay1.Functional_Role__c = 'IATA EasyPay (EDENRED)';
 
-		Portal_Applications__c easyPay2 = new Portal_Applications__c (
-				Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED,
-				ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-				ANG_Accredited_Agents_Only__c = false,
-				Agency__c = true
-			);
+		Portal_Applications__c easyPay2 = easyPay1.clone(false, true, false, false);
 
-		insert new List<Portal_Applications__c>{easyPay1,easyPay2};
+		insert portalApplicationList;
 
 		Id rtId = RecordTypeSingleton.getInstance().getRecordTypeId('Portal_Application_Right__c', 'Biller_Direct');
 

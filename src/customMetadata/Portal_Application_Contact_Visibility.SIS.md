@@ -16,7 +16,7 @@
     </values>
     <values>
         <field>Location_Class__c</field>
-        <value xsi:type="xsd:string">C,D,E,G,K,L,M,N,O,P,S,T,V,X,J</value>
+        <value xsi:type="xsd:string">C,D,E,G,K,L,M,N,O,P,S,T,V,X,J,R,Q,I</value>
     </values>
     <values>
         <field>Location_Type__c</field>

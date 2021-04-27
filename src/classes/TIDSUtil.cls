@@ -593,16 +593,47 @@ public without sharing class TIDSUtil{
 		metadata.Description_P2__c= contentInfo(metadata.Description_P2__c);
 		metadata.Description_P3__c= contentInfo(metadata.Description_P3__c);
 	}
+	private static String obfuscateEmail(String element){
+		if (element.length()<3 && !element.Contains('@')){
+			return element;
+		}
+		string[] parts = element.split('@');
+		integer length = parts[0].length();		
+		integer middle = Math.round(length / 2);
+		integer left =2;
+		integer right=2;
+		if (length==1 || length==2){
+			left=0;
+			right=0;
+		}else if (length==3){
+			left=1;
+			right=0;
+		}else if (length==4){
+			left=1;
+			right=1;
+		}
+		if (length!=0){
+			final string afters = '*'.repeat(length-middle-left);
+			final string befores= '*'.repeat(middle-left);
+			final string part1 = parts[0].substring(middle-left, middle+right);
+			element = befores+part1+afters+'@'+parts[1];
+		}	
+		return element;
+	}
 	//Changes the content based on the email, case, Status...values of the case
 	private static String contentInfo(String content){
 		if (String.isEmpty(content)) {return content;}
 		integer i=0;
 		List<String> toreplace = new List<String>{'{@email}','{@Case}','{@Case Status}','{@ApplicationDecision}','{@CreatedDate}'};
 		for(String o:toreplace){
-			if (replaceby[i]==null) {
-				replaceby[i]='';
+			string element = replaceby[i];
+			if (element==null) {
+				element='';
 			}
-			content=content.replace(o,replaceby[i]);
+			if (i==0){
+				element = obfuscateEmail(element);
+			}
+			content=content.replace(o,element);
 			i++;
 		}
 		return content;

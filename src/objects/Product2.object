@@ -8157,6 +8157,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <fullName>Training%3A Self Study</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Travel Pass</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>IATA_ORG_Group__c</picklist>
@@ -11291,6 +11295,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Training%3A Self Study</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel Pass</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -14521,6 +14529,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <fullName>Training%3A Self Study</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Travel Pass</fullName>
+                <default>false</default>
+            </values>
         </picklistValues>
         <picklistValues>
             <picklist>IATA_ORG_Group__c</picklist>
@@ -17555,6 +17567,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Training - OnSite</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel Pass</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -20810,6 +20826,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Training%3A Self Study</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel Pass</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

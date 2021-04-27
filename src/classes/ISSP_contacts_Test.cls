@@ -37,7 +37,8 @@ public class ISSP_contacts_Test {
 
 		Test.startTest();
 
-		Portal_Applications__c app = new Portal_Applications__c(Name = 'Test App');
+		Portal_Applications__c app = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		app.Name = 'Test App'; 
 		insert app;
 
 		Portal_Application_Right__c appReq = new Portal_Application_Right__c();

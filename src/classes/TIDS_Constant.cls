@@ -9,6 +9,7 @@ public without sharing class TIDS_Constant {
 	public final static String RT_VERIFIER='Verifiers';
 	public final static String RT_AIRPORT='Airport';
 
+	public final static String ERROR_CON0_1 = 'TIDS_ACCES_COND0';
 	public final static String ERROR_CON1 = 'TIDS_ACCES_COND1';
 	public final static String ERROR_CON2_1 = 'TIDS_ACCES_COND2_1';
 	public final static String ERROR_CON2_2 = 'TIDS_ACCES_COND2_2';

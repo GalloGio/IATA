@@ -1,6 +1,5 @@
 @IsTest
 public with sharing class Account_Contact_Role_Helper_TEST {
-
 	@TestSetup
 	private static void setup() {
 
@@ -54,9 +53,9 @@ public with sharing class Account_Contact_Role_Helper_TEST {
 		User testUser3 = createUser(testContact3, profileId);
 
 		//GADM service
-		Portal_Applications__c portalApplications = new Portal_Applications__c();
-		portalApplications.Name = 'GADM';
-		insert portalApplications;
+		Portal_Applications__c portalApplication = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		portalApplication.Name = 'GADM';
+		insert portalApplication;
 
 		//GADM Participang Account Role
 		Account_Roles__c accountRoles = new Account_Roles__c();
@@ -64,7 +63,7 @@ public with sharing class Account_Contact_Role_Helper_TEST {
 		insert accountRoles;
 
 		Account_Role_Services__c accountRoleServices = new Account_Role_Services__c();
-		accountRoleServices.Portal_Service__c = portalApplications.Id;
+		accountRoleServices.Portal_Service__c = portalApplication.Id;
 		accountRoleServices.Account_Roles__c = accountRoles.Id;
 		insert accountRoleServices;
 
@@ -235,7 +234,6 @@ public with sharing class Account_Contact_Role_Helper_TEST {
 
 			}catch(Exception e) {
 				errorMessage = e.getMessage();
-				System.debug('error message:: ' + errorMessage);
 			}
 		}
 

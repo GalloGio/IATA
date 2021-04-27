@@ -184,7 +184,7 @@ private class Comm_User_HelperTest {
 				if (listSettingVisibility.isEmpty()) return;
 				Portal_Application_Visibility__mdt settingVisibility = listSettingVisibility[0];
 
-				Portal_Applications__c app = new Portal_Applications__c();
+				Portal_Applications__c app = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
 				app.Name = settingVisibility.Parent__r.MasterLabel;
 				insert app;
 
@@ -234,7 +234,7 @@ private class Comm_User_HelperTest {
 				if (listSettingVisibility.isEmpty()) return;
 				Portal_Application_Visibility__mdt settingVisibility = listSettingVisibility[0];
 
-				Portal_Applications__c app = new Portal_Applications__c();
+				Portal_Applications__c app = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
 				app.Name = settingVisibility.Parent__r.MasterLabel;
 				insert app;
 
