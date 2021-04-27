@@ -7,8 +7,8 @@
 					<div class="slds-size_1-of-6 slds-grid slds-grid_vertical-align-center slds-grid_align-end slds-p-right_medium">
 						<lightning-icon icon-name="utility:file"></lightning-icon>
 					</div>
-					<div class="slds-size_4-of-6 slds-text-align_left">
-						<p>{item.file.name}</p>
+					<div class="slds-size_4-of-6 slds-text-align_left" onclick={downloadFile}>
+						<p><a href={item.file.url}>{item.file.name}</a></p>
 						<span class="slds-text-title">{item.file.size} bytes</span>
 					</div>
 					<div class="slds-size_1-of-6 slds-grid slds-grid_vertical-align-center slds-grid_align-center">

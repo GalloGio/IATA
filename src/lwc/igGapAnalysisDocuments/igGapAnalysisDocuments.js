@@ -287,7 +287,7 @@ export default class IgGapAnalysisDocuments extends LightningElement {
             return this._documentList.data.map(doc => Object.assign({}, doc, {
                 type: doc.type,
                 typeString: documentTypeToString[doc.type],
-                files: doc.attachments.map(attach => ({ id: attach.Id, name: attach.Name, size: attach.BodyLength, uploaded: true })),
+                files: doc.attachments.map(attach => ({ id: attach.Id, name: attach.Name, size: attach.BodyLength, uploaded: true, url: '/sfsites/c/servlet/servlet.FileDownload?file='+attach.Id })),
                 publishDate: doc.publishDate ? doc.publishDate.split('T')[0] : undefined,
                 reviewDate: doc.reviewDate ? doc.reviewDate.split('T')[0] : undefined,
                 effectiveDate: doc.effectiveDate ? doc.effectiveDate.split('T')[0] : undefined,
@@ -312,6 +312,7 @@ export default class IgGapAnalysisDocuments extends LightningElement {
         return this.currentScreen === SCREEN_STATES.DOCUMENT_EDITOR;
     }
     get hasDocuments() {
+        console.log('Document list ' + JSON.stringify(this.documentList));
         return this.documentList && this.documentList.length > 0;
     }
     get isFileSelected() {
