@@ -1259,7 +1259,7 @@ public without sharing class AMS_Utils {
 				,IATA_ISO_Billing_State__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_Country__r.Name, IATA_ISO_Shipping_State__c, IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name,
 				Link_agent_name__c, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode, Covered_Ownership__c,
 				(SELECT Id FROM RHC_Informations__r), Is_PCI_compliant__c, IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, IATA_ISO_Country__r.AMS_Settlement_System__r.ANG_RHC_Amount_Equals_FS__c,
-				Geoname_Billing_City__c, Geoname_Shipping_City__c, Geoname_Billing_City__r.Name, Geoname_Shipping_City__r.Name, NDC_Agent__c
+				Geoname_Billing_City__c, Geoname_Shipping_City__c, Geoname_Billing_City__r.Name, Geoname_Shipping_City__r.Name, NDC_Agent__c, IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c
 				FROM Account
 				WHERE Id IN :oscarAccountIds]);
 
@@ -1361,7 +1361,9 @@ public without sharing class AMS_Utils {
 					accountHasChanges = true;
 				}
 
-				if(oscar.Process__c == NEWHESTANDARD && acc.RHC_Informations__r.isEmpty()) createRHCInfo.add(acc);
+				if((oscar.Process__c == NEWHESTANDARD || 
+					(acc.IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c && oscar.Process__c == NEWHELITE))
+					&& acc.RHC_Informations__r.isEmpty()) createRHCInfo.add(acc);
 
 				onlineAccToCreateAccountRole.add(onlineAcc);
 
