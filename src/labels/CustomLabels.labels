@@ -46654,6 +46654,22 @@ SF Workflow Process</value>
         <value>Data Privacy</value>
     </labels>
     <labels>
+        <fullName>TIDS_Redirect_Link</fullName>
+        <categories>TIDS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TIDS_Redirect_Link</shortDescription>
+        <value>Click here to access the &lt;a href=&quot;/s/tids&quot; target=&quot;_self&quot;&gt;TIDS Service&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>TIDS_Redirect_Message</fullName>
+        <categories>TIDS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TIDS_Redirect_Message</shortDescription>
+        <value>Please report changes to your company details via the TIDS Service</value>
+    </labels>
+    <labels>
         <fullName>TIP_Reports_Service_Description</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -46736,22 +46752,6 @@ Through this service, you can directly access TIP Reports.</value>
         <protected>false</protected>
         <shortDescription>Title_Home_Page</shortDescription>
         <value>IATA: International Air Transport Association</value>
-    </labels>
-    <labels>
-        <fullName>TIDS_Redirect_Link</fullName>
-        <categories>TIDS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>TIDS_Redirect_Link</shortDescription>
-        <value>Click here to access the &lt;a href=&quot;/s/tids&quot; target=&quot;_self&quot;&gt;TIDS Service&lt;/a&gt;</value>
-    </labels>
-    <labels>
-        <fullName>TIDS_Redirect_Message</fullName>
-        <categories>TIDS</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>TIDS_Redirect_Message</shortDescription>
-        <value>Please report changes to your company details via the TIDS Service</value>
     </labels>
     <labels>
         <fullName>Total_Amount</fullName>
