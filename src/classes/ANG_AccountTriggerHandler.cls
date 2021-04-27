@@ -4,7 +4,6 @@ public class ANG_AccountTriggerHandler {
 	public List<Account> triggerOld = (List<Account>) Trigger.old;
 	private static final Set<String> VALID_CHANGE_CODES = new Set<String>{'CHA','CWD'};
 	private static final String CHA_CHANGE_CODES = 'CHA';
-	private static final String CWD_CHANGE_CODES = 'CWD';
 	public Map<Id, Account> newMap = (Map<Id,Account>) Trigger.newMap;
 	public Map<Id, Account> oldMap = (Map<Id,Account>) Trigger.oldMap;
 
@@ -419,6 +418,7 @@ public class ANG_AccountTriggerHandler {
 														FROM Agency_Applied_Change_code__c 
 														WHERE (Account__c IN : inactivateAcctsSet OR Account__c IN : reActivateAcctsSet)
 															AND Change_Code__c in : VALID_CHANGE_CODES 
+															AND CreatedDate <: Date.today()
 															ORDER BY CreatedDate DESC]){
 				if(cc.Change_Code__c == CHA_CHANGE_CODES){
 					if(mapOfchangeCodesByAccount.get(cc.Account__c) == null) {
@@ -468,18 +468,14 @@ public class ANG_AccountTriggerHandler {
 	public ANG_Agency_Risk_Event__c updateRiskEventCashAndCashless(map<Id,list<Agency_Applied_Change_code__c>> mapCCByAccount, ANG_Agency_Risk_Event__c re, String typrOfChangeCode, map<String, Agency_Applied_Change_code__c> mapOfchangeCodesCWDByCaseNumber){
 		
 		Date checkCreatedDateRE = null;
+		Boolean checkRiskEventUpdated = false;
 
 		if(typrOfChangeCode == AMS_Utils.ACCREDITATIONMODEL_CASH){
 			checkCreatedDateRE = Date.today().addYears(-2);
 		}else{
 			checkCreatedDateRE = Date.today().addMonths(-6);
 		}
-		
-		if(mapCCByAccount.get(re.ANG_AccountId__c) == null && typrOfChangeCode == AMS_Utils.ACCREDITATIONMODEL_CASH){
-			if(re.ANG_AccountId__r.Accreditation_date__c < = checkCreatedDateRE){
-				re.Applicable_for_re_activation__c = true;
-			}
-		}else{
+		if(mapCCByAccount.get(re.ANG_AccountId__c) != null){
 			for(Integer index = 0; index < mapCCByAccount.get(re.ANG_AccountId__c).size(); index ++){
 				if(mapCCByAccount.get(re.ANG_AccountId__c)[index].OSCAR__r.ANG_Type_Of_Change__c == AMS_Utils.ANG_ACCREDITATION_TYPE
 						&& mapCCByAccount.get(re.ANG_AccountId__c)[index].OSCAR__r.AMS_Online_Accreditation__r.ANG_Accreditation_Model_to_Change__c == typrOfChangeCode
@@ -487,11 +483,18 @@ public class ANG_AccountTriggerHandler {
 						|| mapCCByAccount.get(re.ANG_AccountId__c)[index].CreatedDate > = checkCreatedDateRE && typrOfChangeCode == AMS_Utils.ACCREDITATIONMODEL_CASHLESS)){
 							
 					if(typrOfChangeCode == AMS_Utils.ACCREDITATIONMODEL_CASH && mapOfchangeCodesCWDByCaseNumber.get(mapCCByAccount.get(re.ANG_AccountId__c)[index].OSCAR__r.Name) == null){
+						checkRiskEventUpdated = true;
 						re.Applicable_for_re_activation__c = true;
 					}else if(typrOfChangeCode == AMS_Utils.ACCREDITATIONMODEL_CASHLESS){
 						re.ang_event_status__c = ANG_Risk_Helper.STATUS_ACTIVE;
 					}
 				}
+			}
+		}
+
+		if((mapCCByAccount.get(re.ANG_AccountId__c) == null || !checkRiskEventUpdated) && typrOfChangeCode == AMS_Utils.ACCREDITATIONMODEL_CASH ){
+			if(re.ANG_AccountId__r.Accreditation_date__c < = checkCreatedDateRE){
+				re.Applicable_for_re_activation__c = true;
 			}
 		}
 		return re;
