@@ -1,4 +1,4 @@
-trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after insert, after update, before delete, after delete) {
+trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (before insert, after insert, after update, before delete, after delete) {
 
 	if (PortalServiceAccessTriggerHandler.avoidAppTrigger) return;
 
@@ -58,7 +58,7 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (after inse
 	//end of ANG
 
 	//Logic migrated from WF - Application uniqueness for contact | Biller Direct Rights -> to trigger 
-	if(Trigger.isBefore && Trigger.isInsert) handler.onBeforeInsert();
+	if(Trigger.isBefore && Trigger.isInsert) handler.onBeforeInsert(trigger.new);
 	if(Trigger.isBefore && Trigger.isUpdate) handler.onBeforeUpdate();
 
 	//E&F APPS
