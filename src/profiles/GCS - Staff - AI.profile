@@ -44629,6 +44629,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>ID_Card__c.Harmonized_Position__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>ID_Card__c.HourWorkedCode__c</field>
         <readable>true</readable>
     </fieldPermissions>

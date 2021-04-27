@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>true</doesSendEmailToMembers>
-    <name>Airline Suspension - Head Office</name>
+    <name>Airline Risk Management - GDC Madrid</name>
     <queueMembers>
         <users>
             <user>ferratec@iata.org</user>

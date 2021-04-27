@@ -342,7 +342,7 @@ global with sharing class GSS_REST_ConfirmFileDelivery{
 			subDet.Calendar_New_Submission_Effective_Date__c = null;
 			subDet.Calendar_Next_Submission_Date__c = trgHndlrIECgssSubscriptionDetail.calculateCalendarNextSubmissionDate(subDet
 					, deliveredGssSubDetIdToFrequencyMap.get(subDet.Id)
-					, nextDay);
+					, deliveredGssSubDetIdToFrequencyMap.get(subDet.Id) =='Weekly' ? Date.today():nextDay);
 		} // end for deliveredSubDetIdToObjectMap
 
 		// we try to update those it can, instead of doing all or nothing update.

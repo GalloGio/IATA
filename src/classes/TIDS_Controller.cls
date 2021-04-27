@@ -70,8 +70,11 @@ public without sharing class TIDS_Controller {
 		Case tidsCase = new Case();
 		if (TIDSUtil.cases.size() > 0){
 			tidsCase = TIDSUtil.cases[0];
-			if (applicationDecision==TIDS_Constant.IS_APPROVED){
-				if (tidsCase.Status==TIDS_Constant.IS_CLOSED){
+			if ((applicationDecision==TIDS_Constant.IS_REJECTED || applicationDecision==TIDS_Constant.IS_APPREJECTED) && tidsCase.Status!=TIDS_Constant.IS_INPROGRESS){
+				TIDSUtil.setError(TIDS_Constant.MSG11,false);
+				return TIDSUtil.iataCodeError;
+			}else if (applicationDecision==TIDS_Constant.IS_APPROVED){
+				if (tidsCase.Status!=TIDS_Constant.IS_INPROGRESS){
 					TIDSUtil.setError(TIDS_Constant.MSG11,false);
 					return TIDSUtil.iataCodeError;
 				}else if ((!String.isEmpty(tidsCase.Account.IATACode__c) 
@@ -92,7 +95,9 @@ public without sharing class TIDS_Controller {
 			tidsCase.Decision__c = TIDS_Constant.IS_APPROVED.toUpperCase();
 			tidsCase.Status = TIDS_Constant.IS_CLOSED;
 			loadTIDSFromJson(applicationsettings);
-			if (TIDSUtil.iataCodeError.hasAnError){return TIDSUtil.iataCodeError;}
+			if (TIDSUtil.iataCodeError.hasAnError){
+				return TIDSUtil.iataCodeError;
+			}
 			Set<String> type1 = new Set<String>{TIDS_Constant.CHG_NAME,TIDS_Constant.CHG_ADDRESS,TIDS_Constant.CHG_PROFILE};
 			Set<String> type2 = new Set<String>{TIDS_Constant.NEW_HO,TIDS_Constant.NEW_BR,TIDS_Constant.NEW_VB};
 			if (type1.Contains(tids.applicationType)){
@@ -107,10 +112,14 @@ public without sharing class TIDS_Controller {
 				}
 			}
 		}else if(applicationDecision==TIDS_Constant.IS_REJECTED || applicationDecision==TIDS_Constant.IS_APPREJECTED  || applicationDecision==TIDS_Constant.IS_CLOSED ){
+			
 			tidsCase.Decision__c = TIDS_Constant.IS_REJECTED.toUpperCase();
 			tidsCase.Status = TIDS_Constant.IS_CLOSED;
+
 		}
-		if (TIDSUtil.iataCodeError.hasAnError){return TIDSUtil.iataCodeError;}
+		if (TIDSUtil.iataCodeError.hasAnError){
+			return TIDSUtil.iataCodeError;
+		}
 		if (!String.isBlank(reason)){
 			TIDSUtil.createCaseComment(true, caseId,reason);
 		}
@@ -133,7 +142,9 @@ public without sharing class TIDS_Controller {
 			states = [SELECT Id, IATA_ISO_Country__c, IATA_ISO_Country__r.CurrencyIsoCode
 				FROM IATA_ISO_State__c
 				WHERE ISO_Code__c = :TIDS_Constant.STATEISOCODE LIMIT 1];
-		} catch (exception e){TIDSUtil.setError(TIDS_Constant.MSG16,false);}
+		} catch (exception e){
+			TIDSUtil.setError(TIDS_Constant.MSG16,false);
+		}
 	}
 
 	//Will emulate the Staging values based on a minimum of information
@@ -225,7 +236,11 @@ public without sharing class TIDS_Controller {
 	}
 	//Deserialize the data.json file in the tids class
 	public static void loadTIDSFromJson(string tidsjson){
-		try{tids = (vTIDS) JSON.deserialize(tidsjson, vTIDS.class);}catch(Exception e){TIDSUtil.setError(e.getMessage(),true);}
+		try{
+			tids = (vTIDS) JSON.deserialize(tidsjson, vTIDS.class);
+		}catch(Exception e){
+			TIDSUtil.setError(e.getMessage(),true);
+		}
 	}
 	public class vuserInfo {
 		public String Id {get;set;}
