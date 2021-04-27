@@ -457,7 +457,7 @@ public class ANG_AccountTriggerHandler {
 					re.ang_event_status__c = ANG_Risk_Helper.STATUS_INACTIVE_CASHLESS;
 					re = updateRiskEventCashAndCashless(mapOfchangeCodesByAccount, re, AMS_Utils.ACCREDITATIONMODEL_CASH, mapOfchangeCodesCWDByCaseNumber);
 				}
-			}else if(reActivateAcctsSet.contains(re.ANG_AccountId__c)){
+			}else if(reActivateAcctsSet.contains(re.ANG_AccountId__c) && re.Applicable_for_re_activation__c == true){
 				re = updateRiskEventCashAndCashless(mapOfchangeCodesByAccount, re, AMS_Utils.ACCREDITATIONMODEL_CASHLESS, mapOfchangeCodesCWDByCaseNumber);
 			}
 
