@@ -437,6 +437,7 @@ public class ANG_AccountTriggerHandler {
 		set<id> accIdSet = new set<id>(activeAccsIdSet);
 		accIdSet.addAll(inactiveAccsIdSet);
 		accIdSet.addAll(inactivateAcctsSet);
+        accIdSet.addAll(reActivateAcctsSet);
 
 		//get all related risk Events
 		if(accIdSet.isEmpty())
