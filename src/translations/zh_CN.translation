@@ -24641,6 +24641,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Notions_Essentl_Tarif_Billet_Description</name>
     </customLabels>
     <customLabels>
+        <label><!-- OAG_Service_Description --></label>
+        <name>OAG_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- OSCAR_RISK_WARNING --></label>
         <name>OSCAR_RISK_WARNING</name>
     </customLabels>
@@ -26726,6 +26730,14 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- Name of GDPR  Network. Usually name of the community - Query on network objec --></label>
         <name>TECH_GDPR_Network_Name</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- TIDS_Redirect_Link --></label>
+        <name>TIDS_Redirect_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- TIDS_Redirect_Message --></label>
+        <name>TIDS_Redirect_Message</name>
     </customLabels>
     <customLabels>
         <label><!-- TIP Reports Service Description --></label>

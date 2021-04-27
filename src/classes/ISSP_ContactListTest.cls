@@ -229,12 +229,13 @@ private class ISSP_ContactListTest {
 
 		String newContactId2 = con2.Id;
 
-		List<Portal_Applications__c> pal = new List<Portal_Applications__c>();
+		List<Portal_Applications__c> pal = TestDataFactory_PortalApplications.createDefaultPortalApplication(2);
 
-		Portal_Applications__c app1 = new Portal_Applications__c(Name = 'MyTest', Critical_Service__c = true);
-		pal.add(app1);
-		Portal_Applications__c app2 = new Portal_Applications__c(Name = 'MyTest2');
-		pal.add(app2);
+		Portal_Applications__c app1 = pal.get(0);
+		app1.Name = 'MyTest';
+		app1.Critical_Service__c = true;
+		Portal_Applications__c app2 = pal.get(1);
+		app2.Name = 'MyTest2';
 
 		insert pal;
 

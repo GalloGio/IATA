@@ -14206,19 +14206,5 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
                 <value>Europe,GVA HO,Europe (Americas Countries)</value>
             </criteriaItems>
         </ruleEntry>
-        <ruleEntry>
-            <assignedTo>sahuck@iata.org</assignedTo>
-            <assignedToType>User</assignedToType>
-            <criteriaItems>
-                <field>Case.RecordTypeId</field>
-                <operation>equals</operation>
-                <value>ACCA Customer Service Request (Internal)</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Origin</field>
-                <operation>equals</operation>
-                <value>E-mail to Case - ACCA CSR Internal</value>
-            </criteriaItems>
-        </ruleEntry>
     </assignmentRule>
 </AssignmentRules>

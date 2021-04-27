@@ -8,7 +8,7 @@ public class TestDataFactory_Accounts {
 		insert iataISOCountryList;
 	}
 
-	public static List<Account> createStandardAccounts (Integer numberOfRecords){
+	public static List<Account> createDefaultAccounts (Integer numberOfRecords){
 		//create dependent data
 		makeData();
 		//get standard record type
@@ -19,6 +19,19 @@ public class TestDataFactory_Accounts {
 		List<Account> accountList = new List<Account>();
 		for (Integer x = 0; x < numberOfRecords; x ++){
 			Account account = new Account(Name = DEFAULTNAME + ' ' + x, RecordTypeId = recordTypeId, IATA_ISO_Country__c = iataISOCountry.Id);
+			accountList.add(account);
+		}
+		return accountList;
+	}
+
+	public static List<Account> createStandardAccounts (Integer numberOfRecords, Id iataISOCountryId){
+		//get standard record type
+		Id recordTypeId = RecordTypeSelector.selectIdBySObjectAndName('Account', 'Others');
+		
+		//create and return Account List
+		List<Account> accountList = new List<Account>();
+		for (Integer x = 0; x < numberOfRecords; x ++){
+			Account account = new Account(Name = DEFAULTNAME + ' ' + x, RecordTypeId = recordTypeId, IATA_ISO_Country__c = iataISOCountryId);
 			accountList.add(account);
 		}
 		return accountList;

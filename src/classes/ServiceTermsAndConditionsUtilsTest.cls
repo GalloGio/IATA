@@ -4,9 +4,8 @@ private class ServiceTermsAndConditionsUtilsTest {
 	@testSetup
 	public static void testSetup() {
 
-		Portal_Applications__c pa = new Portal_Applications__c(
-			Name = 'Login T&C Checker'
-		);
+		Portal_Applications__c pa = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		pa.Name = 'Login T&C Checker';
 		insert pa;
 
 		Term_and_Condition__c tc = new Term_and_Condition__c(

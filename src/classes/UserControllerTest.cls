@@ -115,10 +115,8 @@ private class UserControllerTest {
 
 		insert (new List<User>{newUser,newUser2});
 
-		Portal_Applications__c portalApp = new Portal_Applications__c(
-			Name = 'testService'
-		);
-
+		Portal_Applications__c portalApp = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		portalApp.Name = 'testService';
 		insert portalApp;
 
 		Portal_Application_Right__c appRight = new Portal_Application_Right__c(

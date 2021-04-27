@@ -218,7 +218,8 @@ private class ISSP_ModelA_Onboarding_Test {
 
 		insert accounts;
 
-		Portal_Applications__c portalApp = new Portal_Applications__c(Name = 'IATA EasyPay (EDENRED)');
+		Portal_Applications__c portalApp = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		portalApp.Name = 'IATA EasyPay (EDENRED)';
 		insert portalApp;
 
 		List<Contact> contacts = new List<Contact>();

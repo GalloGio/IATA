@@ -40,7 +40,8 @@ private class ISSP_UserTriggerHandler_Test {
 		conEmailIdSet.add(contact.Id);
 
 		PortalServiceAccessTriggerHandler.avoidAppTrigger = true;
-		Portal_Applications__c app = new Portal_Applications__c(Name = 'SIS');
+		Portal_Applications__c app = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		app.Name = 'SIS';
 		insert app;
 		Portal_Application_Right__c appRight = new Portal_Application_Right__c(Contact__c = contact.Id, Portal_Application__c = app.Id, Right__c = 'Access Granted');
 		insert appRight;
@@ -117,7 +118,8 @@ private class ISSP_UserTriggerHandler_Test {
 		insert contact;
 
 		// and grant access to SIS
-		Portal_Applications__c app = new Portal_Applications__c(Name = 'SIS');
+		Portal_Applications__c app = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		app.Name = 'SIS';
 		insert app;
 		Portal_Application_Right__c appRight = new Portal_Application_Right__c(Contact__c = contact.Id, Portal_Application__c = app.Id, Right__c = 'Access Granted');
 		insert appRight;

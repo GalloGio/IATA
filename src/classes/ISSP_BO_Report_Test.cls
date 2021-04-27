@@ -61,7 +61,8 @@ private class ISSP_BO_Report_Test {
 		myUser.Mgmt_Report_Team__c = true;
 		update myUser;
 		myUser = [ select Id from User where Id = :UserInfo.getUserId() ];
-		Portal_Applications__c app = new Portal_Applications__c(Name = 'Management Information Report');
+		Portal_Applications__c app = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		app.Name = 'Management Information Report';
 		insert app;
 		Portal_Application_Right__c appRight = new Portal_Application_Right__c(Contact__c = con.Id, Portal_Application__c = app.Id, Right__c = 'Access Granted');
 		insert appRight;
@@ -104,7 +105,8 @@ private class ISSP_BO_Report_Test {
 			contact.AccountId = acc.Id;
 			contact.PaConf_Representative__c = true;
 			insert contact;
-			Portal_Applications__c app = new Portal_Applications__c(Name = 'Management Information Report');
+			Portal_Applications__c app = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+			app.Name = 'Management Information Report';
 			insert app;
 			Portal_Application_Right__c appRight = new Portal_Application_Right__c(Contact__c = contact.Id, Portal_Application__c = app.Id, Right__c = 'Access Granted');
 			insert appRight;

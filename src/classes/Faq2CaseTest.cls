@@ -135,7 +135,7 @@ public class Faq2CaseTest {
 				Type__c = 'Section')
 		};
 		insert listCaseFields;
-
+		
 		list<ISSP_FAQ2Case_Record_Type__c> listFaq2CaseRT = new list<ISSP_FAQ2Case_Record_Type__c>{
 			new ISSP_FAQ2Case_Record_Type__c(
 				Name = '1',
@@ -157,7 +157,7 @@ public class Faq2CaseTest {
 				Subtopic__c = 'TIESS_General_Information__c,TIESS_Link_request_to_Supplier__c,TIESS_New_registration__c,TIESS_Settlement_amount__c,TIESS_User_Profile__c')
 		};
 		insert listFaq2CaseRT;
-
+		
 		list<ISSP_FAQ2Case_Permissions__c> listFaq2CasePermissions = new list<ISSP_FAQ2Case_Permissions__c>{
 			new ISSP_FAQ2Case_Permissions__c(
 				Name = '1',
@@ -173,7 +173,7 @@ public class Faq2CaseTest {
 				Subtopic__c = 'CGO_Accreditations_Fees,CGO_Changes_to_my_Agency,CGO_Closure_of_my_Agency,New_Cargo_Agency_Application,PAX_Accreditation_Fees,PAX_Changes_to_my_Agency,PAX_Closure_of_my_Agency,ID_CardNew_Travel_Agency_Application,PORTAL_General_Information')
 		};
 		insert listFaq2CasePermissions;
-
+		
 		LiveAgentButtonSettings__c liveagent = new LiveAgentButtonSettings__c(
 			Name = 'AirlineEnglish',
 			Sectors__c = 'Airline',
@@ -189,9 +189,9 @@ public class Faq2CaseTest {
 		FAQ__kav article = new FAQ__kav();
 		article.UrlName = 'Test';
 		FAQ__VoteStat voteStat = new FAQ__VoteStat();
-
+		
 		Test.startTest();
-
+		
 		vfISSP_FAQ2Case ctrl = new vfISSP_FAQ2Case();
 		ctrl.SelectedArticleModalView = new vfISSP_FAQ2Case.ArticleModalView();
 		ctrl.topic = '1';
@@ -199,7 +199,6 @@ public class Faq2CaseTest {
 		ctrl.createArticleStatisticsRecords(article,ENV.ArticleStatType.View);
 		List<ArticleStatistics__c> articleStatRecords = [SELECT URL_Name__c, Stat_Type__c
 												FROM ArticleStatistics__c];
-		System.debug('articleStatRecords: ' + articleStatRecords);
 		ctrl.calculateViewAndSatisfied(article);
 
 		vfISSP_FAQ2Case.ArticleViewLine articleVL1 = new vfISSP_FAQ2Case.ArticleViewLine(article);
@@ -219,7 +218,6 @@ public class Faq2CaseTest {
 		parent.Name = 'test';
 
 		insert parent;
-		System.debug('parent Id: ' + parent.Id);
 
 		Account child = ISSP_ObjectFactory.createNewAccount();
 		child.BillingCity = 'test2';
@@ -229,13 +227,11 @@ public class Faq2CaseTest {
 		child.Top_Parent__c = parent.Id;
 		child.Reason_for_creation__c = 'Created by customer';
 		insert child;
-		System.debug('child Id: ' + child.Id);
 		Contact con = ISSP_ObjectFactory.createNewContact();
-
+		
 
 		con.AccountId= child.Id;
 		con.Email = 'Test@test11.com';
-		system.debug('rrrrrrrrrr  ' + con.Owner.UserRoleId);
 		insert con;
 		Test.startTest();
 		User newUser =ISSP_ObjectFactory.createPortalUser(con);
@@ -245,7 +241,7 @@ public class Faq2CaseTest {
 		update con;
 		System.runAs(newUser)
 		{
-
+			
 			vfISSP_FAQ2Case ctrl = new vfISSP_FAQ2Case();
 			object keg = ctrl.newCase;
 
@@ -253,9 +249,7 @@ public class Faq2CaseTest {
 			ctrl.pageLoad();
 			Integer topCatGroupIndex = getIndexWithChildes(ctrl.DataCategoryContainer);
 			ctrl.topic = String.valueOf(topCatGroupIndex);
-			System.debug('ctrl.topic: ' + ctrl.topic);
 			ctrl.subtopic = getSubCat(ctrl.DataCategoryContainer, topCatGroupIndex);
-			System.debug('ctrl.subtopic: ' + ctrl.subtopic);
 
 			//c2
 			ctrl.isGSAOnly = false;
@@ -298,12 +292,11 @@ public class Faq2CaseTest {
 		PageReference pageref = Page.ISSP_FAQ2Case;
 		pageref.getParameters().put('myRecordType','Cases_SIS_Help_Desk');
 		Test.setCurrentPage(pageref);
-
+		
 		Account parent = ISSP_ObjectFactory.createNewAccount();
 		parent.BillingCity = 'test';
 		parent.Name = 'test';
 		insert parent;
-		System.debug('parent Id: ' + parent.Id);
 
 		Account child = ISSP_ObjectFactory.createNewAccount();
 		child.BillingCity = 'test2';
@@ -313,9 +306,8 @@ public class Faq2CaseTest {
 		child.Top_Parent__c = parent.Id;
 		child.Reason_for_creation__c = 'Created by customer';
 		insert child;
-		System.debug('child Id: ' + child.Id);
 		Contact con = ISSP_ObjectFactory.createNewContact();
-
+ 
 		con.AccountId= child.Id;
 		con.Email = 'Test@test11.com';
 		insert con;
@@ -334,9 +326,7 @@ public class Faq2CaseTest {
 			ctrl.pageLoad();
 			Integer topCatGroupIndex = getIndexWithChildes(ctrl.DataCategoryContainer);
 			ctrl.topic = String.valueOf(topCatGroupIndex);
-			System.debug('ctrl.topic: ' + ctrl.topic);
 			ctrl.subtopic = getSubCat(ctrl.DataCategoryContainer, topCatGroupIndex);
-			System.debug('ctrl.subtopic: ' + ctrl.subtopic);
 
 			//c2
 			ctrl.isGSAOnly = false;
@@ -360,13 +350,13 @@ public class Faq2CaseTest {
 	{
 		Id rtIdHq = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 
-		Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR');
+		Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR');                    
 
 		Account parent = ISSP_ObjectFactory.createNewAccount();
 		parent.BillingCity = 'test';
 		parent.Name = 'test';
 		insert parent;
-
+	   
 		Account headQuarter = ISSP_ObjectFactory.createNewAccount();
 		headQuarter.ParentId = parent.Id;
 		headQuarter.BillingCity = 'test2';
@@ -408,13 +398,12 @@ public class Faq2CaseTest {
 		{
 			vfISSP_FAQ2Case controller = new vfISSP_FAQ2Case();
 			controller.getGsaCountryList_2();
-
-		//WMO356 Start 29/10/2018
-		controller.pageLoad();
+			
+			//WMO356 Start 29/10/2018
+			controller.pageLoad();
 			Integer topCatGroupIndex = getIndexWithChildes(controller.DataCategoryContainer);
 			controller.topic = String.valueOf(topCatGroupIndex);
-			// System.debug('controller.topic: ' + controller.topic);
-		// End
+			// End
 
 			controller.refreshAirlineList();
 		}
@@ -479,7 +468,6 @@ public class Faq2CaseTest {
 		parent.BillingCity = 'test';
 		parent.Name = 'test';
 		insert parent;
-		System.debug('parent Id: ' + parent.Id);
 
 		Account child = ISSP_ObjectFactory.createNewAccount();
 		child.BillingCity = 'test2';
@@ -489,7 +477,6 @@ public class Faq2CaseTest {
 		child.Top_Parent__c = parent.Id;
 		child.Reason_for_creation__c = 'Created by customer';
 		insert child;
-		System.debug('child Id: ' + child.Id);
 		Contact con = ISSP_ObjectFactory.createNewContact();
 
 		con.AccountId= child.Id;
@@ -518,7 +505,6 @@ public class Faq2CaseTest {
 		  controller.refreshSubTopicPickList();
 		  keg = controller.countryList;
 		}
-
 	}
 
 	@isTest
@@ -527,7 +513,6 @@ public class Faq2CaseTest {
 		parent.BillingCity = 'test';
 		parent.Name = 'test';
 		insert parent;
-		System.debug('parent Id: ' + parent.Id);
 
 		Account child = ISSP_ObjectFactory.createNewAccount();
 		child.BillingCity = 'test2';
@@ -537,15 +522,12 @@ public class Faq2CaseTest {
 		child.Top_Parent__c = parent.Id;
 		child.Reason_for_creation__c = 'Created by customer';
 		insert child;
-		System.debug('child Id: ' + child.Id);
 		Contact con = ISSP_ObjectFactory.createNewContact();
 
 		con.AccountId= child.Id;
 		con.Email = 'Test@test11.com';
 		insert con;
-		System.debug('con Id: ' + con.Id);
 		User newUser =ISSP_ObjectFactory.createPortalUser(con);
-		System.debug('newUser Id: ' + newUser.Id);
 		con.OwnerId = newUser.Id;
 		update con;
 
@@ -571,7 +553,6 @@ public class Faq2CaseTest {
 		parent.BillingCity = 'test';
 		parent.Name = 'test';
 		insert parent;
-		System.debug('parent Id: ' + parent.Id);
 
 		Account child = ISSP_ObjectFactory.createNewAccount();
 		child.BillingCity = 'test2';
@@ -581,7 +562,6 @@ public class Faq2CaseTest {
 		child.Top_Parent__c = parent.Id;
 		child.Reason_for_creation__c = 'Created by customer';
 		insert child;
-		System.debug('child Id: ' + child.Id);
 		Contact con = ISSP_ObjectFactory.createNewContact();
 
 		con.AccountId= child.Id;
@@ -617,7 +597,6 @@ public class Faq2CaseTest {
 		parent.BillingCity = 'test';
 		parent.Name = 'test';
 		insert parent;
-		System.debug('parent Id: ' + parent.Id);
 
 		Account child = ISSP_ObjectFactory.createNewAccount();
 		child.BillingCity = 'test2';
@@ -627,13 +606,12 @@ public class Faq2CaseTest {
 		child.Top_Parent__c = parent.Id;
 		child.Reason_for_creation__c = 'Created by customer';
 		insert child;
-		System.debug('child Id: ' + child.Id);
 		Contact con = ISSP_ObjectFactory.createNewContact();
 
 		con.AccountId= child.Id;
 		con.Email = 'Test@test11.com';
 		insert con;
-	   Test.startTest();
+		Test.startTest();
 		User newUser =ISSP_ObjectFactory.createPortalUser(con);
 		assignPermissionSet(newUser.id,fullFAQVisibilityPermissionsetId);
 		Test.stopTest();
@@ -662,7 +640,6 @@ public class Faq2CaseTest {
 		parent.BillingCity = 'test';
 		parent.Name = 'test';
 		insert parent;
-		System.debug('parent Id: ' + parent.Id);
 
 		Account child = ISSP_ObjectFactory.createNewAccount();
 		child.BillingCity = 'test2';
@@ -672,7 +649,6 @@ public class Faq2CaseTest {
 		child.Top_Parent__c = parent.Id;
 		child.Reason_for_creation__c = 'Created by customer';
 		insert child;
-		System.debug('child Id: ' + child.Id);
 		Contact con = ISSP_ObjectFactory.createNewContact();
 
 		IATA_ISO_Country__c country = new IATA_ISO_Country__c(name = 'test', ISO_Code__c = 't1', Case_BSP_Country__c = 'test1', Region__c = 'test');
@@ -686,7 +662,7 @@ public class Faq2CaseTest {
 		con.AccountId= child.Id;
 		con.Email = 'Test@test11.com';
 		insert con;
-	   Test.startTest();
+		Test.startTest();
 		User newUser =ISSP_ObjectFactory.createPortalUser(con);
 		assignPermissionSet(newUser.id,fullFAQVisibilityPermissionsetId);
 		Test.stopTest();
@@ -694,33 +670,32 @@ public class Faq2CaseTest {
 		update con;
 		System.runAs(newUser)
 		{
-		  vfISSP_FAQ2Case controller = new vfISSP_FAQ2Case();
-		  controller.pageLoad();
-		  controller.topic = '2';
-		  controller.setRecordType();
+			vfISSP_FAQ2Case controller = new vfISSP_FAQ2Case();
+			controller.pageLoad();
+			controller.topic = '2';
+			controller.setRecordType();
 
-		  controller.create();
-		  controller.back();
-		  controller.save();
-		  controller.refreshTopicPickList();
-		  controller.refreshSubTopicPickList();
+			controller.create();
+			controller.back();
+			controller.save();
+			controller.refreshTopicPickList();
+			controller.refreshSubTopicPickList();
 
-		  controller.subtopic = ENV.SelectOptionDefaultValue;
-		  controller.refreshSubTopicPickList();
-		  controller.createSatisfiedRecord();
-		  controller.GeneralQueueMethod();
-		  controller.ComplimentGeneralQueueMethod();
-		  controller.CheckNewCaseRecordType();
+			controller.subtopic = ENV.SelectOptionDefaultValue;
+			controller.refreshSubTopicPickList();
+			controller.createSatisfiedRecord();
+			controller.GeneralQueueMethod();
+			controller.ComplimentGeneralQueueMethod();
+			controller.CheckNewCaseRecordType();
 
-		  controller.topic = '0';
-		  controller.subtopic = 'CGO_Bank_Guarantees__c';
-		  controller.newCase.IFAP_Country_ISO__c = 'GB';
-		  String test;
-		  test = controller.encTopicLbl;
-		  test = controller.encSubtopicLbl;
-		  test = controller.encIsoCountry;
-		  test = controller.region;
-
+			controller.topic = '0';
+			controller.subtopic = 'CGO_Bank_Guarantees__c';
+			controller.newCase.IFAP_Country_ISO__c = 'GB';
+			String test;
+			test = controller.encTopicLbl;
+			test = controller.encSubtopicLbl;
+			test = controller.encIsoCountry;
+			test = controller.region;
 		}
 	}
 
@@ -807,7 +782,7 @@ public class Faq2CaseTest {
 		con.Email = 'Test@test11.com';
 		con.CNS_Contact__c = true;
 		insert con;
-	   Test.startTest();
+		Test.startTest();
 		User newUser =ISSP_ObjectFactory.createPortalUser(con);
 		assignPermissionSet(newUser.id,fullFAQVisibilityPermissionsetId);
 		Test.stopTest();
@@ -851,7 +826,7 @@ public class Faq2CaseTest {
 			controller.saveAttach();
 		}
 	}
-
+	
 	@isTest
 	static void testAllowedSector() {
 		Account testAccount = new Account(
@@ -868,12 +843,9 @@ public class Faq2CaseTest {
 		con.Email = 'Test@test11.com';
 		con.CNS_Contact__c = true;
 		insert con;
-		System.debug('con Id: ' + con.Id);
 		User newUser =ISSP_ObjectFactory.createPortalUser(con);
-		System.debug('newUser Id: ' + newUser.Id);
 		con.OwnerId = newUser.Id;
 		update con;
-
 	}
 
 	private static Integer getIndex(clsDataCategoryContainer cont) {
@@ -930,7 +902,6 @@ public class Faq2CaseTest {
 		Test.StopTest();
 	}
 
-
 	static testMethod void testLiveAgentConfList(){
 		//Custom settings 1
 		LiveAgent_Countries_Per_Button__c LAcountriesPB = new LiveAgent_Countries_Per_Button__c();
@@ -981,7 +952,7 @@ public class Faq2CaseTest {
 		insert LAtopics;
 		List <String> splitButtomCategories = (LAtopics.LVA_ButtomCategories__c).split(',');
 
-		//ISO Country
+		//ISO Country        
 		IATA_ISO_Country__c isoC = new IATA_ISO_Country__c();
 		isoC.name = 'Portugal';
 		isoC.ISO_Code__c = 'PT';
@@ -989,7 +960,6 @@ public class Faq2CaseTest {
 		isoC.Region__c = 'Europe';
 		isoC.LVA_CountryLanguage__c = 'pt';
 		insert isoC;
-		system.debug('isoCisoC ' + isoC);
 
 		//Account
 		Id agencyRecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
@@ -1000,7 +970,6 @@ public class Faq2CaseTest {
 			IATA_ISO_Country__r = isoC
 		);
 		insert testAccount;
-		system.debug('testAccount zzzzzz ' + testAccount.IATA_ISO_Country__r.Case_BSP_Country__c);
 
 		//Contact
 		Contact con = ISSP_ObjectFactory.createNewContact();
@@ -1008,7 +977,6 @@ public class Faq2CaseTest {
 		con.Email = 'fake@email.com';
 		con.CNS_Contact__c = true;
 		insert con;
-		system.debug('con zzzzzz ' + con);
 
 		//User
 		Test.startTest();
@@ -1017,15 +985,12 @@ public class Faq2CaseTest {
 		Test.stopTest();
 		con.OwnerId = newUser.Id;
 		update con;
-		system.debug('newUser zzzzzz ' + newUser);
 
 		//One time showing the Video
 		Boolean amIseeingThisAgain;
 
-
 		//Run Test
 		System.runAs(newUser){
-
 			vfISSP_FAQ2Case controller = new vfISSP_FAQ2Case();
 			controller.pageLoad();
 			String agentvidMode = controller.livAgentIntroVidMode;
@@ -1034,7 +999,6 @@ public class Faq2CaseTest {
 			controller.livAgentIntroVidCloseAndDontRemenber();
 			amIseeingThisAgain = controller.isIntrovideoAlreadyShowed;
 			system.assertEquals(true,amIseeingThisAgain);
-
 
 			controller.IwishtoComplain();
 			controller.topic = '0';
@@ -1049,7 +1013,7 @@ public class Faq2CaseTest {
 			Case newCases = controller.newCase;
 			newCases.IFAP_Country_ISO__c ='PT';
 			newCases.Subject = 'testMeSub';
-			newCases.Description = 'testMeDesc';
+			newCases.Description = 'testMeDesc';            
 
 			controller.getTopicsToShowButtonFromACategory(splitButtomCategories[1]);
 
@@ -1062,30 +1026,26 @@ public class Faq2CaseTest {
 			controller.isAllowedCode(LAbtnSettings.Name);
 			system.assertEquals(true,controller.isAllowedCode(LAbtnSettings.Name));
 
-
 			controller.getTopicsToShowButtonFromACategory(splitButtomCategories[0]);
 			//LAbtnSettings.Name='Emergency';
 			//update LAbtnSettings;
 			controller.setLiveAgentButtonsNames();
-			System.debug('splitButtomCategories[0]: ' + splitButtomCategories[0]);
 			controller.Clicked_EmergencyRequest = true;
 			controller.subtopic = Env.SelectOptionDefaultValue;
 			controller.getButtonNameFromConfigAndAddToList('EmergencyAirlinepteurope',splitButtomCategories[0]);
 			controller.isAllowedCode(LAbtnSettings.Name);
 			system.assertEquals(true,controller.isAllowedCode(LAbtnSettings.Name));
-
+			
 			Boolean isVidAllowed = controller.livAgentIntroVidIsAllowed;
 			system.assertEquals(true, isVidAllowed);
-
+			
 			Boolean isToShowFAQs = controller.isToShowFAQs;
 			system.assertEquals(true, isToShowFAQs);
-
+			
 			controller.save();
-
 			controller.cancel();
 		}
-	}
-
+	}	
 
 	static testMethod void testDoGet() {
 		//Custom settings 1
@@ -1117,7 +1077,7 @@ public class Faq2CaseTest {
 		insert LAtopics;
 		List <String> splitButtomCategories = (LAtopics.LVA_ButtomCategories__c).split(',');
 
-		//ISO Country
+		//ISO Country        
 		IATA_ISO_Country__c isoC = new IATA_ISO_Country__c();
 		isoC.name = 'United Arab Emirates';
 		isoC.ISO_Code__c = 'AE';
@@ -1134,7 +1094,6 @@ public class Faq2CaseTest {
 			IATA_ISO_Country__r = isoC
 		);
 		insert testAccount;
-		system.debug('testAccount zzzzzz ' + testAccount.IATA_ISO_Country__r.Case_BSP_Country__c);
 
 		//Contact
 		Contact con = ISSP_ObjectFactory.createNewContact();
@@ -1142,7 +1101,6 @@ public class Faq2CaseTest {
 		con.Email = 'fake@email.com';
 		con.CNS_Contact__c = true;
 		insert con;
-		system.debug('con zzzzzz ' + con);
 
 		//User
 		Test.startTest();
@@ -1151,7 +1109,6 @@ public class Faq2CaseTest {
 		Test.stopTest();
 		con.OwnerId = newUser.Id;
 		update con;
-		system.debug('newUser zzzzzz ' + newUser);
 
 		RestRequest req = new RestRequest();
 		RestResponse res = new RestResponse();
@@ -1162,13 +1119,13 @@ public class Faq2CaseTest {
 		RestContext.response= res;
 
 		System.runAs(newUser){
-				vfISSP_FAQ2Case.CustomerSupporWrapperGet customerSupportInfo = vfISSP_FAQ2Case.doGet();
-				// should have topics to choose
-				System.assert(customerSupportInfo.topicsMap != null && customerSupportInfo.topicsMap.size() > 0);
-				// should have subtopics to choose
-				System.assert(customerSupportInfo.subTopicsMap != null && customerSupportInfo.subTopicsMap.size() > 0);
-				// should have countries to choose
-				System.assert(customerSupportInfo.countryMap != null && customerSupportInfo.countryMap.size() > 0);
+			vfISSP_FAQ2Case.CustomerSupporWrapperGet customerSupportInfo = vfISSP_FAQ2Case.doGet();
+			// should have topics to choose
+			System.assert(customerSupportInfo.topicsMap != null && customerSupportInfo.topicsMap.size() > 0);
+			// should have subtopics to choose
+			System.assert(customerSupportInfo.subTopicsMap != null && customerSupportInfo.subTopicsMap.size() > 0);
+			// should have countries to choose
+			System.assert(customerSupportInfo.countryMap != null && customerSupportInfo.countryMap.size() > 0);
 		}
 	}
 
@@ -1202,7 +1159,7 @@ public class Faq2CaseTest {
 		insert LAtopics;
 		List <String> splitButtomCategories = (LAtopics.LVA_ButtomCategories__c).split(',');
 
-		//ISO Country
+		//ISO Country        
 		IATA_ISO_Country__c isoC = new IATA_ISO_Country__c();
 		isoC.name = 'United Arab Emirates';
 		isoC.ISO_Code__c = 'AE';
@@ -1219,7 +1176,6 @@ public class Faq2CaseTest {
 			IATA_ISO_Country__r = isoC
 		);
 		insert testAccount;
-		system.debug('testAccount zzzzzz ' + testAccount.IATA_ISO_Country__r.Case_BSP_Country__c);
 
 		//Contact
 		Contact con = ISSP_ObjectFactory.createNewContact();
@@ -1227,16 +1183,14 @@ public class Faq2CaseTest {
 		con.Email = 'fake@email.com';
 		con.CNS_Contact__c = true;
 		insert con;
-		system.debug('con zzzzzz ' + con);
 
 		//User
-	   Test.startTest();
+		Test.startTest();
 		User newUser =ISSP_ObjectFactory.createPortalUser(con);
 		assignPermissionSet(newUser.id,fullFAQVisibilityPermissionsetId);
 		Test.stopTest();
 		con.OwnerId = newUser.Id;
 		update con;
-		system.debug('newUser zzzzzz ' + newUser);
 
 		RestRequest req = new RestRequest();
 		RestResponse res = new RestResponse();
@@ -1247,9 +1201,8 @@ public class Faq2CaseTest {
 		RestContext.response= res;
 
 		System.runAs(newUser){
-				vfISSP_FAQ2Case.CustomerSupporWrapperPost customerSupportInfo = vfISSP_FAQ2Case.doPost('0', 'CGO_Accreditations_Fees__c', 'AE', '', 'This is a test subject',
+			vfISSP_FAQ2Case.CustomerSupporWrapperPost customerSupportInfo = vfISSP_FAQ2Case.doPost('0', 'CGO_Accreditations_Fees__c', 'AE', '', 'This is a test subject',
 																					'This is a test description', 'Phone [NewGenAPP - Android]');
-
 		}
 	}
 
@@ -1263,10 +1216,7 @@ public class Faq2CaseTest {
 	  }
 	}
 
-	static testMethod void testFaq2CaseEmergency()
-	{
-		//ISSP_ObjectFactory.fiilIncludedFields();
-
+	static testMethod void testFaq2CaseEmergency() {
 		Id rtIdHq = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 
 		Id rtIdBr = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline_BR');
@@ -1306,7 +1256,7 @@ public class Faq2CaseTest {
 
 		list<Services_Rendered__c> services = new list<Services_Rendered__c>();
 		for(Account cons: consumers )
-		{
+		{ 
 			services.add( new  Services_Rendered__c(Services_Rendered_Status__c = 'Active',Services_Rendered_Type__c = 'CASS Participation',Services_Rendered_to_Airline__c = cons.id, Services_Rendered_By__c = headQuarter.Id));
 			services.add( new  Services_Rendered__c(Services_Rendered_Status__c = 'Active',Services_Rendered_Type__c = 'BSP Representation',Services_Rendered_to_Airline__c = cons.id, Services_Rendered_By__c = headQuarter.Id));
 			services.add( new  Services_Rendered__c(Services_Rendered_Status__c = 'Active',Services_Rendered_Type__c = 'THIS ONE WILL NOT FIRE !!!!',Services_Rendered_to_Airline__c = cons.id, Services_Rendered_By__c = headQuarter.Id));
@@ -1321,13 +1271,11 @@ public class Faq2CaseTest {
 			controller.refreshTopicPickList();
 			controller.getCallUsEmergencyFinalString();
 		}
-
 	}
 
 
 	@isTest
 	static void testFaq2Case_AirlineChargesUpdate(){
-
 		Id rtIdHq = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 
 		Account headQuarter = ISSP_ObjectFactory.createNewAccount();
@@ -1342,7 +1290,7 @@ public class Faq2CaseTest {
 		con.AccountId= headQuarter.Id;
 		insert con;
 
-	   Test.startTest();
+		Test.startTest();
 		User newUser =ISSP_ObjectFactory.createPortalUser(con);
 		assignPermissionSet(newUser.id,fullFAQVisibilityPermissionsetId);
 		Test.stopTest();
@@ -1353,14 +1301,12 @@ public class Faq2CaseTest {
 			Test.setCurrentPage(pageref);
 			vfISSP_FAQ2Case controller = new vfISSP_FAQ2Case();
 			controller.pageLoad();
-			System.debug('isToShowFAQs: ' + controller.isToShowFAQs);
 			System.assertEquals(ISSP_CurrencyCenterUtil.FaqSubtopic_AirlineChargesUpdate, controller.subtopic);
 		}
 	}
 
 	@isTest
 	static void testFaq2Case_CurrencyRepatriationIssues(){
-
 		Id rtIdHq = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 
 		Account headQuarter = ISSP_ObjectFactory.createNewAccount();
@@ -1386,7 +1332,6 @@ public class Faq2CaseTest {
 			Test.setCurrentPage(pageref);
 			vfISSP_FAQ2Case controller = new vfISSP_FAQ2Case();
 			controller.pageLoad();
-			System.debug('isToShowFAQs: ' + controller.isToShowFAQs);
 			System.assertEquals(ISSP_CurrencyCenterUtil.FaqSubtopic_CurrencyRepatriation, controller.subtopic);
 		}
 	}
@@ -1419,14 +1364,12 @@ public class Faq2CaseTest {
 			Test.setCurrentPage(pageref);
 			vfISSP_FAQ2Case controller = new vfISSP_FAQ2Case();
 			controller.pageLoad();
-			System.debug('isToShowFAQs: ' + controller.isToShowFAQs);
 			System.assertEquals(ISSP_CurrencyCenterUtil.FaqSubtopic_RequestSurveyUpdate, controller.subtopic);
 		}
 	}
 
 	@isTest
 	static void testFaq2Case_getSelectArtical(){
-
 		Id rtIdHq = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 
 		Account headQuarter = ISSP_ObjectFactory.createNewAccount();
@@ -1454,7 +1397,6 @@ public class Faq2CaseTest {
 					URLName = 'ThisIsATest'
 			);
 			insert article;
-			System.debug('article: ' + article);
 
 			PageReference pageref = Page.ISSP_FAQ2Case;
 			pageref.getParameters().put('artid', article.Id);
@@ -1466,14 +1408,12 @@ public class Faq2CaseTest {
 
 			ctrl.articleViewLines = new List<vfISSP_FAQ2Case.ArticleViewLine>();
 			ctrl.articleViewLines.add( new vfISSP_FAQ2Case.ArticleViewLine(article));
-			System.debug('articleViewLines: ' + ctrl.articleViewLines);
 			PageReference pr = ctrl.getSelectArtical();
 		}
 	}
 
 	@isTest
 	static void testFaq2Case_initTopicsList(){
-
 		Id rtIdHq = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 
 		Account headQuarter = ISSP_ObjectFactory.createNewAccount();
@@ -1510,7 +1450,6 @@ public class Faq2CaseTest {
 
 	@isTest
 	static void testFaq2Case_CodeCoverage(){
-
 		Id rtIdHq = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 
 		Account headQuarter = ISSP_ObjectFactory.createNewAccount();
@@ -1527,7 +1466,7 @@ public class Faq2CaseTest {
 
 		User newUser =ISSP_ObjectFactory.createPortalUser(con);
 
-		Portal_Applications__c papp = new Portal_Applications__c();
+		Portal_Applications__c papp = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
 		papp.Application_URL__c = '/ISSP_CurrencyCenterHome';
 		papp.Hide_on_Homepage__c = false;
 		insert papp;
@@ -1555,7 +1494,6 @@ public class Faq2CaseTest {
 
 	@isTest
 	static void testFaq2Case_create(){
-
 		Id rtIdHq = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 
 		Account headQuarter = ISSP_ObjectFactory.createNewAccount();
@@ -1579,14 +1517,11 @@ public class Faq2CaseTest {
 			vfISSP_FAQ2Case ctrl = new vfISSP_FAQ2Case();
 
 			ctrl.pageLoad();
-
+			
 			ctrl.topic = '1';
 			clsDataCategory selectDataCategory = ctrl.DataCategoryContainer.lst_DataCategories[1];
 			ctrl.refreshTopicPickList();
 			ctrl.refreshSubTopicPickList();
-
-			System.debug('testFaq2Case_create topic: ' + ctrl.topic);
-			System.debug('testFaq2Case_create subtopic: ' + ctrl.subtopic);
 
 			ISSP_FAQ2Case_CreateCaseURL__c ccu = new ISSP_FAQ2Case_CreateCaseURL__c();
 			ccu.Name = 'CCUrl';
@@ -1595,19 +1530,15 @@ public class Faq2CaseTest {
 			ccu.URL__c = '/ISSP_Case?';
 			insert ccu;
 
-			System.debug('testFaq2Case_create ISSP_FAQ2Case_CreateCaseURL__c ccu: ' + ccu);
-
 			PageReference pr = ctrl.create();
 		}
 	}
-
-
+	 
 	@future
 	public static void assignPermissionSet(Id userid,String permissionsetId){
 		PermissionSetAssignment ps = new PermissionSetAssignment();
 		ps.AssigneeId =userid;
 		ps.PermissionSetId =  permissionsetId;
-
 		insert ps;
 	}
  }

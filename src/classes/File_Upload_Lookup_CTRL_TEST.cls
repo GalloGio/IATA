@@ -51,29 +51,29 @@ public class File_Upload_Lookup_CTRL_TEST {
 		contactRole2.Service_Rendered__c = 'GADM';
 		insert contactRole2;
 
-		Portal_Applications__c service = new Portal_Applications__c();
-		service.Name = 'GADM';
-		insert service;
+		Portal_Applications__c portalApplications = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		portalApplications.Name = 'GADM';
+		insert portalApplications;
 
 		Contact_Role_Service_Access__c access = new Contact_Role_Service_Access__c();
 		access.Contact__c = testContact.Id;
 		access.Status__c = 'Granted';
 		access.Contact_Role__c = contactRole.Id;
-		access.Service__c = service.Id;
+		access.Service__c = portalApplications.Id;
 		insert access;
 
 		Contact_Role_Service_Access__c access1 = new Contact_Role_Service_Access__c();
 		access1.Contact__c = testContact.Id;
 		access1.Status__c = 'Granted';
 		access1.Contact_Role__c = contactRole1.Id;
-		access1.Service__c = service.Id;
+		access1.Service__c = portalApplications.Id;
 		insert access1;
 
 		Contact_Role_Service_Access__c access2 = new Contact_Role_Service_Access__c();
 		access2.Contact__c = testContact.Id;
 		access2.Status__c = 'Granted';
 		access2.Contact_Role__c = contactRole2.Id;
-		access2.Service__c = service.Id;
+		access2.Service__c = portalApplications.Id;
 		insert access2;
 
 	}

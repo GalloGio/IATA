@@ -42646,6 +42646,13 @@ Participation in MITA is open to all IATA and non-IATA member airlines holding v
         <value>L’interprétation des règles tarifaires et des éléments de données du billet électronique est essentielle pour satisfaire et retenir les clients. Il existe une foule de tarifs et d’options complexes. Les clients s’attendent à avoir un service exact, rapide et abordable. Ce cours enseigne les principes de la construction tarifaire, qui vous permettront de fournir d’excellents conseils et le tarif le plus bas pour un voyage en avion. Vous allez acquérir, grâce à des exercices pratiques et au matériel de référence, de nouvelles compétences qui vous aideront à devenir un professionnel du voyage et accroître la confiance de vos clients... (&lt;a href=\&quot;http://www.iata.org/training/courses/Pages/notions-tarification-billeterie-tttg14-fr.aspx\&quot; target=\&quot;_blank\&quot;&gt;read more&lt;/a&gt;)</value>
     </labels>
     <labels>
+        <fullName>OAG_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>OAG_Service_Description</shortDescription>
+        <value>OAG Analyzer – a comprehensive airline schedules platform providing in-depth insight into frequency and capacity trends. Includes a spectrum of possibilities and different ways  to analyze and pull  the schedules data, including interactive visual graphs, charts and maps and ability to create your own custom reports. The data is updated on a weekly basis ensuring your business is always planning the most accurate airline schedules.</value>
+    </labels>
+    <labels>
         <fullName>OSCAR_RISK_WARNING</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -46645,6 +46652,22 @@ SF Workflow Process</value>
         <protected>false</protected>
         <shortDescription>Name of GDPR  Network. Usually name of the community - Query on network objec</shortDescription>
         <value>Data Privacy</value>
+    </labels>
+    <labels>
+        <fullName>TIDS_Redirect_Link</fullName>
+        <categories>TIDS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TIDS_Redirect_Link</shortDescription>
+        <value>Click here to access the &lt;a href=&quot;/s/tids&quot; target=&quot;_self&quot;&gt;TIDS Service&lt;/a&gt;</value>
+    </labels>
+    <labels>
+        <fullName>TIDS_Redirect_Message</fullName>
+        <categories>TIDS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>TIDS_Redirect_Message</shortDescription>
+        <value>Please report changes to your company details via the TIDS Service</value>
     </labels>
     <labels>
         <fullName>TIP_Reports_Service_Description</fullName>

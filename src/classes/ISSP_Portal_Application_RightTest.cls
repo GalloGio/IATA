@@ -7,7 +7,8 @@ public class ISSP_Portal_Application_RightTest {
 	}
 
 	public static testMethod void myUnitTest_1bis() {
-		Portal_Applications__c apptest = new Portal_Applications__c(Name = 'SIS');
+		Portal_Applications__c apptest = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		apptest.Name = 'SIS';
 		insert apptest;
 	}
 
@@ -51,7 +52,8 @@ public class ISSP_Portal_Application_RightTest {
 
 		Test.startTest();
 		system.runAs(thisUser) {
-			Portal_Applications__c app = new Portal_Applications__c(Name = 'Biller Direct');
+			Portal_Applications__c app = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+			app.Name = 'Biller Direct';
 			insert app;
 			Portal_Application_Right__c par = new Portal_Application_Right__c();
 			par.Contact__c = contact.Id;
@@ -132,7 +134,10 @@ public class ISSP_Portal_Application_RightTest {
 
 		//Portal_Applications__c app = [SELECT Id,Name,Provisioning_Type__c FROM Portal_Applications__c WHERE Name =:'IFG Production' LIMIT 1];
 
-		Portal_Applications__c app = new Portal_Applications__c(Name = 'IFG Pre-Production', Provisioning_Type__c = 'SCIM', SCIM_App_Name__c = SCIMServProvManager.PRE_PROD_SRV_PROV);
+		Portal_Applications__c app = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		app.Name = 'IFG Pre-Production';
+		app.Provisioning_Type__c = 'SCIM';
+		app.SCIM_App_Name__c = SCIMServProvManager.PRE_PROD_SRV_PROV;
 		insert app;
 
 		system.runAs(newPortalUser) {
@@ -184,7 +189,8 @@ public class ISSP_Portal_Application_RightTest {
 			insert newUser;
 
 
-			Portal_Applications__c app = new Portal_Applications__c(Name = 'E-Bulletin');
+			Portal_Applications__c app = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+			app.Name = 'E-Bulletin';
 			insert app;
 
 			Portal_Application_Right__c par = new Portal_Application_Right__c();
@@ -247,7 +253,8 @@ public class ISSP_Portal_Application_RightTest {
 		User thisUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
 		ISSP_WS_SIS_Callout_Common_Test.load_ISSP_CS();
 		Id recordtypeAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') ;
-		Portal_Applications__c sisApp = new Portal_Applications__c(Name = 'SIS');
+		Portal_Applications__c sisApp = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		sisApp.Name = 'SIS';
 		insert sisApp;
 		ISSP_ObjectFactory.fiilIncludedFields();
 
@@ -286,11 +293,11 @@ public class ISSP_Portal_Application_RightTest {
 		User thisUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
 		ISSP_WS_SIS_Callout_Common_Test.load_ISSP_CS();
 		Id recordtypeAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') ;
-		List<Portal_Applications__c> lApp = new List<Portal_Applications__c>();
-		lApp.add(new Portal_Applications__c (Name = 'Baggage Proration'));
-		lApp.add(new Portal_Applications__c (Name = 'Standards Setting Workspace'));
-		lApp.add(new Portal_Applications__c (Name = 'IATA Accreditation'));
-		lApp.add(new Portal_Applications__c (Name = 'SIS'));
+		List<Portal_Applications__c> lApp = TestDataFactory_PortalApplications.createDefaultPortalApplication(4);
+		lApp.get(0).Name = 'Baggage Proration';
+		lApp.get(0).Name = 'Standards Setting Workspace';
+		lApp.get(0).Name = 'IATA Accreditation';
+		lApp.get(0).Name = 'SIS';
 		insert lApp;
 		ISSP_ObjectFactory.fiilIncludedFields();
 
@@ -342,7 +349,8 @@ public class ISSP_Portal_Application_RightTest {
 		User thisUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
 		ISSP_WS_SIS_Callout_Common_Test.load_ISSP_CS();
 		Id recordtypeAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') ;
-		Portal_Applications__c sisApp = new Portal_Applications__c(Name = 'SIS');
+		Portal_Applications__c sisApp = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		sisApp.Name = 'SIS';
 		insert sisApp;
 		ISSP_ObjectFactory.fiilIncludedFields();
 
@@ -398,7 +406,8 @@ public class ISSP_Portal_Application_RightTest {
 		User thisUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
 		ISSP_WS_SIS_Callout_Common_Test.load_ISSP_CS();
 		Id recordtypeAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') ;
-		Portal_Applications__c sisApp = new Portal_Applications__c(Name = 'SIS');
+		Portal_Applications__c sisApp = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		sisApp.Name = 'SIS';
 		insert sisApp;
 		ISSP_ObjectFactory.fiilIncludedFields();
 
@@ -445,7 +454,8 @@ public class ISSP_Portal_Application_RightTest {
 		User thisUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
 		ISSP_WS_SIS_Callout_Common_Test.load_ISSP_CS();
 		Id recordtypeAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency') ;
-		Portal_Applications__c sisApp = new Portal_Applications__c(Name = 'SIS');
+		Portal_Applications__c sisApp = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		sisApp.Name = 'SIS';
 		insert sisApp;
 		ISSP_ObjectFactory.fiilIncludedFields();
 
@@ -489,7 +499,8 @@ public class ISSP_Portal_Application_RightTest {
 		}
 
 		static testMethod void testParentContactInsertService() {
-				Portal_Applications__c sisApp = new Portal_Applications__c(Name = 'SIS');
+				Portal_Applications__c sisApp = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+				sisApp.Name = 'SIS';
 				insert sisApp;
 
 				Id recordtypeAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account','IATA_Agency');
@@ -516,7 +527,8 @@ public class ISSP_Portal_Application_RightTest {
 		}
 
 		static testMethod void testParentContactUpdateService() {
-				Portal_Applications__c sisApp = new Portal_Applications__c(Name = 'SIS');
+				Portal_Applications__c sisApp = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+				sisApp.Name = 'SIS';
 				insert sisApp;
 
 				Id recordtypeAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account','IATA_Agency');
@@ -550,7 +562,8 @@ public class ISSP_Portal_Application_RightTest {
 
 		@isTest
 		static void testParentContactDeleteService_part1() {
-				Portal_Applications__c sisApp = new Portal_Applications__c(Name = 'SIS');
+				Portal_Applications__c sisApp = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+				sisApp.Name = 'SIS';
 				insert sisApp;
 
 				Id recordtypeAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account','IATA_Agency');
@@ -582,7 +595,8 @@ public class ISSP_Portal_Application_RightTest {
 
 		@isTest
 		static void testParentContactDeleteService_part2() {
-				Portal_Applications__c sisApp = new Portal_Applications__c(Name = 'SIS');
+				Portal_Applications__c sisApp = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+				sisApp.Name = 'SIS';
 				insert sisApp;
 
 				Id recordtypeAgency = RecordTypeSingleton.getInstance().getRecordTypeId('Account','IATA_Agency');
