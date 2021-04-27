@@ -130,6 +130,7 @@ export default class TidsApplicationDecision extends LightningElement {
 				this.showErrorMsg=result.reason;
 				 //enable modal window to retry
 			}else{
+				if (status==='Rejected') {status='Closed';}
 				let action = {type: status,caseId: this.tidsCase.Id};
 				fireEvent(this.pageRef, "applicationDecisionListener", action);
 			}
@@ -200,7 +201,7 @@ export default class TidsApplicationDecision extends LightningElement {
 	handleConfirmRejection(event) {
 		event.preventDefault();
 		let applicationDecisionResult = this.setApplicationDecision({decision: APPLICATION_REJECTED});
-		this.update('Closed', applicationDecisionResult,this.rejectionReason);
+		this.update('Rejected', applicationDecisionResult,this.rejectionReason);
 		this.rejectDialogOpen = false;
 	}
 

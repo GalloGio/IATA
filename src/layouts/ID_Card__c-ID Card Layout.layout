@@ -417,6 +417,10 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>Harmonized_Position__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>JSON_WS_Complex__c</field>
             </layoutItems>
             <layoutItems>
