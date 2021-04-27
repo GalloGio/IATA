@@ -26724,6 +26724,14 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>TECH_GDPR_Network_Name</name>
     </customLabels>
     <customLabels>
+        <label><!-- TIDS_Redirect_Link --></label>
+        <name>TIDS_Redirect_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- TIDS_Redirect_Message --></label>
+        <name>TIDS_Redirect_Message</name>
+    </customLabels>
+    <customLabels>
         <label><!-- TIP Reports Service Description --></label>
         <name>TIP_Reports_Service_Description</name>
     </customLabels>
