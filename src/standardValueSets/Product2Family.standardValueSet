@@ -287,9 +287,9 @@
         <label>Strategic Partnerships</label>
     </standardValue>
     <standardValue>
-        <fullName>TACT</fullName>
+        <fullName>TACT Air Cargo Solutions</fullName>
         <default>false</default>
-        <label>TACT</label>
+        <label>TACT Air Cargo Solutions</label>
     </standardValue>
     <standardValue>
         <fullName>Taxes</fullName>

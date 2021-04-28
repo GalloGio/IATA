@@ -38628,6 +38628,36 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- ONE source station admins --></description>
+        <label><!-- ONE source station admins --></label>
+        <name>ONE_source_station_admins</name>
+        <sections>
+            <label><!-- Account Roles --></label>
+            <name>Account Roles</name>
+        </sections>
+        <sections>
+            <label><!-- OS contact role details --></label>
+            <name>OS contact role details</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- ONE source station contacts --></description>
+        <label><!-- ONE source station contacts --></label>
+        <name>ONE_source_station_contacts</name>
+        <sections>
+            <label><!-- Account Roles --></label>
+            <name>Account Roles</name>
+        </sections>
+        <sections>
+            <label><!-- ONE Source Contact Role Details --></label>
+            <name>ONE Source Contact Role Details</name>
+        </sections>
+        <sections>
+            <label><!-- OS Stations --></label>
+            <name>OS Stations</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- OSCARs with Cases --></description>
         <label><!-- OSCARs with Cases --></label>
         <name>OSCARs_with_Cases</name>
