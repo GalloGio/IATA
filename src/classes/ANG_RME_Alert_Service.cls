@@ -173,6 +173,7 @@ global class ANG_RME_Alert_Service {
 				SELECT Id, IATACode__c, top_parent__c, ANG_IsNewGenAgency__c, status__c, 
 					IATA_ISO_Country__r.AMS_Settlement_System__r.RHC_Exceptional_Monitoring__c,
 					IATA_ISO_Country__r.AMS_Settlement_System__r.Exc_RHC_Monitoring_Alert__c,
+					IATA_ISO_Country__r.ANG_Enable_NewGen__c, IATA_ISO_Country__r.ANG_Portal_Service__c, IATA_ISO_Country__r.ANG_IEP_Model__c, ANG_Accreditation_Model__c, //for cashless agencies in an operation without IEP
 					(SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c FROM RHC_Informations__r),
 					(SELECT Id, ANG_FormOfPayment_ID__c, Status__c FROM Agency_Authorizations__r WHERE recordtype.developername ='FormOfPayment')  //Accelya Email + FOP
 				FROM Account
@@ -186,6 +187,11 @@ global class ANG_RME_Alert_Service {
 			}
 			else {
 				Account acct = accs[0];
+
+				boolean bIsOperationWithoutIEP = (acct.IATA_ISO_Country__r.ANG_Enable_NewGen__c 
+													&& string.isBlank(acct.IATA_ISO_Country__r.ANG_Portal_Service__c) 
+													&& acct.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASHLESS
+													&& acct.IATA_ISO_Country__r.ANG_IEP_Model__c == AMS_Utils.IEPModel_PrePayment);
 
 				switch on req.eventType {
 					when 'RTSAlert'{ //move to static final above when Salesforce decides is a good idea to release it https://trailblazer.salesforce.com/ideaView?id=0873A000000lLkNQAU
@@ -206,22 +212,27 @@ global class ANG_RME_Alert_Service {
 								setResponse(null, 202);
 							}
 						}else{
-							if(acct.RHC_Informations__r.isEmpty()) {
-								setResponse('Agent '+req.iataCode+' does not have RHC set', 404);
-							} 
-							else if(acct.RHC_informations__r.size()>1) {
-								setResponse('Internal Error: Agent '+req.iataCode+' has more than one RHC record', 409);
-							} else{
-								ANG_RHC_Information__c rhcInfo = acct.RHC_informations__r[0];
+							if(bIsOperationWithoutIEP){
+								saveAlert(req, acct.Id, null);
+							}else{
+								//check if the agency is CASHLESS and the operation is without IEP vendor
+								if(acct.RHC_Informations__r.isEmpty()) {
+									setResponse('Agent '+req.iataCode+' does not have RHC set', 404);
+								} 
+								else if(acct.RHC_informations__r.size()>1) {
+									setResponse('Internal Error: Agent '+req.iataCode+' has more than one RHC record', 409);
+								} else{
+									ANG_RHC_Information__c rhcInfo = acct.RHC_informations__r[0];
 
-								String errorMessage = '';
-								if(rhcInfo.CurrencyIsoCode != req.storedBaseCurrency) errorMessage += '\n- Currency mismatch. Request value: '+req.storedBaseCurrency+'. Current value: '+rhcInfo.CurrencyIsoCode;
+									String errorMessage = '';
+									if(rhcInfo.CurrencyIsoCode != req.storedBaseCurrency) errorMessage += '\n- Currency mismatch. Request value: '+req.storedBaseCurrency+'. Current value: '+rhcInfo.CurrencyIsoCode;
 
-								if(String.isNotEmpty(errorMessage))
-									setResponse('Conflicting informations:'+errorMessage, 409);
-								else{
-									updateRHC(req, rhcInfo);
-									saveAlert(req, rhcInfo.ANG_AccountId__c, rhcInfo.Id);
+									if(String.isNotEmpty(errorMessage))
+										setResponse('Conflicting informations:'+errorMessage, 409);
+									else{
+										updateRHC(req, rhcInfo);
+										saveAlert(req, rhcInfo.ANG_AccountId__c, rhcInfo.Id);
+									}
 								}
 							}
 						}
