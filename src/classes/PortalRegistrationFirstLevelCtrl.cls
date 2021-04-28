@@ -746,8 +746,14 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		if(selectedMetadataCustomerType.Filter_on_Sector__c != null){
 			sector = selectedMetadataCustomerType.Filter_on_Sector__c;
 			category = selectedMetadataCustomerType.Filter_on_Category__c;
+		} else if (selectedMetadataCustomerType.Created_Account_Sector__c != null){
+			sector = selectedMetadataCustomerType.Created_Account_Sector__c;
+			if(selectedMetadataCustomerType.Created_Account_Category__c != null)
+				category = selectedMetadataCustomerType.Created_Account_Category__c;
+			else
+				category = 'General Public';
 		}
-		else{
+		else {
 			sector = selectedMetadataCustomerType.MasterLabel;
 			category = 'General Public';
 		}
