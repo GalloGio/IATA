@@ -707,7 +707,7 @@ private class IGOMNotificationUtilTest {
 		 FROM IGOM_Contact_Role_Detail__c 
 		 WHERE Account_Role_Detail__r.Account_Role__r.Account__r.Name = 'Test name 1' AND Role__c = :IGOMConstants.ROLES.ADMIN];
 		
-		System.assertEquals(5, notifiableContacts.size());
+		System.assertEquals(6, notifiableContacts.size());
 		System.assert(notifiableContacts.containsKey(contactRoleDetail.Account_Contact_Role__r.Contact__c));
 		System.assert(notifiableContacts.containsKey(sameStationAcknowledgerContactRoleDetail.Account_Contact_Role__r.Contact__c));
 		System.assert(notifiableContacts.containsKey(parentStationContactRoleDetail.Account_Contact_Role__r.Contact__c));
