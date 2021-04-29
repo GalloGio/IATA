@@ -134,6 +134,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 														 ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_UP, 
 														 ANG_Percentage__c= ANG_RHCHelper.RISK_ALERT_THRESHOLD_LEVEL_100,
 														 recordtypeid = ANG_RHCHelper.RECTYPE_RHCATTRIBUTE,
+														 Accreditation_Model__c = 'Cashless;Cash;Multicountry',
 														 Email_Template_Internal_Stakeholders__c = 'RHC_Exceptional_Monitoring_SMAP_Notification',
 														 Create_SMAP_Case__c = true,
 														 ANG_Send_Email_Agent__c = false,
@@ -143,6 +144,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 														 ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_UP, 
 														 ANG_Percentage__c= ANG_RHCHelper.RISK_ALERT_THRESHOLD_LEVEL_100,
 														 recordtypeid = ANG_RHCHelper.RECTYPE_RHCATTRIBUTE,
+														 Accreditation_Model__c = 'Cashless;Cash;Multicountry',
 														 Email_Template_Internal_Stakeholders__c = 'RHC_Exceptional_Monitoring_100',
 														 Create_SMAP_Case__c = false,
 														 ANG_Send_Email_Agent__c = false,
@@ -152,6 +154,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 														 ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_DOWN, 
 														 ANG_Percentage__c= ANG_RHCHelper.RISK_ALERT_THRESHOLD_LEVEL_100,
 														 recordtypeid = ANG_RHCHelper.RECTYPE_RHCATTRIBUTE,
+														 Accreditation_Model__c = 'Cashless;Cash;Multicountry',
 														 Email_Template_Internal_Stakeholders__c = '',
 														 Create_SMAP_Case__c = false,
 														 ANG_Send_Email_Agent__c = false,
@@ -266,6 +269,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 		att.ANG_EmailTemplate_NG__c = 'emailTemplate';
 		att.ANG_PortalNotificationTemplate__c = [SELECT Id, Name FROM Notification_template__c LIMIT 1].Name;
 		att.RecordTypeId = ANG_RHCHelper.RECTYPE_RHCATTRIBUTE;
+		att.Accreditation_Model__c = 'Cashless;Cash;Multicountry';
 		att.ANG_Send_Email_Agent__c = true;
 		insert att;
 		
