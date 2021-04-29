@@ -145,21 +145,24 @@ public without sharing class AMS_Utils {
 		AMS_Utils.ACC_S1_NOTACCREDITED
 	};
 
+	//EasyPay Models
+	public static final String IEPModel_PrePayment	= 'Pre-Payment (NO IEP)';
+
 	//Process of type PASS
-	public static final String new_PASS_HO        = 'NEW.PASS.HO.1.0' ;
-	public static final String new_PASS_BR        = 'NEW.PASS.BR.1.0' ;
-	public static final String SECTOR_PASS        = 'Postal Service';
-	public static final String sectorValuePass    = 'Postal_Service' ;
-	public static final String categoryPass       = 'Postal Operator' ;
-	public static final String customerTypePass   = 'Postal_Operator' ;
-	public static final String passParticipation  = 'PASS' ;
-	public static final String passAirlineCaseReason = 'PASS Participation';
-	public static final String passGSSACaseReason = 'PASS Participation via GSSA';
-	public static final String passCountryCaseReason = 'PASS Country';
-	public static final String passAggregatorCaseReason = 'PASS Country Aggregator';
-	public static final String passIATAMultipleCountries = 'Multiple';
-	public static final String accountReasonForCreationPASS = 'New Airline joining PASS';
-	public static final String passSSOPortalService = 'PASSlink Single Sign-On';
+	public static final String new_PASS_HO	= 'NEW.PASS.HO.1.0';
+	public static final String new_PASS_BR	= 'NEW.PASS.BR.1.0';
+	public static final String SECTOR_PASS	= 'Postal Service';
+	public static final String sectorValuePass	= 'Postal_Service';
+	public static final String categoryPass	= 'Postal Operator';
+	public static final String customerTypePass	= 'Postal_Operator';
+	public static final String passParticipation	= 'PASS';
+	public static final String passAirlineCaseReason	= 'PASS Participation';
+	public static final String passGSSACaseReason	= 'PASS Participation via GSSA';
+	public static final String passCountryCaseReason	= 'PASS Country';
+	public static final String passAggregatorCaseReason	= 'PASS Country Aggregator';
+	public static final String passIATAMultipleCountries	= 'Multiple';
+	public static final String accountReasonForCreationPASS	= 'New Airline joining PASS';
+	public static final String passSSOPortalService	= 'PASSlink Single Sign-On';
 
 	//Process IATA Pay
 	public static final String iataPayParticipation  = 'IATA Pay Participation';
@@ -239,7 +242,6 @@ public without sharing class AMS_Utils {
 	public static final String RECTYPE_IEP_MODEL_A  = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Requirement__c','IEP_Model_A');
 
 	public static final String RECTYPE_BSP          = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c', 'BSP');
-	public static final Id OSCAR_COMUNICATION       = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 	public static final String RECTYPE_GDI_FS       = RecordTypeSingleton.getInstance().getRecordTypeId('Opportunity','GDI_FinancialSecurity');
 	public static final String RECTYPE_NEWGEN_CHANGES_PAX = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'New_Gen_Changes');
 	public static final String RECTYPE_GENERAL_ONLINE_PAX = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'GeneralOnlineAccreditation');
