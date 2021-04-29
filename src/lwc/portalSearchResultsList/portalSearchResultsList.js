@@ -378,7 +378,7 @@ export default class PortalSearchResultList extends NavigationMixin(LightningEle
                 };
                 aggregateResults.push(faq);
             }
-            if (this.servicesResults && this.servicesResults.length > i && aggregateResults.length < this.filteringObject.numberOfResults && this.servicesResults[i].Requestable__c) {
+            if (this.servicesResults && this.servicesResults.length > i && aggregateResults.length < this.filteringObject.numberOfResults) {
                 let serviceRes = {
                     "id": this.servicesResults[i].Id,
                     "category": this.label.ISSP_AvailableServices_Service,

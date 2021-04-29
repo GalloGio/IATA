@@ -355,6 +355,15 @@ public with sharing class PortalServicesCtrl {
 				mapServiceWrapper.remove(treasureDashboardId);
 			}
 		}
+
+		for(Portal_Application_Right__c accessAux2 : userGrantedList) {
+
+			if(accessAux2.Right__c == 'Access Denied') {
+				mapServiceWrapper.remove(accessAux2.Portal_Application__c);
+			}
+
+		}
+
 		return mapServiceWrapper.values();
 	}
 
