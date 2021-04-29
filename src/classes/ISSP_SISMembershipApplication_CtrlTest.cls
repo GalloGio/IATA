@@ -21,8 +21,9 @@ private class ISSP_SISMembershipApplication_CtrlTest {
 		con.OwnerId = newUser.Id;
 		update con;
 
-		Portal_Applications__c SISapp = new Portal_Applications__c(Name = ISSP_SISMembershipApplication_Ctrl.APP_NAME);
-		insert SISapp;
+		Portal_Applications__c SISapp = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		SISapp.Name = ISSP_SISMembershipApplication_Ctrl.APP_NAME;
+        insert SISapp;
 		insert new Case_Reason_Service__c (
 			Name ='SIS Client',
 			Service__c =ISSP_SISMembershipApplication_Ctrl.APP_NAME,

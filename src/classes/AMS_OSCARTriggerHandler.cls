@@ -4010,7 +4010,7 @@ public class AMS_OSCARTriggerHandler {
 			if (oldOSCAR.STEP2__c != 'Passed' && updatedOscar.STEP2__c == 'Passed') {
 
 				/*** AMSU-31 Start ***/
-				Set<String> processesToCheck = new Set<String> {AMS_Utils.new_HO, AMS_Utils.new_BR, AMS_Utils.new_SA, AMS_Utils.new_BR_ABROAD, AMS_Utils.NEWHELITE, AMS_Utils.NEWHESTANDARD, AMS_Utils.NEWAE};
+				Set<String> processesToCheck = new Set<String> {AMS_Utils.new_HO, AMS_Utils.new_BR, AMS_Utils.new_SA, AMS_Utils.new_BR_ABROAD, AMS_Utils.NEWHELITE, AMS_Utils.NEWHESTANDARD, AMS_Utils.NEWAE, AMS_Utils.MCAE, AMS_Utils.NEWGESTANDARD};
 				Set<String> classesToCheck = new Set<String> {'P', 'D'};
 				if(classesToCheck.contains(updatedOscar.Location_Class__c) && processesToCheck.contains(updatedOscar.Process__c)) {
 					oscarsToCreateAuth.add(updatedOscar);
@@ -5153,59 +5153,154 @@ public class AMS_OSCARTriggerHandler {
 	}
 
 	/**
-	 * retrieves all active promotions defined in metadata Oscar_Promotion__mdt
+	 * retrieves all active promotions defined in metadata Oscar_Promotion__mdt grouped by OSCAR Process type
 	 */
-	public static map<String,Oscar_Promotion__mdt> MAP_PROMOTIONS = null;
-	public static map<String,Oscar_Promotion__mdt> getMapActivePromotions() {
-		if (MAP_PROMOTIONS==null) {
-			MAP_PROMOTIONS = new map<String,Oscar_Promotion__mdt>();
-			list<Oscar_Promotion__mdt> listPromotion = [
-				SELECT DeveloperName, Oscar_Process__c
-				FROM Oscar_Promotion__mdt
-				WHERE Start_Date__c <= TODAY
-				AND End_Date__c >= TODAY
-			];
-			for (Oscar_Promotion__mdt promotion: listPromotion) {
-				MAP_PROMOTIONS.put(promotion.Oscar_Process__c, promotion);
+	public static map<String,list<Oscar_Promotion__mdt>> MAP_PROMOTIONS {
+		get{
+			if (MAP_PROMOTIONS==null) {
+				MAP_PROMOTIONS = new map<String,list<Oscar_Promotion__mdt>>();
+				list<Oscar_Promotion__mdt> listPromotion = [
+					SELECT Promotion_Name__c, Oscar_Process__c, Other_Conditions__c
+					FROM Oscar_Promotion__mdt
+					WHERE Start_Date__c <= TODAY
+					AND End_Date__c >= TODAY
+				];
+				for (Oscar_Promotion__mdt promotion: listPromotion) {
+					list<Oscar_Promotion__mdt> listPromotions= MAP_PROMOTIONS.get(promotion.Oscar_Process__c);
+					if (listPromotions==null) {
+						listPromotions = new list<Oscar_Promotion__mdt>();
+					}
+					listPromotions.add(promotion);
+					MAP_PROMOTIONS.put(promotion.Oscar_Process__c, listPromotions);
+				}
 			}
+			return MAP_PROMOTIONS;
 		}
-		return MAP_PROMOTIONS;
+		set;
 	}
 
 	/**
 	 * Set the value for promotion field, defined in Oscar_Promotion__mdt, if applicable
 	 */
-	private static void setPromotions(list<AMS_Oscar__c> listNew) {
-		// find only those oscar where we are setting the field Oscar_Communication_Case_Id__c
+	public static void setPromotions(list<AMS_Oscar__c> listNew) {
+		// find only those oscar where we are setting the field Oscar_Communication_Case_Id__c and have a promotion to be applied in MAP_PROMOTIONS
 		map<Id,AMS_Oscar__c> mapCaseOscar = new map<Id,AMS_Oscar__c>();
+		Set<Oscar_Promotion__mdt> setUsedPromotions = new Set<Oscar_Promotion__mdt>();
 		for (AMS_Oscar__c newOscar: listNew) {
-			if (newOscar.Oscar_Communication_Case_Id__c!=null) {
+			if (newOscar.Oscar_Communication_Case_Id__c!=null && MAP_PROMOTIONS.keyset().contains(newOscar.Process__c)) {
 				mapCaseOscar.put(Id.ValueOf(newOscar.Oscar_Communication_Case_Id__c),newOscar);
+				setUsedPromotions.addAll(MAP_PROMOTIONS.get(newOscar.Process__c));
 			}
 		}
 		if (mapCaseOscar.isEmpty()) return;
 
-		// get Case.contact.accounts for each OSCAR
-		map<Id,Account> mapOscarAccounts = new map<Id,Account>();
-		list<Case> listCase = [SELECT Id, OSCAR__c, Contact.AccountId, Contact.Account.RecordTypeId, Contact.Account.Location_Class__c
-			FROM Case
-			WHERE Id IN :mapCaseOscar.keyset()
-			AND ContactId != null];
-		for (Case cse: listCase) {
-			AMS_Oscar__c oscar = mapCaseOscar.get(cse.Id);
-			Account account = cse.Contact.Account;
-			mapOscarAccounts.put(oscar.Id, account);
-		}
+		//retrieve the records in related objects
+		list<String> listFieldNames = getListFieldNamesRequiredInPromotions(setUsedPromotions);
+		Set<Id> listCaseId = mapCaseOscar.keyset();
+		String query = 'SELECT ' + String.join(listFieldNames,',') + ' FROM Case WHERE Id IN :listCaseId';
+		list<Case> listQueryCase = (list<Case>)Database.query(query);
+
 		// assign promotions, if applicable, for the incoming oscar records
-		for(AMS_Oscar__c oscar: mapCaseOscar.values()){
-			Account acc = mapOscarAccounts.get(oscar.Id);
-			if ( acc!=null && acc.RecordTypeId == AMS_utils.RECTYPE_IATAAGENCY && acc.Location_Class__c == 'T') {
-				Oscar_Promotion__mdt promotion = getMapActivePromotions().get(oscar.Process__c);
-				if (promotion != null) {
-					oscar.Promotions__c = promotion.DeveloperName;
-				}
+		for(Case cse: listQueryCase){
+			AMS_Oscar__c newOscar = mapCaseOscar.get(cse.Id);
+			Oscar_Promotion__mdt promotion = getRightPromotion(newOscar, cse);
+			if (promotion != null) {
+				newOscar.Promotions__c = promotion.Promotion_Name__c;
 			}
 		}
 	}
 
+	/**
+	 *  Method to get all meaningful fields that will be used in Promotion calculation
+	 *  Basically all fields mentioned in the Other_Conditions__c field in the input list Oscar_Promotion__mdt
+	 */
+	private static list<String> getListFieldNamesRequiredInPromotions(Set<Oscar_Promotion__mdt> setPromotions) {
+		Set<String> setFieldNames = new Set<String>{'Id'};
+		for(Oscar_Promotion__mdt promotion : setPromotions) {
+			if (!String.isBlank(promotion.Other_Conditions__c)) {
+				for (String str: promotion.Other_Conditions__c.split(' AND ')) {
+					String fieldname = str.split(' NOT IN | IN ')[0];
+					setFieldNames.add(fieldname);
+				}
+			}
+		}
+		return new list<String>(setFieldNames);
+	}
+
+	/**
+	 * Find the right promotion to be used in the input Oscar
+	 */
+	private static Oscar_Promotion__mdt getRightPromotion(AMS_Oscar__c oscar, Case cse) {
+		list<Oscar_Promotion__mdt> listPromotions = MAP_PROMOTIONS.get(oscar.Process__c);
+		if (listPromotions==null) return null;
+
+		Oscar_Promotion__mdt deafultPromotion;
+		for (Oscar_Promotion__mdt promotion: listPromotions) {
+			if (String.isBlank(promotion.Other_Conditions__c)) {
+				deafultPromotion = promotion;
+			} else if (processOtherConditions(cse,promotion.Other_Conditions__c)) {
+				return promotion;
+			}
+		}
+		return deafultPromotion;
+	}
+
+	/**
+	 * Checks if the input object validates the input condition
+	 */
+	private static Boolean processOtherConditions(Sobject obj, String conditions) {
+		try {
+			// if there is no condition to process we assume that it passes
+			if (String.isBlank(conditions)) return true;
+			// find AND operation
+			list<String> listParts = conditions.split(' AND ');
+			if (listParts.size()>1) {
+				for (String part: listParts) {
+					if (!processOtherConditions(obj,part)) return false;
+				}
+				return true;
+			}
+			// find NOT IN operation
+			listParts = conditions.split(' NOT IN ');
+			if (listParts.size()==2) {
+				String fieldName = listParts[0];
+				String fieldValue = getFieldValue(obj, fieldName);
+				set<String> values = stringToSet(listParts[1]);
+				return ! values.contains(fieldValue);
+			}
+			// find IN operation
+			listParts = conditions.split(' IN ');
+			if (listParts.size()==2) {
+				String fieldName = listParts[0];
+				String fieldValue = getFieldValue(obj, fieldName);
+				set<String> values = stringToSet(listParts[1]);
+				return values.contains(fieldValue);
+			}
+		} catch (Exception e) {
+			TransformationHelper.sendEmailSupport( 'AMS_OSCARTriggerHandler - ProcessOtherConditions Exception', 'Exception: ' + e + ' || obj: ' + obj + ' || conditions ' + conditions + ' || StackTrace: ' + e.getStackTraceString());
+		}
+		return false;
+	}
+
+	/**
+	 * get the field value, as a String, for the input object,
+	 * allowing field names like 'AMS_OSCAR.Step1__c' or 'OSCAR__r.AMS_Online_Accreditation__r.ANG_Accreditation_type__c'
+	 */
+	private static String getFieldValue(Sobject obj, String fieldname) {
+		list<String> parts = fieldname.split('[.]');
+		if (parts.size()==1) {
+			return String.ValueOf(obj.get(fieldName));
+		}
+		String objectName = parts.remove(0);
+		fieldName = String.join(parts,'.');
+		return getFieldValue(obj.getSObject(objectName), fieldName); 
+	}
+
+	/**
+	 * Transforms the string use in a IN operation to a set<String>
+	 * Example: "('elem1','elem2')"  to set {'elem1','elem2'}
+	 */
+	private static set<String> stringToSet(String str) {
+		return new set<String>(str.replaceAll('[(][ ]*\'','').replaceAll('\'[ ]*[)]','').split('\'[ ]*,[ ]*\''));
+	}
 }

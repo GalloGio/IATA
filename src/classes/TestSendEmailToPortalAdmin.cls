@@ -47,17 +47,25 @@ private class TestSendEmailToPortalAdmin {
 
 		ISSP_HierarchyAccountTeamAccounts.HierarchyAccountTeamMemberAccounts(new set<ID>{adminUser.Id, newUser.Id});
 
-		list<Portal_Applications__c> appList  = new list<Portal_Applications__c> {
-										TestObjectCreator.buildPortalApplications2(ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED)
-										 ,TestObjectCreator.buildPortalApplications2(ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED)
-		};
+		list<Portal_Applications__c> appList = TestDataFactory_PortalApplications.createDefaultPortalApplication(2);
+		Portal_Applications__c app1 = appList.get(0);
+		app1.Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED;
+		app1.ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.CARGO_AGENT;
+		app1.ANG_Accredited_Agents_Only__c = false;
+		app1.Agency__c = true;
+		app1.Cannot_be_managed_by_portal_admin__c = false;
+		app1.Requires_Service_Admin_Approval__c = false;
+		app1.Functional_Role__c = 'IATA EasyPay (EDENRED)';
+
+		Portal_Applications__c app2 = appList.get(1);
+		app2 = app1.clone(false, true, false, false);
 		Database.insert(appList);
+
 		ID applicationId1 = appList[0].Id;
 		ID applicationId2 = appList[1].Id;
 		list<Portal_Application_Right__c> lpar = new list<Portal_Application_Right__c> {
 					 TestObjectCreator.buildPortalApplicationRight(con1.Id, applicationId1)
 					,TestObjectCreator.buildPortalApplicationRight(con1.Id, applicationId2)
-					//,TestObjectCreator.buildPortalApplicationRight(con2.Id, applicationId2, 'Granted')
 		};
 
 		Test.startTest();
@@ -108,11 +116,11 @@ private class TestSendEmailToPortalAdmin {
 
 		ISSP_HierarchyAccountTeamAccounts.HierarchyAccountTeamMemberAccounts(new set<ID>{adminUser.Id, newUser.Id});
 
-		list<Portal_Applications__c> appList  = new list<Portal_Applications__c> {
-										TestObjectCreator.buildPortalApplications('Test Method App 001')
-										 ,TestObjectCreator.buildPortalApplications('Test Method App 002')
-		};
+		list<Portal_Applications__c> appList  = TestDataFactory_PortalApplications.createDefaultPortalApplication(2);
+		appList.get(0).Name = 'Test Method App 001';
+		appList.get(1).Name = 'Test Method App 002';
 		Database.insert(appList);
+
 		ID applicationId1 = appList[0].Id;
 		ID applicationId2 = appList[1].Id;
 		list<Portal_Application_Right__c> lpar = new list<Portal_Application_Right__c> {

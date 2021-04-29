@@ -435,41 +435,50 @@ public without sharing class TIDSHelper {
 			String caseNumber='';
 			String email='';
 			final String portalType=(tidsWrapper.currentUser.Account.Location_Type__c!=TIDS_Constant.TIDS_HO) ? TIDS_Constant.ADM_BRA : TIDS_Constant.ADM_HOP;
-			
 			List<Portal_Application_Right__c> applicationRights =[SELECT 
-					 Id, Right__c, Contact__r.Id, Access_Status_Reason__c,Application_Name__c,Contact__r.Email
+					 Id,
+					 Right__c,
+					 Contact__r.Id, 
+					 Access_Status_Reason__c,
+					 Application_Name__c,
+					 Contact__r.Email
 				FROM Portal_Application_Right__c
-				WHERE Right__c=:AMS_Utils.PORTAL_APP_ACCESS_GRANTED
-					AND Contact__r.Id=:tidsWrapper.currentUser.ContactId
-					AND Access_Status_Reason__c=:portalType
+				WHERE Contact__r.Id=:tidsWrapper.currentUser.ContactId
 					AND Application_Name__c=:TIDS_Constant.TIDSVALUE
 					LIMIT 1];
-			if (applicationRights.size()>0) {
+			if (applicationRights.size()==0) {		
+				//Condition 0: trying to access Tids application
+				tidsWrapper.error = TIDSUtil.getTIDSMetadata(TIDS_Constant.ERROR_CON0_1);
+				return tidsWrapper;
+			}else{
+				if (applicationRights[0].Right__c==AMS_Utils.PORTAL_APP_ACCESS_GRANTED
+					&& applicationRights[0].Access_Status_Reason__c==portalType){
+						tidsWrapper.profile = applicationRights.get(0);
+				}
 				email=applicationRights[0].Contact__r.Email;
 			}
 			TIDSUtil.replaceby = new List<String>{email, caseNumber,'','',''};
 			
-			if (applicationRights.size()==0){
-				applicationRights = [
-				SELECT Id,
-					Right__c,
-					Contact__r.Id,
-					Access_Status_Reason__c,
-					Application_Name__c
-				FROM Portal_Application_Right__c
-				WHERE Contact__r.Id=:tidsWrapper.currentUser.ContactId
-					AND Access_Status_Reason__c!=null
-					AND Application_Name__c=:TIDS_Constant.TIDSVALUE
-				LIMIT 1];
+			
+			string rdevname =tidsWrapper.currentUser.Account.RecordType.DeveloperName;
+			Set<String> cl1 = new Set<String>{
+				TIDS_Constant.RT_GENERAL_SALES_AGENT_HEADQUARTERS,
+				TIDS_Constant.RT_AIRLINE_HEADQUARTERS,
+				TIDS_Constant.RT_AIRLINE_BRANCH,
+				TIDS_Constant.RT_AIRLINE_LOCAL_OFFICES,
+				TIDS_Constant.RT_OPERATOR,
+				TIDS_Constant.RT_VERIFIER,
+				TIDS_Constant.RT_AIRPORT,
+				TIDS_Constant.RT_ICAO_MEMBER_STATE
+			};
+			
+			//Condition 1: Related Account Record Type cannot be “Airline Branch, Airline Headquarters, General Sales Agent Headquarters”
+			if (cl1.Contains(rdevname)){
+				tidsWrapper.error = TIDSUtil.getTIDSMetadata(TIDS_Constant.ERROR_CON1);
+				return tidsWrapper;
 			}
-		
-			if (applicationRights.size() > 0){
-				tidsWrapper.profile = applicationRights.get(0);
-			}
-
 			// TIDS Case
 			Id recordname=tidsWrapper.currentUser.Account.RecordType.Id;
-			string rdevname =tidsWrapper.currentUser.Account.RecordType.DeveloperName;
 			string countryiso=tidsWrapper.currentUser.Account.Country_ISO_Code__c;
 			string status=tidsWrapper.currentUser.Account.Status__c;
 			if (String.isEmpty(recordname)){return tidsWrapper;}
@@ -484,31 +493,11 @@ public without sharing class TIDSHelper {
 				//Condition 2: Related Account “Country_ISO_Code__c” cannot be “AS, GU, MP, PR, US, VI”
 				List<IATA_ISO_Country__c> countries = [SELECT Sanctioned_Country__c FROM IATA_ISO_Country__c WHERE ISO_Code__c=:countryiso AND ISO_Code__c=:neligible Limit 1];
 				if (countries.size()>0) {
-					String econdition = TIDS_Constant.ERROR_CON2_1;
-					// Sanctioned country
-					if (countries[0].Sanctioned_Country__c==true){
-						econdition=TIDS_Constant.ERROR_CON2_2;
-					}
-					tidsWrapper.error = TIDSUtil.getTIDSMetadata(econdition);
+					tidsWrapper.error = TIDSUtil.getTIDSMetadata(countries[0].Sanctioned_Country__c ? TIDS_Constant.ERROR_CON2_2 : TIDS_Constant.ERROR_CON2_1);
 					return tidsWrapper;
 				}
 			}
 			
-			Set<String> cl1 = new Set<String>{
-				TIDS_Constant.RT_GENERAL_SALES_AGENT_HEADQUARTERS,
-				TIDS_Constant.RT_AIRLINE_HEADQUARTERS,
-				TIDS_Constant.RT_AIRLINE_BRANCH,
-				TIDS_Constant.RT_AIRLINE_LOCAL_OFFICES,
-				TIDS_Constant.RT_OPERATOR,
-				TIDS_Constant.RT_VERIFIER,
-				TIDS_Constant.RT_AIRPORT,
-				TIDS_Constant.RT_ICAO_MEMBER_STATE
-			};
-			//Condition 1: Related Account Record Type cannot be “Airline Branch, Airline Headquarters, General Sales Agent Headquarters”
-			if (cl1.Contains(rdevname)){
-				tidsWrapper.error = TIDSUtil.getTIDSMetadata(TIDS_Constant.ERROR_CON1);
-				return tidsWrapper;
-			}
 			string c3=tidsWrapper.currentUser.Account.Location_Class__c;
 			//Condition 3: Related Account Record Type cannot be “Agency”  WHERE Account “Location_Class__c“ = “D, P“
 			if (!String.isEmpty(c3)){
@@ -526,7 +515,7 @@ public without sharing class TIDSHelper {
 					if (rdate==null) {
 						rdate=System.today();
 					}
-				}  
+				}
 				//Condition 4: Related Account Record Type cannot be “Agency“ WHERE Account “Location_Class__c = “T“ and Status__c = “Approved”
 				if (recordname==agencyRecordTypeId 
 					&& c3==TIDS_Constant.TIDS_T 
@@ -589,22 +578,28 @@ public without sharing class TIDSHelper {
 		}    
 		boolean isdenied=true;
 		if (applicationRights.size()>0){
-			if (tidsWrapper.profile.Right__c==AMS_Utils.PORTAL_APP_ACCESS_GRANTED){
+			if (tidsWrapper.profile.Right__c==AMS_Utils.PORTAL_APP_ACCESS_GRANTED && tidsWrapper.profile.Access_Status_Reason__c!=null){
 				isdenied=false;
 			}
 		}
 		if (isdenied){
 			//mettre un mask sur l'email
 			//Access denied but there is admin
-			String econdition=TIDS_Constant.ERROR_CON4_1;
-			//Access denied but there is no admin
-			if (!isparentadmin){
-				econdition=TIDS_Constant.ERROR_CON4_2;
-			}
-			tidsWrapper.error = TIDSUtil.getTIDSMetadata(econdition);
 			//Parent Case
 			tidsWrapper.tidsCase = TIDSUtil.searchCase(tidsWrapper.currentUser.AccountId,TIDS_Constant.IS_CLOSED);
 			tidsWrapper.tidsAttachment = TIDSUtil.getAttachment(tidsWrapper.tidsCase.Id,TIDS_Constant.DATAJSONFILENAME);
+			//retrieve email
+			adminrights = [SELECT Contact__r.email
+							FROM Portal_Application_Right__c
+							WHERE (Contact__r.AccountId=:tidsWrapper.currentUser.Account.ParentId
+								Or Contact__r.AccountId=:tidsWrapper.currentUser.AccountId)
+								AND Access_Status_Reason__c=:TIDS_Constant.ADM_HOP
+								AND Application_Name__c=:TIDS_Constant.TIDSVALUE 
+								LIMIT 1];
+			String email = (adminrights.size()>0  ? adminrights[0].Contact__r.Email:'');
+			TIDSUtil.replaceby = new List<String>{ email, '','','',''};
+			tidsWrapper.error = TIDSUtil.getTIDSMetadata(isparentadmin ?TIDS_Constant.ERROR_CON4_1 : TIDS_Constant.ERROR_CON4_2);
+		
 			return true;
 		}
 		return false;
@@ -845,6 +840,11 @@ public without sharing class TIDSHelper {
 			TIDSUtil.getTidsCases(caseId,false);
 			Case tidscase  = new Case();
 			tidscase = TIDSUtil.cases[0];
+			if (tidsCase.Status!=TIDS_Constant.IS_INPROGRESS){
+				TIDSUtil.setError(TIDS_Constant.MSG11,false);
+				return TIDSUtil.iataCodeError;
+			}
+		
 			tidsCase.Origin = TIDS_Constant.CASE_ORIGIN;
 			tidsCase.CaseArea__c = TIDS_Constant.CASE_AREA;
 			tidsCase.Priority = TIDS_Constant.CASE_PRIORITY;

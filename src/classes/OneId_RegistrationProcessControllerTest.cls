@@ -484,7 +484,8 @@ private class OneId_RegistrationProcessControllerTest {
 		contact.AccountId = acc.Id;
 		insert contact;
 
-		Portal_Applications__c app = new Portal_Applications__c(Name = 'IATA Accreditation & Changes');
+		Portal_Applications__c app = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		app.Name = 'IATA Accreditation & Changes';
 		insert app;
 
 		User user = new User(
@@ -542,7 +543,8 @@ private class OneId_RegistrationProcessControllerTest {
 		 IATA_ISO_Country__c country = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='Pt')  ;
 		 insert country ;
 
-		 Portal_Applications__c pa = new Portal_Applications__c(name = TIP_Utils.PORTAL_SERVICE_NAME_TIP);
+		 Portal_Applications__c pa = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		 pa.Name = TIP_Utils.PORTAL_SERVICE_NAME_TIP;
 		 insert pa;
 
 		 ISSP_Portal_Service_Ids__c ipsi= new ISSP_Portal_Service_Ids__c(
@@ -587,7 +589,7 @@ private class OneId_RegistrationProcessControllerTest {
 		contactRoles2.RecordTypeId = externalRecordTypeId;
 		insert contactRoles2;
 
-		Portal_Applications__c portalApplications = new Portal_Applications__c();
+		Portal_Applications__c portalApplications = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
 		portalApplications.Name = 'GADM';
 		insert portalApplications;
 
@@ -655,7 +657,8 @@ private class OneId_RegistrationProcessControllerTest {
 		IATA_ISO_Country__c country = new IATA_ISO_Country__c (Name='Portugal',ISO_Code__c='Pt')  ;
 		insert country ;
 
-		Portal_Applications__c pa = new Portal_Applications__c(name = ISSP_AMC_DAO.PORTAL_SERVICE_NAME_ACLI);
+		Portal_Applications__c pa = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		pa.Name = ISSP_AMC_DAO.PORTAL_SERVICE_NAME_ACLI;
 		insert pa;
 
 		ISSP_Portal_Service_Ids__c ipsi= new ISSP_Portal_Service_Ids__c(
@@ -668,7 +671,8 @@ private class OneId_RegistrationProcessControllerTest {
 
 		Contact c;
 
-		Portal_Applications__c p = new Portal_Applications__c(Name='One Id NDC Matchmaker');
+		Portal_Applications__c p = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		p.Name='One Id NDC Matchmaker';
 		insert p;
 
 		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];

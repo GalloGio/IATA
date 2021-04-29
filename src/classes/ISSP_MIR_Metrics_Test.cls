@@ -16,7 +16,8 @@ private class ISSP_MIR_Metrics_Test {
 			con1.AccountId = account.Id;
 			insert con1;
 
-			Portal_Applications__c app = new Portal_Applications__c(Name = 'Management Information Report');
+			Portal_Applications__c app = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+			app.Name = 'Management Information Report'; 
 			insert app;
 			Portal_Application_Right__c appRight = new Portal_Application_Right__c(Contact__c = con1.Id, Portal_Application__c = app.Id, Right__c = 'Access Granted');
 			insert appRight;

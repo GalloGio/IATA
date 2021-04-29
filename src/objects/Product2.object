@@ -8122,7 +8122,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>TACT</fullName>
+                <fullName>TACT Air Cargo Solutions</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -8155,6 +8155,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Training%3A Self Study</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel Pass</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -11258,7 +11262,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>TACT</fullName>
+                <fullName>TACT Air Cargo Solutions</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -11291,6 +11295,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Training%3A Self Study</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel Pass</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -14482,7 +14490,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>TACT</fullName>
+                <fullName>TACT Air Cargo Solutions</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -14519,6 +14527,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Training%3A Self Study</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel Pass</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -17555,6 +17567,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Training - OnSite</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel Pass</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -20777,7 +20793,7 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
-                <fullName>TACT</fullName>
+                <fullName>TACT Air Cargo Solutions</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -20810,6 +20826,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Training%3A Self Study</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Travel Pass</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

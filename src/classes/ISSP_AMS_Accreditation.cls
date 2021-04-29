@@ -526,6 +526,7 @@ public without sharing class ISSP_AMS_Accreditation {
 	}
 	public List<SelectOption> selectedCountryIsos {get; set;}
 	public Boolean allCountriesSelected {get; set;}
+	public Boolean showNDCQuestion{get;set;}
 	public String accountToBeFetchedOrRemoved {get; set;}
 	public Account accountToBeConverted {get; set;}
 
@@ -630,6 +631,11 @@ public without sharing class ISSP_AMS_Accreditation {
 		defaultSectorValue = System.currentPageReference().getParameters().get('sectorValue');
 		String defaultAmsLocationType = System.currentPageReference().getParameters().get('accredType');
 
+		this.showNDCQuestion = false;
+		if(this.con.Account.Location_Class__c == 'P' || this.con.Account.Location_Class__c == 'D'){
+			this.showNDCQuestion = true;
+		}
+		
 		if (!String.isBlank(defaultAmsLocationType)) {
 			amsLocationType = defaultAmsLocationType;
 		}
@@ -2738,15 +2744,18 @@ public without sharing class ISSP_AMS_Accreditation {
 			if (newForm.ISSP_AMS_GDS_with_signed_contract__c != null) {
 				newForm.NDC_Transactions__c = 'No';
 			}
-			
+
 			if (accountConcerned.Cass_Number__c != null) {
 				newForm.CASS_Number__c = accountConcerned.Cass_Number__c;
+			}else if (hqAccount.Cass_Number__c != null){
+				newForm.CASS_Number__c = hqAccount.Cass_Number__c;
 			}
+
 			upsert newForm;
 
 			if (isMultiCountryNewAE) {
 				currentMCFormId = newForm.Id;
-			}
+			}	
 
 			if (!Test.IsRunningTest()) {
 				fetchAMSProcessForm();
@@ -6953,6 +6962,9 @@ public without sharing class ISSP_AMS_Accreditation {
 			if (newForm.Effective_Date_Of_Change__c == null) {
 				newForm.Effective_Date_Of_Change__c.addError(Label.ISSP_YouMustEnter);
 				errorFound = true;
+			}
+			if(this.showNDCQuestion && validateNDC()){
+					errorFound = true;
 			}
 
 			if (newForm.Will_such_change_affect_the_managers__c == null) {

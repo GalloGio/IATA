@@ -1,7 +1,5 @@
 @isTest
 private class AmazonFileTrgHelperTest {
-
-
 	private static void loadCredentials() {
 
 		Amazon_Cred__c Amazon_Cred =  new Amazon_Cred__c(name = 'GenericAttach', Prod_Configuration__c = 'adevconf' , Dev_Configuration__c = 'adevconf');
@@ -196,12 +194,14 @@ private class AmazonFileTrgHelperTest {
 
 		loadCredentials();
 
-		Portal_Applications__c app = new Portal_Applications__c(Name = 'TIP Reports');
-		insert app;
+		Portal_Applications__c portalApplication = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		portalApplication.Name = 'TIP Reports';
+		portalApplication.Functional_Role__c = 'TIP Reports';
+		insert portalApplication;
 
 		ISSP_External_Reports_Config__c conf = new ISSP_External_Reports_Config__c(
 			name = 'bla',
-			Portal_Service_ID__c = app.Id,
+			Portal_Service_ID__c = portalApplication.Id,
 			Report_ID__c = 'TIP_AUTO_REPORTS'
 		);
 
@@ -223,7 +223,7 @@ private class AmazonFileTrgHelperTest {
 
 
 		Portal_Application_Right__c appReq = new Portal_Application_Right__c();
-		appReq.Portal_Application__c = app.Id;
+		appReq.Portal_Application__c = portalApplication.Id;
 		appReq.Right__c = 'Access Granted';
 		appReq.Contact__c = contact.Id;
 

@@ -1282,11 +1282,11 @@ public without sharing class AMS_Utils {
 			Account acc = accounts.get(oscar.Account__c);
 
 			AMS_Pax_Accreditation_Form__c onlineAcc = onlineAccreditations.get(oscar.AMS_Online_Accreditation__c);
-			mapOscarOrigin.put(oscar.ID, onlineAcc.SAAM_Case__r.Origin);
+			
 			Map<Id, List<AMS_Agencies_relationhip__c>> accountHierarchyRelationships = AMS_HierarchyHelper.getAccountsHierarchies(new Set<Id>{acc.Id});
 
 			if (acc != null && onlineAcc != null) {
-
+				mapOscarOrigin.put(oscar.ID, onlineAcc.SAAM_Case__r.Origin);
 				List<AMS_ChangeCodesHelper.ObjectChange> accChanges = new List<AMS_ChangeCodesHelper.ObjectChange>();
 
 				for (String accfield : fieldsMapping.keySet()) {

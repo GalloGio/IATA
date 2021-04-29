@@ -1,0 +1,13 @@
+<template>
+
+    <!-- SHOW LOADING -->
+    <div if:true={componentLoading} class="spinnerContainer">
+        <lightning-spinner class="background-superLightGray" alternative-text="Loading"></lightning-spinner>
+    </div>
+
+    <div if:false={componentLoading}>
+        <lightning-formatted-rich-text class="introMessage text-small" value={labels.CSP_Service_StartupHotlist_NoAccess}>
+        </lightning-formatted-rich-text>
+    </div>
+
+</template>

@@ -1,0 +1,74 @@
+<apex:page controller="CNS_Payment" showHeader="false" sidebar="false" standardStylesheets="false" applyBodyTag="false">
+	<html>
+	<c:ISSP_Header communityName="{!communityName}"></c:ISSP_Header>
+
+	<body>
+		<div class="container">
+
+			<c:ISSP_CustomNavigation communityName="{!communityName}" />
+
+			<script type="text/javascript">
+				function submitToCyberSource() {
+
+					var serviceType = document.getElementById('{!$Component.pb.frm.pbs.serviceType}').value;
+					var invoiceNumber = document.getElementById('{!$Component.pb.frm.pbs.invoiceNumber}').value;
+					var amount = document.getElementById('{!$Component.pb.frm.pbs.amount}').value;
+					var reg = /^[0-9]{1,10}$/;
+					var tendigitnum = /^\d{10}$/; 
+
+					if (serviceType.length < 1){
+						alert('Please enter a valid service type.');
+					} else if (!tendigitnum.test(invoiceNumber)){
+						alert('Please enter a valid 10 digit invoice number.');
+					} else if (!reg.test(amount)){
+						alert('Please enter a valid amount.');						
+					}else{
+						fillCyberSrcData();
+					}
+				}
+			</script>
+
+			<apex:pageBlock >
+				<apex:pageBlockSection title="Contact Information">
+					<apex:outputField value="{!con.Account.Name}" />
+					<apex:outputField value="{!con.Account.Country_ISO_Code__c}" />
+					<apex:outputField value="{!con.Account.IATACode__c}" />
+					<apex:outputField value="{!con.Email}" />
+				</apex:pageBlockSection>
+			</apex:pageBlock>
+
+			<apex:pageBlock id="pb">
+				<apex:form id="frm">
+
+					<apex:actionFunction name="fillCyberSrcData" action="{!fillCyberSrcData}" oncomplete="document.formCyberSource.submit()" reRender="a" />
+
+					<apex:pageBlockSection id="pbs" title="Invoice Information" columns="1">
+						<apex:selectList id="serviceType" label="Service Type" size="1" value="{!ServiceType}" required="true">
+							<apex:selectOptions value="{!ListServiceType}" />
+						</apex:selectList>
+						<apex:inputText id="invoiceNumber" label="Invoice number" value="{!InvoiceNumber}" required="true" maxlength="10"/>
+						<apex:inputText id="amount" label="Amount (USD)" value="{!Amount}" required="true" maxlength="10"/>
+					</apex:pageBlockSection>
+
+					<div align="center" draggable="false">
+						<apex:commandButton value="Continue" onclick="submitToCyberSource()" rerender="tstpopup" />
+					</div>
+
+				</apex:form>
+			</apex:pageBlock>
+
+			<apex:outputPanel id="a">
+				<form name="formCyberSource" action="{!url}" method="post">
+					<apex:repeat value="{!cyberSrcData}" var="cbsKey">
+						<input type="hidden" name="{!cbsKey}" value="{!cyberSrcData[cbsKey]}" />
+					</apex:repeat>
+					<input type="hidden" name="signature" value="{!calculatedSignature}" />
+				</form>
+			</apex:outputPanel>
+
+			<c:ISSP_CustomFooter communityName="{!communityName}" />
+		</div>
+	</body>
+
+	</html>
+</apex:page>

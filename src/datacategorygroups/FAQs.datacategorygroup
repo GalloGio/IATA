@@ -181,10 +181,6 @@
                     <name>General_Information_IATA_Codes</name>
                 </dataCategory>
                 <dataCategory>
-                    <label>Other</label>
-                    <name>Other_IATA_Codes</name>
-                </dataCategory>
-                <dataCategory>
                     <label>Closure / Cancellation</label>
                     <name>Closure_Cancellation_IATA_Codes</name>
                 </dataCategory>
@@ -717,10 +713,6 @@
                     <name>Technical_Issue_NDClink</name>
                 </dataCategory>
                 <dataCategory>
-                    <label>Other</label>
-                    <name>Other_NDClink</name>
-                </dataCategory>
-                <dataCategory>
                     <label>User Management</label>
                     <name>User_Management_NDClink</name>
                 </dataCategory>
@@ -1069,10 +1061,6 @@
                     <name>Technical_Issue_CargoIS</name>
                 </dataCategory>
                 <dataCategory>
-                    <label>Other</label>
-                    <name>Other_CargoIS</name>
-                </dataCategory>
-                <dataCategory>
                     <label>Events</label>
                     <name>Events_CargoIS</name>
                 </dataCategory>
@@ -1107,10 +1095,6 @@
                 <dataCategory>
                     <label>Technical Issue</label>
                     <name>Technical_Issue_DDS</name>
-                </dataCategory>
-                <dataCategory>
-                    <label>Other</label>
-                    <name>Other_DDS</name>
                 </dataCategory>
                 <dataCategory>
                     <label>Events</label>
@@ -1167,10 +1151,6 @@
                 <dataCategory>
                     <label>Technical Issue</label>
                     <name>Technical_Issue_Flight_Data_Connect</name>
-                </dataCategory>
-                <dataCategory>
-                    <label>Other</label>
-                    <name>Other_Flight_Data_Connect</name>
                 </dataCategory>
                 <label>Flight Data Connect</label>
                 <name>Flight_Data_Connect</name>
@@ -1351,10 +1331,6 @@
                 <dataCategory>
                     <label>Technical Issue</label>
                     <name>Technical_Issue_PaxIS</name>
-                </dataCategory>
-                <dataCategory>
-                    <label>Other</label>
-                    <name>Other_PaxIS</name>
                 </dataCategory>
                 <dataCategory>
                     <label>Events</label>
@@ -1610,14 +1586,6 @@
             <dataCategory>
                 <dataCategory>
                     <label>General Information</label>
-                    <name>General_Information_OS</name>
-                </dataCategory>
-                <label>OneSource</label>
-                <name>OneSource</name>
-            </dataCategory>
-            <dataCategory>
-                <dataCategory>
-                    <label>General Information</label>
                     <name>General_Information_CheckACode</name>
                 </dataCategory>
                 <dataCategory>
@@ -1789,6 +1757,42 @@
             </dataCategory>
             <dataCategory>
                 <dataCategory>
+                    <label>Changes / Updates</label>
+                    <name>Changes_Updates_trvpass</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>Closure / Cancellation</label>
+                    <name>Closure_Cancellation_trvpass</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>General Information</label>
+                    <name>General_Information_trvpass</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>Invoicing</label>
+                    <name>Invoicing_trvpass</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>Payment related query</label>
+                    <name>Payment_related_query_trvpass</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>Report issue / Technical issue</label>
+                    <name>Report_Technical_issue_trvpass</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>Sign Up / Join</label>
+                    <name>Sign_Up_Join_trvpass</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>User Management</label>
+                    <name>User_Management_trvpass</name>
+                </dataCategory>
+                <label>IATA Travel Pass</label>
+                <name>IATA_Travel_Pass</name>
+            </dataCategory>
+            <dataCategory>
+                <dataCategory>
                     <label>iiNet General Information</label>
                     <name>iiNet_General_Information</name>
                 </dataCategory>
@@ -1822,6 +1826,38 @@
                 </dataCategory>
                 <label>IINet</label>
                 <name>IINet</name>
+            </dataCategory>
+            <dataCategory>
+                <dataCategory>
+                    <label>General Information</label>
+                    <name>General_Information_MRO</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>Payment</label>
+                    <name>Payment_MRO</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>Sign Up / Join</label>
+                    <name>Sign_Up_Join_MRO</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>Technical Issue</label>
+                    <name>Technical_Issue_MRO</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>User Management</label>
+                    <name>User_Management_MRO</name>
+                </dataCategory>
+                <label>MRO SmartHub</label>
+                <name>MRO_SmartHub</name>
+            </dataCategory>
+            <dataCategory>
+                <dataCategory>
+                    <label>General Information</label>
+                    <name>General_Information_OS</name>
+                </dataCategory>
+                <label>OneSource</label>
+                <name>OneSource</name>
             </dataCategory>
             <dataCategory>
                 <dataCategory>
@@ -1862,30 +1898,6 @@
                 </dataCategory>
                 <label>Weblink</label>
                 <name>Weblink</name>
-            </dataCategory>
-            <dataCategory>
-                <dataCategory>
-                    <label>General Information</label>
-                    <name>General_Information_MRO</name>
-                </dataCategory>
-                <dataCategory>
-                    <label>Payment</label>
-                    <name>Payment_MRO</name>
-                </dataCategory>
-                <dataCategory>
-                    <label>Sign Up / Join</label>
-                    <name>Sign_Up_Join_MRO</name>
-                </dataCategory>
-                <dataCategory>
-                    <label>Technical Issue</label>
-                    <name>Technical_Issue_MRO</name>
-                </dataCategory>
-                <dataCategory>
-                    <label>User Management</label>
-                    <name>User_Management_MRO</name>
-                </dataCategory>
-                <label>MRO SmartHub</label>
-                <name>MRO_SmartHub</name>
             </dataCategory>
             <label>Platforms</label>
             <name>Platforms</name>

@@ -54,7 +54,7 @@ private class EF_InvitationCtrlTest {
 		crd.RecordTypeId = crdRecId;
 		insert crd;
 		
-		Portal_Applications__c pa = new Portal_Applications__c();
+		Portal_Applications__c pa = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
 		pa.name = 'E&F APPS';
 		pa.Cannot_be_managed_by_portal_admin__c = false;
 		pa.Requires_Service_Admin_Approval__c = false;

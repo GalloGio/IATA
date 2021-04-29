@@ -4,8 +4,8 @@
     <apex:pageblock title="Generate Late Remittance CSV Report" >
         
             <apex:pageBlockSection columns="2" collapsible="false" >
-                <apex:inputText value="{!strStartDate}" label="Start Date" id="startDate" onfocus="DatePicker.pickDate(false, this , false);" />
-                <apex:inputText value="{!strEndDate}" label="End Date" id="endDate" onfocus="DatePicker.pickDate(false, this , false);" />
+                <apex:inputField value="{!dummyStart.Bank_Guarantee_deadline__c}" ignoreEditPermissionForRendering="true" label="Start Date" id="startDate" />
+                <apex:inputField value="{!dummyEnd.Bank_Guarantee_deadline__c}" ignoreEditPermissionForRendering="true" label="End Date" id="endDate" />
                 
                 <apex:selectList value="{!strRegion}" label="Region" size="1" multiselect="false">
                     <apex:selectOptions value="{!lstRegions}"/>

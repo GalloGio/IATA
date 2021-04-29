@@ -31,8 +31,9 @@ public class ISSP_CreateNotificationTest {
 				//(Contact)ISSP_ObjectFactory.createSObject('Contact',false,1);
 				insert contact;
 
-				 Portal_Applications__c app = new Portal_Applications__c(Name = 'test app');
-				 insert app;
+				Portal_Applications__c app = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		        app.Name = 'test app';
+                insert app;
 				 Portal_Application_Right__c par = new Portal_Application_Right__c(Contact__c = contact.Id, Portal_Application__c = app.Id, Right__c = 'Access Granted');
 				 par.Contact__c = contact.Id;
 				 insert par;
@@ -100,7 +101,8 @@ public class ISSP_CreateNotificationTest {
 				contact.AccountId = a.Id;
 				insert contact;
 
-				 Portal_Applications__c app = new Portal_Applications__c(Name = 'test app');
+				Portal_Applications__c app = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		        app.Name = 'test app'; 
 				 insert app;
 				 Portal_Application_Right__c par = new Portal_Application_Right__c(Contact__c = contact.Id, Portal_Application__c = app.Id, Right__c = 'Access Granted');
 				 par.Contact__c = contact.Id;
