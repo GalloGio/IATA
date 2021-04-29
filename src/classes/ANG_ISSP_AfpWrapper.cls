@@ -36,6 +36,13 @@ public with sharing class ANG_ISSP_AfpWrapper {
 		set;
 	}
 
+	public boolean isCashlessAgencyUsingCash{
+		get {
+			return (Account.IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c && Account.ANG_Accreditation_Model__c == ams_utils.ACCREDITATIONMODEL_CASHLESS);
+		}
+		private set;
+	}
+
 	public Boolean isCreditCardFlag {
 		get {
 			return isCreditCardFlag == null ? false : isCreditCardFlag;
@@ -220,7 +227,7 @@ public with sharing class ANG_ISSP_AfpWrapper {
 			}
 		}
 
-		if (isCashless) {
+		if (isCashless && !isCashlessAgencyUsingCash) {
 			this.cashlessMessage = hasAccess ? Label.ANG_ISSP_AFP_CashlessMessage : Label.ANG_ISSP_AFP_CashlessMessageNoAccess;
 		}
 
