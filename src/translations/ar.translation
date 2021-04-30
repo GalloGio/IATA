@@ -26724,6 +26724,14 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>TECH_GDPR_Network_Name</name>
     </customLabels>
     <customLabels>
+        <label><!-- TIDS_Redirect_Link --></label>
+        <name>TIDS_Redirect_Link</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- TIDS_Redirect_Message --></label>
+        <name>TIDS_Redirect_Message</name>
+    </customLabels>
+    <customLabels>
         <label><!-- TIP Reports Service Description --></label>
         <name>TIP_Reports_Service_Description</name>
     </customLabels>
@@ -38559,6 +38567,36 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <sections>
             <label><!-- Notifications --></label>
             <name>Notifications</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- ONE source station admins --></description>
+        <label><!-- ONE source station admins --></label>
+        <name>ONE_source_station_admins</name>
+        <sections>
+            <label><!-- Account Roles --></label>
+            <name>Account Roles</name>
+        </sections>
+        <sections>
+            <label><!-- OS contact role details --></label>
+            <name>OS contact role details</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- ONE source station contacts --></description>
+        <label><!-- ONE source station contacts --></label>
+        <name>ONE_source_station_contacts</name>
+        <sections>
+            <label><!-- Account Roles --></label>
+            <name>Account Roles</name>
+        </sections>
+        <sections>
+            <label><!-- ONE Source Contact Role Details --></label>
+            <name>ONE Source Contact Role Details</name>
+        </sections>
+        <sections>
+            <label><!-- OS Stations --></label>
+            <name>OS Stations</name>
         </sections>
     </reportTypes>
     <reportTypes>

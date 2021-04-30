@@ -44621,6 +44621,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>ID_Card__c.Harmonized_Position__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>ID_Card__c.HourWorkedCode__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -64257,7 +64262,7 @@
         <recordType>Participation_Online_Application__c.Accounting_or_Prefix_Code</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Participation_Online_Application__c-ACLI Baggage Code Online Application Layout</layout>
+        <layout>Participation_Online_Application__c-ACLI Baggage Code Online Application Layout v2</layout>
         <recordType>Participation_Online_Application__c.Baggage_Code</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -64265,7 +64270,7 @@
         <recordType>Participation_Online_Application__c.Designator_Code</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Participation_Online_Application__c-ACLI Location Code Online Application Layout</layout>
+        <layout>Participation_Online_Application__c-ACLI Location Code Online Application Layout v2</layout>
         <recordType>Participation_Online_Application__c.Location_Code</recordType>
     </layoutAssignments>
     <layoutAssignments>
