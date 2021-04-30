@@ -7,6 +7,12 @@
         <locationY>281</locationY>
         <apexClass>SCIMCreateUserPlugin</apexClass>
         <inputParameters>
+            <name>ExternalSystem</name>
+            <value>
+                <elementReference>EFAPPS</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>userPayload</name>
             <value>
                 <elementReference>UserPayload</elementReference>
@@ -105,6 +111,12 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>properties</name>
+            <value>
+                <elementReference>CallParams</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>title</name>
             <value>
                 <elementReference>UserFields.Title</elementReference>
@@ -134,6 +146,12 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>ExternalSystem</name>
+            <value>
+                <elementReference>EFAPPS</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>userProvisioningRequestId</name>
             <value>
                 <elementReference>UserProvisioningRequest.Id</elementReference>
@@ -150,6 +168,12 @@
         <locationX>817</locationX>
         <locationY>470</locationY>
         <apexClass>SCIMUpdateUserPlugin</apexClass>
+        <inputParameters>
+            <name>ExternalSystem</name>
+            <value>
+                <elementReference>EFAPPS</elementReference>
+            </value>
+        </inputParameters>
         <inputParameters>
             <name>userPayload</name>
             <value>
@@ -229,6 +253,12 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>properties</name>
+            <value>
+                <elementReference>CallParams</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>title</name>
             <value>
                 <elementReference>UserFields.Title</elementReference>
@@ -246,31 +276,10 @@
         </outputParameters>
     </apexPluginCalls>
     <constants>
-        <name>E_and_F</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>&apos;E&amp;F&apos;</stringValue>
-        </value>
-    </constants>
-    <constants>
         <name>EFAPPS</name>
         <dataType>String</dataType>
         <value>
             <stringValue>EFAPPS</stringValue>
-        </value>
-    </constants>
-    <constants>
-        <name>EFAPPSName</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>E&amp;F APPS</stringValue>
-        </value>
-    </constants>
-    <constants>
-        <name>RTServiceAdmin</name>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>&apos;Service_Admin&apos;</stringValue>
         </value>
     </constants>
     <decisions>
@@ -348,6 +357,12 @@
         <name>BuilderType</name>
         <value>
             <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
