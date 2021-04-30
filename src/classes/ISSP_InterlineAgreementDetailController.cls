@@ -1,0 +1,197 @@
+public with sharing class ISSP_InterlineAgreementDetailController {
+
+	public MITA_Agreement__c selectedAgreement {get;set;}
+	public Account otherAirline {get;set;}
+	public Boolean hasWithdrawPermission {get;set;}
+
+	public MITA_Agreement__c dummyAgreement {get;set;}
+	public Boolean showSuccessWithdrawn {get;set;}
+
+	public ISSP_InterlineAgreementDetailController(){
+		this.dummyAgreement = new MITA_Agreement__c();
+	}
+
+	/**
+	 * Getting the number of days to wait from today to be able to withdraw an agreement
+	 */
+	public Integer getDaysForWithdrawal() {
+		return MITAutil.DAYS_TO_WAIT_FOR_WITHDRAWAL;
+	}
+
+	/**
+	 * String formatted version for the withdrawal date
+	 */
+	public String getWithdrawnDateFormatted() {
+		return MITAutil.dateformat(dummyAgreement.Cancellation_date__c);
+	}
+
+	/**
+	 * Withdraw an agreement updating the three cancellation fields in a MITA_Agreement__c record
+	 * only available if the user has permission to do so
+	 */
+	public void withdrawAgreement() {
+		if(!this.hasWithdrawPermission) return;
+		if (this.dummyAgreement.Cancellation_date__c ==null || this.dummyAgreement.Cancellation_date__c < Date.today().addDays(getDaysForWithdrawal())) {
+			return;
+		}
+
+		this.selectedAgreement.Cancellation_processed_date__c = Date.today();
+		this.selectedAgreement.Withdrawal_Request_Reception_Date__c = Date.today();
+		this.selectedAgreement.Cancellation_Reason__c = this.selectedAgreement.Airline_1__c == this.otherAirline.Id? 'Airline 1 leaves agreement': 'Airline 2 leaves agreement';
+		this.selectedAgreement.Cancellation_date__c = this.dummyAgreement.Cancellation_date__c;
+
+		Database.SaveResult result = Database.update(this.selectedAgreement);
+		this.showSuccessWithdrawn = result.isSuccess();
+	}
+
+	/**
+	 * Get the selected agreement object containing more detailed information
+	 */
+	public AgreementDetail agreementDetail{
+		get{
+			String agreementType = this.selectedAgreement.Agreement_type__c;
+			// if it's a one way agreement and the other airline is in first place find the oposite agreement name
+			if (this.selectedAgreement.Airline_1__c == this.otherAirline.Id && MITAutil.MAP_ONE_WAY_TYPES.containsKey(agreementType)) {
+				agreementType = MITAutil.MAP_ONE_WAY_TYPES.get(agreementType);
+			}
+			AgreementDetail row = new AgreementDetail();
+			row.agreementId = this.selectedAgreement.id;
+			row.otherAirlineDesignator = this.otherAirline.Airline_designator__c;
+			row.otherAirlineIataCode = this.otherAirline.IATACode__c;
+			row.otherAirlinePrefix = this.otherAirline.Airline_Prefix__c;
+			row.otherAirlineName = this.otherAirline.Name;
+			row.otherAirlineLogo = this.otherAirline.Company_Logo__c;
+			row.agreementType = MITAutil.MAP_AGREEMENT_LABELS.get(agreementType);
+			row.agreementName = this.selectedAgreement.MITAorBIETA__c;
+			row.agreementStatus = this.selectedAgreement.Status__c;
+			row.agreementEffectiveDate = MITAutil.dateformat(this.selectedAgreement.Effective_date__c);
+			row.agreementCancellationDate = MITAutil.dateformat(this.selectedAgreement.Cancellation_date__c);
+			row.minWithdrawDate = DateTime.now().addDays(getDaysForWithdrawal()).format('yyyy-MM-dd');
+			return row;
+		}
+		private set;
+	}
+
+	/**
+	 * Class used as a wrapper to whoe agreement details
+	 */
+	public class AgreementDetail {
+		public String agreementId {get;set;}
+		public String otherAirlineDesignator {get;set;}
+		public String otherAirlineIataCode {get;set;}
+		public String otherAirlinePrefix {get;set;}
+		public String otherAirlineName {get;set;}
+		public String otherAirlineLogo {get;set;}
+		public String agreementType {get;set;}
+		public String agreementName {get;set;}
+		public String agreementStatus {get;set;}
+		public String agreementEffectiveDate {get;set;}
+		public String agreementCancellationDate {get;set;}
+		public String minWithdrawDate {get;set;}
+	}
+
+	/**
+	 * Get the list of changes for the current agreement
+	 */
+	public list<HistoryRow> AgreementHistory {
+		get{
+			// get history records and its related users in a separate query (not allowed directly)
+			list<MITA_Agreement__history> listHistory = [SELECT Id, ParentId, CreatedById, CreatedDate, Field, OldValue, NewValue
+				FROM MITA_Agreement__history
+				WHERE ParentId = :this.selectedAgreement.Id
+				ORDER BY CreatedDate DESC];
+			
+			set<Id> setUserId = new set<Id>();
+			for (MITA_Agreement__history history: listHistory) {
+				setUserId.add(history.CreatedById);
+			}
+			map<Id,User> mapUsers = new map<Id,User>([SELECT Id, Name, ContactId, Contact.AccountId, Contact.Account.Name FROM User WHERE Id IN :setUserId]);
+
+			// create history rows to be displayed in the page
+			list<HistoryRow> listHistoryRow = new list<HistoryRow>();
+			for (MITA_Agreement__history history: listHistory) {
+				String details = getDetails(history);
+				if (details!=null) {
+					User user = mapUsers.get(history.CreatedById);
+					HistoryRow row = new HistoryRow();
+					row.datechange = history.CreatedDate.format();
+					row.company = user.ContactId == null? 'IATA': user.Contact.Account.Name;
+					row.username = user.ContactId == null? 'IATA': user.Name;
+					row.details = details;
+					listHistoryRow.add(row);
+				}
+			}
+			return listHistoryRow;
+		}
+		private set;
+	}
+
+	@TestVisible
+	private String getDetails(MITA_Agreement__history history) {
+		if (history.field == 'created') {
+			return 'Agreement Requested';
+		}
+		if (history.field == 'Agreement_processed_date__c' && history.OldValue == null && history.newValue != null) {
+			return 'Agreement Accepted';
+		}
+		if (history.field == 'Agreement_processed_date__c' && history.OldValue != null && history.newValue == null) {
+			return 'Undo Agreement Accepted';
+		}
+		if (history.field == 'Cancellation_date__c' && history.OldValue == null && history.newValue != null) {
+			if (this.selectedAgreement.Cancellation_Reason__c ==null || this.selectedAgreement.Cancellation_Reason__c == 'Rejected by Airline 2') {
+				return 'Agreement Rejected';
+			}
+			return 'Agreement Withdrawn';
+		}
+		if (history.field == 'Cancellation_date__c' && history.OldValue != null && history.newValue == null) {
+			return 'Undo Agreement Rejected';
+		}
+		return null;
+	}
+
+	/**
+	 * Wrapper class to store agreement history info
+	 */
+	public class HistoryRow {
+		public String datechange {get;set;}
+		public String company {get;set;}
+		public String username {get;set;}
+		public String details {get;set;}
+	}
+
+	/**
+	 * Get the contacts that belongs to the selected airline to show them in a modal
+	 */
+	public List<AccountContactRow> getAccountContactRows(){
+		List<AccountContactRow> listRows = new List<AccountContactRow>();
+
+		for(Contact contact: [
+			SELECT id, Account.Name, name, email, phone, salutation, MITA_Contact_Type__c
+			FROM Contact
+			WHERE Recordtype.DeveloperName = 'Standard_Contact'
+			AND Status__c = 'Active'
+			AND AccountId = :this.otherAirline.Id
+			ORDER BY Name ASC ])
+		{
+			AccountContactRow row = new AccountContactRow();
+			String salutation = (String.isBlank(contact.salutation)? '': contact.salutation + ' ');
+			row.fullName = salutation + contact.name;
+			row.email = contact.email;
+			row.phone = String.isBlank(contact.phone)? '-': contact.phone;
+			row.mitaType = String.isBlank(contact.MITA_Contact_Type__c)? '-': contact.MITA_Contact_Type__c;
+			listRows.add(row);
+		}
+		return listRows;
+	}
+
+	/**
+	 * Wrapper class to show agreement contact table
+	 */
+	public class AccountContactRow {
+		public String fullName {get;set;}
+		public String email {get;set;}
+		public String phone {get;set;}
+		public String mitaType {get;set;}
+	}
+
+}
