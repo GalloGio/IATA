@@ -68979,7 +68979,7 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>AMS_Pax_Accreditation_Form__c.Annual_Revalidation</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
@@ -69044,7 +69044,7 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>AMS_Pax_Accreditation_Form__c.New_Gen_Changes</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
@@ -69054,12 +69054,12 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>AMS_Pax_Accreditation_Form__c.Other_Changes_NAM</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>AMS_Pax_Accreditation_Form__c.PCI_Compliance</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
@@ -69100,7 +69100,7 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>AMS_Pax_Accreditation_Form__c.VR</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
