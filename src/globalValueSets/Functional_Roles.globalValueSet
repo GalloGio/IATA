@@ -360,6 +360,11 @@
         <default>false</default>
         <label>Treasury Dashboard - Premium</label>
     </customValue>
+    <customValue>
+        <fullName>Laboratory</fullName>
+        <default>false</default>
+        <label>Laboratory</label>
+    </customValue>
     <description>Functional Roles</description>
     <masterLabel>Functional Roles</masterLabel>
     <sorted>true</sorted>

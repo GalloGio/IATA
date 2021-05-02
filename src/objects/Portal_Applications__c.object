@@ -1812,6 +1812,10 @@ IF(OR(
                 <default>false</default>
             </values>
             <values>
+                <fullName>Laboratory</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Local Industry Groups</fullName>
                 <default>false</default>
             </values>
