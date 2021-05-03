@@ -4,27 +4,27 @@
     <protected>false</protected>
     <values>
         <field>Can_Account_Be_Created__c</field>
-        <value xsi:type="xsd:boolean">false</value>
+        <value xsi:type="xsd:boolean">true</value>
     </values>
     <values>
         <field>Created_Account_Category__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">Laboratory</value>
     </values>
     <values>
         <field>Created_Account_Sector__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">Healthcare Industry</value>
     </values>
     <values>
         <field>Display_Country__c</field>
-        <value xsi:type="xsd:boolean">false</value>
+        <value xsi:type="xsd:boolean">true</value>
     </values>
     <values>
         <field>Display_Submit_for_Account_Creation__c</field>
-        <value xsi:type="xsd:boolean">false</value>
+        <value xsi:type="xsd:boolean">true</value>
     </values>
     <values>
         <field>Fields_Displayed__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">Name,Sector__c,Category__c,BillingStreet</value>
     </values>
     <values>
         <field>Fields_Targeted_Exact_Match__c</field>
@@ -40,7 +40,7 @@
     </values>
     <values>
         <field>Filter_on_Record_Type__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">Other, Standard Account</value>
     </values>
     <values>
         <field>Filter_on_Sector__c</field>
@@ -52,19 +52,19 @@
     </values>
     <values>
         <field>Parent__c</field>
-        <value xsi:nil="true"/>
+        <value xsi:type="xsd:string">Healthcare_Industry</value>
     </values>
     <values>
         <field>Partial_List_Order__c</field>
-        <value xsi:type="xsd:string">2</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>Placeholder_Custom_Label__c</field>
-        <value xsi:type="xsd:string">Select</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>Search_Option__c</field>
-        <value xsi:type="xsd:string">No Search</value>
+        <value xsi:type="xsd:string">User Search</value>
     </values>
     <values>
         <field>Send_Email_Notification__c</field>
@@ -72,10 +72,10 @@
     </values>
     <values>
         <field>Sub_Categorization_Custom_Label__c</field>
-        <value xsi:type="xsd:string">Category</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>Type__c</field>
-        <value xsi:type="xsd:string">Sector</value>
+        <value xsi:type="xsd:string">Category</value>
     </values>
 </CustomMetadata>
