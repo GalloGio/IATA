@@ -389,7 +389,7 @@
             <name>Activate_Financial_contact</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Portal_Applications__c.Name</field>
             <operation>equals</operation>
@@ -446,7 +446,7 @@
             <name>Deactivate_Financial_contact</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Portal_Applications__c.Name</field>
             <operation>equals</operation>
@@ -465,7 +465,7 @@
             <name>Update_SIS_User</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Portal_Applications__c.Name</field>
             <operation>equals</operation>
@@ -484,7 +484,7 @@
             <name>ISS_Portal_SIS_Portal_service_Inactiva</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Portal_Applications__c.Name</field>
             <operation>equals</operation>
@@ -503,7 +503,7 @@
             <name>KAVI_Access_Granted</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Portal_Application_Right__c.Right__c</field>
             <operation>equals</operation>
@@ -532,7 +532,7 @@
             <name>ISSP_Alert_contact_of_TD_Premium_request</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Portal_Application_Right__c.Application_Name__c</field>
             <operation>equals</operation>
@@ -561,7 +561,7 @@
             <name>ISSP_Alert_contact_of_TD_Premium_request_FIRST</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Portal_Application_Right__c.Application_Name__c</field>
             <operation>equals</operation>
@@ -590,7 +590,7 @@
             <name>ISSP_Alert_contact_of_Treasury_Dashboard_request</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <description>Notify contact of access request to TD + The ISS Portal user receives a Treasury Dashboard &quot;commercial&quot; information email that explains specific TD access information</description>
         <formula>AND(ISPICKVAL(Right__c, &apos;Access Requested&apos;), Portal_Application__r.Name  =  &apos;Treasury Dashboard&apos;)</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
@@ -661,7 +661,7 @@
             <name>Notify_Admin_of_contact_request</name>
             <type>FieldUpdate</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <formula>AND( TEXT(Right__c) = &apos;Access Requested&apos;, Portal_Application__r.Name != &apos;Treasury Dashboard&apos;, Portal_Application__r.Name != &apos;Currency Center&apos;, OR( ISBLANK(Contact__r.Community__c), NOT(BEGINS(Contact__r.Community__c, &apos;CNS&apos;)) ), OR( AND( BEGINS(Portal_Application__r.Name, &apos;IATA EasyPay&apos;), Contact__r.Account.ANG_IEP_Status_FF__c = &quot;Open&quot; ), NOT(BEGINS(Portal_Application__r.Name, &apos;IATA EasyPay&apos;)) ), OR( AND( Portal_Application__r.Name == &apos;Global Default Insurance (GDI)&apos;, TEXT(Contact__r.User_Portal_Status__c) != &quot;Approved Admin&quot; ), Portal_Application__r.Name != &apos;Global Default Insurance (GDI)&apos; ), Contact__c = $User.ContactId )</formula>
         <triggerType>onCreateOnly</triggerType>
     </rules>
@@ -675,7 +675,7 @@
             <name>Send_email_to_administrators_to_validate_request_cns</name>
             <type>Alert</type>
         </actions>
-        <active>true</active>
+        <active>false</active>
         <booleanFilter>1 AND 2 AND 3</booleanFilter>
         <criteriaItems>
             <field>Portal_Application_Right__c.Right__c</field>
