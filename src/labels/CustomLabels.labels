@@ -7182,7 +7182,7 @@ You can easily create a company account in two steps</value>
         <protected>false</protected>
         <shortDescription>CSP Privacy Policy</shortDescription>
         <value>I agree with IATA&apos;s
-&lt;a target=&quot;_blank&quot; href=&quot;https://www.iata.org/Pages/privacy.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Privacy Policy&lt;/a&gt;
+&lt;a target=&quot;_blank&quot; href=&quot;https://www.iata.org/en/privacy&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Privacy Policy&lt;/a&gt;
  and
 &lt;a target=&quot;_blank&quot; href=&quot;https://www.iata.org/en/terms&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Terms of Use.&lt;/a&gt;</value>
     </labels>
@@ -43159,7 +43159,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_36</shortDescription>
-        <value>5.1	User accepts and acknowledges that IATA&apos;s Privacy Policy (located at https://www.iata.org/Pages/privacy.aspx) applies to the System, and by signing this Agreement, User agrees to be bound by the terms contained therein.</value>
+        <value>5.1	User accepts and acknowledges that IATA&apos;s Privacy Policy (located at https://www.iata.org/en/privacy) applies to the System, and by signing this Agreement, User agrees to be bound by the terms contained therein.</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_37</fullName>
@@ -47742,7 +47742,7 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>csp_Footer_Privacy_URL</shortDescription>
-        <value>https://www.iata.org/Pages/privacy.aspx</value>
+        <value>https://www.iata.org/en/privacy</value>
     </labels>
     <labels>
         <fullName>csp_Footer_Twitter_URL</fullName>
