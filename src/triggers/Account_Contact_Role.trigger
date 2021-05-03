@@ -78,13 +78,16 @@ trigger Account_Contact_Role on Account_Contact_Role__c (after delete, after ins
 			}		   
 		}
 
-		List<Account_Contact_Role__c> accountContactRoleList = new List<Account_Contact_Role__c>();
-		for(Account_Contact_Role__c accountContactRole : Trigger.new){
-			if(accountContactRole.Service_Rendered__c.equals('GADM'))
-				accountContactRoleList.add(accountContactRole);
+		if(!trigger.isDelete){
+			List<Account_Contact_Role__c> accountContactRoleList = new List<Account_Contact_Role__c>();
+			for(Account_Contact_Role__c accountContactRole : Trigger.new){
+				if(accountContactRole.Service_Rendered__c != null && accountContactRole.Service_Rendered__c.equals('GADM'))
+					accountContactRoleList.add(accountContactRole);
+			}
+			if(!accountContactRoleList.isEmpty())
+				ShareObjectsToExternalUsers.shareObjectsByRoleOnAccountContactRoleChange(accountContactRoleList ,Trigger.oldMap);
 		}
-		ShareObjectsToExternalUsers.shareObjectsByRoleOnAccountContactRoleChange(accountContactRoleList ,Trigger.oldMap);
-
+		
 		//Trigger the platform events if bypass custom permission is not assigned
 		if(!FeatureManagement.checkPermission('Bypass_Platform_Events')){
 			if((Limits.getLimitQueueableJobs() - Limits.getQueueableJobs()) > 0 && !System.isFuture() && !System.isBatch()) {
