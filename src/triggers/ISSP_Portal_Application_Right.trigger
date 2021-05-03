@@ -3,7 +3,7 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (before ins
 	if (PortalServiceAccessTriggerHandler.avoidAppTrigger) return;
 
 	//we skip this trigger if IFAP portal service so we avoid too many SOQL queries
-	if (!trigger.isDelete) {
+	if (!trigger.isDelete && !trigger.isBefore) {
 		for (Portal_Application_Right__c access : trigger.new) {
 			if (access.Application_Name__c == 'IFAP' )
 				return;
@@ -71,7 +71,7 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (before ins
 	List<Portal_Application_Right__c> passGrantPortalRights = new List<Portal_Application_Right__c>();
 	List<Portal_Application_Right__c> passReGrantPortalRights = new List<Portal_Application_Right__c>();
 	List<Portal_Application_Right__c> passDenyPortalRights = new List<Portal_Application_Right__c>();
-	if(!Trigger.isDelete && trigger.new!=null && Trigger.isUpdate){
+	if(trigger.new!=null && Trigger.isUpdate){
 		for(Portal_Application_Right__c portal : trigger.new){
 
 			if (portal.Application_Name__c.startsWith(AMS_Utils.passSSOPortalService) && portal.Right__c == 'Access Granted' && (Trigger.oldMap.get(portal.Id).Right__c == 'Access Requested')){
@@ -471,7 +471,7 @@ trigger ISSP_Portal_Application_Right on Portal_Application_Right__c (before ins
 		}
 	}
 
-	if (!trigger.isDelete) {
+	if (!trigger.isDelete && !trigger.isBefore) {
 		if (Trigger.new.size() > 1)
 			return;
 
