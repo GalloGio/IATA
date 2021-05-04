@@ -262,7 +262,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 	}
 
 	@TestVisible
-	private Integer rowsPerPage = 100;
+	private Integer rowsPerPage = 25;
 
 	public Integer currentPage{
 		get{
