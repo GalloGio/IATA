@@ -276,8 +276,6 @@ private class ANG_AccountTriggerHandlerTest {
 	}
 
 	static testMethod void test_riskStatus_allcases() {
-
-		Test.startTest();
 		Account a = [SELECT Id FROM Account WHERE Name = 'Test'];
 		// fill accounts last financial review result and risk history and assert new risk status
 		System.debug(loggingLevel.FINE, '____ [cls ANG_AccountTriggerHandlerTest - test_riskStatus_allcases] first update should be A');
@@ -294,6 +292,7 @@ private class ANG_AccountTriggerHandlerTest {
 		a.Financial_Review_Result__c = ANG_Risk_Helper.FR_UNSATISFACTORY;
 		update a;
 
+		Test.startTest();
 
 		a = [SELECT Id, ANG_RiskStatus__c, IATACode__c, (SELECT Id, Subject FROM Cases ORDER BY CreatedDate) FROM Account WHERE Name = 'Test'];
 		System.assertEquals(ANG_Risk_Helper.RISK_STATUS_B, a.ANG_RiskStatus__c);
