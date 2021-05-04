@@ -1812,7 +1812,7 @@ IF(OR(
                 <default>false</default>
             </values>
             <values>
-                <fullName>Laboratory</fullName>
+                <fullName>Lab Registry</fullName>
                 <default>false</default>
             </values>
             <values>
