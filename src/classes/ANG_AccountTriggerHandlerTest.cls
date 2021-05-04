@@ -215,9 +215,69 @@ private class ANG_AccountTriggerHandlerTest {
 			);
 		insert ret;
 
+		Account accountToUpdateRiskEventCashAndCashless = new Account(
+				Name ='account To Update Risk Event Cash to Cashless',
+				Type = 'IATA Passenger Sales Agent',
+				Sector__c='Travel Agent',
+				Location_Type__c = AMS_Utils.HE,
+				Location_Class__c = 'P',
+				ANG_FA_Opt_out__c = false,
+				IATACode__c='12345600',
+				IATA_ISO_Country__c = countries[0].Id,
+				BillingCountry='Iso Country Name Test',
+				ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH,
+				Status__c = AMS_Utils.ACC_S9_APPROVED,
+				ANG_HE_RiskHistoryAssessment__c = ANG_Risk_Helper.RISK_ASSESSMENT_PASSED,
+				Financial_Review_Result__c = ANG_Risk_Helper.FR_UNSATISFACTORY,
+				RecordTypeId = accRT
+			);
+		insert accountToUpdateRiskEventCashAndCashless;
+		AMS_OSCAR__c oscar = new AMS_OSCAR__c(RecordTypeId = AMS_Utils.RECTYPE_NGCHANGES, Account__c = accountToUpdateRiskEventCashAndCashless.Id, ANG_Type_Of_Change__c = AMS_Utils.ANG_ACCREDITATION_TYPE);
+		insert oscar;
+
+		Case testCase = ISSP_ObjectFactory.createNewCase();
+		testCase.BSPCountry__c = 'Hong Kong (SAR), China';
+		testCase.Reason1__c = 'Agency';
+		testCase.Customer_recovery__c = false;
+		testCase.BounceEmailCounter__c = 0.0;
+		testCase.Case_Language__c = 'English';
+		testCase.Subject = 'Test 006';
+		testCase.Reopened_case__c = 0.0;
+		testCase.IFAP_Country_ISO__c = 'tq';
+		testCase.AccountId = accountToUpdateRiskEventCashAndCashless.id;
+		testCase.Oscar__c = oscar.Id;
+		insert testCase;
+
+		IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Test', ISO_Code__c = 'TS');
+		insert isoc;
+
+		AMS_Pax_Accreditation_Form__c onlineAccreditation = new AMS_Pax_Accreditation_Form__c(IsGSA__c = 'No', CurrencyIsoCode = isoc.CurrencyIsoCode, SAAM_Case__c = testCase.Id, Account_Name__c = accountToUpdateRiskEventCashAndCashless.Name, ANG_Accreditation_Model_to_Change__c = AMS_Utils.ACCREDITATIONMODEL_CASH);
+		insert onlineAccreditation;
+
+		oscar.AMS_Online_Accreditation__c = onlineAccreditation.id;
+		update oscar;
+
+
+		Agency_Applied_Change_code__c ch1 = new Agency_Applied_Change_code__c(OSCAR__c = oscar.id, Account__c = accountToUpdateRiskEventCashAndCashless.Id, Change_Code__c = 'CHA');
+		insert ch1;
+		Test.setCreatedDate(ch1.id, Date.today().addYears(-3));
+
+		ANG_Risk_Event_Type__c ret2 = [Select Id from ANG_Risk_Event_Type__c Where Name = 'Risk Event Test'];
+		ANG_Agency_Risk_Event__c re1 = new ANG_Agency_Risk_Event__c(
+				ANG_AccountId__c = accountToUpdateRiskEventCashAndCashless.id,
+				ANG_Risk_Type__c = ret2.id,
+				ANG_Issued_Date__c = System.today(),
+				ANG_Event_Status__c = ANG_Risk_Helper.STATUS_ACTIVE
+			);
+
+		insert re1;
+		Test.setCreatedDate(re1.id, Date.today().addDays(-10));
+
 	}
 
 	static testMethod void test_riskStatus_allcases() {
+
+		Test.startTest();
 		Account a = [SELECT Id FROM Account WHERE Name = 'Test'];
 		// fill accounts last financial review result and risk history and assert new risk status
 		System.debug(loggingLevel.FINE, '____ [cls ANG_AccountTriggerHandlerTest - test_riskStatus_allcases] first update should be A');
@@ -234,7 +294,6 @@ private class ANG_AccountTriggerHandlerTest {
 		a.Financial_Review_Result__c = ANG_Risk_Helper.FR_UNSATISFACTORY;
 		update a;
 
-		Test.startTest();
 
 		a = [SELECT Id, ANG_RiskStatus__c, IATACode__c, (SELECT Id, Subject FROM Cases ORDER BY CreatedDate) FROM Account WHERE Name = 'Test'];
 		System.assertEquals(ANG_Risk_Helper.RISK_STATUS_B, a.ANG_RiskStatus__c);
@@ -846,6 +905,22 @@ private class ANG_AccountTriggerHandlerTest {
 
 		Test.stopTest();
 
+	}
+
+	static testMethod void test_UpdateRiskEventCashAndCashless() {
+		Account accountToUpdateRiskEventCashAndCashless = [SELECT Id, Name, ANG_Accreditation_Model__c FROM Account WHERE Name = 'account To Update Risk Event Cash to Cashless' LIMIT 1];
+		accountToUpdateRiskEventCashAndCashless.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASHLESS;
+		update accountToUpdateRiskEventCashAndCashless;
+	}
+	static testMethod void test_UpdateRiskEventCashAndCashless1() {
+		Account accountToUpdateRiskEventCashAndCashless = [SELECT Id, Name, ANG_Accreditation_Model__c FROM Account WHERE Name = 'account To Update Risk Event Cash to Cashless' LIMIT 1];
+		AMS_OSCAR__c oscar = [SELECT id FROM AMS_OSCAR__c WHERE Account__c =: accountToUpdateRiskEventCashAndCashless.id];
+		Agency_Applied_Change_code__c ch1 = new Agency_Applied_Change_code__c(OSCAR__c = oscar.id, Account__c = accountToUpdateRiskEventCashAndCashless.Id, Change_Code__c = 'CWD');
+		insert ch1;
+		Test.setCreatedDate(ch1.id, Date.today().addYears(-2));
+		accountToUpdateRiskEventCashAndCashless.Accreditation_date__c = Date.today().addYears(-3);
+		accountToUpdateRiskEventCashAndCashless.ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASHLESS;
+		update accountToUpdateRiskEventCashAndCashless;
 	}
 
 	public class MockHttpResponseSuccessGenerator implements HttpCalloutMock {

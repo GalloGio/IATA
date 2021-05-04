@@ -387,7 +387,6 @@ public class ANG_AccountTriggerHandler {
 		set<Id> inactiveAccsIdSet = new set<Id>();
 		set<Id> activeAccsIdSet = new set<Id>();
 		set<Id> inactivateAcctsSet = new set<Id>();
-		set<Id> reActivateAcctsSet = new set<Id>();
 
 		List<ANG_Agency_Risk_Event__c> riskEventsToInactiveList = new List<ANG_Agency_Risk_Event__c>();
 		List<ANG_Agency_Risk_Event__c> riskEventsToActiveList = new List<ANG_Agency_Risk_Event__c>();
@@ -405,18 +404,14 @@ public class ANG_AccountTriggerHandler {
 			/*When changing accreditation type from Cash to Cashless, any active Risk Event should be updated to status "Inactive_Cashless"*/
 			if(oldMap.get(a.id).ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH && a.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASHLESS)
 				inactivateAcctsSet.add(a.id);
-
-			/*When changing accreditation type from Cashless To Cash, any inactive_cashless Risk Event should be updated to status "Active"*/
-			if(oldMap.get(a.id).ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASHLESS && a.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH)
-				reActivateAcctsSet.add(a.id);
 		}
 
 		// get all change codes to control update on related risk Events When changing accreditation type from Cash to Cashless
-		if(!inactivateAcctsSet.isEmpty() || !reActivateAcctsSet.isEmpty()){
+		if(!inactivateAcctsSet.isEmpty()){
 			for( Agency_Applied_Change_code__c cc : [SELECT id, Account__c, Bulletin_Information__c, Change_Code__c, OSCAR__r.Name, OSCAR__r.ANG_Type_Of_Change__c, 
 															OSCAR__r.AMS_Online_Accreditation__r.ANG_Accreditation_Model_to_Change__c, CreatedDate 
 														FROM Agency_Applied_Change_code__c 
-														WHERE (Account__c IN : inactivateAcctsSet OR Account__c IN : reActivateAcctsSet)
+														WHERE Account__c IN : inactivateAcctsSet 
 															AND Change_Code__c in : VALID_CHANGE_CODES 
 															AND CreatedDate <: Date.today()
 															ORDER BY CreatedDate DESC]){
@@ -437,7 +432,6 @@ public class ANG_AccountTriggerHandler {
 		set<id> accIdSet = new set<id>(activeAccsIdSet);
 		accIdSet.addAll(inactiveAccsIdSet);
 		accIdSet.addAll(inactivateAcctsSet);
-        accIdSet.addAll(reActivateAcctsSet);
 
 		//get all related risk Events
 		if(accIdSet.isEmpty())

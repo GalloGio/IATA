@@ -1037,7 +1037,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS OSCAR STEP52</shortDescription>
-        <value>Re-active Risk Event</value>
+        <value>Re-activate Risk Event</value>
     </labels>
     <labels>
         <fullName>AMS_OSCAR_STEP6</fullName>
