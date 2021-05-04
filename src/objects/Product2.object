@@ -8130,6 +8130,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>TTBS</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Taxes</fullName>
                 <default>false</default>
             </values>
@@ -11267,6 +11271,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>TIESS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TTBS</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -14498,6 +14506,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>TTBS</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Taxes</fullName>
                 <default>false</default>
             </values>
@@ -17561,6 +17573,10 @@ The product will only appear on the Online Store when the date entered in this f
         </picklistValues>
         <picklistValues>
             <picklist>Family</picklist>
+            <values>
+                <fullName>TTBS</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Training - Distance</fullName>
                 <default>false</default>
@@ -20798,6 +20814,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>TIESS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TTBS</fullName>
                 <default>false</default>
             </values>
             <values>
