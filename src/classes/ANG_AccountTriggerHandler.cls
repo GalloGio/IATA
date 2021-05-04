@@ -443,58 +443,44 @@ public class ANG_AccountTriggerHandler {
 		if(accIdSet.isEmpty())
 			return;
 			
-		List<ANG_Agency_Risk_Event__c> reToUpdateList=[select Id,ang_event_status__c,ANG_Issued_Date__c,ANG_AccountId__c, Applicable_for_re_activation__c, ANG_AccountId__r.Accreditation_date__c from ANG_Agency_Risk_Event__c where ANG_AccountId__c in :accIdSet and  ang_event_status__c in (:ANG_Risk_Helper.STATUS_ACTIVE, :ANG_Risk_Helper.STATUS_INACTIVE, :ANG_Risk_Helper.STATUS_TERMINATED, :ANG_Risk_Helper.STATUS_INACTIVE_CASHLESS)];
+		List<ANG_Agency_Risk_Event__c> reToUpdateList=[select Id,ang_event_status__c,ANG_Issued_Date__c,ANG_AccountId__c, Applicable_for_re_activation__c, ANG_AccountId__r.Accreditation_date__c from ANG_Agency_Risk_Event__c where ANG_AccountId__c in :accIdSet and  ang_event_status__c in (:ANG_Risk_Helper.STATUS_ACTIVE, :ANG_Risk_Helper.STATUS_INACTIVE, :ANG_Risk_Helper.STATUS_TERMINATED)];
 
 		for(ANG_Agency_Risk_Event__c re : reToUpdateList){
-			if(re.ang_event_status__c != ANG_Risk_Helper.STATUS_INACTIVE_CASHLESS){
-				if(inactiveAccsIdSet.contains(re.ANG_AccountId__c)
-					&& (re.ang_event_status__c == ANG_Risk_Helper.STATUS_ACTIVE || (re.ang_event_status__c == ANG_Risk_Helper.STATUS_INACTIVE && re.ANG_Issued_Date__c > system.Today()))){
-						re.ang_event_status__c = ANG_Risk_Helper.STATUS_TERMINATED;
-	
-				} else if (activeAccsIdSet.contains(re.ANG_AccountId__c) && re.ang_event_status__c == ANG_Risk_Helper.STATUS_TERMINATED){
-					re.ang_event_status__c = ANG_Risk_Helper.STATUS_ACTIVE;
-				}else if( inactivateAcctsSet.contains(re.ANG_AccountId__c) && re.ang_event_status__c <> ANG_Risk_Helper.STATUS_INACTIVE_CASHLESS){
-					re.ang_event_status__c = ANG_Risk_Helper.STATUS_INACTIVE_CASHLESS;
-					re = updateRiskEventCashAndCashless(mapOfchangeCodesByAccount, re, AMS_Utils.ACCREDITATIONMODEL_CASH, mapOfchangeCodesCWDByCaseNumber);
-				}
-			}else if(reActivateAcctsSet.contains(re.ANG_AccountId__c) && re.Applicable_for_re_activation__c == true){
-				re = updateRiskEventCashAndCashless(mapOfchangeCodesByAccount, re, AMS_Utils.ACCREDITATIONMODEL_CASHLESS, mapOfchangeCodesCWDByCaseNumber);
-			}
+			if(inactiveAccsIdSet.contains(re.ANG_AccountId__c)
+				&& (re.ang_event_status__c == ANG_Risk_Helper.STATUS_ACTIVE || (re.ang_event_status__c == ANG_Risk_Helper.STATUS_INACTIVE && re.ANG_Issued_Date__c > system.Today()))){
+					re.ang_event_status__c = ANG_Risk_Helper.STATUS_TERMINATED;
 
+			} else if (activeAccsIdSet.contains(re.ANG_AccountId__c) && re.ang_event_status__c == ANG_Risk_Helper.STATUS_TERMINATED){
+				re.ang_event_status__c = ANG_Risk_Helper.STATUS_ACTIVE;
+			}else if( inactivateAcctsSet.contains(re.ANG_AccountId__c) && re.ang_event_status__c <> ANG_Risk_Helper.STATUS_INACTIVE_CASHLESS){
+				re.ang_event_status__c = ANG_Risk_Helper.STATUS_INACTIVE_CASHLESS;
+				re = updateRiskEventCashAndCashless(mapOfchangeCodesByAccount, re, mapOfchangeCodesCWDByCaseNumber);
+			}
 		}
 
 		update reToUpdateList;
 	}
 
-	public ANG_Agency_Risk_Event__c updateRiskEventCashAndCashless(map<Id,list<Agency_Applied_Change_code__c>> mapCCByAccount, ANG_Agency_Risk_Event__c re, String typrOfChangeCode, map<String, Agency_Applied_Change_code__c> mapOfchangeCodesCWDByCaseNumber){
+	public ANG_Agency_Risk_Event__c updateRiskEventCashAndCashless(map<Id,list<Agency_Applied_Change_code__c>> mapCCByAccount, ANG_Agency_Risk_Event__c re, map<String, Agency_Applied_Change_code__c> mapOfchangeCodesCWDByCaseNumber){
 		
-		Date checkCreatedDateRE = null;
 		Boolean checkRiskEventUpdated = false;
-
-		if(typrOfChangeCode == AMS_Utils.ACCREDITATIONMODEL_CASH){
-			checkCreatedDateRE = Date.today().addYears(-2);
-		}else{
-			checkCreatedDateRE = Date.today().addMonths(-6);
-		}
+		
 		if(mapCCByAccount.get(re.ANG_AccountId__c) != null){
 			for(Integer index = 0; index < mapCCByAccount.get(re.ANG_AccountId__c).size(); index ++){
 				if(mapCCByAccount.get(re.ANG_AccountId__c)[index].OSCAR__r.ANG_Type_Of_Change__c == AMS_Utils.ANG_ACCREDITATION_TYPE
-						&& mapCCByAccount.get(re.ANG_AccountId__c)[index].OSCAR__r.AMS_Online_Accreditation__r.ANG_Accreditation_Model_to_Change__c == typrOfChangeCode
-						&& ((mapCCByAccount.get(re.ANG_AccountId__c)[index].CreatedDate < = checkCreatedDateRE && typrOfChangeCode == AMS_Utils.ACCREDITATIONMODEL_CASH) 
-						|| mapCCByAccount.get(re.ANG_AccountId__c)[index].CreatedDate > = checkCreatedDateRE && typrOfChangeCode == AMS_Utils.ACCREDITATIONMODEL_CASHLESS)){
+						&& mapCCByAccount.get(re.ANG_AccountId__c)[index].OSCAR__r.AMS_Online_Accreditation__r.ANG_Accreditation_Model_to_Change__c == AMS_Utils.ACCREDITATIONMODEL_CASH
+						&& mapCCByAccount.get(re.ANG_AccountId__c)[index].CreatedDate < = Date.today().addYears(-2)){
 							
-					if(typrOfChangeCode == AMS_Utils.ACCREDITATIONMODEL_CASH && mapOfchangeCodesCWDByCaseNumber.get(mapCCByAccount.get(re.ANG_AccountId__c)[index].OSCAR__r.Name) == null){
+					if(mapOfchangeCodesCWDByCaseNumber.get(mapCCByAccount.get(re.ANG_AccountId__c)[index].OSCAR__r.Name) == null){
 						checkRiskEventUpdated = true;
 						re.Applicable_for_re_activation__c = true;
-					}else if(typrOfChangeCode == AMS_Utils.ACCREDITATIONMODEL_CASHLESS){
-						re.ang_event_status__c = ANG_Risk_Helper.STATUS_ACTIVE;
 					}
 				}
 			}
 		}
 
-		if((mapCCByAccount.get(re.ANG_AccountId__c) == null || !checkRiskEventUpdated) && typrOfChangeCode == AMS_Utils.ACCREDITATIONMODEL_CASH ){
-			if(re.ANG_AccountId__r.Accreditation_date__c < = checkCreatedDateRE){
+		if(mapCCByAccount.get(re.ANG_AccountId__c) == null || !checkRiskEventUpdated){
+			if(re.ANG_AccountId__r.Accreditation_date__c < = Date.today().addYears(-2)){
 				re.Applicable_for_re_activation__c = true;
 			}
 		}
