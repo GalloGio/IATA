@@ -165,6 +165,7 @@
         <fields>TITLE</fields>
         <fields>COMPANY</fields>
         <fields>COUNTRY</fields>
+        <fields>LC_OWNER</fields>
         <relatedList>RelatedCampaignMemberList</relatedList>
         <sortField>COUNTRY</sortField>
         <sortOrder>Asc</sortOrder>

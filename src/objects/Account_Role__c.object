@@ -304,7 +304,7 @@ The Account Role record should be named after the functional capability for whic
     </fields>
     <fields>
         <fullName>GADM_Unique_Key__c</fullName>
-        <caseSensitive>false</caseSensitive>
+        <caseSensitive>true</caseSensitive>
         <externalId>false</externalId>
         <label>GADM Unique Key</label>
         <length>40</length>

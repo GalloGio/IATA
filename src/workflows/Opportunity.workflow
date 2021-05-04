@@ -736,7 +736,7 @@
         </actions>
         <active>true</active>
         <description>Notifications sent to sales and marketing about closed deals over US$ 10,000 - TACT product family excluded</description>
-        <formula>AND(Amount &gt;= 10000, ISPICKVAL(StageName,&apos;7. Closed Sales / Sold&apos;), RecordType.Name = &quot;RCRM Opportunity&quot;,  Block_alerts_on_updates__c = false, NOT(ISPICKVAL(Product_Family__c,&apos;TACT&apos;)))</formula>
+        <formula>AND(Amount &gt;= 10000, ISPICKVAL(StageName,&apos;7. Closed Sales / Sold&apos;), RecordType.Name = &quot;RCRM Opportunity&quot;,  Block_alerts_on_updates__c = false, NOT(ISPICKVAL(Product_Family__c,&apos;TACT Air Cargo Solutions&apos;)))</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -747,7 +747,7 @@
         </actions>
         <active>true</active>
         <description>Notifications sent to sales and marketing about closed deals over US$ 10,000 for TACT product family</description>
-        <formula>AND(Amount &gt;= 10000, ISPICKVAL(StageName,&apos;7. Closed Sales / Sold&apos;), RecordType.Name = &quot;RCRM Opportunity&quot;,  Block_alerts_on_updates__c = false, ISPICKVAL(Product_Family__c,&apos;TACT&apos;))</formula>
+        <formula>AND(Amount &gt;= 10000, ISPICKVAL(StageName,&apos;7. Closed Sales / Sold&apos;), RecordType.Name = &quot;RCRM Opportunity&quot;,  Block_alerts_on_updates__c = false, ISPICKVAL(Product_Family__c,&apos;TACT Air Cargo Solutions&apos;))</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
