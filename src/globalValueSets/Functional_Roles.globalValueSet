@@ -361,6 +361,11 @@
         <label>Treasury Dashboard - Premium</label>
     </customValue>
     <customValue>
+        <fullName>Lab Registry</fullName>
+        <default>false</default>
+        <label>Lab Registry</label>
+    </customValue>
+    <customValue>
         <fullName>Laboratory</fullName>
         <default>false</default>
         <label>Laboratory</label>
