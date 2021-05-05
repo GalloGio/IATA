@@ -11,11 +11,11 @@
                 <br/>
                 <br/>
             </span>
-            <p>---------------------------------------------------------------------------------------</p><br/>
             <apex:outputPanel >
                 <p>{!$Label.CSP_Dear} {!recipient.FirstName} {!recipient.LastName},</p>
                 <p>{!relatedTo.contact.FirstName} {!relatedTo.contact.LastName} {!$Label.CS_Portal_Addittional_Recipients_Body} {!relatedTo.CaseNumber}:</p>
                 <br/>
+                <p>---------------------------------------------------------------------------------------</p><br/>
                 <p>{!relatedTo.Subject}</p>
                 <p>{!relatedTo.Description}</p>
                 <br/>
