@@ -3,6 +3,11 @@
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
     <email>noreply@iata.org</email>
     <name>Cases - IATA Pay Technical Team</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>Cases_IATA_Pay_Technical_Team</publicGroup>
+        </publicGroups>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

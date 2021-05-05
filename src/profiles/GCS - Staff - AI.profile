@@ -28845,7 +28845,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Case.BusinessHoursId</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -44625,6 +44625,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>ID_Card__c.Gender__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ID_Card__c.Harmonized_Position__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
