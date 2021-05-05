@@ -358,7 +358,7 @@ public with sharing class PortalServicesCtrl {
 
 		for(Portal_Application_Right__c accessAux2 : userGrantedList) {
 
-			if(accessAux2.Right__c == 'Access Denied') {
+			if(accessAux2.Right__c == PORTAL_ACCESS_DENIED) {
 				mapServiceWrapper.remove(accessAux2.Portal_Application__c);
 			}
 
