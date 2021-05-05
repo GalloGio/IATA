@@ -32,7 +32,8 @@ public class ISSP_PortalService_Test {
 		con.AccountId = acc.Id;
 		insert con;
 
-		Portal_Applications__c app = new Portal_Applications__c(Name = 'Test App');
+		Portal_Applications__c app = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		app.Name = 'Test App'; 
 		insert app;
 
 		Portal_Application_Right__c appReq = new Portal_Application_Right__c();
@@ -103,7 +104,8 @@ public class ISSP_PortalService_Test {
 
 		Test.startTest();
 
-		Portal_Applications__c app = new Portal_Applications__c(Name = 'EasyPay');
+		Portal_Applications__c app = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		app.Name = 'EasyPay'; 
 		insert app;
 
 		Portal_Application_Right__c appReq = new Portal_Application_Right__c();
@@ -221,7 +223,8 @@ public class ISSP_PortalService_Test {
 
 		Test.startTest();
 
-		Portal_Applications__c app = new Portal_Applications__c(Name = 'IATA Accreditation');
+		Portal_Applications__c app = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		app.Name = 'IATA Accreditation'; 
 		insert app;
 
 		Apexpages.currentPage().getParameters().put('PSid', app.Id);
@@ -273,7 +276,8 @@ public class ISSP_PortalService_Test {
 
 		Test.startTest();
 
-		Portal_Applications__c app = new Portal_Applications__c(Name = 'Test App');
+		Portal_Applications__c app = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		app.Name = 'Test App'; 
 		insert app;
 
 		Portal_Application_Right__c appReq = new Portal_Application_Right__c();

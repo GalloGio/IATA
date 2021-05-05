@@ -73,7 +73,8 @@ public class PASS_UserProvisioningRequestHandler_Test {
 		con.OwnerId = newUser.Id;
 		update con;
 
-		Portal_Applications__c pa = new Portal_Applications__c(name = AMS_Utils.passSSOPortalService);
+		Portal_Applications__c pa = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		pa.Name = AMS_Utils.passSSOPortalService;
 		insert pa;
 
 		Connected_App_Roles__c crole = new Connected_App_Roles__c();

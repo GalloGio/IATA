@@ -2744,15 +2744,18 @@ public without sharing class ISSP_AMS_Accreditation {
 			if (newForm.ISSP_AMS_GDS_with_signed_contract__c != null) {
 				newForm.NDC_Transactions__c = 'No';
 			}
-			
+
 			if (accountConcerned.Cass_Number__c != null) {
 				newForm.CASS_Number__c = accountConcerned.Cass_Number__c;
+			}else if (hqAccount.Cass_Number__c != null){
+				newForm.CASS_Number__c = hqAccount.Cass_Number__c;
 			}
+
 			upsert newForm;
 
 			if (isMultiCountryNewAE) {
 				currentMCFormId = newForm.Id;
-			}
+			}	
 
 			if (!Test.IsRunningTest()) {
 				fetchAMSProcessForm();

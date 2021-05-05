@@ -20,7 +20,7 @@ public class PortalServiceTIPReportsCtrlTest {
 		update con;
 
 		//Portal
-		Portal_Applications__c portal = new Portal_Applications__c();
+		Portal_Applications__c portal = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
 		portal.Name = 'TIP Reports';
 		insert portal;
 

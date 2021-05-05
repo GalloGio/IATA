@@ -49,9 +49,10 @@ public class AccountRoleHandler_TEST {
 		insert testUser;
 
 		//GADM service
-		Portal_Applications__c portalApplications = new Portal_Applications__c();
-		portalApplications.Name = 'GADM';
-		insert portalApplications;
+		Portal_Applications__c portalApplication = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		portalApplication.Functional_Role__c = 'GADM';
+		portalApplication.Name = 'GADM';
+		insert portalApplication;
 
 		//GADM Participang Account Role
 		Account_Roles__c gadmParticipantAccountRole = new Account_Roles__c();
@@ -316,6 +317,4 @@ public class AccountRoleHandler_TEST {
 
 		System.assertEquals(false, errorMessage.contains('DUPLICATE_VALUE'), 'Inserting account role for non GADM Participant role should not raise duplicate error!');
 	}
-
-
 }

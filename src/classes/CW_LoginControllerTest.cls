@@ -8,7 +8,8 @@ public with sharing class CW_LoginControllerTest {
 		icgid.Value__c = '/s/';
 		insert icgid;
 
-		Portal_Applications__c pa = new Portal_Applications__c(Name = 'One Source');
+		Portal_Applications__c pa = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		pa.Name = 'One Source';
 		insert pa;
 	}
 

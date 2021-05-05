@@ -15,7 +15,6 @@ public class AMS_OSCAR_WebserviceTest {
 	private static Case oscarCase;
 
 	private static void setup(){
-
 		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c(Name = 'US', ISO_Code__c = 'US');
 		insert ctry;
 		IATA_ISO_Country__c ctry2 = new IATA_ISO_Country__c(Name = 'Portugal', ISO_Code__c = 'PT', AIMS_Area_ID__c = '1');
@@ -24,7 +23,7 @@ public class AMS_OSCAR_WebserviceTest {
 		Id agencyRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
 		Account account = new Account(RecordTypeId = agencyRT, Name='Test Account');
 		insert account;
-
+		
 		oscar = new AMS_OSCAR__c(Account__c=account.Id, Status__c = 'Reopen', Billing_Document_Number__c = '54321');
 		insert oscar;
 
@@ -325,16 +324,15 @@ public class AMS_OSCAR_WebserviceTest {
 
 		setup();
 
-		Portal_Applications__c easyPay1 = new Portal_Applications__c(Name = 'Test', Application_URL__c = '/ISSP_IFAPCases');
-
+		Portal_Applications__c easyPay1 = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		easyPay1.Name = 'Test';
+		easyPay1.Functional_Role__c = 'IATA EasyPay (EDENRED)';
+		easyPay1.Application_URL__c = '/ISSP_IFAPCases';
 		insert easyPay1;
-
+		
 		Test.startTest();
-
 		String result_createIfapPortalServiceRight = AMS_OSCAR_Webservice.createIfapPortalServiceRight(oscar5.Id);
-
 		System.assertEquals('OK', result_createIfapPortalServiceRight);
-
 		Test.stopTest();
 	}
 

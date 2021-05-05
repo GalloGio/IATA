@@ -28,7 +28,7 @@ private  class CurrencyCenter_AnnualSurveyBatchTest {
 		airlineContact.Email = 'john.doe@airline.com';
 		insert airlineContact;
 
-		Portal_Applications__c papp = new Portal_Applications__c();
+		Portal_Applications__c papp = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
 		papp.Application_URL__c = '/ISSP_CurrencyCenterHome';
 		insert papp;
 
@@ -94,7 +94,7 @@ private  class CurrencyCenter_AnnualSurveyBatchTest {
 		airlineContact.Email = 'john.doe@airline.com';
 		insert airlineContact;
 
-		Portal_Applications__c papp = new Portal_Applications__c();
+		Portal_Applications__c papp = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
 		papp.Application_URL__c = '/ISSP_CurrencyCenterHome';
 		insert papp;
 

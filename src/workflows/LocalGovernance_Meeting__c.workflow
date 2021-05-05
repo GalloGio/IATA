@@ -166,7 +166,7 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>wana@iata.org</recipient>
+            <recipient>borislavok@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -188,7 +188,7 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>wana@iata.org</recipient>
+            <recipient>borislavok@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -239,7 +239,7 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>wana@iata.org</recipient>
+            <recipient>borislavok@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
@@ -265,7 +265,7 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>wana@iata.org</recipient>
+            <recipient>borislavok@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
