@@ -16264,11 +16264,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>AMS_OSCAR__c.STEP52__c</field>
-        <readable>true</readable>
-    </fieldPermissions
-    <fieldPermissions>
-        <editable>true</editable>
         <field>AMS_OSCAR__c.STEP5__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -18420,11 +18415,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>AMS_Settlement_System__c.Settlement_Model__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>ANG_Agency_Risk_Event__c.Applicable_for_re_activation__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
