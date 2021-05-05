@@ -351,4 +351,9 @@
         <default>false</default>
         <label>Travel Pass</label>
     </standardValue>
+    <standardValue>
+        <fullName>TTBS</fullName>
+        <default>false</default>
+        <label>TTBS</label>
+    </standardValue>
 </StandardValueSet>

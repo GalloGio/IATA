@@ -17,6 +17,11 @@
         <label>Country Manager</label>
     </standardValue>
     <standardValue>
+        <fullName>CSC Sales</fullName>
+        <default>false</default>
+        <label>CSC Sales</label>
+    </standardValue>
+    <standardValue>
         <fullName>Email</fullName>
         <default>false</default>
         <label>Email</label>

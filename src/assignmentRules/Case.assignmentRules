@@ -252,7 +252,7 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
         <ruleEntry>
             <assignedTo>ISS_Level_1_Turkish</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 AND (2 OR 6) AND 3 AND 4 AND 5</booleanFilter>
+            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR (3 AND 4 AND 7 AND 8) OR (3 AND 4 AND 7 AND 9 AND 10)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -283,11 +283,31 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <operation>equals</operation>
                 <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
             </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SIDRA,Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Status_SIDRA__c</field>
+                <operation>contains</operation>
+                <value>IATA Charges,Small Amount</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>ISS_Level_1_Vietnamese</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 AND (2 OR 6) AND 3 AND 4 AND 5</booleanFilter>
+            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR (3 AND 4 AND 7 AND 8) OR (3 AND 4 AND 7 AND 9 AND 10)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -318,11 +338,31 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <operation>equals</operation>
                 <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
             </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SIDRA,Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Status_SIDRA__c</field>
+                <operation>contains</operation>
+                <value>IATA Charges,Small Amount</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>ISS_Level_1_Thai</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 AND (2 OR 6) AND 3 AND 4 AND 5</booleanFilter>
+            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR (3 AND 4 AND 7 AND 8) OR (3 AND 4 AND 7 AND 9 AND 10)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -353,11 +393,31 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <operation>equals</operation>
                 <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
             </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SIDRA,Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Status_SIDRA__c</field>
+                <operation>contains</operation>
+                <value>IATA Charges,Small Amount</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>ISS_Level_1_Japanese</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 AND (2 OR 6) AND 3 AND 4 AND 5</booleanFilter>
+            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR (3 AND 4 AND 7 AND 8) OR (3 AND 4 AND 7 AND 9 AND 10)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -388,11 +448,31 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <operation>equals</operation>
                 <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
             </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SIDRA,Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Status_SIDRA__c</field>
+                <operation>contains</operation>
+                <value>IATA Charges,Small Amount</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>ISS_Level_1_German</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 AND (2 OR 6) AND 3 AND 4 AND 5</booleanFilter>
+            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR (3 AND 4 AND 7 AND 8) OR (3 AND 4 AND 7 AND 9 AND 10)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -423,11 +503,31 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <operation>equals</operation>
                 <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
             </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SIDRA,Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Status_SIDRA__c</field>
+                <operation>contains</operation>
+                <value>IATA Charges,Small Amount</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>ISS_Level_1_Indonesian</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 AND (2 OR 6) AND 3 AND 4 AND 5</booleanFilter>
+            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR (3 AND 4 AND 7 AND 8) OR (3 AND 4 AND 7 AND 9 AND 10)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -458,11 +558,31 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <operation>equals</operation>
                 <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
             </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SIDRA,Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Status_SIDRA__c</field>
+                <operation>contains</operation>
+                <value>IATA Charges,Small Amount</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>ISS_Level_1_Italian</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 AND (2 OR 6) AND 3 AND 4 AND 5</booleanFilter>
+            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR ( 3 AND 4 AND 7 AND 8) OR (3 AND 4 AND 7 AND 9 AND 10)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -493,11 +613,31 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <operation>equals</operation>
                 <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
             </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SIDRA,Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Status_SIDRA__c</field>
+                <operation>contains</operation>
+                <value>IATA Charges,Small Amount</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>ISS_Level_1_Arabic</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 AND (2 OR 6) AND 3 AND 4 AND 5</booleanFilter>
+            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR (3 AND 4 AND 7 AND 8) OR (3 AND 4 AND 9 AND 10 AND 11)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -528,11 +668,36 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <operation>equals</operation>
                 <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
             </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SIDRA</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Status_SIDRA__c</field>
+                <operation>contains</operation>
+                <value>IATA Charges,Small Amount</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>ISS_Level_1_Portuguese</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 AND (2 OR 6) AND 3 AND 4 AND 5</booleanFilter>
+            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR ( 3 AND 4 AND 7 AND 8) OR (3 AND 4 AND 7 AND 9 AND 10)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -563,11 +728,31 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <operation>equals</operation>
                 <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
             </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SIDRA,Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Status_SIDRA__c</field>
+                <operation>contains</operation>
+                <value>IATA Charges,Small Amount</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>ISS_Level_1_Chinese</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 AND (2 OR 6) AND 3 AND 4 AND 5</booleanFilter>
+            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR (3 AND 4 AND 7 AND 8) OR (3 AND 4 AND 9 AND 10 AND 11)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -598,11 +783,36 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <operation>equals</operation>
                 <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
             </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SIDRA</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Status_SIDRA__c</field>
+                <operation>contains</operation>
+                <value>IATA Charges,Small Amount</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>ISS_Level_1_Russian</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 AND (2 OR 6) AND 3 AND 4 AND 5</booleanFilter>
+            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR (3 AND 4 AND 7 AND 8) OR (3 AND 4 AND 7 AND 9 AND 10)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -633,11 +843,31 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <operation>equals</operation>
                 <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
             </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SIDRA,Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Status_SIDRA__c</field>
+                <operation>contains</operation>
+                <value>IATA Charges,Small Amount</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>ISS_Level_1_Korean</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 AND (2 OR 6) AND 3 AND 4 AND 5</booleanFilter>
+            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR (3 AND 4 AND 7 AND 8) OR (3 AND 4 AND 7 AND 9 AND 10)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -668,11 +898,31 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <operation>equals</operation>
                 <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
             </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SIDRA,Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Status_SIDRA__c</field>
+                <operation>contains</operation>
+                <value>IATA Charges,Small Amount</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>ISS_L1_Spanish_EUR</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 AND (2 OR 6) AND 3 AND 4 AND 5</booleanFilter>
+            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR (3 AND 4 AND 7 AND 8) OR (3 AND 4 AND 7 AND 9 AND 10)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -703,11 +953,31 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <operation>equals</operation>
                 <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
             </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SIDRA,Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Status_SIDRA__c</field>
+                <operation>contains</operation>
+                <value>IATA Charges,Small Amount</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>ISS_L1_Spanish_AMR</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 AND (2 OR 6) AND 3 AND 4 AND 5</booleanFilter>
+            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR (3 AND 4 AND 7 AND 8) OR (3 AND 4 AND 7 AND 9 AND 10)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -738,11 +1008,31 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <operation>equals</operation>
                 <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
             </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SIDRA,Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Status_SIDRA__c</field>
+                <operation>contains</operation>
+                <value>IATA Charges,Small Amount</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>ISS_L1_French_EUR</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 AND (2 OR 6) AND 3 AND 4 AND 5</booleanFilter>
+            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR (3 AND 4 AND 7 AND 8) OR (3 AND 4 AND 7 AND 9 AND 10)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -773,6 +1063,26 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <operation>equals</operation>
                 <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
             </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SIDRA,Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Status_SIDRA__c</field>
+                <operation>equals</operation>
+                <value>IATA Charges,Small Amount</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>Cases_CNS</assignedTo>
@@ -791,7 +1101,7 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
         <ruleEntry>
             <assignedTo>ISS_L1_French_AMR</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 AND (2 OR 6) AND 3 AND 4 AND 5</booleanFilter>
+            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR (3 AND 4 AND 7 AND 8) OR (3 AND 4 AND 7 AND 9 AND 10)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -822,6 +1132,26 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <operation>equals</operation>
                 <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
             </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SIDRA,Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Status_SIDRA__c</field>
+                <operation>contains</operation>
+                <value>IATA Charges,Small Amount</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>Cases_CNS</assignedTo>
@@ -840,7 +1170,7 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
         <ruleEntry>
             <assignedTo>ISS_L1_French_AME</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 AND (2 OR 6) AND 3 AND 4 AND 5</booleanFilter>
+            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR (3 AND 4 AND 7 AND 8) OR (3 AND 4 AND 7 AND 9 AND 10)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -871,11 +1201,31 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <operation>equals</operation>
                 <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
             </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SIDRA,Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Status_SIDRA__c</field>
+                <operation>contains</operation>
+                <value>IATA Charges,Small Amount</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>ISS_L1_English_NASIA</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 AND (2 OR 6) AND 3 AND 4 AND 5</booleanFilter>
+            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR (3 AND 4 AND 7 AND 8) OR (3 AND 4 AND 7 AND 9 AND 10)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -906,11 +1256,31 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <operation>equals</operation>
                 <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
             </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SIDRA,Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Status_SIDRA__c</field>
+                <operation>contains</operation>
+                <value>IATA Charges,Small Amount</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>ISS_L1_English_EUR</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 AND (2 OR 7)  AND (3 OR 4) AND 5 AND 6</booleanFilter>
+            <booleanFilter>(1 AND (2 OR 7)  AND (3 OR 4) AND 5 AND 6) OR ((3 OR 4) AND 5 AND 8 AND 9) OR ((3 OR 4) AND 5 AND 8 AND 10 AND 11)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -946,11 +1316,31 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <operation>equals</operation>
                 <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
             </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SIDRA,Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Status_SIDRA__c</field>
+                <operation>contains</operation>
+                <value>IATA Charges,Small Amount</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>ISS_L1_English_ASPAC</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 AND (2 OR 7) AND (3 OR 4) AND 5 AND 6</booleanFilter>
+            <booleanFilter>(1 AND (2 OR 7) AND (3 OR 4) AND 5 AND 6) OR ((3 OR 4) AND 5 AND 8 AND 9) OR ((3 OR 4) AND 5 AND 8 AND 10 AND 11)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -986,11 +1376,31 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <operation>equals</operation>
                 <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
             </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SIDRA,Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Status_SIDRA__c</field>
+                <operation>contains</operation>
+                <value>IATA Charges,Small Amount</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>ISS_L1_English_AMR</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 AND (2 OR 7) AND (3 OR 4) AND 5 AND 6</booleanFilter>
+            <booleanFilter>(1 AND (2 OR 7) AND (3 OR 4) AND 5 AND 6) OR ((3 OR 4) AND 5 AND 8 AND 9) OR ((3 OR 4) AND 5 AND 10 AND 11)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -1026,11 +1436,31 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <operation>equals</operation>
                 <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
             </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SIDRA,Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Status_SIDRA__c</field>
+                <operation>contains</operation>
+                <value>IATA Charges,Small Amount</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>ISS_L1_English_AME</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 AND (2 OR 7) AND (3 OR 4) AND 5 AND 6</booleanFilter>
+            <booleanFilter>(1 AND (2 OR 7) AND (3 OR 4) AND 5 AND 6) OR ((3 OR 4) AND 5 AND 8 AND 9) OR((3 OR 4) AND 5 AND 10 AND 11 AND 12)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -1065,6 +1495,31 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <field>Case.Topic__c</field>
                 <operation>equals</operation>
                 <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SIDRA</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Status_SIDRA__c</field>
+                <operation>contains</operation>
+                <value>IATA Charges,Small Amount</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
