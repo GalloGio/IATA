@@ -5406,10 +5406,6 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CS_Portal_Addittional_Recipients_Subject</name>
     </customLabels>
     <customLabels>
-        <label>点击这里</label>
-        <name>CS_Portal_Addittional_Recipients_URL_Click_Here</name>
-    </customLabels>
-    <customLabels>
         <label>去门户网站查看全部细节，并从事通信。</label>
         <name>CS_Portal_Addittional_Recipients_URL_Description</name>
     </customLabels>

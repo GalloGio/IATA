@@ -297,8 +297,10 @@ private static void createCaseTeamMemberList(Case cse, list<Contact> listContact
 // Send a notification email to users or contacts added on the podotal contact us page.
 public static void sendEmailToAdditionalRecipients(wrapFilterContactsAndUsers listContacts, Case cse) {
 	List<Messaging.SingleEmailMessage> emailsToSend = new List<Messaging.SingleEmailMessage>();
-	String templateUsersId = [SELECT Id FROM EmailTemplate WHERE DeveloperName = 'IATA_CS_Portal_Case_Addittional_Rec_Us'].Id;
-	String templateContactsId = [SELECT Id FROM EmailTemplate WHERE DeveloperName = 'IATA_CS_Portal_Case_Addittional_Rec_CC'].Id;
+	Map<String, Id> emailTemplateByDevName = new Map<String, Id>();
+	for(EmailTemplate em: [SELECT Id, DeveloperName FROM EmailTemplate WHERE DeveloperName = 'IATA_CS_Portal_Case_Addittional_Rec_CC' OR DeveloperName = 'IATA_CS_Portal_Case_Addittional_Rec_Us']){
+		emailTemplateByDevName.put(em.DeveloperName, em.Id);
+	}
 	OrgWideEmailAddress orgAddress = [SELECT Id FROM OrgWideEmailAddress WHERE Address = : Label.ISSP_CaseCommentEmail];
 
 	try {
@@ -307,7 +309,7 @@ public static void sendEmailToAdditionalRecipients(wrapFilterContactsAndUsers li
 			mail.setOrgWideEmailAddressId(orgAddress.Id);
 			mail.setTargetObjectId(userId);
 			mail.setSaveAsActivity(false);
-			mail.setTemplateId(templateUsersId);
+			mail.setTemplateId(emailTemplateByDevName.get('IATA_CS_Portal_Case_Addittional_Rec_Us'));
 			mail.setWhatId(cse.Id);
 			emailsToSend.add(mail);
 		}
@@ -320,7 +322,7 @@ public static void sendEmailToAdditionalRecipients(wrapFilterContactsAndUsers li
 			mail.setOrgWideEmailAddressId(orgAddress.Id);
 			mail.setTargetObjectId(cc);
 			mail.setToAddresses(listContacts.setToAddressesContacts) ;
-			mail.setTemplateId(templateContactsId);
+			mail.setTemplateId(emailTemplateByDevName.get('IATA_CS_Portal_Case_Addittional_Rec_CC'));
 			mail.setWhatId(cse.Id);
 			emailsToSend.add(mail);
 		}

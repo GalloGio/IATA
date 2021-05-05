@@ -5406,10 +5406,6 @@ Daha fazla ayrıntı için, Müşteri Portalı&apos;nda &quot;Resolution 812&quo
         <name>CS_Portal_Addittional_Recipients_Subject</name>
     </customLabels>
     <customLabels>
-        <label>Buraya Tıkla</label>
-        <name>CS_Portal_Addittional_Recipients_URL_Click_Here</name>
-    </customLabels>
-    <customLabels>
         <label>Tüm ayrıntıları görüntüleyebilir ve iletişimde bulunmak için portal gitmek için.</label>
         <name>CS_Portal_Addittional_Recipients_URL_Description</name>
     </customLabels>

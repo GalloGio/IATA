@@ -5409,10 +5409,6 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CS_Portal_Addittional_Recipients_Subject</name>
     </customLabels>
     <customLabels>
-        <label>여기를 클릭하십시오</label>
-        <name>CS_Portal_Addittional_Recipients_URL_Click_Here</name>
-    </customLabels>
-    <customLabels>
         <label>전체 세부 사항을 확인하고 통신에 참여 포털로 이동합니다.</label>
         <name>CS_Portal_Addittional_Recipients_URL_Description</name>
     </customLabels>

@@ -5409,10 +5409,6 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CS_Portal_Addittional_Recipients_Subject</name>
     </customLabels>
     <customLabels>
-        <label>Bấm vào đây</label>
-        <name>CS_Portal_Addittional_Recipients_URL_Click_Here</name>
-    </customLabels>
-    <customLabels>
         <label>để đi đến cổng thông tin để xem chi tiết đầy đủ và tham gia vào các giao tiếp.</label>
         <name>CS_Portal_Addittional_Recipients_URL_Description</name>
     </customLabels>

@@ -5406,10 +5406,6 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CS_Portal_Addittional_Recipients_Subject</name>
     </customLabels>
     <customLabels>
-        <label>انقر هنا</label>
-        <name>CS_Portal_Addittional_Recipients_URL_Click_Here</name>
-    </customLabels>
-    <customLabels>
         <label>للذهاب إلى المدخل لعرض تفاصيل كاملة والانخراط في البلاغ.</label>
         <name>CS_Portal_Addittional_Recipients_URL_Description</name>
     </customLabels>

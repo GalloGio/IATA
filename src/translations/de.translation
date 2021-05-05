@@ -5412,10 +5412,6 @@ und &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
         <name>CS_Portal_Addittional_Recipients_Subject</name>
     </customLabels>
     <customLabels>
-        <label>Klicke hier</label>
-        <name>CS_Portal_Addittional_Recipients_URL_Click_Here</name>
-    </customLabels>
-    <customLabels>
         <label>auf das Portal zu gehen, um die vollständigen Details und greifen in der Kommunikation zu sehen.</label>
         <name>CS_Portal_Addittional_Recipients_URL_Description</name>
     </customLabels>

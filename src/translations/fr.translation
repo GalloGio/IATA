@@ -5412,10 +5412,6 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CS_Portal_Addittional_Recipients_Subject</name>
     </customLabels>
     <customLabels>
-        <label>Cliquez ici</label>
-        <name>CS_Portal_Addittional_Recipients_URL_Click_Here</name>
-    </customLabels>
-    <customLabels>
         <label>pour accéder au portail pour voir les détails et engager dans la communication.</label>
         <name>CS_Portal_Addittional_Recipients_URL_Description</name>
     </customLabels>

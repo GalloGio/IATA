@@ -20,7 +20,7 @@
                 <p>{!relatedTo.Description}</p>
                 <br/>
                 <p>---------------------------------------------------------------------------------------</p><br/>
-                <p><b><a href="{!$Label.ISSP_Email_PortalUrl}s/case-details?caseId={!relatedTo.id}">{!$Label.CS_Portal_Addittional_Recipients_URL_Click_Here}</a></b> {!$Label.CS_Portal_Addittional_Recipients_URL_Description}.</p>
+                <p><b><a href="{!$Label.ISSP_Email_PortalUrl}s/case-details?caseId={!relatedTo.id}">{!$Label.Click_here}</a></b> {!$Label.CS_Portal_Addittional_Recipients_URL_Description}.</p>
             </apex:outputPanel>
             <b><apex:outputText value="{!$Label.CSP_IATA_CSC_Email_Greetings}" escape="false" /></b>
             <br/>

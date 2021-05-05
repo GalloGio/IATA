@@ -5410,10 +5410,6 @@ dan &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
         <name>CS_Portal_Addittional_Recipients_Subject</name>
     </customLabels>
     <customLabels>
-        <label>Klik disini</label>
-        <name>CS_Portal_Addittional_Recipients_URL_Click_Here</name>
-    </customLabels>
-    <customLabels>
         <label>untuk pergi ke portal untuk melihat rincian lengkap dan terlibat dalam komunikasi.</label>
         <name>CS_Portal_Addittional_Recipients_URL_Description</name>
     </customLabels>

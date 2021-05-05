@@ -5417,10 +5417,6 @@
         <name>CS_Portal_Addittional_Recipients_Subject</name>
     </customLabels>
     <customLabels>
-        <label>кликните сюда</label>
-        <name>CS_Portal_Addittional_Recipients_URL_Click_Here</name>
-    </customLabels>
-    <customLabels>
         <label>чтобы перейти на портал, чтобы просмотреть полную информацию и участвовать в сообщении.</label>
         <name>CS_Portal_Addittional_Recipients_URL_Description</name>
     </customLabels>

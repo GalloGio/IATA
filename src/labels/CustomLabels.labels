@@ -8581,14 +8581,6 @@ IATA Customer Portal</value>
         <value>IATA Customer Portal - You were added to case</value>
     </labels>
     <labels>
-        <fullName>CS_Portal_Addittional_Recipients_URL_Click_Here</fullName>
-        <categories>CS Portal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CS_Portal_Addittional_Recipients_URL_Click_Here</shortDescription>
-        <value>Click here</value>
-    </labels>
-    <labels>
         <fullName>CS_Portal_Addittional_Recipients_URL_Description</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
