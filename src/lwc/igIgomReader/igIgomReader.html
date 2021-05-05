@@ -73,7 +73,7 @@
                     <a key={manual.Id} data-id={manual.Id} onclick={selectManualHandler}>
                         <div class="slds-box slds-grid slds-m-bottom_small slds-theme_shade slds-theme_info">
                             <div class="slds-size_1-of-2">
-                                <b>{manual.Document_Name__c}</b> - v{manual.Version__c}
+                                <b>{manual.Document_Name__c}</b> - Ed{manual.Edition__c}
                             </div>
                             <div class="slds-size_1-of-2 slds-text-align_right">
                                 <lightning-formatted-date-time value={manual.CreatedDate}></lightning-formatted-date-time>
@@ -85,7 +85,7 @@
                     <a key={manual.Id} data-id={manual.Id} onclick={selectManualHandler}>
                         <div class="slds-box slds-grid slds-m-bottom_small">
                             <div class="slds-size_1-of-2">
-                                <b>{manual.Document_Name__c}</b> - v{manual.Version__c}
+                                <b>{manual.Document_Name__c}</b> - Ed{manual.Edition__c}
                             </div>
                             <div class="slds-size_1-of-2 slds-text-align_right">
                                 <lightning-formatted-date-time value={manual.CreatedDate}></lightning-formatted-date-time>

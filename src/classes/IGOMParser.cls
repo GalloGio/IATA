@@ -65,7 +65,7 @@ public without sharing class IGOMParser {
 		public Date getEffectiveDate(){
 			if (effectiveDate_doc != null) {
 				List<String> effectiveDateInfo = effectiveDate_doc.split('/');
-				return Date.newInstance(Integer.valueOf(effectiveDateInfo.get(2)), Integer.valueOf(effectiveDateInfo.get(1)), Integer.valueOf(effectiveDateInfo.get(0)));
+				return Date.newInstance(Integer.valueOf(effectiveDateInfo.get(0)), Integer.valueOf(effectiveDateInfo.get(1)), Integer.valueOf(effectiveDateInfo.get(2)));
 			}
 			return null;
 		}
