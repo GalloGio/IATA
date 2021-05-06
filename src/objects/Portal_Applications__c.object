@@ -803,6 +803,16 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Is_Invitation_Enabled__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Defines if this Portal Application allows users to be Invited or not.</description>
+        <externalId>false</externalId>
+        <label>Is Invitation Enabled?</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>NewGenAPP_ShortName__c</fullName>
         <caseSensitive>false</caseSensitive>
         <description>When this filed is filled, it will show the service in NewGenAPP mobile.</description>
