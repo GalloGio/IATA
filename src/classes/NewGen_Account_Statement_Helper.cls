@@ -225,8 +225,13 @@ public with sharing class NewGen_Account_Statement_Helper {
 		System.Debug(androidMsg);
 		System.Debug(usersToGetNotified);
 
-		iOSMsg.send('NewGen_APP_IOS', usersToGetNotified);
-		androidMsg.send('NewGen_APP_Android', usersToGetNotified);
+		try{
+			iOSMsg.send('NewGen_APP_IOS', usersToGetNotified);
+			androidMsg.send('NewGen_APP_Android', usersToGetNotified);
+		}
+		catch (exception e){
+			TransformationHelper.sendEmailSupport( 'NewGen_Account_Statement_Helper Exception', 'Exception: ' + e + ' || StackTrace: ' + e.getStackTraceString());
+		}
 
 	}
 }

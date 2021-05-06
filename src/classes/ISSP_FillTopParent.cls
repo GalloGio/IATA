@@ -68,8 +68,15 @@ public without sharing class ISSP_FillTopParent {
 		 * to their parent's top parent, and updates top_parent field for
 		 * all the accounts that are in the hierarchy of the updated account.
 		 */
-		public static void accountsAfterUpdateTopParent(List<Account> acctsToUpdate, Map<Id, Account> triggerOld){
 
+		@future(callout=false)
+		public static void accountsAfterUpdateTopParentFuture(List<Id> acctsToUpdateIds, String oldTrigger){
+
+			List<Account> acctsToUpdate = [SELECT Id, Top_Parent__c, Name, ParentId, BillingCity FROM account WHERE Id IN : acctsToUpdateIds];
+			accountsAfterUpdateTopParent(acctsToUpdate, (Map<id, Account>)JSON.deserialize(oldTrigger, map<id, Account>.class));
+		}
+
+		public static void accountsAfterUpdateTopParent(List<Account> acctsToUpdate, Map<Id, Account> triggerOld){
 		Map<Id, Id> newTopParents = new Map<Id, Id>();
 		Map<Id, Set<Id>> hierarchies = new Map<Id, Set<Id>>();
 
