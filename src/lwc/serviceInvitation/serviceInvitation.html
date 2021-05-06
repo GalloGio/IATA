@@ -1,0 +1,82 @@
+<template>
+    <div if:true={isServiceAdmin} class="slds-theme_default sans-serif slds-p-horizontal_large">
+        <div class="slds-p-vertical_large">
+            <div class="slds-grid slds-gutters_xx-small">
+                <div class="slds-col slds-size_5-of-6">
+                    <div class="slds-grid slds-gutters_xx-small">
+                        <div class="slds-col">
+                            <input type="text" class="slds-input custom-border" placeholder={label.email} data-field="email" onchange={updateField}>
+                        </div>
+
+                        <div class="slds-col">
+                            <div class="select-wrapper">
+                                <select class="slds-input slds-select custom-border" data-field="role" onchange={updateField}>
+                                    <template for:each={roleOptions} for:item="role">
+                                        <option key={role.value} value={role.value}>{role.label}</option>
+                                    </template>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-6">
+                    <div class="slds-col slds-p-top_xx-small">
+                        <button class="blue-btn" onclick={inviteUser}>{label.invite}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div if:true={areInvitationListed} class="slds-grid slds-gutters_xx-small">
+            <div class="slds-col slds-size_5-of-6">
+                <div class="slds-grid slds-gutters_xx-small">
+                    <div class="slds-col slds-size_3-of-12">
+                        <div class="header-label">
+                            <span>{label.status}</span>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_5-of-12">
+                        <div class="header-label">
+                            <span>{label.email}</span>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_4-of-12">
+                        <div class="header-label">
+                            <span>{label.role}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-col slds-size_1-of-6"></div>
+        </div>
+
+        <template if:true={areInvitationListed} for:each={invitationListed} for:item="invitation">
+            <div key={invitation.id} class="slds-grid slds-gutters_xx-small slds-p-top_x-small">
+                <div class="slds-col slds-size_5-of-6">
+                    <div class="slds-grid slds-gutters_xx-small">
+                        <div class="slds-col slds-size_3-of-12">
+                            <div class="column-label">
+                                <span>{invitation.status}</span>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_5-of-12">
+                            <div class="column-label">
+                                <span>{invitation.email}</span>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_4-of-12">
+                            <div class="column-label">
+                                <span>{invitation.role}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-6">
+                    <div class="slds-col slds-p-top_xx-small">
+                        <button if:true={invitation.isActive} class="blue-btn" data-id={invitation.id} onclick={cancelInvitation}>{label.cancel}</button>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </div>
+</template>
