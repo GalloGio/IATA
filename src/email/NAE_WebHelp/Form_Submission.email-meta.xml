@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>Template created for CSC sales process</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATA_Logo_2019</letterhead>
+    <name>Form Submission</name>
+    <style>freeForm</style>
+    <subject>Welcome to IATA {!Case.Subject} - Ref nr {!Case.CaseNumber}</subject>
+    <textOnly>Welcome to IATA!
+
+Hello Name,
+
+
+I’m so excited to have you as part of IATA as an IATA Accredited Agent. We are glad that you chose us, so thank you on behalf of our whole organization.
+
+
+To get you settled, I wanted to share with you some of our best resources so you can make the most out of your experience with us.
+
+
+First, we would like you to have access to the latest aviation industry knowledge, news and latest trends by following us on Facebook &amp; Twitter.
+
+
+Additionally, to maximize your benefits, being an IATA Accredited Agent, some of the great privileges would be access to include:
+
+
+Impressive access to the IATA ID Card
+Special offers on some of the leading courses by IATA Training
+
+
+
+
+I&apos;d love to always hear more about how you&apos;re liking being with IATA so far.
+
+
+
+
+Also, if there&apos;s any way I can be of assistance, I&apos;m here for whatever you may need and look forward to hearing from you soon.
+
+
+
+
+
+Kind regards
+
+
+
+
+
+
+
+
+
+
+
+Aurélie Maldague
+
+Customer Experience Specialist
+
+International Air Transport Association (IATA)
+
+Torre Europa, Paseo de la Castellana 95, Madrid, Spain.</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>
