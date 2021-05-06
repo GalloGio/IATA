@@ -1,7 +1,7 @@
 <template>
 	<!-- TITLE -->
 		<div class="slds-p-horizontal_large slds-p-vertical_large mediumTitle text-bold text-small">
-			Lab registry
+			{label.CSP_LabRegistry}
 		</div>
 
 		<!-- main content with form-->
@@ -13,7 +13,7 @@
 						<div class="slds-var-m-around_medium">
 							<lightning-combobox
 								name="labTypeSelection"
-								label="Please indicate your business model within the following categories:"
+								label={label.CSP_LabReg_InitialQuestion}
 								placeholder="Select Lab Type"
 								options={LAB_TYPE_PicklistValues.data.values}
 								onchange={handleLabTypeChange}
@@ -26,8 +26,8 @@
 
 				<div if:true={setAForm} class="setAForm">
 					<div if:true={SetAstep01} class="SetAstep01">
-						List the region/countries you are operating in (COVID testing enabled)
-						With how many labs per region/country?
+						{label.CSP_LabReg_ListRegion_countries} <br/>
+						{label.CSP_LabReg_HowManyLabs}
 					</div>
 					
 					<div if:true={SetAstep02} class="SetAStep02">
@@ -82,15 +82,15 @@
 
 					</div>
 					<div if:true={SetAstep03} class="SetAStep03">
-						Which Airlines. Only if prev question = YES
+						{label.CSP_LabReg_WhichAirlines}
 					</div>
 				</div>
 
 
 				<div if:true={setBForm} class="setBForm">
 					<div if:true={SetBstep01} class="SetBstep01">
-						List the region/countries you are operating in (COVID testing enabled)
-						With how many labs per region/country?
+						{label.CSP_LabReg_ListRegion_countries} <br/>
+						{label.CSP_LabReg_HowManyLabs}
 					</div>
 					<div if:true={SetBstep02} class="SetBStep02">
 						<template if:true={TYPE_OF_LAB_PicklistValues.data}>
@@ -123,7 +123,7 @@
 						<template if:true={ARE_YOUR_LABS_PART_OF_NATIONAL_PLATFORM_PicklistValues.data}>
 							<div class="slds-var-m-around_medium">
 								<lightning-combobox
-									name="nationalAccreditationSelection"
+									name="labsPartOfNationalPlatform"
 									label="Are your labs part of any national platform?"
 									options={ARE_YOUR_LABS_PART_OF_NATIONAL_PLATFORM_PicklistValues.data.values}
 									required
@@ -144,7 +144,7 @@
 					</div>
 					
 					<div if:true={SetBstep03} class="SetBStep03">
-						Which Airlines. Only if prev question = YES
+						{label.CSP_LabReg_WhichAirlines}
 					</div>
 				</div>
 

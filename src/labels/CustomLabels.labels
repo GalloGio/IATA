@@ -6677,6 +6677,118 @@ You can easily create a company account in two steps</value>
         <value>Personal Phone</value>
     </labels>
     <labels>
+        <fullName>CSP_LabReg_HowManyLabs</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_HowManyLabs</shortDescription>
+        <value>With how many labs per region/country?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_InitialQuestion</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_InitialQuestion</shortDescription>
+        <value>Please indicate your business model within the following categories:</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_ListRegion_countries</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_ListRegion_countries</shortDescription>
+        <value>List the region/countries you are operating in (COVID testing enabled)</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_OwnFacilities</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_OwnFacilities</shortDescription>
+        <value>Are they your own facilities or partner labs?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_SLACertification</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_SLACertification</shortDescription>
+        <value>Type of certification/SLA in place</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_SLA_InPlace</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_SLA_InPlace</shortDescription>
+        <value>Type of SLAs in place</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_TypeOfLab</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_TypeOfLab</shortDescription>
+        <value>Type of lab</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_WhichAirlines</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_WhichAirlines</shortDescription>
+        <value>Which Airlines?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_airlinePartnershipSelection</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_airlinePartnershipSelection</shortDescription>
+        <value>Existing partnership with airlines?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_issueTestResultsSelection</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_issueTestResultsSelection</shortDescription>
+        <value>Do you issue test results for all locations?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_labsPartOfNationalPlatform</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_labsPartOfNationalPlatform</shortDescription>
+        <value>Are your labs part of any national platform?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_manageBookingSelection</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_manageBookingSelection</shortDescription>
+        <value>Do you manage booking for all locations?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_nationalAccreditationSelection</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_nationalAccreditationSelection</shortDescription>
+        <value>National accreditation for all the labs?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabRegistry</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabRegistry</shortDescription>
+        <value>Lab Registry</value>
+    </labels>
+    <labels>
         <fullName>CSP_LastUpdate</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>

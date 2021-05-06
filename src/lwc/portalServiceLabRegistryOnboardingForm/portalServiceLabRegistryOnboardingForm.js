@@ -20,6 +20,20 @@ import Button_Cancel from '@salesforce/label/c.Button_Cancel';
 import Button_Next from '@salesforce/label/c.Button_Next';
 import Button_Previous from '@salesforce/label/c.Button_Previous';
 import ISSP_Confirm from '@salesforce/label/c.ISSP_Confirm';
+import CSP_LabReg_HowManyLabs from '@salesforce/label/c.CSP_LabReg_HowManyLabs';
+import CSP_LabReg_InitialQuestion from '@salesforce/label/c.CSP_LabReg_InitialQuestion';
+import CSP_LabReg_ListRegion_countries from '@salesforce/label/c.CSP_LabReg_ListRegion_countries';
+import CSP_LabReg_OwnFacilities from '@salesforce/label/c.CSP_LabReg_OwnFacilities';
+import CSP_LabReg_SLACertification from '@salesforce/label/c.CSP_LabReg_SLACertification';
+import CSP_LabReg_SLA_InPlace from '@salesforce/label/c.CSP_LabReg_SLA_InPlace';
+import CSP_LabReg_TypeOfLab from '@salesforce/label/c.CSP_LabReg_TypeOfLab';
+import CSP_LabReg_WhichAirlines from '@salesforce/label/c.CSP_LabReg_WhichAirlines';
+import CSP_LabReg_airlinePartnershipSelection from '@salesforce/label/c.CSP_LabReg_airlinePartnershipSelection';
+import CSP_LabReg_issueTestResultsSelection from '@salesforce/label/c.CSP_LabReg_issueTestResultsSelection';
+import CSP_LabReg_labsPartOfNationalPlatform from '@salesforce/label/c.CSP_LabReg_labsPartOfNationalPlatform';
+import CSP_LabReg_manageBookingSelection from '@salesforce/label/c.CSP_LabReg_manageBookingSelection';
+import CSP_LabReg_nationalAccreditationSelection from '@salesforce/label/c.CSP_LabReg_nationalAccreditationSelection';
+import CSP_LabRegistry from '@salesforce/label/c.CSP_LabRegistry';
 
 export default class PortalServiceOnboardingForm extends NavigationMixin(LightningElement) {
 	abortRequest() {
@@ -32,6 +46,20 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 		,Button_Previous
 		,Button_Next
 		,ISSP_Confirm
+		,CSP_LabReg_HowManyLabs
+		,CSP_LabReg_InitialQuestion
+		,CSP_LabReg_ListRegion_countries
+		,CSP_LabReg_OwnFacilities
+		,CSP_LabReg_SLACertification
+		,CSP_LabReg_SLA_InPlace
+		,CSP_LabReg_TypeOfLab
+		,CSP_LabReg_WhichAirlines
+		,CSP_LabReg_airlinePartnershipSelection
+		,CSP_LabReg_issueTestResultsSelection
+		,CSP_LabReg_labsPartOfNationalPlatform
+		,CSP_LabReg_manageBookingSelection
+		,CSP_LabReg_nationalAccreditationSelection
+		,CSP_LabRegistry
 	}
 
 	//Steps and navigation buttons
