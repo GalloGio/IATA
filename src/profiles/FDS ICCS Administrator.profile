@@ -22645,7 +22645,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.NDC_Agent__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -62322,10 +62322,6 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-Case Layout</layout>
-        <recordType>Case.IATA_Training</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Case-Case Layout</layout>
         <recordType>Case.ID_Card_Queries</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -62403,6 +62399,10 @@
     <layoutAssignments>
         <layout>Case-IATA Financial Security Monitoring</layout>
         <recordType>Case.IATA_Financial_Security_Monitoring</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-IATA Training</layout>
+        <recordType>Case.IATA_Training</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-ID Card Application</layout>
@@ -68841,6 +68841,7 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
+        <personAccountDefault>true</personAccountDefault>
         <recordType>Account.Standard_Account</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
