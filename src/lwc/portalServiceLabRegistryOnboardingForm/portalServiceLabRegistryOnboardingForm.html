@@ -1,0 +1,172 @@
+<template>
+	<!-- TITLE -->
+		<div class="slds-p-horizontal_large slds-p-vertical_large mediumTitle text-bold text-small">
+			Lab registry
+		</div>
+
+		<!-- main content with form-->
+		<div
+			class="slds-p-horizontal_small slds-p-horizontal_large slds-size_1-of-1 customWhiteBackground">
+			<div class="slds-p-vertical_large textMediumMessage">
+				<div if:true={isFirstStep} class="isFirstStep">
+					<template if:true={LAB_TYPE_PicklistValues.data}>
+						<div class="slds-var-m-around_medium">
+							<lightning-combobox
+								name="labTypeSelection"
+								label="Please indicate your business model within the following categories:"
+								placeholder="Select Lab Type"
+								options={LAB_TYPE_PicklistValues.data.values}
+								onchange={handleLabTypeChange}
+								required
+								></lightning-combobox>
+						</div>
+					</template>
+				</div>
+
+
+				<div if:true={setAForm} class="setAForm">
+					<div if:true={SetAstep01} class="SetAstep01">
+						List the region/countries you are operating in (COVID testing enabled)
+						With how many labs per region/country?
+					</div>
+					
+					<div if:true={SetAstep02} class="SetAStep02">
+						<div class="slds-p-around_medium lgc-bg">
+							<lightning-input type="text" label="Type of SLAs in place" placeholder="type here..." required></lightning-input>
+						</div>
+
+						<template if:true={THEY_YOUR_OWN_FACILITIES_OR_PARTNER_PicklistValues.data}>
+							<div class="slds-var-m-around_medium">
+								<lightning-combobox
+									name="ownFacilitiesOrPartnerLabSelection"
+									label="Are they your own facilities or partner labs?"
+									options={THEY_YOUR_OWN_FACILITIES_OR_PARTNER_PicklistValues.data.values}
+									required
+									></lightning-combobox>
+							</div>
+						</template>
+
+						<template if:true={DO_YOU_MANAGE_BOOKING_FOR_ALL_LOCATIONS_PicklistValues.data}>
+							<div class="slds-var-m-around_medium">
+								<lightning-combobox
+									name="manageBookingSelection"
+									label="Do you manage booking for all locations"
+									options={DO_YOU_MANAGE_BOOKING_FOR_ALL_LOCATIONS_PicklistValues.data.values}
+									required
+									></lightning-combobox>
+							</div>
+						</template>
+
+						<template if:true={DO_YOU_ISSUE_TEST_RESULTS_FOR_ALL_LAB_PicklistValues.data}>
+							<div class="slds-var-m-around_medium">
+								<lightning-combobox
+									name="issueTestResultsSelection"
+									label="Do you issue test results for all locations?"
+									options={DO_YOU_ISSUE_TEST_RESULTS_FOR_ALL_LAB_PicklistValues.data.values}
+									required
+									></lightning-combobox>
+							</div>
+						</template>
+
+
+						<template if:true={EXISTING_PARTNERSHIP_WITH_AIRLINES_PicklistValues.data}>
+							<div class="slds-var-m-around_medium">
+								<lightning-combobox
+									name="airlinePartnership01Selection"
+									label="Existing partnership with airlines?"
+									options={EXISTING_PARTNERSHIP_WITH_AIRLINES_PicklistValues.data.values}
+									required
+									></lightning-combobox>
+							</div>
+						</template>
+
+					</div>
+					<div if:true={SetAstep03} class="SetAStep03">
+						Which Airlines. Only if prev question = YES
+					</div>
+				</div>
+
+
+				<div if:true={setBForm} class="setBForm">
+					<div if:true={SetBstep01} class="SetBstep01">
+						List the region/countries you are operating in (COVID testing enabled)
+						With how many labs per region/country?
+					</div>
+					<div if:true={SetBstep02} class="SetBStep02">
+						<template if:true={TYPE_OF_LAB_PicklistValues.data}>
+							<div class="slds-var-m-around_medium">
+								<lightning-combobox
+									name="typeOfLabSelection"
+									label="Type of lab"
+									options={TYPE_OF_LAB_PicklistValues.data.values}
+									required
+									></lightning-combobox>
+							</div>
+						</template>
+						
+
+						<div class="slds-p-around_medium lgc-bg">
+							<lightning-input type="text" label="Type of certification/SLA in place" placeholder="type here..." required></lightning-input>
+						</div>
+
+						<template if:true={NATIONAL_ACCREDITATION_FOR_ALL_THE_LABS_PicklistValues.data}>
+							<div class="slds-var-m-around_medium">
+								<lightning-combobox
+									name="nationalAccreditationSelection"
+									label="National accreditation for all the labs?"
+									options={NATIONAL_ACCREDITATION_FOR_ALL_THE_LABS_PicklistValues.data.values}
+									required
+									></lightning-combobox>
+							</div>
+						</template>
+
+						<template if:true={ARE_YOUR_LABS_PART_OF_NATIONAL_PLATFORM_PicklistValues.data}>
+							<div class="slds-var-m-around_medium">
+								<lightning-combobox
+									name="nationalAccreditationSelection"
+									label="Are your labs part of any national platform?"
+									options={ARE_YOUR_LABS_PART_OF_NATIONAL_PLATFORM_PicklistValues.data.values}
+									required
+									></lightning-combobox>
+							</div>
+						</template>
+
+						<template if:true={EXISTING_PARTNERSHIP_WITH_AIRLINES_PicklistValues.data}>
+							<div class="slds-var-m-around_medium">
+								<lightning-combobox
+									name="airlinePartnership02Selection"
+									label="Existing partnership with airlines?"
+									options={EXISTING_PARTNERSHIP_WITH_AIRLINES_PicklistValues.data.values}
+									required
+									></lightning-combobox>
+							</div>
+						</template>
+					</div>
+					
+					<div if:true={SetBstep03} class="SetBStep03">
+						Which Airlines. Only if prev question = YES
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<!-- BUTTON-->
+		<div class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix">
+			<div class="slds-align_absolute-center">
+				<button class="containedButtonAlt containedButton-size cursorPointer uiButton contactSupport slds-m-horizontal_small" onclick={abortRequest}>
+					{label.Button_Cancel}
+				</button>
+
+				<button if:false={isFirstStep} class="containedButtonAlt containedButton-size cursorPointer uiButton contactSupport slds-m-horizontal_small" onclick={goToPreviousStep}>{label.Button_Previous}</button>
+
+				<button if:false={isLastStep} class="containedButtonAlt containedButton-size cursorPointer uiButton contactSupport slds-m-horizontal_small" onclick={goToNextStep}>{label.Button_Next}</button>
+
+				<button if:true={isLastStep}
+					class="containedButton containedButton-size slds-m-horizontal_small"
+					onclick={handleSubmitRequest}>
+					{label.ISSP_Confirm}
+				</button>
+			</div>
+	</div>
+</template>
