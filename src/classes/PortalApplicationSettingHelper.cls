@@ -20,7 +20,7 @@ public with sharing class PortalApplicationSettingHelper {
 					(SELECT Sector__c, Category__c
 					FROM Portal_Application_Visibilities__r
 					WHERE is_Visible__c = true
-					AND Sector__c = :account.Sector__c
+					AND Sector__c IN (:account.Sector__c,:WILDCARD)
 					AND Category__c IN (:account.Category__c,:WILDCARD))
 				FROM Portal_Application_Setting__mdt]) {
 			if (setting.Portal_Application_Visibilities__r.size()>0) {
@@ -43,7 +43,7 @@ public with sharing class PortalApplicationSettingHelper {
 					(SELECT Sector__c, Category__c
 					FROM Portal_Application_Visibilities__r
 					WHERE Auto_grant_service__c = true
-					AND Sector__c = :account.Sector__c
+					AND Sector__c IN (:account.Sector__c,:WILDCARD)
 					AND Category__c IN (:account.Category__c,:WILDCARD))
 				FROM Portal_Application_Setting__mdt]) {
 			if (setting.Portal_Application_Visibilities__r.size()>0) {
