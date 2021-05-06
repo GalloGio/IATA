@@ -62367,6 +62367,10 @@
         <recordType>Case.IATA_Financial_Security_Monitoring</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Case-IATA Training</layout>
+        <recordType>Case.IATA_Training</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Case-ID Card Application</layout>
         <recordType>Case.ID_Card_Application</recordType>
     </layoutAssignments>
@@ -62440,10 +62444,6 @@
     <layoutAssignments>
         <layout>Case-IDFS Cases %28GLOBAL%29</layout>
         <recordType>Case.IATA_Service_Request</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Case-IDFS Cases %28GLOBAL%29</layout>
-        <recordType>Case.IATA_Training</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-IDFS Cases %28GLOBAL%29</layout>
