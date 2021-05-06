@@ -61081,6 +61081,10 @@
         <recordType>Account_Statement_Transaction__c.ICE_Balance</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Case-IATA Training</layout>
+        <recordType>Case.IATA_Training</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Case_Item__c-Case Item Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
