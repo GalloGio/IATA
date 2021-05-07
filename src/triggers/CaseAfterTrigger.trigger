@@ -450,8 +450,7 @@ trigger CaseAfterTrigger on Case (after delete, after insert, after undelete, af
 	 *
 	 * JIRA - ICSC-35
 	 */
-//if(Trigger.isUpdate) {
-	if(CaseTriggerHelper.isDone == false) {
+	if( (Trigger.isInsert || Trigger.isUpdate) && CaseTriggerHelper.isDone == false) {
 		CaseTriggerHelper.createKPIValues(Trigger.oldMap, Trigger.newMap, Trigger.new);
 	}
 
