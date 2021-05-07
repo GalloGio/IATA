@@ -525,6 +525,7 @@
     <fields>
         <fullName>Applicable_for_re_activation__c</fullName>
         <defaultValue>false</defaultValue>
+        <description>This field will be true to be able to reactivate the Risk Event if the Agent has held its previous accreditation type for at least 2 years</description>
         <externalId>false</externalId>
         <label>Applicable for re-activation</label>
         <trackHistory>false</trackHistory>
