@@ -5569,7 +5569,7 @@ IF(
   (IF( 
   CONTAINS($Profile.Name,&quot;Coding and MITA&quot;),&quot;Coding &amp; MITA&quot;, 
   (IF( 
-  CONTAINS($Profile.Name,&quot;ICCS&quot;),&quot;ICCS&quot;,
+  CONTAINS($UserRole.Name,&quot;ICCS&quot;),&quot;ICCS&quot;,
   (IF( 
   CONTAINS($UserRole.Name, &quot;Distribution - Airline Management&quot;), 
   &quot;Airline Management&quot;, 
@@ -7546,7 +7546,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
 (IF(
   CONTAINS($Profile.Name,&quot;Coding and MITA&quot;),&quot;Coding &amp; MITA&quot;,  
 (IF(
-  CONTAINS($Profile.Name,&quot;ICCS&quot;),&quot;ICCS&quot;,
+  CONTAINS($UserRole.Name,&quot;ICCS&quot;),&quot;ICCS&quot;,
 (IF(
   CONTAINS($UserRole.Name, &quot;Distribution - Airline Management&quot;),
   &quot;Airline Management&quot;,
