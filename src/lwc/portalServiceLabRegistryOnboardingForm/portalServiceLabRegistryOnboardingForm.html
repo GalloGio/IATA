@@ -5,9 +5,19 @@
 		</div>
 
 		<!-- main content with form-->
-		<div
-			class="slds-p-horizontal_small slds-p-horizontal_large slds-size_1-of-1 customWhiteBackground">
+		<div class="slds-p-horizontal_small slds-p-horizontal_large slds-size_1-of-1 customWhiteBackground">
 			<div class="slds-p-vertical_large textMediumMessage">
+				
+				<template if:true={showMandatoryFieldsError}>
+					<div class="whiteIcon text-xxsmall errorBox">
+						<div class="slds-grid slds-gutters">
+							<div class="slds-col slds-m-left_medium slds-size_12-of-13">
+								{label.CSP_Error_Message_Mandatory_Fields}
+							</div>
+						</div>
+					</div>
+				</template>
+
 				<div if:true={isFirstStep} class="isFirstStep">
 					<template if:true={LAB_TYPE_PicklistValues.data}>
 						<div class="slds-var-m-around_medium">
@@ -16,9 +26,10 @@
 								label={label.CSP_LabReg_InitialQuestion}
 								placeholder="Select Lab Type"
 								options={LAB_TYPE_PicklistValues.data.values}
-								onchange={handleLabTypeChange}
-								required
-								></lightning-combobox>
+								onchange={handleFormElementChange}
+								value={labTypeSelection}
+								required>
+							</lightning-combobox>
 						</div>
 					</template>
 				</div>
@@ -32,17 +43,27 @@
 					
 					<div if:true={SetAstep02} class="SetAStep02">
 						<div class="slds-p-around_medium lgc-bg">
-							<lightning-input type="text" label="Type of SLAs in place" placeholder="type here..." required></lightning-input>
+							<lightning-input 
+								name={SLAInPlace} 
+								value={SLAInPlace} 
+								type="text" 
+								label={label.CSP_LabReg_SLA_InPlace}
+								placeholder="type here..." 
+								onchange={handleFormElementChange}
+								required>
+							</lightning-input>
 						</div>
 
 						<template if:true={THEY_YOUR_OWN_FACILITIES_OR_PARTNER_PicklistValues.data}>
 							<div class="slds-var-m-around_medium">
 								<lightning-combobox
 									name="ownFacilitiesOrPartnerLabSelection"
-									label="Are they your own facilities or partner labs?"
+									value={ownFacilitiesOrPartnerLabSelection}
+									label={label.CSP_LabReg_OwnFacilities}
 									options={THEY_YOUR_OWN_FACILITIES_OR_PARTNER_PicklistValues.data.values}
-									required
-									></lightning-combobox>
+									onchange={handleFormElementChange}
+									required>
+								</lightning-combobox>
 							</div>
 						</template>
 
@@ -50,10 +71,12 @@
 							<div class="slds-var-m-around_medium">
 								<lightning-combobox
 									name="manageBookingSelection"
-									label="Do you manage booking for all locations"
+									value={manageBookingSelection}
+									label={label.CSP_LabReg_manageBookingSelection}
 									options={DO_YOU_MANAGE_BOOKING_FOR_ALL_LOCATIONS_PicklistValues.data.values}
-									required
-									></lightning-combobox>
+									onchange={handleFormElementChange}
+									required>
+								</lightning-combobox>
 							</div>
 						</template>
 
@@ -61,10 +84,12 @@
 							<div class="slds-var-m-around_medium">
 								<lightning-combobox
 									name="issueTestResultsSelection"
-									label="Do you issue test results for all locations?"
+									value={issueTestResultsSelection}
+									label={label.CSP_LabReg_issueTestResultsSelection}
 									options={DO_YOU_ISSUE_TEST_RESULTS_FOR_ALL_LAB_PicklistValues.data.values}
-									required
-									></lightning-combobox>
+									onchange={handleFormElementChange}
+									required>
+								</lightning-combobox>
 							</div>
 						</template>
 
@@ -73,10 +98,12 @@
 							<div class="slds-var-m-around_medium">
 								<lightning-combobox
 									name="airlinePartnership01Selection"
-									label="Existing partnership with airlines?"
+									value={airlinePartnership01Selection}
+									label={label.CSP_LabReg_airlinePartnershipSelection}
 									options={EXISTING_PARTNERSHIP_WITH_AIRLINES_PicklistValues.data.values}
-									required
-									></lightning-combobox>
+									onchange={handleFormElementChange}
+									required>
+								</lightning-combobox>
 							</div>
 						</template>
 
@@ -97,26 +124,38 @@
 							<div class="slds-var-m-around_medium">
 								<lightning-combobox
 									name="typeOfLabSelection"
-									label="Type of lab"
+									value={typeOfLabSelection}
+									label={label.CSP_LabReg_TypeOfLab}
 									options={TYPE_OF_LAB_PicklistValues.data.values}
-									required
-									></lightning-combobox>
+									onchange={handleFormElementChange}
+									required>
+								</lightning-combobox>
 							</div>
 						</template>
 						
 
 						<div class="slds-p-around_medium lgc-bg">
-							<lightning-input type="text" label="Type of certification/SLA in place" placeholder="type here..." required></lightning-input>
+							<lightning-input 
+								type="text"
+								name="SLACertificationInPlace"
+								value={SLACertificationInPlace}
+								label={label.CSP_LabReg_SLACertification}
+								placeholder="type here..." 
+								onchange={handleFormElementChange} 
+								required>
+							</lightning-input>
 						</div>
 
 						<template if:true={NATIONAL_ACCREDITATION_FOR_ALL_THE_LABS_PicklistValues.data}>
 							<div class="slds-var-m-around_medium">
 								<lightning-combobox
 									name="nationalAccreditationSelection"
-									label="National accreditation for all the labs?"
+									value={nationalAccreditationSelection}
+									label={label.CSP_LabReg_nationalAccreditationSelection}
 									options={NATIONAL_ACCREDITATION_FOR_ALL_THE_LABS_PicklistValues.data.values}
-									required
-									></lightning-combobox>
+									onchange={handleFormElementChange}
+									required>
+								</lightning-combobox>
 							</div>
 						</template>
 
@@ -124,10 +163,12 @@
 							<div class="slds-var-m-around_medium">
 								<lightning-combobox
 									name="labsPartOfNationalPlatform"
-									label="Are your labs part of any national platform?"
+									value={labsPartOfNationalPlatform}
+									label={label.CSP_LabReg_labsPartOfNationalPlatform}
 									options={ARE_YOUR_LABS_PART_OF_NATIONAL_PLATFORM_PicklistValues.data.values}
-									required
-									></lightning-combobox>
+									onchange={handleFormElementChange}
+									required>
+								</lightning-combobox>
 							</div>
 						</template>
 
@@ -135,10 +176,12 @@
 							<div class="slds-var-m-around_medium">
 								<lightning-combobox
 									name="airlinePartnership02Selection"
-									label="Existing partnership with airlines?"
+									value={airlinePartnership02Selection}
+									label={label.CSP_LabReg_airlinePartnershipSelection}
 									options={EXISTING_PARTNERSHIP_WITH_AIRLINES_PicklistValues.data.values}
-									required
-									></lightning-combobox>
+									onchange={handleFormElementChange}
+									required>
+								</lightning-combobox>
 							</div>
 						</template>
 					</div>
@@ -147,7 +190,6 @@
 						{label.CSP_LabReg_WhichAirlines}
 					</div>
 				</div>
-
 			</div>
 		</div>
 

@@ -1,7 +1,9 @@
-.modal2 {
-    z-index: 9999;
-}
-
-.customCenteredPopup1024 {
-    width: 1200px;
+.errorBox {
+	color: #fff;
+	border-radius: 4px;
+	background: #c23934;
+	padding: 10px;
+	margin-left: 38px;
+	width: 89%;
+	white-space: normal;
 }

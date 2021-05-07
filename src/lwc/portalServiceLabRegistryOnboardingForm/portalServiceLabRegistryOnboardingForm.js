@@ -35,6 +35,8 @@ import CSP_LabReg_manageBookingSelection from '@salesforce/label/c.CSP_LabReg_ma
 import CSP_LabReg_nationalAccreditationSelection from '@salesforce/label/c.CSP_LabReg_nationalAccreditationSelection';
 import CSP_LabRegistry from '@salesforce/label/c.CSP_LabRegistry';
 
+import CSP_Error_Message_Mandatory_Fields from '@salesforce/label/c.CSP_Error_Message_Mandatory_Fields_Contact';
+
 export default class PortalServiceOnboardingForm extends NavigationMixin(LightningElement) {
 	abortRequest() {
         this.dispatchEvent(new CustomEvent('requestcompleted', { detail: { success: false }, bubbles: true,composed: true }));// sends the event to the grandparent
@@ -60,6 +62,7 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 		,CSP_LabReg_manageBookingSelection
 		,CSP_LabReg_nationalAccreditationSelection
 		,CSP_LabRegistry
+		,CSP_Error_Message_Mandatory_Fields
 	}
 
 	//Steps and navigation buttons
@@ -67,6 +70,7 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 	@track isLastStep = false;
 	
 	@track currentStep = 'isFirstStep';
+	@track showMandatoryFieldsError = false;
 
 	isAForm = false;
 	@track setAForm = false;
@@ -109,47 +113,101 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 
 	
 	//Lab Type
-	labType='';
-	handleLabTypeChange(event){
-		this.labType = event.detail.value;
-		if(this.labType=='IT integrator' || this.labType=='Aggregator'){
-			this.isAForm = true;
-			this.isBForm = false;
-		} 
+	@track labTypeSelection='';
+	@track SLAInPlace='';
+	@track ownFacilitiesOrPartnerLabSelection='';
+	@track manageBookingSelection='';
+	@track issueTestResultsSelection='';
+	@track airlinePartnership01Selection='';
+	@track typeOfLabSelection='';
+	@track SLACertificationInPlace='';
+	@track nationalAccreditationSelection='';
+	@track labsPartOfNationalPlatform='';
+	@track airlinePartnership02Selection='';
 
-		if(this.labType=='Independent' || this.labType=='Lab Network'){
-			this.isAForm = false;
-			this.isBForm = true;
-		} 
+
+	handleFormElementChange(event){
+		let formElementName = event.target.name;
+		let formElementValue = event.target.value;
+
+		switch(formElementName){
+			case 'labTypeSelection':
+				this.labTypeSelection = formElementValue;
+				if(this.labTypeSelection=='IT integrator' || this.labTypeSelection=='Aggregator'){
+					this.isAForm = true;
+					this.isBForm = false;
+				} 
+		
+				if(this.labTypeSelection=='Independent' || this.labTypeSelection=='Lab Network'){
+					this.isAForm = false;
+					this.isBForm = true;
+				} 
+				break;
+			case 'SLAInPlace':
+				this.SLAInPlace = formElementValue;
+				break;
+			case 'ownFacilitiesOrPartnerLabSelection':
+				this.ownFacilitiesOrPartnerLabSelection = formElementValue;
+				break;
+			case 'manageBookingSelection':
+				this.manageBookingSelection = formElementValue;
+				break;
+			case 'issueTestResultsSelection':
+				this.issueTestResultsSelection = formElementValue;
+				break;
+			case 'airlinePartnership01Selection':
+				this.airlinePartnership01Selection = formElementValue;
+				break;
+			case 'typeOfLabSelection':
+				this.typeOfLabSelection = formElementValue;
+				break;
+			case 'SLACertificationInPlace':
+				this.SLACertificationInPlace = formElementValue;
+				break;
+			case 'nationalAccreditationSelection':
+				this.nationalAccreditationSelection = formElementValue;
+				break;
+			case 'labsPartOfNationalPlatform':
+				this.labsPartOfNationalPlatform = formElementValue;
+				break;
+			case 'airlinePartnership02Selection':
+				this.airlinePartnership02Selection = formElementValue;
+				break;
+		}
 	}
 
 
 	//Navigation methods
 	goToNextStep(){
-		this.setAllNAvigationStepsToFalse();
-		
 		switch(this.currentStep){
 			case 'isFirstStep':
-				if(this.isAForm){
-					this.setAForm = true;
-					this.SetAstep01 = true;
-					this.currentStep = 'SetAstep01';
-				}
+				if(this.labTypeSelection==''){
+					this.showMandatoryFieldsError = true;
+				}else{
+					this.setAllNAvigationStepsToFalse();
+					if(this.isAForm){
+						this.setAForm = true;
+						this.SetAstep01 = true;
+						this.currentStep = 'SetAstep01';
+					}
 
-				if(this.isBForm){
-					this.setBForm = true;
-					this.SetBstep01 = true;
-					this.currentStep = 'SetBstep01';
+					if(this.isBForm){
+						this.setBForm = true;
+						this.SetBstep01 = true;
+						this.currentStep = 'SetBstep01';
+					}
 				}
 				break;
 			
 			//A FORM STEPS
 			case 'SetAstep01':
+				this.setAllNAvigationStepsToFalse();
 				this.setAForm = true;
 				this.SetAstep02 = true;
 				this.currentStep = 'SetAstep02';
 				break;
 			case 'SetAstep02':
+				this.setAllNAvigationStepsToFalse();
 				this.setAForm = true;
 				this.SetAstep03 = true;
 				this.isLastStep = true;
@@ -159,11 +217,13 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 			
 			//B FORM STEPS
 			case 'SetBstep01':
+				this.setAllNAvigationStepsToFalse();
 				this.setBForm = true;
 				this.SetBstep02 = true;
 				this.currentStep = 'SetBstep02';
 				break;
 			case 'SetBstep02':
+				this.setAllNAvigationStepsToFalse();
 				this.setBForm = true;
 				this.SetBstep03 = true;
 				this.isLastStep = true;
@@ -176,6 +236,7 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 
 
 	goToPreviousStep(){
+		this.setAllNAvigationStepsToFalse();
 		switch(this.currentStep){
 			case 'SetBstep03':
 				this.setBForm = true;
@@ -224,6 +285,8 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 		this.SetBstep01 = false;
 		this.SetBstep02 = false;
 		this.SetBstep03 = false;
+
+		this.showMandatoryFieldsError = false;
 	}
 
 	handleSubmitRequest(){
