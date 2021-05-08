@@ -30937,7 +30937,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Case.OSCAR__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -62558,6 +62558,10 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>CaseClose-ACCA Bug Fix Close</layout>
+        <recordType>Case.CNS_Collection_Process</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CaseClose-ACCA Bug Fix Close</layout>
         <recordType>Case.Cases_IFG</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -62587,6 +62591,10 @@
     <layoutAssignments>
         <layout>CaseClose-ACCA Bug Fix Close</layout>
         <recordType>Case.SIDRA_Lite</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CaseClose-ACCA Bug Fix Close</layout>
+        <recordType>Case.TIDS</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>CaseClose-ACCA Close Case - Extended</layout>
@@ -64948,6 +64956,15 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>AMS_Agency_A_Change_code_History__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>AMS_OSCAR__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
@@ -69219,6 +69236,7 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
+        <personAccountDefault>true</personAccountDefault>
         <recordType>Case.CasesEurope</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -69275,7 +69293,7 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Case.Disputes</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
@@ -69440,7 +69458,7 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Case.OSCAR_Communication</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
