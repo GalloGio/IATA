@@ -1,6 +1,7 @@
 import { LightningElement, track, wire, api } from 'lwc';
 import { getObjectInfo, getPicklistValues } from 'lightning/uiObjectInfoApi';
 import { NavigationMixin } from 'lightning/navigation';
+import getCountries from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.getISOCountries';
 
 //Objects schema
 import OBJECT_LAB_ACCOUNT_ROLE_DETAIL from '@salesforce/schema/LAB_Account_Role_Detail__c';
@@ -85,7 +86,7 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 	@track SetBStep03 = false;
 
 
-	//Schema methods
+	//Schema and picklist methods
 	@api recordId;
 	@api objectApiName;
 	
@@ -94,11 +95,11 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 	
 	@wire(getObjectInfo, { objectApiName: OBJECT_LAB_ACCOUNT_ROLE_DETAIL }) 
 		objectInfo({error, data}) {
-			if (error) {
-			  // handle Error
-			} else if (data) {
+			if (data) {
 			  const rtis = data.recordTypeInfos;
 			  this.recTypeId = Object.keys(rtis).find(rti => rtis[rti].name === 'Default');
+			}else if(error){
+				//TODO: Handle error
 			}
 		  };
 
@@ -111,6 +112,129 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 	@wire(getPicklistValues, { recordTypeId: "$recTypeId", fieldApiName: FIELD_NATIONAL_ACCREDITATION_FOR_ALL_THE_LABS }) NATIONAL_ACCREDITATION_FOR_ALL_THE_LABS_PicklistValues;
 	@wire(getPicklistValues, { recordTypeId: "$recTypeId", fieldApiName: FIELD_TYPE_OF_LAB }) TYPE_OF_LAB_PicklistValues;
 
+	//Countries
+	@api countryColumns = [
+		{ label: 'Name', fieldName: 'Name', editable: false },
+		{ label: 'Iso Code', fieldName: 'IsoCode', editable: false },
+		{ label: 'Number Of Labs', fieldName: 'NumOfLabs', type: 'number', editable: true, maximumFractionDigits: 0 }
+	];
+
+	@api countryMetadata = {
+		Id: 'Id',
+		Name: 'Name',
+		IsoCode: 'Iso_code__c'
+	};
+
+	@api countriesAfrica = [];
+	@track countriesEurope = [];
+	@track countriesAmerica = [];
+	@track countriesAsia = [];
+	@track countriesChina = [];
+
+
+	@wire(getCountries,{}) countryData(result){
+		
+		if(result.data){
+			console.log('I am loading countries data');
+			let Africa = [];
+			let America = [];
+			let Asia = [];
+			let China = [];
+			let Europe = [];
+
+			result.data.countryList.forEach(cntr =>{
+				let tmp = {};
+
+				tmp.Id = cntr.Id;
+				tmp.Name = cntr.Name;
+				tmp.IsoCode = cntr.ISO_Code__c;
+
+				switch(cntr.Region__c){
+					case 'Africa & Middle East':
+						Africa.push(tmp);
+						//this.countriesAfrica.push({ 'Id': cntr.Id, 'Name': cntr.Name, 'IsoCode':cntr.ISO_Code__c});
+						break;
+					case 'Americas':
+						America.push(tmp);
+						//this.countriesAmerica.push({ 'Id': cntr.Id, 'Name': cntr.Name, 'IsoCode':cntr.ISO_Code__c});
+						break;
+					case 'Asia & Pacific':
+						Asia.push(tmp);
+						//this.countriesAsia.push({ 'Id': cntr.Id, 'Name': cntr.Name, 'IsoCode':cntr.ISO_Code__c});
+						break;
+					case 'China & North Asia':
+						China.push(tmp);
+						//this.countriesChina.push({ 'Id': cntr.Id, 'Name': cntr.Name, 'IsoCode':cntr.ISO_Code__c});
+						break;
+					case 'Europe':
+						Europe.push(tmp);
+						//this.countriesEurope.push({ 'Id': cntr.Id, 'Name': cntr.Name, 'IsoCode':cntr.ISO_Code__c});
+						break;
+				}
+
+				this.countriesAfrica = Africa;
+				this.countriesAmerica = America;
+				this.countriesAsia = Asia;
+				this.countriesChina = China;
+				this.countriesEurope = Europe;
+			});
+		}
+    }
+
+	getSavedLabNum(cntrId){
+		let indexFound = this.savedLabsNumberPerCountry.findIndex(ar => ar.Id == cntrId);
+		if(indexFound>-1) return this.savedLabsNumberPerCountry[indexFound].labNum;
+		else return null;
+	}
+
+	
+
+	handleCountryInlineEdit(event){
+		let countryId = event.detail.draftValues[0].Id;
+		let labNum = event.detail.draftValues[0].NumOfLabs;
+
+		let chinaIndexFuond = this.countriesChina.findIndex(ar => ar.Id == countryId);
+		if(chinaIndexFuond > -1){
+			console.log('found index in countriesChina set: ' + chinaIndexFuond);
+			this.countriesChina[chinaIndexFuond].NumOfLabs = labNum;
+		}
+
+		let africaIndexFuond = this.countriesAfrica.findIndex(ar => ar.Id == countryId);
+		if(africaIndexFuond > -1){
+			console.log('found index in countriesAfrica set: ' + africaIndexFuond);
+			this.countriesAfrica[africaIndexFuond].NumOfLabs = labNum;
+			console.log(this.countriesAfrica[africaIndexFuond].labNum);
+		} 
+
+		let americaIndexFuond = this.countriesAmerica.findIndex(ar => ar.Id == countryId);
+		if(americaIndexFuond > -1){
+			console.log('found index in countriesAmerica set: ' + americaIndexFuond);
+			this.countriesAmerica[americaIndexFuond].NumOfLabs = labNum;
+		}
+
+		let asiaIndexFuond = this.countriesAsia.findIndex(ar => ar.Id == countryId);
+		if(asiaIndexFuond > -1){
+			console.log('found index in countriesAsia set: ' + asiaIndexFuond);
+			this.countriesAsia[asiaIndexFuond].NumOfLabs = labNum;
+		}
+
+		let europeIndexFuond = this.countriesEurope.findIndex(ar => ar.Id == countryId);
+		if(europeIndexFuond > -1){
+			console.log('found index in countriesEurope set: ' + europeIndexFuond);
+			this.countriesEurope[europeIndexFuond].NumOfLabs = labNum;
+		}
+
+		
+
+		let indexFound = this.savedLabsNumberPerCountry.findIndex(ar => ar.Id == countryId);
+
+		if(indexFound>-1)
+			this.savedLabsNumberPerCountry[indexFound].NumOfLabs = labNum;
+		else
+			this.savedLabsNumberPerCountry.push({'Id': countryId, 'NumOfLabs':labNum});
+	}
+
+	@track savedLabsNumberPerCountry = []
 	
 	//Lab Type
 	@track labTypeSelection='';
@@ -133,7 +257,7 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 		switch(formElementName){
 			case 'labTypeSelection':
 				this.labTypeSelection = formElementValue;
-				if(this.labTypeSelection=='IT integrator' || this.labTypeSelection=='Aggregator'){
+				if(this.labTypeSelection=='IT Integrator' || this.labTypeSelection=='Aggregator'){
 					this.isAForm = true;
 					this.isBForm = false;
 				} 
@@ -238,22 +362,6 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 	goToPreviousStep(){
 		this.setAllNAvigationStepsToFalse();
 		switch(this.currentStep){
-			case 'SetBstep03':
-				this.setBForm = true;
-				this.SetBstep02 = true;
-				this.isLastStep = false;
-				this.currentStep = 'SetBstep02';
-			break;
-			case 'SetBstep02':
-				this.setBForm = true;
-				this.SetBstep01 = true;
-				this.currentStep = 'SetBstep01';
-				break;
-			case 'SetBstep01':
-				this.isFirstStep = true;
-				this.currentStep = 'isFirstStep';
-				break;
-
 			case 'SetAstep03':
 				this.setAForm = true;
 				this.SetAstep02 = true;
@@ -266,6 +374,23 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 				this.currentStep = 'SetAstep01';
 				break;
 			case 'SetAstep01':
+				this.isFirstStep = true;
+				this.currentStep = 'isFirstStep';
+				break;
+
+			
+			case 'SetBstep03':
+				this.setBForm = true;
+				this.SetBstep02 = true;
+				this.isLastStep = false;
+				this.currentStep = 'SetBstep02';
+			break;
+			case 'SetBstep02':
+				this.setBForm = true;
+				this.SetBstep01 = true;
+				this.currentStep = 'SetBstep01';
+				break;
+			case 'SetBstep01':
 				this.isFirstStep = true;
 				this.currentStep = 'isFirstStep';
 				break;

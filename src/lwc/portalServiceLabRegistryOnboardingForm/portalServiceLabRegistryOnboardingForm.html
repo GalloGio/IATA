@@ -39,6 +39,74 @@
 					<div if:true={SetAstep01} class="SetAstep01">
 						{label.CSP_LabReg_ListRegion_countries} <br/>
 						{label.CSP_LabReg_HowManyLabs}
+
+						<lightning-accordion>
+							<lightning-accordion-section name="countriesAfrica" label="Africa &amp; Middle East">
+								<div style="height: 300px;">
+									<lightning-datatable
+											key-field="Id"
+											data={countriesAfrica}
+											row-number-offset=0
+											suppress-bottom-bar
+											columns={countryColumns}
+											hide-checkbox-column
+											oncellchange={handleCountryInlineEdit}>
+									</lightning-datatable>
+								</div>
+							</lightning-accordion-section>
+							
+							<lightning-accordion-section name="countriesAmerica" label="Americas">
+								<div style="height: 300px;">
+									<lightning-datatable
+											key-field="Id"
+											data={countriesAmerica}
+											row-number-offset=0
+											suppress-bottom-bar
+											columns={countryColumns}
+											hide-checkbox-column>
+									</lightning-datatable>
+								</div>
+							</lightning-accordion-section>
+							
+							<lightning-accordion-section name="countriesAsia" label="Asia &amp; Pacific">
+								<div style="height: 300px;">
+									<lightning-datatable
+											key-field="Id"
+											data={countriesAsia}
+											row-number-offset=0
+											suppress-bottom-bar
+											columns={countryColumns}
+											hide-checkbox-column>
+									</lightning-datatable>
+								</div>
+							</lightning-accordion-section>
+							
+							<lightning-accordion-section name="countriesChina" label="China &amp; North Asia">
+								<div style="height: 300px;">
+									<lightning-datatable
+											key-field="Id"
+											data={countriesChina}
+											row-number-offset=0
+											suppress-bottom-bar
+											columns={countryColumns}
+											hide-checkbox-column>
+									</lightning-datatable>
+								</div>
+							</lightning-accordion-section>
+							
+							<lightning-accordion-section name="countriesEurope" label="Europe">
+								<div style="height: 300px;">
+									<lightning-datatable
+											key-field="Id"
+											data={countriesEurope}
+											row-number-offset=0
+											suppress-bottom-bar
+											columns={countryColumns}
+											hide-checkbox-column>
+									</lightning-datatable>
+								</div>
+							</lightning-accordion-section>
+						</lightning-accordion>
 					</div>
 					
 					<div if:true={SetAstep02} class="SetAStep02">
@@ -118,6 +186,74 @@
 					<div if:true={SetBstep01} class="SetBstep01">
 						{label.CSP_LabReg_ListRegion_countries} <br/>
 						{label.CSP_LabReg_HowManyLabs}
+
+						<lightning-accordion>
+							<lightning-accordion-section name="countriesAfrica" label="Africa &amp; Middle East">
+								<div style="height: 300px;">
+									<lightning-datatable
+											key-field="Id"
+											data={countriesAfrica}
+											row-number-offset=0
+											suppress-bottom-bar
+											columns={countryColumns}
+											hide-checkbox-column
+											oncellchange={handleCountryInlineEdit}>
+									</lightning-datatable>
+								</div>
+							</lightning-accordion-section>
+							
+							<lightning-accordion-section name="countriesAmerica" label="Americas">
+								<div style="height: 300px;">
+									<lightning-datatable
+											key-field="Id"
+											data={countriesAmerica}
+											row-number-offset=0
+											suppress-bottom-bar
+											columns={countryColumns}
+											hide-checkbox-column>
+									</lightning-datatable>
+								</div>
+							</lightning-accordion-section>
+							
+							<lightning-accordion-section name="countriesAsia" label="Asia &amp; Pacific">
+								<div style="height: 300px;">
+									<lightning-datatable
+											key-field="Id"
+											data={countriesAsia}
+											row-number-offset=0
+											suppress-bottom-bar
+											columns={countryColumns}
+											hide-checkbox-column>
+									</lightning-datatable>
+								</div>
+							</lightning-accordion-section>
+							
+							<lightning-accordion-section name="countriesChina" label="China &amp; North Asia">
+								<div style="height: 300px;">
+									<lightning-datatable
+											key-field="Id"
+											data={countriesChina}
+											row-number-offset=0
+											suppress-bottom-bar
+											columns={countryColumns}
+											hide-checkbox-column>
+									</lightning-datatable>
+								</div>
+							</lightning-accordion-section>
+							
+							<lightning-accordion-section name="countriesEurope" label="Europe">
+								<div style="height: 300px;">
+									<lightning-datatable
+											key-field="Id"
+											data={countriesEurope}
+											row-number-offset=0
+											suppress-bottom-bar
+											columns={countryColumns}
+											hide-checkbox-column>
+									</lightning-datatable>
+								</div>
+							</lightning-accordion-section>
+						</lightning-accordion>
 					</div>
 					<div if:true={SetBstep02} class="SetBStep02">
 						<template if:true={TYPE_OF_LAB_PicklistValues.data}>
