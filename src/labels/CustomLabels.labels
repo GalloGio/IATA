@@ -45750,7 +45750,7 @@ respect to decisions and/or actions affecting Agents and applicants under the IA
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Reactivate Risk Event warning message</shortDescription>
-        <value>Agency converted to GoLite &lt; 6 months ago and was previously GoStandard for &gt; 2 years</value>
+        <value>This agency meets the conditions of being GoStandard for more than 2 years and subsequently being GoLite for less than 6 months and is therefore eligible to trade as GoStandard under their previous Risk Status, RHC, Risk Events, and Financial Security.</value>
     </labels>
     <labels>
         <fullName>Reader_Main_Content</fullName>
