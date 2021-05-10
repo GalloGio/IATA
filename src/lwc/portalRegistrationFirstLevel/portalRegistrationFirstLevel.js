@@ -469,7 +469,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 
 	handleSubmit(){
 
-		if(typeof this.canSubmit === 'undefined')
+		if(typeof this.canSubmit === 'undefined' || this.canSubmit == false)
 			this.canSubmit = (Math.floor(Date.now() / 1000) - this.timeStamp <= 15) ?  false : true; //Check 15 sec to populate form
 		this.isLoading = true;
         if(this.registrationForm.phone.length < 5){
