@@ -332,6 +332,9 @@ public with sharing class clsMassCaseCreationController {
 				soql += ' and Account.IATA_ISO_Country__c = \'' + aISOCountry.IATA_ISO_Country__c + '\'';
 				system.debug('soql  '+soql);
 
+				//exclude accounts with FinancialSecurity Security_type__c = 'CCG' and security_status__c = 'Active'
+				soql += ' and AccountId NOT IN (SELECT Account__c FROM Financial_Security__c WHERE Security_type__c = \'CCG\' and security_status__c = \'Active\')';
+
 				if (country.toUpperCase().equals('SPAIN')) IsSelectedCountryIsSpain = true;
 				else IsSelectedCountryIsSpain = false;
 			//}
