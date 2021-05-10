@@ -28,7 +28,7 @@
 
 			<div class="input-group ">
 				<apex:inputCheckbox value="{!accept}" selected="false"/>
-				<a target="_blank" href="http://www.iata.org/customer-portal/Pages/terms.aspx">{!$Label.ISSP_Registration_acceptGeneralConditions}</a>                 
+				<a target="_blank" href="https://www.iata.org/en/terms">{!$Label.ISSP_Registration_acceptGeneralConditions}</a>                 
 			</div>
 			<hr />
 			<div class="form-group">
@@ -65,7 +65,7 @@
                 <div class="checkbox">
                   <label>
                     <apex:inputCheckbox value="{!accept}" selected="false"/>
-                    <a target="_blank" href="http://www.iata.org/customer-portal/Pages/terms.aspx">{!$Label.ISSP_Registration_acceptGeneralConditions}</a> 
+                    <a target="_blank" href="https://www.iata.org/en/terms">{!$Label.ISSP_Registration_acceptGeneralConditions}</a> 
                   </label>
                 </div>
               </div>
