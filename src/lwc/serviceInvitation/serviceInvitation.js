@@ -7,6 +7,7 @@ import role from '@salesforce/label/c.Role';
 import cancel from '@salesforce/label/c.Button_Cancel';
 import invite from '@salesforce/label/c.Invite';
 import pageNumbering from '@salesforce/label/c.Page_Numbering';
+import emailFormatErr from '@salesforce/label/c.Email_Wrong_Format';
 
 //import user id
 import userId from '@salesforce/user/Id';
@@ -23,7 +24,8 @@ export default class ServiceInvitation extends LightningElement {
         role,
         cancel,
         invite,
-        pageNumbering
+        pageNumbering,
+        emailFormatErr
 	};
 
     paramKey = 'serviceId';
@@ -113,17 +115,24 @@ export default class ServiceInvitation extends LightningElement {
 
     // Action functions
     updateField(event){
-        const fieldName = event.target.dataset.field;
-        const value = event.target.value;
-        if(fieldName === 'email')
+        var element = event.target;
+        const fieldName = element.dataset.field;
+        const value = element.value;
+        if(fieldName === 'email'){
             if(!this.validateEmail(value)){
                 return;
             }
+        }
         this.invitationInfo[fieldName] = value;
         console.log('Invitation info: ' + JSON.stringify(this.invitationInfo));
     }
 
     inviteUser(){
+        if(this.invitationInfo.email == undefined || this.invitationInfo.email === ''){
+            let target = this.template.querySelector('[data-field="email"]');
+            target.setCustomValidity(this.label.emailFormatErr);
+            target.reportValidity();
+        }
         console.log('Sending invitation to user');
     }
     
