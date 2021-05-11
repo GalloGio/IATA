@@ -2060,7 +2060,6 @@ public with sharing class ANG_AgencyChangesHelper {
 			ANG_RHCHelper.deactivateRHCInfo(new Set<Id>{oscarToProcess.Account__c});
 		}
 		if(oscarOnlineAccreditation.ANG_Accreditation_Type__c ==  'Cash'){
-			toUpsert = performCashTransformation(accountsAffected);
 			if(toReturn.accountsMap.get(oscarToProcess.Account__c)!=null)
 				ANG_RHCHelper.createRHCInfo(new List<Account>{toReturn.accountsMap.get(oscarToProcess.Account__c)}, false);
 		}
