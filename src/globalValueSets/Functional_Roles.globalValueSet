@@ -367,5 +367,5 @@
     </customValue>
     <description>Functional Roles</description>
     <masterLabel>Functional Roles</masterLabel>
-    <sorted>true</sorted>
+    <sorted>false</sorted>
 </GlobalValueSet>

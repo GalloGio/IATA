@@ -4702,7 +4702,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Printed_date</name>
     </customLabels>
     <customLabels>
-        <label>我同意 IATA 的 &lt;a target=&quot;_blank&quot; href=&quot;https://www.iata.org/en/privacy&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;隐私政策&lt;/a&gt; 和 &lt;a target=&quot;_blank&quot; href=&quot;https://www.iata.org/en/terms&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;使用条款。&lt;/a&gt;</label>
+        <label>我同意 IATA 的 &lt;a target=&quot;_blank&quot; href=&quot;https://www.iata.org/Pages/privacy.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;隐私政策&lt;/a&gt; 和 &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-portal/Pages/terms.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;使用条款。&lt;/a&gt;</label>
         <name>CSP_Privacy_Policy</name>
     </customLabels>
     <customLabels>
