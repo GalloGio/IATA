@@ -637,7 +637,7 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
         <ruleEntry>
             <assignedTo>ISS_Level_1_Arabic</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR (3 AND 4 AND 7 AND 8) OR (3 AND 4 AND 9 AND 10 AND 11)</booleanFilter>
+            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR (3 AND 4 AND 7 AND 8) OR (3 AND 4 AND 9 AND 10 AND 11) OR (3 AND 4 AND 12)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -669,14 +669,14 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
             </criteriaItems>
             <criteriaItems>
-                <field>Case.RecordTypeId</field>
+                <field>Case.Subject</field>
                 <operation>equals</operation>
-                <value>SIDRA</value>
+                <value>Customer Login Issue - Registration,Customer Login Issue - Login</value>
             </criteriaItems>
             <criteriaItems>
-                <field>Case.Status_SIDRA__c</field>
-                <operation>contains</operation>
-                <value>IATA Charges,Small Amount</value>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal Enquiry</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
@@ -692,6 +692,11 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <field>Case.Reason1__c</field>
                 <operation>equals</operation>
                 <value>Bank Details Request</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SEDA</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -752,7 +757,7 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
         <ruleEntry>
             <assignedTo>ISS_Level_1_Chinese</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR (3 AND 4 AND 7 AND 8) OR (3 AND 4 AND 9 AND 10 AND 11)</booleanFilter>
+            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR (3 AND 4 AND 7 AND 8) OR (3 AND 4 AND 9 AND 10 AND 11) OR (3 AND 4 AND 12)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -784,14 +789,14 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
             </criteriaItems>
             <criteriaItems>
-                <field>Case.RecordTypeId</field>
+                <field>Case.Subject</field>
                 <operation>equals</operation>
-                <value>SIDRA</value>
+                <value>Customer Login Issue - Registration,Customer Login Issue - Login</value>
             </criteriaItems>
             <criteriaItems>
-                <field>Case.Status_SIDRA__c</field>
-                <operation>contains</operation>
-                <value>IATA Charges,Small Amount</value>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal Enquiry</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
@@ -807,6 +812,11 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <field>Case.Reason1__c</field>
                 <operation>equals</operation>
                 <value>Bank Details Request</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SEDA</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -1280,7 +1290,7 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
         <ruleEntry>
             <assignedTo>ISS_L1_English_EUR</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>(1 AND (2 OR 7)  AND (3 OR 4) AND 5 AND 6) OR ((3 OR 4) AND 5 AND 8 AND 9) OR ((3 OR 4) AND 5 AND 8 AND 10 AND 11)</booleanFilter>
+            <booleanFilter>(1 AND (2 OR 7)  AND (3 OR 4) AND 5 AND 6) OR ((3 OR 4) AND 5 AND 8 AND 9) OR ((3 OR 4) AND 5 AND 8 AND 10 AND 11) OR ((3 OR 4) AND 5 AND 12 AND 13) OR ((3 OR 4) AND 5 AND 14)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -1319,7 +1329,7 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
-                <value>SIDRA,Process</value>
+                <value>Process</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Status_SIDRA__c</field>
@@ -1336,11 +1346,26 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <operation>equals</operation>
                 <value>Bank Details Request</value>
             </criteriaItems>
+            <criteriaItems>
+                <field>Case.Subject</field>
+                <operation>equals</operation>
+                <value>Customer Login Issue - Registration,Customer Login Issue - Login</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal Enquiry</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SEDA</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>ISS_L1_English_ASPAC</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>(1 AND (2 OR 7) AND (3 OR 4) AND 5 AND 6) OR ((3 OR 4) AND 5 AND 8 AND 9) OR ((3 OR 4) AND 5 AND 8 AND 10 AND 11)</booleanFilter>
+            <booleanFilter>(1 AND (2 OR 7) AND (3 OR 4) AND 5 AND 6) OR ((3 OR 4) AND 5 AND 8 AND 9) OR ((3 OR 4) AND 5 AND 8 AND 10 AND 11) OR ((3 OR 4) AND 5 AND 12) OR ((3 OR 4) AND 5 AND 13 AND 14)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -1379,7 +1404,7 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
-                <value>SIDRA,Process</value>
+                <value>Process</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Status_SIDRA__c</field>
@@ -1396,11 +1421,26 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <operation>equals</operation>
                 <value>Bank Details Request</value>
             </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SEDA</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal Enquiry</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Registration process</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>ISS_L1_English_AMR</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>(1 AND (2 OR 7) AND (3 OR 4) AND 5 AND 6) OR ((3 OR 4) AND 5 AND 8 AND 9) OR ((3 OR 4) AND 5 AND 10 AND 11)</booleanFilter>
+            <booleanFilter>(1 AND (2 OR 7) AND (3 OR 4) AND 5 AND 6) OR ((3 OR 4) AND 5 AND 8 AND 9) OR ((3 OR 4) AND 5 AND 10 AND 11) OR ((3 OR 4) AND 5 AND 12 AND 13) OR ((3 OR 4) AND 5 AND 14)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -1439,7 +1479,7 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
-                <value>SIDRA,Process</value>
+                <value>Process</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Status_SIDRA__c</field>
@@ -1456,11 +1496,26 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <operation>equals</operation>
                 <value>Bank Details Request</value>
             </criteriaItems>
+            <criteriaItems>
+                <field>Case.Subject</field>
+                <operation>equals</operation>
+                <value>Customer Login Issue - Registration,Customer Login Issue - Login</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal Enquiry</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SEDA</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>ISS_L1_English_AME</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>(1 AND (2 OR 7) AND (3 OR 4) AND 5 AND 6) OR ((3 OR 4) AND 5 AND 8 AND 9) OR((3 OR 4) AND 5 AND 10 AND 11 AND 12)</booleanFilter>
+            <booleanFilter>(1 AND (2 OR 7) AND (3 OR 4) AND 5 AND 6) OR ((3 OR 4) AND 5 AND 8 AND 9) OR((3 OR 4) AND 5 AND 10 AND 11 AND 12) OR((3 OR 4) AND 5 AND 13)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -1497,14 +1552,14 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
             </criteriaItems>
             <criteriaItems>
-                <field>Case.RecordTypeId</field>
+                <field>Case.Subject</field>
                 <operation>equals</operation>
-                <value>SIDRA</value>
+                <value>Customer Login Issue - Registration,Customer Login Issue - Login</value>
             </criteriaItems>
             <criteriaItems>
-                <field>Case.Status_SIDRA__c</field>
-                <operation>contains</operation>
-                <value>IATA Charges,Small Amount</value>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal Enquiry</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
@@ -1520,6 +1575,11 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <field>Case.Reason1__c</field>
                 <operation>equals</operation>
                 <value>Bank Details Request</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SEDA</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
