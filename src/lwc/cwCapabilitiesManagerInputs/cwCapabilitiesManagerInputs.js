@@ -4,6 +4,7 @@ import ICG_RESOURCES from "@salesforce/resourceUrl/ICG_Resources";
 export default class CwCapabilitiesManagerInputs extends LightningElement {
 	defaultcheckedIconFilename = "ic-tic-green.svg";
 	initialized = false;
+	categoriesStepDecimal = ["servicing_height_min__c","servicing_height_max__c","max_lifting_capacity_or_weight_limit__c","max_load_width_between_safety_rails__c"];
 
 	@api checkedIconFilename = "";
 	icons = {
@@ -145,11 +146,15 @@ export default class CwCapabilitiesManagerInputs extends LightningElement {
 	get getRowIndexAddOne() {
 		return this.rowIndex + 1;
 	}
+	get containsManufacturerField(){
+		return this.item['sc_manufacturer__c'] ? true : false;
+	}
 	get isAuxTypeDefined() {
 		return (
 			this.isAuxTypeStandardTemperatureRanges ||
 			this.isAuxTypeCustomTemperatureRanges ||
-			this.isAuxTypeTemperatureControlledGroundServiceEq
+			this.isAuxTypeTemperatureControlledGroundServiceEq ||
+			this.isAuxTypeHandlingEquipmentInfrastructure
 		);
 	}
 	get isAuxTypeStandardTemperatureRanges() {
@@ -160,6 +165,9 @@ export default class CwCapabilitiesManagerInputs extends LightningElement {
 	}
 	get isAuxTypeTemperatureControlledGroundServiceEq() {
 		return this.auxType === "temperature_controlled_ground_service_eq";
+	}
+	get isAuxTypeHandlingEquipmentInfrastructure(){
+		return this.auxType === "handling_equipment_infrastructure";
 	}
 	get isAuxFieldDefined() {
 		return this.isTchaTemperatureRangeField;
@@ -172,6 +180,14 @@ export default class CwCapabilitiesManagerInputs extends LightningElement {
 	}
 	get isTypeNumber() {
 		return this.type === 'DOUBLE' || this.type === 'INTEGER' || this.type === 'DECIMAL';
+	}
+	get isTypeDecimalorInt() {
+		let isDecimalStep = this.categoriesStepDecimal.indexOf(this.propertyName)>-1;
+		return ((this.type === 'INTEGER') || ((this.type === 'DOUBLE' ||  this.type === 'DECIMAL') && !isDecimalStep));
+	}
+	get isTypeDecimalWithStep() {
+		let isDecimalStep = this.categoriesStepDecimal.indexOf(this.propertyName)>-1;
+		return ((this.type === 'DOUBLE' ||  this.type === 'DECIMAL') && isDecimalStep);
 	}
 	get isTypeTrueFalse() {
 		return this.type === 'BOOLEAN'; 
@@ -198,7 +214,11 @@ export default class CwCapabilitiesManagerInputs extends LightningElement {
 	}
 
 	get getCssClass(){
-		return (this.editMode && this.propertyName !== 'equipment__c') ? 'disable-content' : '';
+		if (this.isPicklist || this.isMultiPicklist) {
+			return 'picklist-scroll';
+		} else {
+			return (this.editMode && this.propertyName !== 'equipment__c') ? 'disable-content' : '';
+		}
 	}
 
 	setValue(event){

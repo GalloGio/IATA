@@ -127,7 +127,7 @@ public class CW_FacilityCapabilitiesControllerTest {
 		Id rtId = [SELECT id FROM RecordType WHERE SObjectType = 'Account_Role_Detail_Capability__c' AND developername = 'System_For_Mail_Tracking_And_Reporting' LIMIT 1].id;
 		Id rtColdRoomsId = [SELECT id FROM RecordType WHERE SObjectType = 'Account_Role_Detail_Capability__c' AND developername = 'Cold_Room_Standard_Temperature_Ranges' LIMIT 1].id;
 
-		ICG_Certification__c cert = [SELECT id FROM ICG_Certification__c WHERE Name ='cert'];
+		ICG_Certification__c cert = [SELECT id FROM ICG_Certification__c WHERE Name ='cert' AND ValidationPrograms__c = 'IATA'];
 		
 		ICG_Capability_Assignment_Group__c ardcert = [SELECT id,ICG_Certification__c FROM ICG_Capability_Assignment_Group__c WHERE RecordTypeId =: RT_CERTIFICATION];
 
@@ -168,7 +168,7 @@ public class CW_FacilityCapabilitiesControllerTest {
 		Id rtId = [SELECT id FROM RecordType WHERE SObjectType = 'Account_Role_Detail_Capability__c' AND developername = 'System_For_Mail_Tracking_And_Reporting' LIMIT 1].id;
 		Id rtColdRoomsId = [SELECT id FROM RecordType WHERE SObjectType = 'Account_Role_Detail_Capability__c' AND developername = 'Cold_Room_Standard_Temperature_Ranges' LIMIT 1].id;
 
-		ICG_Certification__c cert = [SELECT id FROM ICG_Certification__c WHERE Name ='cert'];
+		ICG_Certification__c cert = [SELECT id FROM ICG_Certification__c WHERE Name ='cert' AND ValidationPrograms__c = 'IATA'];
 		
 		ICG_Capability_Assignment_Group__c ardcert = [SELECT id,ICG_Certification__c FROM ICG_Capability_Assignment_Group__c WHERE RecordTypeId =: RT_CERTIFICATION];
 
@@ -258,7 +258,7 @@ public class CW_FacilityCapabilitiesControllerTest {
 		Id rtId = [SELECT id FROM RecordType WHERE SObjectType = 'Account_Role_Detail_Capability__c' AND developername = 'System_For_Mail_Tracking_And_Reporting' LIMIT 1].id;
 		Id rtColdRoomsId = [SELECT id FROM RecordType WHERE SObjectType = 'Account_Role_Detail_Capability__c' AND developername = 'Cold_Room_Standard_Temperature_Ranges' LIMIT 1].id;
 
-		ICG_Certification__c cert = [SELECT id FROM ICG_Certification__c WHERE Name ='cert'];
+		ICG_Certification__c cert = [SELECT id FROM ICG_Certification__c WHERE Name ='cert' AND ValidationPrograms__c = 'IATA'];
 		
 		ICG_Capability_Assignment_Group__c ardcert = [SELECT id,ICG_Certification__c FROM ICG_Capability_Assignment_Group__c WHERE RecordTypeId =: RT_CERTIFICATION];
 

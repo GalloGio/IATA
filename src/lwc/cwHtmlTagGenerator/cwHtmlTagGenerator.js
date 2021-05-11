@@ -49,7 +49,13 @@ export default class CwHtmlTagGenerator extends LightningElement {
 	get isComparisonFacilityView() {
 		return this.viewType === "comparison-facility-view";
 	}
-
+	get getValueAsText() {
+		if (this.propertyName.toLowerCase() === 'year_of_manufacture__c'){
+			return this.item[this.propertyName].toString();
+		} else {
+			return '-';
+		}
+	}
 	get getValue() {
 		if(this.isTypeTrueFalse){
 			return this.item[this.propertyName];
@@ -59,14 +65,6 @@ export default class CwHtmlTagGenerator extends LightningElement {
 			? this.item[this.propertyName].toString()
 			: "-";
 
-		let maxChars = isNaN(Number(this.maxCharacters))
-			? 0
-			: Number(this.maxCharacters);
-
-		if (maxChars > 0 && value.length > maxChars) {
-			return value.substring(0, maxChars) + "...";
-		}
-
 		return value;
 	}
 	
@@ -75,6 +73,9 @@ export default class CwHtmlTagGenerator extends LightningElement {
 	}
 
 	get getValueNumber() {
+		if (this.propertyName.toLowerCase() === 'year_of_manufacture__c'){
+			return false;
+		}
 		let value = this.item[this.propertyName]
 			? this.item[this.propertyName].toString()
 			: false;
@@ -90,6 +91,7 @@ export default class CwHtmlTagGenerator extends LightningElement {
 
 	getTooltip() {
 		let forceShowTooltip = false;
+
 		let value = this.item[this.propertyName]
 			? this.item[this.propertyName].toString()
 			: "";
@@ -97,6 +99,15 @@ export default class CwHtmlTagGenerator extends LightningElement {
 		if (this.item.tooltips && this.propertyName in this.item.tooltips) {
 			forceShowTooltip = true;
 			value = this.item.tooltips[this.propertyName];
+		}
+		else{
+			for (let property in this.item.tooltips) {
+				if (property == (this.propertyName + '#' + this.item[this.propertyName].toLowerCase().replace(' ','_').replaceAll('.',''))) {
+					forceShowTooltip = true;
+					value = this.item.tooltips[this.propertyName + '#' + this.item[this.propertyName].toLowerCase().replace(' ','_').replaceAll('.','')];
+				}
+			}
+
 		}
 
 		let maxChars = isNaN(Number(this.maxCharacters))
@@ -122,11 +133,17 @@ export default class CwHtmlTagGenerator extends LightningElement {
 	get getRowIndexAddOne() {
 		return this.rowIndex + 1;
 	}
+
+	get containsManufacturerField(){
+		return this.item['sc_manufacturer__c'] ? true : false;
+	}
+	
 	get isAuxTypeDefined() {
 		return (
 			this.isAuxTypeStandardTemperatureRanges ||
 			this.isAuxTypeCustomTemperatureRanges ||
-			this.isAuxTypeTemperatureControlledGroundServiceEq
+			this.isAuxTypeTemperatureControlledGroundServiceEq ||
+			this.isAuxTypeHandlingEquipmentInfrastructure
 		);
 	}
 	get isAuxTypeStandardTemperatureRanges() {
@@ -137,6 +154,9 @@ export default class CwHtmlTagGenerator extends LightningElement {
 	}
 	get isAuxTypeTemperatureControlledGroundServiceEq() {
 		return this.auxType === "temperature_controlled_ground_service_eq";
+	}
+	get isAuxTypeHandlingEquipmentInfrastructure(){
+		return this.auxType === "handling_equipment_infrastructure";
 	}
 	get isAuxFieldDefined() {
 		return this.isTchaTemperatureRangeField;
@@ -187,12 +207,11 @@ export default class CwHtmlTagGenerator extends LightningElement {
 		let tooltipObject = {
 			item: item,
 			text: text,
-			marginLeft: -50,
-			marginTop: 32
+			marginLeft: (text.length > 20) ? -220 : -100,
+			marginTop: 20
 		}
 
 		this.tooltipObject = tooltipObject;
-
 	}
 
 	hidePopover() {

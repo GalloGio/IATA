@@ -376,7 +376,7 @@
                 <value>
                     <fullName>Temperature_Controlled_Dollies_Trucks</fullName>
                     <default>false</default>
-                    <label>Temperature Controlled Dollies Trucks</label>
+                    <label>Temperature Controlled Dollies/Trucks</label>
                 </value>
                 <value>
                     <fullName>Build_Up_Break_Down_Areas</fullName>
@@ -427,6 +427,182 @@
                     <fullName>Environmental_Compliance</fullName>
                     <default>false</default>
                     <label>Environmental Compliance</label>
+                </value>
+                <value>
+                    <fullName>Belt_Loader</fullName>
+                    <default>false</default>
+                    <label>Belt Loader</label>
+                </value>
+                <value>
+                    <fullName>Belt_Loader_With_In-Hold_Conveyor_System</fullName>
+                    <default>false</default>
+                    <label>Belt Loader With In-Hold Conveyor System</label>
+                </value>
+                <value>
+                    <fullName>Lower_Deck_Loader</fullName>
+                    <default>false</default>
+                    <label>Lower Deck Loader</label>
+                </value>
+                <value>
+                    <fullName>Main_Deck_Loader</fullName>
+                    <default>false</default>
+                    <label>Main Deck Loader</label>
+                </value>
+                <value>
+                    <fullName>Prm_Boarding_Vehicles</fullName>
+                    <default>false</default>
+                    <label>PRM Boarding Vehicles</label>
+                </value>
+                <value>
+                    <fullName>Catering_Truck</fullName>
+                    <default>false</default>
+                    <label>Catering Truck</label>
+                </value>
+                <value>
+                    <fullName>Cabin_Cleaning_Truck</fullName>
+                    <default>false</default>
+                    <label>Cabin Cleaning Truck</label>
+                </value>
+                <value>
+                    <fullName>Elevating_Work_Platform</fullName>
+                    <default>false</default>
+                    <label>Elevating Work Platform</label>
+                </value>
+                <value>
+                    <fullName>Passenger_Boarding_Stairs</fullName>
+                    <default>false</default>
+                    <label>Passenger Boarding Stairs</label>
+                </value>
+                <value>
+                    <fullName>Mobile_Passenger_Boardingramps</fullName>
+                    <default>false</default>
+                    <label>Mobile Passenger Boarding ramps</label>
+                </value>
+                <value>
+                    <fullName>Maintenance_Stairs</fullName>
+                    <default>false</default>
+                    <label>Maintenance Stairs</label>
+                </value>
+                <value>
+                    <fullName>Aircraft_Tail_Stand</fullName>
+                    <default>false</default>
+                    <label>Aircraft Tail Stand</label>
+                </value>
+                <value>
+                    <fullName>Deicers_And_Deicing/Anti-Icing_Vehicles</fullName>
+                    <default>false</default>
+                    <label>Deicers And Deicing/Anti-Icing Vehicles</label>
+                </value>
+                <value>
+                    <fullName>Baggage_Tractors</fullName>
+                    <default>false</default>
+                    <label>Baggage Tractors</label>
+                </value>
+                <value>
+                    <fullName>Cargo_Tractors</fullName>
+                    <default>false</default>
+                    <label>Cargo Tractors</label>
+                </value>
+                <value>
+                    <fullName>Pushback_Tow_Tractor</fullName>
+                    <default>false</default>
+                    <label>Pushback Tow Tractor</label>
+                </value>
+                <value>
+                    <fullName>Towbar</fullName>
+                    <default>false</default>
+                    <label>Towbar</label>
+                </value>
+                <value>
+                    <fullName>Towbarless_Tow_Tractor</fullName>
+                    <default>false</default>
+                    <label>Towbarless Tow Tractor</label>
+                </value>
+                <value>
+                    <fullName>Maingear_Towbarless_Tractor</fullName>
+                    <default>false</default>
+                    <label>Maingear Towbarless Tractor</label>
+                </value>
+                <value>
+                    <fullName>Air_Start_Unit</fullName>
+                    <default>false</default>
+                    <label>Air Start Unit</label>
+                </value>
+                <value>
+                    <fullName>Aircraftair-Conditioning_Unit</fullName>
+                    <default>false</default>
+                    <label>Aircraft Air-conditioning Unit</label>
+                </value>
+                <value>
+                    <fullName>Aircraft_Heating_Unit</fullName>
+                    <default>false</default>
+                    <label>Aircraft Heating Unit</label>
+                </value>
+                <value>
+                    <fullName>Potable_Water_Service_Vehicle</fullName>
+                    <default>false</default>
+                    <label>Potable Water Service Vehicle</label>
+                </value>
+                <value>
+                    <fullName>Lavatory_Service_Vehicles</fullName>
+                    <default>false</default>
+                    <label>Lavatory Service Vehicles</label>
+                </value>
+                <value>
+                    <fullName>Ground_Power_Unit</fullName>
+                    <default>false</default>
+                    <label>Ground Power Unit</label>
+                </value>
+                <value>
+                    <fullName>Uld_Transporter</fullName>
+                    <default>false</default>
+                    <label>ULD Transporter</label>
+                </value>
+                <value>
+                    <fullName>Uld_Dollies</fullName>
+                    <default>false</default>
+                    <label>ULD Dollies</label>
+                </value>
+                <value>
+                    <fullName>Temperature_Controlled_Cargo_Dolly</fullName>
+                    <default>false</default>
+                    <label>Temperature Controlled Cargo Dolly</label>
+                </value>
+                <value>
+                    <fullName>Baggage_Cart</fullName>
+                    <default>false</default>
+                    <label>Baggage Cart</label>
+                </value>
+                <value>
+                    <fullName>Temperature_Controlled_Cargo_Truck</fullName>
+                    <default>false</default>
+                    <label>Temperature Controlled Cargo Truck</label>
+                </value>
+                <value>
+                    <fullName>Prm_Bus</fullName>
+                    <default>false</default>
+                    <label>PRM Bus</label>
+                </value>
+                <value>
+                    <fullName>Airport_Passenger_Bus</fullName>
+                    <default>false</default>
+                    <label>Airport Passenger Bus</label>
+                </value>
+                <value>
+                    <fullName>Crew_Bus</fullName>
+                    <default>false</default>
+                    <label>Crew Bus</label>
+                </value>
+                <value>
+                    <fullName>Forklift_Truck</fullName>
+                    <default>false</default>
+                    <label>Forklift Truck</label>
+                </value>
+                <value>
+                    <fullName>Temperature_Controlled_Ground_Service_Equipment_In_Facility</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Temperature_Controlled_Ground_Service_Equipment_In_Facility</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -541,11 +717,6 @@
                     <label>K9 Dogs</label>
                 </value>
                 <value>
-                    <fullName>Other_Screening_Equipment</fullName>
-                    <default>false</default>
-                    <label>Other Screening Equipment</label>
-                </value>
-                <value>
                     <fullName>CCTV</fullName>
                     <default>false</default>
                     <label>CCTV</label>
@@ -641,14 +812,9 @@
                     <label>Truck Parking</label>
                 </value>
                 <value>
-                    <fullName>Trucking_Gate_for_Loose_Cargo</fullName>
+                    <fullName>Trucking_Gate_For_Loose_Cargo</fullName>
                     <default>false</default>
                     <label>Trucking Gate for Loose Cargo</label>
-                </value>
-                <value>
-                    <fullName>ULD</fullName>
-                    <default>false</default>
-                    <label>ULD</label>
                 </value>
                 <value>
                     <fullName>Delivery_Counter</fullName>
@@ -1061,14 +1227,189 @@
                     <label>Emissions Obligations</label>
                 </value>
                 <value>
+                    <fullName>Spill_Kits</fullName>
+                    <default>false</default>
+                    <label>Spill Kits</label>
+                </value>
+                <value>
                     <fullName>Trucking Gates ULD</fullName>
                     <default>false</default>
                     <label>Trucking Gates ULD</label>
                 </value>
                 <value>
-                    <fullName>Spill_Kits</fullName>
+                    <fullName>Other_Screening_Equipment</fullName>
                     <default>false</default>
-                    <label>Spill_Kits</label>
+                    <label>Other Screening Equipment</label>
+                </value>
+                <value>
+                    <fullName>Belt_Loader</fullName>
+                    <default>false</default>
+                    <label>Belt Loader</label>
+                </value>
+                <value>
+                    <fullName>Belt_Loader_With_In-Hold_Conveyor_System</fullName>
+                    <default>false</default>
+                    <label>Belt Loader With In-Hold Conveyor System</label>
+                </value>
+                <value>
+                    <fullName>Lower_Deck_Loader</fullName>
+                    <default>false</default>
+                    <label>Lower Deck Loader</label>
+                </value>
+                <value>
+                    <fullName>Main_Deck_Loader</fullName>
+                    <default>false</default>
+                    <label>Main Deck Loader</label>
+                </value>
+                <value>
+                    <fullName>Prm_Boarding_Vehicles</fullName>
+                    <default>false</default>
+                    <label>PRM Boarding Vehicles</label>
+                </value>
+                <value>
+                    <fullName>Catering_Truck</fullName>
+                    <default>false</default>
+                    <label>Catering Truck</label>
+                </value>
+                <value>
+                    <fullName>Cabin_Cleaning_Truck</fullName>
+                    <default>false</default>
+                    <label>Cabin Cleaning Truck</label>
+                </value>
+                <value>
+                    <fullName>Elevating_Work_Platform</fullName>
+                    <default>false</default>
+                    <label>Elevating Work Platform</label>
+                </value>
+                <value>
+                    <fullName>Passenger_Boarding_Stairs</fullName>
+                    <default>false</default>
+                    <label>Passenger Boarding Stairs</label>
+                </value>
+                <value>
+                    <fullName>Mobile_Passenger_Boardingramps</fullName>
+                    <default>false</default>
+                    <label>Mobile Passenger Boarding ramps</label>
+                </value>
+                <value>
+                    <fullName>Maintenance_Stairs</fullName>
+                    <default>false</default>
+                    <label>Maintenance Stairs</label>
+                </value>
+                <value>
+                    <fullName>Aircraft_Tail_Stand</fullName>
+                    <default>false</default>
+                    <label>Aircraft Tail Stand</label>
+                </value>
+                <value>
+                    <fullName>Deicers_And_Deicing/Anti-Icing_Vehicles</fullName>
+                    <default>false</default>
+                    <label>Deicers And Deicing/Anti-Icing Vehicles</label>
+                </value>
+                <value>
+                    <fullName>Baggage_Tractors</fullName>
+                    <default>false</default>
+                    <label>Baggage Tractors</label>
+                </value>
+                <value>
+                    <fullName>Cargo_Tractors</fullName>
+                    <default>false</default>
+                    <label>Cargo Tractors</label>
+                </value>
+                <value>
+                    <fullName>Pushback_Tow_Tractor</fullName>
+                    <default>false</default>
+                    <label>Pushback Tow Tractor</label>
+                </value>
+                <value>
+                    <fullName>Towbar</fullName>
+                    <default>false</default>
+                    <label>Towbar</label>
+                </value>
+                <value>
+                    <fullName>Towbarless_Tow_Tractor</fullName>
+                    <default>false</default>
+                    <label>Towbarless Tow Tractor</label>
+                </value>
+                <value>
+                    <fullName>Maingear_Towbarless_Tractor</fullName>
+                    <default>false</default>
+                    <label>Maingear Towbarless Tractor</label>
+                </value>
+                <value>
+                    <fullName>Air_Start_Unit</fullName>
+                    <default>false</default>
+                    <label>Air Start Unit</label>
+                </value>
+                <value>
+                    <fullName>Aircraftair-Conditioning_Unit</fullName>
+                    <default>false</default>
+                    <label>Aircraft Air-conditioning Unit</label>
+                </value>
+                <value>
+                    <fullName>Aircraft_Heating_Unit</fullName>
+                    <default>false</default>
+                    <label>Aircraft Heating Unit</label>
+                </value>
+                <value>
+                    <fullName>Potable_Water_Service_Vehicle</fullName>
+                    <default>false</default>
+                    <label>Potable Water Service Vehicle</label>
+                </value>
+                <value>
+                    <fullName>Lavatory_Service_Vehicles</fullName>
+                    <default>false</default>
+                    <label>Lavatory Service Vehicles</label>
+                </value>
+                <value>
+                    <fullName>Ground_Power_Unit</fullName>
+                    <default>false</default>
+                    <label>Ground Power Unit</label>
+                </value>
+                <value>
+                    <fullName>Uld_Transporter</fullName>
+                    <default>false</default>
+                    <label>ULD Transporter</label>
+                </value>
+                <value>
+                    <fullName>Uld_Dollies</fullName>
+                    <default>false</default>
+                    <label>ULD Dollies</label>
+                </value>
+                <value>
+                    <fullName>Temperature_Controlled_Cargo_Dolly</fullName>
+                    <default>false</default>
+                    <label>Temperature Controlled Cargo Dolly</label>
+                </value>
+                <value>
+                    <fullName>Baggage_Cart</fullName>
+                    <default>false</default>
+                    <label>Baggage Cart</label>
+                </value>
+                <value>
+                    <fullName>Temperature_Controlled_Cargo_Truck</fullName>
+                    <default>false</default>
+                    <label>Temperature Controlled Cargo Truck</label>
+                </value>
+                <value>
+                    <fullName>Prm_Bus</fullName>
+                    <default>false</default>
+                    <label>PRM Bus</label>
+                </value>
+                <value>
+                    <fullName>Airport_Passenger_Bus</fullName>
+                    <default>false</default>
+                    <label>Airport Passenger Bus</label>
+                </value>
+                <value>
+                    <fullName>Crew_Bus</fullName>
+                    <default>false</default>
+                    <label>Crew Bus</label>
+                </value>
+                <value>
+                    <fullName>Forklift</fullName>
+                    <default>false</default>
+                    <label>Forklift</label>
                 </value>
             </valueSetDefinition>
             <valueSettings>
@@ -1152,16 +1493,32 @@
                 <valueName>Emissions_Obligations</valueName>
             </valueSettings>
             <valueSettings>
+                <controllingFieldValue>Belt_Loader</controllingFieldValue>
+                <valueName>Belt_Loader</valueName>
+            </valueSettings>
+            <valueSettings>
                 <controllingFieldValue>K9_Dogs</controllingFieldValue>
                 <valueName>K9_Dogs</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Belt_Loader_With_In-Hold_Conveyor_System</controllingFieldValue>
+                <valueName>Belt_Loader_With_In-Hold_Conveyor_System</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Other_Screening_Equipment</controllingFieldValue>
                 <valueName>Other_Screening_Equipment</valueName>
             </valueSettings>
             <valueSettings>
+                <controllingFieldValue>Lower_Deck_Loader</controllingFieldValue>
+                <valueName>Lower_Deck_Loader</valueName>
+            </valueSettings>
+            <valueSettings>
                 <controllingFieldValue>Other_Security_Equipment_Measures</controllingFieldValue>
                 <valueName>Other_Security_Equipment_Measures</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Main_Deck_Loader</controllingFieldValue>
+                <valueName>Main_Deck_Loader</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Screening_Equipment</controllingFieldValue>
@@ -1180,8 +1537,16 @@
                 <valueName>Carbon_Dioxide_CO2_Monitors</valueName>
             </valueSettings>
             <valueSettings>
+                <controllingFieldValue>Prm_Boarding_Vehicles</controllingFieldValue>
+                <valueName>Prm_Boarding_Vehicles</valueName>
+            </valueSettings>
+            <valueSettings>
                 <controllingFieldValue>Security_Patrol</controllingFieldValue>
                 <valueName>Security_Patrol</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Catering_Truck</controllingFieldValue>
+                <valueName>Catering_Truck</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Weight_Volume_And_Dimension_Equipment</controllingFieldValue>
@@ -1190,6 +1555,10 @@
             <valueSettings>
                 <controllingFieldValue>Weight_Volume_And_Dimension_Equipment</controllingFieldValue>
                 <valueName>Volume_And_Dimension_Measuring</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Cabin_Cleaning_Truck</controllingFieldValue>
+                <valueName>Cabin_Cleaning_Truck</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>X_Ray</controllingFieldValue>
@@ -1261,7 +1630,6 @@
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Forklift</controllingFieldValue>
-                <controllingFieldValue>Documentation_Counters</controllingFieldValue>
                 <valueName>Forklifts_Electric</valueName>
             </valueSettings>
             <valueSettings>
@@ -1269,8 +1637,12 @@
                 <valueName>Forklifts_Fuel</valueName>
             </valueSettings>
             <valueSettings>
+                <controllingFieldValue>Forklift</controllingFieldValue>
+                <controllingFieldValue>Forklift_Truck</controllingFieldValue>
+                <valueName>Forklift</valueName>
+            </valueSettings>
+            <valueSettings>
                 <controllingFieldValue>Gse_In_Facility</controllingFieldValue>
-                <controllingFieldValue>Documentation_Counters</controllingFieldValue>
                 <valueName>Dollies_Tub_Carts</valueName>
             </valueSettings>
             <valueSettings>
@@ -1290,6 +1662,22 @@
                 <valueName>Intruder_Alarm_System</valueName>
             </valueSettings>
             <valueSettings>
+                <controllingFieldValue>Elevating_Work_Platform</controllingFieldValue>
+                <valueName>Elevating_Work_Platform</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Passenger_Boarding_Stairs</controllingFieldValue>
+                <valueName>Passenger_Boarding_Stairs</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Mobile_Passenger_Boardingramps</controllingFieldValue>
+                <valueName>Mobile_Passenger_Boardingramps</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Maintenance_Stairs</controllingFieldValue>
+                <valueName>Maintenance_Stairs</valueName>
+            </valueSettings>
+            <valueSettings>
                 <controllingFieldValue>Active_ULD_Equipment_2</controllingFieldValue>
                 <valueName>Battery_Replacement_For_Active_ULDs</valueName>
             </valueSettings>
@@ -1298,28 +1686,44 @@
                 <valueName>Dry_Ice_Replenishment_For_ULDs</valueName>
             </valueSettings>
             <valueSettings>
+                <controllingFieldValue>Aircraft_Tail_Stand</controllingFieldValue>
+                <valueName>Aircraft_Tail_Stand</valueName>
+            </valueSettings>
+            <valueSettings>
                 <controllingFieldValue>Delivery_Pickup_Infrastructure</controllingFieldValue>
                 <valueName>Self_Check_In_System_Kiosk_For_Truckers</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Deicers_And_Deicing/Anti-Icing_Vehicles</controllingFieldValue>
+                <valueName>Deicers_And_Deicing/Anti-Icing_Vehicles</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Pre_Arrival_Slot_Booking_Capability</controllingFieldValue>
                 <valueName>Pre_Arrival_Slot_Booking_Capability</valueName>
             </valueSettings>
             <valueSettings>
+                <controllingFieldValue>Baggage_Tractors</controllingFieldValue>
+                <valueName>Baggage_Tractors</valueName>
+            </valueSettings>
+            <valueSettings>
                 <controllingFieldValue>Truck_Parking</controllingFieldValue>
                 <valueName>Truck_Parking</valueName>
             </valueSettings>
             <valueSettings>
-                <controllingFieldValue>Truck_Docking_Gates</controllingFieldValue>
-                <valueName>Trucking_Gate_for_Loose_Cargo</valueName>
+                <controllingFieldValue>Cargo_Tractors</controllingFieldValue>
+                <valueName>Cargo_Tractors</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Truck_Docking_Gates</controllingFieldValue>
-                <valueName>ULD</valueName>
+                <valueName>Trucking_Gate_For_Loose_Cargo</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Truck_Docking_Gates</controllingFieldValue>
                 <valueName>Trucking Gates ULD</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Pushback_Tow_Tractor</controllingFieldValue>
+                <valueName>Pushback_Tow_Tractor</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Documentation_Counters</controllingFieldValue>
@@ -1328,6 +1732,10 @@
             <valueSettings>
                 <controllingFieldValue>Documentation_Counters</controllingFieldValue>
                 <valueName>Pick_Up_Counter</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Towbar</controllingFieldValue>
+                <valueName>Towbar</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Live_Animals_Capacities_1</controllingFieldValue>
@@ -1378,16 +1786,44 @@
                 <valueName>Border_Inspection_Post</valueName>
             </valueSettings>
             <valueSettings>
+                <controllingFieldValue>Towbarless_Tow_Tractor</controllingFieldValue>
+                <valueName>Towbarless_Tow_Tractor</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Maingear_Towbarless_Tractor</controllingFieldValue>
+                <valueName>Maingear_Towbarless_Tractor</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Air_Start_Unit</controllingFieldValue>
+                <valueName>Air_Start_Unit</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Aircraftair-Conditioning_Unit</controllingFieldValue>
+                <valueName>Aircraftair-Conditioning_Unit</valueName>
+            </valueSettings>
+            <valueSettings>
                 <controllingFieldValue>Veterinary_Phytosanitary_And_Pest_Control_3</controllingFieldValue>
                 <valueName>Pest_Control</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Aircraft_Heating_Unit</controllingFieldValue>
+                <valueName>Aircraft_Heating_Unit</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Veterinary_Phytosanitary_And_Pest_Control_4</controllingFieldValue>
                 <valueName>Quarantine_Room</valueName>
             </valueSettings>
             <valueSettings>
+                <controllingFieldValue>Potable_Water_Service_Vehicle</controllingFieldValue>
+                <valueName>Potable_Water_Service_Vehicle</valueName>
+            </valueSettings>
+            <valueSettings>
                 <controllingFieldValue>Cargo_Handling_Warehouse_Management_System</controllingFieldValue>
                 <valueName>Cargo_Handling_Warehouse_Management_System</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Lavatory_Service_Vehicles</controllingFieldValue>
+                <valueName>Lavatory_Service_Vehicles</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Cargo_Handling_System_Capacities</controllingFieldValue>
@@ -1446,6 +1882,10 @@
                 <valueName>Cargo_Dashboard</valueName>
             </valueSettings>
             <valueSettings>
+                <controllingFieldValue>Ground_Power_Unit</controllingFieldValue>
+                <valueName>Ground_Power_Unit</valueName>
+            </valueSettings>
+            <valueSettings>
                 <controllingFieldValue>Cargo_Handling_System_Audit_Trail_Capacities</controllingFieldValue>
                 <valueName>Piece_Level</valueName>
             </valueSettings>
@@ -1466,6 +1906,10 @@
                 <valueName>Flight_Level</valueName>
             </valueSettings>
             <valueSettings>
+                <controllingFieldValue>Uld_Transporter</controllingFieldValue>
+                <valueName>Uld_Transporter</valueName>
+            </valueSettings>
+            <valueSettings>
                 <controllingFieldValue>Cargo_Handling_System_Interface_Capacities</controllingFieldValue>
                 <valueName>Local_Customs_System_Import</valueName>
             </valueSettings>
@@ -1476,6 +1920,10 @@
             <valueSettings>
                 <controllingFieldValue>Cargo_Handling_System_Interface_Capacities</controllingFieldValue>
                 <valueName>Local_Cargo_Community_System</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Uld_Dollies</controllingFieldValue>
+                <valueName>Uld_Dollies</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>IATA_XML_Messages_Cargo_Handling_System_Capabilities</controllingFieldValue>
@@ -1522,6 +1970,22 @@
                 <valueName>Perishables_Processing_Area</valueName>
             </valueSettings>
             <valueSettings>
+                <controllingFieldValue>Temperature_Controlled_Cargo_Dolly</controllingFieldValue>
+                <valueName>Temperature_Controlled_Cargo_Dolly</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Baggage_Cart</controllingFieldValue>
+                <valueName>Baggage_Cart</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Temperature_Controlled_Cargo_Truck</controllingFieldValue>
+                <valueName>Temperature_Controlled_Cargo_Truck</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Prm_Bus</controllingFieldValue>
+                <valueName>Prm_Bus</valueName>
+            </valueSettings>
+            <valueSettings>
                 <controllingFieldValue>Pre_Cooling_Capacities</controllingFieldValue>
                 <valueName>Room_Cooling</valueName>
             </valueSettings>
@@ -1542,12 +2006,20 @@
                 <valueName>Other_Pre_Cooling_Method</valueName>
             </valueSettings>
             <valueSettings>
+                <controllingFieldValue>Airport_Passenger_Bus</controllingFieldValue>
+                <valueName>Airport_Passenger_Bus</valueName>
+            </valueSettings>
+            <valueSettings>
                 <controllingFieldValue>Other_Temperature_Control_Equipment</controllingFieldValue>
                 <valueName>Thermal_Covers_Blankets_Offered_For_Purchase</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Other_Temperature_Control_Equipment</controllingFieldValue>
                 <valueName>Other_Temperature_Control_Equipment</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Crew_Bus</controllingFieldValue>
+                <valueName>Crew_Bus</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Temperature_Controlled_Dollies_Trucks</controllingFieldValue>

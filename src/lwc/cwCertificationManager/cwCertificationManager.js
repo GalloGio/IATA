@@ -14,6 +14,7 @@ export default class CwCertificationManager extends LightningElement {
 	@api label;
 	@api certificationsWithoutCapab;
 	@api stationRT;
+	@api validationPrograms;
 
 	@track isRenewMode = false;
 	@track isEditMode = false;
@@ -32,6 +33,7 @@ export default class CwCertificationManager extends LightningElement {
 	_valuesScope = [];
 	_issuingDate;
 	_expirationDate;
+	byPassScope = false;
 
 	@track deprecatedCerts = [];
 	@track upcomingCerts = [];
@@ -95,7 +97,7 @@ export default class CwCertificationManager extends LightningElement {
 	get disableButtonEditCapab() {
 		if (this.certificationsWithoutCapab != undefined && this.certificationsWithoutCapab != null) {
 			let includeCapabilities = this.certificationsWithoutCapab.filter(cert => cert.Id === this.certificationInfo.value);
-			if (includeCapabilities.length !== 0  || this.disableCertiNotAllowed) {
+			if ((includeCapabilities.length !== 0  || this.disableCertiNotAllowed) || this.certificationInfo.status === 'Expired') {
 				return true;
 			} else {
 				return false;
@@ -145,7 +147,7 @@ export default class CwCertificationManager extends LightningElement {
 	}
 
 	get isCanSave() {
-		return this.selectedScope === '' ? true : false;
+		return (this.selectedScope === '' && !this.byPassScope) ? true : false;
 	}
 
 	renderedCallback() {
@@ -365,6 +367,9 @@ export default class CwCertificationManager extends LightningElement {
 		this.showModal = true;
 		this.isRenewMode = true;
 		this.isEditMode = false;
+		if(this.certificationInfo.byPassScope){
+			this.byPassScope = true;
+		}
 	}
 	closeModal() {
 		this.isRenewMode = false;
@@ -617,7 +622,7 @@ export default class CwCertificationManager extends LightningElement {
 				Certification_Id__c: this.newCertId,
 				Issue_Date__c: this.formatedIssuedDate,
 				Expiration_Date__c: this.formatedExpireDate,
-				SFOC_Scope__c: this.selectedScope
+				CEIV_Scope_List__c: this.selectedScope
 			};
 		}
 
@@ -640,8 +645,9 @@ export default class CwCertificationManager extends LightningElement {
 		const facilityId = this.recordId;
 		const certificationId = this.certificationInfo.value;
 		const groupId = this.certificationInfo.id;
+		const validationPrograms = this.validationPrograms;
 
-		getNotActiveCertifications({ facilityId, certificationId, groupId, statusInput,stationRT }).then(response => {
+		getNotActiveCertifications({ facilityId, certificationId, groupId, statusInput,stationRT,validationPrograms }).then(response => {
 			if (response) {
 				this.deprecatedCerts = [];
 				let dataParsed = JSON.parse(response);

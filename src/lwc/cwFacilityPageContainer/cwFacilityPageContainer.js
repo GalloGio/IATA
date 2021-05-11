@@ -292,6 +292,10 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 		return this.facility.recordTypeDevName === "Airport_Operator" || this.facility.recordTypeDevName === "Airline";
 	}
 
+	get showHandlingServices(){
+		return this.facility.recordTypeDevName === "Ramp_Handler";
+	}
+
 	mapresize() {
 		let databox = this.template.querySelector(".databox");
 		let maincol = this.template.querySelector(".main-col");
@@ -356,6 +360,10 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 							this.populateOperatingStations(facility);
 						});
 					}
+					else if(this.facility.recordTypeDevName === "Ramp_Handler"){
+						
+					}
+					
 					this.updateLocationValid();
 					this.getCompanyAdminsFromDB(this.facility.companyId);
 					this.getFacilityManagersFromDB(this.facility.Id);
@@ -885,6 +893,17 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 					.join(";");
 			}
 
+			let inHouseServices = '';
+			let thirdPartyServices = '';
+
+			this.facility.inHouseServices.forEach(item => {
+				inHouseServices += item.api +';';
+			});
+
+			this.facility.thirdPartyServices.forEach(item => {
+				thirdPartyServices += item.api +';';
+			});
+
 			let objToSave = {
 				Number_of_Employees__c: this.facility.NumberEmployees,
 				Overall_Facility_Size_m2__c: this.facility.recordTypeDevName === 'Cargo_Handling_Facility' ? this.facility.FacilitySize : 0,
@@ -908,7 +927,9 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 				Secondary_Address__c: this.facility.secondAddress,
 				name: this.facility.name,
 				Id: this.facility.Id,
-				Pilot_Information__c: this.facility.pilotInformation
+				Pilot_Information__c: this.facility.pilotInformation,
+				In_House_Services__c: this.facility.recordTypeDevName == 'Ramp_Handler' ? inHouseServices : '',
+				Third_Party_Services__c: this.facility.recordTypeDevName == 'Ramp_Handler' ? thirdPartyServices : ''
 			}
 				
 			if (this.facility.nearestAirportObj != null){

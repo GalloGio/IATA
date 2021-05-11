@@ -154,6 +154,18 @@
     <enableSharing>true</enableSharing>
     <enableStreamingApi>true</enableStreamingApi>
     <externalSharingModel>ReadWrite</externalSharingModel>
+    <label>OS Station</label>
+    <nameField>
+        <label>ONE Source Station Name</label>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>OS Stations</pluralLabel>
+    <recordTypeTrackHistory>false</recordTypeTrackHistory>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <startsWith>Vowel</startsWith>
+    <visibility>Public</visibility>
     <fields>
         <fullName>AccountId__c</fullName>
         <description>Account</description>
@@ -185,6 +197,7 @@
         <externalId>false</externalId>
         <label>Link to Station Account</label>
         <referenceTo>Account_Role__c</referenceTo>
+        <relationshipLabel>OS Stations</relationshipLabel>
         <relationshipName>ICG_Account_Role_Details</relationshipName>
         <required>true</required>
         <trackHistory>false</trackHistory>
@@ -994,6 +1007,7 @@ IF( ISBLANK( Country_FOR__c ) ,NULL,  Country_FOR__c + &quot;, &quot;) + &quot;.
         <externalId>false</externalId>
         <label>IATA ISO Country</label>
         <referenceTo>IATA_ISO_Country__c</referenceTo>
+        <relationshipLabel>OS Stations</relationshipLabel>
         <relationshipName>ICG_Account_Role_Details</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -1019,6 +1033,21 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>In_House_Services__c</fullName>
+        <description>Provided services in-house</description>
+        <externalId>false</externalId>
+        <label>In-House Services</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>ONE_Source_Handling_Services</valueSetName>
+        </valueSet>
+        <visibleLines>4</visibleLines>
     </fields>
     <fields>
         <fullName>Is_Direct_Ramp_Access__c</fullName>
@@ -1070,6 +1099,7 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
         <externalId>false</externalId>
         <label>Nearest Airport</label>
         <referenceTo>Airport_Detail__c</referenceTo>
+        <relationshipLabel>OS Stations</relationshipLabel>
         <relationshipName>ICG_Account_Role_Details</relationshipName>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -1348,6 +1378,21 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
+        <fullName>Third_Party_Services__c</fullName>
+        <description>Third party services from Ramp Handler</description>
+        <externalId>false</externalId>
+        <label>Third Party Services</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>ONE_Source_Handling_Services</valueSetName>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
         <fullName>Website__c</fullName>
         <description>To storage the website url</description>
         <externalId>false</externalId>
@@ -1389,305 +1434,6 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
         <trackTrending>false</trackTrending>
         <type>Url</type>
     </fields>
-    <label>OS Station</label>
-    <listViews>
-        <fullName>Account_pending_for_IATA_approval</fullName>
-        <columns>NAME</columns>
-        <columns>Account_Role__c</columns>
-        <columns>Company_FOR__c</columns>
-        <columns>RECORDTYPE</columns>
-        <columns>IATA_ISO_Country__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Account_Pending_Approval__c</field>
-            <operation>equals</operation>
-            <value>1</value>
-        </filters>
-        <label>Account pending for IATA approval</label>
-    </listViews>
-    <listViews>
-        <fullName>Airline_Stations</fullName>
-        <columns>NAME</columns>
-        <columns>Company_FOR__c</columns>
-        <columns>City_FOR__c</columns>
-        <columns>IATA_ISO_Country__c</columns>
-        <columns>Airmail__c</columns>
-        <columns>General_Cargo__c</columns>
-        <columns>Live_Animals__c</columns>
-        <columns>Perishables__c</columns>
-        <columns>Pharmaceuticals__c</columns>
-        <columns>Dangerous_Goods__c</columns>
-        <columns>Road_Feeder_Services__c</columns>
-        <columns>Number_of_Employees__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>RECORDTYPE</field>
-            <operation>equals</operation>
-            <value>ICG_Account_Role_Detail__c.Airline</value>
-        </filters>
-        <filters>
-            <field>Account_Pending_Approval__c</field>
-            <operation>equals</operation>
-            <value>0</value>
-        </filters>
-        <filters>
-            <field>Status__c</field>
-            <operation>equals</operation>
-            <value>Approved</value>
-        </filters>
-        <label>Airline Stations</label>
-    </listViews>
-    <listViews>
-        <fullName>Airport_Operator_Stations</fullName>
-        <columns>NAME</columns>
-        <columns>Company_FOR__c</columns>
-        <columns>City_FOR__c</columns>
-        <columns>IATA_ISO_Country__c</columns>
-        <columns>Airmail__c</columns>
-        <columns>General_Cargo__c</columns>
-        <columns>Live_Animals__c</columns>
-        <columns>Perishables__c</columns>
-        <columns>Pharmaceuticals__c</columns>
-        <columns>Dangerous_Goods__c</columns>
-        <columns>Number_of_Employees__c</columns>
-        <columns>Overall_Airport_Size__c</columns>
-        <columns>Pilot_Information__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>RECORDTYPE</field>
-            <operation>equals</operation>
-            <value>ICG_Account_Role_Detail__c.Airport_Operator</value>
-        </filters>
-        <filters>
-            <field>Account_Pending_Approval__c</field>
-            <operation>equals</operation>
-            <value>0</value>
-        </filters>
-        <filters>
-            <field>Status__c</field>
-            <operation>equals</operation>
-            <value>Approved</value>
-        </filters>
-        <label>Airport Operator Stations</label>
-    </listViews>
-    <listViews>
-        <fullName>All</fullName>
-        <columns>NAME</columns>
-        <columns>RECORDTYPE</columns>
-        <columns>City_FOR__c</columns>
-        <columns>Country_FOR__c</columns>
-        <filterScope>Everything</filterScope>
-        <label>All</label>
-    </listViews>
-    <listViews>
-        <fullName>Cargo_Handling_Facility_Stations</fullName>
-        <columns>NAME</columns>
-        <columns>Company_FOR__c</columns>
-        <columns>City_FOR__c</columns>
-        <columns>IATA_ISO_Country__c</columns>
-        <columns>Airmail__c</columns>
-        <columns>General_Cargo__c</columns>
-        <columns>Live_Animals__c</columns>
-        <columns>Perishables__c</columns>
-        <columns>Pharmaceuticals__c</columns>
-        <columns>Dangerous_Goods__c</columns>
-        <columns>Number_of_Employees__c</columns>
-        <columns>Overall_Facility_Size_m2__c</columns>
-        <columns>Is_On_Airport__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>RECORDTYPE</field>
-            <operation>equals</operation>
-            <value>ICG_Account_Role_Detail__c.Cargo_Handling_Facility</value>
-        </filters>
-        <filters>
-            <field>Account_Pending_Approval__c</field>
-            <operation>equals</operation>
-            <value>0</value>
-        </filters>
-        <filters>
-            <field>Status__c</field>
-            <operation>equals</operation>
-            <value>Approved</value>
-        </filters>
-        <label>Cargo Handling Facility Stations</label>
-    </listViews>
-    <listViews>
-        <fullName>Freight_Forwarder_Stations</fullName>
-        <columns>NAME</columns>
-        <columns>Company_FOR__c</columns>
-        <columns>City_FOR__c</columns>
-        <columns>IATA_ISO_Country__c</columns>
-        <columns>Airmail__c</columns>
-        <columns>General_Cargo__c</columns>
-        <columns>Live_Animals__c</columns>
-        <columns>Perishables__c</columns>
-        <columns>Pharmaceuticals__c</columns>
-        <columns>Dangerous_Goods__c</columns>
-        <columns>Number_of_Employees__c</columns>
-        <columns>Is_On_Airport__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>RECORDTYPE</field>
-            <operation>equals</operation>
-            <value>ICG_Account_Role_Detail__c.Freight_Forwarder</value>
-        </filters>
-        <filters>
-            <field>Account_Pending_Approval__c</field>
-            <operation>equals</operation>
-            <value>0</value>
-        </filters>
-        <filters>
-            <field>Status__c</field>
-            <operation>equals</operation>
-            <value>Approved</value>
-        </filters>
-        <label>Freight Forwarder Stations</label>
-    </listViews>
-    <listViews>
-        <fullName>ICG_Stakeholders_ICG_Account_Role_Detail</fullName>
-        <filterScope>Queue</filterScope>
-        <label>OneSource Stakeholders</label>
-        <queue>ICG_Stakeholders</queue>
-        <sharedTo>
-            <allInternalUsers></allInternalUsers>
-        </sharedTo>
-    </listViews>
-    <listViews>
-        <fullName>Pending_for_approval</fullName>
-        <columns>NAME</columns>
-        <columns>Company_FOR__c</columns>
-        <columns>City_FOR__c</columns>
-        <columns>Country_FOR__c</columns>
-        <columns>Customer_Service_Email__c</columns>
-        <columns>Customer_Service_Phone_Number__c</columns>
-        <columns>RECORDTYPE</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Status__c</field>
-            <operation>equals</operation>
-            <value>Pending for Approval,Pending for IATA Approval</value>
-        </filters>
-        <label>Pending for approval</label>
-    </listViews>
-    <listViews>
-        <fullName>Ramp_Handler_Stations</fullName>
-        <columns>NAME</columns>
-        <columns>Company_FOR__c</columns>
-        <columns>City_FOR__c</columns>
-        <columns>IATA_ISO_Country__c</columns>
-        <columns>Airmail__c</columns>
-        <columns>General_Cargo__c</columns>
-        <columns>Live_Animals__c</columns>
-        <columns>Perishables__c</columns>
-        <columns>Pharmaceuticals__c</columns>
-        <columns>Dangerous_Goods__c</columns>
-        <columns>Number_of_Employees__c</columns>
-        <columns>Overall_Facility_Size_m2__c</columns>
-        <columns>Is_On_Airport__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>RECORDTYPE</field>
-            <operation>equals</operation>
-            <value>ICG_Account_Role_Detail__c.Ramp_Handler</value>
-        </filters>
-        <filters>
-            <field>Account_Pending_Approval__c</field>
-            <operation>equals</operation>
-            <value>0</value>
-        </filters>
-        <filters>
-            <field>Status__c</field>
-            <operation>equals</operation>
-            <value>Approved</value>
-        </filters>
-        <label>Ramp Handler Stations</label>
-    </listViews>
-    <listViews>
-        <fullName>Shipper_Stations</fullName>
-        <columns>NAME</columns>
-        <columns>Company_FOR__c</columns>
-        <columns>Airmail__c</columns>
-        <columns>General_Cargo__c</columns>
-        <columns>Live_Animals__c</columns>
-        <columns>Perishables__c</columns>
-        <columns>Pharmaceuticals__c</columns>
-        <columns>Dangerous_Goods__c</columns>
-        <columns>City_FOR__c</columns>
-        <columns>IATA_ISO_Country__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>RECORDTYPE</field>
-            <operation>equals</operation>
-            <value>ICG_Account_Role_Detail__c.Shipper</value>
-        </filters>
-        <filters>
-            <field>Account_Pending_Approval__c</field>
-            <operation>equals</operation>
-            <value>0</value>
-        </filters>
-        <filters>
-            <field>Status__c</field>
-            <operation>equals</operation>
-            <value>Approved</value>
-        </filters>
-        <label>Shipper Stations</label>
-    </listViews>
-    <listViews>
-        <fullName>Stations_pending_for_IATA_approval</fullName>
-        <columns>NAME</columns>
-        <columns>Account_Role__c</columns>
-        <columns>Company_FOR__c</columns>
-        <columns>RECORDTYPE</columns>
-        <columns>IATA_ISO_Country__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>Status__c</field>
-            <operation>notEqual</operation>
-            <value>Rejected,Approved</value>
-        </filters>
-        <label>Stations pending for IATA approval</label>
-    </listViews>
-    <listViews>
-        <fullName>Trucker_Stations</fullName>
-        <columns>NAME</columns>
-        <columns>Company_FOR__c</columns>
-        <columns>City_FOR__c</columns>
-        <columns>IATA_ISO_Country__c</columns>
-        <columns>Airmail__c</columns>
-        <columns>General_Cargo__c</columns>
-        <columns>Live_Animals__c</columns>
-        <columns>Perishables__c</columns>
-        <columns>Pharmaceuticals__c</columns>
-        <columns>Dangerous_Goods__c</columns>
-        <columns>Number_of_Employees__c</columns>
-        <columns>Fleet__c</columns>
-        <columns>Is_On_Airport__c</columns>
-        <filterScope>Everything</filterScope>
-        <filters>
-            <field>RECORDTYPE</field>
-            <operation>equals</operation>
-            <value>ICG_Account_Role_Detail__c.Trucker</value>
-        </filters>
-        <filters>
-            <field>Account_Pending_Approval__c</field>
-            <operation>equals</operation>
-            <value>0</value>
-        </filters>
-        <filters>
-            <field>Status__c</field>
-            <operation>equals</operation>
-            <value>Approved</value>
-        </filters>
-        <label>Trucker Stations</label>
-    </listViews>
-    <nameField>
-        <label>ONE Source Station Name</label>
-        <trackHistory>false</trackHistory>
-        <type>Text</type>
-    </nameField>
-    <pluralLabel>OS Stations</pluralLabel>
-    <recordTypeTrackHistory>false</recordTypeTrackHistory>
     <recordTypes>
         <fullName>Airline</fullName>
         <active>true</active>
@@ -4004,6 +3750,73 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>In_House_Services__c</picklist>
+            <values>
+                <fullName>Ancillary_Items</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Baggage_Handling</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cabin_Equipment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Catering_Ramp_Handling</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>De-Icing%2FAnti-Icing_Services_and_Snow%2FIce_Removal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Exterior_Cleaning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Interior_Cleaning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Loading_and_Unloading</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Marshalling</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Moving_of_Aircraft</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Parking</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ramp_to_Flight_Deck_Communication</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Safety_Measures</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Storage_of_Cabin_Material</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Toilet_Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Water_Service</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Status__c</picklist>
             <values>
                 <fullName>Approved</fullName>
@@ -4019,6 +3832,73 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
             </values>
             <values>
                 <fullName>Rejected</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Third_Party_Services__c</picklist>
+            <values>
+                <fullName>Ancillary_Items</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Baggage_Handling</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cabin_Equipment</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Catering_Ramp_Handling</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>De-Icing%2FAnti-Icing_Services_and_Snow%2FIce_Removal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Exterior_Cleaning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Interior_Cleaning</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Loading_and_Unloading</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Marshalling</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Moving_of_Aircraft</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Parking</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ramp_to_Flight_Deck_Communication</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Safety_Measures</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Storage_of_Cabin_Material</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Toilet_Service</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Water_Service</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -4957,9 +4837,6 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
             </values>
         </picklistValues>
     </recordTypes>
-    <searchLayouts/>
-    <sharingModel>ReadWrite</sharingModel>
-    <startsWith>Vowel</startsWith>
     <validationRules>
         <fullName>Number_Of_Employees_Cannot_Be_Negative</fullName>
         <active>true</active>
@@ -4976,5 +4853,295 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
         <errorDisplayField>Number_of_Facilities__c</errorDisplayField>
         <errorMessage>The number of facilities cannot be negative</errorMessage>
     </validationRules>
-    <visibility>Public</visibility>
+    <listViews>
+        <fullName>Account_pending_for_IATA_approval</fullName>
+        <columns>NAME</columns>
+        <columns>Account_Role__c</columns>
+        <columns>Company_FOR__c</columns>
+        <columns>RECORDTYPE</columns>
+        <columns>IATA_ISO_Country__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Account_Pending_Approval__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>Account pending for IATA approval</label>
+    </listViews>
+    <listViews>
+        <fullName>Airline_Stations</fullName>
+        <columns>NAME</columns>
+        <columns>Company_FOR__c</columns>
+        <columns>City_FOR__c</columns>
+        <columns>IATA_ISO_Country__c</columns>
+        <columns>Airmail__c</columns>
+        <columns>General_Cargo__c</columns>
+        <columns>Live_Animals__c</columns>
+        <columns>Perishables__c</columns>
+        <columns>Pharmaceuticals__c</columns>
+        <columns>Dangerous_Goods__c</columns>
+        <columns>Road_Feeder_Services__c</columns>
+        <columns>Number_of_Employees__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>ICG_Account_Role_Detail__c.Airline</value>
+        </filters>
+        <filters>
+            <field>Account_Pending_Approval__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Approved</value>
+        </filters>
+        <label>Airline Stations</label>
+    </listViews>
+    <listViews>
+        <fullName>Airport_Operator_Stations</fullName>
+        <columns>NAME</columns>
+        <columns>Company_FOR__c</columns>
+        <columns>City_FOR__c</columns>
+        <columns>IATA_ISO_Country__c</columns>
+        <columns>Airmail__c</columns>
+        <columns>General_Cargo__c</columns>
+        <columns>Live_Animals__c</columns>
+        <columns>Perishables__c</columns>
+        <columns>Pharmaceuticals__c</columns>
+        <columns>Dangerous_Goods__c</columns>
+        <columns>Number_of_Employees__c</columns>
+        <columns>Overall_Airport_Size__c</columns>
+        <columns>Pilot_Information__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>ICG_Account_Role_Detail__c.Airport_Operator</value>
+        </filters>
+        <filters>
+            <field>Account_Pending_Approval__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Approved</value>
+        </filters>
+        <label>Airport Operator Stations</label>
+    </listViews>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>RECORDTYPE</columns>
+        <columns>City_FOR__c</columns>
+        <columns>Country_FOR__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>Cargo_Handling_Facility_Stations</fullName>
+        <columns>NAME</columns>
+        <columns>Company_FOR__c</columns>
+        <columns>City_FOR__c</columns>
+        <columns>IATA_ISO_Country__c</columns>
+        <columns>Airmail__c</columns>
+        <columns>General_Cargo__c</columns>
+        <columns>Live_Animals__c</columns>
+        <columns>Perishables__c</columns>
+        <columns>Pharmaceuticals__c</columns>
+        <columns>Dangerous_Goods__c</columns>
+        <columns>Number_of_Employees__c</columns>
+        <columns>Overall_Facility_Size_m2__c</columns>
+        <columns>Is_On_Airport__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>ICG_Account_Role_Detail__c.Cargo_Handling_Facility</value>
+        </filters>
+        <filters>
+            <field>Account_Pending_Approval__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Approved</value>
+        </filters>
+        <label>Cargo Handling Facility Stations</label>
+    </listViews>
+    <listViews>
+        <fullName>Freight_Forwarder_Stations</fullName>
+        <columns>NAME</columns>
+        <columns>Company_FOR__c</columns>
+        <columns>City_FOR__c</columns>
+        <columns>IATA_ISO_Country__c</columns>
+        <columns>Airmail__c</columns>
+        <columns>General_Cargo__c</columns>
+        <columns>Live_Animals__c</columns>
+        <columns>Perishables__c</columns>
+        <columns>Pharmaceuticals__c</columns>
+        <columns>Dangerous_Goods__c</columns>
+        <columns>Number_of_Employees__c</columns>
+        <columns>Is_On_Airport__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>ICG_Account_Role_Detail__c.Freight_Forwarder</value>
+        </filters>
+        <filters>
+            <field>Account_Pending_Approval__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Approved</value>
+        </filters>
+        <label>Freight Forwarder Stations</label>
+    </listViews>
+    <listViews>
+        <fullName>ICG_Stakeholders_ICG_Account_Role_Detail</fullName>
+        <filterScope>Queue</filterScope>
+        <label>OneSource Stakeholders</label>
+        <queue>ICG_Stakeholders</queue>
+        <sharedTo>
+            <allInternalUsers/>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>Pending_for_approval</fullName>
+        <columns>NAME</columns>
+        <columns>Company_FOR__c</columns>
+        <columns>City_FOR__c</columns>
+        <columns>Country_FOR__c</columns>
+        <columns>Customer_Service_Email__c</columns>
+        <columns>Customer_Service_Phone_Number__c</columns>
+        <columns>RECORDTYPE</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Pending for Approval,Pending for IATA Approval</value>
+        </filters>
+        <label>Pending for approval</label>
+    </listViews>
+    <listViews>
+        <fullName>Ramp_Handler_Stations</fullName>
+        <columns>NAME</columns>
+        <columns>Company_FOR__c</columns>
+        <columns>City_FOR__c</columns>
+        <columns>IATA_ISO_Country__c</columns>
+        <columns>Airmail__c</columns>
+        <columns>General_Cargo__c</columns>
+        <columns>Live_Animals__c</columns>
+        <columns>Perishables__c</columns>
+        <columns>Pharmaceuticals__c</columns>
+        <columns>Dangerous_Goods__c</columns>
+        <columns>Number_of_Employees__c</columns>
+        <columns>Overall_Facility_Size_m2__c</columns>
+        <columns>Is_On_Airport__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>ICG_Account_Role_Detail__c.Ramp_Handler</value>
+        </filters>
+        <filters>
+            <field>Account_Pending_Approval__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Approved</value>
+        </filters>
+        <label>Ramp Handler Stations</label>
+    </listViews>
+    <listViews>
+        <fullName>Shipper_Stations</fullName>
+        <columns>NAME</columns>
+        <columns>Company_FOR__c</columns>
+        <columns>Airmail__c</columns>
+        <columns>General_Cargo__c</columns>
+        <columns>Live_Animals__c</columns>
+        <columns>Perishables__c</columns>
+        <columns>Pharmaceuticals__c</columns>
+        <columns>Dangerous_Goods__c</columns>
+        <columns>City_FOR__c</columns>
+        <columns>IATA_ISO_Country__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>ICG_Account_Role_Detail__c.Shipper</value>
+        </filters>
+        <filters>
+            <field>Account_Pending_Approval__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Approved</value>
+        </filters>
+        <label>Shipper Stations</label>
+    </listViews>
+    <listViews>
+        <fullName>Stations_pending_for_IATA_approval</fullName>
+        <columns>NAME</columns>
+        <columns>Account_Role__c</columns>
+        <columns>Company_FOR__c</columns>
+        <columns>RECORDTYPE</columns>
+        <columns>IATA_ISO_Country__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Status__c</field>
+            <operation>notEqual</operation>
+            <value>Rejected,Approved</value>
+        </filters>
+        <label>Stations pending for IATA approval</label>
+    </listViews>
+    <listViews>
+        <fullName>Trucker_Stations</fullName>
+        <columns>NAME</columns>
+        <columns>Company_FOR__c</columns>
+        <columns>City_FOR__c</columns>
+        <columns>IATA_ISO_Country__c</columns>
+        <columns>Airmail__c</columns>
+        <columns>General_Cargo__c</columns>
+        <columns>Live_Animals__c</columns>
+        <columns>Perishables__c</columns>
+        <columns>Pharmaceuticals__c</columns>
+        <columns>Dangerous_Goods__c</columns>
+        <columns>Number_of_Employees__c</columns>
+        <columns>Fleet__c</columns>
+        <columns>Is_On_Airport__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>ICG_Account_Role_Detail__c.Trucker</value>
+        </filters>
+        <filters>
+            <field>Account_Pending_Approval__c</field>
+            <operation>equals</operation>
+            <value>0</value>
+        </filters>
+        <filters>
+            <field>Status__c</field>
+            <operation>equals</operation>
+            <value>Approved</value>
+        </filters>
+        <label>Trucker Stations</label>
+    </listViews>
 </CustomObject>

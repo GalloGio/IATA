@@ -50,6 +50,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 	@api certificationName = "";
 	@api groupId = "";
 	@api renewMode = false;
+	@api validationPrograms = "";
 
 	newCertification = {};
 	@api
@@ -516,8 +517,8 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 		}
 	}
 
-	getCapabilitiesFromCertification(id, certiId, groupId) {
-		getCapabilitiesForFacilityCertificationId({ id, certiId, groupId })
+	getCapabilitiesFromCertification(id, certiId, groupId,validationPrograms) {
+		getCapabilitiesForFacilityCertificationId({ id, certiId, groupId,validationPrograms })
 			.then(result => {
 				this.data = result;
 				this.existsRows = this.getexistsRows();
@@ -674,7 +675,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 								}
 								else{
 									row.certifications.forEach(function(cert, n) {
-										if ((row.isAssigned === false && row.isPeviouslyCertified === true && row.isPermissionByDepartment === true && cert.id === groupId) || (!row.isAssigned && row.isPeviouslyCertified && row.isPermissionByDepartment && !isTabEditCapabilities)) {
+										if ((row.isAssigned && row.isPeviouslyCertified === true && row.isPermissionByDepartment === true && cert.id === groupId) || (row.isAssigned && row.isPeviouslyCertified && row.isPermissionByDepartment && !isTabEditCapabilities)) {											
 											let positionRow = {
 												superCategoriesIndex: i,
 												sectionIndex: j,
@@ -689,6 +690,11 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 											}
 										}
 									});
+
+									let toFindCert = row.certifications.filter(cert => cert.id === groupId);
+									if (toFindCert.length === 0) {
+										row.isAssigned = false;
+									}
 								}
 							});
 						});

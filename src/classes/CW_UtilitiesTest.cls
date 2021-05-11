@@ -901,6 +901,12 @@ public class CW_UtilitiesTest {
 		}
 	}
 
+	@isTest
+	static void getAllServicesAvailableTest(){
+		List<CW_Utilities.PicklistVal> historyLst = CW_Utilities.getAllServicesAvailable();
+		System.assertEquals(false, historyLst.isEmpty(), 'ERROR: List of services available for ramp handler are empty');
+	}
+	
 	/*********************************************************************************************************
 	 * @name			getFacilityHistoryByUserTest
 	 * @author			Daniel Mendoza <daniel.mendoza@nextlinksolutions.ch>

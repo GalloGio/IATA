@@ -48974,7 +48974,7 @@ ONE Source is the industry platform for validated aviation capability and infras
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>icg capability validated by</shortDescription>
-        <value>Capability validated by</value>
+        <value>Capability Validated by</value>
     </labels>
     <labels>
         <fullName>icg_cargo_commodities</fullName>
