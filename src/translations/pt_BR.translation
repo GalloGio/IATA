@@ -4705,7 +4705,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Printed_date</name>
     </customLabels>
     <customLabels>
-        <label>Concordo com a &lt;a target=&quot;_blank&quot; href=&quot;https://www.iata.org/en/privacy&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Política de privacidade&lt;/a&gt; e os &lt;a target=&quot;_blank&quot; href=&quot;https://www.iata.org/en/terms&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Termos de uso &lt;/a&gt; da IATA.</label>
+        <label>Concordo com a &lt;a target=&quot;_blank&quot; href=&quot;https://www.iata.org/Pages/privacy.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Política de privacidade&lt;/a&gt; e os &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-portal/Pages/terms.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Termos de uso &lt;/a&gt; da IATA.</label>
         <name>CSP_Privacy_Policy</name>
     </customLabels>
     <customLabels>

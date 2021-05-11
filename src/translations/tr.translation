@@ -4702,7 +4702,7 @@ Daha fazla ayrıntı için, Müşteri Portalı&apos;nda &quot;Resolution 812&quo
         <name>CSP_Printed_date</name>
     </customLabels>
     <customLabels>
-        <label>IATA (Uluslararası Hava Taşımacılığı Birliği)&apos;nin &lt;a target=&quot;_blank&quot; href=&quot;https://www.iata.org/en/privacy&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Gizlilik Politikası&lt;/a&gt; ve &lt;a target=&quot;_blank&quot; href=&quot;https://www.iata.org/en/terms&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Kullanım Koşulları&apos;nı&lt;/a&gt; kabul ediyorum.</label>
+        <label>IATA (Uluslararası Hava Taşımacılığı Birliği)&apos;nin &lt;a target=&quot;_blank&quot; href=&quot;https://www.iata.org/Pages/privacy.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Gizlilik Politikası&lt;/a&gt; ve &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-portal/Pages/terms.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Kullanım Koşulları&apos;nı&lt;/a&gt; kabul ediyorum.</label>
         <name>CSP_Privacy_Policy</name>
     </customLabels>
     <customLabels>

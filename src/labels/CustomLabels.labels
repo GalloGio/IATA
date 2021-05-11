@@ -42650,7 +42650,7 @@ Participation in MITA is open to all IATA and non-IATA member airlines holding v
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OAG_Service_Description</shortDescription>
-        <value>OAG Analyzer – a comprehensive airline schedules platform providing in-depth insight into frequency and capacity trends. Includes a spectrum of possibilities and different ways  to analyze and pull  the schedules data, including interactive visual graphs, charts and maps and ability to create your own custom reports. The data is updated on a weekly basis ensuring your business is always planning the most accurate airline schedules.</value>
+        <value>OAG Analyzer – a comprehensive airline schedules platform providing in-depth insight into frequency and capacity trends. Includes a spectrum of possibilities and different ways to analyze and pull the schedules data, including interactive visual graphs, charts and maps and ability to create your own custom reports. The data is updated on a weekly basis ensuring your business is always planning the most accurate airline schedules.</value>
     </labels>
     <labels>
         <fullName>OSCAR_RISK_WARNING</fullName>
