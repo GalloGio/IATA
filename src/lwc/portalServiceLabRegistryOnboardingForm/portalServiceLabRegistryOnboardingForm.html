@@ -18,7 +18,7 @@
 					</div>
 				</template>
 
-				<div if:true={isFirstStep} class="isFirstStep">
+				<div if:true={firstStep} class="firstStep">
 					<template if:true={FIELD_Lab_Type_PicklistValues.data}>
 						<div class="slds-var-m-around_medium">
 							<lightning-combobox
@@ -34,275 +34,372 @@
 					</template>
 				</div>
 
+				<div if:true={labDetailsStep} class="labDetailsStep">
+					<lightning-accordion>
+						<lightning-accordion-section name="countriesAfrica" label="Africa &amp; Middle East">
+							<div style="height: 300px;">
+								<lightning-datatable
+										key-field="Id"
+										data={countriesAfrica}
+										row-number-offset=0
+										suppress-bottom-bar
+										columns={countryColumns}
+										hide-checkbox-column
+										oncellchange={handleCountryInlineEdit}>
+								</lightning-datatable>
+							</div>
+						</lightning-accordion-section>
+						
+						<lightning-accordion-section name="countriesAmerica" label="Americas">
+							<div style="height: 300px;">
+								<lightning-datatable
+										key-field="Id"
+										data={countriesAmerica}
+										row-number-offset=0
+										suppress-bottom-bar
+										columns={countryColumns}
+										hide-checkbox-column>
+								</lightning-datatable>
+							</div>
+						</lightning-accordion-section>
+						
+						<lightning-accordion-section name="countriesAsia" label="Asia &amp; Pacific">
+							<div style="height: 300px;">
+								<lightning-datatable
+										key-field="Id"
+										data={countriesAsia}
+										row-number-offset=0
+										suppress-bottom-bar
+										columns={countryColumns}
+										hide-checkbox-column>
+								</lightning-datatable>
+							</div>
+						</lightning-accordion-section>
+						
+						<lightning-accordion-section name="countriesChina" label="China &amp; North Asia">
+							<div style="height: 300px;">
+								<lightning-datatable
+										key-field="Id"
+										data={countriesChina}
+										row-number-offset=0
+										suppress-bottom-bar
+										columns={countryColumns}
+										hide-checkbox-column>
+								</lightning-datatable>
+							</div>
+						</lightning-accordion-section>
+						
+						<lightning-accordion-section name="countriesEurope" label="Europe">
+							<div style="height: 300px;">
+								<lightning-datatable
+										key-field="Id"
+										data={countriesEurope}
+										row-number-offset=0
+										suppress-bottom-bar
+										columns={countryColumns}
+										hide-checkbox-column>
+								</lightning-datatable>
+							</div>
+						</lightning-accordion-section>
+					</lightning-accordion>
+				</div>
 
-				<div if:true={setAForm} class="setAForm">
-					<div if:true={SetAstep01} class="SetAstep01">
 
-						<lightning-accordion>
-							<lightning-accordion-section name="countriesAfrica" label="Africa &amp; Middle East">
-								<div style="height: 300px;">
-									<lightning-datatable
-											key-field="Id"
-											data={countriesAfrica}
-											row-number-offset=0
-											suppress-bottom-bar
-											columns={countryColumns}
-											hide-checkbox-column
-											oncellchange={handleCountryInlineEdit}>
-									</lightning-datatable>
-								</div>
-							</lightning-accordion-section>
-							
-							<lightning-accordion-section name="countriesAmerica" label="Americas">
-								<div style="height: 300px;">
-									<lightning-datatable
-											key-field="Id"
-											data={countriesAmerica}
-											row-number-offset=0
-											suppress-bottom-bar
-											columns={countryColumns}
-											hide-checkbox-column>
-									</lightning-datatable>
-								</div>
-							</lightning-accordion-section>
-							
-							<lightning-accordion-section name="countriesAsia" label="Asia &amp; Pacific">
-								<div style="height: 300px;">
-									<lightning-datatable
-											key-field="Id"
-											data={countriesAsia}
-											row-number-offset=0
-											suppress-bottom-bar
-											columns={countryColumns}
-											hide-checkbox-column>
-									</lightning-datatable>
-								</div>
-							</lightning-accordion-section>
-							
-							<lightning-accordion-section name="countriesChina" label="China &amp; North Asia">
-								<div style="height: 300px;">
-									<lightning-datatable
-											key-field="Id"
-											data={countriesChina}
-											row-number-offset=0
-											suppress-bottom-bar
-											columns={countryColumns}
-											hide-checkbox-column>
-									</lightning-datatable>
-								</div>
-							</lightning-accordion-section>
-							
-							<lightning-accordion-section name="countriesEurope" label="Europe">
-								<div style="height: 300px;">
-									<lightning-datatable
-											key-field="Id"
-											data={countriesEurope}
-											row-number-offset=0
-											suppress-bottom-bar
-											columns={countryColumns}
-											hide-checkbox-column>
-									</lightning-datatable>
-								</div>
-							</lightning-accordion-section>
-						</lightning-accordion>
-					</div>
-					
-					<div if:true={SetAstep02} class="SetAStep02">
-						<div class="slds-p-around_medium lgc-bg">
-							<lightning-input 
-								name="SLAInPlace"
-								value={SLAInPlace} 
-								type="text" 
-								label={label.CSP_LabReg_SLA_InPlace}
-								placeholder="type here..." 
+				<div if:true={setAFormStep} class="setAFormStep">
+					<template if:true={FIELD_How_long_have_you_been_in_the_business_PicklistValues.data}>
+						<div class="slds-var-m-around_medium">
+							<lightning-combobox
+								name="howLongInBusinessSelection"
+								value={howLongInBusinessSelection}
+								label={label.CSP_LabReg_How_Long_In_Business}
+								options={FIELD_How_long_have_you_been_in_the_business_PicklistValues.data.values}
 								onchange={handleFormElementChange}
 								required>
-							</lightning-input>
+							</lightning-combobox>
+						</div>
+					</template>
+
+					<template if:true={FIELD_Operating_under_brand_PicklistValues.data}>
+						<div class="slds-var-m-around_medium">
+							<lightning-combobox
+								name="operatingUnderBrand"
+								value={operatingUnderBrand}
+								label={label.CSP_LabReg_Operating_Brand}
+								options={FIELD_Operating_under_brand_PicklistValues.data.values}
+								onchange={handleFormElementChange}
+								required>
+							</lightning-combobox>
 						</div>
 
-						<template if:true={FIELD_Do_you_manage_booking_for_all_locations_PicklistValues.data}>
-							<div class="slds-var-m-around_medium">
-								<lightning-combobox
-									name="manageBookingSelection"
-									value={manageBookingSelection}
-									label={label.CSP_LabReg_manageBookingSelection}
-									options={FIELD_Do_you_manage_booking_for_all_locations_PicklistValues.data.values}
-									onchange={handleFormElementChange}
-									required>
-								</lightning-combobox>
-							</div>
-						</template>
-
-						<template if:true={FIELD_Do_you_issue_test_results_for_all_lab_PicklistValues.data}>
-							<div class="slds-var-m-around_medium">
-								<lightning-combobox
-									name="issueTestResultsSelection"
-									value={issueTestResultsSelection}
-									label={label.CSP_LabReg_issueTestResultsSelection}
-									options={FIELD_Do_you_issue_test_results_for_all_lab_PicklistValues.data.values}
-									onchange={handleFormElementChange}
-									required>
-								</lightning-combobox>
-							</div>
-						</template>
+						<div if:true={showWhichBrand} class="slds-p-around_medium lgc-bg">
+							<lightning-textarea 
+								name="whichBrands"
+								value={whichBrands} 
+								label={label.CSP_LabReg_Which_One}
+								placeholder="type here..."
+								maxlength="2000"
+								onchange={handleFormElementChange}
+								required>
+							</lightning-textarea>
+						</div>
+					</template>
 
 
-						<template if:true={FIELD_Existing_partnership_with_airlines_PicklistValues.data}>
-							<div class="slds-var-m-around_medium">
-								<lightning-combobox
-									name="airlinePartnership01Selection"
-									value={airlinePartnership01Selection}
-									label={label.CSP_LabReg_airlinePartnershipSelection}
-									options={FIELD_Existing_partnership_with_airlines_PicklistValues.data.values}
-									onchange={handleFormElementChange}
-									required>
-								</lightning-combobox>
-							</div>
-						</template>
+					<template if:true={FIELD_Type_of_SLAs_in_place_PicklistValues.data}>
+						<div class="slds-var-m-around_medium">
+							<lightning-combobox
+								name="SLAInPlace"
+								value={SLAInPlace}
+								label={label.CSP_LabReg_SLA_InPlace}
+								options={FIELD_Type_of_SLAs_in_place_PicklistValues.data.values}
+								onchange={handleFormElementChange}
+								required>
+							</lightning-combobox>
+						</div>
 
-					</div>
+						<div if:true={showNatureOfSLA} class="slds-p-around_medium lgc-bg">
+							<lightning-textarea 
+								name="NatureOfSLA"
+								value={NatureOfSLA} 
+								label={label.CSP_LabReg_Describe_SLA_Nature}
+								placeholder="type here..." 
+								maxlength="2000"
+								onchange={handleFormElementChange}
+								required>
+							</lightning-textarea>
+						</div>
+					</template>
+
+
+					<template if:true={FIELD_Do_you_manage_booking_for_all_locations_PicklistValues.data}>
+						<div class="slds-var-m-around_medium">
+							<lightning-combobox
+								name="manageBookingSelection"
+								value={manageBookingSelection}
+								label={label.CSP_LabReg_manageBookingSelection}
+								options={FIELD_Do_you_manage_booking_for_all_locations_PicklistValues.data.values}
+								onchange={handleFormElementChange}
+								required>
+							</lightning-combobox>
+						</div>
+					</template>
+
+					<template if:true={FIELD_Do_you_issue_test_results_for_all_lab_PicklistValues.data}>
+						<div class="slds-var-m-around_medium">
+							<lightning-combobox
+								name="issueTestResultsSelection"
+								value={issueTestResultsSelection}
+								label={label.CSP_LabReg_issueTestResultsSelection}
+								options={FIELD_Do_you_issue_test_results_for_all_lab_PicklistValues.data.values}
+								onchange={handleFormElementChange}
+								required>
+							</lightning-combobox>
+						</div>
+					</template>
+
+
+					<template if:true={FIELD_Are_your_labs_part_of_national_platform_PicklistValues.data}>
+						<div class="slds-var-m-around_medium">
+							<lightning-combobox
+								name="labsPartOfNationalPlatform"
+								value={labsPartOfNationalPlatform}
+								label={label.CSP_LabReg_labsPartOfNationalPlatform}
+								options={FIELD_Are_your_labs_part_of_national_platform_PicklistValues.data.values}
+								onchange={handleFormElementChange}
+								required>
+							</lightning-combobox>
+						</div>
+
+						<div if:true={showWhichNationalPlatform} class="slds-p-around_medium lgc-bg">
+							<lightning-textarea 
+								name="whichNationalPlatform"
+								value={whichNationalPlatform} 
+								label={label.CSP_LabReg_Which_One}
+								placeholder="type here..." 
+								maxlength=2000
+								onchange={handleFormElementChange}
+								required>
+							</lightning-textarea>
+						</div>
+					</template>
+
+					
+
+					<template if:true={FIELD_Existing_partnership_with_airlines_PicklistValues.data}>
+						<div class="slds-var-m-around_medium">
+							<lightning-combobox
+								name="airlinePartnershipSelection"
+								value={airlinePartnershipSelection}
+								label={label.CSP_LabReg_airlinePartnershipSelection}
+								options={FIELD_Existing_partnership_with_airlines_PicklistValues.data.values}
+								onchange={handleFormElementChange}
+								required>
+							</lightning-combobox>
+						</div>
+					</template>
+
 				</div>
 
 				
-				<div if:true={setBForm} class="setBForm">
-					<div if:true={SetBstep01} class="SetBstep01">
-
-						<lightning-accordion>
-							<lightning-accordion-section name="countriesAfrica" label="Africa &amp; Middle East">
-								<div style="height: 300px;">
-									<lightning-datatable
-											key-field="Id"
-											data={countriesAfrica}
-											row-number-offset=0
-											suppress-bottom-bar
-											columns={countryColumns}
-											hide-checkbox-column
-											oncellchange={handleCountryInlineEdit}>
-									</lightning-datatable>
-								</div>
-							</lightning-accordion-section>
-							
-							<lightning-accordion-section name="countriesAmerica" label="Americas">
-								<div style="height: 300px;">
-									<lightning-datatable
-											key-field="Id"
-											data={countriesAmerica}
-											row-number-offset=0
-											suppress-bottom-bar
-											columns={countryColumns}
-											hide-checkbox-column>
-									</lightning-datatable>
-								</div>
-							</lightning-accordion-section>
-							
-							<lightning-accordion-section name="countriesAsia" label="Asia &amp; Pacific">
-								<div style="height: 300px;">
-									<lightning-datatable
-											key-field="Id"
-											data={countriesAsia}
-											row-number-offset=0
-											suppress-bottom-bar
-											columns={countryColumns}
-											hide-checkbox-column>
-									</lightning-datatable>
-								</div>
-							</lightning-accordion-section>
-							
-							<lightning-accordion-section name="countriesChina" label="China &amp; North Asia">
-								<div style="height: 300px;">
-									<lightning-datatable
-											key-field="Id"
-											data={countriesChina}
-											row-number-offset=0
-											suppress-bottom-bar
-											columns={countryColumns}
-											hide-checkbox-column>
-									</lightning-datatable>
-								</div>
-							</lightning-accordion-section>
-							
-							<lightning-accordion-section name="countriesEurope" label="Europe">
-								<div style="height: 300px;">
-									<lightning-datatable
-											key-field="Id"
-											data={countriesEurope}
-											row-number-offset=0
-											suppress-bottom-bar
-											columns={countryColumns}
-											hide-checkbox-column>
-									</lightning-datatable>
-								</div>
-							</lightning-accordion-section>
-						</lightning-accordion>
-					</div>
-					<div if:true={SetBstep02} class="SetBStep02">
-						<template if:true={FIELD_Type_of_lab_PicklistValues.data}>
-							<div class="slds-var-m-around_medium">
-								<lightning-combobox
-									name="typeOfLabSelection"
-									value={typeOfLabSelection}
-									label={label.CSP_LabReg_TypeOfLab}
-									options={FIELD_Type_of_lab_PicklistValues.data.values}
-									onchange={handleFormElementChange}
-									required>
-								</lightning-combobox>
-							</div>
-						</template>
-						
-
-						<div class="slds-p-around_medium lgc-bg">
-							<lightning-input 
-								type="text"
-								name="SLACertificationInPlace"
-								value={SLACertificationInPlace}
-								label={label.CSP_LabReg_SLACertification}
-								placeholder="type here..." 
-								onchange={handleFormElementChange} 
+				<div if:true={setBFormStep} class="setBFormStep">
+					<template if:true={FIELD_How_long_have_you_been_in_the_business_PicklistValues.data}>
+						<div class="slds-var-m-around_medium">
+							<lightning-combobox
+								name="howLongInBusinessSelection"
+								value={howLongInBusinessSelection}
+								label={label.CSP_LabReg_How_Long_In_Business}
+								options={FIELD_How_long_have_you_been_in_the_business_PicklistValues.data.values}
+								onchange={handleFormElementChange}
 								required>
-							</lightning-input>
+							</lightning-combobox>
+						</div>
+					</template>
+
+					<template if:true={FIELD_Type_of_lab_PicklistValues.data}>
+						<div class="slds-var-m-around_medium">
+							<lightning-combobox
+								name="typeOfLabSelection"
+								value={typeOfLabSelection}
+								label={label.CSP_LabReg_TypeOfLab}
+								options={FIELD_Type_of_lab_PicklistValues.data.values}
+								onchange={handleFormElementChange}
+								required>
+							</lightning-combobox>
+						</div>
+					</template>
+
+					<template if:true={FIELD_Do_you_manage_booking_for_all_locations_PicklistValues.data}>
+						<div class="slds-var-m-around_medium">
+							<lightning-combobox
+								name="manageBookingSelection"
+								value={manageBookingSelection}
+								label={label.CSP_LabReg_manageBookingSelection}
+								options={FIELD_Do_you_manage_booking_for_all_locations_PicklistValues.data.values}
+								onchange={handleFormElementChange}
+								required>
+							</lightning-combobox>
+						</div>
+					</template>
+					
+					<template if:true={FIELD_Do_you_issue_test_results_for_all_lab_PicklistValues.data}>
+						<div class="slds-var-m-around_medium">
+							<lightning-combobox
+								name="issueTestResultsSelection"
+								value={issueTestResultsSelection}
+								label={label.CSP_LabReg_issueTestResultsSelection}
+								options={FIELD_Do_you_issue_test_results_for_all_lab_PicklistValues.data.values}
+								onchange={handleFormElementChange}
+								required>
+							</lightning-combobox>
+						</div>
+					</template>
+
+					<template if:true={FIELD_National_accreditation_for_all_the_labs_PicklistValues.data}>
+						<div class="slds-var-m-around_medium">
+							<lightning-combobox
+								name="nationalAccreditationSelection"
+								value={nationalAccreditationSelection}
+								label={label.CSP_LabReg_nationalAccreditationSelection}
+								options={FIELD_National_accreditation_for_all_the_labs_PicklistValues.data.values}
+								onchange={handleFormElementChange}
+								required>
+							</lightning-combobox>
+						</div>
+					</template>
+
+
+					<template if:true={FIELD_Additional_certifications_in_place_PicklistValues.data}>
+						<div class="slds-var-m-around_medium">
+							<lightning-combobox
+								name="AdditionalCertInPlace"
+								value={AdditionalCertInPlace}
+								label={label.CSP_LabReg_AdditionalCertInPlace}
+								options={FIELD_Additional_certifications_in_place_PicklistValues.data.values}
+								onchange={handleFormElementChange}
+								required>
+							</lightning-combobox>
 						</div>
 
-						<template if:true={FIELD_National_accreditation_for_all_the_labs_PicklistValues.data}>
-							<div class="slds-var-m-around_medium">
-								<lightning-combobox
-									name="nationalAccreditationSelection"
-									value={nationalAccreditationSelection}
-									label={label.CSP_LabReg_nationalAccreditationSelection}
-									options={FIELD_National_accreditation_for_all_the_labs_PicklistValues.data.values}
-									onchange={handleFormElementChange}
-									required>
-								</lightning-combobox>
-							</div>
-						</template>
+						<div if:true={showAdditionalCert} class="slds-p-around_medium lgc-bg">
+							<lightning-textarea 
+								name="whichAdditionalCert"
+								value={whichAdditionalCert} 
+								label={label.CSP_LabReg_Which_One}
+								placeholder="type here..." 
+								maxlength=2000
+								onchange={handleFormElementChange}
+								required>
+							</lightning-textarea>
+						</div>
+					</template>
 
-						<template if:true={FIELD_Are_your_labs_part_of_national_platform_PicklistValues.data}>
-							<div class="slds-var-m-around_medium">
-								<lightning-combobox
-									name="labsPartOfNationalPlatform"
-									value={labsPartOfNationalPlatform}
-									label={label.CSP_LabReg_labsPartOfNationalPlatform}
-									options={FIELD_Are_your_labs_part_of_national_platform_PicklistValues.data.values}
-									onchange={handleFormElementChange}
-									required>
-								</lightning-combobox>
-							</div>
-						</template>
+					<template if:true={FIELD_Endorsed_by_governments_PicklistValues.data}>
+						<div class="slds-var-m-around_medium">
+							<lightning-combobox
+								name="endorsedByGovern"
+								value={endorsedByGovern}
+								label={label.CSP_LabReg_National_Govern_Platform}
+								options={FIELD_Endorsed_by_governments_PicklistValues.data.values}
+								onchange={handleFormElementChange}
+								required>
+							</lightning-combobox>
+						</div>
 
-						<template if:true={FIELD_Existing_partnership_with_airlines_PicklistValues.data}>
-							<div class="slds-var-m-around_medium">
-								<lightning-combobox
-									name="airlinePartnership02Selection"
-									value={airlinePartnership02Selection}
-									label={label.CSP_LabReg_airlinePartnershipSelection}
-									options={FIELD_Existing_partnership_with_airlines_PicklistValues.data.values}
-									onchange={handleFormElementChange}
-									required>
-								</lightning-combobox>
-							</div>
-						</template>
-					</div>
+						<div if:true={showWhichGovern} class="slds-p-around_medium lgc-bg">
+							<lightning-textarea 
+								name="whichGovern"
+								value={whichGovern} 
+								label={label.CSP_LabReg_Which_One}
+								placeholder="type here..." 
+								maxlength=2000
+								onchange={handleFormElementChange}
+								required>
+							</lightning-textarea>
+						</div>
+					</template>
+
+
+					<template if:true={FIELD_Are_your_labs_part_of_national_platform_PicklistValues.data}>
+						<div class="slds-var-m-around_medium">
+							<lightning-combobox
+								name="labsPartOfNationalPlatform"
+								value={labsPartOfNationalPlatform}
+								label={label.CSP_LabReg_labsPartOfNationalPlatform}
+								options={FIELD_Are_your_labs_part_of_national_platform_PicklistValues.data.values}
+								onchange={handleFormElementChange}
+								required>
+							</lightning-combobox>
+						</div>
+
+						<div if:true={showWhichNationalPlatform} class="slds-p-around_medium lgc-bg">
+							<lightning-textarea 
+								name="whichNationalPlatform"
+								value={whichNationalPlatform} 
+								label={label.CSP_LabReg_Which_One}
+								placeholder="type here..." 
+								maxlength=2000
+								onchange={handleFormElementChange}
+								required>
+							</lightning-textarea>
+						</div>
+					</template>
+
+					<template if:true={FIELD_Existing_partnership_with_airlines_PicklistValues.data}>
+						<div class="slds-var-m-around_medium">
+							<lightning-combobox
+								name="airlinePartnershipSelection"
+								value={airlinePartnershipSelection}
+								label={label.CSP_LabReg_airlinePartnershipSelection}
+								options={FIELD_Existing_partnership_with_airlines_PicklistValues.data.values}
+								onchange={handleFormElementChange}
+								required>
+							</lightning-combobox>
+						</div>
+					</template>
 				</div>
 
+
+				
 				<div if:true={airlineSelectionStep} class="airlineSelectionStep">
 					{label.CSP_LabReg_WhichAirlines}
 					<!--<lightning-input type="search" label="Search" placeholder="search airline..." onchange={filterAirlines}></lightning-input>-->
@@ -357,9 +454,9 @@
 					
 				</div>
 
-				<!--<div if:true={confirmStep} class="confirmStep">
+				<div if:true={recapStep} class="recapStep">
 					Are you sure you want to submit your request?
-				</div>-->
+				</div>
 
 				<div if:true={finalStep} class="finalStep">
 					Grazie ed arrivederci

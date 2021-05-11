@@ -9,16 +9,15 @@ import OBJECT_LAB_ACCOUNT_ROLE_DETAIL from '@salesforce/schema/LAB_Account_Role_
 
 //Fields with picklist
 import FIELD_Lab_Type from '@salesforce/schema/LAB_Account_Role_Detail__c.Lab_Type__c';
-
-import FIELD_How_long_have_you_been_in_the_business from '@salesforce/schema/LAB_Account_Role_Detail__c.How_long_have_you_been_in_the_business__c';
-import FIELD_Operating_under_brand from '@salesforce/schema/LAB_Account_Role_Detail__c.Operating_under_brand__c';
-import FIELD_Type_of_SLAs_in_place from '@salesforce/schema/LAB_Account_Role_Detail__c.Type_of_SLAs_in_place__c';
 import FIELD_Do_you_manage_booking_for_all_locations from '@salesforce/schema/LAB_Account_Role_Detail__c.Do_you_manage_booking_for_all_locations__c';
 import FIELD_Do_you_issue_test_results_for_all_lab from '@salesforce/schema/LAB_Account_Role_Detail__c.Do_you_issue_test_results_for_all_lab__c';
 import FIELD_Are_your_labs_part_of_national_platform from '@salesforce/schema/LAB_Account_Role_Detail__c.Are_your_labs_part_of_national_platform__c';
 import FIELD_Existing_partnership_with_airlines from '@salesforce/schema/LAB_Account_Role_Detail__c.Existing_partnership_with_airlines__c';
 import FIELD_Type_of_lab from '@salesforce/schema/LAB_Account_Role_Detail__c.Type_of_lab__c';
 import FIELD_National_accreditation_for_all_the_labs from '@salesforce/schema/LAB_Account_Role_Detail__c.National_accreditation_for_all_the_labs__c';
+import FIELD_How_long_have_you_been_in_the_business from '@salesforce/schema/LAB_Account_Role_Detail__c.How_long_have_you_been_in_the_business__c';
+import FIELD_Operating_under_brand from '@salesforce/schema/LAB_Account_Role_Detail__c.Operating_under_brand__c';
+import FIELD_Type_of_SLAs_in_place from '@salesforce/schema/LAB_Account_Role_Detail__c.Type_of_SLAs_in_place__c';
 import FIELD_Additional_certifications_in_place from '@salesforce/schema/LAB_Account_Role_Detail__c.Additional_certifications_in_place__c';
 import FIELD_Endorsed_by_governments from '@salesforce/schema/LAB_Account_Role_Detail__c.Endorsed_by_governments__c';
 
@@ -46,7 +45,6 @@ import CSP_LabReg_TypeOfLab from '@salesforce/label/c.CSP_LabReg_TypeOfLab';
 import CSP_LabReg_Which_One from '@salesforce/label/c.CSP_LabReg_Which_One';
 import CSP_LabReg_WhichAirlines from '@salesforce/label/c.CSP_LabReg_WhichAirlines';
 import CSP_LabRegistry from '@salesforce/label/c.CSP_LabRegistry';
-
 
 import CSP_Error_Message_Mandatory_Fields from '@salesforce/label/c.CSP_Error_Message_Mandatory_Fields_Contact';
 
@@ -107,6 +105,12 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 	@wire(getPicklistValues, { recordTypeId: "$recTypeId", fieldApiName: FIELD_Existing_partnership_with_airlines }) FIELD_Existing_partnership_with_airlines_PicklistValues;
 	@wire(getPicklistValues, { recordTypeId: "$recTypeId", fieldApiName: FIELD_National_accreditation_for_all_the_labs }) FIELD_National_accreditation_for_all_the_labs_PicklistValues;
 	@wire(getPicklistValues, { recordTypeId: "$recTypeId", fieldApiName: FIELD_Type_of_lab }) FIELD_Type_of_lab_PicklistValues;
+	@wire(getPicklistValues, { recordTypeId: "$recTypeId", fieldApiName: FIELD_How_long_have_you_been_in_the_business }) FIELD_How_long_have_you_been_in_the_business_PicklistValues;
+	@wire(getPicklistValues, { recordTypeId: "$recTypeId", fieldApiName: FIELD_Operating_under_brand }) FIELD_Operating_under_brand_PicklistValues;
+	@wire(getPicklistValues, { recordTypeId: "$recTypeId", fieldApiName: FIELD_Type_of_SLAs_in_place }) FIELD_Type_of_SLAs_in_place_PicklistValues;
+	@wire(getPicklistValues, { recordTypeId: "$recTypeId", fieldApiName: FIELD_Additional_certifications_in_place }) FIELD_Additional_certifications_in_place_PicklistValues;
+	@wire(getPicklistValues, { recordTypeId: "$recTypeId", fieldApiName: FIELD_Endorsed_by_governments }) FIELD_Endorsed_by_governments_PicklistValues;
+
 
 	//Countries
 	@api countryColumns = [
@@ -121,7 +125,7 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 		IsoCode: 'Iso_code__c'
 	};
 
-	@api countriesAfrica = [];
+	@track countriesAfrica = [];
 	@track countriesEurope = [];
 	@track countriesAmerica = [];
 	@track countriesAsia = [];
@@ -225,15 +229,28 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 	//Lab Type
 	@track labTypeSelection='';
 	@track SLAInPlace='';
+	@track showNatureOfSLA = false;
+	@track NatureOfSLA='';
 	@track ownFacilitiesOrPartnerLabSelection='';
 	@track manageBookingSelection='';
+	@track howLongInBusinessSelection='';
+	@track operatingUnderBrand = '';
+	@track whichBrands = '';
+	@track showWhichBrand = false;
 	@track issueTestResultsSelection='';
-	@track airlinePartnership01Selection='';
+	@track airlinePartnershipSelection='';
 	@track typeOfLabSelection='';
 	@track SLACertificationInPlace='';
 	@track nationalAccreditationSelection='';
-	@track labsPartOfNationalPlatform='';
-	@track airlinePartnership02Selection='';
+	@track labsPartOfNationalPlatform = '';
+	@track whichNationalPlatform = '';
+	@track showWhichNationalPlatform = '';
+	@track AdditionalCertInPlace = '';
+	@track showAdditionalCert = false;
+	@track whichAdditionalCert = '';
+	@track endorsedByGovern = '';
+	@track showWhichGovern = false;
+	@track whichGovern = '';
 
 
 	handleFormElementChange(event){
@@ -255,6 +272,8 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 				break;
 			case 'SLAInPlace':
 				this.SLAInPlace = formElementValue;
+				if(this.SLAInPlace=='Yes')	this.showNatureOfSLA = true;
+				else this.showNatureOfSLA = false;
 				break;
 			case 'ownFacilitiesOrPartnerLabSelection':
 				this.ownFacilitiesOrPartnerLabSelection = formElementValue;
@@ -262,18 +281,26 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 			case 'manageBookingSelection':
 				this.manageBookingSelection = formElementValue;
 				break;
+			case 'howLongInBusinessSelection':
+				this.howLongInBusinessSelection = formElementValue;
+				break;
+			case 'operatingUnderBrand':
+				this.operatingUnderBrand = formElementValue;
+				if(this.operatingUnderBrand=='Yes')	this.showWhichBrand = true;
+				else this.showWhichBrand = false;
+				break;
 			case 'issueTestResultsSelection':
 				this.issueTestResultsSelection = formElementValue;
 				break;
-			case 'airlinePartnership01Selection':
-				this.airlinePartnership01Selection = formElementValue;
-				if(this.airlinePartnership01Selection == 'Yes'){
+			case 'airlinePartnershipSelection':
+				this.airlinePartnershipSelection = formElementValue;
+				/*if(this.airlinePartnership01Selection == 'Yes'){
 					this.showConfirmButton = false;
 					this.showNextButton = true;
 				}else{
 					this.showConfirmButton = true;
 					this.showNextButton = false;
-				}
+				}*/
 				break;
 			case 'typeOfLabSelection':
 				this.typeOfLabSelection = formElementValue;
@@ -286,248 +313,212 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 				break;
 			case 'labsPartOfNationalPlatform':
 				this.labsPartOfNationalPlatform = formElementValue;
+				if(this.labsPartOfNationalPlatform=='Yes') this.showWhichNationalPlatform = true;
+				else this.showWhichNationalPlatform = false;
 				break;
-			case 'airlinePartnership02Selection':
-				this.airlinePartnership02Selection = formElementValue;
-				if(this.airlinePartnership02Selection == 'Yes'){
-					this.showConfirmButton = false;
-					this.showNextButton = true;
-				}else{
-					this.showConfirmButton = true;
-					this.showNextButton = false;
-				}
+			case 'AdditionalCertInPlace':
+				this.AdditionalCertInPlace = formElementValue;
+				if(this.AdditionalCertInPlace=='Yes') this.showAdditionalCert = true;
+				else this.showAdditionalCert = false;
+				break;
+			case 'whichAdditionalCert':
+				this.whichAdditionalCert = formElementValue;
+				break;
+			case 'endorsedByGovern':
+				this.endorsedByGovern = formElementValue;
+				if(this.endorsedByGovern=='Yes') this.showWhichGovern = true;
+				else this.showWhichGovern = false;
+				break;
+			case 'whichGovern':
+				this.whichGovern = formElementValue;
+				break;
+			case 'whichNationalPlatform':
+				this.whichNationalPlatform = formElementValue;
+				break;
+			case 'whichBrands':
+				this.whichBrands = formElementValue;
+				break;
+			case 'NatureOfSLA':
+				this.NatureOfSLA = formElementValue;
 				break;
 		}
 	}
 
 
 	//Steps and navigation methods
-	@track isFirstStep = true;
-	@track isLastStep = false;
-	
-	@track currentStep = 'isFirstStep';
+	@track firstStep = true;
+	@track labDetailsStep = false;
+	@track setAFormStep = false;
+	@track setBFormStep = false;
+	@track airlineSelectionStep = false;
+	@track recapStep = false;
+	@track finalStep = false;
+
+	@track currentStep = 'firstStep';
 	@track showMandatoryFieldsError = false;
 
 	isAForm = false;
-	@track setAForm = false;
-	@track SetAstep01 = false;
-	@track SetAStep02 = false;
-
 	isBForm = false;
-	@track setBForm = false;
-	@track SetBstep01 = false;
-	@track SetBStep02 = false;
-
-	@track airlineSelectionStep = false;
-	@track confirmStep = false;
-	@track finalStep = false;
 
 	@track showNextButton = true;
 	@track showPrevButton = false;
 	@track showConfirmButton = false;
 
 	goToNextStep(){
-		switch(this.currentStep){
-			case 'isFirstStep':
-				if(this.labTypeSelection==''){
-					this.showMandatoryFieldsError = true;
-				}else{
-					this.setAllNAvigationStepsToFalse();
-					this.showPrevButton = true;
-					this.showNextButton = true;
-					this.showConfirmButton = false;
+		this.showMandatoryFieldsError = false;
 
-					if(this.isAForm){
-						this.setAForm = true;
-						this.setBForm = false;
-						this.SetAstep01 = true;
-						this.currentStep = 'SetAstep01';
-					}
-
-					if(this.isBForm){
-						this.setBForm = true;
-						this.setAForm = false;
-						this.SetBstep01 = true;
-						this.currentStep = 'SetBstep01';
-					}
-				}
-				break;
-			
-			//A FORM STEPS
-			case 'SetAstep01':
-				this.setAllNAvigationStepsToFalse();
-				//this.setAForm = true;
-				this.SetAstep02 = true;
-				this.currentStep = 'SetAstep02';
+		if(this.firstStep){
+			if(this.labTypeSelection==''){
+				this.showMandatoryFieldsError = true;
+			}else{
+				this.firstStep = false;
+				this.labDetailsStep = true;
 				this.showPrevButton = true;
-				this.showNextButton = false;
-				this.showConfirmButton = false;
-				break;
-			case 'SetAstep02':
-				if(this.SLAInPlace == '' || this.ownFacilitiesOrPartnerLabSelection == '' || this.manageBookingSelection == '' || this.issueTestResultsSelection=='' || this.airlinePartnership01Selection==''){
-					this.showMandatoryFieldsError = true;
-				}else{
-					this.setAllNAvigationStepsToFalse();
-					//this.setAForm = true;
-					this.showPrevButton = true;
-					this.showNextButton = false;
-					this.showConfirmButton = false;
+			}
+			return;
+		}
 
-					if(this.airlinePartnership01Selection=='Yes'){
-						this.currentStep = 'airlineSelectionStep';
-						this.airlineSelectionStep = true;
-						this.showConfirmButton = true;
-					}else{
-						this.currentStep = 'finalStep';
-						this.finalStep = true;
-					}
-				}
-				break;
-			
-			
-			//B FORM STEPS
-			case 'SetBstep01':
-				this.setAllNAvigationStepsToFalse();
-				//this.setBForm = true;
-				this.SetBstep02 = true;
-				this.currentStep = 'SetBstep02';
-				this.showPrevButton = true;
-				this.showNextButton = false;
-				this.showConfirmButton = false;
-				break;
-			case 'SetBstep02':
-				if(this.typeOfLabSelection == '' || this.SLACertificationInPlace == '' || this.nationalAccreditationSelection == '' || this.labsPartOfNationalPlatform=='' || this.airlinePartnership02Selection==''){
-					this.showMandatoryFieldsError = true;
-				}else{
-					this.setAllNAvigationStepsToFalse();
-					//this.setBForm = true;
-					this.showPrevButton = true;
-					this.showNextButton = false;
-					this.showConfirmButton = false;
 
-					if(this.airlinePartnership02Selection=='Yes'){
-						this.currentStep = 'airlineSelectionStep';
-						this.airlineSelectionStep = true;
-						this.showConfirmButton = true;
-					}else{
-						this.currentStep = 'finalStep';
-						this.finalStep = true;
-					}
-				}
-				break;
-			
-			case 'airlineSelectionStep':
-				this.setAllNAvigationStepsToFalse();
-				this.showConfirmButton = false;
-				this.showNextButton = false;
-				this.showPrevButton = false;
-				this.currentStep = 'finalStep'
-				this.finalStep = true;
-				break
-				/*this.setAllNAvigationStepsToFalse();
-				this.showPrevButton = true;
-				this.showNextButton = false;
-				this.showConfirmButton = true;
+		if(this.labDetailsStep){
+			this.labDetailsStep = false;
+			if(this.isAForm){
+				this.setAFormStep = true;
+				this.setBFormStep = false;
+			}
 
-				this.currentStep = 'confirmStep';
-				break;
+			if(this.isBForm){
+				this.setAFormStep = false;
+				this.setBFormStep = true;
+			}
+			return;
+		}
 
-			//ConfirmStep
-			case 'confirmStep':
-				this.setAllNAvigationStepsToFalse();
-				this.showConfirmButton = false;
-				this.showNextButton = false;
-				this.showPrevButton = false;
-				this.currentStep = 'finalStep'
-				break;*/
+
+		if(this.setAFormStep){
+			if(this.howLongInBusinessSelection==''
+					|| this.operatingUnderBrand == ''
+					|| (this.operatingUnderBrand == 'Yes' && this.whichBrands == '')
+					|| this.SLAInPlace == ''
+					|| (this.SLAInPlace == 'Yes' && this.NatureOfSLA == '')
+					|| this.manageBookingSelection == ''
+					|| this.issueTestResultsSelection == ''
+					|| this.labsPartOfNationalPlatform == ''
+					|| (this.labsPartOfNationalPlatform == 'Yes' && this.whichNationalPlatform == '')
+					|| this.airlinePartnershipSelection == ''
+				){
+				this.showMandatoryFieldsError = true;
+			}else{
+				this.setAFormStep = false;
+				if(this.airlinePartnershipSelection == 'Yes') this.airlineSelectionStep = true;
+				else this.recapStep = true;
+			}
+			return;
+		}
+
+		if(this.setBFormStep){
+			if(this.howLongInBusinessSelection == ''
+					|| this.typeOfLabSelection == ''
+					|| this.manageBookingSelection == ''
+					|| this.issueTestResultsSelection == ''
+					|| this.nationalAccreditationSelection == ''
+					|| this.AdditionalCertInPlace == ''
+					|| (this.AdditionalCertInPlace == 'Yes' && this.whichAdditionalCert == '')
+					|| this.endorsedByGovern == ''
+					|| (this.endorsedByGovern == 'Yes' && this.whichGovern == '')
+					|| this.labsPartOfNationalPlatform == ''
+					|| (this.labsPartOfNationalPlatform == 'Yes' && this.whichNationalPlatform == '')
+					|| this.airlinePartnershipSelection == ''
+				){
+				this.showMandatoryFieldsError = true;
+			}else{
+				this.setBFormStep = false;
+				if(this.airlinePartnershipSelection == 'Yes') this.airlineSelectionStep = true;
+				else this.recapStep = true;
+			}
+			return;
+		}
+
+		if(this.airlineSelectionStep){
+			this.airlineSelectionStep = false;
+			this.recapStep = true;
+			this.showNextButton = false;
+			this.showConfirmButton = true;
+			return;
+		}
+
+		if(this.recapStep){
+			this.recapStep = false;
+			this.confirmStep = true;
+			this.showNextButton = false;
+			this.showConfirmButton = false;
+			this.showPrevButton = false;
+			return;
 		}
 	}
 
 
 	goToPreviousStep(){
-		this.setAllNAvigationStepsToFalse();
-		switch(this.currentStep){
+		this.showMandatoryFieldsError = false;
 
-			case 'SetAstep02':
-				//this.setAForm = true;
-				this.SetAstep01 = true;
-				this.showConfirmButton = false;
-				this.showNextButton = true;
-				this.showPrevButton = true;
-				this.currentStep = 'SetAstep01';
-				break;
-
-			case 'SetAstep01':
-				this.isFirstStep = true;
-				this.showConfirmButton = false;
-				this.showNextButton = true;
-				this.showPrevButton = false;
-				this.currentStep = 'isFirstStep';
-				break;
-
-			
-
-			case 'SetBstep02':
-				//this.setBForm = true;
-				this.showConfirmButton = false;
-				this.showNextButton = true;
-				this.showPrevButton = true;
-				this.SetBstep01 = true;
-				this.currentStep = 'SetBstep01';
-				break;
-			case 'SetBstep01':
-				this.isFirstStep = true;
-				this.showConfirmButton = false;
-				this.showNextButton = true;
-				this.showPrevButton = false;
-				this.currentStep = 'isFirstStep';
-				break;
-
-
-			
-			case 'airlineSelectionStep':
-				this.showConfirmButton = false;
-				this.showNextButton = true;
-				this.showPrevButton = true;
-
-				if(this.setBForm){
-					this.SetBstep02 = true;
-					this.currentStep = 'SetBstep02';
-				}
-				else{
-					this.SetAstep02 = true;
-					this.currentStep = 'SetAstep02';
-				}
-
-				break;
-
+		if(this.labDetailsStep){
+			this.labDetailsStep = false;
+			this.firstStep = true;
+			this.showPrevButton = false;
+			return;
 		}
 
-	}
 
-	setAllNAvigationStepsToFalse(){
-		this.isFirstStep = false;
-		
-		//this.setAForm = false;
-		this.SetAstep01 = false;
-		this.SetAstep02 = false;
+		if(this.setAFormStep){
+			this.setAFormStep = false;
+			this.labDetailsStep = true;
+			return;
+		}
 
-		//this.setBForm = false;
-		this.SetBstep01 = false;
-		this.SetBstep02 = false;
+		if(this.setBFormStep){
+			this.setBFormStep = false;
+			this.labDetailsStep = true;
+			return;
+		}
 
-		this.airlineSelectionStep = false;
-		this.confirmStep = false;
-		this.finalStep = false;
+		if(this.airlineSelectionStep){
+			this.airlineSelectionStep = false;
+			if(this.isAForm){
+				this.setAFormStep = true;
+				this.setBFormStep = false;
+			}
+
+			if(this.isBForm){
+				this.setAFormStep = false;
+				this.setBFormStep = true;
+			}
+			return;
+		}
+
+		if(this.recapStep){
+			this.recapStep = false;
+			if(this.airlinePartnershipSelection == 'Yes') this.airlineSelectionStep = true;
+			else{
+				if(this.isAForm){
+					this.setAFormStep = true;
+					this.setBFormStep = false;
+				}
 	
-		this.showPrevButton = false;
-
-		this.showMandatoryFieldsError = false;
+				if(this.isBForm){
+					this.setAFormStep = false;
+					this.setBFormStep = true;
+				}
+			}
+			this.showNextButton = true;
+			this.showConfirmButton = false;
+			this.showPrevButton = true;
+			return;
+		}
 	}
+
 
 	handleSubmitRequest(){
 		//TODO Create method to save
-		if(this.setAForm && (this.SLAInPlace == '' || this.ownFacilitiesOrPartnerLabSelection == '' || this.manageBookingSelection == '' || this.issueTestResultsSelection=='' || this.airlinePartnership01Selection=='')){
+		if(this.setAForm && (this.SLAInPlace == '' || this.ownFacilitiesOrPartnerLabSelection == '' || this.manageBookingSelection == '' || this.issueTestResultsSelection=='' || this.airlinePartnershipSelection=='')){
 			this.showMandatoryFieldsError = true;
 		}
 		else if(this.setBForm && (this.typeOfLabSelection == '' || this.SLACertificationInPlace == '' || this.nationalAccreditationSelection == '' || this.labsPartOfNationalPlatform=='' || this.airlinePartnership02Selection=='')){

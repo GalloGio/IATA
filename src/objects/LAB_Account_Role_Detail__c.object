@@ -442,12 +442,14 @@
         <externalId>false</externalId>
         <inlineHelpText>Form Question: Do you have SLAs in place with your partner labs?</inlineHelpText>
         <label>Type of SLAs in place</label>
-        <length>255</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Generic_YES_NO_NA</valueSetName>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Type_of_lab__c</fullName>
@@ -674,6 +676,21 @@
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Type_of_SLAs_in_place__c</picklist>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Type_of_lab__c</picklist>
             <values>
                 <fullName>Clinic</fullName>
@@ -837,6 +854,21 @@
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Type_of_SLAs_in_place__c</picklist>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Type_of_lab__c</picklist>
             <values>
                 <fullName>Clinic</fullName>
@@ -860,10 +892,6 @@
         <picklistValues>
             <picklist>Additional_certifications_in_place__c</picklist>
             <values>
-                <fullName>N%2FA</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>No</fullName>
                 <default>false</default>
             </values>
@@ -874,10 +902,6 @@
         </picklistValues>
         <picklistValues>
             <picklist>Are_your_labs_part_of_national_platform__c</picklist>
-            <values>
-                <fullName>N%2FA</fullName>
-                <default>false</default>
-            </values>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -987,9 +1011,16 @@
         <picklistValues>
             <picklist>Operating_under_brand__c</picklist>
             <values>
-                <fullName>N%2FA</fullName>
+                <fullName>No</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_SLAs_in_place__c</picklist>
             <values>
                 <fullName>No</fullName>
                 <default>false</default>
@@ -1149,6 +1180,21 @@
         </picklistValues>
         <picklistValues>
             <picklist>Operating_under_brand__c</picklist>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_SLAs_in_place__c</picklist>
             <values>
                 <fullName>N%2FA</fullName>
                 <default>false</default>
@@ -1326,6 +1372,21 @@
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Type_of_SLAs_in_place__c</picklist>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Type_of_lab__c</picklist>
             <values>
                 <fullName>Clinic</fullName>
@@ -1489,6 +1550,21 @@
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Type_of_SLAs_in_place__c</picklist>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Type_of_lab__c</picklist>
             <values>
                 <fullName>Clinic</fullName>
@@ -1638,6 +1714,21 @@
         </picklistValues>
         <picklistValues>
             <picklist>Operating_under_brand__c</picklist>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Type_of_SLAs_in_place__c</picklist>
             <values>
                 <fullName>N%2FA</fullName>
                 <default>false</default>
