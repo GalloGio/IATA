@@ -19,13 +19,13 @@
 				</template>
 
 				<div if:true={isFirstStep} class="isFirstStep">
-					<template if:true={LAB_TYPE_PicklistValues.data}>
+					<template if:true={FIELD_Lab_Type_PicklistValues.data}>
 						<div class="slds-var-m-around_medium">
 							<lightning-combobox
 								name="labTypeSelection"
 								label={label.CSP_LabReg_InitialQuestion}
 								placeholder="Select Lab Type"
-								options={LAB_TYPE_PicklistValues.data.values}
+								options={FIELD_Lab_Type_PicklistValues.data.values}
 								onchange={handleFormElementChange}
 								value={labTypeSelection}
 								required>
@@ -37,8 +37,6 @@
 
 				<div if:true={setAForm} class="setAForm">
 					<div if:true={SetAstep01} class="SetAstep01">
-						{label.CSP_LabReg_ListRegion_countries} <br/>
-						{label.CSP_LabReg_HowManyLabs}
 
 						<lightning-accordion>
 							<lightning-accordion-section name="countriesAfrica" label="Africa &amp; Middle East">
@@ -112,7 +110,7 @@
 					<div if:true={SetAstep02} class="SetAStep02">
 						<div class="slds-p-around_medium lgc-bg">
 							<lightning-input 
-								name={SLAInPlace} 
+								name="SLAInPlace"
 								value={SLAInPlace} 
 								type="text" 
 								label={label.CSP_LabReg_SLA_InPlace}
@@ -122,39 +120,26 @@
 							</lightning-input>
 						</div>
 
-						<template if:true={THEY_YOUR_OWN_FACILITIES_OR_PARTNER_PicklistValues.data}>
-							<div class="slds-var-m-around_medium">
-								<lightning-combobox
-									name="ownFacilitiesOrPartnerLabSelection"
-									value={ownFacilitiesOrPartnerLabSelection}
-									label={label.CSP_LabReg_OwnFacilities}
-									options={THEY_YOUR_OWN_FACILITIES_OR_PARTNER_PicklistValues.data.values}
-									onchange={handleFormElementChange}
-									required>
-								</lightning-combobox>
-							</div>
-						</template>
-
-						<template if:true={DO_YOU_MANAGE_BOOKING_FOR_ALL_LOCATIONS_PicklistValues.data}>
+						<template if:true={FIELD_Do_you_manage_booking_for_all_locations_PicklistValues.data}>
 							<div class="slds-var-m-around_medium">
 								<lightning-combobox
 									name="manageBookingSelection"
 									value={manageBookingSelection}
 									label={label.CSP_LabReg_manageBookingSelection}
-									options={DO_YOU_MANAGE_BOOKING_FOR_ALL_LOCATIONS_PicklistValues.data.values}
+									options={FIELD_Do_you_manage_booking_for_all_locations_PicklistValues.data.values}
 									onchange={handleFormElementChange}
 									required>
 								</lightning-combobox>
 							</div>
 						</template>
 
-						<template if:true={DO_YOU_ISSUE_TEST_RESULTS_FOR_ALL_LAB_PicklistValues.data}>
+						<template if:true={FIELD_Do_you_issue_test_results_for_all_lab_PicklistValues.data}>
 							<div class="slds-var-m-around_medium">
 								<lightning-combobox
 									name="issueTestResultsSelection"
 									value={issueTestResultsSelection}
 									label={label.CSP_LabReg_issueTestResultsSelection}
-									options={DO_YOU_ISSUE_TEST_RESULTS_FOR_ALL_LAB_PicklistValues.data.values}
+									options={FIELD_Do_you_issue_test_results_for_all_lab_PicklistValues.data.values}
 									onchange={handleFormElementChange}
 									required>
 								</lightning-combobox>
@@ -162,13 +147,13 @@
 						</template>
 
 
-						<template if:true={EXISTING_PARTNERSHIP_WITH_AIRLINES_PicklistValues.data}>
+						<template if:true={FIELD_Existing_partnership_with_airlines_PicklistValues.data}>
 							<div class="slds-var-m-around_medium">
 								<lightning-combobox
 									name="airlinePartnership01Selection"
 									value={airlinePartnership01Selection}
 									label={label.CSP_LabReg_airlinePartnershipSelection}
-									options={EXISTING_PARTNERSHIP_WITH_AIRLINES_PicklistValues.data.values}
+									options={FIELD_Existing_partnership_with_airlines_PicklistValues.data.values}
 									onchange={handleFormElementChange}
 									required>
 								</lightning-combobox>
@@ -176,16 +161,11 @@
 						</template>
 
 					</div>
-					<div if:true={SetAstep03} class="SetAStep03">
-						{label.CSP_LabReg_WhichAirlines}
-					</div>
 				</div>
 
-
+				
 				<div if:true={setBForm} class="setBForm">
 					<div if:true={SetBstep01} class="SetBstep01">
-						{label.CSP_LabReg_ListRegion_countries} <br/>
-						{label.CSP_LabReg_HowManyLabs}
 
 						<lightning-accordion>
 							<lightning-accordion-section name="countriesAfrica" label="Africa &amp; Middle East">
@@ -256,13 +236,13 @@
 						</lightning-accordion>
 					</div>
 					<div if:true={SetBstep02} class="SetBStep02">
-						<template if:true={TYPE_OF_LAB_PicklistValues.data}>
+						<template if:true={FIELD_Type_of_lab_PicklistValues.data}>
 							<div class="slds-var-m-around_medium">
 								<lightning-combobox
 									name="typeOfLabSelection"
 									value={typeOfLabSelection}
 									label={label.CSP_LabReg_TypeOfLab}
-									options={TYPE_OF_LAB_PicklistValues.data.values}
+									options={FIELD_Type_of_lab_PicklistValues.data.values}
 									onchange={handleFormElementChange}
 									required>
 								</lightning-combobox>
@@ -282,49 +262,107 @@
 							</lightning-input>
 						</div>
 
-						<template if:true={NATIONAL_ACCREDITATION_FOR_ALL_THE_LABS_PicklistValues.data}>
+						<template if:true={FIELD_National_accreditation_for_all_the_labs_PicklistValues.data}>
 							<div class="slds-var-m-around_medium">
 								<lightning-combobox
 									name="nationalAccreditationSelection"
 									value={nationalAccreditationSelection}
 									label={label.CSP_LabReg_nationalAccreditationSelection}
-									options={NATIONAL_ACCREDITATION_FOR_ALL_THE_LABS_PicklistValues.data.values}
+									options={FIELD_National_accreditation_for_all_the_labs_PicklistValues.data.values}
 									onchange={handleFormElementChange}
 									required>
 								</lightning-combobox>
 							</div>
 						</template>
 
-						<template if:true={ARE_YOUR_LABS_PART_OF_NATIONAL_PLATFORM_PicklistValues.data}>
+						<template if:true={FIELD_Are_your_labs_part_of_national_platform_PicklistValues.data}>
 							<div class="slds-var-m-around_medium">
 								<lightning-combobox
 									name="labsPartOfNationalPlatform"
 									value={labsPartOfNationalPlatform}
 									label={label.CSP_LabReg_labsPartOfNationalPlatform}
-									options={ARE_YOUR_LABS_PART_OF_NATIONAL_PLATFORM_PicklistValues.data.values}
+									options={FIELD_Are_your_labs_part_of_national_platform_PicklistValues.data.values}
 									onchange={handleFormElementChange}
 									required>
 								</lightning-combobox>
 							</div>
 						</template>
 
-						<template if:true={EXISTING_PARTNERSHIP_WITH_AIRLINES_PicklistValues.data}>
+						<template if:true={FIELD_Existing_partnership_with_airlines_PicklistValues.data}>
 							<div class="slds-var-m-around_medium">
 								<lightning-combobox
 									name="airlinePartnership02Selection"
 									value={airlinePartnership02Selection}
 									label={label.CSP_LabReg_airlinePartnershipSelection}
-									options={EXISTING_PARTNERSHIP_WITH_AIRLINES_PicklistValues.data.values}
+									options={FIELD_Existing_partnership_with_airlines_PicklistValues.data.values}
 									onchange={handleFormElementChange}
 									required>
 								</lightning-combobox>
 							</div>
 						</template>
 					</div>
-					
-					<div if:true={SetBstep03} class="SetBStep03">
-						{label.CSP_LabReg_WhichAirlines}
+				</div>
+
+				<div if:true={airlineSelectionStep} class="airlineSelectionStep">
+					{label.CSP_LabReg_WhichAirlines}
+					<!--<lightning-input type="search" label="Search" placeholder="search airline..." onchange={filterAirlines}></lightning-input>-->
+					<div>
+						<ul class="slds-list_horizontal slds-has-block-links_space">
+							<li><a onclick={handleLetterFilter}>#</a></li>
+							<li><a onclick={handleLetterFilter}>A</a></li>
+							<li><a onclick={handleLetterFilter}>B</a></li>
+							<li><a onclick={handleLetterFilter}>C</a></li>
+							<li><a onclick={handleLetterFilter}>D</a></li>
+							<li><a onclick={handleLetterFilter}>E</a></li>
+							<li><a onclick={handleLetterFilter}>F</a></li>
+							<li><a onclick={handleLetterFilter}>G</a></li>
+							<li><a onclick={handleLetterFilter}>H</a></li>
+							<li><a onclick={handleLetterFilter}>I</a></li>
+							<li><a onclick={handleLetterFilter}>J</a></li>
+							<li><a onclick={handleLetterFilter}>K</a></li>
+							<li><a onclick={handleLetterFilter}>L</a></li>
+							<li><a onclick={handleLetterFilter}>M</a></li>
+							<li><a onclick={handleLetterFilter}>N</a></li>
+							<li><a onclick={handleLetterFilter}>O</a></li>
+							<li><a onclick={handleLetterFilter}>P</a></li>
+							<li><a onclick={handleLetterFilter}>Q</a></li>
+							<li><a onclick={handleLetterFilter}>R</a></li>
+							<li><a onclick={handleLetterFilter}>S</a></li>
+							<li><a onclick={handleLetterFilter}>T</a></li>
+							<li><a onclick={handleLetterFilter}>U</a></li>
+							<li><a onclick={handleLetterFilter}>V</a></li>
+							<li><a onclick={handleLetterFilter}>W</a></li>
+							<li><a onclick={handleLetterFilter}>X</a></li>
+							<li><a onclick={handleLetterFilter}>Z</a></li>
+							<li><a onclick={handleLetterFilter}>ALL</a></li>
+						</ul>
 					</div>
+					<div style="height: 200px;">
+						<lightning-datatable
+							data={airlinesHQ}
+							columns={airlinesHQColumns}
+							key-field="Id"
+          					onrowselection={selectAirline}>  
+						</lightning-datatable> 
+					</div>
+					
+					Selected Airlines
+					<div style="height: 200px;">
+						<lightning-datatable
+							data={selectedAirlines}
+							columns={airlinesHQColumns}
+							key-field="Id">  
+						</lightning-datatable> 
+					</div>
+					
+				</div>
+
+				<!--<div if:true={confirmStep} class="confirmStep">
+					Are you sure you want to submit your request?
+				</div>-->
+
+				<div if:true={finalStep} class="finalStep">
+					Grazie ed arrivederci
 				</div>
 			</div>
 		</div>
@@ -336,11 +374,11 @@
 					{label.Button_Cancel}
 				</button>
 
-				<button if:false={isFirstStep} class="containedButtonAlt containedButton-size cursorPointer uiButton contactSupport slds-m-horizontal_small" onclick={goToPreviousStep}>{label.Button_Previous}</button>
+				<button if:true={showPrevButton} class="containedButtonAlt containedButton-size cursorPointer uiButton contactSupport slds-m-horizontal_small" onclick={goToPreviousStep}>{label.Button_Previous}</button>
 
-				<button if:false={isLastStep} class="containedButtonAlt containedButton-size cursorPointer uiButton contactSupport slds-m-horizontal_small" onclick={goToNextStep}>{label.Button_Next}</button>
+				<button if:true={showNextButton} class="containedButtonAlt containedButton-size cursorPointer uiButton contactSupport slds-m-horizontal_small" onclick={goToNextStep}>{label.Button_Next}</button>
 
-				<button if:true={isLastStep}
+				<button if:true={showConfirmButton}
 					class="containedButton containedButton-size slds-m-horizontal_small"
 					onclick={handleSubmitRequest}>
 					{label.ISSP_Confirm}

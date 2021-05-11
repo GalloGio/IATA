@@ -6677,12 +6677,36 @@ You can easily create a company account in two steps</value>
         <value>Personal Phone</value>
     </labels>
     <labels>
+        <fullName>CSP_LabReg_AdditionalCertInPlace</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_AdditionalCertInPlace</shortDescription>
+        <value>Do you have any additional certifications in place?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_Describe_SLA_Nature</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_Describe_SLA_Nature</shortDescription>
+        <value>Describe the nature of your SLA</value>
+    </labels>
+    <labels>
         <fullName>CSP_LabReg_HowManyLabs</fullName>
         <categories>LabRegistry</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_LabReg_HowManyLabs</shortDescription>
-        <value>With how many labs per region/country?</value>
+        <value>List the region/countries you are operating in/ your partner is operating in for COVID 19 testing. Indicate how many labs/partners you have per location indicated.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_How_Long_In_Business</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_How_Long_In_Business</shortDescription>
+        <value>How long have you been in the business?</value>
     </labels>
     <labels>
         <fullName>CSP_LabReg_InitialQuestion</fullName>
@@ -6693,12 +6717,20 @@ You can easily create a company account in two steps</value>
         <value>Please indicate your business model within the following categories:</value>
     </labels>
     <labels>
-        <fullName>CSP_LabReg_ListRegion_countries</fullName>
+        <fullName>CSP_LabReg_National_Govern_Platform</fullName>
         <categories>LabRegistry</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>CSP_LabReg_ListRegion_countries</shortDescription>
-        <value>List the region/countries you are operating in (COVID testing enabled)</value>
+        <shortDescription>CSP_LabReg_National_Govern_Platform</shortDescription>
+        <value>Are your labs part of any national platform/endorsed by a government?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_Operating_Brand</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_Operating_Brand</shortDescription>
+        <value>Are you operating under your own brand or another brand name?</value>
     </labels>
     <labels>
         <fullName>CSP_LabReg_OwnFacilities</fullName>
@@ -6709,20 +6741,12 @@ You can easily create a company account in two steps</value>
         <value>Are they your own facilities or partner labs?</value>
     </labels>
     <labels>
-        <fullName>CSP_LabReg_SLACertification</fullName>
-        <categories>LabRegistry</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_LabReg_SLACertification</shortDescription>
-        <value>Type of certification/SLA in place</value>
-    </labels>
-    <labels>
         <fullName>CSP_LabReg_SLA_InPlace</fullName>
         <categories>LabRegistry</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_LabReg_SLA_InPlace</shortDescription>
-        <value>Type of SLAs in place</value>
+        <value>Do you have SLAs in place with your partner labs?</value>
     </labels>
     <labels>
         <fullName>CSP_LabReg_TypeOfLab</fullName>
@@ -6730,7 +6754,7 @@ You can easily create a company account in two steps</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_LabReg_TypeOfLab</shortDescription>
-        <value>Type of lab</value>
+        <value>Please indicate the type of labs</value>
     </labels>
     <labels>
         <fullName>CSP_LabReg_WhichAirlines</fullName>
@@ -6741,12 +6765,20 @@ You can easily create a company account in two steps</value>
         <value>Which Airlines?</value>
     </labels>
     <labels>
+        <fullName>CSP_LabReg_Which_One</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_Which_One</shortDescription>
+        <value>Which one?</value>
+    </labels>
+    <labels>
         <fullName>CSP_LabReg_airlinePartnershipSelection</fullName>
         <categories>LabRegistry</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_LabReg_airlinePartnershipSelection</shortDescription>
-        <value>Existing partnership with airlines?</value>
+        <value>Do you have existing partnership(s) with airlines?</value>
     </labels>
     <labels>
         <fullName>CSP_LabReg_issueTestResultsSelection</fullName>
@@ -6754,7 +6786,7 @@ You can easily create a company account in two steps</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_LabReg_issueTestResultsSelection</shortDescription>
-        <value>Do you issue test results for all locations?</value>
+        <value>Do you issue test results for all locations indicated?</value>
     </labels>
     <labels>
         <fullName>CSP_LabReg_labsPartOfNationalPlatform</fullName>
@@ -6762,7 +6794,7 @@ You can easily create a company account in two steps</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_LabReg_labsPartOfNationalPlatform</shortDescription>
-        <value>Are your labs part of any national platform?</value>
+        <value>Is there a National Platform in place that you need to communicate tests results to?</value>
     </labels>
     <labels>
         <fullName>CSP_LabReg_manageBookingSelection</fullName>
@@ -6770,7 +6802,7 @@ You can easily create a company account in two steps</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_LabReg_manageBookingSelection</shortDescription>
-        <value>Do you manage booking for all locations?</value>
+        <value>Do you manage test appointment booking for all the locations indicated?</value>
     </labels>
     <labels>
         <fullName>CSP_LabReg_nationalAccreditationSelection</fullName>
@@ -6778,7 +6810,7 @@ You can easily create a company account in two steps</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_LabReg_nationalAccreditationSelection</shortDescription>
-        <value>National accreditation for all the labs?</value>
+        <value>Do you have a National accreditation for all the labs?</value>
     </labels>
     <labels>
         <fullName>CSP_LabRegistry</fullName>
