@@ -6685,12 +6685,36 @@ You can easily create a company account in two steps</value>
         <value>Do you have any additional certifications in place?</value>
     </labels>
     <labels>
+        <fullName>CSP_LabReg_AirlineAgreements</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_AirlineAgreements</shortDescription>
+        <value>Airline Agreements</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_CountryLabs</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_CountryLabs</shortDescription>
+        <value>Country Labs</value>
+    </labels>
+    <labels>
         <fullName>CSP_LabReg_Describe_SLA_Nature</fullName>
         <categories>LabRegistry</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_LabReg_Describe_SLA_Nature</shortDescription>
         <value>Describe the nature of your SLA</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_FormNotCompleted</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_FormNotCompleted</shortDescription>
+        <value>The form is not fully compiled. All answers will be lost.</value>
     </labels>
     <labels>
         <fullName>CSP_LabReg_HowManyLabs</fullName>

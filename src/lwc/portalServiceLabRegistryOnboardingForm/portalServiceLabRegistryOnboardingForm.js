@@ -3,6 +3,7 @@ import { getObjectInfo, getPicklistValues } from 'lightning/uiObjectInfoApi';
 import { NavigationMixin } from 'lightning/navigation';
 import getCountries from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.getISOCountries';
 import getAirlinesHQ from '@salesforce/apex/LabRegistry_helper.getAirlinesHQ';
+import { navigateToPage} from'c/navigationUtils';
 
 //Objects schema
 import OBJECT_LAB_ACCOUNT_ROLE_DETAIL from '@salesforce/schema/LAB_Account_Role_Detail__c';
@@ -22,6 +23,13 @@ import FIELD_Additional_certifications_in_place from '@salesforce/schema/LAB_Acc
 import FIELD_Endorsed_by_governments from '@salesforce/schema/LAB_Account_Role_Detail__c.Endorsed_by_governments__c';
 
 //Labels
+import CSP_LabReg_FormNotCompleted			from '@salesforce/label/c.CSP_LabReg_FormNotCompleted';
+import CSP_L2_Additional_Details			from '@salesforce/label/c.CSP_L2_Additional_Details';
+import CSP_L2_Profile_Incomplete_Message	from '@salesforce/label/c.CSP_L2_Profile_Incomplete_Message';
+import CSP_L2_Yes							from '@salesforce/label/c.CSP_L2_Yes';
+import CSP_L2_No							from '@salesforce/label/c.CSP_L2_No';
+import CSP_PortalPath						from '@salesforce/label/c.CSP_PortalPath';
+
 import Button_Cancel from '@salesforce/label/c.Button_Cancel';
 import Button_Next from '@salesforce/label/c.Button_Next';
 import Button_Previous from '@salesforce/label/c.Button_Previous';
@@ -45,10 +53,24 @@ import CSP_LabReg_TypeOfLab from '@salesforce/label/c.CSP_LabReg_TypeOfLab';
 import CSP_LabReg_Which_One from '@salesforce/label/c.CSP_LabReg_Which_One';
 import CSP_LabReg_WhichAirlines from '@salesforce/label/c.CSP_LabReg_WhichAirlines';
 import CSP_LabRegistry from '@salesforce/label/c.CSP_LabRegistry';
+import CSP_LabReg_AirlineAgreements from '@salesforce/label/c.CSP_LabReg_AirlineAgreements';
+import CSP_LabReg_CountryLabs from '@salesforce/label/c.CSP_LabReg_CountryLabs';
 
 import CSP_Error_Message_Mandatory_Fields from '@salesforce/label/c.CSP_Error_Message_Mandatory_Fields_Contact';
 
 export default class PortalServiceOnboardingForm extends NavigationMixin(LightningElement) {
+	/* Images */
+    youAreSafeIcon = CSP_PortalPath + 'CSPortal/Images/Icons/youaresafe.png';
+    alertIcon = CSP_PortalPath + 'CSPortal/alertIcon.png';
+    homeIcon = CSP_PortalPath + 'CSPortal/Images/Icons/L2_home.png';
+    crossIcon = CSP_PortalPath + 'CSPortal/Images/Icons/L2_cross.png';
+    stepCheckedLogo = CSP_PortalPath + 'CSPortal/Images/Icons/L2_step_valid.png';
+    step1ActiveLogo = CSP_PortalPath + 'CSPortal/Images/Icons/L2_step_1_active.png';
+    step2ActiveLogo = CSP_PortalPath + 'CSPortal/Images/Icons/L2_step_2_active.png';
+    step2InactiveLogo = CSP_PortalPath + 'CSPortal/Images/Icons/L2_step_2_inactive.png';
+    step3ActiveLogo = CSP_PortalPath + 'CSPortal/Images/Icons/L2_step_3_active.png';
+    step3InactiveLogo = CSP_PortalPath + 'CSPortal/Images/Icons/L2_step_3_inactive.png';
+
 	abortRequest() {
         this.dispatchEvent(new CustomEvent('requestcompleted', { detail: { success: false }, bubbles: true,composed: true }));// sends the event to the grandparent
     }
@@ -78,6 +100,13 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 		,CSP_LabReg_Which_One
 		,CSP_LabReg_WhichAirlines
 		,CSP_LabRegistry
+		,CSP_L2_Profile_Incomplete_Message
+		,CSP_L2_Yes
+		,CSP_L2_No
+		,CSP_LabReg_FormNotCompleted
+		,CSP_L2_Additional_Details
+		,CSP_LabReg_AirlineAgreements
+		,CSP_LabReg_CountryLabs
 	}
 
 
@@ -232,6 +261,7 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 	handleAirlineSelection(event){
 		let selected = event.detail.value;
 		if(selected==undefined || selected == null || selected == ''){
+			console.log('I am searching');
 			this.selectedAirlines = [];
 		}
 		else{
@@ -546,6 +576,31 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 	}
 
 	
+	@track openMessageModal = false;
+	landingPage
 
+	openGoToHomePopup(){
+        this.landingPage = 'homepage';
+        this.openMessageModal = true;
+    }
 
+	cancel(){
+        this.openMessageModal = false;
+    }
+
+	openClosePopup(){
+        this.landingPage = 'same';
+        this.openMessageModal = true;
+    }
+
+	close(){
+        this.openMessageModal = false;
+        if(this.landingPage == 'same'){
+            //abortRequest();
+			this.dispatchEvent(new CustomEvent('requestcompleted', { detail: { success: false }, bubbles: true,composed: true }));// sends the event to the grandparent
+        }
+        else if(this.landingPage == 'homepage'){
+            navigateToPage(CSP_PortalPath,{});
+        }
+    }
 }

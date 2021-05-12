@@ -1,448 +1,517 @@
 <template>
-	<!-- TITLE -->
-		<div class="slds-p-horizontal_large slds-p-vertical_large mediumTitle text-bold text-small">
-			{label.CSP_LabRegistry}
-		</div>
-
-		<!-- main content with form-->
-		<div class="slds-p-horizontal_small slds-p-horizontal_large slds-size_1-of-1 customWhiteBackground">
-			<div class="slds-p-vertical_large textMediumMessage">
-				
-				<template if:true={showMandatoryFieldsError}>
-					<div class="whiteIcon text-xxsmall errorBox">
-						<div class="slds-grid slds-gutters">
-							<div class="slds-col slds-m-left_medium slds-size_12-of-13">
-								{label.CSP_Error_Message_Mandatory_Fields}
-							</div>
+	<div class="registration-modal">
+		<div data-name="top" class="banner">
+			<div class="header">
+				<div class="headerHome">
+					<img src={homeIcon} height="24" width="24" onclick={openGoToHomePopup}>
+				</div>
+				<div class="headerTitle">{label.CSP_LabRegistry}</div>
+				<div class="headerClose">
+					<img src={crossIcon} height="32" width="32" onclick={openClosePopup}>
+				</div>
+			</div>
+			<div class="progressBarContainer">
+				<div class="progressBar">
+					<div class="progressItem">
+						a
+						<!--<div class="itemIcon">
+							<img src={confirmationLogo} class={confirmationLogoCssClass}>
 						</div>
+						<template if:true={isConfirmationReachable}>
+							<div class={confirmationTitleCssClass} onclick={goToConfirmation}><span>{label.CSP_L2_Confirmation}</span></div>
+						</template>
+						<template if:false={isConfirmationReachable}>
+							<div class={confirmationTitleCssClass}><span>{label.CSP_L2_Confirmation}</span></div>
+						</template>--> 
 					</div>
-				</template>
-
-				<div if:true={firstStep} class="firstStep">
-					<template if:true={FIELD_Lab_Type_PicklistValues.data}>
-						<div class="slds-var-m-around_medium">
-							<lightning-combobox
-								name="labTypeSelection"
-								label={label.CSP_LabReg_InitialQuestion}
-								placeholder="Select Lab Type"
-								options={FIELD_Lab_Type_PicklistValues.data.values}
-								onchange={handleFormElementChange}
-								value={labTypeSelection}
-								required>
-							</lightning-combobox>
+					<div class="progressItem">
+						b
+						<!--<div class="itemIcon">
+							<img src={confirmationLogo} class={confirmationLogoCssClass}>
 						</div>
-					</template>
-				</div>
-
-				<div if:true={labDetailsStep} class="labDetailsStep">
-					<lightning-accordion>
-						<lightning-accordion-section name="countriesAfrica" label="Africa &amp; Middle East">
-							<div style="height: 300px;">
-								<lightning-datatable
-										key-field="Id"
-										data={countriesAfrica}
-										row-number-offset=0
-										suppress-bottom-bar
-										columns={countryColumns}
-										hide-checkbox-column
-										oncellchange={handleCountryInlineEdit}>
-								</lightning-datatable>
-							</div>
-						</lightning-accordion-section>
-						
-						<lightning-accordion-section name="countriesAmerica" label="Americas">
-							<div style="height: 300px;">
-								<lightning-datatable
-										key-field="Id"
-										data={countriesAmerica}
-										row-number-offset=0
-										suppress-bottom-bar
-										columns={countryColumns}
-										hide-checkbox-column>
-								</lightning-datatable>
-							</div>
-						</lightning-accordion-section>
-						
-						<lightning-accordion-section name="countriesAsia" label="Asia &amp; Pacific">
-							<div style="height: 300px;">
-								<lightning-datatable
-										key-field="Id"
-										data={countriesAsia}
-										row-number-offset=0
-										suppress-bottom-bar
-										columns={countryColumns}
-										hide-checkbox-column>
-								</lightning-datatable>
-							</div>
-						</lightning-accordion-section>
-						
-						<lightning-accordion-section name="countriesChina" label="China &amp; North Asia">
-							<div style="height: 300px;">
-								<lightning-datatable
-										key-field="Id"
-										data={countriesChina}
-										row-number-offset=0
-										suppress-bottom-bar
-										columns={countryColumns}
-										hide-checkbox-column>
-								</lightning-datatable>
-							</div>
-						</lightning-accordion-section>
-						
-						<lightning-accordion-section name="countriesEurope" label="Europe">
-							<div style="height: 300px;">
-								<lightning-datatable
-										key-field="Id"
-										data={countriesEurope}
-										row-number-offset=0
-										suppress-bottom-bar
-										columns={countryColumns}
-										hide-checkbox-column>
-								</lightning-datatable>
-							</div>
-						</lightning-accordion-section>
-					</lightning-accordion>
-				</div>
-
-
-				<div if:true={setAFormStep} class="setAFormStep">
-					<template if:true={FIELD_How_long_have_you_been_in_the_business_PicklistValues.data}>
-						<div class="slds-var-m-around_medium">
-							<lightning-combobox
-								name="howLongInBusinessSelection"
-								value={howLongInBusinessSelection}
-								label={label.CSP_LabReg_How_Long_In_Business}
-								options={FIELD_How_long_have_you_been_in_the_business_PicklistValues.data.values}
-								onchange={handleFormElementChange}
-								required>
-							</lightning-combobox>
-						</div>
-					</template>
-
-					<template if:true={FIELD_Operating_under_brand_PicklistValues.data}>
-						<div class="slds-var-m-around_medium">
-							<lightning-combobox
-								name="operatingUnderBrand"
-								value={operatingUnderBrand}
-								label={label.CSP_LabReg_Operating_Brand}
-								options={FIELD_Operating_under_brand_PicklistValues.data.values}
-								onchange={handleFormElementChange}
-								required>
-							</lightning-combobox>
-						</div>
-
-						<div if:true={showWhichBrand} class="slds-p-around_medium lgc-bg">
-							<lightning-textarea 
-								name="whichBrands"
-								value={whichBrands} 
-								label={label.CSP_LabReg_Which_One}
-								placeholder="type here..."
-								maxlength="2000"
-								onchange={handleFormElementChange}
-								required>
-							</lightning-textarea>
-						</div>
-					</template>
-
-
-					<template if:true={FIELD_Type_of_SLAs_in_place_PicklistValues.data}>
-						<div class="slds-var-m-around_medium">
-							<lightning-combobox
-								name="SLAInPlace"
-								value={SLAInPlace}
-								label={label.CSP_LabReg_SLA_InPlace}
-								options={FIELD_Type_of_SLAs_in_place_PicklistValues.data.values}
-								onchange={handleFormElementChange}
-								required>
-							</lightning-combobox>
-						</div>
-
-						<div if:true={showNatureOfSLA} class="slds-p-around_medium lgc-bg">
-							<lightning-textarea 
-								name="NatureOfSLA"
-								value={NatureOfSLA} 
-								label={label.CSP_LabReg_Describe_SLA_Nature}
-								placeholder="type here..." 
-								maxlength="2000"
-								onchange={handleFormElementChange}
-								required>
-							</lightning-textarea>
-						</div>
-					</template>
-
-
-					<template if:true={FIELD_Do_you_manage_booking_for_all_locations_PicklistValues.data}>
-						<div class="slds-var-m-around_medium">
-							<lightning-combobox
-								name="manageBookingSelection"
-								value={manageBookingSelection}
-								label={label.CSP_LabReg_manageBookingSelection}
-								options={FIELD_Do_you_manage_booking_for_all_locations_PicklistValues.data.values}
-								onchange={handleFormElementChange}
-								required>
-							</lightning-combobox>
-						</div>
-					</template>
-
-					<template if:true={FIELD_Do_you_issue_test_results_for_all_lab_PicklistValues.data}>
-						<div class="slds-var-m-around_medium">
-							<lightning-combobox
-								name="issueTestResultsSelection"
-								value={issueTestResultsSelection}
-								label={label.CSP_LabReg_issueTestResultsSelection}
-								options={FIELD_Do_you_issue_test_results_for_all_lab_PicklistValues.data.values}
-								onchange={handleFormElementChange}
-								required>
-							</lightning-combobox>
-						</div>
-					</template>
-
-
-					<template if:true={FIELD_Are_your_labs_part_of_national_platform_PicklistValues.data}>
-						<div class="slds-var-m-around_medium">
-							<lightning-combobox
-								name="labsPartOfNationalPlatform"
-								value={labsPartOfNationalPlatform}
-								label={label.CSP_LabReg_labsPartOfNationalPlatform}
-								options={FIELD_Are_your_labs_part_of_national_platform_PicklistValues.data.values}
-								onchange={handleFormElementChange}
-								required>
-							</lightning-combobox>
-						</div>
-
-						<div if:true={showWhichNationalPlatform} class="slds-p-around_medium lgc-bg">
-							<lightning-textarea 
-								name="whichNationalPlatform"
-								value={whichNationalPlatform} 
-								label={label.CSP_LabReg_Which_One}
-								placeholder="type here..." 
-								maxlength=2000
-								onchange={handleFormElementChange}
-								required>
-							</lightning-textarea>
-						</div>
-					</template>
-
-					
-
-					<template if:true={FIELD_Existing_partnership_with_airlines_PicklistValues.data}>
-						<div class="slds-var-m-around_medium">
-							<lightning-combobox
-								name="airlinePartnershipSelection"
-								value={airlinePartnershipSelection}
-								label={label.CSP_LabReg_airlinePartnershipSelection}
-								options={FIELD_Existing_partnership_with_airlines_PicklistValues.data.values}
-								onchange={handleFormElementChange}
-								required>
-							</lightning-combobox>
-						</div>
-					</template>
-
-				</div>
-
-				
-				<div if:true={setBFormStep} class="setBFormStep">
-					<template if:true={FIELD_How_long_have_you_been_in_the_business_PicklistValues.data}>
-						<div class="slds-var-m-around_medium">
-							<lightning-combobox
-								name="howLongInBusinessSelection"
-								value={howLongInBusinessSelection}
-								label={label.CSP_LabReg_How_Long_In_Business}
-								options={FIELD_How_long_have_you_been_in_the_business_PicklistValues.data.values}
-								onchange={handleFormElementChange}
-								required>
-							</lightning-combobox>
-						</div>
-					</template>
-
-					<template if:true={FIELD_Type_of_lab_PicklistValues.data}>
-						<div class="slds-var-m-around_medium">
-							<lightning-combobox
-								name="typeOfLabSelection"
-								value={typeOfLabSelection}
-								label={label.CSP_LabReg_TypeOfLab}
-								options={FIELD_Type_of_lab_PicklistValues.data.values}
-								onchange={handleFormElementChange}
-								required>
-							</lightning-combobox>
-						</div>
-					</template>
-
-					<template if:true={FIELD_Do_you_manage_booking_for_all_locations_PicklistValues.data}>
-						<div class="slds-var-m-around_medium">
-							<lightning-combobox
-								name="manageBookingSelection"
-								value={manageBookingSelection}
-								label={label.CSP_LabReg_manageBookingSelection}
-								options={FIELD_Do_you_manage_booking_for_all_locations_PicklistValues.data.values}
-								onchange={handleFormElementChange}
-								required>
-							</lightning-combobox>
-						</div>
-					</template>
-					
-					<template if:true={FIELD_Do_you_issue_test_results_for_all_lab_PicklistValues.data}>
-						<div class="slds-var-m-around_medium">
-							<lightning-combobox
-								name="issueTestResultsSelection"
-								value={issueTestResultsSelection}
-								label={label.CSP_LabReg_issueTestResultsSelection}
-								options={FIELD_Do_you_issue_test_results_for_all_lab_PicklistValues.data.values}
-								onchange={handleFormElementChange}
-								required>
-							</lightning-combobox>
-						</div>
-					</template>
-
-					<template if:true={FIELD_National_accreditation_for_all_the_labs_PicklistValues.data}>
-						<div class="slds-var-m-around_medium">
-							<lightning-combobox
-								name="nationalAccreditationSelection"
-								value={nationalAccreditationSelection}
-								label={label.CSP_LabReg_nationalAccreditationSelection}
-								options={FIELD_National_accreditation_for_all_the_labs_PicklistValues.data.values}
-								onchange={handleFormElementChange}
-								required>
-							</lightning-combobox>
-						</div>
-					</template>
-
-
-					<template if:true={FIELD_Additional_certifications_in_place_PicklistValues.data}>
-						<div class="slds-var-m-around_medium">
-							<lightning-combobox
-								name="AdditionalCertInPlace"
-								value={AdditionalCertInPlace}
-								label={label.CSP_LabReg_AdditionalCertInPlace}
-								options={FIELD_Additional_certifications_in_place_PicklistValues.data.values}
-								onchange={handleFormElementChange}
-								required>
-							</lightning-combobox>
-						</div>
-
-						<div if:true={showAdditionalCert} class="slds-p-around_medium lgc-bg">
-							<lightning-textarea 
-								name="whichAdditionalCert"
-								value={whichAdditionalCert} 
-								label={label.CSP_LabReg_Which_One}
-								placeholder="type here..." 
-								maxlength=2000
-								onchange={handleFormElementChange}
-								required>
-							</lightning-textarea>
-						</div>
-					</template>
-
-					<template if:true={FIELD_Endorsed_by_governments_PicklistValues.data}>
-						<div class="slds-var-m-around_medium">
-							<lightning-combobox
-								name="endorsedByGovern"
-								value={endorsedByGovern}
-								label={label.CSP_LabReg_National_Govern_Platform}
-								options={FIELD_Endorsed_by_governments_PicklistValues.data.values}
-								onchange={handleFormElementChange}
-								required>
-							</lightning-combobox>
-						</div>
-
-						<div if:true={showWhichGovern} class="slds-p-around_medium lgc-bg">
-							<lightning-textarea 
-								name="whichGovern"
-								value={whichGovern} 
-								label={label.CSP_LabReg_Which_One}
-								placeholder="type here..." 
-								maxlength=2000
-								onchange={handleFormElementChange}
-								required>
-							</lightning-textarea>
-						</div>
-					</template>
-
-
-					<template if:true={FIELD_Are_your_labs_part_of_national_platform_PicklistValues.data}>
-						<div class="slds-var-m-around_medium">
-							<lightning-combobox
-								name="labsPartOfNationalPlatform"
-								value={labsPartOfNationalPlatform}
-								label={label.CSP_LabReg_labsPartOfNationalPlatform}
-								options={FIELD_Are_your_labs_part_of_national_platform_PicklistValues.data.values}
-								onchange={handleFormElementChange}
-								required>
-							</lightning-combobox>
-						</div>
-
-						<div if:true={showWhichNationalPlatform} class="slds-p-around_medium lgc-bg">
-							<lightning-textarea 
-								name="whichNationalPlatform"
-								value={whichNationalPlatform} 
-								label={label.CSP_LabReg_Which_One}
-								placeholder="type here..." 
-								maxlength=2000
-								onchange={handleFormElementChange}
-								required>
-							</lightning-textarea>
-						</div>
-					</template>
-
-					<template if:true={FIELD_Existing_partnership_with_airlines_PicklistValues.data}>
-						<div class="slds-var-m-around_medium">
-							<lightning-combobox
-								name="airlinePartnershipSelection"
-								value={airlinePartnershipSelection}
-								label={label.CSP_LabReg_airlinePartnershipSelection}
-								options={FIELD_Existing_partnership_with_airlines_PicklistValues.data.values}
-								onchange={handleFormElementChange}
-								required>
-							</lightning-combobox>
-						</div>
-					</template>
-				</div>
-
-
-
-				<div if:true={airlineSelectionStep} class="airlineSelectionStep">
-					{label.CSP_LabReg_WhichAirlines}
-					<div class="slds-col slds-p-left_x-large slds-m-left_x-large">
-						<lightning-input value={airlineSearchKey} onchange={searchAirline} type="search" placeholder="Search Airline..."></lightning-input>
+						<template if:true={isConfirmationReachable}>
+							<div class={confirmationTitleCssClass} onclick={goToConfirmation}><span>{label.CSP_L2_Confirmation}</span></div>
+						</template>
+						<template if:false={isConfirmationReachable}>
+							<div class={confirmationTitleCssClass}><span>{label.CSP_L2_Confirmation}</span></div>
+						</template>-->
 					</div>
-					<lightning-dual-listbox id="airlineDualListbox"
-						name="airlineDualListbox"
-						label="Select Airlines"
-						source-label="Available Airlines"
-						selected-label="Selected Airlines"
-						options={listOptionsAirlines}
-						onchange={handleAirlineSelection}
-						disable-reordering
-						value={selectedAirlines}>
-					</lightning-dual-listbox>
-				</div>
-
-				<div if:true={recapStep} class="recapStep">
-					Are you sure you want to submit your request?
-				</div>
-
-				<div if:true={finalStep} class="finalStep">
-					Grazie ed arrivederci
+					<div class="progressItem">
+						c
+						<!--<div class="itemIcon">
+							<img src={confirmationLogo} class={confirmationLogoCssClass}>
+						</div>
+						<template if:true={isConfirmationReachable}>
+							<div class={confirmationTitleCssClass} onclick={goToConfirmation}><span>{label.CSP_L2_Confirmation}</span></div>
+						</template>
+						<template if:false={isConfirmationReachable}>
+							<div class={confirmationTitleCssClass}><span>{label.CSP_L2_Confirmation}</span></div>
+						</template>-->
+					</div>
 				</div>
 			</div>
 		</div>
+		<div class="customLightShadow customPopupInterior60PercentScreenCentered slds-is-relative">
+			<span slot="pageBody">
+				<c-portal-custom-card-container>
+					<span slot="cardBody">
+						<!-- main content with form-->
+						<div >
+							<template if:true={showMandatoryFieldsError}>
+								<div class="whiteIcon text-xxsmall errorBox">
+									<div class="slds-grid slds-gutters">
+										<div class="slds-col slds-m-left_medium slds-size_12-of-13">
+											{label.CSP_Error_Message_Mandatory_Fields}
+										</div>
+									</div>
+								</div>
+							</template>
 
-		<!-- BUTTON-->
-		<div class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix">
-			<div class="slds-align_absolute-center">
-				<button class="containedButtonAlt containedButton-size cursorPointer uiButton contactSupport slds-m-horizontal_small" onclick={abortRequest}>
-					{label.Button_Cancel}
-				</button>
+							<div if:true={firstStep} class="firstStep">
+								<template if:true={FIELD_Lab_Type_PicklistValues.data}>
+									<div class="slds-var-m-around_medium">
+										<lightning-combobox
+											name="labTypeSelection"
+											label={label.CSP_LabReg_InitialQuestion}
+											placeholder="Select Lab Type"
+											options={FIELD_Lab_Type_PicklistValues.data.values}
+											onchange={handleFormElementChange}
+											value={labTypeSelection}
+											required>
+										</lightning-combobox>
+									</div>
+								</template>
+							</div>
 
-				<button if:true={showPrevButton} class="containedButtonAlt containedButton-size cursorPointer uiButton contactSupport slds-m-horizontal_small" onclick={goToPreviousStep}>{label.Button_Previous}</button>
+							<div if:true={labDetailsStep} class="labDetailsStep">
+								<lightning-accordion>
+									<lightning-accordion-section name="countriesAfrica" label="Africa &amp; Middle East">
+										<div style="height: 300px;">
+											<lightning-datatable
+													key-field="Id"
+													data={countriesAfrica}
+													row-number-offset=0
+													suppress-bottom-bar
+													columns={countryColumns}
+													hide-checkbox-column
+													oncellchange={handleCountryInlineEdit}>
+											</lightning-datatable>
+										</div>
+									</lightning-accordion-section>
+									
+									<lightning-accordion-section name="countriesAmerica" label="Americas">
+										<div style="height: 300px;">
+											<lightning-datatable
+													key-field="Id"
+													data={countriesAmerica}
+													row-number-offset=0
+													suppress-bottom-bar
+													columns={countryColumns}
+													hide-checkbox-column>
+											</lightning-datatable>
+										</div>
+									</lightning-accordion-section>
+									
+									<lightning-accordion-section name="countriesAsia" label="Asia &amp; Pacific">
+										<div style="height: 300px;">
+											<lightning-datatable
+													key-field="Id"
+													data={countriesAsia}
+													row-number-offset=0
+													suppress-bottom-bar
+													columns={countryColumns}
+													hide-checkbox-column>
+											</lightning-datatable>
+										</div>
+									</lightning-accordion-section>
+									
+									<lightning-accordion-section name="countriesChina" label="China &amp; North Asia">
+										<div style="height: 300px;">
+											<lightning-datatable
+													key-field="Id"
+													data={countriesChina}
+													row-number-offset=0
+													suppress-bottom-bar
+													columns={countryColumns}
+													hide-checkbox-column>
+											</lightning-datatable>
+										</div>
+									</lightning-accordion-section>
+									
+									<lightning-accordion-section name="countriesEurope" label="Europe">
+										<div style="height: 300px;">
+											<lightning-datatable
+													key-field="Id"
+													data={countriesEurope}
+													row-number-offset=0
+													suppress-bottom-bar
+													columns={countryColumns}
+													hide-checkbox-column>
+											</lightning-datatable>
+										</div>
+									</lightning-accordion-section>
+								</lightning-accordion>
+							</div>
 
-				<button if:true={showNextButton} class="containedButtonAlt containedButton-size cursorPointer uiButton contactSupport slds-m-horizontal_small" onclick={goToNextStep}>{label.Button_Next}</button>
 
-				<button if:true={showConfirmButton}
-					class="containedButton containedButton-size slds-m-horizontal_small"
-					onclick={handleSubmitRequest}>
-					{label.ISSP_Confirm}
-				</button>
+							<div if:true={setAFormStep} class="setAFormStep">
+								<template if:true={FIELD_How_long_have_you_been_in_the_business_PicklistValues.data}>
+									<div class="slds-var-m-around_medium">
+										<lightning-combobox
+											name="howLongInBusinessSelection"
+											value={howLongInBusinessSelection}
+											label={label.CSP_LabReg_How_Long_In_Business}
+											options={FIELD_How_long_have_you_been_in_the_business_PicklistValues.data.values}
+											onchange={handleFormElementChange}
+											required>
+										</lightning-combobox>
+									</div>
+								</template>
+
+								<template if:true={FIELD_Operating_under_brand_PicklistValues.data}>
+									<div class="slds-var-m-around_medium">
+										<lightning-combobox
+											name="operatingUnderBrand"
+											value={operatingUnderBrand}
+											label={label.CSP_LabReg_Operating_Brand}
+											options={FIELD_Operating_under_brand_PicklistValues.data.values}
+											onchange={handleFormElementChange}
+											required>
+										</lightning-combobox>
+									</div>
+
+									<div if:true={showWhichBrand} class="slds-p-around_medium lgc-bg">
+										<lightning-textarea 
+											name="whichBrands"
+											value={whichBrands} 
+											label={label.CSP_LabReg_Which_One}
+											placeholder="type here..."
+											maxlength="2000"
+											onchange={handleFormElementChange}
+											required>
+										</lightning-textarea>
+									</div>
+								</template>
+
+
+								<template if:true={FIELD_Type_of_SLAs_in_place_PicklistValues.data}>
+									<div class="slds-var-m-around_medium">
+										<lightning-combobox
+											name="SLAInPlace"
+											value={SLAInPlace}
+											label={label.CSP_LabReg_SLA_InPlace}
+											options={FIELD_Type_of_SLAs_in_place_PicklistValues.data.values}
+											onchange={handleFormElementChange}
+											required>
+										</lightning-combobox>
+									</div>
+
+									<div if:true={showNatureOfSLA} class="slds-p-around_medium lgc-bg">
+										<lightning-textarea 
+											name="NatureOfSLA"
+											value={NatureOfSLA} 
+											label={label.CSP_LabReg_Describe_SLA_Nature}
+											placeholder="type here..." 
+											maxlength="2000"
+											onchange={handleFormElementChange}
+											required>
+										</lightning-textarea>
+									</div>
+								</template>
+
+
+								<template if:true={FIELD_Do_you_manage_booking_for_all_locations_PicklistValues.data}>
+									<div class="slds-var-m-around_medium">
+										<lightning-combobox
+											name="manageBookingSelection"
+											value={manageBookingSelection}
+											label={label.CSP_LabReg_manageBookingSelection}
+											options={FIELD_Do_you_manage_booking_for_all_locations_PicklistValues.data.values}
+											onchange={handleFormElementChange}
+											required>
+										</lightning-combobox>
+									</div>
+								</template>
+
+								<template if:true={FIELD_Do_you_issue_test_results_for_all_lab_PicklistValues.data}>
+									<div class="slds-var-m-around_medium">
+										<lightning-combobox
+											name="issueTestResultsSelection"
+											value={issueTestResultsSelection}
+											label={label.CSP_LabReg_issueTestResultsSelection}
+											options={FIELD_Do_you_issue_test_results_for_all_lab_PicklistValues.data.values}
+											onchange={handleFormElementChange}
+											required>
+										</lightning-combobox>
+									</div>
+								</template>
+
+
+								<template if:true={FIELD_Are_your_labs_part_of_national_platform_PicklistValues.data}>
+									<div class="slds-var-m-around_medium">
+										<lightning-combobox
+											name="labsPartOfNationalPlatform"
+											value={labsPartOfNationalPlatform}
+											label={label.CSP_LabReg_labsPartOfNationalPlatform}
+											options={FIELD_Are_your_labs_part_of_national_platform_PicklistValues.data.values}
+											onchange={handleFormElementChange}
+											required>
+										</lightning-combobox>
+									</div>
+
+									<div if:true={showWhichNationalPlatform} class="slds-p-around_medium lgc-bg">
+										<lightning-textarea 
+											name="whichNationalPlatform"
+											value={whichNationalPlatform} 
+											label={label.CSP_LabReg_Which_One}
+											placeholder="type here..." 
+											maxlength=2000
+											onchange={handleFormElementChange}
+											required>
+										</lightning-textarea>
+									</div>
+								</template>
+
+								
+
+								<template if:true={FIELD_Existing_partnership_with_airlines_PicklistValues.data}>
+									<div class="slds-var-m-around_medium">
+										<lightning-combobox
+											name="airlinePartnershipSelection"
+											value={airlinePartnershipSelection}
+											label={label.CSP_LabReg_airlinePartnershipSelection}
+											options={FIELD_Existing_partnership_with_airlines_PicklistValues.data.values}
+											onchange={handleFormElementChange}
+											required>
+										</lightning-combobox>
+									</div>
+								</template>
+
+							</div>
+
+							
+							<div if:true={setBFormStep} class="setBFormStep">
+								<template if:true={FIELD_How_long_have_you_been_in_the_business_PicklistValues.data}>
+									<div class="slds-var-m-around_medium">
+										<lightning-combobox
+											name="howLongInBusinessSelection"
+											value={howLongInBusinessSelection}
+											label={label.CSP_LabReg_How_Long_In_Business}
+											options={FIELD_How_long_have_you_been_in_the_business_PicklistValues.data.values}
+											onchange={handleFormElementChange}
+											required>
+										</lightning-combobox>
+									</div>
+								</template>
+
+								<template if:true={FIELD_Type_of_lab_PicklistValues.data}>
+									<div class="slds-var-m-around_medium">
+										<lightning-combobox
+											name="typeOfLabSelection"
+											value={typeOfLabSelection}
+											label={label.CSP_LabReg_TypeOfLab}
+											options={FIELD_Type_of_lab_PicklistValues.data.values}
+											onchange={handleFormElementChange}
+											required>
+										</lightning-combobox>
+									</div>
+								</template>
+
+								<template if:true={FIELD_Do_you_manage_booking_for_all_locations_PicklistValues.data}>
+									<div class="slds-var-m-around_medium">
+										<lightning-combobox
+											name="manageBookingSelection"
+											value={manageBookingSelection}
+											label={label.CSP_LabReg_manageBookingSelection}
+											options={FIELD_Do_you_manage_booking_for_all_locations_PicklistValues.data.values}
+											onchange={handleFormElementChange}
+											required>
+										</lightning-combobox>
+									</div>
+								</template>
+								
+								<template if:true={FIELD_Do_you_issue_test_results_for_all_lab_PicklistValues.data}>
+									<div class="slds-var-m-around_medium">
+										<lightning-combobox
+											name="issueTestResultsSelection"
+											value={issueTestResultsSelection}
+											label={label.CSP_LabReg_issueTestResultsSelection}
+											options={FIELD_Do_you_issue_test_results_for_all_lab_PicklistValues.data.values}
+											onchange={handleFormElementChange}
+											required>
+										</lightning-combobox>
+									</div>
+								</template>
+
+								<template if:true={FIELD_National_accreditation_for_all_the_labs_PicklistValues.data}>
+									<div class="slds-var-m-around_medium">
+										<lightning-combobox
+											name="nationalAccreditationSelection"
+											value={nationalAccreditationSelection}
+											label={label.CSP_LabReg_nationalAccreditationSelection}
+											options={FIELD_National_accreditation_for_all_the_labs_PicklistValues.data.values}
+											onchange={handleFormElementChange}
+											required>
+										</lightning-combobox>
+									</div>
+								</template>
+
+
+								<template if:true={FIELD_Additional_certifications_in_place_PicklistValues.data}>
+									<div class="slds-var-m-around_medium">
+										<lightning-combobox
+											name="AdditionalCertInPlace"
+											value={AdditionalCertInPlace}
+											label={label.CSP_LabReg_AdditionalCertInPlace}
+											options={FIELD_Additional_certifications_in_place_PicklistValues.data.values}
+											onchange={handleFormElementChange}
+											required>
+										</lightning-combobox>
+									</div>
+
+									<div if:true={showAdditionalCert} class="slds-p-around_medium lgc-bg">
+										<lightning-textarea 
+											name="whichAdditionalCert"
+											value={whichAdditionalCert} 
+											label={label.CSP_LabReg_Which_One}
+											placeholder="type here..." 
+											maxlength=2000
+											onchange={handleFormElementChange}
+											required>
+										</lightning-textarea>
+									</div>
+								</template>
+
+								<template if:true={FIELD_Endorsed_by_governments_PicklistValues.data}>
+									<div class="slds-var-m-around_medium">
+										<lightning-combobox
+											name="endorsedByGovern"
+											value={endorsedByGovern}
+											label={label.CSP_LabReg_National_Govern_Platform}
+											options={FIELD_Endorsed_by_governments_PicklistValues.data.values}
+											onchange={handleFormElementChange}
+											required>
+										</lightning-combobox>
+									</div>
+
+									<div if:true={showWhichGovern} class="slds-p-around_medium lgc-bg">
+										<lightning-textarea 
+											name="whichGovern"
+											value={whichGovern} 
+											label={label.CSP_LabReg_Which_One}
+											placeholder="type here..." 
+											maxlength=2000
+											onchange={handleFormElementChange}
+											required>
+										</lightning-textarea>
+									</div>
+								</template>
+
+
+								<template if:true={FIELD_Are_your_labs_part_of_national_platform_PicklistValues.data}>
+									<div class="slds-var-m-around_medium">
+										<lightning-combobox
+											name="labsPartOfNationalPlatform"
+											value={labsPartOfNationalPlatform}
+											label={label.CSP_LabReg_labsPartOfNationalPlatform}
+											options={FIELD_Are_your_labs_part_of_national_platform_PicklistValues.data.values}
+											onchange={handleFormElementChange}
+											required>
+										</lightning-combobox>
+									</div>
+
+									<div if:true={showWhichNationalPlatform} class="slds-p-around_medium lgc-bg">
+										<lightning-textarea 
+											name="whichNationalPlatform"
+											value={whichNationalPlatform} 
+											label={label.CSP_LabReg_Which_One}
+											placeholder="type here..." 
+											maxlength=2000
+											onchange={handleFormElementChange}
+											required>
+										</lightning-textarea>
+									</div>
+								</template>
+
+								<template if:true={FIELD_Existing_partnership_with_airlines_PicklistValues.data}>
+									<div class="slds-var-m-around_medium">
+										<lightning-combobox
+											name="airlinePartnershipSelection"
+											value={airlinePartnershipSelection}
+											label={label.CSP_LabReg_airlinePartnershipSelection}
+											options={FIELD_Existing_partnership_with_airlines_PicklistValues.data.values}
+											onchange={handleFormElementChange}
+											required>
+										</lightning-combobox>
+									</div>
+								</template>
+							</div>
+
+
+
+							<div if:true={airlineSelectionStep} class="airlineSelectionStep">
+								{label.CSP_LabReg_WhichAirlines}
+								<div class="slds-col slds-p-left_x-large slds-m-left_x-large">
+									<lightning-input value={airlineSearchKey} onchange={searchAirline} type="search" placeholder="Search Airline..."></lightning-input>
+								</div>
+								<lightning-dual-listbox id="airlineDualListbox"
+									name="airlineDualListbox"
+									label="Select Airlines"
+									source-label="Available Airlines"
+									selected-label="Selected Airlines"
+									options={listOptionsAirlines}
+									onchange={handleAirlineSelection}
+									disable-reordering
+									value={selectedAirlines}>
+								</lightning-dual-listbox>
+							</div>
+
+							<div if:true={recapStep} class="recapStep">
+								Are you sure you want to submit your request?
+							</div>
+
+							<div if:true={finalStep} class="finalStep">
+								Grazie ed arrivederci
+							</div>
+						</div>
+
+						<!-- BUTTON-->
+						<div class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix">
+							<div class="slds-align_absolute-center">
+								<button if:true={showPrevButton} class="containedButtonAlt containedButton-size cursorPointer uiButton contactSupport slds-m-horizontal_small" onclick={goToPreviousStep}>{label.Button_Previous}</button>
+
+								<button if:true={showNextButton} class="containedButtonAlt containedButton-size cursorPointer uiButton contactSupport slds-m-horizontal_small" onclick={goToNextStep}>{label.Button_Next}</button>
+
+								<button if:true={showConfirmButton}
+									class="containedButton containedButton-size slds-m-horizontal_small"
+									onclick={handleSubmitRequest}>
+									{label.ISSP_Confirm}
+								</button>
+							</div>
+						</div>
+					</span>
+				</c-portal-custom-card-container>        
+			</span>
+		</div>
+
+		<div data-id="spinnerId" class="slds-spinner_container spinnerContainer" if:true={isLoading}>
+			<div class="slds-spinner slds-spinner_medium" role="status">
+				<span class="slds-assistive-text">Loading</span>
+				<div class="slds-spinner__dot-a"></div>
+				<div class="slds-spinner__dot-b"></div>
 			</div>
+		</div>
 	</div>
+
+	<template if:true={openMessageModal}>
+		<c-portal-registration-generic-modal
+			icon={alertIcon}
+			title={label.CSP_LabReg_FormNotCompleted}
+			message={label.CSP_L2_Profile_Incomplete_Message}
+			button1-label={label.CSP_L2_Yes}
+			button2-label={label.CSP_L2_No}
+			onbuttononeaction={close}
+			onbuttontwoaction={cancel}>
+		</c-portal-registration-generic-modal>
+	</template>
 </template>
