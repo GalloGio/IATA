@@ -179,50 +179,67 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 	@track savedLabsNumberPerCountry = [];
 
 	//Airlines HQ
-	@track selectedAirlines = [];
+	@track listOptionsAirlines = [];
+	localListOptionsAirlines = [];
+	@track airlineSearchKey = '';
+
 	@api airlinesHQColumns = [
-		{ label: 'Name', fieldName: 'Name'},
-		{ label: 'Airline Code', fieldName: 'Airline_designator'}
+		{ label: 'Name', fieldName: 'Name'}
 	];
 
-	@track airlinesHQ = [];
-	localAirlinesHQ = [];
 
 	@wire(getAirlinesHQ, {}) airlinesData(result){
 		if(result.data){
 			result.data.forEach(accnt => {
-				this.localAirlinesHQ.push({'Id':accnt.Id, 'Name':accnt.Name, 'Airline_designator': accnt.Airline_designator__c});
+				this.localListOptionsAirlines.push({'value':accnt.Id, 'label':accnt.Name});
 			});
+
+			this.listOptionsAirlines = this.localListOptionsAirlines;
 		}else{
 			if(result.error){
 			}
 		}
 	}
 
-	/*filterAirlines(event) {
+	@track selectedAirlines = [];
+	searchAirline(event){
 		if(event.target.value=='' || event.target.value == undefined || event.target.value == null){
-			this.airlinesHQ = [];
-		}else{
+			this.listOptionsAirlines = this.localListOptionsAirlines;
+		}
+		else{
 			if(event.target.value.length>1){
-				var regex = new RegExp(event.target.value,'gi')
-				this.airlinesHQ = this.localAirlinesHQ.filter(row => regex.test(row.Name));
+				
+				this.listOptionsAirlines = [];
+				let searchRegExp = new RegExp(event.target.value , 'i');
+
+				let tmp = this.localListOptionsAirlines;
+
+				tmp.filter(obj => searchRegExp.test(obj.label)).forEach(option => {
+					let isAlreadySelected = this.selectedAirlines.find(o => o.value == option.value);
+
+					if(isAlreadySelected==undefined || isAlreadySelected=='' || isAlreadySelected==null ){
+						this.listOptionsAirlines.push({'value':option.value, 'label':option.label});
+					}
+				});
+				
+				this.selectedAirlines.forEach(element => {
+					this.listOptionsAirlines.push({'value':element.value, 'label':element.label});
+				});
 			}
 		}
-    }*/
-
-	selectAirline(event){
-		const selectedRows = event.detail.selectedRows;
-		selectedAirlines = [];
-		for (let i = 0; i < selectedRows.length; i++){
-			this.selectedAirlines.push(selectedRows[i]);
-        }
 	}
 
-	handleLetterFilter(event){
-		let letter = event.target.text;
-		var regex = new RegExp('^' + letter, 'i');
-		this.airlinesHQ = this.localAirlinesHQ.filter(row => regex.test(row.Name));
-		//alert(letter);
+	handleAirlineSelection(event){
+		let selected = event.detail.value;
+		if(selected==undefined || selected == null || selected == ''){
+			this.selectedAirlines = [];
+		}
+		else{
+			selected.forEach(str =>{
+				let selectLabels = this.listOptionsAirlines.find(o => o.value == str).label;
+				this.selectedAirlines.push({'value':str, 'label':selectLabels});
+			});
+		}
 	}
 
 	
@@ -294,13 +311,6 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 				break;
 			case 'airlinePartnershipSelection':
 				this.airlinePartnershipSelection = formElementValue;
-				/*if(this.airlinePartnership01Selection == 'Yes'){
-					this.showConfirmButton = false;
-					this.showNextButton = true;
-				}else{
-					this.showConfirmButton = true;
-					this.showNextButton = false;
-				}*/
 				break;
 			case 'typeOfLabSelection':
 				this.typeOfLabSelection = formElementValue;
@@ -410,7 +420,10 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 			}else{
 				this.setAFormStep = false;
 				if(this.airlinePartnershipSelection == 'Yes') this.airlineSelectionStep = true;
-				else this.recapStep = true;
+				else{
+					this.recapStep = true;
+					this.showConfirmButton = true;
+				} 
 			}
 			return;
 		}
@@ -433,7 +446,10 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 			}else{
 				this.setBFormStep = false;
 				if(this.airlinePartnershipSelection == 'Yes') this.airlineSelectionStep = true;
-				else this.recapStep = true;
+				else{
+					this.recapStep = true;
+					this.showConfirmButton = true;
+				} 
 			}
 			return;
 		}

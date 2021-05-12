@@ -399,59 +399,22 @@
 				</div>
 
 
-				
+
 				<div if:true={airlineSelectionStep} class="airlineSelectionStep">
 					{label.CSP_LabReg_WhichAirlines}
-					<!--<lightning-input type="search" label="Search" placeholder="search airline..." onchange={filterAirlines}></lightning-input>-->
-					<div>
-						<ul class="slds-list_horizontal slds-has-block-links_space">
-							<li><a onclick={handleLetterFilter}>#</a></li>
-							<li><a onclick={handleLetterFilter}>A</a></li>
-							<li><a onclick={handleLetterFilter}>B</a></li>
-							<li><a onclick={handleLetterFilter}>C</a></li>
-							<li><a onclick={handleLetterFilter}>D</a></li>
-							<li><a onclick={handleLetterFilter}>E</a></li>
-							<li><a onclick={handleLetterFilter}>F</a></li>
-							<li><a onclick={handleLetterFilter}>G</a></li>
-							<li><a onclick={handleLetterFilter}>H</a></li>
-							<li><a onclick={handleLetterFilter}>I</a></li>
-							<li><a onclick={handleLetterFilter}>J</a></li>
-							<li><a onclick={handleLetterFilter}>K</a></li>
-							<li><a onclick={handleLetterFilter}>L</a></li>
-							<li><a onclick={handleLetterFilter}>M</a></li>
-							<li><a onclick={handleLetterFilter}>N</a></li>
-							<li><a onclick={handleLetterFilter}>O</a></li>
-							<li><a onclick={handleLetterFilter}>P</a></li>
-							<li><a onclick={handleLetterFilter}>Q</a></li>
-							<li><a onclick={handleLetterFilter}>R</a></li>
-							<li><a onclick={handleLetterFilter}>S</a></li>
-							<li><a onclick={handleLetterFilter}>T</a></li>
-							<li><a onclick={handleLetterFilter}>U</a></li>
-							<li><a onclick={handleLetterFilter}>V</a></li>
-							<li><a onclick={handleLetterFilter}>W</a></li>
-							<li><a onclick={handleLetterFilter}>X</a></li>
-							<li><a onclick={handleLetterFilter}>Z</a></li>
-							<li><a onclick={handleLetterFilter}>ALL</a></li>
-						</ul>
+					<div class="slds-col slds-p-left_x-large slds-m-left_x-large">
+						<lightning-input value={airlineSearchKey} onchange={searchAirline} type="search" placeholder="Search Airline..."></lightning-input>
 					</div>
-					<div style="height: 200px;">
-						<lightning-datatable
-							data={airlinesHQ}
-							columns={airlinesHQColumns}
-							key-field="Id"
-          					onrowselection={selectAirline}>  
-						</lightning-datatable> 
-					</div>
-					
-					Selected Airlines
-					<div style="height: 200px;">
-						<lightning-datatable
-							data={selectedAirlines}
-							columns={airlinesHQColumns}
-							key-field="Id">  
-						</lightning-datatable> 
-					</div>
-					
+					<lightning-dual-listbox id="airlineDualListbox"
+						name="airlineDualListbox"
+						label="Select Airlines"
+						source-label="Available Airlines"
+						selected-label="Selected Airlines"
+						options={listOptionsAirlines}
+						onchange={handleAirlineSelection}
+						disable-reordering
+						value={selectedAirlines}>
+					</lightning-dual-listbox>
 				</div>
 
 				<div if:true={recapStep} class="recapStep">
