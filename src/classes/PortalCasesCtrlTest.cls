@@ -615,6 +615,9 @@ private class PortalCasesCtrlTest {
 
 		Test.startTest();
 		System.runAs(usr) {
+			PortalCasesCtrl.PortalCasesCtrl_WithoutSharing CasesNoSharing = new PortalCasesCtrl.PortalCasesCtrl_WithoutSharing();
+            CasesNoSharing.getCaseComments(newCase4.Id);
+
 			Case getCaseTest = PortalCasesCtrl.getCaseById(newCase4.Id);
 			System.assertNotEquals(getCaseTest, null);
 		}
