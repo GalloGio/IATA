@@ -945,15 +945,15 @@
         <name>ANG_ISSP_ASD_HelpText</name>
     </customLabels>
     <customLabels>
-        <label>Tipo de credenciamento</label>
+        <label>Modelo de credenciamento</label>
         <name>ANG_ISSP_AccreditationType</name>
     </customLabels>
     <customLabels>
-        <label>Selecione o tipo de operação.</label>
+        <label>Selecione o model de credenciamento.</label>
         <name>ANG_ISSP_AccreditationTypeRequired</name>
     </customLabels>
     <customLabels>
-        <label>Tipo de credenciamento</label>
+        <label>Modelo de credenciamento</label>
         <name>ANG_ISSP_AccreditationTypeTitle</name>
     </customLabels>
     <customLabels>
@@ -18849,7 +18849,7 @@ Em caso de suspensão de uma companhia aérea, que resulte na regularização de
         <name>ISSP_Banner_link</name>
     </customLabels>
     <customLabels>
-        <label>IATA Accreditation &amp; Changes</label>
+        <label>Credenciamento IATA e Alterações</label>
         <name>ISSP_Become_Accredited_Agent</name>
     </customLabels>
     <customLabels>
@@ -20491,7 +20491,7 @@ Você poderia por favor confimar de qual pais voce foi previamente atendido.</la
         <name>ISSP_IATA_Code_Agency_Cargo</name>
     </customLabels>
     <customLabels>
-        <label>Código IATA com formato incorreto.&lt;br&gt;Para Agencia de Viagens este código tem 8 dígitos.</label>
+        <label>Código IATA com formato incorreto.&lt;br&gt;Para Agência de Viagens este código tem 8 dígitos.</label>
         <name>ISSP_IATA_Code_Agency_Travel</name>
     </customLabels>
     <customLabels>
