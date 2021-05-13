@@ -22058,7 +22058,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.Global_ID__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
