@@ -55,6 +55,7 @@ import CSP_LabReg_WhichAirlines from '@salesforce/label/c.CSP_LabReg_WhichAirlin
 import CSP_LabRegistry from '@salesforce/label/c.CSP_LabRegistry';
 import CSP_LabReg_AirlineAgreements from '@salesforce/label/c.CSP_LabReg_AirlineAgreements';
 import CSP_LabReg_CountryLabs from '@salesforce/label/c.CSP_LabReg_CountryLabs';
+import CSP_L2_Profile_Details_Message from '@salesforce/label/c.CSP_L2_Profile_Details_Message';
 
 import CSP_Error_Message_Mandatory_Fields from '@salesforce/label/c.CSP_Error_Message_Mandatory_Fields_Contact';
 
@@ -107,6 +108,7 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 		,CSP_L2_Additional_Details
 		,CSP_LabReg_AirlineAgreements
 		,CSP_LabReg_CountryLabs
+		,CSP_L2_Profile_Details_Message
 	}
 
 
@@ -382,6 +384,14 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 				this.NatureOfSLA = formElementValue;
 				break;
 		}
+
+		if(this.isAForm){
+
+		}
+
+		if(this.isBForm){
+			
+		}
 	}
 
 
@@ -393,6 +403,16 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 	@track airlineSelectionStep = false;
 	@track recapStep = false;
 	@track finalStep = false;
+
+	@track isYourDetailsStep = true;
+	@track isCountryLabsStep = false;
+	@track isAirlineAgrStep = false;
+	@track isConfirmationStep = false;
+	
+	//isCountryLabStep is not having any mandatory field, so is valid when isYourDetailStepValid is true
+	@track isYourDetailStepValid = false;
+	@track isAirlineAgrStepValid = false;
+
 
 	@track currentStep = 'firstStep';
 	@track showMandatoryFieldsError = false;

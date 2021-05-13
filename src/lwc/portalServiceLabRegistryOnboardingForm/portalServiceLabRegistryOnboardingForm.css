@@ -8,7 +8,14 @@
 	white-space: normal;
 }
 
+.formLabelContainer{
+    padding-bottom: 11px;
+}
 
+.formItem{
+    margin-bottom: 50px;
+	display: inline-block;
+}
 
 .customPopupInterior60PercentScreenCentered {
     background-color: #F7F8FA;
