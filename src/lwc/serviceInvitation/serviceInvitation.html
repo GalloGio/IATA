@@ -12,7 +12,8 @@
                             <div class="select-wrapper">
                                 <select class="slds-input slds-select custom-border" data-field="role" onchange={updateField}>
                                     <template for:each={roleOptions} for:item="role">
-                                        <option key={role.value} value={role.value}>{role.label}</option>
+                                        <option if:true={role.selected} key={role.value} value={role.value} selected>{role.label}</option>
+                                        <option if:false={role.selected} key={role.value} value={role.value}>{role.label}</option>
                                     </template>
                                 </select>
                             </div>
@@ -74,6 +75,7 @@
                 <div class="slds-col slds-size_1-of-6">
                     <div class="slds-col slds-p-top_xx-small">
                         <button if:true={invitation.isActive} class="blue-btn" data-id={invitation.id} onclick={cancelInvitation}>{label.cancel}</button>
+                        <button if:true={invitation.isCancelled} class="blue-btn" data-id={invitation.id} onclick={resendInvitation}>{label.reInvite}</button>
                     </div>
                 </div>
             </div>

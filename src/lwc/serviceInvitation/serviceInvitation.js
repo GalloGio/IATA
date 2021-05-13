@@ -1,4 +1,5 @@
 import { LightningElement, track, wire } from 'lwc';
+import { refreshApex } from '@salesforce/apex';
 
 import email from '@salesforce/label/c.Email';
 import selectedRole from '@salesforce/label/c.Selected_Role';
@@ -8,13 +9,18 @@ import cancel from '@salesforce/label/c.Button_Cancel';
 import invite from '@salesforce/label/c.Invite';
 import pageNumbering from '@salesforce/label/c.Page_Numbering';
 import emailFormatErr from '@salesforce/label/c.Email_Wrong_Format';
+import reInvite from '@salesforce/label/c.Re_Invite';
 
 //import user id
 import userId from '@salesforce/user/Id';
-// import isServiceAdministrator from '@salesforce/apex/InvitationService.isServiceAdministrator';
-// import getRoles from '@salesforce/apex/InvitationService.getRoles';
-// import getInvitationList from '@salesforce/apex/InvitationService.getInvitationList';
+import isServiceAdministrator from '@salesforce/apex/InvitationService.isServiceAdministrator'; // Params: Id portalApplicationId, List<Id> userIdList - Return: Map<Id,Boolean>
+import getRoles from '@salesforce/apex/InvitationService.getRoles'; // Param: Id portalApplicationId - Return: List<String>
+import getInvitationList from '@salesforce/apex/InvitationService.getInvitationList'; // Param: Id portalApplicationId, List<Id> userIdList - Return: List<EncodedInvitation>
+import inviteUsers from '@salesforce/apex/InvitationService.inviteUsers'; // Param: List<EncodedInvitation> encodedInvitationList - Return: void
+import cancelInvitation from '@salesforce/apex/InvitationService.inviteUsers'; // Param: List<Invitation__c> - Return: void
 
+const activeLbl = 'Active';
+const cancelledLbl = 'Cancelled';
 
 export default class ServiceInvitation extends LightningElement {
     label = {
@@ -25,62 +31,61 @@ export default class ServiceInvitation extends LightningElement {
         cancel,
         invite,
         pageNumbering,
-        emailFormatErr
+        emailFormatErr,
+        reInvite
 	};
 
     paramKey = 'serviceId';
-    serviceId = this.getUrlParamValue(window.location.href, this.paramKey);
+    portalApplicationId = this.getUrlParamValue(window.location.href, this.paramKey);
+    userIdList = [userId];
 
     pageNo = 1;
     recordsPerPage = 10;
     
-    // @wire(getInvitationList, { serviceId : '$serviceId' })
-    invitationEntireList = [
-        {id:'invite1', email:'test1@email.com', role: 'Admin', status: 'Active', isActive: true},
-        {id:'invite2', email:'test2@email.com', role: 'Admin', status: 'Active', isActive: true},
-        {id:'invite3', email:'test3@email.com', role: 'Admin', status: 'Active', isActive: true},
-        {id:'invite4', email:'test4@email.com', role: 'Admin', status: 'Active', isActive: true},
-        {id:'invite5', email:'test5@email.com', role: 'Admin', status: 'Active', isActive: true},
-        {id:'invite6', email:'test6@email.com', role: 'Admin', status: 'Active', isActive: true},
-        {id:'invite7', email:'test7@email.com', role: 'Admin', status: 'Active', isActive: false},
-        {id:'invite8', email:'test8@email.com', role: 'Admin', status: 'Active', isActive: false},
-        {id:'invite9', email:'test9@email.com', role: 'Admin', status: 'Active', isActive: false},
-        {id:'invite10', email:'test10@email.com', role: 'Admin', status: 'Active', isActive: false},
-        {id:'invite11', email:'test11@email.com', role: 'Admin', status: 'Active', isActive: false},
-        {id:'invite12', email:'test12@email.com', role: 'Admin', status: 'Active', isActive: false},
-        {id:'invite13', email:'test13@email.com', role: 'Admin', status: 'Active', isActive: false},
-        {id:'invite14', email:'test14@email.com', role: 'Admin', status: 'Active', isActive: false},
-        {id:'invite15', email:'test15@email.com', role: 'Admin', status: 'Active', isActive: false},
-        {id:'invite16', email:'test16@email.com', role: 'Admin', status: 'Active', isActive: false},
-        {id:'invite17', email:'test17@email.com', role: 'Admin', status: 'Active', isActive: false},
-        {id:'invite18', email:'test18@email.com', role: 'Admin', status: 'Active', isActive: false},
-        {id:'invite19', email:'test19@email.com', role: 'Admin', status: 'Active', isActive: false},
-        {id:'invite20', email:'test20@email.com', role: 'Admin', status: 'Active', isActive: false},
-        {id:'invite21', email:'test21@email.com', role: 'Admin', status: 'Active', isActive: false}
-    ]
+    invitationEntireListWired;
+    @track invitationEntireList = [];
+    roleOptionList = [];
+
+    @wire(getInvitationList, {portalApplicationId : '$portalApplicationId', userIdList: '$userIdList'})
+    getInvitationListWire(result) {
+        this.invitationEntireListWired = result;
+        if (this.invitationEntireListWired && this.invitationEntireListWired.data && this.invitationEntireListWired.data.length !== 0) {
+            this.invitationEntireList = [];
+            this.invitationEntireListWired.data.forEach(invitation => {
+                this.invitationEntireList.push({
+                    id: invitation.id,
+                    status: invitation.status,
+                    email: invitation.emailAddress,
+                    role: invitation.userRole,
+                    isActive: invitation.status == activeLbl,
+                    isCancelled: invitation.status == cancelledLbl
+                });
+            });
+
+            this.sortInvitations();
+        }
+	}
 
     @track invitationInfo = {};
     
-    // @wire(getRoles, { functionalRole : '$' })
-    // roleOptionList;
+    @wire(getRoles, { portalApplicationId : '$portalApplicationId' })
+    getRolesWired({data, error}){
+        if(data && data.length !== 0){
+            this.roleOptionList = [];
+            data.forEach(element => {
+                this.roleOptionList.push({ label: element, value: element });
+            });
+            this.invitationInfo['role'] = this.roleOptionList[0].value;
+        }
+    }
 
-    // @wire(isServiceAdministrator, { userId : '$userId' })
-    // listUserServices;
+    @wire(isServiceAdministrator, { portalApplicationId : '$portalApplicationId', userIdList : '$userIdList' })
+    isServiceAdministratorWired({data, error}){
+
+    }
 
     get roleOptions(){
-        // var options = [];
-        // roleOptionList.forEach(element => {
-        //     options.push({label:element, value:element});
-        // });
-        // return options;
-        return  [
-            {label:'Test 1', value:'Test 1'},
-            {label:'Test 2', value:'Test 2'},
-            {label:'Test 3', value:'Test 3'},
-            {label:'Test 4', value:'Test 4'},
-            {label:'Test 5', value:'Test 5'},
-            {label:'Test 6', value:'Test 6'}
-        ];
+        return this.roleOptionList;
     }
 
     get areInvitationListed(){
@@ -120,8 +125,11 @@ export default class ServiceInvitation extends LightningElement {
         const value = element.value;
         if(fieldName === 'email'){
             if(!this.validateEmail(value)){
+                this.invitationInfo[fieldName] = null;
                 return;
             }
+        } else {
+            console.log('Selectable options ' + JSON.stringify(this.roleOptionList));
         }
         this.invitationInfo[fieldName] = value;
         console.log('Invitation info: ' + JSON.stringify(this.invitationInfo));
@@ -132,8 +140,20 @@ export default class ServiceInvitation extends LightningElement {
             let target = this.template.querySelector('[data-field="email"]');
             target.setCustomValidity(this.label.emailFormatErr);
             target.reportValidity();
+        }else{
+            this.sendInvitation(this.invitationInfo.email, this.invitationInfo.role);
+            this.cleanInformationUp();
         }
-        console.log('Sending invitation to user');
+    }
+
+    resendInvitation(event){
+        let invitationId = event.target.dataset.id;
+        console.log('Canceling invitation ' + invitationId);
+        let invitationToResend = this.invitationsToDisplay.filter(inv => {
+            return inv.id == invitationId;
+        });
+        console.log('Invitation ' + JSON.stringify(invitationToResend));
+        this.sendInvitation(invitationToResend[0].email, invitationToResend[0].role);
     }
     
     cancelInvitation(event){
@@ -156,8 +176,6 @@ export default class ServiceInvitation extends LightningElement {
         this.pageNo = this.totalPages;
     }
 
-
-
     //Private functions
     validateEmail(email){
         return /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/.test(email);
@@ -165,5 +183,44 @@ export default class ServiceInvitation extends LightningElement {
 
     getUrlParamValue(url, key) {
         return new URL(url).searchParams.get(key);
+    }
+
+    sortInvitations(){
+        this.invitationEntireList.sort(function(invitationA, invitationB) {
+            if(invitationA.status === invitationB.status){
+                return 0;
+            }
+            else if ((invitationA.status === activeLbl || (invitationA.status === cancelledLbl && invitationB.status !== activeLbl))){
+              return -1;
+            }
+            return 1;
+        });
+    }
+
+    cleanInformationUp(){
+        this.invitationInfo.email = null;
+        this.invitationInfo.role = this.roleOptionList[0].value;
+
+        let emailTarget = this.template.querySelector('[data-field="email"]');
+        emailTarget.value = null;
+
+        let roleTarget = this.template.querySelector('[data-field="role"]');
+        roleTarget.selectedIndex = 0;
+    }
+
+    sendInvitation(email, role){
+        var invitationList = [];
+        invitationList.push({
+            emailAddress: email,
+            portalApplicationId: this.portalApplicationId,
+            userRole: role,
+            status: activeLbl
+        });
+        console.log('INvitations sent ' + JSON.stringify(invitationList));
+        inviteUsers({encodedInvitationList: invitationList}).then(data => {
+            console.log('Invitation sent to ' + email + ' with role ' + role);
+            refreshApex(this.invitationEntireListWired);
+        });
+
     }
 }
