@@ -2008,6 +2008,39 @@
 )</errorConditionFormula>
         <errorMessage>Please fill in the Milestone and the End Date fields</errorMessage>
     </validationRules>
+    <validationRules>
+        <fullName>Validate_Subject</fullName>
+        <active>true</active>
+        <description>Only the values in the subject picklist are valid</description>
+        <errorConditionFormula>AND(
+  Subject!=&apos;Busy Call&apos;,
+  Subject!=&apos;Call customer!&apos;,
+  Subject!=&apos;Call - Busy&apos;,
+  Subject!=&apos;Call - No Answer&apos;,
+  Subject!=&apos;Call - Successful&apos;,
+  Subject!=&apos;Call - Voice Mail&apos;,
+  Subject!=&apos;Call - Wrong Number - Answered&apos;,
+  Subject!=&apos;Contract elaboration&apos;,
+  Subject!=&apos;Email&apos;,
+  Subject!=&apos;FAX&apos;,
+  Subject!=&apos;Feedback request&apos;,
+  Subject!=&apos;Follow up&apos;,
+  Subject!=&apos;Needs assessment&apos;,
+  Subject!=&apos;No Answer&apos;,
+  Subject!=&apos;Other&apos;,
+  Subject!=&apos;Post sales follow-up&apos;,
+  Subject!=&apos;Preparation of product information&apos;,
+  Subject!=&apos;Presentation preparation&apos;,
+  Subject!=&apos;Send information&apos;,
+  Subject!=&apos;Send letter&apos;,
+  Subject!=&apos;Update application&apos;,
+  Subject!=&apos;Voice Mail&apos;,
+  Subject!=&apos;R&amp;S reinstatement&apos;,
+  Subject!=&apos;Call - Wrong Number - No Line&apos;
+)</errorConditionFormula>
+        <errorDisplayField>Subject</errorDisplayField>
+        <errorMessage>Please, select one of the valid subjects in the button on the right</errorMessage>
+    </validationRules>
     <webLinks>
         <fullName>Mark_Task_Complete</fullName>
         <availability>online</availability>
