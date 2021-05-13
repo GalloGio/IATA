@@ -17,6 +17,16 @@
 	display: inline-block;
 }
 
+.IEFixDisplay{
+	display: inline-block;
+}
+
+.buttonsContainer{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
 .customPopupInterior60PercentScreenCentered {
     background-color: #F7F8FA;
     width: 60%;

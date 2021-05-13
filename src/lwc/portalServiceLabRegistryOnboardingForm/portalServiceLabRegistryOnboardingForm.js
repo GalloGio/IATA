@@ -35,6 +35,8 @@ import Button_Next from '@salesforce/label/c.Button_Next';
 import Button_Previous from '@salesforce/label/c.Button_Previous';
 import ISSP_Confirm from '@salesforce/label/c.ISSP_Confirm';
 
+import CSP_L2_Next_Step from '@salesforce/label/c.CSP_L2_Next_Step';
+
 import CSP_LabReg_AdditionalCertInPlace from '@salesforce/label/c.CSP_LabReg_AdditionalCertInPlace';
 import CSP_LabReg_airlinePartnershipSelection from '@salesforce/label/c.CSP_LabReg_airlinePartnershipSelection';
 import CSP_LabReg_Describe_SLA_Nature from '@salesforce/label/c.CSP_LabReg_Describe_SLA_Nature';
@@ -109,9 +111,10 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 		,CSP_LabReg_AirlineAgreements
 		,CSP_LabReg_CountryLabs
 		,CSP_L2_Profile_Details_Message
+		,CSP_L2_Next_Step
 	}
 
-
+	@track isLoading = false;
 	//Schema and picklist methods
 	@api recordId;
 	@api objectApiName;
@@ -165,6 +168,7 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 
 	@wire(getCountries,{}) countryData(result){
 		if(result.data){
+			console.log('i am loading countries');
 			result.data.countryList.forEach(cntr =>{
 				switch(cntr.Region__c){
 					case 'Africa & Middle East':
@@ -288,6 +292,7 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 	@track showWhichBrand = false;
 	@track issueTestResultsSelection='';
 	@track airlinePartnershipSelection='';
+	@track showAirlineSelectionBox=false;
 	@track typeOfLabSelection='';
 	@track SLACertificationInPlace='';
 	@track nationalAccreditationSelection='';
@@ -343,6 +348,8 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 				break;
 			case 'airlinePartnershipSelection':
 				this.airlinePartnershipSelection = formElementValue;
+				if(this.airlinePartnershipSelection=='Yes')	this.showAirlineSelectionBox = true;
+				else this.showAirlineSelectionBox = false;
 				break;
 			case 'typeOfLabSelection':
 				this.typeOfLabSelection = formElementValue;
@@ -385,77 +392,10 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 				break;
 		}
 
-		if(this.isAForm){
-
-		}
-
-		if(this.isBForm){
-			
-		}
-	}
-
-
-	//Steps and navigation methods
-	@track firstStep = true;
-	@track labDetailsStep = false;
-	@track setAFormStep = false;
-	@track setBFormStep = false;
-	@track airlineSelectionStep = false;
-	@track recapStep = false;
-	@track finalStep = false;
-
-	@track isYourDetailsStep = true;
-	@track isCountryLabsStep = false;
-	@track isAirlineAgrStep = false;
-	@track isConfirmationStep = false;
-	
-	//isCountryLabStep is not having any mandatory field, so is valid when isYourDetailStepValid is true
-	@track isYourDetailStepValid = false;
-	@track isAirlineAgrStepValid = false;
-
-
-	@track currentStep = 'firstStep';
-	@track showMandatoryFieldsError = false;
-
-	isAForm = false;
-	isBForm = false;
-
-	@track showNextButton = true;
-	@track showPrevButton = false;
-	@track showConfirmButton = false;
-
-	goToNextStep(){
-		this.showMandatoryFieldsError = false;
-
-		if(this.firstStep){
-			if(this.labTypeSelection==''){
-				this.showMandatoryFieldsError = true;
-			}else{
-				this.firstStep = false;
-				this.labDetailsStep = true;
-				this.showPrevButton = true;
-			}
-			return;
-		}
-
-
-		if(this.labDetailsStep){
-			this.labDetailsStep = false;
+		if(this.isYourDetailsStep){
 			if(this.isAForm){
-				this.setAFormStep = true;
-				this.setBFormStep = false;
-			}
-
-			if(this.isBForm){
-				this.setAFormStep = false;
-				this.setBFormStep = true;
-			}
-			return;
-		}
-
-
-		if(this.setAFormStep){
-			if(this.howLongInBusinessSelection==''
+				if(this.labTypeSelection=='' 
+					||this.howLongInBusinessSelection==''
 					|| this.operatingUnderBrand == ''
 					|| (this.operatingUnderBrand == 'Yes' && this.whichBrands == '')
 					|| this.SLAInPlace == ''
@@ -463,23 +403,18 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 					|| this.manageBookingSelection == ''
 					|| this.issueTestResultsSelection == ''
 					|| this.labsPartOfNationalPlatform == ''
-					|| (this.labsPartOfNationalPlatform == 'Yes' && this.whichNationalPlatform == '')
-					|| this.airlinePartnershipSelection == ''
-				){
-				this.showMandatoryFieldsError = true;
-			}else{
-				this.setAFormStep = false;
-				if(this.airlinePartnershipSelection == 'Yes') this.airlineSelectionStep = true;
-				else{
-					this.recapStep = true;
-					this.showConfirmButton = true;
-				} 
+					|| (this.labsPartOfNationalPlatform == 'Yes' && this.whichNationalPlatform == '')){
+						this.isYourDetailStepValid = false;
+						this.isNextDisabled = true;
+				}else{
+					this.isYourDetailStepValid = true;
+					this.isNextDisabled = false;
+				}
 			}
-			return;
-		}
 
-		if(this.setBFormStep){
-			if(this.howLongInBusinessSelection == ''
+			if(this.isBForm){
+				if(this.labTypeSelection=='' 
+					|| this.howLongInBusinessSelection == ''
 					|| this.typeOfLabSelection == ''
 					|| this.manageBookingSelection == ''
 					|| this.issueTestResultsSelection == ''
@@ -489,94 +424,117 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 					|| this.endorsedByGovern == ''
 					|| (this.endorsedByGovern == 'Yes' && this.whichGovern == '')
 					|| this.labsPartOfNationalPlatform == ''
-					|| (this.labsPartOfNationalPlatform == 'Yes' && this.whichNationalPlatform == '')
-					|| this.airlinePartnershipSelection == ''
-				){
-				this.showMandatoryFieldsError = true;
-			}else{
-				this.setBFormStep = false;
-				if(this.airlinePartnershipSelection == 'Yes') this.airlineSelectionStep = true;
-				else{
-					this.recapStep = true;
-					this.showConfirmButton = true;
-				} 
+					|| (this.labsPartOfNationalPlatform == 'Yes' && this.whichNationalPlatform == '')){
+						this.isYourDetailStepValid = false;
+						this.isNextDisabled = true;
+				}else{
+					this.isYourDetailStepValid = true;
+					this.isNextDisabled = false;
+				}
 			}
-			return;
 		}
 
-		if(this.airlineSelectionStep){
-			this.airlineSelectionStep = false;
-			this.recapStep = true;
-			this.showNextButton = false;
-			this.showConfirmButton = true;
-			return;
-		}
-
-		if(this.recapStep){
-			this.recapStep = false;
-			this.confirmStep = true;
-			this.showNextButton = false;
-			this.showConfirmButton = false;
-			this.showPrevButton = false;
-			return;
+		if(this.isAirlineAgrStep){
+			if(this.airlinePartnershipSelection == ''){
+				this.isAirlineAgrStepValid = false;
+				this.isNextDisabled = true;
+			}
+			else{
+				this.isAirlineAgrStepValid = true;
+				this.isNextDisabled = false;
+			}
 		}
 	}
 
 
-	goToPreviousStep(){
-		this.showMandatoryFieldsError = false;
+	//Steps and navigation methods
+	@track isNextDisabled = true;
+	@track showPreviousPageLink = false;
 
-		if(this.labDetailsStep){
-			this.labDetailsStep = false;
-			this.firstStep = true;
-			this.showPrevButton = false;
-			return;
-		}
-
-
-		if(this.setAFormStep){
-			this.setAFormStep = false;
-			this.labDetailsStep = true;
-			return;
-		}
-
-		if(this.setBFormStep){
-			this.setBFormStep = false;
-			this.labDetailsStep = true;
-			return;
-		}
-
-		if(this.airlineSelectionStep){
-			this.airlineSelectionStep = false;
-			if(this.isAForm){
-				this.setAFormStep = true;
-				this.setBFormStep = false;
-			}
-
-			if(this.isBForm){
-				this.setAFormStep = false;
-				this.setBFormStep = true;
-			}
-			return;
-		}
-
-		if(this.recapStep){
-			this.recapStep = false;
-			if(this.airlinePartnershipSelection == 'Yes') this.airlineSelectionStep = true;
-			else{
-				if(this.isAForm){
-					this.setAFormStep = true;
-					this.setBFormStep = false;
-				}
+	@track isYourDetailsStep = true;
+	@track isCountryLabsStep = false;
+	@track isAirlineAgrStep = false;
+	@track isConfirmationStep = false;
+	@track isGreetingStep = false;
 	
-				if(this.isBForm){
-					this.setAFormStep = false;
-					this.setBFormStep = true;
-				}
+	//isCountryLabStep is not having any mandatory field, so is valid when isYourDetailStepValid is true
+	@track isYourDetailStepValid = false;
+	@track isAirlineAgrStepValid = false;
+
+	isAForm = false;
+	isBForm = false;
+	goToNextStep(){
+		this.isLoading = true;
+		if(this.isYourDetailsStep){
+			if(this.isYourDetailStepValid){
+				//this.isNextDisabled = false; //will be active on the country lab step
+				this.isYourDetailsStep = false;
+				this.isCountryLabsStep = true;
+				this.currentStep = 'isCountryLabsStep';
+				this.showPreviousPageLink = true;
 			}
-			this.showNextButton = true;
-			this.showConfirmButton = false;
-			this.showPrevButton = true;
+			this.isLoading = false;
+			return;
+		}
+
+		if(this.isCountryLabsStep){
+			if(this.isYourDetailStepValid){
+				this.isNextDisabled = false;
+				this.isCountryLabsStep = false;
+				this.isAirlineAgrStep = true;
+				this.currentStep = 'isAirlineAgrStep';
+				this.showPreviousPageLink = true;
+			}
+			this.isLoading = false;
+			return;
+		}
+
+		if(this.isAirlineAgrStep){
+			if(this.isAirlineAgrStepValid){
+				this.isNextDisabled = false;
+				this.isAirlineAgrStep = false;
+				this.isConfirmationStep = true;
+				this.currentStep = 'isConfirmationStep';
+				this.showPreviousPageLink = true;
+			}
+			this.isLoading = false;
+			return;
+		}
+
+		/*if(this.isConfirmationStep){
+			if(this.isAirlineAgrStepValid){
+				this.isConfirmationStep = false;
+				this.isConfirmationStep = true;
+			}
+		}*/
+	}
+
+	@track currentStep = 'isYourDetailsStep';
+	
+	goToPreviousStep(){
+		this.isLoading = true;
+		this.isNextDisabled = false;
+		this.showPreviousPageLink = true;
+
+		if(this.isConfirmationStep){
+			this.isConfirmationStep = false;
+			this.isAirlineAgrStep = true;
+			this.isLoading = false;
+			return;
+		}
+
+		if(this.isAirlineAgrStep){
+			this.isAirlineAgrStep = false;
+			this.isCountryLabsStep = true;
+			this.isLoading = false;
+			return;
+		}
+
+		if(this.isCountryLabsStep){
+			this.isCountryLabsStep = false;
+			this.isYourDetailsStep = true;
+			this.isLoading = false;
+			this.showPreviousPageLink = false;
 			return;
 		}
 	}
@@ -585,10 +543,10 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 	handleSubmitRequest(){
 		//TODO Create method to save
 		if(this.setAForm && (this.SLAInPlace == '' || this.ownFacilitiesOrPartnerLabSelection == '' || this.manageBookingSelection == '' || this.issueTestResultsSelection=='' || this.airlinePartnershipSelection=='')){
-			this.showMandatoryFieldsError = true;
+			//this.showMandatoryFieldsError = true;
 		}
 		else if(this.setBForm && (this.typeOfLabSelection == '' || this.SLACertificationInPlace == '' || this.nationalAccreditationSelection == '' || this.labsPartOfNationalPlatform=='' || this.airlinePartnership02Selection=='')){
-			this.showMandatoryFieldsError = true;
+			//this.showMandatoryFieldsError = true;
 		}
 		else{
 			//this.dispatchEvent(new CustomEvent('requestcompleted', { detail: { success: false }, bubbles: true,composed: true }));// sends the event to the grandparent
