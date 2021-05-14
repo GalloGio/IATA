@@ -1,10 +1,10 @@
 public with sharing class InvitationService {
     public class EncodedInvitation {
-        @AuraEnabled public Id id;
+        @AuraEnabled public Id id {get;set;}
         @AuraEnabled public String emailAddress {get;set;}
         @AuraEnabled public Id portalApplicationId {get;set;}
         @AuraEnabled public String userRole {get;set;}
-        @AuraEnabled public Id accountId;
+        @AuraEnabled public Id accountId {get;set;}
         @AuraEnabled public String status {get;set;}
 
         public Boolean equals(Object obj){
@@ -192,7 +192,7 @@ public with sharing class InvitationService {
     }
 
     @AuraEnabled (cacheable=true)
-    public static List<String> getRoles(Id portalApplicationId){
+    public static List<String> getInvitableRoles(Id portalApplicationId){
         List<String> roles = new List<String>();
         roles.add('Test 1');
         roles.add('Test 2');
@@ -206,6 +206,17 @@ public with sharing class InvitationService {
     @AuraEnabled
     public static void inviteUsers(List<EncodedInvitation> encodedInvitationList){
         System.debug('Invitations ' + encodedInvitationList);
+    }
+
+    @AuraEnabled
+    public static void cancelInvitation(List<EncodedInvitation> encodedInvitationList){
+        System.debug('Invitations to cancel ' + encodedInvitationList);
+    }
+
+    @AuraEnabled
+    public static Id getAccountId(Id userId){
+        Id accId = [SELECT Id, Contact.AccountId FROM User WHERE Id = :userId LIMIT 1].Contact.AccountId;
+        return accId;
     }
 
 }

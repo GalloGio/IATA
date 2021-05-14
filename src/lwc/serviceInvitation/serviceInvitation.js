@@ -13,11 +13,12 @@ import reInvite from '@salesforce/label/c.Re_Invite';
 
 //import user id
 import userId from '@salesforce/user/Id';
+import getAccountId from '@salesforce/apex/InvitationService.getAccountId'; // Param: Id userId - Return: Id
 import isServiceAdministrator from '@salesforce/apex/InvitationService.isServiceAdministrator'; // Params: Id portalApplicationId, List<Id> userIdList - Return: Map<Id,Boolean>
-import getRoles from '@salesforce/apex/InvitationService.getRoles'; // Param: Id portalApplicationId - Return: List<String>
+import getRoles from '@salesforce/apex/InvitationService.getInvitableRoles'; // Param: Id portalApplicationId - Return: List<String>
 import getInvitationList from '@salesforce/apex/InvitationService.getInvitationList'; // Param: Id portalApplicationId, List<Id> userIdList - Return: List<EncodedInvitation>
 import inviteUsers from '@salesforce/apex/InvitationService.inviteUsers'; // Param: List<EncodedInvitation> encodedInvitationList - Return: void
-import cancelInvitation from '@salesforce/apex/InvitationService.inviteUsers'; // Param: List<Invitation__c> - Return: void
+import cancelInvitation from '@salesforce/apex/InvitationService.cancelInvitation'; // Param: List<EncodedInvitation> encodedInvitationList - Return: void
 
 const activeLbl = 'Active';
 const cancelledLbl = 'Cancelled';
@@ -38,6 +39,8 @@ export default class ServiceInvitation extends LightningElement {
     paramKey = 'serviceId';
     portalApplicationId = this.getUrlParamValue(window.location.href, this.paramKey);
     userIdList = [userId];
+    accountId;
+    isServiceAdmintrator = false;
 
     pageNo = 1;
     recordsPerPage = 10;
@@ -81,7 +84,21 @@ export default class ServiceInvitation extends LightningElement {
 
     @wire(isServiceAdministrator, { portalApplicationId : '$portalApplicationId', userIdList : '$userIdList' })
     isServiceAdministratorWired({data, error}){
+        if(data){
+            var userAdminList = Array.from(data, ([userId, isAdmin]) => ({ userId, isAdmin }));
+            var activeUserAdmin = userAdminList.filter(userAdmin => {
+                return userAdmin.userId === userId;
+            })[0];
+            this.isServiceAdmin = activeUserAdmin.isAdmin;
+        }
+    }
 
+    @wire(getAccountId, { userId : '$userId' })
+    getAccountIdWired({data, error}){
+        console.log('cuenta ' + data);
+        if(data){
+            this.accountId = data;
+        }
     }
 
     get roleOptions(){
@@ -93,7 +110,7 @@ export default class ServiceInvitation extends LightningElement {
     }
 
     get isServiceAdmin(){
-        return true; //this.listUserServices.filter(service => service.Id === serviceId)[0].isAdmin;
+        return true; //this.isServiceAdmintrator
     }
 
     get totalPages(){
@@ -141,7 +158,7 @@ export default class ServiceInvitation extends LightningElement {
             target.setCustomValidity(this.label.emailFormatErr);
             target.reportValidity();
         }else{
-            this.sendInvitation(this.invitationInfo.email, this.invitationInfo.role);
+            this.sendInvitation(null, this.invitationInfo.email, this.invitationInfo.role);
             this.cleanInformationUp();
         }
     }
@@ -153,11 +170,20 @@ export default class ServiceInvitation extends LightningElement {
             return inv.id == invitationId;
         });
         console.log('Invitation ' + JSON.stringify(invitationToResend));
-        this.sendInvitation(invitationToResend[0].email, invitationToResend[0].role);
+        this.sendInvitation(invitationToResend[0].id, invitationToResend[0].email, invitationToResend[0].role);
     }
     
     cancelInvitation(event){
         console.log('Canceling invitation ' + event.target.dataset.id);
+        var invitationList = [];
+        
+        invitationList.push({
+            id: event.target.dataset.id
+        });
+        cancelInvitation({encodedInvitationList: invitationList}).then(data => {
+            console.log('Cancelled ' + event.target.dataset.id);
+            refreshApex(this.invitationEntireListWired);
+        });
     }
 
     handleNext(){
@@ -208,15 +234,17 @@ export default class ServiceInvitation extends LightningElement {
         roleTarget.selectedIndex = 0;
     }
 
-    sendInvitation(email, role){
+    sendInvitation(id, email, role){
         var invitationList = [];
+        
         invitationList.push({
+            id: id,
             emailAddress: email,
             portalApplicationId: this.portalApplicationId,
             userRole: role,
+            accountId: this.accountId,
             status: activeLbl
         });
-        console.log('INvitations sent ' + JSON.stringify(invitationList));
         inviteUsers({encodedInvitationList: invitationList}).then(data => {
             console.log('Invitation sent to ' + email + ' with role ' + role);
             refreshApex(this.invitationEntireListWired);
