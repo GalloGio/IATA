@@ -236,44 +236,6 @@
         <type>Checkbox</type>
     </fields>
     <fields>
-        <fullName>Capacity_In_Kg__c</fullName>
-        <description>GSE attribute field, Measures the Capacity in kg. </description>
-        <externalId>false</externalId>
-        <label>Capacity (in kg)</label>
-        <length>255</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Cart_Type__c</fullName>
-        <description>GSE attribute field.</description>
-        <externalId>false</externalId>
-        <label>Cart Type</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Picklist</type>
-        <valueSet>
-            <restricted>true</restricted>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>Open</fullName>
-                    <default>false</default>
-                    <label>Open</label>
-                </value>
-                <value>
-                    <fullName>Closed</fullName>
-                    <default>false</default>
-                    <label>Closed</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
-    </fields>
-    <fields>
         <fullName>CRSTR_Actions_Taken__c</fullName>
         <description>Actions Taken</description>
         <externalId>false</externalId>
@@ -741,6 +703,44 @@ FALSE
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
+        <fullName>Capacity_In_Kg__c</fullName>
+        <description>GSE attribute field, Measures the Capacity in kg.</description>
+        <externalId>false</externalId>
+        <label>Capacity (in kg)</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Cart_Type__c</fullName>
+        <description>GSE attribute field.</description>
+        <externalId>false</externalId>
+        <label>Cart Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Open</fullName>
+                    <default>false</default>
+                    <label>Open</label>
+                </value>
+                <value>
+                    <fullName>Closed</fullName>
+                    <default>false</default>
+                    <label>Closed</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>Category__c</fullName>
         <description>The picklist value, must be included in the custom metadata &quot;ICG Capabaility Configuration&quot; in the row with type &quot;Categories by record Type&quot; and the same key as the own record type</description>
         <externalId>false</externalId>
@@ -836,6 +836,19 @@ FALSE
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
         <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Drawbar_Pull_Kg__c</fullName>
+        <description>GSE attribute field, Measures the Drawbar Pull in kN.</description>
+        <externalId>false</externalId>
+        <label>Drawbar Pull (kN)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>ESC_Name__c</fullName>
@@ -947,19 +960,6 @@ FALSE
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Drawbar_Pull_Kg__c</fullName>
-        <description>GSE attribute field, Measures the Drawbar Pull in kN.</description>
-        <externalId>false</externalId>
-        <label>Drawbar Pull (kN)</label>
-        <precision>18</precision>
-        <required>false</required>
-        <scale>0</scale>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Number</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>Energy_Mobility__c</fullName>
         <description>GSE attribute field, Energy Mobility Type.</description>
         <externalId>false</externalId>
@@ -1032,42 +1032,6 @@ FALSE
         </valueSet>
     </fields>
     <fields>
-        <fullName>Energy__c</fullName>
-        <description>GSE attribute field, Energy Type.</description>
-        <externalId>false</externalId>
-        <label>Energy</label>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Picklist</type>
-        <valueSet>
-            <restricted>true</restricted>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>Electricity</fullName>
-                    <default>false</default>
-                    <label>Electricity</label>
-                </value>
-                <value>
-                    <fullName>IC_Engine</fullName>
-                    <default>false</default>
-                    <label>I.C. Engine</label>
-                </value>
-                <value>
-                    <fullName>Hybrid</fullName>
-                    <default>false</default>
-                    <label>Hybrid</label>
-                </value>
-                <value>
-                    <fullName>Fuel_Cell</fullName>
-                    <default>false</default>
-                    <label>Fuel Cell</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
-    </fields>
-    <fields>
         <fullName>Energy_Without_Motor__c</fullName>
         <description>GSE attribute field, Energy Type without motor (Not Applicable).</description>
         <externalId>false</externalId>
@@ -1104,6 +1068,42 @@ FALSE
                     <fullName>Not_Applicable</fullName>
                     <default>false</default>
                     <label>Not Applicable</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Energy__c</fullName>
+        <description>GSE attribute field, Energy Type.</description>
+        <externalId>false</externalId>
+        <label>Energy</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Electricity</fullName>
+                    <default>false</default>
+                    <label>Electricity</label>
+                </value>
+                <value>
+                    <fullName>IC_Engine</fullName>
+                    <default>false</default>
+                    <label>I.C. Engine</label>
+                </value>
+                <value>
+                    <fullName>Hybrid</fullName>
+                    <default>false</default>
+                    <label>Hybrid</label>
+                </value>
+                <value>
+                    <fullName>Fuel_Cell</fullName>
+                    <default>false</default>
+                    <label>Fuel Cell</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -1935,18 +1935,6 @@ FALSE
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Maximum_Load_Kg__c</fullName>
-        <description>GSE attribute field, Measures the Maximum Load in kg.</description>
-        <externalId>false</externalId>
-        <label>Maximum Load (kg)</label>
-        <length>255</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>Max_Capacity_In_Passengers__c</fullName>
         <description>GSE attribute field, Maximum Capacity number of Passagers.</description>
         <externalId>false</externalId>
@@ -2044,6 +2032,18 @@ FALSE
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Maximum_Load_Kg__c</fullName>
+        <description>GSE attribute field, Measures the Maximum Load in kg.</description>
+        <externalId>false</externalId>
+        <label>Maximum Load (kg)</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Method_Type__c</fullName>
         <description>GxA Integration field</description>
         <externalId>false</externalId>
@@ -2128,18 +2128,6 @@ url: url where is stored the document</inlineHelpText>
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>Operating_Temperature_Range__c</fullName>
-        <description>GSE attribute field.</description>
-        <externalId>false</externalId>
-        <label>Operating Temperature Range</label>
-        <length>255</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>OTCEI_Max_ULD_Size_Dimensions_H__c</fullName>
         <description>Describes the max ULD size dimensions (Height)</description>
         <externalId>false</externalId>
@@ -2176,6 +2164,18 @@ url: url where is stored the document</inlineHelpText>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Operating_Temperature_Range__c</fullName>
+        <description>GSE attribute field.</description>
+        <externalId>false</externalId>
+        <label>Operating Temperature Range</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
         <unique>false</unique>
     </fields>
     <fields>
@@ -2762,32 +2762,6 @@ url: url where is stored the photo</inlineHelpText>
         <type>Checkbox</type>
     </fields>
     <fields>
-        <fullName>Servicing_Height_Max__c</fullName>
-        <description>GSE attribute field, Measures the Maximum Servicing Height in m.</description>
-        <externalId>false</externalId>
-        <label>Servicing Height (in m) Max</label>
-        <precision>18</precision>
-        <required>false</required>
-        <scale>1</scale>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Number</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Servicing_Height_Min__c</fullName>
-        <description>GSE attribute field, Measures the Minimum Servicing Height in m.</description>
-        <externalId>false</externalId>
-        <label>Servicing Height (in m) Min</label>
-        <precision>18</precision>
-        <required>false</required>
-        <scale>1</scale>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Number</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>SPPE_Method_Type__c</fullName>
         <description>Desbribe the method type of method of validation for Safety personnel and Protective equipment</description>
         <externalId>false</externalId>
@@ -2815,22 +2789,36 @@ url: url where is stored the photo</inlineHelpText>
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
+        <fullName>Servicing_Height_Max__c</fullName>
+        <description>GSE attribute field, Measures the Maximum Servicing Height in m.</description>
+        <externalId>false</externalId>
+        <label>Servicing Height (in m) Max</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Servicing_Height_Min__c</fullName>
+        <description>GSE attribute field, Measures the Minimum Servicing Height in m.</description>
+        <externalId>false</externalId>
+        <label>Servicing Height (in m) Min</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Supply_Flowrate_In_Kg_Sec__c</fullName>
         <description>GSE attribute field, Measures the Supply Flowrate in kg/sec.</description>
         <externalId>false</externalId>
         <label>Supply Flowrate (in kg/sec)</label>
-        <length>255</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
-        <fullName>Tank_Capacity__c</fullName>
-        <description>GSE attribute field.</description>
-        <externalId>false</externalId>
-        <label>Tank Capacity</label>
         <length>255</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -2928,6 +2916,18 @@ url: url where is stored the photo</inlineHelpText>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Tank_Capacity__c</fullName>
+        <description>GSE attribute field.</description>
+        <externalId>false</externalId>
+        <label>Tank Capacity</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>ULD_Compatibility_DPE__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -2982,18 +2982,6 @@ url: url where is stored the photo</inlineHelpText>
         <type>Checkbox</type>
     </fields>
     <fields>
-        <fullName>Useable_Internal_Volume__c</fullName>
-        <description>GSE attribute field.</description>
-        <externalId>false</externalId>
-        <label>Useable Internal Volume</label>
-        <length>255</length>
-        <required>false</required>
-        <trackHistory>false</trackHistory>
-        <trackTrending>false</trackTrending>
-        <type>Text</type>
-        <unique>false</unique>
-    </fields>
-    <fields>
         <fullName>Use_Of_GSE__c</fullName>
         <description>GSE attribute field.</description>
         <externalId>false</externalId>
@@ -3020,30 +3008,16 @@ url: url where is stored the photo</inlineHelpText>
         </valueSet>
     </fields>
     <fields>
-        <fullName>Voltage_Supply__c</fullName>
+        <fullName>Useable_Internal_Volume__c</fullName>
+        <description>GSE attribute field.</description>
         <externalId>false</externalId>
-        <label>Voltage Supply</label>
+        <label>Useable Internal Volume</label>
+        <length>255</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
-        <type>MultiselectPicklist</type>
-        <valueSet>
-            <restricted>true</restricted>
-            <valueSetDefinition>
-                <sorted>false</sorted>
-                <value>
-                    <fullName>115_V_AC_400_Hz</fullName>
-                    <default>false</default>
-                    <label>115 V AC, 400 Hz</label>
-                </value>
-                <value>
-                    <fullName>28_V_DC</fullName>
-                    <default>false</default>
-                    <label>28 V DC</label>
-                </value>
-            </valueSetDefinition>
-        </valueSet>
-        <visibleLines>4</visibleLines>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>VPPC_Export__c</fullName>
@@ -3135,6 +3109,32 @@ url: url where is stored the photo</inlineHelpText>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Voltage_Supply__c</fullName>
+        <externalId>false</externalId>
+        <label>Voltage Supply</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>115_V_AC_400_Hz</fullName>
+                    <default>false</default>
+                    <label>115 V AC, 400 Hz</label>
+                </value>
+                <value>
+                    <fullName>28_V_DC</fullName>
+                    <default>false</default>
+                    <label>28 V DC</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>4</visibleLines>
     </fields>
     <fields>
         <fullName>WVDE_Linked_Facility_Management_Inv_Syst__c</fullName>
@@ -25374,7 +25374,6 @@ url: url where is stored the photo</inlineHelpText>
     </recordTypes>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
-    <visibility>Public</visibility>
     <validationRules>
         <fullName>Year_Of_Manufacture_Validation_Rule</fullName>
         <active>true</active>
@@ -25385,4 +25384,5 @@ VALUE(Year_Of_Manufacture__c) &gt; 3000)</errorConditionFormula>
         <errorDisplayField>Year_Of_Manufacture__c</errorDisplayField>
         <errorMessage>The &apos;Year of manufacture&apos; field must be a valid year. A number between 1900 and 3000.</errorMessage>
     </validationRules>
+    <visibility>Public</visibility>
 </CustomObject>
