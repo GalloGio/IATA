@@ -13,7 +13,7 @@
 			<div class="progressBarContainer">
 				<div class="progressBar">
 					<div class="progressItem">
-						Your details
+						{label.CSP_labReg_Step_GeneralInformation}
 						<!--<div class="itemIcon">
 							<img src={confirmationLogo} class={confirmationLogoCssClass}>
 						</div>
@@ -25,7 +25,7 @@
 						</template>--> 
 					</div>
 					<div class="progressItem">
-						Country Labs
+						{label.CSP_LabReg_Step_Locations}
 						<!--<div class="itemIcon">
 							<img src={confirmationLogo} class={confirmationLogoCssClass}>
 						</div>
@@ -37,7 +37,7 @@
 						</template>-->
 					</div>
 					<div class="progressItem">
-						Airline agreements
+						{label.CSP_labReg_Step_Airline_Agreements}
 						<!--<div class="itemIcon">
 							<img src={confirmationLogo} class={confirmationLogoCssClass}>
 						</div>
@@ -49,7 +49,7 @@
 						</template>-->
 					</div>
 					<div class="progressItem">
-						Confirmation
+						{label.CSP_labReg_Step_Confirmation}
 						<!--<div class="itemIcon">
 							<img src={confirmationLogo} class={confirmationLogoCssClass}>
 						</div>
@@ -70,11 +70,11 @@
 						<!-- main content with form-->
 
 						<div >
-							<lightning-layout-item size="12" class="topLabel IEFixDisplay">
+							<lightning-layout-item size="12" class="topLabel IEFixDisplay" if:false={isConfirmationStep}>
 								<span class="fixed-text">{label.CSP_L2_Profile_Details_Message}</span>
 							</lightning-layout-item>
 
-							<lightning-layout-item class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix IEFixDisplay" size="12">
+							<lightning-layout-item class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix IEFixDisplay" size="12" if:false={isConfirmationStep}>
 							</lightning-layout-item>
 
 							<div if:true={isYourDetailsStep} class="isYourDetailsStep">
@@ -585,7 +585,8 @@
 														row-number-offset=0
 														suppress-bottom-bar
 														columns={countryColumns}
-														hide-checkbox-column>
+														hide-checkbox-column
+														oncellchange={handleCountryInlineEdit}>>
 												</lightning-datatable>
 											</div>
 										</lightning-accordion-section>
@@ -598,7 +599,8 @@
 														row-number-offset=0
 														suppress-bottom-bar
 														columns={countryColumns}
-														hide-checkbox-column>
+														hide-checkbox-column
+														oncellchange={handleCountryInlineEdit}>>
 												</lightning-datatable>
 											</div>
 										</lightning-accordion-section>
@@ -611,7 +613,8 @@
 														row-number-offset=0
 														suppress-bottom-bar
 														columns={countryColumns}
-														hide-checkbox-column>
+														hide-checkbox-column
+														oncellchange={handleCountryInlineEdit}>>
 												</lightning-datatable>
 											</div>
 										</lightning-accordion-section>
@@ -624,7 +627,8 @@
 														row-number-offset=0
 														suppress-bottom-bar
 														columns={countryColumns}
-														hide-checkbox-column>
+														hide-checkbox-column
+														oncellchange={handleCountryInlineEdit}>>
 												</lightning-datatable>
 											</div>
 										</lightning-accordion-section>
@@ -679,7 +683,247 @@
 							</div>
 
 							<div if:true={isConfirmationStep} class="isConfirmationStep">
-								Are you sure you want to submit your request?
+								<lightning-layout multiple-rows vertical-align="stretch">
+									<div class="IEFixDisplayContainer">
+
+										<lightning-layout-item size="12" class="topLabel IEFixDisplay">
+											<div class="stepText">Fancy message here such as You are only one step away from updating your profile. Please check the information provided and click submit button if everthing looks correct.</div>
+										</lightning-layout-item>
+							
+										<lightning-layout-item class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix IEFixDisplay" size="12">
+										</lightning-layout-item>
+
+
+										<div class="sectionHeaderContainer">
+											<lightning-layout-item size="6" class="IEFixDisplay">
+												<div class="sectionTitle">LAB Whatever</div>
+											</lightning-layout-item>
+										</div>
+										<lightning-layout-item size="6" class="IEFixDisplay">
+											<div class="sectionDescription">please check your details</div>
+										</lightning-layout-item>
+					
+										<lightning-layout-item size="6" class="IEFixDisplay">
+										</lightning-layout-item>
+					
+										<lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
+										</lightning-layout-item>
+
+										<!-- Lab Details-->
+										<div>
+											<lightning-layout-item size="6" class="IEFixDisplay">
+												<div class="sectionSubTitle">1. {label.CSP_labReg_Step_GeneralInformation}</div>
+											</lightning-layout-item>
+							
+											<lightning-layout-item size="6" style="text-align:right;" class="IEFixDisplay">
+													<div class="text-xxsmall">
+													<!--<lightning-button variant="base"
+														label={labels.CSP_L2_Back_to_Edit}
+														title={labels.CSP_L2_Back_to_Edit}
+														onclick={toCompanyInformation}
+														class="blueCustomButtonLinkSmall"
+														icon-name="utility:forward" 
+														icon-position="right">
+													</lightning-button>-->
+													go back to edit
+												</div>
+											</lightning-layout-item>
+							
+											<lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
+											</lightning-layout-item>
+
+											<div class="fieldContainer">
+												<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
+													<div class="dataLabel">{label.CSP_LabReg_InitialQuestion}</div>
+													<div class="dataValue itemValue">{labTypeSelection}</div>
+												</lightning-layout-item>
+
+												<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
+													<div class="dataLabel">{label.CSP_LabReg_How_Long_In_Business}</div>
+													<div class="dataValue itemValue">{howLongInBusinessSelection}</div>
+												</lightning-layout-item>
+
+												<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
+													<div class="dataLabel">{label.CSP_LabReg_labsPartOfNationalPlatform}</div>
+													<div class="dataValue itemValue">{labsPartOfNationalPlatform}</div>
+												</lightning-layout-item>
+
+												<lightning-layout-item size="12" class="fieldItem IEFixDisplay" if:true={showWhichNationalPlatform}>
+													<div class="dataLabel">{label.CSP_LabReg_Which_One}</div>
+													<div class="dataValue itemValue">{whichNationalPlatform}</div>
+												</lightning-layout-item>
+
+												<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
+													<div class="dataLabel">{label.CSP_LabReg_issueTestResultsSelection}</div>
+													<div class="dataValue itemValue">{issueTestResultsSelection}</div>
+												</lightning-layout-item>
+
+												<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
+													<div class="dataLabel">{label.CSP_LabReg_manageBookingSelection}</div>
+													<div class="dataValue itemValue">{manageBookingSelection}</div>
+												</lightning-layout-item>
+
+												<!-- FORM A -->
+												<div  if:true={isAForm}>
+													<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
+														<div class="dataLabel">{label.CSP_LabReg_Operating_Brand}</div>
+														<div class="dataValue itemValue">{operatingUnderBrand}</div>
+													</lightning-layout-item>
+
+													<lightning-layout-item size="12" class="fieldItem IEFixDisplay" if:true={showWhichBrand}>
+														<div class="dataLabel">{label.CSP_LabReg_Which_One}</div>
+														<div class="dataValue itemValue">{whichBrands}</div>
+													</lightning-layout-item>
+
+													<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
+														<div class="dataLabel">{label.CSP_LabReg_SLA_InPlace}</div>
+														<div class="dataValue itemValue">{SLAInPlace}</div>
+													</lightning-layout-item>
+
+													<lightning-layout-item size="12" class="fieldItem IEFixDisplay" if:true={showNatureOfSLA}>
+														<div class="dataLabel">{label.CSP_LabReg_Describe_SLA_Nature}</div>
+														<div class="dataValue itemValue">{NatureOfSLA}</div>
+													</lightning-layout-item>
+												</div>
+
+
+												<!-- FORM B -->
+
+												<div  if:true={isBForm}>
+													<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
+														<div class="dataLabel">{label.CSP_LabReg_TypeOfLab}</div>
+														<div class="dataValue itemValue">{typeOfLabSelection}</div>
+													</lightning-layout-item>
+
+													<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
+														<div class="dataLabel">{label.CSP_LabReg_AdditionalCertInPlace}</div>
+														<div class="dataValue itemValue">{AdditionalCertInPlace}</div>
+													</lightning-layout-item>
+
+													<lightning-layout-item size="12" class="fieldItem IEFixDisplay" if:true={showAdditionalCert}>
+														<div class="dataLabel">{label.CSP_LabReg_Which_One}</div>
+														<div class="dataValue itemValue">{whichAdditionalCert}</div>
+													</lightning-layout-item>
+
+													<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
+														<div class="dataLabel">{label.CSP_LabReg_National_Govern_Platform}</div>
+														<div class="dataValue itemValue">{endorsedByGovern}</div>
+													</lightning-layout-item>
+
+													<lightning-layout-item size="12" class="fieldItem IEFixDisplay" if:true={showWhichGovern}>
+														<div class="dataLabel">{label.CSP_LabReg_Describe_SLA_Nature}</div>
+														<div class="dataValue itemValue">{whichGovern}</div>
+													</lightning-layout-item>
+
+													<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
+														<div class="dataLabel">{label.CSP_LabReg_nationalAccreditationSelection}</div>
+														<div class="dataValue itemValue">{nationalAccreditationSelection}</div>
+													</lightning-layout-item>
+												</div>
+											</div>
+										</div>
+
+
+										<!-- COUNTRIES -->
+										<div>
+											<lightning-layout-item size="6" class="IEFixDisplay">
+												<div class="sectionSubTitle">2. {label.CSP_LabReg_Step_Locations}</div>
+											</lightning-layout-item>
+							
+											<lightning-layout-item size="6" style="text-align:right;" class="IEFixDisplay">
+													<div class="text-xxsmall">
+													<!--<lightning-button variant="base"
+														label={labels.CSP_L2_Back_to_Edit}
+														title={labels.CSP_L2_Back_to_Edit}
+														onclick={toCompanyInformation}
+														class="blueCustomButtonLinkSmall"
+														icon-name="utility:forward" 
+														icon-position="right">
+													</lightning-button>-->
+													go back to edit
+												</div>
+											</lightning-layout-item>
+							
+											<lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
+											</lightning-layout-item>
+
+											<ul class="slds-m-around_medium">
+											<template for:each={countriesChina} for:item="cntr">
+												<li key={cntr.Id}>
+													{cntr.Name} - {cntr.NumOfLabs}
+												</li>
+											</template>
+
+											<template for:each={countriesAfrica} for:item="cntr">
+												<li key={cntr.Id}>
+													{cntr.Name} - {cntr.NumOfLabs}
+												</li>
+											</template>
+
+											<template for:each={countriesAmerica} for:item="cntr">
+												<li key={cntr.Id}>
+													{cntr.Name} - {cntr.NumOfLabs}
+												</li>
+											</template>
+
+											<template for:each={countriesAsia} for:item="cntr">
+												<li key={cntr.Id}>
+													{cntr.Name} - {cntr.NumOfLabs}
+												</li>
+											</template>
+
+											<template for:each={countriesEurope} for:item="cntr">
+												<li key={cntr.Id}>
+													{cntr.Name} - {cntr.NumOfLabs}
+												</li>
+											</template>
+											</ul>
+											<div class="fieldContainer">
+											</div>
+										</div>
+
+
+										<!-- AIRLINE AGREEMENTS-->
+										<div>
+											<lightning-layout-item size="6" class="IEFixDisplay">
+												<div class="sectionSubTitle">3. {label.CSP_labReg_Step_Airline_Agreements}</div>
+											</lightning-layout-item>
+							
+											<lightning-layout-item size="6" style="text-align:right;" class="IEFixDisplay">
+													<div class="text-xxsmall">
+													<!--<lightning-button variant="base"
+														label={labels.CSP_L2_Back_to_Edit}
+														title={labels.CSP_L2_Back_to_Edit}
+														onclick={toCompanyInformation}
+														class="blueCustomButtonLinkSmall"
+														icon-name="utility:forward" 
+														icon-position="right">
+													</lightning-button>-->
+													go back to edit
+												</div>
+											</lightning-layout-item>
+							
+											<lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
+											</lightning-layout-item>
+
+											<div class="fieldContainer">
+												<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
+													<div class="dataLabel">{label.CSP_LabReg_airlinePartnershipSelection}</div>
+													<div class="dataValue itemValue">{airlinePartnershipSelection}</div>
+												</lightning-layout-item>
+											</div>
+											<ul class="slds-m-around_medium">
+											<template for:each={selectedAirlines} for:item="airline">
+												<li key={airline.value}>
+													{airline.label}
+												</li>
+											</template>
+											</ul>
+										</div>
+
+
+									</div>
+								</lightning-layout>
 							</div>
 
 							<div if:true={isGreetingStep} class="isGreetingStep">

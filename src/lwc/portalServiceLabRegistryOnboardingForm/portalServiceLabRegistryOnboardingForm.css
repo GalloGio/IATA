@@ -206,3 +206,123 @@
         min-width: 100px;
     }
 }
+
+.stepText {
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.63;
+    letter-spacing: normal;
+    color: #525252;
+  }
+
+  .sectionTitle {
+    font-size: 22px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.45;
+    letter-spacing: normal;
+    color: #333333;
+    padding-bottom: 4px;
+  }
+
+  .sectionSubTitle {
+    font-size: 18px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.78;
+    letter-spacing: normal;
+    color: #333333;
+    padding: 15px 0;
+  }
+
+  .sectionDescription {
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.63;
+    letter-spacing: normal;
+    color: #4a4d61;
+  }  
+
+  .dataLabel {
+    font-size: 14px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.43;
+    letter-spacing: normal;
+    color: #999999;
+  }
+
+  
+
+  .dataValue {
+    font-size: 16px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.63;
+    letter-spacing: normal;
+    color: #525252;
+  }
+
+  .backButtonWrapper{
+    display: flex;
+    align-items: center;
+}
+
+.editButtonWrapper{
+  display: flex;
+  justify-content: flex-end;
+}
+
+.containedButton{
+    box-shadow: none !important;
+}
+
+
+
+.customBtn .slds-button:disabled{
+    box-shadow: none;
+}
+
+.warningIcon{
+  margin-right: 10px;
+}
+
+.fieldContainer{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.fieldItem{
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 15px;
+}
+
+.fullWidthItem:first-child{
+  width: 100%;
+}
+
+.itemValue{
+  word-wrap: break-word;
+  padding-right: 15px;
+}
+
+.sectionHeaderContainer{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.sectionHeaderContainer .editButtonWrapper{
+  text-align: right;
+}

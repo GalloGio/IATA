@@ -4,6 +4,7 @@ import { NavigationMixin } from 'lightning/navigation';
 import getCountries from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.getISOCountries';
 import getAirlinesHQ from '@salesforce/apex/LabRegistry_helper.getAirlinesHQ';
 import { navigateToPage} from'c/navigationUtils';
+import saveSurveyAnswers from '@salesforce/apex/LabRegistry_helper.saveSurveyAnswers';
 
 //Objects schema
 import OBJECT_LAB_ACCOUNT_ROLE_DETAIL from '@salesforce/schema/LAB_Account_Role_Detail__c';
@@ -59,6 +60,11 @@ import CSP_LabReg_AirlineAgreements from '@salesforce/label/c.CSP_LabReg_Airline
 import CSP_LabReg_CountryLabs from '@salesforce/label/c.CSP_LabReg_CountryLabs';
 import CSP_L2_Profile_Details_Message from '@salesforce/label/c.CSP_L2_Profile_Details_Message';
 
+import CSP_labReg_Step_GeneralInformation from '@salesforce/label/c.CSP_labReg_Step_GeneralInformation';
+import CSP_LabReg_Step_Locations from '@salesforce/label/c.CSP_LabReg_Step_Locations';
+import CSP_labReg_Step_Confirmation from '@salesforce/label/c.CSP_labReg_Step_Confirmation';
+import CSP_labReg_Step_Airline_Agreements from '@salesforce/label/c.CSP_labReg_Step_Airline_Agreements';
+
 import CSP_Error_Message_Mandatory_Fields from '@salesforce/label/c.CSP_Error_Message_Mandatory_Fields_Contact';
 
 export default class PortalServiceOnboardingForm extends NavigationMixin(LightningElement) {
@@ -112,6 +118,10 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 		,CSP_LabReg_CountryLabs
 		,CSP_L2_Profile_Details_Message
 		,CSP_L2_Next_Step
+		,CSP_labReg_Step_Airline_Agreements
+		,CSP_labReg_Step_Confirmation
+		,CSP_LabReg_Step_Locations
+		,CSP_labReg_Step_GeneralInformation
 	}
 
 	@track isLoading = false;
@@ -168,7 +178,6 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 
 	@wire(getCountries,{}) countryData(result){
 		if(result.data){
-			console.log('i am loading countries');
 			result.data.countryList.forEach(cntr =>{
 				switch(cntr.Region__c){
 					case 'Africa & Middle East':
@@ -271,10 +280,12 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 			this.selectedAirlines = [];
 		}
 		else{
+			let tmp = [];
 			selected.forEach(str =>{
 				let selectLabels = this.listOptionsAirlines.find(o => o.value == str).label;
-				this.selectedAirlines.push({'value':str, 'label':selectLabels});
+				tmp.push({'value':str, 'label':selectLabels});
 			});
+			this.selectedAirlines = tmp;
 		}
 	}
 
@@ -542,15 +553,132 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 
 	handleSubmitRequest(){
 		//TODO Create method to save
-		if(this.setAForm && (this.SLAInPlace == '' || this.ownFacilitiesOrPartnerLabSelection == '' || this.manageBookingSelection == '' || this.issueTestResultsSelection=='' || this.airlinePartnershipSelection=='')){
-			//this.showMandatoryFieldsError = true;
+		//this.dispatchEvent(new CustomEvent('requestcompleted', { detail: { success: false }, bubbles: true,composed: true }));// sends the event to the grandparent
+		this.startLoading();
+
+		let labDetail =  { 'sobjectType': 'LAB_Account_Role_Detail__c' };
+		let countriesLabs = [];
+		let airlineAgreements = [];
+
+		//common answers
+		labDetail.How_long_have_you_been_in_the_business__c = this.howLongInBusinessSelection;
+		labDetail.Lab_Type__c = this.labTypeSelection;
+		labDetail.Do_you_manage_booking_for_all_locations__c = this.manageBookingSelection;
+		labDetail.Do_you_issue_test_results_for_all_lab__c = this.issueTestResultsSelection;
+		labDetail.Are_your_labs_part_of_national_platform__c = this.labsPartOfNationalPlatform;
+			if(this.labsPartOfNationalPlatform == 'Yes')
+				labDetail.Which_National_Platform__c = this.whichNationalPlatform;
+
+		labDetail.Existing_partnership_with_airlines__c = this.airlinePartnershipSelection;
+
+		if(this.isAForm){
+			labDetail.Operating_under_brand__c = this.operatingUnderBrand;
+			if(this.operatingUnderBrand == 'Yes')
+				labDetail.Which_Operating_Brand__c = this.whichBrands;
+
+			labDetail.Type_of_SLAs_in_place__c = this.SLAInPlace;
+			if(this.SLAInPlace == 'Yes')
+				labDetail.Nature_of_SLA__c = this.NatureOfSLA;
+
+		}if(this.isBForm){
+			labDetail.Type_of_lab__c = this.typeOfLabSelection;
+			labDetail.National_accreditation_for_all_the_labs__c = this.nationalAccreditationSelection;
+			labDetail.Additional_certifications_in_place__c = this.AdditionalCertInPlace;
+			if(this.AdditionalCertInPlace == 'Yes')
+				labDetail.Additional_certifications__c = this.whichAdditionalCert;
+			
+			labDetail.Endorsed_by_governments__c = this.endorsedByGovern;
+			if(this.endorsedByGovern == 'Yes')
+				labDetail.Which_governments__c = this.whichGovern;
 		}
-		else if(this.setBForm && (this.typeOfLabSelection == '' || this.SLACertificationInPlace == '' || this.nationalAccreditationSelection == '' || this.labsPartOfNationalPlatform=='' || this.airlinePartnership02Selection=='')){
-			//this.showMandatoryFieldsError = true;
-		}
-		else{
-			//this.dispatchEvent(new CustomEvent('requestcompleted', { detail: { success: false }, bubbles: true,composed: true }));// sends the event to the grandparent
-		}
+
+		this.countriesChina.forEach(cntr => {
+			if(cntr.NumOfLabs == undefined || cntr.NumOfLabs == null ||cntr.NumOfLabs == ''){}
+			else{
+				let countryLab =  { 'sobjectType': 'LAB_Account_Role_Detail__c' };
+				countryLab.Operating_Country__c = cntr.Id;
+				countryLab.How_Many_Lab__c = cntr.NumOfLabs;
+				countriesLabs.push(countryLab);
+			}
+		});
+
+		this.countriesAsia.forEach(cntr => {
+			if(cntr.NumOfLabs == undefined || cntr.NumOfLabs == null ||cntr.NumOfLabs == ''){}
+			else{
+				let countryLab =  { 'sobjectType': 'LAB_Account_Role_Detail__c' };
+				countryLab.Operating_Country__c = cntr.Id;
+				countryLab.How_Many_Lab__c = cntr.NumOfLabs;
+				countriesLabs.push(countryLab);
+			}
+		});
+
+		this.countriesAfrica.forEach(cntr => {
+			if(cntr.NumOfLabs == undefined || cntr.NumOfLabs == null ||cntr.NumOfLabs == ''){}
+			else{
+				let countryLab =  { 'sobjectType': 'LAB_Account_Role_Detail__c' };
+				countryLab.Operating_Country__c = cntr.Id;
+				countryLab.How_Many_Lab__c = cntr.NumOfLabs;
+				countriesLabs.push(countryLab);
+			}
+		});
+
+		this.countriesAmerica.forEach(cntr => {
+			if(cntr.NumOfLabs == undefined || cntr.NumOfLabs == null ||cntr.NumOfLabs == ''){}
+			else{
+				let countryLab =  { 'sobjectType': 'LAB_Account_Role_Detail__c' };
+				countryLab.Operating_Country__c = cntr.Id;
+				countryLab.How_Many_Lab__c = cntr.NumOfLabs;
+				countriesLabs.push(countryLab);
+			}
+		});
+
+		this.countriesEurope.forEach(cntr => {
+			if(cntr.NumOfLabs == undefined || cntr.NumOfLabs == null ||cntr.NumOfLabs == ''){}
+			else{
+				let countryLab =  { 'sobjectType': 'LAB_Account_Role_Detail__c' };
+				countryLab.Operating_Country__c = cntr.Id;
+				countryLab.How_Many_Lab__c = cntr.NumOfLabs;
+				countriesLabs.push(countryLab);
+			}
+		});
+
+		this.selectedAirlines.forEach(airline =>{
+			let airlineAgreement =  { 'sobjectType': 'LAB_Account_Role_Detail__c' };
+			airlineAgreement.Partner_Airline__c = airline.value;
+			airlineAgreements.push(airlineAgreement);
+		});
+		
+
+		
+		saveSurveyAnswers({labRoleDetail: labDetail
+							, lsCountriesLab : countriesLabs
+							, lsAirlineAgreement: airlineAgreements})
+			.then(result => {
+
+				this.stopLoading(); 
+			})
+			.catch(error => {
+				//this.configureAndOpenErrorModal(error);
+				this.stopLoading();
+			});    
+		/*createNewAccount({ acc: account})
+                .then(result => {
+
+                    let res = JSON.parse(JSON.stringify(result));
+                    if(res.startsWith('accountId')){
+                        this.accountId = res.replace('accountId', '');
+                        this.configureAndOpenSuccessModal();
+                    }
+                    else{
+                        this.configureAndOpenErrorModal(res);
+                    }
+
+                    this.stopLoading();                
+                })
+                .catch(error => {
+                    this.configureAndOpenErrorModal(error);
+                    this.stopLoading();
+                });     */
 	}
 
 	
