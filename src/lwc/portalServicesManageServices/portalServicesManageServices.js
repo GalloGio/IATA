@@ -825,7 +825,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 	//only display contact list for portal admins with access granted
 	get displayAdminView() {
 
-		return this.isAdmin;
+		return this.isAdmin && !this.serviceRecord.recordService.Cannot_be_managed_by_portal_admin__c;
 	}
 
 	//Callback on service request submit completed

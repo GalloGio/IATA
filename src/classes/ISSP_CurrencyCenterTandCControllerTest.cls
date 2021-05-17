@@ -20,9 +20,9 @@ private class ISSP_CurrencyCenterTandCControllerTest
 	}
 
 	public static Portal_Applications__c createAccountStatementApp(User user) {
-		Portal_Applications__c app = new Portal_Applications__c(
-			Name = 'Currency Center', Application_URL__c = '/ISSP_CurrencyCenterHome'
-		);
+		Portal_Applications__c app = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		app.Name = 'Currency Center';
+		app.Application_URL__c = '/ISSP_CurrencyCenterHome';
 		insert app;
 		Portal_Application_Right__c appRight = new Portal_Application_Right__c(
 			Portal_Application__c = app.Id,

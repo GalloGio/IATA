@@ -154,7 +154,7 @@ private class ISSP_PortalUserStatusChangeTest {
 		con.Community__c = 'E-Commerce';
 		insert con;
 
-		Portal_Applications__c portalApp = new Portal_Applications__c();
+		Portal_Applications__c portalApp = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
 		portalApp.Name = 'test portalApp';
 		portalApp.Critical_Service__c = true;
 		insert portalApp;
@@ -249,7 +249,7 @@ private class ISSP_PortalUserStatusChangeTest {
 		con.Community__c = 'E-Commerce';
 		insert con;
 
-		Portal_Applications__c portalApp = new Portal_Applications__c();
+		Portal_Applications__c portalApp = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
 		portalApp.Name = 'test portalApp';
 		portalApp.Critical_Service__c = false;
 		insert portalApp;
@@ -514,7 +514,7 @@ private class ISSP_PortalUserStatusChangeTest {
 		con.email='asd@asd.com';
 		insert con;
 
-	   Portal_Applications__c portalApp = new Portal_Applications__c();
+	   Portal_Applications__c portalApp = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
 		portalApp.Name = 'test portalApp';
 		portalApp.Critical_Service__c = true;
 		insert portalApp;

@@ -3,6 +3,9 @@ public class PortalRegistrationSecondLevelCtrlTest {
 
 	@TestSetup
 	static void createData(){
+		Portal_Applications__c portalApp = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		portalApp.Name = 'IFTP';
+		insert portalApp;
 
 		ISSP_CS__c setting = new ISSP_CS__c();
 		setting.Name = 'DefaultNewAccountOwnerId';
@@ -296,9 +299,6 @@ public class PortalRegistrationSecondLevelCtrlTest {
 			ShippingState = state.Name
 		);
 
-		Portal_Applications__c portalApp = new Portal_Applications__c(Name = 'IFTP');
-		insert portalApp;
-
 		//Create Accounts Roles
 		List<Account_Roles__c> accRolesList = new List<Account_Roles__c>();
 		Account_Roles__c accRolesITP = new Account_Roles__c(Name = 'ITP');
@@ -309,6 +309,8 @@ public class PortalRegistrationSecondLevelCtrlTest {
 		accRolesList.add(accRolesAirlineSup);
 		insert accRolesList;
 
+		Portal_Applications__c portalApp = PortalApplicationSelector.selectIdByName(new Set<String>{'IFTP'}).get(0);
+
 		//Create Accounts Services'
 		List<Account_Role_Services__c> accRoleServicesList = new List<Account_Role_Services__c>();
 		Account_Role_Services__c accRoleServicesITP = new Account_Role_Services__c(Name = 'IFTP - ITP', Account_Roles__c = accRolesITP.Id, Portal_Service__c = portalApp.Id);
@@ -316,7 +318,6 @@ public class PortalRegistrationSecondLevelCtrlTest {
 		accRoleServicesList.add(accRoleServicesITP);
 		accRoleServicesList.add(accRoleServicesAirline);
 		insert accRoleServicesList;
-
 
 		Test.startTest();
 		PortalRegistrationSecondLevelCtrl.registrationWithNewAccount(acc, con);
@@ -327,8 +328,6 @@ public class PortalRegistrationSecondLevelCtrlTest {
 	static void testIFTPRegistrationWithExistingAccount(){
 		Contact con = [SELECT Id FROM Contact WHERE LastName = 'L1 Contact'];
 		Account acc = [SELECT Id FROM Account WHERE Name = 'TEST ITP'];
-
-		
 
 		//Create Accounts Roles
 		List<Account_Roles__c> accRolesList = new List<Account_Roles__c>();
@@ -344,8 +343,7 @@ public class PortalRegistrationSecondLevelCtrlTest {
 		Account_Role__c accRole = new Account_Role__c(account__c = acc.id, recordtypeid = RECTYPE_ITP_AccRole);
 		insert accRole;
 		Test.StartTest();
-		Portal_Applications__c portalApp = new Portal_Applications__c(Name = 'IFTP');
-		insert portalApp;
+		Portal_Applications__c portalApp = PortalApplicationSelector.selectIdByName(new Set<String>{'IFTP'}).get(0);
 
 		//Create Accounts Services'
 		List<Account_Role_Services__c> accRoleServicesList = new List<Account_Role_Services__c>();
@@ -358,5 +356,4 @@ public class PortalRegistrationSecondLevelCtrlTest {
 		Boolean success = PortalRegistrationSecondLevelCtrl.registrationWithExistingAccount(acc, con);
 		Test.StopTest();
 	}
-
 }

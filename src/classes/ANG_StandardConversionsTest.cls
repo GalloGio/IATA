@@ -5,7 +5,8 @@ private class ANG_StandardConversionsTest {
 
 		Test.startTest();
 
-		Portal_Applications__c par = new Portal_Applications__c (Name = ANG_RHCHelper.RISK_PROFILE_AND_RHC_PORTAL_SERVICE);
+		Portal_Applications__c par = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		par.Name = ANG_RHCHelper.RISK_PROFILE_AND_RHC_PORTAL_SERVICE;
 		insert par;
 
 		Amazon_Cred__c amazon_Cred =  new Amazon_Cred__c(

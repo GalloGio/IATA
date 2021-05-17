@@ -34,11 +34,17 @@ private class PortalCasesCtrlTest {
 
 		User newUser = ISSP_ObjectFactory.createPortalUser(newCon1);
 
-		Portal_Applications__c pa = new Portal_Applications__c(Name = TIP_Utils.PORTAL_SERVICE_NAME_TIP);
-		Portal_Applications__c pa1 = new Portal_Applications__c(Name = 'Airline Joinings Test');
-		Portal_Applications__c pa2 = new Portal_Applications__c(name = 'Agency Service Test');
-		Portal_Applications__c pa3 = new Portal_Applications__c(name = 'IATA Airlines and Location Codes');
-		insert new List<Portal_Applications__c>{pa, pa1, pa2, pa3};
+		List<Portal_Applications__c> portalApplicationList = TestDataFactory_PortalApplications.createDefaultPortalApplication(4);
+
+		Portal_Applications__c pa = portalApplicationList.get(0);
+		pa.Name = TIP_Utils.PORTAL_SERVICE_NAME_TIP;
+		Portal_Applications__c pa1 = portalApplicationList.get(1);
+		pa1.Name = 'Airline Joinings Test';
+		Portal_Applications__c pa2 = portalApplicationList.get(2);
+		pa2.Name = 'Agency Service Test';
+		Portal_Applications__c pa3 = portalApplicationList.get(3);
+		pa3.Name = 'IATA Airlines and Location Codes';
+		insert portalApplicationList;
 
 		ISSP_Portal_Service_Ids__c psi = new ISSP_Portal_Service_Ids__c(
 			TIP_Portal_Service_Id__c = pa.Id,
@@ -97,40 +103,38 @@ private class PortalCasesCtrlTest {
 
 		Id caseRT_FDS_ICCS_Email_to_Case = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ICCS_Email_to_Case');
 		Test.startTest();
-			System.runAs(usr) {
-				Case newCase4 = new Case(Subject = 'Bla', Region__c = 'Africa & Middle East',
-										Origin = 'Portal', CaseArea__c = 'Accreditation',
-										E2CP__AdditionalCC__c = 'testqa.tcosta@yopmail.com.inactive.inactive',
-										RecordTypeId = caseRT_FDS_ICCS_Email_to_Case,
-										Visible_on_ISS_Portal__c = true, ContactId = usr.ContactId);
-				insert newCase4;
+		System.runAs(usr) {
+			Case newCase4 = new Case(Subject = 'Bla', Region__c = 'Africa & Middle East',
+									Origin = 'Portal', CaseArea__c = 'Accreditation',
+									E2CP__AdditionalCC__c = 'testqa.tcosta@yopmail.com.inactive.inactive',
+									RecordTypeId = caseRT_FDS_ICCS_Email_to_Case,
+									Visible_on_ISS_Portal__c = true, ContactId = usr.ContactId);
+			insert newCase4;
 
-				Case getCaseTest = PortalCasesCtrl.getCaseById(newCase4.Id);
+			Case getCaseTest = PortalCasesCtrl.getCaseById(newCase4.Id);
 
-				List<CSP_Utils.PickListWrapper> caseTypeOptions = PortalCasesCtrl.typeOfCasePortalCustomPicklist();
+			List<CSP_Utils.PickListWrapper> caseTypeOptions = PortalCasesCtrl.typeOfCasePortalCustomPicklist();
 
-				PortalSearchFilterWrapper.casesComponent casesCmp = new PortalSearchFilterWrapper.casesComponent();
-				casesCmp.caseTypeFilter = caseTypeOptions[0].value;
-				casesCmp.caseCountryFilter = 'Portugal';
-				PortalSearchFilterWrapper portFilterWrapper = new PortalSearchFilterWrapper();
-				portFilterWrapper.searchText = 'Bla';
-				portFilterWrapper.casesComponent = casesCmp;
+			PortalSearchFilterWrapper.casesComponent casesCmp = new PortalSearchFilterWrapper.casesComponent();
+			casesCmp.caseTypeFilter = caseTypeOptions[0].value;
+			casesCmp.caseCountryFilter = 'Portugal';
+			PortalSearchFilterWrapper portFilterWrapper = new PortalSearchFilterWrapper();
+			portFilterWrapper.searchText = 'Bla';
+			portFilterWrapper.casesComponent = casesCmp;
 
-				CSP_Utils.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
+			CSP_Utils.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
 
-				CSP_Utils.PagedResult pag = PortalCasesCtrl.getRecentCases(false, false, false);
+			CSP_Utils.PagedResult pag = PortalCasesCtrl.getRecentCases(false, false, false);
 
-				PortalCasesCtrl.ReturnWrapper addNewRecipientTest = PortalCasesCtrl.addNewRecipient(newCase1.Id, '');
+			PortalCasesCtrl.ReturnWrapper addNewRecipientTest = PortalCasesCtrl.addNewRecipient(newCase1.Id, '');
 
-				DAL_WithoutSharing.ReturnWrapper submitNewMessageTest = DAL_WithoutSharing.submitNewMessage(newCase.Id, 'Test Message');
-			}
-			PortalCasesCtrl.ReturnWrapper addNewRecipientTest1 = PortalCasesCtrl.addNewRecipient(newCase.Id, 'testeW@csp.testclass');
-			PortalCasesCtrl.ReturnWrapper addNewRecipientTest2 = PortalCasesCtrl.addNewRecipient(newCase.Id, 'testemailNEW@csp.testclass');
-			List<PortalCasesCtrl.MessageWrapper> lstCases = PortalCasesCtrl.getCaseMessages(newCase.Id);
-			PortalCasesCtrl.ReturnWrapper removeRecipientTest = PortalCasesCtrl.removeRecipient(newCase1.Id, 'tes@test.com');
+			DAL_WithoutSharing.ReturnWrapper submitNewMessageTest = DAL_WithoutSharing.submitNewMessage(newCase.Id, 'Test Message');
+		}
+		PortalCasesCtrl.ReturnWrapper addNewRecipientTest1 = PortalCasesCtrl.addNewRecipient(newCase.Id, 'testeW@csp.testclass');
+		PortalCasesCtrl.ReturnWrapper addNewRecipientTest2 = PortalCasesCtrl.addNewRecipient(newCase.Id, 'testemailNEW@csp.testclass');
+		List<PortalCasesCtrl.MessageWrapper> lstCases = PortalCasesCtrl.getCaseMessages(newCase.Id);
+		PortalCasesCtrl.ReturnWrapper removeRecipientTest = PortalCasesCtrl.removeRecipient(newCase1.Id, 'tes@test.com');
 		Test.stopTest();
-
-
 	}
 
 	@IsTest
@@ -145,26 +149,26 @@ private class PortalCasesCtrlTest {
 		Case getCaseTest = PortalCasesCtrl.getCaseById(newCase.Id);
 		Id caseRT_FDS_ICCS_Email_to_Case = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'FDS_ICCS_Email_to_Case');
 		Test.startTest();
-			Boolean isAdmin = PortalCasesCtrl.isAirlineAdmin();
-			System.runAs(usr) {
+		Boolean isAdmin = PortalCasesCtrl.isAirlineAdmin();
+		System.runAs(usr) {
 
-				Case newCase4 = new Case(Subject = 'Bla', Region__c = 'Africa & Middle East',
-										Origin = 'Portal', CaseArea__c = 'Accreditation', CNSCase__c = true,
-										E2CP__AdditionalCC__c = 'testqa.tcosta@yopmail.com.inactive.inactive',
-										RecordTypeId = caseRT_FDS_ICCS_Email_to_Case,
-										Visible_on_ISS_Portal__c = true, ContactId = usr.ContactId);
-				insert newCase4;
+			Case newCase4 = new Case(Subject = 'Bla', Region__c = 'Africa & Middle East',
+									Origin = 'Portal', CaseArea__c = 'Accreditation', CNSCase__c = true,
+									E2CP__AdditionalCC__c = 'testqa.tcosta@yopmail.com.inactive.inactive',
+									RecordTypeId = caseRT_FDS_ICCS_Email_to_Case,
+									Visible_on_ISS_Portal__c = true, ContactId = usr.ContactId);
+			insert newCase4;
 
-				CSP_Utils.PagedResult pag = PortalCasesCtrl.getRecentCases(true, true, true);
+			CSP_Utils.PagedResult pag = PortalCasesCtrl.getRecentCases(true, true, true);
 
-				PortalCasesCtrl.ReturnWrapper addNewRecipientTest = PortalCasesCtrl.addNewRecipient(newCase1.Id, '');
+			PortalCasesCtrl.ReturnWrapper addNewRecipientTest = PortalCasesCtrl.addNewRecipient(newCase1.Id, '');
 
-				DAL_WithoutSharing.ReturnWrapper submitNewMessageTest = DAL_WithoutSharing.submitNewMessage(newCase.Id, 'Test Message');
-			}
-			PortalCasesCtrl.ReturnWrapper addNewRecipientTest1 = PortalCasesCtrl.addNewRecipient(newCase.Id, 'testeW@csp.testclass');
-			PortalCasesCtrl.ReturnWrapper addNewRecipientTest2 = PortalCasesCtrl.addNewRecipient(newCase.Id, 'testemailNEW@csp.testclass');
-			List<PortalCasesCtrl.MessageWrapper> lstCases = PortalCasesCtrl.getCaseMessages(newCase.Id);
-			PortalCasesCtrl.ReturnWrapper removeRecipientTest = PortalCasesCtrl.removeRecipient(newCase1.Id, 'tes@test.com');
+			DAL_WithoutSharing.ReturnWrapper submitNewMessageTest = DAL_WithoutSharing.submitNewMessage(newCase.Id, 'Test Message');
+		}
+		PortalCasesCtrl.ReturnWrapper addNewRecipientTest1 = PortalCasesCtrl.addNewRecipient(newCase.Id, 'testeW@csp.testclass');
+		PortalCasesCtrl.ReturnWrapper addNewRecipientTest2 = PortalCasesCtrl.addNewRecipient(newCase.Id, 'testemailNEW@csp.testclass');
+		List<PortalCasesCtrl.MessageWrapper> lstCases = PortalCasesCtrl.getCaseMessages(newCase.Id);
+		PortalCasesCtrl.ReturnWrapper removeRecipientTest = PortalCasesCtrl.removeRecipient(newCase1.Id, 'tes@test.com');
 		Test.stopTest();
 	}
 
@@ -177,32 +181,25 @@ private class PortalCasesCtrlTest {
 
 		Case getCaseTest = PortalCasesCtrl.getCaseById(newCase.Id);
 		Test.startTest();
-			System.runAs(usr) {
+		System.runAs(usr) {
+			createOscar(TIP_Utils.CASE_REASON_PAYMENT_PROVIDER_MANAGMENT,TIP_Utils.CASE_AREA_TRANSPARENCY_IN_PAYMENTS,TIP_Utils.CASE_STATUS_DRAFT,usr.ContactId,'OSCAR_Communication');
+			PortalSearchFilterWrapper portFilterWrapper = new PortalSearchFilterWrapper();
+			portFilterWrapper.searchText = 'Bla';
 
-				createOscar(TIP_Utils.CASE_REASON_PAYMENT_PROVIDER_MANAGMENT,TIP_Utils.CASE_AREA_TRANSPARENCY_IN_PAYMENTS,TIP_Utils.CASE_STATUS_DRAFT,usr.ContactId,'OSCAR_Communication');
-				PortalSearchFilterWrapper portFilterWrapper = new PortalSearchFilterWrapper();
-				portFilterWrapper.searchText = 'Bla';
-
-				CSP_Utils.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
-
-				PortalCasesCtrl.ReturnWrapper addNewRecipientTest = PortalCasesCtrl.addNewRecipient(newCase1.Id, '');
-
-				DAL_WithoutSharing.ReturnWrapper submitNewMessageTest = DAL_WithoutSharing.submitNewMessage(newCase.Id, 'Test Message');
-
-
-				PortalCasesCtrl.MessageWrapper mw = new PortalCasesCtrl.MessageWrapper();
-
-			}
-			PortalCasesCtrl.ReturnWrapper addNewRecipientTest1 = PortalCasesCtrl.addNewRecipient(newCase.Id, 'testeW@csp.testclass');
-			PortalCasesCtrl.ReturnWrapper addNewRecipientTest2 = PortalCasesCtrl.addNewRecipient(newCase.Id, 'testemailNEW@csp.testclass');
-			List<PortalCasesCtrl.MessageWrapper> lstCases = PortalCasesCtrl.getCaseMessages(newCase.Id);
-			PortalCasesCtrl.ReturnWrapper removeRecipientTest = PortalCasesCtrl.removeRecipient(newCase1.Id, 'tes@test.com');
+			CSP_Utils.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
+			PortalCasesCtrl.ReturnWrapper addNewRecipientTest = PortalCasesCtrl.addNewRecipient(newCase1.Id, '');
+			DAL_WithoutSharing.ReturnWrapper submitNewMessageTest = DAL_WithoutSharing.submitNewMessage(newCase.Id, 'Test Message');
+			PortalCasesCtrl.MessageWrapper mw = new PortalCasesCtrl.MessageWrapper();
+		}
+		PortalCasesCtrl.ReturnWrapper addNewRecipientTest1 = PortalCasesCtrl.addNewRecipient(newCase.Id, 'testeW@csp.testclass');
+		PortalCasesCtrl.ReturnWrapper addNewRecipientTest2 = PortalCasesCtrl.addNewRecipient(newCase.Id, 'testemailNEW@csp.testclass');
+		List<PortalCasesCtrl.MessageWrapper> lstCases = PortalCasesCtrl.getCaseMessages(newCase.Id);
+		PortalCasesCtrl.ReturnWrapper removeRecipientTest = PortalCasesCtrl.removeRecipient(newCase1.Id, 'tes@test.com');
 		Test.stopTest();
 	}
 
 	@IsTest
 	static void testHandleResult3(){
-
 		Contact cont = [SELECT Id,lastname,firstname,email FROM Contact WHERE FirstName = 'Jane' LIMIT 1];
 
 		user u = ISSP_ObjectFactory.createPortalUser(cont);
@@ -212,26 +209,23 @@ private class PortalCasesCtrlTest {
 		Id caseRT_FDS_ICCS_Email_to_Case = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
 		Test.startTest();
-			System.runAs(u) {
+		System.runAs(u) {
+			contact contt2= new contact(
+				lastname='Dane',
+				email='janedanetest@test.test',
+				status__c='Active',
+				user_portal_status__c='Approved Admin'
+			);
+			insert contt2;
+			Case cs = new Case(	Subject = 'Bla', Region__c = 'Africa & Middle East',
+								Origin = 'Portal', CaseArea__c = 'Accreditation',
+								E2CP__AdditionalCC__c = 'testqa.tcosta@yopmail.com.inactive.inactive',
+								RecordTypeId = caseRT_FDS_ICCS_Email_to_Case,
+								Visible_on_ISS_Portal__c = true, ContactId = u.ContactId);
+			insert cs;
 
-				contact contt2= new contact(
-					lastname='Dane',
-					email='janedanetest@test.test',
-					status__c='Active',
-					user_portal_status__c='Approved Admin'
-				);
-				insert contt2;
-			   Case cs = new Case(Subject = 'Bla', Region__c = 'Africa & Middle East',
-										Origin = 'Portal', CaseArea__c = 'Accreditation',
-										E2CP__AdditionalCC__c = 'testqa.tcosta@yopmail.com.inactive.inactive',
-										RecordTypeId = caseRT_FDS_ICCS_Email_to_Case,
-										Visible_on_ISS_Portal__c = true, ContactId = u.ContactId);
-				insert cs;
-
-
-				PortalCasesCtrl.ReturnWrapper addNewRecipientTest = PortalCasesCtrl.addNewRecipient(cs.Id, 'janedanetest@test.test');
-
-			}
+			PortalCasesCtrl.ReturnWrapper addNewRecipientTest = PortalCasesCtrl.addNewRecipient(cs.Id, 'janedanetest@test.test');
+		}
 
 		Test.stopTest();
 	}
@@ -241,17 +235,15 @@ private class PortalCasesCtrlTest {
 		User usr = [SELECT Id, ContactId FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
 
 		Test.startTest();
-			System.runAs(usr) {
+		System.runAs(usr) {
+			createOscar('CHG – Data Maintenance','Test','Draft',usr.ContactId,'OSCAR_Communication');
+			PortalSearchFilterWrapper portFilterWrapper = new PortalSearchFilterWrapper();
+			portFilterWrapper.searchText = 'Bla';
 
-				createOscar('CHG – Data Maintenance','Test','Draft',usr.ContactId,'OSCAR_Communication');
-				PortalSearchFilterWrapper portFilterWrapper = new PortalSearchFilterWrapper();
-				portFilterWrapper.searchText = 'Bla';
-
-				CSP_Utils.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
-				List<CSP_Utils.PickListWrapper> contactPickOptions = PortalCasesCtrl.companyCasesContactsPicklist();
-				System.assertNotEquals(0, contactPickOptions.size());
-			}
-
+			CSP_Utils.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
+			List<CSP_Utils.PickListWrapper> contactPickOptions = PortalCasesCtrl.companyCasesContactsPicklist();
+			System.assertNotEquals(0, contactPickOptions.size());
+		}
 		Test.stopTest();
 	}
 
@@ -260,15 +252,13 @@ private class PortalCasesCtrlTest {
 		User usr = [SELECT Id, ContactId FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
 
 		Test.startTest();
-			System.runAs(usr) {
+		System.runAs(usr) {
+			createOscar(AMS_Utils.CASE_REASON_FOR_MANAGEMENT,'Test','Draft',usr.ContactId,'OSCAR_Communication');
+			PortalSearchFilterWrapper portFilterWrapper = new PortalSearchFilterWrapper();
+			portFilterWrapper.searchText = 'Bla';
 
-				createOscar(AMS_Utils.CASE_REASON_FOR_MANAGEMENT,'Test','Draft',usr.ContactId,'OSCAR_Communication');
-				PortalSearchFilterWrapper portFilterWrapper = new PortalSearchFilterWrapper();
-				portFilterWrapper.searchText = 'Bla';
-
-				CSP_Utils.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
-			}
-
+			CSP_Utils.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
+		}
 		Test.stopTest();
 	}
 	@IsTest
@@ -276,15 +266,13 @@ private class PortalCasesCtrlTest {
 		User usr = [SELECT Id, ContactId FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
 
 		Test.startTest();
-			System.runAs(usr) {
+		System.runAs(usr) {
+			createOscar('New','Test','Draft',usr.ContactId,'OSCAR_Communication');
+			PortalSearchFilterWrapper portFilterWrapper = new PortalSearchFilterWrapper();
+			portFilterWrapper.searchText = 'Bla';
 
-				createOscar('New','Test','Draft',usr.ContactId,'OSCAR_Communication');
-				PortalSearchFilterWrapper portFilterWrapper = new PortalSearchFilterWrapper();
-				portFilterWrapper.searchText = 'Bla';
-
-				CSP_Utils.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
-			}
-
+			CSP_Utils.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
+		}
 		Test.stopTest();
 	}
 
@@ -293,15 +281,13 @@ private class PortalCasesCtrlTest {
 		User usr = [SELECT Id, ContactId FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
 
 		Test.startTest();
-			System.runAs(usr) {
+		System.runAs(usr) {
+			createOscar(AMS_Utils.CASE_REASON_HE_MULTICOUNTRY,'Test','Draft',usr.ContactId,'OSCAR_Communication');
+			PortalSearchFilterWrapper portFilterWrapper = new PortalSearchFilterWrapper();
+			portFilterWrapper.searchText = 'Bla';
 
-				createOscar(AMS_Utils.CASE_REASON_HE_MULTICOUNTRY,'Test','Draft',usr.ContactId,'OSCAR_Communication');
-				PortalSearchFilterWrapper portFilterWrapper = new PortalSearchFilterWrapper();
-				portFilterWrapper.searchText = 'Bla';
-
-				CSP_Utils.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
-			}
-
+			CSP_Utils.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
+		}
 		Test.stopTest();
 	}
 
@@ -310,15 +296,14 @@ private class PortalCasesCtrlTest {
 		User usr = [SELECT Id, ContactId FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
 
 		Test.startTest();
-			System.runAs(usr) {
+		System.runAs(usr) {
 
-				createOscar('CLO – Closure','Test','Draft',usr.ContactId,'OSCAR_Communication');
-				PortalSearchFilterWrapper portFilterWrapper = new PortalSearchFilterWrapper();
-				portFilterWrapper.searchText = 'Bla';
+			createOscar('CLO – Closure','Test','Draft',usr.ContactId,'OSCAR_Communication');
+			PortalSearchFilterWrapper portFilterWrapper = new PortalSearchFilterWrapper();
+			portFilterWrapper.searchText = 'Bla';
 
-				CSP_Utils.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
-			}
-
+			CSP_Utils.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
+		}
 		Test.stopTest();
 	}
 	@IsTest
@@ -326,15 +311,14 @@ private class PortalCasesCtrlTest {
 		User usr = [SELECT Id, ContactId FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
 
 		Test.startTest();
-			System.runAs(usr) {
+		System.runAs(usr) {
 
-				createOscar('Bank Detail Update','Test','Draft',usr.ContactId,'OSCAR_Communication');
-				PortalSearchFilterWrapper portFilterWrapper = new PortalSearchFilterWrapper();
-				portFilterWrapper.searchText = 'Bla';
+			createOscar('Bank Detail Update','Test','Draft',usr.ContactId,'OSCAR_Communication');
+			PortalSearchFilterWrapper portFilterWrapper = new PortalSearchFilterWrapper();
+			portFilterWrapper.searchText = 'Bla';
 
-				CSP_Utils.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
-			}
-
+			CSP_Utils.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
+		}
 		Test.stopTest();
 	}
 	@IsTest
@@ -342,15 +326,14 @@ private class PortalCasesCtrlTest {
 		User usr = [SELECT Id, ContactId FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
 
 		Test.startTest();
-			System.runAs(usr) {
+		System.runAs(usr) {
 
-				createOscar('Annual revalidation','Test','Open',usr.ContactId,'OSCAR_Communication');
-				PortalSearchFilterWrapper portFilterWrapper = new PortalSearchFilterWrapper();
-				portFilterWrapper.searchText = 'Bla';
+			createOscar('Annual revalidation','Test','Open',usr.ContactId,'OSCAR_Communication');
+			PortalSearchFilterWrapper portFilterWrapper = new PortalSearchFilterWrapper();
+			portFilterWrapper.searchText = 'Bla';
 
-				CSP_Utils.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
-			}
-
+			CSP_Utils.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
+		}
 		Test.stopTest();
 	}
 	@IsTest
@@ -358,15 +341,14 @@ private class PortalCasesCtrlTest {
 		User usr = [SELECT Id, ContactId FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
 
 		Test.startTest();
-			System.runAs(usr) {
-				createOscar(TIP_Utils.CASE_REASON_PRODUCT_MANAGEMENT,TIP_Utils.CASE_AREA_TRANSPARENCY_IN_PAYMENTS,TIP_Utils.CASE_STATUS_DRAFT,usr.ContactId,'OSCAR_Communication');
+		System.runAs(usr) {
+			createOscar(TIP_Utils.CASE_REASON_PRODUCT_MANAGEMENT,TIP_Utils.CASE_AREA_TRANSPARENCY_IN_PAYMENTS,TIP_Utils.CASE_STATUS_DRAFT,usr.ContactId,'OSCAR_Communication');
 
-				PortalSearchFilterWrapper portFilterWrapper = new PortalSearchFilterWrapper();
-				portFilterWrapper.searchText = 'Bla';
+			PortalSearchFilterWrapper portFilterWrapper = new PortalSearchFilterWrapper();
+			portFilterWrapper.searchText = 'Bla';
 
-				CSP_Utils.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
-			}
-
+			CSP_Utils.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
+		}
 		Test.stopTest();
 	}
 
@@ -375,23 +357,20 @@ private class PortalCasesCtrlTest {
 		User usr = [SELECT Id, ContactId FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
 
 		Test.startTest();
-			System.runAs(usr) {
-				createOscar('Test','','Draft',usr.ContactId,'IDFS_Airline_Participation_Process');
+		System.runAs(usr) {
+			createOscar('Test','','Draft',usr.ContactId,'IDFS_Airline_Participation_Process');
 
-				PortalSearchFilterWrapper portFilterWrapper = new PortalSearchFilterWrapper();
-				portFilterWrapper.searchText = 'Bla';
+			PortalSearchFilterWrapper portFilterWrapper = new PortalSearchFilterWrapper();
+			portFilterWrapper.searchText = 'Bla';
 
-				CSP_Utils.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
-			}
-
+			CSP_Utils.PagedResult pag1 = PortalCasesCtrl.getFilteredCasesResultsPage(JSON.serialize(portFilterWrapper), '0', CSP_Utils.isAdmin());
+		}
 		Test.stopTest();
 	}
 
 	@isTest
 	static void testHandleResult12(){	
-
 		User usr = [SELECT Id, ContactId FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
-
 		Id caseRT_airlineCodingApplication = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Airline_Coding_Application');
 
 		Test.startTest();
@@ -412,16 +391,13 @@ private class PortalCasesCtrlTest {
 			List<CSP_Utils.PickListWrapper> caseTypeOptions = PortalCasesCtrl.typeOfCasePortalCustomPicklist();
 			
 			CSP_Utils.PagedResult pag = PortalCasesCtrl.getRecentCases(false, false, false);
-			
 		}
 		Test.stopTest();
 	}
 
 	@isTest
 	static void testHandleResult13(){	
-
 		User usr = [SELECT Id, ContactId FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
-
 		Id caseRT_airlineCodingApplication = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Airline_Coding_Application');
 
 		Test.startTest();
@@ -442,16 +418,13 @@ private class PortalCasesCtrlTest {
 			List<CSP_Utils.PickListWrapper> caseTypeOptions = PortalCasesCtrl.typeOfCasePortalCustomPicklist();
 			
 			CSP_Utils.PagedResult pag = PortalCasesCtrl.getRecentCases(false, false, false);
-			
 		}
 		Test.stopTest();
 	}
 
 	@isTest
 	static void testHandleResult14(){	
-
 		User usr = [SELECT Id, ContactId FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
-
 		Id caseRT_airlineCodingApplication = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Airline_Coding_Application');
 
 		Test.startTest();
@@ -461,27 +434,21 @@ private class PortalCasesCtrlTest {
 									RecordTypeId = caseRT_airlineCodingApplication,
 									Visible_on_ISS_Portal__c = true, ContactId = usr.ContactId);
 			insert newCase4;
-			
-				
+
 			Participation_Online_Application__c participation = new Participation_Online_Application__c();
 			participation.Case__c = newCase4.Id;
 			insert participation;
 
 			Case getCaseTest = PortalCasesCtrl.getCaseById(newCase4.Id);
-
 			List<CSP_Utils.PickListWrapper> caseTypeOptions = PortalCasesCtrl.typeOfCasePortalCustomPicklist();
-			
 			CSP_Utils.PagedResult pag = PortalCasesCtrl.getRecentCases(false, false, false);
-			
 		}
 		Test.stopTest();
 	}
 
 	@isTest
 	static void testHandleResult15(){	
-
 		User usr = [SELECT Id, ContactId FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
-
 		Id caseRT_airlineCodingApplication = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'Airline_Coding_Application');
 
 		Test.startTest();
@@ -491,8 +458,7 @@ private class PortalCasesCtrlTest {
 									RecordTypeId = caseRT_airlineCodingApplication,
 									Visible_on_ISS_Portal__c = true, ContactId = usr.ContactId);
 			insert newCase4;
-			
-				
+
 			Participation_Online_Application__c participation = new Participation_Online_Application__c();
 			participation.Case__c = newCase4.Id;
 			insert participation;
@@ -500,9 +466,8 @@ private class PortalCasesCtrlTest {
 			Case getCaseTest = PortalCasesCtrl.getCaseById(newCase4.Id);
 
 			List<CSP_Utils.PickListWrapper> caseTypeOptions = PortalCasesCtrl.typeOfCasePortalCustomPicklist();
-			
-			CSP_Utils.PagedResult pag = PortalCasesCtrl.getRecentCases(false, false, false);
-			
+
+			CSP_Utils.PagedResult pag = PortalCasesCtrl.getRecentCases(false, false, false);	
 		}
 		Test.stopTest();
 	}
@@ -529,9 +494,7 @@ private class PortalCasesCtrlTest {
 		ams.Notify_Change_Location__c = true;
 		insert ams;
 
-		AP_Process_Form__c apForm = new AP_Process_Form__c(
-			Case__c = newCase4.Id
-		);
+		AP_Process_Form__c apForm = new AP_Process_Form__c(Case__c = newCase4.Id);
 		insert apForm;
 
 		PortalCasesCtrl.OptionWrapper opBuilder = PortalCasesCtrl.optionBuilder(newCase4);
@@ -551,30 +514,28 @@ private class PortalCasesCtrlTest {
 
 		String link = PortalCasesCtrl.getSurveyLink(newCase.Id);
 		System.assert(link != null);
-
 	}
 
 	@IsTest static void testPortalGlobalSearch() {
+		User testUser = [SELECT Id FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
 
-	User testUser = [SELECT Id FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
+		Test.startTest();
+		System.runAs(testUser) {
+			CSP_Utils.PagedResult test = new CSP_Utils.PagedResult();
+			List<CSP_Utils.PickListWrapper> caseTypeOptions = PortalCasesCtrl.typeOfCasePortalCustomPicklist();
 
-	Test.startTest();
-	System.runAs(testUser) {
-		CSP_Utils.PagedResult test = new CSP_Utils.PagedResult();
-		List<CSP_Utils.PickListWrapper> caseTypeOptions = PortalCasesCtrl.typeOfCasePortalCustomPicklist();
+			PortalSearchFilterWrapper.casesComponent casesCmp = new PortalSearchFilterWrapper.casesComponent();
+			casesCmp.caseTypeFilter = caseTypeOptions[0].value;
+			casesCmp.caseCountryFilter = 'Portugal';
+			casesCmp.show = true;
+			PortalSearchFilterWrapper filtersWrapper = new PortalSearchFilterWrapper();
+			filtersWrapper.searchText = 'Bla';
+			filtersWrapper.casesComponent = casesCmp;
 
-		PortalSearchFilterWrapper.casesComponent casesCmp = new PortalSearchFilterWrapper.casesComponent();
-		casesCmp.caseTypeFilter = caseTypeOptions[0].value;
-		casesCmp.caseCountryFilter = 'Portugal';
-		casesCmp.show = true;
-		PortalSearchFilterWrapper filtersWrapper = new PortalSearchFilterWrapper();
-		filtersWrapper.searchText = 'Bla';
-		filtersWrapper.casesComponent = casesCmp;
-
-		test = PortalGlobalSearchCtrl.portalGlobalSearch(JSON.serialize(filtersWrapper), 'Cases');
+			test = PortalGlobalSearchCtrl.portalGlobalSearch(JSON.serialize(filtersWrapper), 'Cases');
+		}
+		Test.stopTest();
 	}
-	Test.stopTest();
-}
 
 	@IsTest
 	static void testGetHideForClosedCases(){
@@ -605,7 +566,7 @@ private class PortalCasesCtrlTest {
 		
 			}
 	}
-
+	
 	@IsTest
 	static void testGetHideAddNewDocumentsDGR(){
 		User usr = [SELECT Id, ContactId FROM User WHERE Email LIKE '%testemail1@csp.testclass' LIMIT 1];
@@ -653,15 +614,14 @@ private class PortalCasesCtrlTest {
 		insert newCase4;
 
 		Test.startTest();
-
 		System.runAs(usr) {
+			PortalCasesCtrl.PortalCasesCtrl_WithoutSharing CasesNoSharing = new PortalCasesCtrl.PortalCasesCtrl_WithoutSharing();
+            CasesNoSharing.getCaseComments(newCase4.Id);
+
 			Case getCaseTest = PortalCasesCtrl.getCaseById(newCase4.Id);
 			System.assertNotEquals(getCaseTest, null);
 		}
-		
 		PortalCasesCtrl.ReturnWrapper returnWrapperTest = new PortalCasesCtrl.ReturnWrapper(true, 'test', 'test');
-
 		Test.stopTest();
 	}
-
 }

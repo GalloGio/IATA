@@ -1,0 +1,26 @@
+<template>
+
+    <div if:false={componentLoading}>
+
+        <div class="slds-col slds-size_1-of-1 slds-m-bottom_medium text-small">
+            {picklistProperties.fieldLabel}
+        </div>
+
+        <div class="slds-col slds-size_1-of-1">
+            <div  class="slds-grid slds-wrap">
+                <template for:each={picklistProperties.lstPickOptions} for:item="item">
+                    <div key={item.label} class="slds-size_1-of-1 slds-large-size_1-of-2 slds-p-vertical--xx-small">
+                        <label class="checkbox-button">
+                            <input data-item={item.value}
+                                type="checkbox" class="checkbox-button__input"
+                                onchange={changeOption} checked={item.checked}>
+                            <span class="checkbox-button__control"></span>
+                            <span class="checkbox-button__label">{item.value}</span>
+                        </label>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+    
+</template>
