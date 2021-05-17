@@ -13,7 +13,6 @@ import reInvite from '@salesforce/label/c.Re_Invite';
 
 //import user id
 import userId from '@salesforce/user/Id';
-import getAccountId from '@salesforce/apex/InvitationService.getAccountId'; // Param: Id userId - Return: Id
 import getRoles from '@salesforce/apex/InvitationService.getInvitableRoles'; // Param: Id portalApplicationId - Return: List<String>
 import getInvitationList from '@salesforce/apex/InvitationService.getInvitationList'; // Param: Id portalApplicationId, List<Id> userIdList - Return: List<EncodedInvitation>
 import inviteUsers from '@salesforce/apex/InvitationService.inviteUsers'; // Param: List<EncodedInvitation> encodedInvitationList - Return: void
@@ -80,14 +79,7 @@ export default class ServiceInvitation extends LightningElement {
             this.invitationInfo['role'] = this.roleOptionList[0].value;
         }
     }
-
-    @wire(getAccountId, { userId : '$userId' })
-    getAccountIdWired({data, error}){
-        if(data){
-            this.accountId = data;
-        }
-    }
-
+    
     get roleOptions(){
         return this.roleOptionList;
     }
