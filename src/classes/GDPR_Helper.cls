@@ -155,7 +155,7 @@ public without sharing class GDPR_Helper {
 					'<span style="font-size:15px;">© International Air Transportation Association (IATA). All rights reserved.</span>'+
 				'</td>'+
 				'<td style="width:20%; text-align:center;">'+
-					'<a style="font-size:15px; text-decoration: none; color:#ffffff;" class="terms" href="https://www.iata.org/Pages/privacy.aspx" target="_blank">Privacy policy</a>'+
+					'<a style="font-size:15px; text-decoration: none; color:#ffffff;" class="terms" href="https://www.iata.org/en/privacy" target="_blank">Privacy policy</a>'+
 				'</td>'+
 			'</tr>'+
 
