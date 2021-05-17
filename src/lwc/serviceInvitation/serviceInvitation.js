@@ -1,4 +1,4 @@
-import { LightningElement, track, wire } from 'lwc';
+import { LightningElement, api, track, wire } from 'lwc';
 import { refreshApex } from '@salesforce/apex';
 
 import email from '@salesforce/label/c.Email';
@@ -14,7 +14,6 @@ import reInvite from '@salesforce/label/c.Re_Invite';
 //import user id
 import userId from '@salesforce/user/Id';
 import getAccountId from '@salesforce/apex/InvitationService.getAccountId'; // Param: Id userId - Return: Id
-import isServiceAdministrator from '@salesforce/apex/InvitationService.isServiceAdministrator'; // Params: Id portalApplicationId, List<Id> userIdList - Return: Map<Id,Boolean>
 import getRoles from '@salesforce/apex/InvitationService.getInvitableRoles'; // Param: Id portalApplicationId - Return: List<String>
 import getInvitationList from '@salesforce/apex/InvitationService.getInvitationList'; // Param: Id portalApplicationId, List<Id> userIdList - Return: List<EncodedInvitation>
 import inviteUsers from '@salesforce/apex/InvitationService.inviteUsers'; // Param: List<EncodedInvitation> encodedInvitationList - Return: void
@@ -24,6 +23,8 @@ const activeLbl = 'Active';
 const cancelledLbl = 'Cancelled';
 
 export default class ServiceInvitation extends LightningElement {
+    @api accountId;
+    
     label = {
         email,
         selectedRole,
@@ -39,8 +40,6 @@ export default class ServiceInvitation extends LightningElement {
     paramKey = 'serviceId';
     portalApplicationId = this.getUrlParamValue(window.location.href, this.paramKey);
     userIdList = [userId];
-    accountId;
-    _isServiceAdministrator = false;
 
     pageNo = 1;
     recordsPerPage = 10;
@@ -82,20 +81,8 @@ export default class ServiceInvitation extends LightningElement {
         }
     }
 
-    @wire(isServiceAdministrator, { portalApplicationId : '$portalApplicationId', userIdList : '$userIdList' })
-    isServiceAdministratorWired({data, error}){
-        if(data){
-            var userAdminList = Array.from(data, ([userId, isAdmin]) => ({ userId, isAdmin }));
-            var activeUserAdmin = userAdminList.filter(userAdmin => {
-                return userAdmin.userId === userId;
-            })[0];
-            this._isServiceAdministrator = activeUserAdmin.isAdmin;
-        }
-    }
-
     @wire(getAccountId, { userId : '$userId' })
     getAccountIdWired({data, error}){
-        console.log('cuenta ' + data);
         if(data){
             this.accountId = data;
         }
@@ -107,10 +94,6 @@ export default class ServiceInvitation extends LightningElement {
 
     get areInvitationListed(){
         return this.invitationsToDisplay.length !== 0;
-    }
-
-    get isServiceAdmin(){
-        return this._isServiceAdministrator;
     }
 
     get totalPages(){
@@ -145,11 +128,8 @@ export default class ServiceInvitation extends LightningElement {
                 this.invitationInfo[fieldName] = null;
                 return;
             }
-        } else {
-            console.log('Selectable options ' + JSON.stringify(this.roleOptionList));
         }
         this.invitationInfo[fieldName] = value;
-        console.log('Invitation info: ' + JSON.stringify(this.invitationInfo));
     }
 
     inviteUser(){
@@ -172,14 +152,12 @@ export default class ServiceInvitation extends LightningElement {
     }
     
     cancelInvitation(event){
-        console.log('Canceling invitation ' + event.target.dataset.id);
         var invitationList = [];
         
         invitationList.push({
             id: event.target.dataset.id
         });
         cancelInvitation({encodedInvitationList: invitationList}).then(data => {
-            console.log('Cancelled ' + event.target.dataset.id);
             refreshApex(this.invitationEntireListWired);
         });
     }
@@ -244,7 +222,6 @@ export default class ServiceInvitation extends LightningElement {
             status: activeLbl
         });
         inviteUsers({encodedInvitationList: invitationList}).then(data => {
-            console.log('Invitation sent to ' + email + ' with role ' + role);
             refreshApex(this.invitationEntireListWired);
         });
 
