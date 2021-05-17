@@ -162,7 +162,7 @@
     <ul style="width: 100% !important;">
       <li class="first"><a target="_new" href="http://www.iata.org/privacy">{!$Label.ISSP_Privacy_Policy}</a></li>
       <li>|</li>
-      <li><a target="_new" href="http://www.iata.org/customer-portal/Pages/terms.aspx">{!$Label.ISSP_Terms_of_Use}</a></li>
+      <li><a target="_new" href="https://www.iata.org/en/terms">{!$Label.ISSP_Terms_of_Use}</a></li>
   <!--<li>|</li>
       <li><a target="_new" href="/ISSP_Issue_With_Portal">{!$Label.ISSP_Issue_With_Portal}</a></li> -->
             <li style="float: right">
