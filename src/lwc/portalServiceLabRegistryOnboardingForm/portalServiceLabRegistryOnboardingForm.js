@@ -156,72 +156,6 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 	@wire(getPicklistValues, { recordTypeId: "$recTypeId", fieldApiName: FIELD_Endorsed_by_governments }) FIELD_Endorsed_by_governments_PicklistValues;
 
 
-	//Countries
-	@api countryColumns = [
-		{ label: 'Name', fieldName: 'Name', editable: false },
-		{ label: 'Iso Code', fieldName: 'IsoCode', editable: false },
-		{ label: 'Number Of Labs', fieldName: 'NumOfLabs', type: 'number', editable: true, maximumFractionDigits: 0 }
-	];
-
-	@api countryMetadata = {
-		Id: 'Id',
-		Name: 'Name',
-		IsoCode: 'Iso_code__c'
-	};
-
-	@track countriesAfrica = [];
-	@track countriesEurope = [];
-	@track countriesAmerica = [];
-	@track countriesAsia = [];
-	@track countriesChina = [];
-
-
-	@wire(getCountries,{}) countryData(result){
-		if(result.data){
-			result.data.countryList.forEach(cntr =>{
-				switch(cntr.Region__c){
-					case 'Africa & Middle East':
-						this.countriesAfrica.push({ 'Id': cntr.Id, 'Name': cntr.Name, 'IsoCode':cntr.ISO_Code__c});
-						break;
-					case 'Americas':
-						this.countriesAmerica.push({ 'Id': cntr.Id, 'Name': cntr.Name, 'IsoCode':cntr.ISO_Code__c});
-						break;
-					case 'Asia & Pacific':
-						this.countriesAsia.push({ 'Id': cntr.Id, 'Name': cntr.Name, 'IsoCode':cntr.ISO_Code__c});
-						break;
-					case 'China & North Asia':
-						this.countriesChina.push({ 'Id': cntr.Id, 'Name': cntr.Name, 'IsoCode':cntr.ISO_Code__c});
-						break;
-					case 'Europe':
-						this.countriesEurope.push({ 'Id': cntr.Id, 'Name': cntr.Name, 'IsoCode':cntr.ISO_Code__c});
-						break;
-				}
-			});
-		}
-    }
-
-	handleCountryInlineEdit(event){
-		let countryId = event.detail.draftValues[0].Id;
-		let labNum = event.detail.draftValues[0].NumOfLabs;
-
-		let chinaIndexFuond = this.countriesChina.findIndex(ar => ar.Id == countryId);
-		if(chinaIndexFuond > -1)	this.countriesChina[chinaIndexFuond].NumOfLabs = labNum;
-
-		let africaIndexFuond = this.countriesAfrica.findIndex(ar => ar.Id == countryId);
-		if(africaIndexFuond > -1)	this.countriesAfrica[africaIndexFuond].NumOfLabs = labNum; 
-
-		let americaIndexFuond = this.countriesAmerica.findIndex(ar => ar.Id == countryId);
-		if(americaIndexFuond > -1)	this.countriesAmerica[americaIndexFuond].NumOfLabs = labNum;
-
-		let asiaIndexFuond = this.countriesAsia.findIndex(ar => ar.Id == countryId);
-		if(asiaIndexFuond > -1)	this.countriesAsia[asiaIndexFuond].NumOfLabs = labNum;
-
-		let europeIndexFuond = this.countriesEurope.findIndex(ar => ar.Id == countryId);
-		if(europeIndexFuond > -1)	this.countriesEurope[europeIndexFuond].NumOfLabs = labNum;
-	}
-
-	@track savedLabsNumberPerCountry = [];
-
 	//Airlines HQ
 	@track listOptionsAirlines = [];
 	localListOptionsAirlines = [];
@@ -285,7 +219,7 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 				let selectLabels = this.listOptionsAirlines.find(o => o.value == str).label;
 				tmp.push({'value':str, 'label':selectLabels});
 			});
-			this.selectedAirlines = tmp;
+			this.selectedAirlines = [...tmp];
 		}
 	}
 
@@ -512,12 +446,9 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 			return;
 		}
 
-		/*if(this.isConfirmationStep){
-			if(this.isAirlineAgrStepValid){
-				this.isConfirmationStep = false;
-				this.isConfirmationStep = true;
-			}
-		}*/
+		if(this.isConfirmationStep){
+			this.handleSubmitRequest();
+		}
 	}
 
 	@track currentStep = 'isYourDetailsStep';
@@ -552,9 +483,9 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 
 
 	handleSubmitRequest(){
-		//TODO Create method to save
+		console.log('Starting to create data!');
 		//this.dispatchEvent(new CustomEvent('requestcompleted', { detail: { success: false }, bubbles: true,composed: true }));// sends the event to the grandparent
-		this.startLoading();
+		//this.startLoading();
 
 		let labDetail =  { 'sobjectType': 'LAB_Account_Role_Detail__c' };
 		let countriesLabs = [];
@@ -592,47 +523,7 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 				labDetail.Which_governments__c = this.whichGovern;
 		}
 
-		this.countriesChina.forEach(cntr => {
-			if(cntr.NumOfLabs == undefined || cntr.NumOfLabs == null ||cntr.NumOfLabs == ''){}
-			else{
-				let countryLab =  { 'sobjectType': 'LAB_Account_Role_Detail__c' };
-				countryLab.Operating_Country__c = cntr.Id;
-				countryLab.How_Many_Lab__c = cntr.NumOfLabs;
-				countriesLabs.push(countryLab);
-			}
-		});
-
-		this.countriesAsia.forEach(cntr => {
-			if(cntr.NumOfLabs == undefined || cntr.NumOfLabs == null ||cntr.NumOfLabs == ''){}
-			else{
-				let countryLab =  { 'sobjectType': 'LAB_Account_Role_Detail__c' };
-				countryLab.Operating_Country__c = cntr.Id;
-				countryLab.How_Many_Lab__c = cntr.NumOfLabs;
-				countriesLabs.push(countryLab);
-			}
-		});
-
-		this.countriesAfrica.forEach(cntr => {
-			if(cntr.NumOfLabs == undefined || cntr.NumOfLabs == null ||cntr.NumOfLabs == ''){}
-			else{
-				let countryLab =  { 'sobjectType': 'LAB_Account_Role_Detail__c' };
-				countryLab.Operating_Country__c = cntr.Id;
-				countryLab.How_Many_Lab__c = cntr.NumOfLabs;
-				countriesLabs.push(countryLab);
-			}
-		});
-
-		this.countriesAmerica.forEach(cntr => {
-			if(cntr.NumOfLabs == undefined || cntr.NumOfLabs == null ||cntr.NumOfLabs == ''){}
-			else{
-				let countryLab =  { 'sobjectType': 'LAB_Account_Role_Detail__c' };
-				countryLab.Operating_Country__c = cntr.Id;
-				countryLab.How_Many_Lab__c = cntr.NumOfLabs;
-				countriesLabs.push(countryLab);
-			}
-		});
-
-		this.countriesEurope.forEach(cntr => {
+		this.selectedCountries.forEach(cntr => {
 			if(cntr.NumOfLabs == undefined || cntr.NumOfLabs == null ||cntr.NumOfLabs == ''){}
 			else{
 				let countryLab =  { 'sobjectType': 'LAB_Account_Role_Detail__c' };
@@ -649,16 +540,17 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 		});
 		
 
-		
+		console.log('Structure is prepared. Sending to controller');
 		saveSurveyAnswers({labRoleDetail: labDetail
 							, lsCountriesLab : countriesLabs
 							, lsAirlineAgreement: airlineAgreements})
 			.then(result => {
-
+				console.log('wow! Is created! ' + result);
 				this.stopLoading(); 
 			})
 			.catch(error => {
 				//this.configureAndOpenErrorModal(error);
+				console.log('Error, indeed: ' + error);
 				this.stopLoading();
 			});    
 		/*createNewAccount({ acc: account})
@@ -709,4 +601,98 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
             navigateToPage(CSP_PortalPath,{});
         }
     }
+
+	/***********
+	 * 
+	 *  COUNTRIES
+	 * 
+	 *********/
+	actions = [
+		{ label: 'X', name: 'delete' }
+	];
+
+	@api countryColumns = [
+		{ label: 'Name', fieldName: 'label', editable: false },
+		{ label: 'Number Of Labs', fieldName: 'NumOfLabs', type: 'number', editable: true, maximumFractionDigits: 0 },
+		{ type: 'action', typeAttributes: { rowActions: this.actions, menuAlignment: 'left' }}
+	];
+
+	@api countryMetadata = {
+		Id: 'Id',
+		Name: 'Name'
+	};
+
+
+	allCountries = [];
+	@track filteredCountries = [];
+	selectedCountries = [];
+
+	showdropdown;
+
+	@track countrySearchKey = '';
+
+
+	@wire(getCountries,{}) countryData(result){
+		if(result.data){
+			result.data.countryList.forEach(cntr =>{
+				this.allCountries.push({'label' : cntr.Name, 'value' : cntr.Id, 'selected':false});
+			});
+		}
+    }
+
+	handleShowdropdown(event){
+		if(event.target.value=='' || event.target.value == undefined || event.target.value == null){
+			this.showdropdown = false;
+		}
+		else{
+			if(event.target.value.length>1){
+				let searchRegExp = new RegExp(event.target.value , 'i');
+				this.filteredCountries = this.allCountries; //reinitialize
+				this.filteredCountries = this.filteredCountries.filter(({label}) => label.match(searchRegExp));
+				this.showdropdown = true;
+			}
+		}
+    }
+	
+
+	handleSelect(event){
+		let allCountriesIndexFound = this.allCountries.findIndex(ar => ar.value == event.detail.cntrid);
+		if(allCountriesIndexFound>-1)
+			this.allCountries[allCountriesIndexFound].selected = event.detail.selected;
+		
+		if(event.detail.selected==true){
+			this.selectedCountries.push({ 'Id': event.detail.cntrid, 'label': event.detail.cntrname});
+		}else{
+			let selCountryIndexFound = this.selectedCountries.findIndex(ar => ar.Id == event.detail.cntrid);
+			this.selectedCountries.splice(selCountryIndexFound, 1);
+		}
+		this.selectedCountries = [...this.selectedCountries];
+	}
+
+	handleleave() {this.showdropdown = false;}
+
+	handleCountryInlineEdit(event){
+		let countryId = event.detail.draftValues[0].Id;
+		let labNum = event.detail.draftValues[0].NumOfLabs;
+
+		let selectedCountriesIndex = this.selectedCountries.findIndex(ar => ar.Id == countryId);
+		if(selectedCountriesIndex > -1)	this.selectedCountries[selectedCountriesIndex].NumOfLabs = labNum;
+		this.selectedCountries = [...this.selectedCountries];
+	}
+
+	handleRowAction(event) {
+		const action = event.detail.action;
+		const row = event.detail.row;
+		switch (action.name) {
+			case 'delete':
+				let selCountryIndexFound = this.selectedCountries.findIndex(ar => ar.Id == row.Id);
+				this.selectedCountries.splice(selCountryIndexFound, 1);
+				this.selectedCountries = [...this.selectedCountries];
+
+				let allCountryIndexFound = this.allCountries.findIndex(ar => ar.value == row.Id);
+				this.allCountries[allCountryIndexFound].selected = false;
+ 		}	
+	}
+
+	@track savedLabsNumberPerCountry = [];
 }

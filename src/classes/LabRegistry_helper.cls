@@ -50,6 +50,5 @@ public  without sharing class LabRegistry_helper {
 		} catch (Exception e) {
 			return e.getMessage();
 		}
-		return null;
 	}
 }
