@@ -40,7 +40,7 @@ export default class ServiceInvitation extends LightningElement {
     portalApplicationId = this.getUrlParamValue(window.location.href, this.paramKey);
     userIdList = [userId];
     accountId;
-    isServiceAdmintrator = false;
+    _isServiceAdministrator = false;
 
     pageNo = 1;
     recordsPerPage = 10;
@@ -89,7 +89,7 @@ export default class ServiceInvitation extends LightningElement {
             var activeUserAdmin = userAdminList.filter(userAdmin => {
                 return userAdmin.userId === userId;
             })[0];
-            this.isServiceAdmin = activeUserAdmin.isAdmin;
+            this._isServiceAdministrator = activeUserAdmin.isAdmin;
         }
     }
 
@@ -110,7 +110,7 @@ export default class ServiceInvitation extends LightningElement {
     }
 
     get isServiceAdmin(){
-        return true; //this.isServiceAdmintrator
+        return this._isServiceAdministrator;
     }
 
     get totalPages(){
@@ -165,11 +165,9 @@ export default class ServiceInvitation extends LightningElement {
 
     resendInvitation(event){
         let invitationId = event.target.dataset.id;
-        console.log('Canceling invitation ' + invitationId);
         let invitationToResend = this.invitationsToDisplay.filter(inv => {
             return inv.id == invitationId;
         });
-        console.log('Invitation ' + JSON.stringify(invitationToResend));
         this.sendInvitation(invitationToResend[0].id, invitationToResend[0].email, invitationToResend[0].role);
     }
     
