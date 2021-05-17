@@ -15,12 +15,12 @@ public class ANG_PortalApplicationRightHandler {
 	// ****************** distribution methods ********************
 	// ************************************************************
 
-	public void onBeforeInsert(){
-		setAppNameApplicationUniqueContactBillerDirectRight();
+	public void onBeforeInsert(List<Portal_Application_Right__c> parList){
+		setAppNameApplicationUniqueContactBillerDirectRight(parList);
 	}
 
 	public void onBeforeUpdate(){
-		setAppNameApplicationUniqueContactBillerDirectRight();
+		//setAppNameApplicationUniqueContactBillerDirectRight();
 	}
 
 	public void onAfterInsert(){
@@ -50,17 +50,15 @@ public class ANG_PortalApplicationRightHandler {
 	 * 	- Application uniqueness for contact
 	 *  - Biller Direct Rights
 	 */
-	private void setAppNameApplicationUniqueContactBillerDirectRight(){
+	private void setAppNameApplicationUniqueContactBillerDirectRight(List<Portal_Application_Right__c> parList){
 
 		Id billerDirectRT = RecordTypeSingleton.getInstance().getRecordTypeId('Portal_Application_Right__c', 'Biller_Direct');
+		
+		for(Portal_Application_Right__c par : parList){
+			par.Application_Name_Text_Field__c = par.Portal_Application__r.Name;
+			par.Application_uniqueness_for_contact__c = String.valueOf(par.Contact__c).left(15) + String.valueOf(par.Portal_Application__c).left(15);
 
-		for(Portal_Application_Right__c portalApp : [SELECT ID, Portal_Application__r.Name FROM Portal_Application_Right__c 
-													WHERE ID IN: newMap.keyset()]){
-
-			newMap.get(portalApp.ID).Application_Name_Text_Field__c = portalApp.Portal_Application__r.Name;
-			newMap.get(portalApp.ID).Application_uniqueness_for_contact__c = String.valueOf(portalApp.Contact__c) + String.valueOf(portalApp.Portal_Application__c);
-
-			if(portalApp.Portal_Application__r.Name == 'Biller Direct')	newMap.get(portalApp.ID).RecordtypeID = billerDirectRT;
+			if(par.Portal_Application__r.Name == 'Biller Direct') par.RecordtypeID = billerDirectRT;
 		}
 	}
 

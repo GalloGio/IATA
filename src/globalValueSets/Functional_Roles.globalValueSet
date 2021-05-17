@@ -361,9 +361,9 @@
         <label>Treasury Dashboard - Premium</label>
     </customValue>
     <customValue>
-        <fullName>IATA Pay</fullName>
+        <fullName>OAG</fullName>
         <default>false</default>
-        <label>IATA Pay</label>
+        <label>OAG</label>
     </customValue>
     <description>Functional Roles</description>
     <masterLabel>Functional Roles</masterLabel>
