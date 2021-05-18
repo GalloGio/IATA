@@ -2548,11 +2548,11 @@ Product__r.Product_Section__c = &quot;APWP01&quot;
         <ruleEntry>
             <assignedTo>Cases_Emirates</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>((1 AND (2 OR 7) AND 3 AND 4) OR (1 AND 4 AND (5 OR 6) ) OR (8 AND 9 AND 10))</booleanFilter>
+            <booleanFilter>((1 AND (2 OR 7 OR 11) AND 3 AND 4) OR (1 AND 4 AND (5 OR 6) ) OR (8 AND 9 AND 10))</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordType__c</field>
                 <operation>equals</operation>
-                <value>Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia,Complaint (IDFS ISS),SEDA</value>
+                <value>Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia,Complaint (IDFS ISS),SEDA,Cases - Global,Process</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Account.Name</field>
@@ -2599,11 +2599,16 @@ Product__r.Product_Section__c = &quot;APWP01&quot;
                 <operation>contains</operation>
                 <value>Follow up Settlement</value>
             </criteriaItems>
+            <criteriaItems>
+                <field>Account.HQ_Service_Model__c</field>
+                <operation>equals</operation>
+                <value>Differentiated</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>Differentiated_Service_Model_Agency</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 AND (2 OR 3 OR 4 OR 5 OR 6 OR 7 OR 8 OR 9)</booleanFilter>
+            <booleanFilter>1 AND (2 OR 3 OR 4 OR 5 OR 6 OR 7 OR 8 OR 9 OR 11) AND 10</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -2648,6 +2653,16 @@ Product__r.Product_Section__c = &quot;APWP01&quot;
                 <field>Account.IATACode__c</field>
                 <operation>equals</operation>
                 <value>08337022,08344641,08344991,32300085,17334144,2365160,24345801,16335340,91200723,57230670</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.Sector__c</field>
+                <operation>contains</operation>
+                <value>Agent</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.HQ_Service_Model__c</field>
+                <operation>equals</operation>
+                <value>Differentiated</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
