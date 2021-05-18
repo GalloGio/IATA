@@ -365,6 +365,11 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
                     <default>false</default>
                     <label>Cashless</label>
                 </value>
+                <value>
+                    <fullName>Multicountry</fullName>
+                    <default>false</default>
+                    <label>Multicountry</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
         <visibleLines>4</visibleLines>
@@ -1495,6 +1500,10 @@ IF(OR(
             </values>
             <values>
                 <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
