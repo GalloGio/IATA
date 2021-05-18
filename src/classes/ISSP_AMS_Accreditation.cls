@@ -2984,9 +2984,9 @@ public without sharing class ISSP_AMS_Accreditation {
 					locationClass = 'Q';
 				}
 			}else{
-				if(con.Account.Category__c == AMS_Utils.CATEGORY_IATA_CARGO_AGENT){
+				if(newForm.Agent_Type__c == AMS_Utils.CATEGORY_IATA_CARGO_AGENT){
 					locationClass = 'C';
-				}else if(con.Account.Category__c == AMS_Utils.CATEGORY_CASSASSOCIATE || con.Account.Category__c == AMS_Utils.CATEGORY_NON_IATA_FREIGHT_FORWARDER){
+				}else if(newForm.Agent_Type__c == AMS_Utils.CATEGORY_CASSASSOCIATE || con.Account.Category__c == AMS_Utils.CATEGORY_NON_IATA_FREIGHT_FORWARDER){
 					locationClass = 'R';
 				}
 			}
