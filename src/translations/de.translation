@@ -5564,8 +5564,8 @@ und &lt;a target=&quot;_blank&quot; href=&quot;http://www.iata.org/customer-port
         <name>CaseValidation_Area</name>
     </customLabels>
     <customLabels>
-        <label><!-- CaseValidation - Area2 --></label>
-        <name>CaseValidation_Area2</name>
+        <label><!-- CaseValidation - Area in Case Global --></label>
+        <name>CaseValidation_Area_in_Case_Global</name>
     </customLabels>
     <customLabels>
         <label><!-- CaseValidation - InDepthArea --></label>
