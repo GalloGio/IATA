@@ -13,6 +13,6 @@ export default class App extends LightningElement {
             this.selected = true;
         } 
 
-		this.dispatchEvent(new CustomEvent('itemselected', { detail: { selected: this.selected, cntrid: this.value, cntrname:this.label  }}));// sends the event to the grandparent
+		this.dispatchEvent(new CustomEvent('itemselected', { detail: { selected: this.selected, selectedItemId: this.value, selectedItemName:this.label  }}));// sends the event to the grandparent
     }
 }

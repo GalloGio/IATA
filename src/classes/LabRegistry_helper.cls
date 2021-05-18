@@ -9,7 +9,7 @@ public  without sharing class LabRegistry_helper {
 	}
 
 	@AuraEnabled
-	public static string saveSurveyAnswers(LAB_Account_Role_Detail__c labRoleDetail
+	public static boolean saveSurveyAnswers(LAB_Account_Role_Detail__c labRoleDetail
 											, list<LAB_Account_Role_Detail__c> lsCountriesLab
 											, list<LAB_Account_Role_Detail__c> lsAirlineAgreement){
 		try {
@@ -71,12 +71,14 @@ public  without sharing class LabRegistry_helper {
 			pac.Contact__c = currentUser.ContactId;
 			pac.Portal_Application__c = [select id from Portal_Applications__c where Functional_Role__c=:LabRegistry_helper.labRegistryAccnRole limit 1].Id;
 			pac.Right__c = PortalServicesCtrl.PORTAL_ACCESS_REQUESTED;
+			insert pac;
 
-			return 'success';
+			return true;
 
 			
 		} catch (Exception e) {
-			return e.getMessage();
+			//return e.getMessage();
+			return false;
 		}
 	}
 }

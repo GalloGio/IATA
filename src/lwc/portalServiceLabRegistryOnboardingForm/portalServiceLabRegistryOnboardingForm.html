@@ -675,22 +675,56 @@
 											</div>
 										</div>
 
+										<lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
+										</lightning-layout-item>
+
 										<template if:true={showAirlineSelectionBox}>
-											<div if:true={FIELD_Existing_partnership_with_airlines_PicklistValues.data}>
-												{labels.CSP_LabReg_WhichAirlines}
-												<div class="slds-col slds-p-left_x-large slds-m-left_x-large">
-													<lightning-input value={airlineSearchKey} onchange={searchAirline} type="search" placeholder="Search Airline..."></lightning-input>
+											<lightning-layout-item size="12" class="formItem">
+												<div onblur={closeAirlineDropdown} tabindex="0">
+													<div class="slds-form-element">
+														<div class="slds-form-element__control custTextInputSmall">
+															<lightning-input 
+																value={airlineSearchKey} 
+																onchange={handleAirlineDropdown} 
+																type="search" 
+																placeholder="Type to find and add airlines"
+																class="cursorPointerComboBox text-xxsmall">
+															</lightning-input>
+														</div>
+													</div>
+												
+													<!-- Drop down section : Start -->
+													<template if:true={showAirlineDropdown}>
+														<div class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid" role="listbox">
+															<ul class="slds-listbox slds-listbox_vertical" role="presentation">
+																<template for:each={filteredAirlines} for:item="airline">
+																	<c-picklist-value 
+																		key={airline.value}
+																		label={airline.label}
+																		value={airline.value}
+																		selected={airline.selected}
+																		onitemselected={handleAirlineSelection}>
+																	</c-picklist-value>
+																</template>
+															</ul>
+														</div>
+													</template>
 												</div>
-												<lightning-dual-listbox id="airlineDualListbox"
-													name="airlineDualListbox"
-													label="Select Airlines"
-													source-label="Available Airlines"
-													selected-label="Selected Airlines"
-													options={listOptionsAirlines}
-													onchange={handleAirlineSelection}
-													disable-reordering>
-												</lightning-dual-listbox>
-											</div>
+												
+												<lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
+												</lightning-layout-item>
+			
+												<lightning-datatable
+														key-field="Id"
+														data={selectedAirlines}
+														columns={airlinesColumns}
+														hide-checkbox-column
+														resize-column-disabled
+														suppress-bottom-bar
+														onrowaction={handleAirlineRowAction}>
+												</lightning-datatable>
+			
+											</lightning-layout-item>
 										</template>
 
 									</lightning-layout-item>
@@ -748,98 +782,166 @@
 
 											<div class="fieldContainer">
 												<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
-													<div class="dataLabel">{labels.CSP_LabReg_InitialQuestion}</div>
-													<div class="dataValue itemValue">{labTypeSelection}</div>
+													<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_InitialQuestion}</div></div>
+													<div class="slds-form-element">	
+														<div class="slds-form-element__control custTextInput custTextInputSmall">
+															<input type="text" class="slds-input" value={labTypeSelection} disabled/>
+														</div>
+													</div>
 												</lightning-layout-item>
 
 												<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
-													<div class="dataLabel">{labels.CSP_LabReg_How_Long_In_Business}</div>
-													<div class="dataValue itemValue">{howLongInBusinessSelection}</div>
+													<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_How_Long_In_Business}</div></div>
+													<div class="slds-form-element">	
+														<div class="slds-form-element__control custTextInput custTextInputSmall">
+															<input type="text" class="slds-input" value={howLongInBusinessSelection} disabled/>
+														</div>
+													</div>
 												</lightning-layout-item>
 
 												<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
-													<div class="dataLabel">{labels.CSP_LabReg_labsPartOfNationalPlatform}</div>
-													<div class="dataValue itemValue">{labsPartOfNationalPlatform}</div>
+													<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_labsPartOfNationalPlatform}</div></div>
+													<div class="slds-form-element">	
+														<div class="slds-form-element__control custTextInput custTextInputSmall">
+															<input type="text" class="slds-input" value={labsPartOfNationalPlatform} disabled/>
+														</div>
+													</div>
 												</lightning-layout-item>
+												
 
 												<lightning-layout-item size="12" class="fieldItem IEFixDisplay" if:true={showWhichNationalPlatform}>
-													<div class="dataLabel">{labels.CSP_LabReg_Which_One}</div>
-													<div class="dataValue itemValue">{whichNationalPlatform}</div>
+													<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_Which_One}</div></div>
+													<div class="slds-form-element">	
+														<div class="slds-form-element__control custTextInput custTextInputSmall">
+															<input type="text" class="slds-input" value={whichNationalPlatform} disabled/>
+														</div>
+													</div>
 												</lightning-layout-item>
 
 												<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
-													<div class="dataLabel">{labels.CSP_LabReg_issueTestResultsSelection}</div>
-													<div class="dataValue itemValue">{issueTestResultsSelection}</div>
+													<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_issueTestResultsSelection}</div></div>
+													<div class="slds-form-element">	
+														<div class="slds-form-element__control custTextInput custTextInputSmall">
+															<input type="text" class="slds-input" value={issueTestResultsSelection} disabled/>
+														</div>
+													</div>
 												</lightning-layout-item>
 
 												<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
-													<div class="dataLabel">{labels.CSP_LabReg_manageBookingSelection}</div>
-													<div class="dataValue itemValue">{manageBookingSelection}</div>
+													<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_manageBookingSelection}</div></div>
+													<div class="slds-form-element">	
+														<div class="slds-form-element__control custTextInput custTextInputSmall">
+															<input type="text" class="slds-input" value={manageBookingSelection} disabled/>
+														</div>
+													</div>
 												</lightning-layout-item>
 
 												<!-- FORM A -->
-												<div  if:true={isAForm}>
+												<template  if:true={isAForm} >
 													<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
-														<div class="dataLabel">{labels.CSP_LabReg_Operating_Brand}</div>
-														<div class="dataValue itemValue">{operatingUnderBrand}</div>
+														<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_Operating_Brand}</div></div>
+														<div class="slds-form-element">	
+															<div class="slds-form-element__control custTextInput custTextInputSmall">
+																<input type="text" class="slds-input" value={operatingUnderBrand} disabled/>
+															</div>
+														</div>
 													</lightning-layout-item>
 
 													<lightning-layout-item size="12" class="fieldItem IEFixDisplay" if:true={showWhichBrand}>
-														<div class="dataLabel">{labels.CSP_LabReg_Which_One}</div>
-														<div class="dataValue itemValue">{whichBrands}</div>
+														<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_Which_One}</div></div>
+														<div class="slds-form-element">	
+															<div class="slds-form-element__control custTextInput custTextInputSmall">
+																<input type="text" class="slds-input" value={whichBrands} disabled/>
+															</div>
+														</div>
 													</lightning-layout-item>
 
 													<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
-														<div class="dataLabel">{labels.CSP_LabReg_SLA_InPlace}</div>
-														<div class="dataValue itemValue">{SLAInPlace}</div>
+														<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_SLA_InPlace}</div></div>
+														<div class="slds-form-element">	
+															<div class="slds-form-element__control custTextInput custTextInputSmall">
+																<input type="text" class="slds-input" value={SLAInPlace} disabled/>
+															</div>
+														</div>
 													</lightning-layout-item>
 
 													<lightning-layout-item size="12" class="fieldItem IEFixDisplay" if:true={showNatureOfSLA}>
-														<div class="dataLabel">{labels.CSP_LabReg_Describe_SLA_Nature}</div>
-														<div class="dataValue itemValue">{NatureOfSLA}</div>
+														<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_Describe_SLA_Nature}</div></div>
+														<div class="slds-form-element">	
+															<div class="slds-form-element__control custTextInput custTextInputSmall">
+																<input type="text" class="slds-input" value={NatureOfSLA} disabled/>
+															</div>
+														</div>
 													</lightning-layout-item>
-												</div>
+												</template>
 
 
 												<!-- FORM B -->
 
-												<div  if:true={isBForm}>
+												<template  if:true={isBForm}>
 													<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
-														<div class="dataLabel">{labels.CSP_LabReg_TypeOfLab}</div>
-														<div class="dataValue itemValue">{typeOfLabSelection}</div>
+														<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_TypeOfLab}</div></div>
+														<div class="slds-form-element">	
+															<div class="slds-form-element__control custTextInput custTextInputSmall">
+																<input type="text" class="slds-input" value={typeOfLabSelection} disabled/>
+															</div>
+														</div>
 													</lightning-layout-item>
 
 													<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
-														<div class="dataLabel">{labels.CSP_LabReg_AdditionalCertInPlace}</div>
-														<div class="dataValue itemValue">{AdditionalCertInPlace}</div>
+														<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_AdditionalCertInPlace}</div></div>
+														<div class="slds-form-element">	
+															<div class="slds-form-element__control custTextInput custTextInputSmall">
+																<input type="text" class="slds-input" value={AdditionalCertInPlace} disabled/>
+															</div>
+														</div>
 													</lightning-layout-item>
 
 													<lightning-layout-item size="12" class="fieldItem IEFixDisplay" if:true={showAdditionalCert}>
-														<div class="dataLabel">{labels.CSP_LabReg_Which_One}</div>
-														<div class="dataValue itemValue">{whichAdditionalCert}</div>
+														<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_Which_One}</div></div>
+														<div class="slds-form-element">	
+															<div class="slds-form-element__control custTextInput custTextInputSmall">
+																<input type="text" class="slds-input" value={whichAdditionalCert} disabled/>
+															</div>
+														</div>
 													</lightning-layout-item>
 
 													<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
-														<div class="dataLabel">{labels.CSP_LabReg_National_Govern_Platform}</div>
-														<div class="dataValue itemValue">{endorsedByGovern}</div>
+														<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_National_Govern_Platform}</div></div>
+														<div class="slds-form-element">	
+															<div class="slds-form-element__control custTextInput custTextInputSmall">
+																<input type="text" class="slds-input" value={endorsedByGovern} disabled/>
+															</div>
+														</div>
 													</lightning-layout-item>
 
 													<lightning-layout-item size="12" class="fieldItem IEFixDisplay" if:true={showWhichGovern}>
-														<div class="dataLabel">{labels.CSP_LabReg_Describe_SLA_Nature}</div>
-														<div class="dataValue itemValue">{whichGovern}</div>
+														<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_Describe_SLA_Nature}</div></div>
+														<div class="slds-form-element">	
+															<div class="slds-form-element__control custTextInput custTextInputSmall">
+																<input type="text" class="slds-input" value={whichGovern} disabled/>
+															</div>
+														</div>
 													</lightning-layout-item>
 
 													<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
-														<div class="dataLabel">{labels.CSP_LabReg_nationalAccreditationSelection}</div>
-														<div class="dataValue itemValue">{nationalAccreditationSelection}</div>
+														<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_nationalAccreditationSelection}</div></div>
+														<div class="slds-form-element">	
+															<div class="slds-form-element__control custTextInput custTextInputSmall">
+																<input type="text" class="slds-input" value={nationalAccreditationSelection} disabled/>
+															</div>
+														</div>
 													</lightning-layout-item>
-												</div>
+												</template>
 											</div>
 										</div>
 
 
 										<!-- COUNTRIES -->
 										<div>
+											<lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
+											</lightning-layout-item>
+
 											<lightning-layout-item size="6" class="IEFixDisplay">
 												<div class="sectionSubTitle">2. {labels.CSP_LabReg_Step_Locations}</div>
 											</lightning-layout-item>
@@ -860,20 +962,24 @@
 											<lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
 											</lightning-layout-item>
 
-											<ul class="slds-m-around_medium">
-											<template for:each={selectedCountries} for:item="cntr">
-												<li key={cntr.Id}>
-													{cntr.label} - {cntr.NumOfLabs}
-												</li>
-											</template>
-											</ul>
-											<div class="fieldContainer">
-											</div>
+											<lightning-datatable
+													key-field="Id"
+													data={selectedCountries}
+													columns={countryColumnsRO}
+													hide-checkbox-column
+													resize-column-disabled
+													suppress-bottom-bar>
+											</lightning-datatable>
+											<lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
+											</lightning-layout-item>
 										</div>
 
 
 										<!-- AIRLINE AGREEMENTS-->
 										<div>
+											<lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
+											</lightning-layout-item>
+
 											<lightning-layout-item size="6" class="IEFixDisplay">
 												<div class="sectionSubTitle">3. {labels.CSP_labReg_Step_Airline_Agreements}</div>
 											</lightning-layout-item>
@@ -896,26 +1002,31 @@
 
 											<div class="fieldContainer">
 												<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
-													<div class="dataLabel">{labels.CSP_LabReg_airlinePartnershipSelection}</div>
-													<div class="dataValue itemValue">{airlinePartnershipSelection}</div>
+													<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_airlinePartnershipSelection}</div></div>
+													<div class="slds-form-element">	
+														<div class="slds-form-element__control custTextInput custTextInputSmall">
+															<input type="text" class="slds-input" value={airlinePartnershipSelection} disabled/>
+														</div>
+													</div>
 												</lightning-layout-item>
 											</div>
-											<ul class="slds-m-around_medium">
-											<template for:each={selectedAirlines} for:item="airline">
-												<li key={airline.value}>
-													{airline.label}
-												</li>
-											</template>
-											</ul>
+											
+											<lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
+											</lightning-layout-item>
+
+											<lightning-datatable
+													key-field="Id"
+													data={selectedAirlines}
+													columns={airlinesColumnsRO}
+													hide-checkbox-column
+													resize-column-disabled
+													suppress-bottom-bar>
+											</lightning-datatable>
+											<lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
+											</lightning-layout-item>
 										</div>
-
-
 									</div>
 								</lightning-layout>
-							</div>
-
-							<div if:true={isGreetingStep} class="isGreetingStep">
-								Grazie ed arrivederci
 							</div>
 						</div>
 
@@ -937,14 +1048,30 @@
 							</lightning-layout-item>
 			
 							<lightning-layout-item size="6" class="IEFixDisplay">
-								<lightning-button 
-									class="slds-float_right containedButton customBtn" 
-									data-id="nextButton" 
-									label={labels.CSP_L2_Next_Step} 
-									disabled={isNextDisabled} 
-									variant="brand" 
-									onclick={goToNextStep}>
-								</lightning-button>
+								<template if:false={isConfirmationStep}>
+									<lightning-button 
+										class="slds-float_right containedButton customBtn" 
+										data-id="nextButton" 
+										label={labels.CSP_L2_Next_Step} 
+										disabled={isNextDisabled} 
+										variant="brand" 
+										onclick={goToNextStep}>
+									</lightning-button>
+								</template>
+
+								<template  if:true={isConfirmationStep}>
+									<lightning-button 
+										class="slds-float_right containedButton customBtn" 
+										data-id="confirmButton" 
+										label={labels.CSP_L2_Submit} 
+										variant="brand" 
+										onclick={handleSubmitRequest}>
+									</lightning-button>
+								</template>
+							</lightning-layout-item>
+
+							<lightning-layout-item size="6" class="IEFixDisplay" if:true={isConfirmationStep}>
+								
 							</lightning-layout-item>
 						</div>
 			
@@ -975,4 +1102,28 @@
 			onbuttontwoaction={cancel}>
 		</c-portal-registration-generic-modal>
 	</template>
+
+	<template if:true={openSuccessModal}>
+        <c-portal-registration-generic-modal
+            icon={successIcon}
+            title={labels.CSP_L2_Details_Saved}
+            message={labels.OneId_Thank_you_for_subscribing_to_this_new_service}
+            button1-label={labels.CSP_L2_Go_To_Homepage}
+            button2-label={labels.CSP_L2_Go_To_Service}
+            onbuttononeaction={button1Action}
+            onbuttontwoaction={button2Action}>
+        </c-portal-registration-generic-modal>
+    </template>
+
+    <template if:true={openErrorModal}>
+        <c-portal-registration-generic-modal
+            icon={alertIcon}
+            title={labels.CSP_L2_Registration_Error_Title}
+            message={errorModalMessage}
+            button1-label={labels.CSP_L2_Go_Back}
+            button2-label={labels.CSP_L2_Contact_Support}
+            onbuttononeaction={closeErrorModal}
+            onbuttontwoaction={contactSupport}>
+        </c-portal-registration-generic-modal>
+    </template>   
 </template>

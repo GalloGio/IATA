@@ -31,6 +31,7 @@ import CSP_L2_No							from '@salesforce/label/c.CSP_L2_No';
 import CSP_PortalPath						from '@salesforce/label/c.CSP_PortalPath';
 import CSP_L2_Next_Step from '@salesforce/label/c.CSP_L2_Next_Step';
 import CSP_L2_Back_to_Edit from '@salesforce/label/c.CSP_L2_Back_to_Edit';
+import CSP_L2_Submit from '@salesforce/label/c.CSP_L2_Submit';
 
 //Questions labels
 import CSP_LabReg_AdditionalCertInPlace from '@salesforce/label/c.CSP_LabReg_AdditionalCertInPlace';
@@ -61,16 +62,23 @@ import CSP_LabReg_Step_Locations from '@salesforce/label/c.CSP_LabReg_Step_Locat
 import CSP_labReg_Step_Confirmation from '@salesforce/label/c.CSP_labReg_Step_Confirmation';
 import CSP_labReg_Step_Airline_Agreements from '@salesforce/label/c.CSP_labReg_Step_Airline_Agreements';
 
+//Modal Labels
+import CSP_L2_Details_Saved from "@salesforce/label/c.CSP_L2_Details_Saved";
+import CSP_L2_Go_To_Homepage from "@salesforce/label/c.CSP_L2_Go_To_Homepage";
+import CSP_L2_Go_Back from "@salesforce/label/c.CSP_L2_Go_Back";
+import CSP_L2_Go_To_Service from "@salesforce/label/c.CSP_L2_Go_To_Service";
+import CSP_L2_Registration_Error_Title from "@salesforce/label/c.CSP_L2_Registration_Error_Title";
+import CSP_L2_Contact_Support from "@salesforce/label/c.CSP_L2_Contact_Support";
+import OneId_Thank_you_for_subscribing_to_this_new_service from "@salesforce/label/c.OneId_Thank_you_for_subscribing_to_this_new_service";
+
 export default class PortalServiceOnboardingForm extends NavigationMixin(LightningElement) {
 	/* Images */
     alertIcon = CSP_PortalPath + 'CSPortal/alertIcon.png';
     homeIcon = CSP_PortalPath + 'CSPortal/Images/Icons/L2_home.png';
     crossIcon = CSP_PortalPath + 'CSPortal/Images/Icons/L2_cross.png';
     stepCheckedLogo = CSP_PortalPath + 'CSPortal/Images/Icons/L2_step_valid.png';
+	successIcon = CSP_PortalPath + 'CSPortal/Images/Icons/youaresafe.png';
     
-	step1ActiveLogo = CSP_PortalPath + 'CSPortal/Images/Icons/L2_step_1_active.png';
-    step2InactiveLogo = CSP_PortalPath + 'CSPortal/Images/Icons/L2_step_2_inactive.png';
-
 	abortRequest() {
         this.dispatchEvent(new CustomEvent('requestcompleted', { detail: { success: false }, bubbles: true,composed: true }));// sends the event to the grandparent
     }
@@ -108,6 +116,14 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 		,CSP_LabReg_Step_Locations
 		,CSP_labReg_Step_GeneralInformation
 		,CSP_L2_Back_to_Edit
+		,CSP_L2_Submit
+		,CSP_L2_Details_Saved
+		,OneId_Thank_you_for_subscribing_to_this_new_service
+		,CSP_L2_Go_To_Homepage
+		,CSP_L2_Go_To_Service
+		,CSP_L2_Registration_Error_Title
+		,CSP_L2_Go_Back
+		,CSP_L2_Contact_Support
 	}
 
 	@track isLoading = false;
@@ -142,72 +158,7 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 	@wire(getPicklistValues, { recordTypeId: "$recTypeId", fieldApiName: FIELD_Endorsed_by_governments }) FIELD_Endorsed_by_governments_PicklistValues;
 
 
-	//Airlines HQ
-	@track listOptionsAirlines = [];
-	localListOptionsAirlines = [];
-	@track airlineSearchKey = '';
-
-	@api airlinesHQColumns = [
-		{ label: 'Name', fieldName: 'Name'}
-	];
-
-
-	@wire(getAirlinesHQ, {}) airlinesData(result){
-		if(result.data){
-			result.data.forEach(accnt => {
-				this.localListOptionsAirlines.push({'value':accnt.Id, 'label':accnt.Name});
-			});
-
-			this.listOptionsAirlines = this.localListOptionsAirlines;
-		}else{
-			if(result.error){
-			}
-		}
-	}
-
-	@track selectedAirlines = [];
-	searchAirline(event){
-		if(event.target.value=='' || event.target.value == undefined || event.target.value == null){
-			this.listOptionsAirlines = this.localListOptionsAirlines;
-		}
-		else{
-			if(event.target.value.length>1){
-				
-				this.listOptionsAirlines = [];
-				let searchRegExp = new RegExp(event.target.value , 'i');
-
-				let tmp = this.localListOptionsAirlines;
-
-				tmp.filter(obj => searchRegExp.test(obj.label)).forEach(option => {
-					let isAlreadySelected = this.selectedAirlines.find(o => o.value == option.value);
-
-					if(isAlreadySelected==undefined || isAlreadySelected=='' || isAlreadySelected==null ){
-						this.listOptionsAirlines.push({'value':option.value, 'label':option.label});
-					}
-				});
-				
-				this.selectedAirlines.forEach(element => {
-					this.listOptionsAirlines.push({'value':element.value, 'label':element.label});
-				});
-			}
-		}
-	}
-
-	handleAirlineSelection(event){
-		let selected = event.detail.value;
-		if(selected==undefined || selected == null || selected == ''){
-			console.log('I am searching');
-			this.selectedAirlines = [];
-		}
-		else{
-			let tmp = [];
-			selected.forEach(str =>{
-				let selectLabels = this.listOptionsAirlines.find(o => o.value == str).label;
-				tmp.push({'value':str, 'label':selectLabels});
-			});
-			this.selectedAirlines = [...tmp];
-		}
-	}
+	
 
 	
 	//Lab Type
@@ -415,7 +366,6 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 	isBForm = false;
 
 	goToNextStep(){
-		this.isLoading = true;
 		if(this.isYourDetailsStep){
 			if(this.isYourDetailStepValid){
 				//this.isNextDisabled = false; //will be active on the country lab step
@@ -423,18 +373,16 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 				this.isCountryLabsStep = true;
 				this.showPreviousPageLink = true;
 			}
-			this.isLoading = false;
 			return;
 		}
 
 		if(this.isCountryLabsStep){
 			if(this.isYourDetailStepValid){
-				this.isNextDisabled = false;
+				this.isNextDisabled = true;
 				this.isCountryLabsStep = false;
 				this.isAirlineAgrStep = true;
 				this.showPreviousPageLink = true;
 			}
-			this.isLoading = false;
 			return;
 		}
 
@@ -445,13 +393,11 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 				this.isConfirmationStep = true;
 				this.showPreviousPageLink = true;
 			}
-			this.isLoading = false;
 			return;
 		}
 
 		if(this.isConfirmationStep){
 			this.handleSubmitRequest();
-			this.isLoading = false;
 			return;
 		}
 	}
@@ -511,6 +457,7 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 
 
 	handleSubmitRequest(){
+		this.isLoading = true;
 		console.log('Starting to create data!');
 		//this.dispatchEvent(new CustomEvent('requestcompleted', { detail: { success: false }, bubbles: true,composed: true }));// sends the event to the grandparent
 		//this.startLoading();
@@ -573,32 +520,21 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 							, lsCountriesLab : countriesLabs
 							, lsAirlineAgreement: airlineAgreements})
 			.then(result => {
-				console.log('wow! Is created! ' + result);
-				//this.stopLoading(); 
+				let res = JSON.parse(JSON.stringify(result));
+				this.isLoading = false;
+				if(res === true){
+					this.openSuccessModal = true;
+				}
+				else{
+					this.errorModalMessage = 'Error';
+        			this.openErrorModal = true; 
+				}
 			})
 			.catch(error => {
-				//this.configureAndOpenErrorModal(error);
-				console.log('Error, indeed: ' + error);
-				//this.stopLoading();
+				this.errorModalMessage = error;
+        		this.openErrorModal = true; 
+				this.isLoading = false;
 			});    
-		/*createNewAccount({ acc: account})
-                .then(result => {
-
-                    let res = JSON.parse(JSON.stringify(result));
-                    if(res.startsWith('accountId')){
-                        this.accountId = res.replace('accountId', '');
-                        this.configureAndOpenSuccessModal();
-                    }
-                    else{
-                        this.configureAndOpenErrorModal(res);
-                    }
-
-                    this.stopLoading();                
-                })
-                .catch(error => {
-                    this.configureAndOpenErrorModal(error);
-                    this.stopLoading();
-                });     */
 	}
 
 	
@@ -632,17 +568,18 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 
 	/***********
 	 * 
-	 *  COUNTRIES
+	 *  LAB PER COUNTRIES
 	 * 
 	 *********/
-	actions = [
-		{ label: 'X', name: 'delete' }
-	];
-
-	@api countryColumns = [
+	 @api countryColumns = [
 		{ label: 'Name', fieldName: 'label', editable: false },
 		{ label: 'Number Of Labs', fieldName: 'NumOfLabs', type: 'number', editable: true, maximumFractionDigits: 0 },
 		{ type: 'button-icon', initialWidth: 50, typeAttributes: {iconName: 'utility:close', name: 'delete', variant:'container'}}
+	];
+
+	@api countryColumnsRO = [
+		{ label: 'Name', fieldName: 'label'},
+		{ label: 'Number Of Labs', fieldName: 'NumOfLabs', type: 'number'}
 	];
 
 	@api countryMetadata = {
@@ -650,15 +587,12 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 		Name: 'Name'
 	};
 
-
-	allCountries = [];
 	@track filteredCountries = [];
-	selectedCountries = [];
-
-	showdropdown;
-
 	@track countrySearchKey = '';
 
+	allCountries = [];
+	selectedCountries = [];
+	showdropdown;
 
 	@wire(getCountries,{}) countryData(result){
 		if(result.data){
@@ -681,17 +615,16 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 			}
 		}
     }
-	
 
 	handleSelect(event){
-		let allCountriesIndexFound = this.allCountries.findIndex(ar => ar.value == event.detail.cntrid);
+		let allCountriesIndexFound = this.allCountries.findIndex(ar => ar.value == event.detail.selectedItemId);
 		if(allCountriesIndexFound>-1)
 			this.allCountries[allCountriesIndexFound].selected = event.detail.selected;
 		
 		if(event.detail.selected==true){
-			this.selectedCountries.push({ 'Id': event.detail.cntrid, 'label': event.detail.cntrname});
+			this.selectedCountries.push({ 'Id': event.detail.selectedItemId, 'label': event.detail.selectedItemName});
 		}else{
-			let selCountryIndexFound = this.selectedCountries.findIndex(ar => ar.Id == event.detail.cntrid);
+			let selCountryIndexFound = this.selectedCountries.findIndex(ar => ar.Id == event.detail.selectedItemId);
 			this.selectedCountries.splice(selCountryIndexFound, 1);
 		}
 		this.selectedCountries = [...this.selectedCountries];
@@ -722,5 +655,112 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
  		}	
 	}
 
-	@track savedLabsNumberPerCountry = [];
+	/***********
+	 * 
+	 *  AIRLINES
+	 * 
+	 *********/
+	@api airlinesColumns = [
+		{ label: 'Name', fieldName: 'label'},
+		{ type: 'button-icon', initialWidth: 50, typeAttributes: {iconName: 'utility:close', name: 'deleteAirline', variant:'container'}}
+	];
+
+	@api airlinesColumnsRO = [
+		{ label: 'Name', fieldName: 'label'}
+	];
+
+	@api airlineMetadata = {
+		Id: 'Id',
+		Name: 'Name'
+	};
+
+	@track filteredAirlines = [];
+	@track airlineSearchKey = '';
+
+	allAirlines = [];
+	selectedAirlines = [];
+	showAirlineDropdown;
+
+	@wire(getAirlinesHQ, {}) airlinesData(result){
+		if(result.data){
+			result.data.forEach(accnt => {
+				this.allAirlines.push({'label':accnt.Name, 'value':accnt.Id, 'selected':false});
+			});
+		}
+	}
+
+	handleAirlineDropdown(event){
+		if(event.target.value=='' || event.target.value == undefined || event.target.value == null){
+			this.showAirlineDropdown = false;
+		}
+		else{
+			if(event.target.value.length>1){
+				let searchRegExp = new RegExp(event.target.value , 'i');
+				this.filteredAirlines = this.allAirlines; //reinitialize
+				this.filteredAirlines = this.filteredAirlines.filter(({label}) => label.match(searchRegExp));
+				this.showAirlineDropdown = true;
+			}
+		}
+	}
+	
+
+	handleAirlineSelection(event){
+		let allAirlinesIndexFound = this.allAirlines.findIndex(ar => ar.value == event.detail.selectedItemId);
+		if(allAirlinesIndexFound>-1)
+			this.allAirlines[allAirlinesIndexFound].selected = event.detail.selected;
+		
+		if(event.detail.selected==true){
+			this.selectedAirlines.push({ 'Id': event.detail.selectedItemId, 'label': event.detail.selectedItemName});
+		}else{
+			let selAirlinesIndexFound = this.selectedAirlines.findIndex(ar => ar.Id == event.detail.selectedItemId);
+			this.selectedAirlines.splice(selAirlinesIndexFound, 1);
+		}
+		this.selectedAirlines = [...this.selectedAirlines];
+	}
+
+	closeAirlineDropdown() {this.showAirlineDropdown = false;}
+
+	handleAirlineRowAction(event) {
+		const action = event.detail.action;
+		const row = event.detail.row;
+		switch (action.name) {
+			case 'deleteAirline':
+				let selAirlinesIndexFound = this.selectedAirlines.findIndex(ar => ar.Id == row.Id);
+				this.selectedAirlines.splice(selAirlinesIndexFound, 1);
+				this.selectedAirlines = [...this.selectedAirlines];
+
+				let allAirlinesIndexFound = this.allAirlines.findIndex(ar => ar.value == row.Id);
+				this.allAirlines[allAirlinesIndexFound].selected = false;
+ 		}	
+	}
+
+	/***********
+	 * 
+	 *  MODALS METHODS
+	 * 
+	 **********/
+	@api errorModalMessage;
+	@track openSuccessModal = false;
+	@track openErrorModal = false;
+
+	button1Action(){
+        navigateToPage(CSP_PortalPath,{});
+    }
+
+    button2Action(){
+        navigateToPage("services?tab=availableServices");
+    }
+
+	closeErrorModal(){
+        this.openErrorModal = false;
+    }
+
+	contactSupport(){
+        document.body.style.overflow = 'auto';
+        let category = 'Platforms';
+        let topic = 'Customer_Portal';
+        let subtopic = 'Customer_Portal_Support';
+        var page = "support-reach-us?topic=" + topic;
+        navigateToPage(page);
+    }
 }
