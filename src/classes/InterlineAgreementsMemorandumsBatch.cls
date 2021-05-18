@@ -6,7 +6,7 @@
  */
 public class InterlineAgreementsMemorandumsBatch implements Queueable, Database.AllowsCallouts {
 
-	public static final ContentWorkspace LIBRARY = [SELECT ID FROM ContentWorkspace WHERE Name = :MITAutil.LIBRARY_CS];
+	public static final ContentWorkspace LIBRARY = [SELECT ID FROM ContentWorkspace WHERE Name = :IA_util.LIBRARY_CS];
 	public static final String MEMO_PAGE = 'InterlineAgreementsMemorandum';
 	public static final String BASE_NAME = 'Memorandum';
 

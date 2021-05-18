@@ -1,4 +1,4 @@
-public without sharing class ISSP_InterlineAgreementsNewController {
+public without sharing class IA_NewController {
 
 	@testVisible
 	private static Blob EncDecKey = Blob.valueOf('I@T@M!tAS3rvIc3!');
@@ -7,16 +7,16 @@ public without sharing class ISSP_InterlineAgreementsNewController {
 
 	public Account account {get;set;}
 	public Boolean hasRequestPermission {get;set;}
-	public MITAutil.AlertModal alertModal{get;set;}
+	public IA_util.AlertModal alertModal{get;set;}
 	private Set<String> setMyAccountAllowed;
 	private Set<String> setFilterNames;
 	private Set<String> setFilterTypes;
 
 	public List<SelectOption> getOptionNames() {
-		return MITAutil.setToOptions(this.setFilterNames,null);
+		return IA_util.setToOptions(this.setFilterNames,null);
 	}
 	public List<SelectOption> getOptionTypes() {
-		return MITAutil.setToOptions(this.setFilterTypes,MITAutil.MAP_AGREEMENT_LABELS);
+		return IA_util.setToOptions(this.setFilterTypes,IA_util.MAP_AGREEMENT_LABELS);
 	}
 
 	/**
@@ -79,7 +79,7 @@ public without sharing class ISSP_InterlineAgreementsNewController {
 			for (String agreementType : getAllowedAgreementTypes(this.otherAccount)) {
 				if (this.setMyAccountAllowed.contains(agreementType) && !alreadyExisting.contains(agreementType)) {
 					// this agreementType is available, so it is added to the mapActiveAgreements
-					String agreementName = MITAutil.MAP_AGREEMENTS_BY_NAME.get(agreementType);
+					String agreementName = IA_util.MAP_AGREEMENTS_BY_NAME.get(agreementType);
 					list<String> listAgreementTypes = this.mapActiveAgreements.get(agreementName);
 					if (listAgreementTypes == null) listAgreementTypes = new list<String>();
 					listAgreementTypes.add(agreementType);
@@ -95,8 +95,8 @@ public without sharing class ISSP_InterlineAgreementsNewController {
 			set<String> alreadyExisting = new set<String>();
 			//agreements where myAccount is in Airline2 and required one way agreements conversion
 			for(MITA_Agreement__c ma : otherAccount.MITA_Agreements_1__r) {
-				if (MITAutil.MAP_ONE_WAY_TYPES.containsKey(ma.Agreement_type__c)) {
-					alreadyExisting.add(MITAutil.MAP_ONE_WAY_TYPES.get(ma.Agreement_type__c));
+				if (IA_util.MAP_ONE_WAY_TYPES.containsKey(ma.Agreement_type__c)) {
+					alreadyExisting.add(IA_util.MAP_ONE_WAY_TYPES.get(ma.Agreement_type__c));
 				} else {
 					alreadyExisting.add(ma.Agreement_type__c);
 				}
@@ -115,19 +115,19 @@ public without sharing class ISSP_InterlineAgreementsNewController {
 	private static list<String> getAllowedAgreementTypes(Account account) {
 		//get the field list that controlls the permission for each agreement
 		list<String> listFieldNames = new list<String>();
-		if (account.MITA_Member__c) listFieldNames.addAll(MITAutil.LIST_MITA_FIELDS);
-		if (account.BIETA_Member__c) listFieldNames.addAll(MITAutil.LIST_BIETA_FIELDS);
+		if (account.MITA_Member__c) listFieldNames.addAll(IA_util.LIST_MITA_FIELDS);
+		if (account.BIETA_Member__c) listFieldNames.addAll(IA_util.LIST_BIETA_FIELDS);
 		// EMD is granted for everyone so far
 
 		list<String> listAgreementTypes = new list<String>();
 		for (String fieldName: listFieldNames) {
 			Date datefield = (Date)account.get(fieldName);
 			if(datefield !=null && datefield <= Date.today()) {
-				listAgreementTypes.add(MITAutil.MAP_AGREEMENT_FIELDS.get(fieldName));
+				listAgreementTypes.add(IA_util.MAP_AGREEMENT_FIELDS.get(fieldName));
 			}
 		}
 		// EMD has no permissions, it is always able to be requested
-		listAgreementTypes.add(MITAutil.TYPE_EMD);
+		listAgreementTypes.add(IA_util.TYPE_EMD);
 		return listAgreementTypes;
 	}
 
@@ -154,11 +154,11 @@ public without sharing class ISSP_InterlineAgreementsNewController {
 							row.agreementname = agreementName;
 							row.agreements = new list<String>();
 							for (String agr: listActiveAgreements) {
-								String agrType = MITAutil.MAP_AGREEMENT_LABELS.get(agr);
+								String agrType = IA_util.MAP_AGREEMENT_LABELS.get(agr);
 								row.agreements.add(agrType);
 								this.setFilterTypes.add(agrType);
 							}
-							row.otherAccount = MITAutil.Encrypt(EncDecKey,sa.otherAccount.Id);
+							row.otherAccount = IA_util.Encrypt(EncDecKey,sa.otherAccount.Id);
 							availableAgreementsRows.add(row);
 
 							this.setFilterNames.add(agreementName);
@@ -202,7 +202,7 @@ public without sharing class ISSP_InterlineAgreementsNewController {
 		this.alertModal = null;
 
 		//create the new agreement record ready to be saved
-		SuggestedAirline suggestedAirline = this.suggestedAirlines.get(MITAutil.Decrypt(EncDecKey,this.selectedAccount));
+		SuggestedAirline suggestedAirline = this.suggestedAirlines.get(IA_util.Decrypt(EncDecKey,this.selectedAccount));
 		if (suggestedAirline==null) closeModalNewAgreement();
 
 		this.newAgreementAirlineName = suggestedAirline.otherAccount.Name;
@@ -223,7 +223,7 @@ public without sharing class ISSP_InterlineAgreementsNewController {
 			this.listOptionAgreementTypes.add(new SelectOption('','Choose agreement type',true));
 		}
 		for (String agreementName: listActiveAgreements) {
-			this.listOptionAgreementTypes.add(new SelectOption(agreementName,MITAutil.MAP_AGREEMENT_LABELS.get(agreementName)));
+			this.listOptionAgreementTypes.add(new SelectOption(agreementName,IA_util.MAP_AGREEMENT_LABELS.get(agreementName)));
 		}
 	}
 
@@ -242,7 +242,7 @@ public without sharing class ISSP_InterlineAgreementsNewController {
 	public void saveNewAgreement() {
 		if (!this.hasRequestPermission) return;
 		if (this.newAgreement.Effective_date__c == null) {
-			this.alertModal = new MITAutil.AlertModal(MITAutil.ALERTMODAL_ERROR,'Warning',Label.ISSP_ANG_Effective_Date_Of_Change,'');
+			this.alertModal = new IA_util.AlertModal(IA_util.ALERTMODAL_ERROR,'Warning',Label.ISSP_ANG_Effective_Date_Of_Change,'');
 			return;
 		}
 
@@ -250,9 +250,9 @@ public without sharing class ISSP_InterlineAgreementsNewController {
 		if (result.isSuccess()) {
 			closeModalNewAgreement();
 			refreshPage();
-			this.alertModal = new MITAutil.AlertModal(MITAutil.ALERTMODAL_SUCCESSNEW,'Your request has been submitted.','Once the counterpart accepts the request, the agreement will be activated on the effective date.','');
+			this.alertModal = new IA_util.AlertModal(IA_util.ALERTMODAL_SUCCESSNEW,'Your request has been submitted.','Once the counterpart accepts the request, the agreement will be activated on the effective date.','');
 		} else {
-			this.alertModal = new MITAutil.AlertModal(MITAutil.ALERTMODAL_ERROR,'','There was a problem saving the agreement','');
+			this.alertModal = new IA_util.AlertModal(IA_util.ALERTMODAL_ERROR,'','There was a problem saving the agreement','');
 		}
 	}
 

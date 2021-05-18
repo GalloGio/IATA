@@ -1,5 +1,5 @@
 @isTest
-public class ISSP_InterlineAgreementsAllCtrlTest {
+public class IA_AllCtrlTest {
 
 	private static Id RT_AIRLINE = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 	private static Account airline1;
@@ -67,7 +67,7 @@ public class ISSP_InterlineAgreementsAllCtrlTest {
 		queryRecords();
 
 		Test.StartTest();
-		ISSP_InterlineAgreementsAllController ctrl = new ISSP_InterlineAgreementsAllController();
+		IA_AllController ctrl = new IA_AllController();
 		ctrl.account = airline1;
 		ctrl.hasWithdrawPermission = true;
 		System.assert(ctrl.AllAgreementsRows!=null);
@@ -84,8 +84,8 @@ public class ISSP_InterlineAgreementsAllCtrlTest {
 		MITA_Agreement__c agreement1 = new MITA_Agreement__c(
 			Airline_1__c = airline1.Id,
 			Airline_2__c = airline2.Id,
-			MITAorBIETA__c = MITAutil.MITA,
-			Agreement_Type__c = MITAutil.TYPE_PAX,
+			MITAorBIETA__c = IA_util.MITA,
+			Agreement_Type__c = IA_util.TYPE_PAX,
 			Created_date__c = Date.today(),
 			Agreement_processed_date__c = Date.today(),
 			Effective_date__c = Date.today()
@@ -93,8 +93,8 @@ public class ISSP_InterlineAgreementsAllCtrlTest {
 		MITA_Agreement__c agreement2 = new MITA_Agreement__c(
 			Airline_1__c = airline2.Id,
 			Airline_2__c = airline1.Id,
-			MITAorBIETA__c = MITAutil.BIETA,
-			Agreement_Type__c = MITAutil.TYPE_PAX_PARTICIPATING_AIRLINE,
+			MITAorBIETA__c = IA_util.BIETA,
+			Agreement_Type__c = IA_util.TYPE_PAX_PARTICIPATING_AIRLINE,
 			Created_date__c = Date.today(),
 			Agreement_processed_date__c = Date.today(),
 			Effective_date__c = Date.today()
@@ -102,7 +102,7 @@ public class ISSP_InterlineAgreementsAllCtrlTest {
 		insert new List<MITA_Agreement__c>{agreement1, agreement2};
 
 		Test.StartTest();
-		ISSP_InterlineAgreementsAllController ctrl = new ISSP_InterlineAgreementsAllController();
+		IA_AllController ctrl = new IA_AllController();
 		ctrl.account = airline1;
 		ctrl.hasWithdrawPermission = true;
 
@@ -120,7 +120,7 @@ public class ISSP_InterlineAgreementsAllCtrlTest {
 		System.assert(ctrl.showModalAgreementDetail!=true);
 
 		// modal is open with the selected id
-		ctrl.selectedAgreementId = MITAutil.Encrypt(ISSP_InterlineAgreementsAllController.EncDecKey,agreement1.Id);
+		ctrl.selectedAgreementId = IA_util.Encrypt(IA_AllController.EncDecKey,agreement1.Id);
 		ctrl.OpenModalAgreementDetail();
 		System.assert(ctrl.selectedAgreementId!=null);
 		System.assert(ctrl.selectedAgreement!=null);

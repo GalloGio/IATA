@@ -1,5 +1,5 @@
 @isTest
-public class ISSP_InterlineAgreementsMemosCtrlTest {
+public class IA_MemosCtrlTest {
 
 	@TestSetup
 	public static void setup(){
@@ -7,12 +7,12 @@ public class ISSP_InterlineAgreementsMemosCtrlTest {
 			Name = 'Interline Memorandums Library Name',
 			Value__c = 'Memo folder'
 		);
-		System.assertEquals('Memo folder', MITAutil.LIBRARY_CS);
+		System.assertEquals('Memo folder', IA_util.LIBRARY_CS);
 
 		User user = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
 		System.runAs(user) {
 			ContentWorkspace workspace = new ContentWorkspace(
-				Name = MITAutil.LIBRARY_CS
+				Name = IA_util.LIBRARY_CS
 			);
 			insert workspace;
 
@@ -36,7 +36,7 @@ public class ISSP_InterlineAgreementsMemosCtrlTest {
 
 	static testMethod void testController(){
 		Test.StartTest();
-		ISSP_InterlineAgreementsMemosController ctrl = new ISSP_InterlineAgreementsMemosController();
+		IA_MemosController ctrl = new IA_MemosController();
 		System.assert(ctrl.listDocuments!=null);
 		System.assertEquals(1,ctrl.listDocuments.size());
 		Test.stopTest();

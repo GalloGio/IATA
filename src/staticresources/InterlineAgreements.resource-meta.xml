@@ -2,5 +2,5 @@
 <StaticResource xmlns="http://soap.sforce.com/2006/04/metadata">
     <cacheControl>Public</cacheControl>
     <contentType>application/x-zip-compressed</contentType>
-    <description>Resources used in the portal app ISSP Interline Agreements</description>
+    <description>Resources used in the portal app Interline Agreements</description>
 </StaticResource>

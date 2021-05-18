@@ -1,10 +1,10 @@
-public without sharing class ISSP_InterlineAgreementsContactsCtrl {
+public without sharing class IA_ContactsCtrl {
 	@testVisible
 	private static Blob EncDecKey = Blob.valueOf('I@T@M!tAS3rvIc3!');
 
 	public Account account {get;set;}
 	public Boolean hasEditContactsPermission {get;set;}
-	public MITAutil.AlertModal alertModal{get;set;}
+	public IA_util.AlertModal alertModal{get;set;}
 
 	/**
 	 * initialize agreement variables to retrieve them again
@@ -54,7 +54,7 @@ public without sharing class ISSP_InterlineAgreementsContactsCtrl {
 		public String title {get;set;}
 
 		public ContactRow(Contact contact) {
-			this.contactId = MITAutil.Encrypt(EncDecKey,contact.Id);
+			this.contactId = IA_util.Encrypt(EncDecKey,contact.Id);
 			this.name = contact.Name;
 			this.phone = contact.Phone;
 			this.email = contact.Email;
@@ -74,7 +74,7 @@ public without sharing class ISSP_InterlineAgreementsContactsCtrl {
 	 * Opens the modal to edit a contact
 	 **/
 	public void openModalContact() {
-		this.selectedContact = this.mapContacts.get(MITAutil.Decrypt(EncDecKey,this.selectedContactId));
+		this.selectedContact = this.mapContacts.get(IA_util.Decrypt(EncDecKey,this.selectedContactId));
 		if (this.selectedContact==null) return;
 
 		this.showModalContact = true;
@@ -99,10 +99,10 @@ public without sharing class ISSP_InterlineAgreementsContactsCtrl {
 			if (result.isSuccess()) {
 				refreshPage();
 				this.selectedContactId = null;
-				this.alertModal = new MITAutil.AlertModal(MITAutil.ALERTMODAL_SUCCESSNEW,'Contact updated','','');
+				this.alertModal = new IA_util.AlertModal(IA_util.ALERTMODAL_SUCCESSNEW,'Contact updated','','');
 			}
 		} catch (Exception e) {
-			this.alertModal = new MITAutil.AlertModal(MITAutil.ALERTMODAL_ERROR,'','There was a problem saving the contact','');
+			this.alertModal = new IA_util.AlertModal(IA_util.ALERTMODAL_ERROR,'','There was a problem saving the contact','');
 		}
 	}
 

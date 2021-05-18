@@ -1,4 +1,4 @@
-<apex:component id="sectionAllComponent" controller="ISSP_InterlineAgreementsAllController" allowDML="true">
+<apex:component id="sectionAllComponent" controller="IA_AllController" allowDML="true">
 	<apex:attribute name="airline" description="This is the parent airline to show all their agreements" type="Account" required="true" assignTo="{!account}"/>
 	<apex:attribute name="withdrawPermission" description="if this permission is enabled the withdraw agreement section is visible" type="Boolean" required="true" assignTo="{!hasWithdrawPermission}"/>
 
@@ -221,7 +221,7 @@
 	<!-- /MODAL Table Filter -->
 	
 	<apex:outputPanel id="sectionDetail">
-		<c:ISSP_InterlineAgreementDetail agreement="{!selectedAgreement}" otheraccount="{!selectedAgreementOtherAirline}" WithdrawPermission="{!WithdrawPermission}" closefunction="closeModalAgreementDetail()" rendered="{!showModalAgreementDetail}"/>
+		<c:IA_Detail agreement="{!selectedAgreement}" otheraccount="{!selectedAgreementOtherAirline}" WithdrawPermission="{!WithdrawPermission}" closefunction="closeModalAgreementDetail()" rendered="{!showModalAgreementDetail}"/>
 	</apex:outputPanel>
 
 </apex:component>

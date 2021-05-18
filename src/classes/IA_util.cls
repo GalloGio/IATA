@@ -1,4 +1,4 @@
-public with sharing class MITAutil {
+public with sharing class IA_util {
 
 	// Library name where Interline agreement reports are stored
 	public static final String LIBRARY_CS_NAME = 'Interline Memorandums Library Name';

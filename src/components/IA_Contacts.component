@@ -1,4 +1,4 @@
-<apex:component id="sectionContactsComponent" controller="ISSP_InterlineAgreementsContactsCtrl" allowDML="true">
+<apex:component id="sectionContactsComponent" controller="IA_ContactsCtrl" allowDML="true">
 	<apex:attribute name="airline" description="This is the parent airline to show their available agreements and lets it to create new ones" type="Account" required="true" assignTo="{!account}"/>
 	<apex:attribute name="editContactsPermission" description="if this permission is enabled the withdraw agreement section is visible" type="Boolean" required="true" assignTo="{!hasEditContactsPermission}"/>
 

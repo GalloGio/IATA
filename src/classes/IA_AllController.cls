@@ -1,4 +1,4 @@
-public without sharing class ISSP_InterlineAgreementsAllController {
+public without sharing class IA_AllController {
 
 	@testVisible
 	private static Blob EncDecKey = Blob.valueOf('I@T@M!tAS3rvIc3!');
@@ -11,13 +11,13 @@ public without sharing class ISSP_InterlineAgreementsAllController {
 
 	// list of select option to be used in the filter popup
 	public List<SelectOption> getOptionNames() {
-		return MITAutil.setToOptions(this.setFilterNames,null);
+		return IA_util.setToOptions(this.setFilterNames,null);
 	}
 	public List<SelectOption> getOptionTypes() {
-		return MITAutil.setToOptions(this.setFilterTypes,MITAutil.MAP_AGREEMENT_LABELS);
+		return IA_util.setToOptions(this.setFilterTypes,IA_util.MAP_AGREEMENT_LABELS);
 	}
 	public List<SelectOption> getOptionStatus() {
-		return MITAutil.setToOptions(this.setFilterStatus,null);
+		return IA_util.setToOptions(this.setFilterStatus,null);
 	}
 
 	/**
@@ -71,18 +71,18 @@ public without sharing class ISSP_InterlineAgreementsAllController {
 					} else {
 						otherAirline = agreement.Airline_1__r;
 						// if it's a one way agreement and our airline is in second place find the oposite agreement name
-						if (MITAutil.MAP_ONE_WAY_TYPES.containsKey(agreement.Agreement_type__c)) {
-							agreementType = MITAutil.MAP_ONE_WAY_TYPES.get(agreement.Agreement_type__c);
+						if (IA_util.MAP_ONE_WAY_TYPES.containsKey(agreement.Agreement_type__c)) {
+							agreementType = IA_util.MAP_ONE_WAY_TYPES.get(agreement.Agreement_type__c);
 						}
 					}
 
 					AllAgreementsRow row = new AllAgreementsRow();
-					row.agreementId = MITAutil.Encrypt(EncDecKey,agreement.Id);
+					row.agreementId = IA_util.Encrypt(EncDecKey,agreement.Id);
 					row.otherAirlineName = otherAirline.Name;
 					row.otherAirlineDesignator = otherAirline.Airline_designator__c;
 					row.otherAirlineIataCode = otherAirline.IATACode__c;
 					row.otherAirlinePrefix = otherAirline.Airline_Prefix__c;
-					row.agreementType = MITAutil.MAP_AGREEMENT_LABELS.get(agreementType);
+					row.agreementType = IA_util.MAP_AGREEMENT_LABELS.get(agreementType);
 					row.agreementName = agreement.MITAorBIETA__c;
 					row.agreementStatus = agreement.Status__c;
 					AllAgreementsRows.add(row);
@@ -126,7 +126,7 @@ public without sharing class ISSP_InterlineAgreementsAllController {
 	 */
 	public void OpenModalAgreementDetail() {
 		if (String.IsEmpty(this.selectedAgreementId)) return ;
-		this.selectedAgreement = this.mapAllAgreements.get(MITAutil.Decrypt(EncDecKey,this.selectedAgreementId));
+		this.selectedAgreement = this.mapAllAgreements.get(IA_util.Decrypt(EncDecKey,this.selectedAgreementId));
 		if (this.selectedAgreement == null) return;
 
 		this.showModalAgreementDetail = true;

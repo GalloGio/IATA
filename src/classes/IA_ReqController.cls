@@ -1,4 +1,4 @@
-public without sharing class ISSP_InterlineAgreementsReqController {
+public without sharing class IA_ReqController {
 
 	@testVisible
 	private static Blob EncDecKey = Blob.valueOf('I@T@M!tAS3rvIc3!');
@@ -6,19 +6,19 @@ public without sharing class ISSP_InterlineAgreementsReqController {
 	public Account account {get;set;}
 	public Boolean hasApprovePermission {get;set;}
 	public String selectedAgreement {get;set;}
-	public MITAutil.AlertModal toast {get;set;}
+	public IA_util.AlertModal toast {get;set;}
 	private Set<String> setFilterNames;
 	private Set<String> setFilterTypes;
 	private Set<String> setFilterStatus;
 
 	public List<SelectOption> getOptionNames() {
-		return MITAutil.setToOptions(this.setFilterNames,null);
+		return IA_util.setToOptions(this.setFilterNames,null);
 	}
 	public List<SelectOption> getOptionTypes() {
-		return MITAutil.setToOptions(this.setFilterTypes,MITAutil.MAP_AGREEMENT_LABELS);
+		return IA_util.setToOptions(this.setFilterTypes,IA_util.MAP_AGREEMENT_LABELS);
 	}
 	public List<SelectOption> getOptionStatus() {
-		return MITAutil.setToOptions(this.setFilterStatus,null);
+		return IA_util.setToOptions(this.setFilterStatus,null);
 	}
 
 	/**
@@ -61,19 +61,19 @@ public without sharing class ISSP_InterlineAgreementsReqController {
 				for(MITA_Agreement__c agreement : this.mapAgreements.values()){
 					// if it's a one way agreement and our airline is in second place find the oposite agreement name
 					String agreementType = agreement.Agreement_type__c;
-					if (this.account.Id == agreement.Airline_2__c && MITAutil.MAP_ONE_WAY_TYPES.containsKey(agreementType)) {
-						agreementType = MITAutil.MAP_ONE_WAY_TYPES.get(agreementType);
+					if (this.account.Id == agreement.Airline_2__c && IA_util.MAP_ONE_WAY_TYPES.containsKey(agreementType)) {
+						agreementType = IA_util.MAP_ONE_WAY_TYPES.get(agreementType);
 					}
 
 					RequestAgreementsRow row = new RequestAgreementsRow();
-					row.agreementId = MITAutil.Encrypt(EncDecKey,agreement.Id);
+					row.agreementId = IA_util.Encrypt(EncDecKey,agreement.Id);
 					row.agreementName = agreement.MITAorBIETA__c;
-					row.agreementType = MITAutil.MAP_AGREEMENT_LABELS.get(agreementType);
+					row.agreementType = IA_util.MAP_AGREEMENT_LABELS.get(agreementType);
 					row.requesterName = agreement.Airline_1__r.Name;
 					row.requesterDesignator = agreement.Airline1_designator_code__c;
 					row.approverName = agreement.Airline_2__r.Name;
 					row.approverDesignator = agreement.Airline2_designator_code__c;
-					row.effectiveDate = MITAutil.dateformat(agreement.Effective_date__c);
+					row.effectiveDate = IA_util.dateformat(agreement.Effective_date__c);
 					row.agreementStatus = agreement.Status__c;
 					row.showAproveRejectButtons = (agreement.Status__c == 'Pending Approval' && this.hasApprovePermission && this.account.Id == agreement.Airline_2__c);
 					RequesterAgreementsRows.add(row);
@@ -124,7 +124,7 @@ public without sharing class ISSP_InterlineAgreementsReqController {
 	public void approveAgreement() {
 		if (!this.hasApprovePermission && this.selectedAgreement!=null) return;
 
-		MITA_Agreement__c agreement = this.mapAgreements.get(MITAutil.Decrypt(EncDecKey,this.selectedAgreement));
+		MITA_Agreement__c agreement = this.mapAgreements.get(IA_util.Decrypt(EncDecKey,this.selectedAgreement));
 
 		MITA_Agreement__c undoAgreement = new MITA_Agreement__c(
 			Id = agreement.Id,
@@ -140,17 +140,17 @@ public without sharing class ISSP_InterlineAgreementsReqController {
 		if (result.isSuccess()) {
 			refreshPage();
 			String undoActionId = createUndoAction(undoAgreement);
-			this.toast = new MITAutil.AlertModal('success','Request has been approved.', undoActionId);
+			this.toast = new IA_util.AlertModal('success','Request has been approved.', undoActionId);
 
 		} else {
-			this.toast = new MITAutil.AlertModal('fail','There was a problem when approving the agreement',null);
+			this.toast = new IA_util.AlertModal('fail','There was a problem when approving the agreement',null);
 		}
 	}
 
 	public void rejectAgreement() {
 		if (!this.hasApprovePermission && this.selectedAgreement!=null) return;
 
-		MITA_Agreement__c agreement = this.mapAgreements.get(MITAutil.Decrypt(EncDecKey,this.selectedAgreement));
+		MITA_Agreement__c agreement = this.mapAgreements.get(IA_util.Decrypt(EncDecKey,this.selectedAgreement));
 
 		MITA_Agreement__c undoAgreement = new MITA_Agreement__c(
 			Id = agreement.Id,
@@ -170,16 +170,16 @@ public without sharing class ISSP_InterlineAgreementsReqController {
 			this.RequesterAgreementsRows = null;
 
 			String undoActionId = createUndoAction(undoAgreement);
-			this.toast = new MITAutil.AlertModal('rejected','Request has been rejected.', undoActionId);
+			this.toast = new IA_util.AlertModal('rejected','Request has been rejected.', undoActionId);
 
 		} else {
-			this.toast = new MITAutil.AlertModal('fail','There was a problem when rejecting the agreement',null);
+			this.toast = new IA_util.AlertModal('fail','There was a problem when rejecting the agreement',null);
 		}
 	}
 
 	private map<String,MITA_Agreement__c> mapUndoActions = new map<String,MITA_Agreement__c>();
 	private String createUndoAction(MITA_Agreement__c agreement) {
-		String newId = MITAutil.randomString(8);
+		String newId = IA_util.randomString(8);
 		this.mapUndoActions.put(newId,agreement);
 		return newId;
 	}
@@ -195,10 +195,10 @@ public without sharing class ISSP_InterlineAgreementsReqController {
 			this.mapAgreements = null;
 			this.RequesterAgreementsRows = null;
 
-			this.toast = new MITAutil.AlertModal('undo','Action reverted',null);
+			this.toast = new IA_util.AlertModal('undo','Action reverted',null);
 
 		} else {
-			this.toast = new MITAutil.AlertModal('fail','There was a problem when undoing the action',null);
+			this.toast = new IA_util.AlertModal('fail','There was a problem when undoing the action',null);
 		}
 	}
 
@@ -219,7 +219,7 @@ public without sharing class ISSP_InterlineAgreementsReqController {
 	 */
 	public void OpenModalAgreementDetail() {
 		if (String.IsEmpty(this.selectedAgreementId)) return ;
-		this.selectedAgreementDetail = this.mapAgreements.get(MITAutil.Decrypt(EncDecKey,this.selectedAgreementId));
+		this.selectedAgreementDetail = this.mapAgreements.get(IA_util.Decrypt(EncDecKey,this.selectedAgreementId));
 		if (this.selectedAgreementDetail == null) return;
 
 		this.showModalAgreementDetail = true;

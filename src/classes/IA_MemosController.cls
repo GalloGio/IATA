@@ -1,4 +1,4 @@
-public with sharing class ISSP_InterlineAgreementsMemosController {
+public with sharing class IA_MemosController {
 
 	public List<DocumentRow> listDocuments {
 		get{
@@ -8,14 +8,14 @@ public with sharing class ISSP_InterlineAgreementsMemosController {
 				for( ContentWorkspaceDoc doc :
 					[SELECT ContentDocument.Id, ContentDocument.Title, CreatedDate
 					FROM ContentWorkspaceDoc
-					WHERE ContentWorkspace.Name = :MITAutil.LIBRARY_CS
+					WHERE ContentWorkspace.Name = :IA_util.LIBRARY_CS
 					ORDER BY CreatedDate DESC] )
 				{
 					DocumentRow row = new DocumentRow();
 					row.docId = doc.ContentDocument.Id;
 					row.docname = doc.ContentDocument.Title.replace('.pdf','');
 					row.doctype = 'PDF';
-					row.docdate = MITAutil.dateformat(doc.CreatedDate);
+					row.docdate = IA_util.dateformat(doc.CreatedDate);
 					listDocuments.add(row);
 				}
 			}

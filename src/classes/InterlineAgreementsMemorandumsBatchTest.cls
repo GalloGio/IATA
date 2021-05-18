@@ -14,12 +14,12 @@ public class InterlineAgreementsMemorandumsBatchTest {
 			Name = 'Interline Memorandums Library Name',
 			Value__c = 'Memo folder'
 		);
-		System.assertEquals('Memo folder', MITAutil.LIBRARY_CS);
+		System.assertEquals('Memo folder', IA_util.LIBRARY_CS);
 
 		User user = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
 		System.runAs(user) {
 			ContentWorkspace workspace = new ContentWorkspace(
-				Name = MITAutil.LIBRARY_CS
+				Name = IA_util.LIBRARY_CS
 			);
 			insert workspace;
 		}

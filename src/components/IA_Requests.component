@@ -1,4 +1,4 @@
-<apex:component id="sectionReqComponent" controller="ISSP_InterlineAgreementsReqController" allowDML="true">
+<apex:component id="sectionReqComponent" controller="IA_ReqController" allowDML="true">
 	<apex:attribute name="airline" description="This is the parent airline to show their available agreements to sign" type="Account" required="true" assignTo="{!account}"/>
 	<apex:attribute name="approvePermission" description="if this permission is enabled the Approve and reject agreement buttons are visible" type="Boolean" required="true" assignTo="{!hasApprovePermission}"/>
 
@@ -277,7 +277,7 @@
 	<!-- /MODAL Table Filter -->
 
 	<apex:outputPanel id="sectionDetail">
-		<c:ISSP_InterlineAgreementDetail agreement="{!selectedAgreementDetail}" otheraccount="{!selectedAgreementOtherAirline}" WithdrawPermission="false" closefunction="closeModalAgreementDetail()" rendered="{!showModalAgreementDetail}"/>
+		<c:IA_Detail agreement="{!selectedAgreementDetail}" otheraccount="{!selectedAgreementOtherAirline}" WithdrawPermission="false" closefunction="closeModalAgreementDetail()" rendered="{!showModalAgreementDetail}"/>
 	</apex:outputPanel>
 
 </apex:component>

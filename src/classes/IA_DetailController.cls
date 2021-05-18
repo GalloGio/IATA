@@ -1,4 +1,4 @@
-public with sharing class ISSP_InterlineAgreementDetailController {
+public with sharing class IA_DetailController {
 
 	private static final String HISTORY_CREATED = 'created';
 	private static final String HISTORY_AGREEMENT_FIELDNAME = 'Agreement_processed_date__c';
@@ -13,7 +13,7 @@ public with sharing class ISSP_InterlineAgreementDetailController {
 	public MITA_Agreement__c agreementCancellation {get;set;}
 	public Boolean showSuccessWithdrawn {get;set;}
 
-	public ISSP_InterlineAgreementDetailController(){
+	public IA_DetailController(){
 		this.agreementCancellation = new MITA_Agreement__c();
 	}
 
@@ -21,14 +21,14 @@ public with sharing class ISSP_InterlineAgreementDetailController {
 	 * Getting the number of days to wait from today to be able to withdraw an agreement
 	 */
 	public Integer getDaysForWithdrawal() {
-		return MITAutil.DAYS_TO_WAIT_FOR_WITHDRAWAL;
+		return IA_util.DAYS_TO_WAIT_FOR_WITHDRAWAL;
 	}
 
 	/**
 	 * String formatted version for the withdrawal date
 	 */
 	public String getWithdrawnDateFormatted() {
-		return MITAutil.dateformat(agreementCancellation.Cancellation_date__c);
+		return IA_util.dateformat(agreementCancellation.Cancellation_date__c);
 	}
 
 	/**
@@ -57,8 +57,8 @@ public with sharing class ISSP_InterlineAgreementDetailController {
 		get{
 			String agreementType = this.selectedAgreement.Agreement_type__c;
 			// if it's a one way agreement and the other airline is in first place find the oposite agreement name
-			if (this.selectedAgreement.Airline_1__c == this.otherAirline.Id && MITAutil.MAP_ONE_WAY_TYPES.containsKey(agreementType)) {
-				agreementType = MITAutil.MAP_ONE_WAY_TYPES.get(agreementType);
+			if (this.selectedAgreement.Airline_1__c == this.otherAirline.Id && IA_util.MAP_ONE_WAY_TYPES.containsKey(agreementType)) {
+				agreementType = IA_util.MAP_ONE_WAY_TYPES.get(agreementType);
 			}
 			AgreementDetail row = new AgreementDetail();
 			row.agreementId = this.selectedAgreement.id;
@@ -67,11 +67,11 @@ public with sharing class ISSP_InterlineAgreementDetailController {
 			row.otherAirlinePrefix = this.otherAirline.Airline_Prefix__c;
 			row.otherAirlineName = this.otherAirline.Name;
 			row.otherAirlineLogo = this.otherAirline.Company_Logo__c;
-			row.agreementType = MITAutil.MAP_AGREEMENT_LABELS.get(agreementType);
+			row.agreementType = IA_util.MAP_AGREEMENT_LABELS.get(agreementType);
 			row.agreementName = this.selectedAgreement.MITAorBIETA__c;
 			row.agreementStatus = this.selectedAgreement.Status__c;
-			row.agreementEffectiveDate = MITAutil.dateformat(this.selectedAgreement.Effective_date__c);
-			row.agreementCancellationDate = MITAutil.dateformat(this.selectedAgreement.Cancellation_date__c);
+			row.agreementEffectiveDate = IA_util.dateformat(this.selectedAgreement.Effective_date__c);
+			row.agreementCancellationDate = IA_util.dateformat(this.selectedAgreement.Cancellation_date__c);
 			row.minWithdrawDate = DateTime.now().addDays(getDaysForWithdrawal()).format('yyyy-MM-dd');
 			return row;
 		}

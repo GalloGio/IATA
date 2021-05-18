@@ -1,5 +1,5 @@
 @isTest
-public class ISSP_InterlineAgreementsControllerTest {
+public class IA_HomeControllerTest {
 
 	private static Id RT_AIRLINE = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 
@@ -60,7 +60,7 @@ public class ISSP_InterlineAgreementsControllerTest {
 		update portalcontact;
 
 		Portal_Applications__c app = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
-		app.Name = ISSP_InterlineAgreementsController.APP_NAME;
+		app.Name = IA_HomeController.APP_NAME;
 		app.Application_icon_URL__c = 'logo_url';
 		insert app;
 
@@ -87,7 +87,7 @@ public class ISSP_InterlineAgreementsControllerTest {
 
 		Test.startTest();
 		System.runAs(portalUser){
-			ISSP_InterlineAgreementsController ctrl = new ISSP_InterlineAgreementsController();
+			IA_HomeController ctrl = new IA_HomeController();
 			PageReference page = ctrl.initActions();
 			System.assert(page!=null, 'No page should be returned');
 		}
@@ -99,7 +99,7 @@ public class ISSP_InterlineAgreementsControllerTest {
 
 		Test.startTest();
 		System.runAs(portalUser){
-			ISSP_InterlineAgreementsController ctrl = new ISSP_InterlineAgreementsController();
+			IA_HomeController ctrl = new IA_HomeController();
 
 			PageReference page = ctrl.initActions();
 			System.assert(page==null);

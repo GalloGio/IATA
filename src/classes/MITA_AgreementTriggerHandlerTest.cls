@@ -106,7 +106,7 @@ public class MITA_AgreementTriggerHandlerTest {
 			Status__c = 'Active',
 			MITA_Contact__c = true,
 			User_Portal_Status__c = 'Administrator',
-			MITA_Contact_Type__c = MITAutil.GENERIC_CONTACT
+			MITA_Contact_Type__c = IA_util.GENERIC_CONTACT
 		);
 		contact2 = new Contact (
 			AccountId = airline2.Id,
@@ -117,7 +117,7 @@ public class MITA_AgreementTriggerHandlerTest {
 			Status__c = 'Active',
 			MITA_Contact__c = true,
 			User_Portal_Status__c = 'Administrator',
-			MITA_Contact_Type__c = MITAutil.CARGO_MANAGER
+			MITA_Contact_Type__c = IA_util.CARGO_MANAGER
 		);
 		insert new list<Contact>{contact1,contact2};
 	}
@@ -148,8 +148,8 @@ public class MITA_AgreementTriggerHandlerTest {
 		MITA_Agreement__c agreement = new MITA_Agreement__c(
 			Airline_1__c = airline1.Id,
 			Airline_2__c = airline2.Id,
-			MITAorBIETA__c = MITAutil.MITA,
-			Agreement_Type__c = MITAutil.TYPE_PAX,
+			MITAorBIETA__c = IA_util.MITA,
+			Agreement_Type__c = IA_util.TYPE_PAX,
 			Created_date__c = Date.today(),
 			Agreement_processed_date__c = Date.today(),
 			Effective_date__c = Date.today()
@@ -171,8 +171,8 @@ public class MITA_AgreementTriggerHandlerTest {
 		MITA_Agreement__c agreement = new MITA_Agreement__c(
 			Airline_1__c = airline1.Id,
 			Airline_2__c = airline2.Id,
-			MITAorBIETA__c = MITAutil.MITA,
-			Agreement_Type__c = MITAutil.TYPE_PAX,
+			MITAorBIETA__c = IA_util.MITA,
+			Agreement_Type__c = IA_util.TYPE_PAX,
 			Created_date__c = Date.today(),
 			Agreement_processed_date__c = Date.today(),
 			Effective_date__c = null,
@@ -200,8 +200,8 @@ public class MITA_AgreementTriggerHandlerTest {
 		MITA_Agreement__c agreement = new MITA_Agreement__c(
 			Airline_1__c = airline1.Id,
 			Airline_2__c = airline2.Id,
-			MITAorBIETA__c = MITAutil.MITA,
-			Agreement_Type__c = MITAutil.TYPE_PAX,
+			MITAorBIETA__c = IA_util.MITA,
+			Agreement_Type__c = IA_util.TYPE_PAX,
 			Created_date__c = Date.today(),
 			Agreement_processed_date__c = Date.today()
 		);
@@ -228,8 +228,8 @@ public class MITA_AgreementTriggerHandlerTest {
 		MITA_Agreement__c agreement = new MITA_Agreement__c(
 			Airline_1__c = airline1.Id,
 			Airline_2__c = airline2.Id,
-			MITAorBIETA__c = MITAutil.MITA,
-			Agreement_Type__c = MITAutil.TYPE_PAX,
+			MITAorBIETA__c = IA_util.MITA,
+			Agreement_Type__c = IA_util.TYPE_PAX,
 			Created_date__c = Date.today(),
 			Agreement_processed_date__c = Date.today()
 		);
@@ -256,8 +256,8 @@ public class MITA_AgreementTriggerHandlerTest {
 		MITA_Agreement__c agreement = new MITA_Agreement__c(
 			Airline_1__c = airline1.Id,
 			Airline_2__c = airline2.Id,
-			MITAorBIETA__c = MITAutil.MITA,
-			Agreement_Type__c = MITAutil.TYPE_PAX,
+			MITAorBIETA__c = IA_util.MITA,
+			Agreement_Type__c = IA_util.TYPE_PAX,
 			Created_date__c = Date.today(),
 			Agreement_processed_date__c = Date.today()
 		);

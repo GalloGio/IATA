@@ -32,8 +32,8 @@ public with sharing class InterlineAgreementsMemorandumController {
 
 	public List<String> getListTitles() {
 		List<String> listTitles = new List<String>();
-		for (String agrType: MITAutil.AGREEMENT_TYPES) {
-			for (String memoType: MITAutil.MEMO_TYPES) {
+		for (String agrType: IA_util.AGREEMENT_TYPES) {
+			for (String memoType: IA_util.MEMO_TYPES) {
 				listTitles.add(agrType + ' ' + memoType);
 			}
 		}
@@ -60,7 +60,7 @@ public with sharing class InterlineAgreementsMemorandumController {
 
 		Map<String,List<WrapperAgreement>> mapAllAgreements = new Map<String,List<WrapperAgreement>>();
 		for(MITA_Agreement__c agr : lsitAgreements) {
-			String key = agr.MITAorBIETA__c + ' ' + MITAutil.CONCURRENCES;
+			String key = agr.MITAorBIETA__c + ' ' + IA_util.CONCURRENCES;
 			List<WrapperAgreement> listWrapper = mapAllAgreements.get(key);
 			if (listWrapper==null) {
 				listWrapper = new list<WrapperAgreement>();
@@ -94,7 +94,7 @@ public with sharing class InterlineAgreementsMemorandumController {
 
 		Map<String,List<WrapperAgreement>> mapAllAgreements = new Map<String,List<WrapperAgreement>>();
 		for(MITA_Agreement__c agr : res) {
-			String key = agr.MITAorBIETA__c + ' ' + MITAutil.WITHDRAWALS;
+			String key = agr.MITAorBIETA__c + ' ' + IA_util.WITHDRAWALS;
 			List<WrapperAgreement> listWrapper = mapAllAgreements.get(key);
 			if (listWrapper==null) {
 				listWrapper = new list<WrapperAgreement>();
@@ -141,11 +141,11 @@ public with sharing class InterlineAgreementsMemorandumController {
 					(this.agreement.Airline_1__c == newAgreement.Airline_2__c && this.agreement.Airline_2__c == newAgreement.Airline_1__c)
 				) &&
 				(
-					( this.agreement.Agreement_type__c == MITAutil.TYPE_PAX  && newAgreement.Agreement_type__c == MITAutil.TYPE_CARGO) ||
-					( this.agreement.Agreement_type__c == MITAutil.TYPE_CARGO  && newAgreement.Agreement_type__c == MITAutil.TYPE_PAX)
+					( this.agreement.Agreement_type__c == IA_util.TYPE_PAX  && newAgreement.Agreement_type__c == IA_util.TYPE_CARGO) ||
+					( this.agreement.Agreement_type__c == IA_util.TYPE_CARGO  && newAgreement.Agreement_type__c == IA_util.TYPE_PAX)
 				)
 			) {
-				this.agreement.Agreement_type__c = MITAutil.TYPE_PAX_CARGO;
+				this.agreement.Agreement_type__c = IA_util.TYPE_PAX_CARGO;
 				return true;
 			}
 			return false;

@@ -1,4 +1,4 @@
-<apex:component id="sectionDetailComponent" controller="ISSP_InterlineAgreementDetailController" allowDML="true">
+<apex:component id="sectionDetailComponent" controller="IA_DetailController" allowDML="true">
 	<apex:attribute name="agreement" description="This is the agreement to show its info" type="MITA_Agreement__c" required="true" assignTo="{!selectedAgreement}"/>
 	<apex:attribute name="otheraccount" description="This is other airline participating in the agreement" type="Account" required="true" assignTo="{!otherAirline}"/>
 	<apex:attribute name="withdrawPermission" description="if this permission is enabled the withdraw agreement section is visible" type="Boolean" required="true" assignTo="{!hasWithdrawPermission}"/>

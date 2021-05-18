@@ -1,4 +1,4 @@
-<apex:component id="sectionNewComponent" controller="ISSP_InterlineAgreementsNewController" allowDML="true">
+<apex:component id="sectionNewComponent" controller="IA_NewController" allowDML="true">
 	<apex:attribute name="airline" description="This is the parent airline to show their available agreements and lets it to create new ones" type="Account" required="true" assignTo="{!account}"/>
 	<apex:attribute name="requestPermission" description="if this permission is enabled the Request agreement button is visible" type="Boolean" required="true" assignTo="{!hasRequestPermission}"/>
 

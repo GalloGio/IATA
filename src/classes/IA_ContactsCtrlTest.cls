@@ -1,5 +1,5 @@
 @isTest
-public class ISSP_InterlineAgreementsContactsCtrlTest {
+public class IA_ContactsCtrlTest {
 
 	private static Id RT_AIRLINE = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 	private static Id RT_CONTACT = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
@@ -53,7 +53,7 @@ public class ISSP_InterlineAgreementsContactsCtrlTest {
 		queryRecords();
 
 		Test.StartTest();
-		ISSP_InterlineAgreementsContactsCtrl ctrl = new ISSP_InterlineAgreementsContactsCtrl();
+		IA_ContactsCtrl ctrl = new IA_ContactsCtrl();
 		ctrl.resetAlertModal();
 		ctrl.account = airline;
 		ctrl.hasEditContactsPermission = true;
@@ -69,7 +69,7 @@ public class ISSP_InterlineAgreementsContactsCtrlTest {
 		contact.MITA_Contact_Type__c = 'Interline Airline Generic Contact';
 		update contact;
 
-		ISSP_InterlineAgreementsContactsCtrl ctrl = new ISSP_InterlineAgreementsContactsCtrl();
+		IA_ContactsCtrl ctrl = new IA_ContactsCtrl();
 		ctrl.account = airline;
 		ctrl.hasEditContactsPermission = true;
 
@@ -83,14 +83,14 @@ public class ISSP_InterlineAgreementsContactsCtrlTest {
 		System.assertEquals(null,ctrl.alertModal);
 
 		// open modal to show detail contact
-		ctrl.selectedContactId = MITAutil.Encrypt(ISSP_InterlineAgreementsContactsCtrl.EncDecKey,contact.Id);
+		ctrl.selectedContactId = IA_util.Encrypt(IA_ContactsCtrl.EncDecKey,contact.Id);
 		ctrl.openModalContact();
 		System.assertEquals(contact.Id,ctrl.selectedContact.Id);
 		System.assertEquals(true,ctrl.showModalContact);
 		System.assertEquals(null,ctrl.alertModal);
 
 		// update contact
-		contact.MITA_Contact_Type__c = MITAutil.GENERIC_CONTACT;
+		contact.MITA_Contact_Type__c = IA_util.GENERIC_CONTACT;
 		ctrl.saveContact();
 		System.assertEquals(contact.Id,ctrl.selectedContact.Id);
 		System.assertEquals(true,ctrl.showModalContact);
@@ -98,7 +98,7 @@ public class ISSP_InterlineAgreementsContactsCtrlTest {
 		System.assertEquals('successMsgNew',ctrl.alertModal.msgType);
 
 		// close modal
-		contact.MITA_Contact_Type__c = MITAutil.GENERIC_CONTACT + ';' + MITAutil.CARGO_MANAGER;
+		contact.MITA_Contact_Type__c = IA_util.GENERIC_CONTACT + ';' + IA_util.CARGO_MANAGER;
 		ctrl.closeModalContact();
 		System.assertEquals(false,ctrl.showModalContact);
 		System.assertEquals(null,ctrl.selectedContactId);
@@ -113,10 +113,10 @@ public class ISSP_InterlineAgreementsContactsCtrlTest {
 	static TestMethod void testDeleteContact(){
 		queryRecords();
 
-		contact.MITA_Contact_Type__c = MITAutil.GENERIC_CONTACT;
+		contact.MITA_Contact_Type__c = IA_util.GENERIC_CONTACT;
 		update contact;
 
-		ISSP_InterlineAgreementsContactsCtrl ctrl = new ISSP_InterlineAgreementsContactsCtrl();
+		IA_ContactsCtrl ctrl = new IA_ContactsCtrl();
 		ctrl.account = airline;
 		ctrl.hasEditContactsPermission = true;
 
@@ -130,7 +130,7 @@ public class ISSP_InterlineAgreementsContactsCtrlTest {
 		System.assertEquals(null,ctrl.alertModal);
 
 		// open modal to show detail contact
-		ctrl.selectedContactId = MITAutil.Encrypt(ISSP_InterlineAgreementsContactsCtrl.EncDecKey,contact.Id);
+		ctrl.selectedContactId = IA_util.Encrypt(IA_ContactsCtrl.EncDecKey,contact.Id);
 		ctrl.openModalContact();
 		System.assertEquals(contact.Id,ctrl.selectedContact.Id);
 		System.assertEquals(true,ctrl.showModalContact);
@@ -144,7 +144,7 @@ public class ISSP_InterlineAgreementsContactsCtrlTest {
 		System.assertEquals('successMsgNew',ctrl.alertModal.msgType);
 
 		// close modal
-		contact.MITA_Contact_Type__c = MITAutil.GENERIC_CONTACT + ';' + MITAutil.CARGO_MANAGER;
+		contact.MITA_Contact_Type__c = IA_util.GENERIC_CONTACT + ';' + IA_util.CARGO_MANAGER;
 		ctrl.closeModalContact();
 		System.assertEquals(false,ctrl.showModalContact);
 		System.assertEquals(null,ctrl.selectedContactId);

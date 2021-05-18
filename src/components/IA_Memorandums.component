@@ -1,4 +1,4 @@
-<apex:component id="sectionMemorandums" controller="ISSP_InterlineAgreementsMemosController" >
+<apex:component id="sectionMemorandums" controller="IA_MemosController" >
 
 
 	<script>

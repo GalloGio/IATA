@@ -1,4 +1,4 @@
-<apex:page controller="ISSP_InterlineAgreementsController"
+<apex:page controller="IA_HomeController"
 	cache="false"
 	sidebar="false"
 	showHeader="false"
@@ -14,30 +14,30 @@
 
 	<style>
 		:root {
-			--IA-approve-hover-svg: url("{!URLFOR($Resource.ISSP_InterlineAgreements, 'img/approve-hover.svg')}");
-			--IA-approve-svg: url("{!URLFOR($Resource.ISSP_InterlineAgreements, 'img/approve.svg')}");
-			--IA-arrow-first-svg: url("{!URLFOR($Resource.ISSP_InterlineAgreements, 'img/arrow_first.svg')}");
-			--IA-arrow-last-svg: url("{!URLFOR($Resource.ISSP_InterlineAgreements, 'img/arrow_last.svg')}");
-			--IA-arrow-next-svg: url("{!URLFOR($Resource.ISSP_InterlineAgreements, 'img/arrow_next.svg')}");
-			--IA-arrow-prev-svg: url("{!URLFOR($Resource.ISSP_InterlineAgreements, 'img/arrow_prev.svg')}");
-			--IA-check-svg: url("{!URLFOR($Resource.ISSP_InterlineAgreements, 'img/check.svg')}");
-			--IA-close-svg: url("{!URLFOR($Resource.ISSP_InterlineAgreements, 'img/close.svg')}");
-			--IA-date-picker-svg: url("{!URLFOR($Resource.ISSP_InterlineAgreements, 'img/date_picker.svg')}");
-			--IA-delete-svg: url("{!URLFOR($Resource.ISSP_InterlineAgreements, 'img/delete.svg')}");
-			--IA-download-svg: url("{!URLFOR($Resource.ISSP_InterlineAgreements, 'img/download.svg')}");
-			--IA-edit-svg: url("{!URLFOR($Resource.ISSP_InterlineAgreements, 'img/edit.svg')}");
-			--IA-filter-svg: url("{!URLFOR($Resource.ISSP_InterlineAgreements, 'img/filter.svg')}");
-			--IA-filtered-svg: url("{!URLFOR($Resource.ISSP_InterlineAgreements, 'img/filtered.svg')}");
-			--IA-plus-svg: url("{!URLFOR($Resource.ISSP_InterlineAgreements, 'img/plus.svg')}");
-			--IA-plushover-svg: url("{!URLFOR($Resource.ISSP_InterlineAgreements, 'img/plushover.svg')}");
-			--IA-print-svg: url("{!URLFOR($Resource.ISSP_InterlineAgreements, 'img/print.svg')}");
-			--IA-radioOff-svg: url("{!URLFOR($Resource.ISSP_InterlineAgreements, 'img/radio_off.svg')}");
-			--IA-radioOn-svg: url("{!URLFOR($Resource.ISSP_InterlineAgreements, 'img/radio_on.svg')}");
-			--IA-reject-hover-svg: url("{!URLFOR($Resource.ISSP_InterlineAgreements, 'img/reject-hover.svg')}");
-			--IA-reject-svg: url("{!URLFOR($Resource.ISSP_InterlineAgreements, 'img/reject.svg')}");
-			--IA-searchColored-svg: url("{!URLFOR($Resource.ISSP_AccountStatements, 'img/searchColored.svg')}");
-			--IA-select-arrow-svg: url("{!URLFOR($Resource.ISSP_InterlineAgreements, 'img/select_arrow.svg')}");
-			--IA-sort-marker-svg: url("{!URLFOR($Resource.ISSP_InterlineAgreements, 'img/sort_marker.svg')}");
+			--IA-approve-hover-svg: url("{!URLFOR($Resource.InterlineAgreements, 'img/approve-hover.svg')}");
+			--IA-approve-svg: url("{!URLFOR($Resource.InterlineAgreements, 'img/approve.svg')}");
+			--IA-arrow-first-svg: url("{!URLFOR($Resource.InterlineAgreements, 'img/arrow_first.svg')}");
+			--IA-arrow-last-svg: url("{!URLFOR($Resource.InterlineAgreements, 'img/arrow_last.svg')}");
+			--IA-arrow-next-svg: url("{!URLFOR($Resource.InterlineAgreements, 'img/arrow_next.svg')}");
+			--IA-arrow-prev-svg: url("{!URLFOR($Resource.InterlineAgreements, 'img/arrow_prev.svg')}");
+			--IA-check-svg: url("{!URLFOR($Resource.InterlineAgreements, 'img/check.svg')}");
+			--IA-close-svg: url("{!URLFOR($Resource.InterlineAgreements, 'img/close.svg')}");
+			--IA-date-picker-svg: url("{!URLFOR($Resource.InterlineAgreements, 'img/date_picker.svg')}");
+			--IA-delete-svg: url("{!URLFOR($Resource.InterlineAgreements, 'img/delete.svg')}");
+			--IA-download-svg: url("{!URLFOR($Resource.InterlineAgreements, 'img/download.svg')}");
+			--IA-edit-svg: url("{!URLFOR($Resource.InterlineAgreements, 'img/edit.svg')}");
+			--IA-filter-svg: url("{!URLFOR($Resource.InterlineAgreements, 'img/filter.svg')}");
+			--IA-filtered-svg: url("{!URLFOR($Resource.InterlineAgreements, 'img/filtered.svg')}");
+			--IA-plus-svg: url("{!URLFOR($Resource.InterlineAgreements, 'img/plus.svg')}");
+			--IA-plushover-svg: url("{!URLFOR($Resource.InterlineAgreements, 'img/plushover.svg')}");
+			--IA-print-svg: url("{!URLFOR($Resource.InterlineAgreements, 'img/print.svg')}");
+			--IA-radioOff-svg: url("{!URLFOR($Resource.InterlineAgreements, 'img/radio_off.svg')}");
+			--IA-radioOn-svg: url("{!URLFOR($Resource.InterlineAgreements, 'img/radio_on.svg')}");
+			--IA-reject-hover-svg: url("{!URLFOR($Resource.InterlineAgreements, 'img/reject-hover.svg')}");
+			--IA-reject-svg: url("{!URLFOR($Resource.InterlineAgreements, 'img/reject.svg')}");
+			--IA-searchColored-svg: url("{!URLFOR($Resource.InterlineAgreements, 'img/searchColored.svg')}");
+			--IA-select-arrow-svg: url("{!URLFOR($Resource.InterlineAgreements, 'img/select_arrow.svg')}");
+			--IA-sort-marker-svg: url("{!URLFOR($Resource.InterlineAgreements, 'img/sort_marker.svg')}");
 		}
 
 		@font-face {
@@ -49,10 +49,10 @@
 		}
 	</style>
 
-	<apex:includeScript value="{!URLFOR($Resource.ISSP_InterlineAgreements, 'js/xtable/xtable.min.js')}"/>
-	<apex:includeScript value="{!URLFOR($Resource.ISSP_InterlineAgreements, 'js/tostify/tostify.min.js')}"/>
-	<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.ISSP_InterlineAgreements, 'js/tostify/tostify.min.css')}"/>
-	<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.ISSP_InterlineAgreements, 'css/main.min.css')}"/>
+	<apex:includeScript value="{!URLFOR($Resource.InterlineAgreements, 'js/xtable/xtable.min.js')}"/>
+	<apex:includeScript value="{!URLFOR($Resource.InterlineAgreements, 'js/tostify/tostify.min.js')}"/>
+	<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.InterlineAgreements, 'js/tostify/tostify.min.css')}"/>
+	<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.InterlineAgreements, 'css/main.min.css')}"/>
 
 	<script>
 		const ready = function (cb) {
@@ -274,21 +274,21 @@
 					<!-- /SUBTAB selector -->
 
 					<!-- TAB All Agreements-->
-					<c:ISSP_InterlineAgreementsAll id="sectionAll" rendered="{!showSection=='ALL'}" airline="{!airlineHQ}" WithdrawPermission="{!WithdrawPermission}"/>
+					<c:IA_All id="sectionAll" rendered="{!showSection=='ALL'}" airline="{!airlineHQ}" WithdrawPermission="{!WithdrawPermission}"/>
 
 					<!-- TAB Pending Requests -->
-					<c:ISSP_InterlineAgreementsRequests id="sectionReq" rendered="{!showSection=='REQ'}" airline="{!airlineHQ}" approvePermission="{!approvePermission}"/>
+					<c:IA_Requests id="sectionReq" rendered="{!showSection=='REQ'}" airline="{!airlineHQ}" approvePermission="{!approvePermission}"/>
 
 					<!-- TAB New Agreement -->
-					<c:ISSP_InterlineAgreementsNew id="sectionNew" rendered="{!showSection=='NEW'}" airline="{!airlineHQ}" requestPermission="{!requestPermission}"/>
+					<c:IA_New id="sectionNew" rendered="{!showSection=='NEW'}" airline="{!airlineHQ}" requestPermission="{!requestPermission}"/>
 					<!-- /TAB New Agreement -->
 
 					<!-- TAB Contacts -->
-					<c:ISSP_InterlineAgreementsContacts id="sectionContacts" rendered="{!showSection=='CONTACTS'}" airline="{!airlineHQ}" editContactsPermission="{!editContactsPermission}"/>
+					<c:IA_Contacts id="sectionContacts" rendered="{!showSection=='CONTACTS'}" airline="{!airlineHQ}" editContactsPermission="{!editContactsPermission}"/>
 					<!-- /TAB Contacts -->
 
 					<!-- TAB Memorandums -->
-					<c:ISSP_InterlineAgreementsMemorandums id="sectionMemorandums" rendered="{!showSection=='MEMOS'}"/>
+					<c:IA_Memorandums id="sectionMemorandums" rendered="{!showSection=='MEMOS'}"/>
 					<!-- /TAB Memorandums -->
 
 					<div class="row IA-TableFooter"></div>

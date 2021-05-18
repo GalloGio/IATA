@@ -1,5 +1,5 @@
 @isTest
-public class ISSP_InterlineAgreementsReqCtrlTest {
+public class IA_ReqCtrlTest {
 
 	private static Id RT_AIRLINE = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 	private static Account airline1;
@@ -67,7 +67,7 @@ public class ISSP_InterlineAgreementsReqCtrlTest {
 		queryRecords();
 
 		Test.StartTest();
-		ISSP_InterlineAgreementsReqController ctrl = new ISSP_InterlineAgreementsReqController();
+		IA_ReqController ctrl = new IA_ReqController();
 		ctrl.account = airline1;
 		ctrl.hasApprovePermission = true;
 
@@ -90,11 +90,11 @@ public class ISSP_InterlineAgreementsReqCtrlTest {
 			Airline_2__c = airline2.Id,
 			Effective_date__c = Date.today(),
 			Created_date__c = Date.today(),
-			MITAorBIETA__c=MITAutil.MITA,
-			Agreement_Type__c = MITAutil.TYPE_CARGO);
+			MITAorBIETA__c=IA_util.MITA,
+			Agreement_Type__c = IA_util.TYPE_CARGO);
 
 		Test.StartTest();
-		ISSP_InterlineAgreementsReqController ctrl = new ISSP_InterlineAgreementsReqController();
+		IA_ReqController ctrl = new IA_ReqController();
 		ctrl.account = airline1;
 		ctrl.hasApprovePermission = true;
 
@@ -112,8 +112,8 @@ public class ISSP_InterlineAgreementsReqCtrlTest {
 			Airline_2__c = airline1.Id,
 			Effective_date__c = Date.today(),
 			Created_date__c = Date.today(),
-			MITAorBIETA__c=MITAutil.MITA,
-			Agreement_Type__c = MITAutil.TYPE_CARGO,
+			MITAorBIETA__c=IA_util.MITA,
+			Agreement_Type__c = IA_util.TYPE_CARGO,
 			Cancellation_date__c = Date.today(),
 			Cancellation_processed_date__c = Date.today(),
 			Cancellation_Reason__c = 'Rejected by Airline 2'
@@ -121,7 +121,7 @@ public class ISSP_InterlineAgreementsReqCtrlTest {
 		);
 
 		Test.StartTest();
-		ISSP_InterlineAgreementsReqController ctrl = new ISSP_InterlineAgreementsReqController();
+		IA_ReqController ctrl = new IA_ReqController();
 		ctrl.account = airline1;
 		ctrl.hasApprovePermission = true;
 
@@ -139,12 +139,12 @@ public class ISSP_InterlineAgreementsReqCtrlTest {
 			Airline_2__c = airline1.Id,
 			Effective_date__c = Date.today(),
 			Created_date__c = Date.today(),
-			MITAorBIETA__c=MITAutil.MITA,
-			Agreement_Type__c = MITAutil.TYPE_CARGO);
+			MITAorBIETA__c=IA_util.MITA,
+			Agreement_Type__c = IA_util.TYPE_CARGO);
 		insert agreement;
 
 		Test.StartTest();
-		ISSP_InterlineAgreementsReqController ctrl = new ISSP_InterlineAgreementsReqController();
+		IA_ReqController ctrl = new IA_ReqController();
 		ctrl.account = airline1;
 		ctrl.hasApprovePermission = true;
 
@@ -152,19 +152,19 @@ public class ISSP_InterlineAgreementsReqCtrlTest {
 		System.assertEquals(1,ctrl.RequesterAgreementsRows.size());
 
 		//approve agreement
-		ctrl.selectedAgreement = MITAutil.Encrypt(ISSP_InterlineAgreementsReqController.EncDecKey,agreement.Id);
+		ctrl.selectedAgreement = IA_util.Encrypt(IA_ReqController.EncDecKey,agreement.Id);
 		ctrl.approveAgreement();
 
 		System.assert(ctrl.toast!=null);
-		System.assertEquals('success',ctrl.toast.type);
+		System.assertEquals('success',ctrl.toast.msgType);
 		agreement = [SELECT Id,Agreement_processed_date__c FROM MITA_Agreement__c WHERE Id = :agreement.Id];
 		System.assertEquals(Date.today(),agreement.Agreement_processed_date__c);
 
 		//undo approve agreement
-		ctrl.undoId = ctrl.toast.undoactionId;
+		ctrl.undoId = ctrl.toast.undoid;
 		ctrl.undoAction();
 		System.assert(ctrl.toast!=null);
-		System.assertEquals('undo',ctrl.toast.type);
+		System.assertEquals('undo',ctrl.toast.msgType);
 		agreement = [SELECT Id,Agreement_processed_date__c FROM MITA_Agreement__c WHERE Id = :agreement.Id];
 		System.assertEquals(null,agreement.Agreement_processed_date__c);
 
@@ -179,12 +179,12 @@ public class ISSP_InterlineAgreementsReqCtrlTest {
 			Airline_2__c = airline1.Id,
 			Effective_date__c = Date.today(),
 			Created_date__c = Date.today(),
-			MITAorBIETA__c=MITAutil.MITA,
-			Agreement_Type__c = MITAutil.TYPE_CARGO);
+			MITAorBIETA__c=IA_util.MITA,
+			Agreement_Type__c = IA_util.TYPE_CARGO);
 		insert agreement;
 
 		Test.StartTest();
-		ISSP_InterlineAgreementsReqController ctrl = new ISSP_InterlineAgreementsReqController();
+		IA_ReqController ctrl = new IA_ReqController();
 		ctrl.account = airline1;
 		ctrl.hasApprovePermission = true;
 
@@ -192,11 +192,11 @@ public class ISSP_InterlineAgreementsReqCtrlTest {
 		System.assertEquals(1,ctrl.RequesterAgreementsRows.size());
 
 		//reject agreement
-		ctrl.selectedAgreement = MITAutil.Encrypt(ISSP_InterlineAgreementsReqController.EncDecKey,agreement.Id);
+		ctrl.selectedAgreement = IA_util.Encrypt(IA_ReqController.EncDecKey,agreement.Id);
 		ctrl.rejectAgreement();
 
 		System.assert(ctrl.toast!=null);
-		System.assertEquals('rejected',ctrl.toast.type);
+		System.assertEquals('rejected',ctrl.toast.msgType);
 
 		agreement = [SELECT Id,Cancellation_date__c, Cancellation_processed_date__c, Cancellation_Reason__c FROM MITA_Agreement__c WHERE Id = :agreement.Id];
 		System.assertEquals(Date.today(),agreement.Cancellation_date__c);
@@ -204,10 +204,10 @@ public class ISSP_InterlineAgreementsReqCtrlTest {
 		System.assertEquals('Rejected by Airline 2',agreement.Cancellation_Reason__c);
 
 		//undo reject agreement
-		ctrl.undoId = ctrl.toast.undoactionId;
+		ctrl.undoId = ctrl.toast.undoid;
 		ctrl.undoAction();
 		System.assert(ctrl.toast!=null);
-		System.assertEquals('undo',ctrl.toast.type);
+		System.assertEquals('undo',ctrl.toast.msgType);
 		agreement = [SELECT Id,Cancellation_date__c, Cancellation_processed_date__c, Cancellation_Reason__c FROM MITA_Agreement__c WHERE Id = :agreement.Id];
 		System.assertEquals(null,agreement.Cancellation_date__c);
 		System.assertEquals(null,agreement.Cancellation_processed_date__c);
@@ -224,12 +224,12 @@ public class ISSP_InterlineAgreementsReqCtrlTest {
 			Airline_2__c = airline1.Id,
 			Effective_date__c = Date.today(),
 			Created_date__c = Date.today(),
-			MITAorBIETA__c=MITAutil.MITA,
-			Agreement_Type__c = MITAutil.TYPE_CARGO);
+			MITAorBIETA__c=IA_util.MITA,
+			Agreement_Type__c = IA_util.TYPE_CARGO);
 		insert agreement;
 
 		Test.StartTest();
-		ISSP_InterlineAgreementsReqController ctrl = new ISSP_InterlineAgreementsReqController();
+		IA_ReqController ctrl = new IA_ReqController();
 		ctrl.account = airline1;
 		ctrl.hasApprovePermission = true;
 
@@ -241,7 +241,7 @@ public class ISSP_InterlineAgreementsReqCtrlTest {
 		System.assertEquals(null,ctrl.selectedAgreementOtherAirline);
 		System.assertEquals(null,ctrl.showModalAgreementDetail);
 
-		ctrl.selectedAgreementId = MITAutil.Encrypt(ISSP_InterlineAgreementsReqController.EncDecKey,agreement.Id);
+		ctrl.selectedAgreementId = IA_util.Encrypt(IA_ReqController.EncDecKey,agreement.Id);
 		ctrl.OpenModalAgreementDetail();
 		System.assert(ctrl.selectedAgreementId!=null);
 		System.assert(ctrl.selectedAgreementDetail!=null);

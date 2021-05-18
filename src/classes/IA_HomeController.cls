@@ -1,4 +1,4 @@
-public with sharing class ISSP_InterlineAgreementsController {
+public with sharing class IA_HomeController {
 	public static final String APP_NAME = 'Interline agreements';
 
 	public list<String> listMessages {get; set;}
@@ -8,7 +8,7 @@ public with sharing class ISSP_InterlineAgreementsController {
 
 	private User currentUser;
 
-	public ISSP_InterlineAgreementsController(){
+	public IA_HomeController(){
 		this.listMessages = new list<String>();
 		this.showSection = 'ALL';
 		Id userid = UserInfo.getUserId();

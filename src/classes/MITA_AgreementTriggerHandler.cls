@@ -94,7 +94,7 @@ public with sharing class MITA_AgreementTriggerHandler {
 		+ ' WHERE Status__c = \'Active\''
 		+ ' AND User_Portal_Status__c IN (\'Administrator\',\'Approved Admin\')'
 		+ ' AND MITA_Contact__c = true'
-		+ ' AND MITA_Contact_Type__c IN ' + getInParam(MITAutil.LIST_MITA_CONTACTS)
+		+ ' AND MITA_Contact_Type__c IN ' + getInParam(IA_util.LIST_MITA_CONTACTS)
 		+ ' AND ('
 		+ '   AccountId IN ' + getInParam(listAccountId)
 		+ '   OR Account.Top_Parent__c IN ' + getInParam(listAccountId)

@@ -50,8 +50,8 @@ public class InterlineAgreementsMemorandumCtrlTest {
 		MITA_Agreement__c agreement1 = new MITA_Agreement__c(
 			Airline_1__c = airline1.Id,
 			Airline_2__c = airline2.Id,
-			MITAorBIETA__c = MITAutil.MITA,
-			Agreement_Type__c = MITAutil.TYPE_PAX,
+			MITAorBIETA__c = IA_util.MITA,
+			Agreement_Type__c = IA_util.TYPE_PAX,
 			Created_date__c = Date.parse('15/01/2021'),
 			Agreement_processed_date__c = Date.parse('15/01/2021'),
 			Effective_date__c = Date.parse('15/01/2021')
@@ -60,8 +60,8 @@ public class InterlineAgreementsMemorandumCtrlTest {
 		MITA_Agreement__c agreement2 = new MITA_Agreement__c(
 			Airline_1__c = airline1.Id,
 			Airline_2__c = airline2.Id,
-			MITAorBIETA__c = MITAutil.MITA,
-			Agreement_Type__c = MITAutil.TYPE_ISSUING_AIRLINE,
+			MITAorBIETA__c = IA_util.MITA,
+			Agreement_Type__c = IA_util.TYPE_ISSUING_AIRLINE,
 			Created_date__c = Date.parse('15/01/2021'),
 			Agreement_processed_date__c = Date.parse('15/01/2021'),
 			Effective_date__c = Date.parse('15/01/2021')
@@ -70,8 +70,8 @@ public class InterlineAgreementsMemorandumCtrlTest {
 		MITA_Agreement__c agreement3 = new MITA_Agreement__c(
 			Airline_1__c = airline2.Id,
 			Airline_2__c = airline1.Id,
-			MITAorBIETA__c = MITAutil.MITA,
-			Agreement_Type__c = MITAutil.TYPE_ISSUING_AIRLINE,
+			MITAorBIETA__c = IA_util.MITA,
+			Agreement_Type__c = IA_util.TYPE_ISSUING_AIRLINE,
 			Created_date__c = Date.parse('15/01/2021'),
 			Agreement_processed_date__c = Date.parse('15/01/2021'),
 			Effective_date__c = Date.parse('15/01/2021')
@@ -80,8 +80,8 @@ public class InterlineAgreementsMemorandumCtrlTest {
 		MITA_Agreement__c agreement4 = new MITA_Agreement__c(
 			Airline_1__c = airline1.Id,
 			Airline_2__c = airline2.Id,
-			MITAorBIETA__c = MITAutil.BIETA,
-			Agreement_Type__c = MITAutil.TYPE_PAX_ISSUING_AIRLINE,
+			MITAorBIETA__c = IA_util.BIETA,
+			Agreement_Type__c = IA_util.TYPE_PAX_ISSUING_AIRLINE,
 			Created_date__c = Date.parse('20/12/2020'),
 			Agreement_processed_date__c = Date.parse('20/12/2020'),
 			Effective_date__c = Date.parse('20/12/2020'),
@@ -92,8 +92,8 @@ public class InterlineAgreementsMemorandumCtrlTest {
 		MITA_Agreement__c agreement5 = new MITA_Agreement__c(
 			Airline_1__c = airline2.Id,
 			Airline_2__c = airline1.Id,
-			MITAorBIETA__c = MITAutil.BIETA,
-			Agreement_Type__c = MITAutil.TYPE_PAX_ISSUING_AIRLINE,
+			MITAorBIETA__c = IA_util.BIETA,
+			Agreement_Type__c = IA_util.TYPE_PAX_ISSUING_AIRLINE,
 			Created_date__c = Date.parse('20/12/2020'),
 			Agreement_processed_date__c = Date.parse('20/12/2020'),
 			Effective_date__c = Date.parse('20/12/2020'),
@@ -104,8 +104,8 @@ public class InterlineAgreementsMemorandumCtrlTest {
 		MITA_Agreement__c agreement6 = new MITA_Agreement__c(
 			Airline_1__c = airline2.Id,
 			Airline_2__c = airline1.Id,
-			MITAorBIETA__c = MITAutil.MITA,
-			Agreement_Type__c = MITAutil.TYPE_CARGO,
+			MITAorBIETA__c = IA_util.MITA,
+			Agreement_Type__c = IA_util.TYPE_CARGO,
 			Created_date__c = Date.parse('20/12/2020'),
 			Agreement_processed_date__c = Date.parse('20/12/2020'),
 			Effective_date__c = Date.parse('20/12/2020'),
@@ -116,8 +116,8 @@ public class InterlineAgreementsMemorandumCtrlTest {
 		MITA_Agreement__c agreement7 = new MITA_Agreement__c(
 			Airline_1__c = airline1.Id,
 			Airline_2__c = airline2.Id,
-			MITAorBIETA__c = MITAutil.EMD,
-			Agreement_Type__c = MITAutil.TYPE_EMD,
+			MITAorBIETA__c = IA_util.EMD,
+			Agreement_Type__c = IA_util.TYPE_EMD,
 			Created_date__c = Date.parse('20/12/2020'),
 			Agreement_processed_date__c = Date.parse('20/12/2020'),
 			Effective_date__c = Date.parse('20/12/2020'),
