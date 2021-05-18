@@ -448,6 +448,8 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 
 		if(this.isConfirmationStep){
 			this.handleSubmitRequest();
+			this.isLoading = false;
+			return;
 		}
 	}
 
@@ -546,12 +548,12 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 							, lsAirlineAgreement: airlineAgreements})
 			.then(result => {
 				console.log('wow! Is created! ' + result);
-				this.stopLoading(); 
+				//this.stopLoading(); 
 			})
 			.catch(error => {
 				//this.configureAndOpenErrorModal(error);
 				console.log('Error, indeed: ' + error);
-				this.stopLoading();
+				//this.stopLoading();
 			});    
 		/*createNewAccount({ acc: account})
                 .then(result => {

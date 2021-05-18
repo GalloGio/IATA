@@ -1,4 +1,5 @@
 public  without sharing class LabRegistry_helper {
+	public static final string labRegistryAccnRole = 'Lab Registry';
 
 	@AuraEnabled(cacheable=true)
 	public static list<Account> getAirlinesHQ(){
@@ -12,11 +13,12 @@ public  without sharing class LabRegistry_helper {
 											, list<LAB_Account_Role_Detail__c> lsCountriesLab
 											, list<LAB_Account_Role_Detail__c> lsAirlineAgreement){
 		try {
-
-			Account_Role__c accntRole = new Account_Role__c();
-			id AccntId = [Select contact.AccountId from User where id = :UserInfo.getUserId()].contact.AccountId;
+			user currentUser = [select id, ContactId, Contact.AccountId from user where id =: UserInfo.getUserId()];
+			
 			//Create Account Role
-			accntRole.Account__c = AccntId;
+			Account_Role__c accntRole = new Account_Role__c();
+			accntRole.Account__c = currentUser.Contact.AccountId;
+			accntRole.Functional_Role__c = LabRegistry_helper.labRegistryAccnRole;
 			accntRole.recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'Master');
 			insert accntRole;
 
@@ -25,7 +27,26 @@ public  without sharing class LabRegistry_helper {
 			insert theCase;
 
 			//Create Account Role Detail. Main answers
-			labRoleDetail.recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('LAB_Account_Role_Detail__c', 'Default');
+			labRoleDetail.onboarding_case__c = theCase.Id;
+			switch on labRoleDetail.Lab_Type__c {
+				when 'IT Integrator' {
+				    labRoleDetail.recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('LAB_Account_Role_Detail__c', 'IT_Integrator');
+				}	
+				when 'Aggregator' {
+					labRoleDetail.recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('LAB_Account_Role_Detail__c', 'Aggregator');
+				}
+				when 'Independent' {
+					labRoleDetail.recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('LAB_Account_Role_Detail__c', 'Independent');
+				}
+				when 'Lab Network' {
+					labRoleDetail.recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('LAB_Account_Role_Detail__c', 'Lab_Network');
+				}
+				when else {
+					labRoleDetail.recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('LAB_Account_Role_Detail__c', 'Default');
+				}
+			}
+
+			labRoleDetail.Account_Role__c = accntRole.Id;
 			insert labRoleDetail;
 
 			//Create Account Role details. How many labs per country
@@ -43,6 +64,13 @@ public  without sharing class LabRegistry_helper {
 			}
 
 			insert lsAirlineAgreement;
+
+			//Create Access Requested Portal Application Right
+			Portal_Application_Right__c pac = new Portal_Application_Right__c();
+			pac.recordtypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Portal_Application_Right__c', 'Application_rigth');
+			pac.Contact__c = currentUser.ContactId;
+			pac.Portal_Application__c = [select id from Portal_Applications__c where Functional_Role__c=:LabRegistry_helper.labRegistryAccnRole limit 1].Id;
+			pac.Right__c = PortalServicesCtrl.PORTAL_ACCESS_REQUESTED;
 
 			return 'success';
 
