@@ -23,21 +23,16 @@ import FIELD_Type_of_SLAs_in_place from '@salesforce/schema/LAB_Account_Role_Det
 import FIELD_Additional_certifications_in_place from '@salesforce/schema/LAB_Account_Role_Detail__c.Additional_certifications_in_place__c';
 import FIELD_Endorsed_by_governments from '@salesforce/schema/LAB_Account_Role_Detail__c.Endorsed_by_governments__c';
 
-//Labels
+//Generic Labels
 import CSP_LabReg_FormNotCompleted			from '@salesforce/label/c.CSP_LabReg_FormNotCompleted';
-import CSP_L2_Additional_Details			from '@salesforce/label/c.CSP_L2_Additional_Details';
 import CSP_L2_Profile_Incomplete_Message	from '@salesforce/label/c.CSP_L2_Profile_Incomplete_Message';
 import CSP_L2_Yes							from '@salesforce/label/c.CSP_L2_Yes';
 import CSP_L2_No							from '@salesforce/label/c.CSP_L2_No';
 import CSP_PortalPath						from '@salesforce/label/c.CSP_PortalPath';
-
-import Button_Cancel from '@salesforce/label/c.Button_Cancel';
-import Button_Next from '@salesforce/label/c.Button_Next';
-import Button_Previous from '@salesforce/label/c.Button_Previous';
-import ISSP_Confirm from '@salesforce/label/c.ISSP_Confirm';
-
 import CSP_L2_Next_Step from '@salesforce/label/c.CSP_L2_Next_Step';
+import CSP_L2_Back_to_Edit from '@salesforce/label/c.CSP_L2_Back_to_Edit';
 
+//Questions labels
 import CSP_LabReg_AdditionalCertInPlace from '@salesforce/label/c.CSP_LabReg_AdditionalCertInPlace';
 import CSP_LabReg_airlinePartnershipSelection from '@salesforce/label/c.CSP_LabReg_airlinePartnershipSelection';
 import CSP_LabReg_Describe_SLA_Nature from '@salesforce/label/c.CSP_LabReg_Describe_SLA_Nature';
@@ -60,38 +55,29 @@ import CSP_LabReg_AirlineAgreements from '@salesforce/label/c.CSP_LabReg_Airline
 import CSP_LabReg_CountryLabs from '@salesforce/label/c.CSP_LabReg_CountryLabs';
 import CSP_L2_Profile_Details_Message from '@salesforce/label/c.CSP_L2_Profile_Details_Message';
 
+//Steps labels
 import CSP_labReg_Step_GeneralInformation from '@salesforce/label/c.CSP_labReg_Step_GeneralInformation';
 import CSP_LabReg_Step_Locations from '@salesforce/label/c.CSP_LabReg_Step_Locations';
 import CSP_labReg_Step_Confirmation from '@salesforce/label/c.CSP_labReg_Step_Confirmation';
 import CSP_labReg_Step_Airline_Agreements from '@salesforce/label/c.CSP_labReg_Step_Airline_Agreements';
 
-import CSP_Error_Message_Mandatory_Fields from '@salesforce/label/c.CSP_Error_Message_Mandatory_Fields_Contact';
-
 export default class PortalServiceOnboardingForm extends NavigationMixin(LightningElement) {
 	/* Images */
-    youAreSafeIcon = CSP_PortalPath + 'CSPortal/Images/Icons/youaresafe.png';
     alertIcon = CSP_PortalPath + 'CSPortal/alertIcon.png';
     homeIcon = CSP_PortalPath + 'CSPortal/Images/Icons/L2_home.png';
     crossIcon = CSP_PortalPath + 'CSPortal/Images/Icons/L2_cross.png';
     stepCheckedLogo = CSP_PortalPath + 'CSPortal/Images/Icons/L2_step_valid.png';
-    step1ActiveLogo = CSP_PortalPath + 'CSPortal/Images/Icons/L2_step_1_active.png';
-    step2ActiveLogo = CSP_PortalPath + 'CSPortal/Images/Icons/L2_step_2_active.png';
+    
+	step1ActiveLogo = CSP_PortalPath + 'CSPortal/Images/Icons/L2_step_1_active.png';
     step2InactiveLogo = CSP_PortalPath + 'CSPortal/Images/Icons/L2_step_2_inactive.png';
-    step3ActiveLogo = CSP_PortalPath + 'CSPortal/Images/Icons/L2_step_3_active.png';
-    step3InactiveLogo = CSP_PortalPath + 'CSPortal/Images/Icons/L2_step_3_inactive.png';
 
 	abortRequest() {
         this.dispatchEvent(new CustomEvent('requestcompleted', { detail: { success: false }, bubbles: true,composed: true }));// sends the event to the grandparent
     }
 
 	//exposed labels
-    @track label = {
-		Button_Cancel
-		,Button_Previous
-		,Button_Next
-		,ISSP_Confirm
-		,CSP_Error_Message_Mandatory_Fields
-		,CSP_LabReg_AdditionalCertInPlace
+    @track labels = {
+		CSP_LabReg_AdditionalCertInPlace
 		,CSP_LabReg_airlinePartnershipSelection
 		,CSP_LabReg_Describe_SLA_Nature
 		,CSP_LabReg_How_Long_In_Business
@@ -113,7 +99,6 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 		,CSP_L2_Yes
 		,CSP_L2_No
 		,CSP_LabReg_FormNotCompleted
-		,CSP_L2_Additional_Details
 		,CSP_LabReg_AirlineAgreements
 		,CSP_LabReg_CountryLabs
 		,CSP_L2_Profile_Details_Message
@@ -122,6 +107,7 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 		,CSP_labReg_Step_Confirmation
 		,CSP_LabReg_Step_Locations
 		,CSP_labReg_Step_GeneralInformation
+		,CSP_L2_Back_to_Edit
 	}
 
 	@track isLoading = false;
@@ -350,10 +336,11 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 					|| this.labsPartOfNationalPlatform == ''
 					|| (this.labsPartOfNationalPlatform == 'Yes' && this.whichNationalPlatform == '')){
 						this.isYourDetailStepValid = false;
-						this.isNextDisabled = true;
+						//this.isNextDisabled = true;
+						this.isConfirmationStepValid = false;
 				}else{
 					this.isYourDetailStepValid = true;
-					this.isNextDisabled = false;
+					//this.isNextDisabled = false;
 				}
 			}
 
@@ -371,10 +358,13 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 					|| this.labsPartOfNationalPlatform == ''
 					|| (this.labsPartOfNationalPlatform == 'Yes' && this.whichNationalPlatform == '')){
 						this.isYourDetailStepValid = false;
-						this.isNextDisabled = true;
+						//this.isNextDisabled = true;
+						this.isAirlineAgrStepReachable = false;
+						this.isCountryLabsStepReachable = false;
+						this.isConfirmationStepValid = false;
 				}else{
 					this.isYourDetailStepValid = true;
-					this.isNextDisabled = false;
+					//this.isNextDisabled = false;
 				}
 			}
 		}
@@ -382,13 +372,23 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 		if(this.isAirlineAgrStep){
 			if(this.airlinePartnershipSelection == ''){
 				this.isAirlineAgrStepValid = false;
-				this.isNextDisabled = true;
+				//this.isNextDisabled = true;
+				this.isConfirmationStepValid = false;
 			}
 			else{
 				this.isAirlineAgrStepValid = true;
-				this.isNextDisabled = false;
+				//this.isNextDisabled = false;
+				this.isConfirmationStepValid = true;
 			}
 		}
+
+		this.isConfirmationStepReachable = this.isAirlineAgrStepValid && this.isYourDetailStepValid;
+		this.isAirlineAgrStepReachable = this.isYourDetailStepValid;
+		this.isCountryLabsStepReachable = this.isYourDetailStepValid;
+
+		this.isNextDisabled = ((this.isYourDetailsStep && !this.isYourDetailStepValid)
+								|| (this.isCountryLabsStep && !this.isYourDetailStepValid)
+								|| (this.isAirlineAgrStep && !this.isAirlineAgrStepValid));
 	}
 
 
@@ -401,13 +401,19 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 	@track isAirlineAgrStep = false;
 	@track isConfirmationStep = false;
 	@track isGreetingStep = false;
+
+	@track isCountryLabsStepReachable = false;
+	@track isAirlineAgrStepReachable = false;
+	@track isConfirmationStepReachable = false;
 	
 	//isCountryLabStep is not having any mandatory field, so is valid when isYourDetailStepValid is true
 	@track isYourDetailStepValid = false;
 	@track isAirlineAgrStepValid = false;
+	@track isConfirmationStepValid = false;
 
 	isAForm = false;
 	isBForm = false;
+
 	goToNextStep(){
 		this.isLoading = true;
 		if(this.isYourDetailsStep){
@@ -415,7 +421,6 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 				//this.isNextDisabled = false; //will be active on the country lab step
 				this.isYourDetailsStep = false;
 				this.isCountryLabsStep = true;
-				this.currentStep = 'isCountryLabsStep';
 				this.showPreviousPageLink = true;
 			}
 			this.isLoading = false;
@@ -427,7 +432,6 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 				this.isNextDisabled = false;
 				this.isCountryLabsStep = false;
 				this.isAirlineAgrStep = true;
-				this.currentStep = 'isAirlineAgrStep';
 				this.showPreviousPageLink = true;
 			}
 			this.isLoading = false;
@@ -439,7 +443,6 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 				this.isNextDisabled = false;
 				this.isAirlineAgrStep = false;
 				this.isConfirmationStep = true;
-				this.currentStep = 'isConfirmationStep';
 				this.showPreviousPageLink = true;
 			}
 			this.isLoading = false;
@@ -453,8 +456,6 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 		}
 	}
 
-	@track currentStep = 'isYourDetailsStep';
-	
 	goToPreviousStep(){
 		this.isLoading = true;
 		this.isNextDisabled = false;
@@ -481,6 +482,31 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 			this.showPreviousPageLink = false;
 			return;
 		}
+	}
+
+	goToYourDetailsStep(){
+		this.isYourDetailsStep = true;
+		this.isCountryLabsStep = false;
+		this.isAirlineAgrStep = false;
+		this.isConfirmationStep = false;
+	}
+	goToCountryLabStep(){
+		this.isYourDetailsStep = false;
+		this.isCountryLabsStep = true;
+		this.isAirlineAgrStep = false;
+		this.isConfirmationStep = false;
+	}
+	goToAirlineAgrStep(){
+		this.isYourDetailsStep = false;
+		this.isCountryLabsStep = false;
+		this.isAirlineAgrStep = true;
+		this.isConfirmationStep = false;
+	}
+	goToConfirmationStep(){
+		this.isYourDetailsStep = false;
+		this.isCountryLabsStep = false;
+		this.isAirlineAgrStep = false;
+		this.isConfirmationStep = true;
 	}
 
 

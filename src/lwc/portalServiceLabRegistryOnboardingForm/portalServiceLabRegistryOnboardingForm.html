@@ -5,7 +5,7 @@
 				<div class="headerHome">
 					<img src={homeIcon} height="24" width="24" onclick={openGoToHomePopup}>
 				</div>
-				<div class="headerTitle">{label.CSP_LabRegistry}</div>
+				<div class="headerTitle">{labels.CSP_LabRegistry}</div>
 				<div class="headerClose">
 					<img src={crossIcon} height="32" width="32" onclick={openClosePopup}>
 				</div>
@@ -13,52 +13,94 @@
 			<div class="progressBarContainer">
 				<div class="progressBar">
 					<div class="progressItem">
-						{label.CSP_labReg_Step_GeneralInformation}
-						<!--<div class="itemIcon">
-							<img src={confirmationLogo} class={confirmationLogoCssClass}>
-						</div>
-						<template if:true={isConfirmationReachable}>
-							<div class={confirmationTitleCssClass} onclick={goToConfirmation}><span>{label.CSP_L2_Confirmation}</span></div>
+						<template if:true={isYourDetailsStep}>
+							<div class="activeStep">1</div>
+							<div class="itemTitle currentStep">
+								<span>{labels.CSP_labReg_Step_GeneralInformation}</span>
+							</div>
 						</template>
-						<template if:false={isConfirmationReachable}>
-							<div class={confirmationTitleCssClass}><span>{label.CSP_L2_Confirmation}</span></div>
-						</template>--> 
+						<template if:false={isYourDetailsStep}>
+							<template if:true={isYourDetailStepValid}>
+								<div class="itemIcon">
+									<img src={stepCheckedLogo} size="24">
+								</div>
+								<div class="itemTitle itemClickable" onclick={goToYourDetailsStep}>
+									<span>{labels.CSP_labReg_Step_GeneralInformation}</span>
+								</div>
+							</template>
+						</template>
 					</div>
 					<div class="progressItem">
-						{label.CSP_LabReg_Step_Locations}
-						<!--<div class="itemIcon">
-							<img src={confirmationLogo} class={confirmationLogoCssClass}>
-						</div>
-						<template if:true={isConfirmationReachable}>
-							<div class={confirmationTitleCssClass} onclick={goToConfirmation}><span>{label.CSP_L2_Confirmation}</span></div>
+						<template if:true={isCountryLabsStep}>
+							<div class="activeStep">2</div>
+							<div class="itemTitle currentStep">
+								<span>{labels.CSP_LabReg_Step_Locations}</span>
+							</div>
 						</template>
-						<template if:false={isConfirmationReachable}>
-							<div class={confirmationTitleCssClass}><span>{label.CSP_L2_Confirmation}</span></div>
-						</template>-->
+						<template if:false={isCountryLabsStep}>
+							<template if:true={isYourDetailStepValid}>
+								<div class="itemIcon"><img src={stepCheckedLogo} size="24"></div>
+							</template>
+							<template if:false={isYourDetailStepValid}>
+								<div class="inactiveStep">2</div>
+							</template>
+							<template if:true={isCountryLabsStepReachable}>
+								<div class="itemTitle itemClickable" onclick={goToCountryLabStep}>
+									<span>{labels.CSP_LabReg_Step_Locations}</span>
+								</div>
+							</template>
+							<template if:false={isCountryLabsStepReachable}>
+								<div class="itemTitle"><span>{labels.CSP_LabReg_Step_Locations}</span></div>
+							</template>
+						</template>
 					</div>
 					<div class="progressItem">
-						{label.CSP_labReg_Step_Airline_Agreements}
-						<!--<div class="itemIcon">
-							<img src={confirmationLogo} class={confirmationLogoCssClass}>
-						</div>
-						<template if:true={isConfirmationReachable}>
-							<div class={confirmationTitleCssClass} onclick={goToConfirmation}><span>{label.CSP_L2_Confirmation}</span></div>
+						<template if:true={isAirlineAgrStep}>
+							<div class="activeStep">3</div>
+							<div class="itemTitle currentStep">
+								<span>{labels.CSP_labReg_Step_Airline_Agreements}</span>
+							</div>
 						</template>
-						<template if:false={isConfirmationReachable}>
-							<div class={confirmationTitleCssClass}><span>{label.CSP_L2_Confirmation}</span></div>
-						</template>-->
+						<template if:false={isAirlineAgrStep}>
+							<template if:true={isAirlineAgrStepValid}>
+								<div class="itemIcon"><img src={stepCheckedLogo} size="24"></div>
+							</template>
+							<template if:false={isAirlineAgrStepValid}>
+								<div class="inactiveStep">3</div>
+							</template>
+							<template if:true={isAirlineAgrStepReachable}>
+								<div class="itemTitle itemClickable" onclick={goToAirlineAgrStep}>
+									<span>{labels.CSP_labReg_Step_Airline_Agreements}</span>
+								</div>
+							</template>
+							<template if:false={isAirlineAgrStepReachable}>
+								<div class="itemTitle"><span>{labels.CSP_labReg_Step_Airline_Agreements}</span></div>
+							</template>
+						</template>
 					</div>
 					<div class="progressItem">
-						{label.CSP_labReg_Step_Confirmation}
-						<!--<div class="itemIcon">
-							<img src={confirmationLogo} class={confirmationLogoCssClass}>
-						</div>
-						<template if:true={isConfirmationReachable}>
-							<div class={confirmationTitleCssClass} onclick={goToConfirmation}><span>{label.CSP_L2_Confirmation}</span></div>
+						<template if:true={isConfirmationStep}>
+							<div class="activeStep">4</div>
+							<div class="itemTitle currentStep">
+								<span>{labels.CSP_labReg_Step_Confirmation}</span>
+							</div>
 						</template>
-						<template if:false={isConfirmationReachable}>
-							<div class={confirmationTitleCssClass}><span>{label.CSP_L2_Confirmation}</span></div>
-						</template>-->
+						<template if:false={isConfirmationStep}>
+							<template if:true={isConfirmationStepValid}>
+								<div class="itemIcon"><img src={stepCheckedLogo} size="24"></div>
+							</template>
+							<template if:false={isConfirmationStepValid}>
+								<div class="inactiveStep">4</div>
+							</template>
+							<template if:true={isConfirmationStepReachable}>
+								<div class="itemTitle itemClickable" onclick={goToConfirmationStep}>
+									<span>{labels.CSP_labReg_Step_Confirmation}</span>
+								</div>
+							</template>
+							<template if:false={isConfirmationStepReachable}>
+								<div class="itemTitle"><span>{labels.CSP_labReg_Step_Confirmation}</span></div>
+							</template>
+						</template>
 					</div>
 				</div>
 			</div>
@@ -71,7 +113,7 @@
 
 						<div >
 							<lightning-layout-item size="12" class="topLabel IEFixDisplay" if:false={isConfirmationStep}>
-								<span class="fixed-text">{label.CSP_L2_Profile_Details_Message}</span>
+								<span class="fixed-text">{labels.CSP_L2_Profile_Details_Message}</span>
 							</lightning-layout-item>
 
 							<lightning-layout-item class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix IEFixDisplay" size="12" if:false={isConfirmationStep}>
@@ -82,7 +124,7 @@
 									<lightning-layout-item size="12" class="formItem">
 										<div class="formLabelContainer">
 											<div class="text-xxsmall">
-												{label.CSP_LabReg_InitialQuestion}
+												{labels.CSP_LabReg_InitialQuestion}
 											</div>
 										</div>
 							
@@ -107,7 +149,7 @@
 										<lightning-layout-item size="12" class="formItem">
 											<div class="formLabelContainer">
 												<div class="text-xxsmall">
-													{label.CSP_LabReg_How_Long_In_Business}
+													{labels.CSP_LabReg_How_Long_In_Business}
 												</div>
 											</div>
 								
@@ -131,7 +173,7 @@
 										<lightning-layout-item size="12" class="formItem">
 											<div class="formLabelContainer">
 												<div class="text-xxsmall">
-													{label.CSP_LabReg_Operating_Brand}
+													{labels.CSP_LabReg_Operating_Brand}
 												</div>
 											</div>
 								
@@ -152,7 +194,7 @@
 											<div if:true={showWhichBrand} class="slds-p-around_medium lgc-bg">
 												<div class="formLabelContainer">
 													<div class="text-xxsmall">
-														{label.CSP_LabReg_Which_One}
+														{labels.CSP_LabReg_Which_One}
 													</div>
 												</div>
 	
@@ -175,7 +217,7 @@
 										<lightning-layout-item size="12" class="formItem">
 											<div class="formLabelContainer">
 												<div class="text-xxsmall">
-													{label.CSP_LabReg_SLA_InPlace}
+													{labels.CSP_LabReg_SLA_InPlace}
 												</div>
 											</div>
 								
@@ -196,14 +238,14 @@
 											<div if:true={showNatureOfSLA} class="slds-p-around_medium lgc-bg">
 												<div class="formLabelContainer">
 													<div class="text-xxsmall">
-														{label.CSP_LabReg_Describe_SLA_Nature}
+														{labels.CSP_LabReg_Describe_SLA_Nature}
 													</div>
 												</div>
 		
 												<lightning-textarea 
 													name="NatureOfSLA"
 													value={NatureOfSLA} 
-													label={label.CSP_LabReg_Describe_SLA_Nature}
+													label={labels.CSP_LabReg_Describe_SLA_Nature}
 													placeholder="type here..." 
 													maxlength="2000"
 													variant="label-hidden"
@@ -219,7 +261,7 @@
 										<lightning-layout-item size="12" class="formItem">
 											<div class="formLabelContainer">
 												<div class="text-xxsmall">
-													{label.CSP_LabReg_manageBookingSelection}
+													{labels.CSP_LabReg_manageBookingSelection}
 												</div>
 											</div>
 								
@@ -243,7 +285,7 @@
 										<lightning-layout-item size="12" class="formItem">
 											<div class="formLabelContainer">
 												<div class="text-xxsmall">
-													{label.CSP_LabReg_issueTestResultsSelection}
+													{labels.CSP_LabReg_issueTestResultsSelection}
 												</div>
 											</div>
 								
@@ -268,7 +310,7 @@
 										<lightning-layout-item size="12" class="formItem">
 											<div class="formLabelContainer">
 												<div class="text-xxsmall">
-													{label.CSP_LabReg_labsPartOfNationalPlatform}
+													{labels.CSP_LabReg_labsPartOfNationalPlatform}
 												</div>
 											</div>
 								
@@ -289,13 +331,13 @@
 											<div if:true={showWhichNationalPlatform} class="slds-p-around_medium lgc-bg">
 												<div class="formLabelContainer">
 													<div class="text-xxsmall">
-														{label.CSP_LabReg_Which_One}
+														{labels.CSP_LabReg_Which_One}
 													</div>
 												</div>
 												<lightning-textarea 
 													name="whichNationalPlatform"
 													value={whichNationalPlatform} 
-													label={label.CSP_LabReg_Which_One}
+													label={labels.CSP_LabReg_Which_One}
 													placeholder="type here..." 
 													maxlength=2000
 													variant="label-hidden"
@@ -312,7 +354,7 @@
 										<lightning-layout-item size="12" class="formItem">
 											<div class="formLabelContainer">
 												<div class="text-xxsmall">
-													{label.CSP_LabReg_How_Long_In_Business}
+													{labels.CSP_LabReg_How_Long_In_Business}
 												</div>
 											</div>
 								
@@ -336,7 +378,7 @@
 										<lightning-layout-item size="12" class="formItem">
 											<div class="formLabelContainer">
 												<div class="text-xxsmall">
-													{label.CSP_LabReg_TypeOfLab}
+													{labels.CSP_LabReg_TypeOfLab}
 												</div>
 											</div>
 								
@@ -360,7 +402,7 @@
 										<lightning-layout-item size="12" class="formItem">
 											<div class="formLabelContainer">
 												<div class="text-xxsmall">
-													{label.CSP_LabReg_manageBookingSelection}
+													{labels.CSP_LabReg_manageBookingSelection}
 												</div>
 											</div>
 								
@@ -384,7 +426,7 @@
 										<lightning-layout-item size="12" class="formItem">
 											<div class="formLabelContainer">
 												<div class="text-xxsmall">
-													{label.CSP_LabReg_issueTestResultsSelection}
+													{labels.CSP_LabReg_issueTestResultsSelection}
 												</div>
 											</div>
 								
@@ -408,7 +450,7 @@
 										<lightning-layout-item size="12" class="formItem">
 											<div class="formLabelContainer">
 												<div class="text-xxsmall">
-													{label.CSP_LabReg_nationalAccreditationSelection}
+													{labels.CSP_LabReg_nationalAccreditationSelection}
 												</div>
 											</div>
 								
@@ -433,7 +475,7 @@
 										<lightning-layout-item size="12" class="formItem">
 											<div class="formLabelContainer">
 												<div class="text-xxsmall">
-													{label.CSP_LabReg_AdditionalCertInPlace}
+													{labels.CSP_LabReg_AdditionalCertInPlace}
 												</div>
 											</div>
 								
@@ -454,14 +496,14 @@
 											<div if:true={showAdditionalCert} class="slds-p-around_medium lgc-bg">
 												<div class="formLabelContainer">
 													<div class="text-xxsmall">
-														{label.CSP_LabReg_Which_One}
+														{labels.CSP_LabReg_Which_One}
 													</div>
 												</div>
 		
 												<lightning-textarea 
 													name="whichAdditionalCert"
 													value={whichAdditionalCert} 
-													label={label.CSP_LabReg_Which_One}
+													label={labels.CSP_LabReg_Which_One}
 													placeholder="type here..." 
 													variant="label-hidden"
 													maxlength=2000
@@ -476,7 +518,7 @@
 										<lightning-layout-item size="12" class="formItem">
 											<div class="formLabelContainer">
 												<div class="text-xxsmall">
-													{label.CSP_LabReg_National_Govern_Platform}
+													{labels.CSP_LabReg_National_Govern_Platform}
 												</div>
 											</div>
 								
@@ -497,13 +539,13 @@
 											<div if:true={showWhichGovern} class="slds-p-around_medium lgc-bg">
 												<div class="formLabelContainer">
 													<div class="text-xxsmall">
-														{label.CSP_LabReg_Which_One}
+														{labels.CSP_LabReg_Which_One}
 													</div>
 												</div>
 												<lightning-textarea 
 													name="whichGovern"
 													value={whichGovern} 
-													label={label.CSP_LabReg_Which_One}
+													label={labels.CSP_LabReg_Which_One}
 													placeholder="type here..." 
 													maxlength=2000
 													variant="label-hidden"
@@ -519,7 +561,7 @@
 										<lightning-layout-item size="12" class="formItem">
 											<div class="formLabelContainer">
 												<div class="text-xxsmall">
-													{label.CSP_LabReg_labsPartOfNationalPlatform}
+													{labels.CSP_LabReg_labsPartOfNationalPlatform}
 												</div>
 											</div>
 								
@@ -540,14 +582,14 @@
 											<div if:true={showWhichNationalPlatform} class="slds-p-around_medium lgc-bg">
 												<div class="formLabelContainer">
 													<div class="text-xxsmall">
-														{label.CSP_LabReg_Which_One}
+														{labels.CSP_LabReg_Which_One}
 													</div>
 												</div>
 		
 												<lightning-textarea 
 													name="whichNationalPlatform"
 													value={whichNationalPlatform} 
-													label={label.CSP_LabReg_Which_One}
+													label={labels.CSP_LabReg_Which_One}
 													placeholder="type here..." 
 													maxlength=2000
 													variant="label-hidden"
@@ -610,7 +652,7 @@
 									<lightning-layout-item size="12" class="formItem">
 										<div class="formLabelContainer">
 											<div class="text-xxsmall">
-												{label.CSP_LabReg_airlinePartnershipSelection}
+												{labels.CSP_LabReg_airlinePartnershipSelection}
 											</div>
 										</div>
 							
@@ -630,7 +672,7 @@
 
 										<template if:true={showAirlineSelectionBox}>
 											<div if:true={FIELD_Existing_partnership_with_airlines_PicklistValues.data}>
-												{label.CSP_LabReg_WhichAirlines}
+												{labels.CSP_LabReg_WhichAirlines}
 												<div class="slds-col slds-p-left_x-large slds-m-left_x-large">
 													<lightning-input value={airlineSearchKey} onchange={searchAirline} type="search" placeholder="Search Airline..."></lightning-input>
 												</div>
@@ -680,20 +722,19 @@
 										<!-- Lab Details-->
 										<div>
 											<lightning-layout-item size="6" class="IEFixDisplay">
-												<div class="sectionSubTitle">1. {label.CSP_labReg_Step_GeneralInformation}</div>
+												<div class="sectionSubTitle">1. {labels.CSP_labReg_Step_GeneralInformation}</div>
 											</lightning-layout-item>
 							
 											<lightning-layout-item size="6" style="text-align:right;" class="IEFixDisplay">
 													<div class="text-xxsmall">
-													<!--<lightning-button variant="base"
+													<lightning-button variant="base"
 														label={labels.CSP_L2_Back_to_Edit}
 														title={labels.CSP_L2_Back_to_Edit}
-														onclick={toCompanyInformation}
+														onclick={goToYourDetailsStep}
 														class="blueCustomButtonLinkSmall"
 														icon-name="utility:forward" 
 														icon-position="right">
-													</lightning-button>-->
-													go back to edit
+													</lightning-button>
 												</div>
 											</lightning-layout-item>
 							
@@ -702,54 +743,54 @@
 
 											<div class="fieldContainer">
 												<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
-													<div class="dataLabel">{label.CSP_LabReg_InitialQuestion}</div>
+													<div class="dataLabel">{labels.CSP_LabReg_InitialQuestion}</div>
 													<div class="dataValue itemValue">{labTypeSelection}</div>
 												</lightning-layout-item>
 
 												<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
-													<div class="dataLabel">{label.CSP_LabReg_How_Long_In_Business}</div>
+													<div class="dataLabel">{labels.CSP_LabReg_How_Long_In_Business}</div>
 													<div class="dataValue itemValue">{howLongInBusinessSelection}</div>
 												</lightning-layout-item>
 
 												<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
-													<div class="dataLabel">{label.CSP_LabReg_labsPartOfNationalPlatform}</div>
+													<div class="dataLabel">{labels.CSP_LabReg_labsPartOfNationalPlatform}</div>
 													<div class="dataValue itemValue">{labsPartOfNationalPlatform}</div>
 												</lightning-layout-item>
 
 												<lightning-layout-item size="12" class="fieldItem IEFixDisplay" if:true={showWhichNationalPlatform}>
-													<div class="dataLabel">{label.CSP_LabReg_Which_One}</div>
+													<div class="dataLabel">{labels.CSP_LabReg_Which_One}</div>
 													<div class="dataValue itemValue">{whichNationalPlatform}</div>
 												</lightning-layout-item>
 
 												<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
-													<div class="dataLabel">{label.CSP_LabReg_issueTestResultsSelection}</div>
+													<div class="dataLabel">{labels.CSP_LabReg_issueTestResultsSelection}</div>
 													<div class="dataValue itemValue">{issueTestResultsSelection}</div>
 												</lightning-layout-item>
 
 												<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
-													<div class="dataLabel">{label.CSP_LabReg_manageBookingSelection}</div>
+													<div class="dataLabel">{labels.CSP_LabReg_manageBookingSelection}</div>
 													<div class="dataValue itemValue">{manageBookingSelection}</div>
 												</lightning-layout-item>
 
 												<!-- FORM A -->
 												<div  if:true={isAForm}>
 													<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
-														<div class="dataLabel">{label.CSP_LabReg_Operating_Brand}</div>
+														<div class="dataLabel">{labels.CSP_LabReg_Operating_Brand}</div>
 														<div class="dataValue itemValue">{operatingUnderBrand}</div>
 													</lightning-layout-item>
 
 													<lightning-layout-item size="12" class="fieldItem IEFixDisplay" if:true={showWhichBrand}>
-														<div class="dataLabel">{label.CSP_LabReg_Which_One}</div>
+														<div class="dataLabel">{labels.CSP_LabReg_Which_One}</div>
 														<div class="dataValue itemValue">{whichBrands}</div>
 													</lightning-layout-item>
 
 													<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
-														<div class="dataLabel">{label.CSP_LabReg_SLA_InPlace}</div>
+														<div class="dataLabel">{labels.CSP_LabReg_SLA_InPlace}</div>
 														<div class="dataValue itemValue">{SLAInPlace}</div>
 													</lightning-layout-item>
 
 													<lightning-layout-item size="12" class="fieldItem IEFixDisplay" if:true={showNatureOfSLA}>
-														<div class="dataLabel">{label.CSP_LabReg_Describe_SLA_Nature}</div>
+														<div class="dataLabel">{labels.CSP_LabReg_Describe_SLA_Nature}</div>
 														<div class="dataValue itemValue">{NatureOfSLA}</div>
 													</lightning-layout-item>
 												</div>
@@ -759,32 +800,32 @@
 
 												<div  if:true={isBForm}>
 													<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
-														<div class="dataLabel">{label.CSP_LabReg_TypeOfLab}</div>
+														<div class="dataLabel">{labels.CSP_LabReg_TypeOfLab}</div>
 														<div class="dataValue itemValue">{typeOfLabSelection}</div>
 													</lightning-layout-item>
 
 													<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
-														<div class="dataLabel">{label.CSP_LabReg_AdditionalCertInPlace}</div>
+														<div class="dataLabel">{labels.CSP_LabReg_AdditionalCertInPlace}</div>
 														<div class="dataValue itemValue">{AdditionalCertInPlace}</div>
 													</lightning-layout-item>
 
 													<lightning-layout-item size="12" class="fieldItem IEFixDisplay" if:true={showAdditionalCert}>
-														<div class="dataLabel">{label.CSP_LabReg_Which_One}</div>
+														<div class="dataLabel">{labels.CSP_LabReg_Which_One}</div>
 														<div class="dataValue itemValue">{whichAdditionalCert}</div>
 													</lightning-layout-item>
 
 													<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
-														<div class="dataLabel">{label.CSP_LabReg_National_Govern_Platform}</div>
+														<div class="dataLabel">{labels.CSP_LabReg_National_Govern_Platform}</div>
 														<div class="dataValue itemValue">{endorsedByGovern}</div>
 													</lightning-layout-item>
 
 													<lightning-layout-item size="12" class="fieldItem IEFixDisplay" if:true={showWhichGovern}>
-														<div class="dataLabel">{label.CSP_LabReg_Describe_SLA_Nature}</div>
+														<div class="dataLabel">{labels.CSP_LabReg_Describe_SLA_Nature}</div>
 														<div class="dataValue itemValue">{whichGovern}</div>
 													</lightning-layout-item>
 
 													<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
-														<div class="dataLabel">{label.CSP_LabReg_nationalAccreditationSelection}</div>
+														<div class="dataLabel">{labels.CSP_LabReg_nationalAccreditationSelection}</div>
 														<div class="dataValue itemValue">{nationalAccreditationSelection}</div>
 													</lightning-layout-item>
 												</div>
@@ -795,20 +836,19 @@
 										<!-- COUNTRIES -->
 										<div>
 											<lightning-layout-item size="6" class="IEFixDisplay">
-												<div class="sectionSubTitle">2. {label.CSP_LabReg_Step_Locations}</div>
+												<div class="sectionSubTitle">2. {labels.CSP_LabReg_Step_Locations}</div>
 											</lightning-layout-item>
 							
 											<lightning-layout-item size="6" style="text-align:right;" class="IEFixDisplay">
 													<div class="text-xxsmall">
-													<!--<lightning-button variant="base"
+													<lightning-button variant="base"
 														label={labels.CSP_L2_Back_to_Edit}
 														title={labels.CSP_L2_Back_to_Edit}
-														onclick={toCompanyInformation}
+														onclick={goToCountryLabStep}
 														class="blueCustomButtonLinkSmall"
 														icon-name="utility:forward" 
 														icon-position="right">
-													</lightning-button>-->
-													go back to edit
+													</lightning-button>
 												</div>
 											</lightning-layout-item>
 							
@@ -830,20 +870,19 @@
 										<!-- AIRLINE AGREEMENTS-->
 										<div>
 											<lightning-layout-item size="6" class="IEFixDisplay">
-												<div class="sectionSubTitle">3. {label.CSP_labReg_Step_Airline_Agreements}</div>
+												<div class="sectionSubTitle">3. {labels.CSP_labReg_Step_Airline_Agreements}</div>
 											</lightning-layout-item>
 							
 											<lightning-layout-item size="6" style="text-align:right;" class="IEFixDisplay">
 													<div class="text-xxsmall">
-													<!--<lightning-button variant="base"
+													<lightning-button variant="base"
 														label={labels.CSP_L2_Back_to_Edit}
 														title={labels.CSP_L2_Back_to_Edit}
-														onclick={toCompanyInformation}
+														onclick={goToAirlineAgrStep}
 														class="blueCustomButtonLinkSmall"
 														icon-name="utility:forward" 
 														icon-position="right">
-													</lightning-button>-->
-													go back to edit
+													</lightning-button>
 												</div>
 											</lightning-layout-item>
 							
@@ -852,7 +891,7 @@
 
 											<div class="fieldContainer">
 												<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
-													<div class="dataLabel">{label.CSP_LabReg_airlinePartnershipSelection}</div>
+													<div class="dataLabel">{labels.CSP_LabReg_airlinePartnershipSelection}</div>
 													<div class="dataValue itemValue">{airlinePartnershipSelection}</div>
 												</lightning-layout-item>
 											</div>
@@ -893,7 +932,13 @@
 							</lightning-layout-item>
 			
 							<lightning-layout-item size="6" class="IEFixDisplay">
-								<lightning-button class="slds-float_right containedButton customBtn" data-id="nextButton" label={label.CSP_L2_Next_Step} disabled={isNextDisabled} variant="brand" onclick={goToNextStep}>
+								<lightning-button 
+									class="slds-float_right containedButton customBtn" 
+									data-id="nextButton" 
+									label={labels.CSP_L2_Next_Step} 
+									disabled={isNextDisabled} 
+									variant="brand" 
+									onclick={goToNextStep}>
 								</lightning-button>
 							</lightning-layout-item>
 						</div>
@@ -917,10 +962,10 @@
 	<template if:true={openMessageModal}>
 		<c-portal-registration-generic-modal
 			icon={alertIcon}
-			title={label.CSP_LabReg_FormNotCompleted}
-			message={label.CSP_L2_Profile_Incomplete_Message}
-			button1-label={label.CSP_L2_Yes}
-			button2-label={label.CSP_L2_No}
+			title={labels.CSP_LabReg_FormNotCompleted}
+			message={labels.CSP_L2_Profile_Incomplete_Message}
+			button1-label={labels.CSP_L2_Yes}
+			button2-label={labels.CSP_L2_No}
 			onbuttononeaction={close}
 			onbuttontwoaction={cancel}>
 		</c-portal-registration-generic-modal>

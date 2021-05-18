@@ -148,6 +148,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+	width:24px;
 }
 
 .itemTitle{
@@ -325,4 +326,34 @@
 
 .sectionHeaderContainer .editButtonWrapper{
   text-align: right;
+}
+
+.activeStep {
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    padding: 4px;
+	margin-right: 10px;
+
+    background: #2a9434;
+    border: none;
+    color: #FFF;
+    text-align: center;
+
+    font-size: 13Px;
+}
+
+.inactiveStep {
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    padding: 4px;
+	margin-right: 10px;
+
+    background: #CCCCCC;
+    border: none;
+    color: #FFF;
+    text-align: center;
+
+    font-size: 13Px;
 }
