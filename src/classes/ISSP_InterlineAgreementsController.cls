@@ -40,7 +40,6 @@ public with sharing class ISSP_InterlineAgreementsController {
 		Start actions: check rights
 	**/
 	public PageReference initActions() {
-		
 		try {
 			String strId = this.currentUser.ContactId;
 			Portal_Application_Right__c appRight = [
@@ -58,7 +57,7 @@ public with sharing class ISSP_InterlineAgreementsController {
 			//if error happens return to home page
 		}
 		// default action, return to home page (if no Access granted was found)
-		Pagereference pageref = new PageReference('/ISSP_Homepage');
+		Pagereference pageref = new PageReference(Label.CSP_PortalBaseURL + Label.CSP_PortalPath);
 		pageref.setRedirect(true);
 		return pageref;
 	}

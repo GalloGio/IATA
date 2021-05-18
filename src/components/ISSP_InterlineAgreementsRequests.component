@@ -125,7 +125,7 @@
 	<apex:outputPanel id="modalToastRequest">
 		<script>
 			if ("{!toast}">"") {
-				showToast("{!toast.text}", "{!toast.type}", function() { undoAction("{!toast.undoactionId}");} );
+				showToast("{!toast.msgTitle}", "{!toast.msgType}", function() { undoAction("{!toast.undoid}");} );
 				resetToast();
 			}
 		</script>

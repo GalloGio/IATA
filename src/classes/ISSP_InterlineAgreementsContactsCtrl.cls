@@ -36,19 +36,8 @@ public without sharing class ISSP_InterlineAgreementsContactsCtrl {
 		get{
 			if (contactRows==null) {
 				contactRows = new list<ContactRow>();
-				//initialize filters
-				//this.setFilterNames = new Set<String>();
-				//this.setFilterTypes = new Set<String>();
-				//this.setFilterStatus = new Set<String>();
-
-
 				for(Contact contact : mapContacts.values()){
 					contactRows.add(new ContactRow(contact));
-	
-					//store filters
-					//this.setFilterNames.add(row.agreementName);
-					//this.setFilterTypes.add(row.agreementType);
-					//this.setFilterStatus.add(row.agreementStatus);
 				}
 			}
 			return contactRows;
@@ -110,10 +99,10 @@ public without sharing class ISSP_InterlineAgreementsContactsCtrl {
 			if (result.isSuccess()) {
 				refreshPage();
 				this.selectedContactId = null;
-				this.alertModal = new MITAutil.AlertModal('successMsgNew','Contact updated','','');
+				this.alertModal = new MITAutil.AlertModal(MITAutil.ALERTMODAL_SUCCESSNEW,'Contact updated','','');
 			}
 		} catch (Exception e) {
-			this.alertModal = new MITAutil.AlertModal('errorMsg','','There was a problem saving the contact','');
+			this.alertModal = new MITAutil.AlertModal(MITAutil.ALERTMODAL_ERROR,'','There was a problem saving the contact','');
 		}
 	}
 

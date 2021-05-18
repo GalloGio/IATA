@@ -60,9 +60,6 @@ public class ISSP_InterlineAgreementsContactsCtrlTest {
 
 		System.assert(ctrl.contactRows!=null);
 		System.assertEquals(0,ctrl.contactRows.size());
-		//System.assertEquals(0,ctrl.getOptionTypes().size());
-		//System.assertEquals(0,ctrl.getOptionNames().size());
-		//System.assertEquals(0,ctrl.getOptionStatus().size());
 		Test.stopTest();
 	}
 

@@ -108,7 +108,7 @@
 											<div class="col-sm-4"></div>
 											<div class="col-sm-4">
 												<label>Withdrawal Date (at least {!daysForWithdrawal} days from today)</label>
-												<apex:inputField type="date" value="{!dummyAgreement.Cancellation_date__c}" html-min="{!AgreementDetail.minWithdrawDate}" required="true" onchange="checkWithdraw(this);"/>
+												<apex:inputField type="date" value="{!agreementCancellation.Cancellation_date__c}" html-min="{!AgreementDetail.minWithdrawDate}" required="true" onchange="checkWithdraw(this);"/>
 											</div>
 											<div class="col-sm-4"></div>
 										</div>

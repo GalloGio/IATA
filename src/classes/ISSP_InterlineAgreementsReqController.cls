@@ -6,6 +6,7 @@ public without sharing class ISSP_InterlineAgreementsReqController {
 	public Account account {get;set;}
 	public Boolean hasApprovePermission {get;set;}
 	public String selectedAgreement {get;set;}
+	public MITAutil.AlertModal toast {get;set;}
 	private Set<String> setFilterNames;
 	private Set<String> setFilterTypes;
 	private Set<String> setFilterStatus;
@@ -139,10 +140,10 @@ public without sharing class ISSP_InterlineAgreementsReqController {
 		if (result.isSuccess()) {
 			refreshPage();
 			String undoActionId = createUndoAction(undoAgreement);
-			this.toast = new ToastModal('success','Request has been approved.', undoActionId);
+			this.toast = new MITAutil.AlertModal('success','Request has been approved.', undoActionId);
 
 		} else {
-			this.toast = new ToastModal('fail','There was a problem when approving the agreement',null);
+			this.toast = new MITAutil.AlertModal('fail','There was a problem when approving the agreement',null);
 		}
 	}
 
@@ -169,25 +170,12 @@ public without sharing class ISSP_InterlineAgreementsReqController {
 			this.RequesterAgreementsRows = null;
 
 			String undoActionId = createUndoAction(undoAgreement);
-			this.toast = new ToastModal('rejected','Request has been rejected.', undoActionId);
+			this.toast = new MITAutil.AlertModal('rejected','Request has been rejected.', undoActionId);
 
 		} else {
-			this.toast = new ToastModal('fail','There was a problem when rejecting the agreement',null);
+			this.toast = new MITAutil.AlertModal('fail','There was a problem when rejecting the agreement',null);
 		}
 	}
-
-	public ToastModal toast {get;set;}
-	public class ToastModal {
-		public String type {get;set;}
-		public String text {get;set;}
-		public String undoactionId {get;set;}
-		public ToastModal(String typ, String txt, String actionid) {
-			type = typ;
-			text = txt;
-			undoactionId = actionid;
-		}
-	}
-
 
 	private map<String,MITA_Agreement__c> mapUndoActions = new map<String,MITA_Agreement__c>();
 	private String createUndoAction(MITA_Agreement__c agreement) {
@@ -207,10 +195,10 @@ public without sharing class ISSP_InterlineAgreementsReqController {
 			this.mapAgreements = null;
 			this.RequesterAgreementsRows = null;
 
-			this.toast = new ToastModal('undo','Action reverted',null);
+			this.toast = new MITAutil.AlertModal('undo','Action reverted',null);
 
 		} else {
-			this.toast = new ToastModal('fail','There was a problem when undoing the action',null);
+			this.toast = new MITAutil.AlertModal('fail','There was a problem when undoing the action',null);
 		}
 	}
 

@@ -1,14 +1,20 @@
 public with sharing class ISSP_InterlineAgreementDetailController {
 
+	private static final String HISTORY_CREATED = 'created';
+	private static final String HISTORY_AGREEMENT_FIELDNAME = 'Agreement_processed_date__c';
+	private static final String HISTORY_CANCELLATION_FIELDNAME = 'Cancellation_date__c';
+	private static final String HISTORY_REJECTION_REASON = 'Rejected by Airline 2';
+
 	public MITA_Agreement__c selectedAgreement {get;set;}
 	public Account otherAirline {get;set;}
 	public Boolean hasWithdrawPermission {get;set;}
 
-	public MITA_Agreement__c dummyAgreement {get;set;}
+	// dummy object used only to use date field Cancellation_date__c in <apex:inputField> tag
+	public MITA_Agreement__c agreementCancellation {get;set;}
 	public Boolean showSuccessWithdrawn {get;set;}
 
 	public ISSP_InterlineAgreementDetailController(){
-		this.dummyAgreement = new MITA_Agreement__c();
+		this.agreementCancellation = new MITA_Agreement__c();
 	}
 
 	/**
@@ -22,7 +28,7 @@ public with sharing class ISSP_InterlineAgreementDetailController {
 	 * String formatted version for the withdrawal date
 	 */
 	public String getWithdrawnDateFormatted() {
-		return MITAutil.dateformat(dummyAgreement.Cancellation_date__c);
+		return MITAutil.dateformat(agreementCancellation.Cancellation_date__c);
 	}
 
 	/**
@@ -31,14 +37,14 @@ public with sharing class ISSP_InterlineAgreementDetailController {
 	 */
 	public void withdrawAgreement() {
 		if(!this.hasWithdrawPermission) return;
-		if (this.dummyAgreement.Cancellation_date__c ==null || this.dummyAgreement.Cancellation_date__c < Date.today().addDays(getDaysForWithdrawal())) {
+		if (this.agreementCancellation.Cancellation_date__c ==null || this.agreementCancellation.Cancellation_date__c < Date.today().addDays(getDaysForWithdrawal())) {
 			return;
 		}
 
 		this.selectedAgreement.Cancellation_processed_date__c = Date.today();
 		this.selectedAgreement.Withdrawal_Request_Reception_Date__c = Date.today();
 		this.selectedAgreement.Cancellation_Reason__c = this.selectedAgreement.Airline_1__c == this.otherAirline.Id? 'Airline 1 leaves agreement': 'Airline 2 leaves agreement';
-		this.selectedAgreement.Cancellation_date__c = this.dummyAgreement.Cancellation_date__c;
+		this.selectedAgreement.Cancellation_date__c = this.agreementCancellation.Cancellation_date__c;
 
 		Database.SaveResult result = Database.update(this.selectedAgreement);
 		this.showSuccessWithdrawn = result.isSuccess();
@@ -126,24 +132,27 @@ public with sharing class ISSP_InterlineAgreementDetailController {
 		private set;
 	}
 
+	/**
+	 * Returns the history description, if applicable, to be shown to the user based on the input history record
+	 */
 	@TestVisible
 	private String getDetails(MITA_Agreement__history history) {
-		if (history.field == 'created') {
+		if (history.field == HISTORY_CREATED) {
 			return 'Agreement Requested';
 		}
-		if (history.field == 'Agreement_processed_date__c' && history.OldValue == null && history.newValue != null) {
+		if (history.field == HISTORY_AGREEMENT_FIELDNAME && history.OldValue == null && history.newValue != null) {
 			return 'Agreement Accepted';
 		}
-		if (history.field == 'Agreement_processed_date__c' && history.OldValue != null && history.newValue == null) {
+		if (history.field == HISTORY_AGREEMENT_FIELDNAME && history.OldValue != null && history.newValue == null) {
 			return 'Undo Agreement Accepted';
 		}
-		if (history.field == 'Cancellation_date__c' && history.OldValue == null && history.newValue != null) {
-			if (this.selectedAgreement.Cancellation_Reason__c ==null || this.selectedAgreement.Cancellation_Reason__c == 'Rejected by Airline 2') {
+		if (history.field == HISTORY_CANCELLATION_FIELDNAME && history.OldValue == null && history.newValue != null) {
+			if (this.selectedAgreement.Cancellation_Reason__c ==null || this.selectedAgreement.Cancellation_Reason__c == HISTORY_REJECTION_REASON) {
 				return 'Agreement Rejected';
 			}
 			return 'Agreement Withdrawn';
 		}
-		if (history.field == 'Cancellation_date__c' && history.OldValue != null && history.newValue == null) {
+		if (history.field == HISTORY_CANCELLATION_FIELDNAME && history.OldValue != null && history.newValue == null) {
 			return 'Undo Agreement Rejected';
 		}
 		return null;
@@ -166,7 +175,7 @@ public with sharing class ISSP_InterlineAgreementDetailController {
 		List<AccountContactRow> listRows = new List<AccountContactRow>();
 
 		for(Contact contact: [
-			SELECT id, Account.Name, name, email, phone, salutation, MITA_Contact_Type__c
+			SELECT id, name, email, phone, salutation, MITA_Contact_Type__c
 			FROM Contact
 			WHERE Recordtype.DeveloperName = 'Standard_Contact'
 			AND Status__c = 'Active'

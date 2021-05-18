@@ -1,3 +1,7 @@
+/**
+ * Schedulable class to be executed in a monthly basis to generate memorandum files for Interline Agreements
+ * Check related class InterlineAgreementsMemorandumsBatch which is responsible of the actual generation and saving action
+ */
 global class InterlineAgreementsMemorandumsSchedule implements Schedulable {
 
 	// Prepare launch for first day of each month

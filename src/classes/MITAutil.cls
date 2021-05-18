@@ -108,17 +108,26 @@ public with sharing class MITAutil {
 
 	public static final Integer DAYS_TO_WAIT_FOR_WITHDRAWAL = 7;
 
+	public static final String ALERTMODAL_ERROR = 'errorMsg';
+	public static final String ALERTMODAL_SUCCESSNEW = 'successMsgNew';
 	// class to handle alert messages in the portal using the c:ISSP_AlertModal
+	// also reused as a wrapper to be used with js class toastify.js
 	public class AlertModal {
 		public String msgType {get;set;}
 		public String msgTitle {get;set;}
 		public String msgHeader {get;set;}
 		public String msgBody {get;set;}
+		public String undoid {get;set;}
 		public AlertModal (String mType, String mTitle, String mHeader, String mBody) {
 			msgType = mType;
 			msgTitle = mTitle;
 			msgHeader = mHeader;
 			msgBody = mBody;
+		}
+		public AlertModal (String mType, String mTitle, String mUndoid) {
+			msgType = mType;
+			msgTitle = mTitle;
+			undoId = mUndoId;
 		}
 	}
 

@@ -242,7 +242,7 @@ public without sharing class ISSP_InterlineAgreementsNewController {
 	public void saveNewAgreement() {
 		if (!this.hasRequestPermission) return;
 		if (this.newAgreement.Effective_date__c == null) {
-			this.alertModal = new MITAutil.AlertModal('errorMsg','Warning','Select an effective date','');
+			this.alertModal = new MITAutil.AlertModal(MITAutil.ALERTMODAL_ERROR,'Warning',Label.ISSP_ANG_Effective_Date_Of_Change,'');
 			return;
 		}
 
@@ -250,9 +250,9 @@ public without sharing class ISSP_InterlineAgreementsNewController {
 		if (result.isSuccess()) {
 			closeModalNewAgreement();
 			refreshPage();
-			this.alertModal = new MITAutil.AlertModal('successMsgNew','Your request has been submitted.','Once the counterpart accepts the request, the agreement will be activated on the effective date.','');
+			this.alertModal = new MITAutil.AlertModal(MITAutil.ALERTMODAL_SUCCESSNEW,'Your request has been submitted.','Once the counterpart accepts the request, the agreement will be activated on the effective date.','');
 		} else {
-			this.alertModal = new MITAutil.AlertModal('errorMsg','','There was a problem saving the agreement','');
+			this.alertModal = new MITAutil.AlertModal(MITAutil.ALERTMODAL_ERROR,'','There was a problem saving the agreement','');
 		}
 	}
 

@@ -1,3 +1,9 @@
+/**
+ * This class should be called exclusevely by InterlineAgreementsMemorandumsSchedule
+ * It creates a single PDF file and stores it in a specific Library folder
+ * These files are memorandums containing information about in Interline Agreements (MITA_Agreement__c)
+ * and must be accessible in Interline Agreements portal application.
+ */
 public class InterlineAgreementsMemorandumsBatch implements Queueable, Database.AllowsCallouts {
 
 	public static final ContentWorkspace LIBRARY = [SELECT ID FROM ContentWorkspace WHERE Name = :MITAutil.LIBRARY_CS];
