@@ -642,7 +642,7 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 	@api countryColumns = [
 		{ label: 'Name', fieldName: 'label', editable: false },
 		{ label: 'Number Of Labs', fieldName: 'NumOfLabs', type: 'number', editable: true, maximumFractionDigits: 0 },
-		{ type: 'action', typeAttributes: { rowActions: this.actions, menuAlignment: 'left' }}
+		{ type: 'button-icon', initialWidth: 50, typeAttributes: {iconName: 'utility:close', name: 'delete', variant:'container'}}
 	];
 
 	@api countryMetadata = {

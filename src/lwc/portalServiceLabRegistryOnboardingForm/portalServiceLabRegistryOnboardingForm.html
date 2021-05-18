@@ -604,31 +604,36 @@
 
 							<div if:true={isCountryLabsStep} class="isCountryLabStep">
 								<lightning-layout-item size="12" class="formItem">
-									<div>
-										<lightning-input 
-											value={countrySearchKey} 
-											onchange={handleShowdropdown} 
-											type="search" 
-											placeholder="Type to find and add countries"
-											class="text-xxsmall"></lightning-input>
-									</div>
-								
-									<!-- Drop down section : Start -->
-									<template if:true={showdropdown}>
-										<div id="listbox-id-5" class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid" role="listbox">
-											<ul class="slds-listbox slds-listbox_vertical" role="presentation">
-												<template for:each={filteredCountries} for:item="cntr">
-													<c-picklist-value 
-														key={cntr.value}
-														label={cntr.label}
-														value={cntr.value}
-														selected={cntr.selected}
-														onitemselected={handleSelect}>
-													</c-picklist-value>
-												</template>
-											</ul>
+									<div onblur={handleleave} tabindex="0">
+										<div class="slds-form-element">
+											<div class="slds-form-element__control custTextInputSmall">
+												<lightning-input 
+													value={countrySearchKey} 
+													onchange={handleShowdropdown} 
+													type="search" 
+													placeholder="Type to find and add countries"
+													class="cursorPointerComboBox text-xxsmall">
+												</lightning-input>
+											</div>
 										</div>
-									</template>
+									
+										<!-- Drop down section : Start -->
+										<template if:true={showdropdown}>
+											<div id="listbox-id-5" class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid" role="listbox">
+												<ul class="slds-listbox slds-listbox_vertical" role="presentation">
+													<template for:each={filteredCountries} for:item="cntr">
+														<c-picklist-value 
+															key={cntr.value}
+															label={cntr.label}
+															value={cntr.value}
+															selected={cntr.selected}
+															onitemselected={handleSelect}>
+														</c-picklist-value>
+													</template>
+												</ul>
+											</div>
+										</template>
+									</div>
 									
 									<lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
 									</lightning-layout-item>
@@ -636,10 +641,10 @@
 									<lightning-datatable
 											key-field="Id"
 											data={selectedCountries}
-											row-number-offset=0
-											suppress-bottom-bar
 											columns={countryColumns}
 											hide-checkbox-column
+											resize-column-disabled
+											suppress-bottom-bar
 											oncellchange={handleCountryInlineEdit}
 											onrowaction={handleRowAction}>
 									</lightning-datatable>
