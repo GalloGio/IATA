@@ -273,8 +273,12 @@ private static void createCaseTeamMemberList(Case cse, list<Contact> listContact
 	list<CaseTeamMember > listCaseTeam = new list<CaseTeamMember>();
 	list<String> listEmail = new list<String>();
 	String IdTeamRole = [SELECT id FROM CaseTeamRole WHERE Name = 'Partner User Role' LIMIT 1].Id;
-	for (Contact contact: listContact) {
+	set<string> emailAddressesLst = new set<string>();
+	map<string, Contact> mapContacts = new map<string, Contact>();
 
+	for (Contact contact: listContact) {
+		mapContacts.put(contact.Email, contact);
+		emailAddressesLst.add(contact.Email);
 		listCaseTeam.add(new CaseTeamMember(
 					 ParentId = cse.Id,
 					 MemberId = contact.Id,
@@ -282,8 +286,86 @@ private static void createCaseTeamMemberList(Case cse, list<Contact> listContact
 					 ));
 		listEmail.add(contact.Email);
 	}
+	if(!emailAddressesLst.isEmpty()){
+		wrapFilterContactsAndUsers listContactAndUsers = new wrapFilterContactsAndUsers(emailAddressesLst, mapContacts);
+		sendEmailToAdditionalRecipients(listContactAndUsers, cse);
+	}
 	insert listCaseTeam;
 }
+
+
+// Send a notification email to users or contacts added on the podotal contact us page.
+public static void sendEmailToAdditionalRecipients(wrapFilterContactsAndUsers listContacts, Case cse) {
+	List<Messaging.SingleEmailMessage> emailsToSend = new List<Messaging.SingleEmailMessage>();
+	Map<String, Id> emailTemplateByDevName = new Map<String, Id>();
+	for(EmailTemplate em: [SELECT Id, DeveloperName FROM EmailTemplate WHERE DeveloperName = 'IATA_CS_Portal_Case_Addittional_Rec_CC' OR DeveloperName = 'IATA_CS_Portal_Case_Addittional_Rec_Us']){
+		emailTemplateByDevName.put(em.DeveloperName, em.Id);
+	}
+	OrgWideEmailAddress orgAddress = [SELECT Id FROM OrgWideEmailAddress WHERE Address = : Label.ISSP_CaseCommentEmail];
+
+	try {
+		for (ID userId : listContacts.setTargetObjectIdUsers) {
+			Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+			mail.setOrgWideEmailAddressId(orgAddress.Id);
+			mail.setTargetObjectId(userId);
+			mail.setSaveAsActivity(false);
+			mail.setTemplateId(emailTemplateByDevName.get('IATA_CS_Portal_Case_Addittional_Rec_Us'));
+			mail.setWhatId(cse.Id);
+			emailsToSend.add(mail);
+		}
+		if(!emailsToSend.isEmpty()){
+			if (!Test.isRunningTest() ) Messaging.sendEmail(emailsToSend);
+		}
+		emailsToSend = new List<Messaging.SingleEmailMessage>();
+		for (String cc : listContacts.setToAddressesContacts) {
+			Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+			mail.setOrgWideEmailAddressId(orgAddress.Id);
+			mail.setTargetObjectId(cc);
+			mail.setToAddresses(listContacts.setToAddressesContacts) ;
+			mail.setTemplateId(emailTemplateByDevName.get('IATA_CS_Portal_Case_Addittional_Rec_CC'));
+			mail.setWhatId(cse.Id);
+			emailsToSend.add(mail);
+		}
+		if(!emailsToSend.isEmpty()){
+			if (!Test.isRunningTest() ) Messaging.sendEmail(emailsToSend);
+		}
+
+
+	} catch (Exception  e) {
+		TransformationHelper.sendEmailSupport( 'PortalSupportReachUsCreateNewCaseCtrl sendEmailUsers() Exception', 'Exception: ' + e + ' || StackTrace: ' + e.getStackTraceString());
+	}
+
+}
+
+//This wrapper aims to validate whether an email has a user or just a contact.
+//If you have a user, the email will be sent to that same user, making that email not count towards the limits.
+//If there is no user, send it to the contact
+public without sharing class wrapFilterContactsAndUsers {
+	public List<Id> setTargetObjectIdUsers {get; set;}
+	public List<String> setToAddressesContacts {get; set;}
+
+	public wrapFilterContactsAndUsers(set<string> emailAddressesLst, map<string, Contact> mapContacts) {
+		this.setTargetObjectIdUsers = new List<Id>();
+		this.setToAddressesContacts = new List<String>();
+		map<string, user> mapUsers = new map<string, user>();
+		List<User> usList = [SELECT Id, Email FROM User WHERE IsActive = true AND Email IN :emailAddressesLst];
+		for(user u: usList){
+			mapUsers.put(u.Email, u);
+		}
+		for(string sEmailAddr : emailAddressesLst){
+			if(mapUsers.containsKey(sEmailAddr)){
+				this.setTargetObjectIdUsers.add(mapUsers.get(sEmailAddr).id);
+			}else{
+				if(mapContacts.containsKey(sEmailAddr)){
+					this.setToAddressesContacts.add(mapContacts.get(sEmailAddr).id);
+				}
+			}
+		}
+	}
+}
+
+
+
 
 	//Checks if user is a level 1 user (haven't completed level 2 registration)
 	@AuraEnabled

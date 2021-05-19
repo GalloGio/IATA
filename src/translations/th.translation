@@ -3687,7 +3687,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_IATAN_Register_Info</name>
     </customLabels>
     <customLabels>
-        <label>ขอแสดงความนับถือ, &amp;lt;br/&amp;gt; ศูนย์บริการลูกค้า IATA</label>
+        <label>ขอแสดงความนับถือ, &lt;br/&gt; ศูนย์บริการลูกค้า IATA</label>
         <name>CSP_IATA_CSC_Email_Greetings</name>
     </customLabels>
     <customLabels>
@@ -5505,6 +5505,18 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>เลือกเหตุผล</label>
         <name>CSP_selectReason</name>
+    </customLabels>
+    <customLabels>
+        <label>เพิ่มคุณเป็นผู้เข้าร่วมการกรณี</label>
+        <name>CS_Portal_Addittional_Recipients_Body</name>
+    </customLabels>
+    <customLabels>
+        <label>IATA ลูกค้าพอร์ทัล - คุณถูกเพิ่มเข้าไปในกรณี</label>
+        <name>CS_Portal_Addittional_Recipients_Subject</name>
+    </customLabels>
+    <customLabels>
+        <label>เพื่อไปยังพอร์ทัลเพื่อดูรายละเอียดเต็มรูปแบบและมีส่วนร่วมในการสื่อสาร</label>
+        <name>CS_Portal_Addittional_Recipients_URL_Description</name>
     </customLabels>
     <customLabels>
         <label><!-- Campaign already created --></label>
