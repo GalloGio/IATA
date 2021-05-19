@@ -26469,7 +26469,7 @@ It is hereby agreed that this application shall become a part of every Passenger
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step0 Intro Accred</shortDescription>
-        <value>Please note that online accreditation applications must be submitted by an Authorised Signatory of the Agency.</value>
+        <value>Please note that online accreditation applications must be submitted by an Authorized Signatory of the Agency.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step0_Intro_Accred_CNS</fullName>
@@ -26477,7 +26477,7 @@ It is hereby agreed that this application shall become a part of every Passenger
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step0 Intro Accred CNS</shortDescription>
-        <value>Please note that online endorsement applications must be submitted by an Authorised Signatory of the Agency.</value>
+        <value>Please note that online endorsement applications must be submitted by an Authorized Signatory of the Agency.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step0_Intro_Accred_Msg</fullName>
@@ -26493,14 +26493,14 @@ It is hereby agreed that this application shall become a part of every Passenger
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step0 Intro Accred New</shortDescription>
-        <value>Please note that online accreditation applications must be submitted by an Authorised Signatory of the Company.</value>
+        <value>Please note that online accreditation applications must be submitted by an Authorized Signatory of the Company.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step0_Intro_Accred_PASS</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Step0_Intro_Accred_PASS</shortDescription>
-        <value>Please note that online applications must be submitted by an Authorised Signatory of the Company.</value>
+        <value>Please note that online applications must be submitted by an Authorized Signatory of the Company.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step0_Intro_CNS</fullName>
