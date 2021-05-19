@@ -6693,6 +6693,14 @@ You can easily create a company account in two steps</value>
         <value>Airline Agreements</value>
     </labels>
     <labels>
+        <fullName>CSP_LabReg_CompleteDetails</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_CompleteDetails</shortDescription>
+        <value>Complete your laboratory details</value>
+    </labels>
+    <labels>
         <fullName>CSP_LabReg_CountryLabs</fullName>
         <categories>LabRegistry</categories>
         <language>en_US</language>
@@ -6707,6 +6715,14 @@ You can easily create a company account in two steps</value>
         <protected>false</protected>
         <shortDescription>CSP_LabReg_Describe_SLA_Nature</shortDescription>
         <value>Describe the nature of your SLA</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_Download_CSV</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_Download_CSV</shortDescription>
+        <value>Download the CSV template and complete&lt;br/&gt; the full details of your laboratories</value>
     </labels>
     <labels>
         <fullName>CSP_LabReg_FormNotCompleted</fullName>
@@ -6787,6 +6803,30 @@ You can easily create a company account in two steps</value>
         <protected>false</protected>
         <shortDescription>CSP_LabReg_TypeOfLab</shortDescription>
         <value>Please indicate the type of labs</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_UploadCSVBtn</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_UploadCSVBtn</shortDescription>
+        <value>Upload the CSV</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_UploadDetails</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_UploadDetails</shortDescription>
+        <value>Upload your laboratories details</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_UploadFilledCSV</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_UploadFilledCSV</shortDescription>
+        <value>Upload the filled template with&lt;br/&gt;your laboratories details</value>
     </labels>
     <labels>
         <fullName>CSP_LabReg_WhichAirlines</fullName>
@@ -46239,6 +46279,13 @@ respect to decisions and/or actions affecting Agents and applicants under the IA
         <protected>false</protected>
         <shortDescription>Reset your password?</shortDescription>
         <value>Reset your password?</value>
+    </labels>
+    <labels>
+        <fullName>Resource_Center_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Resource Center Service Description</shortDescription>
+        <value>Through the Resource Center, you will gain access to all required documentation from IATA. The Resource Center contains key information for agencies interested in becoming IATA Accredited.</value>
     </labels>
     <labels>
         <fullName>Response_message</fullName>

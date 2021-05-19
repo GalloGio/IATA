@@ -1,0 +1,61 @@
+<template>
+	<div class='banner'></div>
+	<div class="customLightShadow customPopupInterior75PercentScreenCentered slds-is-relative">
+		<span slot="pageBody">
+			<span slot="cardTitle" class="slds-text-heading_large banner">
+				Laboratory Details
+			</span>
+
+			<span slot="cardBody">
+				<div class="c-container">
+					<lightning-layout  pull-to-boundary="medium">
+						<lightning-layout-item flexibility="auto" padding="around-small">
+							<div class="custom-box">
+								<div class="boxSection">
+									<p class="boxNumber">1</p>
+								</div>
+								<div class="boxSection">
+									<lightning-formatted-rich-text class="boxTitle" value={labels.CSP_LabReg_CompleteDetails} ></lightning-formatted-rich-text>
+								</div>
+								<div class="boxSection">
+									<lightning-formatted-rich-text class="boxText" value={labels.CSP_LabReg_Download_CSV} ></lightning-formatted-rich-text>
+								</div>
+								<div class="boxSection">
+									<a href={TemplateFile}>
+										<lightning-icon
+											variant="base" 
+											icon-name="utility:download"
+											class="menu-icon">
+										</lightning-icon>
+									</a>
+								</div>
+							</div>
+						</lightning-layout-item>
+
+						<lightning-layout-item flexibility="auto" padding="around-small">
+							<div class="custom-box">
+								<div class="boxSection">
+									<p class="boxNumber">2</p>
+								</div>
+								<div class="boxSection">
+									<lightning-formatted-rich-text class="boxTitle" value={labels.CSP_LabReg_UploadDetails} ></lightning-formatted-rich-text>
+								</div>
+								<div class="boxSection">
+									<lightning-formatted-rich-text class="boxText" value={labels.CSP_LabReg_UploadFilledCSV} ></lightning-formatted-rich-text>
+								</div>
+								<div class="boxSection">
+									<div class="buttonContainer marginAuto">
+										<lightning-button class="containedButton customBtn btnModal outlinedBtn" label={labels.CSP_LabReg_UploadCSVBtn} variant="neutral"  onclick={openUploadCSVModal} >
+										</lightning-button>
+									</div>
+								</div>
+							</div>
+						</lightning-layout-item>
+					</lightning-layout>
+
+				</div>
+				
+			</span>
+		</span>
+	</div>
+</template>
