@@ -32,6 +32,7 @@ import smart_facility_remote_validation from "@salesforce/label/c.icg_smart_faci
 import smart_facility_remote_validation_text1 from "@salesforce/label/c.icg_smart_facility_remote_validation_text1";
 import smart_facility_remote_validation_text2 from "@salesforce/label/c.icg_smart_facility_remote_validation_text2";
 import smart_facility_remote_validation_text3 from "@salesforce/label/c.icg_smart_facility_remote_validation_text3";
+import smart_facility_remote_validation_url from "@salesforce/label/c.icg_smart_facility_remote_validation_url";
 import latest from "@salesforce/label/c.icg_latest";
 import news from "@salesforce/label/c.icg_news";
 import latest_news from "@salesforce/label/c.icg_latest_news";
