@@ -20,6 +20,25 @@ public with sharing class IA_util {
 	public static final String EMD = 'EMD';
 	public static final List<String> AGREEMENT_TYPES = new List<String>{MITA,BIETA,EMD};
 
+	//Agreement Picklist values
+	public static final String REASON_REJECTION = 'Rejected by Airline 2';
+	public static final String REASON_CANCELLATION_AIRLINE1 = 'Airline 1 leaves agreement';
+	public static final String REASON_CANCELLATION_AIRLINE2 = 'Airline 2 leaves agreement';
+	public static final String STATUS_ACTIVE = 'Active';
+	public static final String STATUS_PENDING_APPROVAL = 'Pending Approval';
+	public static final String STATUS_NOT_ACTIVE_YET = 'Not Active Yet';
+	public static final String STATUS_PENDING_WITHDRAWAL = 'Pending Withdrawal';
+	public static final String STATUS_REJECTED = 'Rejected';
+	public static final String STATUS_WITHDRAWN = 'Withdrawn';
+	public static final Map<String,String> MAP_STATUS_LABELS = new Map<String,String>{
+		STATUS_ACTIVE => Label.ISSP_Active,
+		STATUS_PENDING_APPROVAL => Label.ISSP_Pending_Approval,
+		STATUS_NOT_ACTIVE_YET => Label.IA_Status_not_active_yet,
+		STATUS_PENDING_WITHDRAWAL => Label.IA_Status_pending_withdrawal,
+		STATUS_REJECTED => Label.IA_Status_rejected,
+		STATUS_WITHDRAWN => Label.IA_Status_withdrawn
+	};
+
 	// MITA Agreements
 	public static final String TYPE_PAX_CARGO = 'The Passenger and Cargo Interline Traffic Agreement';
 	public static final String TYPE_PAX = 'The Passenger Interline Agreement';
@@ -109,6 +128,7 @@ public with sharing class IA_util {
 	public static final Integer DAYS_TO_WAIT_FOR_WITHDRAWAL = 7;
 
 	public static final String ALERTMODAL_ERROR = 'errorMsg';
+	public static final String ALERTMODAL_WARNING = 'Warning';
 	public static final String ALERTMODAL_SUCCESSNEW = 'successMsgNew';
 	// class to handle alert messages in the portal using the c:ISSP_AlertModal
 	// also reused as a wrapper to be used with js class toastify.js

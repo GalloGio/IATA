@@ -3,8 +3,12 @@ public without sharing class IA_NewController {
 	@testVisible
 	private static Blob EncDecKey = Blob.valueOf('I@T@M!tAS3rvIc3!');
 
-	private static List<String> ACTIVE_STATUS = new List<String>{'Not Active Yet','Active','Pending Approval','Pending Withdrawal'};
-
+	private static List<String> ACTIVE_STATUS = new List<String>{
+		IA_Util.STATUS_ACTIVE,
+		IA_Util.STATUS_NOT_ACTIVE_YET,
+		IA_Util.STATUS_PENDING_APPROVAL,
+		IA_Util.STATUS_PENDING_WITHDRAWAL
+	};
 	public Account account {get;set;}
 	public Boolean hasRequestPermission {get;set;}
 	public IA_util.AlertModal alertModal{get;set;}
@@ -220,7 +224,7 @@ public without sharing class IA_NewController {
 		list<String> listActiveAgreements = suggestedAirline.mapActiveAgreements.get(this.selectedAgreementName);
 		this.listOptionAgreementTypes = new list<SelectOption>();
 		if (listActiveAgreements.size()!=1) {
-			this.listOptionAgreementTypes.add(new SelectOption('','Choose agreement type',true));
+			this.listOptionAgreementTypes.add(new SelectOption('',Label.IA_Choose_agreement_type,true));
 		}
 		for (String agreementName: listActiveAgreements) {
 			this.listOptionAgreementTypes.add(new SelectOption(agreementName,IA_util.MAP_AGREEMENT_LABELS.get(agreementName)));
@@ -242,7 +246,7 @@ public without sharing class IA_NewController {
 	public void saveNewAgreement() {
 		if (!this.hasRequestPermission) return;
 		if (this.newAgreement.Effective_date__c == null) {
-			this.alertModal = new IA_util.AlertModal(IA_util.ALERTMODAL_ERROR,'Warning',Label.ISSP_ANG_Effective_Date_Of_Change,'');
+			this.alertModal = new IA_util.AlertModal(IA_util.ALERTMODAL_ERROR,IA_util.ALERTMODAL_WARNING,Label.ISSP_ANG_Effective_Date_Of_Change,'');
 			return;
 		}
 
@@ -250,9 +254,9 @@ public without sharing class IA_NewController {
 		if (result.isSuccess()) {
 			closeModalNewAgreement();
 			refreshPage();
-			this.alertModal = new IA_util.AlertModal(IA_util.ALERTMODAL_SUCCESSNEW,'Your request has been submitted.','Once the counterpart accepts the request, the agreement will be activated on the effective date.','');
+			this.alertModal = new IA_util.AlertModal(IA_util.ALERTMODAL_SUCCESSNEW,Label.IA_Request_Submitted,Label.IA_Request_Submitted_Message,'');
 		} else {
-			this.alertModal = new IA_util.AlertModal(IA_util.ALERTMODAL_ERROR,'','There was a problem saving the agreement','');
+			this.alertModal = new IA_util.AlertModal(IA_util.ALERTMODAL_ERROR,'',Label.IA_Requesting_Problem,'');
 		}
 	}
 

@@ -32,7 +32,7 @@
 		<div class="container IA-TableFilters">
 			<div class="row">
 				<div class="IA-SearchContainer col-sm-4">
-					<input id="searchMemorandumsTable" class="IA-SearchInput" placeholder="Find Document" onkeyup="applyMemorandumsFilter();"/>
+					<input id="searchMemorandumsTable" class="IA-SearchInput" placeholder="{!$Label.CSP_Find_Document}" onkeyup="applyMemorandumsFilter();"/>
 					<span id="searchMemorandumsTableClean" class="IA-SearchInputClean" onclick="clearSearchMemorandumsFilter();" hidden="true"/>
 				</div>
 			</div>
@@ -46,7 +46,7 @@
 							<apex:repeat var="doc" value="{!listDocuments}">
 								<tr searchable="true">
 									<td>
-										<span class="IA-view" onclick="viewContentFile('{!doc.docId}')">View</span>
+										<span class="IA-view" onclick="viewContentFile('{!doc.docId}')">{!$Label.View}</span>
 									</td>
 									<td>
 										<apex:outputText value="{!doc.docname}"/>

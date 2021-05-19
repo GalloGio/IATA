@@ -39,13 +39,13 @@
 			--IA-select-arrow-svg: url("{!URLFOR($Resource.InterlineAgreements, 'img/select_arrow.svg')}");
 			--IA-sort-marker-svg: url("{!URLFOR($Resource.InterlineAgreements, 'img/sort_marker.svg')}");
 		}
-
-		@font-face {
-			font-family: 'AktivGrotesk';
-			src: url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Regular/AktivGrotesk_W_Rg.eot')}");
-			src: url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Regular/AktivGrotesk_W_Rg.eot?#iefix')}") format('embedded-opentype'),
-			url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Regular/AktivGrotesk_W_Rg.woff2')}") format('woff2'),
-			url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Regular/AktivGrotesk_W_Rg.woff')}") format('woff');
+		@font-face {font-family: "AktivGrotesk";
+			src: url("{!URLFOR($Resource.aktiv_grotesk_regular,'@font-face/4337eeb93213c64896f2df77962a405e.eot')}"); /* IE9*/
+			src: url("{!URLFOR($Resource.aktiv_grotesk_regular,'@font-face/4337eeb93213c64896f2df77962a405e.eot?#iefix')}") format("embedded-opentype"), /* IE6-IE8 */
+			url("{!URLFOR($Resource.aktiv_grotesk_regular,'@font-face/4337eeb93213c64896f2df77962a405e.woff2')}") format("woff2"), /* chrome、firefox */
+			url("{!URLFOR($Resource.aktiv_grotesk_regular,'@font-face/4337eeb93213c64896f2df77962a405e.woff')}") format("woff"), /* chrome、firefox */
+			url("{!URLFOR($Resource.aktiv_grotesk_regular,'@font-face/4337eeb93213c64896f2df77962a405e.ttf')}") format("truetype"), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+			url("{!URLFOR($Resource.aktiv_grotesk_regular,'@font-face/4337eeb93213c64896f2df77962a405e.svg#Aktiv Grotesk W01 Regular')}") format("svg"); /* iOS 4.1- */
 		}
 	</style>
 
@@ -224,13 +224,13 @@
 								<span> &gt; </span>
 								<a href="/csportal/s/services">{!$Label.ISSP_Services}</a>
 								<span> &gt; </span>
-								<a href="#">Interline Agreements</a>
+								<a href="#">{!$Label.IA_Interline_Agreements}</a>
 							</div>
 							<div class="row">
 								<span>
 									<apex:image styleclass="IA-logo" value="{!appLogoURL}"/>
 								</span>
-								<span class="IA-MainTitle">Interline Agreements</span>
+								<span class="IA-MainTitle">{!$Label.IA_Interline_Agreements}</span>
 							</div>
 						</div>
 					</div>
@@ -240,13 +240,13 @@
 					<div class="IA-TabHeader">
 						<div class="container">
 							<span id="main-tab-header-1" class="col-1 IA-Tab" onclick="{!IF(isAgreementsTab,'return false;','goToAllAgreements();')}">
-								<span class="{!IF(isAgreementsTab,'IA-TabSelected','')}">Agreements</span>
+								<span class="{!IF(isAgreementsTab,'IA-TabSelected','')}">{!$Label.IA_Agreements}</span>
 							</span>
 							<span id="main-tab-header-2" class="col-1 IA-Tab" onclick="{!IF(showSection=='CONTACTS','return false;','goToContacts();')}">
-								<span class="{!IF(showSection=='CONTACTS','IA-TabSelected','')}">Airline Contacts</span>
+								<span class="{!IF(showSection=='CONTACTS','IA-TabSelected','')}">{!$Label.IA_Airline_Contacts}</span>
 							</span>
 							<span id="main-tab-header-3" class="col-1 IA-Tab" onclick="{!IF(showSection=='MEMOS','return false;','goToMemorandums();')}">
-								<span class="{!IF(showSection=='MEMOS','IA-TabSelected','')}">Memorandums</span>
+								<span class="{!IF(showSection=='MEMOS','IA-TabSelected','')}">{!$Label.IA_Memorandums}</span>
 							</span>
 						</div>
 					</div>
@@ -258,15 +258,15 @@
 							<div class="row">
 								<span class="col-1 {!IF(showSection=='ALL','selected','')}" onclick="{!IF(showSection=='ALL','return false;','goToAllAgreements();')}">
 									<span class="IA-RadioButton {!IF(showSection=='ALL','checked','')}"></span>
-									<label>All agreements</label>
+									<label>{!$Label.IA_All_agreements}</label>
 								</span>
 								<span class="col-1 {!IF(showSection=='REQ','selected','')}" onclick="{!IF(showSection=='REQ','return false;','goToPendingRequests();')}">
 									<span class="IA-RadioButton {!IF(showSection=='REQ','checked','')}"></span>
-									<label>Agreement Requests</label>
+									<label>{!$Label.IA_Agreement_Requests}</label>
 								</span>
 								<span class="col-1 {!IF(showSection=='NEW','selected','')}" onclick="{!IF(showSection=='NEW','return false;','goToNewAgreements();')}">
 									<span class="IA-RadioButton {!IF(showSection=='NEW','checked','')}"></span>
-									<label>New Agreement</label>
+									<label>{!$Label.IA_New_Agreement}</label>
 								</span>
 							</div>
 						</div>

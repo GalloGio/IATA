@@ -32,31 +32,16 @@
 			/** filter functions **/
 			openModalContactsFilter = function() {
 				alert("Filter to be defined");
-				//document.getElementById('modalContactsFilter').style.display = '';
 			}
 			closeModalContactsFilter = function() {
-				//document.getElementById('modalContactsFilter').style.display = 'none';
 			}
 			// get all input filters to fitler the All agreements table
 			applyContactsFilter = function() {
 				const filterSearch = document.getElementById('searchContactsTable');
 				const filterSearchClean = document.getElementById('searchContactsTableClean');
-				//const filterName = document.getElementById('{!$Component.mainForm.mainPageBlock.sectionContacts.sectionContactsComponent.filterName}');
-				//const filterType = document.getElementById('{!$Component.mainForm.mainPageBlock.sectionContacts.sectionContactsComponent.filterType}');
-				//const filterStatus = document.getElementById('{!$Component.mainForm.mainPageBlock.sectionContacts.sectionContactsComponent.filterStatus}');
 				
 				const searches = [];
 				if(filterSearch.value > '') searches.push(filterSearch.value);
-				//if(filterName.value > '') searches.push(filterName.value);
-				//if(filterType.value > '') searches.push(filterType.value);
-				//if(filterStatus.value > '') searches.push(filterStatus.value);
-
-
-				//if (filterName.value > '' || filterType.value > '' || filterStatus.value > '') {
-				//	document.getElementById("ContactsFilterButton").classList.add("IA-button-filtering");
-				//} else {
-				//	document.getElementById("ContactsFilterButton").classList.remove("IA-button-filtering");
-				//}
 				filterSearchClean.hidden = filterSearch.value === '';
 
 				getXtable().filter(searches);
@@ -69,9 +54,6 @@
 			}
 			//clear filter inputs
 			clearAllModalFilter = function() {
-				//document.getElementById('{!$Component.mainForm.mainPageBlock.sectionContacts.sectionContactsComponent.filterName}').value = '';
-				//document.getElementById('{!$Component.mainForm.mainPageBlock.sectionContacts.sectionContactsComponent.filterType}').value = '';
-				//document.getElementById('{!$Component.mainForm.mainPageBlock.sectionContacts.sectionContactsComponent.filterStatus}').value = '';
 				applyContactsFilter();
 				initTablePagination(table,box);
 			}
@@ -138,7 +120,7 @@
 						<span class="IA-download"></span>
 					</span>
 					<button type="button" id="ContactsFilterButton" class="IA-button IA-button-faded IA-button-filter" style="margin-left: 26px;" onclick="openModalContactsFilter(); return false;">Filter</button>
-					<button type="button" class="IA-button" style="margin-left: 17px;" onclick="openAddContactModal(); return false;">Add Contact</button>
+					<button type="button" class="IA-button" style="margin-left: 17px;" onclick="openAddContactModal(); return false;">{!$Label.CSP_Add_Contact}</button>
 				</div>
 			</div>
 		</div>
@@ -147,7 +129,7 @@
 			<div class="row IA-TableTitleHeader">
 				<span class="IA-TableTitle" >
 					<apex:outputText value="{!account.Company_Logo__c}" styleclass="baseline" escape="false"/>
-					<span style="margin-left: 15px;">Contacts</span>
+					<span style="margin-left: 15px;">{!$Label.ISSP_Contacts}</span>
 				</span>
 			</div>
 
@@ -156,10 +138,10 @@
 					<table id="ContactsTable" class="table table-hover table-condensed">
 						<thead>
 							<tr>
-								<th exportable="true" sortable="true">Name</th>
-								<th exportable="true" sortable="true">E-mail</th>
-								<th exportable="true" sortable="true">MITA Contact Type</th>
-								<th exportable="true" sortable="true">Title</th>
+								<th exportable="true" sortable="true">{!$Label.CSP_Name}</th>
+								<th exportable="true" sortable="true">{!$Label.CSP_Email}</th>
+								<th exportable="true" sortable="true">{!$Label.IA_MITA_Contact_Type}</th>
+								<th exportable="true" sortable="true">{!$Label.CSP_Title}</th>
 								<th class="{!IF(hasEditContactsPermission,'','hidden')}"></th>
 							</tr>
 						</thead>
@@ -211,26 +193,26 @@
 								<span class="IA-Close" onclick="closeModalContact(); return false;"></span>
 							</div>
 							<div class="row">
-								<div class="IA-ModalSubtitle">Edit Contact</div>
+								<div class="IA-ModalSubtitle">{!$Label.CSP_Edit_Contact}</div>
 							</div>
 						</div>
 						<!-- Contact detail body -->
 						<div class="modal-body">
 							<div class="row">
 								<div class="col col-sm-12">
-									<label>Email</label>
+									<label>{!selectedContact.Email}</label>
 									<div><a href="mailto:{!selectedContact.email}">{!selectedContact.email}</a></div>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col col-sm-6">
-									<label>Business Phone</label>
+									<label>{!$Label.CSP_L_Phone_LMS}</label>
 									<div>{!selectedContact.phone}</div>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col col-sm-12">
-									<label>Contact Type</label>
+									<label>{!$Label.ISSP_Airline_Contact_Type}</label>
 									<apex:inputField value="{!selectedContact.MITA_Contact_Type__c}"/>
 								</div>
 							</div>
@@ -238,9 +220,9 @@
 						<!-- /Contact detail body -->
 						<div class="modal-footer">
 							<div class="IA-button-box row center">
-								<button type="button" class="IA-button IA-button-white" onclick="closeModalContact(); return false;">Cancel</button>
+								<button type="button" class="IA-button IA-button-white" onclick="closeModalContact(); return false;">{!$Label.CSP_Cancel}</button>
 								<apex:outputPanel rendered="{!editContactsPermission}">
-									<button id="saveContactButton" type="button" class="IA-button" onclick="saveContact(); return false;">Save</button>
+									<button id="saveContactButton" type="button" class="IA-button" onclick="saveContact(); return false;">{!$Label.CSP_Save}</button>
 								</apex:outputPanel>
 							</div>
 						</div>

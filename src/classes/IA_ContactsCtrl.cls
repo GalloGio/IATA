@@ -99,10 +99,10 @@ public without sharing class IA_ContactsCtrl {
 			if (result.isSuccess()) {
 				refreshPage();
 				this.selectedContactId = null;
-				this.alertModal = new IA_util.AlertModal(IA_util.ALERTMODAL_SUCCESSNEW,'Contact updated','','');
+				this.alertModal = new IA_util.AlertModal(IA_util.ALERTMODAL_SUCCESSNEW,Label.CSP_Contact_Updated,'','');
 			}
 		} catch (Exception e) {
-			this.alertModal = new IA_util.AlertModal(IA_util.ALERTMODAL_ERROR,'','There was a problem saving the contact','');
+			this.alertModal = new IA_util.AlertModal(IA_util.ALERTMODAL_ERROR,'',Label.IA_Contact_Save_Problem,'');
 		}
 	}
 

@@ -52,10 +52,10 @@
 				const filterbutton = document.getElementById("RequestAgreementsFilterButton");
 				if (filterName.value > '' || filterType.value > '' || filterStatus.value > '') {
 					filterbutton.classList.add("IA-button-filtering");
-					filterbutton.textContent = "Filtered";
+					filterbutton.textContent = "{!$Label.CSP_Filtered}";
 				} else {
 					filterbutton.classList.remove("IA-button-filtering");
-					filterbutton.textContent = "Filter";
+					filterbutton.textContent = "{!$Label.CSP_Filter}";
 				}
 				filterSearchClean.hidden = filterSearch.value === '';
 
@@ -100,7 +100,7 @@
 					let child3 = document.createElement('span');
 					child3.className="IA-Undo";
 					child3.onclick= undoaction;
-					child3.innerHTML="Undo";
+					child3.innerHTML="{!$Label.CSP_Undo}";
 					node.appendChild(child3);
 				}
 
@@ -137,11 +137,11 @@
 		<div class="container IA-TableFilters">
 			<div class="row">
 				<div class="IA-SearchContainer col-sm-4">
-					<input id="searchReqAgreementsTable" class="IA-SearchInput" placeholder="Find Airline or Agreement" onkeyup="applyRequestAgreementsFilter();"/>
+					<input id="searchReqAgreementsTable" class="IA-SearchInput" placeholder="{!$Label.IA_Find_Airline_or_Agreement}" onkeyup="applyRequestAgreementsFilter();"/>
 					<span id="searchReqAgreementsTableClean" class="IA-SearchInputClean" onclick="clearSearchRequestAgreementsTable();" hidden="true"/>
 				</div>
 				<div class="col-sm-8 text-right nopadding">
-					<button type="button" id="RequestAgreementsFilterButton" class="IA-button IA-button-faded IA-button-filter" style="margin-left: 26px;" onclick="openModalRequestAgreementsFilter(); return false;">Filter</button>
+					<button type="button" id="RequestAgreementsFilterButton" class="IA-button IA-button-faded IA-button-filter" style="margin-left: 26px;" onclick="openModalRequestAgreementsFilter(); return false;">{!$Label.CSP_Filter}</button>
 				</div>
 			</div>
 		</div>
@@ -150,7 +150,7 @@
 			<div class="row IA-TableTitleHeader">
 				<span class="IA-TableTitle" >
 					<apex:outputText value="{!account.Company_Logo__c}" styleclass="baseline" escape="false"/>
-					<span style="margin-left: 29px;">{!account.Name}&nbsp;-&nbsp;Interline Agreements For Approval</span>
+					<span style="margin-left: 29px;">{!account.Name}&nbsp;-&nbsp;{!$Label.IA_Interline_Agreements_For_Approval}</span>
 				</span>
 			</div>
 
@@ -164,10 +164,10 @@
 						</span>
 					</div>
 					<div id="noagreements-maintext" class="row">
-						<span>You don't have any pending<br/>requests right now.<br/>Click below to start an agreement process.</span>
+						<apex:outputText value="{!$Label.IA_Request_Agreements_Empty}" escape="false"/>
 					</div>
 					<div id="noagreements-button" class="row">
-						<button type="button" class="IA-button" onclick="goToNewAgreements(); return false;">New Agreement</button>
+						<button type="button" class="IA-button" onclick="goToNewAgreements(); return false;">{!$Label.IA_New_Agreement}</button>
 					</div>
 				</div>
 			</apex:outputPanel>
@@ -177,11 +177,11 @@
 					<table id="ReqAgreementsTable" class="table table-hover table-condensed">
 						<thead>
 							<tr>
-								<th sortable="true">Requester Airline</th>
-								<th sortable="true">Approver Airline</th>
-								<th sortable="true">Agreement</th>
-								<th sortable="true">Agreement Type</th>
-								<th sortable="true">Effective Date</th>
+								<th sortable="true">{!$Label.IA_Requester_Airline}</th>
+								<th sortable="true">{!$Label.IA_Approver_Airline}</th>
+								<th sortable="true">{!$Label.IA_Agreement}</th>
+								<th sortable="true">{!$Label.IA_Agreement_Type}</th>
+								<th sortable="true">{!$Label.Effective_Date}</th>
 								<th></th>
 							</tr>
 						</thead>
@@ -205,7 +205,7 @@
 									</td>
 									<td class="center">
 										<apex:outputPanel rendered="{! !requesterAgreementsRow.showAproveRejectButtons}">
-											<div class="IA-TableOutputInfo IA-{!SUBSTITUTE(requesterAgreementsRow.agreementStatus,' ','_')}">{!requesterAgreementsRow.agreementStatus}</div>
+											<div class="IA-TableOutputInfo IA-{!SUBSTITUTE(requesterAgreementsRow.agreementStatus,' ','_')}">{!requesterAgreementsRow.agreementStatusLabel}</div>
 										</apex:outputPanel>
 										<apex:outputPanel rendered="{!requesterAgreementsRow.showAproveRejectButtons}" >
 											<span class="IA-Circle IA-Approve" style="margin-right: 12px;" onclick="event.stopPropagation(); approveAgreement('{!requesterAgreementsRow.agreementId}');"></span>
@@ -242,23 +242,23 @@
 					<!-- Request Agreements Filter body -->
 					<div class="modal-body">
 						<div class="row">
-							<label>Agreement Name</label>
+							<label>{!$Label.IA_Agreement_Name}</label>
 							<apex:selectList id="filterName" size="1" html-data-value="">
-								<apex:selectOption itemValue="" itemLabel="Choose Type"/>
+								<apex:selectOption itemValue="" itemLabel="{!$Label.IA_Choose_agreement_name}"/>
 								<apex:selectOptions value="{!OptionNames}"/>
 							</apex:selectList>
 						</div>
 						<div class="row">
-							<label>Agreement Type</label>
+							<label>{!$Label.IA_Agreement_Type}</label>
 							<apex:selectList id="filterType" size="1" html-data-value="">
-								<apex:selectOption itemValue="" itemLabel="Choose Type"/>
+								<apex:selectOption itemValue="" itemLabel="{!$Label.IA_Choose_agreement_type}"/>
 								<apex:selectOptions value="{!OptionTypes}"/>
 							</apex:selectList>
 						</div>
 						<div class="row">
-							<label>Agreement Status</label>
+							<label>{!$Label.IA_Agreement_Status}</label>
 							<apex:selectList id="filterStatus" size="1" html-data-value="">
-								<apex:selectOption itemValue="" itemLabel="Choose Status"/>
+								<apex:selectOption itemValue="" itemLabel="{!$Label.IA_Choose_status}"/>
 								<apex:selectOptions value="{!OptionStatus}"/>
 							</apex:selectList>
 						</div>
@@ -266,8 +266,8 @@
 					<!-- /Request Agreements Filter body -->
 					<div class="modal-footer">
 						<div class="IA-button-box row">
-							<button type="button" class="IA-button IA-button-white" onclick="clearRequestModalFilter(); return false;">Remove All Filters</button>
-							<button type="button" class="IA-button" onclick="applyRequestAgreementsFilter(); return false;">Apply</button>
+							<button type="button" class="IA-button IA-button-white" onclick="clearRequestModalFilter(); return false;">{!$Label.CSP_RemoveAllFilters}</button>
+							<button type="button" class="IA-button" onclick="applyRequestAgreementsFilter(); return false;">{!$Label.CSP_Apply}</button>
 						</div>
 					</div>
 				</div>

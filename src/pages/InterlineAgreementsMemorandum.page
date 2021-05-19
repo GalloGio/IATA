@@ -1,13 +1,14 @@
-<apex:page renderas="PDF" controller="InterlineAgreementsMemorandumController" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false" showheader="false" sidebar="false" readOnly="true">
+<apex:page renderas="pdf" controller="InterlineAgreementsMemorandumController" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false" showheader="false" sidebar="false" readOnly="true">
 	<html>
 		<head>
 			<style>
-				@font-face {
-					font-family: 'AktivGrotesk';
-					src: url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Regular/AktivGrotesk_W_Rg.eot')}");
-					src: url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Regular/AktivGrotesk_W_Rg.eot?#iefix')}") format('embedded-opentype'),
-					url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Regular/AktivGrotesk_W_Rg.woff2')}") format('woff2'),
-					url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Regular/AktivGrotesk_W_Rg.woff')}") format('woff');
+				@font-face {font-family: "AktivGrotesk";
+					src: url("{!URLFOR($Resource.aktiv_grotesk_regular,'@font-face/4337eeb93213c64896f2df77962a405e.eot')}"); /* IE9*/
+					src: url("{!URLFOR($Resource.aktiv_grotesk_regular,'@font-face/4337eeb93213c64896f2df77962a405e.eot?#iefix')}") format("embedded-opentype"), /* IE6-IE8 */
+					url("{!URLFOR($Resource.aktiv_grotesk_regular,'@font-face/4337eeb93213c64896f2df77962a405e.woff2')}") format("woff2"), /* chrome、firefox */
+					url("{!URLFOR($Resource.aktiv_grotesk_regular,'@font-face/4337eeb93213c64896f2df77962a405e.woff')}") format("woff"), /* chrome、firefox */
+					url("{!URLFOR($Resource.aktiv_grotesk_regular,'@font-face/4337eeb93213c64896f2df77962a405e.ttf')}") format("truetype"), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+					url("{!URLFOR($Resource.aktiv_grotesk_regular,'@font-face/4337eeb93213c64896f2df77962a405e.svg#Aktiv Grotesk W01 Regular')}") format("svg"); /* iOS 4.1- */
 				}
 				@page{
 					page-size:A4;

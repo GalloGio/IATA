@@ -48,10 +48,10 @@
 				const filterbutton = document.getElementById("AllAgreementsFilterButton");
 				if (filterName.value > '' || filterType.value > '' || filterStatus.value > '') {
 					filterbutton.classList.add("IA-button-filtering");
-					filterbutton.textContent = "Filtered";
+					filterbutton.textContent = "{!$Label.CSP_Filtered}";
 				} else {
 					filterbutton.classList.remove("IA-button-filtering");
-					filterbutton.textContent = "Filter";
+					filterbutton.textContent = "{!$Label.CSP_Filter}";
 				}
 				filterSearchClean.hidden = filterSearch.value === '';
 
@@ -93,7 +93,7 @@
 						<span class="IA-download"></span>
 					</span>
 					<button type="button" id="AllAgreementsFilterButton" class="IA-button IA-button-faded IA-button-filter" style="margin-left: 26px;" onclick="openModalAllAgreementsFilter(); return false;">Filter</button>
-					<button type="button" class="IA-button" style="margin-left: 17px;" onclick="goToNewAgreements(); return false;">New Agreement</button>
+					<button type="button" class="IA-button" style="margin-left: 17px;" onclick="goToNewAgreements(); return false;">{!$Label.IA_New_Agreement}</button>
 				</div>
 			</div>
 		</div>
@@ -102,7 +102,7 @@
 			<div class="row IA-TableTitleHeader">
 				<span class="IA-TableTitle" >
 					<apex:outputText value="{!account.Company_Logo__c}" styleclass="baseline" escape="false"/>
-					<span style="margin-left: 29px;">{!account.Name}&nbsp;-&nbsp;Interline Agreements</span>
+					<span style="margin-left: 29px;">{!account.Name}&nbsp;-&nbsp;{!$Label.IA_Interline_Agreements}</span>
 				</span>
 			</div>
 
@@ -116,10 +116,10 @@
 						</span>
 					</div>
 					<div id="noagreements-maintext" class="row">
-						<span>Your airline do not have any<br/>Interline Agreements yet.<br/>Click below to start an agreement process.</span>
+						<apex:outputText value="{!$Label.IA_New_Agreements_Empty}" escape="false"/>
 					</div>
 					<div id="noagreements-button" class="row">
-						<button type="button" class="IA-button" onclick="goToNewAgreements(); return false;">New Agreement</button>
+						<button type="button" class="IA-button" onclick="goToNewAgreements(); return false;">{!$Label.IA_New_Agreement}</button>
 					</div>
 				</div>
 			</apex:outputPanel>
@@ -131,10 +131,10 @@
 							<tr>
 								<th exportable="true" sortable="true">{!$Label.ISSP_IATA_Designator}</th>
 								<th exportable="true" sortable="true">{!$Label.ISSP_Airline}</th>
-								<th exportable="true" sortable="true">Agreement</th>
+								<th exportable="true" sortable="true">{!$Label.IA_Agreement}</th>
 								<th exportable="true" sortable="true">{!$Label.ISSP_Agreement_type}</th>
-								<th exportable="true" class="hidden">Status</th>
-								<th sortable="true">Status</th>
+								<th exportable="true" class="hidden"></th>
+								<th sortable="true">{!$Label.Status}</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -157,7 +157,7 @@
 										{!allAgreementRow.agreementStatus}
 									</td>
 									<td>
-										<div class="IA-TableOutputInfo IA-{!SUBSTITUTE(allAgreementRow.agreementStatus,' ','_')}">{!allAgreementRow.agreementStatus}</div>
+										<div class="IA-TableOutputInfo IA-{!SUBSTITUTE(allAgreementRow.agreementStatus,' ','_')}">{!allAgreementRow.agreementStatusLabel}</div>
 									</td>
 								</tr>
 							</apex:repeat>
@@ -179,30 +179,30 @@
 				<div id="modalAllAgreementsFilterContent" class="IA-Modal IA-Modal-Filter modal-content">
 					<div class="modal-header">
 						<div class="row">
-							<span class="IA-TableTitle">Filter</span>&nbsp;
+							<span class="IA-TableTitle">{!$Label.CSP_Filter}</span>&nbsp;
 							<span class="IA-Close" onclick="closeModalAllAgreementsFilter(); return false;"></span>
 						</div>
 					</div>
 					<!-- All Agreements Filter body -->
 					<div class="modal-body">
 						<div class="row">
-							<label>Agreement Name</label>
+							<label>{!$Label.IA_Agreement_Name}</label>
 							<apex:selectList id="filterName" size="1" html-data-value="">
-								<apex:selectOption itemValue="" itemLabel="Choose Type"/>
+								<apex:selectOption itemValue="" itemLabel="{!$Label.IA_Choose_agreement_name}"/>
 								<apex:selectOptions value="{!OptionNames}"/>
 							</apex:selectList>
 						</div>
 						<div class="row">
-							<label>Agreement Type</label>
+							<label>{!$Label.IA_Agreement_Type}</label>
 							<apex:selectList id="filterType" size="1" html-data-value="">
-								<apex:selectOption itemValue="" itemLabel="Choose Type"/>
+								<apex:selectOption itemValue="" itemLabel="{!$Label.IA_Choose_agreement_type}"/>
 								<apex:selectOptions value="{!OptionTypes}"/>
 							</apex:selectList>
 						</div>
 						<div class="row">
-							<label>Agreement Status</label>
+							<label>{!$Label.IA_Agreement_Status}</label>
 							<apex:selectList id="filterStatus" size="1" html-data-value="">
-								<apex:selectOption itemValue="" itemLabel="Choose Status"/>
+								<apex:selectOption itemValue="" itemLabel="{!$Label.IA_Choose_status}"/>
 								<apex:selectOptions value="{!OptionStatus}"/>
 							</apex:selectList>
 						</div>
@@ -210,8 +210,8 @@
 					<!-- /All Agreements Filter body -->
 					<div class="modal-footer">
 						<div class="IA-button-box row">
-							<button type="button" class="IA-button IA-button-white" onclick="clearAllModalFilter(); return false;">Remove All Filters</button>
-							<button type="button" class="IA-button" onclick="applyAllAgreementsFilter(); return false;">Apply</button>
+							<button type="button" class="IA-button IA-button-white" onclick="clearAllModalFilter(); return false;">{!$Label.CSP_RemoveAllFilters}</button>
+							<button type="button" class="IA-button" onclick="applyAllAgreementsFilter(); return false;">{!$Label.CSP_Apply}</button>
 						</div>
 					</div>
 				</div>

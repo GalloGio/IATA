@@ -28,6 +28,13 @@ public without sharing class IA_AllController {
 		this.AllAgreementsRows= null;
 	}
 
+	private static List<String> VALID_STATUS = new List<String>{
+		IA_Util.STATUS_ACTIVE,
+		IA_Util.STATUS_NOT_ACTIVE_YET,
+		IA_Util.STATUS_PENDING_WITHDRAWAL,
+		IA_Util.STATUS_WITHDRAWN
+	};
+
 	/**
 	 * Get the query result with all related agreements related to the input account
 	 */
@@ -41,7 +48,7 @@ public without sharing class IA_AllController {
 						Airline_2__r.Name , Airline2_designator_code__c, Airline_2__r.Airline_designator__c, Airline_2__r.Airline_Prefix__c, Airline_2__r.IATACode__c, Airline_2__r.Company_Logo__c
 					FROM MITA_Agreement__c
 					WHERE (Airline_1__c = :account.Id OR Airline_2__c = :account.Id)
-					AND Status__c IN ('Not Active Yet','Active','Withdrawn','Pending Withdrawal')
+					AND Status__c IN :VALID_STATUS
 					AND Airline_1__c != null
 					AND Airline_2__c != null
 				]);
@@ -90,7 +97,7 @@ public without sharing class IA_AllController {
 					//store filters
 					this.setFilterNames.add(row.agreementName);
 					this.setFilterTypes.add(row.agreementType);
-					this.setFilterStatus.add(row.agreementStatus);
+					this.setFilterStatus.add(row.agreementStatusLabel);
 				}
 			}
 			return AllAgreementsRows;
@@ -111,6 +118,11 @@ public without sharing class IA_AllController {
 		public String agreementType {get;set;}
 		public String agreementName {get;set;}
 		public String agreementStatus {get;set;}
+		public String agreementStatusLabel {
+			get{ 
+				return IA_util.MAP_STATUS_LABELS.get(agreementStatus);
+			}
+		}
 	}
 
 	/***

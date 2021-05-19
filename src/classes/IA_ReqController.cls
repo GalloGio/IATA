@@ -3,6 +3,11 @@ public without sharing class IA_ReqController {
 	@testVisible
 	private static Blob EncDecKey = Blob.valueOf('I@T@M!tAS3rvIc3!');
 
+	private static final String ALERT_SUCCESS = 'success';
+	private static final String ALERT_REJECTED = 'rejected';
+	private static final String ALERT_UNDO = 'undo';
+	private static final String ALERT_FAIL = 'fail';
+
 	public Account account {get;set;}
 	public Boolean hasApprovePermission {get;set;}
 	public String selectedAgreement {get;set;}
@@ -34,11 +39,11 @@ public without sharing class IA_ReqController {
 			if (mapAgreements==null) {
 				mapAgreements = new Map<Id,MITA_Agreement__c>([
 					SELECT Id, MITAorBIETA__c, Agreement_type__c, Active__c, Status__c, Created_date__c, Effective_date__c, Agreement_processed_date__c, Cancellation_date__c, Cancellation_Reason__c, Cancellation_processed_date__c,
-						Airline_1__c, Airline_1__r.Name , Airline1_designator_code__c, Airline_1__r.Airline_designator__c, Airline_1__r.Airline_Prefix__c, Airline_1__r.IATACode__c,Airline_1__r.Logo_File_ID__c,
-						Airline_2__c, Airline_2__r.Name , Airline2_designator_code__c, Airline_2__r.Airline_designator__c, Airline_2__r.Airline_Prefix__c, Airline_2__r.IATACode__c,Airline_2__r.Logo_File_ID__c
+						Airline_1__c, Airline_1__r.Name , Airline1_designator_code__c, Airline_1__r.Airline_designator__c, Airline_1__r.Airline_Prefix__c, Airline_1__r.IATACode__c,Airline_1__r.Logo_File_ID__c,Airline_1__r.Company_Logo__c,
+						Airline_2__c, Airline_2__r.Name , Airline2_designator_code__c, Airline_2__r.Airline_designator__c, Airline_2__r.Airline_Prefix__c, Airline_2__r.IATACode__c,Airline_2__r.Logo_File_ID__c,Airline_2__r.Company_Logo__c
 					FROM MITA_Agreement__c
 					WHERE (Airline_1__c = :account.Id OR Airline_2__c = :account.Id)
-					AND Status__c IN ('Pending Approval','Rejected')
+					AND Status__c IN (:IA_Util.STATUS_PENDING_APPROVAL, :IA_Util.STATUS_REJECTED)
 					AND Airline_1__c != null
 					AND Airline_2__c != null
 					ORDER BY Airline_1__r.Name ASC
@@ -75,7 +80,7 @@ public without sharing class IA_ReqController {
 					row.approverDesignator = agreement.Airline2_designator_code__c;
 					row.effectiveDate = IA_util.dateformat(agreement.Effective_date__c);
 					row.agreementStatus = agreement.Status__c;
-					row.showAproveRejectButtons = (agreement.Status__c == 'Pending Approval' && this.hasApprovePermission && this.account.Id == agreement.Airline_2__c);
+					row.showAproveRejectButtons = (agreement.Status__c == IA_Util.STATUS_PENDING_APPROVAL && this.hasApprovePermission && this.account.Id == agreement.Airline_2__c);
 					RequesterAgreementsRows.add(row);
 					//store filters
 					this.setFilterNames.add(row.agreementName);
@@ -89,9 +94,9 @@ public without sharing class IA_ReqController {
 				for(RequestAgreementsRow row : RequesterAgreementsRows){
 					if (row.showAproveRejectButtons) {
 						listApprove.add(row);
-					} else if (row.agreementStatus=='Pending Approval') {
+					} else if (row.agreementStatus==IA_Util.STATUS_PENDING_APPROVAL) {
 						listRequest.add(row);
-					} else if(row.agreementStatus=='Rejected') {
+					} else if(row.agreementStatus==IA_Util.STATUS_REJECTED) {
 						listRejected.add(row);
 					}
 				}
@@ -116,6 +121,11 @@ public without sharing class IA_ReqController {
 		public String effectiveDate {get;set;}
 		public String agreementStatus {get;set;}
 		public Boolean showAproveRejectButtons {get;set;}
+		public String agreementStatusLabel {
+			get{ 
+				return IA_util.MAP_STATUS_LABELS.get(agreementStatus);
+			}
+		}
 	}
 
 	/**
@@ -140,10 +150,10 @@ public without sharing class IA_ReqController {
 		if (result.isSuccess()) {
 			refreshPage();
 			String undoActionId = createUndoAction(undoAgreement);
-			this.toast = new IA_util.AlertModal('success','Request has been approved.', undoActionId);
+			this.toast = new IA_util.AlertModal(ALERT_SUCCESS,Label.IA_Request_Approved, undoActionId);
 
 		} else {
-			this.toast = new IA_util.AlertModal('fail','There was a problem when approving the agreement',null);
+			this.toast = new IA_util.AlertModal(ALERT_FAIL,Label.IA_Approving_Problem,null);
 		}
 	}
 
@@ -161,7 +171,7 @@ public without sharing class IA_ReqController {
 
 		agreement.Cancellation_date__c = Date.today();
 		agreement.Cancellation_processed_date__c = Date.today();
-		agreement.Cancellation_Reason__c = 'Rejected by Airline 2';
+		agreement.Cancellation_Reason__c = IA_Util.REASON_REJECTION;
 
 		Database.SaveResult result = Database.update(agreement);
 		if (result.isSuccess()) {
@@ -170,10 +180,10 @@ public without sharing class IA_ReqController {
 			this.RequesterAgreementsRows = null;
 
 			String undoActionId = createUndoAction(undoAgreement);
-			this.toast = new IA_util.AlertModal('rejected','Request has been rejected.', undoActionId);
+			this.toast = new IA_util.AlertModal(ALERT_REJECTED,Label.IA_Request_Rejected, undoActionId);
 
 		} else {
-			this.toast = new IA_util.AlertModal('fail','There was a problem when rejecting the agreement',null);
+			this.toast = new IA_util.AlertModal(ALERT_FAIL,Label.IA_Rejecting_Problem,null);
 		}
 	}
 
@@ -195,10 +205,10 @@ public without sharing class IA_ReqController {
 			this.mapAgreements = null;
 			this.RequesterAgreementsRows = null;
 
-			this.toast = new IA_util.AlertModal('undo','Action reverted',null);
+			this.toast = new IA_util.AlertModal(ALERT_UNDO,Label.IA_Action_Reverted,null);
 
 		} else {
-			this.toast = new IA_util.AlertModal('fail','There was a problem when undoing the action',null);
+			this.toast = new IA_util.AlertModal(ALERT_FAIL,Label.IA_Undoing_Problem,null);
 		}
 	}
 

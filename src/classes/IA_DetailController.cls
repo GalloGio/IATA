@@ -3,7 +3,7 @@ public with sharing class IA_DetailController {
 	private static final String HISTORY_CREATED = 'created';
 	private static final String HISTORY_AGREEMENT_FIELDNAME = 'Agreement_processed_date__c';
 	private static final String HISTORY_CANCELLATION_FIELDNAME = 'Cancellation_date__c';
-	private static final String HISTORY_REJECTION_REASON = 'Rejected by Airline 2';
+	private static final String INTERNAL_USERNAME = 'IATA';
 
 	public MITA_Agreement__c selectedAgreement {get;set;}
 	public Account otherAirline {get;set;}
@@ -43,7 +43,7 @@ public with sharing class IA_DetailController {
 
 		this.selectedAgreement.Cancellation_processed_date__c = Date.today();
 		this.selectedAgreement.Withdrawal_Request_Reception_Date__c = Date.today();
-		this.selectedAgreement.Cancellation_Reason__c = this.selectedAgreement.Airline_1__c == this.otherAirline.Id? 'Airline 1 leaves agreement': 'Airline 2 leaves agreement';
+		this.selectedAgreement.Cancellation_Reason__c = this.selectedAgreement.Airline_1__c == this.otherAirline.Id? IA_util.REASON_CANCELLATION_AIRLINE1: IA_util.REASON_CANCELLATION_AIRLINE2;
 		this.selectedAgreement.Cancellation_date__c = this.agreementCancellation.Cancellation_date__c;
 
 		Database.SaveResult result = Database.update(this.selectedAgreement);
@@ -94,6 +94,11 @@ public with sharing class IA_DetailController {
 		public String agreementEffectiveDate {get;set;}
 		public String agreementCancellationDate {get;set;}
 		public String minWithdrawDate {get;set;}
+		public String agreementStatusLabel {
+			get{ 
+				return IA_util.MAP_STATUS_LABELS.get(agreementStatus);
+			}
+		}
 	}
 
 	/**
@@ -121,8 +126,8 @@ public with sharing class IA_DetailController {
 					User user = mapUsers.get(history.CreatedById);
 					HistoryRow row = new HistoryRow();
 					row.datechange = history.CreatedDate.format();
-					row.company = user.ContactId == null? 'IATA': user.Contact.Account.Name;
-					row.username = user.ContactId == null? 'IATA': user.Name;
+					row.company = user.ContactId == null? INTERNAL_USERNAME: user.Contact.Account.Name;
+					row.username = user.ContactId == null? INTERNAL_USERNAME: user.Name;
 					row.details = details;
 					listHistoryRow.add(row);
 				}
@@ -138,22 +143,22 @@ public with sharing class IA_DetailController {
 	@TestVisible
 	private String getDetails(MITA_Agreement__history history) {
 		if (history.field == HISTORY_CREATED) {
-			return 'Agreement Requested';
+			return Label.IA_Agreement_Accepted;
 		}
 		if (history.field == HISTORY_AGREEMENT_FIELDNAME && history.OldValue == null && history.newValue != null) {
-			return 'Agreement Accepted';
+			return Label.IA_Agreement_Rejected;
 		}
 		if (history.field == HISTORY_AGREEMENT_FIELDNAME && history.OldValue != null && history.newValue == null) {
-			return 'Undo Agreement Accepted';
+			return Label.IA_Agreement_Requested;
 		}
 		if (history.field == HISTORY_CANCELLATION_FIELDNAME && history.OldValue == null && history.newValue != null) {
-			if (this.selectedAgreement.Cancellation_Reason__c ==null || this.selectedAgreement.Cancellation_Reason__c == HISTORY_REJECTION_REASON) {
-				return 'Agreement Rejected';
+			if (this.selectedAgreement.Cancellation_Reason__c ==null || this.selectedAgreement.Cancellation_Reason__c == IA_util.REASON_REJECTION) {
+				return Label.IA_Agreement_Withdrawn;
 			}
-			return 'Agreement Withdrawn';
+			return Label.IA_Undo_Agreement_Accepted;
 		}
 		if (history.field == HISTORY_CANCELLATION_FIELDNAME && history.OldValue != null && history.newValue == null) {
-			return 'Undo Agreement Rejected';
+			return Label.IA_Undo_Agreement_Rejected;
 		}
 		return null;
 	}
