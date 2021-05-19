@@ -463,17 +463,20 @@ public class ANG_AccountTriggerHandler {
 			for(Integer index = 0; index < mapCCByAccount.get(re.ANG_AccountId__c).size(); index ++){
 				if(mapCCByAccount.get(re.ANG_AccountId__c)[index].OSCAR__r.ANG_Type_Of_Change__c == AMS_Utils.ANG_ACCREDITATION_TYPE
 						&& mapCCByAccount.get(re.ANG_AccountId__c)[index].OSCAR__r.AMS_Online_Accreditation__r.ANG_Accreditation_Model_to_Change__c == AMS_Utils.ACCREDITATIONMODEL_CASH
-						&& mapCCByAccount.get(re.ANG_AccountId__c)[index].CreatedDate < = Date.today().addYears(-2)){
-							
-					if(mapOfchangeCodesCWDByCaseNumber.get(mapCCByAccount.get(re.ANG_AccountId__c)[index].OSCAR__r.Name) == null){
-						checkRiskEventUpdated = true;
+						&& mapCCByAccount.get(re.ANG_AccountId__c)[index].CreatedDate < = Date.today().addYears(-2)
+                  		&& mapOfchangeCodesCWDByCaseNumber.get(mapCCByAccount.get(re.ANG_AccountId__c)[index].OSCAR__r.Name) == null){
 						re.Applicable_for_re_activation__c = true;
-					}
-				}
+                }else{
+                    if(mapOfchangeCodesCWDByCaseNumber.get(mapCCByAccount.get(re.ANG_AccountId__c)[index].OSCAR__r.Name) != null){
+                    	checkRiskEventUpdated = true;                        
+                    }else{
+                    	checkRiskEventUpdated = false; 
+                    }
+                }
 			}
 		}
 
-		if(mapCCByAccount.get(re.ANG_AccountId__c) == null || !checkRiskEventUpdated){
+		if(mapCCByAccount.get(re.ANG_AccountId__c) == null || checkRiskEventUpdated){
 			if(re.ANG_AccountId__r.Accreditation_date__c < = Date.today().addYears(-2)){
 				re.Applicable_for_re_activation__c = true;
 			}
