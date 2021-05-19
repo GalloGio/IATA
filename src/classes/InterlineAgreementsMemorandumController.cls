@@ -22,7 +22,11 @@ public with sharing class InterlineAgreementsMemorandumController {
 		Map<String,String> params = ApexPages.CurrentPage().getParameters();
 		DateTime dt = DateTime.now();
 		if (params.containsKey('date')) {
-			dt = DateTime.newInstance(Date.parse(params.get('date')),Time.newInstance(0,0,0,0));
+			list<String> parseDate = params.get('date').split('/');
+			Integer year = Integer.ValueOf(parseDate[2]);
+			Integer month = Integer.ValueOf(parseDate[1]);
+			Integer day = Integer.ValueOf(parseDate[0]);
+			dt = DateTime.newInstance(year,month,day);
 			this.memorandumDate = Date.newInstance(dt.year(), dt.month(), 1);
 			this.memorandumLastDate = dt.addMonths(1).addDays(-1).date();
 		}

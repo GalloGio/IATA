@@ -61,7 +61,7 @@ public class InterlineAgreementsMemorandumsBatchTest {
 		InterlineAgreementsMemorandumsBatch.testContent = null;
 
 		Test.StartTest();
-		InterlineAgreementsMemorandumsBatch batch = new InterlineAgreementsMemorandumsBatch(Date.parse('01/01/2021'));
+		InterlineAgreementsMemorandumsBatch batch = new InterlineAgreementsMemorandumsBatch(Date.newInstance(2021,1,1));
 		batch.createMemorandum();
 		Test.stopTest();
 
@@ -73,10 +73,10 @@ public class InterlineAgreementsMemorandumsBatchTest {
 		InterlineAgreementsMemorandumsBatch.testContent = Blob.valueOf('testbody');
 
 		Test.StartTest();
-		InterlineAgreementsMemorandumsBatch batch1 = new InterlineAgreementsMemorandumsBatch(Date.parse('01/01/2021'));
+		InterlineAgreementsMemorandumsBatch batch1 = new InterlineAgreementsMemorandumsBatch(Date.newInstance(2021,1,1));
 		batch1.createMemorandum();
 
-		InterlineAgreementsMemorandumsBatch batch2 = new InterlineAgreementsMemorandumsBatch(Date.parse('01/02/2021'));
+		InterlineAgreementsMemorandumsBatch batch2 = new InterlineAgreementsMemorandumsBatch(Date.newInstance(2021,2,1));
 		batch2.createMemorandum();
 		Test.stopTest();
 

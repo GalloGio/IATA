@@ -52,9 +52,9 @@ public class InterlineAgreementsMemorandumCtrlTest {
 			Airline_2__c = airline2.Id,
 			MITAorBIETA__c = IA_util.MITA,
 			Agreement_Type__c = IA_util.TYPE_PAX,
-			Created_date__c = Date.parse('15/01/2021'),
-			Agreement_processed_date__c = Date.parse('15/01/2021'),
-			Effective_date__c = Date.parse('15/01/2021')
+			Created_date__c = Date.newInstance(2021,1,15),
+			Agreement_processed_date__c = Date.newInstance(2021,1,15),
+			Effective_date__c = Date.newInstance(2021,1,15)
 		);
 
 		MITA_Agreement__c agreement2 = new MITA_Agreement__c(
@@ -62,9 +62,9 @@ public class InterlineAgreementsMemorandumCtrlTest {
 			Airline_2__c = airline2.Id,
 			MITAorBIETA__c = IA_util.MITA,
 			Agreement_Type__c = IA_util.TYPE_ISSUING_AIRLINE,
-			Created_date__c = Date.parse('15/01/2021'),
-			Agreement_processed_date__c = Date.parse('15/01/2021'),
-			Effective_date__c = Date.parse('15/01/2021')
+			Created_date__c = Date.newInstance(2021,1,15),
+			Agreement_processed_date__c = Date.newInstance(2021,1,15),
+			Effective_date__c = Date.newInstance(2021,1,15)
 		);
 
 		MITA_Agreement__c agreement3 = new MITA_Agreement__c(
@@ -72,9 +72,9 @@ public class InterlineAgreementsMemorandumCtrlTest {
 			Airline_2__c = airline1.Id,
 			MITAorBIETA__c = IA_util.MITA,
 			Agreement_Type__c = IA_util.TYPE_ISSUING_AIRLINE,
-			Created_date__c = Date.parse('15/01/2021'),
-			Agreement_processed_date__c = Date.parse('15/01/2021'),
-			Effective_date__c = Date.parse('15/01/2021')
+			Created_date__c = Date.newInstance(2021,1,15),
+			Agreement_processed_date__c = Date.newInstance(2021,1,15),
+			Effective_date__c = Date.newInstance(2021,1,15)
 		);
 
 		MITA_Agreement__c agreement4 = new MITA_Agreement__c(
@@ -82,10 +82,10 @@ public class InterlineAgreementsMemorandumCtrlTest {
 			Airline_2__c = airline2.Id,
 			MITAorBIETA__c = IA_util.BIETA,
 			Agreement_Type__c = IA_util.TYPE_PAX_ISSUING_AIRLINE,
-			Created_date__c = Date.parse('20/12/2020'),
-			Agreement_processed_date__c = Date.parse('20/12/2020'),
-			Effective_date__c = Date.parse('20/12/2020'),
-			Cancellation_Processed_Date__c = Date.parse('20/01/2021'),
+			Created_date__c = Date.newInstance(2020,12,20),
+			Agreement_processed_date__c = Date.newInstance(2020,12,20),
+			Effective_date__c = Date.newInstance(2020,12,20),
+			Cancellation_Processed_Date__c = Date.newInstance(2021,1,20),
 			Cancellation_Reason__c = 'Requested by Airline 1'
 		);
 
@@ -94,10 +94,10 @@ public class InterlineAgreementsMemorandumCtrlTest {
 			Airline_2__c = airline1.Id,
 			MITAorBIETA__c = IA_util.BIETA,
 			Agreement_Type__c = IA_util.TYPE_PAX_ISSUING_AIRLINE,
-			Created_date__c = Date.parse('20/12/2020'),
-			Agreement_processed_date__c = Date.parse('20/12/2020'),
-			Effective_date__c = Date.parse('20/12/2020'),
-			Cancellation_Processed_Date__c = Date.parse('20/01/2021'),
+			Created_date__c = Date.newInstance(2020,12,20),
+			Agreement_processed_date__c = Date.newInstance(2020,12,20),
+			Effective_date__c = Date.newInstance(2020,12,20),
+			Cancellation_Processed_Date__c = Date.newInstance(2021,1,20),
 			Cancellation_Reason__c = 'Requested by Airline 1'
 		);
 
@@ -106,10 +106,10 @@ public class InterlineAgreementsMemorandumCtrlTest {
 			Airline_2__c = airline1.Id,
 			MITAorBIETA__c = IA_util.MITA,
 			Agreement_Type__c = IA_util.TYPE_CARGO,
-			Created_date__c = Date.parse('20/12/2020'),
-			Agreement_processed_date__c = Date.parse('20/12/2020'),
-			Effective_date__c = Date.parse('20/12/2020'),
-			Cancellation_Processed_Date__c = Date.parse('20/01/2021'),
+			Created_date__c = Date.newInstance(2020,12,20),
+			Agreement_processed_date__c = Date.newInstance(2020,12,20),
+			Effective_date__c = Date.newInstance(2020,12,20),
+			Cancellation_Processed_Date__c = Date.newInstance(2021,1,20),
 			Cancellation_Reason__c = 'Requested by Airline 1'
 		);
 
@@ -118,10 +118,10 @@ public class InterlineAgreementsMemorandumCtrlTest {
 			Airline_2__c = airline2.Id,
 			MITAorBIETA__c = IA_util.EMD,
 			Agreement_Type__c = IA_util.TYPE_EMD,
-			Created_date__c = Date.parse('20/12/2020'),
-			Agreement_processed_date__c = Date.parse('20/12/2020'),
-			Effective_date__c = Date.parse('20/12/2020'),
-			Cancellation_Processed_Date__c = Date.parse('20/01/2021'),
+			Created_date__c = Date.newInstance(2020,12,20),
+			Agreement_processed_date__c = Date.newInstance(2020,12,20),
+			Effective_date__c = Date.newInstance(2020,12,20),
+			Cancellation_Processed_Date__c = Date.newInstance(2021,1,20),
 			Cancellation_Reason__c = 'Requested by Airline 1'
 		);
 

@@ -81,7 +81,7 @@ public class InterlineAgreementsMemorandumsBatch implements Queueable, Database.
 	public static Blob testContent = null;
 	private Blob getPDFContent(String counter) {
 		PageReference page = new PageReference('/apex/' + MEMO_PAGE);
-		page.getParameters().put('date',this.fromDate.format('MM/dd/yyyy'));
+		page.getParameters().put('date',this.fromDate.format('dd/MM/yyyy'));
 		page.getParameters().put('number',counter);
 		
 		return Test.isRunningTest()? testContent: page.getContentAsPdf();
