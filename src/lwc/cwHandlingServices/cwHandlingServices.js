@@ -3,14 +3,17 @@ import resources from "@salesforce/resourceUrl/ICG_Resources";
 
 export default class CwHandlingServices extends LightningElement {
 	initialized = false;
+	@api isCreateView = false;
+	@api isSummary = false;
+	@track showEditButton = true;
 	@track editModeActive = false;
 	@api label;
 	@api title;
 	@track isLoading = false;
-	@track editModeActive = false;
 	@track editOn = false;
 	@api editMode = false;
 	@track _facility;
+	@track facilityCreateReturn;
 	@track services = [];
 	@api saveOnTheFly = false;
 	@api
@@ -18,7 +21,12 @@ export default class CwHandlingServices extends LightningElement {
 		return this._facility;
 	}
 	set facility(value) {
-		this._facility = JSON.parse(JSON.stringify(value));
+		if (this.isCreateView){
+			this._facility = value;
+		}
+		else{
+			this._facility = JSON.parse(JSON.stringify(value));
+		}
 		this.loadServices();
 	}
 
@@ -31,6 +39,27 @@ export default class CwHandlingServices extends LightningElement {
 
 	get itemLayoutCssClass() {
 		return "cursor-pt tooltip-service display-flex";
+	}
+
+	get getTitleCss(){
+		if (!this.isCreateView){
+			return "title-facility-page";
+		}
+		return "";
+	}
+
+	get getShowSummary(){
+		if (this.isSummary){
+			return false;
+		}
+		return true;
+	}
+
+	get getTooltipCss(){
+		if (!this.isCreateView){
+			return "cursor-pt tooltiptextinfo";
+		}
+		return "cursor-pt tooltiptextinfo-createmode";
 	}
 
 	setActiveService(event){
@@ -71,8 +100,18 @@ export default class CwHandlingServices extends LightningElement {
 			} 
 		});
 
-		this.facility.inHouseServices = inHouseServices;
-		this.facility.thirdPartyServices = thirdPartyServices;
+		if (!this.isCreateView){
+			this.facility.inHouseServices = inHouseServices;
+			this.facility.thirdPartyServices = thirdPartyServices;
+		}
+		else{
+			let facilityUpdated = [];
+			facilityUpdated.inHouseServices = inHouseServices;
+			facilityUpdated.thirdPartyServices = thirdPartyServices;
+			facilityUpdated.allServices = this.facility.allServices;
+			this.facility = facilityUpdated;
+		}
+
 		this.updateFacilityOnParent();
 	}
 
@@ -117,31 +156,54 @@ export default class CwHandlingServices extends LightningElement {
 		if (!this.initialized) {
 			let thirdPartyServices = [];
 			let inHouseServices = [];
-			this.facility.thirdPartyServices.forEach(item => { thirdPartyServices.push(item.api); });
-			this.facility.inHouseServices.forEach(item => { inHouseServices.push(item.api); });
 
-			let idHtml = 0;
+			if (this.facility.thirdPartyServices && this.facility.thirdPartyServices.length > 0){
+				this.facility.thirdPartyServices.forEach(item => { thirdPartyServices.push(item.api); });
+			}
+
+			if (this.facility.inHouseServices && this.facility.inHouseServices.length > 0){
+				this.facility.inHouseServices.forEach(item => { inHouseServices.push(item.api); });
+			}
 			
-			this.facility.allServices.forEach(item => {
-				let hasTooltip = item.tooltip != '' ? true : false;
-				idHtml++;
-				if (thirdPartyServices.includes(item.api)){
-					this.services.push({ key: item.api, label: item.label, id: idHtml, isThirdParty: true, isInHouse: false, isDeselected: false, tooltip: item.tooltip, hasTooltip: hasTooltip });
-				}
-				else if (inHouseServices.includes(item.api)){
-					this.services.push({ key: item.api, label: item.label, id: idHtml, isThirdParty: false, isInHouse: true, isDeselected: false, tooltip: item.tooltip, hasTooltip: hasTooltip });
+			if (this.facility.allServices && this.facility.allServices.length > 0){
+				let idHtml = 0;
+				this.facility.allServices.forEach(item => {
+					let hasTooltip = item.tooltip != '' ? true : false;
+					idHtml++;
+					if (thirdPartyServices.includes(item.api)){
+						this.services.push({ key: item.api, label: item.label, id: idHtml, isThirdParty: true, isInHouse: false, isDeselected: false, tooltip: item.tooltip, hasTooltip: hasTooltip });
+					}
+					else if (inHouseServices.includes(item.api)){
+						this.services.push({ key: item.api, label: item.label, id: idHtml, isThirdParty: false, isInHouse: true, isDeselected: false, tooltip: item.tooltip, hasTooltip: hasTooltip });
 
-				}else{
-					this.services.push({ key: item.api, label: item.label, id: idHtml, isThirdParty: false, isInHouse: false, isDeselected: true, tooltip: item.tooltip, hasTooltip: hasTooltip });
-				}
-			});
+					}else{
+						this.services.push({ key: item.api, label: item.label, id: idHtml, isThirdParty: false, isInHouse: false, isDeselected: true, tooltip: item.tooltip, hasTooltip: hasTooltip });
+					}
+				});
+			}
+		   
+			if (this.isCreateView){
+				this.editMode = true;
+				this.editOn = true;
+				this.editModeActive = true;
+				this.showEditButton = false;
+			}
 
+			if (this.isSummary){
+				this.editMode = false;
+				this.editOn = false;
+				this.editModeActive = false;
+				this.showEditButton = false;
+			}
+			
 			this.initialized = true;
 		}
 	}
 
 	updateFacilityOnParent() {
-		let customEvent = new CustomEvent("updatefacility", { detail: this.facility });
-		this.dispatchEvent(customEvent);
+		if (!this.isSummary){
+			let customEvent = new CustomEvent("updatefacility", { detail: this.facility });
+			this.dispatchEvent(customEvent);
+		}
 	}
 }

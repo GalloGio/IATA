@@ -768,7 +768,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 				fieldsByColumns.forEach(element => {
 					let newField = {
 						field: element.name,
-						value: row[element.name] != null ? (element.type === "MULTIPICKLIST" ? row[element.name].join(";") : (element.type === "DOUBLE") ? Number(row[element.name]) : row[element.name]): "",
+						value: this.transformValue(row, element),
 						label: element.label,
 						required: row.requiredFields.includes(element.name)
 					};
@@ -809,6 +809,20 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 			});
 		}
 		this.loading = false;
+	}
+
+	transformValue(rowData, element) {
+		let newValue = "";
+		if (rowData[element.name] && element.type === "MULTIPICKLIST") {
+			newValue = rowData[element.name].join(";");
+		}
+		else if (rowData[element.name] && element.type === "DOUBLE") {
+			newValue = Number(rowData[element.name]);
+		}
+		else if (rowData[element.name] && rowData[element.name] != null) {
+			newValue = rowData[element.name];
+		}
+		return newValue;
 	}
 
 	assigntCapability(event) {
@@ -865,7 +879,7 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 				fieldsByColumns.forEach(element => {
 					let newField = {
 						field: element.name,
-						value: this.rowSelected[element.name] != null ? (element.type === "MULTIPICKLIST" ? this.rowSelected[element.name].join(";") : (element.type === "DOUBLE") ? Number(this.rowSelected[element.name]) : this.rowSelected[element.name]): "",
+						value: this.transformValue(this.rowSelected, element),
 						label: element.label,
 						required: this.rowSelected.requiredFields.includes(element.name)
 					};

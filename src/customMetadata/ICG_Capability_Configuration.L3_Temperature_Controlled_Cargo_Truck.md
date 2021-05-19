@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>Data__c</field>
-        <value xsi:type="xsd:string">Equipment__c;SC_Manufacturer__c;Model__c;Year_Of_Manufacture__c;Quantity__c;Energy_Mobility__c;Energy_Temp_Control_System__c;Operating_Temperature_Range__c;Useable_Internal_Volume__c;Maximum_Load_Kg__c;Use_Of_GSE__c</value>
+        <value xsi:type="xsd:string">Equipment__c;SC_Manufacturer__c;TCHA_Temperature_Range__c;Model__c;Year_Of_Manufacture__c;Quantity__c;Energy_Mobility__c;Energy_Temp_Control_System__c;Useable_Internal_Volume__c;Maximum_Load_Kg__c;Use_Of_GSE__c</value>
     </values>
     <values>
         <field>Extra_Data__c</field>

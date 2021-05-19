@@ -75,6 +75,22 @@
     visibility: visible;
 }
 
+.tooltiptextinfo-createmode {
+    visibility: hidden;
+    max-width: 300px;
+    text-align: left;
+    border-radius: 6px;
+    padding: 30px;
+    width: fit-content; 
+    position: absolute;
+    z-index: 20;
+	font-size: 0.8rem;
+}
+
+.tooltip-service-info:hover .tooltiptextinfo-createmode {
+    visibility: visible;
+}
+
 .tooltiptextinfoSection{
     left:-35px;
 }

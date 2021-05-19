@@ -1806,6 +1806,11 @@ public without sharing class CW_Utilities {
 		
 		return result;
 	}
+
+	@AuraEnabled
+	public static String getAllServicesAvailableJson() {
+		return JSON.serialize(getAllServicesAvailable());
+	}
 	  
 	  /*********************************************************************************************************
 	   * @name			addMapMember

@@ -292,7 +292,7 @@
                                 <template if:true={showHandlingServices}>
                                     <div class="row-home">
                                         <div class="col-12">
-                                            <c-cw-handling-services label={label} class="cmpEditable" title={label.icg_handling_services} facility={facility}  edit-mode={editMode} onupdatefacility={updateFacility}></c-cw-handling-services>
+                                            <c-cw-handling-services is-create-view={handlingServicesCpm.isCreateView} is-summary={handlingServicesCpm.isSummary} label={label} class="cmpEditable" title={label.icg_handling_services} facility={facility}  edit-mode={editMode} onupdatefacility={updateFacility}></c-cw-handling-services>
                                         </div>
                                     </div>
                                 </template>

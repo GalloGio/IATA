@@ -83,6 +83,7 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 	@track contactInfoValid = true;
 	@track editOn = false;
 	@track editOnAirport = false;
+    @track handlingServicesCpm = {isCreateView: false , isSummary: false};
 
 	//  Params to manage child component cwHandlerDetail
 	@track airlineHandlers;

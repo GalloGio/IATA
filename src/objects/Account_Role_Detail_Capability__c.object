@@ -181,6 +181,11 @@
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
+                    <fullName>None</fullName>
+                    <default>false</default>
+                    <label>None</label>
+                </value>
+                <value>
                     <fullName>Passive</fullName>
                     <default>false</default>
                     <label>Passive</label>
@@ -2010,7 +2015,7 @@ FALSE
         <fullName>Max_Load_Capacity__c</fullName>
         <description>GSE attribute field.</description>
         <externalId>false</externalId>
-        <label>Max Load Capacity</label>
+        <label>Max Load Capacity (kg)</label>
         <length>255</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -2110,6 +2115,11 @@ url: url where is stored the document</inlineHelpText>
                     <fullName>2_Connectors</fullName>
                     <default>false</default>
                     <label>2 connectors</label>
+                </value>
+                <value>
+                    <fullName>3_Connectors</fullName>
+                    <default>false</default>
+                    <label>3 connectors</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -2919,7 +2929,7 @@ url: url where is stored the photo</inlineHelpText>
         <fullName>Tank_Capacity__c</fullName>
         <description>GSE attribute field.</description>
         <externalId>false</externalId>
-        <label>Tank Capacity</label>
+        <label>Tank Capacity (litres)</label>
         <length>255</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -3011,7 +3021,7 @@ url: url where is stored the photo</inlineHelpText>
         <fullName>Useable_Internal_Volume__c</fullName>
         <description>GSE attribute field.</description>
         <externalId>false</externalId>
-        <label>Useable Internal Volume</label>
+        <label>Useable Internal Volume (m3)</label>
         <length>255</length>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -3390,6 +3400,13 @@ url: url where is stored the photo</inlineHelpText>
             <picklist>ESC_Type_Commodity__c</picklist>
             <values>
                 <fullName>General_Cargo</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Energy_Without_Motor__c</picklist>
+            <values>
+                <fullName>Not_Applicable</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -4207,6 +4224,13 @@ url: url where is stored the photo</inlineHelpText>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Energy_Without_Motor__c</picklist>
+            <values>
+                <fullName>Not_Applicable</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Equipment__c</picklist>
             <values>
                 <fullName>15_To_25_C</fullName>
@@ -4888,6 +4912,13 @@ url: url where is stored the photo</inlineHelpText>
             </values>
             <values>
                 <fullName>Pharmaceuticals</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Energy_Without_Motor__c</picklist>
+            <values>
+                <fullName>Not_Applicable</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -5577,6 +5608,13 @@ url: url where is stored the photo</inlineHelpText>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Energy_Without_Motor__c</picklist>
+            <values>
+                <fullName>Not_Applicable</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Equipment__c</picklist>
             <values>
                 <fullName>15_To_25_C</fullName>
@@ -6258,6 +6296,13 @@ url: url where is stored the photo</inlineHelpText>
             </values>
             <values>
                 <fullName>Pharmaceuticals</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Energy_Without_Motor__c</picklist>
+            <values>
+                <fullName>Not_Applicable</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -6975,6 +7020,13 @@ url: url where is stored the photo</inlineHelpText>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Energy_Without_Motor__c</picklist>
+            <values>
+                <fullName>Not_Applicable</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Equipment__c</picklist>
             <values>
                 <fullName>15_To_25_C</fullName>
@@ -7640,6 +7692,13 @@ url: url where is stored the photo</inlineHelpText>
             <picklist>ESC_Type_Commodity__c</picklist>
             <values>
                 <fullName>General_Cargo</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Energy_Without_Motor__c</picklist>
+            <values>
+                <fullName>Not_Applicable</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -8313,6 +8372,13 @@ url: url where is stored the photo</inlineHelpText>
             <picklist>ESC_Type_Commodity__c</picklist>
             <values>
                 <fullName>General_Cargo</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Energy_Without_Motor__c</picklist>
+            <values>
+                <fullName>Not_Applicable</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -8994,6 +9060,13 @@ url: url where is stored the photo</inlineHelpText>
             <picklist>ESC_Type_Commodity__c</picklist>
             <values>
                 <fullName>General_Cargo</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Energy_Without_Motor__c</picklist>
+            <values>
+                <fullName>Not_Applicable</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -9703,6 +9776,13 @@ url: url where is stored the photo</inlineHelpText>
             </values>
             <values>
                 <fullName>Pharmaceuticals</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Energy_Without_Motor__c</picklist>
+            <values>
+                <fullName>Not_Applicable</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -10596,6 +10676,13 @@ url: url where is stored the photo</inlineHelpText>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Energy_Without_Motor__c</picklist>
+            <values>
+                <fullName>Not_Applicable</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Equipment__c</picklist>
             <values>
                 <fullName>15_To_25_C</fullName>
@@ -11301,6 +11388,13 @@ url: url where is stored the photo</inlineHelpText>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Energy_Without_Motor__c</picklist>
+            <values>
+                <fullName>Not_Applicable</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Equipment__c</picklist>
             <values>
                 <fullName>15_To_25_C</fullName>
@@ -11982,6 +12076,13 @@ url: url where is stored the photo</inlineHelpText>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Energy_Without_Motor__c</picklist>
+            <values>
+                <fullName>Not_Applicable</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Equipment__c</picklist>
             <values>
                 <fullName>15_To_25_C</fullName>
@@ -12594,6 +12695,88 @@ url: url where is stored the photo</inlineHelpText>
         <active>true</active>
         <label>Lifting Elevating Equipment</label>
         <picklistValues>
+            <picklist>Aircraft_Damage_Reduction_Systems__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>None</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passive</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>CRSTR_DGR_Dedicated__c</picklist>
+            <values>
+                <fullName>Entire_Room</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Segregated_Area_Whithin_Room</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>CRSTR_Import_Export__c</picklist>
+            <values>
+                <fullName>Export</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Import</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Import_And_Export</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>CRSTR_Pharma_Dedicated__c</picklist>
+            <values>
+                <fullName>Entire_Room</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Segregated_Area_Whithin_Room</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>CRSTR_Spots_Identified__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Cart_Type__c</picklist>
+            <values>
+                <fullName>Closed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Category__c</picklist>
             <values>
                 <fullName>Aircraft_Tail_Stand</fullName>
@@ -12649,6 +12832,124 @@ url: url where is stored the photo</inlineHelpText>
             </values>
             <values>
                 <fullName>Prm_Boarding_Vehicles</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ESC_System_Self_Carrier_Owned__c</picklist>
+            <values>
+                <fullName>Carrier_Owned</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>System_Self_Owned</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ESC_Type_Commodity__c</picklist>
+            <values>
+                <fullName>Airmail</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dangerous</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General_Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Live_Animals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Perishables</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pharmaceuticals</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Energy_Mobility__c</picklist>
+            <values>
+                <fullName>Electricity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fuel_Cell</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hybrid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IC_Engine</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Energy_Temp_Control_System__c</picklist>
+            <values>
+                <fullName>Electricity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fuel_Cell</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hybrid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IC_Engine</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Energy_Without_Motor__c</picklist>
+            <values>
+                <fullName>Electricity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fuel_Cell</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hybrid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IC_Engine</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not_Applicable</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Energy__c</picklist>
+            <values>
+                <fullName>Electricity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fuel_Cell</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hybrid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IC_Engine</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -13287,6 +13588,215 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
         </picklistValues>
+        <picklistValues>
+            <picklist>Filtered_Supply_Air__c</picklist>
+            <values>
+                <fullName>MERV_12_Or_Higher</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Max_Kva_Supply__c</picklist>
+            <values>
+                <fullName>120_Kva</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>140_Kva</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>180_Kva</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>60_Kva</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>75_Kva</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>90_Kva</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Number_Of_Connectors_To_Aircraft__c</picklist>
+            <values>
+                <fullName>1_Connector</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2_Connectors</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3_Connectors</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Pax_Mode__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Power_Factor_PF__c</picklist>
+            <values>
+                <fullName>High_PF_1%2E0</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard_PF_0%2E8</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SC_Free_Running_And_REST__c</picklist>
+            <values>
+                <fullName>Free_Running</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Free_Running_And_REST</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>REST</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SEAM_Color__c</picklist>
+            <values>
+                <fullName>Black_Or_White</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Color</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SEAM_Facility_Access_Control_Type__c</picklist>
+            <values>
+                <fullName>Biometrics</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Both</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ID_Card</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SEAM_Fixed_Or_Pan__c</picklist>
+            <values>
+                <fullName>Fixed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pan</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SEAM_ID_Card_Biometrics__c</picklist>
+            <values>
+                <fullName>Biometrics</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Both</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ID Card</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SEAM_Resolution__c</picklist>
+            <values>
+                <fullName>1080p</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4k</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>720p</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Low_Resolution</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SEAM_Security_Patrol_Type__c</picklist>
+            <values>
+                <fullName>Both</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Company_Security_Staff</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Contracted</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SPPE_Method_Type__c</picklist>
+            <values>
+                <fullName>Hand_Held</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Stationary_Automated</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Use_Of_GSE__c</picklist>
+            <values>
+                <fullName>Not_Pooled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pooled</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Voltage_Supply__c</picklist>
+            <values>
+                <fullName>115_V_AC_400_Hz</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>28_V_DC</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
     </recordTypes>
     <recordTypes>
         <fullName>Live_Animals_Capacities</fullName>
@@ -13374,6 +13884,13 @@ url: url where is stored the photo</inlineHelpText>
             <picklist>ESC_Type_Commodity__c</picklist>
             <values>
                 <fullName>General_Cargo</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Energy_Without_Motor__c</picklist>
+            <values>
+                <fullName>Not_Applicable</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -14047,6 +14564,13 @@ url: url where is stored the photo</inlineHelpText>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Energy_Without_Motor__c</picklist>
+            <values>
+                <fullName>Not_Applicable</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Equipment__c</picklist>
             <values>
                 <fullName>15_To_25_C</fullName>
@@ -14708,6 +15232,13 @@ url: url where is stored the photo</inlineHelpText>
             <picklist>ESC_Type_Commodity__c</picklist>
             <values>
                 <fullName>General_Cargo</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Energy_Without_Motor__c</picklist>
+            <values>
+                <fullName>Not_Applicable</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -15377,6 +15908,13 @@ url: url where is stored the photo</inlineHelpText>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Energy_Without_Motor__c</picklist>
+            <values>
+                <fullName>Not_Applicable</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Equipment__c</picklist>
             <values>
                 <fullName>15_To_25_C</fullName>
@@ -16042,6 +16580,13 @@ url: url where is stored the photo</inlineHelpText>
             <picklist>ESC_Type_Commodity__c</picklist>
             <values>
                 <fullName>General_Cargo</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Energy_Without_Motor__c</picklist>
+            <values>
+                <fullName>Not_Applicable</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -16719,6 +17264,13 @@ url: url where is stored the photo</inlineHelpText>
             <picklist>ESC_Type_Commodity__c</picklist>
             <values>
                 <fullName>General_Cargo</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Energy_Without_Motor__c</picklist>
+            <values>
+                <fullName>Not_Applicable</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -17404,6 +17956,13 @@ url: url where is stored the photo</inlineHelpText>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Energy_Without_Motor__c</picklist>
+            <values>
+                <fullName>Not_Applicable</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Equipment__c</picklist>
             <values>
                 <fullName>15_To_25_C</fullName>
@@ -17988,6 +18547,88 @@ url: url where is stored the photo</inlineHelpText>
         <active>true</active>
         <label>Servicing Equipment</label>
         <picklistValues>
+            <picklist>Aircraft_Damage_Reduction_Systems__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>None</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passive</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>CRSTR_DGR_Dedicated__c</picklist>
+            <values>
+                <fullName>Entire_Room</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Segregated_Area_Whithin_Room</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>CRSTR_Import_Export__c</picklist>
+            <values>
+                <fullName>Export</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Import</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Import_And_Export</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>CRSTR_Pharma_Dedicated__c</picklist>
+            <values>
+                <fullName>Entire_Room</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Segregated_Area_Whithin_Room</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>CRSTR_Spots_Identified__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Cart_Type__c</picklist>
+            <values>
+                <fullName>Closed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Category__c</picklist>
             <values>
                 <fullName>Air_Start_Unit</fullName>
@@ -18015,6 +18656,124 @@ url: url where is stored the photo</inlineHelpText>
             </values>
             <values>
                 <fullName>Uld_Transporter</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ESC_System_Self_Carrier_Owned__c</picklist>
+            <values>
+                <fullName>Carrier_Owned</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>System_Self_Owned</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ESC_Type_Commodity__c</picklist>
+            <values>
+                <fullName>Airmail</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dangerous</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General_Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Live_Animals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Perishables</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pharmaceuticals</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Energy_Mobility__c</picklist>
+            <values>
+                <fullName>Electricity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fuel_Cell</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hybrid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IC_Engine</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Energy_Temp_Control_System__c</picklist>
+            <values>
+                <fullName>Electricity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fuel_Cell</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hybrid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IC_Engine</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Energy_Without_Motor__c</picklist>
+            <values>
+                <fullName>Electricity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fuel_Cell</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hybrid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IC_Engine</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not_Applicable</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Energy__c</picklist>
+            <values>
+                <fullName>Electricity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fuel_Cell</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hybrid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IC_Engine</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -18653,6 +19412,215 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
         </picklistValues>
+        <picklistValues>
+            <picklist>Filtered_Supply_Air__c</picklist>
+            <values>
+                <fullName>MERV_12_Or_Higher</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Max_Kva_Supply__c</picklist>
+            <values>
+                <fullName>120_Kva</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>140_Kva</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>180_Kva</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>60_Kva</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>75_Kva</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>90_Kva</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Number_Of_Connectors_To_Aircraft__c</picklist>
+            <values>
+                <fullName>1_Connector</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2_Connectors</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3_Connectors</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Pax_Mode__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Power_Factor_PF__c</picklist>
+            <values>
+                <fullName>High_PF_1%2E0</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard_PF_0%2E8</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SC_Free_Running_And_REST__c</picklist>
+            <values>
+                <fullName>Free_Running</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Free_Running_And_REST</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>REST</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SEAM_Color__c</picklist>
+            <values>
+                <fullName>Black_Or_White</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Color</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SEAM_Facility_Access_Control_Type__c</picklist>
+            <values>
+                <fullName>Biometrics</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Both</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ID_Card</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SEAM_Fixed_Or_Pan__c</picklist>
+            <values>
+                <fullName>Fixed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pan</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SEAM_ID_Card_Biometrics__c</picklist>
+            <values>
+                <fullName>Biometrics</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Both</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ID Card</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SEAM_Resolution__c</picklist>
+            <values>
+                <fullName>1080p</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4k</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>720p</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Low_Resolution</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SEAM_Security_Patrol_Type__c</picklist>
+            <values>
+                <fullName>Both</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Company_Security_Staff</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Contracted</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SPPE_Method_Type__c</picklist>
+            <values>
+                <fullName>Hand_Held</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Stationary_Automated</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Use_Of_GSE__c</picklist>
+            <values>
+                <fullName>Not_Pooled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pooled</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Voltage_Supply__c</picklist>
+            <values>
+                <fullName>115_V_AC_400_Hz</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>28_V_DC</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
     </recordTypes>
     <recordTypes>
         <fullName>System_For_Mail_Tracking_And_Reporting</fullName>
@@ -18756,6 +19724,13 @@ url: url where is stored the photo</inlineHelpText>
             </values>
             <values>
                 <fullName>Pharmaceuticals</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Energy_Without_Motor__c</picklist>
+            <values>
+                <fullName>Not_Applicable</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -19433,6 +20408,13 @@ url: url where is stored the photo</inlineHelpText>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Energy_Without_Motor__c</picklist>
+            <values>
+                <fullName>Not_Applicable</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Equipment__c</picklist>
             <values>
                 <fullName>15_To_25_C</fullName>
@@ -20098,6 +21080,13 @@ url: url where is stored the photo</inlineHelpText>
             <picklist>ESC_Type_Commodity__c</picklist>
             <values>
                 <fullName>General_Cargo</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Energy_Without_Motor__c</picklist>
+            <values>
+                <fullName>Not_Applicable</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -20771,6 +21760,13 @@ url: url where is stored the photo</inlineHelpText>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Energy_Without_Motor__c</picklist>
+            <values>
+                <fullName>Not_Applicable</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Equipment__c</picklist>
             <values>
                 <fullName>15_To_25_C</fullName>
@@ -21355,6 +22351,88 @@ url: url where is stored the photo</inlineHelpText>
         <active>true</active>
         <label>Towing Equipment</label>
         <picklistValues>
+            <picklist>Aircraft_Damage_Reduction_Systems__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>None</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passive</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>CRSTR_DGR_Dedicated__c</picklist>
+            <values>
+                <fullName>Entire_Room</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Segregated_Area_Whithin_Room</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>CRSTR_Import_Export__c</picklist>
+            <values>
+                <fullName>Export</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Import</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Import_And_Export</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>CRSTR_Pharma_Dedicated__c</picklist>
+            <values>
+                <fullName>Entire_Room</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Segregated_Area_Whithin_Room</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>CRSTR_Spots_Identified__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Cart_Type__c</picklist>
+            <values>
+                <fullName>Closed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Category__c</picklist>
             <values>
                 <fullName>Baggage_Tractors</fullName>
@@ -21378,6 +22456,124 @@ url: url where is stored the photo</inlineHelpText>
             </values>
             <values>
                 <fullName>Towbarless_Tow_Tractor</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ESC_System_Self_Carrier_Owned__c</picklist>
+            <values>
+                <fullName>Carrier_Owned</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>System_Self_Owned</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ESC_Type_Commodity__c</picklist>
+            <values>
+                <fullName>Airmail</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dangerous</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General_Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Live_Animals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Perishables</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pharmaceuticals</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Energy_Mobility__c</picklist>
+            <values>
+                <fullName>Electricity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fuel_Cell</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hybrid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IC_Engine</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Energy_Temp_Control_System__c</picklist>
+            <values>
+                <fullName>Electricity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fuel_Cell</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hybrid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IC_Engine</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Energy_Without_Motor__c</picklist>
+            <values>
+                <fullName>Electricity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fuel_Cell</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hybrid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IC_Engine</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not_Applicable</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Energy__c</picklist>
+            <values>
+                <fullName>Electricity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fuel_Cell</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hybrid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IC_Engine</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -22016,6 +23212,215 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
         </picklistValues>
+        <picklistValues>
+            <picklist>Filtered_Supply_Air__c</picklist>
+            <values>
+                <fullName>MERV_12_Or_Higher</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Max_Kva_Supply__c</picklist>
+            <values>
+                <fullName>120_Kva</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>140_Kva</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>180_Kva</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>60_Kva</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>75_Kva</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>90_Kva</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Number_Of_Connectors_To_Aircraft__c</picklist>
+            <values>
+                <fullName>1_Connector</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2_Connectors</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3_Connectors</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Pax_Mode__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Power_Factor_PF__c</picklist>
+            <values>
+                <fullName>High_PF_1%2E0</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard_PF_0%2E8</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SC_Free_Running_And_REST__c</picklist>
+            <values>
+                <fullName>Free_Running</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Free_Running_And_REST</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>REST</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SEAM_Color__c</picklist>
+            <values>
+                <fullName>Black_Or_White</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Color</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SEAM_Facility_Access_Control_Type__c</picklist>
+            <values>
+                <fullName>Biometrics</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Both</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ID_Card</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SEAM_Fixed_Or_Pan__c</picklist>
+            <values>
+                <fullName>Fixed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pan</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SEAM_ID_Card_Biometrics__c</picklist>
+            <values>
+                <fullName>Biometrics</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Both</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ID Card</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SEAM_Resolution__c</picklist>
+            <values>
+                <fullName>1080p</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4k</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>720p</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Low_Resolution</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SEAM_Security_Patrol_Type__c</picklist>
+            <values>
+                <fullName>Both</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Company_Security_Staff</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Contracted</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SPPE_Method_Type__c</picklist>
+            <values>
+                <fullName>Hand_Held</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Stationary_Automated</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Use_Of_GSE__c</picklist>
+            <values>
+                <fullName>Not_Pooled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pooled</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Voltage_Supply__c</picklist>
+            <values>
+                <fullName>115_V_AC_400_Hz</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>28_V_DC</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
     </recordTypes>
     <recordTypes>
         <fullName>Transport_Vehicles</fullName>
@@ -22107,6 +23512,13 @@ url: url where is stored the photo</inlineHelpText>
             <picklist>ESC_Type_Commodity__c</picklist>
             <values>
                 <fullName>General_Cargo</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Energy_Without_Motor__c</picklist>
+            <values>
+                <fullName>Not_Applicable</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -22699,6 +24111,88 @@ url: url where is stored the photo</inlineHelpText>
         <active>true</active>
         <label>Transporting Equipment</label>
         <picklistValues>
+            <picklist>Aircraft_Damage_Reduction_Systems__c</picklist>
+            <values>
+                <fullName>Active</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>None</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Passive</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>CRSTR_DGR_Dedicated__c</picklist>
+            <values>
+                <fullName>Entire_Room</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Segregated_Area_Whithin_Room</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>CRSTR_Import_Export__c</picklist>
+            <values>
+                <fullName>Export</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Import</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Import_And_Export</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>CRSTR_Pharma_Dedicated__c</picklist>
+            <values>
+                <fullName>Entire_Room</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Segregated_Area_Whithin_Room</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>CRSTR_Spots_Identified__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Cart_Type__c</picklist>
+            <values>
+                <fullName>Closed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Open</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Category__c</picklist>
             <values>
                 <fullName>Airport_Passenger_Bus</fullName>
@@ -22726,6 +24220,124 @@ url: url where is stored the photo</inlineHelpText>
             </values>
             <values>
                 <fullName>Uld_Dollies</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ESC_System_Self_Carrier_Owned__c</picklist>
+            <values>
+                <fullName>Carrier_Owned</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>System_Self_Owned</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>ESC_Type_Commodity__c</picklist>
+            <values>
+                <fullName>Airmail</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Dangerous</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>General_Cargo</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Live_Animals</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Perishables</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pharmaceuticals</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Energy_Mobility__c</picklist>
+            <values>
+                <fullName>Electricity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fuel_Cell</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hybrid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IC_Engine</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Energy_Temp_Control_System__c</picklist>
+            <values>
+                <fullName>Electricity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fuel_Cell</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hybrid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IC_Engine</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Energy_Without_Motor__c</picklist>
+            <values>
+                <fullName>Electricity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fuel_Cell</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hybrid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IC_Engine</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Not_Applicable</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Energy__c</picklist>
+            <values>
+                <fullName>Electricity</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fuel_Cell</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Hybrid</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IC_Engine</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -23364,6 +24976,215 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
         </picklistValues>
+        <picklistValues>
+            <picklist>Filtered_Supply_Air__c</picklist>
+            <values>
+                <fullName>MERV_12_Or_Higher</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Max_Kva_Supply__c</picklist>
+            <values>
+                <fullName>120_Kva</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>140_Kva</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>180_Kva</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>60_Kva</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>75_Kva</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>90_Kva</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Number_Of_Connectors_To_Aircraft__c</picklist>
+            <values>
+                <fullName>1_Connector</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>2_Connectors</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>3_Connectors</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Pax_Mode__c</picklist>
+            <values>
+                <fullName>No</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Power_Factor_PF__c</picklist>
+            <values>
+                <fullName>High_PF_1%2E0</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Standard_PF_0%2E8</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SC_Free_Running_And_REST__c</picklist>
+            <values>
+                <fullName>Free_Running</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Free_Running_And_REST</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>REST</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SEAM_Color__c</picklist>
+            <values>
+                <fullName>Black_Or_White</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Color</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SEAM_Facility_Access_Control_Type__c</picklist>
+            <values>
+                <fullName>Biometrics</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Both</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ID_Card</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SEAM_Fixed_Or_Pan__c</picklist>
+            <values>
+                <fullName>Fixed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pan</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SEAM_ID_Card_Biometrics__c</picklist>
+            <values>
+                <fullName>Biometrics</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Both</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ID Card</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SEAM_Resolution__c</picklist>
+            <values>
+                <fullName>1080p</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>4k</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>720p</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Low_Resolution</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SEAM_Security_Patrol_Type__c</picklist>
+            <values>
+                <fullName>Both</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Company_Security_Staff</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Contracted</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>SPPE_Method_Type__c</picklist>
+            <values>
+                <fullName>Hand_Held</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Stationary_Automated</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Use_Of_GSE__c</picklist>
+            <values>
+                <fullName>Not_Pooled</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pooled</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Voltage_Supply__c</picklist>
+            <values>
+                <fullName>115_V_AC_400_Hz</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>28_V_DC</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
     </recordTypes>
     <recordTypes>
         <fullName>ULD_Storage</fullName>
@@ -23447,6 +25268,13 @@ url: url where is stored the photo</inlineHelpText>
             <picklist>ESC_Type_Commodity__c</picklist>
             <values>
                 <fullName>General_Cargo</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Energy_Without_Motor__c</picklist>
+            <values>
+                <fullName>Not_Applicable</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -24128,6 +25956,13 @@ url: url where is stored the photo</inlineHelpText>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Energy_Without_Motor__c</picklist>
+            <values>
+                <fullName>Not_Applicable</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Equipment__c</picklist>
             <values>
                 <fullName>15_To_25_C</fullName>
@@ -24789,6 +26624,13 @@ url: url where is stored the photo</inlineHelpText>
             <picklist>ESC_Type_Commodity__c</picklist>
             <values>
                 <fullName>General_Cargo</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Energy_Without_Motor__c</picklist>
+            <values>
+                <fullName>Not_Applicable</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

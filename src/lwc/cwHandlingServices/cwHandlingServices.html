@@ -1,31 +1,34 @@
 <template>
-    
-    <p class="title-facility-page">
-        <b>{title}</b>
-        <template if:true={editMode}>
-            <lightning-icon icon-name="utility:close" class="ml-4 cursor-pt" if:true={editOn} variant="error" title="Close" onclick={showInput} size="x-small"></lightning-icon>
-            <lightning-icon icon-name="utility:edit" class="ml-4 cursor-pt" if:false={editOn} title="Edit" onclick={showInput} size="x-small"></lightning-icon>
-            
-            <template if:true={editOn}>
-                <span class="tooltip-service-info">
-                    <lightning-icon icon-name="utility:info_alt" class="ml-4" size="x-small"></lightning-icon>
+    <template if:true={getShowSummary}>
+        <p class={getTitleCss}>
+            <b>{title}</b>
+            <template if:true={editMode}>
+                <template if:true={showEditButton}>
+                    <lightning-icon icon-name="utility:close" class="ml-4 cursor-pt" if:true={editOn} variant="error" title="Close" onclick={showInput} size="x-small"></lightning-icon>
+                    <lightning-icon icon-name="utility:edit" class="ml-4 cursor-pt" if:false={editOn} title="Edit" onclick={showInput} size="x-small"></lightning-icon>
+                </template>
+                        
+                <template if:true={editOn}>
+                    <span class="tooltip-service-info">
+                        <lightning-icon icon-name="utility:info_alt" class="ml-4" size="x-small"></lightning-icon>
                 
-                    <span class="cursor-pt tooltiptextinfo">
-                        <section data-name="stamp-popover" class="slds-popover slds-nubbin_top-left popover-custom tooltiptextinfoSection" role="dialog">
-                            <div class="slds-popover__body">
-                                <span class="text-left">
-                                    <span class="active-service"><b> {label.icg_tooltip_service_info1}</b></span>
-                                    <br/> 
-                                    <span class="active-third-service"><b> {label.icg_tooltip_service_info2}</b></span>
-                                </span>
-                            </div>
-                        </section>
+                        <span class={getTooltipCss}>
+                            <section data-name="stamp-popover" class="slds-popover slds-nubbin_top-left popover-custom tooltiptextinfoSection" role="dialog">
+                                <div class="slds-popover__body">
+                                    <span class="text-left">
+                                        <span class="active-service"><b> {label.icg_tooltip_service_info1}</b></span>
+                                        <br/>
+                                        <span class="active-third-service"><b> {label.icg_tooltip_service_info2}</b></span>
+                                    </span>
+                                </div>
+                            </section>
+                        </span>
                     </span>
-                </span>
+                </template>
             </template>
-        </template>
-    </p>
-    <hr class="yellow-underline mt-2">
+        </p>
+        <hr class="yellow-underline mt-2">
+    </template>
 
     <div class="responsive-padding-left">
         <div class="row">

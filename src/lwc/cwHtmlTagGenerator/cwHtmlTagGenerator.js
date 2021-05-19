@@ -273,7 +273,11 @@ export default class CwHtmlTagGenerator extends LightningElement {
 		}
 
 		if(this.isAuxTypeStandardTemperatureRanges || this.isAuxTypeCustomTemperatureRanges){
-			return this.label.room + " " + this.getRowIndexAddOne;
+			if (this.item.sc_manufacturer__c) {
+				return this.item.sc_manufacturer__c;
+			} else {
+				return this.label.room + " " + this.getRowIndexAddOne;
+			}
 		}
 
 		if(this.isAuxTypeTemperatureControlledGroundServiceEq){

@@ -2169,6 +2169,13 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>In_House_Services__c</picklist>
+            <values>
+                <fullName>Ancillary_Items</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Status__c</picklist>
             <values>
                 <fullName>Approved</fullName>
@@ -2184,6 +2191,13 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
             </values>
             <values>
                 <fullName>Rejected</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Third_Party_Services__c</picklist>
+            <values>
+                <fullName>Ancillary_Items</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -2636,6 +2650,13 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>In_House_Services__c</picklist>
+            <values>
+                <fullName>Ancillary_Items</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Status__c</picklist>
             <values>
                 <fullName>Approved</fullName>
@@ -2651,6 +2672,13 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
             </values>
             <values>
                 <fullName>Rejected</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Third_Party_Services__c</picklist>
+            <values>
+                <fullName>Ancillary_Items</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -3103,6 +3131,13 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>In_House_Services__c</picklist>
+            <values>
+                <fullName>Ancillary_Items</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Status__c</picklist>
             <values>
                 <fullName>Approved</fullName>
@@ -3118,6 +3153,13 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
             </values>
             <values>
                 <fullName>Rejected</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Third_Party_Services__c</picklist>
+            <values>
+                <fullName>Ancillary_Items</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -3570,6 +3612,13 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>In_House_Services__c</picklist>
+            <values>
+                <fullName>Ancillary_Items</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Status__c</picklist>
             <values>
                 <fullName>Approved</fullName>
@@ -3585,6 +3634,13 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
             </values>
             <values>
                 <fullName>Rejected</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Third_Party_Services__c</picklist>
+            <values>
+                <fullName>Ancillary_Items</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -4638,6 +4694,13 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>In_House_Services__c</picklist>
+            <values>
+                <fullName>Ancillary_Items</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Status__c</picklist>
             <values>
                 <fullName>Approved</fullName>
@@ -4653,6 +4716,13 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
             </values>
             <values>
                 <fullName>Rejected</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Third_Party_Services__c</picklist>
+            <values>
+                <fullName>Ancillary_Items</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -5105,6 +5175,13 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>In_House_Services__c</picklist>
+            <values>
+                <fullName>Ancillary_Items</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Status__c</picklist>
             <values>
                 <fullName>Approved</fullName>
@@ -5120,6 +5197,13 @@ IF(RecordType.DeveloperName = &apos;Shipper&apos; , &quot;/resource/156706772300
             </values>
             <values>
                 <fullName>Rejected</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Third_Party_Services__c</picklist>
+            <values>
+                <fullName>Ancillary_Items</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

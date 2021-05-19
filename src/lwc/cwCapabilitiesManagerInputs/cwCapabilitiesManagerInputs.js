@@ -215,7 +215,7 @@ export default class CwCapabilitiesManagerInputs extends LightningElement {
 
 	get getCssClass(){
 		if (this.isPicklist || this.isMultiPicklist) {
-			return 'picklist-scroll';
+			return '';
 		} else {
 			return (this.editMode && this.propertyName !== 'equipment__c') ? 'disable-content' : '';
 		}
