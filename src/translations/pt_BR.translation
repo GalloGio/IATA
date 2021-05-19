@@ -26975,7 +26975,7 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
         <name>Trust_Weaver</name>
     </customLabels>
     <customLabels>
-        <label><!-- Type of Accreditation --></label>
+        <label>* Modelo de Credenciamento</label>
         <name>Type_of_Accreditation</name>
     </customLabels>
     <customLabels>

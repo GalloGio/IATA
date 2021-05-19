@@ -78,23 +78,16 @@
         <name>Bank_Guarantee_or_Agreement_Requested</name>
         <label>Bank Guarantee or Agreement Requested?</label>
         <locationX>730</locationX>
-        <locationY>296</locationY>
+        <locationY>294</locationY>
         <defaultConnector>
             <targetReference>Process_Reconsideration</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
             <name>Yes1</name>
-            <conditionLogic>(1 OR 2) AND 3</conditionLogic>
+            <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>oscar.Bank_Guarantee_requested__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>oscar.Agreement_requested__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -142,7 +135,7 @@
         <name>Payment_Requested</name>
         <label>Payment Requested?</label>
         <locationX>730</locationX>
-        <locationY>52</locationY>
+        <locationY>51</locationY>
         <defaultConnector>
             <targetReference>Bank_Guarantee_or_Agreement_Requested</targetReference>
         </defaultConnector>
@@ -264,7 +257,7 @@
     <formulas>
         <name>BankGuaranteeOrAgreementDate</name>
         <dataType>Date</dataType>
-        <expression>IF({!oscar.Bank_Guarantee_requested__c} &gt; {!oscar.Agreement_requested__c}, {!oscar.Bank_Guarantee_requested__c} , {!oscar.Agreement_requested__c})</expression>
+        <expression>IF(ISBLANK({!oscar.Agreement_requested__c}),{!oscar.Bank_Guarantee_requested__c},IF({!oscar.Bank_Guarantee_requested__c} &gt; {!oscar.Agreement_requested__c}, {!oscar.Bank_Guarantee_requested__c} , {!oscar.Agreement_requested__c}))</expression>
     </formulas>
     <formulas>
         <name>BankGuaranteeTime</name>
@@ -342,6 +335,12 @@
         <name>BuilderType</name>
         <value>
             <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
