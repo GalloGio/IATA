@@ -464,15 +464,15 @@ public class ANG_AccountTriggerHandler {
 				if(mapCCByAccount.get(re.ANG_AccountId__c)[index].OSCAR__r.ANG_Type_Of_Change__c == AMS_Utils.ANG_ACCREDITATION_TYPE
 						&& mapCCByAccount.get(re.ANG_AccountId__c)[index].OSCAR__r.AMS_Online_Accreditation__r.ANG_Accreditation_Model_to_Change__c == AMS_Utils.ACCREDITATIONMODEL_CASH
 						&& mapCCByAccount.get(re.ANG_AccountId__c)[index].CreatedDate < = Date.today().addYears(-2)
-                  		&& mapOfchangeCodesCWDByCaseNumber.get(mapCCByAccount.get(re.ANG_AccountId__c)[index].OSCAR__r.Name) == null){
-						re.Applicable_for_re_activation__c = true;
-                }else{
-                    if(mapOfchangeCodesCWDByCaseNumber.get(mapCCByAccount.get(re.ANG_AccountId__c)[index].OSCAR__r.Name) != null){
-                    	checkRiskEventUpdated = true;                        
-                    }else{
-                    	checkRiskEventUpdated = false; 
-                    }
-                }
+						&& mapOfchangeCodesCWDByCaseNumber.get(mapCCByAccount.get(re.ANG_AccountId__c)[index].OSCAR__r.Name) == null){
+					re.Applicable_for_re_activation__c = true;
+				}else{
+					if(mapOfchangeCodesCWDByCaseNumber.get(mapCCByAccount.get(re.ANG_AccountId__c)[index].OSCAR__r.Name) != null){
+						checkRiskEventUpdated = true;                        
+					}else{
+						checkRiskEventUpdated = false; 
+					}
+				}
 			}
 		}
 
