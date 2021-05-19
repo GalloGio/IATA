@@ -8746,6 +8746,30 @@ IATA Customer Portal</value>
         <value>Select Reason</value>
     </labels>
     <labels>
+        <fullName>CS_Portal_Addittional_Recipients_Body</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CS Portal Addittional Recipients Body</shortDescription>
+        <value>added you as a participant to case</value>
+    </labels>
+    <labels>
+        <fullName>CS_Portal_Addittional_Recipients_Subject</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CS Portal Addittional Recipients Subject</shortDescription>
+        <value>IATA Customer Portal - You were added to case</value>
+    </labels>
+    <labels>
+        <fullName>CS_Portal_Addittional_Recipients_URL_Description</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CS_Portal_Addittional_Recipients_URL_Description</shortDescription>
+        <value>to go to the portal to view the full details and engage in the communication.</value>
+    </labels>
+    <labels>
         <fullName>Campaign_already_created</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -8838,21 +8862,21 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - Area</shortDescription>
-        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,iiNet,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration, TASF, E&amp;F Services,E&amp;F Operations,Easy Pay,NewGen ISS,E&amp;F,SIS,ICH,iiNet,AirportIS,SIS Dispute/Correspondence,SIS e-Invoicing,SIS Fees,SIS File Submission,SIS Invoice Creation,SIS ISPG,SIS Receive invoices/Files,SIS Release Notes,SIS Reports,SIS User Guide,CargoIS,Direct Data Solutions (DDS),GAP,MarketIS,PaxIS,Airline Joining,Airline Leaving,New application - forms, procedures, fees,Agency Risk Management,Airline and Location Coding,ICCS,IMX,IATA Pay</value>
+        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,iiNet,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration, New BSPlink, TASF, E&amp;F Services,E&amp;F Operations,Easy Pay,NewGen ISS,E&amp;F,SIS,ICH,iiNet,AirportIS,SIS Dispute/Correspondence,SIS e-Invoicing,SIS Fees,SIS File Submission,SIS Invoice Creation,SIS ISPG,SIS Receive invoices/Files,SIS Release Notes,SIS Reports,SIS User Guide,CargoIS,Direct Data Solutions (DDS),GAP,MarketIS,PaxIS,Airline Joining,Airline Leaving,New application - forms, procedures, fees,Agency Risk Management,Airline and Location Coding,ICCS,IMX,IATA Pay</value>
     </labels>
     <labels>
-        <fullName>CaseValidation_Area2</fullName>
+        <fullName>CaseValidation_Area_in_Case_Global</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>CaseValidation - Area2</shortDescription>
-        <value>Instructor-led Training (individual),	Instructor-led Training (groups),IATAN,ID Card,CheckACode,eBroadcast,Global Agency Directory,Travel Agency Data Products,Digital ID Card (Mobile App),IATA AgentExperience,Global System Solution,Weblink,NDClink,Treasury Dashboard,TIMATIC,Publications,TACT, YMQ Publications,Distance Learning,Agency Management,Transparency in Payments (TIP), New BSPlink,IDX - Incident Data Exchange, MRO SmartHub, IATA Travel Pass</value>
+        <shortDescription>CaseValidation - Area in Case Global</shortDescription>
+        <value>Airline and Location Coding,AirportIS,Airsat,BIETA,CargoIS,CheckACode,Digital ID Card (Mobile App),Direct Data Solutions (DDS),Distance Learning,E&amp;F Operations,eBroadcast,FDC,FFP,GAP,Global Agency Directory,Global System Solution,IASC,IATA AgentExperience,IATAN,ICCS,ICH,ID Card,iiNet,IMX,Instructor-led Training (groups),Instructor-led Training (individual),MarketIS,MITA,NDClink,PaxIS,SIS,TACT,TIMATIC,Travel Agency Data Products,Treasury Dashboard,Weblink,IDX - Incident Data Exchange,YMQ Publications,MRO SmartHub,IATA Travel Pass</value>
     </labels>
     <labels>
         <fullName>CaseValidation_InDepthArea</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - InDepthArea</shortDescription>
-        <value>Invoicing,Remittance &amp; Settlement</value>
+        <value>Remittance &amp; Settlement</value>
     </labels>
     <labels>
         <fullName>CaseValidation_Reason</fullName>
@@ -8866,7 +8890,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - RecordType</shortDescription>
-        <value>CasesMENA,CasesAmericas,ExternalCasesIDFSglobal,Cases_China_North_Asia,CasesEurope,Cases_Global</value>
+        <value>CasesMENA,CasesAmericas,ExternalCasesIDFSglobal,Cases_China_North_Asia,CasesEurope</value>
     </labels>
     <labels>
         <fullName>Case_Area_ICH</fullName>

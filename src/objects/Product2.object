@@ -8078,6 +8078,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>PASS</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Parking</fullName>
                 <default>false</default>
             </values>
@@ -11223,6 +11227,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Over-flight</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PASS</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -14450,6 +14458,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>PASS</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>PBI %28FDS Division%29</fullName>
                 <default>false</default>
             </values>
@@ -17573,6 +17585,10 @@ The product will only appear on the Online Store when the date entered in this f
         </picklistValues>
         <picklistValues>
             <picklist>Family</picklist>
+            <values>
+                <fullName>PASS</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>TTBS</fullName>
                 <default>false</default>
@@ -20761,6 +20777,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>PASS</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>PBI %28FDS Division%29</fullName>
                 <default>false</default>
             </values>
@@ -20830,6 +20850,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Training</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Training - OnSite</fullName>
                 <default>false</default>
             </values>
             <values>

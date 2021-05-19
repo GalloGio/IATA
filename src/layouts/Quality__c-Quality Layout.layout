@@ -53,7 +53,7 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>Related_Case_Number__c</field>
             </layoutItems>
             <layoutItems>
@@ -167,7 +167,7 @@
         <label>Internal Case Details</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Required</behavior>
                 <field>Description_Internal_Case__c</field>
             </layoutItems>
         </layoutColumns>
