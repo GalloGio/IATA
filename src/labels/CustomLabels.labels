@@ -46700,6 +46700,22 @@ Through this service, you can directly access TIP Reports.</value>
         <value>Tab Name</value>
     </labels>
     <labels>
+        <fullName>Task_Validation_Valid_Recordtypes</fullName>
+        <categories>Task ValidationRule</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Task Validation Valid Recordtypes</shortDescription>
+        <value>GCS - Staff,GCS - Management,GCS - Staff - AI,GCS - Management - AI</value>
+    </labels>
+    <labels>
+        <fullName>Task_Validation_Valid_Subjects</fullName>
+        <categories>Task ValidationRule</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Task Validation Valid Subjects</shortDescription>
+        <value>Busy Call,Call customer!,Call - Busy,Call - No Answer,Call - Successful,Call - Voice Mail,Call - Wrong Number - Answered,Contract elaboration,Email,FAX,Feedback request,Follow up,Needs assessment,No Answer,Other,Post sales follow-up,Preparation of product information,Presentation preparation,Send information,Send letter,Update application,Voice Mail,R&amp;S reinstatement,Call - Wrong Number - No Line</value>
+    </labels>
+    <labels>
         <fullName>Tasks_Notification</fullName>
         <language>en_US</language>
         <protected>false</protected>

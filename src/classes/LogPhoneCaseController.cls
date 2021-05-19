@@ -93,6 +93,7 @@ public with sharing class LogPhoneCaseController {
 	}
 
 	public PageReference Save() {
+		Savepoint sp = Database.setSavepoint();
 		try {
 			newcase.RecordTypeId = strSelectedRType;
 			insert newcase;
@@ -107,6 +108,8 @@ public with sharing class LogPhoneCaseController {
 		} catch (Exception e) {
 			ApexPages.addMessages(e);
 			system.debug(e);
+			Database.rollback(sp);
+			newcase.Id = null;
 			return null;
 		}
 	}
