@@ -3688,7 +3688,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_IATAN_Register_Info</name>
     </customLabels>
     <customLabels>
-        <label>Atentamente, IATA Customer Service Center</label>
+        <label>Atentamente, &lt;br/&gt; IATA Customer Service Center</label>
         <name>CSP_IATA_CSC_Email_Greetings</name>
     </customLabels>
     <customLabels>
@@ -5507,6 +5507,18 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Seleccione el motivo</label>
         <name>CSP_selectReason</name>
+    </customLabels>
+    <customLabels>
+        <label>se añade como un participante con el caso</label>
+        <name>CS_Portal_Addittional_Recipients_Body</name>
+    </customLabels>
+    <customLabels>
+        <label>IATA Portal del Cliente - Usted se añadieron al caso</label>
+        <name>CS_Portal_Addittional_Recipients_Subject</name>
+    </customLabels>
+    <customLabels>
+        <label>para ir al portal para ver los detalles completos y participar en la comunicación.</label>
+        <name>CS_Portal_Addittional_Recipients_URL_Description</name>
     </customLabels>
     <customLabels>
         <label><!-- Campaign already created --></label>
