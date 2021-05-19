@@ -3689,7 +3689,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_IATAN_Register_Info</name>
     </customLabels>
     <customLabels>
-        <label>Trân trọng, &amp;lt;br/&amp;gt; Trung tâm Dịch vụ Khách hàng IATA</label>
+        <label>Trân trọng, &lt;br/&gt; Trung tâm Dịch vụ Khách hàng IATA</label>
         <name>CSP_IATA_CSC_Email_Greetings</name>
     </customLabels>
     <customLabels>
@@ -5507,6 +5507,18 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>Chọn lý do</label>
         <name>CSP_selectReason</name>
+    </customLabels>
+    <customLabels>
+        <label>thêm bạn là người tham gia vào vụ án</label>
+        <name>CS_Portal_Addittional_Recipients_Body</name>
+    </customLabels>
+    <customLabels>
+        <label>IATA khách hàng Portal - Bạn đã được bổ sung vào trường hợp</label>
+        <name>CS_Portal_Addittional_Recipients_Subject</name>
+    </customLabels>
+    <customLabels>
+        <label>để đi đến cổng thông tin để xem chi tiết đầy đủ và tham gia vào các giao tiếp.</label>
+        <name>CS_Portal_Addittional_Recipients_URL_Description</name>
     </customLabels>
     <customLabels>
         <label><!-- Campaign already created --></label>
