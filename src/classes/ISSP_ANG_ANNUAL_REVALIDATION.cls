@@ -163,7 +163,7 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
 		if(getAccountsHierarchiesMap==null){
 			getAccountsHierarchies();
-    	}
+		}
 													
 		for(Id key : getAccountsHierarchiesMap.keySet()) {
 			accountsList.addAll(getAccountsHierarchiesMap.get(key));
