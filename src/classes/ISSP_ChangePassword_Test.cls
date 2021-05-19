@@ -192,8 +192,8 @@ private class ISSP_ChangePassword_Test {
 		insert newAccount;
 
 		//Create Portal Application
-		Portal_Applications__c portalApp = new Portal_Applications__c(Name = 'IFTP');
-		insert portalApp;
+		Portal_Applications__c portalApp = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		portalApp.Name = 'IFTP';
 
 		//Create Accounts Roles
 		List<Account_Roles__c> accRolesList = new List<Account_Roles__c>();

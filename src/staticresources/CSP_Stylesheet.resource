@@ -1575,6 +1575,31 @@ lightning-datatable .slds-th__action {
     max-width: none;
 }
 
+.SH .slds-form-element__label {
+  font-size: 18px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.43;
+  letter-spacing: normal;
+  color: #333333;
+  padding-top: 5%;
+  display: contents;
+  max-width: none;
+}
+
+.SH .slds-form-element__control .slds-form-element__static {
+  color: grey;
+}
+
+.SH .slds-form-element__control .slds-form-element__static a {
+  color: grey;
+}
+
+.valueBold .slds-form-element__control .slds-form-element__static{
+    font-weight: 500;
+}
+
 .labelValue .slds-checkbox .slds-form-element__label {
     display:none;
 }

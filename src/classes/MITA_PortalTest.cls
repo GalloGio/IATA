@@ -48,7 +48,8 @@ public class MITA_PortalTest {
 		}
 		insert Contacts;
 
-		Portal_Applications__c app = new Portal_Applications__c(Name = MITA_PortalMyAgreementsCtrl.APP_NAME);
+		Portal_Applications__c app = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		app.Name = MITA_PortalMyAgreementsCtrl.APP_NAME;
 		insert app;
 
 		Portal_Application_Right__c right = new Portal_Application_Right__c(Portal_Application__c = app.Id, Right__c = 'Access Granted', Contact__c = MyContact.Id);

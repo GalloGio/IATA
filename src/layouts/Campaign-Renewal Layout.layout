@@ -209,6 +209,7 @@
         <fields>COUNTRY</fields>
         <fields>ID</fields>
         <fields>Order__c</fields>
+        <fields>LC_OWNER</fields>
         <relatedList>RelatedCampaignMemberList</relatedList>
         <sortField>COUNTRY</sortField>
         <sortOrder>Asc</sortOrder>

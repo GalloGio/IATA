@@ -33,10 +33,12 @@ private class AccountRolesAlignBatch_Test {
 		Training_Contact_Role_Details__c tcrd = new Training_Contact_Role_Details__c(Account_Contact_Role__c = acr.Id, RecordTypeId = RECTYPE_Trainee_YASContDet);
 		insert tcrd;
 
-		Portal_Applications__c pa = new Portal_Applications__c(Name = 'Training Platform (LMS)');
-		insert pa;
+		Portal_Applications__c portalApplication = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		portalApplication.Name = 'Training Platform (LMS)';
+		portalApplication.Functional_Role__c = 'Training Platform (LMS)';
+		insert portalApplication;
 
-		Term_and_Condition__c tos = new Term_and_Condition__c(NewGenApp_PortalService__c = pa.Id, Is_Latest__c = true, Status__c = 'Final', Effective_Start_Date__c = Date.today());
+		Term_and_Condition__c tos = new Term_and_Condition__c(NewGenApp_PortalService__c = portalApplication.Id, Is_Latest__c = true, Status__c = 'Final', Effective_Start_Date__c = Date.today());
 		insert tos;
 
 	}

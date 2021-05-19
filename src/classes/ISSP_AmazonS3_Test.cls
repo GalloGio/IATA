@@ -66,7 +66,8 @@ private class ISSP_AmazonS3_Test {
 								IATACode__c = '12345678');
 		insert a1;
 
-		Portal_Applications__c portalApp = new Portal_Applications__c(Name = 'IATA EasyPay (EDENRED)');
+		Portal_Applications__c portalApp = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		portalApp.Name = 'IATA EasyPay (EDENRED)';
 		insert portalApp;
 
 		Contact con1 = ISSP_ObjectFactory.createNewContact();

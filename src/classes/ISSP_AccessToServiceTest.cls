@@ -9,7 +9,8 @@ private class ISSP_AccessToServiceTest {
 		cs.Label_API_name__c = 'ISSP_All';
 		insert cs;
 
-		Portal_Applications__c app = new Portal_Applications__c(Name = 'Management Information Report');
+		Portal_Applications__c app = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+        app.Name = 'Management Information Report'; 
 		insert app;
 
 		controller.initialization();
@@ -63,7 +64,8 @@ private class ISSP_AccessToServiceTest {
 
 		Test.startTest();
 
-		Portal_Applications__c app = new Portal_Applications__c(Name = 'Test App');
+		Portal_Applications__c app = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+        app.Name = 'Test App'; 
 		app.Confirm_Box__c = true;
 		insert app;
 

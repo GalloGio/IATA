@@ -252,7 +252,7 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
         <ruleEntry>
             <assignedTo>ISS_Level_1_Turkish</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 AND (2 OR 6) AND 3 AND 4 AND 5</booleanFilter>
+            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR (3 AND 4 AND 8) OR (3 AND 4 AND 7 AND 9 AND 10) OR (3 AND 4 AND 11 AND 12)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -283,11 +283,41 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <operation>equals</operation>
                 <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
             </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SEDA</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal Enquiry</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Subject</field>
+                <operation>equals</operation>
+                <value>Customer Login Issue - Registration,Customer Login Issue - Login</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>ISS_Level_1_Vietnamese</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 AND (2 OR 6) AND 3 AND 4 AND 5</booleanFilter>
+            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR (3 AND 4  AND 8) OR (3 AND 4 AND 7 AND 9 AND 10) OR (3 AND 4  AND 11 AND 12)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -318,11 +348,41 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <operation>equals</operation>
                 <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
             </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SEDA</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal Enquiry</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Subject</field>
+                <operation>equals</operation>
+                <value>Customer Login Issue - Registration,Customer Login Issue - Login</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>ISS_Level_1_Thai</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 AND (2 OR 6) AND 3 AND 4 AND 5</booleanFilter>
+            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR (3 AND 4 AND 8) OR (3 AND 4 AND 7 AND 9 AND 10) OR (3 AND 4 AND 11 AND 12)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -353,11 +413,41 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <operation>equals</operation>
                 <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
             </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SEDA</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Subject</field>
+                <operation>equals</operation>
+                <value>Customer Login Issue - Registration,Customer Login Issue - Login</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal Enquiry</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>ISS_Level_1_Japanese</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 AND (2 OR 6) AND 3 AND 4 AND 5</booleanFilter>
+            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR (3 AND 4 AND 8) OR (3 AND 4 AND 7 AND 9 AND 10) OR (3 AND 4 AND 11 AND 12)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -388,11 +478,41 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <operation>equals</operation>
                 <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
             </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SEDA</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal Enquiry</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Subject</field>
+                <operation>equals</operation>
+                <value>Customer Login Issue - Registration,Customer Login Issue - Login</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>ISS_Level_1_German</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 AND (2 OR 6) AND 3 AND 4 AND 5</booleanFilter>
+            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR (3 AND 4  AND 8) OR (3 AND 4 AND 7 AND 9 AND 10) OR (3 AND 4 AND 11 AND 12)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -423,11 +543,41 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <operation>equals</operation>
                 <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
             </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SEDA</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal Enquiry</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Subject</field>
+                <operation>equals</operation>
+                <value>Customer Login Issue - Registration,Customer Login Issue - Login</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>ISS_Level_1_Indonesian</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 AND (2 OR 6) AND 3 AND 4 AND 5</booleanFilter>
+            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR (3 AND 4 AND 8) OR (3 AND 4 AND 7 AND 9 AND 10) OR (3 AND 4 AND 11 AND 12)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -458,11 +608,41 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <operation>equals</operation>
                 <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
             </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SEDA</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal Enquiry</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Subject</field>
+                <operation>equals</operation>
+                <value>Customer Login Issue - Registration,Customer Login Issue - Login</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>ISS_Level_1_Italian</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 AND (2 OR 6) AND 3 AND 4 AND 5</booleanFilter>
+            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR ( 3 AND 4 AND 8) OR (3 AND 4 AND 7 AND 9 AND 10) OR (3 AND 4 AND 11 AND 12)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -493,11 +673,41 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <operation>equals</operation>
                 <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
             </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SEDA</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal Enquiry</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Subject</field>
+                <operation>equals</operation>
+                <value>Customer Login Issue - Registration,Customer Login Issue - Login</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>ISS_Level_1_Arabic</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 AND (2 OR 6) AND 3 AND 4 AND 5</booleanFilter>
+            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR (3 AND 4 AND 7 AND 8) OR (3 AND 4 AND 9 AND 10 AND 11) OR (3 AND 4 AND 12)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -528,11 +738,41 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <operation>equals</operation>
                 <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
             </criteriaItems>
+            <criteriaItems>
+                <field>Case.Subject</field>
+                <operation>equals</operation>
+                <value>Customer Login Issue - Registration,Customer Login Issue - Login</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal Enquiry</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SEDA</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>ISS_Level_1_Portuguese</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 AND (2 OR 6) AND 3 AND 4 AND 5</booleanFilter>
+            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR ( 3 AND 4 AND 8) OR (3 AND 4 AND 7 AND 9 AND 10) OR ( 3 AND 4 AND 11 AND 12)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -563,11 +803,41 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <operation>equals</operation>
                 <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
             </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SEDA</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal Enquiry</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Subject</field>
+                <operation>equals</operation>
+                <value>Customer Login Issue - Registration,Customer Login Issue - Login</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>ISS_Level_1_Chinese</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 AND (2 OR 6) AND 3 AND 4 AND 5</booleanFilter>
+            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR (3 AND 4 AND 7 AND 8) OR (3 AND 4 AND 9 AND 10 AND 11) OR (3 AND 4 AND 12)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -598,11 +868,41 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <operation>equals</operation>
                 <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
             </criteriaItems>
+            <criteriaItems>
+                <field>Case.Subject</field>
+                <operation>equals</operation>
+                <value>Customer Login Issue - Registration,Customer Login Issue - Login</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal Enquiry</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SEDA</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>ISS_Level_1_Russian</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 AND (2 OR 6) AND 3 AND 4 AND 5</booleanFilter>
+            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR (3 AND 4  AND 8) OR (3 AND 4 AND 7 AND 9 AND 10) OR (3 AND 4 AND 11 AND 12)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -633,11 +933,41 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <operation>equals</operation>
                 <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
             </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SEDA</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Subject</field>
+                <operation>equals</operation>
+                <value>Customer Login Issue - Registration,Customer Login Issue - Login</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal Enquiry</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>ISS_Level_1_Korean</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 AND (2 OR 6) AND 3 AND 4 AND 5</booleanFilter>
+            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR (3 AND 4 AND 8) OR (3 AND 4 AND 7 AND 9 AND 10) OR (3 AND 4 AND 11 AND 12)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -668,11 +998,41 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <operation>equals</operation>
                 <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
             </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SEDA</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal Enquiry</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Subject</field>
+                <operation>equals</operation>
+                <value>Customer Login Issue - Registration,Customer Login Issue - Login</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>ISS_L1_Spanish_EUR</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 AND (2 OR 6) AND 3 AND 4 AND 5</booleanFilter>
+            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR (3 AND 4 AND 8) OR (3 AND 4 AND 7 AND 9 AND 10) OR (3 AND 4 AND 11 AND 12)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -703,11 +1063,41 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <operation>equals</operation>
                 <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
             </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SEDA</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal Enquiry</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Subject</field>
+                <operation>equals</operation>
+                <value>Customer Login Issue - Registration,Customer Login Issue - Login</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>ISS_L1_Spanish_AMR</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 AND (2 OR 6) AND 3 AND 4 AND 5</booleanFilter>
+            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR (3 AND 4 AND  8) OR (3 AND 4 AND 7 AND 9 AND 10) OR (3 AND 4 AND 11 AND 12)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -738,11 +1128,41 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <operation>equals</operation>
                 <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
             </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SEDA</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Subject</field>
+                <operation>equals</operation>
+                <value>Customer Login Issue - Registration,Customer Login Issue - Login</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal Enquiry</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>ISS_L1_French_EUR</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 AND (2 OR 6) AND 3 AND 4 AND 5</booleanFilter>
+            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR (3 AND 4 AND 8) OR (3 AND 4 AND 7 AND 9 AND 10) OR (3 AND 4 AND 11 AND 12)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -773,6 +1193,36 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <operation>equals</operation>
                 <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
             </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SEDA</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal Enquiry</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Subject</field>
+                <operation>equals</operation>
+                <value>Customer Login Issue - Registration,Customer Login Issue - Login</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>Cases_CNS</assignedTo>
@@ -791,7 +1241,7 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
         <ruleEntry>
             <assignedTo>ISS_L1_French_AMR</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 AND (2 OR 6) AND 3 AND 4 AND 5</booleanFilter>
+            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR (3 AND 4 AND 8) OR (3 AND 4 AND 7 AND 9 AND 10)  OR (3 AND 4 AND 11 AND 12)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -822,6 +1272,36 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <operation>equals</operation>
                 <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
             </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SEDA</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal Enquiry</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Subject</field>
+                <operation>equals</operation>
+                <value>Customer Login Issue - Registration,Customer Login Issue - Login</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>Cases_CNS</assignedTo>
@@ -840,7 +1320,7 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
         <ruleEntry>
             <assignedTo>ISS_L1_French_AME</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 AND (2 OR 6) AND 3 AND 4 AND 5</booleanFilter>
+            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR (3 AND 4 AND  8) OR (3 AND 4 AND 7 AND 9 AND 10) OR (3 AND 4 AND 11 AND 12)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -871,11 +1351,41 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <operation>equals</operation>
                 <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
             </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SEDA</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal Enquiry</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Subject</field>
+                <operation>equals</operation>
+                <value>Customer Login Issue - Registration,Customer Login Issue - Login</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>ISS_L1_English_NASIA</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 AND (2 OR 6) AND 3 AND 4 AND 5</booleanFilter>
+            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR (3 AND 4 AND 8) OR (3 AND 4 AND 7 AND 9 AND 10) OR   (3 AND 4 AND 11 AND 12)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -906,11 +1416,41 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <operation>equals</operation>
                 <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
             </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SEDA</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal Enquiry</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Subject</field>
+                <operation>equals</operation>
+                <value>Customer Login Issue - Registration,Customer Login Issue - Login</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>ISS_L1_English_EUR</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 AND (2 OR 7)  AND (3 OR 4) AND 5 AND 6</booleanFilter>
+            <booleanFilter>(1 AND (2 OR 7)  AND (3 OR 4) AND 5 AND 6) OR ((3 OR 4) AND 5 AND 8 AND 9) OR ((3 OR 4) AND 5 AND 8 AND 10 AND 11) OR ((3 OR 4) AND 5 AND 12 AND 13) OR ((3 OR 4) AND 5 AND 14)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -946,11 +1486,46 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <operation>equals</operation>
                 <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
             </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Status_SIDRA__c</field>
+                <operation>contains</operation>
+                <value>IATA Charges,Small Amount</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Subject</field>
+                <operation>equals</operation>
+                <value>Customer Login Issue - Registration,Customer Login Issue - Login</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal Enquiry</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SEDA</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>ISS_L1_English_ASPAC</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 AND (2 OR 7) AND (3 OR 4) AND 5 AND 6</booleanFilter>
+            <booleanFilter>(1 AND (2 OR 7) AND (3 OR 4) AND 5 AND 6) OR ((3 OR 4) AND 5 AND 8 AND 9) OR ((3 OR 4) AND 5 AND 8 AND 10 AND 11) OR ((3 OR 4) AND 5 AND 12) OR ((3 OR 4) AND 5 AND 13 AND 14)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -986,11 +1561,46 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <operation>equals</operation>
                 <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
             </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Status_SIDRA__c</field>
+                <operation>contains</operation>
+                <value>IATA Charges,Small Amount</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SEDA</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal Enquiry</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Registration process</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>ISS_L1_English_AMR</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 AND (2 OR 7) AND (3 OR 4) AND 5 AND 6</booleanFilter>
+            <booleanFilter>(1 AND (2 OR 7) AND (3 OR 4) AND 5 AND 6) OR ((3 OR 4) AND 5 AND 8 AND 9) OR ((3 OR 4) AND 5 AND 10 AND 11) OR ((3 OR 4) AND 5 AND 12 AND 13) OR ((3 OR 4) AND 5 AND 14)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -1026,11 +1636,46 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <operation>equals</operation>
                 <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
             </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Status_SIDRA__c</field>
+                <operation>contains</operation>
+                <value>IATA Charges,Small Amount</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Subject</field>
+                <operation>equals</operation>
+                <value>Customer Login Issue - Registration,Customer Login Issue - Login</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal Enquiry</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SEDA</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>ISS_L1_English_AME</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 AND (2 OR 7) AND (3 OR 4) AND 5 AND 6</booleanFilter>
+            <booleanFilter>(1 AND (2 OR 7) AND (3 OR 4) AND 5 AND 6) OR ((3 OR 4) AND 5 AND 8 AND 9) OR((3 OR 4) AND 5 AND 10 AND 11 AND 12) OR((3 OR 4) AND 5 AND 13)</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -1065,6 +1710,36 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <field>Case.Topic__c</field>
                 <operation>equals</operation>
                 <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Subject</field>
+                <operation>equals</operation>
+                <value>Customer Login Issue - Registration,Customer Login Issue - Login</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal Enquiry</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SEDA</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -1338,6 +2013,85 @@ ISPICKVAL(CaseArea__c, &quot;MRO SmartHub&quot;)
 )</formula>
         </ruleEntry>
         <ruleEntry>
+            <assignedTo>GCS_IATA_Travel_Pass_L2</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>And(
+ISPICKVAL(Service_Level__c, &quot;2&quot;),
+RecordType.Name = &quot;Cases - Global&quot;,
+ISPICKVAL(Topic__c, &quot;IATA Travel Pass&quot;)
+)</formula>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>GCS_IATA_Travel_Pass</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>And(
+RecordType.Name = &quot;Cases - Global&quot;,
+ISPICKVAL(Topic__c, &quot;IATA Travel Pass&quot;)
+)</formula>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>L3_ITP_Lab_Registry_Editor</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Internal Cases (IDFS ISS),Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.Category__c</field>
+                <operation>equals</operation>
+                <value>Pharmaceutical Industry</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>IATA Travel Pass</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Changes / Updates,Closure / Cancellation,Sign Up / Join</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>L3_ITP_Lab_App_Manager</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Internal Cases (IDFS ISS),Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.Category__c</field>
+                <operation>equals</operation>
+                <value>Pharmaceutical Industry</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>IATA Travel Pass</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>General information,User management,Report issue / Technical Issue</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>L3_ITP_Travel_Pass_PM</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Internal Cases (IDFS ISS),Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>IATA Travel Pass</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
             <assignedTo>GCS_Incident_Data_Exchange_L2</assignedTo>
             <assignedToType>Queue</assignedToType>
             <formula>And(
@@ -1412,7 +2166,7 @@ and(RecordType.Name = &quot;Process&quot;,ISPICKVAL(Reason1__c,&quot;Report issu
 
 ISPICKVAL(CaseArea__c, &quot;ICCS&quot;),
 
-or(ISPICKVAL(Reason1__c,&quot;Content inquiry / issue&quot;),ISPICKVAL(Reason1__c,&quot;ISS Calendar Maintenance&quot;),ISPICKVAL(Reason1__c,&quot;Settlement related query&quot;),ISPICKVAL(Reason1__c,&quot;Task request&quot;)
+or(ISPICKVAL(Reason1__c,&quot;Content inquiry / issue&quot;),ISPICKVAL(Reason1__c,&quot;ISS Calendar Maintenance&quot;),ISPICKVAL(Reason1__c,&quot;Settlement related query&quot;),ISPICKVAL(Reason1__c,&quot;Task request&quot;),ISPICKVAL(Reason1__c,&quot;Internal Support&quot;)
 
 ))</formula>
             <template>All/IDFS_Caseassignmentqueue</template>
@@ -1794,11 +2548,11 @@ Product__r.Product_Section__c = &quot;APWP01&quot;
         <ruleEntry>
             <assignedTo>Cases_Emirates</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>((1 AND (2 OR 7) AND 3 AND 4) OR (1 AND 4 AND (5 OR 6) ) OR (8 AND 9 AND 10))</booleanFilter>
+            <booleanFilter>((1 AND (2 OR 7 OR 11) AND 3 AND 4) OR (1 AND 4 AND (5 OR 6) ) OR (8 AND 9 AND 10))</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordType__c</field>
                 <operation>equals</operation>
-                <value>Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia,Complaint (IDFS ISS),SEDA</value>
+                <value>Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia,Complaint (IDFS ISS),SEDA,Cases - Global,Process</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Account.Name</field>
@@ -1845,11 +2599,16 @@ Product__r.Product_Section__c = &quot;APWP01&quot;
                 <operation>contains</operation>
                 <value>Follow up Settlement</value>
             </criteriaItems>
+            <criteriaItems>
+                <field>Account.HQ_Service_Model__c</field>
+                <operation>equals</operation>
+                <value>Differentiated</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>Differentiated_Service_Model_Agency</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 AND (2 OR 3 OR 4 OR 5 OR 6 OR 7 OR 8 OR 9)</booleanFilter>
+            <booleanFilter>1 AND (2 OR 3 OR 4 OR 5 OR 6 OR 7 OR 8 OR 9 OR 11) AND 10</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -1894,6 +2653,16 @@ Product__r.Product_Section__c = &quot;APWP01&quot;
                 <field>Account.IATACode__c</field>
                 <operation>equals</operation>
                 <value>08337022,08344641,08344991,32300085,17334144,2365160,24345801,16335340,91200723,57230670</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.Sector__c</field>
+                <operation>contains</operation>
+                <value>Agent</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.HQ_Service_Model__c</field>
+                <operation>equals</operation>
+                <value>Differentiated</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -6067,7 +6836,7 @@ ISPICKVAL(Reason1__c, &quot;Credit Card Deletion&quot;)
             <criteriaItems>
                 <field>Case.Reason1__c</field>
                 <operation>equals</operation>
-                <value>Billing Query,Billing rerun</value>
+                <value>Billing Query,Billing rerun,Customer Charge Request</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -9011,7 +9780,7 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
             <criteriaItems>
                 <field>Case.Reason1__c</field>
                 <operation>equals</operation>
-                <value>Customer Charge Request</value>
+                <value>Customer Charge Request,Commercial Products</value>
             </criteriaItems>
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
@@ -14125,20 +14894,6 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
                 <field>Case.Region__c</field>
                 <operation>equals</operation>
                 <value>Europe,GVA HO,Europe (Americas Countries)</value>
-            </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>sahuck@iata.org</assignedTo>
-            <assignedToType>User</assignedToType>
-            <criteriaItems>
-                <field>Case.RecordTypeId</field>
-                <operation>equals</operation>
-                <value>ACCA Customer Service Request (Internal)</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Origin</field>
-                <operation>equals</operation>
-                <value>E-mail to Case - ACCA CSR Internal</value>
             </criteriaItems>
         </ruleEntry>
     </assignmentRule>

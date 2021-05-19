@@ -7,17 +7,18 @@ private class ProvisionKaviAccessTest {
 	static user NKPUser;
 	static user me;
 	static {
-
-		Profile p = [SELECT Id FROM Profile WHERE Name='Standard User'];
-		User u = new User(Alias = 'standt', Email='1231323123@123132.com',
-				EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
-				LocaleSidKey='en_US', ProfileId = p.Id,
+		Profile p = [SELECT Id FROM Profile WHERE Name='Standard User']; 
+		User u = new User(Alias = 'standt', Email='1231323123@123132.com', 
+				EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US', 
+				LocaleSidKey='en_US', ProfileId = p.Id, 
 				TimeZoneSidKey='America/Los_Angeles', UserName='12312312@12312312312.com',
 				Is_Kavi_Internal_User__c = true, License_Cost_Center__c = 'XSMW01JO01');
 		insert u;
 		//KPUser = [SELECT id, profile.Name FROM User WHERE profile.Name = 'KaviProvisioningUser' limit 1][0];
 		KPUser = [SELECT id, profile.Name FROM User WHERE Is_Kavi_Internal_User__c = true limit 1][0];
-		insert new Portal_Applications__c (Name = 'Standards Setting Workspace');
+		Portal_Applications__c portalApplication = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		portalApplication.Name = 'Standards Setting Workspace';
+		insert portalApplication;
 		//NKPUser = [SELECT id, profile.Name FROM User WHERE profile.Name != 'KaviProvisioningUser' limit 1][0];
 		NKPUser = [SELECT id, profile.Name FROM User WHERE Is_Kavi_Internal_User__c = false limit 1][0];
 		me = [SELECT id FROM User WHERE id =: UserInfo.getUserId() limit 1];

@@ -62,7 +62,7 @@ Each record stands for a combination of values (account sector and category) whe
         <columns>Is_Visible__c</columns>
         <columns>Auto_grant_service__c</columns>
         <filterScope>Everything</filterScope>
-        <label>All w details</label>
+        <label>All w/ details</label>
         <language>en_US</language>
     </listViews>
     <pluralLabel>Portal Application Visibilities</pluralLabel>

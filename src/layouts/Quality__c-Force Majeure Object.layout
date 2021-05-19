@@ -39,7 +39,7 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>Related_Case_Number__c</field>
             </layoutItems>
             <layoutItems>
@@ -135,11 +135,11 @@
         <label>Recommendation</label>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>Description_Internal_Case__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Required</behavior>
                 <field>Solution_Recommended__c</field>
             </layoutItems>
         </layoutColumns>

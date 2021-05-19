@@ -360,7 +360,7 @@ public class ContactHandler{
 		LIST_GRANT_APPS = new list<Portal_Application_Right__c>();
 		LIST_REVOKE_APPS = new list<Portal_Application_Right__c>();
 		if (listRights.isEmpty()) return;
-		if (listNews.size()==1 || System.isQueueable()) {
+		if (listRights.size()==1 || System.isQueueable()) {
 			Database.UpsertResult result = Database.upsert(listRights[0],Portal_Application_Right__c.Application_uniqueness_for_contact__c, false);
 			for (Database.Error error: result.getErrors()) {
 				if ( error.getStatusCode() == StatusCode.FIELD_CUSTOM_VALIDATION_EXCEPTION) {

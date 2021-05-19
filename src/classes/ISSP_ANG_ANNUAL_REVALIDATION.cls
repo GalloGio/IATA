@@ -180,6 +180,10 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 
 		List<AMS_Agencies_relationhip__c> accountsList = new List<AMS_Agencies_relationhip__c>();
 
+		if(getAccountsHierarchiesMap==null){
+			getAccountsHierarchies();
+		}
+													
 		for(Id key : getAccountsHierarchiesMap.keySet()) {
 			accountsList.addAll(getAccountsHierarchiesMap.get(key));
 		}

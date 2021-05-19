@@ -417,6 +417,11 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>ANG_Type_Of_Change__c</field>
+            <table>AMS_Pax_Accreditation_Form__c.OSCARs__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>Local_Postal_Address_Street__c</field>
             <table>AMS_Pax_Accreditation_Form__c</table>
         </columns>

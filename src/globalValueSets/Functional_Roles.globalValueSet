@@ -221,6 +221,11 @@
         <label>IFTP</label>
     </customValue>
     <customValue>
+        <fullName>Startup Hotlist</fullName>
+        <default>false</default>
+        <label>Startup Hotlist</label>
+    </customValue>
+    <customValue>
         <fullName>Insurance Providers</fullName>
         <default>false</default>
         <label>Insurance Providers</label>
@@ -355,7 +360,12 @@
         <default>false</default>
         <label>Treasury Dashboard - Premium</label>
     </customValue>
+    <customValue>
+        <fullName>OAG</fullName>
+        <default>false</default>
+        <label>OAG</label>
+    </customValue>
     <description>Functional Roles</description>
     <masterLabel>Functional Roles</masterLabel>
-    <sorted>true</sorted>
+    <sorted>false</sorted>
 </GlobalValueSet>

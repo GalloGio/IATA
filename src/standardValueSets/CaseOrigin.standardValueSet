@@ -747,6 +747,11 @@
         <label>E-mail to Case - Online Store Support</label>
     </standardValue>
     <standardValue>
+        <fullName>E-mail to Case - OTC Contracts</fullName>
+        <default>false</default>
+        <label>E-mail to Case - OTC Contracts</label>
+    </standardValue>
+    <standardValue>
         <fullName>E-mail to Case - Pakistan</fullName>
         <default>false</default>
         <label>E-mail to Case - Pakistan</label>

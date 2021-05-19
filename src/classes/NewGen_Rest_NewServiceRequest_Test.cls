@@ -11,8 +11,8 @@ private class NewGen_Rest_NewServiceRequest_Test
 		c.Email = 'ISSP_test@test.test';
 		insert c;
 
-		p = new Portal_Applications__c();
-		insert p;
+		p = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+        insert p;
 	}
 
 	@isTest

@@ -281,7 +281,7 @@ public class ANG_RHCAlertTriggerHandler{
 					for(Id contact : rhcContacts.get(accountId)){
 						contactAccounts.put(contact, a.ANG_Account__c);
 
-						if(config.ANG_Send_Email_Agent__c && !String.isEmpty(config.ANG_EmailTemplate_NG__c)){
+						if(config.ANG_Send_Email_Agent__c && !String.isEmpty(config.ANG_EmailTemplate_NG__c) && rhcInfo.containsKey(a.ANG_Account__c)){
 							notifiedAlerts.add(a.Id);
 							mailList.add(new ANG_RHCHelper.Email(contact, rhcInfo.get(a.ANG_Account__c).Id, emailTemplates.get(config.ANG_EmailTemplate_NG__c)));
 						}
@@ -333,8 +333,10 @@ public class ANG_RHCAlertTriggerHandler{
 			Map <Id, Set <String>> usersPerAccount = NewGen_Account_Statement_Helper.getUsersPerAccount(accountMap.keySet(), NewGen_Account_Statement_Helper.SERVICE_RHC);
 
 			for (Id accountId : accounts.keySet()) {
+				try{
 			NewGen_Account_Statement_Helper.sendPushNotification(usersPerAccount.get(accountId), Label.NewGenApp_RHC_RiskAlert_Notification,
 					new List <String> { riskAlertMap.get(accountId).ANG_Threshold_Level__c, riskAlertMap.get(accountId).ANG_Direction__c }, NewGen_Account_Statement_Helper.NAVIGATE_TO_RHC_HOME);
+				}catch(exception e){}
 			}
 			System.Debug('NewGenApp End');
 			//NewGenApp End
@@ -348,13 +350,15 @@ public class ANG_RHCAlertTriggerHandler{
 				for(Notification__c nt : ISSP_CreateNotification.createnotification(notificationTargets, false)){
 					ANG_RHC_Information__c rhc = rhcInfo.get(contactAccounts.get(nt.Contact__c));
 
-					nt.Message__c = nt.Message__c
-									.replace('#RHC_CURRENCY#', rhc.CurrencyIsoCode)
-									.replace('#RHC_AMOUNT_USED#', (rhc.ANG_ConsumedRHC__c == null ? 0 : rhc.ANG_ConsumedRHC__c).format())
-									.replace('#RHC_AMOUNT_TOTAL#', (rhc.ANG_RHC_Amount__c == null ? 0 : rhc.ANG_RHC_Amount__c).format())
-									.replace('#RHC_PERCENTAGE#', (rhc.ANG_ConsumedRHC_Percent__c == null ? 0 : rhc.ANG_ConsumedRHC_Percent__c).format());
-
-					notifications.add(nt);
+					if(rhc != null){
+						nt.Message__c = nt.Message__c
+										.replace('#RHC_CURRENCY#', rhc.CurrencyIsoCode)
+										.replace('#RHC_AMOUNT_USED#', (rhc.ANG_ConsumedRHC__c == null ? 0 : rhc.ANG_ConsumedRHC__c).format())
+										.replace('#RHC_AMOUNT_TOTAL#', (rhc.ANG_RHC_Amount__c == null ? 0 : rhc.ANG_RHC_Amount__c).format())
+										.replace('#RHC_PERCENTAGE#', (rhc.ANG_ConsumedRHC_Percent__c == null ? 0 : rhc.ANG_ConsumedRHC_Percent__c).format());
+									}
+						notifications.add(nt);
+					
 				}
 				if(!notifications.isEmpty()) insert notifications;
 			}
