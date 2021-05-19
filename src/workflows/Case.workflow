@@ -7015,7 +7015,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
     <fieldUpdates>
         <fullName>Service_Level_2</fullName>
         <field>Service_Level__c</field>
-        <literalValue>2</literalValue>
+        <literalValue>3</literalValue>
         <name>Service Level = 2</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
