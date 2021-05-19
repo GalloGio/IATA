@@ -49577,14 +49577,6 @@ ONE Source is the industry platform for validated aviation capability and infras
         <value>Employees</value>
     </labels>
     <labels>
-        <fullName>icg_enabled_ids</fullName>
-        <categories>ICG One Source</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>icg enabled ids for demo</shortDescription>
-        <value>aDA3N0000004CkVWAU;aDA3N0000004CkaWAE;aDA3N0000004CkfWAE;aDA3N0000004CkuWAE;aDA9E00000000efWAA;aDA3N0000004CkpWAE;aDA3N0000004CkkWAE</value>
-    </labels>
-    <labels>
         <fullName>icg_enter_station_name</fullName>
         <categories>ICG One Source</categories>
         <language>en_US</language>
