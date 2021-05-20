@@ -7182,7 +7182,7 @@ You can easily create a company account in two steps</value>
         <protected>false</protected>
         <shortDescription>CSP Privacy Policy</shortDescription>
         <value>I agree with IATA&apos;s
-&lt;a target=&quot;_blank&quot; href=&quot;https://www.iata.org/Pages/privacy.aspx&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Privacy Policy&lt;/a&gt;
+&lt;a target=&quot;_blank&quot; href=&quot;https://www.iata.org/en/privacy&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Privacy Policy&lt;/a&gt;
  and
 &lt;a target=&quot;_blank&quot; href=&quot;https://www.iata.org/en/terms&quot; style=&quot;color: blue; text-decoration: underline;&quot;&gt;Terms of Use.&lt;/a&gt;</value>
     </labels>
@@ -8746,6 +8746,30 @@ IATA Customer Portal</value>
         <value>Select Reason</value>
     </labels>
     <labels>
+        <fullName>CS_Portal_Addittional_Recipients_Body</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CS Portal Addittional Recipients Body</shortDescription>
+        <value>added you as a participant to case</value>
+    </labels>
+    <labels>
+        <fullName>CS_Portal_Addittional_Recipients_Subject</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CS Portal Addittional Recipients Subject</shortDescription>
+        <value>IATA Customer Portal - You were added to case</value>
+    </labels>
+    <labels>
+        <fullName>CS_Portal_Addittional_Recipients_URL_Description</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CS_Portal_Addittional_Recipients_URL_Description</shortDescription>
+        <value>to go to the portal to view the full details and engage in the communication.</value>
+    </labels>
+    <labels>
         <fullName>Campaign_already_created</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -8838,21 +8862,21 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - Area</shortDescription>
-        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,iiNet,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration, TASF, E&amp;F Services,E&amp;F Operations,Easy Pay,NewGen ISS,E&amp;F,SIS,ICH,iiNet,AirportIS,SIS Dispute/Correspondence,SIS e-Invoicing,SIS Fees,SIS File Submission,SIS Invoice Creation,SIS ISPG,SIS Receive invoices/Files,SIS Release Notes,SIS Reports,SIS User Guide,CargoIS,Direct Data Solutions (DDS),GAP,MarketIS,PaxIS,Airline Joining,Airline Leaving,New application - forms, procedures, fees,Agency Risk Management,Airline and Location Coding,ICCS,IMX,IATA Pay</value>
+        <value>Accreditation,Airlines GSA/MSO,Airline Management,BSPlink/ASD,Cargo Operations,CASSlink,Customer Portal Enquiry,IATA General Information,iiNet,Invoicing,myIATA,Passenger Operations,Passenger Stock Management,Product Enquiry,Remittance &amp; Settlement,Risk Management,TIESS Support, MITA, Coding, Your VOICE - Annual Survey,IBSPs Migration, New BSPlink, TASF, E&amp;F Services,E&amp;F Operations,Easy Pay,NewGen ISS,E&amp;F,SIS,ICH,iiNet,AirportIS,SIS Dispute/Correspondence,SIS e-Invoicing,SIS Fees,SIS File Submission,SIS Invoice Creation,SIS ISPG,SIS Receive invoices/Files,SIS Release Notes,SIS Reports,SIS User Guide,CargoIS,Direct Data Solutions (DDS),GAP,MarketIS,PaxIS,Airline Joining,Airline Leaving,New application - forms, procedures, fees,Agency Risk Management,Airline and Location Coding,ICCS,IMX,IATA Pay, Transparency in Payments (TIP)</value>
     </labels>
     <labels>
-        <fullName>CaseValidation_Area2</fullName>
+        <fullName>CaseValidation_Area_in_Case_Global</fullName>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>CaseValidation - Area2</shortDescription>
-        <value>Instructor-led Training (individual),	Instructor-led Training (groups),IATAN,ID Card,CheckACode,eBroadcast,Global Agency Directory,Travel Agency Data Products,Digital ID Card (Mobile App),IATA AgentExperience,Global System Solution,Weblink,NDClink,Treasury Dashboard,TIMATIC,Publications,TACT, YMQ Publications,Distance Learning,Agency Management,Transparency in Payments (TIP), New BSPlink,IDX - Incident Data Exchange, MRO SmartHub, IATA Travel Pass</value>
+        <shortDescription>CaseValidation - Area in Case Global</shortDescription>
+        <value>Airline and Location Coding,AirportIS,Airsat,BIETA,CargoIS,CheckACode,Digital ID Card (Mobile App),Direct Data Solutions (DDS),Distance Learning,E&amp;F Operations,eBroadcast,FDC,FFP,GAP,Global Agency Directory,Global System Solution,IASC,IATA AgentExperience,IATAN,ICCS,ICH,ID Card,iiNet,IMX,Instructor-led Training (groups),Instructor-led Training (individual),MarketIS,MITA,NDClink,PaxIS,SIS,TACT,TIMATIC,Travel Agency Data Products,Treasury Dashboard,Weblink,IDX - Incident Data Exchange,YMQ Publications,MRO SmartHub,IATA Travel Pass</value>
     </labels>
     <labels>
         <fullName>CaseValidation_InDepthArea</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - InDepthArea</shortDescription>
-        <value>Invoicing,Remittance &amp; Settlement</value>
+        <value>Remittance &amp; Settlement</value>
     </labels>
     <labels>
         <fullName>CaseValidation_Reason</fullName>
@@ -8866,7 +8890,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - RecordType</shortDescription>
-        <value>CasesMENA,CasesAmericas,ExternalCasesIDFSglobal,Cases_China_North_Asia,CasesEurope,Cases_Global</value>
+        <value>CasesMENA,CasesAmericas,ExternalCasesIDFSglobal,Cases_China_North_Asia,CasesEurope</value>
     </labels>
     <labels>
         <fullName>Case_Area_ICH</fullName>
@@ -26445,7 +26469,7 @@ It is hereby agreed that this application shall become a part of every Passenger
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step0 Intro Accred</shortDescription>
-        <value>Please note that online accreditation applications must be submitted by an Authorised Signatory of the Agency.</value>
+        <value>Please note that online accreditation applications must be submitted by an Authorized Signatory of the Agency.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step0_Intro_Accred_CNS</fullName>
@@ -26453,7 +26477,7 @@ It is hereby agreed that this application shall become a part of every Passenger
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step0 Intro Accred CNS</shortDescription>
-        <value>Please note that online endorsement applications must be submitted by an Authorised Signatory of the Agency.</value>
+        <value>Please note that online endorsement applications must be submitted by an Authorized Signatory of the Agency.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step0_Intro_Accred_Msg</fullName>
@@ -26469,14 +26493,14 @@ It is hereby agreed that this application shall become a part of every Passenger
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Step0 Intro Accred New</shortDescription>
-        <value>Please note that online accreditation applications must be submitted by an Authorised Signatory of the Company.</value>
+        <value>Please note that online accreditation applications must be submitted by an Authorized Signatory of the Company.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step0_Intro_Accred_PASS</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Step0_Intro_Accred_PASS</shortDescription>
-        <value>Please note that online applications must be submitted by an Authorised Signatory of the Company.</value>
+        <value>Please note that online applications must be submitted by an Authorized Signatory of the Company.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step0_Intro_CNS</fullName>
@@ -42650,7 +42674,7 @@ Participation in MITA is open to all IATA and non-IATA member airlines holding v
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OAG_Service_Description</shortDescription>
-        <value>OAG Analyzer – a comprehensive airline schedules platform providing in-depth insight into frequency and capacity trends. Includes a spectrum of possibilities and different ways  to analyze and pull  the schedules data, including interactive visual graphs, charts and maps and ability to create your own custom reports. The data is updated on a weekly basis ensuring your business is always planning the most accurate airline schedules.</value>
+        <value>OAG Analyzer – a comprehensive airline schedules platform providing in-depth insight into frequency and capacity trends. Includes a spectrum of possibilities and different ways to analyze and pull the schedules data, including interactive visual graphs, charts and maps and ability to create your own custom reports. The data is updated on a weekly basis ensuring your business is always planning the most accurate airline schedules.</value>
     </labels>
     <labels>
         <fullName>OSCAR_RISK_WARNING</fullName>
@@ -43159,7 +43183,7 @@ Please follow the link below to login. From 1ID homepage, click the FRED+ Servic
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>OneId_FRED_Terms_36</shortDescription>
-        <value>5.1	User accepts and acknowledges that IATA&apos;s Privacy Policy (located at https://www.iata.org/Pages/privacy.aspx) applies to the System, and by signing this Agreement, User agrees to be bound by the terms contained therein.</value>
+        <value>5.1	User accepts and acknowledges that IATA&apos;s Privacy Policy (located at https://www.iata.org/en/privacy) applies to the System, and by signing this Agreement, User agrees to be bound by the terms contained therein.</value>
     </labels>
     <labels>
         <fullName>OneId_FRED_Terms_37</fullName>
@@ -47742,7 +47766,7 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>csp_Footer_Privacy_URL</shortDescription>
-        <value>https://www.iata.org/Pages/privacy.aspx</value>
+        <value>https://www.iata.org/en/privacy</value>
     </labels>
     <labels>
         <fullName>csp_Footer_Twitter_URL</fullName>

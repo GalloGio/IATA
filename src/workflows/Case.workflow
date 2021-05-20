@@ -5569,6 +5569,8 @@ IF(
   (IF( 
   CONTAINS($Profile.Name,&quot;Coding and MITA&quot;),&quot;Coding &amp; MITA&quot;, 
   (IF( 
+  CONTAINS($UserRole.Name,&quot;ICCS&quot;),&quot;ICCS&quot;,
+  (IF( 
   CONTAINS($UserRole.Name, &quot;Distribution - Airline Management&quot;), 
   &quot;Airline Management&quot;, 
   (IF(AND(
@@ -5582,7 +5584,7 @@ IF(
   ),
     &quot;IATA System&quot;,
   
-  &quot;IATA Other&quot;)))))))))))))))))))))))))))))))))))))))))</formula>
+  &quot;IATA Other&quot;)))))))))))))))))))))))))))))))))))))))))))</formula>
         <name>IDFS_CREATED_BY_ROLE</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
@@ -7013,7 +7015,7 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
     <fieldUpdates>
         <fullName>Service_Level_2</fullName>
         <field>Service_Level__c</field>
-        <literalValue>2</literalValue>
+        <literalValue>3</literalValue>
         <name>Service Level = 2</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
@@ -7544,9 +7546,11 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
 (IF(
   CONTAINS($Profile.Name,&quot;Coding and MITA&quot;),&quot;Coding &amp; MITA&quot;,  
 (IF(
+  CONTAINS($UserRole.Name,&quot;ICCS&quot;),&quot;ICCS&quot;,
+(IF(
   CONTAINS($UserRole.Name, &quot;Distribution - Airline Management&quot;),
   &quot;Airline Management&quot;,
-  &quot;IATA Other&quot;)))))))))))))))))))))))))))))))))))))</formula>
+  &quot;IATA Other&quot;)))))))))))))))))))))))))))))))))))))))</formula>
         <name>update closed by role field</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
@@ -13555,35 +13559,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <formula>AND(
-  SIDRA_exchange_rate_updated__c,
-  RecordType.DeveloperName=&apos;SIDRA&apos;,
-  OR(
-    AND(
-      ISPICKVAL(BSP_CASS__c,&quot;CASS&quot;),
-      Short_Payment_Amount_USD__c&gt;50
-    ),
-    AND(
-      ISPICKVAL(BSP_CASS__c,&quot;BSP&quot;),
-      Short_Payment_Amount_USD__c&gt;1000
-    )
-  ),
-  NOT(ISPICKVAL(IRR_Withdrawal_Reason__c,&quot;IATA Charges&quot;)),
-  OR(
-    AND(
-      ISPICKVAL(BSP_CASS__c,&quot;BSP&quot;),
-      CreatedDate &gt; DATETIMEVALUE(&quot;2015-01-01 00:00:00&quot;),
-      Short_Payment_Amount__c&lt;=(Billing_Amount__c*5/100),
-      Short_Payment_Amount_USD__c&lt;=150000
-    ),
-    AND(
-      ISPICKVAL(BSP_CASS__c,&quot;CASS&quot;),
-      CreatedDate&gt;DATETIMEVALUE(&quot;2017-07-18 00:00:00&quot;),
-      Short_Payment_Amount__c&lt;=(Billing_Amount__c*1/100),
-      Short_Payment_Amount_USD__c&lt;=10000
-    )
-  )
-)</formula>
+        <formula>AND(   SIDRA_exchange_rate_updated__c,   RecordType.DeveloperName=&apos;SIDRA&apos;,   OR(     AND(       ISPICKVAL(BSP_CASS__c,&quot;CASS&quot;),       Short_Payment_Amount_USD__c&gt;50     ),     AND(       ISPICKVAL(BSP_CASS__c,&quot;BSP&quot;),       Short_Payment_Amount_USD__c&gt;1000     )   ),   NOT(ISPICKVAL(IRR_Withdrawal_Reason__c,&quot;IATA Charges&quot;)),   OR(     AND(       ISPICKVAL(BSP_CASS__c,&quot;BSP&quot;),       CreatedDate &gt; DATETIMEVALUE(&quot;2015-01-01 00:00:00&quot;),       Short_Payment_Amount__c&lt;=(Billing_Amount__c*5/100),       Short_Payment_Amount_USD__c&lt;=150000     ),     AND(       ISPICKVAL(BSP_CASS__c,&quot;CASS&quot;),       CreatedDate&gt;DATETIMEVALUE(&quot;2017-07-18 00:00:00&quot;),       Short_Payment_Amount__c&lt;=(Billing_Amount__c*1/100),       Short_Payment_Amount_USD__c&lt;=10000     )   ) )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -13605,26 +13581,7 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <formula>AND(
-  SIDRA_exchange_rate_updated__c,
-  TEXT(IRR_Withdrawal_Reason__c)&lt;&gt;&apos;IATA Charges&apos;,
-  OR(
-    RecordType.DeveloperName=&apos;SIDRA&apos;,
-    RecordType.DeveloperName=&apos;SIDRA_BR&apos;
-  ),
-  CreatedDate&gt;DATETIMEVALUE(&quot;2012-09-30 00:00:00&quot;),
-  Short_Payment_Amount_USD__c&gt;1,
-  OR(
-    AND(
-      ROUND(Short_Payment_Amount_USD__c,2)&lt;=50,
-      ISPICKVAL(BSP_CASS__c,&quot;CASS&quot;)
-    ),
-    AND(
-      ROUND(Short_Payment_Amount_USD__c,2)&lt;=1000,
-      ISPICKVAL(BSP_CASS__c,&quot;BSP&quot;)
-    )
-  )
-)</formula>
+        <formula>AND(   SIDRA_exchange_rate_updated__c,   TEXT(IRR_Withdrawal_Reason__c)&lt;&gt;&apos;IATA Charges&apos;,   OR(     RecordType.DeveloperName=&apos;SIDRA&apos;,     RecordType.DeveloperName=&apos;SIDRA_BR&apos;   ),   CreatedDate&gt;DATETIMEVALUE(&quot;2012-09-30 00:00:00&quot;),   Short_Payment_Amount_USD__c&gt;1,   OR(     AND(       ROUND(Short_Payment_Amount_USD__c,2)&lt;=50,       ISPICKVAL(BSP_CASS__c,&quot;CASS&quot;)     ),     AND(       ROUND(Short_Payment_Amount_USD__c,2)&lt;=1000,       ISPICKVAL(BSP_CASS__c,&quot;BSP&quot;)     )   ) )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>

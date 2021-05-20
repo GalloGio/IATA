@@ -434,7 +434,8 @@ public without sharing class TIDSHelper {
 			tidsWrapper.currentUser =TIDSUtil.getUserData(userId);      
 			String caseNumber='';
 			String email='';
-			final String portalType=(tidsWrapper.currentUser.Account.Location_Type__c!=TIDS_Constant.TIDS_HO) ? TIDS_Constant.ADM_BRA : TIDS_Constant.ADM_HOP;
+			final String portalType1=(tidsWrapper.currentUser.Account.Location_Type__c!=TIDS_Constant.TIDS_HO) ? TIDS_Constant.ADM_BRA : TIDS_Constant.ADM_HOP;
+			final String portalType2=(tidsWrapper.currentUser.Account.Location_Type__c!=TIDS_Constant.TIDS_HO) ? TIDS_Constant.ADM_BRA : TIDS_Constant.ADM_HOS;
 			List<Portal_Application_Right__c> applicationRights =[SELECT 
 					 Id,
 					 Right__c,
@@ -452,7 +453,8 @@ public without sharing class TIDSHelper {
 				return tidsWrapper;
 			}else{
 				if (applicationRights[0].Right__c==AMS_Utils.PORTAL_APP_ACCESS_GRANTED
-					&& applicationRights[0].Access_Status_Reason__c==portalType){
+					&& (applicationRights[0].Access_Status_Reason__c==portalType1
+						|| applicationRights[0].Access_Status_Reason__c==portalType2)){
 						tidsWrapper.profile = applicationRights.get(0);
 				}
 				email=applicationRights[0].Contact__r.Email;

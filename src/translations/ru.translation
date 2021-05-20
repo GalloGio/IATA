@@ -3695,7 +3695,7 @@
         <name>CSP_IATAN_Register_Info</name>
     </customLabels>
     <customLabels>
-        <label>С уважением,&amp;lt;br/&amp;gt; Центр обслуживания клиентов ИАТА</label>
+        <label>С уважением,&lt;br/&gt; Центр обслуживания клиентов ИАТА</label>
         <name>CSP_IATA_CSC_Email_Greetings</name>
     </customLabels>
     <customLabels>
@@ -5517,6 +5517,18 @@
         <name>CSP_selectReason</name>
     </customLabels>
     <customLabels>
+        <label>добавил Вас в качестве участника в случае</label>
+        <name>CS_Portal_Addittional_Recipients_Body</name>
+    </customLabels>
+    <customLabels>
+        <label>ИАТА Customer Portal - Вы были добавлены в случае</label>
+        <name>CS_Portal_Addittional_Recipients_Subject</name>
+    </customLabels>
+    <customLabels>
+        <label>чтобы перейти на портал, чтобы просмотреть полную информацию и участвовать в сообщении.</label>
+        <name>CS_Portal_Addittional_Recipients_URL_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Campaign already created --></label>
         <name>Campaign_already_created</name>
     </customLabels>
@@ -5569,8 +5581,8 @@
         <name>CaseValidation_Area</name>
     </customLabels>
     <customLabels>
-        <label><!-- CaseValidation - Area2 --></label>
-        <name>CaseValidation_Area2</name>
+        <label><!-- CaseValidation - Area in Case Global --></label>
+        <name>CaseValidation_Area_in_Case_Global</name>
     </customLabels>
     <customLabels>
         <label><!-- CaseValidation - InDepthArea --></label>

@@ -5510,6 +5510,18 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_selectReason</name>
     </customLabels>
     <customLabels>
+        <label>ケースへの参加者としてあなたを追加しました</label>
+        <name>CS_Portal_Addittional_Recipients_Body</name>
+    </customLabels>
+    <customLabels>
+        <label>IATAカスタマーポータル - あなたはケースに追加されました</label>
+        <name>CS_Portal_Addittional_Recipients_Subject</name>
+    </customLabels>
+    <customLabels>
+        <label>完全な詳細情報を表示し、通信に従事するポータルに移動します。</label>
+        <name>CS_Portal_Addittional_Recipients_URL_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Campaign already created --></label>
         <name>Campaign_already_created</name>
     </customLabels>
@@ -5562,8 +5574,8 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CaseValidation_Area</name>
     </customLabels>
     <customLabels>
-        <label><!-- CaseValidation - Area2 --></label>
-        <name>CaseValidation_Area2</name>
+        <label><!-- CaseValidation - Area in Case Global --></label>
+        <name>CaseValidation_Area_in_Case_Global</name>
     </customLabels>
     <customLabels>
         <label><!-- CaseValidation - InDepthArea --></label>

@@ -53276,6 +53276,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Portal_Applications__c.ANG_Country_Coverage_2__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Portal_Applications__c.ANG_Country_Coverage__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -65487,6 +65492,15 @@
         <modifyAllRecords>false</modifyAllRecords>
         <object>LocalGovernance__c</object>
         <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>Local_Bank_Mandate_Checklist__c</object>
+        <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
         <allowCreate>false</allowCreate>
