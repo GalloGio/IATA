@@ -705,9 +705,16 @@ public class ISSP_ANG_ANNUAL_REVALIDATION {
 		for(childsAccountsWrapper acc: childsAccountsWrapperList){
 			if(acc.checked){
 				iataCodesOk.add(acc.IATACode);
-				
-				if(getForm(acc.IATACode)==null)
-					createForm(acc.IATACode);
+				//after the pull request https://bitbucket.org/iatasfdc/production-master/pull-requests/19600 is merged into PROD,
+				// which is within the following if condition, it must be replaced by createForm(acc.IATACode);
+				if(getForm(acc.IATACode)==null){
+					account a = accountsMap.get(acc.IATACode);
+					formsMap.put(acc.IATACode, new ANG_AnnualRevFormWrapper(createNewForm(acc.IATACode),
+															getFormOwners_2(a.id, lstAccreditationContact, rtAccreditContPreviousOwner),
+															getFormOwners_2(a.id, lstAccreditationContact, rtAccreditContCurrentOwner),
+															getFormOwners_2(a.id, lstAccreditationContact, rtAccreditContCurrentCompanyOwner),
+															getFormOwners_2(a.id, lstAccreditationContact, rtAccreditContPreviousCompanyOwner)));
+				}
 
 				currentAccount = new ANG_AnnualRevCurrentAccount(accountsMap.get(acc.IATACode),
 														getStatus(acc.IATACode),
