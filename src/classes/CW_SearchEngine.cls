@@ -294,7 +294,7 @@ public without sharing class CW_SearchEngine {
 	*	@Param: List<Param> lstAfterQueryFilters - althought 
 	*   @Returns: List<OutputRow> lstARDoutput filtered by lstAfterQueryFilters params
 	*/
-	private static List<OutputRow> filterResultsAfterQuery(List<OutputRow> lstARDinput, List<Param> lstAfterQueryFilters) {
+	public static List<OutputRow> filterResultsAfterQuery(List<OutputRow> lstARDinput, List<Param> lstAfterQueryFilters) {
 		List<OutputRow> lstARDoutput;
 
 		String query = getAdditionalQuery(lstAfterQueryFilters);

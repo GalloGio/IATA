@@ -973,4 +973,17 @@ public class CW_UtilitiesTest {
 		test.stopTest();
 		System.assert(!crds.isEmpty(), 'ERROR: crds should not be empty');
 	}
+
+
+	/*********************************************************************************************************
+	 * @name			getAllHandlingServicesAvailableJsonTest
+	 * @description		Test method for getAllServicesAvailableJson method
+	 * @param			-
+	 * @return			-
+	**********************************************************************************************************/
+	@isTest
+	static void getAllHandlingServicesAvailableJsonTest(){
+		String services = CW_Utilities.getAllServicesAvailableJson();
+		System.assert(string.isNotBlank(services), 'ERROR: services not be empty');
+	}
 }
