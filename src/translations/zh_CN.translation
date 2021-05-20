@@ -3686,7 +3686,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_IATAN_Register_Info</name>
     </customLabels>
     <customLabels>
-        <label>致敬，&amp;lt;br/&amp;gt;国际航空运输协会客户服务中心。</label>
+        <label>致敬，&lt;br/&gt;国际航空运输协会客户服务中心。</label>
         <name>CSP_IATA_CSC_Email_Greetings</name>
     </customLabels>
     <customLabels>
@@ -5506,6 +5506,18 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_selectReason</name>
     </customLabels>
     <customLabels>
+        <label>加入你作为一个参与者的情况下</label>
+        <name>CS_Portal_Addittional_Recipients_Body</name>
+    </customLabels>
+    <customLabels>
+        <label>IATA客户门户网站 - 你加入的情况下</label>
+        <name>CS_Portal_Addittional_Recipients_Subject</name>
+    </customLabels>
+    <customLabels>
+        <label>去门户网站查看全部细节，并从事通信。</label>
+        <name>CS_Portal_Addittional_Recipients_URL_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Campaign already created --></label>
         <name>Campaign_already_created</name>
     </customLabels>
@@ -5558,8 +5570,8 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CaseValidation_Area</name>
     </customLabels>
     <customLabels>
-        <label><!-- CaseValidation - Area2 --></label>
-        <name>CaseValidation_Area2</name>
+        <label><!-- CaseValidation - Area in Case Global --></label>
+        <name>CaseValidation_Area_in_Case_Global</name>
     </customLabels>
     <customLabels>
         <label><!-- CaseValidation - InDepthArea --></label>
@@ -38782,7 +38794,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Opportunities with or without RSL --></label>
         <name>Opportunities_with_or_without_RSL</name>
         <sections>
-            <label><!-- Opportunities --></label>
+            <label>报告/报表</label>
             <name>Opportunities</name>
         </sections>
         <sections>

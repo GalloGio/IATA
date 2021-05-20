@@ -72,6 +72,11 @@
         <label>Actioned -No Response – Will Call Again</label>
     </standardValue>
     <standardValue>
+        <fullName>Action Needed</fullName>
+        <default>false</default>
+        <label>Action Needed</label>
+    </standardValue>
+    <standardValue>
         <fullName>Actual Sale</fullName>
         <default>false</default>
         <label>Actual Sale</label>
@@ -345,6 +350,11 @@
         <fullName>Email Sent</fullName>
         <default>false</default>
         <label>Email Sent</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Escalated Internally</fullName>
+        <default>false</default>
+        <label>Escalated Internally</label>
     </standardValue>
     <standardValue>
         <fullName>Existing SP</fullName>
@@ -1240,6 +1250,11 @@
         <fullName>Participated</fullName>
         <default>false</default>
         <label>Participated</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Pending Customer</fullName>
+        <default>false</default>
+        <label>Pending Customer</label>
     </standardValue>
     <standardValue>
         <fullName>Pending Fixes</fullName>

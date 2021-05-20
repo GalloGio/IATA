@@ -3689,7 +3689,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_IATAN_Register_Info</name>
     </customLabels>
     <customLabels>
-        <label>감사합니다. &amp;lt;br/&amp;gt; IATA 고객 서비스 센터</label>
+        <label>감사합니다. &lt;br/&gt; IATA 고객 서비스 센터</label>
         <name>CSP_IATA_CSC_Email_Greetings</name>
     </customLabels>
     <customLabels>
@@ -5509,6 +5509,18 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_selectReason</name>
     </customLabels>
     <customLabels>
+        <label>경우에 참가자로 추가</label>
+        <name>CS_Portal_Addittional_Recipients_Body</name>
+    </customLabels>
+    <customLabels>
+        <label>IATA 고객 포털 - 당신은 경우에 추가되었습니다</label>
+        <name>CS_Portal_Addittional_Recipients_Subject</name>
+    </customLabels>
+    <customLabels>
+        <label>전체 세부 사항을 확인하고 통신에 참여 포털로 이동합니다.</label>
+        <name>CS_Portal_Addittional_Recipients_URL_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Campaign already created --></label>
         <name>Campaign_already_created</name>
     </customLabels>
@@ -5561,8 +5573,8 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CaseValidation_Area</name>
     </customLabels>
     <customLabels>
-        <label><!-- CaseValidation - Area2 --></label>
-        <name>CaseValidation_Area2</name>
+        <label><!-- CaseValidation - Area in Case Global --></label>
+        <name>CaseValidation_Area_in_Case_Global</name>
     </customLabels>
     <customLabels>
         <label><!-- CaseValidation - InDepthArea --></label>

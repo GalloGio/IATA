@@ -16,7 +16,7 @@
         <inputParameters>
             <name>emailBody</name>
             <value>
-                <stringValue>The Airport_IS_User_Access-13 invocable process failed to start because no records in your org match the record Id specified. In the entities that invoke Airport_IS_User_Access-13, such as other processes, check the value for this input: SObjectId.</stringValue>
+                <stringValue>The Airport_IS_User_Access-3 invocable process failed to start because no records in your org match the record Id specified. In the entities that invoke Airport_IS_User_Access-3, such as other processes, check the value for this input: SObjectId.</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -42,7 +42,7 @@
         <inputParameters>
             <name>emailBody</name>
             <value>
-                <stringValue>The Airport_IS_User_Access-13 invocable process failed to start because a valid value wasn&apos;t found. This can happen when entities that invoke Airport_IS_User_Access-13, such as other processes, don&apos;t have values for either the SObject or SObjectId. For example: 
+                <stringValue>The Airport_IS_User_Access-3 invocable process failed to start because a valid value wasn&apos;t found. This can happen when entities that invoke Airport_IS_User_Access-3, such as other processes, don&apos;t have values for either the SObject or SObjectId. For example: 
 -An SObject or SObject ID wasn&apos;t specified.
 -A value might have been included, but it was null at runtime. </stringValue>
             </value>
@@ -383,6 +383,48 @@
             <processMetadataValues>
                 <name>dataType</name>
                 <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Permission Set Action (Add, Remove)</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>maxOccurs</name>
+                <value>
+                    <numberValue>0.0</numberValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>objectType</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>operation</name>
+            <value>
+                <stringValue>Add</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
                     <stringValue>SObject</stringValue>
                 </value>
             </processMetadataValues>
@@ -461,48 +503,6 @@
             <name>inputPermissionSetName</name>
             <value>
                 <stringValue>OAG_Access</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <processMetadataValues>
-                <name>dataType</name>
-                <value>
-                    <stringValue>String</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>isRequired</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideLabel</name>
-                <value>
-                    <stringValue>Permission Set Action (Add, Remove)</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>maxOccurs</name>
-                <value>
-                    <numberValue>0.0</numberValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>objectType</name>
-                <value>
-                    <stringValue></stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>rightHandSideType</name>
-                <value>
-                    <stringValue>String</stringValue>
-                </value>
-            </processMetadataValues>
-            <name>operation</name>
-            <value>
-                <stringValue>Add</stringValue>
             </value>
         </inputParameters>
     </actionCalls>
@@ -653,160 +653,17 @@
         <processMetadataValues>
             <name>apexSelection</name>
             <value>
-                <stringValue>Modify Permission Set Assignments To Community Contacts</stringValue>
-            </value>
-        </processMetadataValues>
-        <name>myRule_5_A2</name>
-        <label>Unassign OAG Permission Set</label>
-        <locationX>500</locationX>
-        <locationY>300</locationY>
-        <actionName>PermissionSetAssignments</actionName>
-        <actionType>apex</actionType>
-        <connector>
-            <targetReference>myRule_5_A3</targetReference>
-        </connector>
-        <inputParameters>
-            <processMetadataValues>
-                <name>dataType</name>
-                <value>
-                    <stringValue>SObject</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>isRequired</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideLabel</name>
-                <value>
-                    <stringValue>Contact</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>maxOccurs</name>
-                <value>
-                    <numberValue>0.0</numberValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>objectType</name>
-                <value>
-                    <stringValue>Contact</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>rightHandSideType</name>
-                <value>
-                    <stringValue>SObject</stringValue>
-                </value>
-            </processMetadataValues>
-            <name>inputContact</name>
-            <value>
-                <elementReference>SObject.Contact__r</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <processMetadataValues>
-                <name>dataType</name>
-                <value>
-                    <stringValue>String</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>isRequired</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideLabel</name>
-                <value>
-                    <stringValue>Permission Set Name</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>maxOccurs</name>
-                <value>
-                    <numberValue>0.0</numberValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>objectType</name>
-                <value>
-                    <stringValue></stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>rightHandSideType</name>
-                <value>
-                    <stringValue>String</stringValue>
-                </value>
-            </processMetadataValues>
-            <name>inputPermissionSetName</name>
-            <value>
-                <stringValue>OAG_Access</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <processMetadataValues>
-                <name>dataType</name>
-                <value>
-                    <stringValue>String</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>isRequired</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideLabel</name>
-                <value>
-                    <stringValue>Permission Set Action (Add, Remove)</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>maxOccurs</name>
-                <value>
-                    <numberValue>0.0</numberValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>objectType</name>
-                <value>
-                    <stringValue></stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>rightHandSideType</name>
-                <value>
-                    <stringValue>String</stringValue>
-                </value>
-            </processMetadataValues>
-            <name>operation</name>
-            <value>
-                <stringValue>Remove</stringValue>
-            </value>
-        </inputParameters>
-    </actionCalls>
-    <actionCalls>
-        <processMetadataValues>
-            <name>apexSelection</name>
-            <value>
                 <stringValue>Portal Service Access</stringValue>
             </value>
         </processMetadataValues>
-        <name>myRule_5_A3</name>
+        <name>myRule_5_A2</name>
         <label>Process Portal Service Access Request</label>
         <locationX>500</locationX>
-        <locationY>400</locationY>
+        <locationY>300</locationY>
         <actionName>PortalServiceAccessService</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>myRule_5_A4</targetReference>
+            <targetReference>myRule_5_A3</targetReference>
         </connector>
         <inputParameters>
             <processMetadataValues>
@@ -942,10 +799,10 @@
                 <stringValue>Notify_Access_denied_by_internal_user</stringValue>
             </value>
         </processMetadataValues>
-        <name>myRule_5_A4</name>
+        <name>myRule_5_A3</name>
         <label>Send access revoked email</label>
         <locationX>500</locationX>
-        <locationY>500</locationY>
+        <locationY>400</locationY>
         <actionName>Portal_Application_Right__c.Notify_Access_denied_by_internal_user</actionName>
         <actionType>emailAlert</actionType>
         <connector>
@@ -971,6 +828,48 @@
         <locationY>200</locationY>
         <actionName>PermissionSetAssignments</actionName>
         <actionType>apex</actionType>
+        <inputParameters>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Permission Set Action (Add, Remove)</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>maxOccurs</name>
+                <value>
+                    <numberValue>0.0</numberValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>objectType</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>operation</name>
+            <value>
+                <stringValue>Remove</stringValue>
+            </value>
+        </inputParameters>
         <inputParameters>
             <processMetadataValues>
                 <name>dataType</name>
@@ -1053,48 +952,6 @@
             <name>inputPermissionSetName</name>
             <value>
                 <stringValue>OAG_Access</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <processMetadataValues>
-                <name>dataType</name>
-                <value>
-                    <stringValue>String</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>isRequired</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideLabel</name>
-                <value>
-                    <stringValue>Permission Set Action (Add, Remove)</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>maxOccurs</name>
-                <value>
-                    <numberValue>0.0</numberValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>objectType</name>
-                <value>
-                    <stringValue></stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>rightHandSideType</name>
-                <value>
-                    <stringValue>String</stringValue>
-                </value>
-            </processMetadataValues>
-            <name>operation</name>
-            <value>
-                <stringValue>Remove</stringValue>
             </value>
         </inputParameters>
     </actionCalls>
@@ -1443,7 +1300,7 @@
         </rules>
     </decisions>
     <description>Manages User Access to Airport IS via Permission Set. This is an invoked process.</description>
-    <interviewLabel>Airport_IS_User_Access-13_InterviewLabel</interviewLabel>
+    <interviewLabel>Airport_IS_User_Access-3_InterviewLabel</interviewLabel>
     <label>Airport IS User Access</label>
     <processMetadataValues>
         <name>ObjectType</name>
