@@ -38726,7 +38726,7 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
             <name>One Id User Applications</name>
         </sections>
         <sections>
-            <label><!-- User Provisioning Requests --></label>
+            <label>Các báo cáo</label>
             <name>User Provisioning Requests</name>
         </sections>
     </reportTypes>

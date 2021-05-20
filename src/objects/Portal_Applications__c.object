@@ -213,10 +213,10 @@ ISBLANK(ANG_Restrict_by_Accreditation_Type__c)
         <type>Checkbox</type>
     </fields>
     <fields>
-        <fullName>ANG_Country_Coverage__c</fullName>
+        <fullName>ANG_Country_Coverage_2__c</fullName>
         <description>Contains a comma-separated list of Country ISO Codes that are linked to a portal service (this list is managed by the a trigger on IATA ISO country (AMS_IATAISOCountryTrigger).</description>
         <externalId>false</externalId>
-        <label>Country Coverage</label>
+        <label>Country Coverage 2</label>
         <length>255</length>
         <required>false</required>
         <trackHistory>true</trackHistory>
@@ -225,10 +225,10 @@ ISBLANK(ANG_Restrict_by_Accreditation_Type__c)
         <unique>false</unique>
     </fields>
     <fields>
-        <fullName>ANG_Country_Coverage_2__c</fullName>
+        <fullName>ANG_Country_Coverage__c</fullName>
         <description>Contains a comma-separated list of Country ISO Codes that are linked to a portal service (this list is managed by the a trigger on IATA ISO country (AMS_IATAISOCountryTrigger).</description>
         <externalId>false</externalId>
-        <label>Country Coverage 2</label>
+        <label>Country Coverage</label>
         <length>255</length>
         <required>false</required>
         <trackHistory>true</trackHistory>
@@ -264,8 +264,7 @@ ISBLANK(ANG_Restrict_by_Accreditation_Type__c)
             TRIM(ANG_Country_Coverage__c) = &quot;&quot;,
             TRIM(ANG_Country_Coverage_2__c) = &quot;&quot;
             )
-            )
-        </formula>
+            )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Flag Country Coverage</label>
         <trackHistory>false</trackHistory>
