@@ -365,26 +365,62 @@
     </actionCalls>
     <actionCalls>
         <processMetadataValues>
-            <name>ActionCallType</name>
+            <name>apexSelection</name>
             <value>
-                <stringValue>process</stringValue>
-            </value>
-        </processMetadataValues>
-        <processMetadataValues>
-            <name>flowSelection</name>
-            <value>
-                <stringValue>OAG User Access</stringValue>
+                <stringValue>Modify Permission Set Assignments To Community Contacts</stringValue>
             </value>
         </processMetadataValues>
         <name>myRule_3_A1</name>
-        <label>OAG User Access</label>
+        <label>Assign OAG Permission Set</label>
         <locationX>300</locationX>
         <locationY>200</locationY>
-        <actionName>OAG_User_Access</actionName>
-        <actionType>flow</actionType>
+        <actionName>PermissionSetAssignments</actionName>
+        <actionType>apex</actionType>
         <connector>
             <targetReference>myDecision4</targetReference>
         </connector>
+        <inputParameters>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Permission Set Action (Add, Remove)</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>maxOccurs</name>
+                <value>
+                    <numberValue>0.0</numberValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>objectType</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>operation</name>
+            <value>
+                <stringValue>Add</stringValue>
+            </value>
+        </inputParameters>
         <inputParameters>
             <processMetadataValues>
                 <name>dataType</name>
@@ -401,7 +437,7 @@
             <processMetadataValues>
                 <name>leftHandSideLabel</name>
                 <value>
-                    <stringValue>SObject</stringValue>
+                    <stringValue>Contact</stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
@@ -413,7 +449,7 @@
             <processMetadataValues>
                 <name>objectType</name>
                 <value>
-                    <stringValue>Portal_Application_Right__c</stringValue>
+                    <stringValue>Contact</stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
@@ -422,9 +458,51 @@
                     <stringValue>SObject</stringValue>
                 </value>
             </processMetadataValues>
-            <name>SObject</name>
+            <name>inputContact</name>
             <value>
-                <elementReference>SObject</elementReference>
+                <elementReference>SObject.Contact__r</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Permission Set Name</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>maxOccurs</name>
+                <value>
+                    <numberValue>0.0</numberValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>objectType</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>inputPermissionSetName</name>
+            <value>
+                <stringValue>OAG_Access</stringValue>
             </value>
         </inputParameters>
     </actionCalls>
@@ -739,23 +817,59 @@
     </actionCalls>
     <actionCalls>
         <processMetadataValues>
-            <name>ActionCallType</name>
+            <name>apexSelection</name>
             <value>
-                <stringValue>process</stringValue>
-            </value>
-        </processMetadataValues>
-        <processMetadataValues>
-            <name>flowSelection</name>
-            <value>
-                <stringValue>OAG User Access</stringValue>
+                <stringValue>Modify Permission Set Assignments To Community Contacts</stringValue>
             </value>
         </processMetadataValues>
         <name>myRule_7_A1</name>
-        <label>OAG User Access</label>
+        <label>Unassign OAG Permission Set</label>
         <locationX>700</locationX>
         <locationY>200</locationY>
-        <actionName>OAG_User_Access</actionName>
-        <actionType>flow</actionType>
+        <actionName>PermissionSetAssignments</actionName>
+        <actionType>apex</actionType>
+        <inputParameters>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Permission Set Action (Add, Remove)</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>maxOccurs</name>
+                <value>
+                    <numberValue>0.0</numberValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>objectType</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>operation</name>
+            <value>
+                <stringValue>Remove</stringValue>
+            </value>
+        </inputParameters>
         <inputParameters>
             <processMetadataValues>
                 <name>dataType</name>
@@ -772,7 +886,7 @@
             <processMetadataValues>
                 <name>leftHandSideLabel</name>
                 <value>
-                    <stringValue>SObject</stringValue>
+                    <stringValue>Contact</stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
@@ -784,7 +898,7 @@
             <processMetadataValues>
                 <name>objectType</name>
                 <value>
-                    <stringValue>Portal_Application_Right__c</stringValue>
+                    <stringValue>Contact</stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
@@ -793,9 +907,51 @@
                     <stringValue>SObject</stringValue>
                 </value>
             </processMetadataValues>
-            <name>SObject</name>
+            <name>inputContact</name>
             <value>
-                <elementReference>SObject</elementReference>
+                <elementReference>SObject.Contact__r</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Permission Set Name</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>maxOccurs</name>
+                <value>
+                    <numberValue>0.0</numberValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>objectType</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>inputPermissionSetName</name>
+            <value>
+                <stringValue>OAG_Access</stringValue>
             </value>
         </inputParameters>
     </actionCalls>

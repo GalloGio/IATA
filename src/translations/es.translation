@@ -38760,7 +38760,7 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
             <name>One Id User Applications</name>
         </sections>
         <sections>
-            <label><!-- User Provisioning Requests --></label>
+            <label>Informes</label>
             <name>User Provisioning Requests</name>
         </sections>
     </reportTypes>

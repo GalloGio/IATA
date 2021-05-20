@@ -38687,7 +38687,7 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         <label><!-- OS Stations with Certification and Managers --></label>
         <name>OS_Stations_Cert_Mana</name>
         <sections>
-            <label><!-- ONE Source Contact Role Details --></label>
+            <label>Fichiers</label>
             <name>ONE Source Contact Role Details</name>
         </sections>
         <sections>
@@ -38771,7 +38771,7 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
             <name>One Id User Applications</name>
         </sections>
         <sections>
-            <label><!-- User Provisioning Requests --></label>
+            <label>Fichiers</label>
             <name>User Provisioning Requests</name>
         </sections>
     </reportTypes>
