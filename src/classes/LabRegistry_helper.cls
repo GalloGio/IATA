@@ -25,6 +25,7 @@ public  without sharing class LabRegistry_helper {
 			//Create Case
 			Case theCase = new case();
 				theCase.recordtypeid = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');
+				theCase.ContactId = currentUser.ContactId;
 				theCase.AccountId = currentUser.Contact.AccountId;
 				theCase.subject = ('Lab Registry - New access request for ' + currentUser.contact.account.name).left(255);
 				theCase.Origin = 'Portal';
@@ -101,5 +102,92 @@ public  without sharing class LabRegistry_helper {
 		} catch (Exception e) {
 			throw new AuraHandledException(e.getMessage());
 		}
+	}
+
+	@AuraEnabled
+	public static boolean ApproveDenyApplication(ID PARID, string st){
+		try{
+			Portal_Application_Right__c PAR = new Portal_Application_Right__c();
+			par.Id = PARID;
+			par.Right__c = st;
+			update PAR;
+			return true;
+		}catch(Exception e){
+			throw new AuraHandledException(e.getMessage());
+			//return false;
+		}
+	}
+
+	@AuraEnabled
+	public static SavedDataWrapper retrieveSavedData(string recordID){
+		LabRegistry_helper.SavedDataWrapper oReturn = new LabRegistry_helper.SavedDataWrapper();
+		try {
+			case theCase = [select contactId, id, Reason1__c, CaseArea__c from case where id =:recordID];
+			LAB_Account_Role_Detail__c labRoleDetail = [select
+															id
+															,How_long_have_you_been_in_the_business__c
+															,Lab_Type__c
+															,Do_you_manage_booking_for_all_locations__c
+															,Do_you_issue_test_results_for_all_lab__c
+															,Are_your_labs_part_of_national_platform__c
+															,Which_National_Platform__c //if above = YES
+															,Existing_partnership_with_airlines__c
+															//A FORM
+															,Operating_under_brand__c
+															,Which_Operating_Brand__c //IF above = YES
+															,Type_of_SLAs_in_place__c
+															,Nature_of_SLA__c //IF above = YES
+															//B FORM
+															,Type_of_lab__c
+															,National_accreditation_for_all_the_labs__c
+															,Additional_certifications_in_place__c
+															,Additional_certifications__c //IF Above = YES
+															,Endorsed_by_governments__c
+															,Which_governments__c // IF Above = YES
+															,onboarding_case__r.contactId
+														from LAB_Account_Role_Detail__c 
+														where onboarding_case__c = :recordID];
+
+			list<LAB_Account_Role_Detail__c> lsCountriesLab = [select
+																	id
+																	,CountryName__c
+																	,How_Many_Lab__c
+																from LAB_Account_Role_Detail__c 
+																where Parent_Detail_For_Country__c =:labRoleDetail.Id] ;
+
+			list<LAB_Account_Role_Detail__c> lsAirlineAgreement = [select id, Airline_Name__c from LAB_Account_Role_Detail__c where Parent_Detail_For_Airline__c =:labRoleDetail.Id] ;
+			
+			Portal_Application_Right__c PAR = [select id, right__c from Portal_Application_Right__c where Contact__c=:labRoleDetail.onboarding_case__r.contactId and Portal_Application__r.Functional_Role__c=:LabRegistry_helper.labRegistryAccnRole];
+
+			oReturn.labRoleDetail = labRoleDetail;
+			oReturn.lsAirlineAgreement = lsAirlineAgreement;
+			oReturn.lsCountriesLab = lsCountriesLab;
+			oReturn.PAR = PAR;
+			oReturn.onboardingCase = theCase;
+
+			return oReturn;
+			
+		} catch (Exception e) {
+			throw new AuraHandledException(e.getMessage());
+		}
+
+		//return null;
+	}
+
+	public class SavedDataWrapper{
+		@AuraEnabled
+		public Portal_Application_Right__c PAR;
+
+		@AuraEnabled
+		public LAB_Account_Role_Detail__c labRoleDetail;
+
+		@AuraEnabled
+		public list<LAB_Account_Role_Detail__c> lsCountriesLab;
+		
+		@AuraEnabled
+		public list<LAB_Account_Role_Detail__c> lsAirlineAgreement;
+
+		@AuraEnabled
+		public Case onboardingCase;
 	}
 }

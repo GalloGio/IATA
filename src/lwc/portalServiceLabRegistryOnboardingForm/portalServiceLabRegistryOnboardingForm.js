@@ -458,7 +458,6 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 
 	handleSubmitRequest(){
 		this.isLoading = true;
-		console.log('Starting to create data!');
 		//this.dispatchEvent(new CustomEvent('requestcompleted', { detail: { success: false }, bubbles: true,composed: true }));// sends the event to the grandparent
 		//this.startLoading();
 
@@ -510,12 +509,11 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 
 		this.selectedAirlines.forEach(airline =>{
 			let airlineAgreement =  { 'sobjectType': 'LAB_Account_Role_Detail__c' };
-			airlineAgreement.Partner_Airline__c = airline.value;
+			airlineAgreement.Partner_Airline__c = airline.Id;
 			airlineAgreements.push(airlineAgreement);
 		});
 		
 
-		console.log('Structure is prepared. Sending to controller');
 		saveSurveyAnswers({labRoleDetail: labDetail
 							, lsCountriesLab : countriesLabs
 							, lsAirlineAgreement: airlineAgreements})

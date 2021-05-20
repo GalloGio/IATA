@@ -205,6 +205,18 @@
         </valueSet>
     </fields>
     <fields>
+        <fullName>Airline_Name__c</fullName>
+        <externalId>false</externalId>
+        <formula>Partner_Airline__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Airline Name</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Are_your_labs_part_of_national_platform__c</fullName>
         <description>Form question: Is there a National Platform in place that you need to communicate tests results to?</description>
         <externalId>false</externalId>
@@ -218,6 +230,18 @@
             <restricted>true</restricted>
             <valueSetName>Generic_YES_NO_NA</valueSetName>
         </valueSet>
+    </fields>
+    <fields>
+        <fullName>CountryName__c</fullName>
+        <externalId>false</externalId>
+        <formula>Operating_Country__r.Name</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>CountryName</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Do_you_issue_test_results_for_all_lab__c</fullName>
