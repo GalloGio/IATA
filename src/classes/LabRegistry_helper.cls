@@ -81,4 +81,18 @@ public  without sharing class LabRegistry_helper {
 			return false;
 		}
 	}
+
+	@AuraEnabled
+	public static Attachment getCSVTemplateFile(){
+		try {
+			Portal_Applications__c service = [select id from Portal_Applications__c where Functional_Role__c=:LabRegistry_helper.labRegistryAccnRole limit 1];
+			List<Attachment> attachments = [select Id from Attachment WHERE parentId=:service.id order by lastmodifieddate desc LIMIT 1];
+			if (attachments.size()>0) {
+				return attachments[0];
+			}
+			return null;
+		} catch (Exception e) {
+			throw new AuraHandledException(e.getMessage());
+		}
+	}
 }

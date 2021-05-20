@@ -21,7 +21,7 @@
 									<lightning-formatted-rich-text class="boxText" value={labels.CSP_LabReg_Download_CSV} ></lightning-formatted-rich-text>
 								</div>
 								<div class="boxSection">
-									<a href={TemplateFile}>
+									<a href={csvFilePath}>
 										<lightning-icon
 											variant="base" 
 											icon-name="utility:download"
@@ -45,7 +45,7 @@
 								</div>
 								<div class="boxSection">
 									<div class="buttonContainer marginAuto">
-										<lightning-button class="containedButton customBtn btnModal outlinedBtn" label={labels.CSP_LabReg_UploadCSVBtn} variant="neutral"  onclick={openUploadCSVModal} >
+										<lightning-button class="containedButton customBtn btnModal outlinedBtn" label={labels.CSP_LabReg_UploadCSVBtn} variant="neutral"  onclick={openUploadModal} >
 										</lightning-button>
 									</div>
 								</div>
@@ -58,4 +58,62 @@
 			</span>
 		</span>
 	</div>
+
+
+	<!--  MODAL FOR FILE UPLOAD -->
+	<template if:true={showUploadModal}>
+		<div class="modal">
+			<div class="customPopupInteriorThreeQuartersScreenCentered">
+				
+				<div class="slds-p-horizontal_large slds-p-vertical_large mediumTitle text-bold text-small">
+					<span>Upload File</span>
+				</div>
+
+				<div class="slds-p-horizontal_small slds-p-horizontal_large slds-size_1-of-1 customWhiteBackground">
+					<div class="slds-p-vertical_large textMediumMessage">
+						You can upload the filled CSV template here.
+					</div>
+
+					<lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
+						<lightning-input 
+							type="file"
+							accept={acceptedFormats} 
+							onchange={handleUploadFinished}
+							multiple>
+						</lightning-input>
+					</lightning-layout-item>
+
+
+					<lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">
+					</lightning-layout-item>
+
+
+					<lightning-layout-item padding="around-small" size="12" class="IEFixDisplay" if:false={disableConfirm}>
+						<lightning-datatable
+							key-field="Id"
+							data={uploadedCSV}
+							columns={fileColumns}
+							hide-checkbox-column
+							resize-column-disabled
+							suppress-bottom-bar
+							onrowaction={removeFile}>>
+						</lightning-datatable>
+					</lightning-layout-item>
+
+
+				</div>
+
+				
+
+				<div class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix" style="text-align:right">
+					<button class="containedButtonAlt containedButton-size cursorPointer uiButton contactSupport slds-m-horizontal_small" onclick={closeUploadModal}>{labels.Button_Cancel}
+					</button>
+					<button disabled={disableConfirm} class="containedButton containedButton-size slds-m-horizontal_small" onclick={handleSubmitRequest}>
+						{labels.IDCard_Confirm_Replacement}
+					</button>
+				</div>
+			</div>
+		</div>
+	</template>
+
 </template>
