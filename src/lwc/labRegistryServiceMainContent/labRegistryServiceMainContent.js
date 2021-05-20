@@ -64,13 +64,11 @@ export default class labRegistryServiceMainContent extends NavigationMixin(Light
 	handleUploadFinished(event){
 		this.csvId = this.csvId + 1;
 		Array.from(event.target.files).forEach(file => {
-
-
 			//this.uploadedCSV.push(this.mappingFile(file));
 
 			this.uploadedCSV.push({
 				id : this.csvId
-				,document: file
+				, document: file
 				, name: file.name
 				, contentType: file.type
 				, size: file.size
@@ -79,15 +77,7 @@ export default class labRegistryServiceMainContent extends NavigationMixin(Light
 		});
 
 		this.disableConfirm = false;
-
-		// Get the list of uploaded files
-		//let lstUploadedFiles = event.target.files;
-		//this.csvId = this.csvId + 1;
-		//lstUploadedFiles.forEach(fileIterator => this.uploadedCSV.push({'Id':this.csvId, 'fileName':fileIterator.name, 'fileSize':Math.round(fileIterator.size/1024) + 'Kb'}));
 		this.uploadedCSV = [...this.uploadedCSV];
-
-
-		//alert("No. of files uploaded : " + uploadedFiles.length);
 	}
 
 	mappingFile(props) {
