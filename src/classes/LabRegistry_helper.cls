@@ -26,7 +26,7 @@ public  without sharing class LabRegistry_helper {
 			Case theCase = new case();
 				theCase.recordtypeid = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');
 				theCase.AccountId = currentUser.Contact.AccountId;
-				theCase.subject = ('Lab Registry - New access request for Account ' + currentUser.contact.account.name).left(255);
+				theCase.subject = ('Lab Registry - New access request for ' + currentUser.contact.account.name).left(255);
 				theCase.Origin = 'Portal';
 				theCase.Region__c = currentUser.contact.Account.IATA_Iso_Country__r.Region__c;
 				theCase.CaseArea__c = 'IATA Travel Pass';
