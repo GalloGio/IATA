@@ -169,7 +169,7 @@ public class ISSP_ANG_CodeSearch {
 
 					heMessage = aux.replace('%PARENT_LOCATION%', auxReplacement);
 
-					this.agency = parentAgency;				
+					this.agency = parentAgency;
 
 				} else {
 					this.agency = reqAgency;
