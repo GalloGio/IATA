@@ -5569,6 +5569,8 @@ IF(
   (IF( 
   CONTAINS($Profile.Name,&quot;Coding and MITA&quot;),&quot;Coding &amp; MITA&quot;, 
   (IF( 
+  CONTAINS($UserRole.Name,&quot;ICCS&quot;),&quot;ICCS&quot;,
+  (IF( 
   CONTAINS($UserRole.Name, &quot;Distribution - Airline Management&quot;), 
   &quot;Airline Management&quot;, 
   (IF(AND(
@@ -5582,7 +5584,7 @@ IF(
   ),
     &quot;IATA System&quot;,
   
-  &quot;IATA Other&quot;)))))))))))))))))))))))))))))))))))))))))</formula>
+  &quot;IATA Other&quot;)))))))))))))))))))))))))))))))))))))))))))</formula>
         <name>IDFS_CREATED_BY_ROLE</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
@@ -7544,9 +7546,11 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
 (IF(
   CONTAINS($Profile.Name,&quot;Coding and MITA&quot;),&quot;Coding &amp; MITA&quot;,  
 (IF(
+  CONTAINS($UserRole.Name,&quot;ICCS&quot;),&quot;ICCS&quot;,
+(IF(
   CONTAINS($UserRole.Name, &quot;Distribution - Airline Management&quot;),
   &quot;Airline Management&quot;,
-  &quot;IATA Other&quot;)))))))))))))))))))))))))))))))))))))</formula>
+  &quot;IATA Other&quot;)))))))))))))))))))))))))))))))))))))))</formula>
         <name>update closed by role field</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
