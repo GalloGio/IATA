@@ -51553,6 +51553,14 @@ ONE Source is the industry platform for validated aviation capability and infras
         <value>Remote validations are also an integral part of each Smart Facility Operational Capacity Audit. They allow auditors to focus on the procedural assessment of the cargo handling facility.</value>
     </labels>
     <labels>
+        <fullName>icg_smart_facility_remote_validation_url</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg smart facility remote validation url</shortDescription>
+        <value>https://www.iata.org/en/programs/cargo/cargo-operations/smart-facility/remote-validation/</value>
+    </labels>
+    <labels>
         <fullName>icg_smart_facility_url</fullName>
         <categories>ICG One Source</categories>
         <language>en_US</language>
