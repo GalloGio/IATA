@@ -13,7 +13,7 @@ public  without sharing class LabRegistry_helper {
 											, list<LAB_Account_Role_Detail__c> lsCountriesLab
 											, list<LAB_Account_Role_Detail__c> lsAirlineAgreement){
 		try {
-			user currentUser = [select id, ContactId, Contact.AccountId from user where id =: UserInfo.getUserId()];
+			user currentUser = [select id, ContactId, Contact.AccountId, contact.Account.IATA_Iso_Country__r.Region__c, contact.account.name from user where id =: UserInfo.getUserId()];
 			
 			//Create Account Role
 			Account_Role__c accntRole = new Account_Role__c();
@@ -24,6 +24,13 @@ public  without sharing class LabRegistry_helper {
 
 			//Create Case
 			Case theCase = new case();
+				theCase.recordtypeid = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');
+				theCase.AccountId = currentUser.Contact.AccountId;
+				theCase.subject = ('Lab Registry - New access request for Account ' + currentUser.contact.account.name).left(255);
+				theCase.Origin = 'Portal';
+				theCase.Region__c = currentUser.contact.Account.IATA_Iso_Country__r.Region__c;
+				theCase.CaseArea__c = 'IATA Travel Pass';
+				theCase.Reason1__c = 'New access request';
 			insert theCase;
 
 			//Create Account Role Detail. Main answers
