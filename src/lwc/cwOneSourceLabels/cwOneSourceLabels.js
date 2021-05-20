@@ -498,6 +498,7 @@ export function labels() {
 		smart_facility_remote_validation_text1,
 		smart_facility_remote_validation_text2,
 		smart_facility_remote_validation_text3,
+		smart_facility_remote_validation_url,
 		latest,
 		news,
 		latest_news,
