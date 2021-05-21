@@ -1,12 +1,31 @@
 public  without sharing class LabRegistry_helper {
 	public static final string labRegistryAccnRole = 'Lab Registry';
 
+	/*****
+	 * 
+	 * Method is used to retrieve all Airlines' HQ to be displayed in Lab Registry portal service
+	 * 
+	 ***/
 	@AuraEnabled(cacheable=true)
 	public static list<Account> getAirlinesHQ(){
 		list<Account> lsAirline = new list<Account>([select id, name, Airline_designator__c, AccountStatus__c, Site, IATA_ISO_Country__r.Name, IATA_ISO_Country__r.ISO_Code__c, Region__c, recordtypeId  from account where recordtype.developername = 'IATA_Airline' order by Name asc]);
-		//return [select id, name, Airline_designator__c, AccountStatus__c, Site, IATA_ISO_Country__r.Name, IATA_ISO_Country__r.ISO_Code__c, Region__c, recordtypeId  from account where recordtype.developername = 'IATA_Airline' and ACLI_Status__c = 'Active Company' order by Name asc];
 		return lsAirline;
 	}
+
+	/****
+	 * Method used to Save lab registry survey's answers.
+	 * 
+	 *  @input: 
+	 * 		LAB_Account_Role_Detail__c labRoleDetail: used to store the answers to form
+	 * 		list<LAB_Account_Role_Detail__c> lsCountriesLab: used to store how many labs in each country a lab have. each record is child of labRoleDetail
+	 * 		list<LAB_Account_Role_Detail__c> lsAirlineAgreement: used to store airlines havign agreement with the lab. Each record is child of labRoleDetail
+	 * @output:
+	 * 	boolean. True = all good. False, something went wrong
+	 * 
+	 * Method also creates a case, which is saved on the labRoleDetail detail record
+	 * Method created a portal service access with status = access requested
+	 * 
+	 */
 
 	@AuraEnabled
 	public static boolean saveSurveyAnswers(LAB_Account_Role_Detail__c labRoleDetail
@@ -85,16 +104,27 @@ public  without sharing class LabRegistry_helper {
 
 			
 		} catch (Exception e) {
-			//return e.getMessage();
 			return false;
 		}
 	}
 
+	/*****
+	 * Method used to retrieve attachments from portal service Lab Registry.
+	 * Files are shown in the homepage of the portal service.
+	 * Note that only the latest attachment matching the file name is retrieved
+	 * 
+	 * @input:
+	 * 		string filename: the name of the file to retrieve.
+	 * @outpot:
+	 * 		Attachment record
+	 * 
+	 */
+
 	@AuraEnabled
-	public static Attachment getCSVTemplateFile(){
+	public static Attachment getAttachmentFromPortalService(string filename){
 		try {
 			Portal_Applications__c service = [select id from Portal_Applications__c where Functional_Role__c=:LabRegistry_helper.labRegistryAccnRole limit 1];
-			List<Attachment> attachments = [select Id from Attachment WHERE parentId=:service.id order by lastmodifieddate desc LIMIT 1];
+			List<Attachment> attachments = [select Id from Attachment WHERE parentId=:service.id and name = :filename order by lastmodifieddate desc LIMIT 1];
 			if (attachments.size()>0) {
 				return attachments[0];
 			}
@@ -103,6 +133,11 @@ public  without sharing class LabRegistry_helper {
 			throw new AuraHandledException(e.getMessage());
 		}
 	}
+
+	/**
+	 * Invoked by internal users to approve or deny access to the portal service Lab Registry
+	 * 
+	 */
 
 	@AuraEnabled
 	public static boolean ApproveDenyApplication(ID PARID, string st){
@@ -114,9 +149,17 @@ public  without sharing class LabRegistry_helper {
 			return true;
 		}catch(Exception e){
 			throw new AuraHandledException(e.getMessage());
-			//return false;
 		}
 	}
+
+	/***
+	* Method used to retrieve answers to survey to be displayed to internal users to have them reviewing the application
+	* 
+	* 	@input:
+			string recordId: ID of the case which is linked to the survey (account role detail)
+		@output:
+			a wrapper of the records.
+	*/
 
 	@AuraEnabled
 	public static SavedDataWrapper retrieveSavedData(string recordID){
@@ -170,9 +213,11 @@ public  without sharing class LabRegistry_helper {
 		} catch (Exception e) {
 			throw new AuraHandledException(e.getMessage());
 		}
-
-		//return null;
 	}
+
+	/**
+	 * defines the wrapper returned by the above method
+	 */
 
 	public class SavedDataWrapper{
 		@AuraEnabled
@@ -189,5 +234,14 @@ public  without sharing class LabRegistry_helper {
 
 		@AuraEnabled
 		public Case onboardingCase;
+	}
+
+	/**
+	 * Used to retrieve the account name of the user connected to the portal 
+	 */
+
+	@AuraEnabled
+	public static string getAccountName(){
+		return [Select contact.Account.Name from user where id=:UserInfo.getUserId()].contact.Account.Name;
 	}
 }

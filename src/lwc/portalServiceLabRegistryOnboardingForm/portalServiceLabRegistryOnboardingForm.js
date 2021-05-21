@@ -5,6 +5,7 @@ import getCountries from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.getI
 import getAirlinesHQ from '@salesforce/apex/LabRegistry_helper.getAirlinesHQ';
 import { navigateToPage} from'c/navigationUtils';
 import saveSurveyAnswers from '@salesforce/apex/LabRegistry_helper.saveSurveyAnswers';
+import getAccountName from '@salesforce/apex/LabRegistry_helper.getAccountName';
 
 //Objects schema
 import OBJECT_LAB_ACCOUNT_ROLE_DETAIL from '@salesforce/schema/LAB_Account_Role_Detail__c';
@@ -52,14 +53,26 @@ import CSP_LabReg_TypeOfLab from '@salesforce/label/c.CSP_LabReg_TypeOfLab';
 import CSP_LabReg_Which_One from '@salesforce/label/c.CSP_LabReg_Which_One';
 import CSP_LabReg_WhichAirlines from '@salesforce/label/c.CSP_LabReg_WhichAirlines';
 import CSP_LabRegistry from '@salesforce/label/c.CSP_LabRegistry';
-import CSP_LabReg_AirlineAgreements from '@salesforce/label/c.CSP_LabReg_AirlineAgreements';
 import CSP_LabReg_CountryLabs from '@salesforce/label/c.CSP_LabReg_CountryLabs';
 import CSP_L2_Profile_Details_Message from '@salesforce/label/c.CSP_L2_Profile_Details_Message';
+import CSP_L2_Confirmation_Message from '@salesforce/label/c.CSP_L2_Confirmation_Message';
+import CSP_LabReg_confirmDetails from '@salesforce/label/c.CSP_LabReg_confirmDetails';
+
+//Spash screen labels
+
+import CSP_LabReg_Step from '@salesforce/label/c.CSP_LabReg_Step';
+import CSP_LabReg_Start from '@salesforce/label/c.CSP_LabReg_Start';
+import CSP_LabReg_SplashScreen_Intro from '@salesforce/label/c.CSP_LabReg_SplashScreen_Intro';
+import CSP_LabReg_SplashScreen_Step1 from '@salesforce/label/c.CSP_LabReg_SplashScreen_Step1';
+import CSP_LabReg_SplashScreen_Step2 from '@salesforce/label/c.CSP_LabReg_SplashScreen_Step2';
+import CSP_LabReg_SplashScreen_Step3 from '@salesforce/label/c.CSP_LabReg_SplashScreen_Step3';
+import CSP_LabReg_SplashScreen_Step4 from '@salesforce/label/c.CSP_LabReg_SplashScreen_Step4';
+
 
 //Steps labels
 import CSP_labReg_Step_GeneralInformation from '@salesforce/label/c.CSP_labReg_Step_GeneralInformation';
 import CSP_LabReg_Step_Locations from '@salesforce/label/c.CSP_LabReg_Step_Locations';
-import CSP_labReg_Step_Confirmation from '@salesforce/label/c.CSP_labReg_Step_Confirmation';
+import CSP_L2_Confirmation from '@salesforce/label/c.CSP_L2_Confirmation';
 import CSP_labReg_Step_Airline_Agreements from '@salesforce/label/c.CSP_labReg_Step_Airline_Agreements';
 
 //Modal Labels
@@ -82,6 +95,16 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 	abortRequest() {
         this.dispatchEvent(new CustomEvent('requestcompleted', { detail: { success: false }, bubbles: true,composed: true }));// sends the event to the grandparent
     }
+
+	@track AccntName = '';
+	connectedCallback(){
+		getAccountName()
+		.then(response => {
+			if (response!=null){
+				this.AccntName = response;
+			}
+		});
+	}
 
 	//exposed labels
     @track labels = {
@@ -107,12 +130,11 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 		,CSP_L2_Yes
 		,CSP_L2_No
 		,CSP_LabReg_FormNotCompleted
-		,CSP_LabReg_AirlineAgreements
 		,CSP_LabReg_CountryLabs
 		,CSP_L2_Profile_Details_Message
 		,CSP_L2_Next_Step
 		,CSP_labReg_Step_Airline_Agreements
-		,CSP_labReg_Step_Confirmation
+		,CSP_L2_Confirmation
 		,CSP_LabReg_Step_Locations
 		,CSP_labReg_Step_GeneralInformation
 		,CSP_L2_Back_to_Edit
@@ -123,7 +145,22 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 		,CSP_L2_Go_To_Service
 		,CSP_L2_Registration_Error_Title
 		,CSP_L2_Go_Back
+		,CSP_L2_Confirmation_Message
 		,CSP_L2_Contact_Support
+		,CSP_LabReg_Step
+		,CSP_LabReg_Start
+		,CSP_LabReg_SplashScreen_Intro
+		,CSP_LabReg_SplashScreen_Step1
+		,CSP_LabReg_SplashScreen_Step2
+		,CSP_LabReg_SplashScreen_Step3
+		,CSP_LabReg_SplashScreen_Step4
+		,CSP_LabReg_confirmDetails
+	}
+
+	@track showSplashScreen = true;
+
+	startSurvey(){
+		this.showSplashScreen = false;
 	}
 
 	@track isLoading = false;
