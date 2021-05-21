@@ -15,6 +15,13 @@ import CSP_LabReg_UploadFilledCSV		from '@salesforce/label/c.CSP_LabReg_UploadFi
 import IDCard_Confirm_Replacement		from '@salesforce/label/c.IDCard_Confirm_Replacement';
 import CSP_LabReg_UploadCSVBtn		from '@salesforce/label/c.CSP_LabReg_UploadCSVBtn';
 import CSP_LabReg_UploadCompleted from '@salesforce/label/c.CSP_LabReg_UploadCompleted';
+import CSP_LabRegistry_LabDetails from '@salesforce/label/c.CSP_LabRegistry_LabDetails';
+import CSP_LabReg_DownloadTemplate from '@salesforce/label/c.CSP_LabReg_DownloadTemplate';
+import CSP_LabReg_Download_Instructions from '@salesforce/label/c.CSP_LabReg_Download_Instructions';
+import CSP_LabReg_UploadHere from '@salesforce/label/c.CSP_LabReg_UploadHere';
+
+
+import ISSP_RD_UploadFile from '@salesforce/label/c.ISSP_RD_UploadFile';
 import ISSP_RD_OK_Action from '@salesforce/label/c.ISSP_RD_OK_Action';
 import Button_Cancel from '@salesforce/label/c.Button_Cancel';
 import CSP_PortalPath						from '@salesforce/label/c.CSP_PortalPath';
@@ -29,6 +36,11 @@ export default class labRegistryServiceMainContent extends NavigationMixin(Light
 		,CSP_LabReg_UploadCSVBtn
 		,IDCard_Confirm_Replacement
 		,CSP_LabReg_UploadCompleted
+		,CSP_LabRegistry_LabDetails
+		,CSP_LabReg_DownloadTemplate
+		,CSP_LabReg_Download_Instructions
+		,CSP_LabReg_UploadHere
+		,ISSP_RD_UploadFile
 		,ISSP_RD_OK_Action
 		,Button_Cancel
 	}

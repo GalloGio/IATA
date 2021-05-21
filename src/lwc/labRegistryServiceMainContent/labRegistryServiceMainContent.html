@@ -3,7 +3,7 @@
 	<div class="customLightShadow customPopupInterior75PercentScreenCentered slds-is-relative">
 		<span slot="pageBody">
 			<span slot="cardTitle" class="slds-text-heading_large banner">
-				Laboratory Details
+				{labels.CSP_LabRegistry_LabDetails}
 			</span>
 
 			<span slot="cardBody">
@@ -22,11 +22,11 @@
 								</div>
 								<div class="boxSection">
 									<a href={csvFilePath}>
-										<lightning-button label="Download Template"  icon-name="utility:download" class="slds-m-left_x-small"></lightning-button>
+										<lightning-button label={labels.CSP_LabReg_DownloadTemplate}  icon-name="utility:download" class="slds-m-left_x-small"></lightning-button>
 									</a>
 									&nbsp;
 									<a href={instructionFilePath} target="_blank"> 
-										<lightning-button label="Download Instructions"  icon-name="utility:download" class="slds-m-left_x-small"></lightning-button>
+										<lightning-button label={labels.CSP_LabReg_Download_Instructions}  icon-name="utility:download" class="slds-m-left_x-small"></lightning-button>
 									</a>
 								</div>
 							</div>
@@ -66,12 +66,12 @@
 			<div class="customPopupInteriorThreeQuartersScreenCentered">
 				
 				<div class="slds-p-horizontal_large slds-p-vertical_large mediumTitle text-bold text-small">
-					<span>Upload File</span>
+					<span>{labels.ISSP_RD_UploadFile}</span>
 				</div>
 
 				<div class="slds-p-horizontal_small slds-p-horizontal_large slds-size_1-of-1 customWhiteBackground">
 					<div class="slds-p-vertical_large textMediumMessage">
-						You can upload the filled CSV template here.
+						{labels.CSP_LabReg_UploadHere}
 					</div>
 
 					<lightning-layout-item padding="around-small" size="12" class="IEFixDisplay">

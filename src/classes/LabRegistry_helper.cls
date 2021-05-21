@@ -190,4 +190,9 @@ public  without sharing class LabRegistry_helper {
 		@AuraEnabled
 		public Case onboardingCase;
 	}
+
+	@AuraEnabled
+	public static string getAccountName(){
+		return [Select contact.Account.Name from user where id=:UserInfo.getUserId()].contact.Account.Name;
+	}
 }
