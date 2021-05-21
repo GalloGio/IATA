@@ -3404,13 +3404,6 @@ url: url where is stored the photo</inlineHelpText>
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Energy_Without_Motor__c</picklist>
-            <values>
-                <fullName>Not_Applicable</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Equipment__c</picklist>
             <values>
                 <fullName>15_To_25_C</fullName>
@@ -4224,13 +4217,6 @@ url: url where is stored the photo</inlineHelpText>
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Energy_Without_Motor__c</picklist>
-            <values>
-                <fullName>Not_Applicable</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Equipment__c</picklist>
             <values>
                 <fullName>15_To_25_C</fullName>
@@ -4912,13 +4898,6 @@ url: url where is stored the photo</inlineHelpText>
             </values>
             <values>
                 <fullName>Pharmaceuticals</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Energy_Without_Motor__c</picklist>
-            <values>
-                <fullName>Not_Applicable</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -5608,13 +5587,6 @@ url: url where is stored the photo</inlineHelpText>
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Energy_Without_Motor__c</picklist>
-            <values>
-                <fullName>Not_Applicable</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Equipment__c</picklist>
             <values>
                 <fullName>15_To_25_C</fullName>
@@ -6296,13 +6268,6 @@ url: url where is stored the photo</inlineHelpText>
             </values>
             <values>
                 <fullName>Pharmaceuticals</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Energy_Without_Motor__c</picklist>
-            <values>
-                <fullName>Not_Applicable</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -7020,13 +6985,6 @@ url: url where is stored the photo</inlineHelpText>
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Energy_Without_Motor__c</picklist>
-            <values>
-                <fullName>Not_Applicable</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Equipment__c</picklist>
             <values>
                 <fullName>15_To_25_C</fullName>
@@ -7692,13 +7650,6 @@ url: url where is stored the photo</inlineHelpText>
             <picklist>ESC_Type_Commodity__c</picklist>
             <values>
                 <fullName>General_Cargo</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Energy_Without_Motor__c</picklist>
-            <values>
-                <fullName>Not_Applicable</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -8372,13 +8323,6 @@ url: url where is stored the photo</inlineHelpText>
             <picklist>ESC_Type_Commodity__c</picklist>
             <values>
                 <fullName>General_Cargo</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Energy_Without_Motor__c</picklist>
-            <values>
-                <fullName>Not_Applicable</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -9060,13 +9004,6 @@ url: url where is stored the photo</inlineHelpText>
             <picklist>ESC_Type_Commodity__c</picklist>
             <values>
                 <fullName>General_Cargo</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Energy_Without_Motor__c</picklist>
-            <values>
-                <fullName>Not_Applicable</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -9776,13 +9713,6 @@ url: url where is stored the photo</inlineHelpText>
             </values>
             <values>
                 <fullName>Pharmaceuticals</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Energy_Without_Motor__c</picklist>
-            <values>
-                <fullName>Not_Applicable</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -10676,13 +10606,6 @@ url: url where is stored the photo</inlineHelpText>
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Energy_Without_Motor__c</picklist>
-            <values>
-                <fullName>Not_Applicable</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Equipment__c</picklist>
             <values>
                 <fullName>15_To_25_C</fullName>
@@ -11388,13 +11311,6 @@ url: url where is stored the photo</inlineHelpText>
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Energy_Without_Motor__c</picklist>
-            <values>
-                <fullName>Not_Applicable</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Equipment__c</picklist>
             <values>
                 <fullName>15_To_25_C</fullName>
@@ -12072,13 +11988,6 @@ url: url where is stored the photo</inlineHelpText>
             </values>
             <values>
                 <fullName>Pharmaceuticals</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Energy_Without_Motor__c</picklist>
-            <values>
-                <fullName>Not_Applicable</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -12785,13 +12694,6 @@ url: url where is stored the photo</inlineHelpText>
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Energy_Without_Motor__c</picklist>
-            <values>
-                <fullName>Not_Applicable</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Equipment__c</picklist>
             <values>
                 <fullName>15_To_25_C</fullName>
@@ -13461,13 +13363,6 @@ url: url where is stored the photo</inlineHelpText>
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Energy_Without_Motor__c</picklist>
-            <values>
-                <fullName>Not_Applicable</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Equipment__c</picklist>
             <values>
                 <fullName>15_To_25_C</fullName>
@@ -14129,13 +14024,6 @@ url: url where is stored the photo</inlineHelpText>
             <picklist>ESC_Type_Commodity__c</picklist>
             <values>
                 <fullName>General_Cargo</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Energy_Without_Motor__c</picklist>
-            <values>
-                <fullName>Not_Applicable</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -14805,13 +14693,6 @@ url: url where is stored the photo</inlineHelpText>
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Energy_Without_Motor__c</picklist>
-            <values>
-                <fullName>Not_Applicable</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Equipment__c</picklist>
             <values>
                 <fullName>15_To_25_C</fullName>
@@ -15477,13 +15358,6 @@ url: url where is stored the photo</inlineHelpText>
             <picklist>ESC_Type_Commodity__c</picklist>
             <values>
                 <fullName>General_Cargo</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Energy_Without_Motor__c</picklist>
-            <values>
-                <fullName>Not_Applicable</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -16165,13 +16039,6 @@ url: url where is stored the photo</inlineHelpText>
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Energy_Without_Motor__c</picklist>
-            <values>
-                <fullName>Not_Applicable</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Equipment__c</picklist>
             <values>
                 <fullName>15_To_25_C</fullName>
@@ -16849,13 +16716,6 @@ url: url where is stored the photo</inlineHelpText>
             <picklist>ESC_Type_Commodity__c</picklist>
             <values>
                 <fullName>General_Cargo</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Energy_Without_Motor__c</picklist>
-            <values>
-                <fullName>Not_Applicable</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -17550,13 +17410,6 @@ url: url where is stored the photo</inlineHelpText>
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Energy_Without_Motor__c</picklist>
-            <values>
-                <fullName>Not_Applicable</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Equipment__c</picklist>
             <values>
                 <fullName>15_To_25_C</fullName>
@@ -18230,13 +18083,6 @@ url: url where is stored the photo</inlineHelpText>
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Energy_Without_Motor__c</picklist>
-            <values>
-                <fullName>Not_Applicable</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Equipment__c</picklist>
             <values>
                 <fullName>15_To_25_C</fullName>
@@ -18906,13 +18752,6 @@ url: url where is stored the photo</inlineHelpText>
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Energy_Without_Motor__c</picklist>
-            <values>
-                <fullName>Not_Applicable</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Equipment__c</picklist>
             <values>
                 <fullName>15_To_25_C</fullName>
@@ -19578,13 +19417,6 @@ url: url where is stored the photo</inlineHelpText>
             <picklist>ESC_Type_Commodity__c</picklist>
             <values>
                 <fullName>General_Cargo</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Energy_Without_Motor__c</picklist>
-            <values>
-                <fullName>Not_Applicable</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -20267,13 +20099,6 @@ url: url where is stored the photo</inlineHelpText>
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Energy_Without_Motor__c</picklist>
-            <values>
-                <fullName>Not_Applicable</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Equipment__c</picklist>
             <values>
                 <fullName>15_To_25_C</fullName>
@@ -20944,13 +20769,6 @@ url: url where is stored the photo</inlineHelpText>
             <picklist>ESC_Type_Commodity__c</picklist>
             <values>
                 <fullName>General_Cargo</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Energy_Without_Motor__c</picklist>
-            <values>
-                <fullName>Not_Applicable</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -21632,13 +21450,6 @@ url: url where is stored the photo</inlineHelpText>
             </values>
         </picklistValues>
         <picklistValues>
-            <picklist>Energy_Without_Motor__c</picklist>
-            <values>
-                <fullName>Not_Applicable</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
             <picklist>Equipment__c</picklist>
             <values>
                 <fullName>15_To_25_C</fullName>
@@ -22300,13 +22111,6 @@ url: url where is stored the photo</inlineHelpText>
             <picklist>ESC_Type_Commodity__c</picklist>
             <values>
                 <fullName>General_Cargo</fullName>
-                <default>false</default>
-            </values>
-        </picklistValues>
-        <picklistValues>
-            <picklist>Energy_Without_Motor__c</picklist>
-            <values>
-                <fullName>Not_Applicable</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
