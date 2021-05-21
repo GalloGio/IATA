@@ -6,7 +6,7 @@
 		<apex:param name="param1" value="" assignTo="{!selectedAccount}"/>
 		<apex:param name="param2" value="" assignTo="{!selectedAgreementName}"/>
 	</apex:actionFunction>
-	<apex:actionFunction name="closeModalNewAgreement" action="{!closeModalNewAgreement}" rerender="modalNewAgreement" oncomplete="modalOnComplete('auto');" status="loadingStatus" immediate="true"/>
+	<apex:actionFunction name="closeModalNewAgreement" action="{!closeModalNewAgreement}" rerender="modalNewAgreement" oncomplete="initXtable();modalOnComplete('auto');" status="loadingStatus" immediate="true"/>
 	<apex:actionFunction name="saveNewAgreement" action="{!saveNewAgreement}" rerender="modalNewAgreement,modalAlertNewAgreement,newAgreementsTable,modalNewAgreementsFilter" oncomplete="modalOnComplete('auto');" status="loadingStatus"/>
 	<apex:actionFunction name="resetAlertModal" action="{!resetAlertModal}" rerender="null"/>
 	<apex:actionFunction name="refreshPage" action="{!refreshPage}" rerender="newAgreementsTable" oncomplete="initXtable(); modalOnComplete('auto');" status="loadingStatus"/>
@@ -25,6 +25,7 @@
 				let xtable = getXtable();
 				xtable.initPagination();
 				xtable.initSortable();
+				applyNewAgreementsFilter();
 			}
 
 			/** filter functions **/
@@ -98,8 +99,6 @@
 				}
 				if (evt.target.id === "NewAgreementsFilterButton") openModalNewAgreementsFilter();
 			});
-
-			applyNewAgreementsFilter();
 		});
 	</script>
 
@@ -152,33 +151,35 @@
 						</thead>
 						<tbody>
 							<apex:repeat var="availableAgreementsRow" value="{!availableAgreementsRows}">
-								<tr searchable="true">
-									<td>
-										{!availableAgreementsRow.designator}
-									</td>
-									<td class=" hidden">
-										{!availableAgreementsRow.iatacode}
-									</td>
-									<td class=" hidden">
-										{!availableAgreementsRow.Prefix}
-									</td>
-									<td>
-										{!availableAgreementsRow.airlinename}
-									</td>
-									<td>
-										{!availableAgreementsRow.agreementname}
-									</td>
-									<td>
-										<apex:dataList value="{!availableAgreementsRow.agreements}" var="agrementType">
-											{!agrementType}
-										</apex:dataList>
-									</td>
-									<td>
-										<apex:outputPanel styleclass="IA-tooltip">
-											<div class="IA-Circle IA-Plus" onclick="event.stopPropagation(); openModalNewAgreement('{!availableAgreementsRow.otherAccount}','{!availableAgreementsRow.agreementname}'); return false;"/>
-										</apex:outputPanel>
-									</td>
-								</tr>
+								<apex:repeat var="availableAgreementsRowDetail" value="{!availableAgreementsRow.details}">
+									<tr searchable="true">
+										<td>
+											{!availableAgreementsRow.designator}
+										</td>
+										<td class=" hidden">
+											{!availableAgreementsRow.iatacode}
+										</td>
+										<td class=" hidden">
+											{!availableAgreementsRow.Prefix}
+										</td>
+										<td>
+											{!availableAgreementsRow.airlinename}
+										</td>
+										<td>
+											{!availableAgreementsRowDetail.agreementname}
+										</td>
+										<td>
+											<apex:dataList value="{!availableAgreementsRowDetail.agreements}" var="agrementType">
+												{!agrementType}
+											</apex:dataList>
+										</td>
+										<td>
+											<apex:outputPanel styleclass="IA-tooltip">
+												<div class="IA-Circle IA-Plus" onclick="event.stopPropagation(); openModalNewAgreement('{!availableAgreementsRow.otherAccount}','{!availableAgreementsRowDetail.agreementname}'); return false;"/>
+											</apex:outputPanel>
+										</td>
+									</tr>
+								</apex:repeat>
 							</apex:repeat>
 						</tbody>
 					</table>
@@ -265,7 +266,7 @@
 									<label>{!$Label.IA_Agreement}</label>
 									<apex:selectList id="newAgreementType" value="{!newAgreement.Agreement_type__c}" size="1" required="true" onchange="validateNewAgreement();">
 										<apex:selectOptions value="{!listOptionAgreementTypes}"/>
-									</apex:selectList> 
+									</apex:selectList>
 								</div>
 							</div>
 							<div class="row">

@@ -5,7 +5,7 @@
 	<apex:actionFunction name="openModalContact" action="{!openModalContact}" rerender="modalContact" oncomplete="modalOnComplete('hidden');" status="loadingStatus">
 		<apex:param name="param1" value="" assignTo="{!selectedContactId}"/>
 	</apex:actionFunction>
-	<apex:actionFunction name="closeModalContact" action="{!closeModalContact}" rerender="modalContact" oncomplete="modalOnComplete('auto');" status="loadingStatus" immediate="true"/>
+	<apex:actionFunction name="closeModalContact" action="{!closeModalContact}" rerender="modalContact" oncomplete="applyAllAgreementsFilter();modalOnComplete('auto');" status="loadingStatus" immediate="true"/>
 	<apex:actionFunction name="saveContact" action="{!saveContact}" rerender="modalContact,modalAlertContact,ContactsTable,modalContactsFilter" oncomplete="closeModalContact();modalOnComplete('auto');" status="loadingStatus"/>
 	<apex:actionFunction name="deleteContact" action="{!deleteContact}" rerender="ContactsTable" oncomplete="modalOnComplete('auto');" status="loadingStatus">
 		<apex:param name="key" value="" assignTo="{!selectedContactId}"/>	

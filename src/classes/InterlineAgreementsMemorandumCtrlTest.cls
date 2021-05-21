@@ -1,51 +1,29 @@
 @isTest
 public class InterlineAgreementsMemorandumCtrlTest {
 
-	private static Id RT_AIRLINE = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+	private static Account airline1;
+	private static Account airline2;
 
 	@TestSetup
 	public static void setup(){
-		Account airline1 = new Account(
-			RecordTypeId = RT_AIRLINE,
-			Name='MyAirline1',
-			ACLI_Status__c = 'Active Company',
-			MITA_Member__c = true,
-			BIETA_Member__c = true,
-			Airline_designator__c = 'AA',
-			IATACode__c = '111',
-			Airline_Prefix__c = '111',
-			MITA_IATA_Interline_Passenger__c = Date.today(),
-			MITA_IATA_Interline_Cargo__c = Date.today(),
-			MITA_One_way_Pass_Issuing_Airline__c = Date.today(),
-			MITA_One_way_Pass_Participating__c = Date.today(),
-			BIETA_Bilateral_Date__c = Date.today(),
-			BIETA_One_way_Electronic_Issuing_Airline__c = Date.today(),
-			BIETA_One_way_Electronic_Participating__c = Date.today(),
-			BIETA_One_way_Intermodal_Issuing_Airline__c = Date.today(),
-			BIETA_One_way_Intermodal_Participating__c = Date.today()
-		);
-
-		Account airline2 = new Account(
-			RecordTypeId = RT_AIRLINE,
-			Name='MyAirline2',
-			ACLI_Status__c = 'Active Company',
-			MITA_Member__c = true,
-			BIETA_Member__c = true,
-			Airline_designator__c = 'BB',
-			IATACode__c = '222',
-			Airline_Prefix__c = '222',
-			MITA_IATA_Interline_Passenger__c = Date.today(),
-			MITA_IATA_Interline_Cargo__c = Date.today(),
-			MITA_One_way_Pass_Issuing_Airline__c = Date.today(),
-			MITA_One_way_Pass_Participating__c = Date.today(),
-			BIETA_Bilateral_Date__c = Date.today(),
-			BIETA_One_way_Electronic_Issuing_Airline__c = Date.today(),
-			BIETA_One_way_Electronic_Participating__c = Date.today(),
-			BIETA_One_way_Intermodal_Issuing_Airline__c = Date.today(),
-			BIETA_One_way_Intermodal_Participating__c = Date.today()
-		);
-
-		insert new list<Account>{airline1,airline2};
+		list<Account> listAccount = TestDataFactory_Accounts.createAirlines(2);
+		for (Account account: listAccount) {
+			account.ACLI_Status__c = 'Active Company';
+			account.MITA_Member__c = true;
+			account.BIETA_Member__c = true;
+			account.MITA_IATA_Interline_Passenger__c = Date.today();
+			account.MITA_IATA_Interline_Cargo__c = Date.today();
+			account.MITA_One_way_Pass_Issuing_Airline__c = Date.today();
+			account.MITA_One_way_Pass_Participating__c = Date.today();
+			account.BIETA_Bilateral_Date__c = Date.today();
+			account.BIETA_One_way_Electronic_Issuing_Airline__c = Date.today();
+			account.BIETA_One_way_Electronic_Participating__c = Date.today();
+			account.BIETA_One_way_Intermodal_Issuing_Airline__c = Date.today();
+			account.BIETA_One_way_Intermodal_Participating__c = Date.today();
+		}
+		insert listAccount;
+		airline1 = listAccount.get(0);
+		airline2 = listAccount.get(1);
 
 		MITA_Agreement__c agreement1 = new MITA_Agreement__c(
 			Airline_1__c = airline1.Id,
@@ -86,7 +64,7 @@ public class InterlineAgreementsMemorandumCtrlTest {
 			Agreement_processed_date__c = Date.newInstance(2020,12,20),
 			Effective_date__c = Date.newInstance(2020,12,20),
 			Cancellation_Processed_Date__c = Date.newInstance(2021,1,20),
-			Cancellation_Reason__c = 'Requested by Airline 1'
+			Cancellation_Reason__c = IA_util.REASON_REQUESTED_AIRLINE1
 		);
 
 		MITA_Agreement__c agreement5 = new MITA_Agreement__c(
@@ -98,7 +76,7 @@ public class InterlineAgreementsMemorandumCtrlTest {
 			Agreement_processed_date__c = Date.newInstance(2020,12,20),
 			Effective_date__c = Date.newInstance(2020,12,20),
 			Cancellation_Processed_Date__c = Date.newInstance(2021,1,20),
-			Cancellation_Reason__c = 'Requested by Airline 1'
+			Cancellation_Reason__c = IA_util.REASON_REQUESTED_AIRLINE1
 		);
 
 		MITA_Agreement__c agreement6 = new MITA_Agreement__c(
@@ -110,7 +88,7 @@ public class InterlineAgreementsMemorandumCtrlTest {
 			Agreement_processed_date__c = Date.newInstance(2020,12,20),
 			Effective_date__c = Date.newInstance(2020,12,20),
 			Cancellation_Processed_Date__c = Date.newInstance(2021,1,20),
-			Cancellation_Reason__c = 'Requested by Airline 1'
+			Cancellation_Reason__c = IA_util.REASON_REQUESTED_AIRLINE1
 		);
 
 		MITA_Agreement__c agreement7 = new MITA_Agreement__c(
@@ -122,7 +100,7 @@ public class InterlineAgreementsMemorandumCtrlTest {
 			Agreement_processed_date__c = Date.newInstance(2020,12,20),
 			Effective_date__c = Date.newInstance(2020,12,20),
 			Cancellation_Processed_Date__c = Date.newInstance(2021,1,20),
-			Cancellation_Reason__c = 'Requested by Airline 1'
+			Cancellation_Reason__c = IA_util.REASON_REQUESTED_AIRLINE1
 		);
 
 		insert new list<MITA_Agreement__c>{agreement1,agreement2, agreement3, agreement4, agreement5, agreement6, agreement7};
@@ -142,12 +120,12 @@ public class InterlineAgreementsMemorandumCtrlTest {
 		Test.stopTest();
 
 		System.assertEquals(6,data.size());
-		System.assertEquals(3,data.get('MITA Concurrences').size());
-		System.assertEquals(1,data.get('MITA Withdrawals').size());
-		System.assertEquals(0,data.get('BIETA Concurrences').size());
-		System.assertEquals(2,data.get('BIETA Withdrawals').size());
-		System.assertEquals(0,data.get('EMD Concurrences').size());
-		System.assertEquals(1,data.get('EMD Withdrawals').size());
+		System.assertEquals(3,data.get(IA_util.MITA + ' ' + IA_util.CONCURRENCES).size());
+		System.assertEquals(1,data.get(IA_util.MITA + ' ' + IA_util.WITHDRAWALS).size());
+		System.assertEquals(0,data.get(IA_util.BIETA + ' ' + IA_util.CONCURRENCES).size());
+		System.assertEquals(2,data.get(IA_util.BIETA + ' ' + IA_util.WITHDRAWALS).size());
+		System.assertEquals(0,data.get(IA_util.EMD + ' ' + IA_util.CONCURRENCES).size());
+		System.assertEquals(1,data.get(IA_util.EMD + ' ' + IA_util.WITHDRAWALS).size());
 	}
 
 }

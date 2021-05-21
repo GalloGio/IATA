@@ -9,7 +9,8 @@ public with sharing class IA_MemosController {
 					[SELECT ContentDocument.Id, ContentDocument.Title, CreatedDate
 					FROM ContentWorkspaceDoc
 					WHERE ContentWorkspace.Name = :IA_util.LIBRARY_CS
-					ORDER BY CreatedDate DESC] )
+					ORDER BY CreatedDate DESC
+					LIMIT 1000] )
 				{
 					DocumentRow row = new DocumentRow();
 					row.docId = doc.ContentDocument.Id;

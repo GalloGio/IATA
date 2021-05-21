@@ -1,52 +1,34 @@
 @isTest
 public class IA_ContactsCtrlTest {
 
-	private static Id RT_AIRLINE = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
-	private static Id RT_CONTACT = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
 	private static Account airline;
 	private static Contact contact;
 
 	@TestSetup
 	public static void setup(){
-		airline = new Account(
-			RecordTypeId = RT_AIRLINE,
-			Name='MyAirline1',
-			ACLI_Status__c = 'Active Company',
-			MITA_Member__c = true,
-			BIETA_Member__c = true,
-			Airline_designator__c = 'AA',
-			IATACode__c = '111',
-			Airline_Prefix__c = '111'
-		);
-
+		airline = TestDataFactory_Accounts.createAirlines(1).get(0);
 		insert airline;
 
-		contact = new Contact (
-			RecordTypeId = RT_CONTACT,
-			AccountId = airline.Id,
-			FirstName = 'first1',
-			LastName = 'last1',
-			Email = 'test1email@test.com',
-			Phone = '123456789',
-			Status__c = 'Active',
-			MITA_Contact_Type__c = null
-		);
+		contact = TestDataFactory_Contacts.createDefaultContact(airline.Id,1).get(0);
+		contact.Phone = '123456789';
+		contact.Status__c = 'Active';
+		contact.MITA_Contact_Type__c = null;
 		insert contact;
 	}
 
 	private static void queryRecords() {
 		airline = [
-			SELECT Name, Airline_Prefix__c, Airline_designator__c, IATAcode__c, Membership_status__c, MITA_Member__c, BIETA_Member__c, Logo_File_ID__c,
+			SELECT Name, Airline_Prefix__c, Airline_designator__c, IATAcode__c, Membership_status__c, MITA_Member__c, BIETA_Member__c, Company_Logo__c,
 			MITA_IATA_Interline_Passenger__c, MITA_IATA_Interline_Cargo__c, MITA_One_way_Pass_Issuing_Airline__c, MITA_One_way_Pass_Participating__c,
 			BIETA_Bilateral_Date__c, BIETA_One_way_Electronic_Issuing_Airline__c, BIETA_One_way_Electronic_Participating__c, BIETA_One_way_Intermodal_Issuing_Airline__c,
 			BIETA_One_way_Intermodal_Participating__c
 			FROM Account
-			WHERE Name = 'MyAirline1'];
+			WHERE Name = :(TestDataFactory_Accounts.DEFAULTNAME + ' 0')];
 
 		contact = [
 			SELECT Id, RecordTypeId, AccountId, FirstName, LastName, Email, Phone, Status__c, MITA_Contact_Type__c
 			FROM Contact
-			WHERE Email = 'test1email@test.com'];
+			WHERE Email = :(TestDataFactory_Contacts.DEFAULTEMAIL + '0')];
 	}
 
 	static TestMethod void testController(){
@@ -66,7 +48,7 @@ public class IA_ContactsCtrlTest {
 	static TestMethod void testEditContact(){
 		queryRecords();
 
-		contact.MITA_Contact_Type__c = 'Interline Airline Generic Contact';
+		contact.MITA_Contact_Type__c = IA_util.GENERIC_CONTACT;
 		update contact;
 
 		IA_ContactsCtrl ctrl = new IA_ContactsCtrl();
@@ -95,7 +77,7 @@ public class IA_ContactsCtrlTest {
 		System.assertEquals(contact.Id,ctrl.selectedContact.Id);
 		System.assertEquals(true,ctrl.showModalContact);
 		System.assert(ctrl.alertModal!=null);
-		System.assertEquals('successMsgNew',ctrl.alertModal.msgType);
+		System.assertEquals(IA_util.ALERTMODAL_SUCCESSNEW,ctrl.alertModal.msgType);
 
 		// close modal
 		contact.MITA_Contact_Type__c = IA_util.GENERIC_CONTACT + ';' + IA_util.CARGO_MANAGER;
@@ -141,7 +123,7 @@ public class IA_ContactsCtrlTest {
 		System.assertEquals(contact.Id,ctrl.selectedContact.Id);
 		System.assertEquals(true,ctrl.showModalContact);
 		System.assert(ctrl.alertModal!=null);
-		System.assertEquals('successMsgNew',ctrl.alertModal.msgType);
+		System.assertEquals(IA_util.ALERTMODAL_SUCCESSNEW,ctrl.alertModal.msgType);
 
 		// close modal
 		contact.MITA_Contact_Type__c = IA_util.GENERIC_CONTACT + ';' + IA_util.CARGO_MANAGER;

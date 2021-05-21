@@ -1,66 +1,36 @@
 @isTest
 public class IA_ReqCtrlTest {
 
-	private static Id RT_AIRLINE = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 	private static Account airline1;
 	private static Account airline2;
 
 	@TestSetup
 	public static void setup(){
-		airline1 = new Account(
-			RecordTypeId = RT_AIRLINE,
-			Name='MyAirline1',
-			ACLI_Status__c = 'Active Company',
-			MITA_Member__c = true,
-			BIETA_Member__c = true,
-			Airline_designator__c = 'AA',
-			IATACode__c = '111',
-			Airline_Prefix__c = '111',
-			MITA_IATA_Interline_Passenger__c = Date.today(),
-			MITA_IATA_Interline_Cargo__c = Date.today(),
-			MITA_One_way_Pass_Issuing_Airline__c = Date.today(),
-			MITA_One_way_Pass_Participating__c = Date.today(),
-			BIETA_Bilateral_Date__c = Date.today(),
-			BIETA_One_way_Electronic_Issuing_Airline__c = Date.today(),
-			BIETA_One_way_Electronic_Participating__c = Date.today(),
-			BIETA_One_way_Intermodal_Issuing_Airline__c = Date.today(),
-			BIETA_One_way_Intermodal_Participating__c = Date.today()
-		);
-
-		airline2 = new Account(
-			RecordTypeId = RT_AIRLINE,
-			Name='MyAirline2',
-			ACLI_Status__c = 'Active Company',
-			MITA_Member__c = true,
-			BIETA_Member__c = true,
-			Airline_designator__c = 'BB',
-			IATACode__c = '222',
-			Airline_Prefix__c = '222',
-			MITA_IATA_Interline_Passenger__c = Date.today(),
-			MITA_IATA_Interline_Cargo__c = Date.today(),
-			MITA_One_way_Pass_Issuing_Airline__c = Date.today(),
-			MITA_One_way_Pass_Participating__c = Date.today(),
-			BIETA_Bilateral_Date__c = Date.today(),
-			BIETA_One_way_Electronic_Issuing_Airline__c = Date.today(),
-			BIETA_One_way_Electronic_Participating__c = Date.today(),
-			BIETA_One_way_Intermodal_Issuing_Airline__c = Date.today(),
-			BIETA_One_way_Intermodal_Participating__c = Date.today()
-		);
-
-		insert new list<Account>{airline1,airline2};
+		list<Account> listAccount = TestDataFactory_Accounts.createAirlines(2);
+		for (Account account: listAccount) {
+			account.ACLI_Status__c = 'Active Company';
+			account.MITA_Member__c = true;
+			account.BIETA_Member__c = true;
+			account.MITA_IATA_Interline_Passenger__c = Date.today();
+			account.MITA_IATA_Interline_Cargo__c = Date.today();
+			account.MITA_One_way_Pass_Issuing_Airline__c = Date.today();
+			account.MITA_One_way_Pass_Participating__c = Date.today();
+			account.BIETA_Bilateral_Date__c = Date.today();
+			account.BIETA_One_way_Electronic_Issuing_Airline__c = Date.today();
+			account.BIETA_One_way_Electronic_Participating__c = Date.today();
+			account.BIETA_One_way_Intermodal_Issuing_Airline__c = Date.today();
+			account.BIETA_One_way_Intermodal_Participating__c = Date.today();
+		}
+		insert listAccount;
 	}
 
 	private static void queryRecords() {
-		for ( Account account: [
-				SELECT Name, Airline_Prefix__c, Airline_designator__c, IATAcode__c, Membership_status__c, MITA_Member__c, BIETA_Member__c, Logo_File_ID__c,
-				MITA_IATA_Interline_Passenger__c, MITA_IATA_Interline_Cargo__c, MITA_One_way_Pass_Issuing_Airline__c, MITA_One_way_Pass_Participating__c,
-				BIETA_Bilateral_Date__c, BIETA_One_way_Electronic_Issuing_Airline__c, BIETA_One_way_Electronic_Participating__c, BIETA_One_way_Intermodal_Issuing_Airline__c,
-				BIETA_One_way_Intermodal_Participating__c
-				FROM Account])
-		{
-			if (account.Name == 'MyAirline1') airline1 = account;
-			if (account.Name == 'MyAirline2') airline2 = account;
+		for ( Account account: [SELECT Id,Name FROM Account]) {
+			if (account.Name == TestDataFactory_Accounts.DEFAULTNAME + ' 0') airline1 = account;
+			if (account.Name == TestDataFactory_Accounts.DEFAULTNAME + ' 1') airline2 = account;
 		}
+		System.assert(airline1!=null, 'Airline 1 not found');
+		System.assert(airline2!=null, 'Airline 2 not found');
 	}
 
 	static TestMethod void testController(){
@@ -116,7 +86,7 @@ public class IA_ReqCtrlTest {
 			Agreement_Type__c = IA_util.TYPE_CARGO,
 			Cancellation_date__c = Date.today(),
 			Cancellation_processed_date__c = Date.today(),
-			Cancellation_Reason__c = 'Rejected by Airline 2'
+			Cancellation_Reason__c = IA_util.REASON_REJECTION
 			
 		);
 
@@ -156,7 +126,7 @@ public class IA_ReqCtrlTest {
 		ctrl.approveAgreement();
 
 		System.assert(ctrl.toast!=null);
-		System.assertEquals('success',ctrl.toast.msgType);
+		System.assertEquals(IA_ReqController.ALERT_SUCCESS,ctrl.toast.msgType);
 		agreement = [SELECT Id,Agreement_processed_date__c FROM MITA_Agreement__c WHERE Id = :agreement.Id];
 		System.assertEquals(Date.today(),agreement.Agreement_processed_date__c);
 
@@ -164,7 +134,7 @@ public class IA_ReqCtrlTest {
 		ctrl.undoId = ctrl.toast.undoid;
 		ctrl.undoAction();
 		System.assert(ctrl.toast!=null);
-		System.assertEquals('undo',ctrl.toast.msgType);
+		System.assertEquals(IA_ReqController.ALERT_UNDO,ctrl.toast.msgType);
 		agreement = [SELECT Id,Agreement_processed_date__c FROM MITA_Agreement__c WHERE Id = :agreement.Id];
 		System.assertEquals(null,agreement.Agreement_processed_date__c);
 
@@ -196,18 +166,18 @@ public class IA_ReqCtrlTest {
 		ctrl.rejectAgreement();
 
 		System.assert(ctrl.toast!=null);
-		System.assertEquals('rejected',ctrl.toast.msgType);
+		System.assertEquals(IA_ReqController.ALERT_REJECTED,ctrl.toast.msgType);
 
 		agreement = [SELECT Id,Cancellation_date__c, Cancellation_processed_date__c, Cancellation_Reason__c FROM MITA_Agreement__c WHERE Id = :agreement.Id];
 		System.assertEquals(Date.today(),agreement.Cancellation_date__c);
 		System.assertEquals(Date.today(),agreement.Cancellation_processed_date__c);
-		System.assertEquals('Rejected by Airline 2',agreement.Cancellation_Reason__c);
+		System.assertEquals(IA_util.REASON_REJECTION,agreement.Cancellation_Reason__c);
 
 		//undo reject agreement
 		ctrl.undoId = ctrl.toast.undoid;
 		ctrl.undoAction();
 		System.assert(ctrl.toast!=null);
-		System.assertEquals('undo',ctrl.toast.msgType);
+		System.assertEquals(IA_ReqController.ALERT_UNDO,ctrl.toast.msgType);
 		agreement = [SELECT Id,Cancellation_date__c, Cancellation_processed_date__c, Cancellation_Reason__c FROM MITA_Agreement__c WHERE Id = :agreement.Id];
 		System.assertEquals(null,agreement.Cancellation_date__c);
 		System.assertEquals(null,agreement.Cancellation_processed_date__c);

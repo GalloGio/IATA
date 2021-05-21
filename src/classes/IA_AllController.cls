@@ -51,6 +51,7 @@ public without sharing class IA_AllController {
 					AND Status__c IN :VALID_STATUS
 					AND Airline_1__c != null
 					AND Airline_2__c != null
+					LIMIT 1000
 				]);
 			}
 			return mapAllAgreements;

@@ -3,10 +3,10 @@ public without sharing class IA_ReqController {
 	@testVisible
 	private static Blob EncDecKey = Blob.valueOf('I@T@M!tAS3rvIc3!');
 
-	private static final String ALERT_SUCCESS = 'success';
-	private static final String ALERT_REJECTED = 'rejected';
-	private static final String ALERT_UNDO = 'undo';
-	private static final String ALERT_FAIL = 'fail';
+	public static final String ALERT_SUCCESS = 'success';
+	public static final String ALERT_REJECTED = 'rejected';
+	public static final String ALERT_UNDO = 'undo';
+	public static final String ALERT_FAIL = 'fail';
 
 	public Account account {get;set;}
 	public Boolean hasApprovePermission {get;set;}
@@ -47,6 +47,7 @@ public without sharing class IA_ReqController {
 					AND Airline_1__c != null
 					AND Airline_2__c != null
 					ORDER BY Airline_1__r.Name ASC
+					LIMIT 1000
 				]);
 			}
 			return mapAgreements;

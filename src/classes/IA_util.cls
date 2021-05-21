@@ -24,6 +24,8 @@ public with sharing class IA_util {
 	public static final String REASON_REJECTION = 'Rejected by Airline 2';
 	public static final String REASON_CANCELLATION_AIRLINE1 = 'Airline 1 leaves agreement';
 	public static final String REASON_CANCELLATION_AIRLINE2 = 'Airline 2 leaves agreement';
+	public static final String REASON_REQUESTED_AIRLINE1 = 'Requested by Airline 1';
+	public static final String REASON_REQUESTED_AIRLINE2 = 'Requested by Airline 2';
 	public static final String STATUS_ACTIVE = 'Active';
 	public static final String STATUS_PENDING_APPROVAL = 'Pending Approval';
 	public static final String STATUS_NOT_ACTIVE_YET = 'Not Active Yet';

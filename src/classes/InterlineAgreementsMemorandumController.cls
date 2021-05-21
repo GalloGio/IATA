@@ -93,7 +93,7 @@ public with sharing class InterlineAgreementsMemorandumController {
 			FROM MITA_Agreement__c
 			WHERE Cancellation_Processed_Date__c >= :this.memorandumDate
 			AND Cancellation_Processed_Date__c <= :this.memorandumLastDate
-			AND Cancellation_Reason__c in ('Requested by Airline 1','Requested by Airline 2')
+			AND Cancellation_Reason__c in (:IA_util.REASON_REQUESTED_AIRLINE1, :IA_util.REASON_REQUESTED_AIRLINE2)
 			ORDER BY Airline_1__r.Name, Cancellation_Date__c];
 
 		Map<String,List<WrapperAgreement>> mapAllAgreements = new Map<String,List<WrapperAgreement>>();

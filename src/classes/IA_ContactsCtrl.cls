@@ -24,7 +24,8 @@ public without sharing class IA_ContactsCtrl {
 					AND Status__c = 'Active'
 					AND MITA_Contact_Type__c != null
 					AND (AccountId = :this.account.Id OR Account.Top_Parent__c = :this.account.Id)
-					ORDER BY Name ASC]
+					ORDER BY Name ASC
+					LIMIT 1000]
 				);
 			}
 			return mapContacts;

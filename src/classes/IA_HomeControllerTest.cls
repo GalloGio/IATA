@@ -1,7 +1,7 @@
 @isTest
 public class IA_HomeControllerTest {
 
-	private static Id RT_AIRLINE = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+	private static final String TEST_LOGO = 'logo_url';
 
 	private static Contact portalcontact;
 	private static User portaluser;
@@ -9,72 +9,27 @@ public class IA_HomeControllerTest {
 
 	@TestSetup
 	public static void setup(){
-		airline1 = new Account(
-			RecordTypeId = RT_AIRLINE,
-			Name='MyAirline1',
-			ACLI_Status__c = 'Active Company',
-			MITA_Member__c = true,
-			BIETA_Member__c = true,
-			Airline_designator__c = 'AA',
-			IATACode__c = '111',
-			Airline_Prefix__c = '111',
-			MITA_IATA_Interline_Passenger__c = Date.today(),
-			MITA_IATA_Interline_Cargo__c = Date.today(),
-			MITA_One_way_Pass_Issuing_Airline__c = Date.today(),
-			MITA_One_way_Pass_Participating__c = Date.today(),
-			BIETA_Bilateral_Date__c = Date.today(),
-			BIETA_One_way_Electronic_Issuing_Airline__c = Date.today(),
-			BIETA_One_way_Electronic_Participating__c = Date.today(),
-			BIETA_One_way_Intermodal_Issuing_Airline__c = Date.today(),
-			BIETA_One_way_Intermodal_Participating__c = Date.today()
-		);
+		airline1 = TestDataFactory_Accounts.createAirlines(1).get(0);
 		insert airline1;
 
-		portalcontact = new Contact(
-			FirstName = 'Name',
-			LastName='My Contact',
-			AccountId=airline1.Id,
-			Email='contact@MyAirline.com',
-			Status__c = 'Active'
-		);
+		portalcontact = TestDataFactory_Contacts.createDefaultContact(airline1.Id, 1).get(0);
 		insert portalcontact;
 
-		Profile p = [SELECT Id FROM Profile WHERE Name='ISS Portal Airline User (Partner)'];
-		portalUser = new User(
-			Alias = 'standt',
-			Email=DateTime.now().getTime()+'standarduser@testorg.com',
-			EmailEncodingKey='UTF-8',
-			LastName='Testing',
-			LanguageLocaleKey='en_US',
-			LocaleSidKey='en_US',
-			ProfileId = p.Id,
-			ContactId = portalcontact.Id,
-			IsActive = true,
-			TimeZoneSidKey='America/Los_Angeles',
-			UserName='standarduser@testorg.com'
-		);
+		portalUser = TestDataFactory_Users.createPortalUsers(new list<Contact>{portalcontact}).get(0);
 		insert portalUser;
 
-		portalcontact.User_Portal_Status__c = 'Approved Admin';
-		portalcontact.Community__c = 'Community__c';
 		update portalcontact;
 
 		Portal_Applications__c app = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
 		app.Name = IA_HomeController.APP_NAME;
-		app.Application_icon_URL__c = 'logo_url';
+		app.Application_icon_URL__c = TEST_LOGO;
 		insert app;
 
-		Portal_Application_Right__c right = new Portal_Application_Right__c(
-			Portal_Application__c = app.Id,
-			Right__c = 'Access Granted',
-			Contact__c = portalcontact.Id
-		);
-		insert right;
-
+		insert TestDataFactory_PortalApplicationRights.createGrantedPortalApplicationRight(app.Id, portalcontact.Id);
 	}
 
 	private static void queryRecords() {
-		portalcontact = [SELECT Id FROM Contact WHERE Email = 'contact@MyAirline.com'];
+		portalcontact = [SELECT Id FROM Contact WHERE Email = :(TestDataFactory_Contacts.DEFAULTEMAIL+'0')];
 		portaluser = [SELECT Id, Name, ContactId FROM User WHERE ContactId = :portalcontact.Id];
 	}
 
@@ -82,7 +37,7 @@ public class IA_HomeControllerTest {
 		queryRecords();
 
 		Portal_Application_Right__c right = [Select Right__c from Portal_Application_Right__c where Contact__c = :portalUser.ContactId];
-		right.Right__c = 'Access Denied';
+		right.Right__c = TestDataFactory_PortalApplicationRights.DENIED;
 		update right;
 
 		Test.startTest();
@@ -94,7 +49,7 @@ public class IA_HomeControllerTest {
 		Test.stopTest();
 	}
 
-	static TestMethod void testController(){
+	static testMethod void testController(){
 		queryRecords();
 
 		Test.startTest();
@@ -104,7 +59,7 @@ public class IA_HomeControllerTest {
 			PageReference page = ctrl.initActions();
 			System.assert(page==null);
 
-			System.assertEquals('logo_url',ctrl.appLogoURL);
+			System.assertEquals(TEST_LOGO,ctrl.appLogoURL);
 			System.assertEquals(true,ctrl.getWithdrawPermission());
 			System.assertEquals(true,ctrl.getApprovePermission());
 			System.assertEquals(true,ctrl.getRequestPermission());

@@ -218,7 +218,9 @@
 															{!accountContact.phone}
 														</td>
 														<td>
-															{!accountContact.mitaType}
+															<apex:dataList value="{!accountContact.mitaTypes}" var="type">
+																{!type}
+															</apex:dataList>
 														</td>
 													</tr>
 												</apex:repeat>

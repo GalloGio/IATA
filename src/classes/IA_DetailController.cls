@@ -1,9 +1,9 @@
-public with sharing class IA_DetailController {
+public without sharing class IA_DetailController {
 
-	private static final String HISTORY_CREATED = 'created';
-	private static final String HISTORY_AGREEMENT_FIELDNAME = 'Agreement_processed_date__c';
-	private static final String HISTORY_CANCELLATION_FIELDNAME = 'Cancellation_date__c';
-	private static final String INTERNAL_USERNAME = 'IATA';
+	public static final String HISTORY_CREATED = 'created';
+	public static final String HISTORY_AGREEMENT_FIELDNAME = 'Agreement_processed_date__c';
+	public static final String HISTORY_CANCELLATION_FIELDNAME = 'Cancellation_date__c';
+	public static final String INTERNAL_USERNAME = 'IATA';
 
 	public MITA_Agreement__c selectedAgreement {get;set;}
 	public Account otherAirline {get;set;}
@@ -110,13 +110,19 @@ public with sharing class IA_DetailController {
 			list<MITA_Agreement__history> listHistory = [SELECT Id, ParentId, CreatedById, CreatedDate, Field, OldValue, NewValue
 				FROM MITA_Agreement__history
 				WHERE ParentId = :this.selectedAgreement.Id
-				ORDER BY CreatedDate DESC];
+				ORDER BY CreatedDate DESC
+				LIMIT 1000];
 			
 			set<Id> setUserId = new set<Id>();
 			for (MITA_Agreement__history history: listHistory) {
 				setUserId.add(history.CreatedById);
 			}
-			map<Id,User> mapUsers = new map<Id,User>([SELECT Id, Name, ContactId, Contact.AccountId, Contact.Account.Name FROM User WHERE Id IN :setUserId]);
+			map<Id,User> mapUsers = new map<Id,User>([
+				SELECT Id, Name, ContactId, Contact.AccountId, Contact.Account.Name
+				FROM User 
+				WHERE Id IN :setUserId
+				LIMIT 1000
+			]);
 
 			// create history rows to be displayed in the page
 			list<HistoryRow> listHistoryRow = new list<HistoryRow>();
@@ -185,14 +191,16 @@ public with sharing class IA_DetailController {
 			WHERE Recordtype.DeveloperName = 'Standard_Contact'
 			AND Status__c = 'Active'
 			AND AccountId = :this.otherAirline.Id
-			ORDER BY Name ASC ])
+			AND MITA_Contact_Type__c != null
+			ORDER BY Name ASC
+			LIMIT 1000])
 		{
 			AccountContactRow row = new AccountContactRow();
 			String salutation = (String.isBlank(contact.salutation)? '': contact.salutation + ' ');
 			row.fullName = salutation + contact.name;
 			row.email = contact.email;
 			row.phone = String.isBlank(contact.phone)? '-': contact.phone;
-			row.mitaType = String.isBlank(contact.MITA_Contact_Type__c)? '-': contact.MITA_Contact_Type__c;
+			row.mitaTypes = contact.MITA_Contact_Type__c.split(';');
 			listRows.add(row);
 		}
 		return listRows;
@@ -205,7 +213,7 @@ public with sharing class IA_DetailController {
 		public String fullName {get;set;}
 		public String email {get;set;}
 		public String phone {get;set;}
-		public String mitaType {get;set;}
+		public list<String> mitaTypes {get;set;}
 	}
 
 }

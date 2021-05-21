@@ -49,7 +49,8 @@ public without sharing class IA_NewController {
 						AND ACLI_Status__c = 'Active Company'
 						AND (MITA_Member__c = true OR BIETA_Member__c = true)
 						AND ID <> :account.Id
-						ORDER BY Name]) {
+						ORDER BY Name
+						LIMIT 1000]) {
 
 					suggestedAirlines.put(otherAccount.id,new SuggestedAirline(this.account,otherAccount,this.setMyAccountAllowed));
 				}
@@ -147,26 +148,33 @@ public without sharing class IA_NewController {
 
 				availableAgreementsRows = new list<AvailableAgreementsRow>();
 				for(SuggestedAirline sa : this.suggestedAirlines.values()){
+					//find detail rows
+					list<AvailableAgreementsDetailRow> listDetailRow = new list<AvailableAgreementsDetailRow>();
 					for(String agreementName : sa.mapActiveAgreements.keyset()) {
 						List<String> listActiveAgreements = sa.mapActiveAgreements.get(agreementName);
 						if (!listActiveAgreements.isEmpty()) {
-							AvailableAgreementsRow row = new AvailableAgreementsRow();
-							row.designator = sa.otherAccount.Airline_Designator__c;
-							row.iatacode = sa.otherAccount.IATAcode__c;
-							row.Prefix = sa.otherAccount.Airline_Prefix__c;
-							row.airlinename = sa.otherAccount.Name;
-							row.agreementname = agreementName;
-							row.agreements = new list<String>();
+							AvailableAgreementsDetailRow detailRow = new AvailableAgreementsDetailRow();
+							detailRow.agreementname = agreementName;
+							detailRow.agreements = new list<String>();
 							for (String agr: listActiveAgreements) {
 								String agrType = IA_util.MAP_AGREEMENT_LABELS.get(agr);
-								row.agreements.add(agrType);
+								detailRow.agreements.add(agrType);
 								this.setFilterTypes.add(agrType);
 							}
-							row.otherAccount = IA_util.Encrypt(EncDecKey,sa.otherAccount.Id);
-							availableAgreementsRows.add(row);
-
+							listDetailRow.add(detailRow);
 							this.setFilterNames.add(agreementName);
 						}
+					}
+					// if any detail is found then create new row to show in the table
+					if (!listDetailRow.isEmpty()) {
+						AvailableAgreementsRow row = new AvailableAgreementsRow();
+						row.designator = sa.otherAccount.Airline_Designator__c;
+						row.iatacode = sa.otherAccount.IATAcode__c;
+						row.Prefix = sa.otherAccount.Airline_Prefix__c;
+						row.airlinename = sa.otherAccount.Name;
+						row.otherAccount = IA_util.Encrypt(EncDecKey,sa.otherAccount.Id);
+						row.details = listDetailRow;
+						availableAgreementsRows.add(row);
 					}
 				}
 			}
@@ -183,9 +191,12 @@ public without sharing class IA_NewController {
 		public String iatacode {get;set;}
 		public String Prefix {get;set;}
 		public String airlinename {get;set;}
+		public list<AvailableAgreementsDetailRow> details {get;set;}
+		public String otherAccount {get;set;}
+	}
+	public class AvailableAgreementsDetailRow {
 		public String agreementname {get;set;}
 		public list<String> agreements {get;set;}
-		public String otherAccount {get;set;}
 	}
 
 	/***

@@ -5,7 +5,7 @@
 	<apex:actionFunction name="openModalAgreementDetail" action="{!openModalAgreementDetail}" rerender="sectionDetail" oncomplete="modalOnComplete('hidden');" status="loadingStatus">
 		<apex:param name="key" value="" assignTo="{!selectedAgreementId}"/>
 	</apex:actionFunction>
-	<apex:actionFunction name="closeModalAgreementDetail" action="{!closeModalAgreementDetail}" rerender="sectionDetail,allAgreementsContainer" oncomplete="modalOnComplete('auto');" status="loadingStatus" immediate="true"/>
+	<apex:actionFunction name="closeModalAgreementDetail" action="{!closeModalAgreementDetail}" rerender="sectionDetail,allAgreementsContainer" oncomplete="initXtable();modalOnComplete('auto');" status="loadingStatus" immediate="true"/>
 	<apex:actionFunction name="refreshPage" action="{!refreshPage}" rerender="allAgreementsContainer" oncomplete="initXtable(); modalOnComplete('auto');" status="loadingStatus"/>
 
 	<script>
@@ -22,6 +22,9 @@
 				let xtable = getXtable();
 				xtable.initPagination();
 				xtable.initSortable();
+				applyAllAgreementsFilter();
+				//sort by status column
+				xtable.sortColumn(5);
 			}
 
 			/** filter functions **/
