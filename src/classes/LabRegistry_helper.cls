@@ -17,18 +17,22 @@ public  without sharing class LabRegistry_helper {
 	 */
 	@AuraEnabled
 	public static case CreateCase(string reason, user currentUser){
+		if(currentUser == null)
+			currentUser = [select id, ContactId, Contact.AccountId, contact.Account.IATA_Iso_Country__r.Region__c, contact.account.name from user where id =: UserInfo.getUserId()];
+		
 		Case theCase = new case();
 			theCase.recordtypeid = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CS_Process_IDFS_ISS');
 			theCase.ContactId = currentUser.ContactId;
 			theCase.AccountId = currentUser.Contact.AccountId;
-			theCase.subject = ('Lab Registry - New access request for ' + currentUser.contact.account.name).left(255);
+			theCase.subject = ('Lab Registry - ' + reason + ' for ' + currentUser.contact.account.name).left(255);
+			
 			theCase.Origin = 'Portal';
 			theCase.Region__c = currentUser.contact.Account.IATA_Iso_Country__r.Region__c;
 			theCase.CaseArea__c = 'IATA Travel Pass';
 			theCase.Reason1__c = reason;
 		insert theCase;
 
-		return theCase;
+		return [select Id, CaseNumber from case where id=:theCase.Id];
 	}
 	/****
 	 * Method used to Save lab registry survey's answers.

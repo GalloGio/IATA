@@ -9,6 +9,7 @@ import getPortalServiceId from '@salesforce/apex/ServiceTermsAndConditionsUtils.
 import checkLatestTermsAndConditionsAccepted from '@salesforce/apex/ServiceTermsAndConditionsUtils.checkLatestTermsAndConditionsAccepted';
 import getLoggedUser from '@salesforce/apex/CSP_Utils.getLoggedUser';
 import postFileToMulesoft from '@salesforce/apex/LabRegistry_helper.postFileToMulesoft';
+import CreateCase from '@salesforce/apex/LabRegistry_helper.CreateCase';
 
 //Labels
 import CSP_LabReg_CompleteDetails		from '@salesforce/label/c.CSP_LabReg_CompleteDetails';
@@ -49,6 +50,7 @@ export default class labRegistryServiceMainContent extends NavigationMixin(Light
 	}
 
 	successIcon = CSP_PortalPath + 'CSPortal/Images/Icons/youaresafe.png';
+	@track isLoading = false;
 
 	connectedCallback() {
 		this.fetchCSVId();
@@ -94,12 +96,33 @@ export default class labRegistryServiceMainContent extends NavigationMixin(Light
 	
 	//THIS IS WHERE THE CALLOUT TO MULESOFT IS DONE!
 	handleSubmitRequest(){
-		this.uploadedCSV.forEach(theFile => {
-			postFileToMulesoft({filename:theFile.name, fileContent:theFile.VersionData, fileDataContentType:theFile.contentType}).then(result2 => {
-				this.uploadedCSV = [];
-				this.showUploadModal = false;
-				this.openSuccessModal = true;
-			});
+		this.isLoading = true;
+		CreateCase({
+			reason:'New file upload'
+		}).then(result => {
+			if(result==null || result == undefined || result == ''){}
+			else{
+				let caseNum = result.CaseNumber;
+				let i =0;
+				this.uploadedCSV.forEach(theFile => {
+					i = i+1;
+					let fileName = caseNum + '_' + i + '_' + theFile.name;
+					postFileToMulesoft({filename:fileName, fileContent:theFile.VersionData, fileDataContentType:theFile.contentType}).then(result2 => {
+						this.uploadedCSV = [];
+						this.isLoading = false;
+						this.showUploadModal = false;
+						this.openSuccessModal = true;
+					}).catch(error => {
+						//this.errorModalMessage = error;
+						//this.openErrorModal = true; 
+						this.isLoading = false;
+					});
+				});
+			}
+		}).catch(error => {
+			//this.errorModalMessage = error;
+			//this.openErrorModal = true; 
+			this.isLoading = false;
 		});
 	}
 
