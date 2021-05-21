@@ -244,4 +244,27 @@ public  without sharing class LabRegistry_helper {
 	public static string getAccountName(){
 		return [Select contact.Account.Name from user where id=:UserInfo.getUserId()].contact.Account.Name;
 	}
+
+	/**
+	 * Perform Callout to Mulesoft to post files
+	 */
+	@AuraEnabled
+	public static string postFileToMulesoft(string filename, blob fileContent, string fileDataContentType){
+		try {
+			HttpRequest req = new HttpRequest();
+			req.setHeader('Content-Type', 'application/json');
+			req.setMethod('POST');
+			req.setTimeout(120000);
+			req.setEndpoint('callout:Mulesoft_LabRegistry');
+
+			req.setBody('{"fileName": "' + filename + '","fileData": "' + EncodingUtil.base64Decode(EncodingUtil.base64Encode(fileContent)).toString() + '", "fileDataContentType": "' + fileDataContentType + '"}');
+			Http h = new Http();
+			HttpResponse res = h.send(req);
+
+			return string.valueOf(res);
+			
+		} catch (Exception e) {
+			return e.getCause() + ' - ' + e.getMessage();
+		}
+	}
 }
