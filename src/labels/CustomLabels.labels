@@ -8746,30 +8746,6 @@ IATA Customer Portal</value>
         <value>Select Reason</value>
     </labels>
     <labels>
-        <fullName>CS_Portal_Annual_Revalidation_Countries_PickList_Value</fullName>
-        <categories>CS Portal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CS Portal Annual Revalidation Countries PickList Value</shortDescription>
-        <value>View per Market(s)</value>
-    </labels>
-    <labels>
-        <fullName>CS_Portal_Annual_Revalidation_Download_csv</fullName>
-        <categories>CS Portal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CS Portal Annual Revalidation Download csv</shortDescription>
-        <value>Extract details for all locations to CSV file</value>
-    </labels>
-    <labels>
-        <fullName>CS_Portal_Annual_Revalidation_Popup_Title</fullName>
-        <categories>CS Portal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CS Portal Annual Revalidation Popup Title</shortDescription>
-        <value>Confirm details for Multiple Locations</value>
-    </labels>
-    <labels>
         <fullName>CS_Portal_Addittional_Recipients_Body</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -8792,6 +8768,30 @@ IATA Customer Portal</value>
         <protected>false</protected>
         <shortDescription>CS_Portal_Addittional_Recipients_URL_Description</shortDescription>
         <value>to go to the portal to view the full details and engage in the communication.</value>
+    </labels>
+    <labels>
+        <fullName>CS_Portal_Annual_Revalidation_Countries_PickList_Value</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CS Portal Annual Revalidation Countries PickList Value</shortDescription>
+        <value>View per Market(s)</value>
+    </labels>
+    <labels>
+        <fullName>CS_Portal_Annual_Revalidation_Download_csv</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CS Portal Annual Revalidation Download csv</shortDescription>
+        <value>Extract details for all locations to CSV file</value>
+    </labels>
+    <labels>
+        <fullName>CS_Portal_Annual_Revalidation_Popup_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CS Portal Annual Revalidation Popup Title</shortDescription>
+        <value>Confirm details for Multiple Locations</value>
     </labels>
     <labels>
         <fullName>Campaign_already_created</fullName>
