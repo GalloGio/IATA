@@ -8,6 +8,8 @@ import getPortalServiceId from '@salesforce/apex/ServiceTermsAndConditionsUtils.
 
 import checkLatestTermsAndConditionsAccepted from '@salesforce/apex/ServiceTermsAndConditionsUtils.checkLatestTermsAndConditionsAccepted';
 import getLoggedUser from '@salesforce/apex/CSP_Utils.getLoggedUser';
+import postFileToMulesoft from '@salesforce/apex/LabRegistry_helper.postFileToMulesoft';
+import CreateCase from '@salesforce/apex/LabRegistry_helper.CreateCase';
 
 //Labels
 import CSP_LabReg_CompleteDetails		from '@salesforce/label/c.CSP_LabReg_CompleteDetails';
@@ -48,6 +50,7 @@ export default class labRegistryServiceMainContent extends NavigationMixin(Light
 	}
 
 	successIcon = CSP_PortalPath + 'CSPortal/Images/Icons/youaresafe.png';
+	@track isLoading = false;
 
 	connectedCallback() {
 		this.fetchCSVId();
@@ -93,8 +96,34 @@ export default class labRegistryServiceMainContent extends NavigationMixin(Light
 	
 	//THIS IS WHERE THE CALLOUT TO MULESOFT IS DONE!
 	handleSubmitRequest(){
-		this.showUploadModal = false;
-		this.openSuccessModal = true;
+		this.isLoading = true;
+		CreateCase({
+			reason:'New file upload'
+		}).then(result => {
+			if(result==null || result == undefined || result == ''){}
+			else{
+				let caseNum = result.CaseNumber;
+				let i =0;
+				this.uploadedCSV.forEach(theFile => {
+					i = i+1;
+					let fileName = caseNum + '_' + i + '_' + theFile.name;
+					postFileToMulesoft({filename:fileName, fileContent:theFile.VersionData, fileDataContentType:theFile.contentType}).then(result2 => {
+						this.uploadedCSV = [];
+						this.isLoading = false;
+						this.showUploadModal = false;
+						this.openSuccessModal = true;
+					}).catch(error => {
+						//this.errorModalMessage = error;
+						//this.openErrorModal = true; 
+						this.isLoading = false;
+					});
+				});
+			}
+		}).catch(error => {
+			//this.errorModalMessage = error;
+			//this.openErrorModal = true; 
+			this.isLoading = false;
+		});
 	}
 
 	closeConfirmationModal(){
@@ -115,21 +144,35 @@ export default class labRegistryServiceMainContent extends NavigationMixin(Light
 
 	handleUploadFinished(event){
 		this.csvId = this.csvId + 1;
-		Array.from(event.target.files).forEach(file => {
-			//this.uploadedCSV.push(this.mappingFile(file));
 
-			this.uploadedCSV.push({
-				id : this.csvId
-				, document: file
-				, name: file.name
-				, contentType: file.type
-				, size: file.size
-				, sizeConversion: this.formatBytes(file.size)
-			});
-		});
+		if (event.target.files.length > 0) {
+            let files = [];
+            for(var i=0; i< event.target.files.length; i++){
+                let file = event.target.files[i];
+                let reader = new FileReader();
+                reader.onload = e => {
+                    let base64 = 'base64,';
+                    let content = reader.result.indexOf(base64) + base64.length;
+                    let fileContents = reader.result.substring(content);
 
-		this.disableConfirm = false;
-		this.uploadedCSV = [...this.uploadedCSV];
+
+                    this.uploadedCSV.push({
+								name: file.name
+								, VersionData: fileContents
+								, contentType: file.type
+								, size: file.size
+								, sizeConversion: this.formatBytes(file.size)});
+					
+					if(this.uploadedCSV.length>0){
+									this.uploadedCSV = [...this.uploadedCSV];
+									this.disableConfirm = false;
+								}
+                };
+                reader.readAsDataURL(file);
+            }
+
+			
+        }
 	}
 
 	mappingFile(props) {

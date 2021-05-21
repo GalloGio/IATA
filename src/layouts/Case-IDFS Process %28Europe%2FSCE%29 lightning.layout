@@ -11,7 +11,6 @@
     <customButtons>Migrate_SAAM_Case</customButtons>
     <customButtons>Create_SAAM_Case</customButtons>
     <customButtons>E2CP__New_Comment</customButtons>
-    <customButtons>Review_ITP_Application</customButtons>
     <emailDefault>false</emailDefault>
     <excludeButtons>Delete</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
