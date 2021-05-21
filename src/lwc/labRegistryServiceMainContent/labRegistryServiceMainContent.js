@@ -3,7 +3,7 @@ import { NavigationMixin } from 'lightning/navigation';
 import { navigateToPage} from'c/navigationUtils';
 
 //Static Resources
-import getCSVTemplateFile from  '@salesforce/apex/LabRegistry_helper.getCSVTemplateFile';
+import getAttachmentFromPortalService from  '@salesforce/apex/LabRegistry_helper.getAttachmentFromPortalService';
 
 
 
@@ -30,6 +30,7 @@ export default class labRegistryServiceMainContent extends NavigationMixin(Light
 	}
 	connectedCallback() {
 		this.fetchCSVId();
+		this.fetchInstructionFile();
 	}
 
 	downloadTemplate(){
@@ -109,10 +110,20 @@ export default class labRegistryServiceMainContent extends NavigationMixin(Light
 
 	@track csvFilePath;
 	fetchCSVId() {
-		getCSVTemplateFile()
+		getAttachmentFromPortalService({filename:'Lab Information Template.xlsm'})
 		.then(response => {
 			if (response!=null){
 				this.csvFilePath='/servlet/servlet.FileDownload?file='+response.Id;
+			}
+		});
+	}
+
+	@track instructionFilePath;
+	fetchInstructionFile() {
+		getAttachmentFromPortalService({filename:'Lab Registry Data Form Instructions.pdf'})
+		.then(response => {
+			if (response!=null){
+				this.instructionFilePath='/servlet/servlet.FileDownload?file='+response.Id;
 			}
 		});
 	}
