@@ -1,4 +1,13 @@
 <template>
+	<template if:true={displayAcceptTerms}>
+		<c-portal-services-terms-and-conditions-modal 
+			portal-service-id={serviceId}
+			contact-id={contactId}
+			oncancel={goToHome} 
+			onaccept={acceptTerms}>
+		</c-portal-services-terms-and-conditions-modal>
+	</template>
+
 	<div class='banner'></div>
 	<div class="customLightShadow customPopupInterior75PercentScreenCentered slds-is-relative">
 		<span slot="pageBody">

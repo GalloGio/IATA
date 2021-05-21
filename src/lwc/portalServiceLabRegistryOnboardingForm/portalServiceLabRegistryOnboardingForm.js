@@ -53,7 +53,6 @@ import CSP_LabReg_TypeOfLab from '@salesforce/label/c.CSP_LabReg_TypeOfLab';
 import CSP_LabReg_Which_One from '@salesforce/label/c.CSP_LabReg_Which_One';
 import CSP_LabReg_WhichAirlines from '@salesforce/label/c.CSP_LabReg_WhichAirlines';
 import CSP_LabRegistry from '@salesforce/label/c.CSP_LabRegistry';
-import CSP_LabReg_AirlineAgreements from '@salesforce/label/c.CSP_LabReg_AirlineAgreements';
 import CSP_LabReg_CountryLabs from '@salesforce/label/c.CSP_LabReg_CountryLabs';
 import CSP_L2_Profile_Details_Message from '@salesforce/label/c.CSP_L2_Profile_Details_Message';
 import CSP_L2_Confirmation_Message from '@salesforce/label/c.CSP_L2_Confirmation_Message';
@@ -73,7 +72,7 @@ import CSP_LabReg_SplashScreen_Step4 from '@salesforce/label/c.CSP_LabReg_Splash
 //Steps labels
 import CSP_labReg_Step_GeneralInformation from '@salesforce/label/c.CSP_labReg_Step_GeneralInformation';
 import CSP_LabReg_Step_Locations from '@salesforce/label/c.CSP_LabReg_Step_Locations';
-import CSP_labReg_Step_Confirmation from '@salesforce/label/c.CSP_labReg_Step_Confirmation';
+import CSP_L2_Confirmation from '@salesforce/label/c.CSP_L2_Confirmation';
 import CSP_labReg_Step_Airline_Agreements from '@salesforce/label/c.CSP_labReg_Step_Airline_Agreements';
 
 //Modal Labels
@@ -131,12 +130,11 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 		,CSP_L2_Yes
 		,CSP_L2_No
 		,CSP_LabReg_FormNotCompleted
-		,CSP_LabReg_AirlineAgreements
 		,CSP_LabReg_CountryLabs
 		,CSP_L2_Profile_Details_Message
 		,CSP_L2_Next_Step
 		,CSP_labReg_Step_Airline_Agreements
-		,CSP_labReg_Step_Confirmation
+		,CSP_L2_Confirmation
 		,CSP_LabReg_Step_Locations
 		,CSP_labReg_Step_GeneralInformation
 		,CSP_L2_Back_to_Edit

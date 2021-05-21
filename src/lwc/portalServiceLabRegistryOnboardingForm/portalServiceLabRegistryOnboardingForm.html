@@ -84,7 +84,7 @@
 							<template if:true={isConfirmationStep}>
 								<div class="activeStep">4</div>
 								<div class="itemTitle currentStep">
-									<span>{labels.CSP_labReg_Step_Confirmation}</span>
+									<span>{labels.CSP_L2_Confirmation}</span>
 								</div>
 							</template>
 							<template if:false={isConfirmationStep}>
@@ -96,11 +96,11 @@
 								</template>
 								<template if:true={isConfirmationStepReachable}>
 									<div class="itemTitle itemClickable" onclick={goToConfirmationStep}>
-										<span>{labels.CSP_labReg_Step_Confirmation}</span>
+										<span>{labels.CSP_L2_Confirmation}</span>
 									</div>
 								</template>
 								<template if:false={isConfirmationStepReachable}>
-									<div class="itemTitle"><span>{labels.CSP_labReg_Step_Confirmation}</span></div>
+									<div class="itemTitle"><span>{labels.CSP_L2_Confirmation}</span></div>
 								</template>
 							</template>
 						</div>

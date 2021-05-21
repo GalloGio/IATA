@@ -1,11 +1,13 @@
 import { LightningElement, track, wire, api } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
-import { navigateToPage} from'c/navigationUtils';
+import { navigateToPage } from 'c/navigationUtils';
 
 //Static Resources
 import getAttachmentFromPortalService from  '@salesforce/apex/LabRegistry_helper.getAttachmentFromPortalService';
+import getPortalServiceId from '@salesforce/apex/ServiceTermsAndConditionsUtils.getPortalServiceId';
 
-
+import checkLatestTermsAndConditionsAccepted from '@salesforce/apex/ServiceTermsAndConditionsUtils.checkLatestTermsAndConditionsAccepted';
+import getLoggedUser from '@salesforce/apex/CSP_Utils.getLoggedUser';
 
 //Labels
 import CSP_LabReg_CompleteDetails		from '@salesforce/label/c.CSP_LabReg_CompleteDetails';
@@ -50,6 +52,27 @@ export default class labRegistryServiceMainContent extends NavigationMixin(Light
 	connectedCallback() {
 		this.fetchCSVId();
 		this.fetchInstructionFile();
+
+		getPortalServiceId({portalServiceName:'Lab Registry'}).then( result => {
+			this.serviceId = result;
+
+			getLoggedUser().then(userResult => {
+				let loggedUser = JSON.parse(JSON.stringify(userResult));
+	
+				if (loggedUser.Contact != null && loggedUser.Contact.AccountId != null) {
+					this.contactId = loggedUser.ContactId;
+				}
+
+				checkLatestTermsAndConditionsAccepted({portalServiceId: this.serviceId, contactId: this.contactId}).then(result2 => {
+					let isLatestAccepted = JSON.parse(JSON.stringify(result2));
+					this.isLatestAccepted = isLatestAccepted;
+					if(!this.isLatestAccepted){
+						this.displayAcceptTerms = true;
+					}
+				});
+			});
+		});
+
 	}
 
 	downloadTemplate(){
@@ -158,4 +181,19 @@ export default class labRegistryServiceMainContent extends NavigationMixin(Light
 		});
 	}
 	
+
+	//TERMS AND CONDITIONS
+	@track isLatestAccepted = false;
+	@track displayAcceptTerms = false;
+	@track serviceId;
+	@track contactId;
+
+	goToHome(){
+		navigateToPage(CSP_PortalPath,{});
+	}
+	
+	acceptTerms(){
+		this.displayAcceptTerms = false;
+		this.isLatestAccepted = true;
+	}
 }

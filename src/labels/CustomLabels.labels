@@ -6685,14 +6685,6 @@ You can easily create a company account in two steps</value>
         <value>Do you have any additional certifications in place?</value>
     </labels>
     <labels>
-        <fullName>CSP_LabReg_AirlineAgreements</fullName>
-        <categories>LabRegistry</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_LabReg_AirlineAgreements</shortDescription>
-        <value>Airline Agreements</value>
-    </labels>
-    <labels>
         <fullName>CSP_LabReg_CompleteDetails</fullName>
         <categories>LabRegistry</categories>
         <language>en_US</language>
@@ -9069,14 +9061,6 @@ IATA Customer Portal</value>
         <protected>false</protected>
         <shortDescription>CSP_labReg_Step_Airline_Agreements</shortDescription>
         <value>Airline Agreements</value>
-    </labels>
-    <labels>
-        <fullName>CSP_labReg_Step_Confirmation</fullName>
-        <categories>LabRegistry</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP_labReg_Step_Confirmation</shortDescription>
-        <value>Confirmation</value>
     </labels>
     <labels>
         <fullName>CSP_labReg_Step_GeneralInformation</fullName>

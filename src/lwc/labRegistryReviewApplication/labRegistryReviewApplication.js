@@ -30,14 +30,13 @@ import CSP_LabReg_TypeOfLab from '@salesforce/label/c.CSP_LabReg_TypeOfLab';
 import CSP_LabReg_Which_One from '@salesforce/label/c.CSP_LabReg_Which_One';
 import CSP_LabReg_WhichAirlines from '@salesforce/label/c.CSP_LabReg_WhichAirlines';
 import CSP_LabRegistry from '@salesforce/label/c.CSP_LabRegistry';
-import CSP_LabReg_AirlineAgreements from '@salesforce/label/c.CSP_LabReg_AirlineAgreements';
 import CSP_LabReg_CountryLabs from '@salesforce/label/c.CSP_LabReg_CountryLabs';
 import CSP_L2_Profile_Details_Message from '@salesforce/label/c.CSP_L2_Profile_Details_Message';
 
 //Steps labels
 import CSP_labReg_Step_GeneralInformation from '@salesforce/label/c.CSP_labReg_Step_GeneralInformation';
 import CSP_LabReg_Step_Locations from '@salesforce/label/c.CSP_LabReg_Step_Locations';
-import CSP_labReg_Step_Confirmation from '@salesforce/label/c.CSP_labReg_Step_Confirmation';
+import CSP_L2_Confirmation from '@salesforce/label/c.CSP_L2_Confirmation';
 import CSP_labReg_Step_Airline_Agreements from '@salesforce/label/c.CSP_labReg_Step_Airline_Agreements';
 
 
@@ -64,11 +63,10 @@ export default class LabRegistryReviewApplication extends NavigationMixin(Lightn
 		,CSP_LabRegistry
 		,CSP_L2_Yes
 		,CSP_L2_No
-		,CSP_LabReg_AirlineAgreements
 		,CSP_LabReg_CountryLabs
 		,CSP_L2_Profile_Details_Message
 		,CSP_labReg_Step_Airline_Agreements
-		,CSP_labReg_Step_Confirmation
+		,CSP_L2_Confirmation
 		,CSP_LabReg_Step_Locations
 		,CSP_labReg_Step_GeneralInformation
 		,CSP_L2_Submit
@@ -192,9 +190,6 @@ export default class LabRegistryReviewApplication extends NavigationMixin(Lightn
 				}else
 					alert('No result???');
 			})
-			.catch((error) => {
-				console.log('error',JSON.stringify(error));
-			});
 
 		}
 	}
@@ -215,26 +210,17 @@ export default class LabRegistryReviewApplication extends NavigationMixin(Lightn
 
 	updatePAR(PARStatus){
 		this.isLoading = true;
-	//	let localPAR =  { 'sobjectType': 'Portal_Application_Right__c' };
-	//	localPAR.Right__c = PARStatus;
-//		localPAR.Id = this.PAR.Id;
-		
 		ApproveDenyApplication({PARID: this.PAR.Id, st: PARStatus}).then(result => {
 			let res = JSON.parse(JSON.stringify(result));
 			if(res === true){
-				//this.openSuccessModal = true;
 				alert('successfully saved');
 			}
 			else{
 				alert('Error while saving');
-				//this.errorModalMessage = 'Error';
-				//this.openErrorModal = true; 
 			}
 			this.isLoading = false;
 			this.isCompleted = true;
 		}).catch(error => {
-			//this.errorModalMessage = error;
-			//this.openErrorModal = true; 
 			alert('exception!! ' + error);
 			this.isLoading = false;
 		});
