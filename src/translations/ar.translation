@@ -5518,6 +5518,18 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CS_Portal_Addittional_Recipients_URL_Description</name>
     </customLabels>
     <customLabels>
+        <label><!-- CS Portal Annual Revalidation Countries PickList Value --></label>
+        <name>CS_Portal_Annual_Revalidation_Countries_PickList_Value</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CS Portal Annual Revalidation Download csv --></label>
+        <name>CS_Portal_Annual_Revalidation_Download_csv</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CS Portal Annual Revalidation Popup Title --></label>
+        <name>CS_Portal_Annual_Revalidation_Popup_Title</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Campaign already created --></label>
         <name>Campaign_already_created</name>
     </customLabels>
@@ -29898,6 +29910,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- icg smart facility remote validation text3 --></label>
         <name>icg_smart_facility_remote_validation_text3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg smart facility remote validation url --></label>
+        <name>icg_smart_facility_remote_validation_url</name>
     </customLabels>
     <customLabels>
         <label><!-- icg smart facility url --></label>

@@ -19191,9 +19191,9 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>ANG_RHC_Information__c.ANG_RHC_Amount_Equals_FS__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -69223,6 +69223,7 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
+        <personAccountDefault>true</personAccountDefault>
         <recordType>ANG_RHC_Information__c.RHC_Information</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
