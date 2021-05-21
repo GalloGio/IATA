@@ -12,6 +12,24 @@ public  without sharing class LabRegistry_helper {
 		return lsAirline;
 	}
 
+	/***
+	 * method crates the case used by ITP
+	 */
+	@AuraEnabled
+	public static case CreateCase(string reason, user currentUser){
+		Case theCase = new case();
+			theCase.recordtypeid = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CS_Process_IDFS_ISS');
+			theCase.ContactId = currentUser.ContactId;
+			theCase.AccountId = currentUser.Contact.AccountId;
+			theCase.subject = ('Lab Registry - New access request for ' + currentUser.contact.account.name).left(255);
+			theCase.Origin = 'Portal';
+			theCase.Region__c = currentUser.contact.Account.IATA_Iso_Country__r.Region__c;
+			theCase.CaseArea__c = 'IATA Travel Pass';
+			theCase.Reason1__c = reason;
+		insert theCase;
+
+		return theCase;
+	}
 	/****
 	 * Method used to Save lab registry survey's answers.
 	 * 
@@ -42,19 +60,10 @@ public  without sharing class LabRegistry_helper {
 			insert accntRole;
 
 			//Create Case
-			Case theCase = new case();
-				theCase.recordtypeid = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ProcessEuropeSCE');
-				theCase.ContactId = currentUser.ContactId;
-				theCase.AccountId = currentUser.Contact.AccountId;
-				theCase.subject = ('Lab Registry - New access request for ' + currentUser.contact.account.name).left(255);
-				theCase.Origin = 'Portal';
-				theCase.Region__c = currentUser.contact.Account.IATA_Iso_Country__r.Region__c;
-				theCase.CaseArea__c = 'IATA Travel Pass';
-				theCase.Reason1__c = 'New access request';
-			insert theCase;
+			case theCase = LabRegistry_helper.CreateCase('New access request', currentUser);
 
 			//Create Account Role Detail. Main answers
-			labRoleDetail.onboarding_case__c = theCase.Id;
+			labRoleDetail.Onboarding_Case__c = theCase.Id;
 			switch on labRoleDetail.Lab_Type__c {
 				when 'IT Integrator' {
 				    labRoleDetail.recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('LAB_Account_Role_Detail__c', 'IT_Integrator');
@@ -86,7 +95,7 @@ public  without sharing class LabRegistry_helper {
 
 			//Create Account Role details. Airline partnership
 			for(LAB_Account_Role_Detail__c airlineAgreements:lsAirlineAgreement){
-				airlineAgreements.recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('LAB_Account_Role_Detail__c', 'Airline_agreement');
+				airlineAgreements.recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('LAB_Account_Role_Detail__c', 'Airline_Agreement');
 				airlineAgreements.Parent_Detail_For_Airline__c = labRoleDetail.Id;
 			}
 
@@ -189,7 +198,7 @@ public  without sharing class LabRegistry_helper {
 															,Which_governments__c // IF Above = YES
 															,onboarding_case__r.contactId
 														from LAB_Account_Role_Detail__c 
-														where onboarding_case__c = :recordID];
+														where Onboarding_Case__c = :recordID];
 
 			list<LAB_Account_Role_Detail__c> lsCountriesLab = [select
 																	id
