@@ -116,4 +116,15 @@
 		</div>
 	</template>
 
+	<template if:true={openSuccessModal}>
+        <c-portal-registration-generic-modal
+            icon={successIcon}
+            title={labels.CSP_L2_Details_Saved}
+            message={labels.CSP_LabReg_UploadCompleted}
+			button1-label=''
+            button2-label={labels.ISSP_RD_OK_Action}
+            onbuttontwoaction={closeConfirmationModal}>
+        </c-portal-registration-generic-modal>
+    </template>
+
 </template>

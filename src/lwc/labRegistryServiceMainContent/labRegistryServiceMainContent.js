@@ -12,8 +12,10 @@ import CSP_LabReg_CompleteDetails		from '@salesforce/label/c.CSP_LabReg_Complete
 import CSP_LabReg_Download_CSV			from '@salesforce/label/c.CSP_LabReg_Download_CSV';
 import CSP_LabReg_UploadDetails			from '@salesforce/label/c.CSP_LabReg_UploadDetails';
 import CSP_LabReg_UploadFilledCSV		from '@salesforce/label/c.CSP_LabReg_UploadFilledCSV';
+import IDCard_Confirm_Replacement		from '@salesforce/label/c.IDCard_Confirm_Replacement';
 import CSP_LabReg_UploadCSVBtn		from '@salesforce/label/c.CSP_LabReg_UploadCSVBtn';
-import IDCard_Confirm_Replacement from '@salesforce/label/c.IDCard_Confirm_Replacement';
+import CSP_LabReg_UploadCompleted from '@salesforce/label/c.CSP_LabReg_UploadCompleted';
+import ISSP_RD_OK_Action from '@salesforce/label/c.ISSP_RD_OK_Action';
 import Button_Cancel from '@salesforce/label/c.Button_Cancel';
 import CSP_PortalPath						from '@salesforce/label/c.CSP_PortalPath';
 
@@ -26,8 +28,13 @@ export default class labRegistryServiceMainContent extends NavigationMixin(Light
 		,CSP_LabReg_UploadFilledCSV
 		,CSP_LabReg_UploadCSVBtn
 		,IDCard_Confirm_Replacement
+		,CSP_LabReg_UploadCompleted
+		,ISSP_RD_OK_Action
 		,Button_Cancel
 	}
+
+	successIcon = CSP_PortalPath + 'CSPortal/Images/Icons/youaresafe.png';
+
 	connectedCallback() {
 		this.fetchCSVId();
 		this.fetchInstructionFile();
@@ -40,14 +47,23 @@ export default class labRegistryServiceMainContent extends NavigationMixin(Light
 
 	openUploadModal(){
 		this.showUploadModal = true;
+		this.uploadedCSV = [];
 	}
 
 	closeUploadModal(){
 		this.showUploadModal = false;
 	}
 
+	@track openSuccessModal = false;
+	
+	//THIS IS WHERE THE CALLOUT TO MULESOFT IS DONE!
 	handleSubmitRequest(){
-		alert('Processing file upload');
+		this.showUploadModal = false;
+		this.openSuccessModal = true;
+	}
+
+	closeConfirmationModal(){
+		this.openSuccessModal = false;
 	}
 
 	@track showUploadModal = false;
@@ -105,7 +121,9 @@ export default class labRegistryServiceMainContent extends NavigationMixin(Light
 				let indexFound = this.uploadedCSV.findIndex(ar => ar.Id == row.Id);
 				this.uploadedCSV.splice(indexFound, 1);
 				this.uploadedCSV = [...this.uploadedCSV];
- 		}	
+		}
+
+		if(this.uploadedCSV.length<1)  this.disableConfirm = true;
 	}
 
 	@track csvFilePath;
