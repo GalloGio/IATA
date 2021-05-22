@@ -238,7 +238,7 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 					this.isBForm = false;
 				} 
 		
-				if(this.labTypeSelection=='Independent' || this.labTypeSelection=='Lab Network'){
+				if(this.labTypeSelection=='Independent Lab' || this.labTypeSelection=='Lab Network'){
 					this.isAForm = false;
 					this.isBForm = true;
 				} 

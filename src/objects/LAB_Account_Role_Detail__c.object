@@ -363,9 +363,9 @@
             <valueSetDefinition>
                 <sorted>false</sorted>
                 <value>
-                    <fullName>Independent</fullName>
+                    <fullName>Independent Lab</fullName>
                     <default>false</default>
-                    <label>Independent</label>
+                    <label>Independent Lab</label>
                 </value>
                 <value>
                     <fullName>Lab Network</fullName>
@@ -581,6 +581,32 @@
         <type>Lookup</type>
     </fields>
     <label>LAB Account Role Detail</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>All_applications</fullName>
+        <columns>NAME</columns>
+        <columns>RECORDTYPE</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>LAB_Account_Role_Detail__c.Independent_Lab,LAB_Account_Role_Detail__c.IT_Integrator,LAB_Account_Role_Detail__c.Aggregator,LAB_Account_Role_Detail__c.Lab_Network</value>
+        </filters>
+        <label>All applications</label>
+        <language>en_US</language>
+        <sharedTo>
+            <group>ITP_Lab_Engagement</group>
+            <group>ITP_Lab_Registry_Editor</group>
+        </sharedTo>
+    </listViews>
     <nameField>
         <displayFormat>LAB-{000000000}</displayFormat>
         <label>LAB Account Role Detail Name</label>
@@ -702,7 +728,7 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Independent</fullName>
+                <fullName>Independent Lab</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -880,7 +906,7 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Independent</fullName>
+                <fullName>Independent Lab</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1050,7 +1076,7 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Independent</fullName>
+                <fullName>Independent Lab</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1220,7 +1246,7 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Independent</fullName>
+                <fullName>Independent Lab</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1286,10 +1312,10 @@
         </picklistValues>
     </recordTypes>
     <recordTypes>
-        <fullName>Independent</fullName>
+        <fullName>Independent_Lab</fullName>
         <active>true</active>
         <description>Recordtype for Independent Laboratories</description>
-        <label>Independent</label>
+        <label>Independent Lab</label>
         <picklistValues>
             <picklist>Additional_certifications_in_place__c</picklist>
             <values>
@@ -1398,7 +1424,7 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Independent</fullName>
+                <fullName>Independent Lab</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1576,7 +1602,7 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Independent</fullName>
+                <fullName>Independent Lab</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1754,7 +1780,7 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Independent</fullName>
+                <fullName>Independent Lab</fullName>
                 <default>false</default>
             </values>
             <values>

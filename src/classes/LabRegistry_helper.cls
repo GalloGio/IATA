@@ -75,8 +75,8 @@ public  without sharing class LabRegistry_helper {
 				when 'Aggregator' {
 					labRoleDetail.recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('LAB_Account_Role_Detail__c', 'Aggregator');
 				}
-				when 'Independent' {
-					labRoleDetail.recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('LAB_Account_Role_Detail__c', 'Independent');
+				when 'Independent Lab' {
+					labRoleDetail.recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('LAB_Account_Role_Detail__c', 'Independent_Lab');
 				}
 				when 'Lab Network' {
 					labRoleDetail.recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('LAB_Account_Role_Detail__c', 'Lab_Network');
