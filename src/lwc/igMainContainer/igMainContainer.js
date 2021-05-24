@@ -166,10 +166,10 @@ export default class IgMainContainer extends LightningElement {
 		}
 		this.igomManual = JSON.parse(JSON.stringify(newIgom));
 		// Search the current section by PermId
-		const selectedSectionPermId = this.selectedSectionObj.procedure.PermID__c;
+		const selectedSectionPermId = this.selectedSectionObj.procedure.External_Reference_ID__c;
 		//const allProcedures = [].concat(...this.igomManual.chapters.map(chapter => util.flattenArrayByProperty(chapter, pr => pr.subprocedures)));
 		for (const chapter of this.igomManual.chapters) {
-			const foundSection = chapter.subprocedures.find(section => section.procedure.PermID__c === selectedSectionPermId);
+			const foundSection = chapter.subprocedures.find(section => section.procedure.External_Reference_ID__c === selectedSectionPermId);
 			if (foundSection) {
 				this.selectedSectionObj = foundSection;
 				this.selectedChapter = chapter.procedure.Name__c;
