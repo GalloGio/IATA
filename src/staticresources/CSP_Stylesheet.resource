@@ -1665,7 +1665,7 @@ lightning-datatable .slds-th__action {
 }
 
 .textValue input{
-    background-color: #f7f8fa !important;
+    background-color: #ffffff !important;
     border-radius: 1px !important;
     border: solid 1px #e6e6e6 !important;
     color:#333333 !important;
