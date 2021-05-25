@@ -508,8 +508,8 @@ public class AMS_OSCAR_ProcessViewerController {
 		}
 		if(haveSomeMenuToRemove){
 			process.flows[indexFlowsToRemove].steps.remove(indexStepsToRemove);
-		}else{
-			process.flows[indexFlow52ToRemove].steps.remove(indexStep52ToRemove);
+		}else if(process.flows[indexFlow52ToRemove].steps[indexStep52ToRemove].name == 'STEP52'){
+				process.flows[indexFlow52ToRemove].steps.remove(indexStep52ToRemove);
 		}
 	}
 
