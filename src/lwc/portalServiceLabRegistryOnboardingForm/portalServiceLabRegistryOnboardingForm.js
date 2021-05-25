@@ -527,11 +527,11 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 			labDetail.National_accreditation_for_all_the_labs__c = this.nationalAccreditationSelection;
 			labDetail.Additional_certifications_in_place__c = this.AdditionalCertInPlace;
 			if(this.AdditionalCertInPlace == 'Yes')
-				labDetail.Additional_certifications__c = this.whichAdditionalCert;
+				labDetail.Additional_Certifications__c = this.whichAdditionalCert;
 			
 			labDetail.Endorsed_by_governments__c = this.endorsedByGovern;
 			if(this.endorsedByGovern == 'Yes')
-				labDetail.Which_governments__c = this.whichGovern;
+				labDetail.Which_Governments__c = this.whichGovern;
 		}
 
 		this.selectedCountries.forEach(cntr => {

@@ -6993,6 +6993,14 @@ By submitting, you will receive a case number where through this case our engage
         <value>Laboratory Details</value>
     </labels>
     <labels>
+        <fullName>CSP_LabRegistry_service_desc</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabRegistry_service_desc</shortDescription>
+        <value>By joining the Lab Registry network, your lab can issue digital test results to passengers as well as be accessible to passengers through the Travel Pass App as well as other third party sites.</value>
+    </labels>
+    <labels>
         <fullName>CSP_LastUpdate</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>

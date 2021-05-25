@@ -794,7 +794,7 @@
         </picklistValues>
     </recordTypes>
     <recordTypes>
-        <fullName>Airline_agreement</fullName>
+        <fullName>Airline_Agreement</fullName>
         <active>true</active>
         <description>Used to store which airlines a lab has agreement with</description>
         <label>Airline agreement</label>
