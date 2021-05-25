@@ -8770,6 +8770,30 @@ IATA Customer Portal</value>
         <value>to go to the portal to view the full details and engage in the communication.</value>
     </labels>
     <labels>
+        <fullName>CS_Portal_Annual_Revalidation_Countries_PickList_Value</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CS Portal Annual Revalidation Countries PickList Value</shortDescription>
+        <value>View per Market(s)</value>
+    </labels>
+    <labels>
+        <fullName>CS_Portal_Annual_Revalidation_Download_csv</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CS Portal Annual Revalidation Download csv</shortDescription>
+        <value>Extract details for all locations to CSV file</value>
+    </labels>
+    <labels>
+        <fullName>CS_Portal_Annual_Revalidation_Popup_Title</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CS Portal Annual Revalidation Popup Title</shortDescription>
+        <value>Confirm details for Multiple Locations</value>
+    </labels>
+    <labels>
         <fullName>Campaign_already_created</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -30055,7 +30079,7 @@ This service is free of charge.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>STEP 1 - Annual Revalidation</shortDescription>
-        <value>STEP A - Confirm Agency Details</value>
+        <value>&lt;span class=&quot;progress-tab-step&quot;&gt;A&lt;/span&gt;Confirm Agency Details</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_Step1_HE</fullName>
@@ -30093,7 +30117,7 @@ This service is free of charge.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>STEP 2 - Annual Revalidation</shortDescription>
-        <value>STEP B - Submit to IATA</value>
+        <value>&lt;span class=&quot;progress-tab-step&quot;&gt;B&lt;/span&gt;Submit to IATA</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_Step2_Owned_by_OtherOrg_Branch</fullName>
@@ -51527,6 +51551,14 @@ ONE Source is the industry platform for validated aviation capability and infras
         <protected>false</protected>
         <shortDescription>icg smart facility remote validation text3</shortDescription>
         <value>Remote validations are also an integral part of each Smart Facility Operational Capacity Audit. They allow auditors to focus on the procedural assessment of the cargo handling facility.</value>
+    </labels>
+    <labels>
+        <fullName>icg_smart_facility_remote_validation_url</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg smart facility remote validation url</shortDescription>
+        <value>https://www.iata.org/en/programs/cargo/cargo-operations/smart-facility/remote-validation/</value>
     </labels>
     <labels>
         <fullName>icg_smart_facility_url</fullName>

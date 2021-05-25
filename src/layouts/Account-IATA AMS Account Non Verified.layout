@@ -740,6 +740,7 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Operation__c</fields>
         <relatedList>AMS_Agency_Operations__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>

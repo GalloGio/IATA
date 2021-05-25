@@ -65827,7 +65827,7 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>ANG_AccountTrackingHistory</apexPage>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>ANG_AccreditationAreaViewer</apexPage>
@@ -65891,7 +65891,7 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>ANG_RiskEventHistory</apexPage>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>ANG_RiskEventPopUp</apexPage>
