@@ -2610,11 +2610,7 @@
         </actions>
         <active>true</active>
         <description>Retrieve Description information based on Related Exception Case</description>
-        <formula>AND(
-  NOT(ISBLANK(TEXT(Status__c))),
-  NOT(ISBLANK(Parent__c)),
-  Extension__c 
-)</formula>
+        <formula>AND(   NOT(ISBLANK(TEXT(Status__c))),   NOT(ISBLANK(Parent__c)),   Extension__c  )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>

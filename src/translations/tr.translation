@@ -38419,7 +38419,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
             <name>Accounts</name>
         </sections>
         <sections>
-            <label><!-- Contacts --></label>
+            <label>Portal Erişim Ismi</label>
             <name>Contacts</name>
         </sections>
         <sections>
@@ -38515,7 +38515,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
                 <label><!-- Milestone Status --></label>
                 <name>Milestone Status</name>
             </columns>
-            <label><!-- Milestones --></label>
+            <label>Portal Erişim Ismi</label>
             <name>Milestones</name>
         </sections>
         <sections>
@@ -38636,7 +38636,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <label><!-- OSCARs with Cases --></label>
         <name>OSCARs_with_Cases</name>
         <sections>
-            <label><!-- Cases --></label>
+            <label>Portal Erişim Ismi</label>
             <name>Cases</name>
         </sections>
         <sections>
@@ -38720,7 +38720,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
             <name>Account Information</name>
         </sections>
         <sections>
-            <label><!-- Objectives --></label>
+            <label>Portal Erişim Ismi</label>
             <name>Objectives</name>
         </sections>
     </reportTypes>
@@ -38733,7 +38733,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
             <name>One Id User Applications</name>
         </sections>
         <sections>
-            <label><!-- User Provisioning Requests --></label>
+            <label>Portal Erişim Ismi</label>
             <name>User Provisioning Requests</name>
         </sections>
     </reportTypes>

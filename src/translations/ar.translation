@@ -37638,7 +37638,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Financial Securities --></label>
         <name>Financial_Securities</name>
         <sections>
-            <label><!-- Financial Securities --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>Financial Securities</name>
         </sections>
     </reportTypes>
@@ -37691,7 +37691,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
             <name>EBC Email Exclusion Relations</name>
         </sections>
         <sections>
-            <label><!-- GDP Products - Accounts View --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>GDP Products - Accounts View</name>
         </sections>
     </reportTypes>
@@ -38446,7 +38446,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
             <name>Campaign Members and Products</name>
         </sections>
         <sections>
-            <label><!-- Campaigns --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>Campaigns</name>
         </sections>
     </reportTypes>
@@ -38603,7 +38603,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
             <name>Account Roles</name>
         </sections>
         <sections>
-            <label><!-- ONE Source Contact Role Details --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>ONE Source Contact Role Details</name>
         </sections>
         <sections>
@@ -38726,7 +38726,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
             <name>Account Role Relationships (From)</name>
         </sections>
         <sections>
-            <label><!-- Account Roles --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>Account Roles</name>
         </sections>
         <sections>
@@ -38739,7 +38739,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Opportunities w and w/o activities --></label>
         <name>Opportunities_w_and_w_o_activities</name>
         <sections>
-            <label><!-- Activities --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>Activities</name>
         </sections>
         <sections>
@@ -38752,7 +38752,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Opportunities with Accounts and Contracts --></label>
         <name>Opportunities_with_Accounts_and_Contracts</name>
         <sections>
-            <label><!-- Accounts --></label>
+            <label>التقارير</label>
             <name>Accounts</name>
         </sections>
         <sections>
@@ -38842,7 +38842,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
             <name>Order Products</name>
         </sections>
         <sections>
-            <label><!-- Orders --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>Orders</name>
         </sections>
     </reportTypes>
