@@ -4164,6 +4164,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>Your {0} access request has been sent to your company’s portal administrators. &lt;br/&gt;Your portal administrator can be found under your</value>
     </labels>
     <labels>
+        <fullName>CSP_Contact_Deleted</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Contact Deleted</shortDescription>
+        <value>Contact deleted</value>
+    </labels>
+    <labels>
         <fullName>CSP_Contact_Id_Card_Error_Msg</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -4172,12 +4180,20 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>Changing your profile name will impact the validity of your ID Card. Please contact our Customer Service Team to change your profile name.</value>
     </labels>
     <labels>
+        <fullName>CSP_Contact_Added</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Contact Added</shortDescription>
+        <value>Contact Added</value>
+    </labels>
+    <labels>
         <fullName>CSP_Contact_Updated</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Contact Updated</shortDescription>
-        <value>Contact updated</value>
+        <value>Contact Updated</value>
     </labels>
     <labels>
         <fullName>CSP_Contact_Us_Banner_Msg</fullName>
@@ -11921,6 +11937,54 @@ Browse through our extensive catalogue or purchase any of the IATA publications,
         <protected>false</protected>
         <shortDescription>IA Contact Save Problem</shortDescription>
         <value>There was a problem saving the contact</value>
+    </labels>
+    <labels>
+        <fullName>IA_Delete_Message1</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Delete Message1</shortDescription>
+        <value>By clicking on remove, all MITA Contact types will be cleared from this contact and the contact will be removed from the “Active MITA Contact list.”</value>
+    </labels>
+    <labels>
+        <fullName>IA_Delete_Message2</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Delete Message2</shortDescription>
+        <value>Removing the contact here will not delete the contact from the airline account in Customer Portal.</value>
+    </labels>
+    <labels>
+        <fullName>IA_Description_Interline_Airline_Generic_Contact</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Description Interline Airline Generic Contact</shortDescription>
+        <value>Formerly CGO / PAX Correspondence</value>
+    </labels>
+    <labels>
+        <fullName>IA_Description_Interline_Cargo_Agreement_Manager</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Description Interline Cargo Agreement Manager</shortDescription>
+        <value>Formerly CGO Billing</value>
+    </labels>
+    <labels>
+        <fullName>IA_Description_Interline_Passenger_Agreement_Manager</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Description Interline Passenger Agreement Manager</shortDescription>
+        <value>Formerly PAX Billing</value>
+    </labels>
+    <labels>
+        <fullName>IA_Description_Passenger_Protection_Manager</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Description Passenger Protection Manager</shortDescription>
+        <value>New created contact to address issues on operational side</value>
     </labels>
     <labels>
         <fullName>IA_Expiry_Date</fullName>
@@ -48423,6 +48487,14 @@ Upscale your skills by signing up for one of our training programs, directly onl
         <protected>false</protected>
         <shortDescription>Case Details Details page</shortDescription>
         <value>Anyone else to be informed?</value>
+    </labels>
+    <labels>
+        <fullName>csp_Remove_Contact</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Remove Contact</shortDescription>
+        <value>Remove Contact</value>
     </labels>
     <labels>
         <fullName>csp_RequestService_ContactPortalAdmin_Alt</fullName>

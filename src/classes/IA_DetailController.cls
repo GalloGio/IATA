@@ -13,6 +13,10 @@ public without sharing class IA_DetailController {
 	public MITA_Agreement__c agreementCancellation {get;set;}
 	public Boolean showSuccessWithdrawn {get;set;}
 
+	public Map<String,String> getMapTypeLabels() {
+		return IA_util.MAP_MITA_CONTACT_TYPE_LABELS;
+	}
+
 	public IA_DetailController(){
 		this.agreementCancellation = new MITA_Agreement__c();
 	}
@@ -190,7 +194,7 @@ public without sharing class IA_DetailController {
 			FROM Contact
 			WHERE Recordtype.DeveloperName = 'Standard_Contact'
 			AND Status__c = 'Active'
-			AND AccountId = :this.otherAirline.Id
+			AND (AccountId = :this.otherAirline.Id OR Account.Top_Parent__c = :this.otherAirline.Id)
 			AND MITA_Contact_Type__c != null
 			ORDER BY Name ASC
 			LIMIT 1000])

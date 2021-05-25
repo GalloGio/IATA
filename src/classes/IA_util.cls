@@ -10,6 +10,12 @@ public with sharing class IA_util {
 	public static final String PAX_MANAGER = 'Interline Passenger Agreement Manager';
 	public static final String PAX_PROTECTION = 'Passenger Protection Agreement';
 	public static final list<String> LIST_MITA_CONTACTS = new list<String>{GENERIC_CONTACT,CARGO_MANAGER,PAX_MANAGER,PAX_PROTECTION};
+	public static final Map<String,String> MAP_MITA_CONTACT_TYPE_LABELS = new Map<String,String>{
+		GENERIC_CONTACT => Label.IA_Description_Interline_Airline_Generic_Contact,
+		CARGO_MANAGER => Label.IA_Description_Interline_Cargo_Agreement_Manager,
+		PAX_MANAGER => Label.IA_Description_Interline_Passenger_Agreement_Manager,
+		PAX_PROTECTION => Label.IA_Description_Passenger_Protection_Manager
+	};
 
 	public static final String CONCURRENCES = 'Concurrences';
 	public static final String WITHDRAWALS = 'Withdrawals';
@@ -163,8 +169,12 @@ public with sharing class IA_util {
 	}
 
 	public static String Decrypt(Blob key, String idToDecrypt){
-		Blob encodedEncryptedBlob = EncodingUtil.base64Decode(idToDecrypt);
-		return Crypto.decryptWithManagedIV('AES128', key, encodedEncryptedBlob).toString();
+		try {
+			Blob encodedEncryptedBlob = EncodingUtil.base64Decode(idToDecrypt);
+			return Crypto.decryptWithManagedIV('AES128', key, encodedEncryptedBlob).toString();
+		} catch(Exception e) {
+			return null;
+		}
 	}
 
 	public static String randomString(Integer count) {

@@ -213,7 +213,7 @@
 					<!-- /All Agreements Filter body -->
 					<div class="modal-footer">
 						<div class="IA-button-box row">
-							<button type="button" class="IA-button IA-button-white" onclick="clearAllModalFilter(); return false;">{!$Label.CSP_RemoveAllFilters}</button>
+							<button type="button" class="IA-button-white" onclick="clearAllModalFilter(); return false;">{!$Label.CSP_RemoveAllFilters}</button>
 							<button type="button" class="IA-button" onclick="applyAllAgreementsFilter(); return false;">{!$Label.CSP_Apply}</button>
 						</div>
 					</div>

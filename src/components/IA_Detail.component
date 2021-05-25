@@ -219,7 +219,10 @@
 														</td>
 														<td>
 															<apex:dataList value="{!accountContact.mitaTypes}" var="type">
-																{!type}
+																<div class="IA-tooltip">
+																	{!type}
+																	<span>{!MapTypeLabels[type]}</span>
+																</div>
 															</apex:dataList>
 														</td>
 													</tr>

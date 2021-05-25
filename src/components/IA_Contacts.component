@@ -6,12 +6,23 @@
 		<apex:param name="param1" value="" assignTo="{!selectedContactId}"/>
 	</apex:actionFunction>
 	<apex:actionFunction name="closeModalContact" action="{!closeModalContact}" rerender="modalContact" oncomplete="applyAllAgreementsFilter();modalOnComplete('auto');" status="loadingStatus" immediate="true"/>
+	<apex:actionFunction name="openModalRemoveContact" action="{!openModalRemoveContact}" rerender="modalRemoveContact" oncomplete="modalOnComplete('hidden');" status="loadingStatus">
+		<apex:param name="param1" value="" assignTo="{!selectedContactId}"/>
+	</apex:actionFunction>
+	<apex:actionFunction name="closeModalRemoveContact" action="{!closeModalRemoveContact}" rerender="modalRemoveContact" oncomplete="applyAllAgreementsFilter();modalOnComplete('auto');" status="loadingStatus" immediate="true"/>
 	<apex:actionFunction name="saveContact" action="{!saveContact}" rerender="modalContact,modalAlertContact,ContactsTable,modalContactsFilter" oncomplete="closeModalContact();modalOnComplete('auto');" status="loadingStatus"/>
-	<apex:actionFunction name="deleteContact" action="{!deleteContact}" rerender="ContactsTable" oncomplete="modalOnComplete('auto');" status="loadingStatus">
-		<apex:param name="key" value="" assignTo="{!selectedContactId}"/>	
+	<apex:actionFunction name="deleteContact" action="{!deleteContact}" rerender="modalContact,modalAlertContact,modalRemoveContact,ContactsTable" oncomplete="modalOnComplete('auto');" status="loadingStatus">
 	</apex:actionFunction>
 	<apex:actionFunction name="resetAlertModal" action="{!resetAlertModal}" rerender="null"/>
 	<apex:actionFunction name="refreshPage" action="{!refreshPage}" rerender="ContactsTable" oncomplete="initXtable(); modalOnComplete('auto');" status="loadingStatus"/>
+
+	<apex:actionFunction name="openModalAddContact" action="{!openModalAddContact}" rerender="modalAddContact" oncomplete="modalOnComplete('hidden');" status="loadingStatus">
+	</apex:actionFunction>
+	<apex:actionFunction name="closeModalAddContact" action="{!closeModalAddContact}" rerender="modalAddContact" oncomplete="applyAllAgreementsFilter();modalOnComplete('auto');" status="loadingStatus" immediate="true"/>
+	<apex:actionFunction name="openSearchedContact" action="{!openSearchedContact}" rerender="modalAddContact">
+		<apex:param name="param1" value="" assignTo="{!selectedContactSearchKey}"/>
+	</apex:actionFunction>
+	<apex:actionFunction name="saveAddContact" action="{!saveContact}" rerender="modalAddContact,modalAlertContact,ContactsTable,modalContactsFilter" oncomplete="modalOnComplete('auto');" status="loadingStatus"/>
 
 	<script>
 		ready(function() {
@@ -27,11 +38,6 @@
 				let xtable = getXtable();
 				xtable.initPagination();
 				xtable.initSortable();
-			}
-
-			/** filter functions **/
-			openModalContactsFilter = function() {
-				alert("Filter to be defined");
 			}
 			closeModalContactsFilter = function() {
 			}
@@ -84,12 +90,34 @@
 				if (modalDetail && !modalDetail.contains(evt.target)) {
 					closeModalContact();
 				}
-				let modalFilter = document.getElementById('modalContactsFilterContent');
+				let modalFilter = document.getElementById('modalAddContactContent');
 				if (modalFilter && !modalFilter.contains(evt.target)) {
-					closeModalContact();
+					closeModalAddContact();
 				}
-				if (evt.target.id === "ContactsFilterButton") openModalContactsFilter();
+				let previousSibling = evt.target.previousSibling;
+				if(previousSibling && previousSibling.tagName === "INPUT" && evt.target.tagName === "SPAN") {
+					previousSibling.checked = !previousSibling.checked
+				}
 			});
+			document.addEventListener('change', function(evt) {
+				let modalDetails = document.querySelectorAll("#modalAddContactContent .IA-required-field input");
+				for (const modalDetail of modalDetails) {
+					if(modalDetail === evt.target) {
+						document.getElementById("saveContactButton").disabled = document.querySelectorAll("#modalAddContactContent .IA-required-field input:checked").length==0;
+						return;
+					}
+				}
+			});
+			// add styled checkboxes
+			applyCheckboxStyle = function() {
+				Array.prototype.slice.call(document.getElementsByClassName("IA-Checkbox"))
+					.map(function(table, i, arr) {
+						Array.prototype.slice.call(table.getElementsByTagName("td"))
+							.map(function(td, j, arrtd) {
+								td.insertBefore(document.createElement('span'), td.childNodes[1])
+					});
+				});
+			}
 
 			initXtable();
 		});
@@ -111,7 +139,7 @@
 		<div class="container IA-TableFilters">
 			<div class="row">
 				<div class="IA-SearchContainer col-sm-4">
-					<input id="searchContactsTable" class="IA-SearchInput" placeholder="Find Contact" onkeyup="applyContactsFilter();"/>
+					<input id="searchContactsTable" class="IA-SearchInput" placeholder="{!$Label.csp_Find_Contact}" onkeyup="applyContactsFilter();"/>
 					<span id="searchContactsTableClean" class="IA-SearchInputClean" onclick="clearSearchFilter();" hidden="true"/>
 				</div>
 				<div class="col-sm-8 text-right nopadding">
@@ -119,8 +147,7 @@
 						XLS
 						<span class="IA-download"></span>
 					</span>
-					<button type="button" id="ContactsFilterButton" class="IA-button IA-button-faded IA-button-filter" style="margin-left: 26px;" onclick="openModalContactsFilter(); return false;">Filter</button>
-					<button type="button" class="IA-button" style="margin-left: 17px;" onclick="openAddContactModal(); return false;">{!$Label.CSP_Add_Contact}</button>
+					<button type="button" class="IA-button" style="margin-left: 17px;" onclick="openModalAddContact(); return false;">{!$Label.CSP_Add_Contact}</button>
 				</div>
 			</div>
 		</div>
@@ -156,7 +183,10 @@
 									</td>
 									<td exportable="true">
 										<apex:dataList value="{!contactRow.types}" var="contactType">
-											{!contactType}
+											<div class="IA-tooltip">
+												{!contactType}
+												<span>{!MapTypeLabels[contactType]}</span>
+											</div>
 										</apex:dataList>
 									</td>
 									<td exportable="true">
@@ -165,7 +195,7 @@
 									<td class="center {!IF(hasEditContactsPermission,'','hidden')}">
 										<div class="IA-HiddenButtons">
 											<span class="IA-Circle IA-Edit" style="margin-right:12px;" onclick="openModalContact('{!contactRow.contactId}');"></span>
-											<span class="IA-Circle IA-Delete" onclick="deleteContact('{!contactRow.contactId}');"></span>
+											<span class="IA-Circle IA-Delete" onclick="openModalRemoveContact('{!contactRow.contactId}');"></span>
 										</div>
 									</td>
 								</tr>
@@ -189,18 +219,25 @@
 					<div id="modalContactContent" class="IA-Modal IA-Modal-New modal-content">
 						<div class="modal-header">
 							<div class="row">
-								<div class="IA-ModalTitle">{!selectedContact.Name}</div>
-								<span class="IA-Close" onclick="closeModalContact(); return false;"></span>
-							</div>
-							<div class="row">
-								<div class="IA-ModalSubtitle">{!$Label.CSP_Edit_Contact}</div>
+								<div class="IA-ModalTitle col col-sm-10">{!$Label.CSP_Edit_Contact}</div>
+								<span class="IA-Close col col-sm-2" onclick="closeModalContact(); return false;"></span>
 							</div>
 						</div>
-						<!-- Contact detail body -->
-						<div class="modal-body">
+						<!-- Contact detail body for edit-->
+						<apex:outputPanel layout="block" styleclass="modal-body">
 							<div class="row">
-								<div class="col col-sm-12">
-									<label>{!selectedContact.Email}</label>
+								<div class="col col-sm-6">
+									<label>{!$Label.ISSP_MyProfile_AccountName}</label>
+									<div>{!selectedContact.Account.Name}</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col col-sm-6">
+									<label>{!$Label.CSP_Name}</label>
+									<div>{!selectedContact.Name}</div>
+								</div>
+								<div class="col col-sm-6">
+									<label>{!$Label.CSP_Email}</label>
 									<div><a href="mailto:{!selectedContact.email}">{!selectedContact.email}</a></div>
 								</div>
 							</div>
@@ -209,28 +246,146 @@
 									<label>{!$Label.CSP_L_Phone_LMS}</label>
 									<div>{!selectedContact.phone}</div>
 								</div>
-							</div>
-							<div class="row">
+							</div>	
+							<div class="row IA-Checkboxes">
 								<div class="col col-sm-12">
-									<label>{!$Label.ISSP_Airline_Contact_Type}</label>
-									<apex:inputField value="{!selectedContact.MITA_Contact_Type__c}"/>
+									<span class="IA-Modal-Section-Title">{!$Label.IA_MITA_Contact_Type}</span>
+									<apex:selectCheckboxes value="{!selectedMITAContactTypes}" styleClass="IA-Checkbox">
+										<apex:selectOptions value="{!MITAContactTypesOptions}"/>
+									</apex:selectCheckboxes>
 								</div>
 							</div>
-						</div>
-						<!-- /Contact detail body -->
+						</apex:outputPanel>
+						<!-- /Contact detail body for edit-->
 						<div class="modal-footer">
 							<div class="IA-button-box row center">
-								<button type="button" class="IA-button IA-button-white" onclick="closeModalContact(); return false;">{!$Label.CSP_Cancel}</button>
 								<apex:outputPanel rendered="{!editContactsPermission}">
-									<button id="saveContactButton" type="button" class="IA-button" onclick="saveContact(); return false;">{!$Label.CSP_Save}</button>
+									<button type="button" class="IA-button-link" style="width:200px;" onclick="deleteContact(); return false;">{!$Label.csp_Remove_Contact}</button>
+								</apex:outputPanel>
+								<button type="button" class="IA-button-white" style="width:200px;" onclick="closeModalContact(); return false;">{!$Label.CSP_Cancel}</button>
+								<apex:outputPanel rendered="{!editContactsPermission}">
+									<button id="saveContactButton" type="button" class="IA-button" style="width:200px;" onclick="saveContact(); return false;">{!$Label.CSP_Save}</button>
 								</apex:outputPanel>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+			<script>applyCheckboxStyle();</script>
 		</apex:outputPanel>
 	</apex:outputPanel>
 	<!-- /MODAL Contact Detail -->
 
+	<!-- MODAL Add Contact -->
+	<apex:outputPanel id="modalAddContact" styleclass="IA-modal-container">
+		<apex:outputPanel rendered="{!showModalAddContact}">
+			<div class="modal showModal modalBackgound">
+				<div class="modal-dialog modal-dialog-scrollable" role="document">
+					<div id="modalAddContactContent" class="IA-Modal IA-Modal-New modal-content">
+						<div class="modal-header">
+							<div class="row">
+								<div class="IA-ModalTitle col col-sm-10">{!$Label.CSP_Add_Contact}</div>
+								<span class="IA-Close col col-sm-2" onclick="closeModalAddContact(); return false;"></span>
+							</div>
+						</div>
+						<!-- Contact detail body for add contact-->
+						<apex:outputPanel layout="block" styleclass="modal-body">
+							<div class="row" style="padding-left: 15px; padding-right: 15px;">
+								<div class="IA-SearchContainer col-sm-12">
+									<input id="searchAddContacts" class="IA-SearchInput" placeholder="{!$Label.csp_Find_Contact}" onselect="openSearchedContact(this.value);"
+										list="contactlist" />
+									<datalist id="contactlist">
+										<apex:repeat var="option" value="{!searchableContactOptions}">
+											<option value="{!option}"/>
+										</apex:repeat>
+									</datalist>
+								</div>
+							</div>
+							<apex:outputPanel id="SearchedContactSection" rendered="{!showSearchedContact}">
+								<div class="row">
+									<div class="col col-sm-6">
+										<label>{!$Label.ISSP_MyProfile_AccountName}</label>
+										<div>{!selectedContact.Account.Name}</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col col-sm-6">
+										<label>{!$Label.CSP_Name}</label>
+										<div>{!selectedContact.Name}</div>
+									</div>
+									<div class="col col-sm-6">
+										<label>{!$Label.CSP_Email}</label>
+										<div><a href="mailto:{!selectedContact.email}">{!selectedContact.email}</a></div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col col-sm-6">
+										<label>{!$Label.CSP_L_Phone_LMS}</label>
+										<div>{!selectedContact.phone}</div>
+									</div>
+								</div>	
+								<div class="row IA-Checkboxes">
+									<div class="col col-sm-12">
+										<span class="IA-Modal-Section-Title">{!$Label.IA_MITA_Contact_Type}</span>
+										<apex:selectCheckboxes value="{!selectedMITAContactTypes}" styleClass="IA-Checkbox IA-required-field" required="true">
+											<apex:selectOptions value="{!MITAContactTypesOptions}"/>
+										</apex:selectCheckboxes>
+									</div>
+								</div>
+							</apex:outputPanel>
+						</apex:outputPanel>
+						<!-- /Contact detail body for new contact-->
+						<div class="modal-footer">
+							<div class="IA-button-box row center">
+								<button type="button" class="IA-button-white" style="width:200px;" onclick="closeModalAddContact(); return false;">{!$Label.CSP_Cancel}</button>
+								<apex:outputPanel rendered="{!editContactsPermission}">
+									<button id="saveContactButton" type="button" class="IA-button" style="width:200px;" onclick="saveAddContact(); return false;" disabled="true">{!$Label.CSP_Save}</button>
+								</apex:outputPanel>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<script>applyCheckboxStyle();</script>
+		</apex:outputPanel>
+	</apex:outputPanel>
+	<!-- /MODAL Add Contact -->
+
+	<!-- MODAL Remove contact -->
+	<apex:outputPanel id="modalRemoveContact" styleclass="IA-modal-container">
+		<apex:outputPanel rendered="{!showModalRemoveContact}">
+			<div class="modal showModal modalBackgound">
+				<div class="modal-dialog modal-dialog-scrollable" role="document">
+					<div id="modalRemoveContactContent" class="IA-Modal IA-Modal-Remove modal-content">
+						<div class="modal-header">
+							<div class="row">
+								<div class="IA-ModalTitle col col-sm-10">{!$Label.csp_Remove_Contact}</div>
+								<span class="IA-Close col col-sm-2" onclick="closeModalRemoveContact(); return false;"></span>
+							</div>
+						</div>
+						<!-- Contact remove body -->
+						<div class="modal-body">
+							<div class="row">
+								{!$Label.IA_Delete_Message1}
+							</div>
+							<div class="row">
+								{!$Label.IA_Delete_Message2}
+							</div>
+						</div>
+						<!-- /Contact remove body -->
+						<div class="modal-footer">
+							<div class="IA-button-box row center">
+								<button type="button" class="IA-button-white" style="width: 40%;" onclick="closeModalRemoveContact(); return false;">{!$Label.CSP_Cancel}</button>
+								<apex:outputPanel rendered="{!editContactsPermission}">
+									<button id="saveContactButton" type="button" class="IA-button" style="width: 40%;" onclick="deleteContact(); return false;">{!$Label.Button_Remove}</button>
+								</apex:outputPanel>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<script>applyCheckboxStyle();</script>
+		</apex:outputPanel>
+	</apex:outputPanel>
+	<!-- /MODAL Remove Contact -->
 </apex:component>

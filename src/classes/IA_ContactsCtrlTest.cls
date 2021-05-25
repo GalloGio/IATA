@@ -10,6 +10,7 @@ public class IA_ContactsCtrlTest {
 		insert airline;
 
 		contact = TestDataFactory_Contacts.createDefaultContact(airline.Id,1).get(0);
+		contact.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact') ;
 		contact.Phone = '123456789';
 		contact.Status__c = 'Active';
 		contact.MITA_Contact_Type__c = null;
@@ -26,12 +27,12 @@ public class IA_ContactsCtrlTest {
 			WHERE Name = :(TestDataFactory_Accounts.DEFAULTNAME + ' 0')];
 
 		contact = [
-			SELECT Id, RecordTypeId, AccountId, FirstName, LastName, Email, Phone, Status__c, MITA_Contact_Type__c
+			SELECT Id, RecordTypeId, AccountId, Name, FirstName, LastName, Email, Phone, Status__c, MITA_Contact_Type__c
 			FROM Contact
 			WHERE Email = :(TestDataFactory_Contacts.DEFAULTEMAIL + '0')];
 	}
 
-	static TestMethod void testController(){
+	static testMethod void testController(){
 		queryRecords();
 
 		Test.StartTest();
@@ -39,13 +40,58 @@ public class IA_ContactsCtrlTest {
 		ctrl.resetAlertModal();
 		ctrl.account = airline;
 		ctrl.hasEditContactsPermission = true;
+		ctrl.getMapTypeLabels();
+		ctrl.getMITAContactTypesOptions();
 
 		System.assert(ctrl.contactRows!=null);
 		System.assertEquals(0,ctrl.contactRows.size());
 		Test.stopTest();
 	}
 
-	static TestMethod void testEditContact(){
+	static TestMethod void testAddContact(){
+		queryRecords();
+
+		IA_ContactsCtrl ctrl = new IA_ContactsCtrl();
+		ctrl.account = airline;
+		ctrl.hasEditContactsPermission = true;
+
+		Test.StartTest();
+
+		// open modal to show add contact modal
+		ctrl.openModalAddContact();
+		System.assertEquals(null,ctrl.selectedContactSearchKey);
+		System.assertEquals(true,ctrl.showModalAddContact);
+		System.assertEquals(false,ctrl.showSearchedContact);
+		System.assertEquals(null,ctrl.alertModal);
+
+		// get serachable contacts
+		System.assertEquals(2, ctrl.searchableContactOptions.size());
+		System.assertEquals(contact.Name, ctrl.searchableContactOptions[0]);
+		System.assertEquals(contact.Email, ctrl.searchableContactOptions[1]);
+
+		//search a contact
+		ctrl.selectedContactSearchKey = contact.Name;
+		ctrl.openSearchedContact();
+		System.assertEquals(contact.Id,ctrl.selectedContact.Id);
+
+		//save a contact
+		contact.MITA_Contact_Type__c = IA_util.GENERIC_CONTACT;
+		ctrl.saveContact();
+		System.assertEquals(contact.Id,ctrl.selectedContact.Id);
+		System.assertEquals(true,ctrl.showModalAddContact);
+		System.assert(ctrl.alertModal!=null);
+		System.assertEquals(IA_util.ALERTMODAL_SUCCESSNEW,ctrl.alertModal.msgType);
+
+		// close modal
+		ctrl.closeModalAddContact();
+		System.assertEquals(false,ctrl.showModalAddContact);
+		System.assertEquals(null,ctrl.selectedContactSearchKey);
+		System.assertEquals(null,ctrl.alertModal);
+
+		Test.stopTest();
+	}
+
+	static testMethod void testEditContact(){
 		queryRecords();
 
 		contact.MITA_Contact_Type__c = IA_util.GENERIC_CONTACT;
@@ -92,7 +138,7 @@ public class IA_ContactsCtrlTest {
 		Test.stopTest();
 	}
 
-	static TestMethod void testDeleteContact(){
+	static testMethod void testDeleteContact(){
 		queryRecords();
 
 		contact.MITA_Contact_Type__c = IA_util.GENERIC_CONTACT;
@@ -119,11 +165,15 @@ public class IA_ContactsCtrlTest {
 		System.assertEquals(null,ctrl.alertModal);
 
 		// update contact
+		ctrl.selectedContactId = IA_util.Encrypt(IA_ContactsCtrl.EncDecKey,contact.Id);
+		ctrl.openModalRemoveContact();
 		ctrl.deleteContact();
-		System.assertEquals(contact.Id,ctrl.selectedContact.Id);
+		System.assertEquals(null,ctrl.selectedContactId);
+		System.assertEquals(null,ctrl.selectedContact);
 		System.assertEquals(true,ctrl.showModalContact);
 		System.assert(ctrl.alertModal!=null);
 		System.assertEquals(IA_util.ALERTMODAL_SUCCESSNEW,ctrl.alertModal.msgType);
+		System.assertEquals(null, [SELECT MITA_Contact_Type__c FROM Contact WHERE Id = :contact.Id].MITA_Contact_Type__c);
 
 		// close modal
 		contact.MITA_Contact_Type__c = IA_util.GENERIC_CONTACT + ';' + IA_util.CARGO_MANAGER;
