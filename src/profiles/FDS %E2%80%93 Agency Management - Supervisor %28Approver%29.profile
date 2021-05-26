@@ -53276,6 +53276,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Portal_Applications__c.ANG_Country_Coverage_2__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Portal_Applications__c.ANG_Country_Coverage__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -62338,10 +62343,6 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-Case Layout</layout>
-        <recordType>Case.IATA_Training</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Case-Case Layout</layout>
         <recordType>Case.ID_Card_Queries</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -62411,6 +62412,10 @@
     <layoutAssignments>
         <layout>Case-IATA Financial Security Monitoring</layout>
         <recordType>Case.IATA_Financial_Security_Monitoring</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-IATA Training</layout>
+        <recordType>Case.IATA_Training</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-ID Card Application</layout>

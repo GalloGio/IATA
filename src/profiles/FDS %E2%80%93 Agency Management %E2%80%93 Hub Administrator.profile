@@ -53284,6 +53284,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Portal_Applications__c.ANG_Country_Coverage_2__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Portal_Applications__c.ANG_Country_Coverage__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -62346,10 +62351,6 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-Case Layout</layout>
-        <recordType>Case.IATA_Training</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Case-Case Layout</layout>
         <recordType>Case.ID_Card_Queries</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -62419,6 +62420,10 @@
     <layoutAssignments>
         <layout>Case-IATA Financial Security Monitoring</layout>
         <recordType>Case.IATA_Financial_Security_Monitoring</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-IATA Training</layout>
+        <recordType>Case.IATA_Training</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-ID Card Application</layout>
@@ -68979,7 +68984,7 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>AMS_Pax_Accreditation_Form__c.Annual_Revalidation</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
@@ -69044,7 +69049,7 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>AMS_Pax_Accreditation_Form__c.New_Gen_Changes</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
@@ -69054,12 +69059,12 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>AMS_Pax_Accreditation_Form__c.Other_Changes_NAM</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>AMS_Pax_Accreditation_Form__c.PCI_Compliance</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
@@ -69100,7 +69105,7 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>AMS_Pax_Accreditation_Form__c.VR</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>

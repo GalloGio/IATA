@@ -852,10 +852,6 @@
                     <label>Closure / Cancellation</label>
                     <name>Closure_Cancellation_TD</name>
                 </dataCategory>
-                <dataCategory>
-                    <label>Other</label>
-                    <name>Other_TD</name>
-                </dataCategory>
                 <label>Treasury Dashboard</label>
                 <name>TD</name>
             </dataCategory>
@@ -1183,10 +1179,6 @@
                 <dataCategory>
                     <label>Technical Issue</label>
                     <name>Technical_Issue_GAP</name>
-                </dataCategory>
-                <dataCategory>
-                    <label>Other</label>
-                    <name>Other_GAP</name>
                 </dataCategory>
                 <dataCategory>
                     <label>Events</label>
@@ -1757,6 +1749,18 @@
             </dataCategory>
             <dataCategory>
                 <dataCategory>
+                    <label>Digital Identity</label>
+                    <name>Digital_Identity</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>Lab Information</label>
+                    <name>Lab_Information</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>Vaccination</label>
+                    <name>Vaccination</name>
+                </dataCategory>
+                <dataCategory>
                     <label>Changes / Updates</label>
                     <name>Changes_Updates_trvpass</name>
                 </dataCategory>
@@ -1771,10 +1775,6 @@
                 <dataCategory>
                     <label>Invoicing</label>
                     <name>Invoicing_trvpass</name>
-                </dataCategory>
-                <dataCategory>
-                    <label>Payment related query</label>
-                    <name>Payment_related_query_trvpass</name>
                 </dataCategory>
                 <dataCategory>
                     <label>Report issue / Technical issue</label>

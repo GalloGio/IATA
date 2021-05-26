@@ -488,8 +488,6 @@ export default class PortalRegistrationFirstLevelConfirmation extends LightningE
 
         if(this.registrationForm.sector == 'General_Public_Sector' && this.registrationForm.extraChoice.length < 1){
             isValid = false;
-        }else if(this.registrationForm.sector != 'General_Public_Sector' && this.registrationForm.category.length < 1){
-            isValid = false;
         }
 
         await (this.template.querySelector('[data-id="submitButton"]'));

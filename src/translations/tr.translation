@@ -3686,7 +3686,7 @@ Daha fazla ayrıntı için, Müşteri Portalı&apos;nda &quot;Resolution 812&quo
         <name>CSP_IATAN_Register_Info</name>
     </customLabels>
     <customLabels>
-        <label>Saygılarımızla, &amp;lt;br/&amp;gt; IATA Customer Service Center</label>
+        <label>Saygılarımızla, &lt;br/&gt; IATA Customer Service Center</label>
         <name>CSP_IATA_CSC_Email_Greetings</name>
     </customLabels>
     <customLabels>
@@ -5506,6 +5506,30 @@ Daha fazla ayrıntı için, Müşteri Portalı&apos;nda &quot;Resolution 812&quo
         <name>CSP_selectReason</name>
     </customLabels>
     <customLabels>
+        <label>duruma bir katılımcısı olarak ekledi</label>
+        <name>CS_Portal_Addittional_Recipients_Body</name>
+    </customLabels>
+    <customLabels>
+        <label>IATA Müşteri Portalı - Dava eklendi</label>
+        <name>CS_Portal_Addittional_Recipients_Subject</name>
+    </customLabels>
+    <customLabels>
+        <label>Tüm ayrıntıları görüntüleyebilir ve iletişimde bulunmak için portal gitmek için.</label>
+        <name>CS_Portal_Addittional_Recipients_URL_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CS Portal Annual Revalidation Countries PickList Value --></label>
+        <name>CS_Portal_Annual_Revalidation_Countries_PickList_Value</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CS Portal Annual Revalidation Download csv --></label>
+        <name>CS_Portal_Annual_Revalidation_Download_csv</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CS Portal Annual Revalidation Popup Title --></label>
+        <name>CS_Portal_Annual_Revalidation_Popup_Title</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Campaign already created --></label>
         <name>Campaign_already_created</name>
     </customLabels>
@@ -5558,8 +5582,8 @@ Daha fazla ayrıntı için, Müşteri Portalı&apos;nda &quot;Resolution 812&quo
         <name>CaseValidation_Area</name>
     </customLabels>
     <customLabels>
-        <label><!-- CaseValidation - Area2 --></label>
-        <name>CaseValidation_Area2</name>
+        <label><!-- CaseValidation - Area in Case Global --></label>
+        <name>CaseValidation_Area_in_Case_Global</name>
     </customLabels>
     <customLabels>
         <label><!-- CaseValidation - InDepthArea --></label>
@@ -29908,6 +29932,10 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <name>icg_smart_facility_remote_validation_text3</name>
     </customLabels>
     <customLabels>
+        <label><!-- icg smart facility remote validation url --></label>
+        <name>icg_smart_facility_remote_validation_url</name>
+    </customLabels>
+    <customLabels>
         <label><!-- icg smart facility url --></label>
         <name>icg_smart_facility_url</name>
     </customLabels>
@@ -38407,7 +38435,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
             <name>Accounts</name>
         </sections>
         <sections>
-            <label><!-- Contacts --></label>
+            <label>Portal Erişim Ismi</label>
             <name>Contacts</name>
         </sections>
         <sections>
@@ -38503,7 +38531,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
                 <label><!-- Milestone Status --></label>
                 <name>Milestone Status</name>
             </columns>
-            <label><!-- Milestones --></label>
+            <label>Portal Erişim Ismi</label>
             <name>Milestones</name>
         </sections>
         <sections>
@@ -38624,7 +38652,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <label><!-- OSCARs with Cases --></label>
         <name>OSCARs_with_Cases</name>
         <sections>
-            <label><!-- Cases --></label>
+            <label>Portal Erişim Ismi</label>
             <name>Cases</name>
         </sections>
         <sections>
@@ -38708,7 +38736,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
             <name>Account Information</name>
         </sections>
         <sections>
-            <label><!-- Objectives --></label>
+            <label>Portal Erişim Ismi</label>
             <name>Objectives</name>
         </sections>
     </reportTypes>
@@ -38721,7 +38749,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
             <name>One Id User Applications</name>
         </sections>
         <sections>
-            <label><!-- User Provisioning Requests --></label>
+            <label>Portal Erişim Ismi</label>
             <name>User Provisioning Requests</name>
         </sections>
     </reportTypes>

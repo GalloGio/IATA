@@ -8078,6 +8078,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>PASS</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Parking</fullName>
                 <default>false</default>
             </values>
@@ -8127,6 +8131,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>TIESS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TTBS</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -11222,6 +11230,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>PASS</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Parking</fullName>
                 <default>false</default>
             </values>
@@ -11267,6 +11279,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>TIESS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TTBS</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -14442,6 +14458,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>PASS</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>PBI %28FDS Division%29</fullName>
                 <default>false</default>
             </values>
@@ -14495,6 +14515,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>TIESS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TTBS</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -17561,6 +17585,14 @@ The product will only appear on the Online Store when the date entered in this f
         </picklistValues>
         <picklistValues>
             <picklist>Family</picklist>
+            <values>
+                <fullName>PASS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TTBS</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Training - Distance</fullName>
                 <default>false</default>
@@ -20745,6 +20777,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>PASS</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>PBI %28FDS Division%29</fullName>
                 <default>false</default>
             </values>
@@ -20801,6 +20837,10 @@ The product will only appear on the Online Store when the date entered in this f
                 <default>false</default>
             </values>
             <values>
+                <fullName>TTBS</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Taxes</fullName>
                 <default>false</default>
             </values>
@@ -20810,6 +20850,10 @@ The product will only appear on the Online Store when the date entered in this f
             </values>
             <values>
                 <fullName>Training</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Training - OnSite</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -22693,15 +22737,15 @@ The product will only appear on the Online Store when the date entered in this f
         <customTabListAdditionalFields>PRODUCT2.FAMILY</customTabListAdditionalFields>
         <customTabListAdditionalFields>Product_Manager__c</customTabListAdditionalFields>
         <lookupDialogsAdditionalFields>PRODUCT2.NAME</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>Short_Title__c</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>SAP_Material_Number__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>Edition__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>Language__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>Media__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>PRODUCT2.ACTIVE</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Product_Manager__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>PRODUCT2.FAMILY</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Division__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Product_Section__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>PRODUCT2.CUSTOMER_PRODUCT_ID</lookupDialogsAdditionalFields>
         <lookupDialogsAdditionalFields>Effective_From__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>Delivery_Fulfillment_Support__c</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>PRODUCT2.DESCRIPTION</lookupDialogsAdditionalFields>
-        <lookupDialogsAdditionalFields>EF_IATA_Ticket_Tax_Code__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Media__c</lookupDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>PRODUCT2.NAME</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>PRODUCT2.CUSTOMER_PRODUCT_ID</lookupPhoneDialogsAdditionalFields>
         <lookupPhoneDialogsAdditionalFields>PRODUCT2.DESCRIPTION</lookupPhoneDialogsAdditionalFields>

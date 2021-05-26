@@ -2031,7 +2031,7 @@ global class ANG_OscarProcessHelper {
 			conIds.addAll(templateContIdMap.get(key));
 		}
 
-		Map<Id,Contact> contacts = new Map<Id,Contact>([SELECT Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c, Account.IataCode__c, Account.Name
+		Map<Id,Contact> contacts = new Map<Id,Contact>([SELECT Id, Name, Email, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c, Account.IataCode__c, Account.Name, Account.ANG_PCI_compliance_expiry_date__c
 														FROM Contact WHERE Id IN :conIds]);
 
 		for(String key :notifTempNameCaseMap.keySet()){
@@ -2047,6 +2047,7 @@ global class ANG_OscarProcessHelper {
 			nt.Message__c = nt.Message__c
 				.replace('#CONTACTNAME',contacts.get(nt.Contact__c).Name)
 				.replace('#IATACODE',contacts.get(nt.Contact__c).Account.IataCode__c)
+				.replace('#PCICOMPLIANCEEXPIRYDATE',String.valueOf(contacts.get(nt.Contact__c).Account.ANG_PCI_compliance_expiry_date__c))
 				.replace('#ACCOUNTNAME', contacts.get(nt.Contact__c).Account.Name)
 				.replace('#DEADLINEDATE',String.valueOf(Datetime.now().addDays(15).format('MM/dd/yyyy')));
 
