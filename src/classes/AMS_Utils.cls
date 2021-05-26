@@ -145,8 +145,6 @@ public without sharing class AMS_Utils {
 		AMS_Utils.ACC_S1_NOTACCREDITED
 	};
 
-	//EasyPay Models
-	public static final String IEPModel_PrePayment	= 'Pre-Payment (NO IEP)';
 
 	//Process of type PASS
 	public static final String new_PASS_HO	= 'NEW.PASS.HO.1.0';
