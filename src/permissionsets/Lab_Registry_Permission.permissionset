@@ -155,7 +155,7 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <recordType>LAB_Account_Role_Detail__c.Airline_agreement</recordType>
+        <recordType>LAB_Account_Role_Detail__c.Airline_Agreement</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
