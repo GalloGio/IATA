@@ -22,6 +22,6 @@
             <circle cx="10" cy="5" r="3" fill={section.referenceStatus}></circle>
         </svg>
         <span>{section.index}&nbsp;{section.procedure.Name__c}</span>
-        <img if:true={section.modified} src={warning} class="warning-icon">
+        <img if:true={section.modified} src={resources.icons.png.warning} class="warning-icon">
     </li>
 </template>
