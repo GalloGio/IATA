@@ -171,10 +171,10 @@ export default class LabRegistryReviewApplication extends NavigationMixin(Lightn
 					this.typeOfLabSelection = result.labRoleDetail.Type_of_lab__c;
 					this.AdditionalCertInPlace = result.labRoleDetail.Additional_certifications_in_place__c;
 					if(this.AdditionalCertInPlace == 'Yes') this.showAdditionalCert = true;
-					this.whichAdditionalCert = result.labRoleDetail.Additional_certifications__c;
+					this.whichAdditionalCert = result.labRoleDetail.Additional_Certifications__c;
 					this.endorsedByGovern = result.labRoleDetail.Endorsed_by_governments__c;
 					if(this.endorsedByGovern == 'Yes')	this.showWhichGovern = true;
-					this.whichGovern = result.labRoleDetail.Which_governments__c;
+					this.whichGovern = result.labRoleDetail.Which_Governments__c;
 					this.nationalAccreditationSelection = result.labRoleDetail.National_accreditation_for_all_the_labs__c;
 	
 	

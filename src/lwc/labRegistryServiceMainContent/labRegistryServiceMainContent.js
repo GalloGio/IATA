@@ -132,7 +132,7 @@ export default class labRegistryServiceMainContent extends NavigationMixin(Light
 
 	@track showUploadModal = false;
 	@track disableConfirm = true;
-	@track acceptedFormats = ['.xlsm'];
+	@track acceptedFormats = ['.csv'];
 
 	csvId = 0;
 

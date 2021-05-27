@@ -197,12 +197,12 @@ public  without sharing class LabRegistry_helper {
 															,Type_of_lab__c
 															,National_accreditation_for_all_the_labs__c
 															,Additional_certifications_in_place__c
-															,Additional_certifications__c //IF Above = YES
+															,Additional_Certifications__c //IF Above = YES
 															,Endorsed_by_governments__c
-															,Which_governments__c // IF Above = YES
+															,Which_Governments__c // IF Above = YES
 															,onboarding_case__r.contactId
 														from LAB_Account_Role_Detail__c 
-														where Onboarding_Case__c = :recordID];
+														where onboarding_case__c = :recordID];
 
 			list<LAB_Account_Role_Detail__c> lsCountriesLab = [select
 																	id
