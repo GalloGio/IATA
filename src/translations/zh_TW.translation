@@ -37200,6 +37200,19 @@
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Contacts with TOP parent account info --></description>
+        <label><!-- Contacts with TOP parent account info --></label>
+        <name>Contacts_with_TOP_parent_account_info</name>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- Contacts --></label>
+            <name>Contacts</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Contacts with inactivated owners --></description>
         <label><!-- Contacts with inactivated owners --></label>
         <name>Contacts_with_inactivated_owners</name>
