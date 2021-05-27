@@ -93,7 +93,7 @@ export default class LabRegistryReviewApplication extends NavigationMixin(Lightn
 	@api labTypeSelection;
 	@api howLongInBusinessSelection;
 	@api labsPartOfNationalPlatform;
-	@api showWhichNationalPlatform = false;
+		@api showWhichNationalPlatform = false;
 		@api whichNationalPlatform;
 	@api issueTestResultsSelection;
 	@api manageBookingSelection;
@@ -101,22 +101,22 @@ export default class LabRegistryReviewApplication extends NavigationMixin(Lightn
 
 	//FORM A
 	@api isAForm;
-	@api operatingUnderBrand = false;
-		@api showWhichBrand;
-	@api whichBrands;
-	@api SLAInPlace = false;
-		@api showNatureOfSLA;
-	@api NatureOfSLA;
+	@api operatingUnderBrand;
+		@api showWhichBrand = false;
+		@api whichBrands;
+	@api SLAInPlace;
+		@api showNatureOfSLA = false;
+		@api NatureOfSLA;
 
 	//FORM B
 	@api isBForm;
 	@api typeOfLabSelection;
-	@api AdditionalCertInPlace = false;
-		@api showAdditionalCert;
-	@api whichAdditionalCert;
-	@api endorsedByGovern = false;
-		@api showWhichGovern;
-	@api whichGovern;
+	@api AdditionalCertInPlace;
+		@api showAdditionalCert = false;
+		@api whichAdditionalCert;
+	@api endorsedByGovern;
+		@api showWhichGovern = false;
+		@api whichGovern;
 	@api nationalAccreditationSelection;
 
 	connectedCallback() {

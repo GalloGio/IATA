@@ -854,54 +854,19 @@
 														</div>
 													</lightning-layout-item>
 
-													<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
-														<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_How_Long_In_Business}</div></div>
-														<div class="slds-form-element">	
-															<div class="slds-form-element__control custTextInput custTextInputSmall">
-																<input type="text" class="slds-input" value={howLongInBusinessSelection} disabled/>
-															</div>
-														</div>
-													</lightning-layout-item>
 
-													<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
-														<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_labsPartOfNationalPlatform}</div></div>
-														<div class="slds-form-element">	
-															<div class="slds-form-element__control custTextInput custTextInputSmall">
-																<input type="text" class="slds-input" value={labsPartOfNationalPlatform} disabled/>
-															</div>
-														</div>
-													</lightning-layout-item>
-													
-
-													<lightning-layout-item size="12" class="fieldItem IEFixDisplay" if:true={showWhichNationalPlatform}>
-														<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_Which_One}</div></div>
-														<div class="slds-form-element">	
-															<div class="slds-form-element__control custTextInput custTextInputSmall">
-																<input type="text" class="slds-input" value={whichNationalPlatform} disabled/>
-															</div>
-														</div>
-													</lightning-layout-item>
-
-													<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
-														<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_issueTestResultsSelection}</div></div>
-														<div class="slds-form-element">	
-															<div class="slds-form-element__control custTextInput custTextInputSmall">
-																<input type="text" class="slds-input" value={issueTestResultsSelection} disabled/>
-															</div>
-														</div>
-													</lightning-layout-item>
-
-													<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
-														<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_manageBookingSelection}</div></div>
-														<div class="slds-form-element">	
-															<div class="slds-form-element__control custTextInput custTextInputSmall">
-																<input type="text" class="slds-input" value={manageBookingSelection} disabled/>
-															</div>
-														</div>
-													</lightning-layout-item>
 
 													<!-- FORM A -->
 													<template  if:true={isAForm} >
+														<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
+															<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_How_Long_In_Business}</div></div>
+															<div class="slds-form-element">	
+																<div class="slds-form-element__control custTextInput custTextInputSmall">
+																	<input type="text" class="slds-input" value={howLongInBusinessSelection} disabled/>
+																</div>
+															</div>
+														</lightning-layout-item>
+
 														<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
 															<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_Operating_Brand}</div></div>
 															<div class="slds-form-element">	
@@ -937,17 +902,89 @@
 																</div>
 															</div>
 														</lightning-layout-item>
-													</template>
 
+														<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
+															<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_manageBookingSelection}</div></div>
+															<div class="slds-form-element">	
+																<div class="slds-form-element__control custTextInput custTextInputSmall">
+																	<input type="text" class="slds-input" value={manageBookingSelection} disabled/>
+																</div>
+															</div>
+														</lightning-layout-item>
+
+														<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
+															<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_issueTestResultsSelection}</div></div>
+															<div class="slds-form-element">	
+																<div class="slds-form-element__control custTextInput custTextInputSmall">
+																	<input type="text" class="slds-input" value={issueTestResultsSelection} disabled/>
+																</div>
+															</div>
+														</lightning-layout-item>
+
+														<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
+															<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_labsPartOfNationalPlatform}</div></div>
+															<div class="slds-form-element">	
+																<div class="slds-form-element__control custTextInput custTextInputSmall">
+																	<input type="text" class="slds-input" value={labsPartOfNationalPlatform} disabled/>
+																</div>
+															</div>
+														</lightning-layout-item>
+														
+	
+														<lightning-layout-item size="12" class="fieldItem IEFixDisplay" if:true={showWhichNationalPlatform}>
+															<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_Which_One}</div></div>
+															<div class="slds-form-element">	
+																<div class="slds-form-element__control custTextInput custTextInputSmall">
+																	<input type="text" class="slds-input" value={whichNationalPlatform} disabled/>
+																</div>
+															</div>
+														</lightning-layout-item>
+													</template>
 
 													<!-- FORM B -->
 
 													<template  if:true={isBForm}>
 														<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
+															<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_How_Long_In_Business}</div></div>
+															<div class="slds-form-element">	
+																<div class="slds-form-element__control custTextInput custTextInputSmall">
+																	<input type="text" class="slds-input" value={howLongInBusinessSelection} disabled/>
+																</div>
+															</div>
+														</lightning-layout-item>
+
+														<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
 															<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_TypeOfLab}</div></div>
 															<div class="slds-form-element">	
 																<div class="slds-form-element__control custTextInput custTextInputSmall">
 																	<input type="text" class="slds-input" value={typeOfLabSelection} disabled/>
+																</div>
+															</div>
+														</lightning-layout-item>
+
+														<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
+															<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_manageBookingSelection}</div></div>
+															<div class="slds-form-element">	
+																<div class="slds-form-element__control custTextInput custTextInputSmall">
+																	<input type="text" class="slds-input" value={manageBookingSelection} disabled/>
+																</div>
+															</div>
+														</lightning-layout-item>
+
+														<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
+															<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_issueTestResultsSelection}</div></div>
+															<div class="slds-form-element">	
+																<div class="slds-form-element__control custTextInput custTextInputSmall">
+																	<input type="text" class="slds-input" value={issueTestResultsSelection} disabled/>
+																</div>
+															</div>
+														</lightning-layout-item>
+
+														<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
+															<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_nationalAccreditationSelection}</div></div>
+															<div class="slds-form-element">	
+																<div class="slds-form-element__control custTextInput custTextInputSmall">
+																	<input type="text" class="slds-input" value={nationalAccreditationSelection} disabled/>
 																</div>
 															</div>
 														</lightning-layout-item>
@@ -989,10 +1026,20 @@
 														</lightning-layout-item>
 
 														<lightning-layout-item size="12" class="fieldItem IEFixDisplay">
-															<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_nationalAccreditationSelection}</div></div>
+															<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_labsPartOfNationalPlatform}</div></div>
 															<div class="slds-form-element">	
 																<div class="slds-form-element__control custTextInput custTextInputSmall">
-																	<input type="text" class="slds-input" value={nationalAccreditationSelection} disabled/>
+																	<input type="text" class="slds-input" value={labsPartOfNationalPlatform} disabled/>
+																</div>
+															</div>
+														</lightning-layout-item>
+														
+	
+														<lightning-layout-item size="12" class="fieldItem IEFixDisplay" if:true={showWhichNationalPlatform}>
+															<div class="formLabelContainer"><div class="text-xxsmall">{labels.CSP_LabReg_Which_One}</div></div>
+															<div class="slds-form-element">	
+																<div class="slds-form-element__control custTextInput custTextInputSmall">
+																	<input type="text" class="slds-input" value={whichNationalPlatform} disabled/>
 																</div>
 															</div>
 														</lightning-layout-item>

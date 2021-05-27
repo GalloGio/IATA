@@ -518,14 +518,14 @@
                     <label>Clinic</label>
                 </value>
                 <value>
-                    <fullName>Laboratories</fullName>
-                    <default>false</default>
-                    <label>Laboratories</label>
-                </value>
-                <value>
                     <fullName>Mix</fullName>
                     <default>false</default>
                     <label>Mix</label>
+                </value>
+                <value>
+                    <fullName>Laboratory</fullName>
+                    <default>false</default>
+                    <label>Laboratory</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -784,7 +784,7 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Laboratories</fullName>
+                <fullName>Laboratory</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -962,10 +962,6 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Laboratories</fullName>
-                <default>false</default>
-            </values>
-            <values>
                 <fullName>Mix</fullName>
                 <default>false</default>
             </values>
@@ -1124,7 +1120,7 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Laboratories</fullName>
+                <fullName>Laboratory</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1302,7 +1298,7 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Laboratories</fullName>
+                <fullName>Laboratory</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1480,7 +1476,7 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Laboratories</fullName>
+                <fullName>Laboratory</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1658,7 +1654,7 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Laboratories</fullName>
+                <fullName>Laboratory</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -1833,10 +1829,6 @@
             <picklist>Type_of_lab__c</picklist>
             <values>
                 <fullName>Clinic</fullName>
-                <default>false</default>
-            </values>
-            <values>
-                <fullName>Laboratories</fullName>
                 <default>false</default>
             </values>
             <values>
