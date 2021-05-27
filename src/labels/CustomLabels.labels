@@ -22094,7 +22094,7 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Case Attach Limit</shortDescription>
-        <value>Max. file size 50Mb. Accepted file types are: pdf, jpeg, jpg, gif, png, ppt, pptx, xls, xlsx, tif, tiff, zip.</value>
+        <value>Max. file size 30Mb. Accepted file types are: pdf, jpeg, jpg, gif, png, ppt, pptx, xls, xlsx, tif, tiff, zip.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Case_Change_Description</fullName>

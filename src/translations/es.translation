@@ -14134,7 +14134,7 @@ sido designado &quot;&quot;Contacto de Estados Financieros&quot;&quot;&quot;</la
         <name>ISSP_AMS_Case_Attach_Description_DGR</name>
     </customLabels>
     <customLabels>
-        <label>El tamaño máximo del archivo es de 50 Mb. Tipos de archivo compatibles: pdf, jpeg, jpg, gif, png, ppt, pptx, xls, xlsx, tif, tiff, zip.</label>
+        <label>El tamaño máximo del archivo es de 30 Mb. Tipos de archivo compatibles: pdf, jpeg, jpg, gif, png, ppt, pptx, xls, xlsx, tif, tiff, zip.</label>
         <name>ISSP_AMS_Case_Attach_Limit</name>
     </customLabels>
     <customLabels>
@@ -37271,6 +37271,19 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <sections>
             <label><!-- Authorized Signatories --></label>
             <name>Authorized Signatories</name>
+        </sections>
+        <sections>
+            <label><!-- Contacts --></label>
+            <name>Contacts</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Contacts with TOP parent account info --></description>
+        <label><!-- Contacts with TOP parent account info --></label>
+        <name>Contacts_with_TOP_parent_account_info</name>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
         </sections>
         <sections>
             <label><!-- Contacts --></label>
