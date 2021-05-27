@@ -12128,7 +12128,7 @@ Browse through our extensive catalogue or purchase any of the IATA publications,
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IA Request Submitted Message</shortDescription>
-        <value>Once the counterpart accepts the request, the agreement will be activated on the effective date.</value>
+        <value>Once the counterpart accepts the request,&lt;br/&gt;the agreement will be activated on the effective date.</value>
     </labels>
     <labels>
         <fullName>IA_Requester_Airline</fullName>
@@ -12145,6 +12145,38 @@ Browse through our extensive catalogue or purchase any of the IATA publications,
         <protected>false</protected>
         <shortDescription>IA Requesting Problem</shortDescription>
         <value>There was a problem when requesting the agreement</value>
+    </labels>
+    <labels>
+        <fullName>IA_Status_not_active_yet</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Status not active yet</shortDescription>
+        <value>NOT</value>
+    </labels>
+    <labels>
+        <fullName>IA_Status_pending_withdrawal</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Status pending withdrawal</shortDescription>
+        <value>Pending Withdrawal</value>
+    </labels>
+    <labels>
+        <fullName>IA_Status_rejected</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Status rejected</shortDescription>
+        <value>Rejected</value>
+    </labels>
+    <labels>
+        <fullName>IA_Status_withdrawn</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Status withdrawn</shortDescription>
+        <value>Withdrawn</value>
     </labels>
     <labels>
         <fullName>IA_Undo_Agreement_Accepted</fullName>
