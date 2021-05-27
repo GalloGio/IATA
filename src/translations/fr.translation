@@ -14138,7 +14138,7 @@ and
         <name>ISSP_AMS_Case_Attach_Description_DGR</name>
     </customLabels>
     <customLabels>
-        <label>Taille de fichier max. 50Mb. Les types de fichiers acceptés sont: pdf, jpeg, jpg, gif, png, ppt, pptx, xls, xlsx, tif, tiff, zip.</label>
+        <label>Taille de fichier max. 30Mb. Les types de fichiers acceptés sont: pdf, jpeg, jpg, gif, png, ppt, pptx, xls, xlsx, tif, tiff, zip.</label>
         <name>ISSP_AMS_Case_Attach_Limit</name>
     </customLabels>
     <customLabels>
@@ -37282,6 +37282,19 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         <sections>
             <label><!-- Authorized Signatories --></label>
             <name>Authorized Signatories</name>
+        </sections>
+        <sections>
+            <label><!-- Contacts --></label>
+            <name>Contacts</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Contacts with TOP parent account info --></description>
+        <label><!-- Contacts with TOP parent account info --></label>
+        <name>Contacts_with_TOP_parent_account_info</name>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
         </sections>
         <sections>
             <label><!-- Contacts --></label>
