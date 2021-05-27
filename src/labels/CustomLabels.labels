@@ -12152,7 +12152,7 @@ Browse through our extensive catalogue or purchase any of the IATA publications,
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>IA Status not active yet</shortDescription>
-        <value>NOT</value>
+        <value>Not Active Yet</value>
     </labels>
     <labels>
         <fullName>IA_Status_pending_withdrawal</fullName>
