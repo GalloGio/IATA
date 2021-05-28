@@ -52,11 +52,15 @@ private class ANG_MulticountryHelperTest {
 
 		insert new List<IATA_ISO_Country__c>{countryPT, countryUK, countryFR};
 
+		IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'Test', ISO_Code__c = 'TS', IATA_ISO_Country__c = countryPT.Id);
+		insert stt;
+
 		Id standardAcctRecId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account');
 
 		Account accountGE = new Account();
 
 		accountGE.Name = 'Multicountry GE PT';
+		accountGE.Short_Name__c = 'Test';
 		accountGE.Location_Type__c = AMS_Utils.GE;
 		accountGE.Location_Class__c = 'P';
 		accountGE.IATA_ISO_Country__c = countryPT.Id;
@@ -662,7 +666,7 @@ private class ANG_MulticountryHelperTest {
 		AMS_ChangeCodes__c changeCodeCustomsettings = new AMS_ChangeCodes__c(Name = 'FIN-AMS', Change_Code__c = AMS_Utils.FIN_CHANGE_CODE, Reason_Code__c = '', Reason_Code_Description__c = '', Account_status_change__c = '',Integration_RecId__c = 'C');
 		insert changeCodeCustomsettings;
 
-		Account accountGE = [SELECT Id, ParentId, Name FROM Account WHERE Name IN ('Multicountry GE PT') Limit 1];
+		Account accountGE = [SELECT Id, ParentId, Name, Short_Name__c FROM Account WHERE Name IN ('Multicountry GE PT') Limit 1];
 
 		accountGE.IATACode__c = '12345678';
 		update accountGE;
@@ -671,8 +675,16 @@ private class ANG_MulticountryHelperTest {
 
 		insert oscar;
 
-		Test.startTest();
+		IATA_ISO_State__c stt = [SELECT id FROM IATA_ISO_State__c WHERE Name =: 'test' LIMIT 1];
 
+		Test.startTest();
+		Case c = new Case(OSCAR__c = oscar.Id, recordtypeid = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication'));
+		insert c;
+
+		AMS_Pax_Accreditation_Form__c stagingArea = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = c.Id, Account_Name__c=accountGE.Name, Short_Name__c=accountGE.Short_Name__c,IATA_ISO_State__c=stt.Id);
+		insert stagingArea;
+
+		oscar.AMS_Online_Accreditation__c = stagingArea.Id;
 		oscar.STEP10__c = AMS_Utils.PASSED;
 		oscar.Validation_Status__c = AMS_Utils.PASSED;
 		oscar.RPM_Approval__c = AMS_Utils.AUTH_APPROVAL;
