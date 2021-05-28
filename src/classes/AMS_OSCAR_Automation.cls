@@ -46,17 +46,20 @@ public with sharing class AMS_OSCAR_Automation {
 
 			if (oscar != null) {
 				try{
-					for(ANG_Agency_Risk_Event__c rEvent : [SELECT Id, ANG_expiration_date_ff__c, Applicable_for_re_activation__c, ang_event_status__c
-															FROM ANG_Agency_Risk_Event__c 
-															WHERE ANG_AccountId__c  =: oscar.Account__c 
-																AND  ang_event_status__c =: ANG_Risk_Helper.STATUS_INACTIVE_CASHLESS 
-																AND Applicable_for_re_activation__c =: true
-																AND ANG_expiration_date_ff__c >=: Date.today()
-																]){
-						rEvent.Applicable_for_re_activation__c = false;
-						rEvent.ang_event_status__c = ANG_Risk_Helper.STATUS_ACTIVE;
-						update rEvent;
-					}
+					List<ANG_Agency_Risk_Event__c> riskEventList = [SELECT Id, ANG_expiration_date_ff__c, Applicable_for_re_activation__c, ang_event_status__c
+																FROM ANG_Agency_Risk_Event__c 
+																WHERE ANG_AccountId__c  =: oscar.Account__c 
+																	AND  ang_event_status__c =: ANG_Risk_Helper.STATUS_INACTIVE_CASHLESS 
+																	AND Applicable_for_re_activation__c =: true
+																	AND ANG_expiration_date_ff__c >=: Date.today()
+																];
+					if(!riskEventList.isEmpty()){										
+						for(ANG_Agency_Risk_Event__c rEvent : riskEventList){
+							rEvent.Applicable_for_re_activation__c = false;
+							rEvent.ang_event_status__c = ANG_Risk_Helper.STATUS_ACTIVE;
+						}
+						update riskEventList;
+					}	
 					return True;
 				}catch (Exception e){
 					return False;
