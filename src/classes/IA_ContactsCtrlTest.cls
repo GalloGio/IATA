@@ -40,7 +40,6 @@ public class IA_ContactsCtrlTest {
 		ctrl.resetAlertModal();
 		ctrl.account = airline;
 		ctrl.hasEditContactsPermission = true;
-		ctrl.getMapTypeLabels();
 		ctrl.getMITAContactTypesOptions();
 
 		System.assert(ctrl.contactRows!=null);

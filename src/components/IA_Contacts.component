@@ -182,10 +182,12 @@
 										<a href="mailto:{!contactRow.email}">{!contactRow.email}</a>
 									</td>
 									<td exportable="true">
-										<apex:dataList value="{!contactRow.types}" var="contactType">
+										<apex:dataList value="{!contactRow.types}" var="mitaType">
 											<div class="IA-tooltip">
-												{!contactType}
-												<span>{!MapTypeLabels[contactType]}</span>
+												{!mitaType.name}
+												<apex:outputPanel rendered="{!NOT(ISBLANK(mitaType.description))}">
+													{!mitaType.description}
+												</apex:outputPanel>
 											</div>
 										</apex:dataList>
 									</td>

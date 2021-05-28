@@ -6,10 +6,6 @@ public without sharing class IA_ContactsCtrl {
 	public Boolean hasEditContactsPermission {get;set;}
 	public IA_util.AlertModal alertModal{get;set;}
 
-	public Map<String,String> getMapTypeLabels() {
-		return IA_util.MAP_MITA_CONTACT_TYPE_LABELS;
-	}
-
 	/**
 	 * initialize agreement variables to retrieve them again
 	 **/
@@ -55,7 +51,7 @@ public without sharing class IA_ContactsCtrl {
 		public String name {get;set;}
 		public String phone {get;set;}
 		public String email {get;set;}
-		public List<String> types {get;set;}
+		public List<IA_util.MitaType> types {get;set;}
 		public String title {get;set;}
 
 		public ContactRow(Contact contact) {
@@ -63,7 +59,10 @@ public without sharing class IA_ContactsCtrl {
 			this.name = contact.Name;
 			this.phone = contact.Phone;
 			this.email = contact.Email;
-			this.types = contact.MITA_Contact_Type__c.split(';');
+			this.types = new list<IA_util.MitaType>();
+			for (String name: contact.MITA_Contact_Type__c.split(';')) {
+				this.types.add(new IA_util.MitaType(name));
+			}
 			this.title = contact.Title;
 		}
 	}

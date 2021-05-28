@@ -13,10 +13,6 @@ public without sharing class IA_DetailController {
 	public MITA_Agreement__c agreementCancellation {get;set;}
 	public Boolean showSuccessWithdrawn {get;set;}
 
-	public Map<String,String> getMapTypeLabels() {
-		return IA_util.MAP_MITA_CONTACT_TYPE_LABELS;
-	}
-
 	public IA_DetailController(){
 		this.agreementCancellation = new MITA_Agreement__c();
 	}
@@ -204,7 +200,10 @@ public without sharing class IA_DetailController {
 			row.fullName = salutation + contact.name;
 			row.email = contact.email;
 			row.phone = String.isBlank(contact.phone)? '-': contact.phone;
-			row.mitaTypes = contact.MITA_Contact_Type__c.split(';');
+			row.mitaTypes = new list<IA_util.MitaType>();
+			for (String name: contact.MITA_Contact_Type__c.split(';')) {
+				row.mitaTypes.add(new IA_util.MitaType(name));
+			}
 			listRows.add(row);
 		}
 		return listRows;
@@ -217,7 +216,7 @@ public without sharing class IA_DetailController {
 		public String fullName {get;set;}
 		public String email {get;set;}
 		public String phone {get;set;}
-		public list<String> mitaTypes {get;set;}
+		public list<IA_util.MitaType> mitaTypes {get;set;}
 	}
 
 }

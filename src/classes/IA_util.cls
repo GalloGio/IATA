@@ -199,4 +199,14 @@ public with sharing class IA_util {
 		}
 		return listOptions;
 	}
+
+	public class MitaType {
+		public String name {get;set;}
+		public String description {get;set;}
+
+		public MitaType(String mitaType) {
+			this.name = mitaType.trim();
+			this.description = MAP_MITA_CONTACT_TYPE_LABELS.get(this.name);
+		}
+	}
 }

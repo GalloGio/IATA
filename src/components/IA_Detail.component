@@ -218,10 +218,12 @@
 															{!accountContact.phone}
 														</td>
 														<td>
-															<apex:dataList value="{!accountContact.mitaTypes}" var="type">
+															<apex:dataList value="{!accountContact.mitaTypes}" var="mitaType">
 																<div class="IA-tooltip">
-																	{!type}
-																	<span>{!MapTypeLabels[type]}</span>
+																	{!mitaType.name}
+																	<apex:outputPanel rendered="{!NOT(ISBLANK(mitaType.description))}">
+																		{!mitaType.description}
+																	</apex:outputPanel>
 																</div>
 															</apex:dataList>
 														</td>
