@@ -38217,6 +38217,23 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- KPI Values with Cases and Activity History --></description>
+        <label><!-- KPI Values with Cases and Activity History --></label>
+        <name>KPI_Values_with_Cases_and_Activity_History</name>
+        <sections>
+            <label><!-- Activities --></label>
+            <name>Activities</name>
+        </sections>
+        <sections>
+            <label><!-- Cases --></label>
+            <name>Cases</name>
+        </sections>
+        <sections>
+            <label><!-- KPI Values --></label>
+            <name>KPI Values</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- KPI value with cases and user role --></description>
         <label><!-- KPI value with cases and user role --></label>
         <name>KPI_value_with_cases_and_user_role</name>
