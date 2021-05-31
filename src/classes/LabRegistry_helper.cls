@@ -55,13 +55,20 @@ public  without sharing class LabRegistry_helper {
 											, list<LAB_Account_Role_Detail__c> lsAirlineAgreement){
 		try {
 			user currentUser = [select id, ContactId, Contact.AccountId, contact.Account.IATA_Iso_Country__r.Region__c, contact.account.name from user where id =: UserInfo.getUserId()];
-			
 			//Create Account Role
-			Account_Role__c accntRole = new Account_Role__c();
-			accntRole.Account__c = currentUser.Contact.AccountId;
-			accntRole.Functional_Role__c = LabRegistry_helper.labRegistryAccnRole;
-			accntRole.recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'Master');
-			insert accntRole;
+			//check if Account Role with the same type already exists
+			Account_Role__c accntRole;
+
+			list<Account_Role__c> lsAccntRole = [select Id from Account_Role__c where Account__c=:currentUser.Contact.AccountId AND Functional_Role__c = :LabRegistry_helper.labRegistryAccnRole];
+			if(lsAccntRole == null || lsAccntRole.isEmpty()){
+				accntRole = new Account_Role__c();
+				accntRole.Account__c = currentUser.Contact.AccountId;
+				accntRole.Functional_Role__c = LabRegistry_helper.labRegistryAccnRole;
+				accntRole.recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account_Role__c', 'Master');
+				insert accntRole;
+			}else{
+				accntRole = lsAccntRole[0];
+			}
 
 			//Create Case
 			case theCase = LabRegistry_helper.CreateCase('New access request', currentUser);
