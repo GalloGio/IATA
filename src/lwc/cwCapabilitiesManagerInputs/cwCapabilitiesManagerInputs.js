@@ -43,23 +43,25 @@ export default class CwCapabilitiesManagerInputs extends LightningElement {
 			if(this.propertyName === 'equipment__c'){
 				this.type = 'STRING';
 			}
-			if(this.propertyName === 'tcha_temperature_range__c'){
-				let value = this.item[this.propertyName]
-				? this.item[this.propertyName].toString()
-				: "";
-
-				if(value != ""){
-					var valueParse = value.toString().split("to");
-					if(valueParse[0].toString().includes('ºC')){
-						valueParse[0] = valueParse[0].toString().replace('ºC','');
-					}
-					if(valueParse[1].toString().includes('ºC')){
-						valueParse[1] = valueParse[1].toString().replace('ºC','');
-					}
-					this.rangeFrom = valueParse[0];	
-					this.rangeTo = valueParse[1];
+		}
+		
+		if(this.propertyName === 'tcha_temperature_range__c'){
+			let value = this.item[this.propertyName]
+			? this.item[this.propertyName].toString()
+			: "";
+			if(value != ""){
+				var valueParse = value.toString().split("to");
+				if(valueParse[0].toString().includes('ºC')){
+					valueParse[0] = valueParse[0].toString().replace('ºC','');
 				}
-				
+				if(valueParse[1].toString().includes('ºC')){
+					valueParse[1] = valueParse[1].toString().replace('ºC','');
+				}
+				this.rangeFrom = valueParse[0];	
+				this.rangeTo = valueParse[1];
+			}else{
+				this.rangeFrom = '';	
+				this.rangeTo = '';
 			}
 		}
 	}
@@ -81,7 +83,7 @@ export default class CwCapabilitiesManagerInputs extends LightningElement {
 		else
 		{
 			if(this.isTypeNumber){
-				value = this.item.id ? this.item[this.propertyName] : "";
+				value = this.item[this.propertyName] > 0 ? this.item[this.propertyName] : "";
 			}
 			else{
 				value = this.item[this.propertyName]

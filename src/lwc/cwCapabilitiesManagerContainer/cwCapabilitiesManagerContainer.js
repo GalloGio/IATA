@@ -645,6 +645,17 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 				}
 			}
 		});
+		
+		//update child control
+        if (this.columnsToRowSelected){
+            let columns = this.columnsToRowSelected;
+            let fieldsByColumns = columns[columns.length - 1];
+            fieldsByColumns.forEach(element => {
+                if(element.name != 'equipment__c' && !element.isformula){
+                    this.rowSelected[data.field] = data.value;
+                }
+            });
+        }
 
 	}
 
@@ -1008,7 +1019,12 @@ export default class CwCapabilitiesManagerContainer extends LightningElement {
 
 		fieldsByColumns.forEach(element => {
 			if(element.name != 'equipment__c' && !element.isformula){
-				this.rowSelected[element.name] = '';
+				if (typeof this.rowSelected[element.name] !== 'boolean'){
+					this.rowSelected[element.name] = '';
+				}
+				else{
+					this.rowSelected[element.name] = false;
+				}
 			}
 		});
 
