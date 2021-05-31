@@ -3,7 +3,7 @@
     <baseObject>Case</baseObject>
     <category>cases</category>
     <deployed>true</deployed>
-    <description>KPI value with cases and user role</description>
+    <description>CX Report Requested</description>
     <join>
         <join>
             <outerJoin>false</outerJoin>
@@ -12,7 +12,7 @@
         <outerJoin>false</outerJoin>
         <relationship>KPI_Values__r</relationship>
     </join>
-    <label>KPI value with cases and user role</label>
+    <label>KPI Values with Cases and Activity History</label>
     <sections>
         <columns>
             <checkedByDefault>false</checkedByDefault>
@@ -161,12 +161,22 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>E2CP__AdditionalAvailable__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>E2CP__AdditionalBCC__c</field>
             <table>Case</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>E2CP__AdditionalCC__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Additional_Financial_Security_needed__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -656,6 +666,11 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>Case_Items__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>Case_Language__c</field>
             <table>Case</table>
         </columns>
@@ -856,6 +871,11 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>Correct_Resolution__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>Complaint_Closure__c</field>
             <table>Case</table>
         </columns>
@@ -967,11 +987,6 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>dgec__conversation_id__c</field>
-            <table>Case</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Correct_Resolution__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -1421,6 +1436,11 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>dgAI3__DG_Automated__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>dgAI2__DG_Capture_Analytics__c</field>
             <table>Case</table>
         </columns>
@@ -1431,12 +1451,52 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>dgAI3__DG_Completed__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>dgAI2__DG_Fill_Status__c</field>
             <table>Case</table>
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>dgAI3__DG_Fill_Status__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>dgAI3__DG_Incorrect_Automation__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>dgAI3__DG_Intent__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>dgAI2__DG_Language__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>dgAI3__DG_Language__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>dgAI3__DG_Notes_Rich__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>dgAI3__DG_Notes__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>dgAI3__DG_Use_Case__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -1657,6 +1717,11 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Evaluation_Effort__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Exception__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -2361,6 +2426,16 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>dgAI3__Is_Processed_by_Flow_Insert__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>dgAI3__Is_Processed_by_Flow_Update__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>isSISUser__c</field>
             <table>Case</table>
         </columns>
@@ -2446,6 +2521,11 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>Language</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>Last_Action_Closure_Date__c</field>
             <table>Case</table>
         </columns>
@@ -2492,6 +2572,11 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Late_Payment_Date__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>E2CP__Latest_Inbound_BH__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -2901,6 +2986,16 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>Portal_Closure_Link__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Portal_Closure_Status__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>Postal_code__c</field>
             <table>Case</table>
         </columns>
@@ -3211,6 +3306,11 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>RecordTypeDeveloperName__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>Recovered_Amount_eDefault__c</field>
             <table>Case</table>
         </columns>
@@ -3277,6 +3377,11 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>Rejection_Withdrawal_remarks__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Related_Exception__c</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -3432,6 +3537,11 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>HasSelfServiceComments</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>ServiceContract</field>
             <table>Case</table>
         </columns>
         <columns>
@@ -3716,6 +3826,11 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>dgAI3__DG_ThreadId__c</field>
+            <table>Case</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>Ticketing_Authority_Re_assigned__c</field>
             <table>Case</table>
         </columns>
@@ -3954,31 +4069,6 @@
             <field>Community</field>
             <table>Case</table>
         </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Subject</field>
-            <table>Case.KPI_Values__r.Activities</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Owner</field>
-            <table>Case.KPI_Values__r.Activities</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>IsTask</field>
-            <table>Case.KPI_Values__r.Activities</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>Who</field>
-            <table>Case.KPI_Values__r.Activities</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>CreatedDate</field>
-            <table>Case.KPI_Values__r.Activities</table>
-        </columns>
         <masterLabel>Cases</masterLabel>
     </sections>
     <sections>
@@ -4099,11 +4189,6 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Owner.Name</field>
-            <table>Case.KPI_Values__r.Activities</table>
-        </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
             <field>Year__c</field>
             <table>Case.KPI_Values__r</table>
         </columns>
@@ -4114,9 +4199,297 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>Owner.Id</field>
-            <table>Case.KPI_Values__r.Activities</table>
+            <field>Responsible__c.UserRole.Name</field>
+            <table>Case.KPI_Values__r</table>
         </columns>
         <masterLabel>KPI Values</masterLabel>
+    </sections>
+    <sections>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Account</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CurrencyIsoCode</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Id</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IsAllDayEvent</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Owner</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Bridge__c</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CallDurationInSeconds</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CallObject</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CallDisposition</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Call_TIme__c</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CallType</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IsClosed</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Description</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Communication_Sent__c</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Communication_Sent_Date__c</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CompletedDateTime</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CreatedBy</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CreatedDate</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Data_Quality_Description__c</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Data_Quality_Score__c</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>ActivityDate</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>ActivityTimeOnly</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>DurationInMinutes</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>EventSubtype</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>GroupEventType</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Identifying_Members__c</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>AM_Involved__c</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IsChild</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IsGroupEvent</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Issuer__c</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>LastModifiedBy</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>LastModifiedDate</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Location</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Members__c</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Who</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Objectives__c</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Participants__c</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Priority</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IsPrivate</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IsVisibleInSelfService</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Recipient__c</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>RecurrenceRegeneratedType</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Responses__c</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>AM_Responsible__c</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Result_Summary__c</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Sender__c</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>ShowAs</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Status</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <field>Subject</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Subject__c</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>AM_Support_Required_from_Account__c</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IsTask</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>RecordType</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Task_Age_Days__c</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>TaskSubtype</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>ActivityDateTime</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Title__c</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <masterLabel>Activities</masterLabel>
     </sections>
 </ReportType>
