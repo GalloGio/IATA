@@ -5518,6 +5518,18 @@ Daha fazla ayrıntı için, Müşteri Portalı&apos;nda &quot;Resolution 812&quo
         <name>CS_Portal_Addittional_Recipients_URL_Description</name>
     </customLabels>
     <customLabels>
+        <label><!-- CS Portal Annual Revalidation Countries PickList Value --></label>
+        <name>CS_Portal_Annual_Revalidation_Countries_PickList_Value</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CS Portal Annual Revalidation Download csv --></label>
+        <name>CS_Portal_Annual_Revalidation_Download_csv</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CS Portal Annual Revalidation Popup Title --></label>
+        <name>CS_Portal_Annual_Revalidation_Popup_Title</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Campaign already created --></label>
         <name>Campaign_already_created</name>
     </customLabels>
@@ -29920,6 +29932,10 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <name>icg_smart_facility_remote_validation_text3</name>
     </customLabels>
     <customLabels>
+        <label><!-- icg smart facility remote validation url --></label>
+        <name>icg_smart_facility_remote_validation_url</name>
+    </customLabels>
+    <customLabels>
         <label><!-- icg smart facility url --></label>
         <name>icg_smart_facility_url</name>
     </customLabels>
@@ -37235,6 +37251,19 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Contacts with TOP parent account info --></description>
+        <label><!-- Contacts with TOP parent account info --></label>
+        <name>Contacts_with_TOP_parent_account_info</name>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- Contacts --></label>
+            <name>Contacts</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Contacts with inactivated owners --></description>
         <label><!-- Contacts with inactivated owners --></label>
         <name>Contacts_with_inactivated_owners</name>
@@ -38185,6 +38214,23 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
             </columns>
             <label><!-- Yes/No fields --></label>
             <name>Yes/No fields</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- KPI Values with Cases and Activity History --></description>
+        <label><!-- KPI Values with Cases and Activity History --></label>
+        <name>KPI_Values_with_Cases_and_Activity_History</name>
+        <sections>
+            <label><!-- Activities --></label>
+            <name>Activities</name>
+        </sections>
+        <sections>
+            <label><!-- Cases --></label>
+            <name>Cases</name>
+        </sections>
+        <sections>
+            <label><!-- KPI Values --></label>
+            <name>KPI Values</name>
         </sections>
     </reportTypes>
     <reportTypes>

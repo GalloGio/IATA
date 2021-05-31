@@ -5,6 +5,10 @@
     <deployed>true</deployed>
     <description>KPI value with cases and user role</description>
     <join>
+        <join>
+            <outerJoin>false</outerJoin>
+            <relationship>Activities</relationship>
+        </join>
         <outerJoin>false</outerJoin>
         <relationship>KPI_Values__r</relationship>
     </join>
@@ -3950,6 +3954,31 @@
             <field>Community</field>
             <table>Case</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Subject</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Owner</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>IsTask</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Who</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CreatedDate</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
         <masterLabel>Cases</masterLabel>
     </sections>
     <sections>
@@ -4070,6 +4099,11 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>Owner.Name</field>
+            <table>Case.KPI_Values__r.Activities</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>Year__c</field>
             <table>Case.KPI_Values__r</table>
         </columns>
@@ -4077,6 +4111,11 @@
             <checkedByDefault>false</checkedByDefault>
             <field>Responsible__c.UserRole</field>
             <table>Case.KPI_Values__r</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Owner.Id</field>
+            <table>Case.KPI_Values__r.Activities</table>
         </columns>
         <masterLabel>KPI Values</masterLabel>
     </sections>
