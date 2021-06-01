@@ -31734,6 +31734,14 @@ Can you please confirm which country you&apos;ve previously received support for
         <value>This service allows you to change your BSP / CASS Participation details - Local address, Tax number or Financial / Admin Contact (MasterTable) and IATA Easy Pay opt-in or opt-out</value>
     </labels>
     <labels>
+        <fullName>ISSP_Change_of_Accreditation_Type_More_Than_one_Country_Error</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Change of Accreditation Type More Than one Country Error</shortDescription>
+        <value>For the Change of Accreditation Type process you can only choose one country</value>
+    </labels>
+    <labels>
         <fullName>ISSP_China_Domestic</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>

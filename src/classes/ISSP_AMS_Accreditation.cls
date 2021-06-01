@@ -2050,6 +2050,14 @@ public without sharing class ISSP_AMS_Accreditation {
 	}
 
 	public Pagereference save() {
+		if(isChangeOfAccreditationType && (newForm.Scope_of_Change__c == 'GE - Change to Gostandard' || newForm.Scope_of_Change__c == 'GE - Change to Golite') && selectedCountryIsos.size() > 1){
+			ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_Change_of_Accreditation_Type_More_Than_one_Country_Error));
+			return null;
+		}
+		if(isChangeOfAccreditationType && (newForm.Scope_of_Change__c == 'GE - Change to Gostandard' || newForm.Scope_of_Change__c == 'GE - Change to Golite') && selectedCountryIsos.isEmpty()){
+			ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_NoC_Change_for+': '+ Label.ANG_ISSP_CountryConcerned+': '+Label.ISSP_YouMustEnter));
+			return null;
+		}
 
 		if (!isNoticeOfChange) {
 			if (isMultiCountryNewAE || isMCAccredited) {
@@ -2540,6 +2548,12 @@ public without sharing class ISSP_AMS_Accreditation {
 				newForm.Shipping_ISO_State__c = null;
 				newForm.Shipping_ISO_Country__c = null;
 			}/*** AMSU-121 ***/
+			
+			if(isChangeOfAccreditationType && (newForm.Scope_of_Change__c == 'GE - Change to Gostandard' || newForm.Scope_of_Change__c == 'GE - Change to Golite')){
+				for (SelectOption country: selectedCountryIsos) {
+					newForm.MultiCountry_Countries_Concerned__c = country.getValue();
+				}
+			}
 
 			upsert newForm;
 
@@ -3597,7 +3611,13 @@ public without sharing class ISSP_AMS_Accreditation {
 	}
 
 	public Pagereference goToStep1() {
-		String pageURL = '/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&step=1' + commParam;
+
+		String pageURL = '';
+		if(isChangeOfAccreditationType){
+			pageURL = '/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&step=4&isGEMulticountry=true' + commParam;
+		}else{
+			pageURL = '/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&step=1' + commParam;
+		}
 
 		if (isNoticeOfChange) pageURL += '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange;
 		else {
@@ -3621,8 +3641,13 @@ public without sharing class ISSP_AMS_Accreditation {
 
 	public Pagereference goToStep2() {
 		if (getIsPostalOperator() && isNoticeOfChange) return goToStep1();
-
-		String pageURL = '/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&step=2' + commParam;
+		
+		String pageURL = '';
+		if(isChangeOfAccreditationType){
+			pageURL = '/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&step=2&isGEMulticountry=true' + commParam;
+		}else{
+			pageURL = '/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&step=2' + commParam;
+		}
 
 		if (isNoticeOfChange) {
 			pageURL += '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange;
@@ -3708,7 +3733,13 @@ public without sharing class ISSP_AMS_Accreditation {
 	}
 
 	public Pagereference goToStep3() {
-		String pageURL = '/' + includedPageName + '?caseId=' + newCase.Id + commParam +'&step=3';
+
+		String pageURL = '';
+		if(isChangeOfAccreditationType){
+			pageURL = '/' + includedPageName + '?caseId=' + newCase.Id + commParam +'&step=3&isGEMulticountry=true' + commParam;
+		}else{
+			pageURL = '/' + includedPageName + '?caseId=' + newCase.Id + commParam +'&step=3';
+		}
 
 		if (isNoticeOfChange) {
 			pageURL += '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange;
@@ -3720,7 +3751,12 @@ public without sharing class ISSP_AMS_Accreditation {
 	}
 
 	public Pagereference goToStep4() {
-		String pageURL = '/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&step=4' + commParam;
+		String pageURL = '';
+		if(isChangeOfAccreditationType){
+			pageURL = '/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&step=4&isGEMulticountry=true' + commParam;
+		}else{
+			pageURL = '/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&step=4' + commParam;
+		}
 		if (isNoticeOfChange) {
 			if(newForm.Is_change_ownership_or_shareholding__c) { //No File Upload for Change of Ownership
 				return goToStep3();
@@ -3748,8 +3784,12 @@ public without sharing class ISSP_AMS_Accreditation {
 	}
 
 	public Pagereference goToStep5() {
-		String pageURL = '/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&step=5' + commParam;
-
+		String pageURL = '';
+		if(isChangeOfAccreditationType){
+			pageURL = '/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&step=5&isGEMulticountry=true' + commParam;
+		}else{
+			pageURL = '/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&step=5' + commParam;
+		}
 		if (isNoticeOfChange) {
 			pageURL += '&isNoticeOfChange=true&isBankAccountChange=' + isBankAccountChange;
 		} else if (isMultiCountryNewAE && !isMultiCountryAccredittedAddingAEs()) {
@@ -6340,7 +6380,6 @@ public without sharing class ISSP_AMS_Accreditation {
 				queryAuxReqsList += 'WHERE AMS_Accreditation_Country_CheckList__r.IATA_ISO_Country__r.ISO_Code__c = \'' + newCase.IFAP_Country_ISO__c + '\' ';
 			} else {
 				String mcCountriesIsosAux = '(\'';
-
 				for (String isoCountry: newForm.MultiCountry_Countries_Concerned__c.split(',')) {
 					mcCountriesIsosAux += isoCountry + '\',\'';
 				}

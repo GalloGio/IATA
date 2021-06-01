@@ -972,7 +972,6 @@
                                                                 rightLabel="{!$Label.ISSP_AMS_eBulletin_SelectedCountries}"
                                                                 rightOptions="{!selectedCountryIsos}"
                                                                 size="8"
-                                                                isChangeOfAccreditationType="{!isChangeOfAccreditationType}"
                                                                 width="300px"
                                                                 btn_up_down="false"/>
 

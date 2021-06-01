@@ -138,30 +138,19 @@
       // Move the selected options in the idFrom listbox to the idTo
       // listbox, updating the corresponding strings in idHdnFrom and
       // idHdnTo
-
-      console.log('MR::: isChangeOfAccreditationType ', {!isChangeOfAccreditationType});
       var moveSelectedOptions = function(idFrom, idTo, idHdnFrom, idHdnTo) {
         listFrom = document.getElementById(idFrom);
         listTo = document.getElementById(idTo);
 
         for ( var x = 0; x < listTo.options.length; x++) {
-      console.log('MR::: isChangeOfAccreditationType 1');
           listTo.options[x].selected = false;
         }
-
-
-      console.log('MR::: isChangeOfAccreditationType 2 ', listFrom.options.length);
-      if({!isChangeOfAccreditationType} && listFrom.options.length > 1){
-        alert('ERROR');
-      }else{
         for ( var x = 0; x < listFrom.options.length; x++) {
-      console.log('MR::: isChangeOfAccreditationType 2');
           if (listFrom.options[x].selected == true) {
             listTo.appendChild(listFrom.options[x]);
             x--;
           }
         }
-      }
 
         listTo.focus();
 
