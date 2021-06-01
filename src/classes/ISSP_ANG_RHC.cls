@@ -14,6 +14,7 @@ public without sharing class ISSP_ANG_RHC {
 	public Id accountIdTP {get; set;}
 	public Id accountId {get; set;}
 	public Boolean isCashless {get; set;}
+	public Boolean isCashlessWithAllowedCash {get; set;}
 	public ANG_ProductComparisonHelper helper {get; set;}
 	@TestVisible private static final String ICE_SERVICE = ISSP_Portal_Service_Ids__c.getInstance().ICE_E_Statements__c;
 	public ANG_RHC_Information__c rhcInfo {get;set;}
@@ -110,7 +111,10 @@ public without sharing class ISSP_ANG_RHC {
 			}
 
 			this.isCashless = (this.contact.Account.ANG_Accreditation_Model__c != null
-				&& this.contact.Account.ANG_Accreditation_Model__c == 'Cashless');
+				&& this.contact.Account.ANG_Accreditation_Model__c == 'Cashless' && this.contact.Account.IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c == false);
+
+			this.isCashlessWithAllowedCash = (this.contact.Account.ANG_Accreditation_Model__c != null
+			&& this.contact.Account.ANG_Accreditation_Model__c == 'Cashless' && this.contact.Account.IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c == true);
 
 			isChinaAgent = this.contact.Account.IATA_ISO_Country__r.ISO_Code__c == 'CN';
 

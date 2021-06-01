@@ -102,7 +102,7 @@ public class ISSP_ANG_CodeSearch {
 			for (Account a: [SELECT Id, IATACode__c, Name, TradeName__c, Status__c, IATA_ISO_Country__r.Name, ANG_Accreditation_Model__c, Accreditation_date__c, toLabel(Remittance_frequency__c), Location_Class__c,
 								ANG_HE_RiskStatus__c, ANG_RiskStatus__c, Active_Guarantees__c, Accumulated_Irregularities__c, Location_Type__c,
 								Top_Parent__c, IATA_ISO_Country__r.ANG_Enable_NewGen__c, ANG_IsNewGenAgency__c, IATA_ISO_Country__r.BSP_Country_free_text__c,
-								Account.ANG_IEP_Status_FF__c, Top_Parent__r.Location_Type__c, IATA_ISO_Country__r.ANG_IEP_Model__c, IATA_ISO_Country__r.ISO_Code__c,
+								Account.ANG_IEP_Status_FF__c, Top_Parent__r.Location_Type__c, IATA_ISO_Country__r.ANG_IEP_Model__c, IATA_ISO_Country__r.ISO_Code__c, IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c,
 								Field_Head_Office__c, Category__c
 							FROM Account
 							WHERE (Sector__c = :sector
@@ -153,7 +153,7 @@ public class ISSP_ANG_CodeSearch {
 					Account parentAgency = [SELECT Id, IATACode__c, Name, TradeName__c, Status__c, IATA_ISO_Country__r.Name, Accreditation_date__c, toLabel(Remittance_frequency__c), Location_Class__c,
 													 ANG_Accreditation_Model__c, ANG_HE_RiskStatus__c, ANG_RiskStatus__c, Active_Guarantees__c, Category__c,
 													 Accumulated_Irregularities__c, Location_Type__c, IATA_ISO_Country__r.ANG_Enable_NewGen__c, IATA_ISO_Country__r.BSP_Country_free_text__c,
-													 ANG_IsNewGenAgency__c, Account.ANG_IEP_Status_FF__c, Top_Parent__r.Location_Type__c, IATA_ISO_Country__r.ANG_IEP_Model__c, IATA_ISO_Country__r.ISO_Code__c
+													 ANG_IsNewGenAgency__c, Account.ANG_IEP_Status_FF__c, Top_Parent__r.Location_Type__c, IATA_ISO_Country__r.ANG_IEP_Model__c, IATA_ISO_Country__r.ISO_Code__c, IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c
 											FROM Account
 											WHERE Id = :reqAgency.Top_Parent__c];
 

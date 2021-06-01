@@ -54,6 +54,8 @@ public class ANG_RHCHelper {
 	private static final String YES = 'Yes';
 	private static final String NO = 'No';
 
+	public static boolean bIsNewHELiteProcess = false;
+
 	// *********************************************************
 	// *********************** Methods *************************
 	// *********************************************************
@@ -193,7 +195,7 @@ public class ANG_RHCHelper {
 			Account acct = accountsMap.get(rhc.ANG_AccountId__c);
 
 			//If the agency is CASHLESS and the flag "Allow_Cash_FOP_for_Cashless_Agencies__c" on country is true, then force the RHC Amount to 1
-			if(acct.IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c && acct.ANG_Accreditation_Model__c == ams_utils.ACCREDITATIONMODEL_CASHLESS){
+			if(acct.IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c && (acct.ANG_Accreditation_Model__c == ams_utils.ACCREDITATIONMODEL_CASHLESS || (string.isBlank(acct.ANG_Accreditation_Model__c) && ANG_RHCHelper.bIsNewHELiteProcess))){
 				rhc.ANG_RHC_Amount__c = 1;
 				rhc.ANG_RHC_Amount_Forecasted__c = 1;
 			}

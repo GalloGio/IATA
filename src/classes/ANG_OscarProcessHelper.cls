@@ -513,8 +513,12 @@ global class ANG_OscarProcessHelper {
 
 			acc.ANG_Accreditation_Model__c = AMS_Utils.decodeAMFromOscarProcess(oscar.Process__c,acc.ANG_Accreditation_Model__c);
 
-			if((oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWGESTANDARD || (acc.IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c && oscar.Process__c == AMS_Utils.NEWHELITE)) && acc.RHC_Informations__r.isEmpty())
+			if((oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWGESTANDARD || (acc.IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c && oscar.Process__c == AMS_Utils.NEWHELITE)) && acc.RHC_Informations__r.isEmpty()){
 				createRHCInfo.add(acc);
+				if(acc.IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c && oscar.Process__c == AMS_Utils.NEWHELITE)
+					ANG_RHCHelper.bIsNewHELiteProcess = true;
+			}
+				
 
 
 			if(AMS_Utils.oscarPCICompliantMigrationProcesses.contains(oscar.Process__c)){
