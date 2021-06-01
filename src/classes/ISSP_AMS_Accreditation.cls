@@ -228,6 +228,8 @@ public without sharing class ISSP_AMS_Accreditation {
 	public boolean isCASSImport {get; set;}
 	public boolean isHOAccredited {get; set;}
 	public boolean isUserAccAccredited {get; set;}
+	public boolean isGEAccountHierarchy {get; set;}
+	public boolean isChangeOfAccreditationType {get; set;}
 	public boolean isValError {get; set;}
 	public boolean isNoticeOfChange {get; set;}
 	public boolean bIsAdmin {get; set;}     //identify if a user is an administrator or not
@@ -596,6 +598,8 @@ public without sharing class ISSP_AMS_Accreditation {
 		modifyForm = false;
 		mcAbleToSubmit = false;
 		isMCAccredited = false;
+		isGEAccountHierarchy = false;
+		isChangeOfAccreditationType = false;
 		mcformCountryISO = '';
 		agencyListByBSPByISOMap = new Map<String, Map<String, List<AgencyInfoByISOWrapper>>>();
 
@@ -634,6 +638,17 @@ public without sharing class ISSP_AMS_Accreditation {
 		this.showNDCQuestion = false;
 		if(this.con.Account.Location_Class__c == 'P' || this.con.Account.Location_Class__c == 'D'){
 			this.showNDCQuestion = true;
+		}
+
+		String isGEMulticountry = apexpages.currentpage().getparameters().get('isGEMulticountry');
+
+		if(isGEMulticountry != null && isGEMulticountry == 'true'){
+			this.isChangeOfAccreditationType = true;
+		}
+
+		if(this.con.Account.location_type__c == 'GE' ){
+			this.isGEAccountHierarchy = true;
+			this.newForm.Type_of_Change__c = 'No';
 		}
 		
 		if (!String.isBlank(defaultAmsLocationType)) {
@@ -844,7 +859,9 @@ public without sharing class ISSP_AMS_Accreditation {
 		if(isBankAccountChange) {
 			newForm.Is_change_bank_account_details__c = true;
 		} else {
-			newForm.Type_of_Change__c = 'Yes';
+			if(!isGEAccountHierarchy){
+				newForm.Type_of_Change__c = 'Yes';
+			}
 			newForm.Scope_of_Change__c = isHOcontact ? HO_ONLY : SELECTED_BRANCHES; //Set default
 			newForm.Is_change_legal_name__c = true;
 			newForm.Is_change_location__c = true;

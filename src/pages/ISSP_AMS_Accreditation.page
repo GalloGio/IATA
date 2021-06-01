@@ -541,7 +541,7 @@
                 $('[for$="countryconcerned"]')[0].innerText = "* {!$Label.ANG_ISSP_CountryConcerned}";
             }
             
-            if ($('[id$="LocationType"]').find("input")[1].checked) { 
+            if ($('[id$="LocationType"]').find("input")[1].checked || $('[id$="LocationTypeMultiCountry"]').find("input")[0].checked) { 
                 toggleCountryMultiSelection(true, false);
 
                 if ('{!hqAccount.ANG_Accreditation_Model__c}' == '{!ACCREDITATION_MODEL_MC}') {
@@ -555,7 +555,7 @@
                 $('[for$="countryconcerned"]')[0].innerText = "* {!$Label.ANG_ISSP_CountryConcerned}";
             }
 
-            if ($('[id$="LocationType"]').find("input")[2].checked) {
+            if ($('[id$="LocationType"]').find("input")[2].checked || $('[id$="LocationTypeMultiCountry"]').find("input")[1].checked) {
                 if ('{!hqAccount.ANG_Accreditation_Model__c}' == '{!ACCREDITATION_MODEL_MC}') {
                     toggleCountryMultiSelection(false, true);
                     $('[for$="countryconcerned"]')[0].innerText = "* {!$Label.ANG_ISSP_CountryConcerned_AEs}";
@@ -567,7 +567,7 @@
                 $('[id$="nocThirdQuestion"]').css('display', 'none');
             }
 
-            if ($('[id$="LocationType"]').find("input")[3].checked) {
+            if ($('[id$="LocationType"]').find("input")[3].checked || $('[id$="LocationTypeMultiCountry"]').find("input")[2].checked) {
                 if ('{!hqAccount.ANG_Accreditation_Model__c}' == '{!ACCREDITATION_MODEL_MC}') {
                     toggleCountryMultiSelection(false, true);
                     $('[for$="countryconcerned"]')[0].innerText = "* {!$Label.ANG_ISSP_CountryConcerned_AEs}";
@@ -756,7 +756,7 @@
                             <apex:actionFunction action="{!getLegalNameOptions}" name="fetchLegalNames" reRender="legalNameSelected" oncomplete="populateLegalAndSeparateFields();" />
                             <apex:inputHidden id="NextStep" value="{!newCase.Applicable_to_Which_Version_s__c}"/>
                             <apex:actionFunction name="reRenderAccountsNoc" action="{!resetHierarchy}" status="blockEditing" oncomplete="reRenderBranchAccs();"/>
-                            <apex:actionFunction name="reRenderNocOptions" reRender="nocOptions, nocFormQuestions" oncomplete=""/>
+                            <apex:actionFunction name="reRenderNocOptions" reRender="nocOptions, nocFormQuestions, nocOptionsMultiCountry" oncomplete=""/>
                             <apex:actionFunction name="reRenderNocMessage" reRender="nocMessage"/>
                             <apex:actionFunction name="reRenderBranchAccs" status="blockEditing" reRender="branchaccountsel, table, correctHierarchy" oncomplete="checkSelectAll();"/>
                             
@@ -875,7 +875,7 @@
 
                             <apex:outputpanel rendered="{!isNoticeOfChange}" id="nocFormQuestions">
                                 <apex:outputpanel >
-                                    <div class="form-group">
+                                    <div class="form-group" style="{!IF(!isChangeOfAccreditationType,'','display:none')}">
                                         <label for="operationtype" class="col-lg-3 control-label">
                                             {!IF(AND(isBankAccountChange == true, con.Account.Location_Type__c == 'AE'), $Label.ISSP_AMS_AE_NoC_Change_for, $Label.ISSP_AMS_NoC_Change_for)}
                                         </label>
@@ -901,6 +901,20 @@
                                                     </apex:selectRadio>
 
                                                 </apex:outputPanel>
+                                            </apex:outputPanel>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" style="{!IF(isChangeOfAccreditationType,'','display:none')}">
+                                        <label for="operationtype" class="col-lg-3 control-label">
+                                            {!$Label.ISSP_AMS_NoC_Change_for}
+                                        </label>
+                                        <div class="col-lg-9" style="padding-top:7px">
+                                            <apex:outputPanel rendered="{!AND(con.Account.ANG_Accreditation_Model__c != null, con.Account.ANG_Accreditation_Model__c != 'Legacy')}" id="nocOptionsMultiCountry">    
+                                                <apex:selectRadio required="true" id="LocationTypeMultiCountry" layout="pageDirection" label="{!$Label.ISSP_AMS_NoC_Change_for}" style="width:70%;" value="{!newForm.Scope_of_Change__c}" onchange="togglePageItem(this.value, '{!$Component.step1Form.step1Block.branchaccountsel}'); checkLocationQuestion(); reRenderNocMessage();">
+                                                    <apex:selectOption itemValue="HO - All Branches" itemLabel="{!$Label.ISSP_AMS_NoC_HE_All_Branches}" />                                                     
+                                                    <apex:selectOption itemValue="GE - Change to Gostandard" itemLabel="{!$Label.ISSP_AMS_Associate_entities_of_a_country_change_to_Gostandard}" />                                                       
+                                                    <apex:selectOption itemValue="GE - Change to Golite" itemLabel="{!$Label.ISSP_AMS_Associate_entities_of_a_country_change_to_Golite}"  />
+                                                </apex:selectRadio>
                                             </apex:outputPanel>
                                         </div>
                                     </div>
@@ -958,12 +972,13 @@
                                                                 rightLabel="{!$Label.ISSP_AMS_eBulletin_SelectedCountries}"
                                                                 rightOptions="{!selectedCountryIsos}"
                                                                 size="8"
+                                                                isChangeOfAccreditationType="{!isChangeOfAccreditationType}"
                                                                 width="300px"
                                                                 btn_up_down="false"/>
 
-                                            <apex:outputLabel id="selectAllLabel" value="{!$Label.ISSP_AMS_eBulletin_Country_SelectAll}" style="font-weight: 100;"/>&nbsp;
+                                            <apex:outputLabel rendered="{!!isChangeOfAccreditationType}" id="selectAllLabel" value="{!$Label.ISSP_AMS_eBulletin_Country_SelectAll}" style="font-weight: 100;"/>&nbsp;
 
-                                            <apex:inputCheckBox id="selectAll" value="{!allCountriesSelected}" label="{!$Label.ISSP_AMS_eBulletin_Country_SelectAll}">
+                                            <apex:inputCheckBox rendered="{!!isChangeOfAccreditationType}" id="selectAll" value="{!allCountriesSelected}" label="{!$Label.ISSP_AMS_eBulletin_Country_SelectAll}">
                                                 <apex:actionSupport event="onchange" action="{!selectAllCountries}" id="cbSAd" reRender="countryMultiSelection" oncomplete="reRenderAccountsNoc(); setArrowListeners(); reRenderNocMessage();"/>
                                             </apex:inputCheckbox>
                                         </apex:outputPanel>
@@ -985,28 +1000,29 @@
                                     <apex:outputText value="{!amsAllLangCountryLabel}"/>
                                 </div>
                             </div>
+                            <apex:outputpanel rendered="{!OR(AND(isGEAccountHierarchy, isChangeOfAccreditationType), AND(!isGEAccountHierarchy, !isChangeOfAccreditationType))}">
+                                <apex:outputpanel rendered="{!AND(isNoticeOfChange, NOT(isBankAccountChange))}" id="nocThirdQuestion" style="display: none;">
+                                    <!--<apex:outputpanel rendered="{!newForm.Scope_of_Change__c == 'HO - All Branches'}">-->
+                                        <div class="form-group">
+                                            <label for="typeOfChange" class="col-lg-3 control-label">
+                                                {!$Label.ISSP_ANG_NOC_Type_Of_Change}
+                                            </label>
+                                            <div class="col-lg-9" style="padding-top:7px">
 
-                            <apex:outputpanel rendered="{!AND(isNoticeOfChange, NOT(isBankAccountChange))}" id="nocThirdQuestion" style="display: none;">
-                                <!--<apex:outputpanel rendered="{!newForm.Scope_of_Change__c == 'HO - All Branches'}">-->
-                                    <div class="form-group">
-                                        <label for="typeOfChange" class="col-lg-3 control-label">
-                                            {!$Label.ISSP_ANG_NOC_Type_Of_Change}
-                                        </label>
-                                        <div class="col-lg-9" style="padding-top:7px">
+                                                <apex:outputPanel rendered="{!OR(isBankAccountChange != true, con.Account.Location_Type__c != 'AE')}">
+                                                    <apex:outputPanel rendered="{!AND(con.Account.ANG_Accreditation_Model__c != null, con.Account.ANG_Accreditation_Model__c != 'Legacy')}" id="nocOptionsFirstQ">
+                                                        <apex:selectRadio id="typeOfChange" layout="pageDirection" label="{!$Label.ISSP_ANG_NOC_Type_Of_Change}" style="width:70%;" value="{!newForm.Type_of_Change__c}" >
+                                                            <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}"/>
 
-                                            <apex:outputPanel rendered="{!OR(isBankAccountChange != true, con.Account.Location_Type__c != 'AE')}">
-                                                <apex:outputPanel rendered="{!AND(con.Account.ANG_Accreditation_Model__c != null, con.Account.ANG_Accreditation_Model__c != 'Legacy')}" id="nocOptionsFirstQ">
-                                                    <apex:selectRadio id="typeOfChange" layout="pageDirection" label="{!$Label.ISSP_ANG_NOC_Type_Of_Change}" style="width:70%;" value="{!newForm.Type_of_Change__c}" >
-                                                        <apex:selectOption itemValue="Yes" itemLabel="{!$Label.ISSP_Yes}"/>
-
-                                                        <apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}"/>
-                                                    </apex:selectRadio>
+                                                            <apex:selectOption itemValue="No" itemLabel="{!$Label.ISSP_No}"/>
+                                                        </apex:selectRadio>
+                                                    </apex:outputPanel>
                                                 </apex:outputPanel>
-                                            </apex:outputPanel>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                <!--</apex:outputpanel>-->
+                                    <!--</apex:outputpanel>-->
+                                </apex:outputpanel>
                             </apex:outputpanel>
 
                                     <div class="form-group" id="legalNameSelection" style="display: {!IF(AND(isMultiCountryNewAE, sectorValue == 'Travel_Agent'), '', 'none')};">

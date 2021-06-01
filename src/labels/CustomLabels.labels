@@ -20971,6 +20971,20 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>New Associate Entity - GoGlobal</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Associate_entities_of_a_country_change_to_Golite</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Associate entities of a country change to Golite</shortDescription>
+        <value>Associate entities of a Country</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Associate_entities_of_a_country_change_to_Gostandard</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Associate entities of a country change to Gostandard</shortDescription>
+        <value>Associate entities of a Country</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Authorised_Sig</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -26462,6 +26476,14 @@ It is hereby agreed that this application shall become a part of every Passenger
         <protected>false</protected>
         <shortDescription>ISSP AMS Step0 Change Not Allowed</shortDescription>
         <value>Changes can only be made once your Agency has submitted its application for accreditation to IATA.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step0_Change_Of_Accreditation_Type</fullName>
+        <categories>ISSP, ANG</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP_AMS_Step0_Change_Of_Accreditation_Type</shortDescription>
+        <value>Change of Accreditation Type</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step0_Changes</fullName>
@@ -35638,6 +35660,13 @@ this is the tiess topic help</value>
         <protected>false</protected>
         <shortDescription>ISSP NoC HE with AEs Warning</shortDescription>
         <value>The change will only be effective if only agencies belonging to the same legal structure have been selected.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_NoC_HE_with_AEs_Warning_Multicountry</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP NoC HE with AEs Warning Multicountry</shortDescription>
+        <value>Please return to the Accreditation &amp; Changes page to choose Accreditation Type change</value>
     </labels>
     <labels>
         <fullName>ISSP_NoC_Head_Entity_Becoming_a_AE</fullName>

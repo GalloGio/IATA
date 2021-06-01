@@ -2360,7 +2360,11 @@
 			var contactAccountNumberOfAEs = {!ContactAccountAEsChilds},
 				scopeOfChange = '{!newForm.Scope_of_Change__c}';
 			if ({!!CanChangeAccreditationType}) {
-				setWarningBoxOnHover(iataChangeAccType, "{!$Label.ISSP_NoC_HE_with_AEs_Warning}");
+				if({!isGEAccountHierarchy} && !{!isChangeOfAccreditationType}){
+					setWarningBoxOnHover(iataChangeAccType, "{!$Label.ISSP_NoC_HE_with_AEs_Warning_Multicountry}");
+				}else{
+					setWarningBoxOnHover(iataChangeAccType, "{!$Label.ISSP_NoC_HE_with_AEs_Warning}");
+				}
 				if (cntIFAPContacts > 0) {
 					deleteIFAPContact($j('[id$=agencyConIFAPContact]')[0].innerText);
 				}
