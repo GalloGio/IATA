@@ -209,14 +209,14 @@
 						<div class="row">
 							<label>{!$Label.IA_Agreement_Name}</label>
 							<apex:selectList id="filterName" size="1" html-data-value="">
-								<apex:selectOption itemLabel="{!$Label.IA_Choose_agreement_name}"/>
+								<apex:selectOption itemValue="" itemLabel="{!$Label.IA_Choose_agreement_name}"/>
 								<apex:selectOptions value="{!OptionNames}"/>
 							</apex:selectList>
 						</div>
 						<div class="row">
 							<label>{!$Label.IA_Agreement_Type}</label>
 							<apex:selectList id="filterType" size="1" html-data-value="">
-								<apex:selectOption itemLabel="{!$Label.IA_Choose_agreement_type}"/>
+								<apex:selectOption itemValue="" itemLabel="{!$Label.IA_Choose_agreement_type}"/>
 								<apex:selectOptions value="{!OptionTypes}"/>
 							</apex:selectList>
 						</div>

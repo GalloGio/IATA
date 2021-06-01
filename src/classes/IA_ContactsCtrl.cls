@@ -74,29 +74,35 @@ public without sharing class IA_ContactsCtrl {
 	 */
 	private map<String,Contact> mapSearchableContacts {
 		get{
-			mapSearchableContacts = new Map<String,Contact>();
-			for (Contact contact:
-				[SELECT id, Name, Email, Phone, MITA_Contact_Type__c, Title, Account.Name
-				FROM Contact
-				WHERE Recordtype.Developername = 'Standard_Contact'
-				AND Status__c = 'Active'
-				AND MITA_Contact_Type__c = null
-				AND (AccountId = :this.account.Id OR Account.Top_Parent__c = :this.account.Id)
-				ORDER BY Name ASC
-				LIMIT 1000]) {
-					mapSearchableContacts.put(contact.Name, contact);
-					mapSearchableContacts.put(contact.Email, contact);
+			if (mapSearchableContacts==null) {
+				mapSearchableContacts = new Map<String,Contact>();
+				for (Contact contact:
+					[SELECT id, Name, Email, Phone, MITA_Contact_Type__c, Title, Account.Name
+					FROM Contact
+					WHERE Recordtype.Developername = 'Standard_Contact'
+					AND Status__c = 'Active'
+					AND MITA_Contact_Type__c = null
+					AND (AccountId = :this.account.Id OR Account.Top_Parent__c = :this.account.Id)
+					ORDER BY Name ASC
+					LIMIT 1000]) {
+						mapSearchableContacts.put(contact.Name, contact);
+				}
 			}
 			return mapSearchableContacts;
 		}
 		private set;
 	}
 
+	/**
+	 * Get map keys sorted to be used in the input search as suggested inputs
+	 */
 	public list<String> searchableContactOptions {
 		get{
-			list<String> listOptions = new list<String>(mapSearchableContacts.keyset());
-			listOptions.sort();
-			return listOptions;
+			if (searchableContactOptions==null) {
+				searchableContactOptions = new list<String>(mapSearchableContacts.keyset());
+				searchableContactOptions.sort();
+			}
+			return searchableContactOptions;
 		}
 		private set;
 	}
@@ -105,7 +111,43 @@ public without sharing class IA_ContactsCtrl {
 	 * COMMON MODAL VARS
 	 */
 	public Contact selectedContact {get;set;}
-	public list<String> selectedMITAContactTypes {get;set;}
+	//Var to handle the Mita contact types in checkboxes
+	public list<MITAOptionWrapper> MITAContactOptionWrappers {get;set;}
+	public class MITAOptionWrapper {
+		public String label {get;set;}
+		public Boolean checked {get;set;}
+	}
+
+	/**
+	 * Reset Mita contact types
+	 */
+	public void resetMITAContactOptionWrappers() {
+		this.MITAContactOptionWrappers = new list<MITAOptionWrapper>();
+		for (String type: IA_util.LIST_MITA_CONTACTS) {
+			MITAOptionWrapper option = new MITAOptionWrapper();
+			option.label = type;
+			if (this.selectedContact==null) {
+				option.checked = false;
+			} else {
+				String types = this.selectedContact.MITA_Contact_Type__c;
+				option.checked = types!=null && types.contains(type);
+			}
+			this.MITAContactOptionWrappers.add(option);
+		}
+	}
+
+	/**
+	 * Transform Mita contact types list into a String (; separated) to be used in a multipicklist field
+	 */
+	public String getMITAContactFieldValue() {
+		List<String> result = new List<String>();
+		for (MITAOptionWrapper wrapper: this.MITAContactOptionWrappers) {
+			if (wrapper.checked) {
+				result.add(wrapper.label);
+			}
+		}
+		return String.join(result,';');
+	}
 
 	/***
 	 * MODAL ADD CONTACT
@@ -120,6 +162,9 @@ public without sharing class IA_ContactsCtrl {
 		this.selectedContactSearchKey = null;
 		this.selectedContact = null;
 		this.alertModal = null;
+		this.mapSearchableContacts = null;
+		this.searchableContactOptions = null;
+		resetMITAContactOptionWrappers();
 	}
 
 	public void closeModalAddContact() {
@@ -132,8 +177,20 @@ public without sharing class IA_ContactsCtrl {
 
 	public void openSearchedContact() {
 		this.selectedContact = this.mapSearchableContacts.get(this.selectedContactSearchKey);
+		// if the search key is not in the preselected contact try to find it
+		if (this.selectedContact==null) {
+			list<Contact> listContact =
+				[SELECT id, Name, Email, Phone, MITA_Contact_Type__c, Title, Account.Name
+				FROM Contact
+				WHERE Recordtype.Developername = 'Standard_Contact'
+				AND Status__c = 'Active'
+				AND MITA_Contact_Type__c = null
+				AND (AccountId = :this.account.Id OR Account.Top_Parent__c = :this.account.Id)
+				AND (Name = :this.selectedContactSearchKey OR Email = :this.selectedContactSearchKey)
+				LIMIT 1];
+			this.selectedContact = listContact.isEmpty()? null: listContact[0];
+		}
 		this.showSearchedContact = (this.selectedContact!=null);
-		this.selectedMITAContactTypes = new list<String>();
 	}
 
 	/***
@@ -154,9 +211,9 @@ public without sharing class IA_ContactsCtrl {
 			if (this.selectedContact==null) return;
 		}
 
-		this.selectedMITAContactTypes = this.selectedContact.MITA_Contact_Type__c.split(';');
 		this.showModalContact = true;
 		this.alertModal = null;
+		resetMITAContactOptionWrappers();
 	}
 
 	/**
@@ -171,10 +228,10 @@ public without sharing class IA_ContactsCtrl {
 
 	public void saveContact(){
 		if(!this.hasEditContactsPermission || this.selectedContact==null) return;
-
 		try {
 			Boolean isAdded = String.isEmpty(this.selectedContact.MITA_Contact_Type__c);
-			this.selectedContact.MITA_Contact_Type__c = String.join(selectedMITAContactTypes,';');
+			this.selectedContact.MITA_Contact_Type__c = getMITAContactFieldValue();
+
 			Database.SaveResult result = Database.update(this.selectedContact);
 			if (result.isSuccess()) {
 				refreshPage();
@@ -238,16 +295,5 @@ public without sharing class IA_ContactsCtrl {
 	 */
 	public void resetAlertModal() {
 		this.alertModal = null;
-	}
-
-	/**
-	 * Get the options for the MITA Contact Type field
-	 */
-	public list<SelectOption> getMITAContactTypesOptions() {
-		list<SelectOption> options = new list<SelectOption>();
-		for (String type: IA_util.LIST_MITA_CONTACTS) {
-			options.add(new SelectOption(type,type));
-		}
-		return options;
 	}
 }

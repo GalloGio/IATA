@@ -77,9 +77,11 @@
 			/** filter functions **/
 			openModalRequestAgreementsFilter = function() {
 				document.getElementById('modalRequestAgreementsFilter').style.display = '';
+				modalOnComplete('hidden');
 			}
 			closeModalRequestAgreementsFilter = function() {
 				document.getElementById('modalRequestAgreementsFilter').style.display = 'none';
+				modalOnComplete('auto');
 			}
 			// close modal agreement when clicking outside the popup
 			document.addEventListener('click', function(evt) {
@@ -236,7 +238,7 @@
 				<div id="modalRequestAgreementsFilterContent" class="IA-Modal IA-Modal-Filter modal-content">
 					<div class="modal-header">
 						<div class="row">
-							<span class="IA-TableTitle">Filter</span>&nbsp;
+							<span class="IA-TableTitle">{!$Label.CSP_Filter}</span>&nbsp;
 							<span class="IA-Close" onclick="closeModalRequestAgreementsFilter(); return false;"></span>
 						</div>
 					</div>
@@ -267,7 +269,6 @@
 					<!-- /Request Agreements Filter body -->
 					<div class="modal-footer">
 						<div class="IA-button-box row">
-							<button type="button" class="IA-button-link" onclick="clearRequestModalFilter(); return false;">{!$Label.CSP_RemoveAllFilters}</button>
 							<button type="button" class="IA-button-white" onclick="clearRequestModalFilter(); return false;">{!$Label.CSP_RemoveAllFilters}</button>
 							<button type="button" class="IA-button" onclick="applyRequestAgreementsFilter(); return false;">{!$Label.CSP_Apply}</button>
 						</div>

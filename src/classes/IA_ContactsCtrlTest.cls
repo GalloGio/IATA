@@ -40,7 +40,6 @@ public class IA_ContactsCtrlTest {
 		ctrl.resetAlertModal();
 		ctrl.account = airline;
 		ctrl.hasEditContactsPermission = true;
-		ctrl.getMITAContactTypesOptions();
 
 		System.assert(ctrl.contactRows!=null);
 		System.assertEquals(0,ctrl.contactRows.size());
@@ -64,9 +63,8 @@ public class IA_ContactsCtrlTest {
 		System.assertEquals(null,ctrl.alertModal);
 
 		// get serachable contacts
-		System.assertEquals(2, ctrl.searchableContactOptions.size());
+		System.assertEquals(1, ctrl.searchableContactOptions.size());
 		System.assertEquals(contact.Name, ctrl.searchableContactOptions[0]);
-		System.assertEquals(contact.Email, ctrl.searchableContactOptions[1]);
 
 		//search a contact
 		ctrl.selectedContactSearchKey = contact.Name;

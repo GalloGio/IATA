@@ -30,9 +30,11 @@
 			/** filter functions **/
 			openModalAllAgreementsFilter = function() {
 				document.getElementById('modalAllAgreementsFilter').style.display = '';
+				modalOnComplete('hidden');
 			}
 			closeModalAllAgreementsFilter = function() {
 				document.getElementById('modalAllAgreementsFilter').style.display = 'none';
+				modalOnComplete('auto');
 			}
 			// get all input filters to fitler the All agreements table
 			applyAllAgreementsFilter = function() {
@@ -77,7 +79,14 @@
 			downloadAllAgreementsCSV = function() {
 				download(getXtable().exportcsv(),'agreements.csv');
 			}
-
+			// close modal agreement when clicking outside the popup
+			document.addEventListener('click', function(evt) {
+				let modalFilter = document.getElementById('modalAllAgreementsFilterContent');
+				if (modalFilter && !modalFilter.contains(evt.target)) {
+					closeModalAllAgreementsFilter();
+				}
+				if (evt.target.id === "AllAgreementsFilterButton") openModalAllAgreementsFilter();
+			});
 			initXtable();
 		});
 	</script>
@@ -95,7 +104,7 @@
 						XLS
 						<span class="IA-download"></span>
 					</span>
-					<button type="button" id="AllAgreementsFilterButton" class="IA-button IA-button-faded IA-button-filter" style="margin-left: 26px;" onclick="openModalAllAgreementsFilter(); return false;">Filter</button>
+					<button type="button" id="AllAgreementsFilterButton" class="IA-button IA-button-faded IA-button-filter" style="margin-left: 26px;" onclick="openModalAllAgreementsFilter(); return false;">{!$Label.CSP_Filter}</button>
 					<button type="button" class="IA-button" style="margin-left: 17px;" onclick="goToNewAgreements(); return false;">{!$Label.IA_New_Agreement}</button>
 				</div>
 			</div>
@@ -136,7 +145,7 @@
 								<th exportable="true" sortable="true">{!$Label.ISSP_Airline}</th>
 								<th exportable="true" sortable="true">{!$Label.IA_Agreement}</th>
 								<th exportable="true" sortable="true">{!$Label.ISSP_Agreement_type}</th>
-								<th exportable="true" class="hidden"></th>
+								<th exportable="true" class="hidden">{!$Label.Status}</th>
 								<th sortable="true">{!$Label.Status}</th>
 							</tr>
 						</thead>
@@ -157,7 +166,7 @@
 										{!allAgreementRow.agreementType}
 									</td>
 									<td class="hidden" exportable="true">
-										{!allAgreementRow.agreementStatus}
+										{!allAgreementRow.agreementStatusLabel}
 									</td>
 									<td>
 										<div class="IA-TableOutputInfo IA-{!SUBSTITUTE(allAgreementRow.agreementStatus,' ','_')}">{!allAgreementRow.agreementStatusLabel}</div>

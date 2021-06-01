@@ -48,6 +48,10 @@ public without sharing class IA_DetailController {
 
 		Database.SaveResult result = Database.update(this.selectedAgreement);
 		this.showSuccessWithdrawn = result.isSuccess();
+		if (this.showSuccessWithdrawn) {
+			this.agreementDetail.agreementStatus = IA_util.STATUS_PENDING_WITHDRAWAL;
+			this.agreementDetail.agreementCancellationDate = IA_util.dateformat(this.selectedAgreement.Cancellation_date__c);
+		}
 	}
 
 	/**
@@ -55,25 +59,27 @@ public without sharing class IA_DetailController {
 	 */
 	public AgreementDetail agreementDetail{
 		get{
-			String agreementType = this.selectedAgreement.Agreement_type__c;
-			// if it's a one way agreement and the other airline is in first place find the oposite agreement name
-			if (this.selectedAgreement.Airline_1__c == this.otherAirline.Id && IA_util.MAP_ONE_WAY_TYPES.containsKey(agreementType)) {
-				agreementType = IA_util.MAP_ONE_WAY_TYPES.get(agreementType);
+			if (agreementDetail==null) {
+				String agreementType = this.selectedAgreement.Agreement_type__c;
+				// if it's a one way agreement and the other airline is in first place find the oposite agreement name
+				if (this.selectedAgreement.Airline_1__c == this.otherAirline.Id && IA_util.MAP_ONE_WAY_TYPES.containsKey(agreementType)) {
+					agreementType = IA_util.MAP_ONE_WAY_TYPES.get(agreementType);
+				}
+				agreementDetail = new AgreementDetail();
+				agreementDetail.agreementId = this.selectedAgreement.id;
+				agreementDetail.otherAirlineDesignator = this.otherAirline.Airline_designator__c;
+				agreementDetail.otherAirlineIataCode = this.otherAirline.IATACode__c;
+				agreementDetail.otherAirlinePrefix = this.otherAirline.Airline_Prefix__c;
+				agreementDetail.otherAirlineName = this.otherAirline.Name;
+				agreementDetail.otherAirlineLogo = this.otherAirline.Company_Logo__c;
+				agreementDetail.agreementType = IA_util.MAP_AGREEMENT_LABELS.get(agreementType);
+				agreementDetail.agreementName = this.selectedAgreement.MITAorBIETA__c;
+				agreementDetail.agreementStatus = this.selectedAgreement.Status__c;
+				agreementDetail.agreementEffectiveDate = IA_util.dateformat(this.selectedAgreement.Effective_date__c);
+				agreementDetail.agreementCancellationDate = IA_util.dateformat(this.selectedAgreement.Cancellation_date__c);
+				agreementDetail.minWithdrawDate = DateTime.now().addDays(getDaysForWithdrawal()).format('yyyy-MM-dd');
 			}
-			AgreementDetail row = new AgreementDetail();
-			row.agreementId = this.selectedAgreement.id;
-			row.otherAirlineDesignator = this.otherAirline.Airline_designator__c;
-			row.otherAirlineIataCode = this.otherAirline.IATACode__c;
-			row.otherAirlinePrefix = this.otherAirline.Airline_Prefix__c;
-			row.otherAirlineName = this.otherAirline.Name;
-			row.otherAirlineLogo = this.otherAirline.Company_Logo__c;
-			row.agreementType = IA_util.MAP_AGREEMENT_LABELS.get(agreementType);
-			row.agreementName = this.selectedAgreement.MITAorBIETA__c;
-			row.agreementStatus = this.selectedAgreement.Status__c;
-			row.agreementEffectiveDate = IA_util.dateformat(this.selectedAgreement.Effective_date__c);
-			row.agreementCancellationDate = IA_util.dateformat(this.selectedAgreement.Cancellation_date__c);
-			row.minWithdrawDate = DateTime.now().addDays(getDaysForWithdrawal()).format('yyyy-MM-dd');
-			return row;
+			return agreementDetail;
 		}
 		private set;
 	}

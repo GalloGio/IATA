@@ -101,7 +101,7 @@
 		}
 
 		const modalOnComplete = function(overflow) {
-			document.body.style.overflow = "";
+			document.body.style.overflow = overflow;
 		};
 
 		const onChangeNotification = function(obj) {
