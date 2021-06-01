@@ -196,15 +196,6 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>Deleting_IS_date_post_30</fullName>
-        <description>This rule will delete the IS received date on Contact object after 30 days</description>
-        <field>Instant_Survey_Last_feedback_received__c</field>
-        <name>Deleting IS date post 30</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Null</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>IFAP_Enable_portal_self_registration</fullName>
         <field>CanAllowPortalSelfReg</field>
         <literalValue>1</literalValue>
