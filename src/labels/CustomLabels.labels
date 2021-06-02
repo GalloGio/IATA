@@ -4762,6 +4762,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <shortDescription>Emergency reason</shortDescription>
         <value>Suspicion of fraudulent activity</value>
     </labels>
+	<labels>
+        <fullName>CSP_Emergency_Selected_Reason5</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Emergency reason</shortDescription>
+        <value>Re-booking of your IATA Training exam (Distance Learning)</value>
+    </labels>
     <labels>
         <fullName>CSP_Emergency_Tooltip</fullName>
         <categories>CS Portal</categories>
