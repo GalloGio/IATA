@@ -3485,6 +3485,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Emergency_Selected_Reason4</name>
     </customLabels>
     <customLabels>
+        <label>IATA 교육 시험  재예약 (원격 학습)</label>
+        <name>CSP_Emergency_Selected_Reason5</name>
+    </customLabels>
+    <customLabels>
         <label>사기 , 발권, 재정 관련 사례가 아닌 경우, 긴급 채널을 통한 지원을 요청하지 마십시오. </label>
         <name>CSP_Emergency_Tooltip</name>
     </customLabels>

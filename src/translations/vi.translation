@@ -3485,6 +3485,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Emergency_Selected_Reason4</name>
     </customLabels>
     <customLabels>
+        <label>Đăng ký lại kỳ thi cho khóa Đào tạo của IATA (Đào tạo từ xa)</label>
+        <name>CSP_Emergency_Selected_Reason5</name>
+    </customLabels>
+    <customLabels>
         <label>Vui lòng không yêu cầu hỗ trợ khẩn cấp, trừ khi đó là vấn đề về gian lận, xuất vé hoặc vấn đề tài chính. </label>
         <name>CSP_Emergency_Tooltip</name>
     </customLabels>
