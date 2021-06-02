@@ -131,7 +131,6 @@ private class CaseProcessTypeHelperTest {
 		AMS_OSCAR__c oscar = [SELECT Id, Accreditation_Process_Type__c, AMS_Online_Accreditation__r.SAAM_Case__c  FROM AMS_OSCAR__c LIMIT 1];
 		delete oscar;
 
-		cse.Id = cse.Id;
 		cse.Reason1__c = 'FoP Management';
 		cse.Status = 'Closed';
 		update cse;
