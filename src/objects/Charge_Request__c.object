@@ -2190,7 +2190,6 @@ Treasury Dashboard Set-up Fee (800964) : 3500</inlineHelpText>
                 <controllingFieldValue>BSPFEE_ADMIN</controllingFieldValue>
                 <controllingFieldValue>BSPFEE_RPACT</controllingFieldValue>
                 <controllingFieldValue>BSPFEE_TRAIN</controllingFieldValue>
-                <controllingFieldValue>BSPLNK_MSG</controllingFieldValue>
                 <controllingFieldValue>BSPFEE_LEGAL</controllingFieldValue>
                 <controllingFieldValue>VATTAX_CHARG</controllingFieldValue>
                 <controllingFieldValue>AIRSBL_CAIR</controllingFieldValue>

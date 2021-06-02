@@ -3165,7 +3165,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>CSP_Email_Controller</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>CSP_Email_ControllerTest</apexClass>
