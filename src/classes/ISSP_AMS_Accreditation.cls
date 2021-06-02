@@ -1758,6 +1758,9 @@ public without sharing class ISSP_AMS_Accreditation {
 	}
 
 	public Boolean getCanChangeAccreditationType() {
+		if(isChangeOfAccreditationType){
+			return true;
+		}
 		return !((getContactAccountAEsChilds() > 0 && newForm.Scope_of_Change__c != HO_ALL_BRANCHES) || (newForm.Scope_of_Change__c != HO_ALL_BRANCHES && newForm.Scope_of_Change__c != HO_ONLY));
 	}
 
