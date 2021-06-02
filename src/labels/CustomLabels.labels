@@ -20975,14 +20975,14 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Associate entities of a country change to Golite</shortDescription>
-        <value>Associate entities of a Country</value>
+        <value>Associate entities of a country change to Golite</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Associate_entities_of_a_country_change_to_Gostandard</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP AMS Associate entities of a country change to Gostandard</shortDescription>
-        <value>Associate entities of a Country</value>
+        <value>Associate entities of a country change to Gostandard</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Authorised_Sig</fullName>
