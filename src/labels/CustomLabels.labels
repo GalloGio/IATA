@@ -1326,7 +1326,7 @@ Please issue a Credit Note in order to refund the change fee.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ANG_ISSP_ChangeContactHierarchyError</shortDescription>
-        <value>Please deny this contact&apos;s access to the IATA EasyPay Portal Service before moving it to another Agency hierarchy.</value>
+        <value>This contact has access to a Portal Service for which Contact relocation under a different Account is restricted. This operation cannot be saved.</value>
     </labels>
     <labels>
         <fullName>ANG_ISSP_Change_IEP_Status_InProgress_To_Open_Html_Mail_line1</fullName>

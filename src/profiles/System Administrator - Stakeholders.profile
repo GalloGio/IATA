@@ -72847,12 +72847,13 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Agency_Authorization__c.BSPLink</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>false</default>
+        <default>true</default>
+        <personAccountDefault>true</personAccountDefault>
         <recordType>Agency_Authorization__c.FormOfPayment</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
