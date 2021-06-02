@@ -3485,6 +3485,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Emergency_Selected_Reason4</name>
     </customLabels>
     <customLabels>
+        <label><!-- Emergency reason --></label>
+        <name>CSP_Emergency_Selected_Reason5</name>
+    </customLabels>
+    <customLabels>
         <label>不正発券や請求額の相違などではない場合は緊急サポートの要請はご遠慮ください</label>
         <name>CSP_Emergency_Tooltip</name>
     </customLabels>
