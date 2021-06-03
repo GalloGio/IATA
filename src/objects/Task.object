@@ -2015,7 +2015,7 @@
         <errorConditionFormula>AND(
   NOT(CONTAINS($CustomMetadata.GVR__mdt.Task_Valid_Subjects.Value__c, Subject)),
   NOT(CONTAINS($CustomMetadata.GVR__mdt.Task_Valid_Subjects2.Value__c, Subject)),
-  CONTAINS($CustomMetadata.GVR__mdt.Task_Valid_Recordtypes.Value__c,$User.Profile_Name__c)
+  CONTAINS($CustomMetadata.GVR__mdt.Task_Valid_Profiles.Value__c,$User.Profile_Name__c)
 )</errorConditionFormula>
         <errorDisplayField>Subject</errorDisplayField>
         <errorMessage>Please, select one of the valid subjects in the button on the right</errorMessage>
