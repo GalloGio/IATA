@@ -3485,6 +3485,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Emergency_Selected_Reason4</name>
     </customLabels>
     <customLabels>
+        <label><!-- Emergency reason --></label>
+        <name>CSP_Emergency_Selected_Reason5</name>
+    </customLabels>
+    <customLabels>
         <label>Por favor, não exija apoio de emergência a menos que se trate de fraude, emissão de bilhetes ou questões financeiras</label>
         <name>CSP_Emergency_Tooltip</name>
     </customLabels>

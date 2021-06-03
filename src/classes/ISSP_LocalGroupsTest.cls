@@ -49,6 +49,7 @@ public class ISSP_LocalGroupsTest {
 			Contact contact = ISSP_ObjectFactory.createNewContact();
 			contact.AccountId = account.Id;
 			insert contact;
+			Test.startTest();
 			update contact;
 
 			list<LocalGovernance__c> listLocalGroups = new list<LocalGovernance__c>();
@@ -76,6 +77,7 @@ public class ISSP_LocalGroupsTest {
 			}
 			insert listLocalGroups;
 			insert listContacts;
+			Test.stopTest();
 
 			//list<Participant__c> listParticipant = new list<Participant__c>();
 			for (Integer i=0; i<listLocalGroups.size(); i++) {
@@ -90,7 +92,6 @@ public class ISSP_LocalGroupsTest {
 			insert listParticipant;
 		}
 
-		Test.startTest();
 		System.runAs(testUser){
 			ISSP_LocalGroups controller = new ISSP_LocalGroups();
 			System.assertEquals(listParticipant.size(),controller.listWrapper.size());
@@ -98,7 +99,6 @@ public class ISSP_LocalGroupsTest {
 			controller.init();
 			controller.getCSVHeader();
 		}
-		Test.stopTest();
 	}
 
 	static testMethod void testController_testHierarchy() {
