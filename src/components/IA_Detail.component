@@ -4,7 +4,7 @@
 	<apex:attribute name="withdrawPermission" description="if this permission is enabled the withdraw agreement section is visible" type="Boolean" required="true" assignTo="{!hasWithdrawPermission}"/>
 	<apex:attribute name="closefunction" description="javascript string to be used in this component to close itself" type="String" required="true"/>
 
-	<apex:actionFunction name="withdrawAgreement" action="{!withdrawAgreement}" rerender="AgreementDetailsSection" oncomplete="modalOnComplete('auto');" status="loadingStatus"/>
+	<apex:actionFunction name="withdrawAgreement" action="{!withdrawAgreement}" rerender="AgreementDetailsSection" oncomplete="modalOnComplete('hidden');" status="loadingStatus"/>
 
 	<script>
 		ready(function() {
@@ -31,6 +31,8 @@
 				let modalDetail = document.getElementById('modalAgreementDetailContent');
 				if (modalDetail && !modalDetail.contains(evt.target)) {
 					closeThisModal();
+				} else {
+					modalOnComplete('hidden');
 				}
 			});
 		});
