@@ -20,7 +20,7 @@ public with sharing class ANG_PCIComplianceRenewalBatchTest {
 			Status__c= AMS_Utils.ACC_S9_APPROVED,
 			RecordTypeId= AMS_Utils.RECTYPE_IATAAGENCY,
 			Is_PCI_compliant__c = 'Yes',
-			Location_Type__c = AMS_Utils.HE,
+			Location_Type__c = AMS_Utils.HO,
 			ANG_PCI_compliance_expiry_date__c = Date.today().addDays(90)
 		);
 
@@ -66,7 +66,7 @@ public with sharing class ANG_PCIComplianceRenewalBatchTest {
 			Status__c= AMS_Utils.ACC_S9_APPROVED,
 			RecordTypeId= AMS_Utils.RECTYPE_IATAAGENCY,
 			Is_PCI_compliant__c = 'Yes',
-			Location_Type__c = AMS_Utils.HE,
+			Location_Type__c = AMS_Utils.HO,
 			ANG_PCI_compliance_expiry_date__c = Date.today().addDays(90)
 		);
 

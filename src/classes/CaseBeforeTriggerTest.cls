@@ -1495,6 +1495,7 @@ private class CaseBeforeTriggerTest {
 												Subject = 'TestCase Sidra Small Amount ' + c,
 												Origin = 'Web',
 												RecordTypeId = SidraPcaseRecordTypeID,
+												IRR_Withdrawal_Reason__c = 'IATA Charges',
 												Description = 'description ' + c++,
 												Billing_Amount__c = 20000,
 												Short_Payment_Amount__c = 50,

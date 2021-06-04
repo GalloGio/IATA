@@ -19191,9 +19191,9 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>ANG_RHC_Information__c.ANG_RHC_Amount_Equals_FS__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -31636,7 +31636,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Case.SIDRA_Exclude_from_report_exceptions__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -32961,9 +32961,9 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Charge_Request__c.SAP_ID_8digit__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -53277,6 +53277,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Portal_Applications__c.ANG_Country_Coverage_2__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Portal_Applications__c.ANG_Country_Coverage__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -62566,6 +62571,22 @@
         <recordType>Case.ACCA_Bug_Fix</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>CaseClose-ACCA Bug Fix Close</layout>
+        <recordType>Case.CNS_Collection_Process</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CaseClose-ACCA Bug Fix Close</layout>
+        <recordType>Case.GDPR_Request</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CaseClose-ACCA Bug Fix Close</layout>
+        <recordType>Case.NDC_Management</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CaseClose-ACCA Bug Fix Close</layout>
+        <recordType>Case.TIDS</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>CaseClose-ACCA Close Case - Extended</layout>
         <recordType>Case.CS_Process_IDFS_ISS</recordType>
     </layoutAssignments>
@@ -69202,6 +69223,7 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
+        <personAccountDefault>true</personAccountDefault>
         <recordType>ANG_RHC_Information__c.RHC_Information</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -69799,6 +69821,7 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
+        <personAccountDefault>true</personAccountDefault>
         <recordType>Case.CasesEurope</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>

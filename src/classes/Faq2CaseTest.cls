@@ -753,6 +753,7 @@ public class Faq2CaseTest {
 		  Case newCase = controller.newCase;
 		  newCase.IFAP_Country_ISO__c ='t1';
 		  newCase.Subject = 'test';
+		  newCase.CaseArea__c = 'Accreditation';
 		  newCase.Description = 'test';
 		  controller.topic = '0';
 		  controller.subtopic = 'CGO_Bank_Guarantees__c';
@@ -817,6 +818,7 @@ public class Faq2CaseTest {
 			Case newCase = controller.newCase;
 			newCase.IFAP_Country_ISO__c ='t1';
 			newCase.Subject = 'test';
+			newCase.CaseArea__c = 'Accreditation';
 			newCase.Description = 'test';
 			controller.topic = '0';
 			controller.subtopic = 'CGO_Bank_Guarantees__c';
