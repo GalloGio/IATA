@@ -5,7 +5,15 @@ public without sharing class IA_DetailController {
 	public static final String HISTORY_CANCELLATION_FIELDNAME = 'Cancellation_date__c';
 	public static final String INTERNAL_USERNAME = 'IATA';
 
-	public MITA_Agreement__c selectedAgreement {get;set;}
+	public MITA_Agreement__c selectedAgreement {
+		get;
+		set {
+			if ( selectedAgreement != value ) {
+				selectedAgreement = value;
+				this.agreementDetail = null;
+			}
+		}
+	}
 	public Account otherAirline {get;set;}
 	public Boolean hasWithdrawPermission {get;set;}
 
