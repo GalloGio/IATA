@@ -2013,8 +2013,8 @@
         <active>true</active>
         <description>Only the values in the subject picklist are valid</description>
         <errorConditionFormula>AND(
-  NOT(CONTAINS($CustomMetadata.GVR__mdt.Task_Valid_Subjects.Value__c, Subject)),
-  NOT(CONTAINS($CustomMetadata.GVR__mdt.Task_Valid_Subjects2.Value__c, Subject)),
+  NOT(CONTAINS($CustomMetadata.GVR__mdt.Task_Valid_Subjects.Value__c, &apos;&quot;&apos; + Subject + &apos;&quot;&apos;)),
+  NOT(CONTAINS($CustomMetadata.GVR__mdt.Task_Valid_Subjects2.Value__c, &apos;&quot;&apos; + Subject + &apos;&quot;&apos;)),
   CONTAINS($CustomMetadata.GVR__mdt.Task_Valid_Profiles.Value__c,$User.Profile_Name__c)
 )</errorConditionFormula>
         <errorDisplayField>Subject</errorDisplayField>

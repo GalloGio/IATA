@@ -4,6 +4,6 @@
     <protected>false</protected>
     <values>
         <field>Value__c</field>
-        <value xsi:type="xsd:string">Preparation of product information,Presentation preparation,Send information,Send letter,Update application,Voice Mail,R&amp;S reinstatement,Call - Wrong Number - No Line</value>
+        <value xsi:type="xsd:string">&quot;Preparation of product information&quot;,&quot;Presentation preparation&quot;,&quot;Send information&quot;,&quot;Send letter&quot;,&quot;Update application&quot;,&quot;Voice Mail&quot;,&quot;R&amp;S reinstatement&quot;,&quot;Call - Wrong Number - No Line&quot;,&quot;Post sales follow-up&quot;</value>
     </values>
 </CustomMetadata>
