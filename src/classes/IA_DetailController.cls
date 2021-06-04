@@ -11,6 +11,7 @@ public without sharing class IA_DetailController {
 			if ( selectedAgreement != value ) {
 				selectedAgreement = value;
 				this.agreementDetail = null;
+				this.showSuccessWithdrawn = false;
 			}
 		}
 	}
