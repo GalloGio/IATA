@@ -3487,6 +3487,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Emergency_Selected_Reason4</name>
     </customLabels>
     <customLabels>
+        <label>Réinscription à l'examen de formation IATA (formation à distance)</label>
+        <name>CSP_Emergency_Selected_Reason5</name>
+    </customLabels>
+    <customLabels>
         <label>N&apos;exigez pas d&apos;aide d&apos;urgence, sauf en cas de fraude, de billetterie ou de problèmes financiers</label>
         <name>CSP_Emergency_Tooltip</name>
     </customLabels>

@@ -3482,6 +3482,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Emergency_Selected_Reason4</name>
     </customLabels>
     <customLabels>
+        <label>إعادة حجز امتحان IATA التدريبي (التعلم عن بعد)</label>
+        <name>CSP_Emergency_Selected_Reason5</name>
+    </customLabels>
+    <customLabels>
         <label>من فضلك لا تطلب الدعم في حالات الطوارئ إلا إذا كان الأمر يتعلق بالاحتيال أو إصدار التذاكر أو الأمور المالية</label>
         <name>CSP_Emergency_Tooltip</name>
     </customLabels>
