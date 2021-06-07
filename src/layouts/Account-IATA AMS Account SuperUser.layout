@@ -970,6 +970,7 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Operation__c</fields>
         <relatedList>AMS_Agency_Operations__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -1049,6 +1050,21 @@
         <fields>Original_approval_date__c</fields>
         <relatedList>Accreditation__c.Related_Account__c</relatedList>
         <sortField>CREATED_DATE</sortField>
+        <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Amount_to_be_Paid__c</fields>
+        <fields>Balance__c</fields>
+        <fields>Billing_Amount__c</fields>
+        <fields>CURRENCY_ISO_CODE</fields>
+        <fields>Group__c</fields>
+        <fields>Paid__c</fields>
+        <fields>Period__c</fields>
+        <fields>Remittance_Date__c</fields>
+        <fields>LAST_UPDATE</fields>
+        <relatedList>Account_Statement__c.Account__c</relatedList>
+        <sortField>Remittance_Date__c</sortField>
         <sortOrder>Desc</sortOrder>
     </relatedLists>
     <relatedLists>

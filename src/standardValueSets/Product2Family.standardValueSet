@@ -232,6 +232,11 @@
         <label>Parking</label>
     </standardValue>
     <standardValue>
+        <fullName>PASS</fullName>
+        <default>false</default>
+        <label>PASS</label>
+    </standardValue>
+    <standardValue>
         <fullName>Passenger Services</fullName>
         <default>false</default>
         <label>Passenger Services</label>
@@ -350,5 +355,10 @@
         <fullName>Travel Pass</fullName>
         <default>false</default>
         <label>Travel Pass</label>
+    </standardValue>
+    <standardValue>
+        <fullName>TTBS</fullName>
+        <default>false</default>
+        <label>TTBS</label>
     </standardValue>
 </StandardValueSet>

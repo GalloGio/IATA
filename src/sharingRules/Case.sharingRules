@@ -208,6 +208,25 @@
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
+        <fullName>IATA_Pay_Technical_team</fullName>
+        <accessLevel>Read</accessLevel>
+        <description>share customer support cases with IATA Pay Technical team</description>
+        <label>IATA Pay Technical team</label>
+        <sharedTo>
+            <role>IATA_Pay_Support_Team</role>
+        </sharedTo>
+        <criteriaItems>
+            <field>RecordTypeId</field>
+            <operation>equals</operation>
+            <value>Cases - Asia &amp; Pacific,Cases - Africa &amp; Middle East,Cases - China &amp; North Asia,Cases - Americas,Cases - Europe</value>
+        </criteriaItems>
+        <criteriaItems>
+            <field>CaseArea__c</field>
+            <operation>equals</operation>
+            <value>IATA Pay</value>
+        </criteriaItems>
+    </sharingCriteriaRules>
+    <sharingCriteriaRules>
         <fullName>IDCardReadOnly</fullName>
         <accessLevel>Read</accessLevel>
         <label>IDCardReadOnly</label>

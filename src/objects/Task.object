@@ -247,6 +247,24 @@
         <label>Delegated Tasks</label>
     </listViews>
     <listViews>
+        <fullName>L3_TACT_Operations_Task</fullName>
+        <filterScope>Queue</filterScope>
+        <label>L3-TACT-Operations</label>
+        <queue>L3_TACT_Operations</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
+        <fullName>L3_TACT_ProductMgmt_Task</fullName>
+        <filterScope>Queue</filterScope>
+        <label>L3-TACT-ProductMgmt</label>
+        <queue>L3_TACT_ProductMgmt</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
         <fullName>Medaire_Approvals_Task</fullName>
         <filterScope>Queue</filterScope>
         <label>Medaire Approvals</label>

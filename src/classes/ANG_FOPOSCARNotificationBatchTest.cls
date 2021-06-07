@@ -57,6 +57,7 @@ private class ANG_FOPOSCARNotificationBatchTest {
 			Location_Class__c= AMS_Utils.LC_PASSENGER,
 			Status__c= AMS_Utils.ACC_S9_APPROVED,
 			RecordTypeId= AMS_Utils.RECTYPE_IATAAGENCY,
+			ANG_PCI_compliance_expiry_date__c = System.today(),
 			Is_PCI_compliant__c = null,
 			Location_Type__c = AMS_Utils.HO);
 
@@ -68,6 +69,7 @@ private class ANG_FOPOSCARNotificationBatchTest {
 			IATACode__c = '12345677',
 			status__c = Ams_Utils.ACC_S9_APPROVED,
 			IATA_ISO_Country__c = country.Id,
+			ANG_PCI_compliance_expiry_date__c = System.today(),
 			Location_Class__c = 'P',
 			Reason__c = 'Annual Revalidation - Name');
 
