@@ -521,12 +521,12 @@ public with sharing class CW_CapabilitiesUtilities {
 
 		Boolean isValidationWithoutCertification=false;
 		for(CW_Utilities.AsgmtGroupWrapper cert : (List<CW_Utilities.AsgmtGroupWrapper>)certifications){
+			if(!cert.validationProgram.toLowerCase().contains('iata')){
+				isValidationWithoutCertification=true;
+			}
 			if(CERTIFICATIONS_ALLOWED_USER.contains(cert.name)){
 				userHasPermissionToEdit=true;
 				break;
-			}
-			if(!cert.validationProgram.contains('IATA')){
-				isValidationWithoutCertification=true;
 			}
 		}
 		currentObject.put('isPermissionByDepartment',userHasPermissionToEdit);
