@@ -31,6 +31,7 @@ public class LVA_TranscriptControllerTest {
 										   RecordTypeId = recordTypeID,
 										   Status='Open',
 										   Origin='Chat',
+										   CaseArea__c = 'Accreditation',
 										   ContactId = con.Id));
 				}
 

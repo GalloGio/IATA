@@ -1,6 +1,7 @@
 public without sharing class ANG_AnualRevalCaseCreationController {
 
 	private static final String ANNUAL_REV_PROCESS = AMS_Utils.NGANNUALREVAL;
+	private static final String RECTYPE_OSCARCOMM = AMS_Utils.RECTYPE_OSCARCOMM;
 	private static final String MAJOR_CHANGES_PROCESS = AMS_Utils.NGCHANGES;
 	private static final String OWNERSHIP_CHG = AMS_Utils.ANG_OWNERSHIP;
 	private static final String MAJOR_SHAREHOLDING_CHG = AMS_Utils.ANG_MAJOR_SHAREHOLDING;
@@ -336,11 +337,11 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 	private String getOscarCasesSubquery() {
 		return '(SELECT Id, OSCAR__r.Process__c, OSCAR__r.ANG_Type_of_Change__c, OSCAR__r.Status__c, ClosedDate, CreatedDate ' + 
 		'FROM Cases ' +
-		'WHERE (OSCAR__r.Process__c = :ANNUAL_REV_PROCESS) ' +
+		'WHERE RecordTypeId = :RECTYPE_OSCARCOMM AND ((OSCAR__r.Process__c = :ANNUAL_REV_PROCESS) ' +
 		'	OR (OSCAR__r.Process__c = :MAJOR_CHANGES_PROCESS ' +
 		'		AND Oscar__r.ANG_Type_of_Change__c INCLUDES (:OWNERSHIP_CHG, :MAJOR_SHAREHOLDING_CHG, ' +
-		'			:HIERARCHY_CHG, :LOC_TYPE_DIFF_LEGAL_CHG, :LEGAL_NAME_CHG, :LEGAL_STATUS_CHG)) ' +
-		'ORDER BY OSCAR__r.Process__c, OSCAR__r.CreatedDate DESC) ';
+		'			:HIERARCHY_CHG, :LOC_TYPE_DIFF_LEGAL_CHG, :LEGAL_NAME_CHG, :LEGAL_STATUS_CHG))) ' +
+		'ORDER BY OSCAR__r.Process__c, OSCAR__r.CreatedDate DESC)';
 	}
 
 	private Boolean processAccountRelatedCases(Account acct) {
@@ -393,13 +394,14 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 		}
 
 		String queryAccount =
-			'SELECT Id, IATACode__c, Name, RecordType.Name, ' + 
+			'SELECT Id, IATACode__c, Name, RecordType.Name, Location_Class__c, ' + 
 			'   Location_Type__c, Status__c, IATA_ISO_Country__r.Region__c, IATA_ISO_Country__r.Name, Iso_State__r.name, Financial_Year_End__c, ' +
 			getOscarCasesSubquery() +
 			'FROM Account ' +
 			'WHERE RecordType.DeveloperName = \'IATA_Agency\' ' + 
 			'AND ANG_Accreditation_Model__c IN :selectedAccreditationsSet ' + 
 			'AND Status__c IN :TARGET_ACCOUNT_STATUS ' + 
+			'AND Location_Class__c != \'D\' ' + 
 			'AND Accreditation_date__c < LAST_N_MONTHS:6 ';
 
 		if (cashOrLiteAccreditationModelSelected) {

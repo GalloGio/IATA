@@ -1390,7 +1390,7 @@
 								</apex:commandLink>
 							</apex:column>
 							<apex:column >
-								<apex:commandLink onfocus="confirmContactDelete('{!agencycon.Id}', '{!agencycon.Name}', 'contact')" styleClass="glyphicon glyphicon-trash"/>
+								<apex:commandLink onfocus="confirmContactDelete('{!agencycon.Id}', '{!JSINHTMLENCODE(agencycon.Name)}', 'contact')" styleClass="glyphicon glyphicon-trash"/>
 							</apex:column>
 							<apex:column breakBefore="true" colspan="12" style="display:none; background-color:RGB(236, 246, 249)" styleClass="tog{!agencycon.Id}">
 								<div class="col-md-12">
@@ -1442,7 +1442,7 @@
 								</apex:commandLink>
 							</apex:column>
 							<apex:column >
-								<apex:commandLink onfocus="confirmContactDelete('{!agencycon.Id}', '{!agencycon.Name}', 'company')" styleClass="glyphicon glyphicon-trash" />
+								<apex:commandLink onfocus="confirmContactDelete('{!agencycon.Id}', '{!JSINHTMLENCODE(agencycon.Name)}', 'company')" styleClass="glyphicon glyphicon-trash" />
 							</apex:column>
 						</apex:pageBlockTable>
 

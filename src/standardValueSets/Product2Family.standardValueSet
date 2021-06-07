@@ -232,6 +232,11 @@
         <label>Parking</label>
     </standardValue>
     <standardValue>
+        <fullName>PASS</fullName>
+        <default>false</default>
+        <label>PASS</label>
+    </standardValue>
+    <standardValue>
         <fullName>Passenger Services</fullName>
         <default>false</default>
         <label>Passenger Services</label>
@@ -287,9 +292,9 @@
         <label>Strategic Partnerships</label>
     </standardValue>
     <standardValue>
-        <fullName>TACT</fullName>
+        <fullName>TACT Air Cargo Solutions</fullName>
         <default>false</default>
-        <label>TACT</label>
+        <label>TACT Air Cargo Solutions</label>
     </standardValue>
     <standardValue>
         <fullName>Taxes</fullName>
@@ -350,5 +355,10 @@
         <fullName>Travel Pass</fullName>
         <default>false</default>
         <label>Travel Pass</label>
+    </standardValue>
+    <standardValue>
+        <fullName>TTBS</fullName>
+        <default>false</default>
+        <label>TTBS</label>
     </standardValue>
 </StandardValueSet>

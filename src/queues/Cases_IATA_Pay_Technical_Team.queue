@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>false</doesSendEmailToMembers>
-    <email>noreply@iata.org</email>
+    <email>boa_iatapay_servicedesk@kpmg.es</email>
     <name>Cases - IATA Pay Technical Team</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>Cases_IATA_Pay_Technical_Team</publicGroup>
+        </publicGroups>
+    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

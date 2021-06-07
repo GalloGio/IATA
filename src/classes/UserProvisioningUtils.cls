@@ -20,7 +20,7 @@ public class UserProvisioningUtils {
 
 	public static final String PARAM_EXTERNAL_SYSTEM = 'ExternalSystem';
 
-	public static final set<string> AllowedExternalSystems = new set<string>{'IEP', 'GDI', 'PASS', 'FRED+'};
+	public static final set<string> AllowedExternalSystems = new set<string>{'IEP', 'GDI', 'PASS', 'FRED+', 'EFAPPS'};
 
 	private UserProvisioningRequest upr;
 	private NamedCredential namedCredential;

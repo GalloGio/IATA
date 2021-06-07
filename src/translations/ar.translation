@@ -3482,6 +3482,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Emergency_Selected_Reason4</name>
     </customLabels>
     <customLabels>
+        <label><!-- Emergency reason --></label>
+        <name>CSP_Emergency_Selected_Reason5</name>
+    </customLabels>
+    <customLabels>
         <label>من فضلك لا تطلب الدعم في حالات الطوارئ إلا إذا كان الأمر يتعلق بالاحتيال أو إصدار التذاكر أو الأمور المالية</label>
         <name>CSP_Emergency_Tooltip</name>
     </customLabels>
@@ -3686,7 +3690,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_IATAN_Register_Info</name>
     </customLabels>
     <customLabels>
-        <label>أطيب التحيات، &amp;lt;br/&amp;gt; مركز خدمة عملاء IATA</label>
+        <label>أطيب التحيات، &lt;br/&gt; مركز خدمة عملاء IATA</label>
         <name>CSP_IATA_CSC_Email_Greetings</name>
     </customLabels>
     <customLabels>
@@ -5506,6 +5510,30 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_selectReason</name>
     </customLabels>
     <customLabels>
+        <label>وأضاف كنت كمشارك في حالة</label>
+        <name>CS_Portal_Addittional_Recipients_Body</name>
+    </customLabels>
+    <customLabels>
+        <label>وأضاف أن لحالة - IATA بوابة العملاء</label>
+        <name>CS_Portal_Addittional_Recipients_Subject</name>
+    </customLabels>
+    <customLabels>
+        <label>للذهاب إلى المدخل لعرض تفاصيل كاملة والانخراط في البلاغ.</label>
+        <name>CS_Portal_Addittional_Recipients_URL_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CS Portal Annual Revalidation Countries PickList Value --></label>
+        <name>CS_Portal_Annual_Revalidation_Countries_PickList_Value</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CS Portal Annual Revalidation Download csv --></label>
+        <name>CS_Portal_Annual_Revalidation_Download_csv</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CS Portal Annual Revalidation Popup Title --></label>
+        <name>CS_Portal_Annual_Revalidation_Popup_Title</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Campaign already created --></label>
         <name>Campaign_already_created</name>
     </customLabels>
@@ -5558,8 +5586,8 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CaseValidation_Area</name>
     </customLabels>
     <customLabels>
-        <label><!-- CaseValidation - Area2 --></label>
-        <name>CaseValidation_Area2</name>
+        <label><!-- CaseValidation - Area in Case Global --></label>
+        <name>CaseValidation_Area_in_Case_Global</name>
     </customLabels>
     <customLabels>
         <label><!-- CaseValidation - InDepthArea --></label>
@@ -29888,6 +29916,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>icg_smart_facility_remote_validation_text3</name>
     </customLabels>
     <customLabels>
+        <label><!-- icg smart facility remote validation url --></label>
+        <name>icg_smart_facility_remote_validation_url</name>
+    </customLabels>
+    <customLabels>
         <label><!-- icg smart facility url --></label>
         <name>icg_smart_facility_url</name>
     </customLabels>
@@ -37203,6 +37235,19 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Contacts with TOP parent account info --></description>
+        <label><!-- Contacts with TOP parent account info --></label>
+        <name>Contacts_with_TOP_parent_account_info</name>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- Contacts --></label>
+            <name>Contacts</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Contacts with inactivated owners --></description>
         <label><!-- Contacts with inactivated owners --></label>
         <name>Contacts_with_inactivated_owners</name>
@@ -37626,7 +37671,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Financial Securities --></label>
         <name>Financial_Securities</name>
         <sections>
-            <label><!-- Financial Securities --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>Financial Securities</name>
         </sections>
     </reportTypes>
@@ -37679,7 +37724,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
             <name>EBC Email Exclusion Relations</name>
         </sections>
         <sections>
-            <label><!-- GDP Products - Accounts View --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>GDP Products - Accounts View</name>
         </sections>
     </reportTypes>
@@ -38156,6 +38201,23 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- KPI Values with Cases and Activity History --></description>
+        <label><!-- KPI Values with Cases and Activity History --></label>
+        <name>KPI_Values_with_Cases_and_Activity_History</name>
+        <sections>
+            <label><!-- Activities --></label>
+            <name>Activities</name>
+        </sections>
+        <sections>
+            <label><!-- Cases --></label>
+            <name>Cases</name>
+        </sections>
+        <sections>
+            <label><!-- KPI Values --></label>
+            <name>KPI Values</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- KPI value with cases and user role --></description>
         <label><!-- KPI value with cases and user role --></label>
         <name>KPI_value_with_cases_and_user_role</name>
@@ -38434,7 +38496,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
             <name>Campaign Members and Products</name>
         </sections>
         <sections>
-            <label><!-- Campaigns --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>Campaigns</name>
         </sections>
     </reportTypes>
@@ -38570,6 +38632,36 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- ONE source station admins --></description>
+        <label><!-- ONE source station admins --></label>
+        <name>ONE_source_station_admins</name>
+        <sections>
+            <label><!-- Account Roles --></label>
+            <name>Account Roles</name>
+        </sections>
+        <sections>
+            <label><!-- OS contact role details --></label>
+            <name>OS contact role details</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- ONE source station contacts --></description>
+        <label><!-- ONE source station contacts --></label>
+        <name>ONE_source_station_contacts</name>
+        <sections>
+            <label><!-- Account Roles --></label>
+            <name>Account Roles</name>
+        </sections>
+        <sections>
+            <label>حقوق تطبيقات البوابة</label>
+            <name>ONE Source Contact Role Details</name>
+        </sections>
+        <sections>
+            <label><!-- OS Stations --></label>
+            <name>OS Stations</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- OSCARs with Cases --></description>
         <label><!-- OSCARs with Cases --></label>
         <name>OSCARs_with_Cases</name>
@@ -38684,7 +38776,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
             <name>Account Role Relationships (From)</name>
         </sections>
         <sections>
-            <label><!-- Account Roles --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>Account Roles</name>
         </sections>
         <sections>
@@ -38697,7 +38789,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Opportunities w and w/o activities --></label>
         <name>Opportunities_w_and_w_o_activities</name>
         <sections>
-            <label><!-- Activities --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>Activities</name>
         </sections>
         <sections>
@@ -38710,7 +38802,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Opportunities with Accounts and Contracts --></label>
         <name>Opportunities_with_Accounts_and_Contracts</name>
         <sections>
-            <label><!-- Accounts --></label>
+            <label>التقارير</label>
             <name>Accounts</name>
         </sections>
         <sections>
@@ -38800,7 +38892,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
             <name>Order Products</name>
         </sections>
         <sections>
-            <label><!-- Orders --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>Orders</name>
         </sections>
     </reportTypes>
