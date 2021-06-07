@@ -3720,6 +3720,11 @@
                     <label>MER Products</label>
                 </value>
                 <value>
+                    <fullName>PASS</fullName>
+                    <default>false</default>
+                    <label>PASS</label>
+                </value>
+                <value>
                     <fullName>Pax IS</fullName>
                     <default>false</default>
                     <label>Pax IS</label>
@@ -4253,6 +4258,11 @@
                     <default>false</default>
                     <label>Regional Sales</label>
                 </value>
+                <value>
+                    <fullName>CSC Sales Opportunities</fullName>
+                    <default>false</default>
+                    <label>CSC Sales Opportunities</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -4427,6 +4437,33 @@
             <value>Opportunity.RCRM_Opportunity</value>
         </filters>
         <label>All Opportunities</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>CSC_Sales_Opportunities</fullName>
+        <columns>OPPORTUNITY.NAME</columns>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>OPPORTUNITY.AMOUNT</columns>
+        <columns>OPPORTUNITY.CLOSE_DATE</columns>
+        <columns>OPPORTUNITY.STAGE_NAME</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>OPPORTUNITY.RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Opportunity.FieldSales</value>
+        </filters>
+        <filters>
+            <field>OPPORTUNITY.LEAD_SOURCE</field>
+            <operation>equals</operation>
+            <value>CSC Sales</value>
+        </filters>
+        <filters>
+            <field>OPPORTUNITY.NAME</field>
+            <operation>contains</operation>
+            <value>AvMP,WATS,PSCM</value>
+        </filters>
+        <label>CSC Sales Opportunities</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -6351,6 +6388,10 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>CSC Sales</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Cold Call</fullName>
                 <default>false</default>
             </values>
@@ -6524,6 +6565,10 @@
             </values>
             <values>
                 <fullName>MER Products</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PASS</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6715,6 +6760,10 @@
         </picklistValues>
         <picklistValues>
             <picklist>Sales_Team__c</picklist>
+            <values>
+                <fullName>CSC Sales Opportunities</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Events %28Worldtek%29</fullName>
                 <default>false</default>
@@ -8468,6 +8517,10 @@
             </values>
             <values>
                 <fullName>Market IS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PASS</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -10377,6 +10430,10 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>PASS</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>SFO Products</fullName>
                 <default>false</default>
             </values>
@@ -12206,6 +12263,10 @@
             </values>
             <values>
                 <fullName>Market IS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PASS</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -14137,6 +14198,10 @@
             </values>
             <values>
                 <fullName>MER Products</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PASS</fullName>
                 <default>false</default>
             </values>
             <values>

@@ -53264,6 +53264,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Portal_Applications__c.ANG_Country_Coverage_2__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Portal_Applications__c.ANG_Country_Coverage__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -61079,6 +61084,10 @@
     <layoutAssignments>
         <layout>Account_Statement_Transaction__c-Account Statement Transaction Layout</layout>
         <recordType>Account_Statement_Transaction__c.ICE_Balance</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-IATA Training</layout>
+        <recordType>Case.IATA_Training</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case_Item__c-Case Item Layout</layout>

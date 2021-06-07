@@ -32952,9 +32952,9 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Charge_Request__c.SAP_ID_8digit__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -53268,6 +53268,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Portal_Applications__c.ANG_Country_Coverage_2__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Portal_Applications__c.ANG_Country_Coverage__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -62322,10 +62327,6 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-Case Layout</layout>
-        <recordType>Case.IATA_Training</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Case-Case Layout</layout>
         <recordType>Case.ISS_Portal_New_Case_RT</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -62403,6 +62404,10 @@
     <layoutAssignments>
         <layout>Case-IATA Financial Security Monitoring</layout>
         <recordType>Case.IATA_Financial_Security_Monitoring</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-IATA Training</layout>
+        <recordType>Case.IATA_Training</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-ID Card Application</layout>
