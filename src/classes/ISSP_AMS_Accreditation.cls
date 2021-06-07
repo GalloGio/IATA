@@ -644,6 +644,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
 		if(isGEMulticountry != null && isGEMulticountry == 'true'){
 			this.isChangeOfAccreditationType = true;
+			newForm.Notify_Change_Accreditation_Type__c = true;
 		}
 
 		if(this.con.Account.location_type__c == 'GE' ){
@@ -1759,7 +1760,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
 	public Boolean getCanChangeAccreditationType() {
 		if(isChangeOfAccreditationType){
-			return true;
+			return false;
 		}
 		return !((getContactAccountAEsChilds() > 0 && newForm.Scope_of_Change__c != HO_ALL_BRANCHES) || (newForm.Scope_of_Change__c != HO_ALL_BRANCHES && newForm.Scope_of_Change__c != HO_ONLY));
 	}
@@ -3617,7 +3618,7 @@ public without sharing class ISSP_AMS_Accreditation {
 
 		String pageURL = '';
 		if(isChangeOfAccreditationType){
-			pageURL = '/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&step=4&isGEMulticountry=true' + commParam;
+			pageURL = '/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&step=1&isGEMulticountry=true' + commParam;
 		}else{
 			pageURL = '/ISSP_AMS_Accreditation?caseId=' + newCase.Id + '&step=1' + commParam;
 		}
