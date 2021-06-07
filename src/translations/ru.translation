@@ -3491,6 +3491,10 @@
         <name>CSP_Emergency_Selected_Reason4</name>
     </customLabels>
     <customLabels>
+        <label><!-- Emergency reason --></label>
+        <name>CSP_Emergency_Selected_Reason5</name>
+    </customLabels>
+    <customLabels>
         <label>Пожалуйста, не запрашивайте экстренной помощи, если речь не идет о мошенничестве, продаже билетов или финансовых вопросах.</label>
         <name>CSP_Emergency_Tooltip</name>
     </customLabels>

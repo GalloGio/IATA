@@ -685,7 +685,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>AMS_Batch_Progress_Bar_Controller</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>AMS_Batch_Progress_Bar_Controller_Test</apexClass>
@@ -53281,7 +53281,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Portal_Applications__c.ANG_Country_Coverage_2__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>

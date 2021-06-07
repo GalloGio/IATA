@@ -3482,6 +3482,10 @@ Daha fazla ayrıntı için, Müşteri Portalı&apos;nda &quot;Resolution 812&quo
         <name>CSP_Emergency_Selected_Reason4</name>
     </customLabels>
     <customLabels>
+        <label><!-- Emergency reason --></label>
+        <name>CSP_Emergency_Selected_Reason5</name>
+    </customLabels>
+    <customLabels>
         <label>Dolandırıcılık, önemli bilet işlemleri veya finansal konularla ilgili olmadığı sürece lütfen acil durum desteği talep etmeyin</label>
         <name>CSP_Emergency_Tooltip</name>
     </customLabels>

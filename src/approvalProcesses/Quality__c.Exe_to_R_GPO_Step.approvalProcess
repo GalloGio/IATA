@@ -25,6 +25,10 @@
         <submitter>rodriguezja@iata.org</submitter>
         <type>user</type>
     </allowedSubmitters>
+    <allowedSubmitters>
+        <submitter>wana@iata.org</submitter>
+        <type>user</type>
+    </allowedSubmitters>
     <approvalPageFields>
         <field>Name</field>
         <field>Owner</field>
