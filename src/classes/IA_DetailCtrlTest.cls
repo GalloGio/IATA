@@ -142,8 +142,9 @@ public class IA_DetailCtrlTest {
 
 		Id stdContactId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
 	
-		list<Contact> listContact = TestDataFactory_Contacts.createDefaultContact(airline2.Id,10);
+		list<Contact> listContact = TestDataFactory_Contacts.createDefaultContact(10);
 		for (Contact contact: listContact) {
+			contact.AccountId = airline2.Id;
 			contact.RecordtypeId = stdContactId;
 			contact.Status__c = 'Active';
 			contact.MITA_Contact_Type__c = IA_util.GENERIC_CONTACT;

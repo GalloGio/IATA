@@ -12,7 +12,8 @@ public class IA_HomeControllerTest {
 		airline1 = TestDataFactory_Accounts.createAirlines(1).get(0);
 		insert airline1;
 
-		portalcontact = TestDataFactory_Contacts.createDefaultContact(airline1.Id, 1).get(0);
+		portalcontact = TestDataFactory_Contacts.createDefaultContact(1).get(0);
+		portalcontact.AccountId = airline1.Id;
 		insert portalcontact;
 
 		portalUser = TestDataFactory_Users.createPortalUsers(new list<Contact>{portalcontact}).get(0);
