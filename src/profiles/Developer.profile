@@ -685,7 +685,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>AMS_Batch_Progress_Bar_Controller</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>AMS_Batch_Progress_Bar_Controller_Test</apexClass>
