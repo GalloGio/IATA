@@ -3483,6 +3483,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Emergency_Selected_Reason4</name>
     </customLabels>
     <customLabels>
+        <label><!-- Emergency reason --></label>
+        <name>CSP_Emergency_Selected_Reason5</name>
+    </customLabels>
+    <customLabels>
         <label>โปรดอย่าส่งคำร้องผ่านช่องทางฉุกเฉิน ยกเว้นแต่จะเกี่ยวกับการฉ้อโกงการออกตั๋วหรือปัญหาทางการเงิน</label>
         <name>CSP_Emergency_Tooltip</name>
     </customLabels>

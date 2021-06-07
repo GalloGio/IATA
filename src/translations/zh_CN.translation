@@ -3482,6 +3482,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Emergency_Selected_Reason4</name>
     </customLabels>
     <customLabels>
+        <label><!-- Emergency reason --></label>
+        <name>CSP_Emergency_Selected_Reason5</name>
+    </customLabels>
+    <customLabels>
         <label>除非是关于欺诈、票务或财务问题，否则请不要要求紧急支持。</label>
         <name>CSP_Emergency_Tooltip</name>
     </customLabels>

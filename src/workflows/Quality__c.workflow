@@ -2425,7 +2425,7 @@
     </rules>
     <rules>
         <fullName>Deadline for Approval Passed</fullName>
-        <active>true</active>
+        <active>false</active>
         <criteriaItems>
             <field>Quality__c.Deadline_for_Approval__c</field>
             <operation>notEqual</operation>
