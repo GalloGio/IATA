@@ -1684,6 +1684,10 @@ DEPRECATED ... UNIQUE IS SET TO FALSE TO ENABLE ACCOUNT ROLE RECORDS TO BE CREAT
                 <default>false</default>
             </values>
             <values>
+                <fullName>Lab Registry</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Local Industry Groups</fullName>
                 <default>false</default>
             </values>
