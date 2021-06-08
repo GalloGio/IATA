@@ -6685,6 +6685,330 @@ You can easily create a company account in two steps</value>
         <value>Personal Phone</value>
     </labels>
     <labels>
+        <fullName>CSP_LabReg_AdditionalCertInPlace</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_AdditionalCertInPlace</shortDescription>
+        <value>Do you have any additional certifications in place?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_CompleteDetails</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_CompleteDetails</shortDescription>
+        <value>Complete your laboratory details</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_CountryLabs</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_CountryLabs</shortDescription>
+        <value>Country Labs</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_Describe_SLA_Nature</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_Describe_SLA_Nature</shortDescription>
+        <value>Describe the nature of your SLA</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_DownloadTemplate</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_DownloadTemplate</shortDescription>
+        <value>Download template</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_Download_CSV</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_Download_CSV</shortDescription>
+        <value>Download the CSV template and complete&lt;br/&gt; the full details of your laboratories</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_Download_Instructions</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_Download_Instructions</shortDescription>
+        <value>Download Instructions</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_FormNotCompleted</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_FormNotCompleted</shortDescription>
+        <value>The form is not fully compiled. All answers will be lost.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_HowManyLabs</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_HowManyLabs</shortDescription>
+        <value>List the region/countries you are operating in/ your partner is operating in for COVID 19 testing. Indicate how many labs/partners you have per location indicated.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_How_Long_In_Business</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_How_Long_In_Business</shortDescription>
+        <value>How long have you been in the business?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_InitialQuestion</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_InitialQuestion</shortDescription>
+        <value>Please indicate your business model within the following categories:</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_National_Govern_Platform</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_National_Govern_Platform</shortDescription>
+        <value>Are your labs part of any national platform/endorsed by a government?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_Operating_Brand</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_Operating_Brand</shortDescription>
+        <value>Are you operating under your own brand or another brand name?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_OwnFacilities</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_OwnFacilities</shortDescription>
+        <value>Are they your own facilities or partner labs?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_SLA_InPlace</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_SLA_InPlace</shortDescription>
+        <value>Do you have SLAs in place with your partner labs?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_SplashScreen_Intro</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_SplashScreen_Intro</shortDescription>
+        <value>You will be led through a series of steps to gather some preliminary information regarding your company/lab before you can finalize your request to join the Lab Registry Service. Once submitted, these results will be reviewed by our Lab Engagement team, and in turn they will contact you to finalize the engagement process.
+
+These steps are approximated to take 5-10 minutes to complete.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_SplashScreen_Step1</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_SplashScreen_Step1</shortDescription>
+        <value>You will be requested to indicate your business model from a preset list. Based on the selection you made, you will be shown a set of questions personalized to your business model. This will allow us to better review and support you once you submit your answers. These questions will cover the nature of your business, your relationship with certain platforms, booking capabilites, certifications etc.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_SplashScreen_Step2</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_SplashScreen_Step2</shortDescription>
+        <value>This section will prompt you to indicate the locations in you which you are operating. This enables us to get an overall understanding of your region coverage before onboarding you to the network.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_SplashScreen_Step3</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_SplashScreen_Step3</shortDescription>
+        <value>You will be asked if you have any existing airline partners. If you have indicated that you have airline partners, then you will be able to select which airlines you are in partnership with.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_SplashScreen_Step4</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_SplashScreen_Step4</shortDescription>
+        <value>This final step will allow you to review the answers you have selected, and submit. 
+
+By submitting, you will receive a case number where through this case our engagement team will be in contact with you to finalize your joining of the lab registry network.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_Start</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_Start</shortDescription>
+        <value>Start</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_Step</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_Step</shortDescription>
+        <value>Step</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_Step_Locations</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_Step_Locations</shortDescription>
+        <value>Locations</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_TypeOfLab</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_TypeOfLab</shortDescription>
+        <value>Please indicate the nature of the lab you are operating</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_UploadCSVBtn</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_UploadCSVBtn</shortDescription>
+        <value>Upload the CSV</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_UploadCompleted</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_UploadCompleted</shortDescription>
+        <value>Thank you for uploading your labs. Our team will get in touch with you to confirm that your labs are part of the lab registry network</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_UploadDetails</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_UploadDetails</shortDescription>
+        <value>Upload your laboratories details</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_UploadFilledCSV</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_UploadFilledCSV</shortDescription>
+        <value>Upload the filled template with&lt;br/&gt;your laboratories details</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_UploadHere</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_UploadHere</shortDescription>
+        <value>You can upload the filled CSV template here.</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_WhichAirlines</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_WhichAirlines</shortDescription>
+        <value>Which Airlines?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_Which_One</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_Which_One</shortDescription>
+        <value>Which one?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_airlinePartnershipSelection</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_airlinePartnershipSelection</shortDescription>
+        <value>Do you have existing partnership(s) with airlines?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_confirmDetails</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_confirmDetails</shortDescription>
+        <value>Please check your details</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_issueTestResultsSelection</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_issueTestResultsSelection</shortDescription>
+        <value>Do you issue test results for all locations indicated?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_labsPartOfNationalPlatform</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_labsPartOfNationalPlatform</shortDescription>
+        <value>Is there a National Platform in place that you need to communicate tests results to?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_manageBookingSelection</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_manageBookingSelection</shortDescription>
+        <value>Do you manage test appointment booking for all the locations indicated?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabReg_nationalAccreditationSelection</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_nationalAccreditationSelection</shortDescription>
+        <value>Do you have a National accreditation for all the labs?</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabRegistry</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabRegistry</shortDescription>
+        <value>Lab Registry</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabRegistry_LabDetails</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabRegistry_LabDetails</shortDescription>
+        <value>Laboratory Details</value>
+    </labels>
+    <labels>
+        <fullName>CSP_LabRegistry_service_desc</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabRegistry_service_desc</shortDescription>
+        <value>By joining the Lab Registry network, your lab can issue digital test results to passengers as well as be accessible to passengers through the Travel Pass App as well as other third party sites.</value>
+    </labels>
+    <labels>
         <fullName>CSP_LastUpdate</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -8745,6 +9069,22 @@ IATA Customer Portal</value>
         <protected>false</protected>
         <shortDescription>Working Areas</shortDescription>
         <value>Working Areas</value>
+    </labels>
+    <labels>
+        <fullName>CSP_labReg_Step_Airline_Agreements</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_labReg_Step_Airline_Agreements</shortDescription>
+        <value>Airline Agreements</value>
+    </labels>
+    <labels>
+        <fullName>CSP_labReg_Step_GeneralInformation</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_labReg_Step_GeneralInformation</shortDescription>
+        <value>General Information</value>
     </labels>
     <labels>
         <fullName>CSP_selectReason</fullName>
@@ -46095,6 +46435,13 @@ respect to decisions and/or actions affecting Agents and applicants under the IA
         <protected>false</protected>
         <shortDescription>Reset your password?</shortDescription>
         <value>Reset your password?</value>
+    </labels>
+    <labels>
+        <fullName>Resource_Center_Service_Description</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Resource Center Service Description</shortDescription>
+        <value>Through the Resource Center, you will gain access to all required documentation from IATA. The Resource Center contains key information for agencies interested in becoming IATA Accredited.</value>
     </labels>
     <labels>
         <fullName>Response_message</fullName>
