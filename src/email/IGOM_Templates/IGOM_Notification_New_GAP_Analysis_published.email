@@ -1,0 +1,5 @@
+<h1>New GAP Published</h1>
+<h2>A new GAP has been published in {!StationName}</h2>
+<p>The recently published GAP requires your attention regarding the following GAP Analysis Items:</p>
+<div>{!Notifications}</div>
+<p>{!ConfirmationText}</p>

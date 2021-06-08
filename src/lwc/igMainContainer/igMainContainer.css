@@ -1,0 +1,57 @@
+.title-active-menu-header{
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 22px;
+    display: flex;
+    align-items: center;
+    padding-left: 0.5rem;
+}
+
+.header-igom{
+    background-color: white;
+    color: #707683;
+    display: flex;
+    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.08);
+    height: 60px;
+    position: relative;
+}
+
+.igom-version{
+    font-size: 12px;
+    line-height: 18px;
+    color: #90A0B7;
+    display: flex;
+    align-items: center;
+    padding-left: 2rem;
+}
+
+.width-min-content{
+    max-width: 60px;
+}
+
+.sidebar-gap-absolute{
+    position: absolute;
+    z-index: 10;
+    transition: max-width 0.05s;
+}
+
+.width-extended {
+    max-width: 20%;
+}
+
+.pl-60px{
+    padding-left: 60px;
+}
+
+.slds-select_container .slds-select {
+    height: calc(1.875rem + (1px * 2)) !important;
+}
+
+.offset-sidebar {
+    margin-left: 20%;
+}
+
+.btn-ig-secondary:hover {
+    border: 1px solid #5160F1 !important;
+}

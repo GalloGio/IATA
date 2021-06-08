@@ -1,0 +1,54 @@
+<template>
+    <template if:true={_searchBar}>
+        <input class="slds-input slds-size_1-of-1 slds-m-bottom_medium" type="text" placeholder="Search..." oninput={searchChange}/>
+    </template>
+    <div class="pagination slds-size_1-of-1 slds-grid" if:false={_isMonoPage}>
+        <span class="slds-size_1-of-2 slds-text-align_left">Showing {_displayableFirstElement} to {_displayableLastElement} of {_totalElements} entries ({_currentPage} of {_totalPages} pages)</span>
+        <span class="slds-size_1-of-2 slds-text-align_right"> <button onclick={goToPreviousPage}>Previous</button> <button onclick={goToNextPage}>Next</button> </span>
+    </div>
+    <div class={mainTableClass}>
+        <div class="faux-table-header slds-grid" onclick={tableClickHandler}>
+            <template for:each={_adaptedData} for:item="column" for:index="index">
+                <div key={column.id} class={column.columnClass} style={column.customStyle} data-column={column.id}>
+
+                    <template if:false={column.isHiddenHeader}>
+                        <div if:false={column.isSortable} class="faux-header" title={column.name}>
+                            {column.name}
+                        </div>
+
+                        <div if:true={column.isSortable} data-column={column.id} class="faux-header sortable clickable" title={column.name}> <!-- onclick={orderColumn} -->
+                            {column.name}
+                            <span if:true={column.isSortedAsc}>▴</span>
+                            <span if:false={column.isSortedAsc}>▾</span>
+                        </div>
+                    </template>
+
+                    <template if:true={column.isHiddenHeader}>
+                        <div class="faux-header">&nbsp;</div>
+                    </template>
+
+                    <template if:true={column.isText} for:each={column.values} for:item="value">
+                        <div key={value.key} class={value.class} title={value.val}>
+                            {value.val}
+                        </div>
+                    </template>
+
+                    <template if:true={column.isImage} for:each={column.values} for:item="value">
+                        <div key={value.key} class={value.class}>
+                            <img src={value.val} />
+                        </div>
+                    </template>
+
+                    <template if:true={column.isLink} for:each={column.values} for:item="value">
+                        <div if:false={value.hidden} key={value.key} data-link={value.val} class={value.class}>
+                            <span>{column.name}</span>
+                        </div>
+                        
+                        <div if:true={value.hidden} key={value.key} class={value.class}><span>&nbsp;</span></div>
+                    </template>
+
+                </div>
+            </template>
+        </div>
+    </div>
+</template>

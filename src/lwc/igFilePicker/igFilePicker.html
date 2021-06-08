@@ -1,0 +1,30 @@
+<template>
+
+	<template if:true={isSomeFileSelected}>
+		<div class="selected-files">
+			<template for:each={_selectedFiles} for:item="item">
+				<div key={item.id} data-id={item.id} class="selected-file slds-grid">
+					<div class="slds-size_1-of-6 slds-grid slds-grid_vertical-align-center slds-grid_align-end slds-p-right_medium">
+						<lightning-icon icon-name="utility:file"></lightning-icon>
+					</div>
+					<div class="slds-size_4-of-6 slds-text-align_left" onclick={downloadFile}>
+						<p><a href={item.file.url}>{item.file.name}</a></p>
+						<span class="slds-text-title">{item.file.size} bytes</span>
+					</div>
+					<div class="slds-size_1-of-6 slds-grid slds-grid_vertical-align-center slds-grid_align-center">
+						<lightning-button-icon icon-name="utility:clear" size="small" onclick={removeFile}></lightning-button-icon>
+					</div>
+				</div>
+			</template>
+		</div>
+	</template>
+
+	<template if:true={canUploadFiles}>
+		<div class="upload-box" ondrop={dropHandler} ondragover={dragOverHandler} ondragenter={dragEnterHandler} ondragleave={dragLeaveHandler}>
+			{label.custom.ig_drag_and_drop_file}<br/>
+			- {label.custom.ig_or} -<br/>
+			<lightning-button variant="outline-brand" icon-name="utility:open_folder" label={label.custom.ig_browse_files} onclick={fileSelectorDialog}></lightning-button>
+		</div>
+	</template>
+
+</template>

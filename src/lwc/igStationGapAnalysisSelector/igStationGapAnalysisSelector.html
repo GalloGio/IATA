@@ -1,0 +1,78 @@
+<template>
+	<div class="row-no-margin bg-light-yellow">
+		<div class="col-12 p-5">
+			<template if:true={station}>
+				<h4> 
+					<b>{station.name}</b>
+					<span if:true={isGoBackVisible} class="text-blue pl-4 small-font cursor-pt" onclick={goBackClickHandler}>{goBackLabel}</span>
+				</h4>
+				<p class="light-text">{station.city}, {station.country}</p>
+			</template>
+			<template if:false={station}>
+				<h4>
+					<b>-</b>
+					<span if:true={isGoBackVisible} class="text-blue pl-4 small-font cursor-pt" onclick={goBackClickHandler}>{goBackLabel}</span>
+				</h4>
+				<p class="light-text">-, -</p>
+			</template>
+			<div class={selectorComboContainerClass}>
+				<div class="slds-grid">
+					<div class="slds-size_3-of-12"></div>
+					<div class="slds-grid slds-size_9-of-12 selector-field-container">
+						<div class="slds-size_4-of-12 slds-truncate light-text" title={label.custom.ig_gap_analysis}>{label.custom.ig_gap_analysis}</div>
+						<div class="slds-size_2-of-12 slds-truncate light-text" title={label.custom.ig_type}>{label.custom.ig_type}</div>
+						<div class="slds-size_2-of-12 slds-truncate light-text" title={label.custom.ig_IGOM_version_used}>{label.custom.ig_IGOM_version_used}</div>
+						<div class="slds-size_4-of-12 slds-truncate light-text" title={label.custom.ig_effective_date}>{label.custom.ig_effective_date}</div>
+					</div>
+				</div>
+				<template if:true={_complianceReviewList}>
+					<template for:each={_complianceReviewList} for:item="variation">
+						<div if:true={variation.selected} key={variation.data.id} onclick={toggleComboboxVisibility} class="slds-grid">
+							<div class="slds-size_3-of-12 selector-label center-vertically">Selected GAP Analysis:</div>
+							<div class="slds-grid slds-size_9-of-12 combo-input">
+								<div class="slds-size_4-of-12 selector-input-main slds-truncate">{variation.data.name}</div>
+								<div class="slds-size_2-of-12 slds-truncate">{variation.data.status}</div>
+								<div class="slds-size_2-of-12 slds-truncate">{variation.data.complianceDocumentVersion}</div>
+								<div class="slds-size_4-of-12 slds-truncate">{variation.data.publishDate}</div>
+							</div>
+							<span class={foldIconClass}>
+								<svg if:true={complianceReviewListComboOpened} xmlns="http://www.w3.org/2000/svg" width="12" height="12">
+									<use xlink:href={resources.icons.fold}></use>
+								</svg>
+								<svg if:false={complianceReviewListComboOpened} xmlns="http://www.w3.org/2000/svg" width="12" height="12">
+									<use xlink:href={resources.icons.unfold}></use>
+								</svg>
+							</span>    
+						</div>
+					</template>
+				</template>
+				<template if:false={_complianceReviewList}>
+					<div class="slds-grid" onclick={toggleComboboxVisibility}>
+						<div class="slds-size_3-of-12 selector-label center-vertically">Selected GAP Analysis:</div>
+						<div class="slds-grid slds-size_9-of-12 combo-option"> 
+							<div class="slds-size_4-of-12 selector-input-main slds-truncate">-</div>
+							<div class="slds-size_2-of-12 slds-truncate">-</div>
+							<div class="slds-size_2-of-12 slds-truncate">-</div>
+							<div class="slds-size_4-of-12 slds-truncate">-</div>
+						</div>
+					</div>
+				</template>
+				<div if:true={complianceReviewListComboOpened} class="combo-dropdown">
+					<template if:true={_complianceReviewList}>
+						<template for:each={_complianceReviewList} for:item="variation">
+							<div data-id={variation.data.id} if:false={variation.selected} key={variation.data.id} class="slds-grid combo-item" onclick={variationClickHandler}>
+								<div class="slds-size_3-of-12"></div>
+								<div class="slds-grid slds-size_9-of-12 combo-option">
+									<div class="slds-size_4-of-12 selector-input-main slds-truncate">{variation.data.name}</div>
+									<div class="slds-size_2-of-12 slds-truncate">{variation.data.status}</div>
+									<div class="slds-size_2-of-12 slds-truncate">{variation.data.complianceDocumentVersion}</div>
+									<div class="slds-size_4-of-12 slds-truncate">{variation.data.publishDate}</div>
+								</div>
+							</div>
+						</template>
+					</template>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>

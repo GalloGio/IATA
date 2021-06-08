@@ -1,0 +1,125 @@
+<template>
+    <div class="row">
+        <div class="col-12">
+            <h4><b>{label.custom.ig_gap_analysis} - {stationName}</b></h4>
+        </div>
+    </div>
+    
+    <div class="col-8 offset-2 mt-6">
+        <div class="row">
+            <div if:true={isVisibleGapCreation} class={newFileClass} data-name={screens.newFile} onclick={changeScreen}>
+                <img class="icon-files" src={resources.icons.png.newFile}>
+                <span class="icont-text">{label.custom.ig_new_file}</span>
+                <div class={newFileUnderlineClass}></div>
+            </div>
+            <div if:true={isVisibleGapCreation} class={previousVersionClass} data-name={screens.previousVersion} onclick={changeScreen}>
+                <img class="icon-files" src={resources.icons.png.previousVersion}>
+                <span class="icont-text"><lightning-formatted-rich-text value={label.custom.ig_new_file_from_previous}></lightning-formatted-rich-text></span>
+                <div class={previousVersionUnderlineClass}></div>
+            </div>
+            <div if:true={isVisibleGapEdition} class={continueDraftClass} data-name={screens.continueDraft} onclick={changeScreen}>
+                <img class="icon-files" src={resources.icons.png.continueDraft}>
+                <span class="icont-text">{label.custom.ig_continue_draft}</span>
+                <div class={continueDraftUnderlineClass}></div>
+            </div>
+        </div>
+
+        <template if:true={currentNewFile}>
+            <div class="col-12 mt-7 p-5">
+                <label class="small-font">{label.custom.ig_file_name}</label>
+                <input type="text" class="form-control width-100" onkeyup={newFilenameKeyUp} value={filenameForNew}/>
+            </div>
+            <div class="col-12 mt-6 text-center">
+                <button class={newAnalysisButtonClass} disabled={newAnalysisButtonDisabled} onclick={goToGapAnalysis}>{label.custom.ig_continue}</button>
+            </div>
+        </template>
+
+
+        <template if:true={currentPreviousVersion}>
+            <div class="col-12 pl-5 pr-5 mt-5">
+                <input type="text" onkeyup={searchFile} class="form-control width-100" placeholder="Search file..."/>
+            </div>
+            <div class="col-12 pl-5 pr-5 mt-4">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="text-left width-40p">{label.custom.ig_file_name}</th>
+                            <th scope="col" class="text-center">{label.custom.ig_IGOM_version}</th>
+                            <th scope="col" class="text-center">{label.custom.ig_publish_date}</th>
+                            <th scope="col" class="text-center">{label.custom.ig_type}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={previousGapAnalysis} for:item="pGapAnalysis" for:index="index">
+                            <template if:true={pGapAnalysis.selected}>
+                                <tr class="row-file-selected" key={pGapAnalysis.item.id} onclick={selectOldGapAnalysis} data-id={pGapAnalysis.item.id}>
+                                    <td class="text-left width-40p">{pGapAnalysis.item.name}</td>
+                                    <td class="text-center">{pGapAnalysis.item.complianceDocumentVersion}</td>
+                                    <td class="text-center">{pGapAnalysis.item.publishDate}</td>
+                                    <td class="text-center">{pGapAnalysis.type}</td>
+                                </tr>
+                            </template>
+                            <template if:false={pGapAnalysis.selected}>
+                                <tr key={pGapAnalysis.item.id} onclick={selectOldGapAnalysis} data-id={pGapAnalysis.item.id}>
+                                    <td class="text-left width-40p">{pGapAnalysis.item.name}</td>
+                                    <td class="text-center">{pGapAnalysis.item.complianceDocumentVersion}</td>
+                                    <td class="text-center">{pGapAnalysis.item.publishDate}</td>
+                                    <td class="text-center">{pGapAnalysis.type}</td>
+                                </tr>
+                            </template>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-12 mt-3 pl-5 pr-5">
+                <label class="small-font">{label.custom.ig_file_name}</label>
+                <input type="text" class="form-control width-100" onkeyup={fromPreviousFilenameKeyUp} value={filenameForPrevious}/>
+            </div>
+            <div class="col-12 mt-4 text-center">
+                <button class={prevGapSelectionButtonClass} disabled={prevGapSelectionButtonDisabled} onclick={goToGapAnalysis}>{label.custom.ig_continue}</button>
+            </div>
+        </template>
+
+        <template if:true={currentContinueDraft}>
+            <div class="col-12 pl-5 pr-5 mt-4">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="text-left width-40p">{label.custom.ig_file_name}</th>
+                            <th scope="col" class="text-center">{label.custom.ig_completition}</th>
+                            <th scope="col" class="text-center"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={draftGapAnalysis} for:item="dGapAnalysis" for:index="dindex">
+                            <template if:true={dGapAnalysis.selected}>
+                                <tr class="row-file-selected" onclick={selectFileRowDraft} key={dGapAnalysis.item.id} data-id={dGapAnalysis.item.id} data-name={dGapAnalysis.item.name}>
+                                    <td class="text-left width-40p">{dGapAnalysis.item.name}</td>
+                                    <td class="text-center">{dGapAnalysis.item.completition}% {label.custom.ig_complete}</td>
+                                    <td if:true={isVisibleDraftDiscard} onclick={discardDraft} class="text-center">
+                                        {label.custom.ig_discard_draft}
+                                    </td>
+                                </tr>
+                            </template>
+                            <template if:false={dGapAnalysis.selected}>
+                                <tr onclick={selectDraft} key={dGapAnalysis.item.id} data-id={dGapAnalysis.item.id} data-name={dGapAnalysis.item.name}>
+                                    <td class="text-left width-40p">{dGapAnalysis.item.name}</td>
+                                    <td class="text-center">{dGapAnalysis.item.completition}% {label.custom.ig_complete}</td>
+                                    <td if:true={isVisibleDraftDiscard} onclick={discardDraft} class="text-center">
+                                        {label.custom.ig_discard_draft}
+                                    </td>
+                                </tr>
+                            </template>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-12 mt-4 text-center">
+                <button class={draftSelectionButtonClass} disabled={draftSelectionButtonDisabled} onclick={goToGapAnalysis}>{label.custom.ig_continue}</button>
+            </div>
+            <c-ig-modal class="draft-discard-modal" header={label.custom.ig_discard_draft} onaccept={draftDiscardConfirmation}>
+                <p><lightning-formatted-rich-text value={areYouSureDeleteDraftMsg}></lightning-formatted-rich-text></p>
+            </c-ig-modal>
+        </template>
+    </div>
+</template>

@@ -1,0 +1,27 @@
+<template>
+    <div class="logo-sidebar-menu" onclick={toggleFullMenu}>
+        <div class={logoClass}>
+            <img src={resources.images.svg.logoWhite}/>
+        </div>
+        <div class="col-8 m-auto text-center">
+            <p class={topTextClass}>{uppercaseGapAnalysisLbl}</p>
+        </div>  
+    </div>
+
+    <div if:true={igomManual}>
+        <ul class="list-unstyled ul-sidebar background-dark-grey mb-0">
+            <template for:each={igomManual.chapters} for:item="chapter">
+                <c-ig-sidebar-menu-gap-chapter 
+                    key={chapter.procedure.Id} 
+                    chapter={chapter} 
+                    folded={folded}
+                    expanded-chapter={_expandedChapter} 
+                    selected-chapter={selectedChapter}
+                    selected-procedure={selectedProcedure}
+                    onsectionclicked={sectionClickedHandler} 
+                    onchaptertoggled={toggleHandler}>
+                </c-ig-sidebar-menu-gap-chapter>
+            </template>
+        </ul>
+    </div>
+</template>

@@ -1,0 +1,65 @@
+/* Main styles */
+.center-vertically {
+    display: flex;
+    align-items: center;
+}
+
+/* Multifield combobox styles */
+.combo-container {
+    position: relative;
+}
+
+.combo-container .fold-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+}
+
+.combo-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    z-index: 2;
+    max-height: 300px;
+}
+
+.combo-opened.combo-container .combo-input {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.combo-opened.combo-container div:last-child .combo-option {
+    /*border-radius: 0 0 3px 3px;*/
+}
+
+.combo-opened.combo-container .combo-option {
+    border-radius: 0;
+    border-top: 0;
+}
+
+.combo-input, .combo-option {
+    background: white;
+    border: 1px solid #C2CFE0;
+    box-sizing: border-box;
+    border-radius: 3px;
+    padding: 12px;
+    font-size: 14px;
+    color: #90A0B7;
+    cursor: pointer;
+}
+
+.combo-option:hover {
+    background: #f4f5ff
+}
+
+.selector-field-container {
+    padding-bottom: 4px;
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+.selector-input-main {
+    color: #323C47;
+    font-weight: 500;
+}

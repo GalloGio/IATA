@@ -1,0 +1,96 @@
+<template>
+	
+	<template if:false={renderAnalysisVariations}>
+
+		<div class="col-12 pl-5 pr-5 pt-4 height-100">
+			<div class="col-12 slds-m-bottom_medium">
+				<h4>
+					<b>{label.custom.ig_available_stations}</b>
+				</h4>
+			</div>
+			<div class="content shadow-drop slds-p-around_medium">
+				<c-ig-adaptable-table 
+					page-size="3" 
+					table-data={stationList} 
+					table-config={tableConfig} 
+					onlinkclick={gotoAnalysisVariations}
+					onchangedshownids={changedShownStationIds}>
+				</c-ig-adaptable-table>
+			</div>
+		</div>
+
+	</template>
+
+	<template if:true={renderAnalysisVariations}>
+
+		<template if:true={actualGapAnalyses}>
+			<c-ig-station-gap-analysis-selector 
+				go-back-label="Change station"
+				is-go-back-visible={showChangeStation}
+				onback={gotoStationList}
+				station={selectedStation}
+				compliance-review-list={actualGapAnalyses.data} 
+				onchange={gapAnalaysisChangeHandler}>
+			</c-ig-station-gap-analysis-selector>
+		</template>
+		
+		<div class="col-12 pl-5 pr-5 pt-4 height-100 bg-white">
+			<div class="variation-report-body slds-grid slds-wrap">
+				<div if:true={chapterList} class="chapter-menu slds-size_1-of-1 slds-medium-size_1-of-4 slds-p-top_medium">
+					<ul>
+						<template for:each={chapterList} for:item="chapter">
+							<a key={chapter.id} href={chapter.href}>
+								<li class={chapter.class}>{chapter.name}</li>
+							</a>
+						</template>
+					</ul>
+				</div>
+				<div if:true={someVariations} class="variation-list slds-size_1-of-1 slds-medium-size_3-of-4 slds-p-top_medium">
+
+					<template for:each={procedureCompliancesGrouped} for:item="chapter">
+						<div class="chapter-container" key={chapter.id}>
+							<h2 key={chapter.id} data-id={chapter.id} class="slds-m-top_medium line-through slds-size_1-of-1">
+								<span id={chapter.id}>{chapter.name}</span>
+							</h2>
+							<template for:each={chapter.list} for:item="chapterLevelProcedure">
+								<div key={chapterLevelProcedure.id}>
+									<div class="slds-grid procedure-header slds-p-around_medium ">
+										<div class="slds-size_1-of-12"></div>
+										<div class="slds-size_4-of-12">{label.custom.ig_gap_analysis}</div>
+										<div class="slds-size_1-of-12"></div>
+										<div class="slds-size_4-of-12">IGOM</div>
+										<div class="slds-size_2-of-12"></div>
+									</div>
+									<c-ig-variation-report-procedure procedure-compliance={chapterLevelProcedure}></c-ig-variation-report-procedure>
+								</div>
+							</template>
+							<template for:each={chapter.sections} for:item="section">
+								<div key={section.id}>
+									<h3 class="slds-m-top_medium">{section.name}</h3>
+									<div>
+										<div class="slds-grid procedure-header slds-p-around_medium ">
+											<div class="slds-size_1-of-12"></div>
+											<div class="slds-size_4-of-12">{label.custom.ig_gap_analysis}</div>
+											<div class="slds-size_1-of-12"></div>
+											<div class="slds-size_4-of-12">IGOM</div>
+											<div class="slds-size_2-of-12"></div>
+										</div>
+										<template for:each={section.list} for:item="procedItem">
+											<c-ig-variation-report-procedure key={procedItem.id} procedure-compliance={procedItem}></c-ig-variation-report-procedure>
+										</template>
+									</div>
+								</div>
+							</template>
+						</div>
+					</template>
+
+				</div>
+				<div if:true={noVariations} class="w-100 slds-align_absolute-center">
+					<h3>{label.custom.ig_no_variations}</h3>
+				</div>
+			</div>
+		</div>
+
+	</template>
+
+</template>

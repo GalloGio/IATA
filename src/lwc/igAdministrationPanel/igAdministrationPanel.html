@@ -1,0 +1,216 @@
+<template>
+    <div class="slds-p-top_small slds-p-horizontal_medium pl-4">
+        <!-- TAB CONTENT - START -->
+        <lightning-tabset>
+            <lightning-tab label={label.custom.ig_station_management}>
+                <div class="box-shadow-col slds-p-vertical_large slds-p-horizontal_xx-large">
+                    <div class="slds-row slds-grid slds-gutters slds-p-bottom_medium slds-m-horizontal_small">
+                        <div class="slds-col slds-size_1-of-2 slds-border_bottom">
+                            <h5>Users in station</h5>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2">
+                            <div class="slds-float_right width-50">
+                                <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_right">
+                                    <lightning-icon size="x-small" class="slds-icon slds-input__icon slds-input__icon_right slds-icon-text-default" icon-name="utility:search"></lightning-icon>
+                                    <input type="text" placeholder="Search user..." value={userSearchParam} class="slds-input" oninput={searchUser}/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div if:true={usersToDisplay} class="backg-lighter-gray slds-p-top_x-small">
+                        <template for:each={usersToDisplay} for:item="user">
+                            <div key={user.contactId} class="slds-row slds-grid">
+                                <div class="slds-col slds-size_1-of-1">
+                                    <div class="slds-row slds-grid slds-p-horizontal_xx-large slds-p-vertical_x-small">
+                                        <div class="slds-col slds-size_1-of-2 slds-p-top_x-small">
+                                            <h6>• {user.fullName}</h6>
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-2">
+                                            <div class="slds-float_right width-80">
+                                                <div class="slds-col slds-size_1-of-1">
+                                                    <div class="slds-row slds-grid slds-gutters">
+                                                        <div class="slds-col slds-size_10-of-12">
+                                                            <lightning-combobox name="roleSelection"
+                                                                label="Role:"
+                                                                value={user.role}
+                                                                placeholder="Select role"
+                                                                options={roleOptionsCombo}
+                                                                onchange={handleChangeRole}
+                                                                data-contactid={user.contactId}
+                                                                variant="label-inline">
+                                                            </lightning-combobox>
+                                                        </div>
+                                                        <div class="slds-col slds-size_2-of-12 slds-p-top_xx-small">
+                                                            <lightning-button-icon if:true={user.role} icon-name="utility:delete" alternative-text="Remove" title="Remove"
+                                                            data-contactid={user.contactId} onclick={handleDeleteRole} variant="border-filled"></lightning-button-icon>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+
+                    <div if:false={usersToDisplay} class="slds-row slds-grid slds-m-horizontal_small">
+                        {label.custom.ig_no_users_to_display}
+                    </div>
+                    <div class="slds-row slds-grid slds-p-top_medium slds-m-horizontal_small">
+                        <div class="slds-col slds-size_1-of-2">
+                            <lightning-input type="checkbox" label="Show users that do not have a role." onchange={handleShowUsersWithoutRole}></lightning-input>
+                        </div>
+                    </div>
+                </div>
+            </lightning-tab>
+            <lightning-tab label={label.custom.ig_station_relationships}>
+                <div class="box-shadow-col slds-p-vertical_large slds-p-horizontal_xx-large">
+                    <!-- RECEIVED REQUESTS - START -->
+                    <div if:true={requestList} class="slds-p-bottom_medium slds-m-horizontal_small">
+                        <div class="slds-row slds-grid slds-gutters slds-p-top_small">
+                            <div class="slds-col slds-size_1-of-2 slds-border_bottom">
+                                <h5>Received Requests</h5>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2"></div>
+                        </div>
+                        <div class="slds-row slds-grid slds-p-top_medium">
+                            <template for:each={requestList} for:item="request">
+                                <div key={request.id} class="slds-col slds-size_1-of-1 backg-lighter-gray">
+                                    <div class="slds-row slds-grid slds-p-horizontal_xx-large slds-p-vertical_small">
+                                        <div class="slds-col slds-size_2-of-3 slds-p-top_x-small">
+                                            <span>• {request.stationInfo.name}</span>
+                                            <span if:true={request.isChildRelationship}>&nbsp;{label.custom.ig_child_request}</span>
+                                            <span if:true={request.isGroupRelationship}>&nbsp;{label.custom.ig_group_request}</span>
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-3">
+                                            <div class="slds-row slds-grid slds-gutters">
+                                                <div class="slds-col slds-size_1-of-2">
+                                                    <!-- Only show the checkbox if the station that was requesting the relationship
+                                                    allowed the notifications to be accepted (both stations need to accept notifications) -->
+                                                    <div if:true={request.acceptsNotifications}>
+                                                        <lightning-input checked type="checkbox" label="Accept notifications"
+                                                        data-relationshipid={request.relationshipId}></lightning-input>
+                                                    </div>
+                                                </div>
+                                                <div class="slds-col slds-size_1-of-4">
+                                                    <lightning-button-icon icon-name="utility:check" title="Accept request"
+                                                    data-relationshipid={request.relationshipId} onclick={acceptRelationship} variant="border-filled"></lightning-button-icon>
+                                                </div>
+                                                <div class="slds-col slds-size_1-of-4">
+                                                    <lightning-button-icon icon-name="utility:close" title="Deny request"
+                                                    data-relationshipid={request.relationshipId} onclick={denyRelationship} variant="border-filled"></lightning-button-icon>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                    <!-- RECEIVED REQUESTS - END -->
+
+                    <div class="slds-row slds-grid slds-gutters slds-p-bottom_medium slds-m-horizontal_small">
+                        <div class="slds-col slds-size_1-of-4 slds-border_bottom">
+                            <h5>Related stations</h5>
+                        </div>
+                        <div class="slds-col slds-size_1-of-4"></div>
+                        <div class="slds-col slds-size_1-of-4 slds-border_bottom">
+                            <h5>Unrelated stations</h5>
+                        </div>
+                    </div>
+                    <div class="slds-row slds-grid slds-m-horizontal_x-small">
+                        <div if:true={stationsRelated} class="slds-col slds-size_1-of-2 slds-p-horizontal_small">
+                            <template for:each={stationsRelated} for:item="station">
+                                <div key={station.id} class="slds-col slds-size_1-of-1 backg-lighter-gray">
+                                    <div if:true={station.isRelatedToActiveStation} class="slds-row slds-grid slds-p-horizontal_xx-large slds-p-vertical_xx-small">
+                                        <div class="slds-col slds-size_1-of-2">
+                                            <div if:true={station.isParentRelationship} class="slds-p-top_x-small slds-m-left_x-small">
+                                                <h6>{station.closenessLv}. {station.stationInfo.name}</h6>
+                                            </div>
+                                            <div if:true={station.isChildRelationship} class="slds-p-top_x-small">
+                                                <h6>- {station.closenessLv}. {station.stationInfo.name}</h6>
+                                            </div>
+                                            <div if:true={station.isGroupRelationship} class="slds-p-top_x-small">
+                                                <h6>(G) {station.stationInfo.name}</h6>
+                                            </div>
+                                        </div>
+                                        <div if:true={station.isDirectRelationship} class="slds-col slds-size_1-of-2">
+                                            <div class="slds-float_right">
+                                                <lightning-button-icon icon-name="utility:delete" alternative-text="Delete" title="Delete" data-relationshipid={station.relationshipId}
+                                                onclick={deleteRelationship} variant="border-filled"></lightning-button-icon>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Display own station -->
+                                    <div if:false={station.isRelatedToActiveStation} class="slds-row slds-grid slds-p-horizontal_xx-large slds-p-vertical_xx-small">
+                                        <div class="slds-col slds-size_1-of-2">
+                                            <div class="slds-p-top_x-small slds-m-left_x-small">
+                                                <h6>{station.name}</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Display own station -->
+                                </div>
+                            </template>
+                        </div>
+                        <div if:false={stationsRelated} class="slds-col slds-size_1-of-2 slds-p-horizontal_xx-small">
+                            <div class="slds-row slds-grid slds-p-horizontal_xx-large slds-p-vertical_xx-small">
+                                There are no stations related.
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2  slds-p-horizontal_small">
+                            <div class="slds-row slds-grid slds-p-horizontal_large slds-p-vertical_small">
+                                <div class="slds-col slds-size_1-of-1">
+                                    <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon_right">
+                                        <lightning-icon size="x-small" class="slds-icon slds-input__icon slds-input__icon_right slds-icon-text-default" icon-name="utility:search"></lightning-icon>
+                                        <input type="text" placeholder="Search station..." value={stationSearchParam} class="slds-input" oninput={searchStation}/>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div if:false={stationsUnrelated} class="slds-row slds-grid slds-p-horizontal_xx-large slds-p-vertical_xx-small">
+                                {label.custom.ig_no_unrelated_stations_for_search}
+                            </div>
+                            
+                            <template if:true={stationsUnrelated} for:each={stationsUnrelated} for:item="station">
+                                <div key={station.stationInfo.id} class="slds-col slds-size_1-of-1  backg-lighter-gray">
+                                    <div class="slds-row slds-grid slds-p-horizontal_xx-large slds-p-vertical_small">
+                                        <div class="slds-col slds-size_2-of-3 slds-p-top_x-small">
+                                            {station.stationInfo.name}
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-3">
+                                            <div if:false={station.isPending} class="slds-row slds-grid slds-gutters">
+                                                <div class="slds-col slds-p-top_x-small">
+                                                    <lightning-input checked type="checkbox" title="Request notifications?"
+                                                    data-stationid={station.stationInfo.id}></lightning-input>
+                                                </div>
+                                                <div class="slds-col">
+                                                    <lightning-button-icon icon-name="utility:down" title="Ask station to be child in the relationship"
+                                                    data-stationid={station.stationInfo.id} onclick={requestChildRelationship} variant="border-filled"></lightning-button-icon>
+                                                </div>
+                                                <div class="slds-col">
+                                                    <lightning-button-icon icon-name="utility:groups" title="Create a group relationship with station"
+                                                    data-stationid={station.stationInfo.id} onclick={requestGroupRelationship} variant="border-filled"></lightning-button-icon>
+                                                </div>
+                                            </div>
+                                            <div if:true={station.isPending} class="slds-row slds-grid slds-gutters">
+                                                <div class="slds-col slds-size_1-of-3"></div>
+                                                <div class="slds-col slds-size_1-of-3">
+                                                    <lightning-button-icon icon-name="utility:close" title="Cancel request"
+                                                    data-relationshipid={station.relationshipId} onclick={deleteRelationship} variant="border-filled"></lightning-button-icon>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+            </lightning-tab>
+        </lightning-tabset>
+        <!-- TAB CONTENT - END -->
+    </div>
+</template>

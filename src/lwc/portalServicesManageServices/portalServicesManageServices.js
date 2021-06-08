@@ -1,4 +1,4 @@
-import { LightningElement, track } from 'lwc';
+import { LightningElement, track, wire } from 'lwc';
 
 //import navigation methods
 import { NavigationMixin } from 'lightning/navigation';
@@ -103,6 +103,7 @@ import getCountryList from '@salesforce/apex/PortalSupportReachUsCtrl.getCountry
 import getContactInfo from '@salesforce/apex/PortalRegistrationSecondLevelCtrl.getContactInfo';
 import checkLatestTermsAndConditionsAccepted from '@salesforce/apex/ServiceTermsAndConditionsUtils.checkLatestTermsAndConditionsAccepted';
 
+import isServiceAdministrator from '@salesforce/apex/InvitationService.isServiceAdministrator'; // Params: Id portalApplicationId, List<Id> userIdList - Return: Map<Id,Boolean>
 
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
@@ -281,6 +282,29 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 	@track showMassApprove = false;
 	@track showMassDeny = false;
 
+	/* Invitation service variables - Start */
+    _isServiceAdministrator = false;
+    accountId;
+	/* Invitation service variables - End */
+
+	/* Invitation service functionality - Start */
+    @wire(isServiceAdministrator, { portalApplicationId : '$portalApplicationId', userIdList : '$userIdList' })
+    isServiceAdministratorWired({data, error}){
+        if(data){
+            var userAdminList = Array.from(data, ([userId, isAdmin]) => ({ userId, isAdmin }));
+            var activeUserAdmin = userAdminList.filter(userAdmin => {
+                return userAdmin.userId === userId;
+            })[0];
+            this._isServiceAdministrator = activeUserAdmin.isAdmin;
+        }
+    }
+
+    get isServiceAdmin(){
+        return this._isServiceAdministrator;
+    }
+	/* Invitation service functionality - End */
+
+
 	checkMassActionButtons() {
 		if(this.selectedRecords && this.selectedRecords.length > 0) {
 			const uniqueGrant = [...new Set(this.selectedRecords.map((rec) => {
@@ -328,6 +352,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 			let loggedUser = JSON.parse(JSON.stringify(userResult));
 
 			if (loggedUser.Contact != null && loggedUser.Contact.AccountId != null) {
+				this.accountId = loggedUser.Contact.AccountId;
 				this.contactId = loggedUser.ContactId;
 				let account = loggedUser.Contact.Account;
 				if (account.RecordType.DeveloperName === 'IATA_Agency' &&

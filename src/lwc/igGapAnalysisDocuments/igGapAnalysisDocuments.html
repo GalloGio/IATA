@@ -1,0 +1,120 @@
+<template>
+    <div class="col-10 offset-1 p-4">
+        <template if:true={isCurrentScreenDocumentList}>
+            <div class="go-back-crumb cursor-pt" onclick={returnBack}>
+                <img src={resources.icons.back}/><span class="pl-3">{label.custom.ig_go_back}</span>
+            </div>
+        </template>
+        <template if:true={isCurrentScreenNewDocument}>
+            <div class="go-back-crumb cursor-pt" onclick={changeScreenToDocumentList}>
+                <img src={resources.icons.back}/><span class="pl-3">{label.custom.ig_go_back}</span>
+            </div>
+        </template>
+        <div class="row">
+            <div class="col-12">
+                <h4><b>{label.custom.ig_documents}</b></h4>
+            </div>
+        </div>
+        <div if:true={isCurrentScreenDocumentList} class="col-12 mt-4">
+            <div class="row mt-5 mb-4">
+                <div class="col">
+                    <hr>
+                </div>
+                <div class="col-md-auto text-right">
+                    <template if:true={importIgomPermission}>
+                        <span if:false={importIgomButtonDisabled} class="pr-1 information" title="Importing the IGOM will create a full GAP where each reference points to the equally-named IGOM procedure">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16">
+                                <use xlink:href={resources.icons.info}></use>
+                            </svg>
+                        </span>
+                        <span if:true={importIgomButtonDisabled} class="pr-1 information" title="IGOM documents can only be imported to empty GAPs">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16">
+                                <use xlink:href={resources.icons.info}></use>
+                            </svg>
+                        </span>
+                        <button class={importIgomButtonClass} onclick={importManualAsDocument} disabled={importIgomButtonDisabled}>
+                            <lightning-icon icon-name="utility:internal_share" size="x-small" class="mr-3" ></lightning-icon>{label.custom.ig_import_igom}
+                        </button>
+                    </template>
+                    <button class="button btn-ig-primary" onclick={changeScreenToNewDocument}><lightning-icon icon-name="utility:new" variant="inverse" size="x-small" class="mr-3" ></lightning-icon>{label.custom.ig_add_document}</button>
+                </div>
+            </div>
+            <template if:true={hasDocuments}>
+                <c-ig-adaptable-table 
+                    class="row"
+                    page-size="10" table-data={documentList} 
+                    table-config={tableConfig} onlinkclick={linkClickHandler}>
+                </c-ig-adaptable-table>
+            </template>
+            <div if:false={hasDocuments}>
+                <p class="text-center">{label.custom.ig_no_documents_station}</p>
+            </div>
+        </div>
+        <div if:true={isCurrentScreenNewDocument} class="col-10 offset-1 pl-5 pr-5 mt-4">
+            <div class="col-12 mt-4 text-center">
+                <div class="width-100">
+                    <div class="form-row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="small-font">{label.object.DOCUMENT.DOCUMENT_TYPE} <span class="required-asterisk">* </span></label>
+                                <select class="form-control" data-mapping="type" required onchange={mapToEditingDocument}>
+                                    <option value={constants.DOCUMENT.DOCUMENT_TYPE.VALUES.ONLINE_BASED}>URL-based documentation</option>
+                                    <option value={constants.DOCUMENT.DOCUMENT_TYPE.VALUES.SOFTWARE_BASED}>Software-based documentation</option>
+                                    <option value={constants.DOCUMENT.DOCUMENT_TYPE.VALUES.FILES_ON_SERVER}>Files on Servers</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col form-group">
+                            <label class="small-font">{label.object.DOCUMENT.DOCUMENT_NAME} <span class="required-asterisk">* </span></label>
+                            <input type="text" class="form-control" data-mapping="name" value={editingDocument.name} required onchange={mapToEditingDocument}/>
+                        </div> 
+                        <div class="col form-group">
+                            <label class="small-font">{label.object.DOCUMENT.ABBREVIATED_NAME} <span class="required-asterisk">* </span></label>
+                            <input type="text" class="form-control" data-mapping="abbreviation" value={editingDocument.abbreviation} required onchange={mapToEditingDocument}/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col form-group">
+                            <label class="small-font">{label.object.DOCUMENT.EDITION} <span class="required-asterisk" if:true={isEditionRequired}>* </span></label>
+                            <input type="text" class="form-control" data-mapping="edition" value={editingDocument.edition} required={isEditionRequired} onchange={mapToEditingDocument}/>
+                        </div>   
+                        <div class="col form-group">
+                            <label class="small-font">{label.object.DOCUMENT.VERSION} <span class="required-asterisk" if:true={isVersionRequired}>* </span></label>
+                            <input type="text" class="form-control" data-mapping="version" value={editingDocument.version} required={isVersionRequired} onchange={mapToEditingDocument}/>
+                        </div>
+                        <div class="col form-group">
+                            <label class="small-font">{label.object.DOCUMENT.REVISION} <span class="required-asterisk" if:true={isRevisionRequired}>* </span></label>
+                            <input type="text" class="form-control" data-mapping="revision" value={editingDocument.revision} required={isRevisionRequired} onchange={mapToEditingDocument}/>
+                        </div>  
+                    </div>
+                    <div class="row">
+                        <div class="col form-group">
+                            <label class="small-font">{label.object.DOCUMENT.PUBLISHED_DATE} <span class="required-asterisk" if:true={isPublishDateRequired}>* </span></label>
+                            <input type="date" class="form-control" data-mapping="publishDate" value={editingDocument.publishDate} required={isPublishDateRequired} onchange={mapToEditingDocument}/>
+                        </div>   
+                        <div class="col form-group">
+                            <label class="small-font">{label.object.DOCUMENT.REVIEW_DATE} <span class="required-asterisk" if:true={isReviewDateRequired}>* </span></label>
+                            <input type="date" class="form-control" data-mapping="reviewDate" value={editingDocument.reviewDate} required={isReviewDateRequired} disabled={isReviewDateDisabled} onchange={mapToEditingDocument}/> 
+                        </div>
+                        <div class="col form-group">
+                            <label class="small-font">{label.object.DOCUMENT.EFFECTIVE_DATE} <span class="required-asterisk" if:true={isEffectiveDateRequired}>* </span></label>
+                            <input type="date" class="form-control" data-mapping="effectiveDate" value={editingDocument.effectiveDate} required={isEffectiveDateRequired} onchange={mapToEditingDocument}/>
+                        </div>
+                    </div>
+                </div>
+                <hr/>
+                <c-ig-file-picker onfileselected={updateFiles} onfileunselected={unselectedFile} display-file={fileToDisplay}></c-ig-file-picker>
+            </div>
+            <div class="col-12 mt-5 text-center">
+                <button class={uploadButtonClass} disabled={isUploadButtonDisabled} onclick={uploadNewDocument}>{label.custom.ig_save}</button>
+            </div>
+        </div>
+        <c-ig-modal class="delete-modal" disabled={modalDisabled} header={label.custom.ig_remove_document_title} onaccept={deleteModalAcceptClick}>
+            <div if:true={editingDocument}>
+                <p class="text-center">{labelRemoveDocumentWarning}</p>
+            </div>
+        </c-ig-modal>
+    </div>
+</template>

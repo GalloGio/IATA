@@ -1,0 +1,36 @@
+<template>
+
+    <li class={mainLiClass} data-section={chapter.procedure.Name}>
+
+        <!-- Chapter header icon -->
+        <div class={chapterIconClass} onclick={toggleChapter}>
+            <div class="display-inline-flex slds-grid_vertical-align-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32">
+                    <use xlink:href={chapterIcon}></use>
+                </svg>
+                <span class={chapterNameClass}>{chapter.procedure.Name__c}</span>
+                <img if:true={chapter.modified} src={resources.icons.png.warning} class="warning-icon-right slds-m-right_xxx-small" title={label.custom.ig_chapters_with_modifications}>
+            </div>  
+        </div>  
+
+        <!-- Section list -->
+        <ul if:true={showChapterExpanded} class={sublistClass}>
+            <template for:each={sectionList} for:item="subprocedure">
+                <template if:true={subprocedure.isSelected}>
+                    <li key={subprocedure.procedure.Id} class={subitemLiActiveClass} data-id={subprocedure.procedure.Id} data-section={subprocedure.procedure.Id} title={subprocedure.procedure.Name__c} onclick={clickedSection}>
+                        <span>{subprocedure.index}</span>&nbsp;<span class={subchapterNameClass}>{subprocedure.procedure.Name__c}</span>
+                        <img if:true={subprocedure.modified} src={resources.icons.png.warning} class="warning-icon-right slds-m-right_xxx-small">
+                    </li>
+                </template>
+                <template if:false={subprocedure.isSelected}>
+                    <li key={subprocedure.procedure.Id} class={subitemLiClass} data-id={subprocedure.procedure.Id} data-section={subprocedure.procedure.Id} title={subprocedure.procedure.Name__c} onclick={clickedSection}>
+                        <span>{subprocedure.index}</span>&nbsp;<span class={subchapterNameClass}>{subprocedure.procedure.Name__c}</span>
+                        <img if:true={subprocedure.modified} src={resources.icons.png.warning} class="warning-icon-right slds-m-right_xxx-small">
+                    </li>
+                </template>
+            </template>
+        </ul>
+        
+    </li>
+
+</template>

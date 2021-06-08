@@ -686,10 +686,11 @@ NOT(CONTAINS($User.Customer_type__c,&quot;Agency&quot;))
             <restricted>true</restricted>
             <valueSetName>Contact_Role_Details</valueSetName>
             <valueSettings>
+                <controllingFieldValue>One Source</controllingFieldValue>
                 <controllingFieldValue>E&amp;F</controllingFieldValue>
                 <controllingFieldValue>MedAire</controllingFieldValue>
                 <controllingFieldValue>Training</controllingFieldValue>
-                <controllingFieldValue>One Source</controllingFieldValue>
+                <controllingFieldValue>IGOM</controllingFieldValue>
                 <valueName>Operational Contact</valueName>
             </valueSettings>
         </valueSet>
@@ -1826,6 +1827,10 @@ IF(OR(
             </values>
             <values>
                 <fullName>IFTP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IGOM</fullName>
                 <default>false</default>
             </values>
             <values>
