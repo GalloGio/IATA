@@ -56,7 +56,7 @@
     </values>
     <values>
         <field>Partial_List_Order__c</field>
-        <value xsi:type="xsd:string">1</value>
+        <value xsi:type="xsd:string">2</value>
     </values>
     <values>
         <field>Placeholder_Custom_Label__c</field>
