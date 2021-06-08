@@ -11816,6 +11816,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <custom>false</custom>
+    <customPermissions>
+        <enabled>true</enabled>
+        <name>Grant_SIS_Service</name>
+    </customPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>ACCA_Service_Request__c.ACCA_Service_Request_Subject__c</field>
