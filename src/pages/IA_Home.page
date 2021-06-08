@@ -192,19 +192,19 @@
 			<!-- MAIN Form -->
 			<apex:form id="mainForm" styleclass="form-inline">
 
-				<apex:actionFunction name="goToAllAgreements" action="{!null}" rerender="mainPageBlock" oncomplete="modalOnComplete('hidden');" status="loadingStatus">
+				<apex:actionFunction name="goToAllAgreements" action="{!null}" rerender="mainPageBlock" oncomplete="modalOnComplete('auto');" status="loadingStatus">
 					<apex:param name="key" value="ALL" assignTo="{!showSection}"/>
 				</apex:actionFunction>
-				<apex:actionFunction name="goToPendingRequests" action="{!null}" rerender="mainPageBlock" oncomplete="modalOnComplete('hidden');" status="loadingStatus">
+				<apex:actionFunction name="goToPendingRequests" action="{!null}" rerender="mainPageBlock" oncomplete="modalOnComplete('auto');" status="loadingStatus">
 					<apex:param name="key" value="REQ" assignTo="{!showSection}"/>
 				</apex:actionFunction>
-				<apex:actionFunction name="goToNewAgreements" action="{!null}" rerender="mainPageBlock" oncomplete="modalOnComplete('hidden');" status="loadingStatus">
+				<apex:actionFunction name="goToNewAgreements" action="{!null}" rerender="mainPageBlock" oncomplete="modalOnComplete('auto');" status="loadingStatus">
 					<apex:param name="key" value="NEW" assignTo="{!showSection}"/>
 				</apex:actionFunction>
-				<apex:actionFunction name="goToContacts" action="{!null}" rerender="mainPageBlock" oncomplete="modalOnComplete('hidden');" status="loadingStatus">
+				<apex:actionFunction name="goToContacts" action="{!null}" rerender="mainPageBlock" oncomplete="modalOnComplete('auto');" status="loadingStatus">
 					<apex:param name="key" value="CONTACTS" assignTo="{!showSection}"/>
 				</apex:actionFunction>
-				<apex:actionFunction name="goToMemorandums" action="{!null}" rerender="mainPageBlock" oncomplete="modalOnComplete('hidden');" status="loadingStatus">
+				<apex:actionFunction name="goToMemorandums" action="{!null}" rerender="mainPageBlock" oncomplete="modalOnComplete('auto');" status="loadingStatus">
 					<apex:param name="key" value="MEMOS" assignTo="{!showSection}"/>
 				</apex:actionFunction>
 
