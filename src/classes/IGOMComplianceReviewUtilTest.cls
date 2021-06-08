@@ -2,6 +2,9 @@
 public inherited sharing class IGOMComplianceReviewUtilTest {
 
 	public static final String GAP_NAME = 'Compliance Review';
+	public static final String NEW_GAP_NAME = 'New GAP analysis';
+	public static final String EXC_NOT_THROWN = 'Exception not thrown';
+	public static final String UNEXP_EXC_CAUGHT = 'Unexpected exception caught ';
 
 	@TestSetup
 	static void makeData() {
@@ -236,11 +239,11 @@ public inherited sharing class IGOMComplianceReviewUtilTest {
 		System.runAs(user){
 			try {
 				List<IGOMComplianceReviewUtil.ComplianceReview> comps = IGOMComplianceReviewUtil.getEditableGapAnalysisList(station.Id);
-				System.assert(false, 'Exception not thrown');
+				System.assert(false, EXC_NOT_THROWN);
 			} catch (AuraHandledException exc) {
 				System.assert(true);
 			} catch (Exception error) {
-				System.assert(false, 'Unexpected exception caught ' + error);
+				System.assert(false, UNEXP_EXC_CAUGHT + error);
 			}
 		}
 		Test.stopTest();
@@ -314,11 +317,11 @@ public inherited sharing class IGOMComplianceReviewUtilTest {
 		System.runAs(user){
 			try {
 				IGOMComplianceReviewUtil.getImportableGapAnalysisList(station.Id);
-				System.assert(false, 'Exception not thrown');
+				System.assert(false, EXC_NOT_THROWN);
 			} catch (AuraHandledException exc) {
 				System.assert(true);
 			} catch (Exception error) {
-				System.assert(false, 'Unexpected exception caught ' + error);
+				System.assert(false, UNEXP_EXC_CAUGHT + error);
 			}
 		}
 		Test.stopTest();
@@ -361,11 +364,11 @@ public inherited sharing class IGOMComplianceReviewUtilTest {
 		System.runAs(user){
 			try {
 				IGOMComplianceReviewUtil.deleteComplianceReview(gap.Id);
-				System.assert(false, 'Exception not thrown');
+				System.assert(false, EXC_NOT_THROWN);
 			} catch (AuraHandledException exc) {
 				System.assert(true);
 			} catch (Exception error) {
-				System.assert(false, 'Unexpected exception caught ' + error);
+				System.assert(false, UNEXP_EXC_CAUGHT + error);
 			}
 		}
 		Test.stopTest();
@@ -413,11 +416,11 @@ public inherited sharing class IGOMComplianceReviewUtilTest {
 		System.runAs(user){
 			try {
 				IGOMComplianceReviewUtil.importIGOMProceduresAsConformity(gap.Id);
-				System.assert(false, 'Exception not thrown');
+				System.assert(false, EXC_NOT_THROWN);
 			} catch (AuraHandledException exc) {
 				System.assert(true);
 			} catch (Exception error) {
-				System.assert(false, 'Unexpected exception caught ' + error);
+				System.assert(false, UNEXP_EXC_CAUGHT + error);
 			}
 		}
 		Test.stopTest();
@@ -476,11 +479,11 @@ public inherited sharing class IGOMComplianceReviewUtilTest {
 		System.runAs(user){
 			try {
 				compRev = IGOMComplianceReviewUtil.getFullGapAnalysis(gap.Id);
-				System.assert(false, 'Exception not thrown');
+				System.assert(false, EXC_NOT_THROWN);
 			} catch (AuraHandledException exc) {
 				System.assert(true);
 			} catch (Exception error) {
-				System.assert(false, 'Unexpected exception caught ' + error);
+				System.assert(false, UNEXP_EXC_CAUGHT + error);
 			}
 		}
 		Test.stopTest();
@@ -502,7 +505,7 @@ public inherited sharing class IGOMComplianceReviewUtilTest {
 		IGOMComplianceReviewUtil.ComplianceReview createdGap;
 		Test.startTest();
 		System.runAs(user){
-			createdGap = IGOMComplianceReviewUtil.createNewGapAnalysis(station.Id, 'New GAP analysis', igomDocument.Id);
+			createdGap = IGOMComplianceReviewUtil.createNewGapAnalysis(station.Id, NEW_GAP_NAME, igomDocument.Id);
 		}
 		Test.stopTest();
 
@@ -528,12 +531,12 @@ public inherited sharing class IGOMComplianceReviewUtilTest {
 		Test.startTest();
 		System.runAs(user){
 			try {
-				createdGap = IGOMComplianceReviewUtil.createNewGapAnalysis(station.Id, 'New GAP analysis', igomDocument.Id);
-				System.assert(false, 'Exception not thrown');
+				createdGap = IGOMComplianceReviewUtil.createNewGapAnalysis(station.Id, NEW_GAP_NAME, igomDocument.Id);
+				System.assert(false, EXC_NOT_THROWN);
 			} catch (AuraHandledException exc) {
 				System.assert(true);
 			} catch (Exception error) {
-				System.assert(false, 'Unexpected exception caught ' + error);
+				System.assert(false, UNEXP_EXC_CAUGHT + error);
 			}
 		}
 		Test.stopTest();
@@ -554,7 +557,7 @@ public inherited sharing class IGOMComplianceReviewUtilTest {
 		IGOMComplianceReviewUtil.ComplianceReview createdGap;
 		Test.startTest();
 		System.runAs(user){
-			createdGap = IGOMComplianceReviewUtil.importGapAnalysis(station.Id, complianceReviewToCopy.Id, 'New GAP analysis');
+			createdGap = IGOMComplianceReviewUtil.importGapAnalysis(station.Id, complianceReviewToCopy.Id, NEW_GAP_NAME);
 		}
 		Test.stopTest();
 
@@ -580,7 +583,7 @@ public inherited sharing class IGOMComplianceReviewUtilTest {
 		IGOMComplianceReviewUtil.ComplianceReview createdGap;
 		Test.startTest();
 		System.runAs(user){
-			createdGap = IGOMComplianceReviewUtil.importGapAnalysis(station.Id, complianceReviewToCopy.Id, 'New GAP analysis');
+			createdGap = IGOMComplianceReviewUtil.importGapAnalysis(station.Id, complianceReviewToCopy.Id, NEW_GAP_NAME);
 		}
 		Test.stopTest();
 
@@ -604,12 +607,12 @@ public inherited sharing class IGOMComplianceReviewUtilTest {
 		IGOMComplianceReviewUtil.ComplianceReview createdGap;
 		Test.startTest();
 		try {
-			createdGap = IGOMComplianceReviewUtil.importGapAnalysis(station.Id, complianceReviewToCopy.Id, 'New GAP analysis');
-			System.assert(false, 'Exception not thrown');
+			createdGap = IGOMComplianceReviewUtil.importGapAnalysis(station.Id, complianceReviewToCopy.Id, NEW_GAP_NAME);
+			System.assert(false, EXC_NOT_THROWN);
 		} catch (AuraHandledException exc) {
 			System.assert(true);
 		} catch (Exception error) {
-			System.assert(false, 'Unexpected exception caught ' + error);
+			System.assert(false, UNEXP_EXC_CAUGHT + error);
 		}
 		Test.stopTest();
 	}
@@ -631,12 +634,12 @@ public inherited sharing class IGOMComplianceReviewUtilTest {
 		Test.startTest();
 		System.runAs(user){
 			try {
-				createdGap = IGOMComplianceReviewUtil.importGapAnalysis(station.Id, complianceReviewToCopy.Id, 'New GAP analysis');
-				System.assert(false, 'Exception not thrown');
+				createdGap = IGOMComplianceReviewUtil.importGapAnalysis(station.Id, complianceReviewToCopy.Id, NEW_GAP_NAME);
+				System.assert(false, EXC_NOT_THROWN);
 			} catch (AuraHandledException exc) {
 				System.assert(true);
 			} catch (Exception error) {
-				System.assert(false, 'Unexpected exception caught ' + error);
+				System.assert(false, UNEXP_EXC_CAUGHT + error);
 			}
 		}
 		Test.stopTest();
@@ -727,11 +730,11 @@ public inherited sharing class IGOMComplianceReviewUtilTest {
 		System.runAs(user){
 			try {
 				createdGap = IGOMComplianceReviewUtil.publishGapAnalysis(gapAnalysis.Id, chaptersToPublish, effectiveDate, effectiveDate.addDays(-9), new Map<String, List<Id>>());
-				System.assert(false, 'Exception not thrown');
+				System.assert(false, EXC_NOT_THROWN);
 			} catch (AuraHandledException exc) {
 				System.assert(true);
 			} catch (Exception error) {
-				System.assert(false, 'Unexpected exception caught ' + error);
+				System.assert(false, UNEXP_EXC_CAUGHT + error);
 			}
 		}
 		Test.stopTest();
@@ -803,11 +806,11 @@ public inherited sharing class IGOMComplianceReviewUtilTest {
 		System.runAs(user){
 			try {
 				gaps = IGOMComplianceReviewUtil.getAllPublishedGapAnalyses(station.Id);
-				System.assert(false, 'Exception not thrown');
+				System.assert(false, EXC_NOT_THROWN);
 			} catch (AuraHandledException exc) {
 				System.assert(true);
 			} catch (Exception error) {
-				System.assert(false, 'Unexpected exception caught ' + error);
+				System.assert(false, UNEXP_EXC_CAUGHT + error);
 			}
 		}
 		Test.stopTest();
@@ -855,11 +858,11 @@ public inherited sharing class IGOMComplianceReviewUtilTest {
 		System.runAs(user){
 			try {
 				stationId = IGOMComplianceReviewUtil.checkPermissionOnComplianceReview(gapAnalysis.Id, IGOMConstants.PERMISSIONS.EDIT_GAP);
-				System.assert(false, 'Exception not thrown');
+				System.assert(false, EXC_NOT_THROWN);
 			} catch (AuraHandledException exc) {
 				System.assert(true);
 			} catch (Exception error) {
-				System.assert(false, 'Unexpected exception caught ' + error);
+				System.assert(false, UNEXP_EXC_CAUGHT + error);
 			}
 		}
 		Test.stopTest();

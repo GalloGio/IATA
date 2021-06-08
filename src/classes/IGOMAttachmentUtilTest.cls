@@ -1,6 +1,11 @@
 @isTest
 private class IGOMAttachmentUtilTest
 {
+	public static final String ACC_TEST_NAME = 'Test Account';
+	public static final String ATT_CONTENT_TYPE = 'text/plain';
+	public static final String ATT_TEST_NAME = 'Test Attachment';
+	public static final String ATT_TEST_BODY = 'Test body for the attachment';
+
 	@TestSetup
 	static void makeData(){
 		insert new Apex_Setting__c(
@@ -13,7 +18,7 @@ private class IGOMAttachmentUtilTest
 
 	@isTest
 	private static void testInvalidDataUpload() {
-		Account acc = new Account(Name = 'Test Account');
+		Account acc = new Account(Name = ACC_TEST_NAME);
 		insert acc;
 
 		System.assertEquals(0, [SELECT Id FROM Attachment].size());
@@ -21,7 +26,7 @@ private class IGOMAttachmentUtilTest
 		Test.startTest();
 
 		try {
-			Id attachmentId = IGOMAttachmentUtil.saveAttachment(acc.Id, 'Filename', 'text/plain', null, '%%==');
+			Id attachmentId = IGOMAttachmentUtil.saveAttachment(acc.Id, 'Filename', ATT_CONTENT_TYPE, null, '%%==');
 			System.assert(false);
 		} catch(Exception ex) {
 			System.assert(true);
@@ -34,14 +39,14 @@ private class IGOMAttachmentUtilTest
 
 	@isTest
 	private static void testSingleUpload() {
-		Account acc = new Account(Name = 'Test Account');
+		Account acc = new Account(Name = ACC_TEST_NAME);
 		insert acc;
 
 		System.assertEquals(0, [SELECT Id FROM Attachment].size());
 
 		Test.startTest();
 
-		Id attachmentId = IGOMAttachmentUtil.saveAttachment(acc.Id, 'Filename', 'text/plain', null, EncodingUtil.base64Encode(Blob.valueOf('exampleFile')));
+		Id attachmentId = IGOMAttachmentUtil.saveAttachment(acc.Id, 'Filename', ATT_CONTENT_TYPE, null, EncodingUtil.base64Encode(Blob.valueOf('exampleFile')));
 
 		Test.stopTest();
 
@@ -50,13 +55,13 @@ private class IGOMAttachmentUtilTest
 
 		System.assertEquals('Filename', attachments[0].Name);
 		System.assertEquals(acc.Id, attachments[0].ParentId);
-		System.assertEquals('text/plain', attachments[0].ContentType);
+		System.assertEquals(ATT_CONTENT_TYPE, attachments[0].ContentType);
 		System.assertEquals(Blob.valueOf('exampleFile'), attachments[0].Body);
 	}
 
 	@isTest
 	private static void testChunkedUpload() {
-		Account acc = new Account(Name = 'Test Account');
+		Account acc = new Account(Name = ACC_TEST_NAME);
 		insert acc;
 
 		System.assertEquals(0, [SELECT Id FROM Attachment].size());
@@ -65,8 +70,8 @@ private class IGOMAttachmentUtilTest
 
 		String fullFile = EncodingUtil.base64Encode(Blob.valueOf('exampleFile'));
 
-		Id attachmentId = IGOMAttachmentUtil.saveAttachment(acc.Id, 'Filename', 'text/plain', null, fullFile.substring(0,8));
-		IGOMAttachmentUtil.saveAttachment(acc.Id, 'Filename', 'text/plain', attachmentId, fullFile.substring(8));
+		Id attachmentId = IGOMAttachmentUtil.saveAttachment(acc.Id, 'Filename', ATT_CONTENT_TYPE, null, fullFile.substring(0,8));
+		IGOMAttachmentUtil.saveAttachment(acc.Id, 'Filename', ATT_CONTENT_TYPE, attachmentId, fullFile.substring(8));
 
 		Test.stopTest();
 
@@ -75,7 +80,7 @@ private class IGOMAttachmentUtilTest
 
 		System.assertEquals('Filename', attachments[0].Name);
 		System.assertEquals(acc.Id, attachments[0].ParentId);
-		System.assertEquals('text/plain', attachments[0].ContentType);
+		System.assertEquals(ATT_CONTENT_TYPE, attachments[0].ContentType);
 		System.assertEquals(Blob.valueOf('exampleFile'), attachments[0].Body);
 	}
 
@@ -88,8 +93,8 @@ private class IGOMAttachmentUtilTest
 		Compliance_Review_Part__c complianceReviewPart = IGOMTestFactory.createComplianceReviewPart(complianceReview.Id, null, document.Id);
 		insert complianceReviewPart;
 		Attachment attachment = new Attachment(
-			Name = 'Test Attachment',
-			Body = Blob.valueOf('Test body for the attachment'),
+			Name = ATT_TEST_NAME,
+			Body = Blob.valueOf(ATT_TEST_BODY),
 			ParentId = complianceReviewPart.Id
 		);
 		insert attachment;
@@ -110,8 +115,8 @@ private class IGOMAttachmentUtilTest
 		Document__c document = IGOMTestFactory.documentFactoryCreation(1, null, 'Example Document', 'English', IGOMConstants.DOCUMENT.RECORD_TYPE.GOM)[0];
 		insert document;
 		Attachment attachment = new Attachment(
-			Name = 'Test Attachment',
-			Body = Blob.valueOf('Test body for the attachment'),
+			Name = ATT_TEST_NAME,
+			Body = Blob.valueOf(ATT_TEST_BODY),
 			ParentId = document.Id
 		);
 		insert attachment;
@@ -129,11 +134,11 @@ private class IGOMAttachmentUtilTest
 
 	@isTest
 	private static void testDeleteAttachmentOfAccountError() {
-		Account acc = new Account(Name = 'Test Account');
+		Account acc = new Account(Name = ACC_TEST_NAME);
 		insert acc;
 		Attachment attachment = new Attachment(
-			Name = 'Test Attachment',
-			Body = Blob.valueOf('Test body for the attachment'),
+			Name = ATT_TEST_NAME,
+			Body = Blob.valueOf(ATT_TEST_BODY),
 			ParentId = acc.Id
 		);
 		insert attachment;
@@ -156,11 +161,11 @@ private class IGOMAttachmentUtilTest
 
 	@isTest
 	private static void testDeleteAccountError() {
-		Account acc = new Account(Name = 'Test Account');
+		Account acc = new Account(Name = ACC_TEST_NAME);
 		insert acc;
 		Attachment attachment = new Attachment(
-			Name = 'Test Attachment',
-			Body = Blob.valueOf('Test body for the attachment'),
+			Name = ATT_TEST_NAME,
+			Body = Blob.valueOf(ATT_TEST_BODY),
 			ParentId = acc.Id
 		);
 		insert attachment;
@@ -184,8 +189,8 @@ private class IGOMAttachmentUtilTest
 		Account destinationAcc = new Account(Name = 'Destination Account');
 		insert destinationAcc;
 		Attachment originalAttachment = new Attachment(
-			Name = 'Test Attachment',
-			Body = Blob.valueOf('Test body for the attachment'),
+			Name = ATT_TEST_NAME,
+			Body = Blob.valueOf(ATT_TEST_BODY),
 			ParentId = sourceAcc.Id
 		);
 		insert originalAttachment;
@@ -212,8 +217,8 @@ private class IGOMAttachmentUtilTest
 		System.assertEquals(parentIdToAttachments.get(destinationAcc.Id).size(), 1);
 		// Verify the contents
 		for (Attachment attachment : parentIdToAttachments.get(destinationAcc.Id)) {
-			if (attachment.Name == 'Test Attachment') {
-				System.assertEquals(Blob.valueOf('Test body for the attachment'), attachment.Body);
+			if (attachment.Name == ATT_TEST_NAME) {
+				System.assertEquals(Blob.valueOf(ATT_TEST_BODY), attachment.Body);
 			} else {
 				System.assert(false);
 			}

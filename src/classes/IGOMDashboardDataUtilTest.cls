@@ -1,6 +1,10 @@
 @isTest
 private class IGOMDashboardDataUtilTest {
 
+	private static String TEST_NAME = 'Test name ';
+	public static final String EXC_NOT_THROWN = 'Exception not thrown';
+	public static final String UNEXP_EXC_CAUGHT = 'Unexpected exception caught ';
+
 	@TestSetup
 	static void makeData() {
 		List<Compliance_Review_Part__c> complianceReviewParts = IGOMTestFactory.createExampleComplianceReviewData();
@@ -33,9 +37,9 @@ private class IGOMDashboardDataUtilTest {
 		}
 		Test.stopTest();
 
-		IGOMDashboardDataUtil.StationSummary stationSummary1 = stationIdToSummary.get(accountRoleNameToId.get('Test name 0'));
-		IGOMDashboardDataUtil.StationSummary stationSummary2 = stationIdToSummary.get(accountRoleNameToId.get('Test name 1'));
-		IGOMDashboardDataUtil.StationSummary stationSummary3 = stationIdToSummary.get(accountRoleNameToId.get('Test name 2'));
+		IGOMDashboardDataUtil.StationSummary stationSummary1 = stationIdToSummary.get(accountRoleNameToId.get(TEST_NAME + '0'));
+		IGOMDashboardDataUtil.StationSummary stationSummary2 = stationIdToSummary.get(accountRoleNameToId.get(TEST_NAME + '1'));
+		IGOMDashboardDataUtil.StationSummary stationSummary3 = stationIdToSummary.get(accountRoleNameToId.get(TEST_NAME + '2'));
 		System.assertEquals(2, stationSummary1.lastGapAnalysisVariations);
 		System.assertEquals(1, stationSummary2.lastGapAnalysisVariations);
 		System.assertEquals(null, stationSummary3.lastGapAnalysisVariations);
@@ -68,7 +72,7 @@ private class IGOMDashboardDataUtilTest {
 		for (Account_Role__c accountRole : [SELECT Id, Account__r.Name FROM Account_Role__c]) {
 			accountRoleNameToId.put(accountRole.Account__r.Name, accountRole.Id);
 		}
-		Id stationId = accountRoleNameToId.get('Test name 0');
+		Id stationId = accountRoleNameToId.get(TEST_NAME + '0');
 
 		Map<String, Id> complianceReviewPartNameToId = new Map<String, Id>();
 		for (Compliance_Review_Part__c complianceReviewPart : [SELECT Id, Standard_Document_Part__r.Name__c FROM Compliance_Review_Part__c WHERE Compliance_Review__c = :complianceReview2Id]) {
@@ -103,11 +107,11 @@ private class IGOMDashboardDataUtilTest {
 		System.runAs(contactUser) {
 			try {
 				String userAcknowledgements = IGOMDashboardDataUtil.userToProcedureToAcknowledgementStatus(complianceReview2Id);
-				System.assert(false, 'Exception not thrown');
+				System.assert(false, EXC_NOT_THROWN);
 			} catch (AuraHandledException error) {
 				System.assert(true);
 			} catch (Exception error) {
-				System.assert(false, 'Unexpected exception catched ' + error);
+				System.assert(false, UNEXP_EXC_CAUGHT + error);
 			}
 		}
 
@@ -132,9 +136,9 @@ private class IGOMDashboardDataUtilTest {
 		}
 
 		System.assertEquals(3, statusPerStation.size());
-		System.assertEquals('Pending review', statusPerStation.get(accountRoleNameToId.get('Test name 0') + ':Test name 0'));
-		System.assertEquals('Reviewed', statusPerStation.get(accountRoleNameToId.get('Test name 1') + ':Test name 1'));
-		System.assertEquals('Non-existing', statusPerStation.get(accountRoleNameToId.get('Test name 2') + ':Test name 2'));
+		System.assertEquals('Pending review', statusPerStation.get(accountRoleNameToId.get(TEST_NAME + '0') + 'TEST_NAME + :0'));
+		System.assertEquals('Reviewed', statusPerStation.get(accountRoleNameToId.get(TEST_NAME + '1') + 'TEST_NAME + :1'));
+		System.assertEquals('Non-existing', statusPerStation.get(accountRoleNameToId.get(TEST_NAME + '2') + 'TEST_NAME + :2'));
 	}
 
 	@isTest
@@ -150,11 +154,11 @@ private class IGOMDashboardDataUtilTest {
 		System.runAs(contactUser) {
 			try {
 				Map<String, String> statusPerStation = IGOMDashboardDataUtil.statusPerStation();
-				System.assert(false, 'Exception not thrown');
+				System.assert(false, EXC_NOT_THROWN);
 			} catch (AuraHandledException error) {
 				System.assert(true);
 			} catch (Exception error) {
-				System.assert(false, 'Unexpected exception catched ' + error);
+				System.assert(false, UNEXP_EXC_CAUGHT + error);
 			}
 		}
 
@@ -185,7 +189,7 @@ private class IGOMDashboardDataUtilTest {
 		}
 
 		System.assertEquals(1, statusPerStation.size());
-		System.assertEquals('Pending review', statusPerStation.get(accountRoleNameToId.get('Test name 0') + ':Test name 0'));
+		System.assertEquals('Pending review', statusPerStation.get(accountRoleNameToId.get(TEST_NAME + '0') + 'TEST_NAME + :0'));
 	}
 
 	@isTest
@@ -202,11 +206,11 @@ private class IGOMDashboardDataUtilTest {
 		System.runAs(contactUser) {
 			try {
 				Map<String, String> statusPerStation = IGOMDashboardDataUtil.statusPerStation();
-				System.assert(false, 'Exception not thrown');
+				System.assert(false, EXC_NOT_THROWN);
 			} catch (AuraHandledException error) {
 				System.assert(true);
 			} catch (Exception error) {
-				System.assert(false, 'Unexpected exception catched ' + error);
+				System.assert(false, UNEXP_EXC_CAUGHT + error);
 			}
 		}
 
@@ -232,11 +236,11 @@ private class IGOMDashboardDataUtilTest {
 		System.runAs(contactUser) {
 			try {
 				Map<Id, IGOMDashboardDataUtil.StationSummary> stationIdToSummary = IGOMDashboardDataUtil.getStationSummary(accountRoleNameToId.values());
-				System.assert(false, 'Exception not thrown');
+				System.assert(false, EXC_NOT_THROWN);
 			} catch (AuraHandledException error) {
 				System.assert(true);
 			} catch (Exception error) {
-				System.assert(false, 'Unexpected exception catched ' + error);
+				System.assert(false, UNEXP_EXC_CAUGHT + error);
 			}
 		}
 
@@ -284,11 +288,11 @@ private class IGOMDashboardDataUtilTest {
 		System.runAs(contactUser) {
 			try {
 				Map<String, Map<Object, Integer>> variationStatusPerChapter = IGOMDashboardDataUtil.variationStatusPerChapter(complianceReview2Id);
-				System.assert(false, 'Exception not thrown');
+				System.assert(false, EXC_NOT_THROWN);
 			} catch (AuraHandledException error) {
 				System.assert(true);
 			} catch (Exception error) {
-				System.assert(false, 'Unexpected exception catched ' + error);
+				System.assert(false, UNEXP_EXC_CAUGHT + error);
 			}
 		}
 
@@ -331,11 +335,11 @@ private class IGOMDashboardDataUtilTest {
 		System.runAs(contactUser) {
 			try {
 				Map<String, Map<Object, Integer>> itemStatusPerChapter = IGOMDashboardDataUtil.itemStatusPerChapter(complianceReview2Id);
-				System.assert(false, 'Exception not thrown');
+				System.assert(false, EXC_NOT_THROWN);
 			} catch (AuraHandledException error) {
 				System.assert(true);
 			} catch (Exception error) {
-				System.assert(false, 'Unexpected exception catched ' + error);
+				System.assert(false, UNEXP_EXC_CAUGHT + error);
 			}
 		}
 

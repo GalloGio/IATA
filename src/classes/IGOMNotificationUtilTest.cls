@@ -3,6 +3,10 @@ private class IGOMNotificationUtilTest {
 
 	private static final String SUBJECT = 'Test subject';
 	private static final String BODY = 'Test body';
+	public static final String UNEXP_EXC_CAUGHT = 'Unexpected exception caught ';
+	public static final String IGOM_ADMIN = 'IGOM Admin';
+	public static final String ACTION_REQ = 'ACTION REQUIRED';
+	public static final String TEST_NAME = 'Test name 0';
 
 	@TestSetup
 	static void makeData() {
@@ -146,7 +150,7 @@ private class IGOMNotificationUtilTest {
 			} catch (AuraHandledException error) {
 				System.assert(true);
 			} catch (Exception error) {
-				System.assert(false, 'Unexpected exception catched ' + error);
+				System.assert(false, UNEXP_EXC_CAUGHT + error);
 			}
 		}
 
@@ -172,7 +176,7 @@ private class IGOMNotificationUtilTest {
 			} catch (AuraHandledException error) {
 				System.assert(true);
 			} catch (Exception error) {
-				System.assert(false, 'Unexpected exception catched ' + error);
+				System.assert(false, UNEXP_EXC_CAUGHT + error);
 			}
 		}
 
@@ -197,7 +201,7 @@ private class IGOMNotificationUtilTest {
 			} catch (AuraHandledException error) {
 				System.assert(true);
 			} catch (Exception error) {
-				System.assert(false, 'Unexpected exception catched ' + error);
+				System.assert(false, UNEXP_EXC_CAUGHT + error);
 			}
 		}
 
@@ -267,7 +271,7 @@ private class IGOMNotificationUtilTest {
 			} catch (AuraHandledException error) {
 				System.assert(true);
 			} catch (Exception error) {
-				System.assert(false, 'Unexpected exception catched ' + error);
+				System.assert(false, UNEXP_EXC_CAUGHT + error);
 			}
 		}
 
@@ -279,7 +283,7 @@ private class IGOMNotificationUtilTest {
 		IGOM_Contact_Role_Detail__c contactRoleDetail = 
 			[SELECT Id, Account_Role_Detail__c, Account_Contact_Role__r.Contact__c 
 			 FROM IGOM_Contact_Role_Detail__c 
-			 WHERE Account_Role_Detail__r.Account_Role__r.Account__r.Name = 'Test name 0' 
+			 WHERE Account_Role_Detail__r.Account_Role__r.Account__r.Name = :TEST_NAME 
 				   AND Role__c = :IGOMConstants.ROLES.ADMIN
 			 LIMIT 1];
 		User contactUser = [SELECT Id FROM User WHERE ContactId = :contactRoleDetail.Account_Contact_Role__r.Contact__c];
@@ -289,7 +293,7 @@ private class IGOMNotificationUtilTest {
 		IGOM_Contact_Role_Detail__c sameStationAcknowledgerContactRoleDetail = 
 		[SELECT Id, Account_Role_Detail__c, Account_Contact_Role__r.Contact__c 
 		 FROM IGOM_Contact_Role_Detail__c 
-		 WHERE Account_Role_Detail__r.Account_Role__r.Account__r.Name = 'Test name 0' 
+		 WHERE Account_Role_Detail__r.Account_Role__r.Account__r.Name = :TEST_NAME 
 			   AND Role__c = :IGOMConstants.ROLES.ACKNOWLEDGER
 		 LIMIT 1];
 		IGOM_Contact_Role_Detail__c parentStationContactRoleDetail = 
@@ -370,7 +374,7 @@ private class IGOMNotificationUtilTest {
 		IGOM_Contact_Role_Detail__c contactRoleDetail = 
 			[SELECT Id, Account_Role_Detail__c, Account_Contact_Role__r.Contact__c 
 			 FROM IGOM_Contact_Role_Detail__c 
-			 WHERE Account_Role_Detail__r.Account_Role__r.Account__r.Name = 'Test name 0' 
+			 WHERE Account_Role_Detail__r.Account_Role__r.Account__r.Name = :TEST_NAME 
 				   AND Role__c = :IGOMConstants.ROLES.ADMIN
 			 LIMIT 1];
 		User contactUser = [SELECT Id FROM User WHERE ContactId = :contactRoleDetail.Account_Contact_Role__r.Contact__c];
@@ -394,7 +398,7 @@ private class IGOMNotificationUtilTest {
 			} catch (AuraHandledException error) {
 				System.assert(true);
 			} catch (Exception error) {
-				System.assert(false, 'Unexpected exception catched ' + error);
+				System.assert(false, UNEXP_EXC_CAUGHT + error);
 			}
 		}
 
@@ -406,7 +410,7 @@ private class IGOMNotificationUtilTest {
 		IGOM_Contact_Role_Detail__c contactRoleDetail = 
 			[SELECT Id, Account_Role_Detail__c, Account_Contact_Role__r.Contact__c 
 			 FROM IGOM_Contact_Role_Detail__c 
-			 WHERE Account_Role_Detail__r.Account_Role__r.Account__r.Name = 'Test name 0' 
+			 WHERE Account_Role_Detail__r.Account_Role__r.Account__r.Name = :TEST_NAME 
 				   AND Role__c = :IGOMConstants.ROLES.ADMIN
 			 LIMIT 1];
 		User contactUser = [SELECT Id FROM User WHERE ContactId = :contactRoleDetail.Account_Contact_Role__r.Contact__c];
@@ -430,7 +434,7 @@ private class IGOMNotificationUtilTest {
 			} catch (AuraHandledException error) {
 				System.assert(true);
 			} catch (Exception error) {
-				System.assert(false, 'Unexpected exception catched ' + error);
+				System.assert(false, UNEXP_EXC_CAUGHT + error);
 			}
 		}
 
@@ -442,7 +446,7 @@ private class IGOMNotificationUtilTest {
 		IGOM_Contact_Role_Detail__c contactRoleDetail = 
 			[SELECT Id, Account_Role_Detail__c, Account_Contact_Role__r.Contact__c 
 			 FROM IGOM_Contact_Role_Detail__c 
-			 WHERE Account_Role_Detail__r.Account_Role__r.Account__r.Name = 'Test name 0' 
+			 WHERE Account_Role_Detail__r.Account_Role__r.Account__r.Name = :TEST_NAME 
 				   AND Role__c = :IGOMConstants.ROLES.ADMIN
 			 LIMIT 1];
 		User contactUser = [SELECT Id FROM User WHERE ContactId = :contactRoleDetail.Account_Contact_Role__r.Contact__c];
@@ -466,7 +470,7 @@ private class IGOMNotificationUtilTest {
 			} catch (AuraHandledException error) {
 				System.assert(true);
 			} catch (Exception error) {
-				System.assert(false, 'Unexpected exception catched ' + error);
+				System.assert(false, UNEXP_EXC_CAUGHT + error);
 			}
 		}
 
@@ -478,7 +482,7 @@ private class IGOMNotificationUtilTest {
 		IGOM_Contact_Role_Detail__c contactRoleDetail = 
 			[SELECT Id, Account_Role_Detail__c, Account_Contact_Role__r.Contact__c 
 			 FROM IGOM_Contact_Role_Detail__c 
-			 WHERE Account_Role_Detail__r.Account_Role__r.Account__r.Name = 'Test name 0' 
+			 WHERE Account_Role_Detail__r.Account_Role__r.Account__r.Name = :TEST_NAME 
 				   AND Role__c = :IGOMConstants.ROLES.ADMIN
 			 LIMIT 1];
 		User contactUser = [SELECT Id FROM User WHERE ContactId = :contactRoleDetail.Account_Contact_Role__r.Contact__c];
@@ -502,7 +506,7 @@ private class IGOMNotificationUtilTest {
 			} catch (AuraHandledException error) {
 				System.assert(true);
 			} catch (Exception error) {
-				System.assert(false, 'Unexpected exception catched ' + error);
+				System.assert(false, UNEXP_EXC_CAUGHT + error);
 			}
 		}
 
@@ -543,7 +547,7 @@ private class IGOMNotificationUtilTest {
 		} catch (AuraHandledException error) {
 			System.assert(true);
 		} catch (Exception error) {
-			System.assert(false, 'Unexpected exception catched ' + error);
+			System.assert(false, UNEXP_EXC_CAUGHT + error);
 		}
 
 		Test.stopTest();
@@ -564,7 +568,7 @@ private class IGOMNotificationUtilTest {
 		} catch (AuraHandledException error) {
 			System.assert(true);
 		} catch (Exception error) {
-			System.assert(false, 'Unexpected exception catched ' + error);
+			System.assert(false, UNEXP_EXC_CAUGHT + error);
 		}
 
 		Test.stopTest();
@@ -585,7 +589,7 @@ private class IGOMNotificationUtilTest {
 		} catch (AuraHandledException error) {
 			System.assert(true);
 		} catch (Exception error) {
-			System.assert(false, 'Unexpected exception catched ' + error);
+			System.assert(false, UNEXP_EXC_CAUGHT + error);
 		}
 
 		Test.stopTest();
@@ -598,7 +602,7 @@ private class IGOMNotificationUtilTest {
 		IGOM_Contact_Role_Detail__c contactRoleDetail = 
 			[SELECT Id, Account_Role_Detail__c, Account_Contact_Role__r.Contact__c 
 			 FROM IGOM_Contact_Role_Detail__c 
-			 WHERE Account_Role_Detail__r.Account_Role__r.Account__r.Name = 'Test name 0' 
+			 WHERE Account_Role_Detail__r.Account_Role__r.Account__r.Name = :TEST_NAME 
 				   AND Role__c = :IGOMConstants.ROLES.ADMIN
 			 LIMIT 1];
 		User contactUser = [SELECT Id FROM User WHERE ContactId = :contactRoleDetail.Account_Contact_Role__r.Contact__c];
@@ -649,7 +653,7 @@ private class IGOMNotificationUtilTest {
 		} catch (AuraHandledException error) {
 			System.assert(true);
 		} catch (Exception error) {
-			System.assert(false, 'Unexpected exception catched ' + error);
+			System.assert(false, UNEXP_EXC_CAUGHT + error);
 		}
 
 		Test.stopTest();
@@ -670,7 +674,7 @@ private class IGOMNotificationUtilTest {
 		} catch (AuraHandledException error) {
 			System.assert(true);
 		} catch (Exception error) {
-			System.assert(false, 'Unexpected exception catched ' + error);
+			System.assert(false, UNEXP_EXC_CAUGHT + error);
 		}
 
 		Test.stopTest();
@@ -683,7 +687,7 @@ private class IGOMNotificationUtilTest {
 		IGOM_Contact_Role_Detail__c contactRoleDetail = 
 			[SELECT Id, Account_Role_Detail__c, Account_Contact_Role__r.Contact__c, Account_Contact_Role__r.Contact__r.Name
 			 FROM IGOM_Contact_Role_Detail__c 
-			 WHERE Account_Role_Detail__r.Account_Role__r.Account__r.Name = 'Test name 0' 
+			 WHERE Account_Role_Detail__r.Account_Role__r.Account__r.Name = :TEST_NAME 
 				   AND Role__c = :IGOMConstants.ROLES.ADMIN];
 		User contactUser = [SELECT Id FROM User WHERE ContactId = :contactRoleDetail.Account_Contact_Role__r.Contact__c];
 
@@ -701,7 +705,7 @@ private class IGOMNotificationUtilTest {
 		IGOM_Contact_Role_Detail__c sameStationAcknowledgerContactRoleDetail = 
 		[SELECT Id, Account_Role_Detail__c, Account_Contact_Role__r.Contact__c, Account_Contact_Role__r.Contact__r.Name
 		 FROM IGOM_Contact_Role_Detail__c 
-		 WHERE Account_Role_Detail__r.Account_Role__r.Account__r.Name = 'Test name 0' AND Role__c = :IGOMConstants.ROLES.ACKNOWLEDGER];
+		 WHERE Account_Role_Detail__r.Account_Role__r.Account__r.Name = :TEST_NAME AND Role__c = :IGOMConstants.ROLES.ACKNOWLEDGER];
 		IGOM_Contact_Role_Detail__c parentStationContactRoleDetail = 
 		[SELECT Id, Account_Role_Detail__c, Account_Contact_Role__r.Contact__c, Account_Contact_Role__r.Contact__r.Name
 		 FROM IGOM_Contact_Role_Detail__c 
@@ -714,7 +718,7 @@ private class IGOMNotificationUtilTest {
 		
 		System.assertEquals(contactRoleDetail.Id, notifiableContacts.get(contactRoleDetail.Account_Contact_Role__r.Contact__c).id);
 		System.assertEquals(contactRoleDetail.Account_Contact_Role__r.Contact__r.Name, notifiableContacts.get(contactRoleDetail.Account_Contact_Role__r.Contact__c).fullname);
-		System.assertEquals('IGOM Admin', notifiableContacts.get(contactRoleDetail.Account_Contact_Role__r.Contact__c).origin);
+		System.assertEquals(IGOM_ADMIN, notifiableContacts.get(contactRoleDetail.Account_Contact_Role__r.Contact__c).origin);
 
 		System.assertEquals(sameStationAcknowledgerContactRoleDetail.Id, notifiableContacts.get(sameStationAcknowledgerContactRoleDetail.Account_Contact_Role__r.Contact__c).id);
 		System.assertEquals(sameStationAcknowledgerContactRoleDetail.Account_Contact_Role__r.Contact__r.Name, notifiableContacts.get(sameStationAcknowledgerContactRoleDetail.Account_Contact_Role__r.Contact__c).fullname);
@@ -722,7 +726,7 @@ private class IGOMNotificationUtilTest {
 		
 		System.assertEquals(parentStationContactRoleDetail.Id, notifiableContacts.get(parentStationContactRoleDetail.Account_Contact_Role__r.Contact__c).id);
 		System.assertEquals(parentStationContactRoleDetail.Account_Contact_Role__r.Contact__r.Name, notifiableContacts.get(parentStationContactRoleDetail.Account_Contact_Role__r.Contact__c).fullname);
-		System.assertEquals('IGOM Admin', notifiableContacts.get(parentStationContactRoleDetail.Account_Contact_Role__r.Contact__c).origin);
+		System.assertEquals(IGOM_ADMIN, notifiableContacts.get(parentStationContactRoleDetail.Account_Contact_Role__r.Contact__c).origin);
 		System.assertEquals('Test name 1', notifiableContacts.get(parentStationContactRoleDetail.Account_Contact_Role__r.Contact__c).stationName);
 	}
 
@@ -731,7 +735,7 @@ private class IGOMNotificationUtilTest {
 		IGOM_Contact_Role_Detail__c contactRoleDetail = 
 			[SELECT Id, Account_Role_Detail__c, Account_Contact_Role__r.Contact__c, Account_Contact_Role__r.Contact__r.Name
 			 FROM IGOM_Contact_Role_Detail__c 
-			 WHERE Account_Role_Detail__r.Account_Role__r.Account__r.Name = 'Test name 0' 
+			 WHERE Account_Role_Detail__r.Account_Role__r.Account__r.Name = :TEST_NAME 
 				   AND Role__c = :IGOMConstants.ROLES.ADMIN];
 		User contactUser = [SELECT Id FROM User WHERE ContactId = :contactRoleDetail.Account_Contact_Role__r.Contact__c];
 
@@ -741,7 +745,7 @@ private class IGOMNotificationUtilTest {
 
 		Map<Id, IGOMNotificationUtil.NotifiableContact> notifiableContacts;
 		System.runAs(contactUser) {
-			notifiableContacts = IGOMNotificationUtil.getGAPNotifiableContacts(complianceReview1.Id, 'ACTION REQUIRED');
+			notifiableContacts = IGOMNotificationUtil.getGAPNotifiableContacts(complianceReview1.Id, ACTION_REQ);
 		}
 
 		Test.stopTest();
@@ -749,7 +753,7 @@ private class IGOMNotificationUtilTest {
 		IGOM_Contact_Role_Detail__c sameStationAcknowledgerContactRoleDetail = 
 		[SELECT Id, Account_Role_Detail__c, Account_Contact_Role__r.Contact__c, Account_Contact_Role__r.Contact__r.Name
 		 FROM IGOM_Contact_Role_Detail__c 
-		 WHERE Account_Role_Detail__r.Account_Role__r.Account__r.Name = 'Test name 0' AND Role__c = :IGOMConstants.ROLES.ACKNOWLEDGER];
+		 WHERE Account_Role_Detail__r.Account_Role__r.Account__r.Name = :TEST_NAME AND Role__c = :IGOMConstants.ROLES.ACKNOWLEDGER];
 		
 		System.assertEquals(2, notifiableContacts.size());
 		System.assert(notifiableContacts.containsKey(contactRoleDetail.Account_Contact_Role__r.Contact__c));
@@ -757,7 +761,7 @@ private class IGOMNotificationUtilTest {
 		
 		System.assertEquals(contactRoleDetail.Id, notifiableContacts.get(contactRoleDetail.Account_Contact_Role__r.Contact__c).id);
 		System.assertEquals(contactRoleDetail.Account_Contact_Role__r.Contact__r.Name, notifiableContacts.get(contactRoleDetail.Account_Contact_Role__r.Contact__c).fullname);
-		System.assertEquals('IGOM Admin', notifiableContacts.get(contactRoleDetail.Account_Contact_Role__r.Contact__c).origin);
+		System.assertEquals(IGOM_ADMIN, notifiableContacts.get(contactRoleDetail.Account_Contact_Role__r.Contact__c).origin);
 
 		System.assertEquals(sameStationAcknowledgerContactRoleDetail.Id, notifiableContacts.get(sameStationAcknowledgerContactRoleDetail.Account_Contact_Role__r.Contact__c).id);
 		System.assertEquals(sameStationAcknowledgerContactRoleDetail.Account_Contact_Role__r.Contact__r.Name, notifiableContacts.get(sameStationAcknowledgerContactRoleDetail.Account_Contact_Role__r.Contact__c).fullname);
@@ -789,7 +793,7 @@ private class IGOMNotificationUtilTest {
 		IGOM_Contact_Role_Detail__c childStationsAdminContactRoleDetail = 
 		[SELECT Id, Account_Role_Detail__c, Account_Contact_Role__r.Contact__c, Account_Contact_Role__r.Contact__r.Name
 		 FROM IGOM_Contact_Role_Detail__c 
-		 WHERE Account_Role_Detail__r.Account_Role__r.Account__r.Name = 'Test name 0' AND Role__c = :IGOMConstants.ROLES.ADMIN];
+		 WHERE Account_Role_Detail__r.Account_Role__r.Account__r.Name = :TEST_NAME AND Role__c = :IGOMConstants.ROLES.ADMIN];
 		IGOM_Contact_Role_Detail__c grandchildStationsAdminContactRoleDetail = 
 		[SELECT Id, Account_Role_Detail__c, Account_Contact_Role__r.Contact__c, Account_Contact_Role__r.Contact__r.Name
 		 FROM IGOM_Contact_Role_Detail__c 
@@ -807,7 +811,7 @@ private class IGOMNotificationUtilTest {
 		
 		System.assertEquals(contactRoleDetail.Id, notifiableContacts.get(contactRoleDetail.Account_Contact_Role__r.Contact__c).id);
 		System.assertEquals(contactRoleDetail.Account_Contact_Role__r.Contact__r.Name, notifiableContacts.get(contactRoleDetail.Account_Contact_Role__r.Contact__c).fullname);
-		System.assertEquals('IGOM Admin', notifiableContacts.get(contactRoleDetail.Account_Contact_Role__r.Contact__c).origin);
+		System.assertEquals(IGOM_ADMIN, notifiableContacts.get(contactRoleDetail.Account_Contact_Role__r.Contact__c).origin);
 
 		System.assertEquals(sameStationAcknowledgerContactRoleDetail.Id, notifiableContacts.get(sameStationAcknowledgerContactRoleDetail.Account_Contact_Role__r.Contact__c).id);
 		System.assertEquals(sameStationAcknowledgerContactRoleDetail.Account_Contact_Role__r.Contact__r.Name, notifiableContacts.get(sameStationAcknowledgerContactRoleDetail.Account_Contact_Role__r.Contact__c).fullname);
@@ -815,12 +819,12 @@ private class IGOMNotificationUtilTest {
 		
 		System.assertEquals(childStationsAdminContactRoleDetail.Id, notifiableContacts.get(childStationsAdminContactRoleDetail.Account_Contact_Role__r.Contact__c).id);
 		System.assertEquals(childStationsAdminContactRoleDetail.Account_Contact_Role__r.Contact__r.Name, notifiableContacts.get(childStationsAdminContactRoleDetail.Account_Contact_Role__r.Contact__c).fullname);
-		System.assertEquals('IGOM Admin', notifiableContacts.get(childStationsAdminContactRoleDetail.Account_Contact_Role__r.Contact__c).origin);
-		System.assertEquals('Test name 0', notifiableContacts.get(childStationsAdminContactRoleDetail.Account_Contact_Role__r.Contact__c).stationName);
+		System.assertEquals(IGOM_ADMIN, notifiableContacts.get(childStationsAdminContactRoleDetail.Account_Contact_Role__r.Contact__c).origin);
+		System.assertEquals(TEST_NAME, notifiableContacts.get(childStationsAdminContactRoleDetail.Account_Contact_Role__r.Contact__c).stationName);
 		
 		System.assertEquals(grandchildStationsAdminContactRoleDetail.Id, notifiableContacts.get(grandchildStationsAdminContactRoleDetail.Account_Contact_Role__r.Contact__c).id);
 		System.assertEquals(grandchildStationsAdminContactRoleDetail.Account_Contact_Role__r.Contact__r.Name, notifiableContacts.get(grandchildStationsAdminContactRoleDetail.Account_Contact_Role__r.Contact__c).fullname);
-		System.assertEquals('IGOM Admin', notifiableContacts.get(grandchildStationsAdminContactRoleDetail.Account_Contact_Role__r.Contact__c).origin);
+		System.assertEquals(IGOM_ADMIN, notifiableContacts.get(grandchildStationsAdminContactRoleDetail.Account_Contact_Role__r.Contact__c).origin);
 		System.assertEquals('Test name 3', notifiableContacts.get(grandchildStationsAdminContactRoleDetail.Account_Contact_Role__r.Contact__c).stationName);
 	}
 
@@ -841,7 +845,7 @@ private class IGOMNotificationUtilTest {
 
 		Map<Id, IGOMNotificationUtil.NotifiableContact> notifiableContacts;
 		System.runAs(contactUser) {
-			notifiableContacts = IGOMNotificationUtil.getGAPNotifiableContacts(complianceReview1.Id, 'ACTION REQUIRED');
+			notifiableContacts = IGOMNotificationUtil.getGAPNotifiableContacts(complianceReview1.Id, ACTION_REQ);
 		}
 
 		Test.stopTest();
@@ -849,7 +853,7 @@ private class IGOMNotificationUtilTest {
 		IGOM_Contact_Role_Detail__c childStationsAdminContactRoleDetail = 
 		[SELECT Id, Account_Role_Detail__c, Account_Contact_Role__r.Contact__c, Account_Contact_Role__r.Contact__r.Name
 		 FROM IGOM_Contact_Role_Detail__c 
-		 WHERE Account_Role_Detail__r.Account_Role__r.Account__r.Name = 'Test name 0' AND Role__c = :IGOMConstants.ROLES.ADMIN];
+		 WHERE Account_Role_Detail__r.Account_Role__r.Account__r.Name = :TEST_NAME AND Role__c = :IGOMConstants.ROLES.ADMIN];
 		IGOM_Contact_Role_Detail__c grandchildStationsAdminContactRoleDetail = 
 		[SELECT Id, Account_Role_Detail__c, Account_Contact_Role__r.Contact__c, Account_Contact_Role__r.Contact__r.Name
 		 FROM IGOM_Contact_Role_Detail__c 
@@ -867,7 +871,7 @@ private class IGOMNotificationUtilTest {
 		
 		System.assertEquals(contactRoleDetail.Id, notifiableContacts.get(contactRoleDetail.Account_Contact_Role__r.Contact__c).id);
 		System.assertEquals(contactRoleDetail.Account_Contact_Role__r.Contact__r.Name, notifiableContacts.get(contactRoleDetail.Account_Contact_Role__r.Contact__c).fullname);
-		System.assertEquals('IGOM Admin', notifiableContacts.get(contactRoleDetail.Account_Contact_Role__r.Contact__c).origin);
+		System.assertEquals(IGOM_ADMIN, notifiableContacts.get(contactRoleDetail.Account_Contact_Role__r.Contact__c).origin);
 
 		System.assertEquals(sameStationAcknowledgerContactRoleDetail.Id, notifiableContacts.get(sameStationAcknowledgerContactRoleDetail.Account_Contact_Role__r.Contact__c).id);
 		System.assertEquals(sameStationAcknowledgerContactRoleDetail.Account_Contact_Role__r.Contact__r.Name, notifiableContacts.get(sameStationAcknowledgerContactRoleDetail.Account_Contact_Role__r.Contact__c).fullname);
@@ -875,13 +879,13 @@ private class IGOMNotificationUtilTest {
 		
 		System.assertEquals(childStationsAdminContactRoleDetail.Id, notifiableContacts.get(childStationsAdminContactRoleDetail.Account_Contact_Role__r.Contact__c).id);
 		System.assertEquals(childStationsAdminContactRoleDetail.Account_Contact_Role__r.Contact__r.Name, notifiableContacts.get(childStationsAdminContactRoleDetail.Account_Contact_Role__r.Contact__c).fullname);
-		System.assertEquals('IGOM Admin', notifiableContacts.get(childStationsAdminContactRoleDetail.Account_Contact_Role__r.Contact__c).origin);
-		System.assertEquals('Test name 0', notifiableContacts.get(childStationsAdminContactRoleDetail.Account_Contact_Role__r.Contact__c).stationName);
+		System.assertEquals(IGOM_ADMIN, notifiableContacts.get(childStationsAdminContactRoleDetail.Account_Contact_Role__r.Contact__c).origin);
+		System.assertEquals(TEST_NAME, notifiableContacts.get(childStationsAdminContactRoleDetail.Account_Contact_Role__r.Contact__c).stationName);
 		
 		System.assertEquals(grandchildStationsAdminContactRoleDetail.Id, notifiableContacts.get(grandchildStationsAdminContactRoleDetail.Account_Contact_Role__r.Contact__c).id);
 		System.assertEquals(grandchildStationsAdminContactRoleDetail.Account_Contact_Role__r.Contact__r.Name, notifiableContacts.get(grandchildStationsAdminContactRoleDetail.Account_Contact_Role__r.Contact__c).fullname);
-		System.assertEquals('IGOM Admin', notifiableContacts.get(childStationsAdminContactRoleDetail.Account_Contact_Role__r.Contact__c).origin);
-		System.assertEquals('Test name 0', notifiableContacts.get(childStationsAdminContactRoleDetail.Account_Contact_Role__r.Contact__c).stationName);
+		System.assertEquals(IGOM_ADMIN, notifiableContacts.get(childStationsAdminContactRoleDetail.Account_Contact_Role__r.Contact__c).origin);
+		System.assertEquals(TEST_NAME, notifiableContacts.get(childStationsAdminContactRoleDetail.Account_Contact_Role__r.Contact__c).stationName);
 	}
 
 	@isTest
@@ -899,11 +903,11 @@ private class IGOMNotificationUtilTest {
 
 		System.runAs(contactUser) {
 			try {
-				IGOMNotificationUtil.getGAPNotifiableContacts(complianceReview1.Id, 'ACTION REQUIRED');
+				IGOMNotificationUtil.getGAPNotifiableContacts(complianceReview1.Id, ACTION_REQ);
 			} catch (AuraHandledException error) {
 				System.assert(true);
 			} catch (Exception error) {
-				System.assert(false, 'Unexpected exception catched ' + error);
+				System.assert(false, UNEXP_EXC_CAUGHT + error);
 			}
 		}
 
@@ -915,7 +919,7 @@ private class IGOMNotificationUtilTest {
 		IGOM_Contact_Role_Detail__c contactRoleDetail = 
 			[SELECT Id, Account_Role_Detail__c, Account_Contact_Role__r.Contact__c, Account_Contact_Role__r.Contact__r.Name
 			 FROM IGOM_Contact_Role_Detail__c 
-			 WHERE Account_Role_Detail__r.Account_Role__r.Account__r.Name = 'Test name 0' 
+			 WHERE Account_Role_Detail__r.Account_Role__r.Account__r.Name = :TEST_NAME 
 				   AND Role__c = :IGOMConstants.ROLES.ADMIN];
 		User contactUser = [SELECT Id FROM User WHERE ContactId = :contactRoleDetail.Account_Contact_Role__r.Contact__c];
 
@@ -927,11 +931,11 @@ private class IGOMNotificationUtilTest {
 
 		System.runAs(contactUser) {
 			try {
-				IGOMNotificationUtil.getGAPNotifiableContacts(complianceReview1.Id, 'ACTION REQUIRED');
+				IGOMNotificationUtil.getGAPNotifiableContacts(complianceReview1.Id, ACTION_REQ);
 			} catch (AuraHandledException error) {
 				System.assert(true);
 			} catch (Exception error) {
-				System.assert(false, 'Unexpected exception catched ' + error);
+				System.assert(false, UNEXP_EXC_CAUGHT + error);
 			}
 		}
 
@@ -949,7 +953,7 @@ private class IGOMNotificationUtilTest {
 		} catch (AuraHandledException error) {
 			System.assert(true);
 		} catch (Exception error) {
-			System.assert(false, 'Unexpected exception catched ' + error);
+			System.assert(false, UNEXP_EXC_CAUGHT + error);
 		}
 
 		Test.stopTest();
@@ -960,7 +964,7 @@ private class IGOMNotificationUtilTest {
 		IGOM_Contact_Role_Detail__c contactRoleDetail = 
 			[SELECT Id, Account_Role_Detail__c, Account_Contact_Role__r.Contact__c, Account_Contact_Role__r.Contact__r.Name
 			 FROM IGOM_Contact_Role_Detail__c 
-			 WHERE Account_Role_Detail__r.Account_Role__r.Account__r.Name = 'Test name 0' 
+			 WHERE Account_Role_Detail__r.Account_Role__r.Account__r.Name = :TEST_NAME 
 				   AND Role__c = :IGOMConstants.ROLES.ADMIN];
 		User contactUser = [SELECT Id FROM User WHERE ContactId = :contactRoleDetail.Account_Contact_Role__r.Contact__c];
 
@@ -979,7 +983,7 @@ private class IGOMNotificationUtilTest {
 		IGOM_Contact_Role_Detail__c sameStationAcknowledgerContactRoleDetail = 
 		[SELECT Id, Account_Role_Detail__c, Account_Contact_Role__r.Contact__c, Account_Contact_Role__r.Contact__r.Name
 		 FROM IGOM_Contact_Role_Detail__c 
-		 WHERE Account_Role_Detail__r.Account_Role__r.Account__r.Name = 'Test name 0' AND Role__c = :IGOMConstants.ROLES.ACKNOWLEDGER];
+		 WHERE Account_Role_Detail__r.Account_Role__r.Account__r.Name = :TEST_NAME AND Role__c = :IGOMConstants.ROLES.ACKNOWLEDGER];
 		IGOM_Contact_Role_Detail__c parentStationContactRoleDetail = 
 		[SELECT Id, Account_Role_Detail__c, Account_Contact_Role__r.Contact__c, Account_Contact_Role__r.Contact__r.Name
 		 FROM IGOM_Contact_Role_Detail__c 
@@ -991,14 +995,14 @@ private class IGOMNotificationUtilTest {
 		
 		System.assertEquals(contactRoleDetail.Id, notifiableContacts.get(contactRoleDetail.Account_Contact_Role__r.Contact__c).id);
 		System.assertEquals(contactRoleDetail.Account_Contact_Role__r.Contact__r.Name, notifiableContacts.get(contactRoleDetail.Account_Contact_Role__r.Contact__c).fullname);
-		System.assertEquals('IGOM Admin', notifiableContacts.get(contactRoleDetail.Account_Contact_Role__r.Contact__c).origin);
+		System.assertEquals(IGOM_ADMIN, notifiableContacts.get(contactRoleDetail.Account_Contact_Role__r.Contact__c).origin);
 
 		System.assertEquals(sameStationAcknowledgerContactRoleDetail.Id, notifiableContacts.get(sameStationAcknowledgerContactRoleDetail.Account_Contact_Role__r.Contact__c).id);
 		System.assertEquals(sameStationAcknowledgerContactRoleDetail.Account_Contact_Role__r.Contact__r.Name, notifiableContacts.get(sameStationAcknowledgerContactRoleDetail.Account_Contact_Role__r.Contact__c).fullname);
 		System.assertEquals('Acknowledger', notifiableContacts.get(sameStationAcknowledgerContactRoleDetail.Account_Contact_Role__r.Contact__c).origin);
 		
 		System.assertEquals(parentStationContactRoleDetail.Id, notifiableContacts.get(parentStationContactRoleDetail.Account_Contact_Role__r.Contact__c).id);
-		System.assertEquals('IGOM Admin', notifiableContacts.get(parentStationContactRoleDetail.Account_Contact_Role__r.Contact__c).origin);
+		System.assertEquals(IGOM_ADMIN, notifiableContacts.get(parentStationContactRoleDetail.Account_Contact_Role__r.Contact__c).origin);
 		System.assertEquals('Test name 1', notifiableContacts.get(parentStationContactRoleDetail.Account_Contact_Role__r.Contact__c).stationName);
 	}
 
@@ -1060,7 +1064,7 @@ private class IGOMNotificationUtilTest {
 		} catch (AuraHandledException error) {
 			System.assert(true);
 		} catch (Exception error) {
-			System.assert(false, 'Unexpected exception catched ' + error);
+			System.assert(false, UNEXP_EXC_CAUGHT + error);
 		}
 		Test.stopTest();
 	}

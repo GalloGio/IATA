@@ -1,5 +1,7 @@
 @isTest
 private class IGOMPermissionsTest {
+	public static final String UNEXP_EXC_CAUGHT = 'Unexpected exception caught ';
+	public static final String TEST_NAME = 'Test name ';
 
 	@TestSetup
 	static void makeData() {
@@ -48,8 +50,8 @@ private class IGOMPermissionsTest {
 		}
 
         System.assertEquals(2, stationIdToRole.size());
-        System.assertEquals(IGOMConstants.ROLES.ADMIN, stationIdToRole.get(accountRoleNameToId.get('Test name 0')));
-        System.assertEquals(IGOMConstants.ROLES.ACKNOWLEDGER, stationIdToRole.get(accountRoleNameToId.get('Test name 1')));
+        System.assertEquals(IGOMConstants.ROLES.ADMIN, stationIdToRole.get(accountRoleNameToId.get(TEST_NAME+'0')));
+        System.assertEquals(IGOMConstants.ROLES.ACKNOWLEDGER, stationIdToRole.get(accountRoleNameToId.get(TEST_NAME+'1')));
     }
 
     @isTest
@@ -74,7 +76,7 @@ private class IGOMPermissionsTest {
 		}
 
         System.assertEquals(1, stationIdToRole.size());
-        System.assertEquals(IGOMConstants.ROLES.ADMIN, stationIdToRole.get(accountRoleDetailNameToId.get('Test name 1')));
+        System.assertEquals(IGOMConstants.ROLES.ADMIN, stationIdToRole.get(accountRoleDetailNameToId.get(TEST_NAME+'1')));
     }
 
     @isTest
@@ -95,7 +97,7 @@ private class IGOMPermissionsTest {
             } catch (AuraHandledException error) {
                 System.assert(true);
             } catch (Exception error) {
-                System.assert(false, 'Unexpected exception catched ' + error);
+                System.assert(false, UNEXP_EXC_CAUGHT + error);
             }
         }
 
@@ -114,7 +116,7 @@ private class IGOMPermissionsTest {
             } catch (AuraHandledException error) {
                 System.assert(true);
             } catch (Exception error) {
-                System.assert(false, 'Unexpected exception catched ' + error);
+                System.assert(false, UNEXP_EXC_CAUGHT + error);
             }
         }
 
@@ -269,7 +271,7 @@ private class IGOMPermissionsTest {
             } catch (AuraHandledException error) {
                 System.assert(true);
             } catch (Exception error) {
-                System.assert(false, 'Unexpected exception catched ' + error);
+                System.assert(false, UNEXP_EXC_CAUGHT + error);
             }
         }
 
@@ -294,11 +296,11 @@ private class IGOMPermissionsTest {
 
         System.runAs(contactUser) {
             try {
-                IGOMPermissions.getPermissions(accountRoleDetailNameToId.get('Test name 0'));
+                IGOMPermissions.getPermissions(accountRoleDetailNameToId.get(TEST_NAME+'0'));
             } catch (AuraHandledException error) {
                 System.assert(true);
             } catch (Exception error) {
-                System.assert(false, 'Unexpected exception catched ' + error);
+                System.assert(false, UNEXP_EXC_CAUGHT + error);
             }
         }
 
@@ -347,7 +349,7 @@ private class IGOMPermissionsTest {
 
         Map<String, Boolean> permissions;
         System.runAs(contactUser) {
-            permissions = IGOMPermissions.getPermissions(accountRoleDetailNameToId.get('Test name 0'));
+            permissions = IGOMPermissions.getPermissions(accountRoleDetailNameToId.get(TEST_NAME+'0'));
         }
 
         Test.stopTest();
@@ -385,7 +387,7 @@ private class IGOMPermissionsTest {
 
         Map<String, Boolean> permissions;
         System.runAs(contactUser) {
-            permissions = IGOMPermissions.getPermissions(accountRoleDetailNameToId.get('Test name 1'));
+            permissions = IGOMPermissions.getPermissions(accountRoleDetailNameToId.get(TEST_NAME+'1'));
         }
 
         Test.stopTest();
@@ -495,8 +497,8 @@ private class IGOMPermissionsTest {
 
         Set<Id> accountRoleDetailIdsSet = new Set<Id>(accountRoleDetailIds);
         System.assertEquals(2, accountRoleDetailIds.size());
-        System.assert(accountRoleDetailIdsSet.contains(accountRoleDetailNameToId.get('Test name 0')));
-        System.assert(accountRoleDetailIdsSet.contains(accountRoleDetailNameToId.get('Test name 1')));
+        System.assert(accountRoleDetailIdsSet.contains(accountRoleDetailNameToId.get(TEST_NAME+'0')));
+        System.assert(accountRoleDetailIdsSet.contains(accountRoleDetailNameToId.get(TEST_NAME+'1')));
     }
     
     @isTest 
@@ -521,7 +523,7 @@ private class IGOMPermissionsTest {
         Test.stopTest();
 
         System.assertEquals(1, accountRoleDetailIds.size());
-        System.assert(accountRoleDetailIds.contains(accountRoleDetailNameToId.get('Test name 0')));
+        System.assert(accountRoleDetailIds.contains(accountRoleDetailNameToId.get(TEST_NAME+'0')));
     }
 
     @isTest 
@@ -559,7 +561,7 @@ private class IGOMPermissionsTest {
 
         Boolean hasPermission;
         System.runAs(contactUser) {
-            hasPermission = IGOMPermissions.hasPermission(accountRoleDetailNameToId.get('Test name 0'), IGOMConstants.PERMISSIONS.MANAGE_STATION);
+            hasPermission = IGOMPermissions.hasPermission(accountRoleDetailNameToId.get(TEST_NAME+'0'), IGOMConstants.PERMISSIONS.MANAGE_STATION);
         }
 
         Test.stopTest();
@@ -583,7 +585,7 @@ private class IGOMPermissionsTest {
 
         Boolean hasPermission;
         System.runAs(contactUser) {
-            hasPermission = IGOMPermissions.hasPermission(accountRoleDetailNameToId.get('Test name 0'), IGOMConstants.PERMISSIONS.UPLOAD_MANUAL);
+            hasPermission = IGOMPermissions.hasPermission(accountRoleDetailNameToId.get(TEST_NAME+'0'), IGOMConstants.PERMISSIONS.UPLOAD_MANUAL);
         }
 
         Test.stopTest();
@@ -607,7 +609,7 @@ private class IGOMPermissionsTest {
 
         Boolean hasPermission;
         System.runAs(contactUser) {
-            hasPermission = IGOMPermissions.hasPermission(accountRoleDetailNameToId.get('Test name 1'), IGOMConstants.PERMISSIONS.MANAGE_STATION);
+            hasPermission = IGOMPermissions.hasPermission(accountRoleDetailNameToId.get(TEST_NAME+'1'), IGOMConstants.PERMISSIONS.MANAGE_STATION);
         }
 
         Test.stopTest();

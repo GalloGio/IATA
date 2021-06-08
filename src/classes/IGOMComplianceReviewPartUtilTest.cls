@@ -1,5 +1,12 @@
 @isTest
 private class IGOMComplianceReviewPartUtilTest {
+	public static final String SECT1_PROC1 = 'Section 1 Procedure 1';
+	public static final String SECT2_PROC1 = 'Section 2 Procedure 1';
+	public static final String SECT1_PROC2 = 'Section 1 Procedure 2';
+	public static final String TEST_PROV_TEXT = 'Test provision procedure text';
+	public static final String EXC_NOT_THROWN = 'Exception not thrown';
+	public static final String UNEX_EXC = 'Unexpected exception caught ';
+	public static final String UNKNOWN_EXC = 'Unknown exception caught ';
 
 	@TestSetup
 	static void makeData() {
@@ -31,18 +38,18 @@ private class IGOMComplianceReviewPartUtilTest {
 			procedureToComplianceReviewPart.put(complianceReviewPart.igomAuditableProcedureName, complianceReviewPart);
 		}
 		System.assertEquals(procedureToComplianceReviewPart.keySet().size(), 3);
-		System.assertEquals(procedureToComplianceReviewPart.get('Section 1 Procedure 1').variationStatus, IGOMConstants.PROCEDURE_COMPLIANCE.STATUS.VARIATION);
-		System.assertEquals(procedureToComplianceReviewPart.get('Section 2 Procedure 1').variationStatus, IGOMConstants.PROCEDURE_COMPLIANCE.STATUS.VARIATION);
-		System.assertEquals(procedureToComplianceReviewPart.get('Section 1 Procedure 2').variationStatus, IGOMConstants.PROCEDURE_COMPLIANCE.STATUS.CONFORMITY);
-		System.assertEquals(procedureToComplianceReviewPart.get('Section 1 Procedure 1').userProvisionProcedure, 'Test provision procedure text');
-		System.assertEquals(procedureToComplianceReviewPart.get('Section 2 Procedure 1').userProvisionProcedure, 'Test provision procedure text');
-		System.assertEquals(procedureToComplianceReviewPart.get('Section 1 Procedure 2').userProvisionProcedure, 'Test provision procedure text');
-		System.assertEquals(procedureToComplianceReviewPart.get('Section 1 Procedure 1').gapAnalysisId, complianceReview.Id);
-		System.assertEquals(procedureToComplianceReviewPart.get('Section 2 Procedure 1').gapAnalysisId, complianceReview.Id);
-		System.assertEquals(procedureToComplianceReviewPart.get('Section 1 Procedure 2').gapAnalysisId, complianceReview.Id);
-		System.assertEquals(procedureToComplianceReviewPart.get('Section 1 Procedure 1').document, gomDocument.Id);
-		System.assertEquals(procedureToComplianceReviewPart.get('Section 2 Procedure 1').document, gomDocument.Id);
-		System.assertEquals(procedureToComplianceReviewPart.get('Section 1 Procedure 2').document, gomDocument.Id);
+		System.assertEquals(procedureToComplianceReviewPart.get(SECT1_PROC1).variationStatus, IGOMConstants.PROCEDURE_COMPLIANCE.STATUS.VARIATION);
+		System.assertEquals(procedureToComplianceReviewPart.get(SECT2_PROC1).variationStatus, IGOMConstants.PROCEDURE_COMPLIANCE.STATUS.VARIATION);
+		System.assertEquals(procedureToComplianceReviewPart.get(SECT1_PROC2).variationStatus, IGOMConstants.PROCEDURE_COMPLIANCE.STATUS.CONFORMITY);
+		System.assertEquals(procedureToComplianceReviewPart.get(SECT1_PROC1).userProvisionProcedure, TEST_PROV_TEXT);
+		System.assertEquals(procedureToComplianceReviewPart.get(SECT2_PROC1).userProvisionProcedure, TEST_PROV_TEXT);
+		System.assertEquals(procedureToComplianceReviewPart.get(SECT1_PROC2).userProvisionProcedure, TEST_PROV_TEXT);
+		System.assertEquals(procedureToComplianceReviewPart.get(SECT1_PROC1).gapAnalysisId, complianceReview.Id);
+		System.assertEquals(procedureToComplianceReviewPart.get(SECT2_PROC1).gapAnalysisId, complianceReview.Id);
+		System.assertEquals(procedureToComplianceReviewPart.get(SECT1_PROC2).gapAnalysisId, complianceReview.Id);
+		System.assertEquals(procedureToComplianceReviewPart.get(SECT1_PROC1).document, gomDocument.Id);
+		System.assertEquals(procedureToComplianceReviewPart.get(SECT2_PROC1).document, gomDocument.Id);
+		System.assertEquals(procedureToComplianceReviewPart.get(SECT1_PROC2).document, gomDocument.Id);
 	}
 
 	@isTest
@@ -93,18 +100,18 @@ private class IGOMComplianceReviewPartUtilTest {
 			procedureToComplianceReviewPart.put(complianceReviewPart.igomAuditableProcedureName, complianceReviewPart);
 		}
 		System.assertEquals(procedureToComplianceReviewPart.keySet().size(), 3);
-		System.assertEquals(procedureToComplianceReviewPart.get('Section 1 Procedure 1').variationStatus, IGOMConstants.PROCEDURE_COMPLIANCE.STATUS.VARIATION);
-		System.assertEquals(procedureToComplianceReviewPart.get('Section 2 Procedure 1').variationStatus, IGOMConstants.PROCEDURE_COMPLIANCE.STATUS.VARIATION);
-		System.assertEquals(procedureToComplianceReviewPart.get('Section 1 Procedure 2').variationStatus, IGOMConstants.PROCEDURE_COMPLIANCE.STATUS.CONFORMITY);
-		System.assertEquals(procedureToComplianceReviewPart.get('Section 1 Procedure 1').userProvisionProcedure, 'Test provision procedure text');
-		System.assertEquals(procedureToComplianceReviewPart.get('Section 2 Procedure 1').userProvisionProcedure, 'Test provision procedure text');
-		System.assertEquals(procedureToComplianceReviewPart.get('Section 1 Procedure 2').userProvisionProcedure, 'Test provision procedure text');
-		System.assertEquals(procedureToComplianceReviewPart.get('Section 1 Procedure 1').gapAnalysisId, complianceReview.Id);
-		System.assertEquals(procedureToComplianceReviewPart.get('Section 2 Procedure 1').gapAnalysisId, complianceReview.Id);
-		System.assertEquals(procedureToComplianceReviewPart.get('Section 1 Procedure 2').gapAnalysisId, complianceReview.Id);
-		System.assertEquals(procedureToComplianceReviewPart.get('Section 1 Procedure 1').document, gomDocument.Id);
-		System.assertEquals(procedureToComplianceReviewPart.get('Section 2 Procedure 1').document, gomDocument.Id);
-		System.assertEquals(procedureToComplianceReviewPart.get('Section 1 Procedure 2').document, gomDocument.Id);
+		System.assertEquals(procedureToComplianceReviewPart.get(SECT1_PROC1).variationStatus, IGOMConstants.PROCEDURE_COMPLIANCE.STATUS.VARIATION);
+		System.assertEquals(procedureToComplianceReviewPart.get(SECT2_PROC1).variationStatus, IGOMConstants.PROCEDURE_COMPLIANCE.STATUS.VARIATION);
+		System.assertEquals(procedureToComplianceReviewPart.get(SECT1_PROC2).variationStatus, IGOMConstants.PROCEDURE_COMPLIANCE.STATUS.CONFORMITY);
+		System.assertEquals(procedureToComplianceReviewPart.get(SECT1_PROC1).userProvisionProcedure, TEST_PROV_TEXT);
+		System.assertEquals(procedureToComplianceReviewPart.get(SECT2_PROC1).userProvisionProcedure, TEST_PROV_TEXT);
+		System.assertEquals(procedureToComplianceReviewPart.get(SECT1_PROC2).userProvisionProcedure, TEST_PROV_TEXT);
+		System.assertEquals(procedureToComplianceReviewPart.get(SECT1_PROC1).gapAnalysisId, complianceReview.Id);
+		System.assertEquals(procedureToComplianceReviewPart.get(SECT2_PROC1).gapAnalysisId, complianceReview.Id);
+		System.assertEquals(procedureToComplianceReviewPart.get(SECT1_PROC2).gapAnalysisId, complianceReview.Id);
+		System.assertEquals(procedureToComplianceReviewPart.get(SECT1_PROC1).document, gomDocument.Id);
+		System.assertEquals(procedureToComplianceReviewPart.get(SECT2_PROC1).document, gomDocument.Id);
+		System.assertEquals(procedureToComplianceReviewPart.get(SECT1_PROC2).document, gomDocument.Id);
 	}
 
 	@isTest
@@ -154,40 +161,40 @@ private class IGOMComplianceReviewPartUtilTest {
 			procedureToVariation.put(complianceReviewPart.igomAuditableProcedureName, complianceReviewPart);
 		}
 		System.assertEquals(2, procedureToVariation.keySet().size());
-		System.assertEquals(IGOMConstants.PROCEDURE_COMPLIANCE.STATUS.VARIATION, procedureToVariation.get('Section 1 Procedure 1').variationStatus);
-		System.assertEquals(IGOMConstants.PROCEDURE_COMPLIANCE.STATUS.VARIATION, procedureToVariation.get('Section 2 Procedure 1').variationStatus);
-		System.assertEquals('Test provision procedure text', procedureToVariation.get('Section 1 Procedure 1').userProvisionProcedure);
-		System.assertEquals('Test provision procedure text', procedureToVariation.get('Section 2 Procedure 1').userProvisionProcedure);
-		System.assertEquals(complianceReview.Id, procedureToVariation.get('Section 1 Procedure 1').gapAnalysisId);
-		System.assertEquals(complianceReview.Id, procedureToVariation.get('Section 2 Procedure 1').gapAnalysisId);
-		System.assertEquals(gomDocument.Id, procedureToVariation.get('Section 1 Procedure 1').document);
-		System.assertEquals(gomDocument.Id, procedureToVariation.get('Section 2 Procedure 1').document);
-		System.assertEquals('Part 1', procedureToVariation.get('Section 1 Procedure 1').index.chapterName);
-		System.assertEquals('Chapter 1', procedureToVariation.get('Section 1 Procedure 1').index.sectionName);
-		System.assertEquals('Section 1 Procedure 1', procedureToVariation.get('Section 1 Procedure 1').index.subsectionName);
-		System.assertEquals('Part 1', procedureToVariation.get('Section 2 Procedure 1').index.chapterName);
-		System.assertEquals('Chapter 2', procedureToVariation.get('Section 2 Procedure 1').index.sectionName);
-		System.assertEquals('Section 2 Procedure 1', procedureToVariation.get('Section 2 Procedure 1').index.subsectionName);
-		System.assertEquals(false, procedureToVariation.get('Section 1 Procedure 1').igomAuditableProcedureIsCritical);
-		System.assertEquals(false, procedureToVariation.get('Section 2 Procedure 1').igomAuditableProcedureIsCritical);
-		System.assertEquals(false, procedureToVariation.get('Section 1 Procedure 1').isReviewed);
-		System.assertEquals(false, procedureToVariation.get('Section 2 Procedure 1').isReviewed);
-		System.assertEquals(false, procedureToVariation.get('Section 1 Procedure 1').modified);
-		System.assertEquals(false, procedureToVariation.get('Section 2 Procedure 1').modified);
-		System.assertEquals(null, procedureToVariation.get('Section 1 Procedure 1').notes);
-		System.assertEquals(null, procedureToVariation.get('Section 2 Procedure 1').notes);
-		System.assertEquals(null, procedureToVariation.get('Section 1 Procedure 1').statusValue);
-		System.assertEquals(null, procedureToVariation.get('Section 2 Procedure 1').statusValue);
-		System.assertEquals('GOM Ed.1.0 V.0.0 R.Test revision 0', procedureToVariation.get('Section 1 Procedure 1').userProvisionDocument);
-		System.assertEquals('GOM Ed.1.0 V.0.0 R.Test revision 0', procedureToVariation.get('Section 2 Procedure 1').userProvisionDocument);
-		System.assertEquals('GOM Ed.1.0 V.0.0 R.Test revision 0 - Test provision procedure text', procedureToVariation.get('Section 1 Procedure 1').variation);
-		System.assertEquals('GOM Ed.1.0 V.0.0 R.Test revision 0 - Test provision procedure text', procedureToVariation.get('Section 2 Procedure 1').variation);
-		System.assertEquals('Varies 1', procedureToVariation.get('Section 1 Procedure 1').variationComments);
-		System.assertEquals('Varies 2', procedureToVariation.get('Section 2 Procedure 1').variationComments);
-		System.assertEquals(null, procedureToVariation.get('Section 1 Procedure 1').variationCommentLang);
-		System.assertEquals('Spanish', procedureToVariation.get('Section 2 Procedure 1').variationCommentLang);
-		System.assertEquals(null, procedureToVariation.get('Section 1 Procedure 1').variationAlternativeComments);
-		System.assertEquals('Varia 2', procedureToVariation.get('Section 2 Procedure 1').variationAlternativeComments);
+		System.assertEquals(IGOMConstants.PROCEDURE_COMPLIANCE.STATUS.VARIATION, procedureToVariation.get(SECT1_PROC1).variationStatus);
+		System.assertEquals(IGOMConstants.PROCEDURE_COMPLIANCE.STATUS.VARIATION, procedureToVariation.get(SECT2_PROC1).variationStatus);
+		System.assertEquals(TEST_PROV_TEXT, procedureToVariation.get(SECT1_PROC1).userProvisionProcedure);
+		System.assertEquals(TEST_PROV_TEXT, procedureToVariation.get(SECT2_PROC1).userProvisionProcedure);
+		System.assertEquals(complianceReview.Id, procedureToVariation.get(SECT1_PROC1).gapAnalysisId);
+		System.assertEquals(complianceReview.Id, procedureToVariation.get(SECT2_PROC1).gapAnalysisId);
+		System.assertEquals(gomDocument.Id, procedureToVariation.get(SECT1_PROC1).document);
+		System.assertEquals(gomDocument.Id, procedureToVariation.get(SECT2_PROC1).document);
+		System.assertEquals('Part 1', procedureToVariation.get(SECT1_PROC1).index.chapterName);
+		System.assertEquals('Chapter 1', procedureToVariation.get(SECT1_PROC1).index.sectionName);
+		System.assertEquals(SECT1_PROC1, procedureToVariation.get(SECT1_PROC1).index.subsectionName);
+		System.assertEquals('Part 1', procedureToVariation.get(SECT2_PROC1).index.chapterName);
+		System.assertEquals('Chapter 2', procedureToVariation.get(SECT2_PROC1).index.sectionName);
+		System.assertEquals(SECT2_PROC1, procedureToVariation.get(SECT2_PROC1).index.subsectionName);
+		System.assertEquals(false, procedureToVariation.get(SECT1_PROC1).igomAuditableProcedureIsCritical);
+		System.assertEquals(false, procedureToVariation.get(SECT2_PROC1).igomAuditableProcedureIsCritical);
+		System.assertEquals(false, procedureToVariation.get(SECT1_PROC1).isReviewed);
+		System.assertEquals(false, procedureToVariation.get(SECT2_PROC1).isReviewed);
+		System.assertEquals(false, procedureToVariation.get(SECT1_PROC1).modified);
+		System.assertEquals(false, procedureToVariation.get(SECT2_PROC1).modified);
+		System.assertEquals(null, procedureToVariation.get(SECT1_PROC1).notes);
+		System.assertEquals(null, procedureToVariation.get(SECT2_PROC1).notes);
+		System.assertEquals(null, procedureToVariation.get(SECT1_PROC1).statusValue);
+		System.assertEquals(null, procedureToVariation.get(SECT2_PROC1).statusValue);
+		System.assertEquals('GOM Ed.1.0 V.0.0 R.Test revision 0', procedureToVariation.get(SECT1_PROC1).userProvisionDocument);
+		System.assertEquals('GOM Ed.1.0 V.0.0 R.Test revision 0', procedureToVariation.get(SECT2_PROC1).userProvisionDocument);
+		System.assertEquals('GOM Ed.1.0 V.0.0 R.Test revision 0 - Test provision procedure text', procedureToVariation.get(SECT1_PROC1).variation);
+		System.assertEquals('GOM Ed.1.0 V.0.0 R.Test revision 0 - Test provision procedure text', procedureToVariation.get(SECT2_PROC1).variation);
+		System.assertEquals('Varies 1', procedureToVariation.get(SECT1_PROC1).variationComments);
+		System.assertEquals('Varies 2', procedureToVariation.get(SECT2_PROC1).variationComments);
+		System.assertEquals(null, procedureToVariation.get(SECT1_PROC1).variationCommentLang);
+		System.assertEquals('Spanish', procedureToVariation.get(SECT2_PROC1).variationCommentLang);
+		System.assertEquals(null, procedureToVariation.get(SECT1_PROC1).variationAlternativeComments);
+		System.assertEquals('Varia 2', procedureToVariation.get(SECT2_PROC1).variationAlternativeComments);
 	}
 
 	@isTest
@@ -206,11 +213,11 @@ private class IGOMComplianceReviewPartUtilTest {
 		System.runAs(contactUser) {
 			try {
 				List<IGOMComplianceReviewPartUtil.ComplianceReviewPart> variations = IGOMComplianceReviewPartUtil.getVariations(complianceReview.Id);
-				System.assert(false, 'Exception not thrown');
+				System.assert(false, EXC_NOT_THROWN);
 			} catch (AuraHandledException error) {
 				System.assert(true);
 			} catch (Exception error) {
-				System.assert(false, 'Unexpected exception caught ' + error);
+				System.assert(false, UNEX_EXC + error);
 			}
 		}
 
@@ -234,7 +241,7 @@ private class IGOMComplianceReviewPartUtilTest {
 				List<IGOMComplianceReviewPartUtil.ComplianceReviewPart> variations = IGOMComplianceReviewPartUtil.getVariations(complianceReview.Id);
 				System.assert(true);
 			} catch (AuraHandledException error) {
-				System.assert(false, 'Unexpected exception caught ' + error);
+				System.assert(false, UNEX_EXC + error);
 			}
 		}
 
@@ -245,7 +252,7 @@ private class IGOMComplianceReviewPartUtilTest {
 	private static void testUpsertProcedureComplianceInsertOk() {
 		Compliance_Review__c complianceReview = [SELECT Id FROM Compliance_Review__c LIMIT 1];
 		Document__c gomDocument = [SELECT Id FROM Document__c WHERE RecordType.DeveloperName = :IGOMConstants.DOCUMENT.RECORD_TYPE.GOM LIMIT 1];
-		Document_Part__c documentPart = [SELECT Id FROM Document_Part__c WHERE Name__c = 'Section 1 Procedure 2'];
+		Document_Part__c documentPart = [SELECT Id FROM Document_Part__c WHERE Name__c = :SECT1_PROC2];
 
 		Id contactId = [SELECT Account_Contact_Role__r.Contact__c FROM IGOM_Contact_Role_Detail__c LIMIT 1].Account_Contact_Role__r.Contact__c;
 		User user = [SELECT Id FROM User WHERE ContactId = :contactId LIMIT 1];
@@ -276,7 +283,7 @@ private class IGOMComplianceReviewPartUtilTest {
 	private static void testUpsertProcedureComplianceUpdateOk() {
 		Compliance_Review__c complianceReview = [SELECT Id FROM Compliance_Review__c LIMIT 1];
 		Document__c gomDocument = [SELECT Id FROM Document__c WHERE RecordType.DeveloperName = :IGOMConstants.DOCUMENT.RECORD_TYPE.GOM LIMIT 1];
-		Document_Part__c documentPart = [SELECT Id FROM Document_Part__c WHERE Name__c = 'Section 1 Procedure 2'];
+		Document_Part__c documentPart = [SELECT Id FROM Document_Part__c WHERE Name__c = :SECT1_PROC2];
 
 		Compliance_Review_Part__c existingPart = [SELECT Id, Is_Reviewed__c, Variation_Comments__c FROM Compliance_Review_Part__c LIMIT 1];
 		System.assertEquals(false, existingPart.Is_Reviewed__c);
@@ -330,7 +337,7 @@ private class IGOMComplianceReviewPartUtilTest {
 		} catch (TypeException error) {
 			System.assert(true);
 		} catch (Exception error) {
-			System.assert(false, 'Unexpected exception caught ' + error);
+			System.assert(false, UNEX_EXC + error);
 		}
 
 		Test.stopTest();
@@ -345,7 +352,7 @@ private class IGOMComplianceReviewPartUtilTest {
 		
 		Compliance_Review__c complianceReview = [SELECT Id FROM Compliance_Review__c LIMIT 1];
 		Document__c gomDocument = [SELECT Id FROM Document__c WHERE RecordType.DeveloperName = :IGOMConstants.DOCUMENT.RECORD_TYPE.GOM LIMIT 1];
-		Document_Part__c documentPart = [SELECT Id FROM Document_Part__c WHERE Name__c = 'Section 1 Procedure 2'];
+		Document_Part__c documentPart = [SELECT Id FROM Document_Part__c WHERE Name__c = :SECT1_PROC2];
 		User contactUser = [SELECT Id FROM User WHERE ContactId = :contactRole.Account_Contact_Role__r.Contact__c];
 
 		Test.startTest();
@@ -357,11 +364,11 @@ private class IGOMComplianceReviewPartUtilTest {
 				complianceReviewPart.document = gomDocument.Id;
 				complianceReviewPart.igomAuditableProcedureId = documentPart.Id;
 				IGOMComplianceReviewPartUtil.ComplianceReviewPart upsertedComplianceReviewPart = IGOMComplianceReviewPartUtil.upsertProcedureCompliance(complianceReviewPart);
-				System.assert(false, 'Exception not thrown');
+				System.assert(false, EXC_NOT_THROWN);
 			} catch (AuraHandledException error) {
 				System.assert(true);
 			} catch (Exception error) {
-				System.assert(false, 'Unknown exception caught ' + error);
+				System.assert(false, UNKNOWN_EXC + error);
 			}
 		}
 
@@ -417,11 +424,11 @@ private class IGOMComplianceReviewPartUtilTest {
 		System.runAs(contactUser) {
 			try {
 				IGOMComplianceReviewPartUtil.deleteProcedureCompliance(existingPart.Id);
-				System.assert(false, 'Exception not thrown');
+				System.assert(false, EXC_NOT_THROWN);
 			} catch (AuraHandledException error) {
 				System.assert(true);
 			} catch (Exception error) {
-				System.assert(false, 'Unknown exception caught ' + error);
+				System.assert(false, UNKNOWN_EXC + error);
 			}
 		}
 
@@ -444,11 +451,11 @@ private class IGOMComplianceReviewPartUtilTest {
 		System.runAs(contactUser) {
 			try {
 				IGOMComplianceReviewPartUtil.deleteProcedureCompliance(existingPart.Id);
-				System.assert(false, 'Exception not thrown');
+				System.assert(false, EXC_NOT_THROWN);
 			} catch (AuraHandledException error) {
 				System.assert(true);
 			} catch (Exception error) {
-				System.assert(false, 'Unknown exception caught ' + error);
+				System.assert(false, UNKNOWN_EXC + error);
 			}
 		}
 
@@ -506,11 +513,11 @@ private class IGOMComplianceReviewPartUtilTest {
 		System.runAs(contactUser) {
 			try {
 				IGOMComplianceReviewPartUtil.ComplianceReviewPart reviewedComplianceReview = IGOMComplianceReviewPartUtil.markAsReviewed(existingPart.Id);
-				System.assert(false, 'Exception not thrown');
+				System.assert(false, EXC_NOT_THROWN);
 			} catch (AuraHandledException error) {
 				System.assert(true);
 			} catch (Exception error) {
-				System.assert(false, 'Unknown exception caught ' + error);
+				System.assert(false, UNKNOWN_EXC + error);
 			}
 		}
 
@@ -541,12 +548,12 @@ private class IGOMComplianceReviewPartUtilTest {
 			procedureToComplianceReviewPart.put(complianceReviewPart.igomAuditableProcedureName, complianceReviewPart);
 		}
 		System.assertEquals(procedureToComplianceReviewPart.keySet().size(), 3);
-		System.assertEquals(IGOMConstants.PROCEDURE_COMPLIANCE.STATUS.VARIATION, procedureToComplianceReviewPart.get('Section 1 Procedure 1').variationStatus);
-		System.assertEquals(IGOMConstants.PROCEDURE_COMPLIANCE.STATUS.VARIATION, procedureToComplianceReviewPart.get('Section 2 Procedure 1').variationStatus);
-		System.assertEquals(IGOMConstants.PROCEDURE_COMPLIANCE.STATUS.CONFORMITY, procedureToComplianceReviewPart.get('Section 1 Procedure 2').variationStatus);
-		System.assertEquals(false, procedureToComplianceReviewPart.get('Section 1 Procedure 1').isReviewed);
-		System.assertEquals(false, procedureToComplianceReviewPart.get('Section 2 Procedure 1').isReviewed);
-		System.assertEquals(true, procedureToComplianceReviewPart.get('Section 1 Procedure 2').isReviewed);
+		System.assertEquals(IGOMConstants.PROCEDURE_COMPLIANCE.STATUS.VARIATION, procedureToComplianceReviewPart.get(SECT1_PROC1).variationStatus);
+		System.assertEquals(IGOMConstants.PROCEDURE_COMPLIANCE.STATUS.VARIATION, procedureToComplianceReviewPart.get(SECT2_PROC1).variationStatus);
+		System.assertEquals(IGOMConstants.PROCEDURE_COMPLIANCE.STATUS.CONFORMITY, procedureToComplianceReviewPart.get(SECT1_PROC2).variationStatus);
+		System.assertEquals(false, procedureToComplianceReviewPart.get(SECT1_PROC1).isReviewed);
+		System.assertEquals(false, procedureToComplianceReviewPart.get(SECT2_PROC1).isReviewed);
+		System.assertEquals(true, procedureToComplianceReviewPart.get(SECT1_PROC2).isReviewed);
 	}
 
 	@isTest
@@ -565,7 +572,7 @@ private class IGOMComplianceReviewPartUtilTest {
 		} catch (AuraHandledException error) {
 			System.assert(true);
 		} catch (Exception error) {
-			System.assert(false, 'Unexpected exception caught ' + error);
+			System.assert(false, UNEX_EXC + error);
 		}
 
 		Test.stopTest();
@@ -580,7 +587,7 @@ private class IGOMComplianceReviewPartUtilTest {
 		} catch (AuraHandledException error) {
 			System.assert(true);
 		} catch (Exception error) {
-			System.assert(false, 'Unexpected exception caught ' + error);
+			System.assert(false, UNEX_EXC + error);
 		}
 
 		Test.stopTest();
@@ -602,11 +609,11 @@ private class IGOMComplianceReviewPartUtilTest {
 		System.runAs(contactUser) {
 			try {
 				IGOMComplianceReviewPartUtil.confirmAllNonVariatingReferences(existingParts);
-				System.assert(false, 'Exception not thrown');
+				System.assert(false, EXC_NOT_THROWN);
 			} catch (AuraHandledException error) {
 				System.assert(true);
 			} catch (Exception error) {
-				System.assert(false, 'Unknown exception caught ' + error);
+				System.assert(false, UNKNOWN_EXC + error);
 			}
 		}
 

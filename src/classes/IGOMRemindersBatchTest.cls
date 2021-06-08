@@ -71,6 +71,6 @@ public inherited sharing class IGOMRemindersBatchTest {
         Test.stopTest();
 
         List<IGOM_Contact_Role_Procedure_Compliance__c> notifications = [SELECT Id, IGOM_Contact_Role_Detail__c, Notification_Subject__c FROM IGOM_Contact_Role_Procedure_Compliance__c];
-        System.assertEquals((2/2)+3, notifications.size());
+        System.assertEquals(4, notifications.size());
     }
 }

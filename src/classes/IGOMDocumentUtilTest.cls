@@ -1,10 +1,16 @@
 @isTest
 public inherited sharing class IGOMDocumentUtilTest {
+	public static final String IGOM_NAME = 'IGOM Document';
+	public static final String PART_1_NAME = 'Part 1';
+	public static final String PART_2_NAME = 'Part 2';
+	public static final String EXC_NOT_THROWN = 'Exception not thrown';
+	public static final String UNEXP_EXC_CAUGHT = 'Unexpected exception caught ';
+
 	@TestSetup
 	static void makeData() {
 		// Generate an IGOM and a GOM
 		List<Document__c> documents = new List<Document__c>();
-		Document__c igomDocument = IGOMTestFactory.documentFactoryCreation(1, null, 'IGOM Document', 'English', IGOMConstants.DOCUMENT.RECORD_TYPE.IGOM)[0];
+		Document__c igomDocument = IGOMTestFactory.documentFactoryCreation(1, null, IGOM_NAME, 'English', IGOMConstants.DOCUMENT.RECORD_TYPE.IGOM)[0];
 		documents.add(igomDocument);
 		Document__c gomDocument = IGOMTestFactory.documentFactoryCreation(1, null, 'GOM Document', 'English', IGOMConstants.DOCUMENT.RECORD_TYPE.GOM)[0];
 		documents.add(gomDocument);
@@ -12,7 +18,7 @@ public inherited sharing class IGOMDocumentUtilTest {
 		// Generate IGOM parts
 		List<Document_Part__c> documentParts = new List<Document_Part__c>();
 		//Chapter 1
-		Document_Part__c chapter1 = IGOMTestFactory.createDocumentPart(IGOMConstants.DOCUMENT_PART.CATEGORY.PART, igomDocument.Id, 1, 'Part 1');
+		Document_Part__c chapter1 = IGOMTestFactory.createDocumentPart(IGOMConstants.DOCUMENT_PART.CATEGORY.PART, igomDocument.Id, 1, PART_1_NAME);
 		chapter1.External_Reference_ID__c = '0000';
 		documentParts.add(chapter1);
 		Document_Part__c section1_1 = IGOMTestFactory.createDocumentPart(IGOMConstants.DOCUMENT_PART.CATEGORY.CHAPTER, igomDocument.Id, 1, 'Chapter 1');
@@ -34,7 +40,7 @@ public inherited sharing class IGOMDocumentUtilTest {
 		subchapter1_3.Version_Change_Status__c = IGOMConstants.DOCUMENT_PART.VERSION_CHANGE_STATUS.MODIFIED;
 		documentParts.add(subchapter1_3);
 		//Chapter 2
-		Document_Part__c chapter2 = IGOMTestFactory.createDocumentPart(IGOMConstants.DOCUMENT_PART.CATEGORY.PART, igomDocument.Id, 2, 'Part 2');
+		Document_Part__c chapter2 = IGOMTestFactory.createDocumentPart(IGOMConstants.DOCUMENT_PART.CATEGORY.PART, igomDocument.Id, 2, PART_2_NAME);
 		chapter2.External_Reference_ID__c = '0006';
 		documentParts.add(chapter2);
 		Document_Part__c section2_1 = IGOMTestFactory.createDocumentPart(IGOMConstants.DOCUMENT_PART.CATEGORY.CHAPTER, igomDocument.Id, 1, 'Chapter 1');
@@ -119,7 +125,7 @@ public inherited sharing class IGOMDocumentUtilTest {
         igom = IGOMDocumentUtil.getIGOMManualById(igomDoc.Id);
         Test.stopTest();
 
-		System.assertEquals('IGOM Document', igom.name);
+		System.assertEquals(IGOM_NAME, igom.name);
 	}
 
 	/**
@@ -132,11 +138,11 @@ public inherited sharing class IGOMDocumentUtilTest {
         Test.startTest();
 		try {
 			igom = IGOMDocumentUtil.getIGOMManualById(gomDoc.Id);
-			System.assert(false, 'Exception not thrown');
+			System.assert(false, EXC_NOT_THROWN);
 		} catch (AuraHandledException exc) {
 			System.assert(true);
 		} catch (Exception error) {
-			System.assert(false, 'Unexpected exception caught ' + error);
+			System.assert(false, UNEXP_EXC_CAUGHT + error);
 		}
         Test.stopTest();
 	}
@@ -203,11 +209,11 @@ public inherited sharing class IGOMDocumentUtilTest {
 		System.runAs(user){
 			try {
 				stationDocs = IGOMDocumentUtil.getMyStationsDocuments(station.Id);
-				System.assert(false, 'Exception not thrown');
+				System.assert(false, EXC_NOT_THROWN);
 			} catch (AuraHandledException exc) {
 				System.assert(true);
 			} catch (Exception error) {
-				System.assert(false, 'Unexpected exception caught ' + error);
+				System.assert(false, UNEXP_EXC_CAUGHT + error);
 			}
 		}
         Test.stopTest();
@@ -220,9 +226,9 @@ public inherited sharing class IGOMDocumentUtilTest {
 	@isTest
 	public static void getCurrentIGOMLanguagesTest(){
 		List<Document__c> documents = new List<Document__c>();
-		Document__c igomDocument_ES = IGOMTestFactory.documentFactoryCreation(1, null, 'IGOM Document', 'Spanish', IGOMConstants.DOCUMENT.RECORD_TYPE.IGOM)[0];
+		Document__c igomDocument_ES = IGOMTestFactory.documentFactoryCreation(1, null, IGOM_NAME, 'Spanish', IGOMConstants.DOCUMENT.RECORD_TYPE.IGOM)[0];
 		documents.add(igomDocument_ES);
-		Document__c igomDocument_FR = IGOMTestFactory.documentFactoryCreation(1, null, 'IGOM Document', 'French', IGOMConstants.DOCUMENT.RECORD_TYPE.IGOM)[0];
+		Document__c igomDocument_FR = IGOMTestFactory.documentFactoryCreation(1, null, IGOM_NAME, 'French', IGOMConstants.DOCUMENT.RECORD_TYPE.IGOM)[0];
 		documents.add(igomDocument_FR);
 		insert documents;
 
@@ -246,16 +252,16 @@ public inherited sharing class IGOMDocumentUtilTest {
 		permIdsToChapters = IGOMDocumentUtil.getPermidsToChapter(igom.Id);
 		Test.stopTest();
 
-		System.assertEquals('Part 1', permIdsToChapters.get('0000'));
-		System.assertEquals('Part 1', permIdsToChapters.get('0001'));
-		System.assertEquals('Part 1', permIdsToChapters.get('0002'));
-		System.assertEquals('Part 1', permIdsToChapters.get('0003'));
-		System.assertEquals('Part 1', permIdsToChapters.get('0004'));
-		System.assertEquals('Part 1', permIdsToChapters.get('0005'));
-		System.assertEquals('Part 2', permIdsToChapters.get('0006'));
-		System.assertEquals('Part 2', permIdsToChapters.get('0007'));
-		System.assertEquals('Part 2', permIdsToChapters.get('0008'));
-		System.assertEquals('Part 2', permIdsToChapters.get('0009'));
+		System.assertEquals(PART_1_NAME, permIdsToChapters.get('0000'));
+		System.assertEquals(PART_1_NAME, permIdsToChapters.get('0001'));
+		System.assertEquals(PART_1_NAME, permIdsToChapters.get('0002'));
+		System.assertEquals(PART_1_NAME, permIdsToChapters.get('0003'));
+		System.assertEquals(PART_1_NAME, permIdsToChapters.get('0004'));
+		System.assertEquals(PART_1_NAME, permIdsToChapters.get('0005'));
+		System.assertEquals(PART_2_NAME, permIdsToChapters.get('0006'));
+		System.assertEquals(PART_2_NAME, permIdsToChapters.get('0007'));
+		System.assertEquals(PART_2_NAME, permIdsToChapters.get('0008'));
+		System.assertEquals(PART_2_NAME, permIdsToChapters.get('0009'));
 	}
 
 
@@ -292,7 +298,7 @@ public inherited sharing class IGOMDocumentUtilTest {
 		Id contactId = [SELECT Account_Contact_Role__r.Contact__c FROM IGOM_Contact_Role_Detail__c LIMIT 1].Account_Contact_Role__r.Contact__c;
 		User user = [SELECT Id FROM User WHERE ContactId = :contactId LIMIT 1];
 		
-		Document__c igomDocumentSp = IGOMTestFactory.documentFactoryCreation(1, null, 'IGOM Document', 'Spanish', IGOMConstants.DOCUMENT.RECORD_TYPE.IGOM)[0];
+		Document__c igomDocumentSp = IGOMTestFactory.documentFactoryCreation(1, null, IGOM_NAME, 'Spanish', IGOMConstants.DOCUMENT.RECORD_TYPE.IGOM)[0];
 		insert igomDocumentSp;
 
 		// Generate IGOM parts in spanish
@@ -376,11 +382,11 @@ public inherited sharing class IGOMDocumentUtilTest {
 		System.runAs(user){
 			try {
 				formattedIgom = IGOMDocumentUtil.getCurrentIGOMFormatted('Spanish');
-				System.assert(false, 'Exception not thrown');
+				System.assert(false, EXC_NOT_THROWN);
 			} catch (AuraHandledException exc) {
 				System.assert(true);
 			} catch (Exception error) {
-				System.assert(false, 'Unexpected exception caught ' + error);
+				System.assert(false, UNEXP_EXC_CAUGHT + error);
 			}
 		}
 		Test.stopTest();
@@ -402,11 +408,11 @@ public inherited sharing class IGOMDocumentUtilTest {
 		System.runAs(user){
 			try {
 				formattedIgom = IGOMDocumentUtil.getCurrentIGOMFormatted('English');
-				System.assert(false, 'Exception not thrown');
+				System.assert(false, EXC_NOT_THROWN);
 			} catch (AuraHandledException exc) {
 				System.assert(true);
 			} catch (Exception error) {
-				System.assert(false, 'Unexpected exception caught ' + error);
+				System.assert(false, UNEXP_EXC_CAUGHT + error);
 			}
 		}
 		Test.stopTest();
@@ -422,7 +428,7 @@ public inherited sharing class IGOMDocumentUtilTest {
 		Document__c igom = [SELECT Id FROM Document__c WHERE RecordType.DeveloperName = :IGOMConstants.DOCUMENT.RECORD_TYPE.IGOM LIMIT 1];
 		delete igom;
 		
-		Document__c igomDocumentSp = IGOMTestFactory.documentFactoryCreation(1, null, 'IGOM Document', 'Spanish', IGOMConstants.DOCUMENT.RECORD_TYPE.IGOM)[0];
+		Document__c igomDocumentSp = IGOMTestFactory.documentFactoryCreation(1, null, IGOM_NAME, 'Spanish', IGOMConstants.DOCUMENT.RECORD_TYPE.IGOM)[0];
 		insert igomDocumentSp;
 
 		IGOMDocumentUtil.IGOMManual formattedIgom;
@@ -430,11 +436,11 @@ public inherited sharing class IGOMDocumentUtilTest {
 		System.runAs(user){
 			try {
 				formattedIgom = IGOMDocumentUtil.getCurrentIGOMFormatted('English');
-				System.assert(false, 'Exception not thrown');
+				System.assert(false, EXC_NOT_THROWN);
 			} catch (AuraHandledException exc) {
 				System.assert(true);
 			} catch (Exception error) {
-				System.assert(false, 'Unexpected exception caught ' + error);
+				System.assert(false, UNEXP_EXC_CAUGHT + error);
 			}
 		}
 		Test.stopTest();
@@ -455,11 +461,11 @@ public inherited sharing class IGOMDocumentUtilTest {
 		System.runAs(user){
 			try {
 				formattedIgom = IGOMDocumentUtil.getCurrentIGOMFormatted('English');
-				System.assert(false, 'Exception not thrown');
+				System.assert(false, EXC_NOT_THROWN);
 			} catch (AuraHandledException exc) {
 				System.assert(true);
 			} catch (Exception error) {
-				System.assert(false, 'Unexpected exception caught ' + error);
+				System.assert(false, UNEXP_EXC_CAUGHT + error);
 			}
 		}
 		Test.stopTest();
@@ -472,7 +478,7 @@ public inherited sharing class IGOMDocumentUtilTest {
 	public static void getCurrentIGOMFormattedTest_NoTranslation(){
 		User user = [SELECT Id FROM User LIMIT 1];
 		
-		Document__c igomDocumentSp = IGOMTestFactory.documentFactoryCreation(1, null, 'IGOM Document', 'Spanish', IGOMConstants.DOCUMENT.RECORD_TYPE.IGOM)[0];
+		Document__c igomDocumentSp = IGOMTestFactory.documentFactoryCreation(1, null, IGOM_NAME, 'Spanish', IGOMConstants.DOCUMENT.RECORD_TYPE.IGOM)[0];
 		insert igomDocumentSp;
 
 		IGOMDocumentUtil.IGOMManual formattedIgom;
@@ -480,11 +486,11 @@ public inherited sharing class IGOMDocumentUtilTest {
 		System.runAs(user){
 			try {
 				formattedIgom = IGOMDocumentUtil.getCurrentIGOMFormatted('Spanish');
-				System.assert(false, 'Exception not thrown');
+				System.assert(false, EXC_NOT_THROWN);
 			} catch (AuraHandledException exc) {
 				System.assert(true);
 			} catch (Exception error) {
-				System.assert(false, 'Unexpected exception caught ' + error);
+				System.assert(false, UNEXP_EXC_CAUGHT + error);
 			}
 		}
 		Test.stopTest();
@@ -535,11 +541,11 @@ public inherited sharing class IGOMDocumentUtilTest {
 		System.runAs(user){
 			try {
 				stationDoc = IGOMDocumentUtil.upsertGomDocument(station.Id, new IGOMDocumentUtil.Document(gom));
-				System.assert(false, 'Exception not thrown');
+				System.assert(false, EXC_NOT_THROWN);
 			} catch (AuraHandledException exc) {
 				System.assert(true);
 			} catch (Exception error) {
-				System.assert(false, 'Unexpected exception caught ' + error);
+				System.assert(false, UNEXP_EXC_CAUGHT + error);
 			}
 		}
         Test.stopTest();
@@ -597,7 +603,7 @@ public inherited sharing class IGOMDocumentUtilTest {
 		update doc;
         Document__c igomDoc = [SELECT Id FROM Document__c WHERE RecordType.DeveloperName = :IGOMConstants.DOCUMENT.RECORD_TYPE.IGOM LIMIT 1];
 
-		Document_Part__c chapter1 = IGOMTestFactory.createDocumentPart(IGOMConstants.DOCUMENT_PART.CATEGORY.PART, igomDoc.Id, 1, 'Part 1');
+		Document_Part__c chapter1 = IGOMTestFactory.createDocumentPart(IGOMConstants.DOCUMENT_PART.CATEGORY.PART, igomDoc.Id, 1, PART_1_NAME);
 		chapter1.External_Reference_ID__c = '0000';
 		insert chapter1;
 		
@@ -644,11 +650,11 @@ public inherited sharing class IGOMDocumentUtilTest {
 		Test.startTest();
 		try {
 			IGOMDocumentUtil.deleteGomDocument(stationId);
-			System.assert(false, 'Exception not thrown');
+			System.assert(false, EXC_NOT_THROWN);
 		} catch (AuraHandledException exc) {
 			System.assert(true);
 		} catch (Exception error) {
-			System.assert(false, 'Unexpected exception caught ' + error);
+			System.assert(false, UNEXP_EXC_CAUGHT + error);
 		}
 		Test.stopTest();
 	}
@@ -663,11 +669,11 @@ public inherited sharing class IGOMDocumentUtilTest {
 		Test.startTest();
 		try {
 			IGOMDocumentUtil.deleteGomDocument(doc.Id);
-			System.assert(false, 'Exception not thrown');
+			System.assert(false, EXC_NOT_THROWN);
 		} catch (AuraHandledException exc) {
 			System.assert(true);
 		} catch (Exception error) {
-			System.assert(false, 'Unexpected exception caught ' + error);
+			System.assert(false, UNEXP_EXC_CAUGHT + error);
 		}
 		Test.stopTest();
 	}
@@ -681,11 +687,11 @@ public inherited sharing class IGOMDocumentUtilTest {
 		Test.startTest();
 		try {
 			IGOMDocumentUtil.deleteGomDocument(igomDocument.Id);
-			System.assert(false, 'Exception not thrown');
+			System.assert(false, EXC_NOT_THROWN);
 		} catch (AuraHandledException exc) {
 			System.assert(true);
 		} catch (Exception error) {
-			System.assert(false, 'Unexpected exception caught ' + error);
+			System.assert(false, UNEXP_EXC_CAUGHT + error);
 		}
 		Test.stopTest();
 	}
@@ -709,11 +715,11 @@ public inherited sharing class IGOMDocumentUtilTest {
 		System.runAs(user){
 			try {
 				IGOMDocumentUtil.deleteGomDocument(doc.Id);
-				System.assert(false, 'Exception not thrown');
+				System.assert(false, EXC_NOT_THROWN);
 			} catch (AuraHandledException exc) {
 				System.assert(true);
 			} catch (Exception error) {
-				System.assert(false, 'Unexpected exception caught ' + error);
+				System.assert(false, UNEXP_EXC_CAUGHT + error);
 			}
 		}
         Test.stopTest();
@@ -777,11 +783,11 @@ public inherited sharing class IGOMDocumentUtilTest {
 		System.runAs(user){
 			try {
 				igomId = IGOMDocumentUtil.uploadIGOMDocument(xmlFile);
-				System.assert(false, 'Exception not thrown');
+				System.assert(false, EXC_NOT_THROWN);
 			} catch (AuraHandledException exc) {
 				System.assert(true);
 			} catch (Exception error) {
-				System.assert(false, 'Unexpected exception caught ' + error);
+				System.assert(false, UNEXP_EXC_CAUGHT + error);
 			}
 		}
         Test.stopTest();
@@ -800,7 +806,7 @@ public inherited sharing class IGOMDocumentUtilTest {
 		Id contactId = [SELECT Account_Contact_Role__r.Contact__c FROM IGOM_Contact_Role_Detail__c LIMIT 1].Account_Contact_Role__r.Contact__c;
 		User user = [SELECT Id FROM User WHERE ContactId = :contactId LIMIT 1];
 
-		Document__c newIgom = IGOMTestFactory.documentFactoryCreation(1, null, 'IGOM Document', 'English', IGOMConstants.DOCUMENT.RECORD_TYPE.IGOM)[0];
+		Document__c newIgom = IGOMTestFactory.documentFactoryCreation(1, null, IGOM_NAME, 'English', IGOMConstants.DOCUMENT.RECORD_TYPE.IGOM)[0];
 		newIgom.Is_Active__c = false;
 		insert newIgom;
 
@@ -837,11 +843,11 @@ public inherited sharing class IGOMDocumentUtilTest {
 		System.runAs(user){
 			try {
 				IGOMDocumentUtil.activateIGOMManual(igom.Id);
-				System.assert(false, 'Exception not thrown');
+				System.assert(false, EXC_NOT_THROWN);
 			} catch (AuraHandledException exc) {
 				System.assert(true);
 			} catch (Exception error) {
-				System.assert(false, 'Unexpected exception caught ' + error);
+				System.assert(false, UNEXP_EXC_CAUGHT + error);
 			}
 		}
         Test.stopTest();
@@ -857,7 +863,7 @@ public inherited sharing class IGOMDocumentUtilTest {
 		update contactRole;
 		User user = [SELECT Id FROM User LIMIT 1];
 
-		Document__c newIgom = IGOMTestFactory.documentFactoryCreation(1, null, 'IGOM Document', 'English', IGOMConstants.DOCUMENT.RECORD_TYPE.IGOM)[0];
+		Document__c newIgom = IGOMTestFactory.documentFactoryCreation(1, null, IGOM_NAME, 'English', IGOMConstants.DOCUMENT.RECORD_TYPE.IGOM)[0];
 		newIgom.Is_Active__c = false;
 		insert newIgom;
 
@@ -865,11 +871,11 @@ public inherited sharing class IGOMDocumentUtilTest {
 		System.runAs(user){
 			try {
 				IGOMDocumentUtil.activateIGOMManual(newIgom.Id);
-				System.assert(false, 'Exception not thrown');
+				System.assert(false, EXC_NOT_THROWN);
 			} catch (AuraHandledException exc) {
 				System.assert(true);
 			} catch (Exception error) {
-				System.assert(false, 'Unexpected exception caught ' + error);
+				System.assert(false, UNEXP_EXC_CAUGHT + error);
 			}
 			
 		}
@@ -913,11 +919,11 @@ public inherited sharing class IGOMDocumentUtilTest {
 		System.runAs(user){
 			try {
 				manualNew = IGOMDocumentUtil.getIGOMProcedures(manual.Id);
-				System.assert(false, 'Exception not thrown');
+				System.assert(false, EXC_NOT_THROWN);
 			} catch (AuraHandledException exc) {
 				System.assert(true);
 			} catch (Exception error) {
-				System.assert(false, 'Unexpected exception caught ' + error);
+				System.assert(false, UNEXP_EXC_CAUGHT + error);
 			}
 		}
         Test.stopTest();
@@ -939,11 +945,11 @@ public inherited sharing class IGOMDocumentUtilTest {
 		System.runAs(user){
 			try {
 				manualNew = IGOMDocumentUtil.getIGOMProcedures(manual.Id);
-				System.assert(false, 'Exception not thrown');
+				System.assert(false, EXC_NOT_THROWN);
 			} catch (AuraHandledException exc) {
 				System.assert(true);
 			} catch (Exception error) {
-				System.assert(false, 'Unexpected exception caught ' + error);
+				System.assert(false, UNEXP_EXC_CAUGHT + error);
 			}
 		}
         Test.stopTest();
@@ -999,11 +1005,11 @@ public inherited sharing class IGOMDocumentUtilTest {
 		Test.startTest();
 		try {
 			docReference = IGOMDocumentUtil.getDocumentReference(doc);
-			System.assert(false, 'Exception not thrown');
+			System.assert(false, EXC_NOT_THROWN);
 		} catch (SObjectException exc) {
 			System.assert(true);
 		} catch (Exception error) {
-			System.assert(false, 'Unexpected exception caught ' + error);
+			System.assert(false, UNEXP_EXC_CAUGHT + error);
 		}
 		Test.stopTest();
 	}
