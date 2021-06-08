@@ -51,7 +51,10 @@ public class ANG_AgencyChangesConfigHelper{
 		}
 		else if(oscar.Process__c == AMS_Utils.NGCONVERSIONTOMULTICOUNTRY || oscar.Process__c == AMS_Utils.NGCONVERSIONMCTOST || isSingleBspToCashConversion){
 			c = getConfig(CONVERSION, isSingleBspToCashConversion ? AMS_Utils.ACCREDITATIONMODEL_CASH : accreditationModel);
-		} else {
+		} 
+		else if(oscar.Process__c == AMS_Utils.ANGCONVERTMCTOLT ){
+			c = getConfig(CONVERSION, AMS_Utils.ACCREDITATIONMODEL_CASHLESS);
+		}else {
 			c = getConfig(oscar.ANG_Type_Of_Change__c, accreditationModel);
 		}
 

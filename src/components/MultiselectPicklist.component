@@ -33,9 +33,6 @@
   <apex:attribute name="rightOptions"
     description="Options list for right listbox." type="SelectOption[]"
     required="true" assignTo="{!rightOptions}" />
-    <apex:attribute name="isChangeOfAccreditationType"
-      description="if is Change of Accreditation" type="Boolean"
-      required="false" default="false" />
 
   <apex:outputPanel id="multiselectPanel" layout="block" styleClass="duelingListBox">
     <table class="layout">
@@ -145,6 +142,7 @@
         for ( var x = 0; x < listTo.options.length; x++) {
           listTo.options[x].selected = false;
         }
+        
         for ( var x = 0; x < listFrom.options.length; x++) {
           if (listFrom.options[x].selected == true) {
             listTo.appendChild(listFrom.options[x]);

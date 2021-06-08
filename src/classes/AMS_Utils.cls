@@ -127,6 +127,7 @@ public without sharing class AMS_Utils {
 
 	public static final String NGCONVERSIONTOMULTICOUNTRY = 'ANG.CONVERT.ST.TO.MC';
 	public static final String NGCONVERSIONMCTOST = 'ANG.CONVERT.MC.TO.ST';
+	public static final String ANGCONVERTMCTOLT = 'ANG.CONVERT.MC.TO.LT';
 
 	public static final String CONVERTTONEWGENPILOT = 'Conversion to GoLite'; //ACAMBAS - NEWGEN-4445
 	public static final String CONVERTTOLEGACY = 'Conversion to Domestic with Cash'; //ACAMBAS - NEWGEN-4445
