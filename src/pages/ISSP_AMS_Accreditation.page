@@ -347,7 +347,7 @@
 
         function togglePageItem(v, fldId) {
             var el = document.getElementById(fldId);
-            if(v=='HO - Selected Branches' || v=='Selected Branches Only') {
+            if(v=='HO - Selected Branches' || v=='Selected Branches Only' || v=='GE - Change to Gostandard' || v=='GE - Change to Golite') {
                 el.style.display='block';
             } else {
                 el.style.display='none';
@@ -510,7 +510,7 @@
                 $('[id$="branchaccountsel"]').first().insertAfter($('[id$="langGSA"]'));
                 
                 checkLocationQuestion();
-
+                checkLocationQuestionMultiCountry();
                 checkSelectAll();
             }
         }
@@ -533,52 +533,95 @@
 
         function checkLocationQuestion() {
             if ($('[id$="LocationType"]').find("input")[0] && $('[id$="LocationType"]').find("input")[1] && $('[id$="LocationType"]').find("input")[2] && $('[id$="LocationType"]').find("input")[3]) {
-            if ($('[id$="LocationType"]').find("input")[0].checked) {
-                $('[id$="nocThirdQuestion"]').css('display', 'none');
-                toggleCountryMultiSelection(true, false);
-                $('#brcountry').text("{!amsAllLangCountryLabel}");
-
-                $('[for$="countryconcerned"]')[0].innerText = "* {!$Label.ANG_ISSP_CountryConcerned}";
-            }
-            
-            if ($('[id$="LocationType"]').find("input")[1].checked || $('[id$="LocationTypeMultiCountry"]').find("input")[0].checked) { 
-                toggleCountryMultiSelection(true, false);
-
-                if ('{!hqAccount.ANG_Accreditation_Model__c}' == '{!ACCREDITATION_MODEL_MC}') {
-                    $('#brcountry').text("{!$Label.ISSP_AMS_NOC_All_Countries}");
-                }
-
-                if ('{!hqAccount.Sector__c}' == 'Travel Agent' && !{!isBankAccountChange}) {
-                    $('[id$="nocThirdQuestion"]').css('display', 'block');
-                }
-
-                $('[for$="countryconcerned"]')[0].innerText = "* {!$Label.ANG_ISSP_CountryConcerned}";
-            }
-
-            if ($('[id$="LocationType"]').find("input")[2].checked || $('[id$="LocationTypeMultiCountry"]').find("input")[1].checked) {
-                if ('{!hqAccount.ANG_Accreditation_Model__c}' == '{!ACCREDITATION_MODEL_MC}') {
-                    toggleCountryMultiSelection(false, true);
-                    $('[for$="countryconcerned"]')[0].innerText = "* {!$Label.ANG_ISSP_CountryConcerned_AEs}";
-                } else {
+                if ($('[id$="LocationType"]').find("input")[0].checked) {
+                    $('[id$="nocThirdQuestion"]').css('display', 'none');
                     toggleCountryMultiSelection(true, false);
                     $('#brcountry').text("{!amsAllLangCountryLabel}");
+
+                    $('[for$="countryconcerned"]')[0].innerText = "* {!$Label.ANG_ISSP_CountryConcerned}";
                 }
-
-                $('[id$="nocThirdQuestion"]').css('display', 'none');
-            }
-
-            if ($('[id$="LocationType"]').find("input")[3].checked || $('[id$="LocationTypeMultiCountry"]').find("input")[2].checked) {
-                if ('{!hqAccount.ANG_Accreditation_Model__c}' == '{!ACCREDITATION_MODEL_MC}') {
-                    toggleCountryMultiSelection(false, true);
-                    $('[for$="countryconcerned"]')[0].innerText = "* {!$Label.ANG_ISSP_CountryConcerned_AEs}";
-                } else {
+                
+                if ($('[id$="LocationType"]').find("input")[1].checked) { 
                     toggleCountryMultiSelection(true, false);
-                    $('#brcountry').text("{!amsAllLangCountryLabel}");
+
+                    if ('{!hqAccount.ANG_Accreditation_Model__c}' == '{!ACCREDITATION_MODEL_MC}') {
+                        $('#brcountry').text("{!$Label.ISSP_AMS_NOC_All_Countries}");
+                    }
+
+                    if ('{!hqAccount.Sector__c}' == 'Travel Agent' && !{!isBankAccountChange}) {
+                        $('[id$="nocThirdQuestion"]').css('display', 'block');
+                    }
+
+                    $('[for$="countryconcerned"]')[0].innerText = "* {!$Label.ANG_ISSP_CountryConcerned}";
                 }
 
-                $('[id$="nocThirdQuestion"]').css('display', 'none');
+                if ($('[id$="LocationType"]').find("input")[2].checked) {
+                    if ('{!hqAccount.ANG_Accreditation_Model__c}' == '{!ACCREDITATION_MODEL_MC}') {
+                        toggleCountryMultiSelection(false, true);
+                        $('[for$="countryconcerned"]')[0].innerText = "* {!$Label.ANG_ISSP_CountryConcerned_AEs}";
+                    } else {
+                        toggleCountryMultiSelection(true, false);
+                        $('#brcountry').text("{!amsAllLangCountryLabel}");
+                    }
+
+                    $('[id$="nocThirdQuestion"]').css('display', 'none');
+                }
+
+                if ($('[id$="LocationType"]').find("input")[3].checked) {
+                    if ('{!hqAccount.ANG_Accreditation_Model__c}' == '{!ACCREDITATION_MODEL_MC}') {
+                        toggleCountryMultiSelection(false, true);
+                        $('[for$="countryconcerned"]')[0].innerText = "* {!$Label.ANG_ISSP_CountryConcerned_AEs}";
+                    } else {
+                        toggleCountryMultiSelection(true, false);
+                        $('#brcountry').text("{!amsAllLangCountryLabel}");
+                    }
+
+                    $('[id$="nocThirdQuestion"]').css('display', 'none');
+                }
             }
         }
+
+        function checkLocationQuestionMultiCountry() {
+            if ($('[id$="LocationTypeMultiCountry"]').find("input")[0] && $('[id$="LocationTypeMultiCountry"]').find("input")[1] && $('[id$="LocationTypeMultiCountry"]').find("input")[2]) {
+            
+                if ($('[id$="LocationTypeMultiCountry"]').find("input")[0].checked) { 
+                    toggleCountryMultiSelection(true, false);
+
+                    if ('{!hqAccount.ANG_Accreditation_Model__c}' == '{!ACCREDITATION_MODEL_MC}') {
+                        $('#brcountry').text("{!$Label.ISSP_AMS_NOC_All_Countries}");
+                    }
+
+                    if ('{!hqAccount.Sector__c}' == 'Travel Agent') {
+                        $('[id$="nocThirdQuestion"]').css('display', 'block');
+                    }
+
+                    $('[for$="countryconcerned"]')[0].innerText = "* {!$Label.ANG_ISSP_CountryConcerned}";
+                }
+
+                if ($('[id$="LocationTypeMultiCountry"]').find("input")[1].checked) {
+                    if ('{!hqAccount.ANG_Accreditation_Model__c}' == '{!ACCREDITATION_MODEL_MC}') {
+                        toggleCountryMultiSelection(false, true);
+                        $('[for$="countryconcerned"]')[0].innerText = "* {!$Label.ANG_ISSP_CountryConcerned_AEs}";
+                    } else {
+                        toggleCountryMultiSelection(true, false);
+                        $('#brcountry').text("{!amsAllLangCountryLabel}");
+                    }
+
+                    $('[id$="nocThirdQuestion"]').css('display', 'none');
+                }
+
+                if ($('[id$="LocationTypeMultiCountry"]').find("input")[2].checked) {
+                    if ('{!hqAccount.ANG_Accreditation_Model__c}' == '{!ACCREDITATION_MODEL_MC}') {
+                        toggleCountryMultiSelection(false, true);
+                        $('[for$="countryconcerned"]')[0].innerText = "* {!$Label.ANG_ISSP_CountryConcerned_AEs}";
+                    } else {
+                        toggleCountryMultiSelection(true, false);
+                        $('#brcountry').text("{!amsAllLangCountryLabel}");
+                    }
+
+                    $('[id$="nocThirdQuestion"]').css('display', 'none');
+                }
+            }
         }
 
         function toggleCountryMultiSelection(countryLabel, multiCountry) {
@@ -789,7 +832,7 @@
                                         $Label.ISSP_AMS_Noc_StepA_message)}
                                     </div>
                                     <apex:outputPanel id="nocMessage">
-                                        <div  class="alert alert-danger" role="alert" style="display: {!IF(AND(isMCAccredited, isNoticeOfChange, NOT(isBankAccountChange), newForm.Scope_Of_Change__c != "HO Only"), 'flex', 'none')}; margin-bottom: 20px;">
+                                        <div  class="alert alert-danger" role="alert" style="display: {!IF(AND(isMCAccredited, isNoticeOfChange, NOT(isBankAccountChange), newForm.Scope_Of_Change__c != 'HO Only'), 'flex', 'none')}; margin-bottom: 20px;">
                                             {!$Label.ISSP_ANG_NOC_GOGLOBAL_Info}
                                         </div>
                                     </apex:outputPanel>
@@ -875,7 +918,7 @@
 
                             <apex:outputpanel rendered="{!isNoticeOfChange}" id="nocFormQuestions">
                                 <apex:outputpanel >
-                                    <div class="form-group" style="{!IF(!isChangeOfAccreditationType,'','display:none')}">
+                                    <div class="form-group">
                                         <label for="operationtype" class="col-lg-3 control-label">
                                             {!IF(AND(isBankAccountChange == true, con.Account.Location_Type__c == 'AE'), $Label.ISSP_AMS_AE_NoC_Change_for, $Label.ISSP_AMS_NoC_Change_for)}
                                         </label>
@@ -884,7 +927,7 @@
                                                 {!ContactAccount}
                                             </apex:outputPanel>
                                             <apex:outputPanel rendered="{!OR(isBankAccountChange != true, con.Account.Location_Type__c != 'AE')}">
-                                                <apex:outputPanel rendered="{!OR(con.Account.ANG_Accreditation_Model__c == null, con.Account.ANG_Accreditation_Model__c == 'Legacy')}">
+                                                <apex:outputPanel rendered="{!AND(OR(con.Account.ANG_Accreditation_Model__c == null, con.Account.ANG_Accreditation_Model__c == 'Legacy'), !isChangeOfAccreditationType)}">
                                                     <apex:selectRadio required="true" id="LegacyLocationType" layout="pageDirection" label="{!$Label.ISSP_AMS_NoC_Change_for}" style="width:45%;" value="{!newForm.Scope_of_Change__c}" onchange="togglePageItem(this.value, '{!$Component.step1Form.step1Block.branchaccountsel}');">
                                                         <apex:selectOption itemValue="HO Only" itemLabel="{!$Label.ISSP_AMS_NoC_Head_Office}" rendered="{!isHOcontact}" />
                                                         <apex:selectOption itemValue="HO - All Branches" itemLabel="{!$Label.ISSP_AMS_NoC_HO_All_Branches}" rendered="{!AND(isHOcontact, OR(BranchAccounts.size>=1,agencyCodesConcerned.size>=1))}" />
@@ -892,35 +935,27 @@
                                                         <apex:selectOption itemValue="Selected Branches Only" itemLabel="{!$Label.ISSP_AMS_NoC_Branch_Office}" rendered="{!OR(isHOcontact,BranchAccounts.size>=1,agencyCodesConcerned.size>=1)}"/>
                                                     </apex:selectRadio>
                                                 </apex:outputPanel>
-                                                <apex:outputPanel rendered="{!AND(con.Account.ANG_Accreditation_Model__c != null, con.Account.ANG_Accreditation_Model__c != 'Legacy')}" id="nocOptions">    
+                                                <apex:outputPanel rendered="{!AND(con.Account.ANG_Accreditation_Model__c != null, con.Account.ANG_Accreditation_Model__c != 'Legacy', !isChangeOfAccreditationType)}" id="nocOptions">    
                                                     <apex:selectRadio required="true" id="LocationType" layout="pageDirection" label="{!$Label.ISSP_AMS_NoC_Change_for}" style="width:70%;" value="{!newForm.Scope_of_Change__c}" onchange="togglePageItem(this.value, '{!$Component.step1Form.step1Block.branchaccountsel}'); checkLocationQuestion(); reRenderNocMessage();">
                                                         <apex:selectOption itemValue="HO Only" itemLabel="{!$Label.ISSP_AMS_NoC_Head_Entity}" />
                                                         <apex:selectOption itemValue="HO - All Branches" itemLabel="{!$Label.ISSP_AMS_NoC_HE_All_Branches}" rendered="{!OR(AND(OR(BranchAccounts.size>=1, agencyCodesConcerned.size>=1), NOT(isMCAccredited)), isMCAccredited)}"/>                                                     
                                                         <apex:selectOption itemValue="HO - Selected Branches" itemLabel="{!$Label.ISSP_AMS_NoC_HE_Some_Branches}" rendered="{!OR(AND(OR(BranchAccounts.size>=1, agencyCodesConcerned.size>=1), NOT(isMCAccredited)), isMCAccredited)}" />                                                       
                                                         <apex:selectOption itemValue="Selected Branches Only" itemLabel="{!$Label.ISSP_AMS_NoC_Associate_Entity}" rendered="{!OR(AND(OR(BranchAccounts.size>=1, agencyCodesConcerned.size>=1), NOT(isMCAccredited)), isMCAccredited)}" />
                                                     </apex:selectRadio>
-
+                                                </apex:outputPanel>
+                                                <apex:outputPanel rendered="{!isChangeOfAccreditationType}" id="nocOptionsMultiCountry">    
+                                                    <apex:selectRadio required="true" id="LocationTypeMultiCountry" layout="pageDirection" label="{!$Label.ISSP_AMS_NoC_Change_for}" style="width:70%;" value="{!newForm.Scope_of_Change__c}" onchange="togglePageItem(this.value, '{!$Component.step1Form.step1Block.branchaccountsel}'); checkLocationQuestionMultiCountry(); reRenderNocMessage();">
+                                                        <apex:selectOption itemValue="HO - All Branches" itemLabel="{!$Label.ISSP_AMS_NoC_HE_All_Branches}" />                                                     
+                                                        <apex:selectOption itemValue="GE - Change to Gostandard" itemLabel="{!$Label.ISSP_AMS_Associate_entities_of_a_country_change_to_Gostandard}" />                                                       
+                                                        <apex:selectOption itemValue="GE - Change to Golite" itemLabel="{!$Label.ISSP_AMS_Associate_entities_of_a_country_change_to_Golite}"  />
+                                                    </apex:selectRadio>
                                                 </apex:outputPanel>
                                             </apex:outputPanel>
                                         </div>
                                     </div>
-                                    <div class="form-group" style="{!IF(isChangeOfAccreditationType,'','display:none')}">
-                                        <label for="operationtype" class="col-lg-3 control-label">
-                                            {!$Label.ISSP_AMS_NoC_Change_for}
-                                        </label>
-                                        <div class="col-lg-9" style="padding-top:7px">
-                                            <apex:outputPanel rendered="{!AND(con.Account.ANG_Accreditation_Model__c != null, con.Account.ANG_Accreditation_Model__c != 'Legacy')}" id="nocOptionsMultiCountry">    
-                                                <apex:selectRadio required="true" id="LocationTypeMultiCountry" layout="pageDirection" label="{!$Label.ISSP_AMS_NoC_Change_for}" style="width:70%;" value="{!newForm.Scope_of_Change__c}" onchange="togglePageItem(this.value, '{!$Component.step1Form.step1Block.branchaccountsel}'); checkLocationQuestion(); reRenderNocMessage();">
-                                                    <apex:selectOption itemValue="HO - All Branches" itemLabel="{!$Label.ISSP_AMS_NoC_HE_All_Branches}" />                                                     
-                                                    <apex:selectOption itemValue="GE - Change to Gostandard" itemLabel="{!$Label.ISSP_AMS_Associate_entities_of_a_country_change_to_Gostandard}" />                                                       
-                                                    <apex:selectOption itemValue="GE - Change to Golite" itemLabel="{!$Label.ISSP_AMS_Associate_entities_of_a_country_change_to_Golite}"  />
-                                                </apex:selectRadio>
-                                            </apex:outputPanel>
-                                        </div>
-                                    </div>
                                      <!--##RN INC463820  -->
-                                    <apex:outputPanel id="branchaccountsel" style="display:{!IF(OR(newForm.Scope_of_Change__c=='HO - Selected Branches', newForm.Scope_of_Change__c=='Selected Branches Only'), '', 'none')}">
-                                        <apex:pageBlockSection id="table" columns="1" title="{!$Label.ISSP_AMS_Select_AEs}" rendered="{!hierarchyValues.size > 0}">
+                                    <apex:outputPanel id="branchaccountsel" style="display:{!IF(OR(newForm.Scope_of_Change__c=='HO - Selected Branches', newForm.Scope_of_Change__c=='Selected Branches Only',newForm.Scope_of_Change__c=='GE - Change to Gostandard', newForm.Scope_of_Change__c=='GE - Change to Golite'), '', 'none')}">
+                                        <apex:pageBlockSection id="table" columns="1" title="{!$Label.ISSP_AMS_Select_AEs}" rendered="{!AND(hierarchyValues.size > 0, selectedCountryIsos.size > 0)}">
 
                                             <apex:outputPanel id="buttonPanel">
                                                 <apex:commandButton action="{!Beginning}" title="Beginning" value="<<" disabled="{!disablePrevious}" reRender="hierarchyList,buttonPanel"/>

@@ -879,6 +879,8 @@ public without sharing class ISSP_AMS_Accreditation {
 
 		newForm.Scope_of_Change__c = isHOcontact ? HO_ONLY : SELECTED_BRANCHES; //Set default
 
+		newForm.Scope_of_Change__c = isChangeOfAccreditationType ? HO_ALL_BRANCHES : SELECTED_BRANCHES; //Set default
+
 		if (ApexPages.currentPage().getParameters().containsKey('caseId')) {
 			//Retrieve information linked to the case Id
 			vSAAMCaseId = ApexPages.currentPage().getParameters().get('caseId');
