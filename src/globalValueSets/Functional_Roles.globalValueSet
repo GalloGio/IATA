@@ -364,7 +364,7 @@
         <fullName>Lab Registry</fullName>
         <default>false</default>
         <label>Lab Registry</label>
-	</customValue>
+    </customValue>
     <customValue>
         <fullName>OAG</fullName>
         <default>false</default>
