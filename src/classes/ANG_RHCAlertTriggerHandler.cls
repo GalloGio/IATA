@@ -183,10 +183,14 @@ public class ANG_RHCAlertTriggerHandler{
 					if(c.ANG_Enable_NewGen__c) newGenAccounts.add(a.Id);
 					else legacyAccounts.add(a.Id);
 				}
-				for(AMS_Country_Specific_Attribute__c att : c.AMS_Country_Specific_Attributes__r)
-					if(!string.isBlank(att.Accreditation_Model__c))
+				for(AMS_Country_Specific_Attribute__c att : c.AMS_Country_Specific_Attributes__r){
+					if(!string.isBlank(att.Accreditation_Model__c)){
 						for(string AccModel:att.Accreditation_Model__c.split(';'))
 							configs.put((c.ISO_Code__c == DEFAULT_CODE ? c.ISO_Code__c : c.Id) + att.ANG_Direction__c + att.ANG_Percentage__c + AccModel, att);
+					}
+					
+					configs.put((c.ISO_Code__c == DEFAULT_CODE ? c.ISO_Code__c : c.Id) + att.ANG_Direction__c + att.ANG_Percentage__c, att);  //for exceptional monitoring
+				}
 			}
 			if(configs.isEmpty()) return; //no configurations set, no need to check further
 

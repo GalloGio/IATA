@@ -2057,11 +2057,15 @@ public with sharing class ANG_AgencyChangesHelper {
 				if(toReturn.accountsMap.get(accountId) != null)
 					toReturn.accountsMap.get(accountId).Has_a_Financial_Assessment_Contact__c = false;
 			
-			Account acc = changesContainer.accountsMap.get(oscarToProcess.Account__c);
+			Account acc = toReturn.accountsMap.get(oscarToProcess.Account__c);
+
+			if(acc==null){
+				acc = [select id, IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c, (SELECT Id, ANG_AccountId__c FROM RHC_Informations__r) from account where id =:oscarToProcess.Account__c];
+			}
 
 			//countries where Cashless agencies can have CASH FOP need to have the RHC recalculated (set=1)
-			if(acc.IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c && !toReturn.accountsMap.get(oscarToProcess.Account__c).RHC_Informations__r.isEmpty()){
-				ANG_RHCHelper.calculateRHCAmount(new list<ANG_RHC_Information__c>{toReturn.accountsMap.get(oscarToProcess.Account__c).RHC_Informations__r}, true);
+			if(acc.IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c && acc.RHC_Informations__r<>null && !acc.RHC_Informations__r.isEmpty()){
+				ANG_RHCHelper.calculateRHCAmount(new list<ANG_RHC_Information__c>{acc.RHC_Informations__r}, true);
 			}
 			else
 				ANG_RHCHelper.deactivateRHCInfo(new Set<Id>{oscarToProcess.Account__c});
