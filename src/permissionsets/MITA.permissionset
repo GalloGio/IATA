@@ -17,10 +17,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>MITA_PortalMyAgreementsCtrl</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>MITA_PortalTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -244,10 +240,6 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>MITA_PortalAgreements</apexPage>
-        <enabled>true</enabled>
-    </pageAccesses>
-    <pageAccesses>
-        <apexPage>MITA_PortalMyAgreements</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
