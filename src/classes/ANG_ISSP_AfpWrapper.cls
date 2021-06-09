@@ -239,7 +239,7 @@ public with sharing class ANG_ISSP_AfpWrapper {
 										FROM Agency_Authorization__c
 										WHERE Account__c = :accountId
 										AND (Status__c = :AMS_Utils.ACTIVE OR Status__c = :AMS_Utils.AUTHORIZED)]) {
-			if(auth.ANG_FormOfPayment_ID__c == AMS_Utils.CA && !this.isCashless) {
+			if(auth.ANG_FormOfPayment_ID__c == AMS_Utils.CA && (!this.isCashless || (this.isCashless && Account.IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c))) {
 				this.isCashFlag = true;
 				this.authQuantity++;
 			}
