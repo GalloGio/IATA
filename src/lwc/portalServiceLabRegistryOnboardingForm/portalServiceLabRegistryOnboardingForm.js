@@ -55,8 +55,10 @@ import CSP_LabReg_WhichAirlines from '@salesforce/label/c.CSP_LabReg_WhichAirlin
 import CSP_LabRegistry from '@salesforce/label/c.CSP_LabRegistry';
 import CSP_LabReg_CountryLabs from '@salesforce/label/c.CSP_LabReg_CountryLabs';
 import CSP_L2_Profile_Details_Message from '@salesforce/label/c.CSP_L2_Profile_Details_Message';
-import CSP_L2_Confirmation_Message from '@salesforce/label/c.CSP_L2_Confirmation_Message';
+import CSP_LabReg_ConfirmationMessage from '@salesforce/label/c.CSP_LabReg_ConfirmationMessage';
 import CSP_LabReg_confirmDetails from '@salesforce/label/c.CSP_LabReg_confirmDetails';
+import CSP_LabReg_Step2Intro from '@salesforce/label/c.CSP_LabReg_Step2Intro';
+import CSP_LabReg_NumberOfLocations from '@salesforce/label/c.CSP_LabReg_NumberOfLocations';
 
 //Spash screen labels
 
@@ -145,7 +147,7 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 		,CSP_L2_Go_To_Service
 		,CSP_L2_Registration_Error_Title
 		,CSP_L2_Go_Back
-		,CSP_L2_Confirmation_Message
+		,CSP_LabReg_ConfirmationMessage
 		,CSP_L2_Contact_Support
 		,CSP_LabReg_Step
 		,CSP_LabReg_Start
@@ -155,6 +157,8 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 		,CSP_LabReg_SplashScreen_Step3
 		,CSP_LabReg_SplashScreen_Step4
 		,CSP_LabReg_confirmDetails
+		,CSP_LabReg_NumberOfLocations
+		,CSP_LabReg_Step2Intro
 	}
 
 	@track showSplashScreen = true;
@@ -238,7 +242,7 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 					this.isBForm = false;
 				} 
 		
-				if(this.labTypeSelection=='Independent Lab' || this.labTypeSelection=='Lab Network'){
+				if(this.labTypeSelection=='Independent Lab' || this.labTypeSelection=='Lab Partner/Network'){
 					this.isAForm = false;
 					this.isBForm = true;
 				} 
@@ -608,13 +612,13 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 	 *********/
 	 @api countryColumns = [
 		{ label: 'Name', fieldName: 'label', editable: false },
-		{ label: 'Number Of Labs', fieldName: 'NumOfLabs', type: 'number', editable: true, maximumFractionDigits: 0 },
+		{ label: CSP_LabReg_NumberOfLocations , fieldName: 'NumOfLabs', type: 'number', editable: true, maximumFractionDigits: 0 },
 		{ type: 'button-icon', initialWidth: 50, typeAttributes: {iconName: 'utility:close', name: 'delete', variant:'container'}}
 	];
 
 	@api countryColumnsRO = [
 		{ label: 'Name', fieldName: 'label'},
-		{ label: 'Number Of Labs', fieldName: 'NumOfLabs', type: 'number'}
+		{ label: CSP_LabReg_NumberOfLocations, fieldName: 'NumOfLabs', type: 'number'}
 	];
 
 	@api countryMetadata = {
