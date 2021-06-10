@@ -2046,7 +2046,7 @@ global class ANG_OscarProcessHelper {
 			nt.Message__c = nt.Message__c
 				.replace('#CONTACTNAME',contacts.get(nt.Contact__c).Name)
 				.replace('#IATACODE',contacts.get(nt.Contact__c).Account.IataCode__c)
-				.replace('#PCICOMPLIANCEEXPIRYDATE',String.valueOf(contacts.get(nt.Contact__c).Account.ANG_PCI_compliance_expiry_date__c))
+				.replace('#PCICOMPLIANCEEXPIRYDATE',((contacts.get(nt.Contact__c) != null && contacts.get(nt.Contact__c).Account.ANG_PCI_compliance_expiry_date__c != null) ? String.valueOf(contacts.get(nt.Contact__c).Account.ANG_PCI_compliance_expiry_date__c) : ''))
 				.replace('#ACCOUNTNAME', contacts.get(nt.Contact__c).Account.Name)
 				.replace('#DEADLINEDATE',String.valueOf(Datetime.now().addDays(15).format('MM/dd/yyyy')));
 
