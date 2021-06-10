@@ -84,7 +84,7 @@ import CSP_L2_Go_Back from "@salesforce/label/c.CSP_L2_Go_Back";
 import CSP_L2_Go_To_Service from "@salesforce/label/c.CSP_L2_Go_To_Service";
 import CSP_L2_Registration_Error_Title from "@salesforce/label/c.CSP_L2_Registration_Error_Title";
 import CSP_L2_Contact_Support from "@salesforce/label/c.CSP_L2_Contact_Support";
-import OneId_Thank_you_for_subscribing_to_this_new_service from "@salesforce/label/c.OneId_Thank_you_for_subscribing_to_this_new_service";
+import CSP_LabReg_ThankYouForRequestingService from "@salesforce/label/c.CSP_LabReg_ThankYouForRequestingService";
 
 export default class PortalServiceOnboardingForm extends NavigationMixin(LightningElement) {
 	/* Images */
@@ -142,7 +142,7 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 		,CSP_L2_Back_to_Edit
 		,CSP_L2_Submit
 		,CSP_L2_Details_Saved
-		,OneId_Thank_you_for_subscribing_to_this_new_service
+		,CSP_LabReg_ThankYouForRequestingService
 		,CSP_L2_Go_To_Homepage
 		,CSP_L2_Go_To_Service
 		,CSP_L2_Registration_Error_Title
