@@ -211,19 +211,25 @@ global class ANG_RME_Alert_Service {
 								setResponse(null, 202);
 							}
 						}else{
-							if(bIsOperationWithoutIEP){
-								saveAlert(req, acct.Id, null);
-							}else{
-								//check if the agency is CASHLESS and the operation is without IEP vendor
-								if(acct.RHC_Informations__r.isEmpty()) {
-									setResponse('Agent '+req.iataCode+' does not have RHC set', 404);
-								} 
-								else if(acct.RHC_informations__r.size()>1) {
-									setResponse('Internal Error: Agent '+req.iataCode+' has more than one RHC record', 409);
-								} else{
-									ANG_RHC_Information__c rhcInfo = acct.RHC_informations__r[0];
+							if(acct.RHC_Informations__r.isEmpty()) {
+								setResponse('Agent '+req.iataCode+' does not have RHC set', 404);
+							} 
+							else if(acct.RHC_informations__r.size()>1) {
+								setResponse('Internal Error: Agent '+req.iataCode+' has more than one RHC record', 409);
+							} else{
+								ANG_RHC_Information__c rhcInfo = acct.RHC_informations__r[0];
 
-									String errorMessage = '';
+								String errorMessage = '';
+								//check if the agency is CASHLESS and the operation is without IEP vendor
+								//If so, skip checks on currency and save the alert
+								if(bIsOperationWithoutIEP){
+									if(String.isNotEmpty(errorMessage))
+										setResponse('Conflicting informations:'+errorMessage, 409);
+									else{
+										updateRHC(req, rhcInfo);
+										saveAlert(req, rhcInfo.ANG_AccountId__c, rhcInfo.Id);
+									}
+								}else{
 									if(rhcInfo.CurrencyIsoCode != req.storedBaseCurrency) errorMessage += '\n- Currency mismatch. Request value: '+req.storedBaseCurrency+'. Current value: '+rhcInfo.CurrencyIsoCode;
 
 									if(String.isNotEmpty(errorMessage))
