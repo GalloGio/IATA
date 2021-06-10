@@ -579,6 +579,8 @@ public with sharing class clsMassCaseCreationController {
 			From Case c
 			Where c.RecordTypeId = '01220000000Q4Yd'
 			and (c.Status <> 'Closed'
+			AND c.Status <> 'Closed Opt-out'
+			AND c.Status <> 'Closed_Non compliance'
 			AND c.Status <> 'Assessment Cancelled')
 			AND c.ContactId IN :selectedID]) {
 				// Find the contact of the case

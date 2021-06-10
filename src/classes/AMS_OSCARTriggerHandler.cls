@@ -2870,7 +2870,7 @@ public class AMS_OSCARTriggerHandler {
 
 				Set<String> nextMonthLocations = new Set<String>{'P', 'D'};
 				Date terminationDate = nextMonthLocations.contains(updatedOSCAR.Location_Class__c) ? AMS_Utils.lastDayOfMonth(Date.today().addMonths(1)) : Date.today().addDays(15);
-				updatedOSCAR.Termination_date__c = BusinessHours.nextStartDate(updatedOSCAR.BusinessHours__c, DateTime.newInstance(terminationDate, System.now().time())).date();
+				updatedOSCAR.Termination_Date__c = BusinessHours.nextStartDate(updatedOSCAR.BusinessHours__c, DateTime.newInstance(terminationDate, Time.newInstance(0, 0, 0, 0))).date();
 
 				if(updatedOSCAR.Process__c == AMS_Utils.VOLRELINQUISH){
 					updatedOSCAR.Process_Start_Date__c = updatedOSCAR.Termination_Date__c;
@@ -3919,7 +3919,7 @@ public class AMS_OSCARTriggerHandler {
 			}
 
 			if (oldOSCAR.Notify_Agent_Termination__c == false && updatedOscar.Notify_Agent_Termination__c == true) {
-				DateTime nextMonthEnd = DateTime.newInstance(AMS_Utils.lastDayOfMonth(System.today().addMonths(1)), DateTime.now().time());
+				DateTime nextMonthEnd = DateTime.newInstance(AMS_Utils.lastDayOfMonth(System.today().addMonths(1)), Time.newInstance(0, 0, 0, 0));
 				updatedOSCAR.Termination_Date__c = BusinessHours.nextStartDate(updatedOSCAR.BusinessHours__c, nextMonthEnd).date();
 				System.debug(loggingLevel.Debug, '____ [trg AMS_OSCARTrigger - beforUpdate] updatedOSCAR.Termination_Date__c - ' + updatedOSCAR.Termination_Date__c);
 			}
@@ -3978,7 +3978,7 @@ public class AMS_OSCARTriggerHandler {
 			}
 
 			if (oldOSCAR.Terminate_Agency__c == false && updatedOscar.Terminate_Agency__c == true) {
-				DateTime nextMonthEnd = DateTime.newInstance(AMS_Utils.lastDayOfMonth(System.today().addMonths(1)), DateTime.now().time());
+				DateTime nextMonthEnd = DateTime.newInstance(AMS_Utils.lastDayOfMonth(System.today().addMonths(1)), Time.newInstance(0, 0, 0, 0));
 				updatedOSCAR.Termination_Date__c = BusinessHours.nextStartDate(updatedOSCAR.BusinessHours__c, nextMonthEnd).date();
 				System.debug(loggingLevel.Debug, '____ [trg AMS_OSCARTrigger - beforUpdate] updatedOSCAR.Termination_Date__c - ' + updatedOSCAR.Termination_Date__c);
 			}
