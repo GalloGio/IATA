@@ -7,6 +7,7 @@ import CSP_Emergency_Selected_Reason1 from '@salesforce/label/c.CSP_Emergency_Se
 import CSP_Emergency_Selected_Reason2 from '@salesforce/label/c.CSP_Emergency_Selected_Reason2';
 import CSP_Emergency_Selected_Reason3 from '@salesforce/label/c.CSP_Emergency_Selected_Reason3';
 import CSP_Emergency_Selected_Reason4 from '@salesforce/label/c.CSP_Emergency_Selected_Reason4';
+import CSP_Emergency_Selected_Reason5 from '@salesforce/label/c.CSP_Emergency_Selected_Reason5';
 
  
 export default class PortalSupportEmergencyPopup extends LightningElement {
@@ -18,7 +19,8 @@ export default class PortalSupportEmergencyPopup extends LightningElement {
          CSP_Emergency_Selected_Reason1,
          CSP_Emergency_Selected_Reason2,
          CSP_Emergency_Selected_Reason3,
-         CSP_Emergency_Selected_Reason4 
+         CSP_Emergency_Selected_Reason4,
+         CSP_Emergency_Selected_Reason5  
 
     }
 

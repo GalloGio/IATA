@@ -3765,7 +3765,7 @@
         <externalId>false</externalId>
         <formula>DATEVALUE(Submission_for_Approval_Date__c) - DATEVALUE(Open_Date__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Days passed til submission for approval</label>
+        <label>Days until submission for approval</label>
         <precision>18</precision>
         <required>false</required>
         <scale>2</scale>
@@ -11830,6 +11830,37 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
         </sharedTo>
     </listViews>
     <listViews>
+        <fullName>Continuous_Improvement_Owner</fullName>
+        <columns>NAME</columns>
+        <columns>Region__c</columns>
+        <columns>OI_Type__c</columns>
+        <columns>Subject__c</columns>
+        <columns>Root_Cause_Analysis__c</columns>
+        <columns>OI_Approval_date__c</columns>
+        <columns>Status_del__c</columns>
+        <columns>OWNER.ALIAS</columns>
+        <columns>OWNER.FIRST_NAME</columns>
+        <columns>OWNER.LAST_NAME</columns>
+        <filterScope>Mine</filterScope>
+        <filters>
+            <field>Region__c</field>
+            <operation>contains</operation>
+            <value>Africa &amp; Middle East,Americas,Asia &amp; Pacific,China &amp; North Asia,Europe,GVA</value>
+        </filters>
+        <filters>
+            <field>OI_Type__c</field>
+            <operation>notEqual</operation>
+            <value>CPS Check,Data Issue</value>
+        </filters>
+        <filters>
+            <field>OI_Status_auto__c</field>
+            <operation>notEqual</operation>
+            <value>Closed,Terminated,Completed</value>
+        </filters>
+        <label>Continuous Improvement Owner</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
         <fullName>Data_Governance2</fullName>
         <columns>NAME</columns>
         <columns>OI_Status_auto__c</columns>
@@ -11851,6 +11882,40 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
             <value>Data Issue</value>
         </filters>
         <label>Data Governance - Data Issues</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Global_CI</fullName>
+        <columns>NAME</columns>
+        <columns>Region__c</columns>
+        <columns>Open_Date__c</columns>
+        <columns>Subject__c</columns>
+        <columns>Description__c</columns>
+        <columns>Initiator__c</columns>
+        <columns>CREATEDBY_USER</columns>
+        <columns>CREATEDBY_USER.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Region__c</field>
+            <operation>contains</operation>
+            <value>Africa &amp; Middle East,Americas,Asia &amp; Pacific,China &amp; North Asia,Europe,GVA</value>
+        </filters>
+        <filters>
+            <field>CREATEDBY_USER.ALIAS</field>
+            <operation>notContain</operation>
+            <value>Lima,nteko,jiria,karthik,zhangm,psaha,mohammed,jwang,sarro</value>
+        </filters>
+        <filters>
+            <field>OI_Type__c</field>
+            <operation>notEqual</operation>
+            <value>CPS Check,Data Issue</value>
+        </filters>
+        <filters>
+            <field>OI_Status_auto__c</field>
+            <operation>contains</operation>
+            <value>Investigation</value>
+        </filters>
+        <label>Continuous Improvement to be allocated</label>
         <language>en_US</language>
     </listViews>
     <listViews>

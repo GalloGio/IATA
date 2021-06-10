@@ -7776,6 +7776,14 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>LabRegistry_helper</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>LabRegistry_helper_test</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>LabelTranslator</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -14286,9 +14294,9 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>AMS_Country_Specific_Attribute__c.Stakeholders_email_list__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -20176,9 +20184,9 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>AP_Process_Form__c.Company_Country__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -48287,6 +48295,136 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Account_Role__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Additional_Certifications__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Additional_certifications_in_place__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Airline_Name__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Are_your_labs_part_of_national_platform__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.CountryName__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Do_you_issue_test_results_for_all_lab__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Do_you_manage_booking_for_all_locations__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Endorsed_by_governments__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Existing_partnership_with_airlines__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.How_Many_Lab__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.How_long_have_you_been_in_the_business__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Lab_Type__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.National_accreditation_for_all_the_labs__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Nature_of_SLA__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Operating_Country__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Operating_under_brand__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Parent_Detail_For_Airline__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Parent_Detail_For_Country__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Partner_Airline__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Type_of_SLAs_in_place__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Type_of_lab__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Which_Governments__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Which_National_Platform__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Which_Operating_Brand__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.onboarding_case__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>LVA_CallUsConfig__mdt.AvailableHours__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -53273,6 +53411,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Portal_Applications__c.ANG_Cannot_move_contact_between_Agencies__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Portal_Applications__c.ANG_Country_Coverage_2__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -63974,6 +64117,37 @@
         <layout>KPI_Value__c-KPI Value Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>LAB_Account_Role_Detail__c-Aggregator Layout</layout>
+        <recordType>LAB_Account_Role_Detail__c.Aggregator</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>LAB_Account_Role_Detail__c-IT Integrator Layout</layout>
+        <recordType>LAB_Account_Role_Detail__c.IT_Integrator</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>LAB_Account_Role_Detail__c-Independent Layout</layout>
+        <recordType>LAB_Account_Role_Detail__c.Independent_Lab</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>LAB_Account_Role_Detail__c-LAB Account Role Detail Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>LAB_Account_Role_Detail__c-LAB Account Role Detail Layout</layout>
+        <recordType>LAB_Account_Role_Detail__c.Default</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>LAB_Account_Role_Detail__c-Lab Network Layout</layout>
+        <recordType>LAB_Account_Role_Detail__c.Lab_Network</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>LAB_Account_Role_Detail__c-Operating Country Layout</layout>
+        <recordType>LAB_Account_Role_Detail__c.Operating_Country</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>LAB_Account_Role_Detail__c-Partner Airline Layout</layout>
+        <recordType>LAB_Account_Role_Detail__c.Airline_Agreement</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>LVA_CallUsConfig__mdt-LVA_CallUsConfig Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -67954,6 +68128,15 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>true</modifyAllRecords>
         <object>KPI_Value__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>LAB_Account_Role_Detail__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
@@ -72842,12 +73025,13 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Agency_Authorization__c.BSPLink</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>false</default>
+        <default>true</default>
+        <personAccountDefault>true</personAccountDefault>
         <recordType>Agency_Authorization__c.FormOfPayment</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
@@ -73778,6 +73962,41 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Integration_Log__c.Track_Response</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>LAB_Account_Role_Detail__c.Aggregator</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>LAB_Account_Role_Detail__c.Airline_Agreement</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>LAB_Account_Role_Detail__c.Default</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>LAB_Account_Role_Detail__c.IT_Integrator</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>LAB_Account_Role_Detail__c.Independent_Lab</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>LAB_Account_Role_Detail__c.Lab_Network</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>LAB_Account_Role_Detail__c.Operating_Country</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
@@ -74986,6 +75205,10 @@
     <tabVisibilities>
         <tab>KPI_Value__c</tab>
         <visibility>DefaultOff</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>LAB_Account_Role_Detail__c</tab>
+        <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>Late_Remittance_Report</tab>

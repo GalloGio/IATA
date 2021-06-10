@@ -7768,6 +7768,14 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>LabRegistry_helper</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>LabRegistry_helper_test</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>LabelTranslator</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -19284,17 +19292,17 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>ANG_Risk_Alert__c.ANG_Agent_current_standing__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>ANG_Risk_Alert__c.ANG_Direction__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>ANG_Risk_Alert__c.ANG_EventId__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -19304,17 +19312,17 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>ANG_Risk_Alert__c.ANG_Open_Cash_Position__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>ANG_Risk_Alert__c.ANG_RHC_Information__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>ANG_Risk_Alert__c.ANG_RME_Last_Update__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -19329,7 +19337,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>ANG_Risk_Alert__c.ANG_Threshold_Level__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -19339,37 +19347,37 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>ANG_Risk_Alert__c.ANG_Triggered_Rules__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>ANG_Risk_Alert__c.ANG_email_sent__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>ANG_Risk_Alert__c.Additional_Alert_information__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>ANG_Risk_Alert__c.GDS_Alert_Type__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>ANG_Risk_Alert__c.GDS__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>ANG_Risk_Alert__c.Monitored_Account__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>ANG_Risk_Alert__c.Ticket_Number__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -25114,52 +25122,52 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Agency_Authorization__c.ANG_FormOfPayment_ID__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Agency_Authorization__c.Authority__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Agency_Authorization__c.Data_Quality_Description__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Agency_Authorization__c.Data_Quality_Score__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Agency_Authorization__c.Email_Used_for_BSP_Creation__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Agency_Authorization__c.IATACode__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Agency_Authorization__c.ISO_Country__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Agency_Authorization__c.Last_Request_Result__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Agency_Authorization__c.Status__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>Agency_Authorization__c.Unique_Identifier__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -40052,9 +40060,9 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Financial_Security__c.Send_FS_acknowledgment__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -48278,6 +48286,136 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Account_Role__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Additional_Certifications__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Additional_certifications_in_place__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Airline_Name__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Are_your_labs_part_of_national_platform__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.CountryName__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Do_you_issue_test_results_for_all_lab__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Do_you_manage_booking_for_all_locations__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Endorsed_by_governments__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Existing_partnership_with_airlines__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.How_Many_Lab__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.How_long_have_you_been_in_the_business__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Lab_Type__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.National_accreditation_for_all_the_labs__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Nature_of_SLA__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Operating_Country__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Operating_under_brand__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Parent_Detail_For_Airline__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Parent_Detail_For_Country__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Partner_Airline__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Type_of_SLAs_in_place__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Type_of_lab__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Which_Governments__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Which_National_Platform__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.Which_Operating_Brand__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LAB_Account_Role_Detail__c.onboarding_case__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>LVA_CallUsConfig__mdt.AvailableHours__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -53265,6 +53403,11 @@
         <editable>false</editable>
         <field>Portal_Applications__c.ANG_Cannot_move_contact_between_Agencies__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Portal_Applications__c.ANG_Country_Coverage_2__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -63965,6 +64108,37 @@
         <layout>KPI_Value__c-KPI Value Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>LAB_Account_Role_Detail__c-Aggregator Layout</layout>
+        <recordType>LAB_Account_Role_Detail__c.Aggregator</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>LAB_Account_Role_Detail__c-IT Integrator Layout</layout>
+        <recordType>LAB_Account_Role_Detail__c.IT_Integrator</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>LAB_Account_Role_Detail__c-Independent Layout</layout>
+        <recordType>LAB_Account_Role_Detail__c.Independent_Lab</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>LAB_Account_Role_Detail__c-LAB Account Role Detail Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>LAB_Account_Role_Detail__c-LAB Account Role Detail Layout</layout>
+        <recordType>LAB_Account_Role_Detail__c.Default</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>LAB_Account_Role_Detail__c-Lab Network Layout</layout>
+        <recordType>LAB_Account_Role_Detail__c.Lab_Network</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>LAB_Account_Role_Detail__c-Operating Country Layout</layout>
+        <recordType>LAB_Account_Role_Detail__c.Operating_Country</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>LAB_Account_Role_Detail__c-Partner Airline Layout</layout>
+        <recordType>LAB_Account_Role_Detail__c.Airline_Agreement</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>LVA_CallUsConfig__mdt-LVA_CallUsConfig Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -65009,6 +65183,15 @@
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
+        <object>ANG_Risk_Alert__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
         <object>AWSKey__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
@@ -65028,6 +65211,15 @@
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>Agency_Applied_Change_code__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>Agency_Authorization__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
@@ -65804,7 +65996,7 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>ANG_AccountTrackingHistory</apexPage>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>ANG_AccreditationAreaViewer</apexPage>
@@ -65868,7 +66060,7 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>ANG_RiskEventHistory</apexPage>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>ANG_RiskEventPopUp</apexPage>
@@ -70032,6 +70224,41 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
+        <recordType>LAB_Account_Role_Detail__c.Aggregator</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>LAB_Account_Role_Detail__c.Airline_Agreement</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>LAB_Account_Role_Detail__c.Default</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>LAB_Account_Role_Detail__c.IT_Integrator</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>LAB_Account_Role_Detail__c.Independent_Lab</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>LAB_Account_Role_Detail__c.Lab_Network</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>LAB_Account_Role_Detail__c.Operating_Country</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
         <recordType>Lead.CorpComLeads</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
@@ -71232,6 +71459,10 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>KPI_Value__c</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>LAB_Account_Role_Detail__c</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
