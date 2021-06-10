@@ -3716,7 +3716,7 @@
         <externalId>false</externalId>
         <formula>DATEVALUE(Submission_for_Approval_Date__c) - DATEVALUE(Open_Date__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-        <label>Days passed til submission for approval</label>
+        <label>Days until submission for approval</label>
         <precision>18</precision>
         <required>false</required>
         <scale>2</scale>

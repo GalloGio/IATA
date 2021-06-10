@@ -1938,12 +1938,21 @@ ISPICKVAL(Topic__c, &quot;ICCS - IATA Currency Clearance Service&quot;)
         <ruleEntry>
             <assignedTo>GCSICCS</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <formula>And(
-
-RecordType.Name = &quot;Cases - Global&quot;,
-ISPICKVAL(Topic__c, &quot;ICCS - IATA Currency Clearance Service&quot;)
-
-)</formula>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Cases - Global</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.HQ_Service_Model__c</field>
+                <operation>notEqual</operation>
+                <value>Differentiated</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>ICCS - IATA Currency Clearance Service</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>GCS_MITABIETA_L2</assignedTo>
@@ -2011,6 +2020,44 @@ RecordType.Name = &quot;Process&quot;
 ),
 ISPICKVAL(CaseArea__c, &quot;MRO SmartHub&quot;)
 )</formula>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>ITP_Lab_Registry_Editor</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>IATA Travel Pass</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Subject</field>
+                <operation>contains</operation>
+                <value>New file upload</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>ITP_Lab_Engagement</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>IATA Travel Pass</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Subject</field>
+                <operation>contains</operation>
+                <value>New access request</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>GCS_IATA_Travel_Pass_L2</assignedTo>
@@ -8044,7 +8091,7 @@ ISPICKVAL(BSPCountry__c,&quot;Russian Federation&quot;)
             <criteriaItems>
                 <field>Account.Region__c</field>
                 <operation>equals</operation>
-                <value>Europe,Africa,Americas</value>
+                <value>Americas,Asia Pacific,China &amp; North Asia,Europe,Middle East &amp; North Africa</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -14808,7 +14855,7 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
         <ruleEntry>
             <assignedTo>OtherAll</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>(1 AND 2) OR 3</booleanFilter>
+            <booleanFilter>(1 AND 2 AND 4) OR 3</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordType__c</field>
                 <operation>notContain</operation>
@@ -14823,6 +14870,11 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
                 <field>Case.Subject</field>
                 <operation>equals</operation>
                 <value>Create temp account</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>notEqual</operation>
+                <value>IATA Travel Pass</value>
             </criteriaItems>
             <template>All/New_Case</template>
         </ruleEntry>

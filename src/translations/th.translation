@@ -105,6 +105,10 @@
         <name>IFTP</name>
     </customApplications>
     <customApplications>
+        <label><!-- Lab Registry --></label>
+        <name>Lab_Registry</name>
+    </customApplications>
+    <customApplications>
         <label><!-- MITA / BIETA --></label>
         <name>MITA_BIETA</name>
     </customApplications>
@@ -3483,7 +3487,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Emergency_Selected_Reason4</name>
     </customLabels>
     <customLabels>
-        <label>การเปลี่ยนวันเข้าสอบการฝึกอบรม IATA ของคุณ (การเรียนแบบทางไกล)</label>
+        <label><!-- Emergency reason --></label>
         <name>CSP_Emergency_Selected_Reason5</name>
     </customLabels>
     <customLabels>
@@ -4449,6 +4453,166 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- CSP_L_WorkPhone_LMS --></label>
         <name>CSP_L_WorkPhone_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_AdditionalCertInPlace --></label>
+        <name>CSP_LabReg_AdditionalCertInPlace</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_CompleteDetails --></label>
+        <name>CSP_LabReg_CompleteDetails</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_CountryLabs --></label>
+        <name>CSP_LabReg_CountryLabs</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_Describe_SLA_Nature --></label>
+        <name>CSP_LabReg_Describe_SLA_Nature</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_DownloadTemplate --></label>
+        <name>CSP_LabReg_DownloadTemplate</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_Download_CSV --></label>
+        <name>CSP_LabReg_Download_CSV</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_Download_Instructions --></label>
+        <name>CSP_LabReg_Download_Instructions</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_FormNotCompleted --></label>
+        <name>CSP_LabReg_FormNotCompleted</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_HowManyLabs --></label>
+        <name>CSP_LabReg_HowManyLabs</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_How_Long_In_Business --></label>
+        <name>CSP_LabReg_How_Long_In_Business</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_InitialQuestion --></label>
+        <name>CSP_LabReg_InitialQuestion</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_National_Govern_Platform --></label>
+        <name>CSP_LabReg_National_Govern_Platform</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_Operating_Brand --></label>
+        <name>CSP_LabReg_Operating_Brand</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_OwnFacilities --></label>
+        <name>CSP_LabReg_OwnFacilities</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_SLA_InPlace --></label>
+        <name>CSP_LabReg_SLA_InPlace</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_SplashScreen_Intro --></label>
+        <name>CSP_LabReg_SplashScreen_Intro</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_SplashScreen_Step1 --></label>
+        <name>CSP_LabReg_SplashScreen_Step1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_SplashScreen_Step2 --></label>
+        <name>CSP_LabReg_SplashScreen_Step2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_SplashScreen_Step3 --></label>
+        <name>CSP_LabReg_SplashScreen_Step3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_SplashScreen_Step4 --></label>
+        <name>CSP_LabReg_SplashScreen_Step4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_Start --></label>
+        <name>CSP_LabReg_Start</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_Step --></label>
+        <name>CSP_LabReg_Step</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_Step_Locations --></label>
+        <name>CSP_LabReg_Step_Locations</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_TypeOfLab --></label>
+        <name>CSP_LabReg_TypeOfLab</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_UploadCSVBtn --></label>
+        <name>CSP_LabReg_UploadCSVBtn</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_UploadCompleted --></label>
+        <name>CSP_LabReg_UploadCompleted</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_UploadDetails --></label>
+        <name>CSP_LabReg_UploadDetails</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_UploadFilledCSV --></label>
+        <name>CSP_LabReg_UploadFilledCSV</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_UploadHere --></label>
+        <name>CSP_LabReg_UploadHere</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_WhichAirlines --></label>
+        <name>CSP_LabReg_WhichAirlines</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_Which_One --></label>
+        <name>CSP_LabReg_Which_One</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_airlinePartnershipSelection --></label>
+        <name>CSP_LabReg_airlinePartnershipSelection</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_confirmDetails --></label>
+        <name>CSP_LabReg_confirmDetails</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_issueTestResultsSelection --></label>
+        <name>CSP_LabReg_issueTestResultsSelection</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_labsPartOfNationalPlatform --></label>
+        <name>CSP_LabReg_labsPartOfNationalPlatform</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_manageBookingSelection --></label>
+        <name>CSP_LabReg_manageBookingSelection</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_nationalAccreditationSelection --></label>
+        <name>CSP_LabReg_nationalAccreditationSelection</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabRegistry --></label>
+        <name>CSP_LabRegistry</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabRegistry_LabDetails --></label>
+        <name>CSP_LabRegistry_LabDetails</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabRegistry_service_desc --></label>
+        <name>CSP_LabRegistry_service_desc</name>
     </customLabels>
     <customLabels>
         <label>อัปเดตล่าสุด</label>
@@ -5505,6 +5669,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>พื้นที่ทำงาน</label>
         <name>CSP_cpcc_Working_Areas</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_labReg_Step_Airline_Agreements --></label>
+        <name>CSP_labReg_Step_Airline_Agreements</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_labReg_Step_GeneralInformation --></label>
+        <name>CSP_labReg_Step_GeneralInformation</name>
     </customLabels>
     <customLabels>
         <label>เลือกเหตุผล</label>
@@ -26466,6 +26638,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- Reset your password? --></label>
         <name>Reset_your_password</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Resource Center Service Description --></label>
+        <name>Resource_Center_Service_Description</name>
     </customLabels>
     <customLabels>
         <label><!-- Response message --></label>
