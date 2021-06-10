@@ -20,6 +20,34 @@
         <senderType>CurrentUser</senderType>
         <template>Quality/Continuous_Improvement_Process_Approved_by_RPM</template>
     </alerts>
+    <alerts>
+        <fullName>OI_Approved_by_RPM</fullName>
+        <description>OI Approved by RPM</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <recipients>
+            <field>LastModifiedById</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Quality/OI_Approved_by_RPM</template>
+    </alerts>
+    <alerts>
+        <fullName>OI_Extension_Approved_by_RPM</fullName>
+        <description>OI Extension Approved by RPM</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <recipients>
+            <field>LastModifiedById</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Quality/OI_Extension_Approved_by_RPM</template>
+    </alerts>
     <fieldUpdates>
         <fullName>Auto_fill_OI_subject</fullName>
         <description>used to fill in CPS issue check subject with a standard naming convention</description>
