@@ -58,7 +58,7 @@ export default class labRegistryServiceMainContent extends NavigationMixin(Light
 		this.fetchCSVId();
 		this.fetchInstructionFile();
 
-		getPortalServiceId({portalServiceName:'Lab Registry'}).then( result => {
+		getPortalServiceId({portalServiceName:'IATA Lab Network'}).then( result => {
 			this.serviceId = result;
 
 			getLoggedUser().then(userResult => {
@@ -218,7 +218,7 @@ export default class labRegistryServiceMainContent extends NavigationMixin(Light
 
 	@track instructionFilePath;
 	fetchInstructionFile() {
-		getAttachmentFromPortalService({filename:'Lab Registry Data Form Instructions.pdf'})
+		getAttachmentFromPortalService({filename:'IATA Lab Network Data Form Instructions.pdf'})
 		.then(response => {
 			if (response!=null){
 				this.instructionFilePath='/servlet/servlet.FileDownload?file='+response.Id;
