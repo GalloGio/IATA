@@ -11,10 +11,8 @@
 <BR/>
 We would like to inform you that according to our records you have reached 
 <b><apex:outputText value="{0,number,###,###,###.00}"><apex:param value="{!relatedTo.ANG_ConsumedRHC_Percent__c}"/></apex:outputText>%</b> of your Remittance Holding Capacity.<br/>
-It should be noted that your RHC amount is set at <b>{!relatedTo.CurrencyIsoCode} 1 (0)</b> and currently the consumed amount is <b>{!relatedTo.CurrencyIsoCode}
-<apex:outputText value="{0,number,###,###,###.00}">
-<apex:param value="{!relatedTo.ANG_ConsumedRHC__c}"/></apex:outputText></B>
-
+It should be noted that your RHC amount is set at <b>{!relatedTo.CurrencyIsoCode} 1 (0)</b> and currently the consumed amount is <b>-{!relatedTo.CurrencyIsoCode} 
+<apex:outputText value="{0,number,###,###,###.00}"><apex:param value="{!relatedTo.ANG_ConsumedRHC__c}"/></apex:outputText></B>
 <BR/><BR/>
 You can, at any time, top up your RHC amount by making a payment to IATA BSP account. <BR/>
 In the event there is no reference to the IATA numeric code in the transfer, we will be applying the advance payment to the Head Entity.
