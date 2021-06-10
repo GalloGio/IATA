@@ -173,7 +173,7 @@ global class ANG_RME_Alert_Service {
 				SELECT Id, IATACode__c, top_parent__c, ANG_IsNewGenAgency__c, status__c, 
 					IATA_ISO_Country__r.AMS_Settlement_System__r.RHC_Exceptional_Monitoring__c,
 					IATA_ISO_Country__r.AMS_Settlement_System__r.Exc_RHC_Monitoring_Alert__c,
-					IATA_ISO_Country__r.ANG_Enable_NewGen__c, IATA_ISO_Country__r.ANG_Portal_Service__c, IATA_ISO_Country__r.ANG_IEP_Model__c, ANG_Accreditation_Model__c, //for cashless agencies in an operation without IEP
+					IATA_ISO_Country__r.ANG_Enable_NewGen__c, IATA_ISO_Country__r.ANG_Portal_Service__c, IATA_ISO_Country__r.ANG_IEP_Model__c, ANG_Accreditation_Model__c, IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c, //for cashless agencies in an operation without IEP
 					(SELECT Id, CurrencyIsoCode, ANG_RHC_Amount__c, ANG_AccountId__c FROM RHC_Informations__r),
 					(SELECT Id, ANG_FormOfPayment_ID__c, Status__c FROM Agency_Authorizations__r WHERE recordtype.developername ='FormOfPayment')  //Accelya Email + FOP
 				FROM Account
@@ -189,9 +189,8 @@ global class ANG_RME_Alert_Service {
 				Account acct = accs[0];
 
 				boolean bIsOperationWithoutIEP = (acct.IATA_ISO_Country__r.ANG_Enable_NewGen__c 
-													&& string.isBlank(acct.IATA_ISO_Country__r.ANG_Portal_Service__c) 
 													&& acct.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASHLESS
-													&& acct.IATA_ISO_Country__r.ANG_IEP_Model__c == AMS_Utils.IEPModel_PrePayment);
+													&& acct.IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c);
 
 				switch on req.eventType {
 					when 'RTSAlert'{ //move to static final above when Salesforce decides is a good idea to release it https://trailblazer.salesforce.com/ideaView?id=0873A000000lLkNQAU
