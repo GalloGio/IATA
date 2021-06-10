@@ -299,7 +299,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
         }
     }
 
-    get isServiceAdmin(){
+    get isServiceAdministratorDisplay(){
         return this._isServiceAdministrator;
     }
 	/* Invitation service functionality - End */
@@ -472,7 +472,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 					this.serviceName = this.serviceRecord.recordService.ServiceName__c;
 					this.serviceFullName = this.serviceRecord.recordService.Name;
 					this.isIFG_Service = this.serviceRecord.isIFGPending;
-
 
 					//in E&F service it doesn't matter if the user is admin or not
 					if(this.serviceName.includes('E&F APPS')) {
