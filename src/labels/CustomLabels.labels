@@ -6826,8 +6826,7 @@ You can easily create a company account in two steps</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_LabReg_SplashScreen_Intro</shortDescription>
-        <value>You will be led through a series of steps to gather some preliminary information regarding your company/lab before you can finalize your request to join the Lab Registry Service. Once submitted, these results will be reviewed by our Lab Engagement team, and in turn they will contact you to finalize the engagement process.
-
+        <value>By requesting access to the IATA Lab Network service, you will be asked to go through the below steps before your request can be submitted.
 These steps are approximated to take 5-10 minutes to complete.</value>
     </labels>
     <labels>
@@ -6836,7 +6835,7 @@ These steps are approximated to take 5-10 minutes to complete.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_LabReg_SplashScreen_Step1</shortDescription>
-        <value>You will be requested to indicate your business model from a preset list. Based on the selection you made, you will be shown a set of questions personalized to your business model. This will allow us to better review and support you once you submit your answers. These questions will cover the nature of your business, your relationship with certain platforms, booking capabilites, certifications etc.</value>
+        <value>You will be requested to indicate your business model from a preset list. Based on your selection, you will be asked a series of questions. This will allow us to better review and support you once you submit your answers. These questions will cover the nature of your business, your relationship with certain platforms, booking capabilities, certifications, etc.</value>
     </labels>
     <labels>
         <fullName>CSP_LabReg_SplashScreen_Step2</fullName>
@@ -6844,7 +6843,7 @@ These steps are approximated to take 5-10 minutes to complete.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_LabReg_SplashScreen_Step2</shortDescription>
-        <value>This section will prompt you to indicate the locations in you which you are operating. This enables us to get an overall understanding of your region coverage before onboarding you to the network.</value>
+        <value>This section will prompt you to indicate the locations in you which you are operating.</value>
     </labels>
     <labels>
         <fullName>CSP_LabReg_SplashScreen_Step3</fullName>
@@ -6860,9 +6859,9 @@ These steps are approximated to take 5-10 minutes to complete.</value>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_LabReg_SplashScreen_Step4</shortDescription>
-        <value>This final step will allow you to review the answers you have selected, and submit. 
-
-By submitting, you will receive a case number where through this case our engagement team will be in contact with you to finalize your joining of the lab registry network.</value>
+        <value>This final step will allow you to review the answers you have provided, and submit. 
+By submitting, you will receive a case number and our engagement team will be in contact with you to finalize your registration. 
+</value>
     </labels>
     <labels>
         <fullName>CSP_LabReg_Start</fullName>
@@ -6926,7 +6925,7 @@ By submitting, you will receive a case number where through this case our engage
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_LabReg_UploadCompleted</shortDescription>
-        <value>Thank you for uploading your labs. Our team will get in touch with you to confirm that your labs are part of the lab registry network</value>
+        <value>Thank you for uploading your labs. Our team will contact you to confirm once your labs are added to the IATA Lab Network.</value>
     </labels>
     <labels>
         <fullName>CSP_LabReg_UploadDetails</fullName>
@@ -7046,7 +7045,7 @@ By submitting, you will receive a case number where through this case our engage
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_LabRegistry_service_desc</shortDescription>
-        <value>By joining the Lab Registry network, your lab can issue digital test results to passengers as well as be accessible to passengers through the Travel Pass App as well as other third party sites.</value>
+        <value>By joining the IATA Lab Network, your lab can issue digital test results to passengers and be accessible through the IATA Travel Pass App as well as other third party partners.</value>
     </labels>
     <labels>
         <fullName>CSP_LastUpdate</fullName>
