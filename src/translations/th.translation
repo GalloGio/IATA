@@ -17,10 +17,6 @@
         <name>AWS_Toolkit</name>
     </customApplications>
     <customApplications>
-        <label><!-- SnapShot --></label>
-        <name>BLND_SnapShot</name>
-    </customApplications>
-    <customApplications>
         <label><!-- Call Scripting --></label>
         <name>CallScripting</name>
     </customApplications>
@@ -3487,7 +3483,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Emergency_Selected_Reason4</name>
     </customLabels>
     <customLabels>
-        <label><!-- Emergency reason --></label>
+        <label>การเปลี่ยนวันเข้าสอบการฝึกอบรม IATA ของคุณ (การเรียนแบบทางไกล)</label>
         <name>CSP_Emergency_Selected_Reason5</name>
     </customLabels>
     <customLabels>
@@ -34390,10 +34386,6 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customTabs>
         <label>บริการที่พร้อมในปัจุบัน</label>
         <name>Available_Services</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- Snapshot --></label>
-        <name>BLND_Snapshot</name>
     </customTabs>
     <customTabs>
         <label><!-- CNS E-Bulletin --></label>
