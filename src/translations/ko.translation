@@ -17,10 +17,6 @@
         <name>AWS_Toolkit</name>
     </customApplications>
     <customApplications>
-        <label><!-- SnapShot --></label>
-        <name>BLND_SnapShot</name>
-    </customApplications>
-    <customApplications>
         <label><!-- Call Scripting --></label>
         <name>CallScripting</name>
     </customApplications>
@@ -3489,7 +3485,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Emergency_Selected_Reason4</name>
     </customLabels>
     <customLabels>
-        <label><!-- Emergency reason --></label>
+        <label>IATA 교육 시험  재예약 (원격 학습)</label>
         <name>CSP_Emergency_Selected_Reason5</name>
     </customLabels>
     <customLabels>
@@ -34389,10 +34385,6 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
     <customTabs>
         <label>가능한 서비스</label>
         <name>Available_Services</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- Snapshot --></label>
-        <name>BLND_Snapshot</name>
     </customTabs>
     <customTabs>
         <label><!-- CNS E-Bulletin --></label>

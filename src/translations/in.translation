@@ -17,10 +17,6 @@
         <name>AWS_Toolkit</name>
     </customApplications>
     <customApplications>
-        <label><!-- SnapShot --></label>
-        <name>BLND_SnapShot</name>
-    </customApplications>
-    <customApplications>
         <label><!-- Call Scripting --></label>
         <name>CallScripting</name>
     </customApplications>
@@ -34396,10 +34392,6 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
     <customTabs>
         <label><!-- Available Services --></label>
         <name>Available_Services</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- Snapshot --></label>
-        <name>BLND_Snapshot</name>
     </customTabs>
     <customTabs>
         <label><!-- CNS E-Bulletin --></label>

@@ -17,10 +17,6 @@
         <name>AWS_Toolkit</name>
     </customApplications>
     <customApplications>
-        <label><!-- SnapShot --></label>
-        <name>BLND_SnapShot</name>
-    </customApplications>
-    <customApplications>
         <label><!-- Call Scripting --></label>
         <name>CallScripting</name>
     </customApplications>
@@ -34389,10 +34385,6 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
     <customTabs>
         <label>Serviços disponíveis</label>
         <name>Available_Services</name>
-    </customTabs>
-    <customTabs>
-        <label><!-- Snapshot --></label>
-        <name>BLND_Snapshot</name>
     </customTabs>
     <customTabs>
         <label><!-- CNS E-Bulletin --></label>
