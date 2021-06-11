@@ -39149,6 +39149,10 @@ Jika Anda ingin mengganti kata sandi, kembali ke layar masuk lalu gunakan fungsi
             <label><!-- Portal Service Access --></label>
             <name>Portal Service Access</name>
         </sections>
+        <sections>
+            <label><!-- Service information --></label>
+            <name>Service information</name>
+        </sections>
     </reportTypes>
     <reportTypes>
         <description><!-- Portal Service Access CC --></description>

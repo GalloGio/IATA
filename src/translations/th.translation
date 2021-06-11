@@ -39143,6 +39143,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
             <label>รายงาน</label>
             <name>Portal Service Access</name>
         </sections>
+        <sections>
+            <label><!-- Service information --></label>
+            <name>Service information</name>
+        </sections>
     </reportTypes>
     <reportTypes>
         <description><!-- Portal Service Access CC --></description>
