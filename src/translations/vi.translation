@@ -17,10 +17,6 @@
         <name>AWS_Toolkit</name>
     </customApplications>
     <customApplications>
-        <label><!-- SnapShot --></label>
-        <name>BLND_SnapShot</name>
-    </customApplications>
-    <customApplications>
         <label><!-- Call Scripting --></label>
         <name>CallScripting</name>
     </customApplications>
@@ -3489,7 +3485,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Emergency_Selected_Reason4</name>
     </customLabels>
     <customLabels>
-        <label><!-- Emergency reason --></label>
+        <label>Đăng ký lại kỳ thi cho khóa Đào tạo của IATA (Đào tạo từ xa)</label>
         <name>CSP_Emergency_Selected_Reason5</name>
     </customLabels>
     <customLabels>
@@ -34389,10 +34385,6 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <name>Available_Services</name>
     </customTabs>
     <customTabs>
-        <label><!-- Snapshot --></label>
-        <name>BLND_Snapshot</name>
-    </customTabs>
-    <customTabs>
         <label><!-- CNS E-Bulletin --></label>
         <name>CNS_E_Bulletin</name>
     </customTabs>
@@ -39139,6 +39131,10 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <sections>
             <label>Các báo cáo</label>
             <name>Portal Service Access</name>
+        </sections>
+        <sections>
+            <label><!-- Service information --></label>
+            <name>Service information</name>
         </sections>
     </reportTypes>
     <reportTypes>

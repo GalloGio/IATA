@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Queue xmlns="http://soap.sforce.com/2006/04/metadata">
+    <doesSendEmailToMembers>false</doesSendEmailToMembers>
+    <email>csnotificationsame@iata.org</email>
+    <name>Cases - Lebanon</name>
+    <queueMembers>
+        <publicGroups>
+            <publicGroup>IATALevant</publicGroup>
+            <publicGroup>IDFS_Africa_ME_Business_Delivery</publicGroup>
+            <publicGroup>IDFSAfricaMECSFirstLevel</publicGroup>
+            <publicGroup>IDFSAfricaMECSSecondLevel</publicGroup>
+            <publicGroup>IDFSAfricaMEHUB</publicGroup>
+            <publicGroup>IDFSAfricaMEServiceCentre</publicGroup>
+            <publicGroup>IDFSAllusersexcludingIWandACCA</publicGroup>
+        </publicGroups>
+        <users>
+            <user>agouzoulm@iata.org</user>
+        </users>
+    </queueMembers>
+    <queueSobject>
+        <sobjectType>Case</sobjectType>
+    </queueSobject>
+</Queue>

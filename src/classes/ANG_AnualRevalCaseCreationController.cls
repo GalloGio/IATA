@@ -366,7 +366,7 @@ public without sharing class ANG_AnualRevalCaseCreationController {
 					} else if (cse.oscar__r.Process__c == AMS_Utils.NGCHANGES
 						&& (ON_GOING_MAJOR_CHANGES_STATUS.contains(cse.Oscar__r.Status__c)
 							|| (cse.Oscar__r.Status__c == AMS_Utils.OSCAR_CLOSED
-								&& (System.today().daysBetween(Date.valueOf(cse.ClosedDate)) < 180)))) {
+							&& (cse.ClosedDate != null && Date.valueOf(cse.ClosedDate).daysBetween(System.today()) < 180)))) {
 						return true;
 					}
 				}
