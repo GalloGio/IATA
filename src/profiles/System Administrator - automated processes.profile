@@ -14214,6 +14214,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>AMS_Country_Specific_Attribute__c.Accreditation_Model__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>AMS_Country_Specific_Attribute__c.Block_notification_on_RHC_amount_update__c</field>
         <readable>false</readable>
@@ -41750,6 +41755,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>GDP_Products_Account_View__c.Json_WS_NDC__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>GDP_Products_Account_View__c.Json_WS_Simple__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -42572,6 +42582,11 @@
         <editable>false</editable>
         <field>IATA_ISO_Country__c.Airline_EasyPay_Opt_Out_Date__c</field>
         <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>IATA_ISO_Country__c.Allow_Cash_FOP_for_Cashless_Agencies__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>

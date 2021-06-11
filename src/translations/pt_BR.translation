@@ -39142,6 +39142,10 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
             <label>Relatorios / Reportes</label>
             <name>Portal Service Access</name>
         </sections>
+        <sections>
+            <label><!-- Service information --></label>
+            <name>Service information</name>
+        </sections>
     </reportTypes>
     <reportTypes>
         <description><!-- Portal Service Access CC --></description>

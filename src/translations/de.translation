@@ -39146,6 +39146,10 @@ Wenn Sie Ihr Passwort zurücksetzen möchten, gehen Sie bitte zum Log-in-Bildsch
             <label>Berichte</label>
             <name>Portal Service Access</name>
         </sections>
+        <sections>
+            <label><!-- Service information --></label>
+            <name>Service information</name>
+        </sections>
     </reportTypes>
     <reportTypes>
         <description><!-- Portal Service Access CC --></description>
