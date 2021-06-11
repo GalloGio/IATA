@@ -232,7 +232,7 @@ public without sharing class IA_ContactsCtrl {
 			Boolean isAdded = String.isEmpty(this.selectedContact.MITA_Contact_Type__c);
 			this.selectedContact.MITA_Contact_Type__c = getMITAContactFieldValue();
 
-			Database.SaveResult result = Database.update(this.selectedContact);
+			Database.SaveResult result = Database.update(this.selectedContact,false);
 			if (result.isSuccess()) {
 				refreshPage();
 				this.selectedContactId = null;
@@ -279,7 +279,7 @@ public without sharing class IA_ContactsCtrl {
 
 		try {
 			this.selectedContact.MITA_Contact_Type__c = '';
-			Database.SaveResult result = Database.update(this.selectedContact);
+			Database.SaveResult result = Database.update(this.selectedContact,false);
 			if (result.isSuccess()) {
 				closeModalRemoveContact();
 				refreshPage();

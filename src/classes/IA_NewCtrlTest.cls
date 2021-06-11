@@ -42,7 +42,7 @@ public class IA_NewCtrlTest {
 		for(IA_NewController.AvailableAgreementsRow row: listRow) {
 			System.assertEquals(airline2.Name, row.airlinename);
 			list<IA_NewController.AvailableAgreementsDetailRow> existingAgreements = row.details;
-			System.assertEquals(mapExpectedAgreements.size(),existingAgreements.size());
+			System.assertEquals(mapExpectedAgreements.size(),existingAgreements.size(), 'expected : ' + mapExpectedAgreements + ', Actual: ' + existingAgreements);
 			for (IA_NewController.AvailableAgreementsDetailRow detailRow: existingAgreements) {
 				list<String> expectedAgreements = mapExpectedAgreements.get(detailRow.agreementname);
 				System.assertEquals(expectedAgreements.size(), detailRow.agreements.size(), 'expected : ' + expectedAgreements + ', Actual: ' + detailRow.agreements);
@@ -95,12 +95,12 @@ public class IA_NewCtrlTest {
 		airline1.MITA_IATA_Interline_Passenger__c = null;
 		airline2.MITA_IATA_Interline_Cargo__c = null;
 		airline1.MITA_One_way_Pass_Issuing_Airline__c = null;
-		airline2.MITA_One_way_Pass_Participating__c = null;
+		airline2.MITA_One_way_Pass_Issuing_Airline__c = null;
 		airline1.BIETA_Bilateral_Date__c = null;
 		airline2.BIETA_One_way_Electronic_Issuing_Airline__c = null;
-		airline1.BIETA_One_way_Electronic_Participating__c = null;
+		airline1.BIETA_One_way_Electronic_Issuing_Airline__c = null;
 		airline2.BIETA_One_way_Intermodal_Issuing_Airline__c = null;
-		airline1.BIETA_One_way_Intermodal_Participating__c = null;
+		airline1.BIETA_One_way_Intermodal_Issuing_Airline__c = null;
 		update new list<Account>{airline1, airline2};
 		//only EMD agreement will show
 

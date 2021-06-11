@@ -55,7 +55,7 @@ public without sharing class IA_DetailController {
 		this.selectedAgreement.Cancellation_Reason__c = this.selectedAgreement.Airline_1__c == this.otherAirline.Id? IA_util.REASON_CANCELLATION_AIRLINE1: IA_util.REASON_CANCELLATION_AIRLINE2;
 		this.selectedAgreement.Cancellation_date__c = this.agreementCancellation.Cancellation_date__c;
 
-		Database.SaveResult result = Database.update(this.selectedAgreement);
+		Database.SaveResult result = Database.update(this.selectedAgreement,false);
 		this.showSuccessWithdrawn = result.isSuccess();
 		if (this.showSuccessWithdrawn) {
 			this.agreementDetail.agreementStatus = IA_util.STATUS_PENDING_WITHDRAWAL;

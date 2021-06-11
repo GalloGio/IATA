@@ -82,6 +82,7 @@ public without sharing class IA_NewController {
 			Set<String> alreadyExisting = getExistingAgreements();
 			this.mapActiveAgreements = new map<String,List<String>>();
 			for (String agreementType : getAllowedAgreementTypes(this.otherAccount)) {
+				agreementType = invertAgreement(agreementType);
 				if (this.setMyAccountAllowed.contains(agreementType) && !alreadyExisting.contains(agreementType)) {
 					// this agreementType is available, so it is added to the mapActiveAgreements
 					String agreementName = IA_util.MAP_AGREEMENTS_BY_NAME.get(agreementType);
@@ -100,11 +101,7 @@ public without sharing class IA_NewController {
 			set<String> alreadyExisting = new set<String>();
 			//agreements where myAccount is in Airline2 and required one way agreements conversion
 			for(MITA_Agreement__c ma : otherAccount.MITA_Agreements_1__r) {
-				if (IA_util.MAP_ONE_WAY_TYPES.containsKey(ma.Agreement_type__c)) {
-					alreadyExisting.add(IA_util.MAP_ONE_WAY_TYPES.get(ma.Agreement_type__c));
-				} else {
-					alreadyExisting.add(ma.Agreement_type__c);
-				}
+				alreadyExisting.add(invertAgreement(ma.Agreement_type__c));
 			}
 			//agreements where myAccount is in Airline1 and no one way conversion is needed
 			for(MITA_Agreement__c ma : otherAccount.MITA_Agreements_2__r) {
@@ -112,7 +109,18 @@ public without sharing class IA_NewController {
 			}
 			return alreadyExisting;
 		}
+		/**
+		 * Receives an agreement type and returns the inverse agreement
+		 * only for one way, for bilateral it returns the same type
+		 */
+		private String invertAgreement(String agreementType) {
+			if (IA_util.MAP_ONE_WAY_TYPES.containsKey(agreementType)) {
+				return IA_util.MAP_ONE_WAY_TYPES.get(agreementType);
+			}
+			return agreementType;
+		}
 	}
+
 
 	/**
 	 * For the given account it returns all allowed agreements based on its configuration
@@ -261,7 +269,7 @@ public without sharing class IA_NewController {
 			return;
 		}
 
-		Database.SaveResult result = Database.insert(this.newAgreement);
+		Database.SaveResult result = Database.insert(this.newAgreement,false);
 		if (result.isSuccess()) {
 			closeModalNewAgreement();
 			refreshPage();

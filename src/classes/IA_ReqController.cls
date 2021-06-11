@@ -147,7 +147,7 @@ public without sharing class IA_ReqController {
 		if (agreement.Effective_date__c < Date.today()) {
 			agreement.Effective_date__c = Date.today();
 		}
-		Database.SaveResult result = Database.update(agreement);
+		Database.SaveResult result = Database.update(agreement,false);
 		if (result.isSuccess()) {
 			refreshPage();
 			String undoActionId = createUndoAction(undoAgreement);
@@ -174,7 +174,7 @@ public without sharing class IA_ReqController {
 		agreement.Cancellation_processed_date__c = Date.today();
 		agreement.Cancellation_Reason__c = IA_Util.REASON_REJECTION;
 
-		Database.SaveResult result = Database.update(agreement);
+		Database.SaveResult result = Database.update(agreement,false);
 		if (result.isSuccess()) {
 			//force recalculation of requested agreements
 			this.mapAgreements = null;
@@ -200,7 +200,7 @@ public without sharing class IA_ReqController {
 		MITA_Agreement__c agreement = this.mapUndoActions.get(this.undoId);
 		if (agreement==null) return;
 
-		Database.SaveResult result = Database.update(agreement);
+		Database.SaveResult result = Database.update(agreement,false);
 		if (result.isSuccess()) {
 			//force recalculation of requested agreements
 			this.mapAgreements = null;
