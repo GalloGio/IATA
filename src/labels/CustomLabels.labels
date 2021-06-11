@@ -46552,6 +46552,17 @@ Country {8}</value>
         <value>SIS L2 Customer Support</value>
     </labels>
     <labels>
+        <fullName>SIS_Notify_Change_in_SIS_3digit_Code</fullName>
+        <categories>SIS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SIS Notify Change in SIS 3digit Code</shortDescription>
+        <value>SIS 3-digit code changed in account {0}: {1}
+	from:	{2}
+	to:	{3}
+	SAP ID:	{4}</value>
+    </labels>
+    <labels>
         <fullName>SIS_Operations</fullName>
         <language>en_US</language>
         <protected>false</protected>

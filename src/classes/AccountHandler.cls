@@ -31,6 +31,7 @@ public class AccountHandler{
 		CW_ICGAccountRoleDetail_Handler.checkFacilityFields((Map<Id, Account>) Trigger.newMap, (Map<Id, Account>) Trigger.oldMap);
 		findParentAcountsToUpdate(listNews, listOlds);
 		terminateMSOAppointments(listNews, (Map<Id, Account>) Trigger.oldMap);
+		notifyFieldChange(listNews, (Map<Id, Account>) Trigger.oldMap);
 	}
 
 	/**
@@ -228,5 +229,36 @@ public class AccountHandler{
 		}
 	}
 
+	/**
+	 * Send a quick email to SIS team to notify changes in their accounts
+	 */
+	public static void notifyFieldChange(List<Account> listAccount, Map<Id, Account> oldMap) {
+		list<String> listMessages = new list<String>();
+
+		for(Account acc : listAccount) {
+			Account oldAcc = oldMap.get(acc.Id);
+
+			//create a message when SIS 3 digit code changes
+			if( !String.IsEmpty(acc.ACLI_SAP_Id__c) && acc.EF_SIS_Code__c != oldAcc.EF_SIS_Code__c ) {
+				listMessages.add(
+					Label.SIS_Notify_Change_in_SIS_3digit_Code
+						.replace('{0}',nvl(acc.Name))
+						.replace('{1}',URL.getOrgDomainUrl().toExternalForm() + '/' + acc.Id)
+						.replace('{2}',nvl(oldAcc.EF_SIS_Code__c))
+						.replace('{3}',nvl(acc.EF_SIS_Code__c))
+						.replace('{4}',nvl(oldAcc.ACLI_SAP_Id__c))
+				);
+			}
+		}
+
+		if (!listMessages.isEmpty()) {
+			String title = 'Account changes in SIS 3 digit code';
+			TransformationHelper.sendSISTeamAlertMessage(title, String.join(listMessages,'\n\n'));
+		}
+	}
+
+	public static String nvl(String input) {
+		return input==null? '': input;
+	}
 
 }

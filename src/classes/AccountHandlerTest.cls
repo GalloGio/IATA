@@ -163,4 +163,15 @@ private class AccountHandlerTest {
 		System.enqueueJob(new AsyncDML_Util(listAccount, AsyncDML_Util.DML_UNDELETE, false));
 	}
 
+	@isTest
+	private static void testNotifyFieldChange() {
+		loadAccounts();
+
+		Test.startTest();
+		acc1.ACLI_SAP_Id__c = '0034567890';
+		acc1.EF_SIS_Code__c = '123';
+		update acc1;
+		Test.stopTest();
+	}
+
 }
