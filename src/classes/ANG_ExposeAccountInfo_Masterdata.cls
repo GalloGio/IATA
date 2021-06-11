@@ -109,7 +109,7 @@ public without sharing class ANG_ExposeAccountInfo_Masterdata {
 							+' IATA_ISO_Country__r.ANG_Portal_Service__r.Name, IATA_ISO_Country__r.Region__c, Reason__c, Remittance_frequency__c, Status__c, Tax_ID_1__c, TradeName__c, '
 							+' VAT_Number__c, ANG_RiskStatus__c, Segmentation__c, Top_Parent__r.IATACode__c,IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, Top_Parent__c, ParentId,'
 							+' GDI_Status__c, Location_Type_Ordered__c, Multicountry_Key_Hierarchy__c, Identify_as_Key_Customer__c, Is_PCI_compliant__c, ' 
-							+' IATA_ISO_Country__r.ANG_Enable_NewGen__c, IATA_ISO_Country__r.ANG_Portal_Service__c, IATA_ISO_Country__r.ANG_IEP_Model__c, ' //for the NewGen operation without a IEP Provider
+							+' IATA_ISO_Country__r.ANG_Enable_NewGen__c, IATA_ISO_Country__r.ANG_Portal_Service__c, IATA_ISO_Country__r.ANG_IEP_Model__c, IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c,' //for the NewGen operation without a IEP Provider
 							+' IATA_ISO_Country__r.AMS_Settlement_System__r.RHC_Exceptional_Monitoring__c, Site, IMPC_Code__c ' //PASS
 							+' , (Select Id, recordtype.developername, Email_Used_for_BSP_Creation__c, ANG_FormOfPayment_ID__c, Status__c From Agency_Authorizations__r where recordtype.developername in (\'BSPLink\',\'FormOfPayment\'))'  //Accelya Email + FOP
 							+' , (Select Id, IATACode__c, Status__c, Is_PCI_compliant__c From ChildAccounts where Purge_Flag__c = false and IATACode__c != null and recordtypeId = \'' + AMS_Utils.RECTYPE_IATAAGENCY + '\')' //List of children
@@ -326,7 +326,7 @@ public without sharing class ANG_ExposeAccountInfo_Masterdata {
 				this.dueDiligence = new List<DueDiligence>();
 				this.isMulticountryKeyCustomer = acc.Multicountry_Key_Hierarchy__c;
 
-				boolean bIsOperationWithoutIEP = (acc.IATA_ISO_Country__r.ANG_Enable_NewGen__c && string.isBlank(acc.IATA_ISO_Country__r.ANG_Portal_Service__c) && acc.IATA_ISO_Country__r.ANG_IEP_Model__c == AMS_Utils.IEPModel_PrePayment);
+				boolean bIsOperationWithoutIEP = (acc.IATA_ISO_Country__r.ANG_Enable_NewGen__c && acc.IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c);
 
 				/* Due Diligence to IEP - NEWGEN-3857 NEWGEN-3841 NEWGEN-4000*/
 				if(dueDiligenceIEPChangeCodes.contains(changeCode) && acc.oscars__r != null && acc.oscars__r.size()>0){

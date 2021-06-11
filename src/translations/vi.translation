@@ -39140,6 +39140,10 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
             <label>Các báo cáo</label>
             <name>Portal Service Access</name>
         </sections>
+        <sections>
+            <label><!-- Service information --></label>
+            <name>Service information</name>
+        </sections>
     </reportTypes>
     <reportTypes>
         <description><!-- Portal Service Access CC --></description>

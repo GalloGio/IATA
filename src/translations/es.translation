@@ -39174,6 +39174,10 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
             <label>Informes</label>
             <name>Portal Service Access</name>
         </sections>
+        <sections>
+            <label><!-- Service information --></label>
+            <name>Service information</name>
+        </sections>
     </reportTypes>
     <reportTypes>
         <description><!-- Portal Service Access CC --></description>
