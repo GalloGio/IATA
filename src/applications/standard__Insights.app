@@ -28,8 +28,6 @@
     <tabs>AMS_PCI_Compliant_Mass_Oscar_Creation</tabs>
     <tabs>standard-DataUseLegalBasis</tabs>
     <tabs>ISSP_Web_Service_Log__c</tabs>
-    <tabs>BLND_Snapshot</tabs>
-    <tabs>DFSS_SnapShot_Push__c</tabs>
     <tabs>standard-ListEmail</tabs>
     <tabs>EmailTemplate__c</tabs>
     <tabs>IATA_ISO_Country__c</tabs>
