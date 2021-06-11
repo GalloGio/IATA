@@ -73,7 +73,7 @@ public without sharing class WorkflowHelper {
 			newAcct = (Account)acct;
 			oldAcct = oldMap == null ? null : oldMap.get(acct.Id) == null ? null : (Account)oldMap.get(acct.Id);
 
-			updateCNSAccountCheckbox(newAcct);
+			//updateCNSAccountCheckbox(newAcct);
 			updateIndustryFieldFromAIMS(newAcct);
 			updateAirlineMembership(newAcct);
 			updateLastModifiedDateByIntegrations(newAcct);
@@ -115,7 +115,7 @@ public without sharing class WorkflowHelper {
 			updateRecordSharingCriteria(oldCon, newCon);
 			keyContactOptOut(oldCon, newCon);
 			updateIDCardContactCheckbox(oldCon, newCon);
-			updateCNSContactCheckbox(newCon);
+			//updateCNSContactCheckbox(newCon);
 		}
 	}
 

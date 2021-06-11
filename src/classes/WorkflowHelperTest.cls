@@ -1420,7 +1420,7 @@ private class WorkflowHelperTest {
 		System.assertEquals(OperationalManagementHO_RT, casesList.get(c2.Id).RecordTypeId);
 	}
 	
-	@isTest static void isCnsContact() {
+	/*@isTest static void isCnsContact() {
 
 		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (
 			Name='Portugal',
@@ -1481,6 +1481,6 @@ private class WorkflowHelperTest {
 		Contact updateContact = [SELECT id, CNS_Contact__c FROM Contact WHERE Id =: c1.Id LIMIT 1];
 		System.assert(!updateContact.CNS_Contact__c);
 
-	}
+	}*/
 
 }
