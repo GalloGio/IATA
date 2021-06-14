@@ -21,6 +21,34 @@
         <template>Quality/Continuous_Improvement_Process_Approved_by_RPM</template>
     </alerts>
     <alerts>
+        <fullName>OI_Extension_Rejected_by_RPM</fullName>
+        <description>OI Extension Rejected by RPM</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <recipients>
+            <field>LastModifiedById</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Quality/OI_Extension_Rejected_by_RPM</template>
+    </alerts>
+    <alerts>
+        <fullName>OI_Rejected_by_RPM</fullName>
+        <description>OI Rejected by RPM</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <recipients>
+            <field>LastModifiedById</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Quality/OI_Rejected_by_RPM</template>
+    </alerts>
+    <alerts>
         <fullName>OI_Approved_by_RPM</fullName>
         <description>OI Approved by RPM</description>
         <protected>false</protected>
