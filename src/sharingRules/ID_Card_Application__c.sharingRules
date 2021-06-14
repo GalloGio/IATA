@@ -13,6 +13,7 @@
             <operation>notEqual</operation>
             <value></value>
         </criteriaItems>
+        <includeHVUOwnedRecords>false</includeHVUOwnedRecords>
     </sharingGuestRules>
     <sharingGuestRules>
         <fullName>Share_with_guest_IDCard</fullName>
@@ -26,5 +27,6 @@
             <operation>equals</operation>
             <value>005w0000003WXRy</value>
         </criteriaItems>
+        <includeHVUOwnedRecords>false</includeHVUOwnedRecords>
     </sharingGuestRules>
 </SharingRules>
