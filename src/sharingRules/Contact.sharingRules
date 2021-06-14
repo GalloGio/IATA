@@ -102,6 +102,7 @@
             <operation>notEqual</operation>
             <value></value>
         </criteriaItems>
+        <includeHVUOwnedRecords>false</includeHVUOwnedRecords>
     </sharingGuestRules>
     <sharingGuestRules>
         <fullName>Identity_Contact_Sharing</fullName>
@@ -115,6 +116,7 @@
             <operation>notEqual</operation>
             <value></value>
         </criteriaItems>
+        <includeHVUOwnedRecords>false</includeHVUOwnedRecords>
     </sharingGuestRules>
     <sharingGuestRules>
         <fullName>Share_Contacts_with_IATA_Portal_Site_Guest_User</fullName>
@@ -129,5 +131,6 @@
             <operation>notEqual</operation>
             <value></value>
         </criteriaItems>
+        <includeHVUOwnedRecords>false</includeHVUOwnedRecords>
     </sharingGuestRules>
 </SharingRules>

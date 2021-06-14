@@ -399,10 +399,12 @@ public with sharing class ISSP_PortalUserStatusChange {
 			if(con.Community__c != null && con.Community__c.contains('CNS')){
 				link = 'https://' + String.ValueOF(ISSP_CS__c.getValues('Host').value__c)+ '/ISSP_First_Login?CommunityName=CNS&c='+encodedPart ;
 				template = 'ISSP_New_Member_Welcome_Email_2_CNS';
+				Map<String,String> emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( con ,  password ,  link, con.Community__c);
+				Comm_User_Helper.sendEmail( template ,emailWrap, con, con.Community__c);
+			}			
+			else{
+				PortalForgotPasswordController.handleResetPasswordFuture(con.email, null);
 			}
-
-			Map<String,String> emailWrap = Comm_User_Helper.ISSP_PassWordBuilMessageWrapper( con ,  password ,  link, con.Community__c);
-			Comm_User_Helper.sendEmail( template ,emailWrap, con, con.Community__c);
 			Comm_User_Helper.permissionASS(new list<Id>{newUser.ID});
 
 		}else{
