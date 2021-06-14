@@ -5,7 +5,9 @@ public class TestDataFactory_Accounts {
 	@TestSetup
 	static void makeData(){
 		List<IATA_ISO_Country__c> iataISOCountryList = TestDataFactory_IATAISOCountries.createDefaultIATAISOCountries(1);
-		insert iataISOCountryList;
+		try{
+			insert iataISOCountryList;
+		} catch(Exception e){}
 	}
 
 	public static List<Account> createDefaultAccounts (Integer numberOfRecords){

@@ -26,7 +26,8 @@ public with sharing class PortalApplications_Sel extends Selector {
 			Portal_Applications__c.Service_Description_Label__c,
 			Portal_Applications__c.ANG_Restrict_by_Agency_Sector__c,
 			Portal_Applications__c.ANG_Accredited_Agents_Only__c,
-			Portal_Applications__c.Requires_Service_Admin_Approval__c
+			Portal_Applications__c.Requires_Service_Admin_Approval__c,
+			Portal_Applications__c.Is_Invitation_Enabled__c
 		};
 	}
 
