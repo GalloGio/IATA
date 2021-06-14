@@ -4,7 +4,7 @@
     <description>Lab Registy app, part of Travel Pass ecosystem</description>
     <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
     <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
-    <label>Lab Registry</label>
+    <label>IATA Lab Network</label>
     <tabs>standard-Account</tabs>
     <tabs>standard-Case</tabs>
     <tabs>LAB_Account_Role_Detail__c</tabs>

@@ -23,6 +23,7 @@ import CSP_LabRegistry_LabDetails from '@salesforce/label/c.CSP_LabRegistry_LabD
 import CSP_LabReg_DownloadTemplate from '@salesforce/label/c.CSP_LabReg_DownloadTemplate';
 import CSP_LabReg_Download_Instructions from '@salesforce/label/c.CSP_LabReg_Download_Instructions';
 import CSP_LabReg_UploadHere from '@salesforce/label/c.CSP_LabReg_UploadHere';
+import CSP_LabReg_UploadFileHelpText from '@salesforce/label/c.CSP_LabReg_UploadFileHelpText';
 
 
 import ISSP_RD_UploadFile from '@salesforce/label/c.ISSP_RD_UploadFile';
@@ -47,6 +48,7 @@ export default class labRegistryServiceMainContent extends NavigationMixin(Light
 		,ISSP_RD_UploadFile
 		,ISSP_RD_OK_Action
 		,Button_Cancel
+		,CSP_LabReg_UploadFileHelpText
 	}
 
 	successIcon = CSP_PortalPath + 'CSPortal/Images/Icons/youaresafe.png';
@@ -56,7 +58,7 @@ export default class labRegistryServiceMainContent extends NavigationMixin(Light
 		this.fetchCSVId();
 		this.fetchInstructionFile();
 
-		getPortalServiceId({portalServiceName:'Lab Registry'}).then( result => {
+		getPortalServiceId({portalServiceName:'IATA Lab Network'}).then( result => {
 			this.serviceId = result;
 
 			getLoggedUser().then(userResult => {
@@ -216,7 +218,7 @@ export default class labRegistryServiceMainContent extends NavigationMixin(Light
 
 	@track instructionFilePath;
 	fetchInstructionFile() {
-		getAttachmentFromPortalService({filename:'Lab Registry Data Form Instructions.pdf'})
+		getAttachmentFromPortalService({filename:'IATA Lab Network Data Form Instructions.pdf'})
 		.then(response => {
 			if (response!=null){
 				this.instructionFilePath='/servlet/servlet.FileDownload?file='+response.Id;
