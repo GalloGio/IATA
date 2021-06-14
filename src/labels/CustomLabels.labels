@@ -6933,7 +6933,7 @@ By submitting, you will receive a case number and our engagement team will be in
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_LabReg_UploadDetails</shortDescription>
-        <value>Upload your laboratories details</value>
+        <value>Upload your Laboratory details</value>
     </labels>
     <labels>
         <fullName>CSP_LabReg_UploadFileHelpText</fullName>
@@ -7029,7 +7029,7 @@ By submitting, you will receive a case number and our engagement team will be in
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP_LabRegistry</shortDescription>
-        <value>Lab Registry</value>
+        <value>IATA Lab Network</value>
     </labels>
     <labels>
         <fullName>CSP_LabRegistry_LabDetails</fullName>
