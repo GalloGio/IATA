@@ -327,7 +327,7 @@
 										<label>{!$Label.CSP_L_Phone_LMS}</label>
 										<div>{!selectedContact.phone}</div>
 									</div>
-								</div>	
+								</div>
 								<div class="row IA-Checkboxes">
 									<div class="col col-sm-12">
 										<span class="IA-Modal-Section-Title">{!$Label.IA_MITA_Contact_Type}</span>
@@ -344,7 +344,13 @@
 											</ul>
 									</div>
 								</div>
+								<div class="row">
+									<div class="col col-sm-12 IA-InfoText">
+										<label>{!$Label.IA_Add_Contact_Disclaimer}</label>
+									</div>
+								</div>
 							</apex:outputPanel>
+
 						</apex:outputPanel>
 						<!-- /Contact detail body for new contact-->
 						<div class="modal-footer">

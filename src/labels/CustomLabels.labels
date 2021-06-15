@@ -11827,6 +11827,14 @@ Browse through our extensive catalogue or purchase any of the IATA publications,
         <value>Activation Date</value>
     </labels>
     <labels>
+        <fullName>IA_Add_Contact_Disclaimer</fullName>
+        <categories>InterlineAgreements</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>IA Add Contact Disclaimer</shortDescription>
+        <value>Only MITA Contact Type can be changed here, to make changed to other contact information like Name, Email or Phone Number, please contact your IATA Portal Administrator.</value>
+    </labels>
+    <labels>
         <fullName>IA_Agreement</fullName>
         <categories>InterlineAgreements</categories>
         <language>en_US</language>
