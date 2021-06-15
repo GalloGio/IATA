@@ -230,6 +230,19 @@ public class AccountHandler{
 	}
 
 	/**
+	 * Get organization Wide address of the SIS einvoicing Team
+	 */
+	public static OrgWideEmailAddress SIS_EINVOICING_EMAIL {
+		get {
+			if (SIS_EINVOICING_EMAIL==null) {
+				SIS_EINVOICING_EMAIL = [SELECT Id, Address FROM OrgWideEmailAddress WHERE DisplayName = 'SIS eInvoicing'];
+			}
+			return SIS_EINVOICING_EMAIL;
+		}
+		set;
+	}
+
+	/**
 	 * Send a quick email to SIS team to notify changes in their accounts
 	 */
 	public static void notifyFieldChange(List<Account> listAccount, Map<Id, Account> oldMap) {
@@ -253,7 +266,8 @@ public class AccountHandler{
 
 		if (!listMessages.isEmpty()) {
 			String title = 'Account changes in SIS 3 digit code';
-			TransformationHelper.sendSISTeamAlertMessage(title, String.join(listMessages,'\n\n'));
+			List<String> receivers = new List<String>{SIS_EINVOICING_EMAIL.Address};
+			TransformationHelper.sendSFDevsAlertMessage(title, String.join(listMessages,'\n\n'), receivers);
 		}
 	}
 

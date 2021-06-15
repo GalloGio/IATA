@@ -121,33 +121,6 @@ public class TransformationHelper {
 		triggerOnCaseNSerRen = true;
 	}
 
-	public static OrgWideEmailAddress SIS_EINVOICING_EMAIL {
-		get {
-			if (SIS_EINVOICING_EMAIL==null) {
-				SIS_EINVOICING_EMAIL = [SELECT Id, Address FROM OrgWideEmailAddress WHERE DisplayName = 'SIS eInvoicing'];
-			}
-			return SIS_EINVOICING_EMAIL;
-		}
-		set;
-	}
-
-	/**
-	 * Send an email to SIS TEAM, addreses found in the OWA 'SIS eInvoicing'
-	 */
-	public static void sendSISTeamAlertMessage(String title, String message) {
-		try {
-			List<Messaging.SingleEmailMessage> emails = new List<Messaging.SingleEmailMessage>();
-			Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-			mail.setSubject(title);
-			mail.setToAddresses(new list<String>{SIS_EINVOICING_EMAIL.Address}) ;
-			mail.setPlainTextBody(message);
-			emails.add(mail);
-			Messaging.sendEmail(emails);
-		} catch (Exception  e) {
-			system.debug('Failed to send email to SIS Team');
-		}
-	}
-
 	public static void sendSFDevsAlertMessage(String title, String message, String receiver) {
 		sendSFDevsAlertMessage(title, message, new List<String> {receiver});
 	}
