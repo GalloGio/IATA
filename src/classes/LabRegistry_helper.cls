@@ -1,9 +1,10 @@
 public  without sharing class LabRegistry_helper {
 	public static final string labRegistryAccnRole = 'Lab Registry';
+	public static final string labRegistryServiceName = 'IATA Lab Network';
 
 	/*****
 	 * 
-	 * Method is used to retrieve all Airlines' HQ to be displayed in Lab Registry portal service
+	 * Method is used to retrieve all Airlines' HQ to be displayed in IATA Lab Network portal service
 	 * 
 	 ***/
 	@AuraEnabled(cacheable=true)
@@ -24,7 +25,7 @@ public  without sharing class LabRegistry_helper {
 			theCase.recordtypeid = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'CS_Process_IDFS_ISS');
 			theCase.ContactId = currentUser.ContactId;
 			theCase.AccountId = currentUser.Contact.AccountId;
-			theCase.subject = ('Lab Registry - ' + reason + ' for ' + currentUser.contact.account.name).left(255);
+			theCase.subject = (labRegistryServiceName + ' - ' + reason + ' for ' + currentUser.contact.account.name).left(255);
 			
 			theCase.Origin = 'Portal';
 			theCase.Region__c = currentUser.contact.Account.IATA_Iso_Country__r.Region__c;
@@ -35,7 +36,7 @@ public  without sharing class LabRegistry_helper {
 		return [select Id, CaseNumber from case where id=:theCase.Id];
 	}
 	/****
-	 * Method used to Save lab registry survey's answers.
+	 * Method used to Save IATA Lab Network survey's answers.
 	 * 
 	 *  @input: 
 	 * 		LAB_Account_Role_Detail__c labRoleDetail: used to store the answers to form
@@ -85,7 +86,7 @@ public  without sharing class LabRegistry_helper {
 				when 'Independent Lab' {
 					labRoleDetail.recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('LAB_Account_Role_Detail__c', 'Independent_Lab');
 				}
-				when 'Lab Network' {
+				when 'Lab Partner/Network' {
 					labRoleDetail.recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('LAB_Account_Role_Detail__c', 'Lab_Network');
 				}
 				when else {
@@ -129,7 +130,7 @@ public  without sharing class LabRegistry_helper {
 	}
 
 	/*****
-	 * Method used to retrieve attachments from portal service Lab Registry.
+	 * Method used to retrieve attachments from portal service IATA Lab Network.
 	 * Files are shown in the homepage of the portal service.
 	 * Note that only the latest attachment matching the file name is retrieved
 	 * 
@@ -155,7 +156,7 @@ public  without sharing class LabRegistry_helper {
 	}
 
 	/**
-	 * Invoked by internal users to approve or deny access to the portal service Lab Registry
+	 * Invoked by internal users to approve or deny access to the portal service IATA Lab Network
 	 * 
 	 */
 
