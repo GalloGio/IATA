@@ -36,6 +36,7 @@ If this WHERE clause evaluates to true then the custom metadata record will be a
         <fullName>Reason__c</fullName>
         <externalId>false</externalId>
         <fieldManageability>DeveloperControlled</fieldManageability>
+        <inlineHelpText>This accepts the keyword &quot;ALL&quot;</inlineHelpText>
         <label>Reason</label>
         <length>255</length>
         <required>true</required>

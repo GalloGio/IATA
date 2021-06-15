@@ -4,6 +4,7 @@
  */
 public with sharing class CaseProcessTypeHelper {
 
+	private static final String ALL_REASONS = 'ALL'; // keyword that represents all kind of reasons in the Case_Process_Type__mdt
 	private static final Id CASE_RT_OSCAR = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 
 	// Values for the standard field Case.Status marked as a closed
@@ -115,7 +116,8 @@ public with sharing class CaseProcessTypeHelper {
 			if (!SET_CASE_KPI_PROCESSED.contains(cse.Id)) {
 				Case oldRecord = oldMap.get(cse.Id);
 				Boolean beingClosed = cse.Status!=oldRecord.Status && CLOSED_STATUSES.contains(cse.Status) && !CLOSED_STATUSES.contains(oldRecord.Status);
-				Boolean hasConfig = getMapRTsToReasons().get(cse.RecordTypeId) != null && getMapRTsToReasons().get(cse.RecordTypeId).get(cse.Reason1__c) != null;
+				Boolean hasConfig = getMapRTsToReasons().get(cse.RecordTypeId) != null &&
+					(getMapRTsToReasons().get(cse.RecordTypeId).get(cse.Reason1__c) != null || getMapRTsToReasons().get(cse.RecordTypeId).get(ALL_REASONS) != null);
 				Boolean validSubject = String.isNotBlank(cse.Subject) && !cse.Subject.contains('PROCOM');
 				if(hasConfig && beingClosed && validSubject) {
 					SET_CASE_KPI_PROCESSED.add(cse.Id);
@@ -178,6 +180,9 @@ public with sharing class CaseProcessTypeHelper {
 	 */
 	public static Case_Process_Type__mdt getRightProcess(Case cse) {
 		list<Case_Process_Type__mdt> listProcess = getMapRTsToReasons().get(cse.RecordTypeId).get(cse.Reason1__c);
+		if (listProcess==null) {
+			listProcess = getMapRTsToReasons().get(cse.RecordTypeId).get(ALL_REASONS);
+		}
 		if (listProcess!=null) {
 			for (Case_Process_Type__mdt process: listProcess) {
 				if (processOtherConditions(cse,process.Other_Conditions__c)) {
