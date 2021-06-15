@@ -1769,6 +1769,10 @@ IF(OR(
                 <default>false</default>
             </values>
             <values>
+                <fullName>FRED%2B</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Financial Securities</fullName>
                 <default>false</default>
             </values>
@@ -1946,6 +1950,10 @@ IF(OR(
             </values>
             <values>
                 <fullName>TIP Reports</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Timatic</fullName>
                 <default>false</default>
             </values>
             <values>

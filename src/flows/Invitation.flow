@@ -66,7 +66,7 @@
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
             <name>myRule_1</name>
-            <conditionLogic>(1 OR 2) AND 3</conditionLogic>
+            <conditionLogic>(1 OR 2) AND 3 AND 4</conditionLogic>
             <conditions>
                 <processMetadataValues>
                     <name>inputDataType</name>
@@ -95,7 +95,7 @@
                 <leftValueReference>myVariable_current.LastModifiedDate</leftValueReference>
                 <operator>LessThanOrEqualTo</operator>
                 <rightValue>
-                    <elementReference>formula_2_myRule_1_8798303392</elementReference>
+                    <elementReference>formula_2_myRule_1_1911609774</elementReference>
                 </rightValue>
             </conditions>
             <conditions>
@@ -160,6 +160,37 @@
                     <stringValue>Active</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.ServiceId__r.Functional_Role__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>FRED+</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>myRule_1_A1</targetReference>
             </connector>
@@ -174,11 +205,11 @@
                 <stringValue>[Invitation__c].CreatedDate + 0.000022</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_2_myRule_1_8798303392</name>
+        <name>formula_2_myRule_1_1911609774</name>
         <dataType>DateTime</dataType>
         <expression>{!myVariable_current.CreatedDate} + 0.000022</expression>
     </formulas>
-    <interviewLabel>Invitation-2_InterviewLabel</interviewLabel>
+    <interviewLabel>Invitation-4_InterviewLabel</interviewLabel>
     <label>Invitation</label>
     <processMetadataValues>
         <name>ObjectType</name>

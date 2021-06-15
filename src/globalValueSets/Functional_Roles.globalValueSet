@@ -121,6 +121,11 @@
         <label>Financial Securities</label>
     </customValue>
     <customValue>
+        <fullName>FRED+</fullName>
+        <default>false</default>
+        <label>FRED+</label>
+    </customValue>
+    <customValue>
         <fullName>GADM</fullName>
         <default>false</default>
         <label>GADM</label>
@@ -372,5 +377,5 @@
     </customValue>
     <description>Functional Roles</description>
     <masterLabel>Functional Roles</masterLabel>
-    <sorted>false</sorted>
+    <sorted>true</sorted>
 </GlobalValueSet>
