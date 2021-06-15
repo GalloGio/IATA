@@ -398,7 +398,7 @@
     <customValue>
         <fullName>Temperature_Controlled_Cargo_Dolly</fullName>
         <default>false</default>
-        <label>Temperature Controlled Cargo Dolly (TCT)</label>
+        <label>Temperature Controlled Cargo Dolly (TCD)</label>
     </customValue>
     <customValue>
         <fullName>Baggage_Cart</fullName>
@@ -408,7 +408,7 @@
     <customValue>
         <fullName>Temperature_Controlled_Cargo_Truck</fullName>
         <default>false</default>
-        <label>Temperature Controlled Cargo Truck (TCD)</label>
+        <label>Temperature Controlled Cargo Truck (TCT)</label>
     </customValue>
     <customValue>
         <fullName>Prm_Bus</fullName>
