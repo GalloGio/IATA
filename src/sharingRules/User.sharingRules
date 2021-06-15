@@ -13,6 +13,7 @@
             <operation>notEqual</operation>
             <value></value>
         </criteriaItems>
+        <includeHVUOwnedRecords>false</includeHVUOwnedRecords>
     </sharingGuestRules>
     <sharingGuestRules>
         <fullName>Share_users_with_Ecom_Guest_User</fullName>
@@ -27,6 +28,7 @@
             <operation>notEqual</operation>
             <value></value>
         </criteriaItems>
+        <includeHVUOwnedRecords>false</includeHVUOwnedRecords>
     </sharingGuestRules>
     <sharingGuestRules>
         <fullName>Share_users_with_IATA_Portal_Site_Guest_User_CNS</fullName>
@@ -41,6 +43,7 @@
             <operation>notEqual</operation>
             <value></value>
         </criteriaItems>
+        <includeHVUOwnedRecords>false</includeHVUOwnedRecords>
     </sharingGuestRules>
     <sharingGuestRules>
         <fullName>Share_users_with_identity_Site_Guest_User</fullName>
@@ -55,5 +58,6 @@
             <operation>notEqual</operation>
             <value></value>
         </criteriaItems>
+        <includeHVUOwnedRecords>false</includeHVUOwnedRecords>
     </sharingGuestRules>
 </SharingRules>

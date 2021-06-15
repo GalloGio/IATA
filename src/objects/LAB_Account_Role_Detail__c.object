@@ -368,9 +368,9 @@
                     <label>Independent Lab</label>
                 </value>
                 <value>
-                    <fullName>Lab Network</fullName>
+                    <fullName>Lab Partner/Network</fullName>
                     <default>false</default>
-                    <label>Lab Network</label>
+                    <label>Lab Partner/Network</label>
                 </value>
                 <value>
                     <fullName>IT Integrator</fullName>
@@ -381,6 +381,12 @@
                     <fullName>Aggregator</fullName>
                     <default>false</default>
                     <label>Aggregator</label>
+                </value>
+                <value>
+                    <fullName>Lab Network</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Lab Network</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -732,7 +738,7 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Lab Network</fullName>
+                <fullName>Lab Partner%2FNetwork</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -910,7 +916,7 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Lab Network</fullName>
+                <fullName>Lab Partner%2FNetwork</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1076,7 +1082,7 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Lab Network</fullName>
+                <fullName>Lab Partner%2FNetwork</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1246,7 +1252,7 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Lab Network</fullName>
+                <fullName>Lab Partner%2FNetwork</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1424,7 +1430,7 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Lab Network</fullName>
+                <fullName>Lab Partner%2FNetwork</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1488,8 +1494,8 @@
     <recordTypes>
         <fullName>Lab_Network</fullName>
         <active>true</active>
-        <description>Recordtype for Lab Network</description>
-        <label>Lab Network</label>
+        <description>Recordtype for Lab Partner/Network</description>
+        <label>Lab Partner/Network</label>
         <picklistValues>
             <picklist>Additional_certifications_in_place__c</picklist>
             <values>
@@ -1602,7 +1608,7 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Lab Network</fullName>
+                <fullName>Lab Partner%2FNetwork</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1780,7 +1786,7 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>Lab Network</fullName>
+                <fullName>Lab Partner%2FNetwork</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

@@ -59,6 +59,7 @@ global class ANG_OscarProcessHelper {
 					Is_your_firm_handling_Dangerous_Goods__c, IATA_ISO_Billing_State__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_Country__r.Name, IATA_ISO_Shipping_State__c,
 					IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name, Link_agent_name__c, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode, IATA_ISO_Country__r.Due_diligence_mandatory__c,
 					IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, Has_a_Financial_Assessment_Contact__c, Has_an_Administrator_User_Portal__c, ANG_IsNewGenAgency__c , Covered_Ownership__c,
+					IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c, 
 					(SELECT Id FROM RHC_Informations__r), Is_PCI_compliant__c,Link_agent_code__c, Sector__c, Category__c, Check_Digit__c, RecordTypeId,Due_Diligence_Status__c,CNS_Agency__c, GDP_Opt_In__c ,
 					(SELECT Id, Change_Code__c, Active__c FROM Agencies_Applied_Change_codes__r WHERE Active__c = true),(SELECT Id FROM Main_Accounts__r), Reason__c, IATA_ISO_Country__r.AMS_Settlement_System__r.ANG_RHC_Amount_Equals_FS__c
 					FROM Account
@@ -512,8 +513,12 @@ global class ANG_OscarProcessHelper {
 
 			acc.ANG_Accreditation_Model__c = AMS_Utils.decodeAMFromOscarProcess(oscar.Process__c,acc.ANG_Accreditation_Model__c);
 
-			if((oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWGESTANDARD) && acc.RHC_Informations__r.isEmpty())
+			if((oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWGESTANDARD || (acc.IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c && oscar.Process__c == AMS_Utils.NEWHELITE)) && acc.RHC_Informations__r.isEmpty()){
 				createRHCInfo.add(acc);
+				if(acc.IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c && oscar.Process__c == AMS_Utils.NEWHELITE)
+					ANG_RHCHelper.bIsNewHELiteProcess = true;
+			}
+				
 
 
 			if(AMS_Utils.oscarPCICompliantMigrationProcesses.contains(oscar.Process__c)){

@@ -17,10 +17,6 @@
         <name>AWS_Toolkit</name>
     </customApplications>
     <customApplications>
-        <label><!-- SnapShot --></label>
-        <name>BLND_SnapShot</name>
-    </customApplications>
-    <customApplications>
         <label><!-- Call Scripting --></label>
         <name>CallScripting</name>
     </customApplications>
@@ -105,7 +101,7 @@
         <name>IFTP</name>
     </customApplications>
     <customApplications>
-        <label><!-- Lab Registry --></label>
+        <label><!-- IATA Lab Network --></label>
         <name>Lab_Registry</name>
     </customApplications>
     <customApplications>
@@ -4462,6 +4458,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_LabReg_CompleteDetails</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_LabReg_ConfirmationMessage --></label>
+        <name>CSP_LabReg_ConfirmationMessage</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_LabReg_CountryLabs --></label>
         <name>CSP_LabReg_CountryLabs</name>
     </customLabels>
@@ -4500,6 +4500,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- CSP_LabReg_National_Govern_Platform --></label>
         <name>CSP_LabReg_National_Govern_Platform</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_NumberOfLocations --></label>
+        <name>CSP_LabReg_NumberOfLocations</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_LabReg_Operating_Brand --></label>
@@ -4542,8 +4546,16 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_LabReg_Step</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_LabReg_Step2Intro --></label>
+        <name>CSP_LabReg_Step2Intro</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_LabReg_Step_Locations --></label>
         <name>CSP_LabReg_Step_Locations</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_ThankYouForRequestingService --></label>
+        <name>CSP_LabReg_ThankYouForRequestingService</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_LabReg_TypeOfLab --></label>
@@ -4560,6 +4572,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- CSP_LabReg_UploadDetails --></label>
         <name>CSP_LabReg_UploadDetails</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_UploadFileHelpText --></label>
+        <name>CSP_LabReg_UploadFileHelpText</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_LabReg_UploadFilledCSV --></label>
@@ -34384,10 +34400,6 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Available_Services</name>
     </customTabs>
     <customTabs>
-        <label><!-- Snapshot --></label>
-        <name>BLND_Snapshot</name>
-    </customTabs>
-    <customTabs>
         <label><!-- CNS E-Bulletin --></label>
         <name>CNS_E_Bulletin</name>
     </customTabs>
@@ -39134,6 +39146,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <sections>
             <label>报告/报表</label>
             <name>Portal Service Access</name>
+        </sections>
+        <sections>
+            <label><!-- Service information --></label>
+            <name>Service information</name>
         </sections>
     </reportTypes>
     <reportTypes>
