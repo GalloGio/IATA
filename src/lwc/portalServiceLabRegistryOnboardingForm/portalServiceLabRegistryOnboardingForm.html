@@ -122,22 +122,22 @@
 							</lightning-layout-item>
 
 							<lightning-layout-item size="12" class="topLabel IEFixDisplay">
-								<span class="fixed-text"><b>{labels.CSP_LabReg_Step} 1</b><br/></span>
+								<span class="fixed-text"><b>{labels.CSP_LabReg_Step} 1 - {labels.CSP_labReg_Step_GeneralInformation}</b><br/></span>
 								<span class="fixed-text">{labels.CSP_LabReg_SplashScreen_Step1}</span>
 							</lightning-layout-item>
 
 							<lightning-layout-item size="12" class="topLabel IEFixDisplay">
-								<span class="fixed-text"><b>{labels.CSP_LabReg_Step} 2</b><br/></span>
+								<span class="fixed-text"><b>{labels.CSP_LabReg_Step} 2 - {labels.CSP_LabReg_Step_Locations}</b><br/></span>
 								<span class="fixed-text">{labels.CSP_LabReg_SplashScreen_Step2}</span>
 							</lightning-layout-item>
 
 							<lightning-layout-item size="12" class="topLabel IEFixDisplay">
-								<span class="fixed-text"><b>{labels.CSP_LabReg_Step} 3</b><br/></span>
+								<span class="fixed-text"><b>{labels.CSP_LabReg_Step} 3 - {labels.CSP_labReg_Step_Airline_Agreements}</b><br/></span>
 								<span class="fixed-text">{labels.CSP_LabReg_SplashScreen_Step3}</span>
 							</lightning-layout-item>
 
 							<lightning-layout-item size="12" class="topLabel IEFixDisplay">
-								<span class="fixed-text"><b>{labels.CSP_LabReg_Step} 4</b><br/></span>
+								<span class="fixed-text"><b>{labels.CSP_LabReg_Step} 4 - {labels.CSP_L2_Confirmation}</b><br/></span>
 								<span class="fixed-text">{labels.CSP_LabReg_SplashScreen_Step4}</span>
 							</lightning-layout-item>
 
@@ -668,6 +668,12 @@
 
 								<div if:true={isCountryLabsStep} class="isCountryLabStep">
 									<lightning-layout-item size="12" class="formItem">
+										<div class="formLabelContainer">
+											<div class="text-xxsmall">
+												{labels.CSP_LabReg_Step2Intro}
+											</div>
+										</div>
+
 										<div onblur={handleleave} tabindex="0">
 											<div class="slds-form-element">
 												<div class="slds-form-element__control custTextInputSmall">
@@ -800,7 +806,7 @@
 										<div class="IEFixDisplayContainer">
 
 											<lightning-layout-item size="12" class="topLabel IEFixDisplay">
-												<div class="stepText">{labels.CSP_L2_Confirmation_Message}</div>
+												<div class="stepText">{labels.CSP_LabReg_ConfirmationMessage}</div>
 											</lightning-layout-item>
 								
 											<lightning-layout-item class="slds-p-around_medium topLightGrayBorder customWhiteBackground slds-clearfix IEFixDisplay" size="12">
@@ -1218,7 +1224,7 @@
         <c-portal-registration-generic-modal
             icon={successIcon}
             title={labels.CSP_L2_Details_Saved}
-            message={labels.OneId_Thank_you_for_subscribing_to_this_new_service}
+            message={labels.CSP_LabReg_ThankYouForRequestingService}
             button1-label={labels.CSP_L2_Go_To_Homepage}
             button2-label={labels.CSP_L2_Go_To_Service}
             onbuttononeaction={button1Action}

@@ -308,6 +308,21 @@
         <type>Checkbox</type>
     </fields>
     <fields>
+        <fullName>Accreditation_Model__c</fullName>
+        <description>specify for which accreditation model the configuration applies</description>
+        <externalId>false</externalId>
+        <inlineHelpText>specify for which accreditation model the configuration applies</inlineHelpText>
+        <label>Accreditation Model</label>
+        <required>false</required>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>ANG_Accreditation_Models</valueSetName>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
         <fullName>Block_notification_on_RHC_amount_update__c</fullName>
         <defaultValue>false</defaultValue>
         <externalId>false</externalId>
@@ -726,6 +741,49 @@ J-Joint Vent</description>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Accreditation_Model__c</picklist>
+            <values>
+                <fullName>CASS Commercial Account BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASS Commercial Account HO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Endorsement BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Endorsement HO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Endorsement Independent BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Notice Of Change</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legacy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>GDS_Alert_Type__c</picklist>
             <values>
                 <fullName>CashGDSAlert</fullName>
@@ -846,6 +904,49 @@ J-Joint Vent</description>
             <picklist>ANG_RTS_Severity__c</picklist>
             <values>
                 <fullName>Yellow</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Accreditation_Model__c</picklist>
+            <values>
+                <fullName>CASS Commercial Account BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASS Commercial Account HO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Endorsement BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Endorsement HO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Endorsement Independent BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Notice Of Change</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legacy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -982,6 +1083,49 @@ J-Joint Vent</description>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Accreditation_Model__c</picklist>
+            <values>
+                <fullName>CASS Commercial Account BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASS Commercial Account HO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Endorsement BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Endorsement HO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Endorsement Independent BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Notice Of Change</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legacy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>GDS_Alert_Type__c</picklist>
             <values>
                 <fullName>CashGDSAlert</fullName>
@@ -1038,6 +1182,49 @@ J-Joint Vent</description>
             <picklist>ANG_RTS_Severity__c</picklist>
             <values>
                 <fullName>Yellow</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Accreditation_Model__c</picklist>
+            <values>
+                <fullName>CASS Commercial Account BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASS Commercial Account HO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Endorsement BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Endorsement HO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Endorsement Independent BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Notice Of Change</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legacy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1162,6 +1349,49 @@ J-Joint Vent</description>
             <picklist>ANG_RTS_Severity__c</picklist>
             <values>
                 <fullName>Yellow</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Accreditation_Model__c</picklist>
+            <values>
+                <fullName>CASS Commercial Account BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASS Commercial Account HO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Endorsement BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Endorsement HO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Endorsement Independent BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Notice Of Change</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legacy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1298,6 +1528,49 @@ J-Joint Vent</description>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Accreditation_Model__c</picklist>
+            <values>
+                <fullName>CASS Commercial Account BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASS Commercial Account HO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Endorsement BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Endorsement HO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Endorsement Independent BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Notice Of Change</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legacy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>GDS_Alert_Type__c</picklist>
             <values>
                 <fullName>CashGDSAlert</fullName>
@@ -1426,6 +1699,49 @@ J-Joint Vent</description>
             </values>
             <values>
                 <fullName>Yellow</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Accreditation_Model__c</picklist>
+            <values>
+                <fullName>CASS Commercial Account BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASS Commercial Account HO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Endorsement BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Endorsement HO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Endorsement Independent BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Notice Of Change</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legacy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1563,6 +1879,49 @@ J-Joint Vent</description>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Accreditation_Model__c</picklist>
+            <values>
+                <fullName>CASS Commercial Account BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASS Commercial Account HO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Endorsement BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Endorsement HO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Endorsement Independent BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Notice Of Change</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legacy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>GDS_Alert_Type__c</picklist>
             <values>
                 <fullName>CashGDSAlert</fullName>
@@ -1692,6 +2051,49 @@ J-Joint Vent</description>
             </values>
             <values>
                 <fullName>Yellow</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Accreditation_Model__c</picklist>
+            <values>
+                <fullName>CASS Commercial Account BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASS Commercial Account HO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Endorsement BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Endorsement HO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Endorsement Independent BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Notice Of Change</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legacy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -1828,6 +2230,49 @@ J-Joint Vent</description>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Accreditation_Model__c</picklist>
+            <values>
+                <fullName>CASS Commercial Account BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASS Commercial Account HO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Endorsement BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Endorsement HO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Endorsement Independent BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Notice Of Change</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legacy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>GDS_Alert_Type__c</picklist>
             <values>
                 <fullName>CashGDSAlert</fullName>
@@ -1956,6 +2401,25 @@ J-Joint Vent</description>
             </values>
             <values>
                 <fullName>Yellow</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Accreditation_Model__c</picklist>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legacy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -2092,6 +2556,49 @@ J-Joint Vent</description>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Accreditation_Model__c</picklist>
+            <values>
+                <fullName>CASS Commercial Account BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASS Commercial Account HO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Endorsement BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Endorsement HO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Endorsement Independent BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Notice Of Change</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legacy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>GDS_Alert_Type__c</picklist>
             <values>
                 <fullName>CashGDSAlert</fullName>
@@ -2153,6 +2660,49 @@ J-Joint Vent</description>
             </values>
             <values>
                 <fullName>Yellow</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Accreditation_Model__c</picklist>
+            <values>
+                <fullName>CASS Commercial Account BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASS Commercial Account HO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Endorsement BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Endorsement HO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Endorsement Independent BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Notice Of Change</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legacy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -2289,6 +2839,49 @@ J-Joint Vent</description>
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Accreditation_Model__c</picklist>
+            <values>
+                <fullName>CASS Commercial Account BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASS Commercial Account HO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Endorsement BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Endorsement HO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Endorsement Independent BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Notice Of Change</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legacy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>GDS_Alert_Type__c</picklist>
             <values>
                 <fullName>CashGDSAlert</fullName>
@@ -2410,6 +3003,49 @@ J-Joint Vent</description>
             <picklist>ANG_RTS_Severity__c</picklist>
             <values>
                 <fullName>Yellow</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Accreditation_Model__c</picklist>
+            <values>
+                <fullName>CASS Commercial Account BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASS Commercial Account HO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Endorsement BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Endorsement HO</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Endorsement Independent BR</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CNS Notice Of Change</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cash</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cashless</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Legacy</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Multicountry</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

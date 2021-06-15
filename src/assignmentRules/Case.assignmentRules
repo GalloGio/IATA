@@ -3439,10 +3439,29 @@ or(
 ISPICKVAL(BSPCountry__c, &quot;Iran, Islamic Republic of&quot;), 
 ISPICKVAL(BSPCountry__c, &quot;Syria&quot;), 
 ISPICKVAL(BSPCountry__c, &quot;Jordan&quot;), 
-ISPICKVAL(BSPCountry__c, &quot;Lebanon&quot;) , 
 ISPICKVAL(BSPCountry__c, &quot;Palestinian Territories, Occupied&quot;), 
 ISPICKVAL(BSPCountry__c, &quot;Iraq&quot;), 
 ISPICKVAL(BSPCountry__c, &quot;Afghanistan&quot;) 
+) 
+)</formula>
+            <template>All/IDFS_Caseassignmentqueue</template>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>CasesLebanon</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>AND( 
+or( 
+RecordType.Name = &quot;Complaint (IDFS ISS)&quot;, 
+RecordType.Name = &quot;Cases - Global&quot; 
+), 
+
+or( 
+ISPICKVAL(Topic__c, &quot;IATA AgentExperience (Web/Mobile App)&quot;), 
+ISPICKVAL(Topic__c, &quot;ID Card (Print/Digital)&quot;) 
+), 
+
+or( 
+ISPICKVAL(BSPCountry__c, &quot;Lebanon&quot;)
 ) 
 )</formula>
             <template>All/IDFS_Caseassignmentqueue</template>
