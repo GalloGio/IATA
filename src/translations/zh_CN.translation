@@ -101,7 +101,7 @@
         <name>IFTP</name>
     </customApplications>
     <customApplications>
-        <label><!-- Lab Registry --></label>
+        <label><!-- IATA Lab Network --></label>
         <name>Lab_Registry</name>
     </customApplications>
     <customApplications>
@@ -4458,6 +4458,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_LabReg_CompleteDetails</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_LabReg_ConfirmationMessage --></label>
+        <name>CSP_LabReg_ConfirmationMessage</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_LabReg_CountryLabs --></label>
         <name>CSP_LabReg_CountryLabs</name>
     </customLabels>
@@ -4496,6 +4500,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- CSP_LabReg_National_Govern_Platform --></label>
         <name>CSP_LabReg_National_Govern_Platform</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_NumberOfLocations --></label>
+        <name>CSP_LabReg_NumberOfLocations</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_LabReg_Operating_Brand --></label>
@@ -4538,8 +4546,16 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_LabReg_Step</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_LabReg_Step2Intro --></label>
+        <name>CSP_LabReg_Step2Intro</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_LabReg_Step_Locations --></label>
         <name>CSP_LabReg_Step_Locations</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_ThankYouForRequestingService --></label>
+        <name>CSP_LabReg_ThankYouForRequestingService</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_LabReg_TypeOfLab --></label>
@@ -4556,6 +4572,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- CSP_LabReg_UploadDetails --></label>
         <name>CSP_LabReg_UploadDetails</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_UploadFileHelpText --></label>
+        <name>CSP_LabReg_UploadFileHelpText</name>
     </customLabels>
     <customLabels>
         <label><!-- CSP_LabReg_UploadFilledCSV --></label>
