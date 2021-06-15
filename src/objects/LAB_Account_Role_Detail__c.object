@@ -382,6 +382,12 @@
                     <default>false</default>
                     <label>Aggregator</label>
                 </value>
+                <value>
+                    <fullName>Lab Network</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>Lab Network</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>

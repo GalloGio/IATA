@@ -6860,8 +6860,7 @@ These steps are approximated to take 5-10 minutes to complete.</value>
         <protected>false</protected>
         <shortDescription>CSP_LabReg_SplashScreen_Step4</shortDescription>
         <value>This final step will allow you to review the answers you have provided, and submit. 
-By submitting, you will receive a case number and our engagement team will be in contact with you to finalize your registration. 
-</value>
+By submitting, you will receive a case number and our engagement team will be in contact with you to finalize your registration.</value>
     </labels>
     <labels>
         <fullName>CSP_LabReg_Start</fullName>
