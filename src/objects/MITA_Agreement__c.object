@@ -156,7 +156,7 @@
     <fields>
         <fullName>Active__c</fullName>
         <externalId>false</externalId>
-        <formula>OR( Status__c == &apos;Active&apos;, Status__c = &apos;Pending To Deactivate&apos; )</formula>
+        <formula>OR( Status__c == &apos;Active&apos;, Status__c = &apos;Pending Withdrawal&apos; )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Active</label>
         <trackHistory>false</trackHistory>
