@@ -1,4 +1,4 @@
-public class AccountContactRoleSelector{
+public class AccountContactRoleSelector {
 	public static List<Account_Contact_Role__c> selectListByContactId(Set<Id> idSet){
 		return selectQuery('Id, Account__c, Account_Role__c, Contact__c, Status__c, Functional_Role__c, Is_Service_Administrator__c', 'Contact__c', idSet).values();
 	}
@@ -7,7 +7,7 @@ public class AccountContactRoleSelector{
 	public static Map<Id, Account_Contact_Role__c> selectMapByServiceAndContactIdSet(String functionalRole, Set<Id> contactIdSet){
 		List<Account_Contact_Role__c> accountContactRoleList;
 		if(Test.isRunningTest())
-			accountContactRoleList = selectQuery('Id, Account__c, Account_Role__c, Contact__c,  Contact__r.Email', 'Contact__c', contactIdSet).values();
+			accountContactRoleList = selectQuery('Id, Account__c, Account_Role__c, Contact__c, Contact__r.Email', 'Contact__c', contactIdSet).values();
 		else		
 			accountContactRoleList = selectQuery('Id, Account__c, Account_Role__c, Contact__c, Contact__r.Email', 'Functional_Role__c = \'' + functionalRole + '\' AND Contact__c', contactIdSet).values();
 		
