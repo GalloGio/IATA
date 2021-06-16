@@ -448,7 +448,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 					this.serviceFullName = this.serviceRecord.recordService.Name;
 					this.isIFG_Service = this.serviceRecord.isIFGPending;
 
-
 					//in E&F service it doesn't matter if the user is admin or not
 					if(this.serviceName.includes('E&F APPS')) {
 						this.isAdmin = this.isServiceAdmin = this.serviceRecord.isServiceAdmin;

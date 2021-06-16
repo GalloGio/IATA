@@ -305,7 +305,7 @@ private class WorkflowHelperTest {
 		acct =  [Select Id, sector__c, Category__c from Account where name = 'NewGenAgency'];
 
 		System.assertEquals('Travel Agent',acct.sector__c);
-		System.assertEquals('IATAN Passenger Agent',acct.Category__c);
+		System.assertEquals('IATAN Passenger agent',acct.Category__c);
 		
 	}
 

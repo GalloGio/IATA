@@ -41,9 +41,11 @@ private class OneId_Fred_AccountSelection_CTRL_TEST {
 		};
 		Insert accs;
 
-
+		Portal_Applications__c portalApplication = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		portalApplication.Functional_Role__c = 'FRED+';
+		insert portalApplication;
 		// Insert an invitation
-		invitation = new Invitation__c(AccountId__c=accs[2].Id); // the verifier account inserted previously
+		invitation = new Invitation__c(ServiceId__c = portalApplication.Id, AccountId__c=accs[2].Id); // the verifier account inserted previously
 		insert invitation;
 
 		// Create a community user

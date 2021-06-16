@@ -465,7 +465,7 @@
         </connector>
         <fields>
             <name>terms_text_2</name>
-            <fieldText>&lt;SPAN ALIGN=&quot;CENTER&quot;&gt;&lt;FONT FACE=&quot;Arial&quot; STYLE=&quot;font-size:12px&quot; COLOR=&quot;#000000&quot; LETTERSPACING=&quot;0&quot; KERNING=&quot;0&quot;&gt;Please note that by checking the box below, you are accepting the &lt;FONT COLOR=&quot;#0000FF&quot;&gt;&lt;A HREF=&quot;http://www.iata.org/customer-portal/Pages/terms.aspx&quot; TARGET=&quot;_blank&quot;&gt;&lt;U&gt;Terms of Use&lt;/U&gt;&lt;/A&gt;&lt;/FONT&gt; for our portal.&lt;/FONT&gt;&lt;/SPAN&gt;</fieldText>
+            <fieldText>&lt;SPAN ALIGN=&quot;CENTER&quot;&gt;&lt;FONT FACE=&quot;Arial&quot; STYLE=&quot;font-size:12px&quot; COLOR=&quot;#000000&quot; LETTERSPACING=&quot;0&quot; KERNING=&quot;0&quot;&gt;Please note that by checking the box below, you are accepting the &lt;FONT COLOR=&quot;#0000FF&quot;&gt;&lt;A HREF=&quot;https://www.iata.org/en/terms&quot; TARGET=&quot;_blank&quot;&gt;&lt;U&gt;Terms of Use&lt;/U&gt;&lt;/A&gt;&lt;/FONT&gt; for our portal.&lt;/FONT&gt;&lt;/SPAN&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -474,7 +474,7 @@
             <defaultValue>
                 <booleanValue>false</booleanValue>
             </defaultValue>
-            <fieldText>&lt;SPAN ALIGN=&quot;CENTER&quot;&gt;&lt;FONT FACE=&quot;Arial&quot; STYLE=&quot;font-size:12px&quot; COLOR=&quot;#0000FF&quot; LETTERSPACING=&quot;0&quot; KERNING=&quot;0&quot;&gt;&lt;A HREF=&quot;http://www.iata.org/customer-portal/Pages/terms.aspx&quot; TARGET=&quot;_blank&quot;&gt;I have read and accept the Terms of Use conditions&lt;/A&gt;&lt;/FONT&gt;&lt;/SPAN&gt;</fieldText>
+            <fieldText>&lt;SPAN ALIGN=&quot;CENTER&quot;&gt;&lt;FONT FACE=&quot;Arial&quot; STYLE=&quot;font-size:12px&quot; COLOR=&quot;#0000FF&quot; LETTERSPACING=&quot;0&quot; KERNING=&quot;0&quot;&gt;&lt;A HREF=&quot;https://www.iata.org/en/terms&quot; TARGET=&quot;_blank&quot;&gt;I have read and accept the Terms of Use conditions&lt;/A&gt;&lt;/FONT&gt;&lt;/SPAN&gt;</fieldText>
             <fieldType>InputField</fieldType>
             <isRequired>true</isRequired>
             <validationRule>

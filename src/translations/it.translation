@@ -17,10 +17,6 @@
         <name>AWS_Toolkit</name>
     </customApplications>
     <customApplications>
-        <label><!-- SnapShot --></label>
-        <name>BLND_SnapShot</name>
-    </customApplications>
-    <customApplications>
         <label><!-- Call Scripting --></label>
         <name>CallScripting</name>
     </customApplications>
@@ -103,6 +99,10 @@
     <customApplications>
         <label><!-- IFTP --></label>
         <name>IFTP</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- Lab Registry --></label>
+        <name>Lab_Registry</name>
     </customApplications>
     <customApplications>
         <label><!-- MITA / BIETA --></label>
@@ -3486,6 +3486,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Emergency_Selected_Reason4</name>
     </customLabels>
     <customLabels>
+        <label><!-- Emergency reason --></label>
+        <name>CSP_Emergency_Selected_Reason5</name>
+    </customLabels>
+    <customLabels>
         <label>Si prega di non richiedere supporto di emergenza, a meno che non si tratti di frode, biglietteria o problemi finanziari</label>
         <name>CSP_Emergency_Tooltip</name>
     </customLabels>
@@ -3690,7 +3694,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_IATAN_Register_Info</name>
     </customLabels>
     <customLabels>
-        <label>Cordiali saluti,;br/&amp;gt;Centro assistenza clienti IATA</label>
+        <label>Cordiali saluti,&lt;br/&gt;Centro assistenza clienti IATA</label>
         <name>CSP_IATA_CSC_Email_Greetings</name>
     </customLabels>
     <customLabels>
@@ -4448,6 +4452,166 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- CSP_L_WorkPhone_LMS --></label>
         <name>CSP_L_WorkPhone_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_AdditionalCertInPlace --></label>
+        <name>CSP_LabReg_AdditionalCertInPlace</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_CompleteDetails --></label>
+        <name>CSP_LabReg_CompleteDetails</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_CountryLabs --></label>
+        <name>CSP_LabReg_CountryLabs</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_Describe_SLA_Nature --></label>
+        <name>CSP_LabReg_Describe_SLA_Nature</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_DownloadTemplate --></label>
+        <name>CSP_LabReg_DownloadTemplate</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_Download_CSV --></label>
+        <name>CSP_LabReg_Download_CSV</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_Download_Instructions --></label>
+        <name>CSP_LabReg_Download_Instructions</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_FormNotCompleted --></label>
+        <name>CSP_LabReg_FormNotCompleted</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_HowManyLabs --></label>
+        <name>CSP_LabReg_HowManyLabs</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_How_Long_In_Business --></label>
+        <name>CSP_LabReg_How_Long_In_Business</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_InitialQuestion --></label>
+        <name>CSP_LabReg_InitialQuestion</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_National_Govern_Platform --></label>
+        <name>CSP_LabReg_National_Govern_Platform</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_Operating_Brand --></label>
+        <name>CSP_LabReg_Operating_Brand</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_OwnFacilities --></label>
+        <name>CSP_LabReg_OwnFacilities</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_SLA_InPlace --></label>
+        <name>CSP_LabReg_SLA_InPlace</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_SplashScreen_Intro --></label>
+        <name>CSP_LabReg_SplashScreen_Intro</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_SplashScreen_Step1 --></label>
+        <name>CSP_LabReg_SplashScreen_Step1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_SplashScreen_Step2 --></label>
+        <name>CSP_LabReg_SplashScreen_Step2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_SplashScreen_Step3 --></label>
+        <name>CSP_LabReg_SplashScreen_Step3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_SplashScreen_Step4 --></label>
+        <name>CSP_LabReg_SplashScreen_Step4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_Start --></label>
+        <name>CSP_LabReg_Start</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_Step --></label>
+        <name>CSP_LabReg_Step</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_Step_Locations --></label>
+        <name>CSP_LabReg_Step_Locations</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_TypeOfLab --></label>
+        <name>CSP_LabReg_TypeOfLab</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_UploadCSVBtn --></label>
+        <name>CSP_LabReg_UploadCSVBtn</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_UploadCompleted --></label>
+        <name>CSP_LabReg_UploadCompleted</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_UploadDetails --></label>
+        <name>CSP_LabReg_UploadDetails</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_UploadFilledCSV --></label>
+        <name>CSP_LabReg_UploadFilledCSV</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_UploadHere --></label>
+        <name>CSP_LabReg_UploadHere</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_WhichAirlines --></label>
+        <name>CSP_LabReg_WhichAirlines</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_Which_One --></label>
+        <name>CSP_LabReg_Which_One</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_airlinePartnershipSelection --></label>
+        <name>CSP_LabReg_airlinePartnershipSelection</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_confirmDetails --></label>
+        <name>CSP_LabReg_confirmDetails</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_issueTestResultsSelection --></label>
+        <name>CSP_LabReg_issueTestResultsSelection</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_labsPartOfNationalPlatform --></label>
+        <name>CSP_LabReg_labsPartOfNationalPlatform</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_manageBookingSelection --></label>
+        <name>CSP_LabReg_manageBookingSelection</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_nationalAccreditationSelection --></label>
+        <name>CSP_LabReg_nationalAccreditationSelection</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabRegistry --></label>
+        <name>CSP_LabRegistry</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabRegistry_LabDetails --></label>
+        <name>CSP_LabRegistry_LabDetails</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabRegistry_service_desc --></label>
+        <name>CSP_LabRegistry_service_desc</name>
     </customLabels>
     <customLabels>
         <label>Ultimo aggiornamento</label>
@@ -5507,8 +5671,40 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_cpcc_Working_Areas</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_labReg_Step_Airline_Agreements --></label>
+        <name>CSP_labReg_Step_Airline_Agreements</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_labReg_Step_GeneralInformation --></label>
+        <name>CSP_labReg_Step_GeneralInformation</name>
+    </customLabels>
+    <customLabels>
         <label>Seleziona motivo</label>
         <name>CSP_selectReason</name>
+    </customLabels>
+    <customLabels>
+        <label>ti ha aggiunto come partecipante a caso</label>
+        <name>CS_Portal_Addittional_Recipients_Body</name>
+    </customLabels>
+    <customLabels>
+        <label>Clienti IATA Portal - Lei è stato aggiunto al caso</label>
+        <name>CS_Portal_Addittional_Recipients_Subject</name>
+    </customLabels>
+    <customLabels>
+        <label>andare al portale per visualizzare i dettagli e impegnarsi nella comunicazione.</label>
+        <name>CS_Portal_Addittional_Recipients_URL_Description</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CS Portal Annual Revalidation Countries PickList Value --></label>
+        <name>CS_Portal_Annual_Revalidation_Countries_PickList_Value</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CS Portal Annual Revalidation Download csv --></label>
+        <name>CS_Portal_Annual_Revalidation_Download_csv</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CS Portal Annual Revalidation Popup Title --></label>
+        <name>CS_Portal_Annual_Revalidation_Popup_Title</name>
     </customLabels>
     <customLabels>
         <label><!-- Campaign already created --></label>
@@ -5563,8 +5759,8 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CaseValidation_Area</name>
     </customLabels>
     <customLabels>
-        <label><!-- CaseValidation - Area2 --></label>
-        <name>CaseValidation_Area2</name>
+        <label><!-- CaseValidation - Area in Case Global --></label>
+        <name>CaseValidation_Area_in_Case_Global</name>
     </customLabels>
     <customLabels>
         <label><!-- CaseValidation - InDepthArea --></label>
@@ -26445,6 +26641,10 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
         <name>Reset_your_password</name>
     </customLabels>
     <customLabels>
+        <label><!-- Resource Center Service Description --></label>
+        <name>Resource_Center_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Response message --></label>
         <name>Response_message</name>
     </customLabels>
@@ -29907,6 +30107,10 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
     <customLabels>
         <label><!-- icg smart facility remote validation text3 --></label>
         <name>icg_smart_facility_remote_validation_text3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg smart facility remote validation url --></label>
+        <name>icg_smart_facility_remote_validation_url</name>
     </customLabels>
     <customLabels>
         <label><!-- icg smart facility url --></label>
@@ -34189,10 +34393,6 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
         <name>Available_Services</name>
     </customTabs>
     <customTabs>
-        <label><!-- Snapshot --></label>
-        <name>BLND_Snapshot</name>
-    </customTabs>
-    <customTabs>
         <label><!-- CNS E-Bulletin --></label>
         <name>CNS_E_Bulletin</name>
     </customTabs>
@@ -37224,6 +37424,19 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Contacts with TOP parent account info --></description>
+        <label><!-- Contacts with TOP parent account info --></label>
+        <name>Contacts_with_TOP_parent_account_info</name>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- Contacts --></label>
+            <name>Contacts</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Contacts with inactivated owners --></description>
         <label><!-- Contacts with inactivated owners --></label>
         <name>Contacts_with_inactivated_owners</name>
@@ -38177,6 +38390,23 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- KPI Values with Cases and Activity History --></description>
+        <label><!-- KPI Values with Cases and Activity History --></label>
+        <name>KPI_Values_with_Cases_and_Activity_History</name>
+        <sections>
+            <label><!-- Activities --></label>
+            <name>Activities</name>
+        </sections>
+        <sections>
+            <label><!-- Cases --></label>
+            <name>Cases</name>
+        </sections>
+        <sections>
+            <label><!-- KPI Values --></label>
+            <name>KPI Values</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- KPI value with cases and user role --></description>
         <label><!-- KPI value with cases and user role --></label>
         <name>KPI_value_with_cases_and_user_role</name>
@@ -38909,6 +39139,10 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
         <sections>
             <label><!-- Portal Service Access --></label>
             <name>Portal Service Access</name>
+        </sections>
+        <sections>
+            <label><!-- Service information --></label>
+            <name>Service information</name>
         </sections>
     </reportTypes>
     <reportTypes>

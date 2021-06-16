@@ -3198,7 +3198,7 @@ if(isnull(Deadline_for_Input_Other__c),0,TODAY()-DATEVALUE(Deadline_for_Input_Ot
     <fields>
         <fullName>Description_Internal_Case__c</fullName>
         <externalId>false</externalId>
-        <label>Description (Internal Case)</label>
+        <label>Description</label>
         <length>32768</length>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>
@@ -11924,7 +11924,7 @@ IF( Requested_Other__c = FALSE, TRUE, IF( Responded_Other__c = TRUE, TRUE, FALSE
         <fullName>Solution_Recommended__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>Summary of recommendation to be sent to the approver (after incorporating input)</inlineHelpText>
-        <label>Exe Summary (optional)</label>
+        <label>Exe Summary</label>
         <length>2500</length>
         <trackFeedHistory>false</trackFeedHistory>
         <trackHistory>false</trackHistory>

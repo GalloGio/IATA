@@ -355,6 +355,15 @@ public with sharing class PortalServicesCtrl {
 				mapServiceWrapper.remove(treasureDashboardId);
 			}
 		}
+
+		for(Portal_Application_Right__c accessAux2 : userGrantedList) {
+
+			if(accessAux2.Right__c == PORTAL_ACCESS_DENIED) {
+				mapServiceWrapper.remove(accessAux2.Portal_Application__c);
+			}
+
+		}
+
 		return mapServiceWrapper.values();
 	}
 
@@ -864,12 +873,16 @@ public with sharing class PortalServicesCtrl {
 	@AuraEnabled
 	public static void requestAccess(String applicationId, String applicationName){
 		User userAux = [SELECT ContactId, Contact.Email, CurrencyIsoCode FROM User WHERE Id = :UserInfo.getUserId()];
+		Portal_Applications__c portalApplication = PortalApplicationSelector.selectIsServiceEnabledMapByServiceIdSet(new Set<Id>{applicationId}).get(applicationId);
 
 		if(applicationName.equals(EFAPPS)){
 			EF_Helper.requestAccessEF(applicationId, applicationName, userAux);
-		} else {
+		} else if (!portalApplication.Is_Invitation_Enabled__c){
 			//invokes request method, ignoring visibility
 			ISSP_AvailableServices.newAppsRequest(applicationId,'',userAux.ContactId);
+		} else{
+			//check for active invitations and if present provision user to the service
+			InvitationService.checkForInvitations(applicationId, userAux);
 		}
 	}
 
