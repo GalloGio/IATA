@@ -3994,6 +3994,8 @@ public class AMS_OSCARTriggerHandler {
 
 	public static void applyChangeCodesWithDependencies(AMS_OSCAR__c oldOSCAR, AMS_OSCAR__c updatedOscar,Set<Id> oscarAccountIds, Set<AMS_Oscar__c> oscarsToCreateAuth) {
 
+		system.debug('applyChangeCodesWithDependencies recordTypeId: '+updatedOscar.recordTypeId);
+
 		Set<Id> oscarRTsToProcess = new Set<Id>{
 			AMS_Utils.RECTYPE_NEW,
 			AMS_Utils.RECTYPE_NEWHE, 
@@ -4004,11 +4006,15 @@ public class AMS_OSCARTriggerHandler {
 		};
 
 		if (oscarRTsToProcess.contains(updatedOscar.recordTypeId)){
+			
+			system.debug('applyChangeCodesWithDependencies oldOSCAR: '+JSON.serialize(oldOSCAR));
+			system.debug('applyChangeCodesWithDependencies updatedOscar: '+JSON.serialize(updatedOscar));
+
 			//TD2080607: partially refactored below code
 			boolean bGenerateCC =  false;
 			String changeCodeId = '';
 			if (oldOSCAR.STEP2__c != 'Passed' && updatedOscar.STEP2__c == 'Passed') {
-
+				
 				/*** AMSU-31 Start ***/
 				Set<String> processesToCheck = new Set<String> {AMS_Utils.new_HO, AMS_Utils.new_BR, AMS_Utils.new_SA, AMS_Utils.new_BR_ABROAD, AMS_Utils.NEWHELITE, AMS_Utils.NEWHESTANDARD, AMS_Utils.NEWAE, AMS_Utils.MCAE, AMS_Utils.NEWGESTANDARD};
 				Set<String> classesToCheck = new Set<String> {'P', 'D'};
@@ -4022,8 +4028,11 @@ public class AMS_OSCARTriggerHandler {
 				bGenerateCC = true;
 				changeCodeId = 'DIS-' + updatedOscar.Business_Process__c;
 			}else if (oldOSCAR.STEP4__c != AMS_Utils.PASSED && updatedOscar.STEP4__c == AMS_Utils.PASSED) {
-				bGenerateCC = true;
-				changeCodeId = 'NWD-' + updatedOscar.Business_Process__c;
+				Account oscarAccount = getAccounts(updatedOscar.Account__c).get(0);
+				if(!String.isBlank(oscarAccount.IATACode__c)){
+					bGenerateCC = true;
+					changeCodeId = 'NWD-' + updatedOscar.Business_Process__c;
+				}
 			}else if (oldOSCAR.STEP5__c != AMS_Utils.PASSED && updatedOscar.STEP5__c == AMS_Utils.PASSED) {
 				bGenerateCC = true;
 				changeCodeId = 'REC-' + updatedOscar.Business_Process__c;
@@ -4053,6 +4062,7 @@ public class AMS_OSCARTriggerHandler {
 				changeCode.status  = n.Account_status_change__c;
 				changeCode.publishedOnEBulletin = n.Published_in_bulletin__c;
 
+				system.debug('createAAChangeCodes_1');
 				AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode> {changeCode},new List<AMS_OSCAR__c> {updatedOscar},(List<Account>)JSON.deserialize('[{"Id" : "'+ updatedOscar.Account__c +'", "CNS_Agency__c" : "' + accounts.get(updatedOscar.Account__c).CNS_Agency__c + '", "Sector__c" : "' + accounts.get(updatedOscar.Account__c).Sector__c +'", "Category__c" : "' + accounts.get(updatedOscar.Account__c).Category__c +'" }]', List<Account>.class), true);            }
 		// Management of CORRECTION OSCARs
 		}else if (updatedOscar.recordTypeID == AMS_Utils.RECTYPE_CORRECTION){
