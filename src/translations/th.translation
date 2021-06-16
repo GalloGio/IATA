@@ -39144,10 +39144,70 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label>การเข้าถึงบริการพอร์ทัล</label>
         <name>Portal_Service_Access</name>
         <sections>
+            <columns>
+                <label><!-- Account Category --></label>
+                <name>Account Category</name>
+            </columns>
+            <columns>
+                <label><!-- Account Country --></label>
+                <name>Account Country</name>
+            </columns>
+            <columns>
+                <label><!-- Account Country ISO Code --></label>
+                <name>Account Country ISO Code</name>
+            </columns>
+            <columns>
+                <label><!-- Account Country ISO Code --></label>
+                <name>Account Country ISO Code</name>
+            </columns>
+            <columns>
+                <label><!-- Account IATA Code --></label>
+                <name>Account IATA Code</name>
+            </columns>
+            <columns>
+                <label><!-- Account ID --></label>
+                <name>Account ID</name>
+            </columns>
+            <columns>
+                <label><!-- Account ISO Country --></label>
+                <name>Account ISO Country</name>
+            </columns>
+            <columns>
+                <label><!-- Account Name --></label>
+                <name>Account Name</name>
+            </columns>
+            <columns>
+                <label><!-- Account Record Type --></label>
+                <name>Account Record Type</name>
+            </columns>
+            <columns>
+                <label><!-- Account Sector --></label>
+                <name>Account Sector</name>
+            </columns>
             <label><!-- Account Information --></label>
             <name>Account Information</name>
         </sections>
         <sections>
+            <columns>
+                <label><!-- Contact Email --></label>
+                <name>Contact Email</name>
+            </columns>
+            <columns>
+                <label><!-- Contact ID --></label>
+                <name>Contact ID</name>
+            </columns>
+            <columns>
+                <label><!-- Contact Name --></label>
+                <name>Contact Name</name>
+            </columns>
+            <columns>
+                <label><!-- Contact Title --></label>
+                <name>Contact Title</name>
+            </columns>
+            <columns>
+                <label><!-- Contact User Portal Status --></label>
+                <name>Contact User Portal Status</name>
+            </columns>
             <label><!-- Contact Information --></label>
             <name>Contact Information</name>
         </sections>
@@ -39156,6 +39216,74 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
             <name>Portal Service Access</name>
         </sections>
         <sections>
+            <columns>
+                <label><!-- Portal Service Application URL --></label>
+                <name>Portal Service Application URL</name>
+            </columns>
+            <columns>
+                <label><!-- Portal Service: Auto approved for --></label>
+                <name>Portal Service: Auto approved for</name>
+            </columns>
+            <columns>
+                <label><!-- Portal Service: Cannot be granted internally --></label>
+                <name>Portal Service: Cannot be granted internally</name>
+            </columns>
+            <columns>
+                <label><!-- Portal Service: Cannot be managed by portal admin --></label>
+                <name>Portal Service: Cannot be managed by portal admin</name>
+            </columns>
+            <columns>
+                <label><!-- Portal Service: Critical Service --></label>
+                <name>Portal Service: Critical Service</name>
+            </columns>
+            <columns>
+                <label><!-- Portal Service: Description --></label>
+                <name>Portal Service: Description</name>
+            </columns>
+            <columns>
+                <label><!-- Portal Service: Functional Role --></label>
+                <name>Portal Service: Functional Role</name>
+            </columns>
+            <columns>
+                <label><!-- Portal Service: Hide on Homepage --></label>
+                <name>Portal Service: Hide on Homepage</name>
+            </columns>
+            <columns>
+                <label><!-- Portal Service: Requestable --></label>
+                <name>Portal Service: Requestable</name>
+            </columns>
+            <columns>
+                <label><!-- Portal Service: Requires Level2 Registration --></label>
+                <name>Portal Service: Requires Level2 Registration</name>
+            </columns>
+            <columns>
+                <label><!-- Portal Service: Requires Service Admin Approval --></label>
+                <name>Portal Service: Requires Service Admin Approval</name>
+            </columns>
+            <columns>
+                <label><!-- Portal Service: Restricted App --></label>
+                <name>Portal Service: Restricted App</name>
+            </columns>
+            <columns>
+                <label><!-- Portal Service: Service --></label>
+                <name>Portal Service: Service</name>
+            </columns>
+            <columns>
+                <label><!-- Portal Service: Service --></label>
+                <name>Portal Service: Service</name>
+            </columns>
+            <columns>
+                <label><!-- Portal Service: Visible --></label>
+                <name>Portal Service: Visible</name>
+            </columns>
+            <columns>
+                <label><!-- Portal Service: Visible on CNS --></label>
+                <name>Portal Service: Visible on CNS</name>
+            </columns>
+            <columns>
+                <label><!-- Service Description --></label>
+                <name>Service Description</name>
+            </columns>
             <label><!-- Service information --></label>
             <name>Service information</name>
         </sections>
