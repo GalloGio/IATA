@@ -4004,12 +4004,10 @@ public class AMS_OSCARTriggerHandler {
 		};
 
 		if (oscarRTsToProcess.contains(updatedOscar.recordTypeId)){
-			
 			//TD2080607: partially refactored below code
 			boolean bGenerateCC =  false;
 			String changeCodeId = '';
 			if (oldOSCAR.STEP2__c != 'Passed' && updatedOscar.STEP2__c == 'Passed') {
-				
 				/*** AMSU-31 Start ***/
 				Set<String> processesToCheck = new Set<String> {AMS_Utils.new_HO, AMS_Utils.new_BR, AMS_Utils.new_SA, AMS_Utils.new_BR_ABROAD, AMS_Utils.NEWHELITE, AMS_Utils.NEWHESTANDARD, AMS_Utils.NEWAE, AMS_Utils.MCAE, AMS_Utils.NEWGESTANDARD};
 				Set<String> classesToCheck = new Set<String> {'P', 'D'};

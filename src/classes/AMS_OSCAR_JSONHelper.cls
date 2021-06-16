@@ -163,10 +163,15 @@ public class AMS_OSCAR_JSONHelper {
 							{
 								AMS_OSCAR_JSON.ChangeCode changeCode = a.changeCode;
 								if(changeCode != null){
-									if((!String.isBlank(oscar.Account__r.IATACode__c) && (oscar.Process__c == AMS_Utils.new_GSA_BSP || oscar.Process__c == AMS_Utils.new_AHA_BSP)) 
-										|| (oscar.Process__c != AMS_Utils.new_GSA_BSP && oscar.Process__c != AMS_Utils.new_AHA_BSP)){
-											Account acct = new Account(Id = oscar.Account__c, Sector__c = oscar.Account__r.Sector__c, Category__c = oscar.Account__r.Category__c);
-											AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode>{changeCode}, new List<AMS_OSCAR__c>{oscar}, new List<Account>{acct}, true);
+									if(changeCode.name == 'NWD'){
+										if((!String.isBlank(oscar.Account__r.IATACode__c) && (oscar.Process__c == AMS_Utils.new_GSA_BSP || oscar.Process__c == AMS_Utils.new_AHA_BSP)) 
+											|| (oscar.Process__c != AMS_Utils.new_GSA_BSP && oscar.Process__c != AMS_Utils.new_AHA_BSP)){
+												Account acct = new Account(Id = oscar.Account__c, Sector__c = oscar.Account__r.Sector__c, Category__c = oscar.Account__r.Category__c);
+												AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode>{changeCode}, new List<AMS_OSCAR__c>{oscar}, new List<Account>{acct}, true);
+										}
+									}else{
+										Account acct = new Account(Id = oscar.Account__c, Sector__c = oscar.Account__r.Sector__c, Category__c = oscar.Account__r.Category__c);
+										AMS_ChangeCodesHelper.createAAChangeCodes(new List<AMS_OSCAR_JSON.ChangeCode>{changeCode}, new List<AMS_OSCAR__c>{oscar}, new List<Account>{acct}, true);
 									}
 								}
 								AMS_OSCAR_AutomationManager am = new AMS_OSCAR_AutomationManager();
