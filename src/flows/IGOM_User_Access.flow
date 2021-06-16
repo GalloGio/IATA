@@ -373,7 +373,7 @@
                     <stringValue>SObject</stringValue>
                 </value>
             </processMetadataValues>
-            <name>portalApplicaitonRight</name>
+            <name>portalApplicationRight</name>
             <value>
                 <elementReference>SObject</elementReference>
             </value>
@@ -698,7 +698,7 @@
                     <stringValue>SObject</stringValue>
                 </value>
             </processMetadataValues>
-            <name>portalApplicaitonRight</name>
+            <name>portalApplicationRight</name>
             <value>
                 <elementReference>SObject</elementReference>
             </value>
