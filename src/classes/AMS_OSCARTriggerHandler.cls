@@ -706,7 +706,7 @@ public class AMS_OSCARTriggerHandler {
 																	AMS_Utils.new_GSA,
 																	AMS_Utils.new_GSSA,
 																	AMS_Utils.new_AHA
-																	};
+																};
 
 		/*** AMSU-31 Start ***/
 		Set<AMS_Oscar__c> oscarsToCreateAuth = new Set<AMS_Oscar__c>();
@@ -3994,8 +3994,6 @@ public class AMS_OSCARTriggerHandler {
 
 	public static void applyChangeCodesWithDependencies(AMS_OSCAR__c oldOSCAR, AMS_OSCAR__c updatedOscar,Set<Id> oscarAccountIds, Set<AMS_Oscar__c> oscarsToCreateAuth) {
 
-		system.debug('applyChangeCodesWithDependencies recordTypeId: '+updatedOscar.recordTypeId);
-
 		Set<Id> oscarRTsToProcess = new Set<Id>{
 			AMS_Utils.RECTYPE_NEW,
 			AMS_Utils.RECTYPE_NEWHE, 
@@ -4007,9 +4005,6 @@ public class AMS_OSCARTriggerHandler {
 
 		if (oscarRTsToProcess.contains(updatedOscar.recordTypeId)){
 			
-			system.debug('applyChangeCodesWithDependencies oldOSCAR: '+JSON.serialize(oldOSCAR));
-			system.debug('applyChangeCodesWithDependencies updatedOscar: '+JSON.serialize(updatedOscar));
-
 			//TD2080607: partially refactored below code
 			boolean bGenerateCC =  false;
 			String changeCodeId = '';
