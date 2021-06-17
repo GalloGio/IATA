@@ -95,12 +95,22 @@ export default class CwCertificationManager extends LightningElement {
 	}
 
 	get disableButtonEditCapab() {
+		let isValidationProgramNoneExpired = false;
+		if (this.certificationInfo.status === 'Expired'){
+			if (this.lstCertificationsAllowed != undefined && this.lstCertificationsAllowed != null) {
+				let noneCapability = this.lstCertificationsAllowed.filter(cert => cert.value === this.certificationInfo.value && cert.validationProgram === 'NONE');
+				isValidationProgramNoneExpired = (noneCapability.length !== 0);
+			}
+		} 
+		
 		if (this.certificationsWithoutCapab != undefined && this.certificationsWithoutCapab != null) {
 			let includeCapabilities = this.certificationsWithoutCapab.filter(cert => cert.Id === this.certificationInfo.value);
-			if ((includeCapabilities.length !== 0  || this.disableCertiNotAllowed) || this.certificationInfo.status === 'Expired') {
-				return true;
-			} else {
+			if ((includeCapabilities.length !== 0  || this.disableCertiNotAllowed) 
+				|| this.certificationInfo.status === 'Active' 
+				|| isValidationProgramNoneExpired) {
 				return false;
+			} else {
+				return true;
 			}
 		}
 	}

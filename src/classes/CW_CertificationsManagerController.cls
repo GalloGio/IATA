@@ -204,7 +204,7 @@ public with sharing class CW_CertificationsManagerController {
 
 		List<String> lstDepts = CW_CapabilitiesUtilities.getCertificationsAllowedByDepartments(stationRT,validationPrograms);
 
-		return (JSON.serialize([SELECT id,Name, Label__c,Certification_Type__c, Applicable_to__c,Expiration_Period__c FROM ICG_Certification__c WHERE Name IN: lstDepts AND ValidationPrograms__c IN : listValidationPrograms]));
+		return (JSON.serialize([SELECT id,Name, Label__c,Certification_Type__c, Applicable_to__c,Expiration_Period__c, ValidationPrograms__c FROM ICG_Certification__c WHERE Name IN: lstDepts AND ValidationPrograms__c IN : listValidationPrograms]));
 		
 	}
 	

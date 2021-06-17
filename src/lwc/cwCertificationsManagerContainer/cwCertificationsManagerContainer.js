@@ -256,7 +256,8 @@ export default class CwCertificationsManagerContainer extends LightningElement {
 					let usedCert = [];
 					let valueItems = {
 						label : cert.Label__c,
-						value : cert.Id
+						value : cert.Id,
+						validationProgram : cert.ValidationPrograms__c
 					}
 					this.allcertificationDropdowOptions.push(valueItems);
 					//check used cert
@@ -274,7 +275,8 @@ export default class CwCertificationsManagerContainer extends LightningElement {
 						this.certificationsRemaining.push(cert);
 						let option = {
 							label : cert.Label__c,
-							value : cert.Id
+							value : cert.Id,
+							validationProgram : cert.ValidationPrograms__c
 						}
 						this.certificationDropdowOptions.push(option);
 					}
