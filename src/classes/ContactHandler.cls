@@ -229,7 +229,7 @@ public class ContactHandler{
 		}
 		// insert app rights
 		if (listAppRight.isEmpty()) return;
-		if (listNews.size()==1 || System.isQueueable()) {
+		if (listAppRight.size()==1 || System.isQueueable()) {
 			Database.SaveResult result = Database.insert(listAppRight[0], false);
 			for (Database.Error error: result.getErrors()) {
 				if ( error.getStatusCode() == StatusCode.FIELD_CUSTOM_VALIDATION_EXCEPTION) {
