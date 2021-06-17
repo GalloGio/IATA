@@ -554,6 +554,7 @@
       NOT(ISNULL(Parent.Update_AIMS_DEF__c))
     ),
     Parent.RecordType.DeveloperName = &quot;CS_Process_IDFS_ISS&quot;,
+    Parent.RecordType.DeveloperName = &quot;SEDA&quot;,
     Parent.RecordType.DeveloperName = &quot;ProcessEuropeSCE&quot;,
     Parent.RecordType.DeveloperName = &quot;InternalCasesEuropeSCE&quot;,
     Parent.RecordType.DeveloperName = &quot;IDFS_Airline_Participation_Process&quot;,
