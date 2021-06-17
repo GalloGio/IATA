@@ -1,4 +1,4 @@
-import { LightningElement, track, wire, api } from 'lwc';
+import { LightningElement, track, api } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 import Id from '@salesforce/user/Id';
@@ -731,12 +731,13 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
     handleSubmitRequest() {
         this.showConfirm = false; //hides confirm box
+        this.showSpinner = true;
+
         //displays popup with active spinner (only if the service does not require approval)
         //if the service requires service administrator approval, then this will be managed
         //by the "<service> User Access" process builder for that service
         if(!this.isServiceAdminApproved){
             this.showPopUp = false;
-            this.showSpinner = true;
             let serviceNameaux = this.serviceName;
             if(this.serviceName == 'E&F APPS'){
                 this.submitMessage = this.label.confirmedRequestEFAppsMsglb;
@@ -747,7 +748,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
 
         requestServiceAccess({ applicationId: this.trackedServiceId, applicationName: this.serviceName })
             .then(() => {
-                //Show toas with confirmation            
+                //Show toas with confirmation
                 if(this.serviceName == 'E&F APPS'){
                     this.showSpinner = false;
                     this.showPopUp = true; // for e&f success box
@@ -760,7 +761,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                         this.dispatchEvent(new CustomEvent('requestcompleted', { detail: { success: true } }));// sends to parent the nr of records
                         this.navigateToServicesPage();
                     } else {
-                        this.showSpinner = false;
                         if(!this.isServiceAdminApproved){
                             this[NavigationMixin.Navigate]({
                                 type: 'standard__namedPage',
@@ -772,8 +772,8 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                     }
                 }
             }).catch(error => {
-                console.error(error);
                 this.showSpinner = false;
+			    this.showConfirm = false;
                 this.showPopUp = false;
                 this.dispatchEvent(
                     new ShowToastEvent({
