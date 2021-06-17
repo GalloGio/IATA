@@ -74,9 +74,9 @@ private class InvitationServiceTest {
 	}
 
 	@IsTest
-	static void testGetInvitationsForPortalServiceId(){
+	static void testGetInvitationList(){
 		Portal_Applications__c portalApplication = [SELECT Id FROM Portal_Applications__c WHERE Name = :TestDataFactory_PortalApplications.DEFAULTSERVICENAME];
-		List<Invitation__c> invitationList = InvitationService.getInvitationsForPortalServiceId(portalApplication.Id);
+		List<Invitation__c> invitationList = InvitationService.getInvitationList(portalApplication.Id);
 		System.assertEquals(1, invitationList.size(), ' Expected 1 Portal Service');
 	}
 

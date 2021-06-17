@@ -143,7 +143,7 @@ public without sharing class InvitationService {
 	}
 
 	@AuraEnabled
-	public static List<Invitation__c> getInvitationsForPortalServiceId(Id portalServiceId){
+	public static List<Invitation__c> getInvitationList(Id portalServiceId){
 		try {
 			List<Invitation__c> invitationList = InvitationSelector.selectQuery('Id, Account__c, Email__c, Role_Name__c, Status__c', 'ServiceId__c = \'' + portalServiceId + '\'', null);
 			return invitationList;	
