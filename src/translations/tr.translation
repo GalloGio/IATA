@@ -3006,6 +3006,10 @@ Daha fazla ayrıntı için, Müşteri Portalı&apos;nda &quot;Resolution 812&quo
         <name>CSP_Breadcrump_MyProfile_Title</name>
     </customLabels>
     <customLabels>
+        <label>İş E-postası (eğer varsa)</label>
+        <name>CSP_Business_Email</name>
+    </customLabels>
+    <customLabels>
         <label>Çevrim içi satın alın</label>
         <name>CSP_Buy_Online</name>
     </customLabels>

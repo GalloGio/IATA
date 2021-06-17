@@ -3850,7 +3850,7 @@ If you are already CNS Endorsed, you can use this service to update information 
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CSP Business Email</shortDescription>
-        <value>Business Email</value>
+        <value>Business Email (in case you have one)</value>
     </labels>
     <labels>
         <fullName>CSP_Buy_Online</fullName>

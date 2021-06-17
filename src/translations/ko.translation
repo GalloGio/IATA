@@ -3009,6 +3009,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Breadcrump_MyProfile_Title</name>
     </customLabels>
     <customLabels>
+        <label>비즈니스 이메일 (있는 경우)</label>
+        <name>CSP_Business_Email</name>
+    </customLabels>
+    <customLabels>
         <label>온라인 구매</label>
         <name>CSP_Buy_Online</name>
     </customLabels>
