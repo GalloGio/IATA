@@ -10557,7 +10557,7 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
         <columns>Root_Cause_Analysis__c</columns>
         <columns>OI_Approval_date__c</columns>
         <columns>Status_del__c</columns>
-        <columns>OWNER.ALIAS</columns>
+        <columns>CREATED_DATE</columns>
         <columns>OWNER.FIRST_NAME</columns>
         <columns>OWNER.LAST_NAME</columns>
         <filterScope>Mine</filterScope>
@@ -10612,7 +10612,8 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
         <columns>Description__c</columns>
         <columns>Initiator__c</columns>
         <columns>CREATEDBY_USER</columns>
-        <columns>CREATEDBY_USER.ALIAS</columns>
+        <columns>OWNER.FIRST_NAME</columns>
+        <columns>OWNER.LAST_NAME</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Region__c</field>
