@@ -238,6 +238,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     @track ShowICCSModal = false;
     @track ShowSSWSModal = false;
     @track ShowTDModal = false;
+	@track ShowLabRegistryModal = false;
 
     //tracks loading message IEP
     @track loadingMessage = '';
@@ -271,6 +272,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             this.ShowIEPModal = false;
             this.ShowICCSModal = false;
             this.ShowSSWSModal = false;
+			this.ShowLabRegistryModal = false;
             this.TDSuccessModal = false;
             this.ShowTDModal = false;
             this.showButtons = true;
@@ -437,6 +439,12 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                         + '<br/>' + this.label.csp_TDP_ServiceRequest_MediumLabel2;
                 }
             }
+			else if(this.serviceName.includes('IATA Lab Network')){
+				this.ShowLabRegistryModal = true;
+				this.defaultMessage = false;
+				this.DefaultRequestButton = false;
+				this.showButtons = false;
+			}
 
             //get the parameters for this page  
             this.pageParams = getParamsFromPage();
@@ -811,4 +819,13 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
             window.history.pushState(null, null, windowURL);
         }
     }
+
+	get tabModalWidth() { 
+		return this.ShowLabRegistryModal ? 'customPopupInteriorThreeQuartersScreenCentered' : 'customPopupInteriorHalfScreenCentered';
+	}
+
+	get tabModalWidthDefaultMessage() { 
+		return this.ShowLabRegistryModal ? '' : 'customPopupInteriorHalfScreenCentered defaultMessage';
+	}
 }
+

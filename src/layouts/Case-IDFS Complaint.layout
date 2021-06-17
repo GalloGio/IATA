@@ -224,7 +224,7 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>Complaint_Description__c</field>
             </layoutItems>
             <layoutItems>
@@ -232,11 +232,11 @@
                 <field>Complaint_Analysis__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>Complaint_Recommendations__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>Correct_Resolution__c</field>
             </layoutItems>
         </layoutColumns>
@@ -446,6 +446,11 @@
             <sortOrder>2</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
+            <actionName>Move_to_Recycle_Bin_SIS_HD</actionName>
+            <actionType>CustomButton</actionType>
+            <sortOrder>3</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>Case.New_Comment_Key_Customer_Alert</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>4</sortOrder>
@@ -459,11 +464,6 @@
             <actionName>Case.Log_Phone_Case_Key_Customer_Alert</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>6</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Move_to_Recycle_Bin_SIS_HD</actionName>
-            <actionType>CustomButton</actionType>
-            <sortOrder>3</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <quickActionList/>

@@ -17,10 +17,6 @@
         <name>AWS_Toolkit</name>
     </customApplications>
     <customApplications>
-        <label><!-- SnapShot --></label>
-        <name>BLND_SnapShot</name>
-    </customApplications>
-    <customApplications>
         <label><!-- Call Scripting --></label>
         <name>CallScripting</name>
     </customApplications>
@@ -103,6 +99,10 @@
     <customApplications>
         <label><!-- IFTP --></label>
         <name>IFTP</name>
+    </customApplications>
+    <customApplications>
+        <label><!-- IATA Lab Network --></label>
+        <name>Lab_Registry</name>
     </customApplications>
     <customApplications>
         <label><!-- MITA / BIETA --></label>
@@ -3485,6 +3485,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Emergency_Selected_Reason4</name>
     </customLabels>
     <customLabels>
+        <label>IATA 교육 시험  재예약 (원격 학습)</label>
+        <name>CSP_Emergency_Selected_Reason5</name>
+    </customLabels>
+    <customLabels>
         <label>사기 , 발권, 재정 관련 사례가 아닌 경우, 긴급 채널을 통한 지원을 요청하지 마십시오. </label>
         <name>CSP_Emergency_Tooltip</name>
     </customLabels>
@@ -4447,6 +4451,186 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- CSP_L_WorkPhone_LMS --></label>
         <name>CSP_L_WorkPhone_LMS</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_AdditionalCertInPlace --></label>
+        <name>CSP_LabReg_AdditionalCertInPlace</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_CompleteDetails --></label>
+        <name>CSP_LabReg_CompleteDetails</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_ConfirmationMessage --></label>
+        <name>CSP_LabReg_ConfirmationMessage</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_CountryLabs --></label>
+        <name>CSP_LabReg_CountryLabs</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_Describe_SLA_Nature --></label>
+        <name>CSP_LabReg_Describe_SLA_Nature</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_DownloadTemplate --></label>
+        <name>CSP_LabReg_DownloadTemplate</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_Download_CSV --></label>
+        <name>CSP_LabReg_Download_CSV</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_Download_Instructions --></label>
+        <name>CSP_LabReg_Download_Instructions</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_FormNotCompleted --></label>
+        <name>CSP_LabReg_FormNotCompleted</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_HowManyLabs --></label>
+        <name>CSP_LabReg_HowManyLabs</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_How_Long_In_Business --></label>
+        <name>CSP_LabReg_How_Long_In_Business</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_InitialQuestion --></label>
+        <name>CSP_LabReg_InitialQuestion</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_National_Govern_Platform --></label>
+        <name>CSP_LabReg_National_Govern_Platform</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_NumberOfLocations --></label>
+        <name>CSP_LabReg_NumberOfLocations</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_Operating_Brand --></label>
+        <name>CSP_LabReg_Operating_Brand</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_OwnFacilities --></label>
+        <name>CSP_LabReg_OwnFacilities</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_SLA_InPlace --></label>
+        <name>CSP_LabReg_SLA_InPlace</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_SplashScreen_Intro --></label>
+        <name>CSP_LabReg_SplashScreen_Intro</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_SplashScreen_Step1 --></label>
+        <name>CSP_LabReg_SplashScreen_Step1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_SplashScreen_Step2 --></label>
+        <name>CSP_LabReg_SplashScreen_Step2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_SplashScreen_Step3 --></label>
+        <name>CSP_LabReg_SplashScreen_Step3</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_SplashScreen_Step4 --></label>
+        <name>CSP_LabReg_SplashScreen_Step4</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_Start --></label>
+        <name>CSP_LabReg_Start</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_Step --></label>
+        <name>CSP_LabReg_Step</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_Step2Intro --></label>
+        <name>CSP_LabReg_Step2Intro</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_Step_Locations --></label>
+        <name>CSP_LabReg_Step_Locations</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_ThankYouForRequestingService --></label>
+        <name>CSP_LabReg_ThankYouForRequestingService</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_TypeOfLab --></label>
+        <name>CSP_LabReg_TypeOfLab</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_UploadCSVBtn --></label>
+        <name>CSP_LabReg_UploadCSVBtn</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_UploadCompleted --></label>
+        <name>CSP_LabReg_UploadCompleted</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_UploadDetails --></label>
+        <name>CSP_LabReg_UploadDetails</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_UploadFileHelpText --></label>
+        <name>CSP_LabReg_UploadFileHelpText</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_UploadFilledCSV --></label>
+        <name>CSP_LabReg_UploadFilledCSV</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_UploadHere --></label>
+        <name>CSP_LabReg_UploadHere</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_WhichAirlines --></label>
+        <name>CSP_LabReg_WhichAirlines</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_Which_One --></label>
+        <name>CSP_LabReg_Which_One</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_airlinePartnershipSelection --></label>
+        <name>CSP_LabReg_airlinePartnershipSelection</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_confirmDetails --></label>
+        <name>CSP_LabReg_confirmDetails</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_issueTestResultsSelection --></label>
+        <name>CSP_LabReg_issueTestResultsSelection</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_labsPartOfNationalPlatform --></label>
+        <name>CSP_LabReg_labsPartOfNationalPlatform</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_manageBookingSelection --></label>
+        <name>CSP_LabReg_manageBookingSelection</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabReg_nationalAccreditationSelection --></label>
+        <name>CSP_LabReg_nationalAccreditationSelection</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabRegistry --></label>
+        <name>CSP_LabRegistry</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabRegistry_LabDetails --></label>
+        <name>CSP_LabRegistry_LabDetails</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_LabRegistry_service_desc --></label>
+        <name>CSP_LabRegistry_service_desc</name>
     </customLabels>
     <customLabels>
         <label>마지막 업데이트</label>
@@ -5503,6 +5687,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label>작업 영역</label>
         <name>CSP_cpcc_Working_Areas</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_labReg_Step_Airline_Agreements --></label>
+        <name>CSP_labReg_Step_Airline_Agreements</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- CSP_labReg_Step_GeneralInformation --></label>
+        <name>CSP_labReg_Step_GeneralInformation</name>
     </customLabels>
     <customLabels>
         <label>이유 선택</label>
@@ -26463,6 +26655,10 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>Reset_your_password</name>
     </customLabels>
     <customLabels>
+        <label><!-- Resource Center Service Description --></label>
+        <name>Resource_Center_Service_Description</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Response message --></label>
         <name>Response_message</name>
     </customLabels>
@@ -34211,10 +34407,6 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>Available_Services</name>
     </customTabs>
     <customTabs>
-        <label><!-- Snapshot --></label>
-        <name>BLND_Snapshot</name>
-    </customTabs>
-    <customTabs>
         <label><!-- CNS E-Bulletin --></label>
         <name>CNS_E_Bulletin</name>
     </customTabs>
@@ -37246,6 +37438,19 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Contacts with TOP parent account info --></description>
+        <label><!-- Contacts with TOP parent account info --></label>
+        <name>Contacts_with_TOP_parent_account_info</name>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- Contacts --></label>
+            <name>Contacts</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Contacts with inactivated owners --></description>
         <label><!-- Contacts with inactivated owners --></label>
         <name>Contacts_with_inactivated_owners</name>
@@ -38199,6 +38404,23 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- KPI Values with Cases and Activity History --></description>
+        <label><!-- KPI Values with Cases and Activity History --></label>
+        <name>KPI_Values_with_Cases_and_Activity_History</name>
+        <sections>
+            <label><!-- Activities --></label>
+            <name>Activities</name>
+        </sections>
+        <sections>
+            <label><!-- Cases --></label>
+            <name>Cases</name>
+        </sections>
+        <sections>
+            <label><!-- KPI Values --></label>
+            <name>KPI Values</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- KPI value with cases and user role --></description>
         <label><!-- KPI value with cases and user role --></label>
         <name>KPI_value_with_cases_and_user_role</name>
@@ -38921,16 +39143,148 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <label>포털 서비스 접속</label>
         <name>Portal_Service_Access</name>
         <sections>
+            <columns>
+                <label><!-- Account Category --></label>
+                <name>Account Category</name>
+            </columns>
+            <columns>
+                <label><!-- Account Country --></label>
+                <name>Account Country</name>
+            </columns>
+            <columns>
+                <label><!-- Account Country ISO Code --></label>
+                <name>Account Country ISO Code</name>
+            </columns>
+            <columns>
+                <label><!-- Account Country ISO Code --></label>
+                <name>Account Country ISO Code</name>
+            </columns>
+            <columns>
+                <label><!-- Account IATA Code --></label>
+                <name>Account IATA Code</name>
+            </columns>
+            <columns>
+                <label><!-- Account ID --></label>
+                <name>Account ID</name>
+            </columns>
+            <columns>
+                <label><!-- Account ISO Country --></label>
+                <name>Account ISO Country</name>
+            </columns>
+            <columns>
+                <label><!-- Account Name --></label>
+                <name>Account Name</name>
+            </columns>
+            <columns>
+                <label><!-- Account Record Type --></label>
+                <name>Account Record Type</name>
+            </columns>
+            <columns>
+                <label><!-- Account Sector --></label>
+                <name>Account Sector</name>
+            </columns>
             <label><!-- Account Information --></label>
             <name>Account Information</name>
         </sections>
         <sections>
+            <columns>
+                <label><!-- Contact Email --></label>
+                <name>Contact Email</name>
+            </columns>
+            <columns>
+                <label><!-- Contact ID --></label>
+                <name>Contact ID</name>
+            </columns>
+            <columns>
+                <label><!-- Contact Name --></label>
+                <name>Contact Name</name>
+            </columns>
+            <columns>
+                <label><!-- Contact Title --></label>
+                <name>Contact Title</name>
+            </columns>
+            <columns>
+                <label><!-- Contact User Portal Status --></label>
+                <name>Contact User Portal Status</name>
+            </columns>
             <label><!-- Contact Information --></label>
             <name>Contact Information</name>
         </sections>
         <sections>
             <label><!-- Portal Service Access --></label>
             <name>Portal Service Access</name>
+        </sections>
+        <sections>
+            <columns>
+                <label><!-- Portal Service Application URL --></label>
+                <name>Portal Service Application URL</name>
+            </columns>
+            <columns>
+                <label><!-- Portal Service: Auto approved for --></label>
+                <name>Portal Service: Auto approved for</name>
+            </columns>
+            <columns>
+                <label><!-- Portal Service: Cannot be granted internally --></label>
+                <name>Portal Service: Cannot be granted internally</name>
+            </columns>
+            <columns>
+                <label><!-- Portal Service: Cannot be managed by portal admin --></label>
+                <name>Portal Service: Cannot be managed by portal admin</name>
+            </columns>
+            <columns>
+                <label><!-- Portal Service: Critical Service --></label>
+                <name>Portal Service: Critical Service</name>
+            </columns>
+            <columns>
+                <label><!-- Portal Service: Description --></label>
+                <name>Portal Service: Description</name>
+            </columns>
+            <columns>
+                <label><!-- Portal Service: Functional Role --></label>
+                <name>Portal Service: Functional Role</name>
+            </columns>
+            <columns>
+                <label><!-- Portal Service: Hide on Homepage --></label>
+                <name>Portal Service: Hide on Homepage</name>
+            </columns>
+            <columns>
+                <label><!-- Portal Service: Requestable --></label>
+                <name>Portal Service: Requestable</name>
+            </columns>
+            <columns>
+                <label><!-- Portal Service: Requires Level2 Registration --></label>
+                <name>Portal Service: Requires Level2 Registration</name>
+            </columns>
+            <columns>
+                <label><!-- Portal Service: Requires Service Admin Approval --></label>
+                <name>Portal Service: Requires Service Admin Approval</name>
+            </columns>
+            <columns>
+                <label><!-- Portal Service: Restricted App --></label>
+                <name>Portal Service: Restricted App</name>
+            </columns>
+            <columns>
+                <label><!-- Portal Service: Service --></label>
+                <name>Portal Service: Service</name>
+            </columns>
+            <columns>
+                <label><!-- Portal Service: Service --></label>
+                <name>Portal Service: Service</name>
+            </columns>
+            <columns>
+                <label><!-- Portal Service: Visible --></label>
+                <name>Portal Service: Visible</name>
+            </columns>
+            <columns>
+                <label><!-- Portal Service: Visible on CNS --></label>
+                <name>Portal Service: Visible on CNS</name>
+            </columns>
+            <columns>
+                <label><!-- Service Description --></label>
+                <name>Service Description</name>
+            </columns>
+            <label><!-- Service information --></label>
+            <name>Service information</name>
         </sections>
     </reportTypes>
     <reportTypes>
