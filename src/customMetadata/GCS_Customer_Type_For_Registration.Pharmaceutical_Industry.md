@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>Created_Account_Sector__c</field>
-        <value xsi:type="xsd:string">Healthcare Industry</value>
+        <value xsi:type="xsd:string">Health Industry</value>
     </values>
     <values>
         <field>Display_Country__c</field>
@@ -52,7 +52,7 @@
     </values>
     <values>
         <field>Parent__c</field>
-        <value xsi:type="xsd:string">Healthcare_Industry</value>
+        <value xsi:type="xsd:string">Health_Industry</value>
     </values>
     <values>
         <field>Partial_List_Order__c</field>
