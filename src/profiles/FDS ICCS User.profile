@@ -48682,6 +48682,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>OI_Action_Plan__c.Weightage__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Objective__c.AM_Can_IATA_support_the_airline__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -49131,6 +49136,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Operational_Improvements__c.Action_Plan_Effectiveness_Assessment__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Operational_Improvements__c.Affected_Process__c</field>
         <readable>true</readable>
@@ -49194,6 +49204,11 @@
         <editable>false</editable>
         <field>Operational_Improvements__c.Closest_Action_Plan_due_date__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Operational_Improvements__c.Comments_OI__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -49262,6 +49277,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Operational_Improvements__c.Effectiveness_Evaluation_Deadline__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Operational_Improvements__c.Effort__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Operational_Improvements__c.Estimated_of_Records_Affected_total__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -49302,6 +49327,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Operational_Improvements__c.If_Dropped__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Operational_Improvements__c.If_Yes_please_indicate_the_number__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -49324,6 +49354,11 @@
         <editable>true</editable>
         <field>Operational_Improvements__c.Impact__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Operational_Improvements__c.Improvement_Target__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -49427,6 +49462,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Operational_Improvements__c.OI_Category__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Operational_Improvements__c.OI_Status_WF__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -49434,6 +49474,11 @@
         <editable>false</editable>
         <field>Operational_Improvements__c.OI_Status_auto__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Operational_Improvements__c.OI_Subcategory__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -49467,6 +49512,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Operational_Improvements__c.Other_Initiator__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Operational_Improvements__c.Overall_Deadline_Formula__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Operational_Improvements__c.Overall_Deadline__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -49494,6 +49549,11 @@
         <editable>false</editable>
         <field>Operational_Improvements__c.Please_indicate_reasoning__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Operational_Improvements__c.Priority__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -49569,6 +49629,11 @@
         <editable>false</editable>
         <field>Operational_Improvements__c.Service_Impact__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Operational_Improvements__c.Solution__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>

@@ -3482,7 +3482,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Emergency_Selected_Reason4</name>
     </customLabels>
     <customLabels>
-        <label><!-- Emergency reason --></label>
+        <label>重新预约你的IATA培训考试（远程学习）</label>
         <name>CSP_Emergency_Selected_Reason5</name>
     </customLabels>
     <customLabels>
@@ -36679,6 +36679,19 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <sections>
             <label><!-- Emails --></label>
             <name>Emails</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Case Tracking History with Cases --></description>
+        <label><!-- Case Tracking History with Cases --></label>
+        <name>Case_Tracking_History_with_Cases</name>
+        <sections>
+            <label><!-- Case Tracking History --></label>
+            <name>Case Tracking History</name>
+        </sections>
+        <sections>
+            <label><!-- Cases --></label>
+            <name>Cases</name>
         </sections>
     </reportTypes>
     <reportTypes>

@@ -36687,6 +36687,19 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Case Tracking History with Cases --></description>
+        <label><!-- Case Tracking History with Cases --></label>
+        <name>Case_Tracking_History_with_Cases</name>
+        <sections>
+            <label><!-- Case Tracking History --></label>
+            <name>Case Tracking History</name>
+        </sections>
+        <sections>
+            <label><!-- Cases --></label>
+            <name>Cases</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Case and Canned Comment --></description>
         <label><!-- Case and Canned Comment --></label>
         <name>Case_and_Canned_Comment</name>

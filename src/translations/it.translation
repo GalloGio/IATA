@@ -3486,7 +3486,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Emergency_Selected_Reason4</name>
     </customLabels>
     <customLabels>
-        <label><!-- Emergency reason --></label>
+        <label>Riprenotazione del suo esame di formazione IATA (apprendimento a distanza)</label>
         <name>CSP_Emergency_Selected_Reason5</name>
     </customLabels>
     <customLabels>
@@ -36692,6 +36692,19 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
         <sections>
             <label><!-- Emails --></label>
             <name>Emails</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Case Tracking History with Cases --></description>
+        <label><!-- Case Tracking History with Cases --></label>
+        <name>Case_Tracking_History_with_Cases</name>
+        <sections>
+            <label><!-- Case Tracking History --></label>
+            <name>Case Tracking History</name>
+        </sections>
+        <sections>
+            <label><!-- Cases --></label>
+            <name>Cases</name>
         </sections>
     </reportTypes>
     <reportTypes>
