@@ -21,34 +21,6 @@
         <template>Quality/Continuous_Improvement_Process_Approved_by_RPM</template>
     </alerts>
     <alerts>
-        <fullName>OI_Extension_Rejected_by_RPM</fullName>
-        <description>OI Extension Rejected by RPM</description>
-        <protected>false</protected>
-        <recipients>
-            <type>owner</type>
-        </recipients>
-        <recipients>
-            <field>LastModifiedById</field>
-            <type>userLookup</type>
-        </recipients>
-        <senderType>CurrentUser</senderType>
-        <template>Quality/OI_Extension_Rejected_by_RPM</template>
-    </alerts>
-    <alerts>
-        <fullName>OI_Rejected_by_RPM</fullName>
-        <description>OI Rejected by RPM</description>
-        <protected>false</protected>
-        <recipients>
-            <type>owner</type>
-        </recipients>
-        <recipients>
-            <field>LastModifiedById</field>
-            <type>userLookup</type>
-        </recipients>
-        <senderType>CurrentUser</senderType>
-        <template>Quality/OI_Rejected_by_RPM</template>
-    </alerts>
-    <alerts>
         <fullName>OI_Approved_by_RPM</fullName>
         <description>OI Approved by RPM</description>
         <protected>false</protected>
@@ -75,6 +47,34 @@
         </recipients>
         <senderType>CurrentUser</senderType>
         <template>Quality/OI_Extension_Approved_by_RPM</template>
+    </alerts>
+    <alerts>
+        <fullName>OI_Extension_Rejected_by_RPM</fullName>
+        <description>OI Extension Rejected by RPM</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <recipients>
+            <field>LastModifiedById</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Quality/OI_Extension_Rejected_by_RPM</template>
+    </alerts>
+    <alerts>
+        <fullName>OI_Rejected_by_RPM</fullName>
+        <description>OI Rejected by RPM</description>
+        <protected>false</protected>
+        <recipients>
+            <type>owner</type>
+        </recipients>
+        <recipients>
+            <field>LastModifiedById</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>Quality/OI_Rejected_by_RPM</template>
     </alerts>
     <fieldUpdates>
         <fullName>Auto_fill_OI_subject</fullName>
@@ -242,13 +242,7 @@ IF(NOT(ISNULL(Submission_for_Approval_Date__c)),
         </actions>
         <active>true</active>
         <description>Action done when an OI is being completed</description>
-        <formula>AND(
-  OR(
-    RecordType.DeveloperName=&apos;Data_Governance&apos;,
-    RecordType.DeveloperName=&apos;Operational_Improvements&apos;
-  ),
-  NOT(ISBLANK(TEXT(Action_Plan_Effectiveness_Assessment__c)))
-)</formula>
+        <formula>AND(   OR(     RecordType.DeveloperName=&apos;Data_Governance&apos;,     RecordType.DeveloperName=&apos;Operational_Improvements&apos;   ),   NOT(ISBLANK(TEXT(Action_Plan_Effectiveness_Assessment__c))) )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -271,25 +265,7 @@ IF(NOT(ISNULL(Submission_for_Approval_Date__c)),
         <active>true</active>
         <description>Fills the field &apos;OI Status (WF)&apos; with current calculated status.
 Only for RT &apos;CPS Checks&apos;</description>
-        <formula>OR(
-  RecordType.DeveloperName=&apos;CPS_Checks&apos;,
-  ISNEW(),
-  AND(
-    NOT(ISNEW()),
-    OR(
-      ISCHANGED(Date_Time_Closed__c),
-      ISCHANGED(Extension_approved_date__c),
-      ISCHANGED(Submission_for_extension_date__c),
-      ISCHANGED(Submission_for_Approval_Date__c),
-      ISCHANGED(Overall_Deadline__c),
-      ISCHANGED(Pending_eff_validation_date__c),
-      ISCHANGED(Terminated_Date__c),
-      ISCHANGED(OI_Approval_date__c),
-      ISCHANGED(Conclusion_Date__c),
-      ISCHANGED(Extension_rejected_date__c)
-    )
-  )
-)</formula>
+        <formula>OR(   RecordType.DeveloperName=&apos;CPS_Checks&apos;,   ISNEW(),   AND(     NOT(ISNEW()),     OR(       ISCHANGED(Date_Time_Closed__c),       ISCHANGED(Extension_approved_date__c),       ISCHANGED(Submission_for_extension_date__c),       ISCHANGED(Submission_for_Approval_Date__c),       ISCHANGED(Overall_Deadline__c),       ISCHANGED(Pending_eff_validation_date__c),       ISCHANGED(Terminated_Date__c),       ISCHANGED(OI_Approval_date__c),       ISCHANGED(Conclusion_Date__c),       ISCHANGED(Extension_rejected_date__c)     )   ) )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
 </Workflow>
