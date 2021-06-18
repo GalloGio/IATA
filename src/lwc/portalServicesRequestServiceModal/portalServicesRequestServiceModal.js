@@ -773,7 +773,7 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                 }
             }).catch(error => {
                 this.showSpinner = false;
-			    this.showConfirm = false;
+                this.showConfirm = false;
                 this.showPopUp = false;
                 this.dispatchEvent(
                     new ShowToastEvent({
