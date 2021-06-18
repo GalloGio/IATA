@@ -10993,6 +10993,20 @@ TEXT( Related_Case_Number__r.Region__c))</formula>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Region__c</fullName>
+        <externalId>false</externalId>
+        <label>Region</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Financial_Security_Regional_Coverage</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>Regional_Cargo_Manager_Regional__c</fullName>
         <deleteConstraint>SetNull</deleteConstraint>
         <externalId>false</externalId>
