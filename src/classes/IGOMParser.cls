@@ -140,8 +140,7 @@ public without sharing class IGOMParser {
 					Index__c = section.index,
 					Is_Safety_Critical__c = section.isSafetyCritical,
 					Version_Change_Status__c = section.revision,
-					Document__c = manual.Id,
-					Language__c = language_doc
+					Document__c = manual.Id
 				);
 
 				permIdToAuditableProcedure.put(section.permId, procedure);

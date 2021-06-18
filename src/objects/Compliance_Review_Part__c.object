@@ -180,7 +180,7 @@
     </fields>
     <fields>
         <fullName>Compliance_Review__c</fullName>
-        <description>The Commpliance Review that this Compliance Review Part is a constituent part of.</description>
+        <description>The Compliance Review that this Compliance Review Part is a constituent part of.</description>
         <externalId>false</externalId>
         <label>Compliance Review</label>
         <referenceTo>Compliance_Review__c</referenceTo>
@@ -195,7 +195,7 @@
     <fields>
         <fullName>Document__c</fullName>
         <deleteConstraint>Restrict</deleteConstraint>
-        <description>The document record that is being attached or referred in this Compliance Review Part.</description>
+        <description>The Document record that is the subject of this Compliance Review Part.</description>
         <externalId>false</externalId>
         <label>Document</label>
         <referenceTo>Document__c</referenceTo>
