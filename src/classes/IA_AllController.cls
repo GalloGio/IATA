@@ -85,7 +85,7 @@ public without sharing class IA_AllController {
 					}
 
 					AllAgreementsRow row = new AllAgreementsRow();
-					row.agreementId = IA_util.Encrypt(EncDecKey,agreement.Id);
+					row.agreementId = IA_util.encrypt(EncDecKey,agreement.Id);
 					row.otherAirlineName = otherAirline.Name;
 					row.otherAirlineDesignator = otherAirline.Airline_designator__c;
 					row.otherAirlineIataCode = otherAirline.IATACode__c;
@@ -137,9 +137,9 @@ public without sharing class IA_AllController {
 	/**
 	 * Opens the modal to show a detail view of a single agreement
 	 */
-	public void OpenModalAgreementDetail() {
+	public void openModalAgreementDetail() {
 		if (String.IsEmpty(this.selectedAgreementId)) return ;
-		this.selectedAgreement = this.mapAllAgreements.get(IA_util.Decrypt(EncDecKey,this.selectedAgreementId));
+		this.selectedAgreement = this.mapAllAgreements.get(IA_util.decrypt(EncDecKey,this.selectedAgreementId));
 		if (this.selectedAgreement == null) return;
 
 		this.showModalAgreementDetail = true;

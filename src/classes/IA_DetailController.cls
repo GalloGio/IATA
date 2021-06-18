@@ -45,8 +45,10 @@ public without sharing class IA_DetailController {
 	 * only available if the user has permission to do so
 	 */
 	public void withdrawAgreement() {
-		if(!this.hasWithdrawPermission) return;
-		if (this.agreementCancellation.Cancellation_date__c ==null || this.agreementCancellation.Cancellation_date__c < Date.today().addDays(getDaysForWithdrawal())) {
+		if(!this.hasWithdrawPermission &&
+			(this.agreementCancellation.Cancellation_date__c ==null
+			|| this.agreementCancellation.Cancellation_date__c < Date.today().addDays(getDaysForWithdrawal()))
+		) {
 			return;
 		}
 

@@ -55,7 +55,7 @@ public without sharing class IA_ContactsCtrl {
 		public String title {get;set;}
 
 		public ContactRow(Contact contact) {
-			this.contactId = IA_util.Encrypt(EncDecKey,contact.Id);
+			this.contactId = IA_util.encrypt(EncDecKey,contact.Id);
 			this.name = contact.Name;
 			this.phone = contact.Phone;
 			this.email = contact.Email;
@@ -207,7 +207,7 @@ public without sharing class IA_ContactsCtrl {
 			this.selectedContact = new Contact();
 			this.selectedContact.MITA_Contact_Type__c = '';
 		} else {
-			this.selectedContact = this.mapContacts.get(IA_util.Decrypt(EncDecKey,this.selectedContactId));
+			this.selectedContact = this.mapContacts.get(IA_util.decrypt(EncDecKey,this.selectedContactId));
 			if (this.selectedContact==null) return;
 		}
 
@@ -253,7 +253,7 @@ public without sharing class IA_ContactsCtrl {
 	 * Opens the modal to remove a contact
 	 **/
 	public void openModalRemoveContact() {
-		this.selectedContact = this.mapContacts.get(IA_util.Decrypt(EncDecKey,this.selectedContactId));
+		this.selectedContact = this.mapContacts.get(IA_util.decrypt(EncDecKey,this.selectedContactId));
 		if (this.selectedContact==null) return;
 
 		this.showModalRemoveContact = true;

@@ -72,7 +72,7 @@ public without sharing class IA_ReqController {
 					}
 
 					RequestAgreementsRow row = new RequestAgreementsRow();
-					row.agreementId = IA_util.Encrypt(EncDecKey,agreement.Id);
+					row.agreementId = IA_util.encrypt(EncDecKey,agreement.Id);
 					row.agreementName = agreement.MITAorBIETA__c;
 					row.agreementType = IA_util.MAP_AGREEMENT_LABELS.get(agreementType);
 					row.requesterName = agreement.Airline_1__r.Name;
@@ -135,7 +135,7 @@ public without sharing class IA_ReqController {
 	public void approveAgreement() {
 		if (!this.hasApprovePermission && this.selectedAgreement!=null) return;
 
-		MITA_Agreement__c agreement = this.mapAgreements.get(IA_util.Decrypt(EncDecKey,this.selectedAgreement));
+		MITA_Agreement__c agreement = this.mapAgreements.get(IA_util.decrypt(EncDecKey,this.selectedAgreement));
 
 		MITA_Agreement__c undoAgreement = new MITA_Agreement__c(
 			Id = agreement.Id,
@@ -161,7 +161,7 @@ public without sharing class IA_ReqController {
 	public void rejectAgreement() {
 		if (!this.hasApprovePermission && this.selectedAgreement!=null) return;
 
-		MITA_Agreement__c agreement = this.mapAgreements.get(IA_util.Decrypt(EncDecKey,this.selectedAgreement));
+		MITA_Agreement__c agreement = this.mapAgreements.get(IA_util.decrypt(EncDecKey,this.selectedAgreement));
 
 		MITA_Agreement__c undoAgreement = new MITA_Agreement__c(
 			Id = agreement.Id,
@@ -228,9 +228,9 @@ public without sharing class IA_ReqController {
 	/**
 	 * Opens the modal to show a detail view of a single agreement
 	 */
-	public void OpenModalAgreementDetail() {
+	public void openModalAgreementDetail() {
 		if (String.IsEmpty(this.selectedAgreementId)) return ;
-		this.selectedAgreementDetail = this.mapAgreements.get(IA_util.Decrypt(EncDecKey,this.selectedAgreementId));
+		this.selectedAgreementDetail = this.mapAgreements.get(IA_util.decrypt(EncDecKey,this.selectedAgreementId));
 		if (this.selectedAgreementDetail == null) return;
 
 		this.showModalAgreementDetail = true;

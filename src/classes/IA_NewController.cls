@@ -180,7 +180,7 @@ public without sharing class IA_NewController {
 						row.iatacode = sa.otherAccount.IATAcode__c;
 						row.Prefix = sa.otherAccount.Airline_Prefix__c;
 						row.airlinename = sa.otherAccount.Name;
-						row.otherAccount = IA_util.Encrypt(EncDecKey,sa.otherAccount.Id);
+						row.otherAccount = IA_util.encrypt(EncDecKey,sa.otherAccount.Id);
 						row.details = listDetailRow;
 						availableAgreementsRows.add(row);
 					}
@@ -225,7 +225,7 @@ public without sharing class IA_NewController {
 		this.alertModal = null;
 
 		//create the new agreement record ready to be saved
-		SuggestedAirline suggestedAirline = this.suggestedAirlines.get(IA_util.Decrypt(EncDecKey,this.selectedAccount));
+		SuggestedAirline suggestedAirline = this.suggestedAirlines.get(IA_util.decrypt(EncDecKey,this.selectedAccount));
 		if (suggestedAirline==null) closeModalNewAgreement();
 
 		this.newAgreementAirlineName = suggestedAirline.otherAccount.Name;

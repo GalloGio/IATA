@@ -5,11 +5,11 @@ public with sharing class MITA_AgreementTriggerHandler {
 	public static final String TEMPLATE_REJECTED = 'Interline Agreement Rejected';
 	public static final String TEMPLATE_WITHDRAWN = 'Interline Agreement Withdrawn';
 
-	public void OnAfterInsert(list<MITA_Agreement__c> news){
+	public void onAfterInsert(list<MITA_Agreement__c> news){
 		sendNotificationForRequestedNewAgreements(news);
 	}
 
-	public void OnBeforeUpdate(list<MITA_Agreement__c> olds, list<MITA_Agreement__c> news, map<Id,MITA_Agreement__c> mapOlds){
+	public void onBeforeUpdate(list<MITA_Agreement__c> olds, list<MITA_Agreement__c> news, map<Id,MITA_Agreement__c> mapOlds){
 		sendNotifications(news, mapOlds);
 	}
 
