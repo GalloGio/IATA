@@ -1,0 +1,26 @@
+<apex:page standardController="Account" extensions="AccountDashboardCTI" standardStylesheets="false" lightningStylesheets="true" title="Odigo Page">
+
+    <apex:slds />
+
+    <apex:stylesheet value="{!$Resource.CSP_Stylesheet}"/>
+
+    <apex:includeLightning />
+
+    <apex:includeScript value="/lightning/lightning.out.js" />
+
+    <div id="LightningComponentid" />
+
+    <script>
+        $Lightning.use("c:AccountDashboardCTIApp", function() {
+            $Lightning.createComponent("c:AccountDashboardCTI",
+            { 
+                accountId: "{!Account.Id}",
+                contactId: "{!contactId}",
+            },
+            "LightningComponentid",
+            function(cmp) {
+                console.log('Account Dashboard CTI Component loaded...');
+            });
+        });
+    </script>
+</apex:page>

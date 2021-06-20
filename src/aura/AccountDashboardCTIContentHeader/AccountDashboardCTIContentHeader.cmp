@@ -1,0 +1,106 @@
+<aura:component controller="AccountDashboardCTIHeaderCtrl" access="public">
+	<aura:attribute name="accountId" type="Id" />
+	<aura:attribute name="record" type="Account" />
+	<aura:attribute name="UIThemeDescription" type="String" />
+	<aura:attribute name="UIThemeisLEX" type="Boolean" />
+
+	<aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+
+	<div class="slds-page-header slds-box">
+		<!-- 
+		<div class="slds-grid slds-clearfix">
+			<div class="slds-col"><lightning:button label="Account Details" title="Account Details" onclick="{!c.viewAccountDetails}" /></div>
+			<div class="slds-col"><lightning:button label="Contacts" title="Contacts" onclick="{!c.viewContacts}" /></div>
+			<div class="slds-col"><lightning:button label="Account Team" title="Account Team" onclick="{!c.viewAccountTeam}" /></div>
+		</div>
+		-->
+		<div class="slds-box slds-box_x-small slds-align_absolute-center slds-clearfix">
+			<div class="slds-float_left">
+				<div class="slds-grid slds-clearfix">
+					<div class="slds-col"><h1 class="slds-text-heading_medium">{!v.record.Name}</h1></div>
+					<div class="slds-col"><lightning:button label="Account Team" title="Account Team" onclick="{!c.viewAccountTeam}" /></div>
+					<aura:renderIf isTrue="{!v.UIThemeDescription=='Theme3'}">
+						<div class="slds-col"><lightning:button label="Account Details" title="Account Details" onclick="{!c.viewAccountDetails}" /></div>
+					</aura:renderIf>
+				</div>
+			</div>
+		</div>
+		<!--
+		<div class="slds-box slds-box_x-small slds-theme_default slds-m-top_xx-small slds-clearfix">
+			<div class="slds-float_left">
+				<p class="slds-text-heading_label">Record Type</p>
+				<ui:outputText value="{!v.record.RecordType.Name}" />
+			</div>
+		</div>
+		<div class="slds-box slds-box_x-small slds-theme_default slds-m-top_xx-small slds-clearfix">
+			<div class="slds-float_left">
+				<p class="slds-text-heading_label">Verified</p>
+				<ui:outputRichText value="{!v.record.Quality__c}" />
+			</div>
+		</div>
+		<div class="slds-box slds-box_x-small slds-theme_default slds-m-top_xx-small slds-clearfix">
+			<div class="slds-float_left">
+				<p class="slds-text-heading_label">Country</p>
+				<ui:outputText value="{!v.record.IATA_ISO_Country__r.Name}" />
+			</div>
+		</div>
+	-->
+		<div class="slds-box slds-box_x-small slds-theme_default slds-m-top_xx-small slds-clearfix">
+			<div class="slds-float_left">
+				<p class="slds-text-heading_label">Sector</p>
+				<ui:outputText value="{!v.record.Sector__c}" />
+			</div>
+		</div>
+		<div class="slds-box slds-box_x-small slds-theme_default slds-m-top_xx-small slds-clearfix">
+			<div class="slds-float_left">
+				<p class="slds-text-heading_label">Category</p>
+				<ui:outputText value="{!v.record.Category__c}" />
+			</div>
+		</div>
+		<div class="slds-box slds-box_x-small slds-theme_default slds-m-top_xx-small slds-clearfix">
+			<div class="slds-float_left">
+				<p class="slds-text-heading_label">IATA Code</p>
+				<ui:outputText value="{!v.record.IATACode__c}" />
+			</div>
+		</div>
+		<div class="slds-box slds-box_x-small slds-theme_default slds-m-top_xx-small slds-clearfix">
+			<div class="slds-float_left">
+				<p class="slds-text-heading_label">Status</p>
+				<ui:outputText value="{!v.record.Status__c}" />
+			</div>
+		</div>
+		<div class="slds-box slds-box_x-small slds-theme_default slds-m-top_xx-small slds-clearfix">
+			<div class="slds-float_left">
+				<p class="slds-text-heading_label">Agency Loc. Type</p>
+				<ui:outputText value="{!v.record.Location_Type__c}" />
+			</div>
+		</div>
+		<div class="slds-box slds-box_x-small slds-theme_default slds-m-top_xx-small slds-clearfix">
+			<div class="slds-float_left">
+				<p class="slds-text-heading_label">Ecomm C. type</p>
+				<ui:outputText value="{!v.record.Customer_Type__c}" />
+			</div>
+		</div>
+		<div class="slds-box slds-box_x-small slds-theme_default slds-m-top_xx-small slds-clearfix">
+			<div class="slds-float_left">
+				<p class="slds-text-heading_label">Service Model</p>
+				<ui:outputText value="{!v.record.Service_Model__c}" />
+			</div>
+		</div>
+		<div class="slds-box slds-box_x-small slds-theme_default slds-m-top_xx-small slds-clearfix">
+			<div class="slds-float_left">
+				<p class="slds-text-heading_label">Segmentation</p>
+				<ui:outputText value="{!v.record.Segmentation__c}" />
+			</div>
+		</div>
+		<div class="slds-box slds-box_x-small slds-theme_default slds-m-top_xx-small slds-clearfix">
+			<div class="slds-float_left">
+				<p class="slds-text-heading_label">Overall sat. (YTD)</p>
+				<!-- <ui:outputText value="{!v.record.Segmentation__c}" /> -->
+			</div>
+		</div>
+	</div>
+	<div aura:id="header-spinner" class="slds-hide">
+		<lightning:spinner class="slds-is-fixed" alternativeText="Loading" size="large" />
+	</div>
+</aura:component>
