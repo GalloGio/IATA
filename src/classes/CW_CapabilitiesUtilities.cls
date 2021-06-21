@@ -235,8 +235,6 @@ public with sharing class CW_CapabilitiesUtilities {
         Map<String, String> tooltips = new Map<String, String>();
 		Map<String,Schema.SObjectField> mfields = Schema.getGlobalDescribe().get(currentDetail.getSObjectType().getDescribe().getName()).getDescribe().fields.getMap();
 		for (String tooltipFieldKey : mapTooltipFieldsByField.keySet()) {
-			tooltipFieldKey = tooltipFieldKey;
-
 			String tooltipKey = tooltipFieldKey;
 			String tooltipValue;
 
