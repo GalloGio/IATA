@@ -168,6 +168,37 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Aircraft_Damage_Reduction_Systems__c</fullName>
+        <description>GSE attribute field.</description>
+        <externalId>false</externalId>
+        <label>Aircraft Damage Reduction Systems</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>None</fullName>
+                    <default>false</default>
+                    <label>None</label>
+                </value>
+                <value>
+                    <fullName>Passive</fullName>
+                    <default>false</default>
+                    <label>Passive</label>
+                </value>
+                <value>
+                    <fullName>Active</fullName>
+                    <default>false</default>
+                    <label>Active</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>Applied_Measurement_System__c</fullName>
         <description>Applied Measurement System</description>
         <externalId>false</externalId>
@@ -677,6 +708,44 @@ FALSE
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
+        <fullName>Capacity_In_Kg__c</fullName>
+        <description>GSE attribute field, Measures the Capacity in kg.</description>
+        <externalId>false</externalId>
+        <label>Capacity (in kg)</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Cart_Type__c</fullName>
+        <description>GSE attribute field.</description>
+        <externalId>false</externalId>
+        <label>Cart Type</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Open</fullName>
+                    <default>false</default>
+                    <label>Open</label>
+                </value>
+                <value>
+                    <fullName>Closed</fullName>
+                    <default>false</default>
+                    <label>Closed</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>Category__c</fullName>
         <description>The picklist value, must be included in the custom metadata &quot;ICG Capabaility Configuration&quot; in the row with type &quot;Categories by record Type&quot; and the same key as the own record type</description>
         <externalId>false</externalId>
@@ -772,6 +841,19 @@ FALSE
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
         <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Drawbar_Pull_Kg__c</fullName>
+        <description>GSE attribute field, Measures the Drawbar Pull in kN.</description>
+        <externalId>false</externalId>
+        <label>Drawbar Pull (kN)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>ESC_Name__c</fullName>
@@ -883,6 +965,155 @@ FALSE
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Energy_Mobility__c</fullName>
+        <description>GSE attribute field, Energy Mobility Type.</description>
+        <externalId>false</externalId>
+        <label>Energy (Mobility)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Electricity</fullName>
+                    <default>false</default>
+                    <label>Electricity</label>
+                </value>
+                <value>
+                    <fullName>IC_Engine</fullName>
+                    <default>false</default>
+                    <label>I.C. Engine</label>
+                </value>
+                <value>
+                    <fullName>Hybrid</fullName>
+                    <default>false</default>
+                    <label>Hybrid</label>
+                </value>
+                <value>
+                    <fullName>Fuel_Cell</fullName>
+                    <default>false</default>
+                    <label>Fuel cell</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Energy_Temp_Control_System__c</fullName>
+        <description>GSE attribute field, Energy Type (Temp Control System).</description>
+        <externalId>false</externalId>
+        <label>Energy (Temp Control System)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Electricity</fullName>
+                    <default>false</default>
+                    <label>Electricity</label>
+                </value>
+                <value>
+                    <fullName>IC_Engine</fullName>
+                    <default>false</default>
+                    <label>I.C. Engine</label>
+                </value>
+                <value>
+                    <fullName>Hybrid</fullName>
+                    <default>false</default>
+                    <label>Hybrid</label>
+                </value>
+                <value>
+                    <fullName>Fuel_Cell</fullName>
+                    <default>false</default>
+                    <label>Fuel Cell</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Energy_Without_Motor__c</fullName>
+        <description>GSE attribute field, Energy Type without motor (Not Applicable).</description>
+        <externalId>false</externalId>
+        <label>Energy</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Electricity</fullName>
+                    <default>false</default>
+                    <label>Electricity</label>
+                </value>
+                <value>
+                    <fullName>IC_Engine</fullName>
+                    <default>false</default>
+                    <label>I.C. Engine</label>
+                </value>
+                <value>
+                    <fullName>Hybrid</fullName>
+                    <default>false</default>
+                    <label>Hybrid</label>
+                </value>
+                <value>
+                    <fullName>Fuel_Cell</fullName>
+                    <default>false</default>
+                    <label>Fuel Cell</label>
+                </value>
+                <value>
+                    <fullName>Not_Applicable</fullName>
+                    <default>false</default>
+                    <label>Not Applicable</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Energy__c</fullName>
+        <description>GSE attribute field, Energy Type.</description>
+        <externalId>false</externalId>
+        <label>Energy</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Electricity</fullName>
+                    <default>false</default>
+                    <label>Electricity</label>
+                </value>
+                <value>
+                    <fullName>IC_Engine</fullName>
+                    <default>false</default>
+                    <label>I.C. Engine</label>
+                </value>
+                <value>
+                    <fullName>Hybrid</fullName>
+                    <default>false</default>
+                    <label>Hybrid</label>
+                </value>
+                <value>
+                    <fullName>Fuel_Cell</fullName>
+                    <default>false</default>
+                    <label>Fuel Cell</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>Equipment__c</fullName>
         <description>Describes the Equipment of the capability</description>
         <externalId>false</externalId>
@@ -976,6 +1207,10 @@ FALSE
                 <valueName>Emissions_Obligations</valueName>
             </valueSettings>
             <valueSettings>
+                <controllingFieldValue>Belt_Loader</controllingFieldValue>
+                <valueName>Belt_Loader</valueName>
+            </valueSettings>
+            <valueSettings>
                 <controllingFieldValue>K9_Dogs</controllingFieldValue>
                 <valueName>K9_Dogs</valueName>
             </valueSettings>
@@ -984,8 +1219,16 @@ FALSE
                 <valueName>Other_Screening_Equipment</valueName>
             </valueSettings>
             <valueSettings>
+                <controllingFieldValue>Belt_Loader_With_In-Hold_Conveyor_System</controllingFieldValue>
+                <valueName>Belt_Loader_With_In-Hold_Conveyor_System</valueName>
+            </valueSettings>
+            <valueSettings>
                 <controllingFieldValue>Other_Security_Equipment_Measures</controllingFieldValue>
                 <valueName>Other_Security_Equipment_Measures</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Lower_Deck_Loader</controllingFieldValue>
+                <valueName>Lower_Deck_Loader</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Screening_Equipment</controllingFieldValue>
@@ -1004,8 +1247,16 @@ FALSE
                 <valueName>Carbon_Dioxide_CO2_Monitors</valueName>
             </valueSettings>
             <valueSettings>
+                <controllingFieldValue>Main_Deck_Loader</controllingFieldValue>
+                <valueName>Main_Deck_Loader</valueName>
+            </valueSettings>
+            <valueSettings>
                 <controllingFieldValue>Security_Patrol</controllingFieldValue>
                 <valueName>Security_Patrol</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Prm_Boarding_Vehicles</controllingFieldValue>
+                <valueName>Prm_Boarding_Vehicles</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Weight_Volume_And_Dimension_Equipment</controllingFieldValue>
@@ -1014,6 +1265,10 @@ FALSE
             <valueSettings>
                 <controllingFieldValue>Weight_Volume_And_Dimension_Equipment</controllingFieldValue>
                 <valueName>Volume_And_Dimension_Measuring</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Catering_Truck</controllingFieldValue>
+                <valueName>Catering_Truck</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>X_Ray</controllingFieldValue>
@@ -1112,6 +1367,22 @@ FALSE
                 <valueName>Intruder_Alarm_System</valueName>
             </valueSettings>
             <valueSettings>
+                <controllingFieldValue>Cabin_Cleaning_Truck</controllingFieldValue>
+                <valueName>Cabin_Cleaning_Truck</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Elevating_Work_Platform</controllingFieldValue>
+                <valueName>Elevating_Work_Platform</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Passenger_Boarding_Stairs</controllingFieldValue>
+                <valueName>Passenger_Boarding_Stairs</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Mobile_Passenger_Boardingramps</controllingFieldValue>
+                <valueName>Mobile_Passenger_Boardingramps</valueName>
+            </valueSettings>
+            <valueSettings>
                 <controllingFieldValue>Active_ULD_Equipment_2</controllingFieldValue>
                 <valueName>Battery_Replacement_For_Active_ULDs</valueName>
             </valueSettings>
@@ -1120,16 +1391,32 @@ FALSE
                 <valueName>Dry_Ice_Replenishment_For_ULDs</valueName>
             </valueSettings>
             <valueSettings>
+                <controllingFieldValue>Maintenance_Stairs</controllingFieldValue>
+                <valueName>Maintenance_Stairs</valueName>
+            </valueSettings>
+            <valueSettings>
                 <controllingFieldValue>Delivery_Pickup_Infrastructure</controllingFieldValue>
                 <valueName>Self_Check_In_System_Kiosk_For_Truckers</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Aircraft_Tail_Stand</controllingFieldValue>
+                <valueName>Aircraft_Tail_Stand</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Pre_Arrival_Slot_Booking_Capability</controllingFieldValue>
                 <valueName>Pre_Arrival_Slot_Booking_Capability</valueName>
             </valueSettings>
             <valueSettings>
+                <controllingFieldValue>Deicers_And_Deicing/Anti-Icing_Vehicles</controllingFieldValue>
+                <valueName>Deicers_And_Deicing/Anti-Icing_Vehicles</valueName>
+            </valueSettings>
+            <valueSettings>
                 <controllingFieldValue>Truck_Parking</controllingFieldValue>
                 <valueName>Truck_Parking</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Baggage_Tractors</controllingFieldValue>
+                <valueName>Baggage_Tractors</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Truck_Docking_Gates</controllingFieldValue>
@@ -1140,12 +1427,20 @@ FALSE
                 <valueName>Trucking Gates ULD</valueName>
             </valueSettings>
             <valueSettings>
+                <controllingFieldValue>Cargo_Tractors</controllingFieldValue>
+                <valueName>Cargo_Tractors</valueName>
+            </valueSettings>
+            <valueSettings>
                 <controllingFieldValue>Documentation_Counters</controllingFieldValue>
                 <valueName>Delivery_Counter</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Documentation_Counters</controllingFieldValue>
                 <valueName>Pick_Up_Counter</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Pushback_Tow_Tractor</controllingFieldValue>
+                <valueName>Pushback_Tow_Tractor</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Live_Animals_Capacities_1</controllingFieldValue>
@@ -1196,16 +1491,44 @@ FALSE
                 <valueName>Border_Inspection_Post</valueName>
             </valueSettings>
             <valueSettings>
+                <controllingFieldValue>Towbar</controllingFieldValue>
+                <valueName>Towbar</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Towbarless_Tow_Tractor</controllingFieldValue>
+                <valueName>Towbarless_Tow_Tractor</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Maingear_Towbarless_Tractor</controllingFieldValue>
+                <valueName>Maingear_Towbarless_Tractor</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Air_Start_Unit</controllingFieldValue>
+                <valueName>Air_Start_Unit</valueName>
+            </valueSettings>
+            <valueSettings>
                 <controllingFieldValue>Veterinary_Phytosanitary_And_Pest_Control_3</controllingFieldValue>
                 <valueName>Pest_Control</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Aircraftair-Conditioning_Unit</controllingFieldValue>
+                <valueName>Aircraftair-Conditioning_Unit</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Veterinary_Phytosanitary_And_Pest_Control_4</controllingFieldValue>
                 <valueName>Quarantine_Room</valueName>
             </valueSettings>
             <valueSettings>
+                <controllingFieldValue>Aircraft_Heating_Unit</controllingFieldValue>
+                <valueName>Aircraft_Heating_Unit</valueName>
+            </valueSettings>
+            <valueSettings>
                 <controllingFieldValue>Cargo_Handling_Warehouse_Management_System</controllingFieldValue>
                 <valueName>Cargo_Handling_Warehouse_Management_System</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Potable_Water_Service_Vehicle</controllingFieldValue>
+                <valueName>Potable_Water_Service_Vehicle</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Cargo_Handling_System_Capacities</controllingFieldValue>
@@ -1264,6 +1587,10 @@ FALSE
                 <valueName>Cargo_Dashboard</valueName>
             </valueSettings>
             <valueSettings>
+                <controllingFieldValue>Lavatory_Service_Vehicles</controllingFieldValue>
+                <valueName>Lavatory_Service_Vehicles</valueName>
+            </valueSettings>
+            <valueSettings>
                 <controllingFieldValue>Cargo_Handling_System_Audit_Trail_Capacities</controllingFieldValue>
                 <valueName>Piece_Level</valueName>
             </valueSettings>
@@ -1284,6 +1611,10 @@ FALSE
                 <valueName>Flight_Level</valueName>
             </valueSettings>
             <valueSettings>
+                <controllingFieldValue>Ground_Power_Unit</controllingFieldValue>
+                <valueName>Ground_Power_Unit</valueName>
+            </valueSettings>
+            <valueSettings>
                 <controllingFieldValue>Cargo_Handling_System_Interface_Capacities</controllingFieldValue>
                 <valueName>Local_Customs_System_Import</valueName>
             </valueSettings>
@@ -1294,6 +1625,10 @@ FALSE
             <valueSettings>
                 <controllingFieldValue>Cargo_Handling_System_Interface_Capacities</controllingFieldValue>
                 <valueName>Local_Cargo_Community_System</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Uld_Transporter</controllingFieldValue>
+                <valueName>Uld_Transporter</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>IATA_XML_Messages_Cargo_Handling_System_Capabilities</controllingFieldValue>
@@ -1340,6 +1675,22 @@ FALSE
                 <valueName>Perishables_Processing_Area</valueName>
             </valueSettings>
             <valueSettings>
+                <controllingFieldValue>Uld_Dollies</controllingFieldValue>
+                <valueName>Uld_Dollies</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Temperature_Controlled_Cargo_Dolly</controllingFieldValue>
+                <valueName>Temperature_Controlled_Cargo_Dolly</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Baggage_Cart</controllingFieldValue>
+                <valueName>Baggage_Cart</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Temperature_Controlled_Cargo_Truck</controllingFieldValue>
+                <valueName>Temperature_Controlled_Cargo_Truck</valueName>
+            </valueSettings>
+            <valueSettings>
                 <controllingFieldValue>Pre_Cooling_Capacities</controllingFieldValue>
                 <valueName>Room_Cooling</valueName>
             </valueSettings>
@@ -1360,6 +1711,10 @@ FALSE
                 <valueName>Other_Pre_Cooling_Method</valueName>
             </valueSettings>
             <valueSettings>
+                <controllingFieldValue>Prm_Bus</controllingFieldValue>
+                <valueName>Prm_Bus</valueName>
+            </valueSettings>
+            <valueSettings>
                 <controllingFieldValue>Other_Temperature_Control_Equipment</controllingFieldValue>
                 <valueName>Thermal_Covers_Blankets_Offered_For_Purchase</valueName>
             </valueSettings>
@@ -1368,8 +1723,16 @@ FALSE
                 <valueName>Other_Temperature_Control_Equipment</valueName>
             </valueSettings>
             <valueSettings>
+                <controllingFieldValue>Airport_Passenger_Bus</controllingFieldValue>
+                <valueName>Airport_Passenger_Bus</valueName>
+            </valueSettings>
+            <valueSettings>
                 <controllingFieldValue>Temperature_Controlled_Dollies_Trucks</controllingFieldValue>
                 <valueName>Temperature_Controlled_Dollies_Trucks</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Crew_Bus</controllingFieldValue>
+                <valueName>Crew_Bus</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Build_Up_Break_Down_Areas</controllingFieldValue>
@@ -1387,6 +1750,10 @@ FALSE
                 <controllingFieldValue>Build_Up_Break_Down_Areas</controllingFieldValue>
                 <valueName>Build_Up_Break_Down_Stations_For_Special_Loads</valueName>
             </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Forklift_Truck</controllingFieldValue>
+                <valueName>Forklift</valueName>
+            </valueSettings>
         </valueSet>
     </fields>
     <fields>
@@ -1398,6 +1765,32 @@ FALSE
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Filtered_Supply_Air__c</fullName>
+        <description>GSE attribute field.</description>
+        <externalId>false</externalId>
+        <label>Filtered Supply Air</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Standard</fullName>
+                    <default>false</default>
+                    <label>Standard</label>
+                </value>
+                <value>
+                    <fullName>MERV_12_Or_Higher</fullName>
+                    <default>false</default>
+                    <label>MERV 12 or Higher</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Fleet__c</fullName>
@@ -1547,6 +1940,115 @@ FALSE
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Max_Capacity_In_Passengers__c</fullName>
+        <description>GSE attribute field, Maximum Capacity number of Passagers.</description>
+        <externalId>false</externalId>
+        <label>Max. Capacity (in Passengers)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Max_Kva_Supply__c</fullName>
+        <description>GSE attribute field, Measures the Maximum Supply in kVA.</description>
+        <externalId>false</externalId>
+        <label>Max kVA Supply</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>60_Kva</fullName>
+                    <default>false</default>
+                    <label>60 kVA</label>
+                </value>
+                <value>
+                    <fullName>75_Kva</fullName>
+                    <default>false</default>
+                    <label>75 kVA</label>
+                </value>
+                <value>
+                    <fullName>90_Kva</fullName>
+                    <default>false</default>
+                    <label>90 kVA</label>
+                </value>
+                <value>
+                    <fullName>120_Kva</fullName>
+                    <default>false</default>
+                    <label>120 kVA</label>
+                </value>
+                <value>
+                    <fullName>140_Kva</fullName>
+                    <default>false</default>
+                    <label>140 kVA</label>
+                </value>
+                <value>
+                    <fullName>180_Kva</fullName>
+                    <default>false</default>
+                    <label>180 kVA</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Max_Lifting_Capacity_Or_Weight_Limit__c</fullName>
+        <description>GSE attribute field, Measures the Max.Lifting Capacity or Weight Limit in kg.</description>
+        <externalId>false</externalId>
+        <label>Max.Lifting Capacity or Weight Limit(kg)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Max_Load_Capacity__c</fullName>
+        <description>GSE attribute field.</description>
+        <externalId>false</externalId>
+        <label>Max Load Capacity (kg)</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Max_Load_Width_Between_Safety_Rails__c</fullName>
+        <description>GSE attribute field, Measures the Max. Load Width Between Safety Rails in mm.</description>
+        <externalId>false</externalId>
+        <label>Max. Load Width Between Safety Rails(mm)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Maximum_Load_Kg__c</fullName>
+        <description>GSE attribute field, Measures the Maximum Load in kg.</description>
+        <externalId>false</externalId>
+        <label>Maximum Load (kg)</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Method_Type__c</fullName>
         <description>GxA Integration field</description>
         <externalId>false</externalId>
@@ -1556,6 +2058,17 @@ FALSE
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
         <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Model__c</fullName>
+        <externalId>false</externalId>
+        <label>Model</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>More_Info_Document__c</fullName>
@@ -1579,6 +2092,37 @@ url: url where is stored the document</inlineHelpText>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>Number_Of_Connectors_To_Aircraft__c</fullName>
+        <description>GSE attribute field, Number of Connectors to Aircraft.</description>
+        <externalId>false</externalId>
+        <label>Number of Connectors to Aircraft</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>1_Connector</fullName>
+                    <default>false</default>
+                    <label>1 connector</label>
+                </value>
+                <value>
+                    <fullName>2_Connectors</fullName>
+                    <default>false</default>
+                    <label>2 connectors</label>
+                </value>
+                <value>
+                    <fullName>3_Connectors</fullName>
+                    <default>false</default>
+                    <label>3 connectors</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Number__c</fullName>
@@ -1633,6 +2177,18 @@ url: url where is stored the document</inlineHelpText>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Operating_Temperature_Range__c</fullName>
+        <description>GSE attribute field.</description>
+        <externalId>false</externalId>
+        <label>Operating Temperature Range</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Overall_Airport_Size__c</fullName>
         <description>Describe the airport size in m2</description>
         <externalId>false</externalId>
@@ -1644,6 +2200,32 @@ url: url where is stored the document</inlineHelpText>
         <trackTrending>false</trackTrending>
         <type>Number</type>
         <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Pax_Mode__c</fullName>
+        <description>GSE attribute field.</description>
+        <externalId>false</externalId>
+        <label>Pax Mode</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Yes</fullName>
+                    <default>false</default>
+                    <label>Yes</label>
+                </value>
+                <value>
+                    <fullName>No</fullName>
+                    <default>false</default>
+                    <label>No</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Photos_Private__c</fullName>
@@ -1680,6 +2262,32 @@ url: url where is stored the photo</inlineHelpText>
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Power_Factor_PF__c</fullName>
+        <description>GSE attribute field.</description>
+        <externalId>false</externalId>
+        <label>Power Factor (PF)</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Standard_PF_0.8</fullName>
+                    <default>false</default>
+                    <label>Standard - PF 0.8</label>
+                </value>
+                <value>
+                    <fullName>High_PF_1.0</fullName>
+                    <default>false</default>
+                    <label>High - PF 1.0</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>Printscreen__c</fullName>
         <description>Store private pictures url (Amazon S3) separated by \n</description>
         <externalId>false</externalId>
@@ -1689,6 +2297,18 @@ url: url where is stored the photo</inlineHelpText>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
         <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Quantity__c</fullName>
+        <externalId>false</externalId>
+        <label>Quantity</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
     </fields>
     <fields>
         <fullName>Road_Feeder_Services__c</fullName>
@@ -2179,6 +2799,44 @@ url: url where is stored the photo</inlineHelpText>
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
+        <fullName>Servicing_Height_Max__c</fullName>
+        <description>GSE attribute field, Measures the Maximum Servicing Height in m.</description>
+        <externalId>false</externalId>
+        <label>Servicing Height (in m) Max</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Servicing_Height_Min__c</fullName>
+        <description>GSE attribute field, Measures the Minimum Servicing Height in m.</description>
+        <externalId>false</externalId>
+        <label>Servicing Height (in m) Min</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Supply_Flowrate_In_Kg_Sec__c</fullName>
+        <description>GSE attribute field, Measures the Supply Flowrate in kg/sec.</description>
+        <externalId>false</externalId>
+        <label>Supply Flowrate (in kg/sec)</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>TCHA_Alarm_Range__c</fullName>
         <description>Alarm Range</description>
         <externalId>false</externalId>
@@ -2265,6 +2923,110 @@ url: url where is stored the photo</inlineHelpText>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Tank_Capacity__c</fullName>
+        <description>GSE attribute field.</description>
+        <externalId>false</externalId>
+        <label>Tank Capacity (litres)</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ULD_Compatibility_DPE__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>ULD Compatibility DPE</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ULD_Compatibility_PAG__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>ULD Compatibility PAG</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ULD_Compatibility_PBM__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>ULD Compatibility PBM</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ULD_Compatibility_PGA__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>ULD Compatibility PGA</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ULD_Compatibility_PMC__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>ULD Compatibility PMC</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ULD_Compatibility_PRM__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>ULD Compatibility PRM</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Use_Of_GSE__c</fullName>
+        <description>GSE attribute field.</description>
+        <externalId>false</externalId>
+        <label>Use of GSE</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Pooled</fullName>
+                    <default>false</default>
+                    <label>Pooled</label>
+                </value>
+                <value>
+                    <fullName>Not_Pooled</fullName>
+                    <default>false</default>
+                    <label>Not pooled</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Useable_Internal_Volume__c</fullName>
+        <description>GSE attribute field.</description>
+        <externalId>false</externalId>
+        <label>Useable Internal Volume (m3)</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
         <unique>false</unique>
     </fields>
     <fields>
@@ -2359,6 +3121,32 @@ url: url where is stored the photo</inlineHelpText>
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Voltage_Supply__c</fullName>
+        <externalId>false</externalId>
+        <label>Voltage Supply</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>MultiselectPicklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>115_V_AC_400_Hz</fullName>
+                    <default>false</default>
+                    <label>115 V AC, 400 Hz</label>
+                </value>
+                <value>
+                    <fullName>28_V_DC</fullName>
+                    <default>false</default>
+                    <label>28 V DC</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
         <fullName>WVDE_Linked_Facility_Management_Inv_Syst__c</fullName>
         <defaultValue>false</defaultValue>
         <description>Describes if there is facility management linked</description>
@@ -2418,6 +3206,18 @@ url: url where is stored the photo</inlineHelpText>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Year_Of_Manufacture__c</fullName>
+        <description>GSE attribute field. Year format number between 1900 and 3000.</description>
+        <externalId>false</externalId>
+        <label>Year of Manufacture</label>
+        <length>4</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
         <unique>false</unique>
     </fields>
     <label>Account Role Detail Capability</label>
@@ -11800,6 +12600,11 @@ url: url where is stored the photo</inlineHelpText>
         </picklistValues>
     </recordTypes>
     <recordTypes>
+        <fullName>Lifting_Elevating_Equipment</fullName>
+        <active>true</active>
+        <label>Lifting Elevating Equipment</label>
+    </recordTypes>
+    <recordTypes>
         <fullName>Live_Animals_Capacities</fullName>
         <active>true</active>
         <label>Live Animals Capacities</label>
@@ -16495,6 +17300,11 @@ url: url where is stored the photo</inlineHelpText>
         </picklistValues>
     </recordTypes>
     <recordTypes>
+        <fullName>Servicing_Equipment</fullName>
+        <active>true</active>
+        <label>Servicing Equipment</label>
+    </recordTypes>
+    <recordTypes>
         <fullName>System_For_Mail_Tracking_And_Reporting</fullName>
         <active>true</active>
         <label>System for Mail Tracking and Reporting</label>
@@ -19191,6 +20001,11 @@ url: url where is stored the photo</inlineHelpText>
         </picklistValues>
     </recordTypes>
     <recordTypes>
+        <fullName>Towing_Equipment</fullName>
+        <active>true</active>
+        <label>Towing Equipment</label>
+    </recordTypes>
+    <recordTypes>
         <fullName>Transport_Vehicles</fullName>
         <active>true</active>
         <label>Transport Vehicles</label>
@@ -19866,6 +20681,11 @@ url: url where is stored the photo</inlineHelpText>
                 <default>false</default>
             </values>
         </picklistValues>
+    </recordTypes>
+    <recordTypes>
+        <fullName>Transporting_Equipment</fullName>
+        <active>true</active>
+        <label>Transporting Equipment</label>
     </recordTypes>
     <recordTypes>
         <fullName>ULD_Storage</fullName>
@@ -21876,5 +22696,15 @@ url: url where is stored the photo</inlineHelpText>
     </recordTypes>
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>Year_Of_Manufacture_Validation_Rule</fullName>
+        <active>true</active>
+        <description>Year of manufacture must be a valid number format between 1900 and 3000.</description>
+        <errorConditionFormula>OR(
+VALUE(Year_Of_Manufacture__c) &lt; 1900,
+VALUE(Year_Of_Manufacture__c) &gt; 3000)</errorConditionFormula>
+        <errorDisplayField>Year_Of_Manufacture__c</errorDisplayField>
+        <errorMessage>The &apos;Year of manufacture&apos; field must be a valid year. A number between 1900 and 3000.</errorMessage>
+    </validationRules>
     <visibility>Public</visibility>
 </CustomObject>

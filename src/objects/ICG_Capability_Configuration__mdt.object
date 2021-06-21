@@ -138,6 +138,7 @@
     </listViews>
     <listViews>
         <fullName>Categories_By_Record_Type</fullName>
+        <columns>MasterLabel</columns>
         <columns>DeveloperName</columns>
         <columns>Order__c</columns>
         <columns>Key__c</columns>
@@ -195,6 +196,7 @@
     </listViews>
     <listViews>
         <fullName>Extra_Config</fullName>
+        <columns>MasterLabel</columns>
         <columns>DeveloperName</columns>
         <columns>Key__c</columns>
         <columns>Data__c</columns>
@@ -209,6 +211,7 @@
     </listViews>
     <listViews>
         <fullName>Fields_By_Record_Type_And_Category</fullName>
+        <columns>MasterLabel</columns>
         <columns>DeveloperName</columns>
         <columns>Order__c</columns>
         <columns>Key__c</columns>
@@ -224,6 +227,7 @@
     </listViews>
     <listViews>
         <fullName>Grouped_Fields</fullName>
+        <columns>MasterLabel</columns>
         <columns>DeveloperName</columns>
         <columns>Key__c</columns>
         <columns>Data__c</columns>
@@ -238,6 +242,7 @@
     </listViews>
     <listViews>
         <fullName>Record_Types_By_Section</fullName>
+        <columns>MasterLabel</columns>
         <columns>DeveloperName</columns>
         <columns>Order__c</columns>
         <columns>Key__c</columns>
@@ -253,6 +258,7 @@
     </listViews>
     <listViews>
         <fullName>Sections_by_Supercategory</fullName>
+        <columns>MasterLabel</columns>
         <columns>DeveloperName</columns>
         <columns>Order__c</columns>
         <columns>Key__c</columns>
@@ -282,9 +288,11 @@
     </listViews>
     <listViews>
         <fullName>Tooltip_Fields_By_Field</fullName>
+        <columns>MasterLabel</columns>
         <columns>DeveloperName</columns>
         <columns>Key__c</columns>
         <columns>Data__c</columns>
+        <columns>Extra_Data__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
             <field>Type__c</field>
