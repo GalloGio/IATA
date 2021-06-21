@@ -11861,7 +11861,7 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
         <columns>Subject__c</columns>
         <columns>Root_Cause_Analysis__c</columns>
         <columns>OI_Approval_date__c</columns>
-        <columns>Status_del__c</columns>
+        <columns>OI_Status_auto__c</columns>
         <columns>CREATED_DATE</columns>
         <columns>OWNER.FIRST_NAME</columns>
         <columns>OWNER.LAST_NAME</columns>
@@ -11879,7 +11879,7 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
         <filters>
             <field>OI_Status_auto__c</field>
             <operation>notEqual</operation>
-            <value>Closed,Terminated,Completed</value>
+            <value>Closed,Terminated,Completed,Dropped</value>
         </filters>
         <label>Continuous Improvement Owner</label>
         <language>en_US</language>
@@ -11923,7 +11923,7 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
         <filters>
             <field>Region__c</field>
             <operation>contains</operation>
-            <value>Africa &amp; Middle East,Americas,Asia &amp; Pacific,China &amp; North Asia,Europe,GVA</value>
+            <value>Africa &amp; Middle East,Americas,Asia &amp; Pacific,China &amp; North Asia,Europe,Global</value>
         </filters>
         <filters>
             <field>CREATEDBY_USER.ALIAS</field>
@@ -25525,11 +25525,27 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
         <picklistValues>
             <picklist>Initiator__c</picklist>
             <values>
-                <fullName>CPS</fullName>
+                <fullName>Agent%28s%29</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Central Business</fullName>
+                <fullName>Airline%28s%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Audits</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Banking Issues</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Business Request - RCA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CPS</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -25545,11 +25561,23 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
-                <fullName>Other QRM</fullName>
+                <fullName>Governance Groups</fullName>
                 <default>false</default>
             </values>
             <values>
-                <fullName>Regional Business</fullName>
+                <fullName>Incidents</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lean Six Sigma</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Meeting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -25558,6 +25586,14 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
             </values>
             <values>
                 <fullName>TAC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Trend Analysis</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>VOCC</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -26901,7 +26937,7 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
-                <fullName>GVA HO</fullName>
+                <fullName>Global</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
