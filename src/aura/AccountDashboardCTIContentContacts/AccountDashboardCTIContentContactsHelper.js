@@ -163,7 +163,6 @@
 					url_new_case += "Type_of_customer__c" + "%3D" + encodeURIComponent(contactDataSelected.AccountTypeCustomer);
 				}
 			}
-			console.log("url_new_case = ", url_new_case);
 			window.open(url_new_case, open_page_method);
 		} else {
 			alert("No Contact was selected! Please, choose one contact before create a new case.");

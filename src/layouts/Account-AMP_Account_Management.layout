@@ -3,6 +3,7 @@
     <customButtons>Chatter_Broadcast_Tool</customButtons>
     <customButtons>Key_Account_Plan</customButtons>
     <customButtons>Web_App_View</customButtons>
+    <customButtons>Account_Dashboard_CTI</customButtons>
     <excludeButtons>ChangeOwnerOne</excludeButtons>
     <excludeButtons>DataDotComAccountInsights</excludeButtons>
     <excludeButtons>DataDotComClean</excludeButtons>

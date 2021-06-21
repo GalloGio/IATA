@@ -6,6 +6,7 @@
     <customButtons>Key_Account_Plan</customButtons>
     <customButtons>Zuora__Sync_Data_from_ZBilling</customButtons>
     <customButtons>Web_App_View</customButtons>
+    <customButtons>Account_Dashboard_CTI</customButtons>
     <excludeButtons>DisableCustomerPortalAccount</excludeButtons>
     <excludeButtons>DisablePartnerPortalAccount</excludeButtons>
     <excludeButtons>IncludeOffline</excludeButtons>
