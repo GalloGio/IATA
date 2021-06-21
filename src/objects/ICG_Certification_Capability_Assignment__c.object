@@ -1411,6 +1411,12 @@
                     <default>false</default>
                     <label>Forklift</label>
                 </value>
+                <value>
+                    <fullName>ULD</fullName>
+                    <default>false</default>
+                    <isActive>false</isActive>
+                    <label>ULD</label>
+                </value>
             </valueSetDefinition>
             <valueSettings>
                 <controllingFieldValue>Temporary_Storage_And_Working_Areas_1</controllingFieldValue>
