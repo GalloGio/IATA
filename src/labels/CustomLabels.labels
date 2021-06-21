@@ -48879,7 +48879,7 @@ ONE Source is the industry platform for validated aviation capability and infras
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>icg account create take several days</shortDescription>
-        <value>Account Creation Process takes several days, please proceed to enter the Station details for the One Source Station Profile.</value>
+        <value>Account Creation Process takes several days, please proceed to enter the Station details for the ONE Source Station Profile.</value>
     </labels>
     <labels>
         <fullName>icg_account_creation</fullName>
@@ -49399,7 +49399,7 @@ ONE Source is the industry platform for validated aviation capability and infras
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>icg_capab_message_to_show</shortDescription>
-        <value>There are not capabilities to edit</value>
+        <value>There are no capabilities to edit</value>
     </labels>
     <labels>
         <fullName>icg_capability_management</fullName>
@@ -49415,7 +49415,7 @@ ONE Source is the industry platform for validated aviation capability and infras
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>icg capability validated by</shortDescription>
-        <value>Capability validated by</value>
+        <value>Capability Validated by</value>
     </labels>
     <labels>
         <fullName>icg_cargo_commodities</fullName>
@@ -49855,7 +49855,7 @@ ONE Source is the industry platform for validated aviation capability and infras
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>You don´t have permission</shortDescription>
-        <value>Date</value>
+        <value>You don´t have permission</value>
     </labels>
     <labels>
         <fullName>icg_date</fullName>
@@ -50242,6 +50242,14 @@ ONE Source is the industry platform for validated aviation capability and infras
         <value>There are no records in this section.</value>
     </labels>
     <labels>
+        <fullName>icg_handling_services</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg handling services</shortDescription>
+        <value>Handling Services</value>
+    </labels>
+    <labels>
         <fullName>icg_has_been_approved</fullName>
         <categories>ICG One Source</categories>
         <language>en_US</language>
@@ -50344,6 +50352,14 @@ ONE Source is the industry platform for validated aviation capability and infras
         <protected>false</protected>
         <shortDescription>icg in</shortDescription>
         <value>in</value>
+    </labels>
+    <labels>
+        <fullName>icg_in_house</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg in house</shortDescription>
+        <value>Provided In House</value>
     </labels>
     <labels>
         <fullName>icg_in_progress</fullName>
@@ -50551,7 +50567,7 @@ ONE Source is the industry platform for validated aviation capability and infras
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>icg languages spoken</shortDescription>
-        <value>Languages Spoken</value>
+        <value>Supported Languages</value>
     </labels>
     <labels>
         <fullName>icg_lastname</fullName>
@@ -50671,7 +50687,7 @@ ONE Source is the industry platform for validated aviation capability and infras
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>icg manage photos</shortDescription>
-        <value>Supporting Documentation</value>
+        <value>Manage Photos</value>
     </labels>
     <labels>
         <fullName>icg_manage_remote_validations</fullName>
@@ -50695,7 +50711,7 @@ ONE Source is the industry platform for validated aviation capability and infras
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>icg manager user permission</shortDescription>
-        <value>Manager User Permission</value>
+        <value>Manage User Permissions</value>
     </labels>
     <labels>
         <fullName>icg_members_airlines</fullName>
@@ -50839,7 +50855,7 @@ ONE Source is the industry platform for validated aviation capability and infras
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>icg nearest airport</shortDescription>
-        <value>Nearest Airport</value>
+        <value>Airport</value>
     </labels>
     <labels>
         <fullName>icg_nearest_airport_description</fullName>
@@ -51392,6 +51408,14 @@ ONE Source is the industry platform for validated aviation capability and infras
         <protected>false</protected>
         <shortDescription>icg process finished</shortDescription>
         <value>Process Finished</value>
+    </labels>
+    <labels>
+        <fullName>icg_provided_bythird_party</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg provided bythird party</shortDescription>
+        <value>Provided by 3rd party</value>
     </labels>
     <labels>
         <fullName>icg_public_area</fullName>
@@ -52298,6 +52322,22 @@ ONE Source is the industry platform for validated aviation capability and infras
         <value>To</value>
     </labels>
     <labels>
+        <fullName>icg_tooltip_service_info1</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg tooltip service info1</shortDescription>
+        <value>Click once = Service provided in house</value>
+    </labels>
+    <labels>
+        <fullName>icg_tooltip_service_info2</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg tooltip service info2</shortDescription>
+        <value>Click twice = Service provided by third party</value>
+    </labels>
+    <labels>
         <fullName>icg_total_facility_space</fullName>
         <categories>ICG One Source</categories>
         <language>en_US</language>
@@ -52392,6 +52432,14 @@ ONE Source is the industry platform for validated aviation capability and infras
         <protected>false</protected>
         <shortDescription>icg validation management</shortDescription>
         <value>Audits and Certifications</value>
+    </labels>
+    <labels>
+        <fullName>icg_validation_services_message</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg validation services message</shortDescription>
+        <value>The items selected in the list &quot;In-House Service&quot; cannot belong to the list &quot;Third party Services&quot; or vice versa.</value>
     </labels>
     <labels>
         <fullName>icg_watch_video</fullName>
