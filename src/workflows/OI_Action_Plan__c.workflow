@@ -1,25 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
-        <fullName>OI_Action_Plan_Reminder_15_days_before_due_date_SIN</fullName>
-        <description>OI Action Plan Reminder- 15 days before due date SIN</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>Quality_Team_SIN</recipient>
-            <type>group</type>
-        </recipients>
-        <recipients>
-            <type>owner</type>
-        </recipients>
-        <recipients>
-            <field>Action_Owner__c</field>
-            <type>userLookup</type>
-        </recipients>
-        <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>Quality/OI_Action_Plan_D_15_days</template>
-    </alerts>
-    <alerts>
         <fullName>OI_Action_Plan_Remnder_15_days_before_due_date</fullName>
         <description>OI Action Plan Reminder- 15 days before due date</description>
         <protected>false</protected>
@@ -38,25 +19,6 @@
         <fullName>OI_Action_Plan_Remnder_5_days_before_due_date</fullName>
         <description>OI Action Plan Reminder- 5 days before due date</description>
         <protected>false</protected>
-        <recipients>
-            <type>owner</type>
-        </recipients>
-        <recipients>
-            <field>Action_Owner__c</field>
-            <type>userLookup</type>
-        </recipients>
-        <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>Quality/OI_Action_Plan_D_5_days</template>
-    </alerts>
-    <alerts>
-        <fullName>OI_Action_Plan_Remnder_5_days_before_due_date_SIN</fullName>
-        <description>OI Action Plan Reminder- 5 days before due date SIN</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>Quality_Team_SIN</recipient>
-            <type>group</type>
-        </recipients>
         <recipients>
             <type>owner</type>
         </recipients>
