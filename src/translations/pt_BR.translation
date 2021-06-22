@@ -20645,7 +20645,7 @@ Você poderia por favor confimar de qual pais voce foi previamente atendido.</la
         <name>ISSP_IATA_Designator</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_IATA_Location_Code --></label>
+        <label>Localidade do código IATA</label>
         <name>ISSP_IATA_Location_Code</name>
     </customLabels>
     <customLabels>
