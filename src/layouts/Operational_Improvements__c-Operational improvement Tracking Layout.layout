@@ -77,8 +77,8 @@
                 <field>Related_Case_Number__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
-                <field>OI_Type__c</field>
+                <behavior>Edit</behavior>
+                <field>Improvement_Target__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>

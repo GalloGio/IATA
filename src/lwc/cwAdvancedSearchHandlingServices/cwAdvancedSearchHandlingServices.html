@@ -1,0 +1,24 @@
+<template>
+    <h3>{label.icg_handling_services}</h3>
+    <hr class="yellow-underline-100">
+    <div class="height-85">
+        <div class="bg-white p-3 row-no-margin height-100">
+            <template for:each={services} for:item="item">
+                <template if:true={item.enabled}>
+                    <div key={item.name} onclick={onClickItem} data-tosca={item.name} data-name={item.name}
+                        data-type="services" class="col-6 itemBase itemUnselected text-left company-item">
+                        <div class="p-2 company-type-content imgtxtfil text-truncate">
+                            <img src={item.image} width="20px">&nbsp;&nbsp;{item.label}
+                        </div>
+                    </div>
+                </template>
+            </template>
+            <template if:true={selectAllVisible} class="row">
+                <div class="col-12 text-right mt-3">
+                    <a class="badge-results blueText" data-tosca="selectallcargotypes" onclick={searchAllServices}><b>{selectedText}</b></a>
+                </div>
+            </template>
+        </div>
+    </div>
+    
+</template>

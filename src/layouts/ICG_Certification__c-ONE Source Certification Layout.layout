@@ -16,6 +16,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Required</behavior>
+                <field>ValidationPrograms__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Required</behavior>
                 <field>Name</field>
             </layoutItems>
         </layoutColumns>
@@ -62,6 +66,7 @@
     <miniLayout>
         <fields>Certification_Type__c</fields>
         <fields>Image_Filename__c</fields>
+        <fields>ValidationPrograms__c</fields>
     </miniLayout>
     <relatedLists>
         <fields>TASK.SUBJECT</fields>
