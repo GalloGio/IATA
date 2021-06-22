@@ -16,6 +16,7 @@ public class CW_TestDataFactory {
 		cert.Certification_Type__c = 'Assessments';
 		cert.Image_Filename__c = 'sfoc_stamp.svg';
 		cert.Is_Visible__c = true;
+		cert.ValidationPrograms__c = 'IATA';
 		return cert;
 	}
 

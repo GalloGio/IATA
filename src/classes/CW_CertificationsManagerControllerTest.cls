@@ -131,7 +131,7 @@ public with sharing class CW_CertificationsManagerControllerTest {
 	static void testGetFacilityCertifications() {
 		ICG_Account_Role_Detail__c ard = [SELECT id FROM ICG_Account_Role_Detail__c WHERE Name = 'Generic Test' LIMIT 1];
 		test.startTest();
-		string jsonCertifications = CW_CertificationsManagerController.refreshFacilityCertifications(ard.id,'Airline');
+		string jsonCertifications = CW_CertificationsManagerController.refreshFacilityCertifications(ard.id,'Airline','IATA');
 		List<ICG_Capability_Assignment_Group__c> lstCertifications = (List<ICG_Capability_Assignment_Group__c>) JSON.deserialize(jsonCertifications, List<ICG_Capability_Assignment_Group__c>.class);
 		System.assertNotEquals(null, lstCertificationS, 'Information not retrieved properly lstDepts');
 		test.stopTest();
@@ -139,7 +139,7 @@ public with sharing class CW_CertificationsManagerControllerTest {
 	@isTest
 	static void testGetAllCertifications() {
 		test.startTest();
-		string jsonCertifications = CW_CertificationsManagerController.getAllCertifications('smart_facility_operational_capacity');
+		string jsonCertifications = CW_CertificationsManagerController.getAllCertifications('smart_facility_operational_capacity','IATA');
 		List<ICG_Certification__c> lstCertifications = (List<ICG_Certification__c>) JSON.deserialize(jsonCertifications, List<ICG_Certification__c>.class);
 		System.assertNotEquals(null, lstCertifications, 'Information not retrieved properly');
 		test.stopTest();
@@ -165,7 +165,7 @@ public with sharing class CW_CertificationsManagerControllerTest {
 	@isTest
 	static void testCreateCertification() {
 		ICG_Account_Role_Detail__c ard = [SELECT id FROM ICG_Account_Role_Detail__c LIMIT 1];
-		ICG_Certification__c cert = [SELECT id FROM ICG_Certification__c LIMIT 1];
+		ICG_Certification__c cert = [SELECT id FROM ICG_Certification__c WHERE ValidationPrograms__c = 'IATA' LIMIT 1];
 		ICG_Capability_Assignment_Group__c ardCert = new ICG_Capability_Assignment_Group__c();
 		ardCert.id = null;
 		ardCert.ICG_Account_Role_Detail__c = ard.id;
@@ -207,12 +207,12 @@ public with sharing class CW_CertificationsManagerControllerTest {
 	static void getNextCertificationID() {
 		ICG_Account_Role_Detail__c acc = [SELECT id FROM ICG_Account_Role_Detail__c WHERE Name = 'Generic Test' LIMIT 1];
 		
-		ICG_Certification__c newcert = [SELECT Id FROM ICG_Certification__c WHERE Name = 'smart_facility_operational_capacity'];
-		ICG_Certification__c newcert1 = [SELECT Id FROM ICG_Certification__c WHERE Name = 'ceiv_fresh'];
-		ICG_Certification__c newcert2 = [SELECT Id FROM ICG_Certification__c WHERE Name = 'ceiv_pharma'];
-		ICG_Certification__c newcert3 = [SELECT Id FROM ICG_Certification__c WHERE Name = 'Smart Facility Remote Validation'];
-		ICG_Certification__c newcert4 = [SELECT Id FROM ICG_Certification__c WHERE Name = 'ienva_stage_1'];
-		ICG_Certification__c newcert5 = [SELECT Id FROM ICG_Certification__c WHERE Name = 'ceiv_live_animals'];
+		ICG_Certification__c newcert = [SELECT Id FROM ICG_Certification__c WHERE Name = 'smart_facility_operational_capacity' AND ValidationPrograms__c = 'IATA'];
+		ICG_Certification__c newcert1 = [SELECT Id FROM ICG_Certification__c WHERE Name = 'ceiv_fresh' AND ValidationPrograms__c = 'IATA'];
+		ICG_Certification__c newcert2 = [SELECT Id FROM ICG_Certification__c WHERE Name = 'ceiv_pharma' AND ValidationPrograms__c = 'IATA'];
+		ICG_Certification__c newcert3 = [SELECT Id FROM ICG_Certification__c WHERE Name = 'Smart Facility Remote Validation' AND ValidationPrograms__c = 'IATA'];
+		ICG_Certification__c newcert4 = [SELECT Id FROM ICG_Certification__c WHERE Name = 'ienva_stage_1' AND ValidationPrograms__c = 'IATA'];
+		ICG_Certification__c newcert5 = [SELECT Id FROM ICG_Certification__c WHERE Name = 'ceiv_live_animals' AND ValidationPrograms__c = 'IATA'];
 		
 		test.startTest();
 		ICG_Certification__c cert = [SELECT id FROM ICG_Certification__c LIMIT 1];
@@ -245,7 +245,7 @@ public with sharing class CW_CertificationsManagerControllerTest {
 		ICG_Capability_Assignment_Group__c ardCert = [SELECT id, ICG_Account_Role_Detail__c, ICG_Certification__c, Is_Active__c FROM ICG_Capability_Assignment_Group__c WHERE ICG_Certification__r.Name = 'smart_facility_operational_capacity' LIMIT 1];
 		
 		test.startTest();
-		String result = CW_CertificationsManagerController.getFacilityNotActiveCertifications(ardCert.ICG_Account_Role_Detail__c, ardCert.ICG_Certification__c, ardCert.id, '\'Upcoming\'', 'smart_facility_operational_capacity');
+		String result = CW_CertificationsManagerController.getFacilityNotActiveCertifications(ardCert.ICG_Account_Role_Detail__c, ardCert.ICG_Certification__c, ardCert.id, '\'Upcoming\'', 'smart_facility_operational_capacity', 'IATA');
 		System.assertNotEquals(result, '');
 
 		test.stopTest();
@@ -271,7 +271,7 @@ public with sharing class CW_CertificationsManagerControllerTest {
 		ICG_Capability_Assignment_Group__c ardCert = [SELECT id, ICG_Account_Role_Detail__c FROM ICG_Capability_Assignment_Group__c WHERE ICG_Certification__r.Name = 'smart_facility_operational_capacity' LIMIT 1];
 		
 		test.startTest();
-		List<ICG_Certification__c> result = CW_CertificationsManagerController.getCertificationWithoutCapabilities(ardCert.ICG_Account_Role_Detail__c);
+		List<ICG_Certification__c> result = CW_CertificationsManagerController.getCertificationWithoutCapabilities(ardCert.ICG_Account_Role_Detail__c,'IATA');
 		System.assertNotEquals(result, null);
 
 		test.stopTest();

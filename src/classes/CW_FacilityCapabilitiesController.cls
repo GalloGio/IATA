@@ -17,6 +17,9 @@ public without sharing class CW_FacilityCapabilitiesController {
 	public final static Map<String, List<String>> EDITABLE_RECORDTYPES = getMapEditableRecordTypes();
 	public final static List<Id> EDITABLE_RECORDTYPES_ID = getListEditableRecordTypesID();
 
+	//This validation program is used to check if you have permissions to manage capabilities.
+	final static String validationPrograms = CW_Utilities.VALIDATION_PROGRAMS;
+
 	/*
 	 * @description		Generate a cvs based on this structure :  StationType_DeveloperName,StationType_Name,Category_Value,Category_Label,Equipment,Equipment_Label
 	 * @return			Csv content
@@ -163,7 +166,7 @@ public without sharing class CW_FacilityCapabilitiesController {
 	public static Map<String, List<String>> getMapTooltipFieldsByField() {
 		Map<String, List<String>> output = new Map<String, List<String>>();
 		for (ICG_capability_configuration__mdt currentConfig : getCapabilityConfigurationMetadataByType(MD_TOOLTIP_FIELDS_BY_FIELD, SEARCH_ONLY_DATA)) {
-			output.put(currentConfig.Key__c.toLowerCase(), (String.isBlank(currentConfig.Data__c)) ? new List<String>() : currentConfig.Data__c.toLowerCase().split(';'));
+			output.put(currentConfig.Key__c.toLowerCase(), (String.isBlank(currentConfig.Data__c)) ? new List<String>() : currentConfig.Data__c.split(';'));
 		}
 
 		return output;
@@ -290,7 +293,8 @@ public without sharing class CW_FacilityCapabilitiesController {
 			}
 
 			// Fields related to Certifications
-			fieldsToRetrieve.addAll(new List<String>{ caGroupR + '.Id', caGroupR + '.Expiration_Date__c', caGroupR + '.Issue_Date__c', caGroupR + '.' + certificationR + '.Name', caGroupR + '.' + certificationR + '.Label__c', caGroupR + '.' + certificationR + '.Image__c', caGroupR + '.' + certificationR + '.Order__c' });
+			fieldsToRetrieve.addAll(new List<String>{ caGroupR + '.Id', caGroupR + '.Expiration_Date__c', caGroupR + '.Issue_Date__c', caGroupR + '.' + certificationR + '.Name', caGroupR + '.' + certificationR + '.Label__c', caGroupR + '.' + certificationR + '.Image__c', caGroupR + '.' + certificationR + '.Order__c', caGroupR + '.' + certificationR + '.ValidationPrograms__c' });
+
 			String optionalFilterConflicts = capabilitiesIdForConflicts == null || capabilitiesIdForConflicts.isEmpty() ? ' AND Is_In_Conflict__c = false' : 'AND ' + ardCapabilityR + '.Id IN (\'' + String.join((capabilitiesIdForConflicts), '\', \'') + '\')';
 
 			String query = 'SELECT Id, ' + String.join(fieldsToRetrieve, ', ') + ' FROM ICG_Account_Role_Capability_Assignment__c ' + ' WHERE ' + caGroupR + '.Is_Active__c = true ' + optionalFilterConflicts + ' AND ' + caGroupR + '.Expiration_Date__c >= TODAY AND ' + arDetailR + '.Id = \'' + ardId + '\' ' + ' AND ' + ardCapabilityR + '.RecordTypeId IN (\'' + String.join((recordTypesId), '\', \'') + '\')' + ' AND ' + ardCapabilityR + '.Category__c IN (\'' + String.join(categoriesToRetrieve, '\', \'') + '\') order by CreatedDate ';
@@ -329,6 +333,7 @@ public without sharing class CW_FacilityCapabilitiesController {
 					asgmtGroupToAdd.name = currentGroup.ICG_Certification__r.Name;
 					asgmtGroupToAdd.label = currentGroup.ICG_Certification__r.Label__c;
 					asgmtGroupToAdd.src = currentGroup.ICG_Certification__r.Image__c;
+					asgmtGroupToAdd.validationProgram = currentGroup.ICG_Certification__r.ValidationPrograms__c;
 				}
 				if (!currentGroup.RecordTypeId.equals(RT_NO_CERTIFICATION_REQUIRED)) {
 					asgmtGroupByCapabilityId.get(currentAssignment.Account_Role_Detail_Capability__c).add(asgmtGroupToAdd);
@@ -356,13 +361,14 @@ public without sharing class CW_FacilityCapabilitiesController {
 													Map<String, List<String>> mapCategoriesByRecordTypeDevName, 
 													Map<Id, RecordType> mapAccountRoleDetailAssignmentRtsById,
 													List<String> capabilitiesIdForConflicts, 
-													ICG_Account_Role_Detail__c accountRoleDetailFound) {
+													ICG_Account_Role_Detail__c accountRoleDetailFound,
+													String validationPrograms) {
 		Set<String> listSectionsIncluded = new Set<String>();
 		CW_FacilityCapabilitiesController.SectionsWrapper checksMap;
 
 		//Get certifications allowed for user
 		String stationRT = [SELECT RecordType.DeveloperName FROM ICG_Account_Role_Detail__c WHERE Id =: id].RecordType.DeveloperName;
-		List<String> CERTIFICATIONS_ALLOWED_USER =  CW_CapabilitiesUtilities.getCertificationsAllowedByDepartments(stationRT);
+		List<String> CERTIFICATIONS_ALLOWED_USER =  CW_CapabilitiesUtilities.getCertificationsAllowedByDepartments(stationRT,validationPrograms);
 		Boolean userHasPermissionToEdit = CW_Utilities.hasSpecialPermissionsToEdit();
 
 		//Get recordtypes id for category
@@ -483,7 +489,7 @@ public without sharing class CW_FacilityCapabilitiesController {
 				return returnValue;
 			}
 
-			Map<String, Object> generatedData = generateData(id, categoriesToRetrieve, mapCategoriesByRecordTypeDevName, mapAccountRoleDetailAssignmentRtsById, capabilitiesIdForConflicts, accountRoleDetailFound);
+			Map<String, Object> generatedData = generateData(id, categoriesToRetrieve, mapCategoriesByRecordTypeDevName, mapAccountRoleDetailAssignmentRtsById, capabilitiesIdForConflicts, accountRoleDetailFound,validationPrograms);
 
 			return CW_CapabilitiesUtilities.generateReturnValue(id, generatedData,false);
 		} catch (Exception e) {
@@ -879,6 +885,7 @@ public without sharing class CW_FacilityCapabilitiesController {
 					  'type' => fieldMap.get(fieldName).getDescribe().getType().name(), 
 					  'values' => pickListValuesList,
 					  'isfileupload' => (fieldName == 'more_info_document__c'),
+					  'isManufacturerField' => (fieldName == 'sc_manufacturer__c'),
 					  'isurlfield' => fieldMap.get(fieldName).getDescribe().getType().name() == 'URL'
 					 });
 
@@ -887,9 +894,10 @@ public without sharing class CW_FacilityCapabilitiesController {
 						 'colspan' => 1, 'name' => fieldName, 'label' => '', 
 						 'isformula' => fieldMap.get(fieldName).getDescribe().isCalculated(),
 						  'type' => fieldMap.get(fieldName).getDescribe().getType().name(),
-						  'values' => pickListValuesList,
-						  'isfileupload' => (fieldName == 'more_info_document__c'),
-					  	  'isurlfield' => fieldMap.get(fieldName).getDescribe().getType().name() == 'URL'
+						   'values' => pickListValuesList,
+						   'isfileupload' => (fieldName == 'more_info_document__c'),
+						   'isManufacturerField' => (fieldName == 'sc_manufacturer__c'),
+					  	   'isurlfield' => fieldMap.get(fieldName).getDescribe().getType().name() == 'URL'
 						 });
 				}
 			}

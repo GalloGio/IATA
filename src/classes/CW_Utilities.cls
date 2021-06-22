@@ -4,6 +4,8 @@
  */
 public without sharing class CW_Utilities {
 
+	public final static string VALIDATION_PROGRAMS = 'IATA';
+
 	public final static string FACILITY_MANAGER = 'Facility Manager';
 	public final static string COMPANY_ADMIN = 'Company Admin';
 	final static string FIELD_CUSTOM_VALIDATION_EXCEPTION = 'FIELD_CUSTOM_VALIDATION_EXCEPTION';
@@ -1778,6 +1780,38 @@ public without sharing class CW_Utilities {
 		}
 	}
 
+	/******************************************************************************************************
+	* @name				getAllServicesAvailable
+	* @description		Get all services available in ONE Source Handling Services picklist 
+	* @return			List<String>
+	******************************************************************************************************/
+	@AuraEnabled
+	public static List<CW_Utilities.PicklistVal> getAllServicesAvailable(){
+		String thirdPartyField = 'Third_Party_Services__c';
+		String inHouseField = 'In_House_Services__c';
+		List<CW_Utilities.PicklistVal> result = (List<CW_Utilities.PicklistVal>) JSON.deserialize(CW_Utilities.getPicklistValues('ICG_Account_Role_Detail__c', thirdPartyField), List<CW_Utilities.picklistVal>.class);
+		
+		Map<String, String> tooltips = new Map<String, String>();
+		for (ICG_capability_configuration__mdt item :[SELECT Key__c, Type__c, Data__c FROM ICG_capability_configuration__mdt where Type__c = 'Tooltip_Fields_By_Field']) {
+			tooltips.put(item.Key__c, item.Data__c);
+		}
+
+		for (CW_Utilities.PicklistVal item :result) {
+			if (tooltips.containsKey(thirdPartyField + '#' + item.api)){
+				item.tooltip = tooltips.get(thirdPartyField + '#' + item.api);
+			} else if (tooltips.containsKey(inHouseField + '#' + item.api)){
+				item.tooltip = tooltips.get(inHouseField + '#' + item.api);
+			}
+		}
+		
+		return result;
+	}
+
+	@AuraEnabled
+	public static String getAllServicesAvailableJson() {
+		return JSON.serialize(getAllServicesAvailable());
+	}
+	  
 	  /*********************************************************************************************************
 	   * @name			addMapMember
 	   * @author		Beatriz <beatriz.menendez@next-lin.ch>
@@ -1827,10 +1861,12 @@ public without sharing class CW_Utilities {
 	public class PicklistVal {
 		public string api;
 		public string label;
+		public String tooltip;
 
 		public PicklistVal(string api, string label) {
 			this.api = api;
 			this.label = label;
+			this.tooltip = '';
 		}
 	}
 
@@ -1906,6 +1942,8 @@ public without sharing class CW_Utilities {
 		public String src;
 		@AuraEnabled
 		public Double order;
+		@AuraEnabled
+		public String validationProgram;
 
 		public AsgmtGroupWrapper() {
 		}
