@@ -110,10 +110,10 @@ public without sharing class TIDS_Controller {
 				if (TIDSUtil.iataCodeError.hasAnError){
 					return TIDSUtil.iataCodeError;
 				}else{
-					manageHierarchy(tidsCase, tids.applicationType);
+					manageHierarchy(tidsCase.AccountId, tids.applicationType);
 				}
 			}
-			createChangeCode(tidsCase, tids.applicationType);
+			createChangeCode(tidsCase.AccountId, tids.applicationType);
 		}else if(applicationDecision==TIDS_Constant.IS_REJECTED || applicationDecision==TIDS_Constant.IS_APPREJECTED  || applicationDecision==TIDS_Constant.IS_CLOSED ){
 			
 			tidsCase.Decision__c = TIDS_Constant.IS_REJECTED.toUpperCase();
@@ -1227,12 +1227,12 @@ public without sharing class TIDS_Controller {
 	}
 
 	@future
-	private static void manageHierarchy(case tidsCase, string applicationType){
-		boolean bIsHiearchyCreated = AMS_RecordCreatorWebservice.createHierarchy(tidsCase.AccountId, applicationType);
+	private static void manageHierarchy(string AccountId, string applicationType){
+		boolean bIsHiearchyCreated = AMS_RecordCreatorWebservice.publicCreateHierarchy(AccountId, applicationType);
 	}
 
 	@future
-	private static void createChangeCode(case tidsCase, string applicationType){
+	private static void createChangeCode(string AccountId, string applicationType){
 		string sSettingName = '';
 		if(applicationType == TIDS_Constant.NEW_HO || applicationType == TIDS_Constant.NEW_BR || applicationType == TIDS_Constant.NEW_VB){
 			sSettingName = 'TIDS-FIN';
@@ -1240,15 +1240,26 @@ public without sharing class TIDS_Controller {
 		if(applicationType==TIDS_Constant.CHG_NAME || applicationType==TIDS_Constant.CHG_ADDRESS){
 			sSettingName = 'TIDS-CHF';
 		}
-		if((applicationType==TIDS_Constant.RELINQ_HO || applicationType==TIDS_Constant.RELINQ_BR || applicationType==TIDS_Constant.RELINQ_VB){
+		if(applicationType==TIDS_Constant.RELINQ_HO || applicationType==TIDS_Constant.RELINQ_BR || applicationType==TIDS_Constant.RELINQ_VB){
 			sSettingName = 'TIDS-TER';
 		}
-		if((applicationType==TIDS_Constant.REINSTATE_HO || applicationType==TIDS_Constant.REINSTATE_BR || applicationType==TIDS_Constant.REINSTATE_VB){
+		if(applicationType==TIDS_Constant.REINSTATE_HO || applicationType==TIDS_Constant.REINSTATE_BR || applicationType==TIDS_Constant.REINSTATE_VB){
 			sSettingName = 'TIDS-REI';
 		}
 
-		if(!sSettingName==''){
-			AMS_ChangeCodesConfigHelper.createChangeCodeFromConfigSetting(sSettingName, '', '', null, '');
+		if(sSettingName!=''){
+			AMS_OSCAR_JSON.ChangeCode cc = AMS_ChangeCodesConfigHelper.createChangeCodeFromConfigSetting(sSettingName, '', '', null, '');
+			Agency_Applied_Change_code__c changeCode = new Agency_Applied_Change_code__c(
+						Account__c = AccountId
+						,Active__c = true
+						,Bulletin_Information__c = cc.memoText
+						,Change_Code__c = cc.name
+						,Reason_Code__c = cc.reasonCode
+						,Reason_Description__c = cc.reasonDesc
+						,AccountNewStatus__c =  cc.status
+						,To_Publish_in_e_Bulletin__c = cc.publishedOnEBulletin
+						);
+			insert changeCode;
 		}
 	}
 }
