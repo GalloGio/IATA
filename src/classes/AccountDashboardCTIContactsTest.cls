@@ -19,7 +19,7 @@ public with sharing class AccountDashboardCTIContactsTest {
 		}
 		insert accountList;
 
-		List<Contact> contactList = TestDataFactory_Contacts.createDefaultContact(accountList.get(0).Id);
+		List<Contact> contactList = TestDataFactory_Contacts.createDefaultContact(2);
 		insert contactList;
 
 		contactList[0].AccountId = accountList.get(0).Id;
