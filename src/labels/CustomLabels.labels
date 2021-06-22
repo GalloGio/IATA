@@ -51218,6 +51218,14 @@ ONE Source is the industry platform for validated aviation capability and infras
         <value>In order to create a new physical address, please proceed to request the creation of the new Account</value>
     </labels>
     <labels>
+        <fullName>icg_others</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg others</shortDescription>
+        <value>OTHERS</value>
+    </labels>
+    <labels>
         <fullName>icg_overall_aiport_size</fullName>
         <categories>ICG One Source</categories>
         <language>en_US</language>
