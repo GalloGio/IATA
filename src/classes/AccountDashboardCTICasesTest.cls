@@ -19,8 +19,12 @@ public with sharing class AccountDashboardCTICasesTest {
 		}
 		insert accountList;
 
-		List<Contact> contactList = TestDataFactory_Contacts.createDefaultContact(accountList.get(0).Id, 2);
+		List<Contact> contactList = TestDataFactory_Contacts.createDefaultContact(2);
 		insert contactList;
+
+		contactList[0].AccountId = accountList.get(0).Id;
+		contactList[1].AccountId = accountList.get(0).Id;
+		update contactList;
 
 		Case testCase = ISSP_ObjectFactory.createNewCase();
 		testCase.BSPCountry__c = 'Hong Kong (SAR), China';

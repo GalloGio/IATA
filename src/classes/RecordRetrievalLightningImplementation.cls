@@ -92,9 +92,6 @@ global class RecordRetrievalLightningImplementation extends odigocti.RecordRetri
 							result.objectType = 'Search'; //keyword to open the search page
 							Set < String > setIds = new Set < String > ();
 							setIds.add(localPhoneNumber); //what to search
-							if (IATACode != '') { 
-								setIds.add(IATACode); //what to search
-							}
 							result.recordIds = setIds;
 							return result;
 						}
@@ -117,9 +114,6 @@ global class RecordRetrievalLightningImplementation extends odigocti.RecordRetri
 							result.objectType = 'Search'; //keyword to open the search page
 							Set < String > setIds = new Set < String > ();
 							setIds.add(localPhoneNumber); //what to search
-							if (IATACode != '') { 
-								setIds.add(IATACode); //what to search
-							}
 							result.recordIds = setIds;
 							return result;
 						}
@@ -134,9 +128,6 @@ global class RecordRetrievalLightningImplementation extends odigocti.RecordRetri
 		result.objectType = 'Search'; //keyword to open the search page
 		Set < String > setIds = new Set < String > ();
 		setIds.add(localPhoneNumber); 	//what to search
-		if (IATACode != '') { 
-			setIds.add(IATACode); //what to search
-		}
 		result.recordIds = setIds;
 
 		return result;
