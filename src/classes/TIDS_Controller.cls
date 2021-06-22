@@ -109,8 +109,11 @@ public without sharing class TIDS_Controller {
 				tidsGenerateIATACode(tidsCase.contactId, caseId, null, false);
 				if (TIDSUtil.iataCodeError.hasAnError){
 					return TIDSUtil.iataCodeError;
+				}else{
+					manageHierarchy(tidsCase, tids.applicationType);
 				}
 			}
+			createChangeCode(tidsCase, tids.applicationType);
 		}else if(applicationDecision==TIDS_Constant.IS_REJECTED || applicationDecision==TIDS_Constant.IS_APPREJECTED  || applicationDecision==TIDS_Constant.IS_CLOSED ){
 			
 			tidsCase.Decision__c = TIDS_Constant.IS_REJECTED.toUpperCase();
@@ -1220,6 +1223,32 @@ public without sharing class TIDS_Controller {
 		private void getBusinessProfile(){
 			List<vslabel> values = this.sections.BusinessSpecialization.values.percentageBreakdown.values;
 			setBusinessCodes(values, false, true, '');
+		}
+	}
+
+	@future
+	private static void manageHierarchy(case tidsCase, string applicationType){
+		boolean bIsHiearchyCreated = AMS_RecordCreatorWebservice.createHierarchy(tidsCase.AccountId, applicationType);
+	}
+
+	@future
+	private static void createChangeCode(case tidsCase, string applicationType){
+		string sSettingName = '';
+		if(applicationType == TIDS_Constant.NEW_HO || applicationType == TIDS_Constant.NEW_BR || applicationType == TIDS_Constant.NEW_VB){
+			sSettingName = 'TIDS-FIN';
+		}
+		if(applicationType==TIDS_Constant.CHG_NAME || applicationType==TIDS_Constant.CHG_ADDRESS){
+			sSettingName = 'TIDS-CHF';
+		}
+		if((applicationType==TIDS_Constant.RELINQ_HO || applicationType==TIDS_Constant.RELINQ_BR || applicationType==TIDS_Constant.RELINQ_VB){
+			sSettingName = 'TIDS-TER';
+		}
+		if((applicationType==TIDS_Constant.REINSTATE_HO || applicationType==TIDS_Constant.REINSTATE_BR || applicationType==TIDS_Constant.REINSTATE_VB){
+			sSettingName = 'TIDS-REI';
+		}
+
+		if(!sSettingName==''){
+			AMS_ChangeCodesConfigHelper.createChangeCodeFromConfigSetting(sSettingName, '', '', null, '');
 		}
 	}
 }

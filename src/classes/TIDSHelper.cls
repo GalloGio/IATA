@@ -929,16 +929,16 @@ public without sharing class TIDSHelper {
 		types.put(TIDS_Constant.NEW_HO,TIDS_Constant.CASE_SUBJECT_HEAD_OFFICE);
 		types.put(TIDS_Constant.NEW_BR,TIDS_Constant.CASE_SUBJECT_BRANCH);
 		types.put(TIDS_Constant.NEW_VB,TIDS_Constant.CASE_SUBJECT_VIRTUAL_BRANCH);
-		types.put('chg-business-profile-specialization' ,TIDS_Constant.CASE_SUBJECT_BUSINESS_PROFILE_SPECIALIZATION);
-		types.put('chg-address-contact',TIDS_Constant.CASE_SUBJECT_ADDRESS_CONTACT);
-		types.put('chg-name-company',TIDS_Constant.CASE_SUBJECT_NAME_COMPANY);
-		types.put('request-virtual-branch-service','TIDS – Virtual Branch Access Request');
-		types.put('request-relinquish-ho','TIDS – Head Office Relinquishment');
-		types.put('request-relinquish-vb','TIDS – Virtual Branch Relinquishment');
-		types.put('request-relinquish-br','TIDS – Branch Office Relinquishment');
-		types.put('request-reinstate-ho','TIDS – Head Office Reinstatement');
-		types.put('request-reinstate-br','TIDS – Branch Office Reinstatement');
-		types.put('request-reinstate-vb','TIDS – Virtual Branch Reinstatement');
+		types.put(TIDS_Constant.CHG_PROFILE,TIDS_Constant.CASE_SUBJECT_BUSINESS_PROFILE_SPECIALIZATION);
+		types.put(TIDS_Constant.CHG_ADDRESS,TIDS_Constant.CASE_SUBJECT_ADDRESS_CONTACT);
+		types.put(TIDS_Constant.CHG_NAME,TIDS_Constant.CASE_SUBJECT_NAME_COMPANY);
+		types.put(TIDS_Constant.RQT_VIRTUALB,'TIDS – Virtual Branch Access Request');
+		types.put(TIDS_Constant.RELINQ_HO,'TIDS – Head Office Relinquishment');
+		types.put(TIDS_Constant.RELINQ_VB,'TIDS – Virtual Branch Relinquishment');
+		types.put(TIDS_Constant.RELINQ_BR,'TIDS – Branch Office Relinquishment');
+		types.put(TIDS_Constant.REINSTATE_HO,'TIDS – Head Office Reinstatement');
+		types.put(TIDS_Constant.REINSTATE_BR,'TIDS – Branch Office Reinstatement');
+		types.put(TIDS_Constant.REINSTATE_VB,'TIDS – Virtual Branch Reinstatement');
 		if (types.ContainsKey(applicationType)){
 			subject = (String) types.get(applicationType);
 		}
@@ -951,16 +951,16 @@ public without sharing class TIDSHelper {
 		types.put(TIDS_Constant.NEW_HO,TIDS_Constant.NEW_APP);
 		types.put(TIDS_Constant.NEW_BR,'TIDS - New BR Application');
 		types.put(TIDS_Constant.NEW_VB,'TIDS - New VB Application');
-		types.put('chg-business-profile-specialization' ,'TIDS - Change of Business Profile Specialization');
-		types.put('chg-address-contact','TIDS - Change of Address or Contact Details');
-		types.put('chg-name-company','TIDS - Change of Name or Company Details');
-		types.put('request-virtual-branch-service','TIDS – VB Service Request');
-		types.put('request-relinquish-ho',TIDS_Constant.CASE_REASON_RELINQUISH);
-		types.put('request-relinquish-br',TIDS_Constant.CASE_REASON_RELINQUISH);
-		types.put('request-relinquish-vb',TIDS_Constant.CASE_REASON_RELINQUISH);
-		types.put('request-reinstate-ho',TIDS_Constant.CASE_REASON_REINSTATEMENT);
-		types.put('request-reinstate-br',TIDS_Constant.CASE_REASON_REINSTATEMENT);
-		types.put('request-reinstate-vb',TIDS_Constant.CASE_REASON_REINSTATEMENT);		
+		types.put(TIDS_Constant.CHG_PROFILE ,'TIDS - Change of Business Profile Specialization');
+		types.put(TIDS_Constant.CHG_ADDRESS,'TIDS - Change of Address or Contact Details');
+		types.put(TIDS_Constant.CHG_NAME,'TIDS - Change of Name or Company Details');
+		types.put(TIDS_Constant.RQT_VIRTUALB,'TIDS – VB Service Request');
+		types.put(TIDS_Constant.RELINQ_HO,TIDS_Constant.CASE_REASON_RELINQUISH);
+		types.put(TIDS_Constant.RELINQ_BR,TIDS_Constant.CASE_REASON_RELINQUISH);
+		types.put(TIDS_Constant.RELINQ_VB,TIDS_Constant.CASE_REASON_RELINQUISH);
+		types.put(TIDS_Constant.REINSTATE_HO,TIDS_Constant.CASE_REASON_REINSTATEMENT);
+		types.put(TIDS_Constant.REINSTATE_BR,TIDS_Constant.CASE_REASON_REINSTATEMENT);
+		types.put(TIDS_Constant.REINSTATE_VB,TIDS_Constant.CASE_REASON_REINSTATEMENT);
 		if (types.ContainsKey(applicationType)){
 			subject = (String) types.get(applicationType);
 		}
