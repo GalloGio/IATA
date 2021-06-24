@@ -544,8 +544,7 @@ export default class CwHandlerDetail extends LightningElement {
 						new CustomEvent("event", {
 							detail: {
 								name: "save",
-								handlerType: this.handlerType,
-								handlerData: JSON.parse(JSON.stringify(this.handlerData))
+								handlerType: this.handlerType
 							}
 						})
 					);
@@ -581,8 +580,7 @@ export default class CwHandlerDetail extends LightningElement {
 								detail: {
 									name: "save",
 									handlerType: this.handlerType,
-									result: result,
-									handlerData: JSON.parse(JSON.stringify(this.handlerData))
+									result: result
 								}
 							})
 						);
@@ -644,9 +642,7 @@ export default class CwHandlerDetail extends LightningElement {
 				detail: {
 					name: "selectItem",
 					handlerType: this.handlerType,
-					itemSelected: itemSelected,
-					handlerData: this.handlerData,
-					handlerDataDraft: this._handlerDataDraft
+					itemSelected: itemSelected
 				}
 			})
 		);
