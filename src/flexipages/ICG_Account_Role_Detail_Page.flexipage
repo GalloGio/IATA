@@ -51,6 +51,10 @@
     </flexiPageRegions>
     <flexiPageRegions>
         <componentInstances>
+            <componentInstanceProperties>
+                <name>validationPrograms</name>
+                <value>IATA,NONE</value>
+            </componentInstanceProperties>
             <componentName>cwCertificationsManagerContainer</componentName>
         </componentInstances>
         <name>Facet-9dfec202-1931-474e-96fa-9619baa64ad3</name>
@@ -58,6 +62,10 @@
     </flexiPageRegions>
     <flexiPageRegions>
         <componentInstances>
+            <componentInstanceProperties>
+                <name>validationPrograms</name>
+                <value>IATA,NONE</value>
+            </componentInstanceProperties>
             <componentName>cwCapabilitiesManagerContainer</componentName>
         </componentInstances>
         <name>Facet-cb4ce62e-0932-41a8-8ef1-e048ff31a3e4</name>

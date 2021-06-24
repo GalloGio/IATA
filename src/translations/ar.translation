@@ -4498,6 +4498,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_LabReg_InitialQuestion</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_LabReg_InitialQuestionDescription --></label>
+        <name>CSP_LabReg_InitialQuestionDescription</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_LabReg_National_Govern_Platform --></label>
         <name>CSP_LabReg_National_Govern_Platform</name>
     </customLabels>
@@ -29256,6 +29260,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>icg_gridEmptyMessage</name>
     </customLabels>
     <customLabels>
+        <label><!-- icg handling services --></label>
+        <name>icg_handling_services</name>
+    </customLabels>
+    <customLabels>
         <label><!-- icg has been approved --></label>
         <name>icg_has_been_approved</name>
     </customLabels>
@@ -29306,6 +29314,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- icg in --></label>
         <name>icg_in</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg in house --></label>
+        <name>icg_in_house</name>
     </customLabels>
     <customLabels>
         <label><!-- icg in progress --></label>
@@ -29832,6 +29844,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>icg_process_finished</name>
     </customLabels>
     <customLabels>
+        <label><!-- icg provided bythird party --></label>
+        <name>icg_provided_bythird_party</name>
+    </customLabels>
+    <customLabels>
         <label><!-- icg public area --></label>
         <name>icg_public_area</name>
     </customLabels>
@@ -30284,6 +30300,14 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>icg_to</name>
     </customLabels>
     <customLabels>
+        <label><!-- icg tooltip service info1 --></label>
+        <name>icg_tooltip_service_info1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg tooltip service info2 --></label>
+        <name>icg_tooltip_service_info2</name>
+    </customLabels>
+    <customLabels>
         <label><!-- icg total facility space --></label>
         <name>icg_total_facility_space</name>
     </customLabels>
@@ -30330,6 +30354,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- icg validation management --></label>
         <name>icg_validation_management</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- icg validation services message --></label>
+        <name>icg_validation_services_message</name>
     </customLabels>
     <customLabels>
         <label><!-- icg watch video --></label>

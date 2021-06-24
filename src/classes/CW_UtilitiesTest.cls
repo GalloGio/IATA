@@ -901,6 +901,12 @@ public class CW_UtilitiesTest {
 		}
 	}
 
+	@isTest
+	static void getAllServicesAvailableTest(){
+		List<CW_Utilities.PicklistVal> historyLst = CW_Utilities.getAllServicesAvailable();
+		System.assertEquals(false, historyLst.isEmpty(), 'ERROR: List of services available for ramp handler are empty');
+	}
+	
 	/*********************************************************************************************************
 	 * @name			getFacilityHistoryByUserTest
 	 * @author			Daniel Mendoza <daniel.mendoza@nextlinksolutions.ch>
@@ -966,5 +972,18 @@ public class CW_UtilitiesTest {
 		List<ICG_Contact_Role_Detail__c> crds = CW_Utilities.getContactRoleDetailsToInsert(accRole.Account__c, station.Id, usr.ContactId, 'Approved');
 		test.stopTest();
 		System.assert(!crds.isEmpty(), 'ERROR: crds should not be empty');
+	}
+
+
+	/*********************************************************************************************************
+	 * @name			getAllHandlingServicesAvailableJsonTest
+	 * @description		Test method for getAllServicesAvailableJson method
+	 * @param			-
+	 * @return			-
+	**********************************************************************************************************/
+	@isTest
+	static void getAllHandlingServicesAvailableJsonTest(){
+		String services = CW_Utilities.getAllServicesAvailableJson();
+		System.assert(string.isNotBlank(services), 'ERROR: services not be empty');
 	}
 }

@@ -74,7 +74,7 @@ public class CW_ScheduleAuditsControllerTest {
 	public static void insertIcgNotifications() {
 		User partnerUser = [SELECT Id FROM User WHERE FirstName = 'test' AND LastName = 'Audit' LIMIT 1];
 		System.runAs(partnerUser){
-			List<ICG_Certification__c> cert = [SELECT id, name FROM ICG_Certification__c];
+			List<ICG_Certification__c> cert = [SELECT id, name FROM ICG_Certification__c WHERE ValidationPrograms__c = 'IATA'];
 			Id stationId = [SELECT id FROM ICG_Account_Role_Detail__c LIMIT 1].id;
 			Group ownerQueue = [SELECT Id FROM Group WHERE Name = 'TheTestQueue' LIMIT 1];
 			List<CW_ScheduleAuditsController.CertData> crtdatalist = new List<CW_ScheduleAuditsController.CertData>();
