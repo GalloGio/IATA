@@ -4507,6 +4507,10 @@
         <name>CSP_LabReg_InitialQuestion</name>
     </customLabels>
     <customLabels>
+        <label><!-- CSP_LabReg_InitialQuestionDescription --></label>
+        <name>CSP_LabReg_InitialQuestionDescription</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CSP_LabReg_National_Govern_Platform --></label>
         <name>CSP_LabReg_National_Govern_Platform</name>
     </customLabels>
