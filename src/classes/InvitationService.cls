@@ -78,7 +78,7 @@ public without sharing class InvitationService {
 		//commit updated invitations to DB
 		try{
 			update invitations.records;
-		} catch(Exception e){
+		} catch(InvitationServiceException e){
 			throw e;
 		}
 	}
