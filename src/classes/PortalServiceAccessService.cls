@@ -202,7 +202,7 @@ public without sharing class PortalServiceAccessService {
 		AccountContactRoles accountContactRoles = new AccountContactRoles();
 
 		//get acrs and related ars for denied psa's (acr selector + ar fields) based on contact id and functional role
-		Map<Id, Account_Contact_Role__c> existingAccountContactRoleMap = AccountContactRoleSelector.selectAccountContactRoleMap();
+		Map<Id, Account_Contact_Role__c> existingAccountContactRoleMap = AccountContactRoleSelector.selectAccountContactRoleMap(contactMap.keySet());
 		
 		//create a set of ar id's for any acr's that are modified
 		Set<Id> accountRoleWithModifiedContactRoleIdSet = new Set<Id>();

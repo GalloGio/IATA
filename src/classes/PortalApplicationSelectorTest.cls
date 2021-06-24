@@ -33,4 +33,26 @@ private class PortalApplicationSelectorTest {
 		System.assert(!portalApplication.ANG_Accredited_Agents_Only__c, 'Expected false but returned ' + !portalApplication.ANG_Accredited_Agents_Only__c);
 		System.assert(portalApplication.Agency__c, 'Expected true but returned ' + portalApplication.Agency__c);
 	}
+
+	@IsTest
+	static void testSelectFunctionalRoleMapByServiceIdSet(){
+		Map<Id, Portal_Applications__c> portalApplicationIdMap = PortalApplicationSelector.selectFunctionalRoleMapByServiceNameSet(new Set<String>{TestDataFactory_PortalApplications.DEFAULTSERVICENAME});		 
+		System.assertEquals(1, portalApplicationIdMap.size());
+	}
+
+	@IsTest
+	static void testSelectInvitationFieldsMapByName(){
+		Portal_Applications__c portalApplication = [SELECT Id, Functional_Role__c FROM Portal_Applications__c LIMIT 1];
+		System.assert(PortalApplicationSelector.selectInvitationFieldsMapByName(new Set<String>{portalApplication.Functional_Role__c}) != null);
+	}
+
+	@IsTest
+	static void testSelectIsServiceEnabledMapByServiceIdSet(){
+		Portal_Applications__c portalApplication = [SELECT Id, Is_Invitation_Enabled__c FROM Portal_Applications__c WHERE Name = :TestDataFactory_PortalApplications.DEFAULTSERVICENAME LIMIT 1];
+		portalApplication.Is_Invitation_Enabled__c = true;
+		update portalApplication;
+
+		Map<Id, Portal_Applications__c> portalApplicationIdMap = PortalApplicationSelector.selectIsServiceEnabledMapByServiceIdSet(new Set<Id>{portalApplication.Id});		 
+		System.assert(portalApplicationIdMap.get(portalApplication.Id).Is_Invitation_Enabled__c);
+	}
 }

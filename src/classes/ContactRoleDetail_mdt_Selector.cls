@@ -7,7 +7,7 @@ public class ContactRoleDetail_mdt_Selector {
 	public static List<Contact_Role_Detail__mdt> selectRolesByFunctionalRole(String functionalRole){
 		return [SELECT Id, Functional_Role__c, Role_Name__c 
 			FROM Contact_Role_Detail__mdt 
-			WHERE Functional_Role__c = :functionalRole
+			WHERE Functional_Role__r.DeveloperName = :functionalRole
 		];
 	}
 

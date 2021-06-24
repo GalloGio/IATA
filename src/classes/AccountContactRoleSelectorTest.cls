@@ -62,4 +62,11 @@ private class AccountContactRoleSelectorTest {
 		Map<Id,List<Account_Contact_Role__c>> accountContactRoleMap = AccountContactRoleSelector.selectContactIdAccountRolesByContactIdMap(new Set<Id>{contactId});
 		System.assert(!accountContactRoleMap.isEmpty());
 	}
+
+	@IsTest
+	static void testSelectAccountContactRoleMap() {
+		Account_Contact_Role__c accountContactRole = [SELECT Id, Contact__c FROM Account_Contact_Role__c LIMIT 1];
+		Map<Id, Account_Contact_Role__c> accountContactRoleMap = AccountContactRoleSelector.selectAccountContactRoleMap(new Set<Id>{accountContactRole.Contact__c});
+		System.assertEquals(accountContactRole.Contact__c, accountContactRoleMap.values().get(0).Contact__c);
+	}
 }

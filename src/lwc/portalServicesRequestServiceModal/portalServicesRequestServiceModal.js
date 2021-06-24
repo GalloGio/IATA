@@ -730,7 +730,6 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
     }
 
     handleSubmitRequest() {
-        this.showConfirm = false; //hides confirm box
         this.showSpinner = true;
 
         //displays popup with active spinner (only if the service does not require approval)

@@ -5,6 +5,25 @@ private class OneId_RegistrationProcessControllerTest {
 	 * Attribute
 	 */
 	enum PortalType { CSPLiteUser, PowerPartner, PowerCustomerSuccess, CustomerSuccess }
+
+	 /**
+	 * Methods to help for portal user creation
+	 */
+	/*private static testmethod void usertest() {
+		User pu = getPortalUser(PortalType.PowerPartner, null, true);
+		System.assert([select isPortalEnabled
+						 from user
+						where id = :pu.id].isPortalEnabled,
+						'User was not flagged as portal enabled.');
+
+		System.RunAs(pu) {
+			System.assert([select isPortalEnabled
+							 from user
+							where id = :UserInfo.getUserId()].isPortalEnabled,
+							'User wasnt portal enabled within the runas block. ');
+		}
+	}*/
+
 	@isTest
 	public static void testGetHostURL() {
 
@@ -466,9 +485,7 @@ private class OneId_RegistrationProcessControllerTest {
 		insert contact;
 
 		String functionalRole = SObjectType.Portal_Applications__c.Fields.Functional_Role__c.PicklistValues[0].getValue();
-		Portal_Applications__c app = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
-		app.Name = 'IATA Accreditation & Changes';
-		app.Functional_Role__c = functionalRole;
+		Portal_Applications__c app = new Portal_Applications__c(Functional_Role__c = functionalRole, Name = 'IATA Accreditation & Changes');
 		insert app;
 
 		User user = new User(
@@ -527,9 +544,7 @@ private class OneId_RegistrationProcessControllerTest {
 		 insert country ;
 
 		 String functionalRole = SObjectType.Portal_Applications__c.Fields.Functional_Role__c.PicklistValues[0].getValue();
-		 Portal_Applications__c pa = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
-		 pa.Name = TIP_Utils.PORTAL_SERVICE_NAME_TIP;
-		 pa.Functional_Role__c = functionalRole;
+		 Portal_Applications__c pa = new Portal_Applications__c(Functional_Role__c = functionalRole, name = TIP_Utils.PORTAL_SERVICE_NAME_TIP);
 		 insert pa;
 
 		 ISSP_Portal_Service_Ids__c ipsi= new ISSP_Portal_Service_Ids__c(
@@ -575,7 +590,7 @@ private class OneId_RegistrationProcessControllerTest {
 		insert contactRoles2;
 
 		String functionalRole = SObjectType.Portal_Applications__c.Fields.Functional_Role__c.PicklistValues[0].getValue();
-		Portal_Applications__c portalApplications = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		Portal_Applications__c portalApplications = new Portal_Applications__c();
 		portalApplications.Name = 'GADM';
 		portalApplications.Functional_Role__c = functionalRole;
 		insert portalApplications;
@@ -645,9 +660,7 @@ private class OneId_RegistrationProcessControllerTest {
 		insert country ;
 
 		String functionalRole = SObjectType.Portal_Applications__c.Fields.Functional_Role__c.PicklistValues[0].getValue();
-		Portal_Applications__c pa = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
-		pa.Name = ISSP_AMC_DAO.PORTAL_SERVICE_NAME_ACLI;
-		pa.Functional_Role__c = functionalRole;
+		Portal_Applications__c pa = new Portal_Applications__c(Functional_Role__c = functionalRole, name = ISSP_AMC_DAO.PORTAL_SERVICE_NAME_ACLI);
 		insert pa;
 
 		ISSP_Portal_Service_Ids__c ipsi= new ISSP_Portal_Service_Ids__c(
@@ -660,9 +673,8 @@ private class OneId_RegistrationProcessControllerTest {
 
 		Contact c;
 
-		Portal_Applications__c p = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
-		p.Name='One Id NDC Matchmaker';
-		p.Functional_Role__c = functionalRole;
+		functionalRole = SObjectType.Portal_Applications__c.Fields.Functional_Role__c.PicklistValues[0].getValue();
+		Portal_Applications__c p = new Portal_Applications__c(Functional_Role__c = functionalRole, Name='One Id NDC Matchmaker');
 		insert p;
 
 		User myUser = [select Id from User WHERE Profile.Name = 'System Administrator' AND IsActive = true LIMIT 1];

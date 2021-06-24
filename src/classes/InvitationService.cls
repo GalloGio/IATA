@@ -60,42 +60,50 @@ public without sharing class InvitationService {
 	}
 
 	@AuraEnabled
-	public static void cancelInvitation(List<EncodedInvitation> encodedInvitationList){
+	//only the invitation record id is sent in the encodedInvitationList
+	public static void cancelInvitation(List<EncodedInvitation> encodedInvitationList){	
+		//create set of invitation ids
+		Set<Id> cancelledInvitationIdSet = new Set<Id>();
+		for(EncodedInvitation encodedInvitation : encodedInvitationList){
+			cancelledInvitationIdSet.add(encodedInvitation.id);
+		}
+		//query for existing invitations
+		//todo move to invitationselector class
+		List<Invitation__c> invitationList = [SELECT Id, Status__c FROM Invitation__c WHERE Id IN :cancelledInvitationIdSet];
 		//create Invitation domain class
-		Invitations invitations = new Invitations();
+		Invitations invitations = new Invitations(invitationList);
+		//update status' on records
+		invitations.updateStatus(invitations.CANCELLED);
 
-		//verify required data is present in encodedInvitationList
+		//commit updated invitations to DB
 		try{
-			invitations.verifyInvitation(decodeInvitation(encodedInvitationList));
-		}catch(InvitationServiceException e){
-			throw e;
-		}
-
-		//create set for ease of checking for presence of email address and account id
-		Set<String> invitationEmailAddressSet = new Set<String>();
-		Set<Id> accountIdSet = new Set<Id>();
-		//get existing invitations for portal service where email or account exists in invitation
-		Set<EncodedInvitation> existingEncodedInvitationSet = getExistingInvitationSet(encodedInvitationList,invitationEmailAddressSet, accountIdSet);
-
-		//initialise set of original requested EncodedInvitation
-		Set<EncodedInvitation> requestedEncodedInvitationSet = new Set<EncodedInvitation>(encodedInvitationList);
-
-		//initialise list of records to modify
-		List<Invitation__c> invitationsToUpsert = new List<Invitation__c>();
-
-		//iterate requested invitations and if existing is not present, create. if present, update status and to list to be upserted
-		for(EncodedInvitation requestedEncodedInvitation : requestedEncodedInvitationSet){
-			//if requested invitation exists, update the status
-			if(existingEncodedInvitationSet.contains(requestedEncodedInvitation)){
-				requestedEncodedInvitation.status = invitations.CANCELLED;
-				invitationsToUpsert.add(decodeInvitation(new List<EncodedInvitation>{requestedEncodedInvitation}).get(0));
-			}
-		}
-
-		try{
-			upsertRecords(invitationsToUpsert);
+			update invitations.records;
 		} catch(Exception e){
 			throw e;
+		}
+	}
+
+	@AuraEnabled(cacheable=true)
+	public static Id getUserContactRoleAccountId(Id loggedInUserId, Id portalApplicationId){
+		try {
+			//todo move to PortalApplicationSelector
+			String functionalRole = [SELECT Functional_Role__c FROM Portal_Applications__c WHERE Id = :portalApplicationId LIMIT 1].Functional_Role__c;
+
+			//todo move to AccountContactRoleSelector
+			return [
+				SELECT Account_Role__r.Account__c 
+				FROM Account_Contact_Role__c 
+				WHERE Functional_Role__c = :functionalRole
+				AND Account_Role__r.Functional_Role__c =:functionalRole
+				AND Contact__c IN (
+					SELECT ContactId 
+					FROM User 
+					WHERE Id = :loggedInUserId
+				) 
+				LIMIT 1
+			].Account_Role__r.Account__c;
+		} catch (Exception e) {
+			throw new AuraHandledException(e.getMessage());
 		}
 	}
 
@@ -126,27 +134,43 @@ public without sharing class InvitationService {
 				inviteIdContactMap.put(invitation.Id, emailContactMap.get(invitation.Email__c));
 			}
 
+			//get existing portalapplicationright record for contact + service (may already exist as access denied)
+			List<Portal_Application_Right__c> existingPortalApplicationRightList = [SELECT Id, Contact__c, Portal_Application__c FROM Portal_Application_Right__c WHERE Portal_Application__c = :portalApplicationId AND Contact__c = :user.ContactId];
+			//create map Contact Id + Portal_Application_Right__c
+			Map<Id, Portal_Application_Right__c> contactPortalApplicationRightMap = new Map<Id, Portal_Application_Right__c>();
+			for(Portal_Application_Right__c portalApplicationRight : existingPortalApplicationRightList){
+				contactPortalApplicationRightMap.put(portalApplicationRight.Contact__c, portalApplicationRight);
+			}
+
 			List<Portal_Application_Right__c> portalApplicationRightList = portalApplicationRights.createDefaultPortalApplicationRight(invitationList.size());
 			for(Integer x = 0 ; x < invitationList.size(); x++){
 				Invitation__c invitation = invitationList.get(x);
 				Portal_Application_Right__c portalApplicationRight = portalApplicationRightList.get(x);
-				portalApplicationRight.Portal_Application__c = invitation.ServiceId__c;
-				portalApplicationRight.Contact__c = inviteIdContactMap.get(invitation.Id).Id;
+				Id existingContactId = inviteIdContactMap.get(invitation.Id).Id;
+
+				if(contactPortalApplicationRightMap.get(existingContactId) != null){
+					portalApplicationRightList.set(x, contactPortalApplicationRightMap.get(existingContactId));
+					portalApplicationRight = portalApplicationRightList.get(x);
+				} else{
+					portalApplicationRight.Portal_Application__c = invitation.ServiceId__c;
+					portalApplicationRight.Contact__c = existingContactId;
+				}
 				portalApplicationRight.Right__c = portalApplicationRights.ACCESSGRANTED;
 				portalApplicationRight.Is_Invitation__c = TRUE;
 			}
-			insert portalApplicationRightList;
+			upsert portalApplicationRightList;
 		} catch (Exception e) {
 			Database.rollback(savePoint);
 			throw new AuraHandledException(e.getMessage() + ' = ' + e.getStackTraceString());
 		}
 	}
 
-	@AuraEnabled
-	public static List<Invitation__c> getInvitationList(Id portalServiceId){
+	@AuraEnabled(cacheable=true)
+	public static List<EncodedInvitation> getInvitationList(Id portalApplicationId){
 		try {
-			List<Invitation__c> invitationList = InvitationSelector.selectQuery('Id, Account__c, Email__c, Role_Name__c, Status__c', 'ServiceId__c = \'' + portalServiceId + '\'', null);
-			return invitationList;	
+			//todo move to individual method in invitationselector
+			List<Invitation__c> invitationList = InvitationSelector.selectQuery('Id, Account__c, Email__c, Role_Name__c, Status__c, ServiceId__c, Functional_Role__c', 'ServiceId__c = \'' + portalApplicationId + '\'', null);
+			return encodeInvitation(invitationList);	
 		} catch (Exception e) {
 			throw new AuraHandledException(e.getMessage());
 		}
@@ -173,7 +197,7 @@ public without sharing class InvitationService {
 	}
 
 	//returns a list of invitable roles for a provided PortalApplicationId
-	@AuraEnabled
+	@AuraEnabled(cacheable=true)
 	public static List<String> getInvitableRoles(Id portalApplicationId){
 		try {
 			List<String> invitableRoleList = new List<String>();
@@ -194,8 +218,14 @@ public without sharing class InvitationService {
 
 	//converts the input EncodedInvitations into Invitation__c records
 	public static List<Invitation__c> decodeInvitation(List<EncodedInvitation> encodedInvitationList){
+		//set of unique role names (label value)
+		Set<String> userRoleNameSet = new Set<String>();
+		//get all role names to be decoded
+		for(EncodedInvitation encodedInvitation : encodedInvitationList){
+			userRoleNameSet.add(encodedInvitation.userRole);
+		}
+		
 		List<Invitation__c> invitationList = new List<Invitation__c>();
-
 		for(EncodedInvitation encodedInvitation : encodedInvitationList){
 			Invitation__c invitation = new Invitation__c(
 				Id = encodedInvitation.id,
@@ -212,7 +242,7 @@ public without sharing class InvitationService {
 	}
 
 	//converts the input Invitation__c into EncodedInvitations
-	public static  List<EncodedInvitation> encodeInvitation(List<Invitation__c> invitationList){
+	public static  List<EncodedInvitation> encodeInvitation(List<Invitation__c> invitationList){		
 		List<EncodedInvitation> encodedInvitationList = new List<EncodedInvitation>();
 		for(Invitation__c invitation : invitationList){
 			//create EncodedInvitation and add to Set<EncodedInvitation> existingInvitationSet

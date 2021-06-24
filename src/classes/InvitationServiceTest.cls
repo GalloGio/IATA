@@ -76,8 +76,8 @@ private class InvitationServiceTest {
 	@IsTest
 	static void testGetInvitationList(){
 		Portal_Applications__c portalApplication = [SELECT Id FROM Portal_Applications__c WHERE Name = :TestDataFactory_PortalApplications.DEFAULTSERVICENAME];
-		List<Invitation__c> invitationList = InvitationService.getInvitationList(portalApplication.Id);
-		System.assertEquals(1, invitationList.size(), ' Expected 1 Portal Service');
+		List<InvitationService.EncodedInvitation> encodedInvitationList = InvitationService.getInvitationList(portalApplication.Id);
+		System.assertEquals(1, encodedInvitationList.size(), ' Expected 1 Portal Service');
 	}
 
 	//InvitationService.getInvitableRoles cannot be tested correctly because it relies 
@@ -224,5 +224,28 @@ private class InvitationServiceTest {
 		InvitationService.checkForInvitations(portalApplication.Id, user);
 		Portal_Application_Right__c portalApplicationRight = [SELECT Id, Right__c FROM Portal_Application_Right__c WHERE Contact__c = :contact.Id AND Portal_Application__c = :portalApplication.Id].get(0);
 		System.assertEquals(portalApplicationRights.ACCESSGRANTED, portalApplicationRight.Right__c);
+	}
+
+	@IsTest
+	static void testGetUserContactRoleAccountId(){
+		String functionalRole = SObjectType.Portal_Applications__c.Fields.Functional_Role__c.PicklistValues[0].getValue();
+		Contact contact = TestDataFactory_Contacts.createDefaultContact(1).get(0);
+		Account account = [SELECT Id FROM Account LIMIT 1];
+		contact.AccountId = account.Id;
+		insert contact;
+
+		User user = TestDataFactory_Users.createPortalUsers(new List<Contact>{contact}).get(0);
+		insert user;
+
+		Account_Role__c accountRole = TestDataFactory_AccountRoles.createAccountRoles(new List<Account>{account}, functionalRole).get(0);
+		insert accountRole;
+
+		Account_Contact_Role__c accountContactRole = TestDataFactory_AccountContactRoles.createDefaultAccountContactRole(contact.Id, accountRole.Id);
+		accountContactRole.Functional_Role__c = functionalRole;
+		insert accountContactRole;
+
+		Portal_Applications__c portalApplication = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		insert portalApplication;
+		System.assertEquals(account.Id, InvitationService.getUserContactRoleAccountId(user.Id, portalApplication.Id));
 	}
 }
