@@ -6781,6 +6781,17 @@ You can easily create a company account in two steps</value>
         <value>Please indicate your business model within the following categories:</value>
     </labels>
     <labels>
+        <fullName>CSP_LabReg_InitialQuestionDescription</fullName>
+        <categories>LabRegistry</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP_LabReg_InitialQuestionDescription</shortDescription>
+        <value>&amp;lt;b&amp;gt;Independent Labs&amp;lt;/b&amp;gt;: Labs that are not part of a lab network such as Clinics, medical centers and hospitals. Often have their collections sites as part of the infrastructure.&amp;lt;br/&amp;gt;
+&amp;lt;b&amp;gt;Lab Network&amp;lt;/b&amp;gt;: under a common brand, a Lab network share common practices, process and mostly same IT infrastructure under a Head office coordination.&amp;lt;br/&amp;gt;
+&amp;lt;b&amp;gt;Lab Aggregator&amp;lt;/b&amp;gt;: A lab aggregator often partners with Lab Networks and independent labs to maximize reach and geographical coverage of collection sites.&amp;lt;br/&amp;gt;
+&amp;lt;b&amp;gt;Lab IT Integrator&amp;lt;/b&amp;gt;: Mainly aggregates Laboratories / collection sites by providing a common IT platform (often for booking or for the Laboratory Information System).</value>
+    </labels>
+    <labels>
         <fullName>CSP_LabReg_National_Govern_Platform</fullName>
         <categories>LabRegistry</categories>
         <language>en_US</language>
