@@ -280,6 +280,7 @@
     </fields>
     <fields>
         <fullName>Local_Group_Type__c</fullName>
+        <description>Formula field to retrieve Type from parent object</description>
         <externalId>false</externalId>
         <formula>TEXT(Local_Governance__r.Local_Governance_type__c)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
