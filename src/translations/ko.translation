@@ -39102,6 +39102,19 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Opportunitis with Accounts --></description>
+        <label><!-- Opportunitis with Accounts --></label>
+        <name>Opportunitis_with_Accounts</name>
+        <sections>
+            <label><!-- Accounts --></label>
+            <name>Accounts</name>
+        </sections>
+        <sections>
+            <label><!-- Opportunities --></label>
+            <name>Opportunities</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Orders Products &amp; Charges --></description>
         <label><!-- Orders Products &amp; Charges --></label>
         <name>Orders_Products_Charges</name>
