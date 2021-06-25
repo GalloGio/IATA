@@ -93,7 +93,7 @@
     <applicationVisibilities>
         <application>IATA_Auto_Assignment</application>
         <default>false</default>
-        <visible>false</visible>
+        <visible>true</visible>
     </applicationVisibilities>
     <applicationVisibilities>
         <application>IATA_Financial_Assessment</application>

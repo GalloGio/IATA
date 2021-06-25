@@ -23043,7 +23043,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.Service_Model__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -63658,6 +63658,16 @@
         <description>Clarityhk.iata.org</description>
         <endAddress>203.95.215.71</endAddress>
         <startAddress>203.95.215.71</startAddress>
+    </loginIpRanges>
+    <loginIpRanges>
+        <description>Odigo2</description>
+        <endAddress>212.101.64.178</endAddress>
+        <startAddress>212.101.64.178</startAddress>
+    </loginIpRanges>
+    <loginIpRanges>
+        <description>Odigo1</description>
+        <endAddress>212.101.72.49</endAddress>
+        <startAddress>212.101.72.49</startAddress>
     </loginIpRanges>
     <loginIpRanges>
         <description>Clarity Connect</description>

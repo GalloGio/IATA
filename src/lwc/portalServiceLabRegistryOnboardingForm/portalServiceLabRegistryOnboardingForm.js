@@ -41,6 +41,7 @@ import CSP_LabReg_Describe_SLA_Nature from '@salesforce/label/c.CSP_LabReg_Descr
 import CSP_LabReg_How_Long_In_Business from '@salesforce/label/c.CSP_LabReg_How_Long_In_Business';
 import CSP_LabReg_HowManyLabs from '@salesforce/label/c.CSP_LabReg_HowManyLabs';
 import CSP_LabReg_InitialQuestion from '@salesforce/label/c.CSP_LabReg_InitialQuestion';
+import CSP_LabReg_InitialQuestionDescription from '@salesforce/label/c.CSP_LabReg_InitialQuestionDescription';
 import CSP_LabReg_issueTestResultsSelection from '@salesforce/label/c.CSP_LabReg_issueTestResultsSelection';
 import CSP_LabReg_labsPartOfNationalPlatform from '@salesforce/label/c.CSP_LabReg_labsPartOfNationalPlatform';
 import CSP_LabReg_manageBookingSelection from '@salesforce/label/c.CSP_LabReg_manageBookingSelection';
@@ -159,6 +160,7 @@ export default class PortalServiceOnboardingForm extends NavigationMixin(Lightni
 		,CSP_LabReg_confirmDetails
 		,CSP_LabReg_NumberOfLocations
 		,CSP_LabReg_Step2Intro
+		,CSP_LabReg_InitialQuestionDescription
 	}
 
 	@track showSplashScreen = true;
