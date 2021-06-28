@@ -1,5 +1,5 @@
 @isTest
-public class InterlineAgreementsMemorandumCtrlTest {
+public class IA_MemorandumCtrlTest {
 
 	private static Account airline1;
 	private static Account airline2;
@@ -114,9 +114,9 @@ public class InterlineAgreementsMemorandumCtrlTest {
 		Test.setCurrentPage(page);
 
 		Test.StartTest();
-		InterlineAgreementsMemorandumController ctrl = new InterlineAgreementsMemorandumController();
+		IA_MemorandumController ctrl = new IA_MemorandumController();
 		System.assertEquals(null,ctrl.getIATALogoURL());
-		Map<String,List<InterlineAgreementsMemorandumController.WrapperAgreement>> data = ctrl.getDataAgreements();
+		Map<String,List<IA_MemorandumController.WrapperAgreement>> data = ctrl.getDataAgreements();
 		Test.stopTest();
 
 		System.assertEquals(6,data.size());

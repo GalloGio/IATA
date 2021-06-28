@@ -1,4 +1,4 @@
-public with sharing class InterlineAgreementsMemorandumController {
+public with sharing class IA_MemorandumController {
 
 	public String memorandumNumber {get;set;}
 	public Date memorandumDate {get;set;}
@@ -14,7 +14,7 @@ public with sharing class InterlineAgreementsMemorandumController {
 			URL.getSalesforceBaseUrl().getProtocol()+'://'+System.URL.getSalesforceBaseUrl().getHost().replace('visualforce','documentforce')+'/servlet/servlet.FileDownload?file='+listDoc[0].id;
 	}
 
-	public InterlineAgreementsMemorandumController(){
+	public IA_MemorandumController(){
 		initFromParams();
 	}
 

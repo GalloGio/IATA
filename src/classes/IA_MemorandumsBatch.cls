@@ -1,10 +1,10 @@
 /**
- * This class should be called exclusevely by InterlineAgreementsMemorandumsSchedule
+ * This class should be called exclusevely by IA_MemorandumsSchedule
  * It creates a single PDF file and stores it in a specific Library folder
  * These files are memorandums containing information about in Interline Agreements (MITA_Agreement__c)
  * and must be accessible in Interline Agreements portal application.
  */
-public class InterlineAgreementsMemorandumsBatch implements Queueable, Database.AllowsCallouts {
+public class IA_MemorandumsBatch implements Queueable, Database.AllowsCallouts {
 
 	public static final ContentWorkspace LIBRARY = [SELECT ID FROM ContentWorkspace WHERE Name = :IA_util.LIBRARY_CS];
 	public static final String MEMO_PAGE = 'InterlineAgreementsMemorandum';
@@ -13,7 +13,7 @@ public class InterlineAgreementsMemorandumsBatch implements Queueable, Database.
 	public String filename;
 	public DateTime fromDate;
 
-	public InterlineAgreementsMemorandumsBatch(DateTime fromDate) {
+	public IA_MemorandumsBatch(DateTime fromDate) {
 		this.fromDate = fromDate;
 	}
 
@@ -46,7 +46,7 @@ public class InterlineAgreementsMemorandumsBatch implements Queueable, Database.
 			insert docLink;
 
 		} catch (Exception e) {
-			TransformationHelper.sendEmailSupport('ERROR: InterlineAgreementsMemorandumsBatch.createMemorandum() ' , '   STACKTRACE   ' + e.getStackTraceString()  + '  '  + e.getMessage());
+			TransformationHelper.sendEmailSupport('ERROR: IA_MemorandumsBatch.createMemorandum() ' , '   STACKTRACE   ' + e.getStackTraceString()  + '  '  + e.getMessage());
 			Database.rollback(sp);
 		}
 	}

@@ -1,5 +1,5 @@
 @isTest
-public class InterlineAgreementsMemorandumsBatchTest {
+public class IA_MemorandumsBatchTest {
 
 	@TestSetup
 	public static void setup(){
@@ -21,21 +21,21 @@ public class InterlineAgreementsMemorandumsBatchTest {
 
 	static testMethod void testscheduler(){
 		Test.StartTest();
-		InterlineAgreementsMemorandumsSchedule.doSchedule();
+		IA_MemorandumsSchedule.doSchedule();
 		Test.stopTest();
 	}
 
 	static testMethod void testCallBatch(){
 		Test.StartTest();
-		new InterlineAgreementsMemorandumsSchedule().createMemorandums();
+		new IA_MemorandumsSchedule().createMemorandums();
 		Test.stopTest();
 	}
 
 	static testMethod void testRunBatch_Error(){
-		InterlineAgreementsMemorandumsBatch.testContent = null;
+		IA_MemorandumsBatch.testContent = null;
 
 		Test.StartTest();
-		InterlineAgreementsMemorandumsBatch batch = new InterlineAgreementsMemorandumsBatch(Date.newInstance(2021,1,1));
+		IA_MemorandumsBatch batch = new IA_MemorandumsBatch(Date.newInstance(2021,1,1));
 		batch.createMemorandum();
 		Test.stopTest();
 
@@ -44,13 +44,13 @@ public class InterlineAgreementsMemorandumsBatchTest {
 	}
 
 	static testMethod void testRunBatch(){
-		InterlineAgreementsMemorandumsBatch.testContent = Blob.valueOf('testbody');
+		IA_MemorandumsBatch.testContent = Blob.valueOf('testbody');
 
 		Test.StartTest();
-		InterlineAgreementsMemorandumsBatch batch1 = new InterlineAgreementsMemorandumsBatch(Date.newInstance(2021,1,1));
+		IA_MemorandumsBatch batch1 = new IA_MemorandumsBatch(Date.newInstance(2021,1,1));
 		batch1.createMemorandum();
 
-		InterlineAgreementsMemorandumsBatch batch2 = new InterlineAgreementsMemorandumsBatch(Date.newInstance(2021,2,1));
+		IA_MemorandumsBatch batch2 = new IA_MemorandumsBatch(Date.newInstance(2021,2,1));
 		batch2.createMemorandum();
 		Test.stopTest();
 
