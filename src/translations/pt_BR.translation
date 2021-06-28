@@ -5545,7 +5545,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Unexcepted_Error</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_User --></label>
+        <label>Usuário</label>
         <name>CSP_User</name>
     </customLabels>
     <customLabels>
