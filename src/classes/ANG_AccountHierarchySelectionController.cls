@@ -1,8 +1,13 @@
 public with sharing class ANG_AccountHierarchySelectionController {
 
 	public Contact contact {get;set;} // new account to create
+	public Boolean showErrorMessageSplitAccountMultiCountry {get;set;} 
+	public Boolean newParentSelected {get;set;} 
+	public ID countryIDToShowOnSplitAccountMultiCountry {get;set;} 
+	public String countryNameToShowOnSplitAccountMultiCountry {get;set;} 
 
 	public List<Account> results{get;set;} // search results
+	public Map<Id, List<HierarchyItem>> hierarchyItemByCountry {get;set;} 
 
 	public Account newParent{
 		get{
@@ -291,8 +296,10 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		get{
 			if(processDetails == null){
 				processDetails = new Map<Id, AMS_Process_Detail__c>();
-				for(AMS_Process_Detail__c pd : [SELECT Id, Account__c FROM AMS_Process_Detail__c WHERE Oscar__c = :oscarId and recordtype.developername='Agency_Involved']){
+				for(AMS_Process_Detail__c pd : [SELECT Id, Account__c, Account__r.IATA_ISO_Country__c, Account__r.IATA_ISO_Country__r.Name FROM AMS_Process_Detail__c WHERE Oscar__c = :oscarId and recordtype.developername='Agency_Involved']){
 					processDetails.put(pd.Account__c, pd);
+					countryIDToShowOnSplitAccountMultiCountry = pd.Account__r.IATA_ISO_Country__c;
+					countryNameToShowOnSplitAccountMultiCountry = pd.Account__r.IATA_ISO_Country__r.Name;
 				}
 			}
 			return processDetails;
@@ -350,8 +357,12 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		get{
 			if(oscar.ANG_Type_Of_Change__c != null){
 
-				if(tocList.contains(AMS_Utils.ANG_HIERARCHY))
+				if(tocList.contains(AMS_Utils.ANG_HIERARCHY)){
+					if(oscar.Process__c == AMS_Utils.ANGPARTCONVERTMCTOLT || oscar.Process__c == AMS_Utils.ANGPARTCONVERTMCTOST){
+						chechSplitOfAccountHE();
+					}
 					return true;
+				}
 
 			}
 
@@ -428,50 +439,90 @@ public with sharing class ANG_AccountHierarchySelectionController {
 				//to prevent nullpointer on agencies with no hierarchy
 				accountIds.add(oscar.Account__c);
 
+				Boolean auxRecall = processDetails.containsKey(oscar.Account__c);
+
 				for(AMS_Agencies_relationhip__c r : relationshipMap.get(oscar.Account__c)){
 					accountIds.add(r.Child_Account__c);
 					accountIds.add(r.Parent_Account__c);
 				}
 
 				integer nbrOfPendingCases = 0;
-
+				hierarchyItemByCountry = new Map<Id, List<HierarchyItem>>();
 				for(Account a : Database.query('SELECT Id, '+String.join(accountFieldList, ',') + getOscarCaseSubQuery() + ' FROM Account WHERE Id IN :accountIds' + getInvalidStatusCondition())){
-					Boolean main = (a.Id == oscar.Account__c);
-					Boolean isSelected = (processDetails.containsKey(a.Id) || oscar.Process__c == AMS_Utils.NGCHINACONVERSION);
-					hierarchy.put(a.Id, new HierarchyItem(a, main, isSelected,(a.Location_Type__c == AMS_Utils.HE || a.Location_Type__c == AMS_Utils.GE)));
-					if(a.Location_Type__c == AMS_Utils.GE) currentGE = a;
-
-					if(this.isMulticountry){
-
-						integer bspCount = this.bspCountMap.get(a.IATA_ISO_Country__r.AMS_Settlement_System__c);
-
-						if(bspCount == null){
-							bspCount = 0;
+					if(countryIDToShowOnSplitAccountMultiCountry != null && (oscar.Process__c == AMS_Utils.ANGPARTCONVERTMCTOLT || oscar.Process__c == AMS_Utils.ANGPARTCONVERTMCTOST)){
+						if(countryIDToShowOnSplitAccountMultiCountry == a.IATA_ISO_Country__c && a.location_type__c != 'GE'){
+							Boolean main = (a.Id == oscar.Account__c);
+							Boolean isSelected = (processDetails.containsKey(a.Id) || oscar.Process__c == AMS_Utils.NGCHINACONVERSION);
+							hierarchy.put(a.Id, new HierarchyItem(a, main, isSelected,(a.Location_Type__c == AMS_Utils.HE || a.Location_Type__c == AMS_Utils.GE)));
+							if(hierarchyItemByCountry.get(a.IATA_ISO_Country__c) == null) {
+								hierarchyItemByCountry.put(a.IATA_ISO_Country__c, new List<HierarchyItem>{new HierarchyItem(a, main, isSelected,(a.Location_Type__c == AMS_Utils.HE || a.Location_Type__c == AMS_Utils.GE))});
+							}else{
+								hierarchyItemByCountry.get(a.IATA_ISO_Country__c).add(new HierarchyItem(a, main, isSelected,(a.Location_Type__c == AMS_Utils.HE || a.Location_Type__c == AMS_Utils.GE)));
+							}
+							
+							if(a.Location_Type__c == AMS_Utils.GE) currentGE = a;
+		
+							if(this.isMulticountry){
+		
+								integer bspCount = this.bspCountMap.get(a.IATA_ISO_Country__r.AMS_Settlement_System__c);
+		
+								if(bspCount == null){
+									bspCount = 0;
+								}
+		
+								bspCount++;
+		
+								this.bspCountMap.put(a.IATA_ISO_Country__r.AMS_Settlement_System__c, bspCount);
+		
+								//NEWGEN-5008
+								if(!bspAccountMap.containsKey(a.IATA_ISO_Country__r.AMS_Settlement_System__c))
+									this.bspAccountMap.put(a.IATA_ISO_Country__r.AMS_Settlement_System__c, new Set<Account>());
+								this.bspAccountMap.get(a.IATA_ISO_Country__r.AMS_Settlement_System__c).add(a);
+							}
 						}
-
-						bspCount++;
-
-						this.bspCountMap.put(a.IATA_ISO_Country__r.AMS_Settlement_System__c, bspCount);
-
-						//NEWGEN-5008
-						if(!bspAccountMap.containsKey(a.IATA_ISO_Country__r.AMS_Settlement_System__c))
-							this.bspAccountMap.put(a.IATA_ISO_Country__r.AMS_Settlement_System__c, new Set<Account>());
-						this.bspAccountMap.get(a.IATA_ISO_Country__r.AMS_Settlement_System__c).add(a);
+					}else{
+						Boolean main = (a.Id == oscar.Account__c);
+						Boolean isSelected = (processDetails.containsKey(a.Id) || oscar.Process__c == AMS_Utils.NGCHINACONVERSION);
+						hierarchy.put(a.Id, new HierarchyItem(a, main, isSelected,(a.Location_Type__c == AMS_Utils.HE || a.Location_Type__c == AMS_Utils.GE)));
+						if(hierarchyItemByCountry.get(a.IATA_ISO_Country__c) == null) {
+							hierarchyItemByCountry.put(a.IATA_ISO_Country__c, new List<HierarchyItem>{new HierarchyItem(a, main, isSelected,(a.Location_Type__c == AMS_Utils.HE || a.Location_Type__c == AMS_Utils.GE))});
+						}else{
+							hierarchyItemByCountry.get(a.IATA_ISO_Country__c).add(new HierarchyItem(a, main, isSelected,(a.Location_Type__c == AMS_Utils.HE || a.Location_Type__c == AMS_Utils.GE)));
+						}
+						
+						if(a.Location_Type__c == AMS_Utils.GE) currentGE = a;
+	
+						if(this.isMulticountry){
+	
+							integer bspCount = this.bspCountMap.get(a.IATA_ISO_Country__r.AMS_Settlement_System__c);
+	
+							if(bspCount == null){
+								bspCount = 0;
+							}
+	
+							bspCount++;
+	
+							this.bspCountMap.put(a.IATA_ISO_Country__r.AMS_Settlement_System__c, bspCount);
+	
+							//NEWGEN-5008
+							if(!bspAccountMap.containsKey(a.IATA_ISO_Country__r.AMS_Settlement_System__c))
+								this.bspAccountMap.put(a.IATA_ISO_Country__r.AMS_Settlement_System__c, new Set<Account>());
+							this.bspAccountMap.get(a.IATA_ISO_Country__r.AMS_Settlement_System__c).add(a);
+						}
+	
+						if(oscar.Process__c == AMS_Utils.NGCHINACONVERSION){
+							// Requires that every account have location class "D" if the account status
+							// is not one of the following: "Terminated", "Not in Operation", "Not Accredited" (pilotAccStatusNotRequireLocClassD)
+							if(a.Location_Class__c != 'D' && !AMS_Utils.pilotAccStatusNotRequireLocClassD.contains(a.Status__c)){
+								existsLocClassDomesticError = true;
+							}
+	
+							List<Case> caseLst = a.getSobjects('Cases');
+							if(caseLst != null) {
+								nbrOfPendingCases += caseLst.size();
+							}
+						}
 					}
-
-					if(oscar.Process__c == AMS_Utils.NGCHINACONVERSION){
-						// Requires that every account have location class "D" if the account status
-						// is not one of the following: "Terminated", "Not in Operation", "Not Accredited" (pilotAccStatusNotRequireLocClassD)
-						if(a.Location_Class__c != 'D' && !AMS_Utils.pilotAccStatusNotRequireLocClassD.contains(a.Status__c)){
-							existsLocClassDomesticError = true;
-						}
-
-						List<Case> caseLst = a.getSobjects('Cases');
-						if(caseLst != null) {
-							nbrOfPendingCases += caseLst.size();
-						}
-					}
-
 				}
 
 				// Require that at least 2 cases aren't finished
@@ -661,6 +712,8 @@ public with sharing class ANG_AccountHierarchySelectionController {
 	// ********** constructor ************
 	// ***********************************
 	public ANG_AccountHierarchySelectionController(ApexPages.StandardController stdController){
+		showErrorMessageSplitAccountMultiCountry = false;
+		newParentSelected = false;
 		if(!Test.isRunningTest()) stdController.addFields(new List<String>(oscarFields));
 
 		oscarId = stdController.getId();
@@ -669,7 +722,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		if(Test.isRunningTest()){
 			oscar = (AMS_OSCAR__c) Database.query('SELECT ' + String.join(new List<String>(oscarFields), ', ') + ' FROM AMS_OSCAR__c WHERE Id = :oscarId');
 		}
-
+		Map<Id, List<HierarchyItem>> hierarchyItemByCountry = new Map<Id, List<HierarchyItem>>();
 		this.isMulticountry = oscar.Account__r.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
 		this.isCashOrCashless = (oscar.Account__r.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH || oscar.Account__r.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASHLESS);
 
@@ -742,7 +795,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 				}
 
 				if (diffDestination(oscar.New_parent__c)) {
-					if (tocList.contains(AMS_Utils.ANG_ACCREDITATION_TYPE)) {
+					if (tocList.contains(AMS_Utils.ANG_ACCREDITATION_TYPE) && oscar.Process__c != AMS_Utils.ANGPARTCONVERTMCTOLT && oscar.Process__c != AMS_Utils.ANGPARTCONVERTMCTOST) {
 						errorChecks.put('Mixed types of changes', true);
 					}
 
@@ -754,7 +807,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 						errorChecks.put('Top Location Type', true);
 					}
 				} else {
-					if (isAllHierarchySelected()) {
+					if (isAllHierarchySelected() && oscar.Process__c != AMS_Utils.ANGPARTCONVERTMCTOLT && oscar.Process__c != AMS_Utils.ANGPARTCONVERTMCTOST) {
 						errorChecks.put('Location Type Change Detected', true);
 					}
 
@@ -896,6 +949,9 @@ public with sharing class ANG_AccountHierarchySelectionController {
 	}
 
 	public void handleSelection(){
+		showErrorMessageSplitAccountMultiCountry = false;
+		newParentSelected = false;
+		oscar.New_parent__c = null;
 
 		if(newParent != null && tocList.contains(AMS_Utils.ANG_HIERARCHY) && newParent.Location_Type__c == AMS_Utils.GE){
 
@@ -936,6 +992,47 @@ public with sharing class ANG_AccountHierarchySelectionController {
 
 			hesPerBSPs = tempHesPerBSPs;
 
+		}
+
+		if(oscar.Process__c == AMS_Utils.ANGPARTCONVERTMCTOLT || oscar.Process__c == AMS_Utils.ANGPARTCONVERTMCTOST){
+			chechSplitOfAccountHE();
+		}
+	}
+
+	public void chechSplitOfAccountHE(){
+		Integer countManyAE = 0; 
+		Id newParentAe = null;
+		if(oscar.Process__c == AMS_Utils.ANGPARTCONVERTMCTOLT || oscar.Process__c == AMS_Utils.ANGPARTCONVERTMCTOST){
+			List<HierarchyItem> hierarchyItemsSorted = hierarchy.values().clone();
+			hierarchyItemsSorted.sort();
+			for (HierarchyItem i : hierarchyItemsSorted){
+				if(i.selected == true && i.acc.Location_Type__c == 'HE'){
+					if(hierarchyItemByCountry.get(i.acc.IATA_ISO_Country__c) != null){
+						Boolean moreThanOne = false;
+						for(HierarchyItem hi : hierarchyItemByCountry.get(i.acc.IATA_ISO_Country__c)){
+							if(hi.acc.Location_Type__c != 'HE'){
+								for (HierarchyItem ihh : hierarchyItemsSorted){
+									if(ihh.acc.Id == hi.acc.Id && ihh.selected == false){
+										showErrorMessageSplitAccountMultiCountry = true;
+										ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, Label.AMS_Console_Account_Hierarchy_Split_account_multicountry.replace('HEAccount.iso_country__c', countryNameToShowOnSplitAccountMultiCountry)));
+									}
+								}
+							}
+						}
+						if(!showErrorMessageSplitAccountMultiCountry){
+							oscar.New_parent__c = i.acc.Id;
+							newParentSelected = true;
+						}
+					}
+				}else if(i.selected == true && i.acc.Location_Type__c == 'AE'){
+					newParentAe = i.acc.Id;
+					countManyAE++;
+				}
+			}
+			if(countManyAE == 1 && !newParentSelected){
+				oscar.New_parent__c = newParentAe;
+				newParentSelected = true;
+			}
 		}
 	}
 
@@ -997,6 +1094,61 @@ public with sharing class ANG_AccountHierarchySelectionController {
 	}
 
 	public void save(){
+		if(oscar.Process__c == AMS_Utils.ANGPARTCONVERTMCTOLT || oscar.Process__c == AMS_Utils.ANGPARTCONVERTMCTOST){
+			if(oscar.New_parent__c == null && tocList.contains(AMS_Utils.ANG_HIERARCHY)){
+				ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Console_new_parent_empty_error));
+				return;
+			}
+			if(showErrorMessageSplitAccountMultiCountry){
+				ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, Label.AMS_Console_Account_Hierarchy_Split_account_multicountry.replace('HEAccount.iso_country__c', countryNameToShowOnSplitAccountMultiCountry)));
+				return;
+			}
+			if(tocList.contains(AMS_Utils.ANG_HIERARCHY)){
+				Account newParent = [SELECT Id, ANG_Accreditation_Model__c, IATA_ISO_Country__c, Status__c, Remittance_frequency__c FROM Account WHERE Id=: oscar.New_parent__c];
+				if(!newParentSelected && oscar.Process__c == AMS_Utils.ANGPARTCONVERTMCTOLT && newParent.ANG_Accreditation_Model__c != AMS_Utils.ACCREDITATIONMODEL_CASHLESS){
+					ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, Label.ISSP_ANG_PARTCONVERT_MC_TO_LT_Accreditation_type_Error));
+					return;
+				}
+
+				if(!newParentSelected && oscar.Process__c == AMS_Utils.ANGPARTCONVERTMCTOST && newParent.ANG_Accreditation_Model__c != AMS_Utils.ACCREDITATIONMODEL_CASH){
+					ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, Label.ISSP_ANG_PARTCONVERT_MC_TO_ST_Accreditation_type_Error));
+					return;
+				}
+
+				if( newParent.IATA_ISO_Country__c != countryIDToShowOnSplitAccountMultiCountry){
+					ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Console_new_parent_HE_error + ' ' + countryNameToShowOnSplitAccountMultiCountry));
+					return;
+				}
+				List<string> statusForNewParent = new List<String>{'Approved','Cash basis/no commission','Cash basis/with commission','Changes processed','Listed','Under review'};
+				if(!statusForNewParent.contains(newParent.Status__c)){
+					ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Console_new_parent_Status_error));
+					return;
+				}
+
+				List<HierarchyItem> hierarchyItemsSorted = hierarchy.values().clone();
+				hierarchyItemsSorted.sort();
+				String remittanceFrequencyValue = '';
+				integer indexof = 0;
+				Boolean showRemittanceFrequencyError = false;
+				for (HierarchyItem i : hierarchyItemsSorted){
+					if(i.selected == true){
+						if(String.isBlank(i.acc.Remittance_frequency__c)){
+							showRemittanceFrequencyError = true;
+						}
+						if(indexof == 0){
+							remittanceFrequencyValue = i.acc.Remittance_frequency__c;
+						}else if(remittanceFrequencyValue != i.acc.Remittance_frequency__c){
+							showRemittanceFrequencyError = true;
+						}
+					}
+				}
+				if(newParent.Remittance_frequency__c != remittanceFrequencyValue || showRemittanceFrequencyError){
+					ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Console_remittance_Frequency_error));
+					return;
+				}
+
+			}
+		}
 
 		//Make sure that the proper main account is selected
 		selectMainAccount();
@@ -1203,7 +1355,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 	private void runValidationChangeHierarchyforMulticountry(){
 
 		//TEST SCENARIO 1
-		if (newParent.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASHLESS) {
+		if (newParent.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASHLESS && oscar.Process__c != AMS_Utils.ANGPARTCONVERTMCTOLT && oscar.Process__c != AMS_Utils.ANGPARTCONVERTMCTOST) {
 			errorChecks.put('Multicountry to Lite hierarchy', true);
 		}
 

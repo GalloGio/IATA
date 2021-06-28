@@ -832,7 +832,7 @@
                                         $Label.ISSP_AMS_Noc_StepA_message)}
                                     </div>
                                     <apex:outputPanel id="nocMessage">
-                                        <div  class="alert alert-danger" role="alert" style="display: {!IF(AND(isMCAccredited, isNoticeOfChange, NOT(isBankAccountChange), newForm.Scope_Of_Change__c != 'HO Only'), 'flex', 'none')}; margin-bottom: 20px;">
+                                        <div  class="alert alert-danger" role="alert" style="display: {!IF(AND(!isChangeOfAccreditationType, AND(isMCAccredited, isNoticeOfChange, NOT(isBankAccountChange), newForm.Scope_Of_Change__c != 'HO Only')), 'flex', 'none')}; margin-bottom: 20px;">
                                             {!$Label.ISSP_ANG_NOC_GOGLOBAL_Info}
                                         </div>
                                     </apex:outputPanel>
@@ -945,7 +945,7 @@
                                                 </apex:outputPanel>
                                                 <apex:outputPanel rendered="{!isChangeOfAccreditationType}" id="nocOptionsMultiCountry">    
                                                     <apex:selectRadio required="true" id="LocationTypeMultiCountry" layout="pageDirection" label="{!$Label.ISSP_AMS_NoC_Change_for}" style="width:70%;" value="{!newForm.Scope_of_Change__c}" onchange="togglePageItem(this.value, '{!$Component.step1Form.step1Block.branchaccountsel}'); checkLocationQuestionMultiCountry(); reRenderNocMessage();">
-                                                        <apex:selectOption itemValue="HO - All Branches" itemLabel="{!$Label.ISSP_AMS_NoC_HE_All_Branches}" />                                                     
+                                                        <apex:selectOption itemValue="HO - All Branches" itemLabel="{!$Label.ISSP_AMS_NoC_HE_All_Branches_Multicountry}" />                                                     
                                                         <apex:selectOption itemValue="GE - Change to Gostandard" itemLabel="{!$Label.ISSP_AMS_Associate_entities_of_a_country_change_to_Gostandard}" />                                                       
                                                         <apex:selectOption itemValue="GE - Change to Golite" itemLabel="{!$Label.ISSP_AMS_Associate_entities_of_a_country_change_to_Golite}"  />
                                                     </apex:selectRadio>
@@ -1034,7 +1034,7 @@
                                     <apex:outputText value="{!amsAllLangCountryLabel}"/>
                                 </div>
                             </div>
-                            <apex:outputpanel rendered="{!OR(AND(isGEAccountHierarchy, isChangeOfAccreditationType), AND(!isGEAccountHierarchy, !isChangeOfAccreditationType))}">
+                            <apex:outputpanel rendered="{!OR(AND(isGEAccountHierarchy, !isChangeOfAccreditationType), AND(!isGEAccountHierarchy, !isChangeOfAccreditationType))}">
                                 <apex:outputpanel rendered="{!AND(isNoticeOfChange, NOT(isBankAccountChange))}" id="nocThirdQuestion" style="display: none;">
                                     <!--<apex:outputpanel rendered="{!newForm.Scope_of_Change__c == 'HO - All Branches'}">-->
                                         <div class="form-group">

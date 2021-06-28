@@ -127,7 +127,8 @@ public without sharing class AMS_Utils {
 
 	public static final String NGCONVERSIONTOMULTICOUNTRY = 'ANG.CONVERT.ST.TO.MC';
 	public static final String NGCONVERSIONMCTOST = 'ANG.CONVERT.MC.TO.ST';
-	public static final String ANGCONVERTMCTOLT = 'ANG.CONVERT.MC.TO.LT';
+	public static final String ANGPARTCONVERTMCTOST = 'ANG.PARTCONVERT.MC.TO.ST';
+	public static final String ANGPARTCONVERTMCTOLT = 'ANG.PARTCONVERT.MC.TO.LT';
 
 	public static final String CONVERTTONEWGENPILOT = 'Conversion to GoLite'; //ACAMBAS - NEWGEN-4445
 	public static final String CONVERTTOLEGACY = 'Conversion to Domestic with Cash'; //ACAMBAS - NEWGEN-4445
@@ -229,6 +230,8 @@ public without sharing class AMS_Utils {
 
 	public static final String RECTYPE_NGCONVERSIONTOMULTICOUNTRY = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Convert_ST_To_MC');
 	public static final String RECTYPE_NGCONVERSIONTOSTANDARD = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Convert_MC_To_ST');
+	public static final String RECTYPE_NGPARTCONVERSIONTOLITE = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'ANG_Part_Convert_MC_To_LT');
+	public static final String RECTYPE_NGPARTCONVERSIONTOSTANDARD = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NG_Part_Convert_MC_To_ST');
 
 	public static final String RECTYPE_OSCARCOMM    = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 	public static final String RECTYPE_SIDRALITE    = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'SIDRA_Lite');

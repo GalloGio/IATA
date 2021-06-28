@@ -66,6 +66,13 @@
         <value>Conga Merge</value>
     </labels>
     <labels>
+        <fullName>AMS_Console_Account_Hierarchy_Split_account_multicountry</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS Console Account Hierarchy Split account multicountry</shortDescription>
+        <value>Please, re-org BSP  &lt;the HE account.iso_country__c&gt; by assigning a new HE</value>
+    </labels>
+    <labels>
         <fullName>AMS_CountrySAttr_Validation</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -20791,6 +20798,13 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>Please accept the Terms and Conditions before submitting your Agency Endorsement application to CNS.</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_Accreditation_type_change</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Accreditation type change</shortDescription>
+        <value>Accreditation type change</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_Add_Company</fullName>
         <categories>ISSP, AMS</categories>
         <language>en_US</language>
@@ -22194,6 +22208,34 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <protected>false</protected>
         <shortDescription>ISSP_AMS_Completed_dangerous_goods_training</shortDescription>
         <value>Completed dangerous goods training</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Console_new_parent_HE_error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Console new parent HE error</shortDescription>
+        <value>Please select New parent from same country</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Console_new_parent_Status_error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Console new parent Status error</shortDescription>
+        <value>Please select an active New parent</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Console_new_parent_empty_error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Console new parent empty error</shortDescription>
+        <value>Please select New parent!</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Console_remittance_Frequency_error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Console remittance Frequency error</shortDescription>
+        <value>Please align the Remittance Frequencies of the splitting codes to the acquiring HE</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Contact_Info</fullName>
@@ -24711,6 +24753,13 @@ You will be required to upload a scanned copy of this document in the next step 
         <value>Head Entity &amp; All Associate Entities</value>
     </labels>
     <labels>
+        <fullName>ISSP_AMS_NoC_HE_All_Branches_Multicountry</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS NoC HE All Branches Multicountry</shortDescription>
+        <value>Head entity &amp; all associate entities change to GoStandard</value>
+    </labels>
+    <labels>
         <fullName>ISSP_AMS_NoC_HE_Some_Branches</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -26650,6 +26699,13 @@ It is hereby agreed that this application shall become a part of every Passenger
         <protected>false</protected>
         <shortDescription>ISSP AMS Step0 Other Changes Msg PostalOperator</shortDescription>
         <value>For changes to your Location, Company Name or Legal Status</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_AMS_Step0_Other_Changes_Msg_for_Nam_Pax_Agent_Multicountry</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP AMS Step0 Other Changes Msg for Nam Pax Agent Multicountry</shortDescription>
+        <value>Notify IATA of changes to your Location, Company Name, Legal Status, Ownership / Shareholding.</value>
     </labels>
     <labels>
         <fullName>ISSP_AMS_Step0_Other_Forms</fullName>
@@ -29870,6 +29926,21 @@ Separate legal entities cannot share the same Legal Name.</value>
         <protected>false</protected>
         <shortDescription>ISSP_ANG_OptIn_OptOut_DateInfo</shortDescription>
         <value>Date from which Airlines can Opt-Out of IATA EasyPay for this country on the portal.</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_PARTCONVERT_MC_TO_LT_Accreditation_type_Error</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP ANG.PARTCONVERT.MC.TO.LT Accreditation type Error</shortDescription>
+        <value>Please select New parent with accreditation type Cashless</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_ANG_PARTCONVERT_MC_TO_ST_Accreditation_type_Error</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP ANG.PARTCONVERT.MC.TO.ST Accreditation type Error</shortDescription>
+        <value>Please select New parent with accreditation type Cash</value>
     </labels>
     <labels>
         <fullName>ISSP_ANG_PCI_Choose_IATA_Code</fullName>
@@ -35332,6 +35403,14 @@ this is the tiess topic help</value>
         <protected>false</protected>
         <shortDescription>ISSP Mandatory</shortDescription>
         <value>Mandatory</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Milticountry_Request_Change_of_Accreditation_Type</fullName>
+        <categories>Issp, portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Milticountry Request Change of Accreditation Type</shortDescription>
+        <value>Request Change of Accreditation Type</value>
     </labels>
     <labels>
         <fullName>ISSP_MyClosedCases</fullName>

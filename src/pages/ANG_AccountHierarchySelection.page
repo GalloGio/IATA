@@ -28,6 +28,16 @@
 				$('[id$=typeOfChangeMultipicklist_unselected]').find('option:contains("Accreditation type")').remove();
 			}
         }
+
+		function disableAndEnableNewParent(aux){
+			if (aux == true) {
+				$('[id$=newParentField]').attr('disabled','disabled');
+				$('[id$=newParentField_lkwgt]').hide();
+			}else{
+				$('[id$=newParentField]').attr('disabled',false);
+				$('[id$=newParentField_lkwgt]').show();
+			}
+        }
 		
 		function closeTab(){
 			sforce.console.getEnclosingTabId(closeSubtab);
@@ -117,7 +127,9 @@
 				timeoutInPlace = true;
 			}
 		}
-	
+		$( document ).ready(function() {
+			chechSplitOfAccountHE();
+		});
 </script>
 
 
@@ -141,10 +153,10 @@
 			margin-left: -16px;
 			}
 	</style>
-	
 	<apex:sectionHeader title="Newgen ISS Account Hierarchy Selection" subtitle="{!AMS_OSCAR__c.Account__r.Name}"/>
-	<apex:form styleClass="pos-relative">
-		<apex:pageBlock mode="edit" rendered="{!editable}">
+	<apex:form id="myForm" styleClass="pos-relative">
+		<apex:actionFunction name="chechSplitOfAccountHE" action="{!chechSplitOfAccountHE}" reRender="myForm"/>
+		<apex:pageBlock mode="edit" rendered="{!editable}" id="firstPageBlock">
 		<apex:actionFunction name="rerenderNotes" rerender="notes" />
 
 			<apex:panelGrid id="fields" columns="2" rendered="{!showTopPanel}">
@@ -156,6 +168,9 @@
 				</apex:pageBlockSection>
 				<apex:pageBlockSection id="dependentFields">
 					<apex:inputField id="newParentField" value="{!oscar.New_parent__c}" rendered="{!showTargetAgency}">
+						<script type="text/javascript">
+								disableAndEnableNewParent({!newParentSelected});
+						</script>  
 						<apex:actionSupport event="onchange" onsubmit="beforeSubmitNewParent(this); return;" status="blockEditing" />
 					</apex:inputField>
 				</apex:pageBlockSection>
@@ -196,7 +211,7 @@
 						</apex:facet>
 						
 						<apex:inputCheckbox html-data-group="select" html-data-controlledBy="{!hi.acc.Id}" value="{!hi.selected}"  disabled="{!isChinaConversion}">
-							<apex:actionSupport event="onchange" action="{!handleSelection}" reRender="BSPTable, BSPList, bspErrors"/>
+							<apex:actionSupport event="onchange" action="{!handleSelection}" reRender="BSPTable, BSPList, bspErrors, myForm"/>
 						</apex:inputCheckbox>
 					</apex:column>
 

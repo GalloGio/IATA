@@ -613,19 +613,19 @@
 	</script>
 	
 	<div class="pageNav" style="display:{!IF(isStep3,'inline-block','none')}">
-		<p class="LOB">{!$Label.ISSP_AMS_NoC_Request_for_Change}</p>
+		<p class="LOB">{!IF(isChangeOfAccreditationType,$Label.ISSP_AMS_Accreditation_type_change,$Label.ISSP_AMS_NoC_Request_for_Change)}</p>
 		<div style="border-top: 1px #fff dotted; padding-bottom: 3px;">
 			<p>{!$Label.ISSP_AMS_Jump_To}</p>
 		</div>
 		<p><a href="#top">{!$Label.ISSP_AMS_Top}</a></p>
 		<apex:outputText rendered="{!newform.Is_change_bank_account_details__c==true && PDFPerRegionCS!=null}">
-			<p><a href="#nav_one">{!$Label.ISSP_AMS_NoC_Change_Bank_Details}</a></p>
+			<p><a href="#nav_one" style="{!IF(isChangeOfAccreditationType,'color: gray!important;', '')}">{!$Label.ISSP_AMS_NoC_Change_Bank_Details}</a></p>
 		</apex:outputText>
 		<apex:outputText rendered="{!AND(isAccreditationModelNotNullOrLegacy, NOT(isBankAccountChange))}">
-			<p><a href="#nav_one">{!$Label.ISSP_AMS_NoC_Acreditation_Type_Section_Header}</a></p>
+			<p><a href="#nav_one" style="{!IF(isChangeOfAccreditationType,'color: #gray!important;', '')}">{!$Label.ISSP_AMS_NoC_Acreditation_Type_Section_Header}</a></p>
 		</apex:outputText>
 		<apex:outputText rendered="{!newform.Is_change_legal_name__c==true}">
-			<p><a href="#nav_two">
+			<p><a href="#nav_two" style="{!IF(isChangeOfAccreditationType,'color: gray!important;', '')}">
 				<apex:outputText rendered="{!!isAccreditationModelNotNullOrLegacy}">{!IF(newlabels, $Label.ISSP_AMS_NoC_Change_of_Legal_Name_New, $Label.ISSP_AMS_NoC_Change_of_Legal_Name)}</apex:outputText>
 				<apex:outputText rendered="{!isAccreditationModelNotNullOrLegacy}">
 					{!SUBSTITUTE(IF(newlabels, $Label.ISSP_AMS_NoC_Change_of_Legal_Name_New, $Label.ISSP_AMS_NoC_Change_of_Legal_Name), '1', '2')}
@@ -633,7 +633,7 @@
 			</a></p>
 		</apex:outputText>
 		<apex:outputText rendered="{!newform.Is_change_location__c==true}">
-			<p><a href="#nav_three">
+			<p><a href="#nav_three" style="{!IF(isChangeOfAccreditationType,'color: gray!important;', '')}">
 				<apex:outputText rendered="{!!isAccreditationModelNotNullOrLegacy}">{!IF(newlabels, $Label.ISSP_AMS_NoC_Change_of_Location_New, $Label.ISSP_AMS_NoC_Change_of_Location)}</apex:outputText>
 				<apex:outputText rendered="{!isAccreditationModelNotNullOrLegacy}">
 					{!SUBSTITUTE(IF(newlabels, $Label.ISSP_AMS_NoC_Change_of_Location_New, $Label.ISSP_AMS_NoC_Change_of_Location), '2', '3')}
@@ -641,7 +641,7 @@
 			</a></p>
 		</apex:outputText>
 		<apex:outputText rendered="{!newform.Is_change_bank_account_details__c==false}">
-			<p><a href="#nav_four">
+			<p><a href="#nav_four" style="{!IF(isChangeOfAccreditationType,'color: gray!important;', '')}">
 				<apex:outputText rendered="{!!isAccreditationModelNotNullOrLegacy}">{!IF(IsPostalOperator, $Label.ISSP_AMS_NoC_Change_Ownership_Legal_Status, IF(newlabels, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding_New, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding))}</apex:outputText>
 				<apex:outputText rendered="{!isAccreditationModelNotNullOrLegacy}">
 					{!SUBSTITUTE(IF(IsPostalOperator, $Label.ISSP_AMS_NoC_Change_Ownership_Legal_Status, IF(newlabels, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding_New, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding)), '3', '4')}
@@ -779,7 +779,7 @@
 					
 				</apex:pageBlockSection>
 				
-				<apex:pageBlockSection columns="1" rendered="{!NOT(newform.Is_change_bank_account_details__c)}">
+				<apex:pageBlockSection columns="1" rendered="{!AND(NOT(newform.Is_change_bank_account_details__c), !isChangeOfAccreditationType)}">
 					<apex:outputText escape="false" value="{!IF(isCNSAgency, $Label.ISSP_AMS_NOC_Instructions_CNS, IF(newlabels, $Label.ISSP_AMS_NOC_Instructions_New, $Label.ISSP_AMS_NOC_Instructions))}"/>
 				</apex:pageBlockSection>
 				<apex:outputPanel rendered="{!AND(isAccreditationModelNotNullOrLegacy, NOT(isBankAccountChange))}">
@@ -965,7 +965,7 @@
 							
 						<apex:pageBlockSectionItem labelStyle="width:40%" dataStyle="width:10%;{!IF(AND(isValError, newForm.Confirm_Legal_Details_are_correct__c==false,newForm.Notify_Change_Legal_Details__c==false), 'border:2px red solid !important;margin-right:5px', 'margin-right:5px')}">
 							<apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Confirm_Legal_Details_are_correct__c.Label}" style="color:black;font-size:110%"/>
-							<apex:inputCheckbox html-data-group="agencyLegalDetails" onchange="resetLegalDetais()" value="{!newForm.Confirm_Legal_Details_are_correct__c}"/>
+							<apex:inputCheckbox id="confirmLegalDetailsarecorrect" html-data-group="agencyLegalDetails" onchange="resetLegalDetais()" value="{!newForm.Confirm_Legal_Details_are_correct__c}" disabled="{!isChangeOfAccreditationType}"/>
 						</apex:pageBlockSectionItem>
 						
 						<apex:pageBlockSectionItem labelStyle="width:40%;" dataStyle="width:10%;{!IF(AND(isValError, newForm.Confirm_Legal_Details_are_correct__c==false,newForm.Notify_Change_Legal_Details__c==false), 'border:2px red solid !important;margin-right:5px', 'margin-right:5px')}">
@@ -1046,12 +1046,12 @@
 
 						<apex:pageBlockSectionItem labelStyle="width:40%" dataStyle="width:10%;{!IF(AND(isValError, newForm.Confirm_Location_Details_are_correct__c==false,newForm.Notify_Change_Location__c==false), 'border:2px red solid !important;margin-right:5px', 'margin-right:5px')}">
 								<apex:outputLabel value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Confirm_Location_Details_are_correct__c.Label}" style="color:black;font-size:110%"/>
-								<apex:inputCheckbox html-data-group="agencyLocation" onchange="updateModalAddressInfo()" value="{!newForm.Confirm_Location_Details_are_correct__c}"/>
+								<apex:inputCheckbox id="confirmLocationDetailsarecorrect" html-data-group="agencyLocation" onchange="updateModalAddressInfo()" value="{!newForm.Confirm_Location_Details_are_correct__c}" disabled="{!isChangeOfAccreditationType}"/>
 							</apex:pageBlockSectionItem>
 						
 						<apex:pageBlockSectionItem labelStyle="width:40%;font-weight:" dataStyle="width:10%;{!IF(AND(isValError, newForm.Confirm_Location_Details_are_correct__c==false,newForm.Notify_Change_Location__c==false, newForm.Scope_of_Change__c != 'HO - All Branches'), 'border:2px red solid !important;margin-right:5px', 'margin-right:5px')}">
 							<apex:outputLabel value="{!IF(isCNSAgency, $Label.ISSP_AMS_Notify_Change_Legal_Details_CNS, $ObjectType.AMS_Pax_Accreditation_Form__c.fields.Notify_Change_Location__c.Label)}" style="color:black;font-size:110%"/>
-							<apex:inputCheckbox id="notifyChangeLocationCheckbox" html-data-group="agencyLocation" html-data-controls="agencyLocationComponent" value="{!newForm.Notify_Change_Location__c}"  disabled="{!isChangeOfAccreditationType}"/>
+							<apex:inputCheckbox id="notifyChangeLocationCheckbox" html-data-group="agencyLocation" html-data-controls="agencyLocationComponent" value="{!newForm.Notify_Change_Location__c}" disabled="{!isChangeOfAccreditationType}"/>
 						</apex:pageBlockSectionItem>
 
 						<apex:pageBlockSection columns="1">
@@ -1200,7 +1200,7 @@
 						<apex:pageBlockSection columns="1">
 		                   	<apex:pageBlockSectionItem labelStyle="width:80%" dataStyle="width:10%;{!IF(AND(isValError, newForm.Confirm_Ownership_details_are_correct__c==false,newForm.Notify_Change_Ownership__c==false), 'border:2px red solid !important;margin-right:5px', 'margin-right:5px')}">
 								<apex:outputLabel value="{!IF(IsPostalOperator,$Label.ISSP_AMS_NoC_Confirm_Type_of_Entity,$Label.ISSP_AMS_NoC_Confirm_Ownership_details)}" style="color:black;font-size:110%"/> <!--{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields.Confirm_Ownership_details_are_correct__c.Label}"-->
-								<apex:inputCheckbox html-data-group="agencyOwnership" onchange="resetLegalStatus();" value="{!newForm.Confirm_Ownership_details_are_correct__c}"/>
+								<apex:inputCheckbox id="confirmOwnershipdetailsarecorrect" html-data-group="agencyOwnership" onchange="resetLegalStatus();" value="{!newForm.Confirm_Ownership_details_are_correct__c}" disabled="{!isChangeOfAccreditationType}"/>
 							</apex:pageBlockSectionItem>
 						</apex:pageBlockSection>
 					</apex:outputPanel>
@@ -2247,6 +2247,9 @@
 				lScopeOfChange = '{!newForm.Scope_of_Change__c}',
 				checkb = $j('[id$=notifyChangeLocationCheckbox]'),
 				iataChangeAccType = $j('[id$=iataChangeAccType]'),
+				confirmLegalDetailsarecorrect = $j('[id$=confirmLegalDetailsarecorrect]'),
+				confirmLocationDetailsarecorrect = $j('[id$=confirmLocationDetailsarecorrect]'),
+				confirmOwnershipdetailsarecorrect = $j('[id$=confirmOwnershipdetailsarecorrect]'),
 				allowedAccreditationModelSelect = $j('[id$=allowedAccreditationModelSelect]'),
 				addFinancialAssessmentContactItem = $j('[id$=addFinancialAssessmentContactItem]'),
 				allowedAccreditationModelSelectPanel = $j('[id$=allowedAccreditationModelSelectPanel]'),
@@ -2377,14 +2380,16 @@
 		}
 
 		if({!isChangeOfAccreditationType}){
-			if("{!newForm.Scope_of_Change__c}" == 'GE - Change to Gostandard'){
-			}else if("{!newForm.Scope_of_Change__c}" == 'GE - Change to Golite'){
+			if("{!newForm.Scope_of_Change__c}" == 'GE - Change to Golite'){
+				allowedAccreditationModelSelect.val('Cashless');
 			}else{
 				allowedAccreditationModelSelect.val('Cash');
 			}
-			allowedAccreditationModelSelect.val('Cash');
 			iataChangeAccType[0].checked = true;
 			$j('[id$=allowedAccreditationModelSelectPanel]').css('display', '');
+			confirmLegalDetailsarecorrect[0].checked = true;
+			confirmLocationDetailsarecorrect[0].checked = true;
+			confirmOwnershipdetailsarecorrect[0].checked = true;
 		}
 
 		if ({!isMCAccredited} && lScopeOfChange !== 'HO Only') {
