@@ -156,7 +156,7 @@
     <fields>
         <fullName>Active__c</fullName>
         <externalId>false</externalId>
-        <formula>OR( Status__c == &apos;Active&apos;, Status__c = &apos;Pending To Deactivate&apos; )</formula>
+        <formula>OR( Status__c == &apos;Active&apos;, Status__c = &apos;Pending Withdrawal&apos; )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Active</label>
         <trackHistory>false</trackHistory>
@@ -168,7 +168,7 @@
         <externalId>false</externalId>
         <label>Agreement processed date</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -234,6 +234,11 @@
                     <default>false</default>
                     <label>One Way Intermodal Participating Date</label>
                 </value>
+                <value>
+                    <fullName>Electronic Miscellaneous Document</fullName>
+                    <default>false</default>
+                    <label>Electronic Miscellaneous Document</label>
+                </value>
             </valueSetDefinition>
             <valueSettings>
                 <controllingFieldValue>MITA</controllingFieldValue>
@@ -274,6 +279,10 @@
             <valueSettings>
                 <controllingFieldValue>BIETA</controllingFieldValue>
                 <valueName>One Way Intermodal Participating Date</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>EMD</controllingFieldValue>
+                <valueName>Electronic Miscellaneous Document</valueName>
             </valueSettings>
         </valueSet>
     </fields>
@@ -455,6 +464,11 @@
                     <default>false</default>
                     <label>Airline 2 leaves agreement</label>
                 </value>
+                <value>
+                    <fullName>Rejected by Airline 2</fullName>
+                    <default>false</default>
+                    <label>Rejected by Airline 2</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -463,7 +477,7 @@
         <externalId>false</externalId>
         <label>Cancellation effective date</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
@@ -499,14 +513,14 @@
         <externalId>false</externalId>
         <label>Effective date</label>
         <required>false</required>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
     </fields>
     <fields>
         <fullName>MITAorBIETA__c</fullName>
         <externalId>false</externalId>
-        <label>MITA/BIETA</label>
+        <label>MITA/BIETA/EMD</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
@@ -524,6 +538,11 @@
                     <default>false</default>
                     <label>BIETA</label>
                 </value>
+                <value>
+                    <fullName>EMD</fullName>
+                    <default>false</default>
+                    <label>EMD</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
     </fields>
@@ -531,16 +550,30 @@
         <fullName>Status__c</fullName>
         <description>Describes the situtation of the agreement</description>
         <externalId>false</externalId>
-        <formula>IF( ISNULL(Cancellation_processed_date__c),
-  IF ( Effective_date__c &lt;= TODAY(), &apos;Active&apos;, &apos;Not Active Yet&apos;),
-  IF ( Cancellation_date__c &lt;= TODAY(), &apos;Inactive&apos;, &apos;Pending To Deactivate&apos;)
+        <formula>IF(ISNULL(Cancellation_processed_date__c),
+  IF(ISNULL(Agreement_processed_date__c),
+    &apos;Pending Approval&apos;,
+    IF(Effective_date__c &lt;= TODAY(),
+      &apos;Active&apos;,
+      &apos;Not Active Yet&apos;
+    )
+  ),
+  IF(OR(ISPICKVAL(Cancellation_Reason__c,&apos;Rejected by Airline 1&apos;),ISPICKVAL(Cancellation_Reason__c,&apos;Rejected by Airline 2&apos;)),
+    &apos;Rejected&apos;,
+    IF(Cancellation_date__c &lt;= TODAY(),
+      &apos;Withdrawn&apos;,
+      &apos;Pending Withdrawal&apos;
+    )
+  )
 )</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <inlineHelpText>Possible values are:
  - Not Active Yet,
  - Active
- - Pending To Deactivate
- - Inactive</inlineHelpText>
+ - Pending Approval
+ - Withdrawn
+- Pending Withdrawal
+- Rejected</inlineHelpText>
         <label>Status</label>
         <required>false</required>
         <trackHistory>false</trackHistory>
@@ -618,19 +651,14 @@
     <listViews>
         <fullName>last30days</fullName>
         <columns>NAME</columns>
-        <columns>Active__c</columns>
+        <columns>Status__c</columns>
+        <columns>MITAorBIETA__c</columns>
         <columns>Agreement_type__c</columns>
         <columns>Airline_1__c</columns>
-        <columns>Airline1_designator_code__c</columns>
         <columns>Airline_2__c</columns>
-        <columns>Airline2_designator_code__c</columns>
         <columns>Agreement_processed_date__c</columns>
-        <columns>Cancellation_date__c</columns>
         <columns>Cancellation_processed_date__c</columns>
-        <columns>Cancellation_Reason__c</columns>
         <columns>Created_date__c</columns>
-        <columns>MITAorBIETA__c</columns>
-        <columns>Status__c</columns>
         <columns>CREATEDBY_USER</columns>
         <filterScope>Everything</filterScope>
         <filters>
@@ -829,57 +857,6 @@
 )=&apos;t&apos;,true,false)
 )</errorConditionFormula>
         <errorMessage>This agreement type is not enabled for the selected airlines</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>N4_BIETA_Seniority</fullName>
-        <active>true</active>
-        <description>Prevents &quot;junior&quot; BIETA members from requesting agreements to senior airlines.
-The seniorship is calculate on a different date for each agreement type.</description>
-        <errorConditionFormula>AND(ISPICKVAL(Cancellation_Reason__c, &quot;&quot;),IF(CASE(TEXT(Agreement_type__c), 
-
-&apos;Bilateral, both carriers can issue electronic tickets&apos;, 
-IF(Airline_1__r.BIETA_Bilateral_Date__c &gt; Airline_2__r.BIETA_Bilateral_Date__c,&apos;t&apos;,&apos;f&apos;), 
-
-&apos;One Way Passenger Issuing Airline&apos;, 
-IF(Airline_1__r.BIETA_One_way_Electronic_Issuing_Airline__c&gt; Airline_2__r.BIETA_One_way_Electronic_Issuing_Airline__c,&apos;t&apos;,&apos;f&apos;),
-
-&apos;One Way Passenger Partcipating&apos;, 
-IF(Airline_1__r.BIETA_One_way_Electronic_Participating__c &gt; Airline_2__r.BIETA_One_way_Electronic_Participating__c,&apos;t&apos;,&apos;f&apos;),
-
-&apos;One Way Intermodal Issuing Date&apos;, 
-IF(Airline_1__r.BIETA_One_way_Intermodal_Issuing_Airline__c  &gt; Airline_2__r.BIETA_One_way_Intermodal_Issuing_Airline__c ,&apos;t&apos;,&apos;f&apos;),
-
-&apos;One Way Intermodal Participating Date&apos;, 
-IF(Airline_1__r.BIETA_One_way_Intermodal_Participating__c&gt; Airline_2__r.BIETA_One_way_Intermodal_Participating__c,&apos;t&apos;,&apos;f&apos;),
-
-&apos;f&apos; )=&apos;t&apos;,true,false))</errorConditionFormula>
-        <errorMessage>The selected airline 2 has more seniority than airline 1</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>N4_MITA_Seniority</fullName>
-        <active>true</active>
-        <description>Prevents &quot;junior&quot; MITA members from requesting agreements to senior airlines.
-The seniorship is calculate on a different date for each agreement type.</description>
-        <errorConditionFormula>AND(
-AND(OR(NOT(ISBLANK(Withdrawal_Request_Reception_Date__c)),NOT(ISBLANK(Cancellation_date__c)),NOT(ISBLANK(Cancellation_processed_date__c))),
-Active__c,ISPICKVAL(Cancellation_Reason__c, &quot;&quot;)),
-IF(CASE(TEXT(Agreement_type__c), 
-&apos;The Passenger and Cargo Interline Traffic Agreement&apos;, 
-IF(AND(Airline_1__r.MITA_IATA_Interline_Passenger__c &gt; Airline_2__r.MITA_IATA_Interline_Passenger__c, Airline_1__r.MITA_IATA_Interline_Cargo__c &lt; Airline_2__r.MITA_IATA_Interline_Cargo__c),&apos;t&apos;,&apos;f&apos;), 
-
-
-&apos;The Passenger Interline Agreement&apos;,IF(AND(Airline_1__r.MITA_IATA_Interline_Passenger__c &gt; Airline_2__r.MITA_IATA_Interline_Passenger__c),&apos;t&apos;, &apos;f&apos;),
-
-&apos;The Cargo Interline Agreement&apos;, IF(AND(Airline_1__r.MITA_IATA_Interline_Cargo__c &gt; Airline_2__r.MITA_IATA_Interline_Cargo__c),&apos;t&apos;, &apos;f&apos;),
-
-&apos;The One Way Issuing Airline&apos;,IF(AND(Airline_1__r.MITA_One_way_Pass_Issuing_Airline__c &gt; Airline_2__r.MITA_One_way_Pass_Issuing_Airline__c),&apos;t&apos;, &apos;f&apos;),
-
-&apos;The One Way Participating Airline&apos;, IF(AND(Airline_1__r.MITA_One_way_Pass_Participating__c &gt; Airline_2__r.MITA_One_way_Pass_Participating__c),&apos;t&apos;, &apos;f&apos;),
-
-&apos;f&apos; 
-)=&apos;t&apos;,true,false)
-)</errorConditionFormula>
-        <errorMessage>Airline 2 has more seniority than airline 1 for this agreement type.</errorMessage>
     </validationRules>
     <visibility>Public</visibility>
 </CustomObject>
