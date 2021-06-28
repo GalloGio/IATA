@@ -1762,6 +1762,7 @@ trigger CaseBeforeTrigger on Case (before delete, before insert, before update) 
 				}
 				//ACAMBAS - WMO-384 - End
 				if (aCase.RecordTypeId == SIDRAcaseRecordTypeID &&
+					aCase.BSP_CASS__c != 'CASS' &&
 					aCaseOld.Update_AIMS_Repayment_agreed__c == null &&
 					aCase.Update_AIMS_Repayment_agreed__c != null) {
 					listCasesUpdatedAIMS.add(aCase.Id);
