@@ -5,6 +5,7 @@ public with sharing class RecordRetrievalLightningImpTest {
 	public static final String DEFAULTLASTNAME = 'Contact Last Name';
 	public static final String DEFAULTCONTACTPHONE = '91111111';
 	public static final String DEFAULTACCOUNTPHONE = '81111111';
+	public static final String DEFAULTIATACODE = '618';
 	public static final String DEFAULTFOLDERID = 'Singapore#SIN#English#Airline_Differenciated#Singapore Airlines#618#618#Differentiated Service Model#';
 
 	@TestSetup
@@ -19,13 +20,12 @@ public with sharing class RecordRetrievalLightningImpTest {
 		//create and return Account List
 		List<Account> accountList = new List<Account>();
 		for (Integer x = 0; x < numberOfRecords; x ++){
-			Account account = new Account(Name = DEFAULTNAME + ' ' + x, RecordTypeId = recordTypeId, IATA_ISO_Country__c = iataISOCountry.Id, Phone=DEFAULTACCOUNTPHONE+x);
+			Account account = new Account(Name = DEFAULTNAME + ' ' + x, RecordTypeId = recordTypeId, IATA_ISO_Country__c = iataISOCountry.Id, IATACode__c = DEFAULTIATACODE, Phone=DEFAULTACCOUNTPHONE+x);
 			accountList.add(account);
 		}
 		insert accountList;
 
 		//create Contacts
-		numberOfRecords = 2;
 		List<Contact> contactList = new List<Contact>();
 		for(Integer x = 0; x < numberOfRecords; x++){
 			Contact contact = new Contact(Email = DEFAULTEMAIL + x, AccountId = accountList.get(0).Id, LastName = DEFAULTLASTNAME, Phone = DEFAULTCONTACTPHONE+x);
@@ -70,7 +70,20 @@ public with sharing class RecordRetrievalLightningImpTest {
 		String folderId = DEFAULTFOLDERID;
 		test.startTest();
 		result = odigo_cs.SearchRecords(phoneNum,phoneIntNum,phoneLocalNum,folderId,'111','222','call','444');
-		System.debug('result = '+result);
+		test.stopTest();
+		System.assert(result != null, 'Contact/Account found!');
+	}
+
+	@isTest
+	public static void recordRetrivalImplementationNothingFoundTest() {
+		OdigoCti.RecordRetrievalLightningInterface_v3.SearchResult result = new OdigoCti.RecordRetrievalLightningInterface_v3.SearchResult();
+		RecordRetrievalLightningImplementation odigo_cs = new RecordRetrievalLightningImplementation();
+		String phoneNum = '999888777';
+		String phoneIntNum = '+44999888777';
+		String phoneLocalNum = '999888777';
+		String folderId = 'NO#NEED#FOLDERID';
+		test.startTest();
+		result = odigo_cs.SearchRecords(phoneNum,phoneIntNum,phoneLocalNum,folderId,'111','222','call','444');
 		test.stopTest();
 		System.assert(result != null, 'Contact/Account found!');
 	}
@@ -89,7 +102,6 @@ public with sharing class RecordRetrievalLightningImpTest {
 		Test.startTest();
 		Test.setFixedSearchResults(fixedSearchResults);
 		result = odigo_cs.SearchRecords(phoneNum,phoneIntNum,phoneLocalNum,folderId,'111','222','call','444');
-		System.debug('resultContact = '+result);
 		Test.stopTest();
 		System.assert(result != null, 'No Contact found!');
 	}
@@ -109,7 +121,6 @@ public with sharing class RecordRetrievalLightningImpTest {
 		Test.startTest();
 		Test.setFixedSearchResults(fixedSearchResults);
 		result = odigo_cs.SearchRecords(phoneNum,phoneIntNum,phoneLocalNum,folderId,'111','222','call','444');
-		System.debug('resultContacts = '+result);
 		Test.stopTest();
 		System.assert(result != null, 'No Contacts found!');
 	}
@@ -128,7 +139,6 @@ public with sharing class RecordRetrievalLightningImpTest {
 		Test.startTest();
 		Test.setFixedSearchResults(fixedSearchResults);
 		result = odigo_cs.SearchRecords(phoneNum,phoneIntNum,phoneLocalNum,folderId,'111','222','call','444');
-		System.debug('resultAccount = '+result);
 		Test.stopTest();
 		System.assert(result != null, 'No Account found!');
 	}
@@ -148,7 +158,6 @@ public with sharing class RecordRetrievalLightningImpTest {
 		Test.startTest();
 		Test.setFixedSearchResults(fixedSearchResults);
 		result = odigo_cs.SearchRecords(phoneNum,phoneIntNum,phoneLocalNum,folderId,'111','222','call','444');
-		System.debug('resultAccounts = '+result);
 		Test.stopTest();
 		System.assert(result != null, 'No Accounts found!');
 	}
@@ -167,7 +176,6 @@ public with sharing class RecordRetrievalLightningImpTest {
 		Test.startTest();
 		Test.setFixedSearchResults(fixedSearchResults);
 		result = odigo_cs.SearchRecords(phoneNum,phoneIntNum,phoneLocalNum,folderId,'111','222','callback','444');
-		System.debug('result = '+result);
 		Test.stopTest();
 		System.assert(result != null, 'No Cases found!');
 	}
@@ -186,8 +194,51 @@ public with sharing class RecordRetrievalLightningImpTest {
 		Test.startTest();
 		Test.setFixedSearchResults(fixedSearchResults);
 		result = odigo_cs.SearchRecords(phoneNum,phoneIntNum,phoneLocalNum,folderId,'111','222','callback','444');
-		System.debug('result = '+result);
 		Test.stopTest();
 		System.assert(result != null, 'No Cases found!');
+	}
+
+	@isTest
+	public static void recordRetrivalImplementationOneAccountTest() {
+		OdigoCti.RecordRetrievalLightningInterface_v3.SearchResult result = new OdigoCti.RecordRetrievalLightningInterface_v3.SearchResult();
+		RecordRetrievalLightningImplementation odigo_cs = new RecordRetrievalLightningImplementation();
+		List<Account> accounts = [SELECT Id, Phone FROM Account];
+		List<Id> fixedSearchResults = new List<Id>();
+		fixedSearchResults.add(accounts[0].Id);
+		String newPhone = '71717171';
+		accounts[0].Phone = newPhone;
+		update accounts;
+		String phoneNum = newPhone;
+		String phoneIntNum = '+44'+newPhone;
+		String phoneLocalNum = newPhone;
+		String folderId = 'NO#NEED#FOLDERID';
+		Test.startTest();
+		Test.setFixedSearchResults(fixedSearchResults);
+		result = odigo_cs.SearchRecords(phoneNum,phoneIntNum,phoneLocalNum,folderId,'111','222','call','444');
+		Test.stopTest();
+		System.assert(result != null, 'No Accounts found!');
+	}
+
+	@isTest
+	public static void recordRetrivalImplementationManyAccountsTest() {
+		OdigoCti.RecordRetrievalLightningInterface_v3.SearchResult result = new OdigoCti.RecordRetrievalLightningInterface_v3.SearchResult();
+		RecordRetrievalLightningImplementation odigo_cs = new RecordRetrievalLightningImplementation();
+		List<Account> accounts = [SELECT Id, Phone FROM Account];
+		List<Id> fixedSearchResults = new List<Id>();
+		Set<Id> ctIds = (new Map<Id,SObject>(accounts)).keySet();
+		fixedSearchResults = new List<Id>(ctIds);
+		String newPhone = '71717171';
+		accounts[0].Phone = newPhone;
+		accounts[1].Phone = newPhone;
+		update accounts;
+		String phoneNum = newPhone;
+		String phoneIntNum = '+44'+newPhone;
+		String phoneLocalNum = newPhone;
+		String folderId = 'NO#NEED#FOLDERID';
+		Test.startTest();
+		Test.setFixedSearchResults(fixedSearchResults);
+		result = odigo_cs.SearchRecords(phoneNum,phoneIntNum,phoneLocalNum,folderId,'111','222','call','444');
+		Test.stopTest();
+		System.assert(result != null, 'No Accounts found!');
 	}
 }

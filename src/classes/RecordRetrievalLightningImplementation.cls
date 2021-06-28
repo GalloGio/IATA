@@ -9,10 +9,13 @@ global class RecordRetrievalLightningImplementation extends odigocti.RecordRetri
 		String type,
 		String IVRNumber
 	) {
-		Integer IATACodeStringPosition = 6; // FolderId will have the IATACode, must identity which position is
+		Integer IATACodeStringPosition = 5; // FolderId will have the IATACode, must identity which position is
 		String IATACode = '';
-		if (folderId != '' && folderId.indexOf('#') > 0 ) {
-			IATACode = folderId.split('#')[IATACodeStringPosition];
+		localPhoneNumber = localPhoneNumber.replaceFirst('^0+', '');
+		String searchExpression = localPhoneNumber;
+		List<String> folderIdStrings = folderId.split('#');
+		if (folderIdStrings.size()>=IATACodeStringPosition) {
+			IATACode = folderIdStrings[IATACodeStringPosition];
 		}
 		//prepare the object that will be returned to the odigo CTI
 		SearchResult result = new SearchResult();
@@ -61,19 +64,30 @@ global class RecordRetrievalLightningImplementation extends odigocti.RecordRetri
 				 * looking for every contact and account that as this phone number and iata code in all fields
 				 */
 				String queryPhones = '\\+*'+internationalPhoneNumber.replaceFirst('^0+', '')+' OR '+localPhoneNumber+' OR '+phoneNumber;
-				//if (IATACode != '') { queryPhones += ' OR '+IATACode; }
-
-				List < List < SObject >> searchList = [
+				List < List < SObject >> searchList = new List < List < SObject >>();
+				if (IATACode != '') { 
+					searchExpression += ' OR ' + IATACode;
+					String phoneWildcard = '%'+localPhoneNumber+'%';
+					List<Contact> contactList = [SELECT Id, AccountId, IATA_Code__c, Phone, PhoneNational__c, MobilePhone, OtherPhone, Account.Phone FROM Contact WHERE (Phone LIKE :phoneWildcard OR PhoneNational__c LIKE :phoneWildcard OR MobilePhone LIKE :phoneWildcard OR OtherPhone LIKE :phoneWildcard OR Account.Phone LIKE :phoneWildcard) OR IATA_Code__c = :IATACode LIMIT 1000];
+					if (contactList.size() > 0) {
+						searchList = performSearchInData(contactList, localPhoneNumber, IATACode);
+					}
+				}
+				if (searchList.size() == 0) {
+					searchList = [
 						FIND :queryPhones 
 						IN PHONE FIELDS
 						RETURNING 
 						Contact(Id, AccountId), 
 						Account(Id)
 					];
-
+				}
 				if (searchList != null && searchList.size() > 0) {
+					List < Account > accounts = new List<Account>();
 					List < Contact > contacts = ((List < Contact > ) searchList[0]);
-					List < Account > accounts = ((List < Account > ) searchList[1]);
+					if (searchList.size() > 1) {
+						accounts = ((List < Account > ) searchList[1]);
+					}
 					if (contacts != null && contacts.size() > 0) {
 						/**
 						 * we found only one matching contact, so we open it
@@ -91,7 +105,7 @@ global class RecordRetrievalLightningImplementation extends odigocti.RecordRetri
 							 */
 							result.objectType = 'Search'; //keyword to open the search page
 							Set < String > setIds = new Set < String > ();
-							setIds.add(localPhoneNumber); //what to search
+							setIds.add(searchExpression); //what to search
 							result.recordIds = setIds;
 							return result;
 						}
@@ -113,7 +127,7 @@ global class RecordRetrievalLightningImplementation extends odigocti.RecordRetri
 							 */
 							result.objectType = 'Search'; //keyword to open the search page
 							Set < String > setIds = new Set < String > ();
-							setIds.add(localPhoneNumber); //what to search
+							setIds.add(searchExpression); //what to search
 							result.recordIds = setIds;
 							return result;
 						}
@@ -127,9 +141,48 @@ global class RecordRetrievalLightningImplementation extends odigocti.RecordRetri
 		 */
 		result.objectType = 'Search'; //keyword to open the search page
 		Set < String > setIds = new Set < String > ();
-		setIds.add(localPhoneNumber); 	//what to search
+		setIds.add(searchExpression); 	//what to search
 		result.recordIds = setIds;
 
 		return result;
+	}
+
+	/**
+	 * Get and Split Contacts and Accounts
+	 */
+	private static List<List<SObject>> performSearchInData(List<Contact> contactList, String phoneToCheck, String iatacodeToCheck) {
+		List<List<SObject>> searchList = new List<List<SObject>>();
+		List<Contact> contactRecords = new List<Contact>();
+		List<Contact> contactIATARecords = new List<Contact>();
+		List<Account> accountRecords = new List<Account>();
+		Set<Id> accountIds = new Set<Id>();
+		
+		if (contactList.size() > 0) {
+			String allPhones = '';
+			for (Contact contact : contactList) {
+				accountIds.add(contact.AccountId);
+				allPhones = contact.Phone + ' ' + contact.PhoneNational__c + ' ' + contact.MobilePhone + ' ' + contact.OtherPhone + ' ' +contact.Account.Phone;
+				if (allPhones.contains(phoneToCheck) && contact.IATA_Code__c == iatacodeToCheck) {
+					contactIATARecords.add(contact);
+				} else if (allPhones.contains(phoneToCheck)) {
+					contactRecords.add(contact);
+				}
+			}
+			if (contactIATARecords.size() > 0) {
+				searchList.add(contactIATARecords);
+			} else {
+				searchList.add(contactRecords);
+			}
+
+			if (accountIds.size()>0) {
+				for (Id aId:accountIds) {
+					Account acc = new Account();
+					acc.Id = aId;
+					accountRecords.add(acc);
+				}
+				searchList.add(accountRecords);
+			}
+		}
+		return searchList;
 	}
 }
