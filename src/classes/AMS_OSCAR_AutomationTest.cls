@@ -14,7 +14,7 @@ private class AMS_OSCAR_AutomationTest {
 	}
 
 	static testMethod void test_AMS_OSCAR_Automation() {
-		AMS_Oscar__c oscar = [SELECT Id, Account__c FROM AMS_Oscar__c LIMIT 1];
+		AMS_Oscar__c oscar = [SELECT Id, ANG_Type_Of_Change__c, Account__c, AMS_Online_Accreditation__r.ANG_Accreditation_Model_to_Change__c FROM AMS_Oscar__c LIMIT 1];
 		AMS_OSCAR_Event__c event = new AMS_OSCAR_Event__c();
 		AMS_OSCAR_AutomationManager manager = new AMS_OSCAR_AutomationManager();
 		AMS_OSCAR_Automation.IClassFactory factory;
@@ -153,9 +153,24 @@ private class AMS_OSCAR_AutomationTest {
 				Step 02
 			*/
 			oscar.STEP15__c = 'Passed';
+			oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_ACCREDITATION_TYPE;
+			oscar.AMS_Online_Accreditation__r.ANG_Accreditation_Model_to_Change__c = AMS_Utils.ACCREDITATIONMODEL_CASH;
 			factory = manager.newClassInstance('AMS_OSCAR_Automation.AMS_OSCAR_Step2_succeeded');
 			System.assertEquals(true, factory.processWork(event, oscar));
 			System.assertEquals('On Hold_Internal', oscar.Status__c);
+			
+			List<Agency_Authorization__c> toUpsert = new List<Agency_Authorization__c>();
+			For(Agency_Authorization__c aa: [Select Id , Status__c, Account__r.IATA_ISO_Country__r.ANG_Enable_NewGen__c, Account__r.IATA_ISO_Country__r.ANG_Portal_Service__c, Account__r.IATA_ISO_Country__r.ANG_IEP_Model__c
+											from Agency_Authorization__c 
+											where Account__c =: oscar.Account__C and ANG_FormOfPayment_ID__c = 'CA' and Status__c != 'Not Authorized' and RecordType.DeveloperName = 'FormOfPayment']){
+				aa.Status__c = 'Not Authorized';
+				toUpsert.add(aa);
+			}
+			Update toUpsert;
+
+			Set<Id> accountsAffected = new Set<Id>();
+			accountsAffected.add(oscar.Account__c);
+			ANG_AgencyChangesHelper.performCashTransformation(accountsAffected);
 
 			factory = manager.newClassInstance('AMS_OSCAR_Automation.AMS_OSCAR_Step2_failed');
 			System.assertEquals(true, factory.processWork(event, oscar));
