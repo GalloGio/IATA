@@ -23313,7 +23313,7 @@ Also used as default WF, Lead, Case</description>
     <fieldPermissions>
         <editable>false</editable>
         <field>Account.X8585_Code__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
