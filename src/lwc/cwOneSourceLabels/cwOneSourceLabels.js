@@ -467,6 +467,7 @@ import icg_in_house from "@salesforce/label/c.icg_in_house";
 import icg_manage_obligations_documents from "@salesforce/label/c.icg_manage_obligations_documents";
 import icg_tooltip_service_info1 from "@salesforce/label/c.icg_tooltip_service_info1";
 import icg_tooltip_service_info2 from "@salesforce/label/c.icg_tooltip_service_info2";
+import icg_others from "@salesforce/label/c.icg_others";
 
 export function labels() {
 	let labels = {
@@ -939,7 +940,8 @@ export function labels() {
 		icg_in_house,
 		icg_manage_obligations_documents,
 		icg_tooltip_service_info1,
-		icg_tooltip_service_info2
+		icg_tooltip_service_info2,
+		icg_others
 
 	};
 
