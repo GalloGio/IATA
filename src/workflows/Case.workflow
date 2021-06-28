@@ -14973,7 +14973,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.SuppliedEmail</field>
             <operation>equals</operation>
-            <value>garciam@iata.org,shalbakf@iata.org,info.sce@iata.org</value>
+            <value>shalbakf@iata.org,info.sce@iata.org</value>
         </criteriaItems>
         <criteriaItems>
             <field>Case.Subject</field>
@@ -15019,7 +15019,7 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <criteriaItems>
             <field>Case.SuppliedEmail</field>
             <operation>equals</operation>
-            <value>garciam@iata.org,shalbakf@iata.org,info.sce@iata.org</value>
+            <value>shalbakf@iata.org,info.sce@iata.org</value>
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
@@ -18466,30 +18466,6 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
-        <fullName>Web - Change Case Area to Accreditation</fullName>
-        <actions>
-            <name>Case_Area_Accreditation</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.Region__c</field>
-            <operation>notEqual</operation>
-            <value>Europe</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.CaseArea__c</field>
-            <operation>equals</operation>
-            <value>Accreditation Products</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Product_Category_ID__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <description>For all regions except Europe, change the Case Area from Accreditation Products to Accreditation.  Excludes Case with &quot;Product Category ID&quot; NOT null because they are to do with IATA Certificate purchase and their Case Area should be Accreditation Process</description>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
         <fullName>Web - SAFs - Greece</fullName>
         <actions>
             <name>SAForderGreecenotification</name>
@@ -18613,51 +18589,6 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <value>Web,Portal</value>
         </criteriaItems>
         <description>When a web case is logged, the Region field and Case Record Type in the Case is automatically updated based on IATA Country selected. Or if an email2case is received.</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Web - Update Region - Africa %26 Middle East</fullName>
-        <actions>
-            <name>Case_Record_Type_MENA</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Update_Region_MENA</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>(1 OR 4 OR 5 OR 6) AND 2 AND 3</booleanFilter>
-        <criteriaItems>
-            <field>Case.BSPCountry__c</field>
-            <operation>equals</operation>
-            <value>Central African Republic,Ghana,Nigeria,&quot;Congo, the Democratic Republic of the&quot;,Saudi Arabia,Mali,Gambia,Burkina Faso,Togo,Gabon,Tchad,Mauritania,Liberia,Niger,Equatorial Guinea,Senegal,Chad,Guinea,Benin,Guinea-Bissau,Cape Verde,Sierra Leone,Cameroon</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Origin</field>
-            <operation>equals</operation>
-            <value>Web,Portal</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Cases - Europe</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.BSPCountry__c</field>
-            <operation>equals</operation>
-            <value>Angola,Comoros,&quot;Tanzania, United Republic of&quot;,Tanzania,Réunion,Lesotho,Kenya,Ethiopia,Malawi,South Africa,Namibia,Burundi,Uganda,Seychelles,Sudan,Rwanda,Swaziland,Zambia,Mauritius,Mozambique,Botswana,Congo (Brazzaville),Congo,Côte d&apos;Ivoire,Zimbabwe</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.BSPCountry__c</field>
-            <operation>equals</operation>
-            <value>United Arab Emirates,Qatar,Saudi Arabia,Morocco,Syria,Oman,Lebanon,Libya,Iraq,Egypt,Sao Tome,Bahrain,Mauritius,Jordan,Reunion,&quot;Iran, Islamic Republic of&quot;,Eritrea,Kuwait,Djibouti,&quot;Palestinian Territories, Occupied&quot;,Algeria,Madagascar,Somalia</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.BSPCountry__c</field>
-            <operation>equals</operation>
-            <value>Tunisia,Yemen,Afghanistan</value>
-        </criteriaItems>
-        <description>When a web case is logged, the Region field in the Case is automatically updated based on IATA Country selected, and the applicable Record Type is updated.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -18829,156 +18760,6 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <value>False</value>
         </criteriaItems>
         <description>When a web case is logged, the Region field in the Case is automatically updated based on IATA Country selected, and the applicable Record Type is updated.</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>ZZZ_IDFS_SIDRA_IRR01Technical default Americas - email to R%26S</fullName>
-        <actions>
-            <name>IDFS_SIDRA_IRR01Technical_default_detected_email_to_R_S</name>
-            <type>Alert</type>
-        </actions>
-        <actions>
-            <name>SIDRA_R_S_feedback_Tech_default</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>1 AND 9 AND ((4 AND 8) OR (5 AND ((2 AND 7) OR (3 AND 6))))</booleanFilter>
-        <criteriaItems>
-            <field>Case.Region__c</field>
-            <operation>equals</operation>
-            <value>Americas</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.BSPCountry__c</field>
-            <operation>notContain</operation>
-            <value>Uruguay,Paraguay,Argentina</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.BSPCountry__c</field>
-            <operation>equals</operation>
-            <value>Uruguay,Paraguay,Argentina</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.BSP_CASS__c</field>
-            <operation>equals</operation>
-            <value>CASS</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.BSP_CASS__c</field>
-            <operation>equals</operation>
-            <value>BSP</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Total_Irregularities__c</field>
-            <operation>equals</operation>
-            <value>8</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Total_Irregularities__c</field>
-            <operation>equals</operation>
-            <value>6</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Total_Irregularities__c</field>
-            <operation>equals</operation>
-            <value>4</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>SIDRA,SIDRA BR</value>
-        </criteriaItems>
-        <description>SIDRA</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>ZZZ_IDFS_SIDRA_IRR01Technical default N%2EASIA - email to R%26S</fullName>
-        <actions>
-            <name>IDFS_SIDRA_IRR01Technical_default_detected_email_to_R_S</name>
-            <type>Alert</type>
-        </actions>
-        <actions>
-            <name>SIDRA_R_S_feedback_Tech_default</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>1 AND 4 AND ((2 AND 8) OR (3 AND 5 AND 8) OR (3 AND 6 AND 7))</booleanFilter>
-        <criteriaItems>
-            <field>Case.Region__c</field>
-            <operation>equals</operation>
-            <value>China &amp; North Asia</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.BSPCountry__c</field>
-            <operation>notEqual</operation>
-            <value>People&apos;s Republic of China</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.BSPCountry__c</field>
-            <operation>equals</operation>
-            <value>People&apos;s Republic of China</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>SIDRA,SIDRA BR</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.BSP_CASS__c</field>
-            <operation>equals</operation>
-            <value>CASS</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.BSP_CASS__c</field>
-            <operation>equals</operation>
-            <value>BSP</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Total_Irregularities__c</field>
-            <operation>equals</operation>
-            <value>10</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Total_Irregularities__c</field>
-            <operation>equals</operation>
-            <value>4</value>
-        </criteriaItems>
-        <description>SIDRA</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>ZZZ_IDFS_SIDRA_IRR01_Technical default EUR - email to R%26S</fullName>
-        <actions>
-            <name>SIDRA_DEF01_Tech_Def_detected_by_ACC</name>
-            <type>Alert</type>
-        </actions>
-        <actions>
-            <name>SIDRA_R_S_feedback_Tech_default</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>(1 OR 2) AND 3 AND 4</booleanFilter>
-        <criteriaItems>
-            <field>Case.Total_Irregularities__c</field>
-            <operation>equals</operation>
-            <value>4</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.REI_Previous_12_Months_CASS_only__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>contains</operation>
-            <value>SIDRA</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Region__c</field>
-            <operation>equals</operation>
-            <value>Europe</value>
-        </criteriaItems>
-        <description>SIDRA</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
