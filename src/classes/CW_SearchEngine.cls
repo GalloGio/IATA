@@ -123,7 +123,7 @@ public without sharing class CW_SearchEngine {
 			querySelect += ', Opening_Hours__c ';
 		}
 		if (getHandledAirlines == true) {
-			querySelect += ', (Select Id, Handled_Airline__c, Handled_Airline__r.Name from ICG_Account_Role_Detail_Relationships__r) ';
+			querySelect += ', (Select Id, Handled_Airline__c, Handled_Airline__r.Name, Handled_Airline__r.Airline_Designator__c from ICG_Account_Role_Detail_Relationships__r) ';
 		}
 
 		querySelect += ', Third_Party_Services__c,  In_House_Services__c ';
@@ -690,7 +690,9 @@ public without sharing class CW_SearchEngine {
 					HandledElement airlineHandled = new HandledElement();
 					airlineHandled.selected = true;
 					airlineHandled.value = acrr.Handled_Airline__c;
-					airlineHandled.label = acrr.Handled_Airline__r.Name;
+					airlineHandled.label = 
+						acrr.Handled_Airline__r.Name +
+						(String.isNotBlank(acrr.Handled_Airline__r.Airline_designator__c) ? ' [' + acrr.Handled_Airline__r.Airline_designator__c + ']' : '');
 					handledAirlines.add(airlineHandled);
 				}
 			}
