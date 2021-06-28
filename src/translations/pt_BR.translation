@@ -8737,7 +8737,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>Home_Page_New_Release_Msg</name>
     </customLabels>
     <customLabels>
-        <label><!-- IATA Acr Changes Service Description --></label>
+        <label>O credenciamento IATA simplifica muito a relação comercial entre agentes e companhias aéreas. Sendo uma agência credenciada pela IATA, você se destacará como um parceiro reconhecido da indústria. Você terá um código numérico IATA exclusivo, abrindo oportunidades para trabalhar com companhias aéreas globais. Através deste serviço Credenciamento IATA & Alterações, você pode se inscrever diretamente para se tornar um IATA Accredited Agency (Agente Credenciado IATA). Se você já for credenciado IATA, pode usar este serviço para atualizar as informações sobre alteração de endereço ou propriedade. Você também pode usar este serviço para adicionar filiais.</label>
         <name>IATA_Acr_Changes_Service_Description</name>
     </customLabels>
     <customLabels>
