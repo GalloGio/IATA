@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>Pharmaceutical Industry</label>
+    <label>Pharmaceutical</label>
     <protected>false</protected>
     <values>
         <field>Can_Account_Be_Created__c</field>
@@ -8,11 +8,11 @@
     </values>
     <values>
         <field>Created_Account_Category__c</field>
-        <value xsi:type="xsd:string">Pharmaceutical Industry</value>
+        <value xsi:type="xsd:string">Pharmaceutical</value>
     </values>
     <values>
         <field>Created_Account_Sector__c</field>
-        <value xsi:type="xsd:string">Healthcare Industry</value>
+        <value xsi:type="xsd:string">Health Industry</value>
     </values>
     <values>
         <field>Display_Country__c</field>
@@ -52,7 +52,7 @@
     </values>
     <values>
         <field>Parent__c</field>
-        <value xsi:type="xsd:string">Healthcare_Industry</value>
+        <value xsi:type="xsd:string">Health_Industry</value>
     </values>
     <values>
         <field>Partial_List_Order__c</field>
