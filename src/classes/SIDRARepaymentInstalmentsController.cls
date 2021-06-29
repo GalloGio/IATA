@@ -90,7 +90,7 @@ public with sharing class SIDRARepaymentInstalmentsController {
 	**/
 	public void Edit () {
 		if (getBlockEdit()) {
-			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,'As per resolution, Repayment Plan is not allowed for CASS Agents.'));
+			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,Label.SIDRA_Repayment_Instalments_not_allowed_for_CASS));
 			return;
 		}
 		this.isEditMode = true;
@@ -122,7 +122,7 @@ public with sharing class SIDRARepaymentInstalmentsController {
 		try {
 
 			if (getBlockEdit()) {
-				throw new SIDRARepaymentInstalmentsException('As per resolution, Repayment Plan is not allowed for CASS Agents.');
+				throw new SIDRARepaymentInstalmentsException(Label.SIDRA_Repayment_Instalments_not_allowed_for_CASS);
 			}
 
 			upsert lstRepaymentInstalments;
@@ -153,7 +153,7 @@ public with sharing class SIDRARepaymentInstalmentsController {
 	public void DeleteRpi () {
 		try {
 			if (getBlockEdit()) {
-				throw new SIDRARepaymentInstalmentsException('As per resolution, Repayment Plan is not allowed for CASS Agents.');
+				throw new SIDRARepaymentInstalmentsException(Label.SIDRA_Repayment_Instalments_not_allowed_for_CASS);
 			}
 
 			Case_Detail__c instalmentToDelete = this.lstRepaymentInstalments.remove(this.rpiIndexToDelete);
@@ -182,7 +182,7 @@ public with sharing class SIDRARepaymentInstalmentsController {
 	public void AddNewPaymentInstalment () {
 		try {
 			if (getBlockEdit()) {
-				throw new SIDRARepaymentInstalmentsException('As per resolution, Repayment Plan is not allowed for CASS Agents.');
+				throw new SIDRARepaymentInstalmentsException(Label.SIDRA_Repayment_Instalments_not_allowed_for_CASS);
 			}
 
 			this.lstRepaymentInstalments = getListInstalments(this.cs.Id);
