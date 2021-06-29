@@ -352,11 +352,6 @@
         <label>Email Sent</label>
     </standardValue>
     <standardValue>
-        <fullName>Envoyé</fullName>
-        <default>false</default>
-        <label>Envoyé</label>
-    </standardValue>
-    <standardValue>
         <fullName>Escalated Internally</fullName>
         <default>false</default>
         <label>Escalated Internally</label>
@@ -1415,11 +1410,6 @@
         <fullName>Replaced by New Contact</fullName>
         <default>false</default>
         <label>Replaced by New Contact</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Répondu</fullName>
-        <default>false</default>
-        <label>Répondu</label>
     </standardValue>
     <standardValue>
         <fullName>Responded</fullName>

@@ -1126,24 +1126,4 @@ Request an agent to upload Financial Documents&apos; is sent</description>
         <formula>AND( Parent.OwnerId = &apos;00G1r0000031kjM&apos;, NOT( CONTAINS(Subject, &apos;has been created&apos;)  ) )</formula>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
-    <rules>
-        <fullName>test anita</fullName>
-        <active>false</active>
-        <criteriaItems>
-            <field>EmailMessage.Incoming</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>EmailMessage.FromAddress</field>
-            <operation>contains</operation>
-            <value>kaleconsultants.com</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Cases - SIS Help Desk</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
 </Workflow>

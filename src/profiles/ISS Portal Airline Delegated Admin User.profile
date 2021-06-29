@@ -5044,6 +5044,86 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>IA_AllController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IA_AllCtrlTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IA_ContactsCtrl</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IA_ContactsCtrlTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IA_DetailController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IA_DetailCtrlTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IA_HomeController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IA_HomeControllerTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IA_MemorandumController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IA_MemorandumCtrlTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IA_MemorandumsBatch</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IA_MemorandumsBatchTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IA_MemorandumsSchedule</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IA_MemosController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IA_MemosCtrlTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IA_NewController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IA_NewCtrlTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IA_ReqController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IA_ReqCtrlTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>IA_util</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>ICCS_CaseAttachmentsController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -7896,6 +7976,14 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>MITA_AgreementTriggerHandler</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>MITA_AgreementTriggerHandlerTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>MITA_AgreementsCtrl</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -10077,6 +10165,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>TestDataFactory_PortalApplications</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>TestDataFactory_Users</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -38283,6 +38375,106 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Event.OdigoCti__Additional_Data__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Event.OdigoCti__Call_Folder_ID__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Event.OdigoCti__Call_Result__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Event.OdigoCti__Call_Type__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Event.OdigoCti__Call_duration__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Event.OdigoCti__Call_end_time__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Event.OdigoCti__Call_fail_cause__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Event.OdigoCti__Call_fail_reason__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Event.OdigoCti__Call_reference__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Event.OdigoCti__Call_start_time__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Event.OdigoCti__Campaign__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Event.OdigoCti__IVR_Number__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Event.OdigoCti__Phone_number__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Event.OdigoCti__Skill__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Event.OdigoCti__Survey_information__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Event.OdigoCti__Survey_name__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Event.OdigoCti__Survey_score__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Event.OdigoCti__Transfer__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Event.OdigoCti__Waiting_time__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Event.OdigoCti__Waiting_time_second__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Event.Participants__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -48327,12 +48519,12 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>MITA_Agreement__c.Agreement_processed_date__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>MITA_Agreement__c.Agreement_type__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -48362,7 +48554,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>MITA_Agreement__c.Airline_1__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -48382,42 +48574,42 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>MITA_Agreement__c.Airline_2__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>MITA_Agreement__c.Cancellation_Reason__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>MITA_Agreement__c.Cancellation_date__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>MITA_Agreement__c.Cancellation_processed_date__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>MITA_Agreement__c.Comments__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>MITA_Agreement__c.Created_date__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>MITA_Agreement__c.Effective_date__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>MITA_Agreement__c.MITAorBIETA__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -48427,7 +48619,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>MITA_Agreement__c.Withdrawal_Request_Reception_Date__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -57588,6 +57780,106 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Task.OdigoCti__Additional_Data__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Task.OdigoCti__Call_Folder_ID__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Task.OdigoCti__Call_Result__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Task.OdigoCti__Call_Type__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Task.OdigoCti__Call_duration__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Task.OdigoCti__Call_end_time__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Task.OdigoCti__Call_fail_cause__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Task.OdigoCti__Call_fail_reason__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Task.OdigoCti__Call_reference__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Task.OdigoCti__Call_start_time__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Task.OdigoCti__Campaign__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Task.OdigoCti__IVR_Number__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Task.OdigoCti__Phone_number__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Task.OdigoCti__Skill__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Task.OdigoCti__Survey_information__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Task.OdigoCti__Survey_name__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Task.OdigoCti__Survey_score__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Task.OdigoCti__Transfer__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Task.OdigoCti__Waiting_time__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Task.OdigoCti__Waiting_time_second__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Task.Participants__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -58615,6 +58907,16 @@
         <editable>true</editable>
         <field>User.Mgmt_Report_Team__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>User.OdigoCti__Odigo_Conf__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>User.OdigoCti__Odigo_login__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -64338,9 +64640,9 @@
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
-        <allowCreate>false</allowCreate>
+        <allowCreate>true</allowCreate>
         <allowDelete>false</allowDelete>
-        <allowEdit>false</allowEdit>
+        <allowEdit>true</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>MITA_Agreement__c</object>
@@ -65457,6 +65759,10 @@
     <pageAccesses>
         <apexPage>IATAPassengersList</apexPage>
         <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>IA_Home</apexPage>
+        <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>ICCSPdfPAGenerator</apexPage>
@@ -66789,6 +67095,10 @@
     <pageAccesses>
         <apexPage>InMaintenance</apexPage>
         <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>InterlineAgreementsMemorandum</apexPage>
+        <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>Invite_User</apexPage>

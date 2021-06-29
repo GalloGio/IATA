@@ -491,18 +491,6 @@
         <template>All/Clicktools_Contact_Email_CX_TR</template>
     </alerts>
     <alerts>
-        <fullName>Clicktools_Email_for_Instant_survey_CX_VI</fullName>
-        <description>Clicktools Email for Instant survey_CX_VI</description>
-        <protected>false</protected>
-        <recipients>
-            <field>ContactId</field>
-            <type>contactLookup</type>
-        </recipients>
-        <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>All/Clicktools_Contact_Email_CX_VI</template>
-    </alerts>
-    <alerts>
         <fullName>Clicktools_Email_for_Instant_survey_CX_ZH</fullName>
         <description>Clicktools Email for Instant survey_CX_ZH</description>
         <protected>false</protected>
@@ -3765,17 +3753,6 @@
         </recipients>
         <senderType>CurrentUser</senderType>
         <template>All/ACCA_Changed_Escalated_Status_ACCA</template>
-    </alerts>
-    <alerts>
-        <fullName>TEST_Email_Alert_on_IS_for_AM</fullName>
-        <description>TEST Email Alert on IS for AM</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>oueidatg2@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <senderType>CurrentUser</senderType>
-        <template>Salesforcetemplatesnotused/Test_for_IS_for_AM</template>
     </alerts>
     <alerts>
         <fullName>Used_to_inform_the_owner_that_the_CR_has_been_approved</fullName>
@@ -11184,10 +11161,6 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <description>Workflow rule used to send IS for Agency Risk Management processes</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_VI</name>
-                <type>Alert</type>
-            </actions>
             <actions>
                 <name>Timestamp_on_date_survey_is_sent</name>
                 <type>FieldUpdate</type>

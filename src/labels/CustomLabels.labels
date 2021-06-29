@@ -4164,6 +4164,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>Your {0} access request has been sent to your company’s portal administrators. &lt;br/&gt;Your portal administrator can be found under your</value>
     </labels>
     <labels>
+        <fullName>CSP_Contact_Added</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Contact Added</shortDescription>
+        <value>Contact Added</value>
+    </labels>
+    <labels>
         <fullName>CSP_Contact_Deleted</fullName>
         <categories>CS Portal</categories>
         <language>en_US</language>
@@ -4178,14 +4186,6 @@ If you are already CNS Endorsed, you can use this service to update information 
         <protected>false</protected>
         <shortDescription>CSP Contact Id Card Error Msg</shortDescription>
         <value>Changing your profile name will impact the validity of your ID Card. Please contact our Customer Service Team to change your profile name.</value>
-    </labels>
-    <labels>
-        <fullName>CSP_Contact_Added</fullName>
-        <categories>CS Portal</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>CSP Contact Added</shortDescription>
-        <value>Contact Added</value>
     </labels>
     <labels>
         <fullName>CSP_Contact_Updated</fullName>
@@ -51779,6 +51779,14 @@ ONE Source is the industry platform for validated aviation capability and infras
         <protected>false</protected>
         <shortDescription>icg order to create new phyisical address</shortDescription>
         <value>In order to create a new physical address, please proceed to request the creation of the new Account</value>
+    </labels>
+    <labels>
+        <fullName>icg_others</fullName>
+        <categories>ICG One Source</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>icg others</shortDescription>
+        <value>OTHERS</value>
     </labels>
     <labels>
         <fullName>icg_overall_aiport_size</fullName>
