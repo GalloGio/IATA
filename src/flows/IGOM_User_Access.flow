@@ -193,7 +193,7 @@
             </processMetadataValues>
             <name>inputPermissionSetName</name>
             <value>
-                <stringValue>IGOM Portal</stringValue>
+                <stringValue>IGOM_Portal</stringValue>
             </value>
         </inputParameters>
     </actionCalls>
@@ -479,7 +479,7 @@
             </processMetadataValues>
             <name>inputPermissionSetName</name>
             <value>
-                <stringValue>IGOM Portal</stringValue>
+                <stringValue>IGOM_Portal</stringValue>
             </value>
         </inputParameters>
     </actionCalls>
