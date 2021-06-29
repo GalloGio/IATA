@@ -1402,6 +1402,11 @@
         <label>Renewal Sent</label>
     </standardValue>
     <standardValue>
+        <fullName>Replaced by a New Contact</fullName>
+        <default>false</default>
+        <label>Replaced by a New Contact</label>
+    </standardValue>
+    <standardValue>
         <fullName>Replaced by New Contact</fullName>
         <default>false</default>
         <label>Replaced by New Contact</label>

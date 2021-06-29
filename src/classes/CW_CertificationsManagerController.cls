@@ -69,12 +69,17 @@ public with sharing class CW_CertificationsManagerController {
 	 * @Returns			: String relatedCertifications - json containing all the related certifications
 	 ****************************************************************************/
 	@AuraEnabled
-	public static string getFacilityCertifications(String facilityId, String stationRT) {
+	public static string getFacilityCertifications(String facilityId, String stationRT, String validationPrograms) {
+		List<String> listValidationPrograms = new List<String>();
+		if(String.isNotBlank(validationPrograms)){
+			listValidationPrograms = validationPrograms.split(',');
+		}
+
 		List<ICG_Capability_Assignment_Group__c> returnList = new List<ICG_Capability_Assignment_Group__c>();
 
 		List<ICG_Capability_Assignment_Group__c> groupList = [SELECT id, Certification_Id__c,Is_Booked__c, Status__c, Issue_Date__c, Expiration_Date__c, ToLabel(CEIV_Scope_List__c), ToLabel(SFOC_Scope__c),ToLabel(IENVA_Scope__c), ICG_Certification__r.Name, ICG_Certification__r.Label__c, ICG_Certification__r.CreatedDate, ICG_Certification__r.Certification_Type__c,ICG_Certification__r.Expiration_Period__c,ICG_Account_Role_Detail__r.RecordType.DeveloperName, Is_Active__c
 			FROM ICG_Capability_Assignment_Group__c WHERE ICG_Account_Role_Detail__c = :facilityId AND
-			RecordTypeId =: RT_CERTIFICATION ORDER BY Status__c ASC];
+			RecordTypeId =: RT_CERTIFICATION AND ICG_Certification__r.ValidationPrograms__c IN : listValidationPrograms ORDER BY Status__c ASC];
 
 		List<ICG_Capability_Assignment_Group__c> orderedList = sortGroupListByStatus(groupList);
 		
@@ -156,8 +161,8 @@ public with sharing class CW_CertificationsManagerController {
 	 * @Returns			: String relatedCertifications - json containing all the related certifications
 	 ****************************************************************************/
 	@AuraEnabled
-	public static string refreshFacilityCertifications(string facilityId,String stationRT) {
-		return getFacilityCertifications(facilityId,stationRT);
+	public static string refreshFacilityCertifications(string facilityId,String stationRT,String validationPrograms) {
+		return getFacilityCertifications(facilityId,stationRT,validationPrograms);
 	}
 
 
@@ -170,10 +175,15 @@ public with sharing class CW_CertificationsManagerController {
 	 * @Returns			: String relatedCertifications - json containing all the upcoming certifications
 	 ****************************************************************************/
 	@AuraEnabled
-	public static string getFacilityNotActiveCertifications(string facilityId, string certificationId, String groupId, String statusInput, String stationRT) {
+	public static string getFacilityNotActiveCertifications(string facilityId, string certificationId, String groupId, String statusInput, String stationRT, String validationPrograms) {
+		List<String> listValidationPrograms = new List<String>();
+		if(String.isNotBlank(validationPrograms))
+		{
+			listValidationPrograms = validationPrograms.split(',');
+		}
 
 		String query = 'SELECT Id, Certification_Id__c, Status__c, Issue_Date__c, Expiration_Date__c, ToLabel(CEIV_Scope_List__c), ToLabel(SFOC_Scope__c),ToLabel(IENVA_Scope__c), ICG_Certification__r.Name, ICG_Certification__r.Label__c, ICG_Certification__r.CreatedDate, ICG_Certification__r.Certification_Type__c,ICG_Certification__r.Expiration_Period__c,ICG_Account_Role_Detail__r.RecordType.DeveloperName '+
-			 'FROM ICG_Capability_Assignment_Group__c WHERE ICG_Account_Role_Detail__c =\''+ facilityId +'\' AND ICG_Certification__c =\''+ certificationId +'\' AND RecordTypeId =\''+ RT_CERTIFICATION +'\' AND Is_Active__c = false AND Status__c IN ('+statusInput+') AND Id !=\''+ groupId +'\' Order by CreatedDate desc';
+			 'FROM ICG_Capability_Assignment_Group__c WHERE ICG_Account_Role_Detail__c =\''+ facilityId +'\' AND ICG_Certification__c =\''+ certificationId +'\' AND RecordTypeId =\''+ RT_CERTIFICATION +'\' AND Is_Active__c = false AND Status__c IN ('+statusInput+') AND Id !=\''+ groupId +'\' AND ICG_Certification__r.ValidationPrograms__c IN (\'' + String.join(listValidationPrograms, '\', \'') + '\') order by CreatedDate desc';
 		List<ICG_Capability_Assignment_Group__c> firtsList = (List<ICG_Capability_Assignment_Group__c>) Database.query(query);
 		
 		return (JSON.serialize(firtsList));
@@ -186,10 +196,15 @@ public with sharing class CW_CertificationsManagerController {
 	 * @Returns			: String relatedCertifications - json containing all certifications
 	 ****************************************************************************/
 	@AuraEnabled
-	public static string getAllCertifications(String stationRT) {
-		List<String> lstDepts = CW_CapabilitiesUtilities.getCertificationsAllowedByDepartments(stationRT);
+	public static string getAllCertifications(String stationRT,String validationPrograms) {
+		List<String> listValidationPrograms = new List<String>();
+		if(String.isNotBlank(validationPrograms)){
+			listValidationPrograms = validationPrograms.split(',');
+		}
 
-		return (JSON.serialize([SELECT id,Name, Label__c,Certification_Type__c, Applicable_to__c,Expiration_Period__c FROM ICG_Certification__c WHERE Name IN: lstDepts]));
+		List<String> lstDepts = CW_CapabilitiesUtilities.getCertificationsAllowedByDepartments(stationRT,validationPrograms);
+
+		return (JSON.serialize([SELECT id,Name, Label__c,Certification_Type__c, Applicable_to__c,Expiration_Period__c, ValidationPrograms__c FROM ICG_Certification__c WHERE Name IN: lstDepts AND ValidationPrograms__c IN : listValidationPrograms]));
 		
 	}
 	
@@ -200,7 +215,13 @@ public with sharing class CW_CertificationsManagerController {
 	 * @Returns			: List<tring>> certificationList - contains all certification without capabilities
 	 ****************************************************************************/
 	@AuraEnabled
-	public static List<ICG_Certification__c> getCertificationWithoutCapabilities(String recordId) {		
+	public static List<ICG_Certification__c> getCertificationWithoutCapabilities(String recordId, String validationPrograms) {
+		List<String> listValidationPrograms = new List<String>();
+		if(String.isNotBlank(validationPrograms))
+		{
+			listValidationPrograms = validationPrograms.split(',');
+		}
+		
 		// Get the record type of the station and the categories availables fot this record type
 		String stationRT = [SELECT RecordType.DeveloperName FROM ICG_Account_Role_Detail__c WHERE Id =: recordId].RecordType.DeveloperName.toLowerCase();
 		Map<String, List<String>> categoriesByAccountRoleDetailRecordType = CW_FacilityCapabilitiesController.getMapCategoriesByAccountRoleDetailRecordType();
@@ -216,7 +237,7 @@ public with sharing class CW_CertificationsManagerController {
 				assignedCertifications.add(certCA.ICG_Certification__c);
 			}
 		}
-		return [SELECT Name, Label__c from ICG_Certification__c WHERE Id NOT IN :assignedCertifications];
+		return [SELECT Name, Label__c from ICG_Certification__c WHERE Id NOT IN :assignedCertifications AND ValidationPrograms__c IN: listValidationPrograms];
 	}
 
 	/****************************************************************************

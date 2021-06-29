@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>Data__c</field>
-        <value xsi:type="xsd:string">Gse_In_Facility;Temperature_Controlled_Dollies_Trucks</value>
+        <value xsi:type="xsd:string">Belt_Loader;Belt_Loader_With_In-Hold_Conveyor_System;Lower_Deck_Loader;Main_Deck_Loader;Prm_Boarding_Vehicles;Catering_Truck;Cabin_Cleaning_Truck;Forklift_Truck;Elevating_Work_Platform;Passenger_Boarding_Stairs;Mobile_Passenger_Boardingramps;Maintenance_Stairs;Aircraft_Tail_Stand;Deicers_And_Deicing/Anti-Icing_Vehicles;Baggage_Tractors;Cargo_Tractors;Pushback_Tow_Tractor;Towbar;Towbarless_Tow_Tractor;Maingear_Towbarless_Tractor;Air_Start_Unit;Aircraftair-Conditioning_Unit;Aircraft_Heating_Unit;Potable_Water_Service_Vehicle;Lavatory_Service_Vehicles;Ground_Power_Unit;Uld_Transporter;Uld_Dollies;Temperature_Controlled_Cargo_Dolly;Baggage_Cart;Temperature_Controlled_Cargo_Truck;Prm_Bus;Airport_Passenger_Bus;Crew_Bus</value>
     </values>
     <values>
         <field>Extra_Data__c</field>

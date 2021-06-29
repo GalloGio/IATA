@@ -394,7 +394,7 @@ public class ANG_ISSP_AfpWrapper_Test {
 		return [SELECT Id, ContactId, AccountId, Contact.Authorized_Signatory__c, Contact.Account.Id, Contact.Account.ANG_Accreditation_Model__c,
 			Contact.Account.ANG_IEP_Status_FF__c, Contact.Account.IATA_ISO_Country__c, Contact.Account.Location_Class__c,
 			Contact.Account.Category__c, Contact.Account.Location_Type__c, Contact.Account.Top_Parent__r.Location_Class__c,
-			Contact.Account.IATA_ISO_Country__r.ISO_Code__c, Contact.Account.IATA_ISO_Country__r.ANG_IEP_Model__c
+			Contact.Account.IATA_ISO_Country__r.ISO_Code__c, Contact.Account.IATA_ISO_Country__r.ANG_IEP_Model__c, Contact.Account.IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c
 				FROM User
 				WHERE Contact.Email = :email];
 	}

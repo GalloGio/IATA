@@ -1211,6 +1211,11 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                     <label>AIRSBL_PAIR</label>
                 </value>
                 <value>
+                    <fullName>SFTP_CASS - 801290</fullName>
+                    <default>false</default>
+                    <label>AISFTP_CASS - 801290</label>
+                </value>
+                <value>
                     <fullName>AISTLM_FILE</fullName>
                     <default>false</default>
                     <label>AISTLM_FILE - 801100</label>
@@ -1536,11 +1541,6 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                     <label>PDP / PTA Assignment Fee - 701924</label>
                 </value>
                 <value>
-                    <fullName>SFTP_CASS - 801290</fullName>
-                    <default>false</default>
-                    <label>SFTP_CASS - 801290</label>
-                </value>
-                <value>
                     <fullName>TAXRPT_CASS – 753034</fullName>
                     <default>false</default>
                     <label>TAXRPT_CASS – 753034</label>
@@ -1652,6 +1652,10 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>CASS</controllingFieldValue>
+                <valueName>SFTP_CASS - 801290</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>CASS</controllingFieldValue>
                 <valueName>CASFEE_DGRR1</valueName>
             </valueSettings>
             <valueSettings>
@@ -1702,10 +1706,6 @@ Please check for ICH membership under www.iata.org/ich.</inlineHelpText>
                 <controllingFieldValue>CASS</controllingFieldValue>
                 <controllingFieldValue>CNS</controllingFieldValue>
                 <valueName>CNSFEE_JOIN</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>CASS</controllingFieldValue>
-                <valueName>SFTP_CASS - 801290</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>CASS</controllingFieldValue>

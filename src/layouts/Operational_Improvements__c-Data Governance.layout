@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Layout xmlns="http://soap.sforce.com/2006/04/metadata">
     <customButtons>Submit_for_Approval</customButtons>
-    <customButtons>Submit_for_extension</customButtons>
-    <customButtons>Concluded_OI</customButtons>
-    <customButtons>Terminate_OI</customButtons>
-    <customButtons>Close_OI</customButtons>
     <excludeButtons>Clone</excludeButtons>
     <excludeButtons>Share</excludeButtons>
     <excludeButtons>Submit</excludeButtons>
@@ -35,14 +31,6 @@
                 <field>Status_update__c</field>
             </layoutItems>
         </layoutColumns>
-        <style>OneColumn</style>
-    </layoutSections>
-    <layoutSections>
-        <customLabel>true</customLabel>
-        <detailHeading>true</detailHeading>
-        <editHeading>true</editHeading>
-        <label>Root Cause Analysis</label>
-        <layoutColumns/>
         <style>OneColumn</style>
     </layoutSections>
     <layoutSections>
@@ -327,7 +315,10 @@
         <relatedList>Quality__c.OI_number_if_logged__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>Subject__c</fields>
         <fields>NAME</fields>
+        <fields>OI_Category__c</fields>
+        <fields>OI_Subcategory__c</fields>
         <relatedList>Operational_Improvements__c.Parent_OI__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
@@ -336,7 +327,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1l000000FqKI</masterLabel>
+        <masterLabel>00h1r00000jzSCM</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

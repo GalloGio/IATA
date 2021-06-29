@@ -163,12 +163,12 @@ public with sharing class IA_util {
 		return dt == null ? '-': dt.format('d MMM yyyy');
 	}
 
-	public static String Encrypt(Blob key, String IdToEncrypt){
+	public static String encrypt(Blob key, String IdToEncrypt){
 		Blob cipherText = Crypto.encryptWithManagedIV('AES128', key, Blob.valueOf(IdToEncrypt));
 		return EncodingUtil.base64Encode(cipherText);
 	}
 
-	public static String Decrypt(Blob key, String idToDecrypt){
+	public static String decrypt(Blob key, String idToDecrypt){
 		try {
 			Blob encodedEncryptedBlob = EncodingUtil.base64Decode(idToDecrypt);
 			return Crypto.decryptWithManagedIV('AES128', key, encodedEncryptedBlob).toString();
