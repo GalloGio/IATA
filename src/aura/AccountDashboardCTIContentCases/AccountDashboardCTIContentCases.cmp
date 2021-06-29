@@ -12,7 +12,7 @@
 
 	<div class="slds-p-around_medium">
 		<div class="slds-box slds-p-around_none slds-theme_shade">
-			<lightning:card class="bckColor" title="Contact/Customer Interactions" iconName="standard:case">
+			<lightning:card class="bckColor" title="{!$Label.c.AccountCTI_Cases_Interactions}" iconName="standard:case">
 				<aura:set attribute="actions"> </aura:set>
 
 				<div class="slds-p-around_none slds-m-around_medium">

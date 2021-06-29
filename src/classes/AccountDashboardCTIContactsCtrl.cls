@@ -2,7 +2,6 @@ public with sharing class AccountDashboardCTIContactsCtrl {
 
 	@AuraEnabled
 	public static List<KeyContact> getKeyContacts(Id accountId, Id contactId) {
-		System.debug('AccountDashboardCTIContactsCtrl - contactId: '+contactId);
 		List<KeyContact> keyContactsWrapper = new List<KeyContact>();
 		List<Contact> keyContacts = searchKeyContacts(accountId, contactId, 5);
 		if (keyContacts.size()>0) {
@@ -15,7 +14,6 @@ public with sharing class AccountDashboardCTIContactsCtrl {
 				keyContactsWrapper.add(new KeyContact(con, contactPortalServices.get(con.Id), contactSelected));
 			}
 		}
-		System.debug('keyContactsWrapper:'+keyContactsWrapper);
 		return keyContactsWrapper;
 	}
 

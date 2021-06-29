@@ -25,36 +25,11 @@ global class RecordRetrievalLightningImplementation extends odigocti.RecordRetri
 			any case you can remove this "if" completly
 		*/
 		if ('callback'.equals(type) && !String.isBlank(folderId) && folderId.length() > 2) {
-			/**
-			 * This is looking for a Case, but you can set whatever you want
-			 */
-			List < List < SObject >> searchList = [
-				FIND: FolderId
-				IN ALL FIELDS
-				RETURNING Case(Id)
-			];
-
-			if (searchList != null && searchList.size() > 0) {
-				List < Case > casesLst = ((List < Case > ) searchList[0]);
-				if (casesLst != null) {
-					/**
-					 * we only found one case, so we open it
-					 */
-					if (casesLst.size() == 1) {
-						result.objectType = 'Case'; //any time of object you want to open. In this case, a Case
-						Set < String > setIds = new Set < String > ();
-						setIds.add(casesLst[0].id);
-						result.recordIds = setIds;
-						return result;
-					} else if (casesLst.size() > 1) {
-						result.objectType = 'Search'; //keyword to open the search page
-						Set < String > setIds = new Set < String > ();
-						setIds.add(folderId); // what to search in the search page
-						result.recordIds = setIds;
-						return result;
-					}
-				}
-			}
+			// if is needed to manage some action when do a callback, put code here
+			result.objectType = 'Nothing';
+			Set<String> setIds = new Set<String>();
+			result.recordIds = setIds;
+			return result;
 		} else {
 			/**
 			 * searching by folder id takes priority over the basic searching
@@ -73,7 +48,7 @@ global class RecordRetrievalLightningImplementation extends odigocti.RecordRetri
 						searchList = performSearchInData(contactList, localPhoneNumber, IATACode);
 					}
 				}
-				if (searchList.size() == 0) {
+				if (searchList.isEmpty()) {
 					searchList = [
 						FIND :queryPhones 
 						IN PHONE FIELDS
@@ -82,13 +57,13 @@ global class RecordRetrievalLightningImplementation extends odigocti.RecordRetri
 						Account(Id)
 					];
 				}
-				if (searchList != null && searchList.size() > 0) {
+				if (!searchList.isEmpty()) {
 					List < Account > accounts = new List<Account>();
 					List < Contact > contacts = ((List < Contact > ) searchList[0]);
 					if (searchList.size() > 1) {
 						accounts = ((List < Account > ) searchList[1]);
 					}
-					if (contacts != null && contacts.size() > 0) {
+					if (!contacts.isEmpty()) {
 						/**
 						 * we found only one matching contact, so we open it
 						 */
@@ -110,7 +85,7 @@ global class RecordRetrievalLightningImplementation extends odigocti.RecordRetri
 							return result;
 						}
 
-					} else if (accounts != null && accounts.size() > 0) {
+					} else if (!accounts.isEmpty()) {
 						/**
 						 * we found only one matching account, so we open it
 						 */
@@ -157,7 +132,7 @@ global class RecordRetrievalLightningImplementation extends odigocti.RecordRetri
 		List<Account> accountRecords = new List<Account>();
 		Set<Id> accountIds = new Set<Id>();
 		
-		if (contactList.size() > 0) {
+		if (!contactList.isEmpty()) {
 			String allPhones = '';
 			for (Contact contact : contactList) {
 				accountIds.add(contact.AccountId);
@@ -168,13 +143,13 @@ global class RecordRetrievalLightningImplementation extends odigocti.RecordRetri
 					contactRecords.add(contact);
 				}
 			}
-			if (contactIATARecords.size() > 0) {
+			if (!contactIATARecords.isEmpty()) {
 				searchList.add(contactIATARecords);
 			} else {
 				searchList.add(contactRecords);
 			}
 
-			if (accountIds.size()>0) {
+			if (!accountIds.isEmpty()) {
 				for (Id aId:accountIds) {
 					Account acc = new Account();
 					acc.Id = aId;

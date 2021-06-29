@@ -22,11 +22,21 @@
 						<div class="slds-col">
 							<div class="slds-grid">
 								<div class="slds-col">
-									<lightning:button class="slds-col" label="All Contacts" title="All Contacts" onclick="{!c.gotoAllContacts}" />
-									<lightning:button class="slds-col" label="Create Case" title="Create Case" onclick="{!c.createNewCase}" />
+									<lightning:button
+										class="slds-col"
+										label="{!$Label.c.AccountCTI_Contact_AllContacts}"
+										title="{!$Label.c.AccountCTI_Contact_AllContacts}"
+										onclick="{!c.gotoAllContacts}"
+									/>
+									<lightning:button
+										class="slds-col"
+										label="{!$Label.c.AccountCTI_Contact_CreateCase}"
+										title="{!$Label.c.AccountCTI_Contact_CreateCase}"
+										onclick="{!c.createNewCase}"
+									/>
 								</div>
 								<div class="slds-col">
-									<lightning:helptext class="slds-p-left_x-small" content="Choose the correct Contact before to create the Case" iconName="utility:info" />
+									<lightning:helptext class="slds-p-left_x-small" content="{!$Label.c.AccountCTI_Contact_ChooseContact}" iconName="utility:info" />
 								</div>
 							</div>
 						</div>
@@ -101,7 +111,7 @@
 	<div aura:id="portalServicesArea">
 		<div class="slds-p-around_medium">
 			<div class="slds-box slds-p-around_none slds-theme_shade">
-				<lightning:card class="bckColor" title="Portal Services" iconName="standard:contact">
+				<lightning:card class="bckColor" title="{!$Label.c.AccountCTI_Contact_PortalServices}" iconName="standard:contact">
 					<div class="slds-p-around_none slds-m-around_medium">
 						<table class="slds-table slds-table_bordered slds-border_left slds-border_right">
 							<thead>
