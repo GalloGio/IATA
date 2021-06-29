@@ -1237,7 +1237,7 @@ public without sharing class TIDS_Controller {
 	}
 
 	@future
-	private static void createChangeCode(string accountId, string applicationType){
+	public static void createChangeCode(string accountId, string applicationType){
 		string sSettingName = '';
 		if(applicationType == TIDS_Constant.NEW_HO || applicationType == TIDS_Constant.NEW_BR || applicationType == TIDS_Constant.NEW_VB){
 			sSettingName = 'TIDS-FIN';
@@ -1254,14 +1254,12 @@ public without sharing class TIDS_Controller {
 
 		if(sSettingName!=''){
 			AMS_OSCAR_JSON.ChangeCode cc = AMS_ChangeCodesConfigHelper.createChangeCodeFromConfigSetting(sSettingName, '', '', null, '');
+			//DO NOT SET REASON CODE/DESCRIPTION OR ACCUONT STATUS. Otherwhise, Last Org Date Change gets updated, and we don't want it.
 			Agency_Applied_Change_code__c changeCode = new Agency_Applied_Change_code__c(
 						Account__c = accountId
 						,Active__c = true
 						,Bulletin_Information__c = cc.memoText
 						,Change_Code__c = cc.name
-						,Reason_Code__c = cc.reasonCode
-						,Reason_Description__c = cc.reasonDesc
-						,AccountNewStatus__c =  cc.status
 						,To_Publish_in_e_Bulletin__c = cc.publishedOnEBulletin
 						);
 			insert changeCode;
