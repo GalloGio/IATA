@@ -106,8 +106,6 @@
 				const filterSearch = document.getElementById('searchAddContacts');
 				filterSearchClean.hidden = filterSearch.value === '';
 			}
-
-			initXtable();
 		});
 	</script>
 

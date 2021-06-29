@@ -6,7 +6,7 @@
 		<apex:param name="param1" value="" assignTo="{!selectedAccount}"/>
 		<apex:param name="param2" value="" assignTo="{!selectedAgreementName}"/>
 	</apex:actionFunction>
-	<apex:actionFunction name="closeModalNewAgreement" action="{!closeModalNewAgreement}" rerender="modalNewAgreement" oncomplete="initXtable();modalOnComplete('auto');" status="loadingStatus" immediate="true"/>
+	<apex:actionFunction name="closeModalNewAgreement" action="{!closeModalNewAgreement}" rerender="modalNewAgreement" oncomplete="initXtable(true);modalOnComplete('auto');" status="loadingStatus" immediate="true"/>
 	<apex:actionFunction name="saveNewAgreement" action="{!saveNewAgreement}" rerender="modalNewAgreement,modalAlertNewAgreement,newAgreementsTable,modalNewAgreementsFilter" oncomplete="modalOnComplete('auto');" status="loadingStatus"/>
 	<apex:actionFunction name="resetAlertModal" action="{!resetAlertModal}" rerender="null"/>
 	<apex:actionFunction name="refreshPage" action="{!refreshPage}" rerender="newAgreementsTable" oncomplete="initXtable(); modalOnComplete('auto');" status="loadingStatus"/>
@@ -21,11 +21,11 @@
 				return Xtable(table,box);
 			}
 
-			initXtable = function() {
+			initXtable = function(applyFilters) {
 				let xtable = getXtable();
 				xtable.initPagination();
 				xtable.initSortable();
-				applyNewAgreementsFilter();
+				if (applyFilters) applyAllAgreementsFilter();
 			}
 
 			/** filter functions **/
@@ -99,6 +99,14 @@
 				}
 				if (evt.target.id === "NewAgreementsFilterButton") openModalNewAgreementsFilter();
 			});
+
+			filterAgreementPicklist = function() {
+				let controller = document.getElementById('{!$Component.mainForm.mainPageBlock.sectionNew.sectionNewComponent.filterName}');
+				let dependent = document.getElementById('{!$Component.mainForm.mainPageBlock.sectionNew.sectionNewComponent.filterType}');
+				filterControlledPicklist(controller,dependent,MAP_AGREEMENTS_BY_NAME);
+			}
+
+			clearAllModalFilter();
 		});
 	</script>
 
@@ -208,7 +216,7 @@
 					<div class="modal-body">
 						<div class="row">
 							<label>{!$Label.IA_Agreement_Name}</label>
-							<apex:selectList id="filterName" size="1" html-data-value="">
+							<apex:selectList id="filterName" size="1" html-data-value="" onchange="filterAgreementPicklist();">
 								<apex:selectOption itemValue="" itemLabel="{!$Label.IA_Choose_agreement_name}"/>
 								<apex:selectOptions value="{!OptionNames}"/>
 							</apex:selectList>
