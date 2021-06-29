@@ -121,6 +121,9 @@
                                     data-letter={currentLetter}>{currentLetter}</span>&nbsp;&nbsp;
                             </template>
 
+                            <span class="breadlink" onclick={selectLetter}
+                                data-letter="OTHERS">{label.icg_others}</span>&nbsp;&nbsp;
+
                             <span class="breadlink backnext" if:true={showNextButton} onclick={next}>&gt;</span>
                         </div>
                     </div>

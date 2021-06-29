@@ -75,16 +75,6 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>SARA_Security_Status_Expired</fullName>
-        <description>SARA</description>
-        <field>Security_Status__c</field>
-        <literalValue>Expired</literalValue>
-        <name>SARA Security Status = Expired</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>SARA_Security_status_Not_Active_Yet</fullName>
         <field>Security_Status__c</field>
         <literalValue>Not Active yet</literalValue>
@@ -198,10 +188,6 @@
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
-            <actions>
-                <name>SARA_Security_Status_Expired</name>
-                <type>FieldUpdate</type>
-            </actions>
             <offsetFromField>Financial_Security__c.Expiry_Date__c</offsetFromField>
             <timeLength>1</timeLength>
             <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
@@ -231,10 +217,6 @@
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
-            <actions>
-                <name>SARA_Security_Status_Expired</name>
-                <type>FieldUpdate</type>
-            </actions>
             <offsetFromField>Financial_Security__c.Expiry_Date__c</offsetFromField>
             <timeLength>18</timeLength>
             <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
