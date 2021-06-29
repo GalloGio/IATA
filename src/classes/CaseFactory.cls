@@ -65,6 +65,9 @@ public with sharing class CaseFactory {
 				insert fsCase;
 			} catch (System.DmlException e) {
 				system.debug('## ERROR: ' + e.getMessage());
+				insert new Technical_Logs__c(Operation__c= 'CaseFactory '+ fsCase,
+				Status__c= 'Error',
+				Log__c= e.getMessage() + '/' + e.getStackTraceString());
 			}
 		}
 
