@@ -136,9 +136,9 @@ private class IGOMDashboardDataUtilTest {
 		}
 
 		System.assertEquals(3, statusPerStation.size());
-		System.assertEquals('Pending review', statusPerStation.get(accountRoleNameToId.get(TEST_NAME + '0') + 'TEST_NAME + :0'));
-		System.assertEquals('Reviewed', statusPerStation.get(accountRoleNameToId.get(TEST_NAME + '1') + 'TEST_NAME + :1'));
-		System.assertEquals('Non-existing', statusPerStation.get(accountRoleNameToId.get(TEST_NAME + '2') + 'TEST_NAME + :2'));
+		System.assertEquals('Pending review', statusPerStation.get(accountRoleNameToId.get(TEST_NAME + '0') + ':' + TEST_NAME + '0'));
+		System.assertEquals('Reviewed', statusPerStation.get(accountRoleNameToId.get(TEST_NAME + '1') + ':' + TEST_NAME + '1'));
+		System.assertEquals('Non-existing', statusPerStation.get(accountRoleNameToId.get(TEST_NAME + '2') + ':' + TEST_NAME + '2'));
 	}
 
 	@isTest
@@ -189,7 +189,7 @@ private class IGOMDashboardDataUtilTest {
 		}
 
 		System.assertEquals(1, statusPerStation.size());
-		System.assertEquals('Pending review', statusPerStation.get(accountRoleNameToId.get(TEST_NAME + '0') + 'TEST_NAME + :0'));
+		System.assertEquals('Pending review', statusPerStation.get(accountRoleNameToId.get(TEST_NAME + '0') + ':' + TEST_NAME + '0'));
 	}
 
 	@isTest

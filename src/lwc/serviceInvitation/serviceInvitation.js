@@ -38,7 +38,6 @@ export default class ServiceInvitation extends LightningElement {
 
     paramKey = 'serviceId';
     portalApplicationId = this.getUrlParamValue(window.location.href, this.paramKey);
-    userIdList = [userId];
 
     pageNo = 1;
     recordsPerPage = 10;
@@ -47,7 +46,7 @@ export default class ServiceInvitation extends LightningElement {
     @track invitationEntireList = [];
     roleOptionList = [];
 
-    @wire(getInvitationList, {portalApplicationId : '$portalApplicationId', userIdList: '$userIdList'})
+    @wire(getInvitationList, {portalApplicationId : '$portalApplicationId'})
     getInvitationListWire(result) {
         this.invitationEntireListWired = result;
         if (this.invitationEntireListWired && this.invitationEntireListWired.data && this.invitationEntireListWired.data.length !== 0) {
