@@ -93,6 +93,7 @@ public with sharing class LogPhoneCaseController {
 	}
 
 	public PageReference Save() {
+		Savepoint sp = Database.setSavepoint();
 		try {
 			newcase.RecordTypeId = strSelectedRType;
 			insert newcase;
@@ -106,7 +107,10 @@ public with sharing class LogPhoneCaseController {
 			return cancel();
 		} catch (Exception e) {
 			ApexPages.addMessages(e);
-			system.debug(e);
+			System.debug(loggingLevel.FINE, '____ [cls LogPhoneCaseController - Save] newcase - ' + newcase);
+			System.debug(loggingLevel.FINE, '____ [cls LogPhoneCaseController - Save] newtask - ' + newtask);
+			Database.rollback(sp);
+			newcase.Id = null;
 			return null;
 		}
 	}
