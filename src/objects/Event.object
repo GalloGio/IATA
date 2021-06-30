@@ -365,6 +365,48 @@
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>OdigoCti__Call_Result__c</picklist>
+            <values>
+                <fullName>Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Value 2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Value 3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Value 4</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>OdigoCti__Call_Type__c</picklist>
+            <values>
+                <fullName>Call back</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call%26Pay</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inbound</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Internal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Outbound</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Subject</picklist>
             <values>
                 <fullName>Business trip planning</fullName>
@@ -487,6 +529,48 @@
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>OdigoCti__Call_Result__c</picklist>
+            <values>
+                <fullName>Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Value 2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Value 3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Value 4</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>OdigoCti__Call_Type__c</picklist>
+            <values>
+                <fullName>Call back</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call%26Pay</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inbound</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Internal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Outbound</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Subject</picklist>
             <values>
                 <fullName>Business trip planning</fullName>
@@ -601,6 +685,48 @@
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>OdigoCti__Call_Result__c</picklist>
+            <values>
+                <fullName>Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Value 2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Value 3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Value 4</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>OdigoCti__Call_Type__c</picklist>
+            <values>
+                <fullName>Call back</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call%26Pay</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inbound</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Internal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Outbound</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

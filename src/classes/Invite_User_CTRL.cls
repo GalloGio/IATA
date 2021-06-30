@@ -20,7 +20,7 @@ public without sharing class Invite_User_CTRL {
 					actorIds.add(accountRole.Account__c);
 				}
 				if (!actorIds.isEmpty()) {
-					List<Account> gadmList = [SELECT Id, Name FROM Account WHERE Id = :actorIds];
+					List<Account> gadmList = [SELECT Id, Name FROM Account WHERE Id = :actorIds order by Name];
 					if (!gadmList.isEmpty()) {
 						gadmActors = gadmList;
 					}

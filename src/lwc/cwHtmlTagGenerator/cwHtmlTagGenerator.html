@@ -10,8 +10,13 @@
 					<span>{label.temperature_range}: {getValue}</span>
 					<c-cw-simple-tooltip item-id="stamp-popover-1" tooltip-object={tooltipObject} tooltip-to-display={tooltipToDisplay}></c-cw-simple-tooltip>
 				</div>
-				
+			</template>
 
+			<template if:true={isAuxTypeHandlingEquipmentInfrastructure}>
+				<div data-item="stamp-popover-1" onmouseover={showPopover} onmouseleave={hidePopover} class="content bold yellow ">
+					<span>{getValue}</span>
+					<c-cw-simple-tooltip item-id="stamp-popover-1" tooltip-object={tooltipObject} tooltip-to-display={tooltipToDisplay}></c-cw-simple-tooltip>
+				</div>
 			</template>
 
 			<template if:true={isAuxTypeCustomTemperatureRanges}>
@@ -65,6 +70,20 @@
 				</diV>
 			</template>
 
+			<template if:true={isAuxTypeHandlingEquipmentInfrastructure}>
+				<div class="display-flex">
+					<div data-item="stamp-popover-8" onmouseover={showPopover} onmouseleave={hidePopover} class={getCssClass}>
+						<template if:true={containsManufacturerField}>
+							<span>{item.sc_manufacturer__c}</span>
+						</template>
+						<template if:false={containsManufacturerField}>
+							<span>{getValue} {getRowIndexAddOne}</span>
+						</template>
+						<c-cw-simple-tooltip item-id="stamp-popover-8" tooltip-object={tooltipObject} tooltip-to-display={tooltipToDisplay}></c-cw-simple-tooltip>
+					</div>
+				</div>
+			</template>
+
 			<template if:true={isAuxTypeCustomTemperatureRanges}>
 				<div class="display-flex">
 					<div data-item="stamp-popover-8" onmouseover={showPopover} onmouseleave={hidePopover} class={getCssClass}>
@@ -115,7 +134,7 @@
 								<lightning-formatted-number value={getValue}></lightning-formatted-number>
 							</template>
 							<template if:false={getValueNumber}>
-								-
+								{getValueAsText}
 							</template>
 							<c-cw-simple-tooltip item-id="stamp-popover-12" tooltip-object={tooltipObject} tooltip-to-display={tooltipToDisplay}></c-cw-simple-tooltip>
 						</div>
