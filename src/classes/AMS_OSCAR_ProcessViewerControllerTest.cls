@@ -201,6 +201,7 @@ private class AMS_OSCAR_ProcessViewerControllerTest {
 		pageAMS_OSCAR_ProcessViewer.getParameters().put('Id', oscar.Id);
 		Test.setCurrentPage(pageAMS_OSCAR_ProcessViewer);
 		AMS_OSCAR_ProcessViewerController controller = new AMS_OSCAR_ProcessViewerController();
+		System.assert(! controller.isGEwithNoHierarchy);
 
 		Test.stopTest();
 	}

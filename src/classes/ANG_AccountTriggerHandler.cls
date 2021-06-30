@@ -476,10 +476,8 @@ public class ANG_AccountTriggerHandler {
 			}
 		}
 
-		if(mapCCByAccount.get(re.ANG_AccountId__c) == null || checkRiskEventUpdated){
-			if(re.ANG_AccountId__r.Accreditation_date__c < = Date.today().addYears(-2)){
-				re.Applicable_for_re_activation__c = true;
-			}
+		if((mapCCByAccount.get(re.ANG_AccountId__c) == null || checkRiskEventUpdated) && (re.ANG_AccountId__r.Accreditation_date__c < = Date.today().addYears(-2))){
+			re.Applicable_for_re_activation__c = true;
 		}
 		return re;
 	}
