@@ -6,10 +6,6 @@
         <publicGroups>
             <publicGroup>L3_Training_Exam</publicGroup>
         </publicGroups>
-        <users>
-            <user>hamelinm@iata.org</user>
-            <user>zhoux@iata.org</user>
-        </users>
     </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>

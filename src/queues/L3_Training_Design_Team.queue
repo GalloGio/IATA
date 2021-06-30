@@ -10,6 +10,6 @@
         </users>
     </queueMembers>
     <queueSobject>
-        <sobjectType>KnowledgeArticleVersion</sobjectType>
+        <sobjectType>Case</sobjectType>
     </queueSobject>
 </Queue>
