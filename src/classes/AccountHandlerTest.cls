@@ -177,11 +177,13 @@ private class AccountHandlerTest {
 		}
 
 		Test.startTest();
+		System.assertEquals(0,Limits.getEmailInvocations());
 		System.runAs(currentUser) {
 			acc1.ACLI_SAP_Id__c = '0034567890';
 			acc1.EF_SIS_Code__c = '123';
 			update acc1;
 		}
+		System.assertEquals(1,Limits.getEmailInvocations());
 		Test.stopTest();
 	}
 
