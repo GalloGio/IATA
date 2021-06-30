@@ -71492,7 +71492,7 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>operational_Calendar__c</tab>
-        <visibility>Hidden</visibility>
+        <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>standard-Account</tab>
