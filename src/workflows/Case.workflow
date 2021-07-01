@@ -347,18 +347,6 @@
         <template>All/Clicktools_Contact_Email_CX_EN</template>
     </alerts>
     <alerts>
-        <fullName>Clicktools_Email_for_Instant_survey_CX_EN_FR</fullName>
-        <description>Clicktools Email for Instant survey_CX_EN_FR</description>
-        <protected>false</protected>
-        <recipients>
-            <field>ContactId</field>
-            <type>contactLookup</type>
-        </recipients>
-        <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>All/Clicktools_Contact_Email_CX_EN_FR</template>
-    </alerts>
-    <alerts>
         <fullName>Clicktools_Email_for_Instant_survey_CX_ES</fullName>
         <description>Clicktools Email for Instant survey_CX_ES</description>
         <protected>false</protected>
@@ -395,18 +383,6 @@
         <template>All/Clicktools_Contact_Email_CX_GR</template>
     </alerts>
     <alerts>
-        <fullName>Clicktools_Email_for_Instant_survey_CX_ID</fullName>
-        <description>Clicktools Email for Instant survey_CX_ID</description>
-        <protected>false</protected>
-        <recipients>
-            <field>ContactId</field>
-            <type>contactLookup</type>
-        </recipients>
-        <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>All/Clicktools_Contact_Email_CX_ID</template>
-    </alerts>
-    <alerts>
         <fullName>Clicktools_Email_for_Instant_survey_CX_IT</fullName>
         <description>Clicktools Email for Instant survey_CX_IT</description>
         <protected>false</protected>
@@ -417,30 +393,6 @@
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>All/Clicktools_Contact_Email_CX_IT</template>
-    </alerts>
-    <alerts>
-        <fullName>Clicktools_Email_for_Instant_survey_CX_JA</fullName>
-        <description>Clicktools Email for Instant survey_CX_JA</description>
-        <protected>false</protected>
-        <recipients>
-            <field>ContactId</field>
-            <type>contactLookup</type>
-        </recipients>
-        <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>All/Clicktools_Contact_Email_CX_JA</template>
-    </alerts>
-    <alerts>
-        <fullName>Clicktools_Email_for_Instant_survey_CX_KO</fullName>
-        <description>Clicktools Email for Instant survey_CX_KO</description>
-        <protected>false</protected>
-        <recipients>
-            <field>ContactId</field>
-            <type>contactLookup</type>
-        </recipients>
-        <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>All/Clicktools_Contact_Email_CX_KO</template>
     </alerts>
     <alerts>
         <fullName>Clicktools_Email_for_Instant_survey_CX_PT</fullName>
@@ -467,18 +419,6 @@
         <template>All/Clicktools_Contact_Email_CX_RO</template>
     </alerts>
     <alerts>
-        <fullName>Clicktools_Email_for_Instant_survey_CX_TH</fullName>
-        <description>Clicktools Email for Instant survey_CX_TH</description>
-        <protected>false</protected>
-        <recipients>
-            <field>ContactId</field>
-            <type>contactLookup</type>
-        </recipients>
-        <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>All/Clicktools_Contact_Email_CX_TH</template>
-    </alerts>
-    <alerts>
         <fullName>Clicktools_Email_for_Instant_survey_CX_TR</fullName>
         <description>Clicktools Email for Instant survey_CX_TR</description>
         <protected>false</protected>
@@ -489,18 +429,6 @@
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>All/Clicktools_Contact_Email_CX_TR</template>
-    </alerts>
-    <alerts>
-        <fullName>Clicktools_Email_for_Instant_survey_CX_ZH</fullName>
-        <description>Clicktools Email for Instant survey_CX_ZH</description>
-        <protected>false</protected>
-        <recipients>
-            <field>ContactId</field>
-            <type>contactLookup</type>
-        </recipients>
-        <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>All/Clicktools_Contact_Email_CX_ZH</template>
     </alerts>
     <alerts>
         <fullName>Clicktools_Email_for_Instant_survey_DE</fullName>
@@ -8841,84 +8769,6 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
-        <fullName>Clicktools Workflow_AM_CX_CHINESE</fullName>
-        <active>false</active>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7 AND 8 AND 9 AND 10 AND 11</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Process (IDFS ISS)</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.BSPCountry__c</field>
-            <operation>equals</operation>
-            <value>People&apos;s Republic of China</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.Email</field>
-            <operation>notContain</operation>
-            <value>iata.org</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.IATA_Code__c</field>
-            <operation>notEqual</operation>
-            <value>953,954</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Reason1__c</field>
-            <operation>equals</operation>
-            <value>CHC – Change of Shareholding,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,New BR / IP,New HO,New SA / CHV – New Code</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Closed,Closed_Accredited</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Name</field>
-            <operation>notContain</operation>
-            <value>General Public,Pubblico Italia</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.HasOptedOutOfEmail</field>
-            <operation>equals</operation>
-            <value>False</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.Instant_Survey_opt_out__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Subject</field>
-            <operation>notContain</operation>
-            <value>PROCOM-EDMC PROJECT</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.OwnerId</field>
-            <operation>notEqual</operation>
-            <value>Ángel Peña,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
-        </criteriaItems>
-        <description>Workflow rule used to send IS for Agency Management processes</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_ZH</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>Timestamp_on_date_survey_is_sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Update_Instant_Survey_Feedback_Requested</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.ClosedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
         <fullName>Clicktools Workflow_AM_CX_ENGLISH</fullName>
         <active>false</active>
         <booleanFilter>1 AND ((2 AND 3 AND 4) OR (12 AND 13) OR (14 AND 15) OR (16 AND 17 AND 18) OR (19 AND 20)) AND 5 AND 6 AND 7 AND 8 AND 9 AND 10 AND 11 AND 21 AND 22</booleanFilter>
@@ -9036,84 +8886,6 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <workflowTimeTriggers>
             <actions>
                 <name>Clicktools_Email_for_Instant_survey_CX_EN</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>Timestamp_on_date_survey_is_sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Update_Instant_Survey_Feedback_Requested</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.ClosedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Clicktools Workflow_AM_CX_ENGLISH_FRENCH</fullName>
-        <active>false</active>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7 AND 8 AND 9 AND 10 AND 11</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Process (IDFS ISS)</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.BSPCountry__c</field>
-            <operation>equals</operation>
-            <value>Canada</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.Email</field>
-            <operation>notContain</operation>
-            <value>iata.org</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.IATA_Code__c</field>
-            <operation>notEqual</operation>
-            <value>953,954</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Reason1__c</field>
-            <operation>equals</operation>
-            <value>CHC – Change of Shareholding,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,New BR / IP,New HO,New SA / CHV – New Code</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Closed,Closed_Accredited</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Name</field>
-            <operation>notContain</operation>
-            <value>General Public,Pubblico Italia</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.HasOptedOutOfEmail</field>
-            <operation>equals</operation>
-            <value>False</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.Instant_Survey_opt_out__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Subject</field>
-            <operation>notContain</operation>
-            <value>PROCOM-EDMC PROJECT</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.OwnerId</field>
-            <operation>notEqual</operation>
-            <value>Ángel Peña,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
-        </criteriaItems>
-        <description>Workflow rule used to send IS for Agency Management processes</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_EN_FR</name>
                 <type>Alert</type>
             </actions>
             <actions>
@@ -9364,84 +9136,6 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         </workflowTimeTriggers>
     </rules>
     <rules>
-        <fullName>Clicktools Workflow_AM_CX_INDONESIAN</fullName>
-        <active>false</active>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7 AND 8 AND 9 AND 10 AND 11</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Process (IDFS ISS)</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.BSPCountry__c</field>
-            <operation>equals</operation>
-            <value>Indonesia</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.Email</field>
-            <operation>notContain</operation>
-            <value>iata.org</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.IATA_Code__c</field>
-            <operation>notEqual</operation>
-            <value>953,954</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Reason1__c</field>
-            <operation>equals</operation>
-            <value>CHC – Change of Shareholding,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,New BR / IP,New HO,New SA / CHV – New Code</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Closed,Closed_Accredited</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Name</field>
-            <operation>notContain</operation>
-            <value>General Public,Pubblico Italia</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.HasOptedOutOfEmail</field>
-            <operation>equals</operation>
-            <value>False</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.Instant_Survey_opt_out__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Subject</field>
-            <operation>notContain</operation>
-            <value>PROCOM-EDMC PROJECT</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.OwnerId</field>
-            <operation>notEqual</operation>
-            <value>Ángel Peña,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
-        </criteriaItems>
-        <description>Workflow rule used to send IS for Agency Management processes</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_ID</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>Timestamp_on_date_survey_is_sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Update_Instant_Survey_Feedback_Requested</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.ClosedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
         <fullName>Clicktools Workflow_AM_CX_ITALIAN</fullName>
         <active>false</active>
         <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7 AND 8 AND 9 AND 10 AND 11</booleanFilter>
@@ -9504,162 +9198,6 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <workflowTimeTriggers>
             <actions>
                 <name>Clicktools_Email_for_Instant_survey_CX_IT</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>Timestamp_on_date_survey_is_sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Update_Instant_Survey_Feedback_Requested</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.ClosedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Clicktools Workflow_AM_CX_JAPANESE</fullName>
-        <active>false</active>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7 AND 8 AND 9 AND 10 AND 11</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Process (IDFS ISS)</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.BSPCountry__c</field>
-            <operation>equals</operation>
-            <value>Japan</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.Email</field>
-            <operation>notContain</operation>
-            <value>iata.org</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.IATA_Code__c</field>
-            <operation>notEqual</operation>
-            <value>953,954</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Reason1__c</field>
-            <operation>equals</operation>
-            <value>CHC – Change of Shareholding,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,New BR / IP,New HO,New SA / CHV – New Code</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Closed,Closed_Accredited</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Name</field>
-            <operation>notContain</operation>
-            <value>General Public,Pubblico Italia</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.HasOptedOutOfEmail</field>
-            <operation>equals</operation>
-            <value>False</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.Instant_Survey_opt_out__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Subject</field>
-            <operation>notContain</operation>
-            <value>PROCOM-EDMC PROJECT</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.OwnerId</field>
-            <operation>notEqual</operation>
-            <value>Ángel Peña,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
-        </criteriaItems>
-        <description>Workflow rule used to send IS for Agency Management processes</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_JA</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>Timestamp_on_date_survey_is_sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Update_Instant_Survey_Feedback_Requested</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.ClosedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Clicktools Workflow_AM_CX_KOREAN</fullName>
-        <active>false</active>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7 AND 8 AND 9 AND 10 AND 11</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Process (IDFS ISS)</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.BSPCountry__c</field>
-            <operation>equals</operation>
-            <value>&quot;Korea, Republic of&quot;</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.Email</field>
-            <operation>notContain</operation>
-            <value>iata.org</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.IATA_Code__c</field>
-            <operation>notEqual</operation>
-            <value>953,954</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Reason1__c</field>
-            <operation>equals</operation>
-            <value>CHC – Change of Shareholding,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,New BR / IP,New HO,New SA / CHV – New Code</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Closed,Closed_Accredited</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Name</field>
-            <operation>notContain</operation>
-            <value>General Public,Pubblico Italia</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.HasOptedOutOfEmail</field>
-            <operation>equals</operation>
-            <value>False</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.Instant_Survey_opt_out__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Subject</field>
-            <operation>notContain</operation>
-            <value>PROCOM-EDMC PROJECT</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.OwnerId</field>
-            <operation>notEqual</operation>
-            <value>Ángel Peña,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
-        </criteriaItems>
-        <description>Workflow rule used to send IS for Agency Management processes</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_KO</name>
                 <type>Alert</type>
             </actions>
             <actions>
@@ -9910,84 +9448,6 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         </workflowTimeTriggers>
     </rules>
     <rules>
-        <fullName>Clicktools Workflow_AM_CX_THAI</fullName>
-        <active>false</active>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7 AND 8 AND 9 AND 10 AND 11</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Process (IDFS ISS)</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.BSPCountry__c</field>
-            <operation>equals</operation>
-            <value>Thailand</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.Email</field>
-            <operation>notContain</operation>
-            <value>iata.org</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.IATA_Code__c</field>
-            <operation>notEqual</operation>
-            <value>953,954</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Reason1__c</field>
-            <operation>equals</operation>
-            <value>CHC – Change of Shareholding,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,New BR / IP,New HO,New SA / CHV – New Code</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Closed,Closed_Accredited</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Name</field>
-            <operation>notContain</operation>
-            <value>General Public,Pubblico Italia</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.HasOptedOutOfEmail</field>
-            <operation>equals</operation>
-            <value>False</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.Instant_Survey_opt_out__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Subject</field>
-            <operation>notContain</operation>
-            <value>PROCOM-EDMC PROJECT</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.OwnerId</field>
-            <operation>notEqual</operation>
-            <value>Ángel Peña,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
-        </criteriaItems>
-        <description>Workflow rule used to send IS for Agency Management processes</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_TH</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>Timestamp_on_date_survey_is_sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Update_Instant_Survey_Feedback_Requested</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.ClosedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
         <fullName>Clicktools Workflow_AM_CX_TURKISH</fullName>
         <active>false</active>
         <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7 AND 8 AND 9 AND 10 AND 11</booleanFilter>
@@ -10050,84 +9510,6 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <workflowTimeTriggers>
             <actions>
                 <name>Clicktools_Email_for_Instant_survey_CX_TR</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>Timestamp_on_date_survey_is_sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Update_Instant_Survey_Feedback_Requested</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.ClosedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Clicktools Workflow_AM_CX_VIETNAMESE</fullName>
-        <active>false</active>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7 AND 8 AND 9 AND 10 AND 11</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Process (IDFS ISS)</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.BSPCountry__c</field>
-            <operation>equals</operation>
-            <value>Vietnam</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.Email</field>
-            <operation>notContain</operation>
-            <value>iata.org</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.IATA_Code__c</field>
-            <operation>notEqual</operation>
-            <value>953,954</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Reason1__c</field>
-            <operation>equals</operation>
-            <value>CHC – Change of Shareholding,CHL - Change of Location,CHN - Change of Name,CHO / CHS – Change of Ownership / Legal Status,New BR / IP,New HO,New SA / CHV – New Code</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Closed,Closed_Accredited</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Name</field>
-            <operation>notContain</operation>
-            <value>General Public,Pubblico Italia</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.HasOptedOutOfEmail</field>
-            <operation>equals</operation>
-            <value>False</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Contact.Instant_Survey_opt_out__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Subject</field>
-            <operation>notContain</operation>
-            <value>PROCOM-EDMC PROJECT</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.OwnerId</field>
-            <operation>notEqual</operation>
-            <value>Ángel Peña,Cristina Lopez,Miguel Rodriguez Hernandez,Rafael Alarcon</value>
-        </criteriaItems>
-        <description>Workflow rule used to send IS for Agency Management processes</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_TH</name>
                 <type>Alert</type>
             </actions>
             <actions>
@@ -10236,10 +9618,6 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <description>Workflow rule used to send IS for Agency Risk Management processes</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_ZH</name>
-                <type>Alert</type>
-            </actions>
             <actions>
                 <name>Timestamp_on_date_survey_is_sent</name>
                 <type>FieldUpdate</type>
@@ -10402,10 +9780,6 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <description>Workflow rule used to send IS for Agency Risk Management processes</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_EN_FR</name>
-                <type>Alert</type>
-            </actions>
             <actions>
                 <name>Timestamp_on_date_survey_is_sent</name>
                 <type>FieldUpdate</type>
@@ -10640,10 +10014,6 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
             <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_ID</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
                 <name>Timestamp_on_date_survey_is_sent</name>
                 <type>FieldUpdate</type>
             </actions>
@@ -10755,68 +10125,6 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <description>Workflow rule used to send IS for Agency Risk Management processes</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_JA</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>Timestamp_on_date_survey_is_sent</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <actions>
-                <name>Update_Instant_Survey_Feedback_Requested</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.ClosedDate</offsetFromField>
-            <timeLength>1</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Clicktools Workflow_ARM_CX_KOREAN</fullName>
-        <active>false</active>
-        <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7</booleanFilter>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>IATA Financial Review</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Closed</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Financial_Review_Result__c</field>
-            <operation>equals</operation>
-            <value>Satisfactory - New Financial Security,Satisfactory - Update Financial Security,Unsatisfactory - New Financial Security,Unsatisfactory - Update Financial Security</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Financial_Review_Type__c</field>
-            <operation>equals</operation>
-            <value>Annual</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.FS_Submitted_Date__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.CreatedDate</field>
-            <operation>greaterOrEqual</operation>
-            <value>&quot;12/31/2013, 8:00 PM&quot;</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Account_Billing_Country__c</field>
-            <operation>equals</operation>
-            <value>&quot;Korea, Democratic People&apos;s Republic of&quot;,&quot;Korea, Republic of&quot;,KOREA DEM.PEOPLES REPUBLIC</value>
-        </criteriaItems>
-        <description>Workflow rule used to send IS for Agency Risk Management processes</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_KO</name>
-                <type>Alert</type>
-            </actions>
             <actions>
                 <name>Timestamp_on_date_survey_is_sent</name>
                 <type>FieldUpdate</type>
@@ -11045,10 +10353,6 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <description>Workflow rule used to send IS for Agency Risk Management processes</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
         <workflowTimeTriggers>
-            <actions>
-                <name>Clicktools_Email_for_Instant_survey_CX_TH</name>
-                <type>Alert</type>
-            </actions>
             <actions>
                 <name>Timestamp_on_date_survey_is_sent</name>
                 <type>FieldUpdate</type>

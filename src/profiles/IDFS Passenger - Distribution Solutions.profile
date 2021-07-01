@@ -41203,6 +41203,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>GVR__mdt.Value__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>GadmAccountServiceDetail__e.EventType__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -62668,6 +62673,9 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>GST_Information__c-GST Information Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>GVR__mdt-Global Validation Rules Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Global-Global Layout</layout>
