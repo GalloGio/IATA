@@ -41199,6 +41199,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>GVR__mdt.Value__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>GadmAccountServiceDetail__e.EventType__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -60256,6 +60261,9 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>DelegatedAccount-External Managed Account Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>GVR__mdt-Global Validation Rules Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>ICG_Account_Role_Capability_Assignment__c-OS Account Role Capability Assignment Layout</layout>
