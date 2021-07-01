@@ -227,6 +227,96 @@
         <fullName>WhoId</fullName>
         <type>Lookup</type>
     </fields>
+    <listViews>
+        <fullName>MyRecentEvents</fullName>
+        <columns>START_DATE_TIME</columns>
+        <columns>END_DATE_TIME</columns>
+        <columns>SUBJECT</columns>
+        <columns>WHO_NAME</columns>
+        <columns>WHAT_NAME</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>ALL_DAY</columns>
+        <filterScope>Mine</filterScope>
+        <filters>
+            <field>DUE_DATE</field>
+            <operation>equals</operation>
+            <value>LAST_N_DAYS:60</value>
+        </filters>
+        <label>My Recent Events</label>
+    </listViews>
+    <listViews>
+        <fullName>MyTeamsRecentEvents</fullName>
+        <columns>START_DATE_TIME</columns>
+        <columns>END_DATE_TIME</columns>
+        <columns>SUBJECT</columns>
+        <columns>WHO_NAME</columns>
+        <columns>WHAT_NAME</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>ALL_DAY</columns>
+        <filterScope>Team</filterScope>
+        <filters>
+            <field>DUE_DATE</field>
+            <operation>equals</operation>
+            <value>LAST_N_DAYS:30</value>
+        </filters>
+        <label>My Team&apos;s Recent Events</label>
+    </listViews>
+    <listViews>
+        <fullName>MyTeamsUpcomingEvents</fullName>
+        <columns>START_DATE_TIME</columns>
+        <columns>END_DATE_TIME</columns>
+        <columns>SUBJECT</columns>
+        <columns>WHO_NAME</columns>
+        <columns>WHAT_NAME</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>ALL_DAY</columns>
+        <filterScope>Team</filterScope>
+        <filters>
+            <field>DUE_DATE</field>
+            <operation>equals</operation>
+            <value>TODAY,NEXT_N_DAYS:30</value>
+        </filters>
+        <label>My Team&apos;s Upcoming Events</label>
+    </listViews>
+    <listViews>
+        <fullName>MyUpcomingEvents</fullName>
+        <columns>START_DATE_TIME</columns>
+        <columns>END_DATE_TIME</columns>
+        <columns>SUBJECT</columns>
+        <columns>WHO_NAME</columns>
+        <columns>WHAT_NAME</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>ALL_DAY</columns>
+        <filterScope>Mine</filterScope>
+        <filters>
+            <field>DUE_DATE</field>
+            <operation>equals</operation>
+            <value>TODAY,NEXT_N_DAYS:60</value>
+        </filters>
+        <label>My Upcoming Events</label>
+    </listViews>
+    <listViews>
+        <fullName>TodaysAgenda</fullName>
+        <columns>START_DATE_TIME</columns>
+        <columns>END_DATE_TIME</columns>
+        <columns>SUBJECT</columns>
+        <columns>WHO_NAME</columns>
+        <columns>WHAT_NAME</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>ALL_DAY</columns>
+        <filterScope>Mine</filterScope>
+        <filters>
+            <field>DUE_DATE</field>
+            <operation>lessOrEqual</operation>
+            <value>TODAY</value>
+        </filters>
+        <filters>
+            <field>END_DATE</field>
+            <operation>greaterOrEqual</operation>
+            <value>TODAY</value>
+        </filters>
+        <label>Today&apos;s Agenda</label>
+    </listViews>
     <recordTypes>
         <fullName>Conference_Call</fullName>
         <active>true</active>
@@ -271,6 +361,48 @@
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>OdigoCti__Call_Result__c</picklist>
+            <values>
+                <fullName>Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Value 2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Value 3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Value 4</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>OdigoCti__Call_Type__c</picklist>
+            <values>
+                <fullName>Call back</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call%26Pay</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inbound</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Internal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Outbound</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -397,6 +529,48 @@
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>OdigoCti__Call_Result__c</picklist>
+            <values>
+                <fullName>Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Value 2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Value 3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Value 4</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>OdigoCti__Call_Type__c</picklist>
+            <values>
+                <fullName>Call back</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call%26Pay</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inbound</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Internal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Outbound</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Subject</picklist>
             <values>
                 <fullName>Business trip planning</fullName>
@@ -511,6 +685,48 @@
             </values>
             <values>
                 <fullName>Yes</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>OdigoCti__Call_Result__c</picklist>
+            <values>
+                <fullName>Value 1</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Value 2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Value 3</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Value 4</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>OdigoCti__Call_Type__c</picklist>
+            <values>
+                <fullName>Call back</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Call%26Pay</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Inbound</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Internal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Outbound</fullName>
                 <default>false</default>
             </values>
         </picklistValues>

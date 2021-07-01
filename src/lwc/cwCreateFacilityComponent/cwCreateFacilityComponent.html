@@ -335,6 +335,14 @@
                             </div>
                         </template>
                     </div>
+                    
+                    <!-- HANDLING SERVICES -->
+                    <template if:true={showRampHandler}>
+                        <div class="boxHandlingService">
+                                <c-cw-handling-services is-create-view={handlingServicesEdit.isCreateView} is-summary={handlingServicesEdit.isSummary} label={label} class="cmpEditable" title={label.icg_handling_services} facility={handlingServicesEdit.facilityHandlingService} edit-mode=true onupdatefacility={updateFacility}></c-cw-handling-services>
+                            <br /><br />
+                        </div>
+                    </template>
 
                     <div>
                         <p><b>{label.station_overview}</b></p>
@@ -581,6 +589,13 @@
                         <p>{label.icg_perishables}: <b>{additionalData.perishables}</b></p>
                         <p>{label.icg_pharmaceuticals}: <b>{additionalData.pharmaceuticals}</b></p>
                     </div>
+                    <template if:true={showRampHandler}>
+                        <div class="col-8 summarydatadiv separatorbelow">
+                            <p><b>{label.icg_handling_services}</b></p>
+                            <hr class="yellow-underline mb-2-5">
+                            <c-cw-handling-services is-create-view={handlingServicesSummary.isCreateView} is-summary={handlingServicesSummary.isSummary} label={label} class="cmpEditable" title={label.icg_handling_services} facility={handlingServicesEdit.facilityHandlingService} edit-mode=true onupdatefacility={updateFacility}></c-cw-handling-services>
+                        </div>
+                    </template> 
                     <div class="col-8 summarydatadiv separatorbelow">
                         <p><b>{label.station_overview}</b></p>
                         <hr class="yellow-underline mb-2-5">

@@ -8,7 +8,7 @@
             <type>owner</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>Quality/OI_Creation_Notification</template>
+        <template>Quality/Continuous_Improvement_Process_Creation_Notification</template>
     </alerts>
     <alerts>
         <fullName>OI_Approval_notification</fullName>
@@ -18,7 +18,7 @@
             <type>owner</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>Quality/OI_Approved_by_RPM</template>
+        <template>Quality/Continuous_Improvement_Process_Approved_by_RPM</template>
     </alerts>
     <alerts>
         <fullName>OI_Approved_by_RPM</fullName>
@@ -176,6 +176,16 @@ IF(NOT(ISNULL(Submission_for_Approval_Date__c)),
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
+        <fullName>Set_Closed_Date</fullName>
+        <description>Set the OI closed date to NOW</description>
+        <field>Date_Time_Closed__c</field>
+        <formula>NOW()</formula>
+        <name>Set Closed Date</name>
+        <notifyAssignee>false</notifyAssignee>
+        <operation>Formula</operation>
+        <protected>false</protected>
+    </fieldUpdates>
+    <fieldUpdates>
         <fullName>Terminate_OI</fullName>
         <description>Set today as Termination Date to set the status as Terminated</description>
         <field>Terminated_Date__c</field>
@@ -225,6 +235,17 @@ IF(NOT(ISNULL(Submission_for_Approval_Date__c)),
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
+        <fullName>OI Completed</fullName>
+        <actions>
+            <name>Set_Closed_Date</name>
+            <type>FieldUpdate</type>
+        </actions>
+        <active>true</active>
+        <description>Action done when an OI is being completed</description>
+        <formula>AND(   OR(     RecordType.DeveloperName=&apos;Data_Governance&apos;,     RecordType.DeveloperName=&apos;Operational_Improvements&apos;   ),   NOT(ISBLANK(TEXT(Action_Plan_Effectiveness_Assessment__c))) )</formula>
+        <triggerType>onCreateOrTriggeringUpdate</triggerType>
+    </rules>
+    <rules>
         <fullName>Reset approval date</fullName>
         <actions>
             <name>Reset_approval_date_OI</name>
@@ -242,8 +263,9 @@ IF(NOT(ISNULL(Submission_for_Approval_Date__c)),
             <type>FieldUpdate</type>
         </actions>
         <active>true</active>
-        <description>Fills the field &apos;OI Status (WF)&apos; with current calculated status</description>
-        <formula>OR(	ISNEW(), 	AND(NOT(ISNEW()), 		OR( 			ISCHANGED(Date_Time_Closed__c), 			ISCHANGED(Extension_approved_date__c), 			ISCHANGED(Submission_for_extension_date__c), 			ISCHANGED(Submission_for_Approval_Date__c), 			ISCHANGED(Overall_Deadline__c), 			ISCHANGED(Pending_eff_validation_date__c), 			ISCHANGED(Terminated_Date__c), 			ISCHANGED(OI_Approval_date__c), 			ISCHANGED(Conclusion_Date__c), 			ISCHANGED(Extension_rejected_date__c) 		) 	) )</formula>
+        <description>Fills the field &apos;OI Status (WF)&apos; with current calculated status.
+Only for RT &apos;CPS Checks&apos;</description>
+        <formula>OR(   RecordType.DeveloperName=&apos;CPS_Checks&apos;,   ISNEW(),   AND(     NOT(ISNEW()),     OR(       ISCHANGED(Date_Time_Closed__c),       ISCHANGED(Extension_approved_date__c),       ISCHANGED(Submission_for_extension_date__c),       ISCHANGED(Submission_for_Approval_Date__c),       ISCHANGED(Overall_Deadline__c),       ISCHANGED(Pending_eff_validation_date__c),       ISCHANGED(Terminated_Date__c),       ISCHANGED(OI_Approval_date__c),       ISCHANGED(Conclusion_Date__c),       ISCHANGED(Extension_rejected_date__c)     )   ) )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
 </Workflow>

@@ -34,3 +34,8 @@
   width: max-content;
   text-align: left;
 }
+
+.content{
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

@@ -12,6 +12,7 @@
             <operation>notEqual</operation>
             <value></value>
         </criteriaItems>
+        <includeHVUOwnedRecords>false</includeHVUOwnedRecords>
     </sharingGuestRules>
     <sharingGuestRules>
         <fullName>IATA_KB_Comm</fullName>
@@ -26,5 +27,6 @@
             <operation>notEqual</operation>
             <value></value>
         </criteriaItems>
+        <includeHVUOwnedRecords>false</includeHVUOwnedRecords>
     </sharingGuestRules>
 </SharingRules>
