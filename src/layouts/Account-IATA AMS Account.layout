@@ -3,7 +3,6 @@
     <customButtons>Detailed_Hierarchy_View</customButtons>
     <customButtons>Zuora__Sync_Data_from_ZBilling</customButtons>
     <customButtons>Start_Oscar_Wizard</customButtons>
-    <customButtons>Account_Dashboard_CTI</customButtons>
     <customConsoleComponents>
         <primaryTabComponents>
             <containers>

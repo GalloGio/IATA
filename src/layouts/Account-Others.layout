@@ -562,6 +562,11 @@
             <actionType>ProductivityAction</actionType>
             <sortOrder>22</sortOrder>
         </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Account_Dashboard_CTI</actionName>
+            <actionType>CustomButton</actionType>
+            <sortOrder>23</sortOrder>
+        </platformActionListItems>
     </platformActionList>
     <relatedContent>
         <relatedContentItems>

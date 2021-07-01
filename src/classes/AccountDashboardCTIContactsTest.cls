@@ -56,18 +56,18 @@ public with sharing class AccountDashboardCTIContactsTest {
 		List<Account> accountList = [SELECT Id FROM Account LIMIT 1];
 		List<Contact> contactList = [SELECT Id FROM Contact LIMIT 2];
 		test.startTest();
-		List<Contact> Contacts = AccountDashboardCTIContactsCtrl.searchKeyContacts(accountList[0].Id, contactList[0].Id, 5);
+		List<Contact> contacts = AccountDashboardCTIContactsCtrl.searchKeyContacts(accountList[0].Id, contactList[0].Id, 5);
 		test.stopTest();
-		System.assert(Contacts.size() > 0, 'No Contacts (w/ selected) found!');
+		System.assert(contacts.size() > 0, 'No Contacts (w/ selected) found!');
 	}
 
 	@isTest
 	public static void searchKeyContactsAllTest() {
 		List<Account> accountList = [SELECT Id FROM Account LIMIT 1];
 		test.startTest();
-		List<Contact> Contacts = AccountDashboardCTIContactsCtrl.searchKeyContacts(accountList[0].Id, null, 5);
+		List<Contact> contacts = AccountDashboardCTIContactsCtrl.searchKeyContacts(accountList[0].Id, null, 5);
 		test.stopTest();
-		System.assert(Contacts.size() > 0, 'No Contacts found!');
+		System.assert(contacts.size() > 0, 'No Contacts found!');
 	}
 
 	@isTest
@@ -75,8 +75,8 @@ public with sharing class AccountDashboardCTIContactsTest {
 		List<Account> accountList = [SELECT Id FROM Account LIMIT 1];
 		List<Contact> contactList = [SELECT Id FROM Contact LIMIT 2];
 		test.startTest();
-		List<AccountDashboardCTIContactsCtrl.KeyContact> Contacts = AccountDashboardCTIContactsCtrl.getKeyContacts(accountList[0].Id, contactList[0].Id);
+		List<AccountDashboardCTIContactsCtrl.KeyContact> contacts = AccountDashboardCTIContactsCtrl.getKeyContacts(accountList[0].Id, contactList[0].Id);
 		test.stopTest();
-		System.assert(Contacts.size() > 0, 'No Contacts found!');
+		System.assert(contacts.size() > 0, 'No Contacts found!');
 	}
 }

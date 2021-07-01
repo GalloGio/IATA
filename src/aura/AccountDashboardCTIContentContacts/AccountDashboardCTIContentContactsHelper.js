@@ -78,9 +78,9 @@
 		if (contactSelected !== undefined && contactSelected !== "") {
 			let contactData = component.get("v.data");
 			component.set("v.portalServicesForContact", null);
-			for (let i = 0; i < contactData.length; i++) {
-				if (contactData[i].contactId == contactSelected && contactData[i].portalServices != undefined && contactData[i].portalServices != null) {
-					component.set("v.portalServicesForContact", contactData[i].portalServices);
+			for (let ctt of contactData) {
+				if (ctt.contactId == contactSelected && ctt.portalServices != undefined && ctt.portalServices != null) {
+					component.set("v.portalServicesForContact", ctt.portalServices);
 					break;
 				}
 			}
@@ -106,8 +106,7 @@
 		min = helper.getNumberWithZeroPrefix(min);
 		sec = helper.getNumberWithZeroPrefix(sec);
 
-		let dateF = year + "-" + month + "-" + day + " " + hour + ":" + min + ":" + sec;
-		return dateF;
+		return year + "-" + month + "-" + day + " " + hour + ":" + min + ":" + sec;
 	},
 	createNewCaseForContactId: function (component, helper, contactSelected) {
 		if (contactSelected != "") {
@@ -122,9 +121,9 @@
 			let caseDescription = encodeURIComponent("Phone call");
 			let caseVisibleISSPortal = "true";
 			let caseOrigin = "Phone";
-			for (let i = 0; i < contactData.length; i++) {
-				if (contactData[i].contactId == contactSelected) {
-					contactDataSelected = contactData[i];
+			for (let ctt of contactData) {
+				if (ctt.contactId == contactSelected) {
+					contactDataSelected = ctt;
 					break;
 				}
 			}

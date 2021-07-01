@@ -20,13 +20,13 @@ public with sharing class AccountDashboardCTITest {
 		insert accountList;
 
 		// Create a new Contact for the Account
-		Id ContactStd_RT_Id = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
-		Contact c = new Contact(FirstName = 'Test', LastName = 'Contact', email = 'test_AccountCTIController@test.com', AccountId = accountList.get(0).Id, RecordTypeId = ContactStd_RT_Id);
+		Id contactStdRTId = RecordTypeSingleton.getInstance().getRecordTypeId('Contact', 'Standard_Contact');
+		Contact c = new Contact(FirstName = 'Test', LastName = 'Contact', email = 'test_AccountCTIController@test.com', AccountId = accountList.get(0).Id, RecordTypeId = contactStdRTId);
 		insert c;
 	}
 
 	@isTest
-	public static void AccountDashboardCTI_Ok_Test(){
+	public static void accountDashboardCTIOkTest(){
 		//init();
 		Account acc = [SELECT Id, Name FROM Account LIMIT 1];
 		Contact con = [SELECT Id, Name FROM contact LIMIT 1];
@@ -37,7 +37,7 @@ public with sharing class AccountDashboardCTITest {
 		System.assert(adCTI.accountId!=null, 'Must have an AccountId!');
 	}
 	@isTest
-	public static void AccountDashboardCTI_NOk_Test(){
+	public static void accountDashboardCTINOkTest(){
 		//init();
 		Account acc = new Account();
 		test.startTest();
@@ -46,7 +46,7 @@ public with sharing class AccountDashboardCTITest {
 		System.assert(adCTI.accountId==null, 'Must have an empty Account!');
 	}
 	@isTest
-	public static void AccountDashboardCTI_Error_Test(){
+	public static void accountDashboardCTIErrorTest(){
 		//init();
 		test.startTest();
 			AccountDashboardCTI adCTI = new AccountDashboardCTI(null);
@@ -55,7 +55,7 @@ public with sharing class AccountDashboardCTITest {
 	}
 
 	@isTest
-	public static void AccountDashboardCTI_CheckAndRedirect_Test(){
+	public static void accountDashboardCTICheckAndRedirectTest(){
 		Contact con = [SELECT Id, Name FROM contact LIMIT 1];
 		Test.startTest();
 			pageReference pageRef = page.ContactDashboardCTI;
@@ -70,8 +70,7 @@ public with sharing class AccountDashboardCTITest {
 	}
 
 	@isTest
-	public static void AccountDashboardCTI_ErrorCheckAndRedirect_Test(){
-		Contact con = [SELECT Id, Name FROM contact LIMIT 1];
+	public static void accountDashboardCTIErrorCheckAndRedirectTest(){
 		Test.startTest();
 			pageReference pageRef = page.ContactDashboardCTI;
 			pageRef.getParameters().put('id', '');

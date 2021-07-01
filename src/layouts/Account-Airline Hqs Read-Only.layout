@@ -3,7 +3,6 @@
     <customButtons>NewRelatedAccount</customButtons>
     <customButtons>Create_MSO_agency</customButtons>
     <customButtons>Zuora__Sync_Data_from_ZBilling</customButtons>
-    <customButtons>Account_Dashboard_CTI</customButtons>
     <excludeButtons>DataDotComAccountInsights</excludeButtons>
     <excludeButtons>DisableCustomerPortalAccount</excludeButtons>
     <excludeButtons>DisablePartnerPortalAccount</excludeButtons>

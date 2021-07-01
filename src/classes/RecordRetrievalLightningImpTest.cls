@@ -75,6 +75,25 @@ public with sharing class RecordRetrievalLightningImpTest {
 	}
 
 	@isTest
+	public static void recordRetrivalImplementationContactsNoSearchDataTest() {
+		OdigoCti.RecordRetrievalLightningInterface_v3.SearchResult result = new OdigoCti.RecordRetrievalLightningInterface_v3.SearchResult();
+		RecordRetrievalLightningImplementation odigo_cs = new RecordRetrievalLightningImplementation();
+		List<Contact> contact = [SELECT Id, Phone FROM Contact];
+		Set<Id> ctIds = (new Map<Id,SObject>(contact)).keySet();
+		List<Id> fixedSearchResults = new List<Id>(ctIds);
+		String partialPhone = ''; 
+		String phoneNum = '';
+		String phoneIntNum = '';
+		String phoneLocalNum = '';
+		String folderId = DEFAULTFOLDERID;
+		Test.startTest();
+		Test.setFixedSearchResults(fixedSearchResults);
+		result = odigo_cs.SearchRecords(phoneNum,phoneIntNum,phoneLocalNum,folderId,'111','222','call','444');
+		Test.stopTest();
+		System.assert(result != null, 'No Contacts found!');
+	}
+
+	@isTest
 	public static void recordRetrivalImplementationNothingFoundTest() {
 		OdigoCti.RecordRetrievalLightningInterface_v3.SearchResult result = new OdigoCti.RecordRetrievalLightningInterface_v3.SearchResult();
 		RecordRetrievalLightningImplementation odigo_cs = new RecordRetrievalLightningImplementation();

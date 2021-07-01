@@ -10,7 +10,7 @@ public with sharing class AccountDashboardCTIContactsCtrl {
 			Map<Id, List<Portal_Application_Right__c>> contactPortalServices = getPortalServicesByContact(keyContacts, portalServices);
 			Boolean contactSelected = false;
 			for(Contact con : keyContacts) {
-				contactSelected = (con.Id == contactId) ? true : false;
+				contactSelected = (con.Id == contactId);
 				keyContactsWrapper.add(new KeyContact(con, contactPortalServices.get(con.Id), contactSelected));
 			}
 		}
@@ -126,7 +126,6 @@ public with sharing class AccountDashboardCTIContactsCtrl {
 			this.mobile = con.MobilePhone;
 			this.email = con.Email;
 			this.status = con.Status__c;
-			this.selected = (selected) ? true : false;
 			this.lastActivityDate = (contactCase.CreatedDate != null) ? String.valueOf(contactCase.CreatedDate) : '';
 			this.AccountCountryName = con.Account.IATA_Iso_Country_Name__c;
 			this.AccountRegionName = con.Account.Region_formula__c;

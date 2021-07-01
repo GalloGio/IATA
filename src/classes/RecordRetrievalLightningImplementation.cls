@@ -11,39 +11,45 @@ global class RecordRetrievalLightningImplementation extends odigocti.RecordRetri
 	) {
 		Integer IATACodeStringPosition = 5; // FolderId will have the IATACode, must identity which position is
 		String IATACode = '';
-		localPhoneNumber = localPhoneNumber.replaceFirst('^0+', '');
+		localPhoneNumber = (!String.isBlank(localPhoneNumber)) ? localPhoneNumber.replaceFirst('^0+', '') : '';
 		String searchExpression = localPhoneNumber;
-		List<String> folderIdStrings = folderId.split('#');
-		if (folderIdStrings.size()>=IATACodeStringPosition) {
-			IATACode = folderIdStrings[IATACodeStringPosition];
+		if (!String.isBlank(folderId)) {
+			List<String> folderIdStrings = folderId.split('#');
+			if (folderIdStrings.size()>=IATACodeStringPosition) {
+				IATACode = folderIdStrings[IATACodeStringPosition];
+			}
 		}
 		//prepare the object that will be returned to the odigo CTI
 		SearchResult result = new SearchResult();
 
 		/**
-		* Looking for an object using the folder ID. This is mostly usefull for cases. If you don't do
-			any case you can remove this "if" completly
+		* if is needed to manage some action when do a callback, put code here
 		*/
-		if ('callback'.equals(type) && !String.isBlank(folderId) && folderId.length() > 2) {
-			// if is needed to manage some action when do a callback, put code here
+		if ('callback'.equals(type) || 'outbound'.equals(type) || 'internal'.equals(type)) {
+			result.objectType = 'Nothing';
+			Set<String> setIds = new Set<String>();
+			result.recordIds = setIds;
+			return result;
+		} else if (String.isBlank(searchExpression)) {
 			result.objectType = 'Nothing';
 			Set<String> setIds = new Set<String>();
 			result.recordIds = setIds;
 			return result;
 		} else {
 			/**
-			 * searching by folder id takes priority over the basic searching
+			 * Searching for phone and iata code in Contacts/Accounts.
+			 * If nothing found, perform a SOSL search in phone fields (Contacs & Accounts)
 			 */
-			if (!String.isBlank(localPhoneNumber) && localPhoneNumber.length() > 2) {
+			if (!String.isBlank(searchExpression) && searchExpression.length() > 2) {
 				/**
-				 * looking for every contact and account that as this phone number and iata code in all fields
+				 * looking for every contact and account that as this phone number and iata code 
 				 */
 				String queryPhones = '\\+*'+internationalPhoneNumber.replaceFirst('^0+', '')+' OR '+localPhoneNumber+' OR '+phoneNumber;
 				List < List < SObject >> searchList = new List < List < SObject >>();
 				if (IATACode != '') { 
 					searchExpression += ' OR ' + IATACode;
 					String phoneWildcard = '%'+localPhoneNumber+'%';
-					List<Contact> contactList = [SELECT Id, AccountId, IATA_Code__c, Phone, PhoneNational__c, MobilePhone, OtherPhone, Account.Phone FROM Contact WHERE (Phone LIKE :phoneWildcard OR PhoneNational__c LIKE :phoneWildcard OR MobilePhone LIKE :phoneWildcard OR OtherPhone LIKE :phoneWildcard OR Account.Phone LIKE :phoneWildcard) OR IATA_Code__c = :IATACode LIMIT 1000];
+					List<Contact> contactList = [SELECT Id, AccountId, IATA_Code__c, Account.Site, Phone, PhoneNational__c, MobilePhone, OtherPhone, Account.Phone FROM Contact WHERE (Phone LIKE :phoneWildcard OR PhoneNational__c LIKE :phoneWildcard OR MobilePhone LIKE :phoneWildcard OR OtherPhone LIKE :phoneWildcard OR Account.Phone LIKE :phoneWildcard) OR Account.Site = :IATACode OR IATA_Code__c = :IATACode LIMIT 1000];
 					if (contactList.size() > 0) {
 						searchList = performSearchInData(contactList, localPhoneNumber, IATACode);
 					}
@@ -137,7 +143,7 @@ global class RecordRetrievalLightningImplementation extends odigocti.RecordRetri
 			for (Contact contact : contactList) {
 				accountIds.add(contact.AccountId);
 				allPhones = contact.Phone + ' ' + contact.PhoneNational__c + ' ' + contact.MobilePhone + ' ' + contact.OtherPhone + ' ' +contact.Account.Phone;
-				if (allPhones.contains(phoneToCheck) && contact.IATA_Code__c == iatacodeToCheck) {
+				if (allPhones.contains(phoneToCheck) && (contact.Account.Site == iatacodeToCheck || contact.IATA_Code__c == iatacodeToCheck)) {
 					contactIATARecords.add(contact);
 				} else if (allPhones.contains(phoneToCheck)) {
 					contactRecords.add(contact);
