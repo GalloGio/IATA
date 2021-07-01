@@ -36,12 +36,9 @@ public with sharing class SIDRARepaymentInstalmentsController {
 	public Integer rpiIndexToDelete {get; set;}
 
 	/**
-	 * According to story WMO-1297 we need to block all actions in this page for
-	 * some specific cases:
-	 * SIDRA CASS starting on 01/07/2021
+	 * According to story WMO-1297 we need to block all actions in this page for SIDRA CASS cases
 	 */
 	public Boolean getBlockEdit() {
-		//return cs.BSP_CASS__c == 'CASS' && Date.today() >= Date.newInstance('2021','07','01');
 		return cs!=null && cs.BSP_CASS__c == 'CASS';
 	}
 
