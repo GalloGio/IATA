@@ -231,10 +231,10 @@ global class ANG_FOPOSCARNotificationBatch implements Database.Batchable<Case>, 
 				(SELECT Id, Email, Name, Preferred_Language__c, BSP_CASS_Payment_contact__c, Financial_Assessment_Contact__c,
 					Account.IataCode__c, Account.Name, Account.ANG_PCI_compliance_expiry_date__c
 				FROM Contacts
-				WHERE Status__c = 'Active'
+				WHERE Status__c = :AMS_Utils.ACTIVE
 				AND IsEmailBounced = false
 				AND (
-					User_Portal_Status__c = 'Approved Admin'
+					User_Portal_Status__c = :AMS_Utils.CONTACT_TYPE_ADMIN
 					OR Financial_Assessment_Contact__c = true
 					OR BSP_CASS_Payment_contact__c = true
 				))

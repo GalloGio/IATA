@@ -127,7 +127,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 			if(keyContactsPerAccount!=null && keyContactsPerAccount.get(agReg.Account__c)!= null && !keyContactsPerAccount.get(agReg.Account__c).isEmpty()){
 				//find portal admin
 				for(Contact c: keyContactsPerAccount.get(agReg.Account__c)){
-					if(c.User_Portal_Status__c == 'Approved Admin')
+					if(c.User_Portal_Status__c == AMS_Utils.CONTACT_TYPE_ADMIN)
 						comCasecontact = c;
 				}
 
@@ -452,7 +452,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 				}else if(isDGR){
 
 					//FM 24/10/2017 - AMSU-32
-					if(recipientContact.User_Portal_Status__c == 'Approved Admin'){
+					if(recipientContact.User_Portal_Status__c == AMS_Utils.CONTACT_TYPE_ADMIN){
 
 						//lPortalAdminsEmailsDGR.add(recipient.Email);
 						if(mPortalAdminsEmailsDGR.containsKey(recipientContact.Preferred_Language__c)){
