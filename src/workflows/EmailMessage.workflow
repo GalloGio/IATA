@@ -11,42 +11,10 @@
         <targetObject>ParentId</targetObject>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>Case_Status</fullName>
-        <field>Status</field>
-        <literalValue>Action Needed</literalValue>
-        <name>Case Status</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <targetObject>ParentId</targetObject>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Change_Owner</fullName>
-        <field>OwnerId</field>
-        <lookupValue>GCS_iiNet</lookupValue>
-        <lookupValueType>Queue</lookupValueType>
-        <name>Change Owner</name>
-        <notifyAssignee>true</notifyAssignee>
-        <operation>LookupValue</operation>
-        <protected>false</protected>
-        <targetObject>ParentId</targetObject>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>Change_case_status_to_Action_Needed</fullName>
         <field>Status</field>
         <literalValue>Action Needed</literalValue>
         <name>Case Status = Action Needed</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-        <targetObject>ParentId</targetObject>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Changestatusofcase</fullName>
-        <description>Change status of case when incoming email is received on a closed case.</description>
-        <field>Status</field>
-        <literalValue>Reopen</literalValue>
-        <name>Case Status = Reopen</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>
@@ -311,47 +279,6 @@
         <protected>false</protected>
         <targetObject>ParentId</targetObject>
     </fieldUpdates>
-    <rules>
-        <fullName>Americas%3A Change case status to Reopen</fullName>
-        <actions>
-            <name>Changestatusofcase</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>(((1 AND 4) OR (4 AND 5)) AND (2 OR 3)) And 6</booleanFilter>
-        <criteriaItems>
-            <field>EmailMessage.ToAddress</field>
-            <operation>contains</operation>
-            <value>info.americas@iata.org,bspcanada@iata.org,bomcs@iata.org,helpdeskau@iata.org,daccs@iata.org,jktcs@iata.org,tyocs@iata.org,kulcs@iata.org,bspnp@iata.org,khics@iata.org,mnlcs@iata.org,sincs@iata.org,cmb@iata.org,bkkcs@iata.org,sgncs@iata.org,selcs@iata.org</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>EmailMessage.Subject</field>
-            <operation>contains</operation>
-            <value>ref:</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>EmailMessage.TextBody</field>
-            <operation>contains</operation>
-            <value>ref:</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Closed</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>EmailMessage.ToAddress</field>
-            <operation>contains</operation>
-            <value>bsphdakl@iata.org,rssupport@iata.org,agysupport@iata.org,afosupport@iata.org,cussupport@iata.org,dpsupport@iata.org</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>cases - americas</value>
-        </criteriaItems>
-        <description>workflow rule that can automatically populate the Status field with the value Reopen when an incoming email is received</description>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
     <rules>
         <fullName>CSKC01 Message with %28big%29 attachment</fullName>
         <actions>
@@ -696,41 +623,6 @@
             <operation>notEqual</operation>
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>IDFS_SIDRA_DOP03_New Email in case</fullName>
-        <actions>
-            <name>SIDRA</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>SIDRA_update_CSemail</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>1 AND 2 AND 3 AND 4</booleanFilter>
-        <criteriaItems>
-            <field>EmailMessage.Incoming</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>EmailMessage.FromAddress</field>
-            <operation>notContain</operation>
-            <value>qms,accelya,acca,infofax,baissonm</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>SIDRA,SIDRA BR</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Region__c</field>
-            <operation>notEqual</operation>
-            <value>Europe,Africa &amp; Middle East,Asia &amp; Pacific</value>
-        </criteriaItems>
-        <description>SIDRA</description>
-        <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
         <fullName>IDFS_SIDRA_DOP03_New Email in case_Europe AME</fullName>
@@ -1110,20 +1002,5 @@ Request an agent to upload Financial Documents&apos; is sent</description>
         </criteriaItems>
         <description>Updates field when new email is read</description>
         <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>iiNET Update Case Status from SNOW</fullName>
-        <actions>
-            <name>Case_Status</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Change_Owner</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <description>When the case under “iiNET Technical Support” queue gets updated with the response from SNOW – the case status should be changed to “Action needed”, check if the case has a Parent case, and if yes – change the case owner to “GCS-iiNET” queue</description>
-        <formula>AND( Parent.OwnerId = &apos;00G1r0000031kjM&apos;, NOT( CONTAINS(Subject, &apos;has been created&apos;)  ) )</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
 </Workflow>
