@@ -30665,6 +30665,10 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
         <name>SIS_L2_Customer_Support</name>
     </customLabels>
     <customLabels>
+        <label><!-- SIS Notify Change in SIS 3digit Code --></label>
+        <name>SIS_Notify_Change_in_SIS_3digit_Code</name>
+    </customLabels>
+    <customLabels>
         <label><!-- SIS Operations --></label>
         <name>SIS_Operations</name>
     </customLabels>

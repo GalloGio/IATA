@@ -2060,7 +2060,7 @@ public with sharing class ANG_AgencyChangesHelper {
 			Account acc = toReturn.accountsMap.get(oscarToProcess.Account__c);
 
 			if(acc==null){
-				acc = [select id, IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c, (SELECT Id, ANG_AccountId__c FROM RHC_Informations__r) from account where id =:oscarToProcess.Account__c];
+				acc = [select id, IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c, (SELECT Id, ANG_AccountId__c, Amount_At_Risk_USD__c FROM RHC_Informations__r) from account where id =:oscarToProcess.Account__c];
 			}
 
 			//countries where Cashless agencies can have CASH FOP need to have the RHC recalculated (set=1)
