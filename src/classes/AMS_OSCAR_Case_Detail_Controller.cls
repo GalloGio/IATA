@@ -397,7 +397,11 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 		Set<String> auxOptions = new Set<String>();
 
 				if(!allowMultipleRemittances){
-					rfPicklistValues.add(new SelectOption (oscarObj.Account__r.Remittance_frequency__c,getPicklistLabels('AMS_Pax_Accreditation_Form__c','Remittance_frequency__c').get(oscarObj.Account__r.Remittance_Frequency__c))); 
+					if (oscarObj.Account__r.Remittance_frequency__c == null ){
+						rfPicklistValues.add(new SelectOption('','--None--'));
+					} else {
+						rfPicklistValues.add(new SelectOption (oscarObj.Account__r.Remittance_frequency__c,getPicklistLabels('AMS_Pax_Accreditation_Form__c','Remittance_frequency__c').get(oscarObj.Account__r.Remittance_Frequency__c))); 
+					}
 				// if multipicklist is being displayed, check the rightOptions to prevent record duplication between the left and right lists
 				}else if(accreditationObj.Remittance_frequency__c != null){
 					rightOptions = new Set<String>(accreditationObj.Remittance_frequency__c.Split(';'));
