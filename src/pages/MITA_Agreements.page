@@ -69,6 +69,7 @@
                         <div class="mytabheader active" id="hdAirline" onclick="showTab('Airline')">Airline</div>
                         <div class="mytabheader" id="hdMITA" onclick="showTab('MITA')">MITA</div>
                         <div class="mytabheader" id="hdBIETA" onclick="showTab('BIETA')">BIETA</div>
+                        <div class="mytabheader" id="hdEMD" onclick="showTab('EMD')">EMD</div>
                         <div class="mytabheader" id="hdContacts" onclick="showTab('Contacts')">Contacts</div>
                     </div>
 
@@ -353,9 +354,6 @@
                                     <div style="float:left; width:30%" >
                                         <apex:outputText value="{!MITAagreementTypes}" escape="false" />
                                     </div>
-<!--                                    <div style="float:left; width:30%" > -->
-<!--                                        <apex:commandButton value="Deactivate MITA member" onclick="return confirm('Are you sure? This will inactivate all MITA agreements for this Airline.');" action="{!deactivateMitaMember}" style="display:block; margin:auto;" /> -->
-<!--                                    </div> -->
                                     <div style="float:right" >
                                         <input type="radio" name="MITAagreementactive" class="agreementactivefilter" data-type="MITA" data-value=" " />Show all the agreements<br/>
                                         <input type="radio" name="MITAagreementactive" class="agreementactivefilter" data-type="MITA" data-value="true" checked="checked"/>Active agreements<br/>
@@ -380,7 +378,7 @@
                                         </tbody>
                                     </table>
                                     <script>
-                                        initAgreementTable(true);
+                                        initAgreementTable('MITA');
                                     </script>
                                     <br/><br/>
                                 </apex:outputPanel>
@@ -471,9 +469,6 @@
                                     <div style="float:left; width: 30%;" >
                                         <apex:outputText value="{!BIETAagreementTypes}" escape="false" />
                                     </div>
-<!--                                    <div style="float:left; width: 30%;" > -->
-<!--                                        <apex:commandButton value="Deactivate BIETA member" onclick="return confirm('Are you sure? This will inactivate all BIETA agreements for this Airline.');" action="{!deactivateBietaMember}" style="display:block; margin:auto;" /> -->
-<!--                                    </div> -->
                                     <div style="float:right" >
                                         <input type="radio" name="BIETAagreementactive" class="agreementactivefilter" data-type="BIETA" data-value=" " />Show all the agreements<br/>
                                         <input type="radio" name="BIETAagreementactive" class="agreementactivefilter" data-type="BIETA" data-value="true" checked="checked"/>Active agreemnents<br/>
@@ -499,7 +494,7 @@
                                         </tbody>
                                     </table>
                                     <script>
-                                        initAgreementTable(false);
+                                        initAgreementTable('BIETA');
                                     </script>
                                     <br/><br/>
                                 </apex:outputPanel>
@@ -507,7 +502,122 @@
 
                         </div>
 
-                        <!-- FOURTH TAB: CONTACTS -->
+                        <!-- FOURTH TAB: EMD -->
+                        <div class="mytab" id="tabEMD">
+
+                            <!-- SECTION FOR EMD AGREEMENT INFO -->
+                            <apex:outputPanel id="EMDagreementInfoPanel">
+                                <apex:pageBlockSection title="Agreement details" columns="1" rendered="{!NOT(chosenEMDAgreement)}">
+                                    <apex:pageBlockSectionItem />
+                                    <apex:pageBlockSectionItem />
+                                    <apex:pageBlockSectionItem />
+                                </apex:pageBlockSection>
+
+                                <!-- EMD VIEW -->
+                                <apex:pageBlockSection id="viewEMDAgreementInfo" rendered="{!AND(chosenEMDAgreement,NOT(editEMDAgreementMode),!wrapper.isMixed)}" title="Agreement details">
+                                    <apex:pageBlockSectionItem >
+                                        <apex:outputLabel for="theLink" value="{!$ObjectType.MITA_Agreement__c.fields.Airline_1__c.Label}" />
+                                        <apex:commandLink id="theLink"
+                                                            value="{!wrapper.agreement.Airline_1__r.Name_on_AOC__c}"
+                                                            onclick="$('[id$=accountid]').val('{!wrapper.agreement.Airline_1__c}'); selectAccount();"
+                                                            rerender="messages"/>
+                                    </apex:PageBlockSectionItem>
+                                    <apex:pageBlockSectionItem >
+                                        <apex:outputLabel for="theLink" value="{!$ObjectType.MITA_Agreement__c.fields.Airline_2__c.Label}" />
+                                        <apex:commandLink id="theLink"
+                                                            value="{!wrapper.agreement.Airline_2__r.Name_on_AOC__c}"
+                                                            onclick="$('[id$=accountid]').val('{!wrapper.agreement.Airline_2__c}'); selectAccount();"
+                                                            rerender="messages"/>
+                                    </apex:PageBlockSectionItem>
+
+                                    <apex:outputField value="{!wrapper.agreement.Agreement_type__c}" />
+                                    <apex:outputField value="{!wrapper.agreement.Status__c}" />
+
+                                    <apex:outputField value="{!wrapper.agreement.Effective_date__c}" />
+                                    <apex:outputField value="{!wrapper.agreement.Cancellation_date__c}" />
+
+                                    <apex:outputField value="{!wrapper.agreement.Agreement_processed_date__c}" />
+                                    <apex:outputField value="{!wrapper.agreement.Cancellation_processed_date__c}" />
+
+                                    <apex:outputField value="{!wrapper.agreement.Withdrawal_Request_Reception_Date__c}" />
+                                    <apex:outputField value="{!wrapper.agreement.Cancellation_Reason__c}" />
+                                </apex:pageBlockSection>
+
+                                <!-- EMD EDIT -->
+                                <apex:inputField value="{!wrapper.agreement.MITAorBIETA__c}" style="display:none" label="" rendered="{!editEMDAgreementMode}"/>
+                                <apex:pageBlockSection id="editEMDAgreementInfo" rendered="{!AND(chosenEMDAgreement,editEMDAgreementMode,!wrapper.isMixed)}" title="Agreement details">
+                                    <apex:inputField value="{!wrapper.agreement.Airline_1__c}" rendered="{!AND(wrapper.isNew,wrapper.agreement.Airline_2__c = acc.Id)}" required="true"/>
+                                    <apex:outputField value="{!wrapper.agreement.Airline_1__c}" rendered="{!!AND(wrapper.isNew,wrapper.agreement.Airline_2__c = acc.Id)}"/>
+                                    <apex:inputField value="{!wrapper.agreement.Airline_2__c}" rendered="{!AND(wrapper.isNew,wrapper.agreement.Airline_1__c = acc.Id)}" required="true"/>
+                                    <apex:outputField value="{!wrapper.agreement.Airline_2__c}" rendered="{!!AND(wrapper.isNew,wrapper.agreement.Airline_1__c = acc.Id)}" />
+
+                                    <apex:inputField value="{!wrapper.agreement.Agreement_type__c}" required="true" rendered="{!wrapper.isNew}"/>
+                                    <apex:PageBlockSectionItem rendered="{!!wrapper.isNew}" />
+                                    <apex:PageBlockSectionItem />
+
+                                    <apex:inputField value="{!wrapper.agreement.Effective_date__c}" />
+                                    <apex:inputField value="{!wrapper.agreement.Cancellation_date__c}" />
+
+                                    <apex:inputField value="{!wrapper.agreement.Agreement_processed_date__c}" />
+                                    <apex:inputField value="{!wrapper.agreement.Cancellation_processed_date__c}" />
+
+                                    <apex:inputField value="{!wrapper.agreement.Withdrawal_Request_Reception_Date__c}" />
+                                    <apex:inputField value="{!wrapper.agreement.Cancellation_Reason__c}" />
+                                </apex:pageBlockSection>
+
+                                <div style="text-align:center;">
+                                    <apex:commandButton value="New"   action="{!newEMDAgreement}" rerender="EMDagreementInfoPanel, messages" rendered="{!NOT(editEMDAgreementMode)}" status="Loading"/>
+                                    <apex:commandButton value="Edit"   action="{!editEMDAgreement}" rerender="EMDagreementInfoPanel, messages" rendered="{!AND(chosenEMDAgreement, NOT(editEMDAgreementMode))}" status="Loading"/>
+                                    <apex:commandButton value="Save"   action="{!saveEMDAgreement}" rerender=" messages" rendered="{!editEMDAgreementMode}" status="Loading" oncomplete="refreshAccountIfNoErrors()"/>
+                                    <apex:commandButton value="Cancel" action="{!resetEMDAgreement}" rerender="EMDagreementInfoPanel, messages" rendered="{!editEMDAgreementMode}" status="Loading" immediate="true"/>
+                                </div>
+
+                            </apex:outputPanel>
+
+
+                            <!-- SECTION FOR EMD AGREEMENTS -->
+                            <apex:inputHidden value="{!EMDagreementid}" id="EMDagreementid"/>
+                            <apex:actionFunction id="selectEMDAgreement" name="selectEMDAgreement" action="{!selectEMDAgreement}" rerender="EMDagreementInfoPanel,messages" status="Loading"/>
+
+                            <apex:pageBlockSection title="Agreements" columns="1" id="EMDagreementSearchPanel">
+                                <apex:outputPanel >
+                                    <div style="float:left; width: 30%;" >
+                                        <apex:outputText value="{!EMDagreementTypes}" escape="false" />
+                                    </div>
+                                    <div style="float:right" >
+                                        <input type="radio" name="EMDagreementactive" class="agreementactivefilter" data-type="EMD" data-value=" " />Show all the agreements<br/>
+                                        <input type="radio" name="EMDagreementactive" class="agreementactivefilter" data-type="EMD" data-value="true" checked="checked"/>Active agreemnents<br/>
+                                        <input type="radio" name="EMDagreementactive" class="agreementactivefilter" data-type="EMD" data-value="false" />Inactive agreemnents<br/>
+                                    </div>
+
+
+                                    <br style="clear:both"/>
+
+                                    <table id="EMDagreementsTable" class="agreementsTable" >
+                                        <thead>
+                                            <tr>
+                                                <th>Code</th>
+                                                <th>Airline</th>
+                                                <th>Agreement type</th>
+                                                <th>Effective date</th>
+                                                <th class="hide" >Active</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <apex:outputText value="{!EMDAgreementTable}" escape="false" />
+                                        </tbody>
+                                    </table>
+                                    <script>
+                                        initAgreementTable('EMD');
+                                    </script>
+                                    <br/><br/>
+                                </apex:outputPanel>
+                            </apex:pageBlockSection>
+
+                        </div>
+
+                        <!-- FIFTH TAB: CONTACTS -->
                         <div class="mytab "  id="tabContacts">
                             <apex:pageBlockSection id="contactList" title="Airline Contacts" columns="1" >
                                 <apex:pageBlockTable value="{!contacts}" var="c" onRowClick="clickOnContact('{!c.Id}')">
@@ -695,6 +805,7 @@
         var airlinesTable;
         var MITAagreementsTable;
         var BIETAagreementsTable;
+        var EMDagreementsTable;
         var activeTab = 'Airline';
 
         /****** METHODS TO SET UP AIRLINE DATA TABLE *****/
@@ -777,8 +888,8 @@
         /****** METHODS FOR AGREEMENTS ******/
 
 
-        function initAgreementTable(isMITA){
-            var agreementsTable = $('#'+(isMITA ? 'MITA' : 'BIETA')+'agreementsTable').DataTable({
+        function initAgreementTable(type){
+            var agreementsTable = $('#'+type+'agreementsTable').DataTable({
                 "dom": '<"top" lf>rt<"bottom"ip><"clear">',
                 "pageLength": 50,
                 "columnDefs": [
@@ -790,52 +901,59 @@
                 ]
             });
 
-            if(isMITA)
+            if(type === "MITA")
                 MITAagreementsTable = agreementsTable;
-            else
+            else if(type === "BIETA")
                 BIETAagreementsTable = agreementsTable;
+            else if(type === "EMD")
+                EMDagreementsTable = agreementsTable;
+            else return;
 
-            filterAgreements(isMITA);
+            filterAgreements(type);
 
             $(agreementsTable.rows().nodes()).click(function () {
-                $('[id$='+(isMITA ? 'MITA' : 'BIETA')+'agreementid]').val($(this).attr('id'));
+                $('[id$='+type+'agreementid]').val($(this).attr('id'));
 
-                if(isMITA){
+                if(type === "MITA"){
                     $(MITAagreementsTable.rows().nodes()).removeClass('selected');
                     selectMITAAgreement();
-                }else{
+                } else if(type === "BIETA") {
                     $(BIETAagreementsTable.rows().nodes()).removeClass('selected');
                     selectBIETAAgreement();
+                } else if(type === "EMD") {
+                    $(EMDagreementsTable.rows().nodes()).removeClass('selected');
+                    selectEMDAgreement();
                 }
                 $(this).addClass('selected');
-
-                selectAgreement();
-
-
             });
 
 
             $(".agreementtypefilter, .agreementactivefilter").on( 'change', function(){
-                var isMITA = $(this).attr('data-type') == "MITA";
-                filterAgreements(isMITA);
+                var type = $(this).attr('data-type');
+                filterAgreements(type);
             });
 
 
-            function filterAgreements(isMITA){
-                var MB = isMITA ? "MITA" : "BIETA";
-                var typefilter = $('.agreementtypefilter[data-type="'+MB+'"]:checked').attr("data-value");
-                var activefilter = $('.agreementactivefilter[data-type="'+MB+'"]:checked').attr("data-value");
+            function filterAgreements(type){
+                var typefilter = $('.agreementtypefilter[data-type="'+type+'"]:checked').attr("data-value");
+                var activefilter = $('.agreementactivefilter[data-type="'+type+'"]:checked').attr("data-value");
 
-                if(isMITA)
+                if(type === "MITA"){
                     MITAagreementsTable
                         .column('type:name').search('"'+typefilter+'"')
                         .column('active:name').search('"'+activefilter+'"')
                         .draw();
-                else
+                } else if(type === "BIETA") {
                     BIETAagreementsTable
                         .column('type:name').search('"'+typefilter+'"')
                         .column('active:name').search('"'+activefilter+'"')
                         .draw();
+                } else if(type === "EMD") {
+                    EMDagreementsTable
+                        .column('type:name').search('"'+typefilter+'"')
+                        .column('active:name').search('"'+activefilter+'"')
+                        .draw();
+                }
             }
         }
 
