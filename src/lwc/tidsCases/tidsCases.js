@@ -19,15 +19,20 @@ export default class TidsCases extends LightningElement {
 		viewCaseList(result){
 			result.forEach(function(item){
 				item.newId='$'+item.Id+'$';
-				item.url="/csportal/s/case-details?caseId="+item.Id + '&Att=false';
+				item.url="/s/case-details?caseId="+item.Id + '&Att=false';
 				item.visible=true;
 			});
 			this.cases = result;
-			console.log(JSON.stringify(result));
 		}
 		// the above is how you would link the javascript to the html
 		caseValues() {
-				getSortedCases({accountIds:this.accountInfo.Id,name:this.sortCode,order:this.sortDirection, search:this.newsearch}).then(result => {
+				getSortedCases({
+					accountIds:this.accountInfo.Id
+					,name:this.sortCode
+					,order:this.sortDirection
+					,search:this.newsearch
+					,allrecords:false
+				}).then(result => {
 					this.viewCaseList(result);
 				});
 		}
@@ -45,7 +50,13 @@ export default class TidsCases extends LightningElement {
 		handlegetCases(event){
 			event.preventDefault();
 			fireEvent(this.pageRef,'spinnerListener', {payload:{show:true}});
-			getSortedCases({accountIds:this.accountInfo.Id,name:this.sortCode,order:this.sortDirection, search:this.newsearch}).then(result => {
+			getSortedCases({
+				accountIds:this.accountInfo.Id
+				,name:this.sortCode
+				,order:this.sortDirection
+				,search:this.newsearch
+				,allrecords:false
+			}).then(result => {
 				this.isSearchOn=true;
 				fireEvent(this.pageRef,'spinnerListener', {payload:{show:false}});
 				this.viewCaseList(result);
@@ -55,7 +66,13 @@ export default class TidsCases extends LightningElement {
 			event.preventDefault();
 			fireEvent(this.pageRef,'spinnerListener', {payload:{show:true}});
 			this.newsearch='';
-			getSortedCases({accountIds:this.accountInfo.Id,name:this.sortCode,order:this.sortDirection, search:this.newsearch}).then(result => {
+			getSortedCases({
+				accountIds:this.accountInfo.Id
+				,name:this.sortCode
+				,order:this.sortDirection
+				,search:this.newsearch
+				,allrecords:false
+			}).then(result => {
 				this.isSearchOn=false;
 				fireEvent(this.pageRef,'spinnerListener', {payload:{show:false}});
 				this.viewCaseList(result);
@@ -85,6 +102,6 @@ export default class TidsCases extends LightningElement {
 							pageName: "case-details"
 					}})
 			.then(url => navigateToPage(url, params));
-			window.location.href = CSP_PortalPath + "/csportal/s/case-details?caseId="+selectedcase.Id + '&Att=true';;
+			window.location.href = CSP_PortalPath + "/s/case-details?caseId="+selectedcase.Id + '&Att=true';;
 		}
 }

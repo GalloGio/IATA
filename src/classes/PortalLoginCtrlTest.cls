@@ -3,14 +3,15 @@ public with sharing class PortalLoginCtrlTest {
 
 	@isTest
 	static void unitTest() {
-
 		ISSP_CS__c cs=new ISSP_CS__c(name='PasswordResetPeriod',value__C='60');
 		insert cs;
 
 		IATA_ISO_Country__c israel = new IATA_ISO_Country__c(Name = 'Israel', ISO_Code__c = 'IL');
 		insert israel;
 
-		Portal_Applications__c app = new Portal_Applications__c(Name = 'Deduction Notice', Application_URL__c = '/csportal/s/israel-disputes-create-new-case');
+		Portal_Applications__c app = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		app.Name = 'Deduction Notice';
+		app.Application_URL__c = '/csportal/s/israel-disputes-create-new-case';
 		insert app;
 
 		Id rt =  RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Agency');
@@ -64,5 +65,4 @@ public with sharing class PortalLoginCtrlTest {
 			PortalLoginCtrl.reactivateUser(portalUser, params);
 		}
 	}
-
 }

@@ -1,0 +1,9 @@
+.blueLink {
+    color: blue !important;
+}
+.blueLink:hover {
+    color: blue !important;
+}
+.btn {
+    min-height: 36px !important;
+}

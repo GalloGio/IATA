@@ -41,15 +41,16 @@ public with sharing class DAL_ISSP {
 					Account.BillingCountry, Account.IATACode__c, Account.Airline_Prefix__c, Account.BillingPostalCode,Account.BillingState,
 					Account.TradeName__c, Account.ParentId, Account.Top_Parent__c, Account.Airline_designator__c,
 					Account.Accumulated_Irregularities__c,Account.Sector__c,Account.Category__c,Account.VAT_Number__c,
-					 	Account.Fin_statements_submission_deadline__c, BSP_CASS_Payment_contact__c,Invoicing_contact__c,Airline_Credit_Risk_Manager__c,
-				 		Financial_Assessment_Contact__c, Account.Field_Head_Office__c, Account.Membership_status__c, Account.Phone, Account.Fax,Account.Email__c,Account.WebSite,
+					Account.Fin_statements_submission_deadline__c, BSP_CASS_Payment_contact__c,Invoicing_contact__c,Airline_Credit_Risk_Manager__c,
+					Financial_Assessment_Contact__c, Account.Field_Head_Office__c, Account.Membership_status__c, Account.Phone, Account.Fax,Account.Email__c,Account.WebSite,
 					Account.ICAO_designator__c, Account.IATA_ISO_Country__r.Name, Account.IATA_ISO_Country__r.Region__c, Account.IATA_ISO_Country__r.ISO_Code__c,Account.IATA_ISO_Country__r.OSCAR_enabled__c,
-				 		Account.Location_Type__c, Account.RecordType.DeveloperName, Account.Overdue_Invoices_Indicator__c ,Account.Top_Parent__r.IATACode__c,Account.IATA_ISO_Country__r.Prevent_Portal_Trade_Name_Change__c,
+					Account.Location_Type__c, Account.RecordType.DeveloperName, Account.Overdue_Invoices_Indicator__c ,Account.Top_Parent__r.IATACode__c,Account.IATA_ISO_Country__r.Prevent_Portal_Trade_Name_Change__c,
 					Account.Top_Parent__r.Location_Type__c , Account.Region_formula__c,PhoneNational__c,FAXNational__c,MobileNational__c,Account.IATA_ISO_Country__r.Enable_Minor_Changes_from_Portal__c,
 					ID_Card_Holder__c, Account.DDS_status__c, Account.DDS_Last_Update_Date__c,Account.PhoneNational__c,Account.FAXNational__c,
 					Account.Location_Class__c, Account.CNS_Account__c,Account.IATA_ISO_Country__r.ANG_Portal_Service__c, Account.ANG_IEP_Status_FF__c, Account.Quality__c,Account.ANG_Accreditation_Model__c,Account.Legal_name__c,
 					Authorized_Signatory__c, Account.ANG_FA_Opt_out__c, Account.IATA_ISO_Country__r.ANG_Enable_NewGen__c, Account.Top_Parent__r.Legal_name__c, Account.Top_Parent__r.Name_on_AOC__c, Account.Name_on_AOC__c, Account.GDP_Opt_In__c,Account.Country_ISO_Code__c,Account.ANG_IsNewGenAgency__c,
-					Account.IATA_ISO_Country__r.Multicountry_Enabled__c, IsEmailBounced, Account.CNS_Agency__c, Account.IATA_ISO_Country__r.CNS_Country__c
+					Account.IATA_ISO_Country__r.Multicountry_Enabled__c, IsEmailBounced, Account.CNS_Agency__c, Account.IATA_ISO_Country__r.CNS_Country__c,
+					Account.Mobile__c, Account.Registration_Number__c, Account.License_Number__c, Account.GDS__c, Account.Company_Type__c
 					from Contact where Id=:contactId];
 
 		return contacts.isEmpty() ? null : contacts[0];
@@ -155,7 +156,7 @@ public with sharing class DAL_ISSP {
 			 	DEF_Withdrawal_Approval_Rejection__c,DEF_Withdrawal_Approval_Rejection_Date__c,Update_AIMS_REI_DEFWITH__c,Remittance_Date__c,Short_Payment_Amount__c,Billing_Amount__c,
 				Collected_amount__c, E2CP__AdditionalCC__c, Has_the_agent_paid_invoice__c, Account.Location_Type__c, Reason_for_Deadline__c, Cost_Centre__c, Action__c, Due_Date__c,
 				Action_Person__c, Detailed_Description__c, Source_of_Case__c, IsClosed, Remittance_period__c, BSP_CASS__c,
-				OSCAR__c, Oscar__r.Process__c, Country_Concerned__c
+				OSCAR__c, Oscar__r.Process__c, Country_Concerned__c, Verification__c
 				FROM Case where Id=:caseId];
 
 		return cases.isEmpty() ? null : cases[0];

@@ -27,9 +27,6 @@ export default class TidsViewAdministrators extends LightningElement {
 			getAdministrators({
 				accountId: this.newaccountId
 			}).then(result => {
-				//fireEvent(this.pageRef,'spinnerListener', {payload:{show:false}});
-				//Alert Relinquishment in process
-				console.log('getAdministrators result',JSON.stringify(result));
 				let administrators= {Primary:'', Secondary:''};
 				if (result!=null){
 						result.forEach(function(item){
@@ -44,8 +41,8 @@ export default class TidsViewAdministrators extends LightningElement {
 				administrators.Primary=this.setNone(administrators.Primary);
 				this.roles=administrators;
 			 }).catch(error => {
-				 console.log('error',error); 
-				 this.roles = {Primary:'', Secondary:''};
+				console.log('error',JSON.stringify(error));
+				this.roles = {Primary:'', Secondary:''};
 			
 			})
 			
@@ -57,8 +54,6 @@ export default class TidsViewAdministrators extends LightningElement {
 			return value;
 		}
 		connectedCallback() {
-			console.log('connectedCallback',this.baccountId);
-			//if (this.baccountId!=this.accountId) this.getmyAdministrators();
 		}
 		
 }

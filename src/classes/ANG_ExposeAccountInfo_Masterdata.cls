@@ -109,10 +109,11 @@ public without sharing class ANG_ExposeAccountInfo_Masterdata {
 							+' IATA_ISO_Country__r.ANG_Portal_Service__r.Name, IATA_ISO_Country__r.Region__c, Reason__c, Remittance_frequency__c, Status__c, Tax_ID_1__c, TradeName__c, '
 							+' VAT_Number__c, ANG_RiskStatus__c, Segmentation__c, Top_Parent__r.IATACode__c,IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, Top_Parent__c, ParentId,'
 							+' GDI_Status__c, Location_Type_Ordered__c, Multicountry_Key_Hierarchy__c, Identify_as_Key_Customer__c, Is_PCI_compliant__c, ' 
+							+' IATA_ISO_Country__r.ANG_Enable_NewGen__c, IATA_ISO_Country__r.ANG_Portal_Service__c, IATA_ISO_Country__r.ANG_IEP_Model__c, IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c,' //for the NewGen operation without a IEP Provider
 							+' IATA_ISO_Country__r.AMS_Settlement_System__r.RHC_Exceptional_Monitoring__c, Site, IMPC_Code__c ' //PASS
 							+' , (Select Id, recordtype.developername, Email_Used_for_BSP_Creation__c, ANG_FormOfPayment_ID__c, Status__c From Agency_Authorizations__r where recordtype.developername in (\'BSPLink\',\'FormOfPayment\'))'  //Accelya Email + FOP
 							+' , (Select Id, IATACode__c, Status__c, Is_PCI_compliant__c From ChildAccounts where Purge_Flag__c = false and IATACode__c != null and recordtypeId = \'' + AMS_Utils.RECTYPE_IATAAGENCY + '\')' //List of children
-							+' , (Select Id, ANG_RHC_Amount__c, CurrencyIsoCode, ANG_Financial_Security__c From RHC_Informations__r)'  //RHC Information
+							+' , (Select Id, ANG_RHC_Amount__c, CurrencyIsoCode, ANG_Financial_Security__c From RHC_Informations__r)'	//RHC Information
 							+' , (Select Id, STEP17__c, STEP41__c From OSCARs__r where RecordTypeId IN :iEPRecordTypes ORDER BY LastModifiedDate DESC)' //OSCAR
 							+' , (select Hierarchy__c, Hierarchy__r.name from AMS_Agencies_relationships__r limit 1)' //hierarchy name
 							+' , (select Id, Name, Main_account__c from Main_Accounts__r)'
@@ -325,6 +326,8 @@ public without sharing class ANG_ExposeAccountInfo_Masterdata {
 				this.dueDiligence = new List<DueDiligence>();
 				this.isMulticountryKeyCustomer = acc.Multicountry_Key_Hierarchy__c;
 
+				boolean bIsOperationWithoutIEP = (acc.IATA_ISO_Country__r.ANG_Enable_NewGen__c && acc.IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c);
+
 				/* Due Diligence to IEP - NEWGEN-3857 NEWGEN-3841 NEWGEN-4000*/
 				if(dueDiligenceIEPChangeCodes.contains(changeCode) && acc.oscars__r != null && acc.oscars__r.size()>0){
 					if(changeCode == 'MaddY')
@@ -346,18 +349,24 @@ public without sharing class ANG_ExposeAccountInfo_Masterdata {
 					}
 				}
 
-				if(this.RHCInfo == null){
-					Decimal totalFsConverted = String.isBlank(sBSPCurrency)
-						? acc.Guaranteed_amount__c
-						: ANG_Risk_Helper.currencyConverter(acc.CurrencyIsoCode, acc.Guaranteed_amount__c, sBSPCurrency);
 
-					this.RHCInfo = new RHCInfoClass(
-						null,
-						//If the BSP is under RHC exceptional monitoring the RHC amount sent is the Total FS converted into the BSP currency
-						acc.IATA_ISO_Country__r.AMS_Settlement_System__r.RHC_Exceptional_Monitoring__c ? totalFsConverted : null,
-						String.isBlank(sBSPCurrency) ? acc.CurrencyIsoCode : sBSPCurrency,
-						totalFsConverted
-					);
+				Decimal totalFsConverted = String.isBlank(sBSPCurrency)
+							? acc.Guaranteed_amount__c
+							: ANG_Risk_Helper.currencyConverter(acc.CurrencyIsoCode, acc.Guaranteed_amount__c, sBSPCurrency);
+
+				//For CASHLESS agency in an Operation without IEP provider, we need to send fake RHC with amount of 1 in local currency.
+				if(bIsOperationWithoutIEP && string.isBlank(acc.ParentId) && this.AccreditationType == AMS_Utils.ACCREDITATIONMODEL_CASHLESS){
+					this.RHCInfo = new RHCInfoClass(acc.ANG_RiskStatus__c, 1, acc.IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, totalFsConverted);
+				}else{
+					if(this.RHCInfo == null){
+						this.RHCInfo = new RHCInfoClass(
+							null,
+							//If the BSP is under RHC exceptional monitoring the RHC amount sent is the Total FS converted into the BSP currency
+							acc.IATA_ISO_Country__r.AMS_Settlement_System__r.RHC_Exceptional_Monitoring__c ? totalFsConverted : null,
+							String.isBlank(sBSPCurrency) ? acc.CurrencyIsoCode : sBSPCurrency,
+							totalFsConverted
+						);
+					}
 				}
 
 				this.currencies = lsCurrencies;

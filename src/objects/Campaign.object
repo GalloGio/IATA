@@ -558,6 +558,10 @@ IF (ISPICKVAL (Campaign_focus__c,&quot;Not Specific&quot;), &quot;NS-&quot; &amp
         <type>Picklist</type>
     </fields>
     <fields>
+        <fullName>TenantId</fullName>
+        <type>Lookup</type>
+    </fields>
+    <fields>
         <fullName>TotalEmailsDelivered</fullName>
     </fields>
     <fields>
@@ -896,6 +900,17 @@ else {
         <showsLocation>false</showsLocation>
         <showsStatus>false</showsStatus>
         <url>https://emea.salesforce.com/servlet/servlet.FileDownload?file=015200000000kIC</url>
+    </webLinks>
+    <webLinks>
+        <fullName>OdigoCti__BT_Launch_CallBack_Campaign</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Launch CallBack Campaign</masterLabel>
+        <openType>sidebar</openType>
+        <page>OdigoCti__VFP02CallBackCampaign</page>
+        <protected>false</protected>
     </webLinks>
     <webLinks>
         <fullName>SendExactTargetEmail</fullName>

@@ -10,7 +10,7 @@ import { LightningElement, track, wire}         from 'lwc';
 import { navigateToPage, getParamsFromPage }    from 'c/navigationUtils';
 import { loadScript, loadStyle }                from 'lightning/platformResourceLoader';
 import RegistrationUtils                        from 'c/registrationUtils';
-
+import { getQueryParameters } 					from "c/cwUtilities";
 import getConfig                                from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.getConfig';
 import getUserInformationFromEmail              from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.getUserInformationFromEmail';
 import register                                 from '@salesforce/apex/PortalRegistrationFirstLevelCtrl.simulateRegister';
@@ -292,7 +292,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 
 									getGCSServiceId({portalServiceName:'Login T&C Checker'}).then(result => {
 										var gcsPortalServiceId = JSON.parse(JSON.stringify(result));
-										this.gcsPortalServiceId = gcsPortalServiceId;
+										this.registrationForm.gcsPortalServiceId = gcsPortalServiceId;
 
 										getWrappedTermsAndConditions({portalServiceId: gcsPortalServiceId, language: this.registrationForm.language}).then(result2 => {
 											var tcs = JSON.parse(JSON.stringify(result2));
@@ -469,7 +469,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 
 	handleSubmit(){
 
-		if(typeof this.canSubmit === 'undefined')
+		if(typeof this.canSubmit === 'undefined' || this.canSubmit == false)
 			this.canSubmit = (Math.floor(Date.now() / 1000) - this.timeStamp <= 15) ?  false : true; //Check 15 sec to populate form
 		this.isLoading = true;
         if(this.registrationForm.phone.length < 5){
@@ -478,6 +478,10 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 
 		var contactId = this.userInfo.contactId;
 		var accountId = this.userInfo.accountId;
+		
+		if(getQueryParameters().sourceService){
+			this.registrationForm.sourceService = getQueryParameters().sourceService;
+		}
 
 		if(this.registrationForm.registrationValidity == "" && this.canSubmit){ // Validate hidden field and Timer 
 			register({ registrationForm : JSON.stringify(this.registrationForm),

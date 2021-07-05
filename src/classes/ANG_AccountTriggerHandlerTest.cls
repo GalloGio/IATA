@@ -1,8 +1,16 @@
 @isTest
 private class ANG_AccountTriggerHandlerTest {
 
-
 	@testSetup static void createData() {
+		List<Portal_Applications__c> pas = TestDataFactory_PortalApplications.createDefaultPortalApplication(2);
+		Portal_Applications__c iataEasyPayEdenRed = pas.get(0);
+		iataEasyPayEdenRed.Name = 'IATA EasyPay (EDENRED)';
+		iataEasyPayEdenRed.Functional_Role__c = 'IATA EasyPay (EDENRED)';
+		Portal_Applications__c iataEasyPayMSTS = pas.get(1);
+		iataEasyPayMSTS.Name = 'IATA EasyPay (MSTS)';
+		iataEasyPayMSTS.Functional_Role__c = 'IATA EasyPay (MSTS)';
+		insert pas;
+
 		List<ANG_CalloutMapping__c> customsettings = new List<ANG_CalloutMapping__c>();
 		customsettings.add(new ANG_CalloutMapping__c(Name = 'BTN_Prov', CalloutClass__c = 'ANG_RME_Alert_Service', Action__c = 'GET', Event_Type__C = 'WebService', Credential__c = '/calculatedrhc/{agencyId}/v1', Named_Credential__c = 'Mulesoft_Credential_Masterdata', Type__c = 'Button'));
 		customsettings.add(new ANG_CalloutMapping__c(Name = 'BTN_Bal', CalloutClass__c = 'ANG_RME_Alert_Service', Action__c = 'GET', Event_Type__C = 'WebService', Credential__c = '/consumedrhc/{agencyId}/v1/', Named_Credential__c = 'Mulesoft_Credential_Masterdata', Type__c = 'Button'));
@@ -29,6 +37,18 @@ private class ANG_AccountTriggerHandlerTest {
 		Id accRT = AMS_Utils.RECTYPE_IATAAGENCY;
 		Id riskStatusAssessmentRT = ANG_Risk_Helper.RECTYPE_RISKSTATUSASSESSMENT;
 
+		List<AMS_Settlement_System__c> settlementSystemList = new List<AMS_Settlement_System__c>();
+		settlementSystemList.add(new AMS_Settlement_System__c(name = 'BSP-01', Enable_Provisional_RHC_Request__c=true));
+		settlementSystemList.add(new AMS_Settlement_System__c(name = 'BSP-02', Enable_Provisional_RHC_Request__c=true));
+		settlementSystemList.add(new AMS_Settlement_System__c(name = 'BSP-03', Enable_Provisional_RHC_Request__c=true));
+		insert settlementSystemList;
+
+		List<ANG_BSP_Attributes__c> bspAttrLst = new List<ANG_BSP_Attributes__c>();
+		for(AMS_Settlement_System__c iss:settlementSystemList){
+			bspAttrLst.addAll(AMS_OSCAR_TestDataFactory.createOperationAttributes(iss));
+		}
+		insert bspAttrLst;
+
 		List<IATA_ISO_Country__c> countries = new List<IATA_ISO_Country__c>();
 
 		IATA_ISO_Country__c isoTest = new IATA_ISO_Country__c(
@@ -39,7 +59,8 @@ private class ANG_AccountTriggerHandlerTest {
 				AIMS_Area_ID__c='1',
 				ANG_Enable_NewGen__c = true,
 				ANG_IEP_Model__c = 'Model A',
-				Multicountry_Enabled__c = true
+				Multicountry_Enabled__c = true,
+				AMS_Settlement_System__c = settlementSystemList[0].id
 			);
 		countries.add(isoTest);
 
@@ -50,7 +71,8 @@ private class ANG_AccountTriggerHandlerTest {
 				ISO_Code__c = 'ES',
 				AIMS_Area_ID__c='1',
 				ANG_Enable_NewGen__c = true,
-				ANG_IEP_Model__c = 'Model B'
+				ANG_IEP_Model__c = 'Model B',
+				AMS_Settlement_System__c = settlementSystemList[1].id
 			);
 		countries.add(isoTest2);
 
@@ -61,7 +83,8 @@ private class ANG_AccountTriggerHandlerTest {
 				ISO_Code__c = 'UK',
 				AIMS_Area_ID__c='1',
 				ANG_Enable_NewGen__c = true,
-				ANG_IEP_Model__c = 'Model B+'
+				ANG_IEP_Model__c = 'Model B+',
+				AMS_Settlement_System__c = settlementSystemList[2].id
 			);
 
 		countries.add(ukCountry);
@@ -203,15 +226,15 @@ private class ANG_AccountTriggerHandlerTest {
 	}
 
 	static testMethod void test_riskStatus_allcases() {
-		Account a = [SELECT Id FROM Account WHERE Name = 'Test'];
+		Account a = AccountSelector.selectNewGenFieldsMapByName(null, new Set<String>{'Test'}, null).values().get(0);
+
 		// fill accounts last financial review result and risk history and assert new risk status
 		System.debug(loggingLevel.FINE, '____ [cls ANG_AccountTriggerHandlerTest - test_riskStatus_allcases] first update should be A');
 		a.Financial_Review_Result__c = ANG_Risk_Helper.FR_SATISFACTORY;
 		a.ANG_HE_RiskHistoryAssessment__c = AMS_Utils.PASSED;
-
 		update a;
 
-		a = [SELECT Id, ANG_RiskStatus__c, (SELECT Id, Subject FROM Cases) FROM Account WHERE Name = 'Test'];
+		a = [SELECT Id, ANG_RiskStatus__c, (SELECT Id, Subject FROM Cases) FROM Account WHERE Id = :a.Id];
 		System.assertEquals(ANG_Risk_Helper.RISK_STATUS_A, a.ANG_RiskStatus__c);
 
 		System.debug(loggingLevel.FINE, '____ [cls ANG_AccountTriggerHandlerTest - test_riskStatus_allcases] second update should be B');
@@ -221,7 +244,7 @@ private class ANG_AccountTriggerHandlerTest {
 
 		Test.startTest();
 
-		a = [SELECT Id, ANG_RiskStatus__c, IATACode__c, (SELECT Id, Subject FROM Cases ORDER BY CreatedDate) FROM Account WHERE Name = 'Test'];
+		a = [SELECT Id, ANG_RiskStatus__c, IATACode__c, (SELECT Id, Subject FROM Cases ORDER BY CreatedDate) FROM Account WHERE Id = :a.Id];
 		System.assertEquals(ANG_Risk_Helper.RISK_STATUS_B, a.ANG_RiskStatus__c);
 		System.assertEquals(1, a.Cases.size());
 		System.assertEquals('Test - ' + a.IATACode__c + ' - Downgrade Risk Status', a.Cases[0].Subject);
@@ -232,7 +255,7 @@ private class ANG_AccountTriggerHandlerTest {
 		a.ANG_HE_RiskHistoryAssessment__c =  AMS_Utils.FAILED;
 		update a;
 
-		a = [SELECT Id, ANG_RiskStatus__c, (SELECT Id, RecordType.DeveloperName FROM Cases ORDER BY CreatedDate) FROM Account WHERE Name = 'Test'];
+		a = [SELECT Id, ANG_RiskStatus__c, (SELECT Id, RecordType.DeveloperName FROM Cases ORDER BY CreatedDate) FROM Account WHERE Id = :a.Id];
 		System.assertEquals(ANG_Risk_Helper.RISK_STATUS_C, a.ANG_RiskStatus__c);
 		System.assert([SELECT Id, ANG_CashCondition__c FROM ANG_RHC_Information__c WHERE ANG_AccountId__c = :a.Id].ANG_CashCondition__c);
 
@@ -240,8 +263,7 @@ private class ANG_AccountTriggerHandlerTest {
 	}
 
 	static testMethod void test_RHCupdate() {
-
-		Account a = [SELECT Id FROM Account WHERE Name = 'Test'];
+		Account a = AccountSelector.selectNewGenFieldsMapByName(null, new Set<String>{'Test'}, null).values().get(0);
 		a.Status__c = AMS_Utils.ACC_S0_TERMINATED;
 
 		update a;
@@ -256,29 +278,21 @@ private class ANG_AccountTriggerHandlerTest {
 	}
 
 	static testMethod void test_shortNameModification() {
-
 		Id accRT = AMS_Utils.RECTYPE_IATAAGENCY;
-		ID standardRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account') ;
+		Id standardRT = RecordTypeSelector.selectIdBySObjectAndName('Account', 'Standard Account');
 
-		Account a1 = new Account(Name = 'NameTest1', IATACode__c = '12344560', TradeName__c = 'tradeName1', RecordTypeId = standardRT,      Short_Name__c = 'ShortNameTest1Example1');
+		Account a1 = new Account(Name = 'NameTest1', IATACode__c = '12344560', TradeName__c = 'tradeName1', RecordTypeId = standardRT, Short_Name__c = 'ShortNameTest1Example1');
 		Account a2 = new Account(Name = 'NameTest2', IATACode__c = '12344568', TradeName__c = 'tradeName2', RecordTypeId = accRT, Short_Name__c = 'ShortNameTest1Example2');
 		Account a3 = new Account(Name = 'NameTest3', IATACode__c = '12344569', TradeName__c = '', RecordTypeId = accRT, Short_Name__c = 'ShortNameTest1Example3');
-
 		insert new List<Account>{a1,a2,a3};
 
 		Test.startTest();
 
-		List<Account> acctsRetreived = [Select Id, Name, Short_Name__c, TradeName__c from Account where Name in ('NameTest1','NameTest2','NameTest3')];
+		Map<String,Account> accountMap = AccountSelector.selectNewGenFieldsMapByName(null, new Set<String>{'NameTest1', 'NameTest2', 'NameTest3'}, null);
 
-		Map<String,Account> acctsRetreivedMap = new Map<String,Account>();
-
-		for(Account a: acctsRetreived){
-			acctsRetreivedMap.put(a.Name,a);
-		}
-
-		System.assertEquals('ShortNameTest1Example1',acctsRetreivedMap.get('NameTest1').Short_Name__c);
-		System.assertEquals('tradeName2',acctsRetreivedMap.get('NameTest2').Short_Name__c);
-		System.assertEquals('NameTest3',acctsRetreivedMap.get('NameTest3').Short_Name__c);
+		System.assertEquals('ShortNameTest1Example1',accountMap.get('NameTest1').Short_Name__c);
+		System.assertEquals('tradeName2',accountMap.get('NameTest2').Short_Name__c);
+		System.assertEquals('NameTest3',accountMap.get('NameTest3').Short_Name__c);
 
 		a1.Name = 'NameTest11';
 		a2.IATACode__c = '12344566';
@@ -289,20 +303,13 @@ private class ANG_AccountTriggerHandlerTest {
 
 		update new List<Account>{a1,a2,a3};
 
-		acctsRetreived = [Select Id, Name, Short_Name__c, TradeName__c from Account where Name in ('NameTest11','NameTest2','NameTest33')];
+		accountMap = AccountSelector.selectNewGenFieldsMapByName(null, new Set<String>{'NameTest11', 'NameTest2', 'NameTest33'}, null);
 
-		acctsRetreivedMap = new Map<String,Account>();
-
-		for(Account a: acctsRetreived){
-			acctsRetreivedMap.put(a.Name,a);
-		}
-
-		System.assertEquals('ShortNameTest1Example1',acctsRetreivedMap.get('NameTest11').Short_Name__c);
-		System.assertEquals('tradeName22',acctsRetreivedMap.get('NameTest2').Short_Name__c);
-		System.assertEquals('tradeName3',acctsRetreivedMap.get('NameTest33').Short_Name__c);
+		System.assertEquals('ShortNameTest1Example1',accountMap.get('NameTest11').Short_Name__c);
+		System.assertEquals('tradeName22',accountMap.get('NameTest2').Short_Name__c);
+		System.assertEquals('tradeName3',accountMap.get('NameTest33').Short_Name__c);
 
 		Test.stopTest();
-
 	}
 
 	static testMethod void test_updateRHCInformation_OptIN_OptOUT() {
@@ -335,7 +342,8 @@ private class ANG_AccountTriggerHandlerTest {
 													   ANG_RME_Amount__c, ANG_AccountId__c, ANG_Financial_Security__c,
 													   RHC_Amount_Equals_FS_Percent__c, ANG_RHC_Amount_Equals_FS__c,
 													   ANG_CashCondition__c, ANG_Exceeding_Financial_Security__c,
-													   ANG_RHC_Amount_Forecasted__c
+													   ANG_RHC_Amount_Forecasted__c,
+													   Amount_At_Risk_USD__c, Forecasted_Tier__c, RHC_Amount_USD__c, Tier__c, Tiered_Provisional_Amount__c
 												  from ANG_RHC_Information__c
 												 Where ANG_AccountId__c =: a.id];
 
@@ -409,7 +417,8 @@ private class ANG_AccountTriggerHandlerTest {
 													   ANG_RME_Amount__c, ANG_AccountId__c, ANG_Financial_Security__c,
 													   RHC_Amount_Equals_FS_Percent__c, ANG_RHC_Amount_Equals_FS__c,
 													   ANG_CashCondition__c, ANG_Exceeding_Financial_Security__c,
-													   ANG_RHC_Amount_Forecasted__c
+													   ANG_RHC_Amount_Forecasted__c,
+													   Amount_At_Risk_USD__c, Forecasted_Tier__c, RHC_Amount_USD__c, Tier__c, Tiered_Provisional_Amount__c
 												  from ANG_RHC_Information__c
 												 Where ANG_AccountId__c =: a.id];
 
@@ -497,7 +506,8 @@ private class ANG_AccountTriggerHandlerTest {
 													   ANG_RME_Amount__c, ANG_AccountId__c, ANG_Financial_Security__c,
 													   RHC_Amount_Equals_FS_Percent__c, ANG_RHC_Amount_Equals_FS__c,
 													   ANG_CashCondition__c, ANG_Exceeding_Financial_Security__c,
-													   ANG_RHC_Amount_Forecasted__c
+													   ANG_RHC_Amount_Forecasted__c,
+													   Amount_At_Risk_USD__c, Forecasted_Tier__c, RHC_Amount_USD__c, Tier__c, Tiered_Provisional_Amount__c
 												  from ANG_RHC_Information__c
 												 Where ANG_AccountId__c =: a.id];
 
@@ -562,20 +572,17 @@ private class ANG_AccountTriggerHandlerTest {
 
 		insert cons;
 
-		List<Portal_Applications__c> pas = new List<Portal_Applications__c>();
-		pas.add(new Portal_Applications__c(Name = 'IATA EasyPay (EDENRED)'));
-		pas.add(new Portal_Applications__c(Name = 'IATA EasyPay (MSTS)'));
-		insert pas;
+
+		Map<String, Portal_Applications__c> easyPayNameMap = PortalApplicationSelector.selectNewGenFieldsMapByName(new Set<String>{'IATA EasyPay (EDENRED)', 'IATA EasyPay (MSTS)'});
 
 		List<Portal_Application_Right__c> pars = new List<Portal_Application_Right__c> ();
-		pars.add(new Portal_Application_Right__c(Right__c = 'Access Granted', ANG_Portal_Service_Role__c = 'IEP Admin', Portal_Application__c = pas[0].Id, Contact__c = con1.Id ));
-		pars.add(new Portal_Application_Right__c(Right__c = 'Access Granted', ANG_Portal_Service_Role__c = 'IEP Admin', Portal_Application__c = pas[1].Id, Contact__c = con2.Id ));
+		pars.add(new Portal_Application_Right__c(Right__c = 'Access Granted', ANG_Portal_Service_Role__c = 'IEP Admin', Portal_Application__c = easyPayNameMap.get('IATA EasyPay (EDENRED)').Id, Contact__c = con1.Id ));
+		pars.add(new Portal_Application_Right__c(Right__c = 'Access Granted', ANG_Portal_Service_Role__c = 'IEP Admin', Portal_Application__c = easyPayNameMap.get('IATA EasyPay (MSTS)').Id, Contact__c = con2.Id ));
 		insert pars;
 
 		Test.startTest();
 
 		Test.setMock(HttpCalloutMock.class, new MockHttpResponseSuccessGenerator());
-
 
 		for (Account a :accs){
 			a.ANG_IEP_Status__c = 'In Progress';
@@ -635,6 +642,8 @@ private class ANG_AccountTriggerHandlerTest {
 
 	@isTest static void dueDiligenceModelBPlusTest(){
 
+		Account account = AccountSelector.selectIdByNames(new Set<String>{'UK Test'}).get(0);
+		
 		List<Account> accs = [SELECT Id, ANG_IEP_Status__c FROM Account WHERE Name = 'UK Test'];
 
 		List<Contact> cons = new List<Contact>();
@@ -649,13 +658,9 @@ private class ANG_AccountTriggerHandlerTest {
 
 		insert cons;
 
-		List<Portal_Applications__c> pas = new List<Portal_Applications__c>();
-		pas.add(new Portal_Applications__c(Name = 'IATA EasyPay (EDENRED)'));
-		pas.add(new Portal_Applications__c(Name = 'IATA EasyPay (MSTS)'));
-		insert pas;
-
+		Map<String, Portal_Applications__c> easyPayNameMap = PortalApplicationSelector.selectNewGenFieldsMapByName(new Set<String>{'IATA EasyPay (EDENRED)'});
 		List<Portal_Application_Right__c> pars = new List<Portal_Application_Right__c> ();
-		pars.add(new Portal_Application_Right__c(Right__c = 'Access Granted', ANG_Portal_Service_Role__c = 'IEP Admin', Portal_Application__c = pas[0].Id, Contact__c = con1.Id ));
+		pars.add(new Portal_Application_Right__c(Right__c = 'Access Granted', ANG_Portal_Service_Role__c = 'IEP Admin', Portal_Application__c = easyPayNameMap.get('IATA EasyPay (EDENRED)').Id, Contact__c = con1.Id ));
 		insert pars;
 
 		Test.startTest();
@@ -707,14 +712,11 @@ private class ANG_AccountTriggerHandlerTest {
 
 		insert cons;
 
-		List<Portal_Applications__c> pas = new List<Portal_Applications__c>();
-		pas.add(new Portal_Applications__c(Name = 'IATA EasyPay (EDENRED)'));
-		pas.add(new Portal_Applications__c(Name = 'IATA EasyPay (MSTS)'));
-		insert pas;
+		Map<String, Portal_Applications__c> easyPayNameMap = PortalApplicationSelector.selectNewGenFieldsMapByName(new Set<String>{'IATA EasyPay (EDENRED)', 'IATA EasyPay (MSTS)'});
 
 		List<Portal_Application_Right__c> pars = new List<Portal_Application_Right__c> ();
-		pars.add(new Portal_Application_Right__c(Right__c = 'Access Granted', ANG_Portal_Service_Role__c = 'IEP Admin', Portal_Application__c = pas[0].Id, Contact__c = con1.Id ));
-		pars.add(new Portal_Application_Right__c(Right__c = 'Access Granted', ANG_Portal_Service_Role__c = 'IEP Admin', Portal_Application__c = pas[1].Id, Contact__c = con2.Id ));
+		pars.add(new Portal_Application_Right__c(Right__c = 'Access Granted', ANG_Portal_Service_Role__c = 'IEP Admin', Portal_Application__c = easyPayNameMap.get('IATA EasyPay (EDENRED)').Id, Contact__c = con1.Id ));
+		pars.add(new Portal_Application_Right__c(Right__c = 'Access Granted', ANG_Portal_Service_Role__c = 'IEP Admin', Portal_Application__c = easyPayNameMap.get('IATA EasyPay (MSTS)').Id, Contact__c = con2.Id ));
 		insert pars;
 
 		Test.startTest();
@@ -775,14 +777,11 @@ private class ANG_AccountTriggerHandlerTest {
 
 		insert cons;
 
-		List<Portal_Applications__c> pas = new List<Portal_Applications__c>();
-		pas.add(new Portal_Applications__c(Name = 'IATA EasyPay (EDENRED)'));
-		pas.add(new Portal_Applications__c(Name = 'IATA EasyPay (MSTS)'));
-		insert pas;
+		Map<String, Portal_Applications__c> easyPayNameMap = PortalApplicationSelector.selectNewGenFieldsMapByName(new Set<String>{'IATA EasyPay (EDENRED)', 'IATA EasyPay (MSTS)'});
 
 		List<Portal_Application_Right__c> pars = new List<Portal_Application_Right__c> ();
-		pars.add(new Portal_Application_Right__c(Right__c = 'Access Granted', ANG_Portal_Service_Role__c = 'IEP Admin', Portal_Application__c = pas[0].Id, Contact__c = con1.Id ));
-		pars.add(new Portal_Application_Right__c(Right__c = 'Access Granted', ANG_Portal_Service_Role__c = 'IEP Admin', Portal_Application__c = pas[1].Id, Contact__c = con2.Id ));
+		pars.add(new Portal_Application_Right__c(Right__c = 'Access Granted', ANG_Portal_Service_Role__c = 'IEP Admin', Portal_Application__c = easyPayNameMap.get('IATA EasyPay (EDENRED)').Id, Contact__c = con1.Id ));
+		pars.add(new Portal_Application_Right__c(Right__c = 'Access Granted', ANG_Portal_Service_Role__c = 'IEP Admin', Portal_Application__c = easyPayNameMap.get('IATA EasyPay (MSTS)').Id, Contact__c = con2.Id ));
 		insert pars;
 
 		Test.startTest();

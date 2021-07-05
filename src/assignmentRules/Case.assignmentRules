@@ -252,292 +252,1494 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
         <ruleEntry>
             <assignedTo>ISS_Level_1_Turkish</assignedTo>
             <assignedToType>Queue</assignedToType>
+            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR (3 AND 4 AND 8) OR (3 AND 4 AND 7 AND 9 AND 10) OR (3 AND 4 AND 11 AND 12)</booleanFilter>
             <criteriaItems>
-                <field>Case.Origin</field>
+                <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
-                <value>Portal</value>
+                <value>Cases - Global,Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Topic__c</field>
                 <operation>equals</operation>
-                <value>Customer Portal,New BSPlink,IATA Annual Fees (BSP/CASS)</value>
+                <value>Accreditation Cargo Agent,Accreditation Travel Agent,Airline Management,Baggage Prorate,BSP Operations/Passenger,CASS Operations/Cargo,CNS CASS Operations/Cargo,CNS Customer Portal,CNS Helpdesk,Currency Center,Customer Portal</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.BSPCountry__c</field>
                 <operation>equals</operation>
                 <value>Turkey</value>
             </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>ISS_Level_1_Vietnamese</assignedTo>
-            <assignedToType>Queue</assignedToType>
             <criteriaItems>
-                <field>Case.Origin</field>
+                <field>Account.HQ_Service_Model__c</field>
+                <operation>notEqual</operation>
+                <value>Differentiated</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Service_Level__c</field>
                 <operation>equals</operation>
-                <value>Portal</value>
+                <value>1</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Topic__c</field>
                 <operation>equals</operation>
-                <value>Customer Portal,New BSPlink,IATA Annual Fees (BSP/CASS)</value>
+                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SEDA</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal Enquiry</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Subject</field>
+                <operation>equals</operation>
+                <value>Customer Login Issue - Registration,Customer Login Issue - Login</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>ISS_Level_1_Vietnamese</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR (3 AND 4  AND 8) OR (3 AND 4 AND 7 AND 9 AND 10) OR (3 AND 4  AND 11 AND 12)</booleanFilter>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Cases - Global,Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>Accreditation Cargo Agent,Accreditation Travel Agent,Airline Management,Baggage Prorate,BSP Operations/Passenger,CASS Operations/Cargo,CNS CASS Operations/Cargo,CNS Customer Portal,CNS Helpdesk,Currency Center,Customer Portal</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.BSPCountry__c</field>
                 <operation>equals</operation>
                 <value>Vietnam</value>
             </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>ISS_Level_1_Thai</assignedTo>
-            <assignedToType>Queue</assignedToType>
             <criteriaItems>
-                <field>Case.Origin</field>
+                <field>Account.HQ_Service_Model__c</field>
+                <operation>notEqual</operation>
+                <value>Differentiated</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Service_Level__c</field>
                 <operation>equals</operation>
-                <value>Portal</value>
+                <value>1</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Topic__c</field>
                 <operation>equals</operation>
-                <value>Customer Portal,New BSPlink,IATA Annual Fees (BSP/CASS)</value>
+                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SEDA</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal Enquiry</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Subject</field>
+                <operation>equals</operation>
+                <value>Customer Login Issue - Registration,Customer Login Issue - Login</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>ISS_Level_1_Thai</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR (3 AND 4 AND 8) OR (3 AND 4 AND 7 AND 9 AND 10) OR (3 AND 4 AND 11 AND 12)</booleanFilter>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Cases - Global,Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>Accreditation Cargo Agent,Accreditation Travel Agent,Airline Management,Baggage Prorate,BSP Operations/Passenger,CASS Operations/Cargo,CNS CASS Operations/Cargo,CNS Customer Portal,CNS Helpdesk,Currency Center,Customer Portal</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.BSPCountry__c</field>
                 <operation>equals</operation>
                 <value>Thailand</value>
             </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>ISS_Level_1_Japanese</assignedTo>
-            <assignedToType>Queue</assignedToType>
             <criteriaItems>
-                <field>Case.Origin</field>
+                <field>Account.HQ_Service_Model__c</field>
+                <operation>notEqual</operation>
+                <value>Differentiated</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Service_Level__c</field>
                 <operation>equals</operation>
-                <value>Portal</value>
+                <value>1</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Topic__c</field>
                 <operation>equals</operation>
-                <value>Customer Portal,New BSPlink,IATA Annual Fees (BSP/CASS)</value>
+                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SEDA</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Subject</field>
+                <operation>equals</operation>
+                <value>Customer Login Issue - Registration,Customer Login Issue - Login</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal Enquiry</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>ISS_Level_1_Japanese</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR (3 AND 4 AND 8) OR (3 AND 4 AND 7 AND 9 AND 10) OR (3 AND 4 AND 11 AND 12)</booleanFilter>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Cases - Global,Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>Accreditation Cargo Agent,Accreditation Travel Agent,Airline Management,Baggage Prorate,BSP Operations/Passenger,CASS Operations/Cargo,CNS CASS Operations/Cargo,CNS Customer Portal,CNS Helpdesk,Currency Center,Customer Portal</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.BSPCountry__c</field>
                 <operation>equals</operation>
                 <value>Japan</value>
             </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>ISS_Level_1_German</assignedTo>
-            <assignedToType>Queue</assignedToType>
             <criteriaItems>
-                <field>Case.Origin</field>
+                <field>Account.HQ_Service_Model__c</field>
+                <operation>notEqual</operation>
+                <value>Differentiated</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Service_Level__c</field>
                 <operation>equals</operation>
-                <value>Portal</value>
+                <value>1</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Topic__c</field>
                 <operation>equals</operation>
-                <value>Customer Portal,New BSPlink,IATA Annual Fees (BSP/CASS)</value>
+                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SEDA</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal Enquiry</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Subject</field>
+                <operation>equals</operation>
+                <value>Customer Login Issue - Registration,Customer Login Issue - Login</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>ISS_Level_1_German</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR (3 AND 4  AND 8) OR (3 AND 4 AND 7 AND 9 AND 10) OR (3 AND 4 AND 11 AND 12)</booleanFilter>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Cases - Global,Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>Accreditation Cargo Agent,Accreditation Travel Agent,Airline Management,Baggage Prorate,BSP Operations/Passenger,CASS Operations/Cargo,CNS CASS Operations/Cargo,CNS Customer Portal,CNS Helpdesk,Currency Center,Customer Portal</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.BSPCountry__c</field>
                 <operation>equals</operation>
                 <value>Germany</value>
             </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>ISS_Level_1_Indonesian</assignedTo>
-            <assignedToType>Queue</assignedToType>
             <criteriaItems>
-                <field>Case.Origin</field>
+                <field>Account.HQ_Service_Model__c</field>
+                <operation>notEqual</operation>
+                <value>Differentiated</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Service_Level__c</field>
                 <operation>equals</operation>
-                <value>Portal</value>
+                <value>1</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Topic__c</field>
                 <operation>equals</operation>
-                <value>Customer Portal,New BSPlink,IATA Annual Fees (BSP/CASS)</value>
+                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SEDA</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal Enquiry</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Subject</field>
+                <operation>equals</operation>
+                <value>Customer Login Issue - Registration,Customer Login Issue - Login</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>ISS_Level_1_Indonesian</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR (3 AND 4 AND 8) OR (3 AND 4 AND 7 AND 9 AND 10) OR (3 AND 4 AND 11 AND 12)</booleanFilter>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Cases - Global,Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>Accreditation Cargo Agent,Accreditation Travel Agent,Airline Management,Baggage Prorate,BSP Operations/Passenger,CASS Operations/Cargo,CNS CASS Operations/Cargo,CNS Customer Portal,CNS Helpdesk,Currency Center,Customer Portal</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.BSPCountry__c</field>
                 <operation>equals</operation>
                 <value>Indonesia</value>
             </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>ISS_Level_1_Italian</assignedTo>
-            <assignedToType>Queue</assignedToType>
             <criteriaItems>
-                <field>Case.Origin</field>
+                <field>Account.HQ_Service_Model__c</field>
+                <operation>notEqual</operation>
+                <value>Differentiated</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Service_Level__c</field>
                 <operation>equals</operation>
-                <value>Portal</value>
+                <value>1</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Topic__c</field>
                 <operation>equals</operation>
-                <value>Customer Portal,New BSPlink,IATA Annual Fees (BSP/CASS)</value>
+                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SEDA</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal Enquiry</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Subject</field>
+                <operation>equals</operation>
+                <value>Customer Login Issue - Registration,Customer Login Issue - Login</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>ISS_Level_1_Italian</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR ( 3 AND 4 AND 8) OR (3 AND 4 AND 7 AND 9 AND 10) OR (3 AND 4 AND 11 AND 12)</booleanFilter>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Cases - Global,Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>Accreditation Cargo Agent,Accreditation Travel Agent,Airline Management,Baggage Prorate,BSP Operations/Passenger,CASS Operations/Cargo,CNS CASS Operations/Cargo,CNS Customer Portal,CNS Helpdesk,Currency Center,Customer Portal</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.BSPCountry__c</field>
                 <operation>equals</operation>
                 <value>Italy</value>
             </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>ISS_Level_1_Arabic</assignedTo>
-            <assignedToType>Queue</assignedToType>
             <criteriaItems>
-                <field>Case.Origin</field>
+                <field>Account.HQ_Service_Model__c</field>
+                <operation>notEqual</operation>
+                <value>Differentiated</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Service_Level__c</field>
                 <operation>equals</operation>
-                <value>Portal</value>
+                <value>1</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Topic__c</field>
                 <operation>equals</operation>
-                <value>Customer Portal,New BSPlink,IATA Annual Fees (BSP/CASS)</value>
+                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SEDA</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal Enquiry</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Subject</field>
+                <operation>equals</operation>
+                <value>Customer Login Issue - Registration,Customer Login Issue - Login</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>ISS_Level_1_Arabic</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR (3 AND 4 AND 7 AND 8) OR (3 AND 4 AND 9 AND 10 AND 11) OR (3 AND 4 AND 12)</booleanFilter>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Cases - Global,Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>Accreditation Cargo Agent,Accreditation Travel Agent,Airline Management,Baggage Prorate,BSP Operations/Passenger,CASS Operations/Cargo,CNS CASS Operations/Cargo,CNS Customer Portal,CNS Helpdesk,Currency Center,Customer Portal</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.BSPCountry__c</field>
                 <operation>equals</operation>
                 <value>Egypt,Jordan,Kuwait,Saudi Arabia,Somalia,Sudan,Syrian Arab Republic,Yemen</value>
             </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>ISS_Level_1_Portuguese</assignedTo>
-            <assignedToType>Queue</assignedToType>
             <criteriaItems>
-                <field>Case.Origin</field>
+                <field>Account.HQ_Service_Model__c</field>
+                <operation>notEqual</operation>
+                <value>Differentiated</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Service_Level__c</field>
                 <operation>equals</operation>
-                <value>Portal</value>
+                <value>1</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Topic__c</field>
                 <operation>equals</operation>
-                <value>Customer Portal,New BSPlink,IATA Annual Fees (BSP/CASS)</value>
+                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Subject</field>
+                <operation>equals</operation>
+                <value>Customer Login Issue - Registration,Customer Login Issue - Login</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal Enquiry</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SEDA</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>ISS_Level_1_Portuguese</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR ( 3 AND 4 AND 8) OR (3 AND 4 AND 7 AND 9 AND 10) OR ( 3 AND 4 AND 11 AND 12)</booleanFilter>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Cases - Global,Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>Accreditation Cargo Agent,Accreditation Travel Agent,Airline Management,Baggage Prorate,BSP Operations/Passenger,CASS Operations/Cargo,CNS CASS Operations/Cargo,CNS Customer Portal,CNS Helpdesk,Currency Center,Customer Portal</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.BSPCountry__c</field>
                 <operation>equals</operation>
                 <value>Angola,Cape Verde,Mozambique,Portugal,Brazil</value>
             </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>ISS_Level_1_Chinese</assignedTo>
-            <assignedToType>Queue</assignedToType>
             <criteriaItems>
-                <field>Case.Origin</field>
+                <field>Account.HQ_Service_Model__c</field>
+                <operation>notEqual</operation>
+                <value>Differentiated</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Service_Level__c</field>
                 <operation>equals</operation>
-                <value>Portal</value>
+                <value>1</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Topic__c</field>
                 <operation>equals</operation>
-                <value>Customer Portal,New BSPlink,IATA Annual Fees (BSP/CASS)</value>
+                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SEDA</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal Enquiry</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Subject</field>
+                <operation>equals</operation>
+                <value>Customer Login Issue - Registration,Customer Login Issue - Login</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>ISS_Level_1_Chinese</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR (3 AND 4 AND 7 AND 8) OR (3 AND 4 AND 9 AND 10 AND 11) OR (3 AND 4 AND 12)</booleanFilter>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Cases - Global,Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>Accreditation Cargo Agent,Accreditation Travel Agent,Airline Management,Baggage Prorate,BSP Operations/Passenger,CASS Operations/Cargo,CNS CASS Operations/Cargo,CNS Customer Portal,CNS Helpdesk,Currency Center,Customer Portal</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.BSPCountry__c</field>
                 <operation>equals</operation>
                 <value>People&apos;s Republic of China,Chinese Taipei,&quot;Hong Kong (SAR), China&quot;,&quot;Macau SAR, China&quot;</value>
             </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>ISS_Level_1_Spanish</assignedTo>
-            <assignedToType>Queue</assignedToType>
             <criteriaItems>
-                <field>Case.Origin</field>
+                <field>Account.HQ_Service_Model__c</field>
+                <operation>notEqual</operation>
+                <value>Differentiated</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Service_Level__c</field>
                 <operation>equals</operation>
-                <value>Portal</value>
+                <value>1</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Topic__c</field>
                 <operation>equals</operation>
-                <value>Customer Portal,New BSPlink,IATA Annual Fees (BSP/CASS)</value>
+                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
             </criteriaItems>
             <criteriaItems>
-                <field>Case.BSPCountry__c</field>
+                <field>Case.Subject</field>
                 <operation>equals</operation>
-                <value>Argentina,Bolivia,Chile,Colombia,Costa Rica,Cuba,Curacao,Dominica,Dominican Republic,Ecuador,El Salvador,Guatemala,Jamaica,Mexico,Paraguay,Peru,Spain &amp; Andorra,Venezuela</value>
-            </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>ISS_Level_1_Korean</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.Origin</field>
-                <operation>equals</operation>
-                <value>Portal</value>
+                <value>Customer Login Issue - Registration,Customer Login Issue - Login</value>
             </criteriaItems>
             <criteriaItems>
-                <field>Case.Topic__c</field>
+                <field>Case.CaseArea__c</field>
                 <operation>equals</operation>
-                <value>Customer Portal,New BSPlink,IATA Annual Fees (BSP/CASS)</value>
+                <value>Customer Portal Enquiry</value>
             </criteriaItems>
             <criteriaItems>
-                <field>Case.BSPCountry__c</field>
+                <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
-                <value>&quot;Korea, Democratic People’s Republic of&quot;,&quot;Korea, Republic of&quot;</value>
+                <value>Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SEDA</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>ISS_Level_1_Russian</assignedTo>
             <assignedToType>Queue</assignedToType>
+            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR (3 AND 4  AND 8) OR (3 AND 4 AND 7 AND 9 AND 10) OR (3 AND 4 AND 11 AND 12)</booleanFilter>
             <criteriaItems>
-                <field>Case.Origin</field>
+                <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
-                <value>Portal</value>
+                <value>Cases - Global,Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Topic__c</field>
                 <operation>equals</operation>
-                <value>Customer Portal,New BSPlink,IATA Annual Fees (BSP/CASS)</value>
+                <value>Accreditation Cargo Agent,Accreditation Travel Agent,Airline Management,Baggage Prorate,BSP Operations/Passenger,CASS Operations/Cargo,CNS CASS Operations/Cargo,CNS Customer Portal,CNS Helpdesk,Currency Center,Customer Portal</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.BSPCountry__c</field>
                 <operation>equals</operation>
                 <value>Armenia,Azerbaijan,Belarus,Georgia,Kazakhstan,Kyrgyzstan,Tajikistan,Ukraine,Uzbekistan</value>
             </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>ISS_Level_1_French</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 AND 2 AND (3 OR 4)</booleanFilter>
             <criteriaItems>
-                <field>Case.Origin</field>
-                <operation>equals</operation>
-                <value>Portal</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Topic__c</field>
-                <operation>equals</operation>
-                <value>Customer Portal,New BSPlink,IATA Annual Fees (BSP/CASS)</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.BSPCountry__c</field>
-                <operation>equals</operation>
-                <value>France,Algeria,Benin,Burkina Faso,Cameroon,Central African Republic,Chad,Côte d&apos;Ivoire,Equatorial Guinea,Gabon,Guinea,Guinea-Bissau,Madagascar,Mali</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.BSPCountry__c</field>
-                <operation>equals</operation>
-                <value>Mauritania,Morocco,Niger,Senegal,Sierra Leone,Togo,Tunisia,Canada,French Polynesia,Papua New Guinea,Lebanon,Switzerland &amp; Liechtenstein</value>
-            </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>ISS_Level_1_English</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.Origin</field>
-                <operation>equals</operation>
-                <value>Portal</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Topic__c</field>
-                <operation>equals</operation>
-                <value>Customer Portal,New BSPlink,IATA Annual Fees (BSP/CASS)</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.BSPCountry__c</field>
+                <field>Account.HQ_Service_Model__c</field>
                 <operation>notEqual</operation>
-                <value>Israel,Russian Federation</value>
+                <value>Differentiated</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Service_Level__c</field>
+                <operation>equals</operation>
+                <value>1</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SEDA</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Subject</field>
+                <operation>equals</operation>
+                <value>Customer Login Issue - Registration,Customer Login Issue - Login</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal Enquiry</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>ISS_Level_1_Korean</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR (3 AND 4 AND 8) OR (3 AND 4 AND 7 AND 9 AND 10) OR (3 AND 4 AND 11 AND 12)</booleanFilter>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Cases - Global,Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>Accreditation Cargo Agent,Accreditation Travel Agent,Airline Management,Baggage Prorate,BSP Operations/Passenger,CASS Operations/Cargo,CNS CASS Operations/Cargo,CNS Customer Portal,CNS Helpdesk,Currency Center,Customer Portal</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.BSPCountry__c</field>
+                <operation>equals</operation>
+                <value>&quot;Korea, Republic of&quot;</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.HQ_Service_Model__c</field>
+                <operation>notEqual</operation>
+                <value>Differentiated</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Service_Level__c</field>
+                <operation>equals</operation>
+                <value>1</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SEDA</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal Enquiry</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Subject</field>
+                <operation>equals</operation>
+                <value>Customer Login Issue - Registration,Customer Login Issue - Login</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>ISS_L1_Spanish_EUR</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR (3 AND 4 AND 8) OR (3 AND 4 AND 7 AND 9 AND 10) OR (3 AND 4 AND 11 AND 12)</booleanFilter>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Cases - Global,Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>Accreditation Cargo Agent,Accreditation Travel Agent,Airline Management,Baggage Prorate,BSP Operations/Passenger,CASS Operations/Cargo,CNS CASS Operations/Cargo,CNS Customer Portal,CNS Helpdesk,Currency Center,Customer Portal</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.BSPCountry__c</field>
+                <operation>equals</operation>
+                <value>Spain &amp; Andorra</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.HQ_Service_Model__c</field>
+                <operation>notEqual</operation>
+                <value>Differentiated</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Service_Level__c</field>
+                <operation>equals</operation>
+                <value>1</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SEDA</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal Enquiry</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Subject</field>
+                <operation>equals</operation>
+                <value>Customer Login Issue - Registration,Customer Login Issue - Login</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>ISS_L1_Spanish_AMR</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR (3 AND 4 AND  8) OR (3 AND 4 AND 7 AND 9 AND 10) OR (3 AND 4 AND 11 AND 12)</booleanFilter>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Cases - Global,Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>Accreditation Cargo Agent,Accreditation Travel Agent,Airline Management,Baggage Prorate,BSP Operations/Passenger,CASS Operations/Cargo,CNS CASS Operations/Cargo,CNS Customer Portal,CNS Helpdesk,Currency Center,Customer Portal</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.BSPCountry__c</field>
+                <operation>equals</operation>
+                <value>Argentina,Bolivia,Chile,Colombia,Costa Rica,Cuba,Curacao,Dominica,Dominican Republic,Ecuador,El Salvador,Guatemala,Honduras,Mexico,Nicaragua,Panama,Paraguay,Peru,Uruguay,Venezuela</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.HQ_Service_Model__c</field>
+                <operation>notEqual</operation>
+                <value>Differentiated</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Service_Level__c</field>
+                <operation>equals</operation>
+                <value>1</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SEDA</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Subject</field>
+                <operation>equals</operation>
+                <value>Customer Login Issue - Registration,Customer Login Issue - Login</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal Enquiry</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>ISS_L1_French_EUR</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR (3 AND 4 AND 8) OR (3 AND 4 AND 7 AND 9 AND 10) OR (3 AND 4 AND 11 AND 12)</booleanFilter>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Cases - Global,Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>Accreditation Cargo Agent,Accreditation Travel Agent,Airline Management,Baggage Prorate,BSP Operations/Passenger,CASS Operations/Cargo,CNS CASS Operations/Cargo,CNS Customer Portal,CNS Helpdesk,Currency Center,Customer Portal</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.BSPCountry__c</field>
+                <operation>equals</operation>
+                <value>France,Switzerland &amp; Liechtenstein</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.HQ_Service_Model__c</field>
+                <operation>notEqual</operation>
+                <value>Differentiated</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Service_Level__c</field>
+                <operation>equals</operation>
+                <value>1</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SEDA</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal Enquiry</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Subject</field>
+                <operation>equals</operation>
+                <value>Customer Login Issue - Registration,Customer Login Issue - Login</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>Cases_CNS</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.CNSCase__c</field>
+                <operation>equals</operation>
+                <value>True</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>notEqual</operation>
+                <value>Complaint (IDFS ISS),IATA Financial Review,OSCAR Communication</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>ISS_L1_French_AMR</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR (3 AND 4 AND 8) OR (3 AND 4 AND 7 AND 9 AND 10)  OR (3 AND 4 AND 11 AND 12)</booleanFilter>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Cases - Global,Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>Accreditation Cargo Agent,Accreditation Travel Agent,Airline Management,Baggage Prorate,BSP Operations/Passenger,CASS Operations/Cargo,CNS CASS Operations/Cargo,CNS Customer Portal,CNS Helpdesk,Currency Center,Customer Portal</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.BSPCountry__c</field>
+                <operation>equals</operation>
+                <value>Canada</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.HQ_Service_Model__c</field>
+                <operation>notEqual</operation>
+                <value>Differentiated</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Service_Level__c</field>
+                <operation>equals</operation>
+                <value>1</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SEDA</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal Enquiry</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Subject</field>
+                <operation>equals</operation>
+                <value>Customer Login Issue - Registration,Customer Login Issue - Login</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>Cases_CNS</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>Voicemail</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Description</field>
+                <operation>contains</operation>
+                <value>CNS Market</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>ISS_L1_French_AME</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR (3 AND 4 AND  8) OR (3 AND 4 AND 7 AND 9 AND 10) OR (3 AND 4 AND 11 AND 12)</booleanFilter>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Cases - Global,Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>Accreditation Cargo Agent,Accreditation Travel Agent,Airline Management,Baggage Prorate,BSP Operations/Passenger,CASS Operations/Cargo,CNS CASS Operations/Cargo,CNS Customer Portal,CNS Helpdesk,Currency Center,Customer Portal</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.BSPCountry__c</field>
+                <operation>equals</operation>
+                <value>Algeria,Benin,Burkina Faso,Cameroon,Central African Republic,Côte d&apos;Ivoire,Equatorial Guinea,Gabon,Guinea,Guinea-Bissau,Madagascar,Mali,Mauritania,Morocco,Niger,Senegal,Sierra Leone,Togo,Tunisia,&quot;Congo, the Democratic Republic of the&quot;</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.HQ_Service_Model__c</field>
+                <operation>notEqual</operation>
+                <value>Differentiated</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Service_Level__c</field>
+                <operation>equals</operation>
+                <value>1</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SEDA</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal Enquiry</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Subject</field>
+                <operation>equals</operation>
+                <value>Customer Login Issue - Registration,Customer Login Issue - Login</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>ISS_L1_English_NASIA</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <booleanFilter>(1 AND (2 OR 6) AND 3 AND 4 AND 5) OR (3 AND 4 AND 8) OR (3 AND 4 AND 7 AND 9 AND 10) OR   (3 AND 4 AND 11 AND 12)</booleanFilter>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Cases - Global,Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>Accreditation Cargo Agent,Accreditation Travel Agent,Airline Management,Baggage Prorate,BSP Operations/Passenger,CASS Operations/Cargo,CNS CASS Operations/Cargo,CNS Customer Portal,CNS Helpdesk,Currency Center,Customer Portal</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.BSPCountry__c</field>
+                <operation>equals</operation>
+                <value>Mongolia,&quot;Korea, Democratic People’s Republic of&quot;</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.HQ_Service_Model__c</field>
+                <operation>notEqual</operation>
+                <value>Differentiated</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Service_Level__c</field>
+                <operation>equals</operation>
+                <value>1</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SEDA</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal Enquiry</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Subject</field>
+                <operation>equals</operation>
+                <value>Customer Login Issue - Registration,Customer Login Issue - Login</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>ISS_L1_English_EUR</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <booleanFilter>(1 AND (2 OR 7)  AND (3 OR 4) AND 5 AND 6) OR ((3 OR 4) AND 5 AND 8 AND 9) OR ((3 OR 4) AND 5 AND 8 AND 10 AND 11) OR ((3 OR 4) AND 5 AND 12 AND 13) OR ((3 OR 4) AND 5 AND 14)</booleanFilter>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Cases - Global,Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>Accreditation Cargo Agent,Accreditation Travel Agent,Airline Management,Baggage Prorate,BSP Operations/Passenger,CASS Operations/Cargo,CNS CASS Operations/Cargo,CNS Customer Portal,CNS Helpdesk,Currency Center,Customer Portal</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.BSPCountry__c</field>
+                <operation>equals</operation>
+                <value>Albania,Austria,Belgium &amp; Luxembourg,Bosnia and Herzegovina,Bulgaria,Croatia,Cyprus,United Kingdom,Western Balkans,Serbia,Slovakia,Slovenia,Sweden,Greece,Hungary,Iceland,Kosovo,Latvia</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.BSPCountry__c</field>
+                <operation>equals</operation>
+                <value>Czech Republic &amp; Slovakia,Czechia,Denmark,Estonia,Finland,Ireland,Lithuania,Malta,Montenegro,Netherlands,Nordic &amp; Baltic,Norway,Poland,Republic of North Macedonia,Romania &amp; Moldova</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.HQ_Service_Model__c</field>
+                <operation>notEqual</operation>
+                <value>Differentiated</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Service_Level__c</field>
+                <operation>equals</operation>
+                <value>1</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Status_SIDRA__c</field>
+                <operation>contains</operation>
+                <value>IATA Charges,Small Amount</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Subject</field>
+                <operation>equals</operation>
+                <value>Customer Login Issue - Registration,Customer Login Issue - Login</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal Enquiry</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SEDA</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>ISS_L1_English_ASPAC</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <booleanFilter>(1 AND (2 OR 7) AND (3 OR 4) AND 5 AND 6) OR ((3 OR 4) AND 5 AND 8 AND 9) OR ((3 OR 4) AND 5 AND 8 AND 10 AND 11) OR ((3 OR 4) AND 5 AND 12) OR ((3 OR 4) AND 5 AND 13 AND 14)</booleanFilter>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Cases - Global,Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>Accreditation Cargo Agent,Accreditation Travel Agent,Airline Management,Baggage Prorate,BSP Operations/Passenger,CASS Operations/Cargo,CNS CASS Operations/Cargo,CNS Customer Portal,CNS Helpdesk,Currency Center,Customer Portal</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.BSPCountry__c</field>
+                <operation>equals</operation>
+                <value>Australia,Bangladesh,Bhutan,Brunei Darussalam,Cambodia,Cook Islands,Fiji,Guam,India,Kiribati,Lao People&apos;s Democratic Republic,Malaysia,Maldives,Marshall Islands,Myanmar,Nepal,&quot;Micronesia, Federal States of&quot;,French Polynesia</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.BSPCountry__c</field>
+                <operation>equals</operation>
+                <value>New Caledonia,New Zealand,Northern Mariana Islands,Pakistan,Philippines,Samoa,Singapore,Solomon Islands,Sri Lanka,Tahiti,Tonga,Vanuatu,Wallis &amp; Futuna Islands,&quot;Palau, Republic of&quot;,Papua New Guinea</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.HQ_Service_Model__c</field>
+                <operation>notEqual</operation>
+                <value>Differentiated</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Service_Level__c</field>
+                <operation>equals</operation>
+                <value>1</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Status_SIDRA__c</field>
+                <operation>contains</operation>
+                <value>IATA Charges,Small Amount</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SEDA</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal Enquiry</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Registration process</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>ISS_L1_English_AMR</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <booleanFilter>(1 AND (2 OR 7) AND (3 OR 4) AND 5 AND 6) OR ((3 OR 4) AND 5 AND 8 AND 9) OR ((3 OR 4) AND 5 AND 10 AND 11) OR ((3 OR 4) AND 5 AND 12 AND 13) OR ((3 OR 4) AND 5 AND 14)</booleanFilter>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Cases - Global,Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>Accreditation Cargo Agent,Accreditation Travel Agent,Airline Management,Baggage Prorate,BSP Operations/Passenger,CASS Operations/Cargo,CNS CASS Operations/Cargo,CNS Customer Portal,CNS Helpdesk,Currency Center,Customer Portal</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.BSPCountry__c</field>
+                <operation>equals</operation>
+                <value>Anguilla,Antigua and Barbuda,Aruba,Bahamas,Barbados,Belize,Bermuda,British Virgin Islands,Cayman Islands,Falkland Islands,Grenada,Guadeloupe,Guyana,Haiti,Martinique,Montserrat</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.BSPCountry__c</field>
+                <operation>equals</operation>
+                <value>Saint Kitts and Nevis,Saint Lucia,Saint Maarten,Saint Pierre and Miquelon,Saint Vincent and the Grenadines,Suriname,Trinidad and Tobago,Turks and Caicos Islands,United States,&quot;Bonaire, Saba, St. Eustatius&quot;,Jamaica</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.HQ_Service_Model__c</field>
+                <operation>notEqual</operation>
+                <value>Differentiated</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Service_Level__c</field>
+                <operation>equals</operation>
+                <value>1</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Status_SIDRA__c</field>
+                <operation>contains</operation>
+                <value>IATA Charges,Small Amount</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Subject</field>
+                <operation>equals</operation>
+                <value>Customer Login Issue - Registration,Customer Login Issue - Login</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal Enquiry</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SEDA</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>ISS_L1_English_AME</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <booleanFilter>(1 AND (2 OR 7) AND (3 OR 4) AND 5 AND 6) OR ((3 OR 4) AND 5 AND 8 AND 9) OR((3 OR 4) AND 5 AND 10 AND 11 AND 12) OR((3 OR 4) AND 5 AND 13)</booleanFilter>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Cases - Global,Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>Accreditation Cargo Agent,Accreditation Travel Agent,Airline Management,Baggage Prorate,BSP Operations/Passenger,CASS Operations/Cargo,CNS CASS Operations/Cargo,CNS Customer Portal,CNS Helpdesk,Currency Center,Customer Portal</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.BSPCountry__c</field>
+                <operation>equals</operation>
+                <value>Afghanistan,Bahrain,Botswana,Burundi,Comoros,Djibouti,Eritrea,Eswatini,Ethiopia,Gambia,Ghana,Iran,Iraq,Kenya,Kuwait,Lesotho,Liberia,Malawi,Mauritius,Mayotte,Namibia,Nigeria</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.BSPCountry__c</field>
+                <operation>equals</operation>
+                <value>Oman,Palestinian Territories,Qatar,Reunion,Rwanda,Sao Tome,Seychelles,South Africa,Swaziland,Tanzania,Tchad,Turkmenistan,Uganda,United Arab Emirates,Zambia,Zimbabwe,Lebanon</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.HQ_Service_Model__c</field>
+                <operation>notEqual</operation>
+                <value>Differentiated</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Service_Level__c</field>
+                <operation>equals</operation>
+                <value>1</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Subject</field>
+                <operation>equals</operation>
+                <value>Customer Login Issue - Registration,Customer Login Issue - Login</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Portal Enquiry</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>Customer Services</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Bank Details Request</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>SEDA</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -558,6 +1760,17 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
                 <operation>equals</operation>
                 <value>Compliance</value>
             </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>L3_OneSource</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>AND(
+RecordType.Name = &quot;Process&quot;,
+OR(
+ISPICKVAL(Topic__c, &quot;OneSource&quot;),
+ISPICKVAL(CaseArea__c, &quot;OneSource&quot;)
+)
+)</formula>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>GCS_DDS_DataQuality_L3</assignedTo>
@@ -713,13 +1926,41 @@ ISPICKVAL(Reason1__c,&quot;Status of Application&quot;)
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>GCSICCS</assignedTo>
+            <assignedTo>GCS_ICCS_L2</assignedTo>
             <assignedToType>Queue</assignedToType>
             <formula>And(
-
+ISPICKVAL(Service_Level__c, &quot;2&quot;),
 RecordType.Name = &quot;Cases - Global&quot;,
 ISPICKVAL(Topic__c, &quot;ICCS - IATA Currency Clearance Service&quot;)
 
+)</formula>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>GCSICCS</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Cases - Global</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.HQ_Service_Model__c</field>
+                <operation>notEqual</operation>
+                <value>Differentiated</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>ICCS - IATA Currency Clearance Service</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>GCS_MITABIETA_L2</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>And(
+ISPICKVAL(Service_Level__c, &quot;2&quot;),
+RecordType.Name = &quot;Cases - Global&quot;,
+ISPICKVAL(Topic__c, &quot;Interline Agreements (MITA/BIETA)&quot;)
 )</formula>
         </ruleEntry>
         <ruleEntry>
@@ -733,6 +1974,15 @@ ISPICKVAL(Topic__c, &quot;Interline Agreements (MITA/BIETA)&quot;)
 )</formula>
         </ruleEntry>
         <ruleEntry>
+            <assignedTo>GCS_Coding_L2</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>And(
+ISPICKVAL(Service_Level__c, &quot;2&quot;),
+RecordType.Name = &quot;Cases - Global&quot;,
+ISPICKVAL(Topic__c, &quot;IATA Codes (not applicable to Agents)&quot;)
+)</formula>
+        </ruleEntry>
+        <ruleEntry>
             <assignedTo>GCS_Coding</assignedTo>
             <assignedToType>Queue</assignedToType>
             <formula>And(
@@ -740,6 +1990,182 @@ ISPICKVAL(Topic__c, &quot;Interline Agreements (MITA/BIETA)&quot;)
 RecordType.Name = &quot;Cases - Global&quot;,
 ISPICKVAL(Topic__c, &quot;IATA Codes (not applicable to Agents)&quot;)
 
+)</formula>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>GCS_MRO_SmartHub_L2</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>And(
+ISPICKVAL(Service_Level__c, &quot;2&quot;),
+RecordType.Name = &quot;Cases - Global&quot;,
+ISPICKVAL(Topic__c, &quot;MRO SmartHub&quot;)
+)</formula>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>GCS_MRO_SmartHub</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>And(
+RecordType.Name = &quot;Cases - Global&quot;,
+ISPICKVAL(Topic__c, &quot;MRO SmartHub&quot;)
+)</formula>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>L3_MRO_SmartHub_PM</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>AND(
+OR(
+RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,
+RecordType.Name = &quot;Complaint (IDFS ISS)&quot;,
+RecordType.Name = &quot;Process&quot;
+),
+ISPICKVAL(CaseArea__c, &quot;MRO SmartHub&quot;)
+)</formula>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>ITP_Lab_Registry_Editor</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>IATA Travel Pass</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Subject</field>
+                <operation>contains</operation>
+                <value>New file upload</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>ITP_Lab_Engagement</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>IATA Travel Pass</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Subject</field>
+                <operation>contains</operation>
+                <value>New access request</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>GCS_IATA_Travel_Pass_L2</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>And(
+ISPICKVAL(Service_Level__c, &quot;2&quot;),
+RecordType.Name = &quot;Cases - Global&quot;,
+ISPICKVAL(Topic__c, &quot;IATA Travel Pass&quot;)
+)</formula>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>GCS_IATA_Travel_Pass</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>And(
+RecordType.Name = &quot;Cases - Global&quot;,
+ISPICKVAL(Topic__c, &quot;IATA Travel Pass&quot;)
+)</formula>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>L3_ITP_Lab_Registry_Editor</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Internal Cases (IDFS ISS),Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.Category__c</field>
+                <operation>equals</operation>
+                <value>Pharmaceutical</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>IATA Travel Pass</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Changes / Updates,Closure / Cancellation,Sign Up / Join</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>L3_ITP_Lab_App_Manager</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Internal Cases (IDFS ISS),Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.Category__c</field>
+                <operation>equals</operation>
+                <value>Pharmaceutical</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>IATA Travel Pass</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>General information,User management,Report issue / Technical Issue</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>L3_ITP_Travel_Pass_PM</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Internal Cases (IDFS ISS),Process</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>IATA Travel Pass</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>GCS_Incident_Data_Exchange_L2</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>And(
+ISPICKVAL(Service_Level__c, &quot;2&quot;),
+RecordType.Name = &quot;Cases - Global&quot;,
+ISPICKVAL(Topic__c, &quot;IDX - Incident Data Exchange&quot;)
+
+)</formula>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>GCS_Incident_Data_Exchange</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>And(
+RecordType.Name = &quot;Cases - Global&quot;,
+ISPICKVAL(Topic__c, &quot;IDX - Incident Data Exchange&quot;)
+)</formula>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>L3_Incident_Data_Exchange</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>AND(
+OR(
+RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,
+RecordType.Name = &quot;Complaint (IDFS ISS)&quot;,
+RecordType.Name = &quot;Process&quot;
+),
+ISPICKVAL(CaseArea__c, &quot;IDX - Incident Data Exchange&quot;)
 )</formula>
         </ruleEntry>
         <ruleEntry>
@@ -787,7 +2213,7 @@ and(RecordType.Name = &quot;Process&quot;,ISPICKVAL(Reason1__c,&quot;Report issu
 
 ISPICKVAL(CaseArea__c, &quot;ICCS&quot;),
 
-or(ISPICKVAL(Reason1__c,&quot;Content inquiry / issue&quot;),ISPICKVAL(Reason1__c,&quot;ISS Calendar Maintenance&quot;),ISPICKVAL(Reason1__c,&quot;Settlement related query&quot;),ISPICKVAL(Reason1__c,&quot;Task request&quot;)
+or(ISPICKVAL(Reason1__c,&quot;Content inquiry / issue&quot;),ISPICKVAL(Reason1__c,&quot;ISS Calendar Maintenance&quot;),ISPICKVAL(Reason1__c,&quot;Settlement related query&quot;),ISPICKVAL(Reason1__c,&quot;Task request&quot;),ISPICKVAL(Reason1__c,&quot;Internal Support&quot;)
 
 ))</formula>
             <template>All/IDFS_Caseassignmentqueue</template>
@@ -1169,11 +2595,11 @@ Product__r.Product_Section__c = &quot;APWP01&quot;
         <ruleEntry>
             <assignedTo>Cases_Emirates</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>((1 AND (2 OR 7) AND 3 AND 4) OR (1 AND 4 AND (5 OR 6) ) OR (8 AND 9 AND 10))</booleanFilter>
+            <booleanFilter>((1 AND (2 OR 7 OR 11) AND 3 AND 4) OR (1 AND 4 AND (5 OR 6) ) OR (8 AND 9 AND 10))</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordType__c</field>
                 <operation>equals</operation>
-                <value>Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia,Complaint (IDFS ISS),SEDA</value>
+                <value>Cases - Europe,Cases - Americas,Cases - Africa &amp; Middle East,Cases - Asia &amp; Pacific,Cases - China &amp; North Asia,Complaint (IDFS ISS),SEDA,Cases - Global,Process</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Account.Name</field>
@@ -1220,11 +2646,16 @@ Product__r.Product_Section__c = &quot;APWP01&quot;
                 <operation>contains</operation>
                 <value>Follow up Settlement</value>
             </criteriaItems>
+            <criteriaItems>
+                <field>Account.HQ_Service_Model__c</field>
+                <operation>equals</operation>
+                <value>Differentiated</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>Differentiated_Service_Model_Agency</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 AND (2 OR 3 OR 4 OR 5 OR 6 OR 7 OR 8 OR 9)</booleanFilter>
+            <booleanFilter>1 AND (2 OR 3 OR 4 OR 5 OR 6 OR 7 OR 8 OR 9 OR 11) AND 10</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
@@ -1270,6 +2701,44 @@ Product__r.Product_Section__c = &quot;APWP01&quot;
                 <operation>equals</operation>
                 <value>08337022,08344641,08344991,32300085,17334144,2365160,24345801,16335340,91200723,57230670</value>
             </criteriaItems>
+            <criteriaItems>
+                <field>Account.Sector__c</field>
+                <operation>contains</operation>
+                <value>Agent</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Account.HQ_Service_Model__c</field>
+                <operation>equals</operation>
+                <value>Differentiated</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>GCS_IATAN_L2</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>AND(
+ISPICKVAL(Service_Level__c, &quot;2&quot;),
+or(
+RecordType.Name = &quot;Complaint (IDFS ISS)&quot;,
+RecordType.Name = &quot;Cases - Global&quot;
+),
+
+or(
+ISPICKVAL(Topic__c, &quot;Accreditation IATAN (US)&quot;),
+and(
+or(
+ISPICKVAL(Topic__c, &quot;IATA AgentExperience (Web/Mobile App)&quot;),
+ISPICKVAL(Topic__c, &quot;ID Card (Print/Digital)&quot;)
+),
+or(
+ISPICKVAL(BSPCountry__c, &quot;Guam&quot;),
+ISPICKVAL(BSPCountry__c, &quot;Northern Mariana Islands&quot;),
+ISPICKVAL(BSPCountry__c, &quot;Palau, Republic of&quot;),
+ISPICKVAL(BSPCountry__c, &quot;United States&quot;)
+)
+)
+
+)
+)</formula>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>GCS_IATAN</assignedTo>
@@ -1970,10 +3439,29 @@ or(
 ISPICKVAL(BSPCountry__c, &quot;Iran, Islamic Republic of&quot;), 
 ISPICKVAL(BSPCountry__c, &quot;Syria&quot;), 
 ISPICKVAL(BSPCountry__c, &quot;Jordan&quot;), 
-ISPICKVAL(BSPCountry__c, &quot;Lebanon&quot;) , 
 ISPICKVAL(BSPCountry__c, &quot;Palestinian Territories, Occupied&quot;), 
 ISPICKVAL(BSPCountry__c, &quot;Iraq&quot;), 
 ISPICKVAL(BSPCountry__c, &quot;Afghanistan&quot;) 
+) 
+)</formula>
+            <template>All/IDFS_Caseassignmentqueue</template>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>CasesLebanon</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>AND( 
+or( 
+RecordType.Name = &quot;Complaint (IDFS ISS)&quot;, 
+RecordType.Name = &quot;Cases - Global&quot; 
+), 
+
+or( 
+ISPICKVAL(Topic__c, &quot;IATA AgentExperience (Web/Mobile App)&quot;), 
+ISPICKVAL(Topic__c, &quot;ID Card (Print/Digital)&quot;) 
+), 
+
+or( 
+ISPICKVAL(BSPCountry__c, &quot;Lebanon&quot;)
 ) 
 )</formula>
             <template>All/IDFS_Caseassignmentqueue</template>
@@ -2394,7 +3882,7 @@ ISPICKVAL(BSPCountry__c, &quot;Albania&quot;),
 ISPICKVAL(BSPCountry__c, &quot;Bosnia and Herzegovina&quot;), 
 ISPICKVAL(BSPCountry__c, &quot;Croatia&quot;), 
 ISPICKVAL(BSPCountry__c, &quot;Kosovo&quot;) , 
-ISPICKVAL(BSPCountry__c, &quot;Macedonia, the former Yugoslav Republic of&quot;), 
+ISPICKVAL(BSPCountry__c, &quot;Republic of North Macedonia&quot;), 
 ISPICKVAL(BSPCountry__c, &quot;Montenegro&quot;), 
 ISPICKVAL(BSPCountry__c, &quot;Serbia&quot;), 
 ISPICKVAL(BSPCountry__c, &quot;Slovenia&quot;) 
@@ -3016,22 +4504,21 @@ ISPICKVAL(Reason1__c,&quot;Privacy / Data protection&quot;)
         <ruleEntry>
             <assignedTo>GCS_Corporate_Taxation</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <formula>AND(
-or(
-RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,
-RecordType.Name = &quot;Complaint (IDFS ISS)&quot;,
-RecordType.Name = &quot;Process&quot;
-),
-or(
-ISPICKVAL(CaseArea__c, &quot;IASC&quot;),
-ISPICKVAL(CaseArea__c, &quot;FFP&quot;),
-ISPICKVAL(CaseArea__c, &quot;Airsat&quot;),
-ISPICKVAL(CaseArea__c, &quot;FDC&quot;),
-ISPICKVAL(CaseArea__c, &quot;IMX&quot;)
-),
-
-ISPICKVAL(Reason1__c,&quot;Tax Forms / information&quot;)
-)</formula>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Internal Cases (IDFS ISS),Process,Complaint (IDFS ISS)</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>AirportIS,CargoIS,Direct Data Solutions (DDS),GAP,MarketIS,PaxIS,IASC,FFP,Airsat,FDC,IMX</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Reason1__c</field>
+                <operation>equals</operation>
+                <value>Tax Forms / information</value>
+            </criteriaItems>
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
@@ -3819,6 +5306,18 @@ or(ISPICKVAL(Reason1__c, &quot;Changes / Updates&quot;),ISPICKVAL(Reason1__c, &q
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
+            <assignedTo>GCS_TreasuryDashboard_L2</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>AND(
+ISPICKVAL(Service_Level__c, &quot;2&quot;),
+or(
+RecordType.Name = &quot;Complaint (IDFS ISS)&quot;,
+RecordType.Name = &quot;Cases - Global&quot;
+),
+ISPICKVAL(Topic__c, &quot;Treasury Dashboard&quot;)
+)</formula>
+        </ruleEntry>
+        <ruleEntry>
             <assignedTo>GCS_TreasuryDashboard</assignedTo>
             <assignedToType>Queue</assignedToType>
             <formula>AND(
@@ -3827,6 +5326,21 @@ RecordType.Name = &quot;Complaint (IDFS ISS)&quot;,
 RecordType.Name = &quot;Cases - Global&quot;
 ),
 ISPICKVAL(Topic__c, &quot;Treasury Dashboard&quot;)
+)</formula>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>GCS_Weblink_L2</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>AND(
+ISPICKVAL(Service_Level__c, &quot;2&quot;),
+or(
+RecordType.Name = &quot;Complaint (IDFS ISS)&quot;,
+RecordType.Name = &quot;Cases - Global&quot;
+),
+or (
+ISPICKVAL(Topic__c, &quot;Weblink&quot;) ,
+ISPICKVAL(Topic__c, &quot;NDC – New Distribution Capability&quot;)
+)
 )</formula>
         </ruleEntry>
         <ruleEntry>
@@ -3839,8 +5353,21 @@ RecordType.Name = &quot;Cases - Global&quot;
 ),
 or (
 ISPICKVAL(Topic__c, &quot;Weblink&quot;) ,
-ISPICKVAL(Topic__c, &quot;NDC – New Distribution Capability&quot;)
+ISPICKVAL(Topic__c, &quot;NDC – New Distribution Capability&quot;),
+ISPICKVAL(Topic__c, &quot;NDCLink&quot;)
 )
+)</formula>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>GCS_OnlineStore_L2</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>AND(
+ISPICKVAL(Service_Level__c, &quot;2&quot;),
+or(
+RecordType.Name = &quot;Complaint (IDFS ISS)&quot;,
+RecordType.Name = &quot;Cases - Global&quot;
+),
+ISPICKVAL(Topic__c, &quot;IATA Store&quot;)
 )</formula>
         </ruleEntry>
         <ruleEntry>
@@ -3855,6 +5382,18 @@ ISPICKVAL(Topic__c, &quot;IATA Store&quot;)
 )</formula>
         </ruleEntry>
         <ruleEntry>
+            <assignedTo>GCS_Timatic_L2</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>AND(
+ISPICKVAL(Service_Level__c, &quot;2&quot;),
+or(
+RecordType.Name= &quot;Complaint (IDFS ISS)&quot;,
+RecordType.Name= &quot;Cases - Global&quot;
+),
+ISPICKVAL(Topic__c, &quot;Timatic Solutions&quot;)
+)</formula>
+        </ruleEntry>
+        <ruleEntry>
             <assignedTo>GCS_Timatic</assignedTo>
             <assignedToType>Queue</assignedToType>
             <formula>AND(
@@ -3863,6 +5402,18 @@ RecordType.Name= &quot;Complaint (IDFS ISS)&quot;,
 RecordType.Name= &quot;Cases - Global&quot;
 ),
 ISPICKVAL(Topic__c, &quot;Timatic Solutions&quot;)
+)</formula>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>GCS_SelfStudyCourses_L2</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>AND(
+ISPICKVAL(Service_Level__c, &quot;2&quot;),
+or(
+RecordType.Name = &quot;Complaint (IDFS ISS)&quot;,
+RecordType.Name = &quot;Cases - Global&quot;
+),
+ISPICKVAL(Topic__c, &quot;Self-study courses&quot;)
 )</formula>
         </ruleEntry>
         <ruleEntry>
@@ -3877,6 +5428,18 @@ ISPICKVAL(Topic__c, &quot;Self-study courses&quot;)
 )</formula>
         </ruleEntry>
         <ruleEntry>
+            <assignedTo>GCS_InstructorLedTraining_L2</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>AND(
+ISPICKVAL(Service_Level__c, &quot;2&quot;),
+or(
+RecordType.Name= &quot;Complaint (IDFS ISS)&quot;,
+RecordType.Name= &quot;Cases - Global&quot;
+),
+ISPICKVAL(Topic__c, &quot;Instructor led training&quot;)
+)</formula>
+        </ruleEntry>
+        <ruleEntry>
             <assignedTo>GCS_InstructorLedTraining</assignedTo>
             <assignedToType>Queue</assignedToType>
             <formula>AND(
@@ -3885,6 +5448,21 @@ RecordType.Name= &quot;Complaint (IDFS ISS)&quot;,
 RecordType.Name= &quot;Cases - Global&quot;
 ),
 ISPICKVAL(Topic__c, &quot;Instructor led training&quot;)
+)</formula>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>GCS_TACT_L2</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>AND(
+ISPICKVAL(Service_Level__c, &quot;2&quot;),
+or(
+RecordType.Name= &quot;Complaint (IDFS ISS)&quot;,
+RecordType.Name= &quot;Cases - Global&quot;
+),
+or(
+ISPICKVAL(Topic__c, &quot;IATA net rates&quot;),
+ISPICKVAL(Topic__c, &quot;TACT&quot;)
+)
 )</formula>
         </ruleEntry>
         <ruleEntry>
@@ -3898,6 +5476,25 @@ RecordType.Name= &quot;Cases - Global&quot;
 or(
 ISPICKVAL(Topic__c, &quot;IATA net rates&quot;),
 ISPICKVAL(Topic__c, &quot;TACT&quot;)
+)
+)</formula>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>GCS_T_T_L2</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>AND(
+ISPICKVAL(Service_Level__c, &quot;2&quot;),
+or(
+RecordType.Name= &quot;Complaint (IDFS ISS)&quot;,
+RecordType.Name= &quot;Cases - Global&quot;
+),
+or(
+ISPICKVAL(Topic__c, &quot;CheckACode (Online/WebService)&quot;),
+ISPICKVAL(Topic__c, &quot;eBroadcast&quot;),
+ISPICKVAL(Topic__c, &quot;Agency Database Files&quot;),
+ISPICKVAL(Topic__c, &quot;Global Agency Directory&quot;),
+ISPICKVAL(Topic__c, &quot;Agency Data Products&quot;),
+ISPICKVAL(Topic__c, &quot;IATA AgentExperience(Web/Mobile App)&quot;)
 )
 )</formula>
         </ruleEntry>
@@ -3920,6 +5517,18 @@ ISPICKVAL(Topic__c, &quot;IATA AgentExperience(Web/Mobile App)&quot;)
 )</formula>
         </ruleEntry>
         <ruleEntry>
+            <assignedTo>GCS_Publications_L2</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>AND(
+ISPICKVAL(Service_Level__c, &quot;2&quot;),
+or(
+RecordType.Name= &quot;Complaint (IDFS ISS)&quot;,
+RecordType.Name= &quot;Cases - Global&quot;
+),
+ISPICKVAL(Topic__c, &quot;Publications&quot;)
+)</formula>
+        </ruleEntry>
+        <ruleEntry>
             <assignedTo>GCS_Publications</assignedTo>
             <assignedToType>Queue</assignedToType>
             <formula>AND(
@@ -3929,6 +5538,29 @@ RecordType.Name= &quot;Cases - Global&quot;
 ),
 ISPICKVAL(Topic__c, &quot;Publications&quot;)
 )</formula>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>GCS_BIS_L2</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>AND(
+ISPICKVAL(Service_Level__c, &quot;2&quot;),
+or(
+RecordType.Name = &quot;Complaint (IDFS ISS)&quot;,
+RecordType.Name = &quot;Cases - Global&quot;
+),
+or(
+ISPICKVAL(Topic__c, &quot;Airsat&quot;),
+ISPICKVAL(Topic__c, &quot;AirportIS&quot;),
+ISPICKVAL(Topic__c, &quot;CargoIS&quot;),
+ISPICKVAL(Topic__c, &quot;Direct Data Solutions (DDS)&quot;),
+ISPICKVAL(Topic__c, &quot;FFP - Frequent Flyer Program Benchmark&quot;),
+ISPICKVAL(Topic__c, &quot;Flight Data Connect&quot;),
+ISPICKVAL(Topic__c, &quot;I-ASC: IATA Safety Culture Survey&quot;),
+ISPICKVAL(Topic__c, &quot;IMX - Integrated Management Solutions&quot;),
+ISPICKVAL(Topic__c, &quot;GAP&quot;),
+ISPICKVAL(Topic__c, &quot;MarketIS&quot;),
+ISPICKVAL(Topic__c, &quot;PAXIS&quot;)
+))</formula>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>GCS_BIS</assignedTo>
@@ -4364,6 +5996,25 @@ OR(
 Product__r.Product_Section__c = &quot;TRQ003&quot;		
 )</formula>
             <template>All/IDFS_Caseassignmentqueue</template>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>L3_T_T_TIDS</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <formula>And(
+	or(
+		RecordType.Name = &quot;Internal Cases (IDFS ISS)&quot;,
+		RecordType.Name = &quot;Process&quot;
+		),
+		ISPICKVAL(CaseArea__c, &quot;TIDS&quot;),
+		or(
+		ISPICKVAL(Reason1__c, &quot;Changes / Updates&quot;),
+		ISPICKVAL(Reason1__c, &quot;Closure / Cancellation&quot;),
+		ISPICKVAL(Reason1__c, &quot;General information&quot;),
+		ISPICKVAL(Reason1__c, &quot;New application - forms, procedures, fees&quot;),
+		ISPICKVAL(Reason1__c, &quot;Report issue / Technical Issue&quot;),
+		ISPICKVAL(Reason1__c, &quot;Status of Application&quot;)
+	)
+)</formula>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>L3_Training_ProductMgmt_Distribution</assignedTo>
@@ -5033,18 +6684,31 @@ ISPICKVAL(Reason1__c, &quot;Credit Card Deletion&quot;)
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>GCS_SIS</assignedTo>
+            <assignedTo>GCS_SIS_L2</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>(1 OR 2) AND 3</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
-                <value>Cases - Global</value>
+                <value>Cases - Global,Complaint (IDFS ISS)</value>
             </criteriaItems>
             <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>SIS - Simplified Invoicing &amp; Settlement,SIS Membership</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Service_Level__c</field>
+                <operation>equals</operation>
+                <value>2</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>GCS_SIS</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
-                <value>Complaint (IDFS ISS)</value>
+                <value>Cases - Global,Complaint (IDFS ISS)</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Topic__c</field>
@@ -5053,23 +6717,55 @@ ISPICKVAL(Reason1__c, &quot;Credit Card Deletion&quot;)
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>GCS_iiNet</assignedTo>
+            <assignedTo>GCS_iiNet_L2</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>(1 OR 2) AND 3</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
-                <value>Cases - Global</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.RecordTypeId</field>
-                <operation>equals</operation>
-                <value>Complaint (IDFS ISS)</value>
+                <value>Cases - Global,Complaint (IDFS ISS)</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Topic__c</field>
                 <operation>equals</operation>
                 <value>iiNet</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Service_Level__c</field>
+                <operation>equals</operation>
+                <value>2</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>GCS_iiNet</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Cases - Global,Complaint (IDFS ISS)</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>iiNet</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>GCS_ICH_L2</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <criteriaItems>
+                <field>Case.RecordTypeId</field>
+                <operation>equals</operation>
+                <value>Cases - Global,Complaint (IDFS ISS)</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Topic__c</field>
+                <operation>equals</operation>
+                <value>ICH - IATA Clearing House</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Service_Level__c</field>
+                <operation>equals</operation>
+                <value>2</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -5139,7 +6835,7 @@ ISPICKVAL(Reason1__c, &quot;Credit Card Deletion&quot;)
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>GCS_E_F</assignedTo>
+            <assignedTo>GCS_E_F_L2</assignedTo>
             <assignedToType>Queue</assignedToType>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
@@ -5151,9 +6847,14 @@ ISPICKVAL(Reason1__c, &quot;Credit Card Deletion&quot;)
                 <operation>equals</operation>
                 <value>E&amp;F - Enhancement &amp; Financing</value>
             </criteriaItems>
+            <criteriaItems>
+                <field>Case.Service_Level__c</field>
+                <operation>equals</operation>
+                <value>2</value>
+            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>GCS_MarketIS</assignedTo>
+            <assignedTo>GCS_E_F</assignedTo>
             <assignedToType>Queue</assignedToType>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
@@ -5163,77 +6864,7 @@ ISPICKVAL(Reason1__c, &quot;Credit Card Deletion&quot;)
             <criteriaItems>
                 <field>Case.Topic__c</field>
                 <operation>equals</operation>
-                <value>MarketIS</value>
-            </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>GCS_CargoIS</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.RecordTypeId</field>
-                <operation>equals</operation>
-                <value>Complaint (IDFS ISS),Cases - Global</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Topic__c</field>
-                <operation>equals</operation>
-                <value>CargoIS</value>
-            </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>GCS_GAP</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.RecordTypeId</field>
-                <operation>equals</operation>
-                <value>Complaint (IDFS ISS),Cases - Global</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Topic__c</field>
-                <operation>equals</operation>
-                <value>GAP</value>
-            </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>GCS_DDS</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.RecordTypeId</field>
-                <operation>equals</operation>
-                <value>Complaint (IDFS ISS),Cases - Global</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Topic__c</field>
-                <operation>equals</operation>
-                <value>Direct Data Solutions (DDS)</value>
-            </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>GCS_AirportIS</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.RecordTypeId</field>
-                <operation>equals</operation>
-                <value>Complaint (IDFS ISS),Cases - Global</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Topic__c</field>
-                <operation>equals</operation>
-                <value>AirportIS</value>
-            </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>GCS_PaxIS</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.RecordTypeId</field>
-                <operation>equals</operation>
-                <value>Complaint (IDFS ISS),Cases - Global</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Topic__c</field>
-                <operation>equals</operation>
-                <value>PaxIS</value>
+                <value>E&amp;F - Enhancement &amp; Financing</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -5271,7 +6902,7 @@ ISPICKVAL(Reason1__c, &quot;Credit Card Deletion&quot;)
             <criteriaItems>
                 <field>Case.Reason1__c</field>
                 <operation>equals</operation>
-                <value>Billing Query,Billing rerun</value>
+                <value>Billing Query,Billing rerun,Customer Charge Request</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -5519,25 +7150,6 @@ ISPICKVAL(Reason1__c,&quot;Support escalation&quot;),ISPICKVAL(Reason1__c,&quot;
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>GCS_Corporate_Taxation</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.RecordTypeId</field>
-                <operation>equals</operation>
-                <value>Internal Cases (IDFS ISS),Process</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.CaseArea__c</field>
-                <operation>equals</operation>
-                <value>AirportIS,CargoIS,Direct Data Solutions (DDS),GAP,MarketIS,PaxIS</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Reason1__c</field>
-                <operation>equals</operation>
-                <value>Tax Forms / information</value>
-            </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
             <assignedTo>iiNet_Business_Team</assignedTo>
             <assignedToType>Queue</assignedToType>
             <booleanFilter>1 AND ((2 AND 3) OR 4)</booleanFilter>
@@ -5695,20 +7307,6 @@ ISPICKVAL(Reason1__c,&quot;Support escalation&quot;),ISPICKVAL(Reason1__c,&quot;
                 <field>Case.RecordType__c</field>
                 <operation>equals</operation>
                 <value>Cases - IFG</value>
-            </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>Cases_CNS</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.CNSCase__c</field>
-                <operation>equals</operation>
-                <value>True</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.RecordTypeId</field>
-                <operation>notEqual</operation>
-                <value>Complaint (IDFS ISS),IATA Financial Review,OSCAR Communication</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -6120,7 +7718,7 @@ ISPICKVAL(Reason1__c,&quot;Support escalation&quot;),ISPICKVAL(Reason1__c,&quot;
             <criteriaItems>
                 <field>Case.Country_concerned_by_the_query__c</field>
                 <operation>equals</operation>
-                <value>Albania,Bosnia and Herzegovina,Croatia,Kosovo,Latvia,&quot;Macedonia, the former Yugoslav Republic of&quot;,Montenegro,Netherlands,Serbia,Slovenia,Suriname</value>
+                <value>Albania,Bosnia and Herzegovina,Croatia,Kosovo,Latvia,Republic of North Macedonia,Montenegro,Netherlands,Serbia,Slovenia,Suriname</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -6201,7 +7799,7 @@ ISPICKVAL(Reason1__c,&quot;Support escalation&quot;),ISPICKVAL(Reason1__c,&quot;
             <criteriaItems>
                 <field>Case.Country_concerned_by_the_query__c</field>
                 <operation>equals</operation>
-                <value>Latvia,Liechtenstein,Lithuania,Luxembourg,&quot;Macedonia, the former Yugoslav Republic of&quot;,Malta,&quot;Moldova, Republic of&quot;,Montenegro,Netherlands,Norway,Poland,Portugal,Romania,Russian Federation,Serbia,Slovakia,Slovenia,Spain,Sweden</value>
+                <value>Latvia,Liechtenstein,Lithuania,Luxembourg,Republic of North Macedonia,Malta,&quot;Moldova, Republic of&quot;,Montenegro,Netherlands,Norway,Poland,Portugal,Romania,Russian Federation,Serbia,Slovakia,Slovenia,Spain,Sweden</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Country_concerned_by_the_query__c</field>
@@ -6430,7 +8028,7 @@ ISPICKVAL(BSPCountry__c,&quot;Russian Federation&quot;)
         <ruleEntry>
             <assignedTo>ID_Card_Global_Mailbox</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>1 OR (2 AND 3 AND 4)</booleanFilter>
+            <booleanFilter>1 OR (2 AND 3 AND 4 AND 5)</booleanFilter>
             <criteriaItems>
                 <field>Case.Origin</field>
                 <operation>equals</operation>
@@ -6450,6 +8048,11 @@ ISPICKVAL(BSPCountry__c,&quot;Russian Federation&quot;)
                 <field>Case.BSPCountry__c</field>
                 <operation>notEqual</operation>
                 <value>United States</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>notEqual</operation>
+                <value>Corporate Compliance</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -6473,7 +8076,7 @@ ISPICKVAL(BSPCountry__c,&quot;Russian Federation&quot;)
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>Weblinkheadoffice</assignedTo>
+            <assignedTo>WEBLink_Business</assignedTo>
             <assignedToType>Queue</assignedToType>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
@@ -6507,7 +8110,7 @@ ISPICKVAL(BSPCountry__c,&quot;Russian Federation&quot;)
             <criteriaItems>
                 <field>Account.Region__c</field>
                 <operation>equals</operation>
-                <value>Europe,Africa,Americas</value>
+                <value>Americas,Asia Pacific,China &amp; North Asia,Europe,Middle East &amp; North Africa</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -7266,11 +8869,11 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
         <ruleEntry>
             <assignedTo>Cases_Complaints_GDC_MAD</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>(1 AND 7) OR (2 AND 3 AND 5 AND 7) OR (4 AND 6)</booleanFilter>
+            <booleanFilter>(1 AND 2) OR (2 AND 3 AND 5) OR (4 AND 6)</booleanFilter>
             <criteriaItems>
-                <field>Case.Subject</field>
-                <operation>startsWith</operation>
-                <value>#C</value>
+                <field>Case.RecordTypeDeveloperName__c</field>
+                <operation>equals</operation>
+                <value>ComplaintIDFS</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Region__c</field>
@@ -7297,26 +8900,7 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
                 <operation>notEqual</operation>
                 <value>IATA Internal User</value>
             </criteriaItems>
-            <criteriaItems>
-                <field>Case.Subject</field>
-                <operation>notContain</operation>
-                <value>#C Asia &amp; Pacific,#C China &amp; North Asia</value>
-            </criteriaItems>
             <template>All/IDFS_Caseassignmentqueue</template>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>TSP_Certification_process</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.Origin</field>
-                <operation>equals</operation>
-                <value>E-mail to Case - TSP Certification</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.RecordTypeId</field>
-                <operation>equals</operation>
-                <value>Process,Internal Cases (IDFS ISS)</value>
-            </criteriaItems>
         </ruleEntry>
         <ruleEntry>
             <assignedTo>Cases_Complaints_GDC_MAD</assignedTo>
@@ -7344,47 +8928,83 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>ACCA_Bug_Fix</assignedTo>
+            <assignedTo>Cases_Complaints_SIN</assignedTo>
             <assignedToType>Queue</assignedToType>
+            <booleanFilter>(1 AND 2 AND 3) OR (1 AND 4)</booleanFilter>
             <criteriaItems>
-                <field>Case.Origin</field>
+                <field>Case.Region__c</field>
                 <operation>equals</operation>
-                <value>E-mail to Case - ACCA Bug Fix</value>
+                <value>Asia &amp; Pacific</value>
             </criteriaItems>
             <criteriaItems>
-                <field>Case.RecordTypeId</field>
+                <field>Case.IsComplaint__c</field>
                 <operation>equals</operation>
-                <value>ACCA Bug Fix</value>
+                <value>True</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Subtopic__c</field>
+                <operation>notContain</operation>
+                <value>MITA Interline Agreements,General Queries</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeDeveloperName__c</field>
+                <operation>equals</operation>
+                <value>ComplaintIDFS</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>OperationalManagementHeadOffice</assignedTo>
+            <assignedTo>Cases_Complaints_Americas</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>(1 OR 2 OR 5) OR (3 AND 4)</booleanFilter>
+            <booleanFilter>((1 AND 2 AND 3) OR (1 AND 4)) AND 5</booleanFilter>
             <criteriaItems>
-                <field>Case.Origin</field>
+                <field>Case.Region__c</field>
                 <operation>equals</operation>
-                <value>E-mail to Case - EMD Testing,E-mail to Case - BSPlink,E-mail to Case - BSP Support,E-mail to Case - SNAP,E-mail to Case - CASSlink GVA,E-mail to Case - ISDM,E-mail to Case - Cargolink</value>
+                <value>Americas</value>
             </criteriaItems>
             <criteriaItems>
-                <field>Case.RecordType__c</field>
+                <field>Case.IsComplaint__c</field>
                 <operation>equals</operation>
-                <value>IATA Service Request</value>
+                <value>True</value>
             </criteriaItems>
             <criteriaItems>
-                <field>Case.RecordType__c</field>
-                <operation>equals</operation>
-                <value>Process</value>
+                <field>Case.Subtopic__c</field>
+                <operation>notContain</operation>
+                <value>MITA Interline Agreements,X3 numeric and or 3 digit airline code,Airline Designator Code,Baggage Tag Issuer,General Queries,Location Identifier</value>
             </criteriaItems>
             <criteriaItems>
-                <field>Case.CaseArea__c</field>
+                <field>Case.RecordTypeDeveloperName__c</field>
                 <operation>equals</operation>
-                <value>DPC Management – Card Payment Process,DPC Management - ETSP Process,DPCM – Global data Update Request</value>
+                <value>ComplaintIDFS</value>
             </criteriaItems>
             <criteriaItems>
-                <field>Case.Origin</field>
+                <field>Case.BSPCountry__c</field>
+                <operation>notEqual</operation>
+                <value>Bermuda,Canada</value>
+            </criteriaItems>
+        </ruleEntry>
+        <ruleEntry>
+            <assignedTo>Cases_Complaints_BJS</assignedTo>
+            <assignedToType>Queue</assignedToType>
+            <booleanFilter>(1 AND 2 AND 3) OR (1 AND 4)</booleanFilter>
+            <criteriaItems>
+                <field>Case.Region__c</field>
                 <operation>equals</operation>
-                <value>E-mail to Case - Global Data Update</value>
+                <value>China &amp; North Asia</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.IsComplaint__c</field>
+                <operation>equals</operation>
+                <value>True</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Subtopic__c</field>
+                <operation>notContain</operation>
+                <value>MITA Interline Agreements,General Queries</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.RecordTypeDeveloperName__c</field>
+                <operation>equals</operation>
+                <value>ComplaintIDFS</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -7446,7 +9066,7 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>OperationalManagementAmericas</assignedTo>
+            <assignedTo>OperationalManagementAP</assignedTo>
             <assignedToType>Queue</assignedToType>
             <booleanFilter>(1 OR 2) AND 3 AND 4 AND 5</booleanFilter>
             <criteriaItems>
@@ -7475,7 +9095,7 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>OperationalManagementAfricaME</assignedTo>
+            <assignedTo>OperationalManagementAP</assignedTo>
             <assignedToType>Queue</assignedToType>
             <booleanFilter>(1 OR 2) AND 3 AND 4 AND 5</booleanFilter>
             <criteriaItems>
@@ -7504,7 +9124,7 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>CasesReportingBilling</assignedTo>
+            <assignedTo>OperationalManagementAP</assignedTo>
             <assignedToType>Queue</assignedToType>
             <booleanFilter>((1 OR 2) AND 3 AND 4 AND 5) OR (6)</booleanFilter>
             <criteriaItems>
@@ -8226,7 +9846,7 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
             <criteriaItems>
                 <field>Case.Reason1__c</field>
                 <operation>equals</operation>
-                <value>Customer Charge Request</value>
+                <value>Customer Charge Request,Commercial Products</value>
             </criteriaItems>
             <template>All/IDFS_Caseassignmentqueue</template>
         </ruleEntry>
@@ -8659,7 +10279,7 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>CasesReportingBilling</assignedTo>
+            <assignedTo>OperationalManagementAP</assignedTo>
             <assignedToType>Queue</assignedToType>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
@@ -9699,7 +11319,7 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
             <criteriaItems>
                 <field>Case.BSPCountry__c</field>
                 <operation>equals</operation>
-                <value>Albania,Bosnia and Herzegovina,Croatia,Kosovo,&quot;Macedonia, the former Yugoslav Republic of&quot;,Montenegro,Serbia,Slovenia</value>
+                <value>Albania,Bosnia and Herzegovina,Croatia,Kosovo,Republic of North Macedonia,Montenegro,Serbia,Slovenia</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Origin</field>
@@ -9714,7 +11334,7 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
             <criteriaItems>
                 <field>Case.Subject</field>
                 <operation>contains</operation>
-                <value>Albania,Bosnia and Herzegovina,Croatia,Kosovo,&quot;Macedonia, the former Yugoslav Republic of&quot;,Montenegro,Serbia,Slovenia,Macedonia,Bosnia,Herzegovina</value>
+                <value>Albania,Bosnia and Herzegovina,Croatia,Kosovo,Macedonia,Montenegro,Serbia,Slovenia,Bosnia,Herzegovina</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Subtopic__c</field>
@@ -9976,83 +11596,61 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
             <template>All/IDFS_Caseassignmentstaff</template>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>Cases_Complaints_SIN</assignedTo>
+            <assignedTo>TSP_Certification_process</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>(1 AND 2 AND 3) OR 4</booleanFilter>
             <criteriaItems>
-                <field>Case.Region__c</field>
+                <field>Case.Origin</field>
                 <operation>equals</operation>
-                <value>Asia &amp; Pacific</value>
+                <value>E-mail to Case - TSP Certification</value>
             </criteriaItems>
             <criteriaItems>
-                <field>Case.IsComplaint__c</field>
+                <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
-                <value>True</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Subtopic__c</field>
-                <operation>notContain</operation>
-                <value>MITA Interline Agreements,General Queries</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Subject</field>
-                <operation>startsWith</operation>
-                <value>#C Asia &amp; Pacific</value>
+                <value>Process,Internal Cases (IDFS ISS)</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>Cases_Complaints_Americas</assignedTo>
+            <assignedTo>ACCA_Bug_Fix</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>((1 AND 2 AND 3) OR 4) AND 5</booleanFilter>
             <criteriaItems>
-                <field>Case.Region__c</field>
+                <field>Case.Origin</field>
                 <operation>equals</operation>
-                <value>Americas</value>
+                <value>E-mail to Case - ACCA Bug Fix</value>
             </criteriaItems>
             <criteriaItems>
-                <field>Case.IsComplaint__c</field>
+                <field>Case.RecordTypeId</field>
                 <operation>equals</operation>
-                <value>True</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Subtopic__c</field>
-                <operation>notContain</operation>
-                <value>MITA Interline Agreements,X3 numeric and or 3 digit airline code,Airline Designator Code,Baggage Tag Issuer,General Queries,Location Identifier</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Subject</field>
-                <operation>startsWith</operation>
-                <value>#C Americas</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.BSPCountry__c</field>
-                <operation>notEqual</operation>
-                <value>Bermuda,Canada</value>
+                <value>ACCA Bug Fix</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>Cases_Complaints_BJS</assignedTo>
+            <assignedTo>OperationalManagementHeadOffice</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>(1 AND 2 AND 3) OR 4</booleanFilter>
+            <booleanFilter>(1 OR 2 OR 5) OR (3 AND 4)</booleanFilter>
             <criteriaItems>
-                <field>Case.Region__c</field>
+                <field>Case.Origin</field>
                 <operation>equals</operation>
-                <value>China &amp; North Asia</value>
+                <value>E-mail to Case - EMD Testing,E-mail to Case - BSPlink,E-mail to Case - BSP Support,E-mail to Case - SNAP,E-mail to Case - CASSlink GVA,E-mail to Case - ISDM,E-mail to Case - Cargolink</value>
             </criteriaItems>
             <criteriaItems>
-                <field>Case.IsComplaint__c</field>
+                <field>Case.RecordType__c</field>
                 <operation>equals</operation>
-                <value>True</value>
+                <value>IATA Service Request</value>
             </criteriaItems>
             <criteriaItems>
-                <field>Case.Subtopic__c</field>
-                <operation>notContain</operation>
-                <value>MITA Interline Agreements,General Queries</value>
+                <field>Case.RecordType__c</field>
+                <operation>equals</operation>
+                <value>Process</value>
             </criteriaItems>
             <criteriaItems>
-                <field>Case.Subject</field>
-                <operation>startsWith</operation>
-                <value>#C China &amp; North Asia</value>
+                <field>Case.CaseArea__c</field>
+                <operation>equals</operation>
+                <value>DPC Management – Card Payment Process,DPC Management - ETSP Process,DPCM – Global data Update Request</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.Origin</field>
+                <operation>equals</operation>
+                <value>E-mail to Case - Global Data Update</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -10411,7 +12009,7 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>OperationalManagementAfricaME</assignedTo>
+            <assignedTo>OperationalManagementAP</assignedTo>
             <assignedToType>Queue</assignedToType>
             <booleanFilter>1 OR (2 AND 3 AND 4)</booleanFilter>
             <criteriaItems>
@@ -10686,7 +12284,7 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>OperationalManagementAmericas</assignedTo>
+            <assignedTo>OperationalManagementAP</assignedTo>
             <assignedToType>Queue</assignedToType>
             <booleanFilter>(1 AND 2 AND 3) OR 4 OR (5 AND 6)</booleanFilter>
             <criteriaItems>
@@ -11155,7 +12753,7 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>gabriel@iata.org</assignedTo>
+            <assignedTo>oueidatg2@iata.org</assignedTo>
             <assignedToType>User</assignedToType>
             <booleanFilter>(1 AND 2) OR 3</booleanFilter>
             <criteriaItems>
@@ -11209,26 +12807,6 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
             <template>All/IDFS_Caseassignmentstaff</template>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>corciulos@iata.org</assignedTo>
-            <assignedToType>User</assignedToType>
-            <criteriaItems>
-                <field>Case.CaseArea__c</field>
-                <operation>contains</operation>
-                <value>Product</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Reason1__c</field>
-                <operation>contains</operation>
-                <value>CASS,Normative</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.BSPCountry__c</field>
-                <operation>equals</operation>
-                <value>Italy</value>
-            </criteriaItems>
-            <template>All/IDFS_Caseassignmentstaff</template>
-        </ruleEntry>
-        <ruleEntry>
             <assignedTo>RecycleBinEurope</assignedTo>
             <assignedToType>Queue</assignedToType>
             <criteriaItems>
@@ -11243,30 +12821,12 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>CasesISS</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.Origin</field>
-                <operation>equals</operation>
-                <value>E-mail to Case - ISS</value>
-            </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
             <assignedTo>CasesACCEuropeBankGuarantees</assignedTo>
             <assignedToType>Queue</assignedToType>
             <criteriaItems>
                 <field>Case.Origin</field>
                 <operation>equals</operation>
                 <value>Email to Case - BG noreply</value>
-            </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>ivancans@iata.org</assignedTo>
-            <assignedToType>User</assignedToType>
-            <criteriaItems>
-                <field>Case.Origin</field>
-                <operation>equals</operation>
-                <value>Exact Target commercial TEST</value>
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
@@ -12388,20 +13948,6 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
             </criteriaItems>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>Cases_CNS</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.Origin</field>
-                <operation>equals</operation>
-                <value>Voicemail</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Description</field>
-                <operation>contains</operation>
-                <value>CNS Market</value>
-            </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
             <assignedTo>CasesCentralAmerica</assignedTo>
             <assignedToType>Queue</assignedToType>
             <booleanFilter>(1 OR (2 AND 3) OR 4) AND (5 AND 6)</booleanFilter>
@@ -12944,16 +14490,6 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
             <template>All/IDFS_Caseassignmentstaff</template>
         </ruleEntry>
         <ruleEntry>
-            <assignedTo>CasesAmericasemails</assignedTo>
-            <assignedToType>Queue</assignedToType>
-            <criteriaItems>
-                <field>Case.Origin</field>
-                <operation>equals</operation>
-                <value>E-mail to Case - Americas,E-mail to Case - Americas FAX,E-mail to Case - Agency Services</value>
-            </criteriaItems>
-            <template>All/IDFS_Caseassignmentqueue</template>
-        </ruleEntry>
-        <ruleEntry>
             <assignedTo>Cases_Armenia_Belarus_Turkmenistan</assignedTo>
             <assignedToType>Queue</assignedToType>
             <booleanFilter>(1 OR 2) AND (3 AND 4)</booleanFilter>
@@ -13338,7 +14874,7 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
         <ruleEntry>
             <assignedTo>OtherAll</assignedTo>
             <assignedToType>Queue</assignedToType>
-            <booleanFilter>(1 AND 2) OR 3</booleanFilter>
+            <booleanFilter>(1 AND 2 AND 4) OR 3</booleanFilter>
             <criteriaItems>
                 <field>Case.RecordType__c</field>
                 <operation>notContain</operation>
@@ -13353,6 +14889,11 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
                 <field>Case.Subject</field>
                 <operation>equals</operation>
                 <value>Create temp account</value>
+            </criteriaItems>
+            <criteriaItems>
+                <field>Case.CaseArea__c</field>
+                <operation>notEqual</operation>
+                <value>IATA Travel Pass</value>
             </criteriaItems>
             <template>All/New_Case</template>
         </ruleEntry>
@@ -13424,20 +14965,6 @@ AND(ISPICKVAL(CaseArea__c,&apos;IDPC&apos;),RecordType.DeveloperName=&apos;Inter
                 <field>Case.Region__c</field>
                 <operation>equals</operation>
                 <value>Europe,GVA HO,Europe (Americas Countries)</value>
-            </criteriaItems>
-        </ruleEntry>
-        <ruleEntry>
-            <assignedTo>sahuck@iata.org</assignedTo>
-            <assignedToType>User</assignedToType>
-            <criteriaItems>
-                <field>Case.RecordTypeId</field>
-                <operation>equals</operation>
-                <value>ACCA Customer Service Request (Internal)</value>
-            </criteriaItems>
-            <criteriaItems>
-                <field>Case.Origin</field>
-                <operation>equals</operation>
-                <value>E-mail to Case - ACCA CSR Internal</value>
             </criteriaItems>
         </ruleEntry>
     </assignmentRule>

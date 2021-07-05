@@ -76,11 +76,12 @@ public with sharing class TIDS_Test {
 		createUser(profileId);
 		
 		//TIDS service
-		portalApplications = new Portal_Applications__c();
+		portalApplications = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
 		portalApplications.Name = TIDS_Constant.TIDSVALUE;
 		portalApplications.TIDS_Total_Ownership_Minimum__c=1;
 		portalApplications.TIDS_Total_Ownership_Maximum__c=100;
 		portalApplications.TIDS_Non_Eligible_Location_Countries__c='CA';
+		portalApplications.Functional_Role__c = 'TIDS';
 		insert portalApplications;
 
 		List<Code_Range__c>  lrange  = new List<Code_Range__c>();
@@ -461,6 +462,7 @@ public with sharing class TIDS_Test {
 		TIDS_Controller.applicationSubmitted(caseId, applicationsettings,applicationType );
 		//Vetting Approved
 		Case mycase = [Select Id, ContactId,Status From Case Where Id=:caseId limit 1];
+        mycase.Status =TIDS_Constant.IS_INPROGRESS;
 		mycase.ContactId= contactId;
 		update mycase;
 		userType='vetting';
@@ -506,6 +508,7 @@ public with sharing class TIDS_Test {
 		TIDS_Controller.applicationSubmitted(caseId, applicationsettings,applicationType );
 		//Vetting Approved
 		Case mycase = [Select Id, ContactId,Status From Case Where Id=:caseId limit 1];
+        mycase.Status =TIDS_Constant.IS_INPROGRESS;
 		mycase.ContactId= contactId;
 		update mycase;
 		userType='vetting';
@@ -538,6 +541,7 @@ public with sharing class TIDS_Test {
 		String applicationsettings;
 		String reason='';
 		readObjectsId();
+     	createHOSRight(contactId, TIDS_Constant.ADM_HOP);
 		applicationsettings ='{\"userType\":\"client\",\"applicationType\":\"NEW_HO\",\"userInfo\":{\"UserName\":\"PRIMARY USE FOR TIDS COND TEST\",\"UserId\":\"@userId\",\"ContactId\":\"@contatId\",\"tidsAccount\":{\"Id\":\"@accountId\",\"Country_ISO_Code\":\"CA\",\"RecordType\":{\"Name\":\"Standard Account\",\"Id\":\"@accountId\"}}},\"businessRules\":{\"Name\":\"TIDS\",\"Id\":\"a2w4E000000DaNDQA0\",\"TIDS_Total_Ownership_Minimum\":\"95\",\"TIDS_Total_Ownership_Maximum\":\"101\"},\"tidsCase\":{\"Id\":\"@caseId\"},\"sections\":{\"Welcome\":{\"sectionName\":\"Welcome\",\"cmpName\":\"new-applicant\",\"values\":{\"companyLegalName\":\"New HO Application - For Test Classes\",\"countryName\":\"Canada\",\"countryIsoCode\":\"CA\",\"countryId\":\"@countryId\"},\"sectionDecision\":\"Not_Started\",\"errors\":[]},\"AgencyLegalStatus\":{\"sectionName\":\"Agency Legal Status\",\"cmpName\":\"agency-legal-status\",\"values\":{\"tradingName\":\"Test Classes Application\",\"companyType\":\"C\",\"taxIdVATNumber1\":\"123456\",\"taxIdVATNumber2\":\"987654\",\"businessRegistration\":\"852963\",\"inOperationsSince\":\"2020-05-04\"},\"sectionDecision\":\"Not_Started\",\"errors\":[]},\"ShareholderDetails\":{\"sectionName\":\"Ownership Details\",\"cmpName\":\"shareholder-details\",\"values\":[{\"percentage\":\"50\",\"name\":\"Test\",\"email\":\"test@testclasses.com\",\"type\":\"Person\",\"id\":\"efba\"},{\"percentage\":\"50\",\"type\":\"Company\",\"name\":\"Class\",\"email\":\"class@testclasses.com\",\"id\":\"c6ab\"}],\"sectionDecision\":\"Not_Started\",\"errors\":[]},\"Address\":{\"sectionName\":\"Address\",\"cmpName\":\"address\",\"values\":{\"address\":\"10 Test Class Street\",\"city\":\"Laval\",\"citygeonameId\":6050610,\"state\":{\"Id\":\"@stateId\",\"label\":\"Quebec\",\"value\":\"CA-QC\"},\"postalCode\":\"H1H2H3\",\"countryName\":\"Canada\",\"countryIsoCode\":\"CA\",\"countryId\":\"@countryId\"},\"sectionDecision\":\"Not_Started\",\"errors\":[]},\"Mailing\":{\"sectionName\":\"Mailing\",\"cmpName\":\"mailing\",\"values\":{\"isMailingSameAsPhysicalAddress\":\"false\",\"mailingAddress\":\"10 Mailing Street\",\"city\":\"Seattle\",\"citygeonameId\":5809844,\"state\":{\"Id\":\"@stateId\",\"label\":\"Washington\",\"value\":\"US-WA\"},\"postalCode\":\"98162\",\"countryName\":\"United States\",\"countryIsoCode\":\"US\",\"countryId\":\"@countryId\"},\"sectionDecision\":\"Not_Started\",\"errors\":[]},\"Contact\":{\"sectionName\":\"Contact\",\"cmpName\":\"contact\",\"values\":{\"preferedLanguage\":\"ENG\",\"phone\":\"15148740202\",\"fax\":\"15148743636\",\"businessEmail\":\"debonol@iata.org\",\"webSite\":\"www.testclasses.com\",\"omFirstName\":\"Test\",\"omLastName\":\"Classes\"},\"sectionDecision\":\"Not_Started\",\"errors\":[]},\"BusinessProfile\":{\"sectionName\":\"Business Profile\",\"cmpName\":\"business-profile\",\"values\":{\"principalActivities\":{\"fieldName\":\"principalActivities\",\"values\":[{\"label\":\"Online Travel Agency\",\"value\":\"OL\"}]},\"marketFocus\":{\"fieldName\":\"marketFocus\",\"values\":[{\"label\":\"Leisure\",\"value\":\"67\"},{\"label\":\"Corporate\",\"value\":\"33\"}]},\"salesMix\":{\"fieldName\":\"salesMix\",\"values\":[{\"label\":\"Online\",\"value\":\"39\"},{\"label\":\"Offline\",\"value\":\"61\"}]},\"travelSales\":{\"fieldName\":\"travelSales\",\"values\":\"3\"},\"GDS\":{\"fieldName\":\"GDS\",\"values\":[{\"label\":\"Farelogix\",\"value\":\"FLGX\"},{\"label\":\"Travelsky\",\"value\":\"MINS\"}]},\"numberEmployees\":{\"fieldName\":\"numberEmployees\",\"values\":\"2\"},\"numberOffices\":{\"fieldName\":\"numberOffices\",\"values\":\"8\"}},\"sectionDecision\":\"Not_Started\",\"errors\":[]},\"BusinessSpecialization\":{\"sectionName\":\"Business Specialization\",\"cmpName\":\"business-specialization\",\"values\":{\"percentageBreakdown\":{\"fieldName\":\"percentageBreakdown\",\"values\":[{\"id\":null,\"label\":\"Accommodation\",\"value\":\"12\",\"isSelected\":\"false\"},{\"id\":\"1\",\"label\":\"Air Travel\",\"value\":\"18\",\"isSelected\":\"false\"},{\"id\":\"2\",\"label\":\"Cruises\",\"value\":\"33\",\"isSelected\":\"false\"},{\"id\":\"3\",\"label\":\"Land Transportation\",\"value\":\"13\",\"isSelected\":\"false\"},{\"id\":\"4\",\"label\":\"Meetings & Events\",\"value\":\"14\",\"isSelected\":\"false\"},{\"id\":\"5\",\"label\":\"Tours & Packages\",\"value\":\"10\",\"isSelected\":\"false\"}]},\"marketSpecialties\":{\"fieldName\":\"marketSpecialties\",\"values\":[{\"label\":\"Inbound\",\"value\":\"IB\"},{\"label\":\"Adventure\",\"value\":\"AD\"},{\"label\":\"Conference/Exhibitions\",\"value\":\"CF\"}]},\"destinationSpecialties\":{\"fieldName\":\"destinationSpecialties\",\"values\":[{\"label\":\"France\",\"value\":\"FR\"},{\"label\":\"General\",\"value\":\"AL\"},{\"label\":\"Mexico\",\"value\":\"MX\"}]}},\"sectionDecision\":\"Not_Started\",\"errors\":[]},\"SupportingDocuments\":{\"sectionName\":\"Supporting Documents\",\"cmpName\":\"supporting-documents\",\"values\":[],\"sectionDecision\":\"Not_Started\",\"errors\":[]}},\"sectionsDone\":[{\"id\":0,\"sectionName\":\"new-applicant\",\"next\":\"agency-legal-status\"},{\"id\":1,\"sectionName\":\"agency-legal-status\",\"next\":\"shareholder-details\"},{\"id\":2,\"sectionName\":\"shareholder-details\",\"next\":\"address\"},{\"id\":3,\"sectionName\":\"address\",\"next\":\"mailing\"},{\"id\":4,\"sectionName\":\"mailing\",\"next\":\"contact\"},{\"id\":5,\"sectionName\":\"contact\",\"next\":\"business-profile\"},{\"id\":6,\"sectionName\":\"business-profile\",\"next\":\"business-specialization\"},{\"id\":7,\"sectionName\":\"business-specialization\",\"next\":\"supporting-documents\"},{\"id\":8,\"sectionName\":\"supporting-documents\",\"next\":\"submit-application\"}]}';
 		TIDSUtil.ErrorWrapper errmgt = TIDSHelper.saveSettings(
 							accountId,
@@ -560,7 +564,8 @@ public with sharing class TIDS_Test {
 	private static void returnCondition4() {
 		Test.startTest();
 		readObjectsId();
-	  	Account acc = [Select Status__c From Account Where Id=:accountId Limit 1];
+     	createHOSRight(contactId, TIDS_Constant.ADM_HOP);
+		Account acc = [Select Status__c From Account Where Id=:accountId Limit 1];
 		acc.Status__c=TIDS_Constant.IS_TERMINATED;
 		update acc;
 		List<IATA_ISO_Country__c> todelete = new List<IATA_ISO_Country__c>();
@@ -575,7 +580,8 @@ public with sharing class TIDS_Test {
 	private static void returnCondition6() {
 		Test.startTest();
 		readObjectsId();
-	 	Account acc = [Select Status__c From Account Where Id=:accountId Limit 1];
+     	createHOSRight(contactId, TIDS_Constant.ADM_HOP);
+		Account acc = [Select Status__c From Account Where Id=:accountId Limit 1];
 		acc.Status__c=TIDS_Constant.IS_REJECTED;
 		update acc;
 		List<IATA_ISO_Country__c> todelete = new List<IATA_ISO_Country__c>();
@@ -590,7 +596,8 @@ public with sharing class TIDS_Test {
 	private static void returnCondition6b() {
 		Test.startTest();
 		readObjectsId();
-	  	Account acc = [Select Status__c From Account Where Id=:accountId Limit 1];
+     	createHOSRight(contactId, TIDS_Constant.ADM_HOP);
+		Account acc = [Select Status__c From Account Where Id=:accountId Limit 1];
 		acc.Status__c=Null;
 		update acc;
 		List<IATA_ISO_Country__c> todelete = new List<IATA_ISO_Country__c>();
@@ -604,7 +611,8 @@ public with sharing class TIDS_Test {
 	private static void returnCondition7() {
 		Test.startTest();
 		readObjectsId();
-	  	Account acc = [Select Status__c,Location_Class__c From Account Where Id=:accountId Limit 1];
+     	createHOSRight(contactId, TIDS_Constant.ADM_HOP);
+		Account acc = [Select Status__c,Location_Class__c From Account Where Id=:accountId Limit 1];
 		acc.Status__c=Null;
 		acc.Location_Class__c='L';
 		update acc;
@@ -615,6 +623,25 @@ public with sharing class TIDS_Test {
 	 	System.assertEquals(true,acc.Status__c==null,false);
 		Test.stopTest();
 	}
+	@IsTest
+	private static void returnCondition7b() {
+		Test.startTest();
+		readObjectsId();
+     	createHOSRight(contactId, TIDS_Constant.ADM_HOP);
+		Account acc = [Select Status__c,Location_Class__c From Account Where Id=:accountId Limit 1];
+		acc.Status__c=Null;
+		acc.Location_Class__c='L';
+		update acc;
+		List<IATA_ISO_Country__c> todelete = new List<IATA_ISO_Country__c>();
+		todelete = [SELECT Id, Sanctioned_Country__c FROM IATA_ISO_Country__c WHERE ISO_Code__c='CA'];
+		if (todelete.size()>0) {delete todelete;}
+
+		Case tidscase = createMyCase(TIDS_Constant.IS_DRAFT,TIDS_Constant.NEW_APP,null);
+	 	TIDSHelper.getUserInfo(userId);
+	 	System.assertEquals(true,acc.Status__c==null,false);
+		Test.stopTest();
+	}
+	
 
 	@IsTest
 	private static void saveandVettingHOSubmited() {
@@ -636,6 +663,7 @@ public with sharing class TIDS_Test {
 							null);
 		caseId= errmgt.caseId;
 		Case mycase = [Select Id, ContactId,Status From Case Where Id=:caseId limit 1];
+        mycase.Status =TIDS_Constant.IS_INPROGRESS;
 		mycase.ContactId= contactId;
 		update mycase;
 		//Return to drat for the case
@@ -667,6 +695,7 @@ public with sharing class TIDS_Test {
 		String applicationsettings;
 		String reason='';
 		readObjectsId();
+     	createHOSRight(contactId, TIDS_Constant.ADM_HOP);
 		applicationsettings ='{\"userType\":\"client\",\"applicationType\":\"NEW_HO\",\"userInfo\":{\"UserName\":\"PRIMARY USE FOR TIDS COND TEST\",\"UserId\":\"@userId\",\"ContactId\":\"@contatId\",\"tidsAccount\":{\"Id\":\"@accountId\",\"Country_ISO_Code\":\"CA\",\"RecordType\":{\"Name\":\"Standard Account\",\"Id\":\"@accountId\"}}},\"businessRules\":{\"Name\":\"TIDS\",\"Id\":\"a2w4E000000DaNDQA0\",\"TIDS_Total_Ownership_Minimum\":\"95\",\"TIDS_Total_Ownership_Maximum\":\"101\"},\"tidsCase\":{\"Id\":\"@caseId\"},\"sections\":{\"Welcome\":{\"sectionName\":\"Welcome\",\"cmpName\":\"new-applicant\",\"values\":{\"companyLegalName\":\"New HO Application - For Test Classes\",\"countryName\":\"Canada\",\"countryIsoCode\":\"CA\",\"countryId\":\"@countryId\"},\"sectionDecision\":\"Not_Started\",\"errors\":[]},\"AgencyLegalStatus\":{\"sectionName\":\"Agency Legal Status\",\"cmpName\":\"agency-legal-status\",\"values\":{\"tradingName\":\"Test Classes Application\",\"companyType\":\"C\",\"taxIdVATNumber1\":\"123456\",\"taxIdVATNumber2\":\"987654\",\"businessRegistration\":\"852963\",\"inOperationsSince\":\"2020-05-04\"},\"sectionDecision\":\"Not_Started\",\"errors\":[]},\"ShareholderDetails\":{\"sectionName\":\"Ownership Details\",\"cmpName\":\"shareholder-details\",\"values\":[{\"percentage\":\"50\",\"name\":\"Test\",\"email\":\"test@testclasses.com\",\"type\":\"Person\",\"id\":\"efba\"},{\"percentage\":\"50\",\"type\":\"Company\",\"name\":\"Class\",\"email\":\"class@testclasses.com\",\"id\":\"c6ab\"}],\"sectionDecision\":\"Not_Started\",\"errors\":[]},\"Address\":{\"sectionName\":\"Address\",\"cmpName\":\"address\",\"values\":{\"address\":\"10 Test Class Street\",\"city\":\"Laval\",\"citygeonameId\":6050610,\"state\":{\"Id\":\"@stateId\",\"label\":\"Quebec\",\"value\":\"CA-QC\"},\"postalCode\":\"H1H2H3\",\"countryName\":\"Canada\",\"countryIsoCode\":\"CA\",\"countryId\":\"@countryId\"},\"sectionDecision\":\"Not_Started\",\"errors\":[]},\"Mailing\":{\"sectionName\":\"Mailing\",\"cmpName\":\"mailing\",\"values\":{\"isMailingSameAsPhysicalAddress\":\"false\",\"mailingAddress\":\"10 Mailing Street\",\"city\":\"Seattle\",\"citygeonameId\":5809844,\"state\":{\"Id\":\"@stateId\",\"label\":\"Washington\",\"value\":\"US-WA\"},\"postalCode\":\"98162\",\"countryName\":\"United States\",\"countryIsoCode\":\"US\",\"countryId\":\"@countryId\"},\"sectionDecision\":\"Not_Started\",\"errors\":[]},\"Contact\":{\"sectionName\":\"Contact\",\"cmpName\":\"contact\",\"values\":{\"preferedLanguage\":\"ENG\",\"phone\":\"15148740202\",\"fax\":\"15148743636\",\"businessEmail\":\"debonol@iata.org\",\"webSite\":\"www.testclasses.com\",\"omFirstName\":\"Test\",\"omLastName\":\"Classes\"},\"sectionDecision\":\"Not_Started\",\"errors\":[]},\"BusinessProfile\":{\"sectionName\":\"Business Profile\",\"cmpName\":\"business-profile\",\"values\":{\"principalActivities\":{\"fieldName\":\"principalActivities\",\"values\":[{\"label\":\"Online Travel Agency\",\"value\":\"OL\"}]},\"marketFocus\":{\"fieldName\":\"marketFocus\",\"values\":[{\"label\":\"Leisure\",\"value\":\"67\"},{\"label\":\"Corporate\",\"value\":\"33\"}]},\"salesMix\":{\"fieldName\":\"salesMix\",\"values\":[{\"label\":\"Online\",\"value\":\"39\"},{\"label\":\"Offline\",\"value\":\"61\"}]},\"travelSales\":{\"fieldName\":\"travelSales\",\"values\":\"3\"},\"GDS\":{\"fieldName\":\"GDS\",\"values\":[{\"label\":\"Farelogix\",\"value\":\"FLGX\"},{\"label\":\"Travelsky\",\"value\":\"MINS\"}]},\"numberEmployees\":{\"fieldName\":\"numberEmployees\",\"values\":\"2\"},\"numberOffices\":{\"fieldName\":\"numberOffices\",\"values\":\"8\"}},\"sectionDecision\":\"Not_Started\",\"errors\":[]},\"BusinessSpecialization\":{\"sectionName\":\"Business Specialization\",\"cmpName\":\"business-specialization\",\"values\":{\"percentageBreakdown\":{\"fieldName\":\"percentageBreakdown\",\"values\":[{\"id\":null,\"label\":\"Accommodation\",\"value\":\"12\",\"isSelected\":\"false\"},{\"id\":\"1\",\"label\":\"Air Travel\",\"value\":\"18\",\"isSelected\":\"false\"},{\"id\":\"2\",\"label\":\"Cruises\",\"value\":\"33\",\"isSelected\":\"false\"},{\"id\":\"3\",\"label\":\"Land Transportation\",\"value\":\"13\",\"isSelected\":\"false\"},{\"id\":\"4\",\"label\":\"Meetings & Events\",\"value\":\"14\",\"isSelected\":\"false\"},{\"id\":\"5\",\"label\":\"Tours & Packages\",\"value\":\"10\",\"isSelected\":\"false\"}]},\"marketSpecialties\":{\"fieldName\":\"marketSpecialties\",\"values\":[{\"label\":\"Inbound\",\"value\":\"IB\"},{\"label\":\"Adventure\",\"value\":\"AD\"},{\"label\":\"Conference/Exhibitions\",\"value\":\"CF\"}]},\"destinationSpecialties\":{\"fieldName\":\"destinationSpecialties\",\"values\":[{\"label\":\"France\",\"value\":\"FR\"},{\"label\":\"General\",\"value\":\"AL\"},{\"label\":\"Mexico\",\"value\":\"MX\"}]}},\"sectionDecision\":\"Not_Started\",\"errors\":[]},\"SupportingDocuments\":{\"sectionName\":\"Supporting Documents\",\"cmpName\":\"supporting-documents\",\"values\":[],\"sectionDecision\":\"Not_Started\",\"errors\":[]}},\"sectionsDone\":[{\"id\":0,\"sectionName\":\"new-applicant\",\"next\":\"agency-legal-status\"},{\"id\":1,\"sectionName\":\"agency-legal-status\",\"next\":\"shareholder-details\"},{\"id\":2,\"sectionName\":\"shareholder-details\",\"next\":\"address\"},{\"id\":3,\"sectionName\":\"address\",\"next\":\"mailing\"},{\"id\":4,\"sectionName\":\"mailing\",\"next\":\"contact\"},{\"id\":5,\"sectionName\":\"contact\",\"next\":\"business-profile\"},{\"id\":6,\"sectionName\":\"business-profile\",\"next\":\"business-specialization\"},{\"id\":7,\"sectionName\":\"business-specialization\",\"next\":\"supporting-documents\"},{\"id\":8,\"sectionName\":\"supporting-documents\",\"next\":\"submit-application\"}]}';
 		TIDSUtil.ErrorWrapper errmgt = TIDSHelper.saveSettings(
 							accountId,
@@ -683,6 +712,7 @@ public with sharing class TIDS_Test {
 			applicationType);
 		
 		Case mycase = [Select Id, ContactId,Status From Case Where Id=:caseId limit 1];
+        mycase.Status =TIDS_Constant.IS_INPROGRESS;
 		mycase.ContactId= contactId;
 		update mycase;
 		//Vetting Reject
@@ -704,8 +734,8 @@ public with sharing class TIDS_Test {
 		update mycase;
 						
 		TIDSHelper.getVettingDoneCondition(String.ValueOf(caseId));
-		TIDSHelper.getSortedBranches(String.ValueOf(accountId), 'Id', 'Desc', 'T');
-		TIDSHelper.getSortedCases(String.ValueOf(accountId),'Id', 'Desc', '0');
+		TIDSHelper.getSortedBranches(String.ValueOf(accountId), 'Id', 'Desc', 'T',false);
+		TIDSHelper.getSortedCases(String.ValueOf(accountId),'Id', 'Desc', '0',false);
 		
 		System.assertEquals(true,caseId!=null,false);
 		Test.stopTest();
@@ -864,6 +894,7 @@ public with sharing class TIDS_Test {
 		String applicationsettings;
 		String reason='';
 		readObjectsId();
+        createHOSRight(contactId, TIDS_Constant.ADM_HOP);
 		applicationsettings ='{\"userType\":\"client\",\"applicationType\":\"NEW_BR\",\"userInfo\":{\"UserName\":\"PRIMARY USE FOR TIDS COND TEST\",\"UserId\":\"@userId\",\"ContactId\":\"@contatId\",\"tidsAccount\":{\"Id\":\"@accountId\",\"Country_ISO_Code\":\"CA\",\"RecordType\":{\"Name\":\"Standard Account\",\"Id\":\"@accountId\"}}},\"businessRules\":{\"Name\":\"TIDS\",\"Id\":\"a2w4E000000DaNDQA0\",\"TIDS_Total_Ownership_Minimum\":\"95\",\"TIDS_Total_Ownership_Maximum\":\"101\"},\"tidsCase\":{\"Id\":\"@caseId\"},\"sections\":{\"Welcome\":{\"sectionName\":\"Welcome\",\"cmpName\":\"new-applicant\",\"values\":{\"companyLegalName\":\"New HO Application - For Test Classes\",\"countryName\":\"Canada\",\"countryIsoCode\":\"CA\",\"countryId\":\"@countryId\"},\"sectionDecision\":\"Not_Started\",\"errors\":[]},\"AgencyLegalStatus\":{\"sectionName\":\"Agency Legal Status\",\"cmpName\":\"agency-legal-status\",\"values\":{\"tradingName\":\"Test Classes Application\",\"companyType\":\"C\",\"taxIdVATNumber1\":\"123456\",\"taxIdVATNumber2\":\"987654\",\"businessRegistration\":\"852963\",\"inOperationsSince\":\"2020-05-04\"},\"sectionDecision\":\"Not_Started\",\"errors\":[]},\"ShareholderDetails\":{\"sectionName\":\"Ownership Details\",\"cmpName\":\"shareholder-details\",\"values\":[{\"percentage\":\"50\",\"name\":\"Test\",\"email\":\"test@testclasses.com\",\"type\":\"Person\",\"id\":\"efba\"},{\"percentage\":\"50\",\"type\":\"Company\",\"name\":\"Class\",\"email\":\"class@testclasses.com\",\"id\":\"c6ab\"}],\"sectionDecision\":\"Not_Started\",\"errors\":[]},\"Address\":{\"sectionName\":\"Address\",\"cmpName\":\"address\",\"values\":{\"address\":\"10 Test Class Street\",\"city\":\"Laval\",\"citygeonameId\":6050610,\"state\":{\"Id\":\"@stateId\",\"label\":\"Quebec\",\"value\":\"CA-QC\"},\"postalCode\":\"H1H2H3\",\"countryName\":\"Canada\",\"countryIsoCode\":\"CA\",\"countryId\":\"@countryId\"},\"sectionDecision\":\"Not_Started\",\"errors\":[]},\"Mailing\":{\"sectionName\":\"Mailing\",\"cmpName\":\"mailing\",\"values\":{\"isMailingSameAsPhysicalAddress\":\"false\",\"mailingAddress\":\"10 Mailing Street\",\"city\":\"Seattle\",\"citygeonameId\":5809844,\"state\":{\"Id\":\"@stateId\",\"label\":\"Washington\",\"value\":\"US-WA\"},\"postalCode\":\"98162\",\"countryName\":\"United States\",\"countryIsoCode\":\"US\",\"countryId\":\"@countryId\"},\"sectionDecision\":\"Not_Started\",\"errors\":[]},\"Contact\":{\"sectionName\":\"Contact\",\"cmpName\":\"contact\",\"values\":{\"preferedLanguage\":\"ENG\",\"phone\":\"15148740202\",\"fax\":\"15148743636\",\"businessEmail\":\"debonol@iata.org\",\"webSite\":\"www.testclasses.com\",\"omFirstName\":\"Test\",\"omLastName\":\"Classes\"},\"sectionDecision\":\"Not_Started\",\"errors\":[]},\"BusinessProfile\":{\"sectionName\":\"Business Profile\",\"cmpName\":\"business-profile\",\"values\":{\"principalActivities\":{\"fieldName\":\"principalActivities\",\"values\":[{\"label\":\"Online Travel Agency\",\"value\":\"OL\"}]},\"marketFocus\":{\"fieldName\":\"marketFocus\",\"values\":[{\"label\":\"Leisure\",\"value\":\"67\"},{\"label\":\"Corporate\",\"value\":\"33\"}]},\"salesMix\":{\"fieldName\":\"salesMix\",\"values\":[{\"label\":\"Online\",\"value\":\"39\"},{\"label\":\"Offline\",\"value\":\"61\"}]},\"travelSales\":{\"fieldName\":\"travelSales\",\"values\":\"3\"},\"GDS\":{\"fieldName\":\"GDS\",\"values\":[{\"label\":\"Farelogix\",\"value\":\"FLGX\"},{\"label\":\"Travelsky\",\"value\":\"MINS\"}]},\"numberEmployees\":{\"fieldName\":\"numberEmployees\",\"values\":\"2\"},\"numberOffices\":{\"fieldName\":\"numberOffices\",\"values\":\"8\"}},\"sectionDecision\":\"Not_Started\",\"errors\":[]},\"BusinessSpecialization\":{\"sectionName\":\"Business Specialization\",\"cmpName\":\"business-specialization\",\"values\":{\"percentageBreakdown\":{\"fieldName\":\"percentageBreakdown\",\"values\":[{\"id\":null,\"label\":\"Accommodation\",\"value\":\"12\",\"isSelected\":\"false\"},{\"id\":\"1\",\"label\":\"Air Travel\",\"value\":\"18\",\"isSelected\":\"false\"},{\"id\":\"2\",\"label\":\"Cruises\",\"value\":\"33\",\"isSelected\":\"false\"},{\"id\":\"3\",\"label\":\"Land Transportation\",\"value\":\"13\",\"isSelected\":\"false\"},{\"id\":\"4\",\"label\":\"Meetings & Events\",\"value\":\"14\",\"isSelected\":\"false\"},{\"id\":\"5\",\"label\":\"Tours & Packages\",\"value\":\"10\",\"isSelected\":\"false\"}]},\"marketSpecialties\":{\"fieldName\":\"marketSpecialties\",\"values\":[{\"label\":\"Inbound\",\"value\":\"IB\"},{\"label\":\"Adventure\",\"value\":\"AD\"},{\"label\":\"Conference/Exhibitions\",\"value\":\"CF\"}]},\"destinationSpecialties\":{\"fieldName\":\"destinationSpecialties\",\"values\":[{\"label\":\"France\",\"value\":\"FR\"},{\"label\":\"General\",\"value\":\"AL\"},{\"label\":\"Mexico\",\"value\":\"MX\"}]}},\"sectionDecision\":\"Not_Started\",\"errors\":[]},\"SupportingDocuments\":{\"sectionName\":\"Supporting Documents\",\"cmpName\":\"supporting-documents\",\"values\":[],\"sectionDecision\":\"Not_Started\",\"errors\":[]}},\"sectionsDone\":[{\"id\":0,\"sectionName\":\"new-applicant\",\"next\":\"agency-legal-status\"},{\"id\":1,\"sectionName\":\"agency-legal-status\",\"next\":\"shareholder-details\"},{\"id\":2,\"sectionName\":\"shareholder-details\",\"next\":\"address\"},{\"id\":3,\"sectionName\":\"address\",\"next\":\"mailing\"},{\"id\":4,\"sectionName\":\"mailing\",\"next\":\"contact\"},{\"id\":5,\"sectionName\":\"contact\",\"next\":\"business-profile\"},{\"id\":6,\"sectionName\":\"business-profile\",\"next\":\"business-specialization\"},{\"id\":7,\"sectionName\":\"business-specialization\",\"next\":\"supporting-documents\"},{\"id\":8,\"sectionName\":\"supporting-documents\",\"next\":\"submit-application\"}]}';
 		TIDSUtil.ErrorWrapper errmgt = TIDSHelper.saveSettings(
 							accountId,
@@ -872,6 +903,7 @@ public with sharing class TIDS_Test {
 							null);
 		caseId= errmgt.caseId;
 		Case mycase = [Select Id, ContactId,Status From Case Where Id=:caseId limit 1];
+        mycase.Status =TIDS_Constant.IS_INPROGRESS;
 		mycase.ContactId= contactId;
 		update mycase;
 		//Return to drat for the case
@@ -902,6 +934,7 @@ public with sharing class TIDS_Test {
 		String applicationsettings;
 		String reason='';
 		readObjectsId();
+        createHOSRight(contactId, TIDS_Constant.ADM_HOP);
 		applicationsettings ='{\"userType\":\"client\",\"applicationType\":\"NEW_VB\",\"userInfo\":{\"UserName\":\"PRIMARY USE FOR TIDS COND TEST\",\"UserId\":\"@userId\",\"ContactId\":\"@contatId\",\"tidsAccount\":{\"Id\":\"@accountId\",\"Country_ISO_Code\":\"CA\",\"RecordType\":{\"Name\":\"Standard Account\",\"Id\":\"@accountId\"}}},\"businessRules\":{\"Name\":\"TIDS\",\"Id\":\"a2w4E000000DaNDQA0\",\"TIDS_Total_Ownership_Minimum\":\"95\",\"TIDS_Total_Ownership_Maximum\":\"101\"},\"tidsCase\":{\"Id\":\"@caseId\"},\"sections\":{\"Welcome\":{\"sectionName\":\"Welcome\",\"cmpName\":\"new-applicant\",\"values\":{\"companyLegalName\":\"New HO Application - For Test Classes\",\"countryName\":\"Canada\",\"countryIsoCode\":\"CA\",\"countryId\":\"@countryId\"},\"sectionDecision\":\"Not_Started\",\"errors\":[]},\"AgencyLegalStatus\":{\"sectionName\":\"Agency Legal Status\",\"cmpName\":\"agency-legal-status\",\"values\":{\"tradingName\":\"Test Classes Application\",\"companyType\":\"C\",\"taxIdVATNumber1\":\"123456\",\"taxIdVATNumber2\":\"987654\",\"businessRegistration\":\"852963\",\"inOperationsSince\":\"2020-05-04\"},\"sectionDecision\":\"Not_Started\",\"errors\":[]},\"ShareholderDetails\":{\"sectionName\":\"Ownership Details\",\"cmpName\":\"shareholder-details\",\"values\":[{\"percentage\":\"50\",\"name\":\"Test\",\"email\":\"test@testclasses.com\",\"type\":\"Person\",\"id\":\"efba\"},{\"percentage\":\"50\",\"type\":\"Company\",\"name\":\"Class\",\"email\":\"class@testclasses.com\",\"id\":\"c6ab\"}],\"sectionDecision\":\"Not_Started\",\"errors\":[]},\"Address\":{\"sectionName\":\"Address\",\"cmpName\":\"address\",\"values\":{\"address\":\"10 Test Class Street\",\"city\":\"Laval\",\"citygeonameId\":6050610,\"state\":{\"Id\":\"@stateId\",\"label\":\"Quebec\",\"value\":\"CA-QC\"},\"postalCode\":\"H1H2H3\",\"countryName\":\"Canada\",\"countryIsoCode\":\"CA\",\"countryId\":\"@countryId\"},\"sectionDecision\":\"Not_Started\",\"errors\":[]},\"Mailing\":{\"sectionName\":\"Mailing\",\"cmpName\":\"mailing\",\"values\":{\"isMailingSameAsPhysicalAddress\":\"false\",\"mailingAddress\":\"10 Mailing Street\",\"city\":\"Seattle\",\"citygeonameId\":5809844,\"state\":{\"Id\":\"@stateId\",\"label\":\"Washington\",\"value\":\"US-WA\"},\"postalCode\":\"98162\",\"countryName\":\"United States\",\"countryIsoCode\":\"US\",\"countryId\":\"@countryId\"},\"sectionDecision\":\"Not_Started\",\"errors\":[]},\"Contact\":{\"sectionName\":\"Contact\",\"cmpName\":\"contact\",\"values\":{\"preferedLanguage\":\"ENG\",\"phone\":\"15148740202\",\"fax\":\"15148743636\",\"businessEmail\":\"debonol@iata.org\",\"webSite\":\"www.testclasses.com\",\"omFirstName\":\"Test\",\"omLastName\":\"Classes\"},\"sectionDecision\":\"Not_Started\",\"errors\":[]},\"BusinessProfile\":{\"sectionName\":\"Business Profile\",\"cmpName\":\"business-profile\",\"values\":{\"principalActivities\":{\"fieldName\":\"principalActivities\",\"values\":[{\"label\":\"Online Travel Agency\",\"value\":\"OL\"}]},\"marketFocus\":{\"fieldName\":\"marketFocus\",\"values\":[{\"label\":\"Leisure\",\"value\":\"67\"},{\"label\":\"Corporate\",\"value\":\"33\"}]},\"salesMix\":{\"fieldName\":\"salesMix\",\"values\":[{\"label\":\"Online\",\"value\":\"39\"},{\"label\":\"Offline\",\"value\":\"61\"}]},\"travelSales\":{\"fieldName\":\"travelSales\",\"values\":\"3\"},\"GDS\":{\"fieldName\":\"GDS\",\"values\":[{\"label\":\"Farelogix\",\"value\":\"FLGX\"},{\"label\":\"Travelsky\",\"value\":\"MINS\"}]},\"numberEmployees\":{\"fieldName\":\"numberEmployees\",\"values\":\"2\"},\"numberOffices\":{\"fieldName\":\"numberOffices\",\"values\":\"8\"}},\"sectionDecision\":\"Not_Started\",\"errors\":[]},\"BusinessSpecialization\":{\"sectionName\":\"Business Specialization\",\"cmpName\":\"business-specialization\",\"values\":{\"percentageBreakdown\":{\"fieldName\":\"percentageBreakdown\",\"values\":[{\"id\":null,\"label\":\"Accommodation\",\"value\":\"12\",\"isSelected\":\"false\"},{\"id\":\"1\",\"label\":\"Air Travel\",\"value\":\"18\",\"isSelected\":\"false\"},{\"id\":\"2\",\"label\":\"Cruises\",\"value\":\"33\",\"isSelected\":\"false\"},{\"id\":\"3\",\"label\":\"Land Transportation\",\"value\":\"13\",\"isSelected\":\"false\"},{\"id\":\"4\",\"label\":\"Meetings & Events\",\"value\":\"14\",\"isSelected\":\"false\"},{\"id\":\"5\",\"label\":\"Tours & Packages\",\"value\":\"10\",\"isSelected\":\"false\"}]},\"marketSpecialties\":{\"fieldName\":\"marketSpecialties\",\"values\":[{\"label\":\"Inbound\",\"value\":\"IB\"},{\"label\":\"Adventure\",\"value\":\"AD\"},{\"label\":\"Conference/Exhibitions\",\"value\":\"CF\"}]},\"destinationSpecialties\":{\"fieldName\":\"destinationSpecialties\",\"values\":[{\"label\":\"France\",\"value\":\"FR\"},{\"label\":\"General\",\"value\":\"AL\"},{\"label\":\"Mexico\",\"value\":\"MX\"}]}},\"sectionDecision\":\"Not_Started\",\"errors\":[]},\"SupportingDocuments\":{\"sectionName\":\"Supporting Documents\",\"cmpName\":\"supporting-documents\",\"values\":[],\"sectionDecision\":\"Not_Started\",\"errors\":[]}},\"sectionsDone\":[{\"id\":0,\"sectionName\":\"new-applicant\",\"next\":\"agency-legal-status\"},{\"id\":1,\"sectionName\":\"agency-legal-status\",\"next\":\"shareholder-details\"},{\"id\":2,\"sectionName\":\"shareholder-details\",\"next\":\"address\"},{\"id\":3,\"sectionName\":\"address\",\"next\":\"mailing\"},{\"id\":4,\"sectionName\":\"mailing\",\"next\":\"contact\"},{\"id\":5,\"sectionName\":\"contact\",\"next\":\"business-profile\"},{\"id\":6,\"sectionName\":\"business-profile\",\"next\":\"business-specialization\"},{\"id\":7,\"sectionName\":\"business-specialization\",\"next\":\"supporting-documents\"},{\"id\":8,\"sectionName\":\"supporting-documents\",\"next\":\"submit-application\"}]}';
 		TIDSUtil.ErrorWrapper errmgt = TIDSHelper.saveSettings(
 							accountId,
@@ -910,6 +943,7 @@ public with sharing class TIDS_Test {
 							null);
 		caseId= errmgt.caseId;
 		Case mycase = [Select Id, ContactId,Status From Case Where Id=:caseId limit 1];
+        mycase.Status =TIDS_Constant.IS_INPROGRESS;
 		mycase.ContactId= contactId;
 		update mycase;
 		//Return to drat for the case
@@ -941,6 +975,7 @@ public with sharing class TIDS_Test {
 		String applicationsettings;
 		String reason='';
 		readObjectsId();
+        createHOSRight(contactId, TIDS_Constant.ADM_HOP);
 		applicationsettings ='{\"applicationDecision\":\"Application_Errors\",\"userType\":\"vetting\",\"applicationType\":\"chg-address-contact\",\"userInfo\":{\"UserName\":\"Luc Debono\",\"UserId\":\"0054E000005CGEoQAO\",\"ContactId\":\"0034E000012JGhAQAW\",\"tidsAccount\":{\"Location_Type\":\"HO\",\"Id\":\"0014E00001BcLuGQAV\",\"Country_ISO_Code\":\"CA\",\"RecordType\":{\"Name\":null,\"Id\":null}}},\"businessRules\":{\"Name\":\"TIDS\",\"Id\":\"a2w4E000000DaNDQA0\",\"TIDS_Total_Ownership_Minimum\":\"95\",\"TIDS_Total_Ownership_Maximum\":\"101\"},\"tidsCase\":{\"Id\":\"5004E00000CzhMCQAZ\"},\"sections\":{\"Welcome\":{\"cmpName\":\"new-applicant\",\"target\":\"NA\",\"values\":{\"companyLegalName\":\"Bottas Racing Inc.\",\"countryName\":\"Canada\",\"countryIsoCode\":\"CA\",\"countryId\":\"a0n4E000001Ql2zQAC\"},\"sectionDecision\":\"NA\",\"vettingErrors\":[]},\"AgencyLegalStatus\":{},\"ShareholderDetails\":{},\"Address\":{\"sectionName\":\"Address\",\"cmpName\":\"address\",\"values\":{\"address\":\"15 Rue Papineau East\",\"city\":\"Montréal\",\"citygeonameId\":\"aCX4E00000001rEWAQ\",\"state\":{\"Id\":\"a444E000000IsvnQAC\",\"label\":\"Quebec\",\"value\":\"CA-QC\"},\"postalCode\":\"H2V4T8\",\"countryName\":\"Canada\",\"countryIsoCode\":\"CA\",\"countryId\":\"a0n4E000001Ql2zQAC\"},\"sectionDecision\":\"Error_Reported\",\"errors\":[{\"show\":true,\"description\":\"Comment 3\",\"fieldName\":\"address\",\"fieldLabel\":\"Address\"},{\"show\":true,\"description\":\"Comment 2\",\"fieldName\":\"city\",\"fieldLabel\":\"City\"},{\"show\":true,\"description\":\"Comment 1\",\"fieldName\":\"state\",\"fieldLabel\":\"State / Province\"},{\"show\":true,\"description\":\"Comment 4\",\"fieldName\":\"postalCode\",\"fieldLabel\":\"Postal Code\"}]},\"Mailing\":{\"sectionName\":\"Mailing\",\"cmpName\":\"mailing\",\"values\":{\"isMailingSameAsPhysicalAddress\":\"false\",\"mailingAddress\":\"33 Expedia Avenue\",\"city\":\"Seattle\",\"citygeonameId\":\"aCX4E00000001rJWAQ\",\"state\":{\"Id\":\"a444E000000DQzpQAG\",\"label\":\"Washington\",\"value\":\"US-WA\"},\"postalCode\":\"98888\",\"countryName\":\"United States\",\"countryIsoCode\":\"US\",\"countryId\":\"a0n4E0000018PutQAE\"},\"sectionDecision\":\"Error_Reported\",\"errors\":[{\"fieldLabel\":\"Address\",\"fieldName\":\"mailingAddress\",\"show\":true,\"description\":\"Comment 8\"},{\"fieldLabel\":\"City\",\"fieldName\":\"city\",\"show\":true,\"description\":\"Comment 7\"},{\"fieldLabel\":\"State / Province\",\"fieldName\":\"state\",\"show\":true,\"description\":\"Comment 6\"},{\"fieldLabel\":\"Postal Code\",\"fieldName\":\"postalCode\",\"show\":true,\"description\":\"Comment 9\"},{\"fieldLabel\":\"Country\",\"fieldName\":\"country\",\"show\":true,\"description\":\"Comment 5\"}]},\"Contact\":{\"sectionName\":\"Contact\",\"cmpName\":\"contact\",\"values\":{\"preferedLanguage\":\"ENG\",\"phone\":\"15148740202\",\"fax\":\"999888777\",\"businessEmail\":\"lorem@ipsum.com\",\"webSite\":\"www.loremipsum.com\",\"omFirstName\":\"Lorem\",\"omLastName\":\"Ipsum\"},\"sectionDecision\":\"Error_Reported\",\"errors\":[{\"show\":true,\"description\":\"Comment 10\",\"fieldName\":\"phone\",\"fieldLabel\":\"Phone Number\"},{\"show\":true,\"description\":\"Comment 11\",\"fieldName\":\"fax\",\"fieldLabel\":\"Fax Number\"},{\"show\":true,\"description\":\"Comment 12\",\"fieldName\":\"businessEmail\",\"fieldLabel\":\"Business Email address\"},{\"show\":true,\"description\":\"Comment 13\",\"fieldName\":\"website\",\"fieldLabel\":\"Web Site\"},{\"show\":true,\"description\":\"Comment 14\",\"fieldName\":\"omFirstName\",\"fieldLabel\":\"Office Manager - First Name\"},{\"show\":true,\"description\":\"Comment 15\",\"fieldName\":\"omLastName\",\"fieldLabel\":\"Office Manager - Last Name\"},{\"show\":true,\"description\":\"Comment 16\",\"fieldName\":\"preferedLanguage\",\"fieldLabel\":\"Prefered language of correspondance\"}]},\"BusinessProfile\":{},\"BusinessSpecialization\":{},\"SupportingDocuments\":{}},\"sectionsDone\":[{\"id\":0,\"sectionName\":\"address\",\"next\":\"mailing\"},{\"id\":1,\"sectionName\":\"mailing\",\"next\":\"contact\"},{\"id\":2,\"sectionName\":\"contact\",\"next\":\"submit-application\"}]}';
 		TIDSUtil.ErrorWrapper errmgt = TIDSHelper.saveSettings(
 							accountId,
@@ -949,6 +984,7 @@ public with sharing class TIDS_Test {
 							null);
 		caseId= errmgt.caseId;
 		Case mycase = [Select Id, ContactId,Status From Case Where Id=:caseId limit 1];
+        mycase.Status =TIDS_Constant.IS_INPROGRESS;
 		mycase.ContactId= contactId;
 		update mycase;
 		//Return to drat for the case
@@ -1344,6 +1380,37 @@ public with sharing class TIDS_Test {
 	}
 
 	@IsTest
+	private static void TIDSHelperFunctionPart4() {
+		Test.startTest();
+		String applicationType='ho';
+		String reason='TIDS is a good reason';
+		String payload=TIDS_Constant.TIDSVALUE ;
+	
+		readObjectsId();	
+		TIDSUtil.ErrorWrapper t1 = TIDSHelper.verifyRole(accountId,contactId);
+		TIDSUtil.ErrorWrapper t2 = TIDSHelper.createRole(accountId,contactId);
+
+		System.assertEquals(false,t1.hasAnError);
+		Test.stopTest();
+	}
+	@IsTest
+	private static void TIDSHelperFunctionPart5() {
+		Test.startTest();
+
+		
+		readObjectsId();	
+		TIDSUtil.ErrorWrapper t0 = TIDSHelper.verifyCascading(String.ValueOf(accountId),'cascadingkey');
+		TIDSHelper.bypass=true;
+		TIDSUtil.ErrorWrapper t1 = TIDSHelper.verifyCascading(String.ValueOf(accountId)+';'+String.ValueOf(accountId),null);
+		TIDSUtil.ErrorWrapper t2 = TIDSHelper.verifyCascading(String.ValueOf(accountId),null);
+		TIDSUtil.ErrorWrapper t3 = TIDSHelper.createCascading(String.ValueOf(accountId),null);
+
+		System.assertEquals(false,t2.hasAnError);
+		Test.stopTest();
+	}
+
+	
+	@IsTest
 	private static void sendEmail(){
 		Test.startTest();
 		
@@ -1397,27 +1464,7 @@ public with sharing class TIDS_Test {
 		Test.stopTest();
 	}
 
-	@IsTest
-	private static void TidsBatchHelper() {
-		Test.startTest();
-		String applicationDecision;
-		String userType='client';
-		String applicationType='TIDS - Change of Address or Contact Details';
-		String applicationsettings;
-		String reason='';
-		readObjectsId();
-		applicationsettings ='{\"applicationDecision\":\"Application_Errors\",\"userType\":\"vetting\",\"applicationType\":\"chg-address-contact\",\"userInfo\":{\"UserName\":\"Luc Debono\",\"UserId\":\"0054E000005CGEoQAO\",\"ContactId\":\"0034E000012JGhAQAW\",\"tidsAccount\":{\"Location_Type\":\"HO\",\"Id\":\"0014E00001BcLuGQAV\",\"Country_ISO_Code\":\"CA\",\"RecordType\":{\"Name\":null,\"Id\":null}}},\"businessRules\":{\"Name\":\"TIDS\",\"Id\":\"a2w4E000000DaNDQA0\",\"TIDS_Total_Ownership_Minimum\":\"95\",\"TIDS_Total_Ownership_Maximum\":\"101\"},\"tidsCase\":{\"Id\":\"5004E00000CzhMCQAZ\"},\"sections\":{\"Welcome\":{\"cmpName\":\"new-applicant\",\"target\":\"NA\",\"values\":{\"companyLegalName\":\"Bottas Racing Inc.\",\"countryName\":\"Canada\",\"countryIsoCode\":\"CA\",\"countryId\":\"a0n4E000001Ql2zQAC\"},\"sectionDecision\":\"NA\",\"vettingErrors\":[]},\"AgencyLegalStatus\":{},\"ShareholderDetails\":{},\"Address\":{\"sectionName\":\"Address\",\"cmpName\":\"address\",\"values\":{\"address\":\"15 Rue Papineau East\",\"city\":\"Montréal\",\"citygeonameId\":\"aCX4E00000001rEWAQ\",\"state\":{\"Id\":\"a444E000000IsvnQAC\",\"label\":\"Quebec\",\"value\":\"CA-QC\"},\"postalCode\":\"H2V4T8\",\"countryName\":\"Canada\",\"countryIsoCode\":\"CA\",\"countryId\":\"a0n4E000001Ql2zQAC\"},\"sectionDecision\":\"Error_Reported\",\"errors\":[{\"show\":true,\"description\":\"Comment 3\",\"fieldName\":\"address\",\"fieldLabel\":\"Address\"},{\"show\":true,\"description\":\"Comment 2\",\"fieldName\":\"city\",\"fieldLabel\":\"City\"},{\"show\":true,\"description\":\"Comment 1\",\"fieldName\":\"state\",\"fieldLabel\":\"State / Province\"},{\"show\":true,\"description\":\"Comment 4\",\"fieldName\":\"postalCode\",\"fieldLabel\":\"Postal Code\"}]},\"Mailing\":{\"sectionName\":\"Mailing\",\"cmpName\":\"mailing\",\"values\":{\"isMailingSameAsPhysicalAddress\":\"false\",\"mailingAddress\":\"33 Expedia Avenue\",\"city\":\"Seattle\",\"citygeonameId\":\"aCX4E00000001rJWAQ\",\"state\":{\"Id\":\"a444E000000DQzpQAG\",\"label\":\"Washington\",\"value\":\"US-WA\"},\"postalCode\":\"98888\",\"countryName\":\"United States\",\"countryIsoCode\":\"US\",\"countryId\":\"a0n4E0000018PutQAE\"},\"sectionDecision\":\"Error_Reported\",\"errors\":[{\"fieldLabel\":\"Address\",\"fieldName\":\"mailingAddress\",\"show\":true,\"description\":\"Comment 8\"},{\"fieldLabel\":\"City\",\"fieldName\":\"city\",\"show\":true,\"description\":\"Comment 7\"},{\"fieldLabel\":\"State / Province\",\"fieldName\":\"state\",\"show\":true,\"description\":\"Comment 6\"},{\"fieldLabel\":\"Postal Code\",\"fieldName\":\"postalCode\",\"show\":true,\"description\":\"Comment 9\"},{\"fieldLabel\":\"Country\",\"fieldName\":\"country\",\"show\":true,\"description\":\"Comment 5\"}]},\"Contact\":{\"sectionName\":\"Contact\",\"cmpName\":\"contact\",\"values\":{\"preferedLanguage\":\"ENG\",\"phone\":\"15148740202\",\"fax\":\"999888777\",\"businessEmail\":\"lorem@ipsum.com\",\"webSite\":\"www.loremipsum.com\",\"omFirstName\":\"Lorem\",\"omLastName\":\"Ipsum\"},\"sectionDecision\":\"Error_Reported\",\"errors\":[{\"show\":true,\"description\":\"Comment 10\",\"fieldName\":\"phone\",\"fieldLabel\":\"Phone Number\"},{\"show\":true,\"description\":\"Comment 11\",\"fieldName\":\"fax\",\"fieldLabel\":\"Fax Number\"},{\"show\":true,\"description\":\"Comment 12\",\"fieldName\":\"businessEmail\",\"fieldLabel\":\"Business Email address\"},{\"show\":true,\"description\":\"Comment 13\",\"fieldName\":\"website\",\"fieldLabel\":\"Web Site\"},{\"show\":true,\"description\":\"Comment 14\",\"fieldName\":\"omFirstName\",\"fieldLabel\":\"Office Manager - First Name\"},{\"show\":true,\"description\":\"Comment 15\",\"fieldName\":\"omLastName\",\"fieldLabel\":\"Office Manager - Last Name\"},{\"show\":true,\"description\":\"Comment 16\",\"fieldName\":\"preferedLanguage\",\"fieldLabel\":\"Prefered language of correspondance\"}]},\"BusinessProfile\":{},\"BusinessSpecialization\":{},\"SupportingDocuments\":{}},\"sectionsDone\":[{\"id\":0,\"sectionName\":\"address\",\"next\":\"mailing\"},{\"id\":1,\"sectionName\":\"mailing\",\"next\":\"contact\"},{\"id\":2,\"sectionName\":\"contact\",\"next\":\"submit-application\"}]}';
-		TIDSUtil.ErrorWrapper errmgt = TIDSHelper.saveSettings(
-								accountId,
-								applicationsettings,
-								applicationtype,
-								null);
-		caseId= errmgt.caseId;
-		TidsBatchHelper.testbatch(caseId);
-		
-		System.assertEquals(true,caseId!=null,false);
-		Test.stopTest();
-	}
+	
 	@IsTest
 	private static void TidsConditions() {
 		Test.startTest();
@@ -1427,6 +1474,7 @@ public with sharing class TIDS_Test {
 		String applicationsettings;
 		String reason='';
 		readObjectsId();
+     	createHOSRight(contactId, TIDS_Constant.ADM_HOP);
 		List<IATA_ISO_Country__c> todelete = new List<IATA_ISO_Country__c>();
 		todelete = [SELECT Id, Sanctioned_Country__c FROM IATA_ISO_Country__c WHERE ISO_Code__c='CA'];
 		if (todelete.size()>0) {delete todelete;}
@@ -1559,7 +1607,15 @@ public with sharing class TIDS_Test {
 		TIDSUtil.tidsNotifications(new List<String> {tidscase.Id});
 		tidscase =createCase(9);
 		TIDSUtil.tidsNotifications(new List<String> {tidscase.Id});
-		tidscase =createCase(10);
+		
+		System.assertEquals(true,tidscase.Id!=null,false);
+		Test.stopTest();
+	}    
+	@IsTest
+	private static void TidsClosedCaseForNotificationsPart4() {
+		Test.startTest();
+		readObjectsId();
+		Case tidscase =createCase(10);
 		TIDSUtil.tidsNotifications(new List<String> {tidscase.Id});
 		tidscase =createCase(11);
 		TIDSUtil.tidsNotifications(new List<String> {tidscase.Id});
@@ -1625,13 +1681,8 @@ public with sharing class TIDS_Test {
 	}
 	
 	@IsTest
-	private static void TidsRunBatchCascading() {
+	private static void TidsRunBatchCascadingPart1() {
 		Test.startTest();
-		String applicationDecision;
-		String userType='client';
-		String applicationType='TIDS - Change of Address or Contact Details';
-		String applicationsettings;
-		String reason='';
 		readObjectsId();
 		Case tidscase = createMyCase(TIDS_Constant.IS_DRAFT,TIDS_Constant.CASE_SUBJECT_NAME_COMPANY,null);
 		List<Account> accounts = new List<Account>();
@@ -1640,21 +1691,63 @@ public with sharing class TIDS_Test {
 		accounts.add(newAccount(4, countryId,accountId, headquarters,'VB','T','Agency','Approved',null));
 		accounts.add(newAccount(5, countryId,accountId, headquarters,'VB','T','Agency','Approved',null));
 		insert accounts;
-		
-		applicationsettings ='{\"applicationDecision\":\"Application_Errors\",\"userType\":\"vetting\",\"applicationType\":\"chg-address-contact\",\"userInfo\":{\"UserName\":\"Luc Debono\",\"UserId\":\"0054E000005CGEoQAO\",\"ContactId\":\"0034E000012JGhAQAW\",\"tidsAccount\":{\"Location_Type\":\"HO\",\"Id\":\"0014E00001BcLuGQAV\",\"Country_ISO_Code\":\"CA\",\"RecordType\":{\"Name\":null,\"Id\":null}}},\"businessRules\":{\"Name\":\"TIDS\",\"Id\":\"a2w4E000000DaNDQA0\",\"TIDS_Total_Ownership_Minimum\":\"95\",\"TIDS_Total_Ownership_Maximum\":\"101\"},\"tidsCase\":{\"Id\":\"5004E00000CzhMCQAZ\"},\"sections\":{\"Welcome\":{\"cmpName\":\"new-applicant\",\"target\":\"NA\",\"values\":{\"companyLegalName\":\"Bottas Racing Inc.\",\"countryName\":\"Canada\",\"countryIsoCode\":\"CA\",\"countryId\":\"a0n4E000001Ql2zQAC\"},\"sectionDecision\":\"NA\",\"vettingErrors\":[]},\"AgencyLegalStatus\":{},\"ShareholderDetails\":{},\"Address\":{\"sectionName\":\"Address\",\"cmpName\":\"address\",\"values\":{\"address\":\"15 Rue Papineau East\",\"city\":\"Montréal\",\"citygeonameId\":\"aCX4E00000001rEWAQ\",\"state\":{\"Id\":\"a444E000000IsvnQAC\",\"label\":\"Quebec\",\"value\":\"CA-QC\"},\"postalCode\":\"H2V4T8\",\"countryName\":\"Canada\",\"countryIsoCode\":\"CA\",\"countryId\":\"a0n4E000001Ql2zQAC\"},\"sectionDecision\":\"Error_Reported\",\"errors\":[{\"show\":true,\"description\":\"Comment 3\",\"fieldName\":\"address\",\"fieldLabel\":\"Address\"},{\"show\":true,\"description\":\"Comment 2\",\"fieldName\":\"city\",\"fieldLabel\":\"City\"},{\"show\":true,\"description\":\"Comment 1\",\"fieldName\":\"state\",\"fieldLabel\":\"State / Province\"},{\"show\":true,\"description\":\"Comment 4\",\"fieldName\":\"postalCode\",\"fieldLabel\":\"Postal Code\"}]},\"Mailing\":{\"sectionName\":\"Mailing\",\"cmpName\":\"mailing\",\"values\":{\"isMailingSameAsPhysicalAddress\":\"false\",\"mailingAddress\":\"33 Expedia Avenue\",\"city\":\"Seattle\",\"citygeonameId\":\"aCX4E00000001rJWAQ\",\"state\":{\"Id\":\"a444E000000DQzpQAG\",\"label\":\"Washington\",\"value\":\"US-WA\"},\"postalCode\":\"98888\",\"countryName\":\"United States\",\"countryIsoCode\":\"US\",\"countryId\":\"a0n4E0000018PutQAE\"},\"sectionDecision\":\"Error_Reported\",\"errors\":[{\"fieldLabel\":\"Address\",\"fieldName\":\"mailingAddress\",\"show\":true,\"description\":\"Comment 8\"},{\"fieldLabel\":\"City\",\"fieldName\":\"city\",\"show\":true,\"description\":\"Comment 7\"},{\"fieldLabel\":\"State / Province\",\"fieldName\":\"state\",\"show\":true,\"description\":\"Comment 6\"},{\"fieldLabel\":\"Postal Code\",\"fieldName\":\"postalCode\",\"show\":true,\"description\":\"Comment 9\"},{\"fieldLabel\":\"Country\",\"fieldName\":\"country\",\"show\":true,\"description\":\"Comment 5\"}]},\"Contact\":{\"sectionName\":\"Contact\",\"cmpName\":\"contact\",\"values\":{\"preferedLanguage\":\"ENG\",\"phone\":\"15148740202\",\"fax\":\"999888777\",\"businessEmail\":\"lorem@ipsum.com\",\"webSite\":\"www.loremipsum.com\",\"omFirstName\":\"Lorem\",\"omLastName\":\"Ipsum\"},\"sectionDecision\":\"Error_Reported\",\"errors\":[{\"show\":true,\"description\":\"Comment 10\",\"fieldName\":\"phone\",\"fieldLabel\":\"Phone Number\"},{\"show\":true,\"description\":\"Comment 11\",\"fieldName\":\"fax\",\"fieldLabel\":\"Fax Number\"},{\"show\":true,\"description\":\"Comment 12\",\"fieldName\":\"businessEmail\",\"fieldLabel\":\"Business Email address\"},{\"show\":true,\"description\":\"Comment 13\",\"fieldName\":\"website\",\"fieldLabel\":\"Web Site\"},{\"show\":true,\"description\":\"Comment 14\",\"fieldName\":\"omFirstName\",\"fieldLabel\":\"Office Manager - First Name\"},{\"show\":true,\"description\":\"Comment 15\",\"fieldName\":\"omLastName\",\"fieldLabel\":\"Office Manager - Last Name\"},{\"show\":true,\"description\":\"Comment 16\",\"fieldName\":\"preferedLanguage\",\"fieldLabel\":\"Prefered language of correspondance\"}]},\"BusinessProfile\":{},\"BusinessSpecialization\":{},\"SupportingDocuments\":{}},\"sectionsDone\":[{\"id\":0,\"sectionName\":\"address\",\"next\":\"mailing\"},{\"id\":1,\"sectionName\":\"mailing\",\"next\":\"contact\"},{\"id\":2,\"sectionName\":\"contact\",\"next\":\"submit-application\"}]}';
-		TIDSUtil.ErrorWrapper errmgt = TIDSHelper.saveSettings(
-								accountId,
-								applicationsettings,
-								applicationtype,
-								null);
-		caseId= errmgt.caseId;
+				
+		GDP_Reference_Table__c gdpc = new GDP_Reference_Table__c();
+		gdpc.Name=TIDS_Constant.IS_TERMINATED;
+		gdpc.Code__c=TIDS_Constant.TIDS_T;
+		insert gdpc;
+
+		Accreditation__c accre = new Accreditation__c();
+		accre.Class__c = gdpc.Id;
+		accre.Termination_Date__c=System.Today();
+		accre.Related_Account__c=accountId;
+		insert accre;
+	
 		TidsBatchCascading obj = new  TidsBatchCascading();
-		obj.caseId=caseId;
+		obj.caseId=tidscase.Id ;
 		DataBase.executeBatch(obj);
-		System.assertEquals(true,caseId!=null,false); 
+		System.assertEquals(true,tidscase.Id !=null,false); 
 		Test.stopTest();
 	}
-	 
+	@IsTest
+	private static void TidsRunBatchCascadingPart2() {
+		Test.startTest();
+		readObjectsId();
+		Case tidscase = createMyCase(TIDS_Constant.IS_DRAFT,TIDS_Constant.CASE_SUBJECT_ADDRESS_CONTACT,null);
+		List<Account> accounts = new List<Account>();
+	  	accounts.add(newAccount(2, countryId,accountId, headquarters,'VB','T','Agency','Approved',null));
+		accounts.add(newAccount(3, countryId,accountId, headquarters,'BR','T','Agency','Approved',null));
+		accounts.add(newAccount(4, countryId,accountId, headquarters,'VB','T','Agency','Approved',null));
+		accounts.add(newAccount(5, countryId,accountId, headquarters,'VB','T','Agency','Approved',null));
+		insert accounts;
+		
+				
+		GDP_Reference_Table__c gdpc = new GDP_Reference_Table__c();
+		gdpc.Name=TIDS_Constant.IS_TERMINATED;
+		gdpc.Code__c=TIDS_Constant.TIDS_T;
+		insert gdpc;
+
+		Accreditation__c accre = new Accreditation__c();
+		accre.Class__c = gdpc.Id;
+		accre.Termination_Date__c=System.Today();
+		accre.Related_Account__c=accountId;
+		insert accre;
+	
+		TidsBatchCascading obj = new  TidsBatchCascading();
+		obj.caseId=tidscase.Id;
+		DataBase.executeBatch(obj);
+		System.assertEquals(true,tidscase.Id!=null,false); 
+		Test.stopTest();
+	}
+
+	@IsTest
+	private static void TidsRunBatchCascadingPart3() {
+		Test.startTest();
+		readObjectsId();
+		TidsBatchHelper.scheduleCleanse();
+		Test.stopTest();
+	}
+	
 	@IsTest
 	private static void TidsRunBatchRelinquish() {
 		Test.startTest();

@@ -57,6 +57,10 @@
         <name>GCS_CompanyContact</name>
     </fieldSets>
     <fieldSets>
+        <label><!-- GCS Company Contact Airline --></label>
+        <name>GCS_Company_Contact_Airline</name>
+    </fieldSets>
+    <fieldSets>
         <label><!-- GCS Company Profile - Agency --></label>
         <name>GCS_Profile_Agency</name>
     </fieldSets>
@@ -83,6 +87,10 @@
     <fieldSets>
         <label><!-- ISSP Notification Trigger Field Set --></label>
         <name>ISSP_Notification_Trigger_Field_Set</name>
+    </fieldSets>
+    <fieldSets>
+        <label><!-- NewGen Selector --></label>
+        <name>NewGen_Selector</name>
     </fieldSets>
     <fieldSets>
         <label><!-- TrackingHistory --></label>
@@ -657,6 +665,11 @@
     <fields>
         <label><!-- Airline Code --></label>
         <name>Airline_Code__c</name>
+    </fields>
+    <fields>
+        <help><!-- Number of active IATA Pay Services Rendered where the customer is either the airline HQ or one of its branches. --></help>
+        <label><!-- Total IATA Pay Participations --></label>
+        <name>Airline_IATAPay_Participations__c</name>
     </fields>
     <fields>
         <label><!-- Airline Business Model --></label>
@@ -2080,7 +2093,7 @@
             <translation>ANSP</translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Academic/Research Body</masterLabel>
+            <masterLabel>Academic or Research Body</masterLabel>
             <translation>Organisme académique/de recherche</translation>
         </picklistValues>
         <picklistValues>
@@ -2132,8 +2145,8 @@
             <translation>Location appartements et villas</translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Architect / Engineering Consultant</masterLabel>
-            <translation><!-- Architect / Engineering Consultant --></translation>
+            <masterLabel>Architect or Engineering Consultant</masterLabel>
+            <translation><!-- Architect or Engineering Consultant --></translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Banking Service</masterLabel>
@@ -2186,10 +2199,6 @@
         <picklistValues>
             <masterLabel>Cruise Line</masterLabel>
             <translation>Ligne de croisières</translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>DPC</masterLabel>
-            <translation><!-- DPC --></translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Domestic Agent</masterLabel>
@@ -2256,24 +2265,8 @@
             <translation>Agent de fret IATA</translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>IATA Head Office</masterLabel>
-            <translation><!-- IATA Head Office --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>IATA Local office</masterLabel>
-            <translation><!-- IATA Local office --></translation>
-        </picklistValues>
-        <picklistValues>
             <masterLabel>IATA Passenger Sales Agent</masterLabel>
             <translation>Agent ventes passagers IATA</translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>IATA Regional Office</masterLabel>
-            <translation><!-- IATA Regional Office --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>IATAN Passenger Agent</masterLabel>
-            <translation><!-- IATAN Passenger Agent --></translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Import Agent</masterLabel>
@@ -2304,12 +2297,12 @@
             <translation>Bailleur</translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>MSO Member Sales Office</masterLabel>
-            <translation>Bureau de vente membre MSO</translation>
+            <masterLabel>MRO - Maintenance Repair Overhaul</masterLabel>
+            <translation>Maintenance, réparation, révision</translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>Maintenance, Repair, Overhaul</masterLabel>
-            <translation>Maintenance, réparation, révision</translation>
+            <masterLabel>MSO Member Sales Office</masterLabel>
+            <translation>Bureau de vente membre MSO</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Manufacturing Industry</masterLabel>
@@ -2330,10 +2323,6 @@
         <picklistValues>
             <masterLabel>Non-IATA Freight Forwarder</masterLabel>
             <translation>Agent de fret ne faisant pas partie de l’IATA</translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Non-IATA Passenger Agent</masterLabel>
-            <translation>Agent de passagers ne faisant pas partie de l’IATA</translation>
         </picklistValues>
         <picklistValues>
             <masterLabel>Non-IATA Travel Agent</masterLabel>
@@ -2442,10 +2431,6 @@
         <picklistValues>
             <masterLabel>Truck Line</masterLabel>
             <translation><!-- Truck Line --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Vendor</masterLabel>
-            <translation>Fournisseur</translation>
         </picklistValues>
     </fields>
     <fields>
@@ -5009,6 +4994,11 @@ WSPN-Worldspan --></help>
         <name>HQ_Due_Dilingence_Status__c</name>
     </fields>
     <fields>
+        <help><!-- Support model provided to HQ Account --></help>
+        <label><!-- HQ Service Model --></label>
+        <name>HQ_Service_Model__c</name>
+    </fields>
+    <fields>
         <label><!-- Has Activities --></label>
         <name>Has_Activities__c</name>
     </fields>
@@ -5174,6 +5164,10 @@ WSPN-Worldspan --></help>
     <fields>
         <label><!-- IATA Membership status (all levels) --></label>
         <name>IATA_Membership_status_all_levels__c</name>
+    </fields>
+    <fields>
+        <label><!-- Is Airline participating in IATA Pay --></label>
+        <name>IATA_Pay_Participant_formula__c</name>
     </fields>
     <fields>
         <label><!-- IATA code Lenght --></label>
@@ -7375,6 +7369,10 @@ J-Joint Vent --></help>
             <translation><!-- TD --></translation>
         </picklistValues>
         <picklistValues>
+            <masterLabel>VB</masterLabel>
+            <translation><!-- VB --></translation>
+        </picklistValues>
+        <picklistValues>
             <masterLabel>WH</masterLabel>
             <translation><!-- WH --></translation>
         </picklistValues>
@@ -7815,6 +7813,10 @@ J-Joint Vent --></help>
     <fields>
         <label><!-- Number of open Financial Review Cases --></label>
         <name>Number_of_open_Financial_Review_Cases__c</name>
+    </fields>
+    <fields>
+        <label><!-- ONE Source Related Account --></label>
+        <name>ONE_Source_Related_Account__c</name>
     </fields>
     <fields>
         <label><!-- Old Airline Prefix --></label>
@@ -8390,14 +8392,6 @@ J-Joint Vent --></help>
             <translation>Société d&apos;investissements</translation>
         </picklistValues>
         <picklistValues>
-            <masterLabel>IATA</masterLabel>
-            <translation><!-- IATA --></translation>
-        </picklistValues>
-        <picklistValues>
-            <masterLabel>Internal Use</masterLabel>
-            <translation><!-- Internal Use --></translation>
-        </picklistValues>
-        <picklistValues>
             <masterLabel>Media</masterLabel>
             <translation>Média</translation>
         </picklistValues>
@@ -8449,6 +8443,19 @@ J-Joint Vent --></help>
     <fields>
         <label><!-- Sent to External System --></label>
         <name>Sent_to_External_System__c</name>
+    </fields>
+    <fields>
+        <help><!-- Support model provided to Account --></help>
+        <label><!-- Service Model --></label>
+        <name>Service_Model__c</name>
+        <picklistValues>
+            <masterLabel>Differentiated</masterLabel>
+            <translation><!-- Differentiated --></translation>
+        </picklistValues>
+        <picklistValues>
+            <masterLabel>Standard</masterLabel>
+            <translation><!-- Standard --></translation>
+        </picklistValues>
     </fields>
     <fields>
         <label><!-- Services Rendered Country --></label>
@@ -10829,10 +10836,6 @@ J-Joint Vent --></help>
         <name>ACLI_SAP_ID_format_validation</name>
     </validationRules>
     <validationRules>
-        <errorMessage><!-- Account Name cannot include Ltd or Intl --></errorMessage>
-        <name>Account_Name_cannot_include_Ltd_or_Intl</name>
-    </validationRules>
-    <validationRules>
         <errorMessage><!-- You are not allowed to change the field &quot;Account Name&quot;. --></errorMessage>
         <name>Agency_Name</name>
     </validationRules>
@@ -10874,14 +10877,6 @@ Name on AOC, IATA Code, Old IATA Code, ICAO Designator, IATA Designator (2-chara
         <name>BR_and_SA_Standard_Account_Parent_Id</name>
     </validationRules>
     <validationRules>
-        <errorMessage><!-- Billing City and Billing Country are mandatory fields --></errorMessage>
-        <name>Billing_Address</name>
-    </validationRules>
-    <validationRules>
-        <errorMessage><!-- You are not allowed to modify AMS data, Please contact agency management or your system admin --></errorMessage>
-        <name>Block_non_AGM_user_from_modifying_agents</name>
-    </validationRules>
-    <validationRules>
         <errorMessage><!-- You do not have permission to edit ISO Country, VAT Number, Billing Address, Legal Name, Trade Name, Sector, Category, Account Type, Agency Business Model, Website and Ownership Type. Please contact your administrator. --></errorMessage>
         <name>Blocks_Users_Editing_Fields_AgencyWWHQ</name>
     </validationRules>
@@ -10910,44 +10905,12 @@ Name on AOC, IATA Code, Old IATA Code, ICAO Designator, IATA Designator (2-chara
         <name>Create_Head_office</name>
     </validationRules>
     <validationRules>
-        <errorMessage><!-- You don&apos;t have the right level of access to edit Client Accounts --></errorMessage>
-        <name>EF_AS_Specialist_Prevent_Client_Edit</name>
-    </validationRules>
-    <validationRules>
-        <errorMessage><!-- You are not allowed to reactivate Client accounts for E&amp;F. --></errorMessage>
-        <name>EF_Account_Client_Reactivation</name>
-    </validationRules>
-    <validationRules>
-        <errorMessage><!-- You are not allowed to reactivate Customer accounts for E&amp;F. --></errorMessage>
-        <name>EF_Account_Customer_Reactivation</name>
-    </validationRules>
-    <validationRules>
-        <errorMessage><!-- SIS Verified can&apos;t be unchecked if Record Type is Operator --></errorMessage>
-        <name>EF_BlockRemoveSISVerifiedOnOperator</name>
-    </validationRules>
-    <validationRules>
         <errorMessage><!-- A branch or Domestic HQ account needs a Parent account --></errorMessage>
         <name>EF_Branch_ParentAccount</name>
     </validationRules>
     <validationRules>
-        <errorMessage><!-- A Branch Account needs the same country as its Parent Account --></errorMessage>
-        <name>EF_Branch_SameCountryWithParentAccount</name>
-    </validationRules>
-    <validationRules>
-        <errorMessage><!-- SIS Verified can&apos;t be checked if SIS Accounting Code or SIS Designator are empty --></errorMessage>
-        <name>EF_CantSetSISVerifiedIfSISCodeEmpty</name>
-    </validationRules>
-    <validationRules>
         <errorMessage><!-- You need to change the Herarchy level to &quot;branch&quot; for a Branch account --></errorMessage>
         <name>EF_Herarchylevel_branch_for_Branch</name>
-    </validationRules>
-    <validationRules>
-        <errorMessage><!-- Please fill in E&amp;F Type, E&amp;F Status, E&amp;F Sub-Status, E&amp;F Status Date Change --></errorMessage>
-        <name>EF_MandatoryFields</name>
-    </validationRules>
-    <validationRules>
-        <errorMessage><!-- SIS Location ID just accepts values Main, and numbers from 1 to 99 --></errorMessage>
-        <name>EF_SIS_Location_ID_format_check</name>
     </validationRules>
     <validationRules>
         <errorMessage><!-- A verified Airport needs a IATA Code. --></errorMessage>
@@ -10986,10 +10949,6 @@ Name on AOC, IATA Code, Old IATA Code, ICAO Designator, IATA Designator (2-chara
         <name>EF_VerificationStatus_Sector_Category</name>
     </validationRules>
     <validationRules>
-        <errorMessage><!-- Head office account can be edited only by administrator, please contact your administrator --></errorMessage>
-        <name>Edit_Head_office</name>
-    </validationRules>
-    <validationRules>
         <errorMessage><!-- This field can only be amended from the Global Entity (GE) --></errorMessage>
         <name>Edit_Identify_Multicountry_for_GE_only</name>
     </validationRules>
@@ -10998,16 +10957,8 @@ Name on AOC, IATA Code, Old IATA Code, ICAO Designator, IATA Designator (2-chara
         <name>Enforce_HE_Parent_on_AE_Account</name>
     </validationRules>
     <validationRules>
-        <errorMessage><!-- The Field/Head Office is mandatory for airlines --></errorMessage>
-        <name>Field_Head_Office_Required</name>
-    </validationRules>
-    <validationRules>
         <errorMessage><!-- Please contact an administrator if you wish to create or modify a general public account --></errorMessage>
         <name>General_Public_Admin_only</name>
-    </validationRules>
-    <validationRules>
-        <errorMessage><!-- IATA Code is mandatory --></errorMessage>
-        <name>IATACode_IsMandatory</name>
     </validationRules>
     <validationRules>
         <errorMessage><!-- To insert a discount this Account must be a Key Account. --></errorMessage>
@@ -11020,10 +10971,6 @@ Name on AOC, IATA Code, Old IATA Code, ICAO Designator, IATA Designator (2-chara
     <validationRules>
         <errorMessage><!-- The airline is a member and the name or the billing address cannot be edited. Only MER is allowed. --></errorMessage>
         <name>If_Member_only_MER_can_Edit</name>
-    </validationRules>
-    <validationRules>
-        <errorMessage><!-- Industry is a required field. --></errorMessage>
-        <name>Industry_Required</name>
     </validationRules>
     <validationRules>
         <errorMessage><!-- The amount of selected options is not valid for this agency. --></errorMessage>
@@ -11046,20 +10993,12 @@ Name on AOC, IATA Code, Old IATA Code, ICAO Designator, IATA Designator (2-chara
         <name>No_tabs_in_VAT_Number</name>
     </validationRules>
     <validationRules>
-        <errorMessage><!-- If Industry = Airline, and Field Head Office not = Headquarter, then Parent Account must be filled and Airline Designator must be filled --></errorMessage>
-        <name>Parent_Acc_Airline_Designator_Required</name>
-    </validationRules>
-    <validationRules>
         <errorMessage><!-- The parent account must be an airline --></errorMessage>
         <name>Parent_account_is_Airline</name>
     </validationRules>
     <validationRules>
         <errorMessage><!-- Abbreviated Name of the Agency has more than 30Chars, 30 is the maximum length. --></errorMessage>
         <name>Passenger_Abbreviated_name_lenght</name>
-    </validationRules>
-    <validationRules>
-        <errorMessage><!-- Account can&apos;t be Active for E&amp;F becaue Parent E&amp;F Status is Inactive --></errorMessage>
-        <name>PreventEFStatusActiveIfParentInactive</name>
     </validationRules>
     <validationRules>
         <errorMessage><!-- Please select the reason for creation. --></errorMessage>

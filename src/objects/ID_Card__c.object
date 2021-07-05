@@ -1102,6 +1102,33 @@ two record types:
         </valueSet>
     </fields>
     <fields>
+        <fullName>Harmonized_Position__c</fullName>
+        <description>Harmonized Positions based on values used by SFDC and Webstar</description>
+        <externalId>false</externalId>
+        <formula>IF(ISBLANK(Position__c),&quot;Employee&quot;,
+CASE(LOWER(Position__c),
+&quot;manager&quot;,&quot;Manager&quot;,
+&quot;partner&quot;,&quot;Owner&quot;,
+&quot;shareholder&quot;,&quot;Owner&quot;,
+&quot;sole owner&quot;,&quot;Owner&quot;,
+&quot;sole proprietor&quot;,&quot;Owner&quot;,
+&quot;stockholder&quot;,&quot;Owner&quot;,
+&quot;account admin&quot;,&quot;Verified Admin&quot;,
+&quot;independent consultant/broker&quot;,&quot;Contractor&quot;,
+&quot;independent contractor&quot;,&quot;Contractor&quot;,
+&quot;director&quot;,&quot;Director&quot;,
+&quot;employee&quot;,&quot;Employee&quot;,
+&quot; &quot;)
+)</formula>
+        <inlineHelpText>Harmonized Positions based on values used by SFDC and Webstar</inlineHelpText>
+        <label>Harmonized Position</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>HourWorkedCode__c</fullName>
         <externalId>false</externalId>
         <formula>CASE( Hours_per_week__c , 
@@ -1166,25 +1193,15 @@ two record types:
         <fullName>Is_Active_Card__c</fullName>
         <description>Check if the card is active</description>
         <externalId>false</externalId>
-        <formula>IF
-(
-RecordType.DeveloperName = &apos;AIMS&apos; ,
-AND
-(
-Valid_From_Date__c &lt;= TODAY(),
-Valid_To_Date__c &gt; TODAY(),
-ISNULL(Cancellation_Date__c)
-)
-,
-IF
-(
+        <formula>IF (
+AND(Valid_To_Date__c &gt;= TODAY(),
+NOT(OR (
 ISPICKVAL(Card_Status__c, &apos;Cancelled ID Card&apos;),
-FALSE,
-(
-IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
+ISPICKVAL(Card_Status__c, &apos;Cancelled&apos;)
 )
 )
-)</formula>
+)
+, True, False)</formula>
         <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
         <label>Is Active Card</label>
         <trackHistory>false</trackHistory>
@@ -1205,10 +1222,11 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <description>CAC Web Service Complex Response for IDCard</description>
         <externalId>false</externalId>
         <formula>&quot;\&quot;reason\&quot;:\&quot;&quot;+ IF (Json_Is_Active__c, &quot;VALID&quot;, &quot;INVALID&quot;) + &quot;\&quot;,&quot;+
-&quot;\&quot;cardholder-name\&quot;:\&quot;&quot;+ FirstName__c +&quot; &quot;+ LastName__c + &quot;\&quot;,&quot;+
-&quot;\&quot;card-expiry-date\&quot;:\&quot;&quot;+ TEXT(Month(Valid_To_Date__c))+ &quot;-&quot; +TEXT(Day(Valid_To_Date__c))+ &quot;-&quot; +TEXT(Year(Valid_To_Date__c)) + &quot;\&quot;,&quot;+ 
-&quot;\&quot;agency-code\&quot;:\&quot;&quot;+Agency_IATA_Code__c + &quot;\&quot;,&quot;+ 
-&quot;\&quot;agency-name\&quot;:\&quot;&quot;+EBC_Agency_Name__c + &quot;\&quot;&quot;</formula>
+            &quot;\&quot;cardholder-name\&quot;:\&quot;&quot;+ FirstName__c +&quot; &quot;+ LastName__c + &quot;\&quot;,&quot;+
+            &quot;\&quot;cardholder-position\&quot;:\&quot;&quot;+Harmonized_Position__c + &quot;\&quot;,&quot;+
+            &quot;\&quot;card-expiry-date\&quot;:\&quot;&quot;+ TEXT(Month(Valid_To_Date__c))+ &quot;-&quot; +TEXT(Day(Valid_To_Date__c))+ &quot;-&quot; +TEXT(Year(Valid_To_Date__c)) + &quot;\&quot;,&quot;+
+            &quot;\&quot;agency-code\&quot;:\&quot;&quot;+Agency_IATA_Code__c + &quot;\&quot;,&quot;+
+            &quot;\&quot;agency-name\&quot;:\&quot;&quot;+EBC_Agency_Name__c + &quot;\&quot;&quot;</formula>
         <inlineHelpText>CAC Web Service Complex Response for IDCard</inlineHelpText>
         <label>JSON WS Complex</label>
         <required>false</required>
@@ -1252,7 +1270,7 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <description>Is Active according the new conditions Valid Date To and The Card Status not Cancelled</description>
         <externalId>false</externalId>
         <formula>IF (
-       AND(Valid_To_Date__c &gt; TODAY(),
+       AND(Valid_To_Date__c &gt;= TODAY(),
            NOT(OR (
                    ISPICKVAL(Card_Status__c, &apos;Cancelled ID Card&apos;),
                    ISPICKVAL(Card_Status__c, &apos;Cancelled&apos;)
@@ -1747,6 +1765,34 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
         <columns>MustSyncWithAIMS__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Inactive_ID_Cards</fullName>
+        <columns>NAME</columns>
+        <columns>Agency_IATA_Code__c</columns>
+        <columns>Agency_Name__c</columns>
+        <columns>VER_Number__c</columns>
+        <columns>Json_Is_Active__c</columns>
+        <columns>Valid_To_Date__c</columns>
+        <columns>Card_Status__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Agency_Name__c</field>
+            <operation>startsWith</operation>
+            <value>SATO,SCHEDULED</value>
+        </filters>
+        <filters>
+            <field>RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>ID_Card__c.AIMS</value>
+        </filters>
+        <filters>
+            <field>Json_Is_Active__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>Inactive ID Cards</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -2876,13 +2922,6 @@ IF(TODAY()&lt;= Valid_To_Date__c, TRUE,FALSE)
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <startsWith>Vowel</startsWith>
-    <validationRules>
-        <fullName>IDCard_DontSaveIfSenttoAIMS</fullName>
-        <active>false</active>
-        <description>Dont allow the user to modify if the card is already sent to AIMS</description>
-        <errorConditionFormula>AND(PRIORVALUE(MustSyncWithAIMS__c) == true, NOT(CONTAINS($Profile.Name ,&apos;System Administrator&apos;) ) ,NOT(CONTAINS($Profile.Name , &apos;idcard portal profile&apos; )))</errorConditionFormula>
-        <errorMessage>Card has been already sent to AIMS. It can not be modified anymore.</errorMessage>
-    </validationRules>
     <visibility>Public</visibility>
     <webLinks>
         <fullName>Cancel_Card</fullName>

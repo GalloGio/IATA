@@ -1,10 +1,5 @@
 @isTest
 private class ISSP_CurrencyCenterUtilTest {
-
-	private static void init(){
-
-	}
-
 	@isTest static void testCheckIfUserHasAccessToServiceWithoutUser() {
 		PageReference result = ISSP_CurrencyCenterUtil.checkIfUserHasAccessToService();
 		System.assertNotEquals(new PageReference('/ISSP_Homepage'),result);
@@ -52,7 +47,8 @@ private class ISSP_CurrencyCenterUtilTest {
 		);
 		insert newUser;
 
-		Portal_Applications__c app = new Portal_Applications__c(Application_URL__c='/ISSP_CurrencyCenterHome');
+		Portal_Applications__c app = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		app.Application_URL__c='/ISSP_CurrencyCenterHome';
 		insert app;
 
 		Portal_Application_Right__c par =

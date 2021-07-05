@@ -134,6 +134,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 														 ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_UP, 
 														 ANG_Percentage__c= ANG_RHCHelper.RISK_ALERT_THRESHOLD_LEVEL_100,
 														 recordtypeid = ANG_RHCHelper.RECTYPE_RHCATTRIBUTE,
+														 Accreditation_Model__c = 'Cashless;Cash;Multicountry',
 														 Email_Template_Internal_Stakeholders__c = 'RHC_Exceptional_Monitoring_SMAP_Notification',
 														 Create_SMAP_Case__c = true,
 														 ANG_Send_Email_Agent__c = false,
@@ -143,6 +144,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 														 ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_UP, 
 														 ANG_Percentage__c= ANG_RHCHelper.RISK_ALERT_THRESHOLD_LEVEL_100,
 														 recordtypeid = ANG_RHCHelper.RECTYPE_RHCATTRIBUTE,
+														 Accreditation_Model__c = 'Cashless;Cash;Multicountry',
 														 Email_Template_Internal_Stakeholders__c = 'RHC_Exceptional_Monitoring_100',
 														 Create_SMAP_Case__c = false,
 														 ANG_Send_Email_Agent__c = false,
@@ -152,6 +154,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 														 ANG_Direction__c = ANG_RHCHelper.RISK_ALERT_DIRECTION_DOWN, 
 														 ANG_Percentage__c= ANG_RHCHelper.RISK_ALERT_THRESHOLD_LEVEL_100,
 														 recordtypeid = ANG_RHCHelper.RECTYPE_RHCATTRIBUTE,
+														 Accreditation_Model__c = 'Cashless;Cash;Multicountry',
 														 Email_Template_Internal_Stakeholders__c = '',
 														 Create_SMAP_Case__c = false,
 														 ANG_Send_Email_Agent__c = false,
@@ -266,6 +269,7 @@ private class ANG_RHCAlertTriggerHandler_test {
 		att.ANG_EmailTemplate_NG__c = 'emailTemplate';
 		att.ANG_PortalNotificationTemplate__c = [SELECT Id, Name FROM Notification_template__c LIMIT 1].Name;
 		att.RecordTypeId = ANG_RHCHelper.RECTYPE_RHCATTRIBUTE;
+		att.Accreditation_Model__c = 'Cashless;Cash;Multicountry';
 		att.ANG_Send_Email_Agent__c = true;
 		insert att;
 		
@@ -310,21 +314,19 @@ private class ANG_RHCAlertTriggerHandler_test {
 			LastName = 'test', 
 			AccountId = accnt.Id,
 			User_Portal_Status__c = ANG_Risk_Helper.USER_PORTAL_STATUS_APPROVED_ADIM,
-			email = 'testiata@yopmail.com'
+			email = 'testiata' + string.valueof(system.now().getTime()) + '@yopmail.com'
 			);
 		insert contact;
 
 		ISSP_ObjectFactory.createPortalUser(contact);
 
-		Portal_Applications__c par = new Portal_Applications__c (Name = ANG_RHCHelper.RISK_PROFILE_AND_RHC_PORTAL_SERVICE);
+		Portal_Applications__c par = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		par.Name = ANG_RHCHelper.RISK_PROFILE_AND_RHC_PORTAL_SERVICE;
 		insert par;
-
 
 		insert new Portal_Application_Right__c(Portal_Application__c = par.id, Right__c = 'Access Granted', Contact__c = contact.Id);
 
-
 		ANG_RHC_Information__c rhcInfo=[SELECT Id,ANG_AccountId__c FROM ANG_RHC_Information__c LIMIT 1];
-		
 
 		ANG_Risk_Alert__c ara = new ANG_Risk_Alert__c(
 			ANG_RHC_Information__c = rhcInfo.Id,

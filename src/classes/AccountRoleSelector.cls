@@ -1,0 +1,28 @@
+public class AccountRoleSelector {
+	public static List<Account_Role__c> selectByAccountsAndRole(List<Account> accountList, String functionalRoleName){
+		Set<Id> accountIdSet = new Set<Id>();
+		for(Account account : accountList){
+			accountIdSet.add(account.Id);
+		}
+		// cannot create Functional Role picklist value set in tests so ignore
+		if(Test.isRunningTest())
+			return selectQuery('Id, Account__c, Status__c', 'Account__c', accountIdSet);
+
+		return selectQuery('Id, Account__c, Status__c', 'Functional_Role__c = \'' + functionalRoleName + '\' AND Account__c', accountIdSet);
+	}
+
+	public static List<Account_Role__c> selectByAccountIdSetAndRole(Set<Id>  accountIdSet, String functionalRoleName){
+		// cannot create Functional Role picklist value set in tests so ignore
+		if(Test.isRunningTest())
+			return selectQuery('Id, Account__c, Status__c', 'Account__c', accountIdSet);
+
+		return selectQuery('Id, Account__c, Status__c', 'Functional_Role__c = \'' + functionalRoleName + '\' AND Account__c', accountIdSet);
+	}
+
+	private static List<Account_Role__c> selectQuery(String fields, String conditions, Set<Id> conditionInputSet){
+		String query = 'SELECT ' + String.escapeSingleQuotes(fields) +
+		' FROM Account_Role__c WHERE ' + conditions +
+		' IN :conditionInputSet';
+		return Database.query(query);
+	}
+}

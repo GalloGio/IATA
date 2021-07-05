@@ -42,7 +42,6 @@ export default class TidsAddBranch extends LightningElement {
 		.catch(error => {
 			console.log('error',JSON.stringify(error));
 		});
-		//this.showVirtualBranch = true;
 	}
 		
 

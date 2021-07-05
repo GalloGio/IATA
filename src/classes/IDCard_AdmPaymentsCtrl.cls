@@ -1,4 +1,4 @@
-public class IDCard_AdmPaymentsCtrl extends IDCardAbstractController {
+public without sharing class IDCard_AdmPaymentsCtrl extends IDCardAbstractController {
 
 	public list<ID_Card_Application__c> IdCardApplications {get; set;}
 	public list<ID_Card_Application__c> applicationToCancel {get; set;}

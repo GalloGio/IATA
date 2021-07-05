@@ -278,8 +278,7 @@ private class AMS_ChangeCodesHelperTest {
 			Identifier__c = 'notification'
 			);
 
-		AMS_Settlement_System__c iss = new AMS_Settlement_System__c(Name = 'BSP-FR');
-		insert iss;
+		AMS_Settlement_System__c iss =AMS_OSCAR_TestDataFactory.createOperationAndItsAttributes('BSP-FR');
 
 		// Create a new ISO Country
 		IATA_ISO_Country__c country = new IATA_ISO_Country__c(Name = 'France', ISO_Code__c = 'FR', CNS_Country__c=true, AMS_Settlement_System__c = iss.id, ANG_Enable_NewGen__c = true);
@@ -349,6 +348,7 @@ private class AMS_ChangeCodesHelperTest {
 		att.ANG_EmailTemplate_NG__c = 'emailTemplate';
 		att.ANG_PortalNotificationTemplate__c = [SELECT Id, Name FROM Notification_template__c LIMIT 1].Name;
 		att.RecordTypeId = ANG_RHCHelper.RECTYPE_RHCATTRIBUTE;
+		att.Accreditation_Model__c = 'Cashless;Cash;Multicountry';
 		insert att;
 
 

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingGuestRules>
+        <fullName>AccRoleDetailCapability_OS_GuestUser</fullName>
+        <accessLevel>Read</accessLevel>
+        <description>Give view all access to onesource guest user. (Needed after Spring21 release)</description>
+        <label>Acc Role Detail Capability OneSource GuestUser</label>
+        <sharedTo>
+            <guestUser>ONE_Source</guestUser>
+        </sharedTo>
+        <criteriaItems>
+            <field>CreatedById</field>
+            <operation>notEqual</operation>
+            <value></value>
+        </criteriaItems>
+        <includeHVUOwnedRecords>false</includeHVUOwnedRecords>
+    </sharingGuestRules>
+</SharingRules>

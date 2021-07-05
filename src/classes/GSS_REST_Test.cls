@@ -16,7 +16,7 @@
  */
 
 
-@isTest (SeeAllData=false)
+@isTest
 global class GSS_REST_Test {
 	public static IATA_ISO_Country__c myCountry;
 	public static Account myAcct;
@@ -114,7 +114,7 @@ global class GSS_REST_Test {
 		zuoraSubscriptionList.add(mySubscription);
 		zuoraSubscriptionList.add(mySubscriptionWeekly);
 		Insert zuoraSubscriptionList;
-		System.debug('zuoraSubscriptionList>>' + zuoraSubscriptionList);
+
 
 		//Create the reference File Description
 		myFileDescriptionReference = new GDP_File_Description__c(
@@ -177,7 +177,7 @@ global class GSS_REST_Test {
 		fileDescriptionList.add(myFileDescriptionDeltaDaily);
 		Insert fileDescriptionList;
 
-
+		Test.startTest();
 		// insert GDP_File_Fields_Description test data related to myFileDescriptionReference
 		insertGDPFileFieldsDescriptionTestData();
 
@@ -217,6 +217,7 @@ global class GSS_REST_Test {
 
 		// insert data for file records, i.e. GDP_Products_Account_View and related objects
 		insertGDPDataFileRecords();
+		Test.stopTest();
 
 		// insert file subscription detail
 		mySubscriptionDetail = new GSS_Subscription_Detail__c(
@@ -257,8 +258,6 @@ global class GSS_REST_Test {
 			);
 
 		insert myFileProduction;
-
-		//test.stopTest();
 	}
 
 
@@ -751,7 +750,7 @@ global class GSS_REST_Test {
 		//req.addParameter('IsTestMode', '1');
 
 
-		system.debug('TestGetPayloadDeltaAfter_Add_Change FileSpecificationId: '+myFileDescription.id);
+
 
 		RestContext.request = req;
 		RestContext.response = res;
@@ -763,8 +762,8 @@ global class GSS_REST_Test {
 		Test.stopTest();
 
 		//Assert
-		system.debug('TestGetPayloadDeltaAfter_Add_Change getFilePayload responseBody : ' + res.responseBody.toString());
-		system.debug('TestGetPayloadDeltaAfter_Add_Change getFilePayload Status Code : ' +  res.statusCode);
+
+
 		System.assertEquals(200, res.statusCode);
 
 		// Inspect Response body to see if there is something expected
@@ -784,7 +783,7 @@ global class GSS_REST_Test {
 
 		//Assert
 		//A-C code should return an A code
-		system.debug('FieldValueList: '+FieldValueList);
+
 		//system.assertEquals('A',FieldValueList[0],'A Code expected if A-C present in delta code sequence');
 	}
 
@@ -795,7 +794,7 @@ global class GSS_REST_Test {
 	*/
 	static testMethod void TestGss_DeltaTriggerHelper2() {
 	   //Arrange
-	   system.debug('TestGss_DeltaTriggerHelper2: ');
+
 	   list<GDP_Products_Account_View__c> Products_Account_View_list =
 		   [Select Id, Related_Accreditation_Class__c,
 			(SELECT id, Last_change_date__c, Status__c, Status__r.Code__c From Accreditation__r)
@@ -842,7 +841,7 @@ global class GSS_REST_Test {
 		//
 
 		//Act
-		system.debug('TestGss_DeltaTriggerHelper Scenario 4: ');
+
 		Accreditation__c Accr = Products_Account_View_list[0].Related_Accreditation_Class__r;
 		Accr.Status__c = ReferenceMap.get('Accredited');
 		test.startTest();
@@ -856,8 +855,8 @@ global class GSS_REST_Test {
 										Order By Id Desc];
 
 		//Assert
-		system.debug('DeltaList 4: '+DeltaList);
-		system.debug('DeltaList 4 size: ' + DeltaList.size());
+
+
 		System.assertEquals('D', DeltaList[0].Change_Code__c, 'Expect a D code');
 
 
@@ -865,7 +864,7 @@ global class GSS_REST_Test {
 		//expect a 'B' Code
 		//
 		//Act
-		system.debug('TestGss_DeltaTriggerHelper Scenario 5: ');
+
 		Accr.Status__c = ReferenceMap.get('Accredited');
 		Update Accr;
 		Test.stopTest();
@@ -875,8 +874,8 @@ global class GSS_REST_Test {
 										 FROM GDP_Delta__c
 										 WHERE Related_GDP_Product_Account_View__c = : Products_Account_View_list[0].id
 										 Order By Id Desc];
-		system.debug('DeltaList 5: '+DeltaList);
-		system.debug('DeltaList 5 size: ' + DeltaList.size());
+
+
 		System.assertEquals('B', DeltaList[0].Change_Code__c, 'Expect a B code');
 	}
 
@@ -894,7 +893,7 @@ global class GSS_REST_Test {
 		//Scenario 6 Change Reference Accreditation on an Account,
 		//From a Accredited to an Terminated Accreditation record expect a 'D' Code
 		//
-		system.debug('TestGss_DeltaTriggerHelper Scenario 6: ');
+
 
 		System.AssertEquals(Products_Account_View_list[0].Accreditation__r[0].Status__r.Code__c,'9'); //Accredited
 		System.AssertEquals(Products_Account_View_list[1].Accreditation__r[1].Status__r.Code__c,'0'); //Terminated
@@ -912,8 +911,8 @@ global class GSS_REST_Test {
 										FROM GDP_Delta__c
 										WHERE Related_GDP_Product_Account_View__c = : Products_Account_View_list[0].id
 										Order By Id Desc];
-		system.debug('DeltaList 6: '+DeltaList);
-		system.debug('DeltaList 6 size: ' + DeltaList.size());
+
+
 		System.assertEquals('D', DeltaList[0].Change_Code__c, 'Expect a D code');
 	}
 
@@ -934,7 +933,7 @@ global class GSS_REST_Test {
 		BDel.query = 'SELECT Id FROM GDP_Delta__c WHERE DeltaLastModifiedDate__c < ' + String.ValueOf(d);
 		// Invoke the batch job.
 		ID batchprocessid = Database.executeBatch(BDel);
-		System.debug('Returned batch process ID: ' + batchProcessId);
+
 
 		Test.StopTest();
 
@@ -951,7 +950,7 @@ global class GSS_REST_Test {
 	*   Created by Alex  22/09/2015
 	*/
 	static testMethod void TestGetSubscriptionId() {
-		system.debug('mySubscription2 >> ' + mySubscription);
+
 		RestRequest req = new RestRequest();
 		RestResponse res = new RestResponse();
 
@@ -966,7 +965,7 @@ global class GSS_REST_Test {
 		System.assertEquals(200, res.statusCode);
 
 		GSS_REST_Subscriptions.SubscriptionCls ResponseClass = new GSS_REST_Subscriptions.SubscriptionCls();
-		//system.debug('responseBody toString: ' + res.responseBody.toString());
+
 		ResponseClass=(GSS_REST_Subscriptions.SubscriptionCls)JSON.deserialize(
 			res.responseBody.toString(),
 			GSS_REST_Subscriptions.SubscriptionCls.class);
@@ -993,12 +992,12 @@ global class GSS_REST_Test {
 	// test FileSpecification delivery for basic successful case
 	// the delivery record has not been created
 	static testmethod void testGetFileSpecification01_WillDeliver(){
-		System.debug( 'testGetFileSpecification01_WillDeliver');
+
 		Zuora__Subscription__c zuoraSubscription = [select Id, Name
 												   from Zuora__Subscription__c
 												   where Zuora__Zuora_Id__c = : ZUORA_SUBSCRIPTION_ID_DAILY
 												   limit 1];
-		System.debug('Subscription: >> ' + zuoraSubscription);
+
 		System.assertNotEquals(null, zuoraSubscription);
 		String SubscriptionId= zuoraSubscription.Id;
 
@@ -1017,7 +1016,7 @@ global class GSS_REST_Test {
 		req.httpMethod = 'POST';
 		req.addHeader('SpecificationId', SubscriptionId);
 
-		system.debug('SubscriptionId >> ' + SubscriptionId);
+
 		List<String> listid = new String [] { SubscriptionId };
 
 		// ----------------------------------------------------------
@@ -1025,7 +1024,7 @@ global class GSS_REST_Test {
 
 		GSS_REST_FileSpecification.ListOfSubscriptionId RequestClass = new GSS_REST_FileSpecification.ListOfSubscriptionId(listid);
 		req.requestBody = Blob.valueOf(json.serialize(RequestClass));
-		System.debug( 'testGetFileSpecification:requestBody:' + req.requestBody.toString());
+
 
 		RestContext.request = req;
 		RestContext.response = res;
@@ -1033,7 +1032,7 @@ global class GSS_REST_Test {
 		//1 Tests positive scenario with code 200
 		GSS_REST_FileSpecification.getActiveSubscription();
 		System.assertEquals(200, res.statusCode);
-		//System.debug('testGetFileSpecification:responseBody toString: ' + res.responseBody.toString());
+
 
 		Test.stopTest();
 		// ----------------------------------------------------------
@@ -1044,23 +1043,23 @@ global class GSS_REST_Test {
 			res.responseBody.toString(),
 			GSS_REST_FileSpecification.FileSpecificationCls.class);
 
-		System.debug( 'ResponseClass.FileSpecifications size:' + ResponseClass.FileSpecifications.size());
-		//System.debug( 'ResponseClass:' + ResponseClass);
+
+
 
 		//Assert that the return object contains the filespecification
 		// it might deliver the file specification of the SubscriptionDetail or its Master file
 		String FileSpecificationId = ResponseClass.FileSpecifications[0].FileSpecificationID;
 		String SubscriptionDetailId = ResponseClass.FileSpecifications[0].SubscriptionDetailID;
-		System.debug( 'FileSpecificationID:' + FileSpecificationId);
-		System.debug( 'SubscriptionDetailId:' + SubscriptionDetailId);
+
+
 		System.assertNotEquals( null, FileSpecificationID, 'FileSpecificationID should not be null.');
 		System.assertNotEquals( null, SubscriptionDetailId, 'SubscriptionDetailId should not be null.');
 
 		Map<Id,GDP_File_Description__c> fileSpecIdToObjectMap = new Map<Id,GDP_File_Description__c> ([Select Id, Name, Description__c
 															 From GDP_File_Description__c limit 100]);
-		System.debug( 'stored file description:'+ fileSpecIdToObjectMap);
+
 		GDP_File_Description__c returnedFileSpec = fileSpecIdToObjectMap.get(FileSpecificationId);
-		System.debug( 'returned fileSpecification:' + returnedFileSpec);
+
 		System.assertNotEquals(null, returnedFileSpec, 'Returned FileSpecification not found');
 
 	} // end of testGetFileSpecification01_WillDeliver
@@ -1070,13 +1069,13 @@ global class GSS_REST_Test {
 	// test FileSpecification delivery for basic successful case
 	// the delivery record has not been created
 	static testmethod void testGetFileSpecification02_WillDeliverWeekly(){
-		System.debug( 'testGetFileSpecification02_WillDeliverWeekly');
+
 
 		Zuora__Subscription__c zuoraSubscription = [select Id, Name
 												   from Zuora__Subscription__c
 												   where Zuora__Zuora_Id__c = : ZUORA_SUBSCRIPTION_ID_WEEKLY
 												   limit 1];
-		System.debug('Subscription: >> ' + zuoraSubscription);
+
 		System.assertNotEquals(null, zuoraSubscription);
 		String SubscriptionId= zuoraSubscription.Id;
 
@@ -1095,7 +1094,7 @@ global class GSS_REST_Test {
 		req.httpMethod = 'POST';
 		req.addHeader('SpecificationId', SubscriptionId);
 
-		system.debug('SubscriptionId >> ' + SubscriptionId);
+
 
 		List<String> listid = new String [] { SubscriptionId };
 
@@ -1104,7 +1103,7 @@ global class GSS_REST_Test {
 
 		GSS_REST_FileSpecification.ListOfSubscriptionId RequestClass = new GSS_REST_FileSpecification.ListOfSubscriptionId(listid);
 		req.requestBody = Blob.valueOf(json.serialize(RequestClass));
-		System.debug( 'testGetFileSpecification:requestBody:' + req.requestBody.toString());
+
 
 		RestContext.request = req;
 		RestContext.response = res;
@@ -1112,7 +1111,7 @@ global class GSS_REST_Test {
 		//1 Tests positive scenario with code 200
 		GSS_REST_FileSpecification.getActiveSubscription();
 		System.assertEquals(200, res.statusCode);
-		//System.debug('testGetFileSpecification:responseBody toString: ' + res.responseBody.toString());
+
 
 		GSS_REST_FileSpecification.FileSpecificationCls ResponseClass = new GSS_REST_FileSpecification.FileSpecificationCls();
 
@@ -1123,23 +1122,23 @@ global class GSS_REST_Test {
 			res.responseBody.toString(),
 			GSS_REST_FileSpecification.FileSpecificationCls.class);
 
-		System.debug( 'ResponseClass.FileSpecifications size:' + ResponseClass.FileSpecifications.size());
-		//System.debug( 'ResponseClass:' + ResponseClass);
+
+
 
 		//Assert that the return object contains the filespecification
 		// it might deliver the file specification of the SubscriptionDetail or its Master file
 		String FileSpecificationId = ResponseClass.FileSpecifications[0].FileSpecificationID;
 		String SubscriptionDetailId = ResponseClass.FileSpecifications[0].SubscriptionDetailID;
-		System.debug( 'FileSpecificationID:' + FileSpecificationId);
-		System.debug( 'SubscriptionDetailId:' + SubscriptionDetailId);
+
+
 		System.assertNotEquals( null, FileSpecificationID, 'FileSpecificationID should not be null.');
 		System.assertNotEquals( null, SubscriptionDetailId, 'SubscriptionDetailId should not be null.');
 
 		Map<Id,GDP_File_Description__c> fileSpecIdToObjectMap = new Map<Id,GDP_File_Description__c> ([Select Id, Name, Description__c
 															 From GDP_File_Description__c limit 100]);
-		System.debug( 'stored file description:'+ fileSpecIdToObjectMap);
+
 		GDP_File_Description__c returnedFileSpec = fileSpecIdToObjectMap.get(FileSpecificationId);
-		System.debug( 'returned fileSpecification:' + returnedFileSpec);
+
 		System.assertNotEquals(null, returnedFileSpec, 'Returned FileSpecification not found');
 
 	} // end of testGetFileSpecification02_WillDeliveryWeekly
@@ -1150,13 +1149,13 @@ global class GSS_REST_Test {
 	// the delivery record have been created for all the subscription details related to this subscription
 	// Tests positive scenario with Delivery date exists for the given subscription and product and charge
 	static testmethod void testGetFileSpecification03_WillNotDeliver(){
-		System.debug( 'testGetFileSpecification03_WillNotDeliver');
+
 
 		Zuora__Subscription__c zuoraSubscription = [select Id, Name
 												   from Zuora__Subscription__c
 												   where Zuora__Zuora_Id__c = : ZUORA_SUBSCRIPTION_ID_WEEKLY
 												   limit 1];
-		System.debug('Subscription: >> ' + zuoraSubscription);
+
 		System.assertNotEquals(null, zuoraSubscription);
 		String SubscriptionId= zuoraSubscription.Id;
 		System.assertNotEquals(null, SubscriptionId);
@@ -1185,7 +1184,7 @@ global class GSS_REST_Test {
 		req.httpMethod = 'POST';
 		req.addHeader('SpecificationId', SubscriptionId);
 
-		system.debug('SubscriptionId >> ' + SubscriptionId);
+
 
 		List<String> listid = new String [] { SubscriptionId };
 
@@ -1193,13 +1192,13 @@ global class GSS_REST_Test {
 		Test.startTest();
 		GSS_REST_FileSpecification.ListOfSubscriptionId RequestClass = new GSS_REST_FileSpecification.ListOfSubscriptionId(listid);
 		req.requestBody = Blob.valueOf(json.serialize(RequestClass));
-		System.debug( 'testGetFileSpecification:requestBody:' + req.requestBody.toString());
+
 
 		RestContext.request = req;
 		RestContext.response = res;
 
 		GSS_REST_FileSpecification.getActiveSubscription();
-		system.debug('responseBody toString: ' + res.responseBody.toString());
+
 
 		GSS_REST_FileSpecification.FileSpecificationCls ResponseClass = new GSS_REST_FileSpecification.FileSpecificationCls();
 		ResponseClass=(GSS_REST_FileSpecification.FileSpecificationCls)JSON.deserialize(
@@ -1208,7 +1207,7 @@ global class GSS_REST_Test {
 
 		Test.stopTest();
 
-		System.debug( 'ResponseClass.FileSpecifications size:' + ResponseClass.FileSpecifications.size());
+
 		System.assertEquals(0, ResponseClass.FileSpecifications.size());
 	} // end of testGetFileSpecification03_WillNotDeliver
 
@@ -1228,7 +1227,7 @@ global class GSS_REST_Test {
 
 		req.addParameter('FileSpecificationId', [Select Id From GDP_File_Description__c limit 1][0].Id);
 		req.addParameter('IsTestMode', '1');
-		system.debug('testGetFilePayload FileSpecificationId: '+[Select Id From GDP_File_Description__c limit 1][0].Id);
+
 
 		RestContext.request = req;
 		RestContext.response = res;
@@ -1239,8 +1238,8 @@ global class GSS_REST_Test {
 		GSS_REST_FilePayload.getFilePayload();
 
 		//Assert
-		system.debug('testGetFilePayload getFilePayload responseBody : ' + res.responseBody.toString());
-		system.debug('testGetFilePayload getFilePayload Status Code : ' +  res.statusCode);
+
+
 		System.assertEquals(200, res.statusCode);
 
 		// Inspect Response body to see if there is something expected
@@ -1249,7 +1248,7 @@ global class GSS_REST_Test {
 	}
 
 	static testmethod void testConfirmFileDelivery(){
-		system.debug('mySubscription3 >> ' + mySubscription);
+
 		RestRequest req = new RestRequest();
 		RestResponse res = new RestResponse();
 
@@ -1275,7 +1274,7 @@ global class GSS_REST_Test {
 
 
 		requestClassList.add(requestClass);
-		system.debug('requestClassList TEST 1: ' +Json.serialize(requestClassList));
+
 		req.requestBody =  Blob.valueOf(Json.serialize(requestClassList));
 		//Test #1 Call with successfull criterias to insert record
 		Test.startTest();
@@ -1295,7 +1294,7 @@ global class GSS_REST_Test {
 		//Test #1B Call with successfull criterias to upsert record with Completed status
 		requestClassList[0].FileDeliveryId = ReturnIdResponse[0].Id;
 		requestClassList[0].Status = 'Completed';
-		system.debug('requestClassList TEST 1B: ' +Json.serialize(requestClassList));
+
 		req.requestBody =  Blob.valueOf(Json.serialize(requestClassList));
 		GSS_REST_ConfirmFileDelivery.postConfirmationFileDelivery();
 
@@ -1323,8 +1322,8 @@ global class GSS_REST_Test {
 		//requestClassList.clear(); // there will be 2 items in the list
 		requestClassList.add(bad_requestClass);
 		req.requestBody =  Blob.valueOf(Json.serialize(requestClassList));
-		system.debug('requestClassList' + bad_requestClass);
-		system.debug('requestClassList TEST 2: ' +Json.serialize(requestClassList));
+
+
 		GSS_REST_ConfirmFileDelivery.postConfirmationFileDelivery();
 		System.assertEquals(400, res.statusCode);
 
@@ -1337,7 +1336,7 @@ global class GSS_REST_Test {
 		bad_requestClass.FileSpecificationId = null;
 		requestClassList.clear();
 		requestClassList.add(bad_requestClass);
-		system.debug('requestClassList TEST 3: ' +Json.serialize(requestClassList));
+
 		req.requestBody =  Blob.valueOf(Json.serialize(requestClassList));
 		GSS_REST_ConfirmFileDelivery.postConfirmationFileDelivery();
 		System.assertEquals(400, res.statusCode);
@@ -1350,7 +1349,7 @@ global class GSS_REST_Test {
 		bad_requestClass.FailureMessage=         requestClass.FailureMessage;
 		bad_requestClass.Status=                 requestClass.Status;
 		bad_requestClass.SubscriptionDetailId =  null;
-		system.debug('requestClassList TEST 4: ' +Json.serialize(requestClassList));
+
 		req.requestBody =  Blob.valueOf(Json.serialize(bad_requestClass));
 		GSS_REST_ConfirmFileDelivery.postConfirmationFileDelivery();
 		System.assertEquals(400, res.statusCode);
@@ -1365,7 +1364,7 @@ global class GSS_REST_Test {
 		bad_requestClass.SubscriptionDetailId =  null;
 		requestClassList.clear();
 		requestClassList.add(bad_requestClass);
-		system.debug('requestClassList TEST 5: ' +Json.serialize(requestClassList));
+
 		req.requestBody =  Blob.valueOf(Json.serialize(requestClassList));
 		GSS_REST_ConfirmFileDelivery.postConfirmationFileDelivery();
 		System.assertEquals(400, res.statusCode);
@@ -1379,7 +1378,7 @@ global class GSS_REST_Test {
 		bad_requestClass.SubscriptionDetailId = 'bogusId';
 		requestClassList.clear();
 		requestClassList.add(bad_requestClass);
-		system.debug('requestClassList TEST 6: ' +Json.serialize(requestClassList));
+
 		req.requestBody =  Blob.valueOf(Json.serialize(requestClassList));
 		GSS_REST_ConfirmFileDelivery.postConfirmationFileDelivery();
 		System.assertEquals(400, res.statusCode);
@@ -1388,7 +1387,7 @@ global class GSS_REST_Test {
 
 	// normal scenario in using GSS_REST_FileProduction
 	static testmethod void testGetFileProduction01_NormalCase(){
-		system.debug('File Production  >>> In progress');
+
 
 		String FileSpecificationId= [Select Id From GDP_File_Description__c
 				where Name = : FILE_DESCRIPTION_NAME_NON_REFERENCE_DELTA_DAILY_01
@@ -1404,7 +1403,7 @@ global class GSS_REST_Test {
 		req.addParameter('FileSpecificationId', FileSpecificationId);
 		req.addParameter('IsUniqueRequest', 'true');
 
-		system.debug('FileSpecification >> ' + FileSpecificationId);
+
 
 		List<String> listid = new String [] { FileSpecificationId };
 
@@ -1434,7 +1433,7 @@ global class GSS_REST_Test {
 
 		GSS_REST_FileProduction.FileProductionCls ResponseClass = new GSS_REST_FileProduction.FileProductionCls();
 
-		system.debug('responseBody toString: ' + res.responseBody.toString());
+
 		ResponseClass=(GSS_REST_FileProduction.FileProductionCls)JSON.deserialize(
 			res.responseBody.toString(),
 			GSS_REST_FileProduction.FileProductionCls.class);
@@ -1445,7 +1444,7 @@ global class GSS_REST_Test {
 
 		ResponseClass.FileProductions.Clear();
 		GSS_REST_FileProduction.getFiletoProduce();
-		system.debug('responseBody toString: ' + res.responseBody.toString());
+
 		ResponseClass=(GSS_REST_FileProduction.FileProductionCls)JSON.deserialize(
 			res.responseBody.toString(),
 			GSS_REST_FileProduction.FileProductionCls.class);
@@ -1501,7 +1500,7 @@ global class GSS_REST_Test {
 	} // testGetFileProduction02_OtherCalls
 
 	static testmethod void testConfirmFileProduction(){
-		system.debug('myProduction >>> ConfirmFileProduction ' );
+
 		RestRequest req = new RestRequest();
 		RestResponse res = new RestResponse();
 
@@ -1524,7 +1523,6 @@ global class GSS_REST_Test {
 
 
 		requestClassList.add(requestClass);
-		system.debug('requestClassList TEST 1: ' +Json.serialize(requestClassList));
 		req.requestBody =  Blob.valueOf(Json.serialize(requestClassList));
 		//Test #1 Call with successfull criterias to insert record
 		Test.startTest();
@@ -1546,7 +1544,7 @@ global class GSS_REST_Test {
 		requestClassList[0].Status = 'Completed';
 		requestClassList[0].FailureMessage = '';
 
-		system.debug('requestClassList TEST 1B: ' +Json.serialize(requestClassList));
+
 		req.requestBody =  Blob.valueOf(Json.serialize(requestClassList));
 		GSS_REST_ConfirmFileProduction.postConfirmationFileProduction();
 
@@ -1570,8 +1568,8 @@ global class GSS_REST_Test {
 		//requestClassList.clear(); // there will be 2 items in the list
 		requestClassList.add(bad_requestClass);
 		req.requestBody =  Blob.valueOf(Json.serialize(requestClassList));
-		system.debug('requestClassList' + bad_requestClass);
-		system.debug('requestClassList TEST 2: ' +Json.serialize(requestClassList));
+
+
 		GSS_REST_ConfirmFileProduction.postConfirmationFileProduction();
 		System.assertEquals(400, res.statusCode);
 
@@ -1581,7 +1579,7 @@ global class GSS_REST_Test {
 		bad_requestClass.FileSpecificationId = null;
 		requestClassList.clear();
 		requestClassList.add(bad_requestClass);
-		system.debug('requestClassList TEST 3: ' +Json.serialize(requestClassList));
+
 		req.requestBody =  Blob.valueOf(Json.serialize(requestClassList));
 		GSS_REST_ConfirmFileProduction.postConfirmationFileProduction();
 		System.assertEquals(400, res.statusCode);
@@ -1612,8 +1610,8 @@ global class GSS_REST_Test {
 
 		//Call the REST API
 		GSS_REST_ErrorHandler.postException();
-		system.debug('testExceptionHandler test1 Exception RequestBody : ' + json.serialize(myEx));
-		system.debug('testExceptionHandler test1 Status Code : ' +  res.statusCode);
+
+
 		System.assertEquals(400, res.statusCode);
 
 		//2 Tests Positive scenario , expected StatusCode 200
@@ -1628,8 +1626,8 @@ global class GSS_REST_Test {
 
 		//Call the REST API
 		GSS_REST_ErrorHandler.postException();
-		system.debug('testExceptionHandler test2 Exception RequestBody : ' + json.serialize(myEx));
-		system.debug('testExceptionHandler test2 Status Code : ' +  res.statusCode);
+
+
 		System.assertEquals(200, res.statusCode);
 	}
 }

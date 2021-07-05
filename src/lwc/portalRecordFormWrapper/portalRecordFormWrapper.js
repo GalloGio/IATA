@@ -3,7 +3,9 @@ import { LightningElement, api, track } from 'lwc';
 //navigation
 import { NavigationMixin } from 'lightning/navigation';
 import { navigateToPage } from 'c/navigationUtils';
+import { getParamsFromPage } from 'c/navigationUtils';
 
+import isTidsAccount from '@salesforce/apex/PortalProfileCtrl.isTidsAccount';
 import isAdmin from '@salesforce/apex/CSP_Utils.isAdmin';
 import getPickListValues from '@salesforce/apex/CSP_Utils.getPickListValues';
 import goToPrivacyPortal from '@salesforce/apex/PortalProfileCtrl.goToPrivacyPortal';
@@ -25,6 +27,12 @@ import ServicesTitle from '@salesforce/label/c.CSP_Services_Title';
 import InvalidValue from '@salesforce/label/c.csp_InvalidPhoneValue';
 import CompleteField from '@salesforce/label/c.csp_CompleteField';
 import RelocateAccount from '@salesforce/label/c.ISSP_Relocate_Contact';
+import CSP_Technology from '@salesforce/label/c.CSP_Technology';
+import CSP_FocusAreas from '@salesforce/label/c.CSP_FocusAreas';
+import CSP_Categories from '@salesforce/label/c.CSP_Categories';
+import CSP_ForMoreInfo from '@salesforce/label/c.CSP_ForMoreInfo';
+import Edit from '@salesforce/label/c.Edit';
+import CSP_EditTrainingDetails from '@salesforce/label/c.CSP_EditTrainingDetails';
 
 import IdCard from '@salesforce/label/c.CSP_Id_Card';
 import IdCardNumber from '@salesforce/label/c.CSP_IDCard_Ver_Number';
@@ -47,7 +55,6 @@ import CSP_Travel_Agent_Accreditation_Changes_Request from '@salesforce/label/c.
 import CSP_Airline_Changes_Access from '@salesforce/label/c.CSP_Airline_Changes_Access';
 import See_Bank_Account_Details from '@salesforce/label/c.See_Bank_Account_Details'; //WMO-699 - ACAMBAS
 import Credit_Card_Payment_Link from '@salesforce/label/c.Credit_Card_Payment_Link'; //WMO-699 - ACAMBAS
-import Link_To_SIS from '@salesforce/label/c.Link_To_SIS'; //WMO-736 - ACAMBAS
 
 // GCSDI
 import CSP_L2_Business_Address_Information_LMS from '@salesforce/label/c.CSP_L2_Business_Address_Information_LMS';
@@ -60,6 +67,9 @@ import CSP_L2_Street from '@salesforce/label/c.CSP_L2_Street';
 import CSP_L3_PersonalEmail_LMS from '@salesforce/label/c.CSP_L3_PersonalEmail_LMS';
 import CSP_L_WorkPhone_LMS from '@salesforce/label/c.CSP_L_WorkPhone_LMS';
 
+// TIDS
+import TIDS_Redirect_Message from '@salesforce/label/c.TIDS_Redirect_Message';
+import TIDS_Redirect_Link from '@salesforce/label/c.TIDS_Redirect_Link';
 
 
 export default class PortalRecordFormWrapper extends NavigationMixin(LightningElement) {
@@ -114,6 +124,9 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     @track sisPage;
     @track additionalEmail;
     @track otherPhone;
+    @track providerId;
+    @track logoId;
+    @track SHListFields;
 
     timeout = null;
 
@@ -141,6 +154,8 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     }
 
     _labels = {
+        TIDS_Redirect_Link,
+        TIDS_Redirect_Message,
         SaveLabel,
         CancelLabel,
         MembershipFunction,
@@ -161,6 +176,12 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         CSP_Travel_Agent_Accreditation_Changes_Request,
         CSP_Airline_Changes_Access,
         CSP_CompanyAdministration_Link,
+        CSP_Technology,
+        CSP_FocusAreas,
+        CSP_Categories,
+        CSP_ForMoreInfo,
+        Edit,
+        CSP_EditTrainingDetails,
         IdCardName,
         IdCardPhoto,
         IdCardStatus,
@@ -180,6 +201,7 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     };
 
     @api tabName;
+    @track isTids = false;
     @track isAdminUser = false;
     @track isAirline=false;
     @track linkToDoChanges='';
@@ -221,6 +243,13 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
     emptyServices = 'emptyServices';
 
     connectedCallback() {
+
+        let pageParams = getParamsFromPage();
+        if(pageParams !== undefined){
+            if(pageParams.providerId !== undefined){
+                this.providerId = pageParams.providerId;
+            }
+        }
 
         if (this.isContact) {
             getPickListValues({ sobj: 'Contact', field: 'Area__c' }).then(result => {
@@ -319,7 +348,10 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
             }
 
         }
-        
+        this.isTids=false;
+        isTidsAccount().then(result =>{
+            this.isTids=result;
+        });
         isAdmin().then(result => {
             this.showEditTrack = result && this.showEditTrack;
             if (this.tabName && this._labels.CompanyInformation.trim() === this.tabName.trim()){	
@@ -428,8 +460,13 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
         if(this.sectionName === 'Portal Accessibility' && !this.isSuccess){
             this.fields = this.initialList;
         }
+
         this.isSuccess = false;
         this.showEditModal = false; 
+
+        if(this.sectionName === 'Basics'){
+            setTimeout(function(){ location.reload(); }, 7000);
+        }
     }
 
 
@@ -483,6 +520,10 @@ export default class PortalRecordFormWrapper extends NavigationMixin(LightningEl
 
     get isContact() {
         return this.objectName != null && this.objectName.toLowerCase() == 'contact';
+    }
+
+    get isIHUB() {
+        return window.location.pathname.includes('service-startuphotlist');
     }
 
     //WMO-699 - ACAMBAS: Begin

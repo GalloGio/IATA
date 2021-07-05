@@ -28,6 +28,7 @@ public class IfapXmlParserTest {
 			+'<FileType>FinancialAssessmentResult</FileType>'
 			+'</File>'
 			+'<GFAStatus>Unsatisfactory - New Financial Security</GFAStatus>'
+			+'<Status>Submitted</Status>'
 			+'<FinancialSecurity><Amount>100</Amount><Currency_x>EUR</Currency_x></FinancialSecurity>'
 			+'<Error>'
 			+'<ErrorCode>0</ErrorCode>'
@@ -37,7 +38,7 @@ public class IfapXmlParserTest {
 		XmlStreamReader reader = new XmlStreamReader(str);
 		IfapXmlParser.IfapResult ReassessmentRequest = demo.parseIfapResult(reader);
 		System.debug(ReassessmentRequest);
-
+		System.assertEquals('Submitted', ReassessmentRequest.getStatus());
 	}
 
 	private static testmethod void parseIfapResultErrorTest() {

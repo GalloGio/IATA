@@ -4,6 +4,7 @@ import getCaseById from '@salesforce/apex/PortalCasesCtrl.getCaseById';
 import removeRecipient from '@salesforce/apex/PortalCasesCtrl.removeRecipient';
 import addNewRecipient from '@salesforce/apex/PortalCasesCtrl.addNewRecipient';
 import getHideForClosedCases from '@salesforce/apex/PortalCasesCtrl.getHideForClosedCases';
+import getHideAddNewDocumentsDGR from '@salesforce/apex/PortalCasesCtrl.getHideAddNewDocumentsDGR';
 import getOscarProgress from '@salesforce/apex/portal_OscarProgressBar.getOscarProgress';
 import isUserLevelOne from '@salesforce/apex/PortalSupportReachUsCreateNewCaseCtrl.isUserLevelOne';
 import getSurveyLink from '@salesforce/apex/PortalCasesCtrl.getSurveyLink';
@@ -22,6 +23,7 @@ import Open from '@salesforce/label/c.Open';
 import CSP_RecipientsQuestion from '@salesforce/label/c.CSP_RecipientsQuestion';
 import CSP_Recipients from '@salesforce/label/c.CSP_Recipients';
 import ISSP_Case_Closed_More_Than_2_Months from '@salesforce/label/c.ISSP_Case_Closed_More_Than_2_Months';
+import Case_Closed_For_DGR from '@salesforce/label/c.Case_Closed_For_DGR';
 import ISSP_CaseNumber from '@salesforce/label/c.ISSP_CaseNumber';
 import ISSP_Subject from '@salesforce/label/c.ISSP_Subject';
 import CSP_Status from '@salesforce/label/c.CSP_Status';
@@ -45,6 +47,7 @@ export default class PortalHomeCalendar extends LightningElement {
     @track newRecipient = '';
     @track haveRecipients = false;
     @track isExpired = false;
+    @track isExpiredDGR = false;
     @track expiredCard;
     @track CaseStatusClass = '';
     @track surveyLink;
@@ -77,6 +80,7 @@ export default class PortalHomeCalendar extends LightningElement {
 	ISSP_Subject,
         CSP_AddOrRemove_Recipients,
 	ISSP_Case_Closed_More_Than_2_Months,
+    Case_Closed_For_DGR,
 	CSP_Status,
 	CSP_CreatedOn,
     CSP_NoSearchResults,
@@ -174,6 +178,21 @@ export default class PortalHomeCalendar extends LightningElement {
 
             const selectedEvent = new CustomEvent("sendexpired", {
                 detail: this.isExpired
+              });
+
+            // Dispatches the event.
+            this.dispatchEvent(selectedEvent);
+        })
+        .catch(e => {
+            console.log(e);
+        });
+
+        getHideAddNewDocumentsDGR({ caseId : this.pageParams.caseId })
+        .then(results => {
+            this.isExpiredDGR = results; //Disable
+
+            const selectedEvent = new CustomEvent("sendexpireddgr", {
+                detail: this.isExpiredDGR
               });
 
             // Dispatches the event.

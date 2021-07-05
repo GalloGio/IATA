@@ -1,0 +1,41 @@
+.customspinner {
+    z-index: 9999;
+    margin:auto;
+}
+
+.spinneroverlay {
+    z-index: 9999;
+    content: " ";
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+}
+
+.margin-spinner-gif{
+    left: calc(37.5%);
+    top: calc(37.5%);
+}
+
+
+/* Duplicated CSS neccesary to first load spinner */
+.position-static {
+    position: static !important;
+}
+
+.position-relative {
+    position: relative !important;
+}
+
+.position-absolute {
+    position: absolute !important;
+}
+
+.position-fixed {
+    position: fixed !important;
+}
+
+.position-sticky {
+    position: -webkit-sticky !important;
+    position: sticky !important;
+}

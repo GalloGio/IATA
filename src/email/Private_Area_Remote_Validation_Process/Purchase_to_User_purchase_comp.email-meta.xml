@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>48.0</apiVersion>
+    <available>true</available>
+    <description>Email to user when purchase is completed (information about waiting time).</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>Purchase to User purchase completed</name>
+    <style>none</style>
+    <subject>Remote Validation purchase was successful</subject>
+    <type>visualforce</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

@@ -22,7 +22,7 @@
                 <button class="btn btn-primary btn-greyL noTop" type="submit" onclick="{!c.checkUserTrue}">Submit</button>
             </div>        
         </div>
-        <p>Your privacy matters to us. Please read our <a class="terms" href="https://www.iata.org/Pages/privacy.aspx" target="_blank">privacy statement.</a></p>
+        <p>Your privacy matters to us. Please read our <a class="terms" href="https://www.iata.org/en/privacy" target="_blank">privacy statement.</a></p>
         <div class="slds-align--absolute-center" style="height:100%">
             <lightning:spinner aura:id="spinner" variant="brand" size="large" class="slds-hide"/>
         </div>

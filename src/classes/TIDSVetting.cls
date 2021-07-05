@@ -23,13 +23,21 @@ public class TIDSVetting {
 		isStartVetting=false;
 		mcase = new List<Case>();
 		TIDSUtil.getTidsCases(vcase.Id, false);
-		if (TIDSUtil.cases.size()==0) {this.isOpen=false;return;}
-		if (TIDSUtil.cases[0].Status==TIDS_Constant.IS_CLOSED) {this.isOpen=false;return;}
+		if (TIDSUtil.cases.size()==0) {
+			this.isOpen=false;
+			return;
+		}
+		if (TIDSUtil.cases[0].Status==TIDS_Constant.IS_CLOSED) {
+			this.isOpen=false;
+			return;
+		}
 		mcase = TIDSUtil.cases;
 		isVirtualBranchRequest=(mcase[0].Subject==TIDS_Constant.CASE_SUBJECT_VIRTUAL_ACCREQ);
 		isRelinquishRequest=(mcase[0].Reason1__c==TIDS_Constant.CASE_REASON_RELINQUISH);
 		isReinstateRequest=(mcase[0].Reason1__c==TIDS_Constant.CASE_REASON_REINSTATEMENT);
-		if (isVirtualBranchRequest==false && isRelinquishRequest==false && isReinstateRequest==false)  {isStartVetting=true;}
+		if (isVirtualBranchRequest==false && isRelinquishRequest==false && isReinstateRequest==false){
+			isStartVetting=true;
+		}
 	}
 	//Approves the Tids request by updating the case
 	public void approveRequest() {
@@ -47,7 +55,10 @@ public class TIDSVetting {
 				if (a.size()>0){
 					a[0].Virtual_Branch_Enabled__c=true;
 					update a;
-				}else{messageError=TIDSUtil.getTIDSMetadataError(TIDS_Constant.MSG33); return;}
+				}else{
+					messageError=TIDSUtil.getTIDSMetadataError(TIDS_Constant.MSG33);
+					return;
+				}
 			}
 			mcase[0].Decision__c=TIDS_Constant.DECISION_APPROVED;
 			mcase[0].Decision_Date__c=System.now();
@@ -78,7 +89,10 @@ public class TIDSVetting {
 		this.isOpen=false;
 		messageError=TIDSUtil.getTIDSMetadataError(TIDS_Constant.MSG34);
 		getRequestCase();
-		if (mcase.size()==0){messageError=TIDSUtil.getTIDSMetadataError(TIDS_Constant.MSG31);return;}
+		if (mcase.size()==0){
+			messageError=TIDSUtil.getTIDSMetadataError(TIDS_Constant.MSG31);
+			return;
+		}
 		messageError=TIDSUtil.getTIDSMetadataError(TIDS_Constant.MSG35);
 		mcase[0].Decision__c=TIDS_Constant.DECISION_REJECTED;
 		mcase[0].Decision_Date__c=System.now();

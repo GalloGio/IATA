@@ -79,50 +79,51 @@ public class ams2gdp_BusinessLogic {
 			else if (account.Is_PCI_compliant__c == 'Corporate Card') {PCICompliance = 'C';}
 
 			result.add(new GDP_Products_Account_View__c(AMS_GDP_Key__c  = mapping_key
-					   , Parent_GDP_Account_View__c = (account.ParentId != null) ? parentMap.get(account.ParentId) : null
-					   , Related_GDP_Address__c = addressMap.get(account.Id)
-					   , Related_Accreditation_Class__c = accredMap.get(account.Id)
-					   , Related_Main_Phone__c = phoneMap.get(account.Id)
-					   , Name = account.Name.left(80)
-					   , Airline_Code__c =  airlineCode
-					   , CNS_Agency__c = account.CNS_Agency__c
-					   , BSP_CASS_Code__c =  account.BSP_CASS_Code__c
-					   , CASS_Number__c =  account.CASS_Number__c
-					   , Check_Digit__c =   account.Check_Digit__c
-					   , Email_Address__c =  account.Email__c
-					   , GDP_Opt_In__c =  account.GDP_Opt_In__c
-					   , IATA_Code__c =  (String.isNotBlank(account.IATACode__c)) ? (account.IATACode__c.left(1).equalsIgnoreCase('x') ? account.IATACode__c.left(8) : account.IATACode__c.left(7)) : null
-					   , Incorporation_Type__c =  (tbl_company_types.containsKey(account.Company_Type__c)) ? tbl_company_types.get(account.Company_Type__c).Id : account.Incorporation_Type__c
-					   , Agency_Short_Name__c  = account.Short_Name__c
-					   , Legal_Name_1__c =   (legalNameParts.size() > 0) ? legalNameParts.get(0) : null
-					   , Legal_Name_2__c =   (legalNameParts.size() > 1) ? legalNameParts.get(1) : null
-					   , Legal_Name_3__c =   (legalNameParts.size() > 2) ? legalNameParts.get(2) : null
-					   , License_Number__c =   account.License_Number__c
-					   , Location_Type__c =  (tbl_location_types.containsKey(account.Location_Type__c)) ? tbl_location_types.get(account.Location_Type__c).Id : account.GDP_Location_Type__c
-					   , Manager_First_Name__c =   account.Manager_First_Name__c
-					   , Manager_Last_Name__c =   account.Manager_Last_Name__c
-					   , Passenger_And_Cargo__c =   account.PAX_Cargo__c
-					   , Preferred_Language__c =   account.Preferred_Language__c
-					   , Tax_ID_1__c =  (String.isNotBlank(account.VAT_Number__c)) ? account.VAT_Number__c.left(20) : null
-					   , Tax_ID_2__c =  (String.isNotBlank(account.VAT_Number_2__c)) ? account.VAT_Number_2__c.left(20) : null
-					   , Ticketing_Agent_First_Name__c =   account.Ticketing_Agent_First_Name__c
-					   , Ticketing_Agent_Last_Name__c =   account.Ticketing_Agent_Last_Name__c
-					   , Trading_Name_1__c =   (tradeNameParts.size() > 0) ? tradeNameParts.get(0) : null
-					   , Trading_Name_2__c =   (tradeNameParts.size() > 1) ? tradeNameParts.get(1) : null
-					   , TTY__c =  account.TTY__c
-					   , Website__c =  account.Website
-					   , WebStar_ID__c = (String.isNotBlank(account.WebStar_ID__c)) ? account.WebStar_ID__c + 'GDP' : null
-					   , AIMS_ID__c = (String.isNotBlank(account.AIMS_ID__c)) ? account.AIMS_ID__c + 'GDP' : null
-					   , Parent_Account_WebStar_ID__c = (account.ParentId != null && String.isNotBlank(account.Parent.WebStar_ID__c)) ? account.Parent.WebStar_ID__c : null
-					   , Parent_Account_AIMS_ID__c = (account.ParentId != null && String.isNotBlank(account.Parent.AIMS_ID__c)) ? account.Parent.AIMS_ID__c : null
-					   // , account.ANG_IsNewGenAgency__c
-					   , Due_Diligence_Status__c = account.Due_Diligence_Status__c
-					   , PCI_Compliance__c = PCICompliance
-					   , PCI_compliance_expiry_date__c = account.ANG_PCI_compliance_expiry_date__c
+					, IDCard_Key_Account__c = account.IDCard_Key_Account__c
+					, Parent_GDP_Account_View__c = (account.ParentId != null) ? parentMap.get(account.ParentId) : null
+					, Related_GDP_Address__c = addressMap.get(account.Id)
+					, Related_Accreditation_Class__c = accredMap.get(account.Id)
+					, Related_Main_Phone__c = phoneMap.get(account.Id)
+					, Name = account.Name.left(80)
+					, Airline_Code__c =  airlineCode
+					, CNS_Agency__c = account.CNS_Agency__c
+					, BSP_CASS_Code__c =  account.BSP_CASS_Code__c
+					, CASS_Number__c =  account.CASS_Number__c
+					, Check_Digit__c =   account.Check_Digit__c
+					, Email_Address__c =  account.Email__c
+					, GDP_Opt_In__c =  account.GDP_Opt_In__c
+					, IATA_Code__c =  (String.isNotBlank(account.IATACode__c)) ? (account.IATACode__c.left(1).equalsIgnoreCase('x') ? account.IATACode__c.left(8) : account.IATACode__c.left(7)) : null
+					, Incorporation_Type__c =  (tbl_company_types.containsKey(account.Company_Type__c)) ? tbl_company_types.get(account.Company_Type__c).Id : account.Incorporation_Type__c
+					, Agency_Short_Name__c  = account.Short_Name__c
+					, Legal_Name_1__c =   (legalNameParts.size() > 0) ? legalNameParts.get(0) : null
+					, Legal_Name_2__c =   (legalNameParts.size() > 1) ? legalNameParts.get(1) : null
+					, Legal_Name_3__c =   (legalNameParts.size() > 2) ? legalNameParts.get(2) : null
+					, License_Number__c =   account.License_Number__c
+					, Location_Type__c =  (tbl_location_types.containsKey(account.Location_Type__c)) ? tbl_location_types.get(account.Location_Type__c).Id : account.GDP_Location_Type__c
+					, Manager_First_Name__c =   account.Manager_First_Name__c
+					, Manager_Last_Name__c =   account.Manager_Last_Name__c
+					, Passenger_And_Cargo__c =   account.PAX_Cargo__c
+					, Preferred_Language__c =   account.Preferred_Language__c
+					, Tax_ID_1__c =  (String.isNotBlank(account.VAT_Number__c)) ? account.VAT_Number__c.left(20) : null
+					, Tax_ID_2__c =  (String.isNotBlank(account.VAT_Number_2__c)) ? account.VAT_Number_2__c.left(20) : null
+					, Ticketing_Agent_First_Name__c =   account.Ticketing_Agent_First_Name__c
+					, Ticketing_Agent_Last_Name__c =   account.Ticketing_Agent_Last_Name__c
+					, Trading_Name_1__c =   (tradeNameParts.size() > 0) ? tradeNameParts.get(0) : null
+					, Trading_Name_2__c =   (tradeNameParts.size() > 1) ? tradeNameParts.get(1) : null
+					, TTY__c =  account.TTY__c
+					, Website__c =  account.Website
+					, WebStar_ID__c = (String.isNotBlank(account.WebStar_ID__c)) ? account.WebStar_ID__c + 'GDP' : null
+					, AIMS_ID__c = (String.isNotBlank(account.AIMS_ID__c)) ? account.AIMS_ID__c + 'GDP' : null
+					, Parent_Account_WebStar_ID__c = (account.ParentId != null && String.isNotBlank(account.Parent.WebStar_ID__c)) ? account.Parent.WebStar_ID__c : null
+					, Parent_Account_AIMS_ID__c = (account.ParentId != null && String.isNotBlank(account.Parent.AIMS_ID__c)) ? account.Parent.AIMS_ID__c : null
+					// , account.ANG_IsNewGenAgency__c
+					, Due_Diligence_Status__c = account.Due_Diligence_Status__c
+					, PCI_Compliance__c = PCICompliance
+					, PCI_compliance_expiry_date__c = account.ANG_PCI_compliance_expiry_date__c
 
-					   , Remittance_Frequency_1__c =  (remittance_frequency_references.containsKey(remittance1)) ? remittance_frequency_references.get(remittance1).Id : null
-					   , Remittance_Frequency_2__c =  (remittance_frequency_references.containsKey(remittance2)) ? remittance_frequency_references.get(remittance2).Id : null
-					   , EasyPay_Account_Status__c =  (easy_pay_status_references.containsKey(account.ANG_IEP_Status_FF__c)) ? easy_pay_status_references.get(account.ANG_IEP_Status_FF__c).Id : null
+					, Remittance_Frequency_1__c =  (remittance_frequency_references.containsKey(remittance1)) ? remittance_frequency_references.get(remittance1).Id : null
+					, Remittance_Frequency_2__c =  (remittance_frequency_references.containsKey(remittance2)) ? remittance_frequency_references.get(remittance2).Id : null
+					, EasyPay_Account_Status__c =  (easy_pay_status_references.containsKey(account.ANG_IEP_Status_FF__c)) ? easy_pay_status_references.get(account.ANG_IEP_Status_FF__c).Id : null
 			));
 		}
 
@@ -1098,7 +1099,7 @@ public class ams2gdp_BusinessLogic {
 		if (newvalues.size()!=2){return null;}
 		decimal minv=decimal.ValueOf(newvalues[0]);
 		decimal maxv=decimal.ValueOf(newvalues[1]);
-		decimal retv = (maxv-minv)/2;
+		decimal retv = (maxv+minv)/2;
 		return retv;
 	}
 	public static List<GDP_Agency_Profile_Specialization__c> formatAgencyProfile2GDPAgencyProfile(List<AMS_Agency_Profile__c> profiles) {

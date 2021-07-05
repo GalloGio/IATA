@@ -12,11 +12,11 @@
     </values>
     <values>
         <field>Country__c</field>
-        <value xsi:type="xsd:string">-CL,GT,IL,US,UY,IQ,TH,SG,SD,TW,SY,VN,IR,LY,XK,PR,UM</value>
+        <value xsi:type="xsd:string">-CL,GT,IL,US,UY,TH,SG,SD,TW,VN,IR,XK,PR,UM</value>
     </values>
     <values>
         <field>Location_Class__c</field>
-        <value xsi:type="xsd:string">ALL</value>
+        <value xsi:type="xsd:string">C,D,E,G,K,L,M,N,O,P,S,T,V,X,J,R,Q,I</value>
     </values>
     <values>
         <field>Location_Type__c</field>

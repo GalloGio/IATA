@@ -67,7 +67,8 @@ private class HigherLogicIntegrationTest {
 
 		}
 
-		Portal_Applications__c app = new Portal_Applications__c(Name = 'Standards Setting Workspace');
+		Portal_Applications__c app = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		app.Name = 'Standards Setting Workspace'; 
 		insert app;
 
 		//Triggers the following exception:

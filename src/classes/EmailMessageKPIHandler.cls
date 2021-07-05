@@ -7,7 +7,7 @@ public class EmailMessageKPIHandler {
 		Set<Id> recordTypesToProcess = new Set<Id>();
 		List<EmailMessage> emailsToProcess = new List<EmailMessage>();
 		for(EmailMessage e: newEmails) {
-			if(e.ParentId.getSObjectType() == Case.SObjectType && e.Incoming==false) {
+			if(e.ParentId.getSObjectType() == Case.SObjectType && e.Incoming==false && (String.isEmpty(e.Subject) || e.Subject.indexOf(Label.ISSP_Email_CaseComment_Subject) == -1 || e.Subject.indexOf('New Case Comment') == -1)) {
 				emailsToProcess.add(e);
 			}
 		}
@@ -30,7 +30,7 @@ public class EmailMessageKPIHandler {
 		}
 
 		List<EmailMessage> emailMessages = [SELECT id, ParentId, Parent.RecordType.DeveloperName
-											FROM EmailMessage WHERE ID IN: newEmails AND Incoming=False
+											FROM EmailMessage WHERE ID IN: emailsToProcess AND Incoming=False
 											AND Parent.RecordTypeId IN :recordTypesToProcess];
 
 		if(emailMessages.isEmpty()) {
@@ -56,14 +56,9 @@ public class EmailMessageKPIHandler {
 			}
 		}
 
-
-
 		if(kpiValuesToInsert.size() > 0 ) {
 			insert kpiValuesToInsert;
 		}
-
-
-
 	}
 
 	private static List<ISSP_KPI_Reporting__mdt> getKPIConfig(String actionType) {

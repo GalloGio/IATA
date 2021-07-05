@@ -5845,6 +5845,23 @@ albam@iata.org</description>
         </sharedTo>
     </listViews>
     <listViews>
+        <fullName>CSC_Sales_Lead</fullName>
+        <columns>LEAD.RECORDTYPE</columns>
+        <columns>DSE__DS_Account__c</columns>
+        <columns>FULL_NAME</columns>
+        <columns>LEAD.COMPANY</columns>
+        <columns>LEAD.STATE</columns>
+        <columns>LEAD.EMAIL</columns>
+        <columns>LEAD.STATUS</columns>
+        <columns>LEAD.CREATED_DATE</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <columns>LEAD.UNREAD</columns>
+        <filterScope>Queue</filterScope>
+        <label>CSC Sales</label>
+        <language>en_US</language>
+        <queue>CSC_Sales</queue>
+    </listViews>
+    <listViews>
         <fullName>Created_Online</fullName>
         <columns>FULL_NAME</columns>
         <columns>LEAD.COMPANY</columns>
@@ -6350,6 +6367,15 @@ albam@iata.org</description>
             <role>VPMACS</role>
         </sharedTo>
     </listViews>
+    <listViews>
+        <fullName>TASF_Lead</fullName>
+        <filterScope>Queue</filterScope>
+        <label>TASF</label>
+        <queue>TASF</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
     <recordTypeTrackHistory>true</recordTypeTrackHistory>
     <recordTypes>
         <fullName>CorpComLeads</fullName>
@@ -6682,6 +6708,10 @@ albam@iata.org</description>
             <picklist>LeadSource</picklist>
             <values>
                 <fullName>Advertisement</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CSC Sales</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -7770,6 +7800,10 @@ albam@iata.org</description>
                 <default>false</default>
             </values>
             <values>
+                <fullName>CSC Sales</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Cold Call</fullName>
                 <default>false</default>
             </values>
@@ -8839,6 +8873,10 @@ albam@iata.org</description>
                 <default>false</default>
             </values>
             <values>
+                <fullName>CSC Sales</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Cold Call</fullName>
                 <default>false</default>
             </values>
@@ -9816,6 +9854,10 @@ albam@iata.org</description>
             <picklist>LeadSource</picklist>
             <values>
                 <fullName>Advertisement</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CSC Sales</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -11000,6 +11042,10 @@ albam@iata.org</description>
                 <default>false</default>
             </values>
             <values>
+                <fullName>CSC Sales</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Cold Call</fullName>
                 <default>false</default>
             </values>
@@ -12133,6 +12179,10 @@ albam@iata.org</description>
                 <default>false</default>
             </values>
             <values>
+                <fullName>CSC Sales</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Cold Call</fullName>
                 <default>false</default>
             </values>
@@ -12869,27 +12919,6 @@ COPY THE URL FROM THIS BUTTON and paste it into your own custom button or link. 
 &amp;serverUrl={!API.Partner_Server_URL_290}
 &amp;id={!Lead.Id}</url>
         <width>625</width>
-    </webLinks>
-    <webLinks>
-        <fullName>BLND_FormFactoryLeadLink</fullName>
-        <availability>online</availability>
-        <displayType>link</displayType>
-        <encodingKey>UTF-8</encodingKey>
-        <height>550</height>
-        <linkType>url</linkType>
-        <masterLabel>FormFactory Lead Link</masterLabel>
-        <openType>sidebar</openType>
-        <protected>false</protected>
-        <url>https://www.dreamfactory.net/sforce/formfactory/formfactory.html? 
-sforce_session_id={!API.Session_ID}&amp; 
-sforce_server_url={!API.Partner_Server_URL_120}&amp; 
-sforce_user_name={!User.Username}&amp; 
-sforce_full_name={!User.Name}&amp; 
-sforce_user_id={!User.Id}&amp; 
-custom_link_name=FormFactory Form Name&amp; 
-myaccount={!Account.Id}&amp; 
-mylead={!Lead.Id}&amp; 
-myuser={!User.Id}</url>
     </webLinks>
     <webLinks>
         <fullName>Busy</fullName>

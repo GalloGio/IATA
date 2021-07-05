@@ -1,0 +1,134 @@
+<template>
+    <div if:true={isValidHandlerType} class="row-home">
+        <div class="col-12">
+            <p class="title-airlines-handled">
+                <b class={getCssTitle}>{getTitle}</b>
+                <img class="img-list-airline" src={getIconInformation} alt="type"
+                    title={label.information_not_verified} />
+
+                <template if:true={isEditModeAvailable}>
+                    <lightning-icon icon-name="utility:close" class="ml-4 cursor-pt" if:false={isReadOnly}
+                        variant="error" title={label.close} onclick={toggleReadOnlyMode} size="x-small">
+                    </lightning-icon>
+                    <lightning-icon icon-name="utility:edit" class="ml-4 cursor-pt" if:true={isReadOnly}
+                        title={label.icg_capab_magmnt_edit} onclick={toggleReadOnlyMode} size="x-small">
+                    </lightning-icon>
+                </template>
+
+            </p>
+            <hr class={getCssYellowUnderlineTitle}>
+            <div class="form-row">
+                <div class="col-6 text-right">
+                    <c-cw-search-in-list label={label} onfilterinlist={setHandlersFilterText}>
+                    </c-cw-search-in-list>
+                </div>
+            </div>
+            <br />
+
+            <div class="form-row">
+                <div class="col">
+
+                    <div class="content max-height-100 border-card">
+
+                        <div class="row">
+                            <template for:each={getAllItemsToShow} for:item="list">
+                                <div key={list.label} class="col-4 text-truncate">
+                                    <template for:each={list.value} for:item="item">
+
+                                        <template if:true={isReadOnly}>
+
+                                            <template if:false={item.isHeader}>
+                                                <div key={item.value} data-tosca={item.value} data-name={item.value}
+                                                    class={getCssItemReadOnly}>
+                                                    <span if:false={item.selected} class="pl-0 item-filter"
+                                                        title={item.label}>{item.label}</span>
+                                                    <span if:true={item.selected} class="pl-0 item-filter"
+                                                        title={item.label}><a href={item.stationProfileUrl}
+                                                            target="_blank">{item.label}</a></span>
+                                                </div>
+                                            </template>
+
+                                            <template if:true={item.isHeader}>
+                                                <div key={item.label}>
+                                                    <span key={item.label} class="pl-0 itemLetter"
+                                                        title={item.label}>{item.label}</span>
+                                                </div>
+                                            </template>
+
+                                        </template>
+
+
+                                        <template if:false={isReadOnly}>
+
+                                            <template if:false={item.isHeader}>
+
+                                                <template if:true={item.selected}>
+                                                    <div key={item.value} data-tosca={item.value} data-name={item.value}
+                                                        class={getCssItemSelectedEditMode}
+                                                        onclick={setSelectedHandlerItem}>
+                                                        <img key={item.value} data-tosca={item.value}
+                                                            src={getIconSelectedItem}
+                                                            class="selectedTick width-15" />&nbsp;&nbsp;
+                                                        <span class="item-filter filter-grey-100-operating"
+                                                            title={item.label}>{item.label}</span>
+                                                    </div>
+                                                </template>
+
+                                                <template if:false={item.selected}>
+                                                    <div key={item.value} data-tosca={item.value} data-name={item.value}
+                                                        class={getCssItemUnselectedEditMode}
+                                                        onclick={setSelectedHandlerItem}>
+                                                        <img key={item.value} data-tosca={item.value}
+                                                            src={getIconSelectedItem}
+                                                            class="selectedTick width-15" />&nbsp;&nbsp;
+                                                        <span class="item-filter" title={item.label}>{item.label}</span>
+                                                    </div>
+                                                </template>
+
+                                            </template>
+
+                                            <template if:true={item.isHeader}>
+                                                <div key={item.label}>
+                                                    <span key={item.label} class="pl-15">&nbsp;</span>&nbsp;&nbsp;
+                                                    <span class="item-filter"
+                                                        title={item.label}><b>{item.label}</b></span>
+                                                </div>
+                                            </template>
+
+                                        </template>
+                                    </template>
+                                </div>
+                            </template>
+                        </div>
+                        <br />
+
+                        <template if:false={isReadOnly}>
+                            <div class="col-12 text-center">
+                                <span class="breadlink"
+                                    onclick={showHideSelectedItems}>{showHideSelectedItemsButtonText}</span>
+                            </div>
+                            <br />
+                        </template>
+
+                        <div class="col-12 row-flex">
+                            <span if:true={showBackButton} class="breadlink backnext"
+                                onclick={back}>&lt;</span>&nbsp;&nbsp;
+                            <span class="breadlink letterSelected" data-letter="ALL"
+                                onclick={unselectLetter}>{label.all}</span>&nbsp;&nbsp;
+
+                            <template for:each={getLettersForFilters} for:item="currentLetter">
+                                <span key={currentLetter} class="breadlink" onclick={selectLetter}
+                                    data-letter={currentLetter}>{currentLetter}</span>&nbsp;&nbsp;
+                            </template>
+
+                            <span class="breadlink" onclick={selectLetter}
+                                data-letter="OTHERS">{label.icg_others}</span>&nbsp;&nbsp;
+
+                            <span class="breadlink backnext" if:true={showNextButton} onclick={next}>&gt;</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

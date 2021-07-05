@@ -1,4 +1,5 @@
 import { LightningElement, track, wire, api } from 'lwc';
+import { loadStyle } from "lightning/platformResourceLoader";
 
 // language
 import userId from '@salesforce/user/Id';
@@ -62,6 +63,7 @@ import CSP_Sign_Up from '@salesforce/label/c.CSP_Sign_Up';
 import CSP_Login from '@salesforce/label/c.CSP_Login';
 import CSP_Go_to_IataOrg from '@salesforce/label/c.CSP_Go_to_IataOrg';
 
+
 // Accept Terms
 import { updateRecord } from 'lightning/uiRecordApi';
 import { getRecord } from 'lightning/uiRecordApi';
@@ -71,6 +73,7 @@ import AccountSector from '@salesforce/schema/User.Contact.Account.Sector__c';
 import Portal_Registration_Required from '@salesforce/schema/User.Portal_Registration_Required__c';
 
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
+import getOneSourceLoginUrl from '@salesforce/apex/CW_LoginController.getLoginUrl';
 
 
 export default class PortalHeader extends NavigationMixin(LightningElement) {
@@ -308,7 +311,6 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     }
 
     connectedCallback() {
-
         isGuestUser().then(results => {
             
             this.internalUser = !results;
@@ -341,7 +343,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
                 });
 
                 let pageParams = getParamsFromPage();
-                if(pageParams && pageParams.firstLogin){
+                if(pageParams && pageParams.firstLogin && pageParams.firstLogin !== 'false'){
                     this.firstLogin = true;
                     this.displayFirstLogin = true;
                 }
@@ -395,19 +397,17 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
                             .catch(error => {
                                 this.error = error;
                             });
-
-			}
-		}else if(pageParams.lmsflow.indexOf('flow') > -1){
-			this.thirdLoginLMS = true;
-			this.registrationlevel = '3';
-			this.displayFirstLogin = false;
-			this.triggerThirdLevelRegistrationLMS();
-		}
-	}
-
-        getNotifications().then(result => {
-            this.baseURL = window.location.href;
-            let resultsAux = JSON.parse(JSON.stringify(result));
+                        }
+                    }else if(pageParams.lmsflow.indexOf('flow') > -1){
+                        this.thirdLoginLMS = true;
+                        this.registrationlevel = '3';
+                        this.displayFirstLogin = false;
+                        this.triggerThirdLevelRegistrationLMS();
+                    }
+                }
+                getNotifications().then(result => {
+                    this.baseURL = window.location.href;
+                    let resultsAux = JSON.parse(JSON.stringify(result));
 
                     resultsAux.sort(function (a, b) {
                         return new Date(b.createdDate) - new Date(a.createdDate);
@@ -457,7 +457,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
                             if(isLatestAccepted){
                                 this.displayAcceptTerms = false;
-                                if(result.users[0].Portal_Registration_Required__c === true){
+                                if(result.Users && result.Users[0].Portal_Registration_Required__c === true){
                                     this.displayRegistrationConfirmation = true;
                                 }else{
                                     if(this.firstLogin === true){
@@ -513,9 +513,9 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
     // Check if we are in the Old/New Portal
     navigationCheck(pageNameToNavigate, currentService) {
-
+        let oneSourceCommunity = window.location.href.includes('onesource');
         this.closeSideMenu();
-        if (this.trackedIsInOldPortal || !this.internalUser) {
+        if (this.trackedIsInOldPortal || !this.internalUser || oneSourceCommunity) {
             redirectfromPortalHeader({ pageName: currentService }).then(result => {
                 window.location.href = result;
             });
@@ -552,8 +552,9 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     //WMO-627 - ACAMBAS: End
 
     navigateToHomePage() {
+        let oneSourceCommunity = window.location.href.includes('onesource');
         this.closeSideMenu();
-        if(this.trackedIsInOldPortal)
+        if(this.trackedIsInOldPortal || oneSourceCommunity)
             this.navigationCheck("home", "");
         else
             this.navigateToOtherPage("home");
@@ -609,7 +610,14 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
     //user logout
     logOut() {
-        navigateToPage("/secur/logout.jsp?retUrl=" + CSP_PortalPath + "login");
+        let oneSourceCommunity = window.location.href.includes('onesource');
+        if (oneSourceCommunity) {
+            getOneSourceLoginUrl().then(oneSourceLoginurl => {
+                navigateToPage("/secur/logout.jsp?retUrl=" + oneSourceLoginurl);
+            });
+        } else {
+            navigateToPage("/secur/logout.jsp?retUrl=" + CSP_PortalPath + "login");
+        }
     }
 
 

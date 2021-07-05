@@ -1,4 +1,4 @@
-global with sharing class IDCardUtil {
+global without sharing class IDCardUtil {
 
 	//flag to determine if idcard contact trigger can run more than once per execution
 	public static Boolean isFirstTime = true;
@@ -1183,20 +1183,20 @@ global with sharing class IDCardUtil {
 		}
 	}
 
-	public static Case CreateIDCardApplicationCase(ID_Card_Application__c idCardApp, Account theAccount) {
-		return  CreateIDCardApplicationCase(idCardApp, theAccount, false);
+	public static Case CreateIDCardApplicationCase(ID_Card_Application__c idCardApp, Account theAccount, id idCardAppId) {
+		return  CreateIDCardApplicationCase(idCardApp, theAccount, false, idCardAppId);
 	}
 
-	public static Case CreateIDCardApplicationCase(ID_Card_Application__c idCardApp, Account theAccount, Boolean isPaidByCheque) {
-		return CreateIDCardApplicationCase(idCardApp, theAccount, isPaidByCheque, true);
+	public static Case CreateIDCardApplicationCase(ID_Card_Application__c idCardApp, Account theAccount, Boolean isPaidByCheque, id idCardAppId) {
+		return CreateIDCardApplicationCase(idCardApp, theAccount, isPaidByCheque, true, idCardAppId);
 	}
 
-	public static Case createKeyAccountIdCardMassApplicationCase(ID_Card_Application__c idCardApp, Account theAccount, boolean mustInsertInDB) {
+	public static Case createKeyAccountIdCardMassApplicationCase(ID_Card_Application__c idCardApp, Account theAccount, boolean mustInsertInDB, id idCardAppId) {
 
 		// Create the case
 		Case newCase = new Case();
 		newCase.RecordTypeId =  RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'ID_Card_Mass_Application');
-		newCase.Subject = 'Case for ID Card Mass Application ' + idCardApp.Name;
+		newCase.Subject = 'Case for ID Card Mass Application ' + (string.isBlank(idCardAppId)?idCardApp.Name:[select name from ID_Card_Application__c where id =:idCardAppId].Name);
 
 		newCase.Status = 'In progress';
 		newCase.OwnerId = System.Userinfo.getUserId();
@@ -1205,7 +1205,7 @@ global with sharing class IDCardUtil {
 
 		newCase.AccountId = theAccount.Id;
 		newCase.Origin = 'ID Card Portal';
-		newCase.Related_ID_Card_Application__c = idCardApp.Id;
+		newCase.Related_ID_Card_Application__c = idCardAppId==null?idCardApp.Id:idCardAppId;
 		newCase.SuppliedEmail = idCardApp.Email_admin__c;
 		newCase.CaseArea__c = 'Accreditation';
 		newCase.Reason1__c  = 'ID Card';
@@ -1230,13 +1230,15 @@ global with sharing class IDCardUtil {
 
 		return newCase;
 	}
-
 	public static Case createKeyAccountIdCardApplicationCase(ID_Card_Application__c idCardApp, Account theAccount) {
+		return createKeyAccountIdCardApplicationCase(idCardApp, theAccount, null);
+	}
 
+	public static Case createKeyAccountIdCardApplicationCase(ID_Card_Application__c idCardApp, Account theAccount, id AppId) {
 		// Create the case
 		Case newCase = new Case();
 		newCase.RecordTypeId = IDCardcaseRecordTypeID;
-		newCase.Subject = 'Case for ID Card Application ' + idCardApp.Name;
+		newCase.Subject = 'Case for ID Card Application ' + (appId==null?idCardApp.Name:([select name from ID_Card_Application__c where id=:AppId].name));
 
 		newCase.Status = 'In progress';
 		newCase.OwnerId = System.Userinfo.getUserId();
@@ -1244,7 +1246,7 @@ global with sharing class IDCardUtil {
 
 		newCase.AccountId = theAccount.Id;
 		newCase.Origin = 'ID Card Portal';
-		newCase.Related_ID_Card_Application__c = idCardApp.Id;
+		newCase.Related_ID_Card_Application__c = AppId==null?idCardApp.Id:AppId;
 		newCase.SuppliedEmail = idCardApp.Email_admin__c;
 		newCase.ID_Card_Status__c = CASECARDSTATUS_PENDING;
 		newCase.CaseArea__c = 'Accreditation';
@@ -1310,14 +1312,14 @@ global with sharing class IDCardUtil {
 		return newCase;
 	}
 
-	public static Case CreateIDCardApplicationCase(ID_Card_Application__c idCardApp, Account theAccount, Boolean isPaidByCheque, Boolean SendEmail) {
+	public static Case CreateIDCardApplicationCase(ID_Card_Application__c idCardApp, Account theAccount, Boolean isPaidByCheque, Boolean SendEmail, id idCardAppId) {
 		// Get recordtype ID
 
 
 		// Create the case
 		Case newCase = new Case();
 		newCase.RecordTypeId = IDCardcaseRecordTypeID;
-		newCase.Subject = 'Case for ID Card Application ' + idCardApp.Name;
+		newCase.Subject = 'Case for ID Card Application ' + (idCardAppId==null?'':([SELECT Name FROM ID_Card_Application__c WHERE Id = :idCardAppId].Name));
 		if (SendEmail)
 			newCase.Status = 'Agent to be Notified';
 		else
@@ -1335,7 +1337,7 @@ global with sharing class IDCardUtil {
 
 		newCase.AccountId = theAccount.Id;
 		newCase.Origin = 'ID Card Portal';
-		newCase.Related_ID_Card_Application__c = idCardApp.Id;
+		newCase.Related_ID_Card_Application__c = idCardAppId==null?idCardApp.Id:idCardAppId;
 		newCase.SuppliedEmail = idCardApp.Email_admin__c;
 		newCase.ID_Card_Status__c = CASECARDSTATUS_PENDING;
 		newCase.CaseArea__c = 'Accreditation';
@@ -1580,7 +1582,8 @@ global with sharing class IDCardUtil {
 					c[0].Status = CASESTATUS_READYFORPRODUCTION;
 
 					//To Check if we can do this Status change now.
-					Update c[0];
+					//Update c[0];
+					database.UpsertResult cur = IDCardUtilWithoutSharing.upsertGenericObject('Case', c[0], c[0].ID, c[0].getPopulatedFieldsAsMap().keyset());
 					System.debug(LoggingLevel.ERROR, '[UpdateCaseToApproved_Rejected]  Case saved with status ' + c[0].status );
 
 					//get IDCard and Application
@@ -1607,9 +1610,20 @@ global with sharing class IDCardUtil {
 						System.debug(LoggingLevel.ERROR, '[UpdateCaseToApproved_Rejected]  calling the method for id card creation');
 
 						idCardNew = IDCardUtil.CreateIDCardObjectFromApplication(application, contacts[0], accountType);
-						upsert idCardNew;
-						application.ID_Card__c = idCardNew.Id;
-						update application;
+
+						database.UpsertResult idcur = IDCardUtilWithoutSharing.upsertGenericObject('ID_Card__c', idCardNew, idCardNew.Id, idCardNew.getPopulatedFieldsAsMap().keyset());
+						//upsert idCardNew;
+						if(idcur.isSuccess()){
+							application.ID_Card__c = idcur.getId();
+						}else{
+							string updateErrors = '';
+							for(Database.Error err : idcur.getErrors()) {
+								updateErrors += '\t' + err.getStatusCode() + ': ' + err.getMessage() + '. Fields affected: ' + err.getFields() + '. \r\n';
+							}
+							throw new TransformationException('Error while creating IDCard: ' + updateErrors);
+						}
+						//update application;
+						IDCardUtilWithoutSharing.saveCommittedICA(application, application.Id);
 					}
 
 					//@@ and c.RecordTypeID =: IDCardContactRecordTypeID
@@ -1638,7 +1652,11 @@ global with sharing class IDCardUtil {
 
 					//update contact after cancelling existing card to avoid validation rule on active cards in case of name change.
 					theContact.Allow_Contact_LastName_Change__c = true;
-					update theContact;
+					for(string s:theContact.getPopulatedFieldsAsMap().keyset()){
+						system.debug('DTULLO Fields: ' + s);
+					}
+					database.UpsertResult cour1 = IDCardUtilWithoutSharing.upsertGenericObject('Contact', theContact, theContact.Id, theContact.getPopulatedFieldsAsMap().keyset());
+					//update theContact;
 
 
 					// call the cropping tool web service to rename the photo filename (from a GUID to the UIR)
@@ -1663,20 +1681,23 @@ global with sharing class IDCardUtil {
 							Id contID = c[0].ContactId;
 							c[0].ContactId = null;
 
-							update c[0];
+							//update c[0];
+							database.UpsertResult caur1 = IDCardUtilWithoutSharing.upsertGenericObject('Case', c[0], c[0].ID, c[0].getPopulatedFieldsAsMap().keyset());
 
 							// Contact cont = [Select id From Contact where Id= : contID limit 1];
 
 							//delete cont;
 						}
 						if (idCards[0].Sent_to_AIMS_on__c == null)
-							delete idCards;
+							IDCardUtilWithoutSharing.deleteGenericsObject(new set<id>{idCards[0].Id}, 'ID_Card__c');
 					}
-					update c[0];
+					//update c[0];
+					database.UpsertResult caur1 = IDCardUtilWithoutSharing.upsertGenericObject('Case', c[0], c[0].ID, c[0].getPopulatedFieldsAsMap().keyset());
 					return 'true';
 
 				}
-				Update c[0];
+				//Update c[0];
+				database.UpsertResult caur1 = IDCardUtilWithoutSharing.upsertGenericObject('Case', c[0], c[0].ID, c[0].getPopulatedFieldsAsMap().keyset());
 				System.debug(LoggingLevel.ERROR, '[UpdateCaseToApproved_Rejected]  Case ' + c[0].id + 'saved for the second time with status ' + c[0].status );
 
 				return 'true';
@@ -1685,6 +1706,8 @@ global with sharing class IDCardUtil {
 		} catch (Exception e) {
 
 			System.debug(LoggingLevel.ERROR, '[UpdateCaseToApproved_Rejected] ################ ERROR : ' + e.getStackTraceString());
+			System.debug(LoggingLevel.ERROR, '[UpdateCaseToApproved_Rejected] ################ ERROR : ' + e.getCause());
+			System.debug(LoggingLevel.ERROR, '[UpdateCaseToApproved_Rejected] ################ ERROR : ' + e.getMessage());
 
 
 
@@ -1801,7 +1824,7 @@ global with sharing class IDCardUtil {
 			newIDCardApplication = [ Select Id, Name, Hours_Worked_Validation_Failed__c, Revenue_Confirmation_Validation_Failed__c, Email_admin__c, IDCard_Expedite_Delivery__c, VER_Number__c from ID_Card_Application__c where id = :newIDCardApplication.Id limit 1];
 
 			//create case without sending an email.
-			CreateIDCardApplicationCase(newIDCardApplication , theAccount, false, false);
+			CreateIDCardApplicationCase(newIDCardApplication , theAccount, false, false, null);
 
 
 			return newIDCardApplication.Id;
@@ -1930,6 +1953,4 @@ global with sharing class IDCardUtil {
 		}
 		return '';
 	}
-
-
 }

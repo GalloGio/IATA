@@ -19,10 +19,7 @@
     <tabs>ICCS_Checklist__c</tabs>
     <tabs>Local_Bank_Mandate_Checklist__c</tabs>
     <tabs>Skill_Types__c</tabs>
-    <tabs>unbabelapi__Unbabel_Translation_Request__c</tabs>
-    <tabs>unbabelapi__Unbabel_Configuration_Menu</tabs>
     <tabs>Mass_Reminder_Email</tabs>
-    <tabs>unbabelsc__Unbabel_SC_Configuration_Menu</tabs>
     <tabs>standard-ContentSubscriptions</tabs>
     <tabs>Financial_Security_Request</tabs>
     <tabs>standard-Portal</tabs>
@@ -31,8 +28,6 @@
     <tabs>AMS_PCI_Compliant_Mass_Oscar_Creation</tabs>
     <tabs>standard-DataUseLegalBasis</tabs>
     <tabs>ISSP_Web_Service_Log__c</tabs>
-    <tabs>BLND_Snapshot</tabs>
-    <tabs>DFSS_SnapShot_Push__c</tabs>
     <tabs>standard-ListEmail</tabs>
     <tabs>EmailTemplate__c</tabs>
     <tabs>IATA_ISO_Country__c</tabs>

@@ -399,7 +399,133 @@
 				</table>
 			</lightning-tab>
 			<lightning-tab label="TIDS Admin Role Assignment" value="tab5" onactive={tabselect}>
-				
+				<div class="slds-m-top_small slds-m-bottom_medium">
+					<p class="slds-p-horizontal_small">Use this tool to assign the TIDS HO Primary Administrator to a Contact by providing the Salesforce Id’s of the target Account and Contact.</p>
+					<p class="slds-p-horizontal_small">Note the following conditions:</p>
+					<p class="slds-p-horizontal_small">- Account must be an Approved TIDS Head Office Account with no existing TIDS HO Primary Administrator</p>
+					<p class="slds-p-horizontal_small">- Contact must be under the selected account, with an email address and an Active Status</p>
+				</div>
+				<div class="slds-m-top_small slds-m-bottom_medium">
+					<lightning-input
+						type="text"
+						label="Account Id"
+						placeholder="Enter the Salesforce Account ID"
+						id="accountid"
+						name="accountid"
+						value={accountid}
+						onchange={changeField}
+						required=true
+					>
+					</lightning-input>
+					<lightning-input
+						type="text"
+						label="Contact Id"
+						placeholder="Enter the Salesforce Contact ID"
+						id="contactid"
+						name="contactid"
+						value={contactid}
+						onchange={changeField}
+						required=true
+					>
+					</lightning-input>
+				</div>
+				<lightning-card  title="Query">						
+					<p class="slds-p-horizontal_small"><Strong>
+						SELECT Id 
+						FROM Contact 
+						WHERE AccountId='{accountid}'
+							AND Id='{contactid}'
+							AND Email!=null
+							AND Status__c='Active'
+							AND (account.Location_Type__c='HO' 
+								and account.RecordType.DeveloperName='IATA_Agency'
+								and account.Status__c='Approved' 
+								and account.Location_Class__c='T')</Strong></p>
+				</lightning-card>
+				<!-- Base variant: Makes a button look like a link -->
+				<div class="slds-m-top_small slds-m-bottom_medium">
+					<lightning-button variant="Neutral" label="Verification" title="Verifies the validity of the account and contact" onclick={handleVerifcationClick} class="slds-m-left_x-small" disabled={verifybutton}></lightning-button>
+				</div>
+				<template if:true={isverifaction}>
+					<lightning-card  title="Account and Contact Info">						
+						<p class="slds-p-horizontal_small">Account Name:<Strong>{infocreaterole.accountname}</Strong></p>
+						<p class="slds-p-horizontal_small">Contact Name:<Strong>{infocreaterole.firstname} {infocreaterole.lastname}</Strong></p>
+					</lightning-card>						
+				</template>
+				<template if:true={isissue}>
+					<lightning-card  title="Issue">						
+						<p class="slds-p-horizontal_small"><Strong>{reasoncreaterole}</Strong></p>
+					</lightning-card>							
+				</template>
+				<template if:true={issucess}>
+					<lightning-card  title="Success">						
+						<p class="slds-p-horizontal_small"><Strong>The TIDS Primary HO Administrator has been assigned.</Strong></p>
+					</lightning-card>							
+				</template>					
+				<div class="slds-m-top_small slds-m-bottom_medium">
+					<lightning-button variant="Neutral" label="Assign Admin Role" title="Assigns The Admin Role" onclick={handleCreateClick} class="slds-m-left_x-small" disabled={createbutton}></lightning-button>
+					<lightning-button variant="Neutral" label="Reset" title="Resets the process" onclick={handleResetClick} class="slds-m-left_x-small" disabled={createbutton}></lightning-button>
+				</div>
+			</lightning-tab>
+			<lightning-tab label="TIDS Cascading Process" value="tab6" onactive={tabselect}>
+				<div class="slds-m-top_small slds-m-bottom_medium">
+					<p class="slds-p-horizontal_small">Use this tool to align corporate details between the Head Office and its branches.</p>
+					<p class="slds-p-horizontal_small">The tool will cascade corporate details (Legal Name + Company Type + Ownership Details + Location Address to VB's) from the Head Office to the BR's and VB's.</p> 
+					<p class="slds-p-horizontal_small">Note the following conditions:</p>
+					<p class="slds-p-horizontal_small">- Account must be an Approved TIDS Head Office Account</p>
+				</div>
+				<div class="slds-m-top_small slds-m-bottom_medium">
+					<lightning-input
+						type="text"
+						label="Account Id"
+						placeholder="Enter up to 20 Salesforce Account Id's, Semicolon separated"
+						id="accountlist"
+						name="accountlist"
+						value={accountlist}
+						onchange={changeCascadingField}
+						required=true
+					>
+					</lightning-input>
+					<lightning-input
+						type="password"
+						label="Password"
+						placeholder="Enter the Cascading Process password"
+						id="cascadingkey"
+						name="cascadingkey"
+						value={cascadingkey}
+						onchange={changeCascadingField}
+						required=true
+					>
+					</lightning-input>
+				</div>
+				<lightning-card  title="Query">						
+					<p class="slds-p-horizontal_small"><Strong>
+						SELECT Id 
+						FROM Account
+						WHERE Id='{accountlist}'
+							AND (Location_Type__c='HO' 
+								and RecordType.DeveloperName='IATA_Agency'
+								and Status__c='Approved' 
+								and Location_Class__c='T')</Strong></p>
+				</lightning-card>
+				<!-- Base variant: Makes a button look like a link -->
+				<div class="slds-m-top_small slds-m-bottom_medium">
+					<lightning-button variant="Neutral" label="Verification" title="Verifies the validity of the account" onclick={handleVerifcationCascadingClick} class="slds-m-left_x-small" disabled={verifycascadingbutton}></lightning-button>
+				</div>
+				<template if:true={isissuecascading}>
+					<lightning-card  title="Issue">						
+						<p class="slds-p-horizontal_small"><Strong>{reasoncascading}</Strong></p>
+					</lightning-card>							
+				</template>
+				<template if:true={issucesscascading}>
+					<lightning-card  title="Success">						
+						<p class="slds-p-horizontal_small"><Strong>The Cascading Process has executed successfully.</Strong></p>
+					</lightning-card>							
+				</template>					
+				<div class="slds-m-top_small slds-m-bottom_medium">
+					<lightning-button variant="Neutral" label="Run Cascading Process" title="" onclick={handleCreateCascadingClick} class="slds-m-left_x-small" disabled={createcascadingbutton}></lightning-button>
+					<lightning-button variant="Neutral" label="Reset" title="Resets the process" onclick={handleResetCascadingClick} class="slds-m-left_x-small" disabled={createcascadingbutton}></lightning-button>
+				</div>
 			</lightning-tab>
 		</lightning-tabset>
 		<!-- Data Table End -->

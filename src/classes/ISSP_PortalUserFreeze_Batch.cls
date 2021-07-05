@@ -1,6 +1,5 @@
 global class ISSP_PortalUserFreeze_Batch implements Database.Batchable<SOBJECT>, Database.Stateful, Schedulable {
 
-	global Set<Id> inactivateUserIds;
 
 	global static String scheduleIt() {
 
@@ -31,9 +30,9 @@ global class ISSP_PortalUserFreeze_Batch implements Database.Batchable<SOBJECT>,
 
 	global Database.QueryLocator start(Database.BatchableContext BC) {
 		DateTime minus90days = system.now() - 90;
-		DateTime minus75days = system.now() - 75;
+		DateTime minus30days = system.now() - 30;
 		if (!test.isRunningtest()){
-	 			return Database.getQueryLocator([SELECT Id, ContactId, Email, LastLoginDate, CreatedDate
+	 			return Database.getQueryLocator([SELECT Id, Contact.Account.RecordType.Name, ContactId, Email, LastLoginDate, CreatedDate
 	 										FROM User WHERE
 	 										IsActive = true
 	 										AND UserType = 'PowerPartner'
@@ -43,61 +42,62 @@ global class ISSP_PortalUserFreeze_Batch implements Database.Batchable<SOBJECT>,
 	 										//			'tiago.ferreira+sp08_42@kerensen.com')
 	 										AND
 	 										(LastLoginDate < :minus90days OR (LastLoginDate = null AND CreatedDate < :minus90days)
-	 										//OR
-	 										//LastLoginDate < :minus75days OR (LastLoginDate = null AND CreatedDate < :minus75days)
+	 										OR
+	 										(Contact.Account.RecordType.Name = 'Standard Account' AND (LastLoginDate < :minus30days OR (LastLoginDate = null AND CreatedDate < :minus30days)))
 	 										)
 											]);
 		}
 		else{
-			return Database.getQueryLocator([SELECT Id, ContactId, Email, LastLoginDate, CreatedDate
+			return Database.getQueryLocator([SELECT Id, ContactId, Email, LastLoginDate, CreatedDate, Contact.Account.RecordType.Name
 	 										FROM User WHERE
 	 										Email = 'ISSPPortalUserFreezeBatchTest@ISSPPortalUserFreezeBatchTest.com'
 											]);
 		}
-	 	}
+	}
 
-	 	global void execute(Database.BatchableContext BC, List<sObject> scope) {
-	 		system.debug('ON EXECUTE');
-	 		DateTime minus90days = system.now() - 90;
-		DateTime minus75days = system.now() - 75;
+	global void execute(Database.BatchableContext BC, List<sObject> scope) {
+ 		DateTime minus90days = system.now() - 90;
+		DateTime minus30days = system.now() - 30;
 		IECTestUtil.trgPortalUserAfterInserUpdate = true;//avoid @future in trigger
 		Id replyToId = [SELECT Id FROM OrgWideEmailAddress WHERE Address = 'noreply@iata.org'].Id;
 		//String template90Id = [SELECT Id FROM EmailTemplate WHERE DeveloperName = 'ISSP_account_freeze'].Id;
 		//String template75Id = [SELECT Id FROM EmailTemplate WHERE DeveloperName = 'ISSP_75_days_warning'].Id;
-		inactivateUserIds = new Set<Id>();
 		List<User> userList = scope;
-		system.debug('userList: ' + userList);
 		List<Messaging.SingleEmailMessage> mailsToSend = new List<Messaging.SingleEmailMessage>();
-	 		for(User thisUser : userList) {
-	 			Boolean inactive75 = false;
-	 			Boolean inactive90 = false;
-	 			if (test.isRunningtest()){
-	 				inactive90 = true;
-				}
+        Boolean inactive30 = false;
+		Boolean inactive90 = false;
+		for(User thisUser : userList) {
+			inactive30 = false;
+            inactive90 = false;
+			if (test.isRunningtest()){
+				inactive90 = true;
+				inactive30 = true;
+			}
 
-	 			if (thisUser.LastLoginDate < minus90days || (thisUser.LastLoginDate == null && thisUser.CreatedDate < minus90days)){
-	 				inactive90 = true;
-	 			}
+			if (thisUser.LastLoginDate < minus90days || (thisUser.LastLoginDate == null && thisUser.CreatedDate < minus90days)){
+				inactive90 = true;
+			}else if(thisUser.Contact.Account.RecordType.Name == 'Standard Account' && (thisUser.LastLoginDate < minus30days || (thisUser.LastLoginDate == null && thisUser.CreatedDate < minus30days))){
+				inactive30 = true;
+			}
 
-	 			// no login for over 90 days, inactivate user
-	 			if (inactive90){
-		 			thisUser.IsActive = false;
-		 			thisUser.Portal_User_Frozen_Checkbox__c = true;
-	 			}
-	 		}
-	 		Database.saveResult[] userResult;
-	 		userResult = Database.update(userList, false);
-	 		String message = 'FINAL\n';
-	 		for (Database.saveResult thisResult : userResult){
-	 			if (thisResult.isSuccess()){
-	 				//message += 'Success for: ' + thisResult.getId() + '\n';
-	 				inactivateUserIds.add(thisResult.getId());
-	 			}
-	 			else{
-	 				message += 'ERROR: ' + thisResult + '\n';
-	 			}
-	 		}
-	 		transformationHelper.sendSFDevsAlertMessage('BATCH RESULT ' ,  message,  new list<string>{'nunesr@iata.org','beatrizr@iata.org'});
+			// no login for over 90 days, inactivate user
+			if (inactive90 || inactive30){
+				thisUser.IsActive = false;
+				thisUser.Portal_User_Frozen_Checkbox__c = true;
+			}
+            
+		}
+		Database.saveResult[] userResult;
+		userResult = Database.update(userList, false);
+		String message = 'FINAL\n';
+		for (Database.saveResult thisResult : userResult){
+			if (!thisResult.isSuccess()){
+				message += 'ERROR: ' + thisResult + '\n';
+			}
+		}
+		if(message.contains('ERROR:')){
+			TransformationHelper.sendEmailSupport('[ISSP_PortalUserFreeze_Batch] ' ,  message);
+		}
 	 	}
 
 	 	global void finish(Database.BatchableContext BC) {

@@ -90,18 +90,6 @@
         <template>MarketingPAX/Cargo_IS_Sample_Internal</template>
     </alerts>
     <alerts>
-        <fullName>Cargo_IS_Forum_2014_Email_Alert_for_PM</fullName>
-        <description>CargoIS Forum 2014 - Email Alert for PM</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>rossandj@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>MarketingPAX/CargoIS_Forum_2014</template>
-    </alerts>
-    <alerts>
         <fullName>Cargo_IS_Sample_Data</fullName>
         <description>Cargo IS Sample Data</description>
         <protected>false</protected>
@@ -590,16 +578,6 @@
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
-        <fullName>Air Mercury - Next Gen - Notification</fullName>
-        <active>false</active>
-        <criteriaItems>
-            <field>Lead.Web_form_Code__c</field>
-            <operation>equals</operation>
-            <value>PAX1002140</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>Airport IS - New lead notification</fullName>
         <active>true</active>
         <criteriaItems>
@@ -661,21 +639,6 @@
             <operation>equals</operation>
             <value>CAR-1002819</value>
         </criteriaItems>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
-        <fullName>CargoIS Forum 2014</fullName>
-        <actions>
-            <name>Cargo_IS_Forum_2014_Email_Alert_for_PM</name>
-            <type>Alert</type>
-        </actions>
-        <active>true</active>
-        <criteriaItems>
-            <field>Lead.Web_form_Code__c</field>
-            <operation>contains</operation>
-            <value>car1003026</value>
-        </criteriaItems>
-        <description>Email Alert sent to PM when a request is made on the website for CargoIS Forum 2014 -  campaign/ lead web form code car1003026</description>
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>

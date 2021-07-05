@@ -204,10 +204,8 @@ public class AMS_AgencyHelper {
 		try{
 			insert  newAgencyOperations;
 			system.debug('[OPERATIONS][SUCCESS] Update Agencies operation for '+newAgencyOperations.size()+ 'From request '+operationHelpercandidate.size());
-			//DevsTools.sendSFDevsAlertMessage('[SUCCESS] Update Agencies operation for '+newAgencyOperations.size(), 'From request '+operationHelpercandidate.size());
 		}catch(Exception e){
 			System.debug('[OPERATIONS][failure] Update Agencies operation for '+newAgencyOperations.size()+' '+ e.getMessage());
-			//DevsTools.sendSFDevsAlertMessage('[failure] Update Agencies operation for '+newAgencyOperations.size(), e.getMessage());
 			Database.rollback(sp);
 		}
 	}

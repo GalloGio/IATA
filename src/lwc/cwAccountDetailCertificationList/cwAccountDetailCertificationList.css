@@ -1,0 +1,28 @@
+.title {
+	font-size: 1.1rem;
+}
+
+.enlarge:hover {
+	z-index: 50;
+	cursor: pointer;
+}
+ 
+.enlarge:hover span {
+  left: 60px;
+  bottom: -10px;
+}
+
+@media (min-width: 1200px){
+  .cert-padding-left{
+    padding-left: 9%;
+  }
+
+}
+
+.lightning-layout-item {
+  padding-left: 1px;
+}
+
+.max-w-75{
+  max-width: 75px;
+}

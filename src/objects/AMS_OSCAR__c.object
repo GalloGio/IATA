@@ -4143,6 +4143,16 @@ Promotions defined in Custom Metadata &apos;Oscar_Promotion__mdt&apos;</descript
                     <default>false</default>
                     <label>TIDS to GoLite (free)</label>
                 </value>
+                <value>
+                    <fullName>BSP_XC_TIDS_to_GoLite</fullName>
+                    <default>false</default>
+                    <label>BSP XC TIDS to GoLite (free)</label>
+                </value>
+                <value>
+                    <fullName>BSP_XC_TIDS_to_GoStandard</fullName>
+                    <default>false</default>
+                    <label>BSP XC TIDS to GoStandard (free)</label>
+                </value>
             </valueSetDefinition>
         </valueSet>
         <visibleLines>4</visibleLines>
@@ -4371,7 +4381,7 @@ Promotions defined in Custom Metadata &apos;Oscar_Promotion__mdt&apos;</descript
         ,IF(INCLUDES(Type_of_change__c, &quot;Name&quot;),&quot;CHN - Change of Name&quot;
         ,IF(OR(INCLUDES(Type_of_change__c, &quot;Location&quot;), INCLUDES(Type_of_change__c, &quot;Location with inspection&quot;)),&quot;CHL - Change of Location&quot;
         ,IF(INCLUDES(Type_of_change__c, &quot;VMFR&quot;),&quot;VMFR Setup/Update&quot;
-        ,IF(INCLUDES(Type_of_change__c, &quot;Minor Shareholding&quot;),&quot;CHG – Data Maintenance&quot;
+        ,IF(INCLUDES(Type_of_change__c, &quot;Minor Shareholding&quot;),&quot;MCH – Minor Change of Shareholding&quot;
         ,&quot;&quot;  )))))))
     , &quot;&quot;)
    )</formula>
@@ -16179,6 +16189,10 @@ The values selected by the analyst will determine the reason why the application
             </values>
             <values>
                 <fullName>Pending Approval</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending Reconsideration</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -52203,6 +52217,10 @@ The values selected by the analyst will determine the reason why the application
                 <default>false</default>
             </values>
             <values>
+                <fullName>Pending Reconsideration</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Pending Validation</fullName>
                 <default>false</default>
             </values>
@@ -57061,6 +57079,14 @@ The values selected by the analyst will determine the reason why the application
         <picklistValues>
             <picklist>Promotions__c</picklist>
             <values>
+                <fullName>BSP_XC_TIDS_to_GoLite</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BSP_XC_TIDS_to_GoStandard</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>TIDS_to_GoLite</fullName>
                 <default>false</default>
             </values>
@@ -59411,6 +59437,10 @@ The values selected by the analyst will determine the reason why the application
             </values>
             <values>
                 <fullName>Pending Approval</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Pending Reconsideration</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -83403,13 +83433,6 @@ The values selected by the analyst will determine the reason why the application
         <errorMessage>Cannot set sanity check as &quot;Passed&quot; if the &quot;Change effective as of&quot; is empty or in the future</errorMessage>
     </validationRules>
     <validationRules>
-        <fullName>ANG_IEP_require_ag_contact_on_san_check</fullName>
-        <active>false</active>
-        <description>Cannot set sanity check as &quot;Passed&quot; if the Agency Contact is not filled</description>
-        <errorConditionFormula>TEXT(Process__c)  = &apos;IEP.BANK.ACCOUNT.SETUP&apos; &amp;&amp;  TEXT(STEP6__c) = &apos;Passed&apos;  &amp;&amp;  ISBLANK( Agency_Contact__c )</errorConditionFormula>
-        <errorMessage>Cannot set sanity check as &quot;Passed&quot; if Agency Contact is missing</errorMessage>
-    </validationRules>
-    <validationRules>
         <fullName>ANG_Is_PCI_compliant_mandatory</fullName>
         <active>true</active>
         <errorConditionFormula>OR(
@@ -83499,24 +83522,6 @@ ISPICKVAL(Process__c, &quot;ANG.NEW.GE.STANDARD.1.0&quot;)
         <errorMessage>Please fill a &quot;Reason for Unsuccessful application&quot; before closing this case.</errorMessage>
     </validationRules>
     <validationRules>
-        <fullName>Form_Date_Courier_Cargo</fullName>
-        <active>false</active>
-        <errorConditionFormula>RecordType.DeveloperName = &quot;VOLUNTARY_RELINQUISHMENT&quot;
-&amp;&amp; NOT(ISBLANK(Form_Effective_Date__c))
-&amp;&amp; ISPICKVAL(Account__r.Location_Class__c, &apos;C&apos;)
-&amp;&amp; (Form_Effective_Date__c - Dossier_Reception_Date__c &lt; 90)</errorConditionFormula>
-        <errorMessage>Form Effective Date must be at least 90 days from the Dossier Reception Date</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>Form_Date_Courier_Cass_Associates</fullName>
-        <active>false</active>
-        <errorConditionFormula>RecordType.DeveloperName = &quot;VOLUNTARY_RELINQUISHMENT&quot;
-&amp;&amp; NOT(ISBLANK(Form_Effective_Date__c))
-&amp;&amp; OR(ISPICKVAL(Account__r.Category__c, &apos;Courier&apos;), ISPICKVAL(Account__r.Category__c, &apos;Cass Associate&apos;))
-&amp;&amp; (Form_Effective_Date__c - Dossier_Reception_Date__c &lt; 30)</errorConditionFormula>
-        <errorMessage>Form Effective Date must be at least 30 days from the Dossier Reception Date</errorMessage>
-    </validationRules>
-    <validationRules>
         <fullName>IFAP_Changing_Financial_Review_Result</fullName>
         <active>true</active>
         <errorConditionFormula>AND
@@ -83536,16 +83541,6 @@ $Profile.Name = &apos;System Administrator - automated processes&apos;
 )</errorConditionFormula>
         <errorDisplayField>Financial_Review_Result__c</errorDisplayField>
         <errorMessage>To change the Financial Review Result you need to provide a reason for the change in &quot;Reason for change of Financial result&quot;.</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>Location_Type_verification</fullName>
-        <active>false</active>
-        <errorConditionFormula>AND(
-OR( ISPICKVAL(Account__r.Location_Type__c,&quot;HE&quot;),ISPICKVAL(Account__r.Location_Type__c,&quot;AE&quot;)),
-NOT( OR( ISPICKVAL(Account__r.Location_Class__c,&quot;P&quot;),ISPICKVAL(Account__r.Location_Class__c,&quot;D&quot;))
-)
-)</errorConditionFormula>
-        <errorMessage>Cannot set the account as HE or AE if its location class is not either &apos;P&apos; or &apos;D&apos;</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>No_validation_or_approval</fullName>
@@ -83585,18 +83580,6 @@ NOT( OR( ISPICKVAL(Account__r.Location_Class__c,&quot;P&quot;),ISPICKVAL(Account
         NOT(RecordType.Name = &quot;CERTIFICATE&quot;)
         )</errorConditionFormula>
         <errorMessage>Please fill the &quot;Payment requested&quot; date before populating the &quot;Payment received&quot;</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>RPM_Approval_only_after_Validation</fullName>
-        <active>false</active>
-        <description>Enforce the proper process by ensuring that the manager approval cannot happen before the assistant manager&apos;s validation.</description>
-        <errorConditionFormula>AND (
-  ISCHANGED(RPM_Approval__c),
-  NOT(ISPICKVAL(Validation_Status__c,&apos;Passed&apos;)),
-  NOT(ISPICKVAL(Validation_Status__c,&apos;Failed&apos;))
-)</errorConditionFormula>
-        <errorDisplayField>RPM_Approval__c</errorDisplayField>
-        <errorMessage>The manager Approval / Disapproval cannot happen before the assistant manager&apos;s Validation.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Reconsideration_date</fullName>

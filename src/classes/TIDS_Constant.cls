@@ -1,5 +1,6 @@
 public without sharing class TIDS_Constant {
 	public final static String RT_AIRLINE_BRANCH = 'IATA_Airline_BR';
+	public final static String RT_AGENCY= 'IATA_Agency';
 	public final static String RT_AIRLINE_HEADQUARTERS = 'IATA_Airline';
 	public final static String RT_GENERAL_SALES_AGENT_HEADQUARTERS = 'IATA_GSA';
 	public final static String RT_ICAO_MEMBER_STATE = 'ICAO_Member_State';
@@ -8,6 +9,7 @@ public without sharing class TIDS_Constant {
 	public final static String RT_VERIFIER='Verifiers';
 	public final static String RT_AIRPORT='Airport';
 
+	public final static String ERROR_CON0_1 = 'TIDS_ACCES_COND0';
 	public final static String ERROR_CON1 = 'TIDS_ACCES_COND1';
 	public final static String ERROR_CON2_1 = 'TIDS_ACCES_COND2_1';
 	public final static String ERROR_CON2_2 = 'TIDS_ACCES_COND2_2';
@@ -22,6 +24,7 @@ public without sharing class TIDS_Constant {
 	public final static String ERROR_CON7_3 = 'TIDS_ACCES_COND7_3';
 	public final static String VETTING_DONE = 'TIDS_VETTING_DONE';
 	public final static String TIDS_ADM_EMAIL='TIDS_ADM_EMAIL';
+	public final static String CASCADE_PASSWORD='TIDS_CASCADE_PASSWORD';
 
 	public final static String NEW_AGENT='New agent';
 	// Case subjects
@@ -56,10 +59,15 @@ public without sharing class TIDS_Constant {
 	public final static String NEW_BR='NEW_BR';
 	public final static String NEW_VB='NEW_VB';
 	public final static String NEW_HO='NEW_HO';
+	public final static String TIDS_T='T';
+	public final static String TIDS_BR='BR';
+	public final static String TIDS_VB='VB';
+	public final static String TIDS_HO='HO';
 	public final static String ADM_HOS='TIDS Admin HO Secondary';
 	public final static String ADM_HOP='TIDS Admin HO Primary';
 	public final static String ADM_BRA='TIDS Branch Administrator';
 	public final static String NEW_APP='TIDS - new HO Application';
+	public final static String TIDS_VOL='Voluntary Relinquishment';
 
 	//Actions
 	public final static String ACTION_VETTING='vetting';
@@ -92,6 +100,7 @@ public without sharing class TIDS_Constant {
 	public final static String IS_INPROGRESS='Review in Progress';
 	public final static String IS_CUSTOMER='Pending Customer';
 	public final static String IS_APPROVED='Approved';
+	public final static String IS_ACTIVE='Active';
 	public final static String IS_ABANDONED='Abandoned';
 	public final static String IS_TERMINATED='Terminated';
 	public final static String IS_REJECTED='Rejected';
@@ -102,6 +111,10 @@ public without sharing class TIDS_Constant {
 	public final static String CHG_PROFILE='chg-business-profile-specialization';
 	public final static String RQT_VIRTUALB='request-virtual-branch-service';
 
+	public final static String TIDS_ACTION_ADD='add';
+	public final static String TIDS_ACTION_REMOVE='remove';
+	public final static String TIDS_ACTION_SWAP='swap';
+	
 	//Message Errors
 	public final static String MSG1='TIDS_MSG1';
 	public final static String MSG2='TIDS_MSG2';
@@ -127,4 +140,10 @@ public without sharing class TIDS_Constant {
 	public final static String MSG33='TIDS_MSG33';
 	public final static String MSG34='TIDS_MSG34';
 	public final static String MSG35='TIDS_MSG35';
+	public final static String MSG40='TIDS_MSG40';
+	public final static String MSG41='TIDS_MSG41';
+	public final static String MSG42='TIDS_MSG42';
+	public final static String MSG43='TIDS_MSG43'; 
+	public final static String MSG44='TIDS_MSG44';
+	public final static String MSG45='TIDS_MSG45';
 }

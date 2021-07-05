@@ -218,10 +218,11 @@ public class AMS_OSCARTriggerHandler {
 		//if(test.IsRunningTest())
 			performBackupANG((Map<Id, AMS_OSCAR__c>) Trigger.oldMap, (Map<Id, AMS_OSCAR__c>) Trigger.newMap);
 
+		updateAccreditationProcessType(oscars, (Map<Id,AMS_OSCAR__c>)Trigger.oldMap);
+
 	}
 
 	public static void handleBeforeInsert() {
-		//assignOSCARToRegionalQueues();
 		prepopulateValues();
 
 		AMS_AccreditationContactHelper.mirrorAccrediationContactsFromAccountRole((List<AMS_OSCAR__c>)Trigger.New, null);
@@ -1042,18 +1043,6 @@ public class AMS_OSCARTriggerHandler {
 			}
 
 		}
-	}
-
-	private static void assignOSCARToRegionalQueues(){
-
-		List<AMS_OSCAR__c> certificationOscars = new List<AMS_OSCAR__c>();
-
-		for(AMS_OSCAR__c oscar : (List<AMS_OSCAR__c>)Trigger.New)
-			if(oscar.RecordTypeId == AMS_Utils.RECTYPE_CERT)
-				certificationOscars.add(oscar);
-
-		/*if(!certificationOscars.isEmpty())
-			AMS_OscarCaseTriggerHelper.assignOscarToRegionQueue(certificationOscars);*/
 	}
 
 	public static void handleChangesProcess(List<AMS_OSCAR__c> oscars) {
@@ -2810,13 +2799,21 @@ public class AMS_OSCARTriggerHandler {
 
 		Set<Id> oscarOnlineAccredIds = new Set<Id>();
 		Map<Id, Set<Id>> accountsInvolved = new Map<Id, Set<Id>>();
+		
+		//If all oscar are just being closed, there is no need to run handleVRProcess method
+		Boolean noNeedForValidations = true;
 
 		for (AMS_OSCAR__c oscar : oscars) {
-			addAccountId(oscar.Account__c);
-			addAccountId(oscar.AMS_Target_Agency__c);
-			oscarOnlineAccredIds.add(oscar.AMS_Online_Accreditation__c);
-			accountsInvolved.put(oscar.Id, new Set<Id>{oscar.Account__c});
+			if(oscar.Status__c != AMS_Utils.OSCAR_CLOSED){
+				addAccountId(oscar.Account__c);
+				addAccountId(oscar.AMS_Target_Agency__c);
+				oscarOnlineAccredIds.add(oscar.AMS_Online_Accreditation__c);
+				accountsInvolved.put(oscar.Id, new Set<Id>{oscar.Account__c});
+				noNeedForValidations = false;
+			}
 		}
+
+		if(noNeedForValidations) return;
 
 		//find all agencies involved
 		//DTULLO: Added Record Type
@@ -2873,7 +2870,7 @@ public class AMS_OSCARTriggerHandler {
 
 				Set<String> nextMonthLocations = new Set<String>{'P', 'D'};
 				Date terminationDate = nextMonthLocations.contains(updatedOSCAR.Location_Class__c) ? AMS_Utils.lastDayOfMonth(Date.today().addMonths(1)) : Date.today().addDays(15);
-				updatedOSCAR.Termination_date__c = BusinessHours.nextStartDate(updatedOSCAR.BusinessHours__c, DateTime.newInstance(terminationDate, System.now().time())).date();
+				updatedOSCAR.Termination_Date__c = BusinessHours.nextStartDate(updatedOSCAR.BusinessHours__c, DateTime.newInstance(terminationDate, Time.newInstance(0, 0, 0, 0))).date();
 
 				if(updatedOSCAR.Process__c == AMS_Utils.VOLRELINQUISH){
 					updatedOSCAR.Process_Start_Date__c = updatedOSCAR.Termination_Date__c;
@@ -2960,6 +2957,7 @@ public class AMS_OSCARTriggerHandler {
 					Parent.Location_Type__c, ParentId, Top_Parent__c, Phone, Remittance_frequency__c, ShippingCity, ShippingCountry, 
 					ShippingPostalCode, ShippingState, ShippingStreet, Short_Name__c, Solicitation_Flag__c, Status__c, TradeName__c, 
 					VAT_Number_2__c, VAT_Number__c, Website, Reason__c,Sector__c, Category__c, recordTypeID,
+					IATA_ISO_Country__r.ANG_Enable_NewGen__c, IATA_ISO_Country__r.ANG_Portal_Service__c, IATA_ISO_Country__r.ANG_IEP_Model__c, IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c, 
 					(SELECT Id, ParentId, Top_Parent__c, ANG_FA_Opt_out__c, Guaranteed_amount__c FROM ChildAccounts),
 					(SELECT Id, Account__c, Reason_Code__c, Reason_Description__c, Bulletin_Information__c FROM Agencies_Applied_Change_codes__r WHERE Active__c = true ORDER BY CreatedDate DESC)
 				FROM Account WHERE Id IN :accountIds]);
@@ -2998,7 +2996,7 @@ public class AMS_OSCARTriggerHandler {
 
 		if(oscarCommCaseId != null){
 
-			OrgWideEmailAddress[] owea = [select Id from OrgWideEmailAddress where Address = 'agencymanagement@iata.org'];
+			OrgWideEmailAddress[] owea = [select Id, Address, DisplayName from OrgWideEmailAddress where Address = 'agencymanagement@iata.org'];
 
 			List<Contact> contList;
 				contList = fetchContactInfoFromCase(oscarCommCaseId);
@@ -3074,7 +3072,6 @@ public class AMS_OSCARTriggerHandler {
 		else if(agencyType == ANG_OscarProcessHelper.ANG_PCI_RENEWAL && step == null ) templateId  = 'ANG_PCI_RENEWAL';
 		else if(agencyType == ANG_FOPOSCARNotificationBatch.FOP_REMINDER_TEMPLATE_ID && step == null) templateId  = 'ANG_Mass_FOP_OSCAR_Reminder';
 		else if(agencyType == ANG_FOPOSCARNotificationBatch.FOP_NONCOMPLIANCE_TEMPLATE_ID && step == null) templateId  = 'ANG_Mass_FOP_OSCAR_NonCompliance';
-		else if(agencyType == ANG_FOPOSCARNotificationBatch.RENEWAL_FOP_REMINDER_TEMPLATE_ID&& step == null) templateId  = 'ANG_PCI_RENEWAL_Reminder';
 		else if(agencyType == ANG_FOPOSCARNotificationBatch.RENEWAL_FOP_NONCOMPLIANCE_TEMPLATE_ID&& step == null) templateId  = 'ANG_PCI_RENEWAL_NonCompliance';
 		else if(agencyType == ANG_FOPOSCARNotificationBatch.ANNUAL_REV_REMINDER && step == null) {
 			templateId  = 'ANG_Annual_Revalidation_Reminder';
@@ -3922,7 +3919,7 @@ public class AMS_OSCARTriggerHandler {
 			}
 
 			if (oldOSCAR.Notify_Agent_Termination__c == false && updatedOscar.Notify_Agent_Termination__c == true) {
-				DateTime nextMonthEnd = DateTime.newInstance(AMS_Utils.lastDayOfMonth(System.today().addMonths(1)), DateTime.now().time());
+				DateTime nextMonthEnd = DateTime.newInstance(AMS_Utils.lastDayOfMonth(System.today().addMonths(1)), Time.newInstance(0, 0, 0, 0));
 				updatedOSCAR.Termination_Date__c = BusinessHours.nextStartDate(updatedOSCAR.BusinessHours__c, nextMonthEnd).date();
 				System.debug(loggingLevel.Debug, '____ [trg AMS_OSCARTrigger - beforUpdate] updatedOSCAR.Termination_Date__c - ' + updatedOSCAR.Termination_Date__c);
 			}
@@ -3981,7 +3978,7 @@ public class AMS_OSCARTriggerHandler {
 			}
 
 			if (oldOSCAR.Terminate_Agency__c == false && updatedOscar.Terminate_Agency__c == true) {
-				DateTime nextMonthEnd = DateTime.newInstance(AMS_Utils.lastDayOfMonth(System.today().addMonths(1)), DateTime.now().time());
+				DateTime nextMonthEnd = DateTime.newInstance(AMS_Utils.lastDayOfMonth(System.today().addMonths(1)), Time.newInstance(0, 0, 0, 0));
 				updatedOSCAR.Termination_Date__c = BusinessHours.nextStartDate(updatedOSCAR.BusinessHours__c, nextMonthEnd).date();
 				System.debug(loggingLevel.Debug, '____ [trg AMS_OSCARTrigger - beforUpdate] updatedOSCAR.Termination_Date__c - ' + updatedOSCAR.Termination_Date__c);
 			}
@@ -4013,7 +4010,7 @@ public class AMS_OSCARTriggerHandler {
 			if (oldOSCAR.STEP2__c != 'Passed' && updatedOscar.STEP2__c == 'Passed') {
 
 				/*** AMSU-31 Start ***/
-				Set<String> processesToCheck = new Set<String> {AMS_Utils.new_HO, AMS_Utils.new_BR, AMS_Utils.new_SA, AMS_Utils.new_BR_ABROAD, AMS_Utils.NEWHELITE, AMS_Utils.NEWHESTANDARD, AMS_Utils.NEWAE};
+				Set<String> processesToCheck = new Set<String> {AMS_Utils.new_HO, AMS_Utils.new_BR, AMS_Utils.new_SA, AMS_Utils.new_BR_ABROAD, AMS_Utils.NEWHELITE, AMS_Utils.NEWHESTANDARD, AMS_Utils.NEWAE, AMS_Utils.MCAE, AMS_Utils.NEWGESTANDARD};
 				Set<String> classesToCheck = new Set<String> {'P', 'D'};
 				if(classesToCheck.contains(updatedOscar.Location_Class__c) && processesToCheck.contains(updatedOscar.Process__c)) {
 					oscarsToCreateAuth.add(updatedOscar);
@@ -4543,7 +4540,10 @@ public class AMS_OSCARTriggerHandler {
 		}
 
 		authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = 'CC', Status__c = (AMS_Utils.setChinaCountries.contains(oscar.Country_ISO_Code__c) ? 'Authorized' : statusForCC), RecordTypeId = FormOfPaymentRT));
-		if(oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWGESTANDARD)
+		if(oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWGESTANDARD || 
+			(oscar.process__c == AMS_Utils.NEWHELITE && (accounts.containsKey(oscar.Account__c)
+														?accounts.get(oscar.Account__c).IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c
+														:false)))
 			authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = 'CA', Status__c = (AMS_Utils.setChinaCountries.contains(oscar.Country_ISO_Code__c) ? 'Authorized' : 'Active'), RecordTypeId = FormOfPaymentRT));
 		authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = (AMS_Utils.setChinaCountries.contains(oscar.Country_ISO_Code__c) ? 'BOP' : 'EP'), Status__c = (AMS_Utils.setChinaCountries.contains(oscar.Country_ISO_Code__c) ? 'Authorized' : statusForIEP), RecordTypeId = FormOfPaymentRT));
 
@@ -5073,60 +5073,234 @@ public class AMS_OSCARTriggerHandler {
 		return false;
 	}
 
-	/**
-	 * retrieves all active promotions defined in metadata Oscar_Promotion__mdt
+	/*
+	 * Updates the accreditation process type field based on the custom metadata Case_Process_Type__mdt
+	 * if any relevant field in this oscar is being updated
 	 */
-	public static map<String,Oscar_Promotion__mdt> MAP_PROMOTIONS = null;
-	public static map<String,Oscar_Promotion__mdt> getMapActivePromotions() {
-		if (MAP_PROMOTIONS==null) {
-			MAP_PROMOTIONS = new map<String,Oscar_Promotion__mdt>();
-			list<Oscar_Promotion__mdt> listPromotion = [
-				SELECT DeveloperName, Oscar_Process__c
-				FROM Oscar_Promotion__mdt
-				WHERE Start_Date__c <= TODAY
-				AND End_Date__c >= TODAY
-			];
-			for (Oscar_Promotion__mdt promotion: listPromotion) {
-				MAP_PROMOTIONS.put(promotion.Oscar_Process__c, promotion);
+	public static void updateAccreditationProcessType(list<AMS_OSCAR__c> listNew, Map<Id, AMS_OSCAR__c> mapOld) {
+		for (AMS_OSCAR__c newOscar: listNew) {
+			AMS_OSCAR__c oldOscar = mapOld.get(newOscar.Id);
+
+			// fields to verify if are changing
+			set<String> setCheckFields = CaseProcessTypeHelper.getRelevantFields(newOscar);
+			if (isUpdated(newOscar, oldOscar, setCheckFields)) {
+				// add extra fields from Accreditation related object
+				setAccreditationFields(listNew, newOscar);
+				//call helper function to set the value for Accreditation_Process_Type__c
+				CaseProcessTypeHelper.populateOSCARAccProcess(newOscar);
 			}
 		}
-		return MAP_PROMOTIONS;
+	}
+
+
+	/**
+	 * get a map of releated AMS_Pax_Accreditation_Form__c records for the incoming Oscars
+	 * to be used in the setAccreditationFields method
+	 * 
+	 * Note:
+	 * If another releated object is used in the custom meta AMS_Pax_Accreditation_Form__c besides AMS_Online_Accreditation__r
+	 * then must be added too
+	 */
+	private static map<Id,AMS_Pax_Accreditation_Form__c> MAP_ACCREDITATION = null;
+	private static map<Id,AMS_Pax_Accreditation_Form__c> getMapAccreditation(list<AMS_OSCAR__c> listTrigger) {
+		if (MAP_ACCREDITATION==null) {
+			MAP_ACCREDITATION = new map<Id,AMS_Pax_Accreditation_Form__c>();
+			//get all accreditation Ids
+			list<Id> listAccreditationId = new list<Id>();
+			for (AMS_OSCAR__c newOscar: listTrigger) {
+				if (newOscar.AMS_Online_Accreditation__c!=null) {
+					listAccreditationId.add(newOscar.AMS_Online_Accreditation__c);
+				}
+			}
+			// find Accreditation fields used in the custom meta Case_Process_Type__mdt, in the other condition field
+			set<String> setFields = new set<String>{'Id'};
+			for (Case_Process_Type__mdt process: [SELECT Other_Conditions__c FROM Case_Process_Type__mdt WHERE Other_Conditions__c != null]) {
+				for (String elem: process.Other_Conditions__c.split(' ')) {
+					if (elem.startsWithIgnoreCase('OSCAR__r.AMS_Online_Accreditation__r.')) {
+						setFields.add(elem.replace('OSCAR__r.AMS_Online_Accreditation__r.',''));
+					}
+				}
+			}
+			// prepare the query and store it into a map for later use in setAccreditationFields()
+			String query = 'SELECT ' +  String.join(new list<String>(setFields),',') + ' FROM AMS_Pax_Accreditation_Form__c WHERE Id IN :listAccreditationId';
+			MAP_ACCREDITATION = new map<Id,AMS_Pax_Accreditation_Form__c>(
+				(list<AMS_Pax_Accreditation_Form__c>)Database.query(query)
+			);
+		}
+		return MAP_ACCREDITATION;
+	}
+
+	/**
+	 * Use the MAP_ACCREDITATION map to set the related object 'AMS_Pax_Accreditation_Form__c' into the input oscar record
+	 */
+	private static void setAccreditationFields(list<AMS_OSCAR__c> listTrigger, AMS_Oscar__c oscar) {
+		AMS_Pax_Accreditation_Form__c accreditation = getMapAccreditation(listTrigger).get(oscar.AMS_Online_Accreditation__c);
+		if (accreditation!=null) {
+			oscar.AMS_Online_Accreditation__r = accreditation;
+		}
+	}
+
+	/*
+	 * True if any of the input field names is updated
+	 */
+	private static Boolean isUpdated(AMS_OSCAR__c newOscar, AMS_OSCAR__c oldOscar, set<String> setFieldNames) {
+		for (String fieldname: setFieldNames) {
+			if (fieldname.containsNone('.') && newOscar.get(fieldName) != oldOscar.get(fieldName)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * retrieves all active promotions defined in metadata Oscar_Promotion__mdt grouped by OSCAR Process type
+	 */
+	public static map<String,list<Oscar_Promotion__mdt>> MAP_PROMOTIONS {
+		get{
+			if (MAP_PROMOTIONS==null) {
+				MAP_PROMOTIONS = new map<String,list<Oscar_Promotion__mdt>>();
+				list<Oscar_Promotion__mdt> listPromotion = [
+					SELECT Promotion_Name__c, Oscar_Process__c, Other_Conditions__c
+					FROM Oscar_Promotion__mdt
+					WHERE Start_Date__c <= TODAY
+					AND End_Date__c >= TODAY
+				];
+				for (Oscar_Promotion__mdt promotion: listPromotion) {
+					list<Oscar_Promotion__mdt> listPromotions= MAP_PROMOTIONS.get(promotion.Oscar_Process__c);
+					if (listPromotions==null) {
+						listPromotions = new list<Oscar_Promotion__mdt>();
+					}
+					listPromotions.add(promotion);
+					MAP_PROMOTIONS.put(promotion.Oscar_Process__c, listPromotions);
+				}
+			}
+			return MAP_PROMOTIONS;
+		}
+		set;
 	}
 
 	/**
 	 * Set the value for promotion field, defined in Oscar_Promotion__mdt, if applicable
 	 */
-	private static void setPromotions(list<AMS_Oscar__c> listNew) {
-		// find only those oscar where we are setting the field Oscar_Communication_Case_Id__c
+	public static void setPromotions(list<AMS_Oscar__c> listNew) {
+		// find only those oscar where we are setting the field Oscar_Communication_Case_Id__c and have a promotion to be applied in MAP_PROMOTIONS
 		map<Id,AMS_Oscar__c> mapCaseOscar = new map<Id,AMS_Oscar__c>();
+		Set<Oscar_Promotion__mdt> setUsedPromotions = new Set<Oscar_Promotion__mdt>();
 		for (AMS_Oscar__c newOscar: listNew) {
-			if (newOscar.Oscar_Communication_Case_Id__c!=null) {
+			if (newOscar.Oscar_Communication_Case_Id__c!=null && MAP_PROMOTIONS.keyset().contains(newOscar.Process__c)) {
 				mapCaseOscar.put(Id.ValueOf(newOscar.Oscar_Communication_Case_Id__c),newOscar);
+				setUsedPromotions.addAll(MAP_PROMOTIONS.get(newOscar.Process__c));
 			}
 		}
 		if (mapCaseOscar.isEmpty()) return;
 
-		// get Case.contact.accounts for each OSCAR
-		map<Id,Account> mapOscarAccounts = new map<Id,Account>();
-		list<Case> listCase = [SELECT Id, OSCAR__c, Contact.AccountId, Contact.Account.RecordTypeId, Contact.Account.Location_Class__c
-			FROM Case
-			WHERE Id IN :mapCaseOscar.keyset()
-			AND ContactId != null];
-		for (Case cse: listCase) {
-			AMS_Oscar__c oscar = mapCaseOscar.get(cse.Id);
-			Account account = cse.Contact.Account;
-			mapOscarAccounts.put(oscar.Id, account);
-		}
+		//retrieve the records in related objects
+		list<String> listFieldNames = getListFieldNamesRequiredInPromotions(setUsedPromotions);
+		Set<Id> listCaseId = mapCaseOscar.keyset();
+		String query = 'SELECT ' + String.join(listFieldNames,',') + ' FROM Case WHERE Id IN :listCaseId';
+		list<Case> listQueryCase = (list<Case>)Database.query(query);
+
 		// assign promotions, if applicable, for the incoming oscar records
-		for(AMS_Oscar__c oscar: mapCaseOscar.values()){
-			Account acc = mapOscarAccounts.get(oscar.Id);
-			if ( acc!=null && acc.RecordTypeId == AMS_utils.RECTYPE_IATAAGENCY && acc.Location_Class__c == 'T') {
-				Oscar_Promotion__mdt promotion = getMapActivePromotions().get(oscar.Process__c);
-				if (promotion != null) {
-					oscar.Promotions__c = promotion.DeveloperName;
-				}
+		for(Case cse: listQueryCase){
+			AMS_Oscar__c newOscar = mapCaseOscar.get(cse.Id);
+			Oscar_Promotion__mdt promotion = getRightPromotion(newOscar, cse);
+			if (promotion != null) {
+				newOscar.Promotions__c = promotion.Promotion_Name__c;
 			}
 		}
 	}
 
+	/**
+	 *  Method to get all meaningful fields that will be used in Promotion calculation
+	 *  Basically all fields mentioned in the Other_Conditions__c field in the input list Oscar_Promotion__mdt
+	 */
+	private static list<String> getListFieldNamesRequiredInPromotions(Set<Oscar_Promotion__mdt> setPromotions) {
+		Set<String> setFieldNames = new Set<String>{'Id'};
+		for(Oscar_Promotion__mdt promotion : setPromotions) {
+			if (!String.isBlank(promotion.Other_Conditions__c)) {
+				for (String str: promotion.Other_Conditions__c.split(' AND ')) {
+					String fieldname = str.split(' NOT IN | IN ')[0];
+					setFieldNames.add(fieldname);
+				}
+			}
+		}
+		return new list<String>(setFieldNames);
+	}
+
+	/**
+	 * Find the right promotion to be used in the input Oscar
+	 */
+	private static Oscar_Promotion__mdt getRightPromotion(AMS_Oscar__c oscar, Case cse) {
+		list<Oscar_Promotion__mdt> listPromotions = MAP_PROMOTIONS.get(oscar.Process__c);
+		if (listPromotions==null) return null;
+
+		Oscar_Promotion__mdt deafultPromotion;
+		for (Oscar_Promotion__mdt promotion: listPromotions) {
+			if (String.isBlank(promotion.Other_Conditions__c)) {
+				deafultPromotion = promotion;
+			} else if (processOtherConditions(cse,promotion.Other_Conditions__c)) {
+				return promotion;
+			}
+		}
+		return deafultPromotion;
+	}
+
+	/**
+	 * Checks if the input object validates the input condition
+	 */
+	private static Boolean processOtherConditions(Sobject obj, String conditions) {
+		try {
+			// if there is no condition to process we assume that it passes
+			if (String.isBlank(conditions)) return true;
+			// find AND operation
+			list<String> listParts = conditions.split(' AND ');
+			if (listParts.size()>1) {
+				for (String part: listParts) {
+					if (!processOtherConditions(obj,part)) return false;
+				}
+				return true;
+			}
+			// find NOT IN operation
+			listParts = conditions.split(' NOT IN ');
+			if (listParts.size()==2) {
+				String fieldName = listParts[0];
+				String fieldValue = getFieldValue(obj, fieldName);
+				set<String> values = stringToSet(listParts[1]);
+				return ! values.contains(fieldValue);
+			}
+			// find IN operation
+			listParts = conditions.split(' IN ');
+			if (listParts.size()==2) {
+				String fieldName = listParts[0];
+				String fieldValue = getFieldValue(obj, fieldName);
+				set<String> values = stringToSet(listParts[1]);
+				return values.contains(fieldValue);
+			}
+		} catch (Exception e) {
+			TransformationHelper.sendEmailSupport( 'AMS_OSCARTriggerHandler - ProcessOtherConditions Exception', 'Exception: ' + e + ' || obj: ' + obj + ' || conditions ' + conditions + ' || StackTrace: ' + e.getStackTraceString());
+		}
+		return false;
+	}
+
+	/**
+	 * get the field value, as a String, for the input object,
+	 * allowing field names like 'AMS_OSCAR.Step1__c' or 'OSCAR__r.AMS_Online_Accreditation__r.ANG_Accreditation_type__c'
+	 */
+	private static String getFieldValue(Sobject obj, String fieldname) {
+		list<String> parts = fieldname.split('[.]');
+		if (parts.size()==1) {
+			return String.ValueOf(obj.get(fieldName));
+		}
+		String objectName = parts.remove(0);
+		fieldName = String.join(parts,'.');
+		return getFieldValue(obj.getSObject(objectName), fieldName); 
+	}
+
+	/**
+	 * Transforms the string use in a IN operation to a set<String>
+	 * Example: "('elem1','elem2')"  to set {'elem1','elem2'}
+	 */
+	private static set<String> stringToSet(String str) {
+		return new set<String>(str.replaceAll('[(][ ]*\'','').replaceAll('\'[ ]*[)]','').split('\'[ ]*,[ ]*\''));
+	}
 }

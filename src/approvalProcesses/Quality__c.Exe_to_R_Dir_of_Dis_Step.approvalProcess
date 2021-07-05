@@ -10,11 +10,11 @@
         <type>user</type>
     </allowedSubmitters>
     <allowedSubmitters>
-        <submitter>garciate@iata.org</submitter>
+        <submitter>dsaj@iata.org</submitter>
         <type>user</type>
     </allowedSubmitters>
     <allowedSubmitters>
-        <submitter>malika@iata.org</submitter>
+        <submitter>garciate@iata.org</submitter>
         <type>user</type>
     </allowedSubmitters>
     <allowedSubmitters>
@@ -35,6 +35,10 @@
     </allowedSubmitters>
     <allowedSubmitters>
         <submitter>rodriguezja@iata.org</submitter>
+        <type>user</type>
+    </allowedSubmitters>
+    <allowedSubmitters>
+        <submitter>wana@iata.org</submitter>
         <type>user</type>
     </allowedSubmitters>
     <approvalPageFields>

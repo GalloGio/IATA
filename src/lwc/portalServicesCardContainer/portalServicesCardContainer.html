@@ -17,11 +17,14 @@
                 <div class={fadeClass}><slot name="serviceDescription"></slot></div>
 
                 <!-- Actions -->
-                <div class="slds-grid slds-wrap actionsGridContainer ">
+                <div class="slds-grid slds-wrap actionsGridContainer">
                     <div class="slds-col slds-size_1-of-2 slds-small-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-align_absolute-center">
                         <slot name="leftButton"></slot>
                     </div>
-                    <div class="slds-col slds-size_1-of-2 slds-small-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-align_absolute-center">
+                    <div if:false={oneButton} class="slds-col slds-size_1-of-2 slds-small-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-align_absolute-center">
+                        <slot name="rightButton"></slot>
+                    </div>
+                    <div if:true={oneButton} class="slds-col slds-size_1-of-1 slds-small-size_1-of-1 slds-medium-size_1-of-2 slds-large-size_1-of-2 slds-align_absolute-center">
                         <slot name="rightButton"></slot>
                     </div>
                 </div>

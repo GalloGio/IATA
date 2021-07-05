@@ -1,6 +1,10 @@
 @isTest
 public class NewLocalGroupMeetingCtrlTest{
 
+	@testSetup static void testSetup() {
+		insert new Apex_Setting__c(Name='RT valid to reopen attachment trigger', Text_1__c='CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia, ComplaintIDFS,'
+                                           +  'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
+	}
 	public static LocalGovernance__c lg;
 	public static List<Contact> conts;
 	public static List<Participant__c> parts;
@@ -10,25 +14,26 @@ public class NewLocalGroupMeetingCtrlTest{
 	public static Contact contcomplete;
 	public static Contact contduplicate;
 
-	private static User testUser = createTestUser();
+	private static User testUser {
+		get {
+			Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
+			User tu = New User(
+				Alias = 'standt', Email='standarduser@testorg.com',
+				EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
+				LocaleSidKey='en_US', ProfileId = testProfile.Id,
+				TimeZoneSidKey='America/Los_Angeles', UserName='test.username@test.com',
+				License_Cost_Center__c = 'ISF005CH01'
+			);
 
-	public static User createTestUser(){
-		Profile testProfile = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
-		User tu = New User(
-			Alias = 'standt', Email='standarduser@testorg.com',
-			EmailEncodingKey='UTF-8', LastName='Testing', LanguageLocaleKey='en_US',
-			LocaleSidKey='en_US', ProfileId = testProfile.Id,
-			TimeZoneSidKey='America/Los_Angeles', UserName='test.username@test.com',
-			License_Cost_Center__c = 'ISF005CH01'
-		);
+			insert tu;
 
-		insert tu;
+			PermissionSet myPermissionSet = [SELECT ID from permissionSet where Name = 'Local_group_owners'];
+			PermissionSetAssignment psa = new PermissionSetAssignment (PermissionSetId = myPermissionSet.Id, AssigneeId = tu.Id);
+			insert psa;
 
-		PermissionSet myPermissionSet = [SELECT ID from permissionSet where Name = 'Local_group_owners'];
-		PermissionSetAssignment psa = new PermissionSetAssignment (PermissionSetId = myPermissionSet.Id, AssigneeId = tu.Id);
-		insert psa;
-
-		return tu;
+			return tu;
+		}
+		set;
 	}
 
 	public static void initTestData(Integer NRECORDS){
@@ -64,7 +69,7 @@ public class NewLocalGroupMeetingCtrlTest{
 
 			parts = new List<Participant__c>();
 			for(Integer i = 0; i<NRECORDS; i++)
-				parts.add(new Participant__c(Contact__c=conts[i].Id, Local_Governance__c=lg.Id));
+				parts.add(new Participant__c(Contact__c=conts[i].Id, Local_Governance__c=lg.Id, Local_Group_Type__c = 'APJC'));
 			insert parts;
 
 	}
@@ -206,7 +211,7 @@ public class NewLocalGroupMeetingCtrlTest{
 			List<Meeting_Participant__c> atts = [SELECT Local_Governance_Participant__c, Participant_Contact__c FROM Meeting_Participant__c WHERE Local_Governance_Meeting__c = :mctrl.lm.Id];
 			system.assertEquals(1, atts.size(), 'There should be 1 participant related to the meeting');
 
-	  		NewMeetingAttendeeByEmailCtrl  actrl = new NewMeetingAttendeeByEmailCtrl (new ApexPages.StandardController(new Meeting_Participant__c(Local_Governance_Meeting__c=mctrl.lm.Id)));
+				NewMeetingAttendeeByEmailCtrl  actrl = new NewMeetingAttendeeByEmailCtrl (new ApexPages.StandardController(new Meeting_Participant__c(Local_Governance_Meeting__c=mctrl.lm.Id)));
 
 
 			system.assertEquals(null, actrl.MySave(), 'I didn\'t choose any contact so I shouldn\'t be able to save');
@@ -371,8 +376,6 @@ public class NewLocalGroupMeetingCtrlTest{
 
 	static testmethod void testForInactiveGroup(){
 		Integer NRECORDS = 1;
-		insert new Apex_Setting__c(Name='RT valid to reopen attachment trigger', Text_1__c='CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia, ComplaintIDFS,'
-                                           +  'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
 		System.runAs(testUser){
 			initTestData(NRECORDS);
 

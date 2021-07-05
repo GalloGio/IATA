@@ -1,3 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata"/>
-
+<SharingRules xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sharingGuestRules>
+        <fullName>CS_Portal</fullName>
+        <accessLevel>Read</accessLevel>
+        <label>CS Portal</label>
+        <sharedTo>
+            <guestUser>CS_Portal</guestUser>
+        </sharedTo>
+        <criteriaItems>
+            <field>CreatedById</field>
+            <operation>notEqual</operation>
+            <value></value>
+        </criteriaItems>
+        <includeHVUOwnedRecords>false</includeHVUOwnedRecords>
+    </sharingGuestRules>
+    <sharingGuestRules>
+        <fullName>IATA_KB_Comm</fullName>
+        <accessLevel>Read</accessLevel>
+        <description>good one</description>
+        <label>IATA KB</label>
+        <sharedTo>
+            <guestUser>IATA_Public_KB1</guestUser>
+        </sharedTo>
+        <criteriaItems>
+            <field>CreatedById</field>
+            <operation>notEqual</operation>
+            <value></value>
+        </criteriaItems>
+        <includeHVUOwnedRecords>false</includeHVUOwnedRecords>
+    </sharingGuestRules>
+</SharingRules>

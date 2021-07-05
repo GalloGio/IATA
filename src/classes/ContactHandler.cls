@@ -218,6 +218,7 @@ public class ContactHandler{
 						Portal_Application_Right__c appRight =  new Portal_Application_Right__c(
 							Contact__c = contactNew.Id,
 							Portal_Application__c = app.Id,
+							Application_uniqueness_for_contact__c = String.valueOf(contactNew.Id).left(15) + String.valueOf(app.Id).left(15),
 							Right__c = 'Access Granted');
 						listAppRight.add(appRight);
 					}
@@ -228,7 +229,7 @@ public class ContactHandler{
 		}
 		// insert app rights
 		if (listAppRight.isEmpty()) return;
-		if (listNews.size()==1 || System.isQueueable()) {
+		if (listAppRight.size()==1 || System.isQueueable()) {
 			Database.SaveResult result = Database.insert(listAppRight[0], false);
 			for (Database.Error error: result.getErrors()) {
 				if ( error.getStatusCode() == StatusCode.FIELD_CUSTOM_VALIDATION_EXCEPTION) {
@@ -261,6 +262,7 @@ public class ContactHandler{
 					if (app!=null) {
 						Portal_Application_Right__c appRight =  new Portal_Application_Right__c(
 							Contact__c = contactNew.Id,
+							Application_uniqueness_for_contact__c = String.valueOf(contactNew.Id).left(15) + String.valueOf(app.Id).left(15),
 							Portal_Application__c = app.Id,
 							Right__c = 'Access Granted');
 						listAppRight.add(appRight);
@@ -326,7 +328,7 @@ public class ContactHandler{
 
 		map<Id,Contact> mapContactsRights = new map<Id,Contact>([
 			SELECT Id,
-				(SELECT Id, Application_Name__c
+				(SELECT Id, Application_Name__c, Application_uniqueness_for_contact__c
 				FROM Portal_Application_Rights__r
 				WHERE Right__c = 'Access Granted'
 				)
@@ -358,8 +360,8 @@ public class ContactHandler{
 		LIST_GRANT_APPS = new list<Portal_Application_Right__c>();
 		LIST_REVOKE_APPS = new list<Portal_Application_Right__c>();
 		if (listRights.isEmpty()) return;
-		if (listNews.size()==1 || System.isQueueable()) {
-			Database.UpsertResult result = Database.upsert(listRights[0], false);
+		if (listRights.size()==1 || System.isQueueable()) {
+			Database.UpsertResult result = Database.upsert(listRights[0],Portal_Application_Right__c.Application_uniqueness_for_contact__c, false);
 			for (Database.Error error: result.getErrors()) {
 				if ( error.getStatusCode() == StatusCode.FIELD_CUSTOM_VALIDATION_EXCEPTION) {
 					listNews[0].addError(error.getMessage());

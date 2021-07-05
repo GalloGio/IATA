@@ -5,7 +5,18 @@ public class ANG_AgencyChangesHelperTest {
 	static void testSetup(){
 		Test.startTest();
 
-		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US', ANG_Enable_NewGen__c = true)  ;
+		List<AMS_Settlement_System__c> settlementSystemList = new List<AMS_Settlement_System__c>();
+		settlementSystemList.add(new AMS_Settlement_System__c(name = 'BSP-01', Enable_Provisional_RHC_Request__c=true, currencyIsoCode='EUR'));
+		settlementSystemList.add(new AMS_Settlement_System__c(name = 'BSP-02', Enable_Provisional_RHC_Request__c=true, currencyIsoCode='USD'));
+		insert settlementSystemList;
+
+		List<ANG_BSP_Attributes__c> bspAttrLst = new List<ANG_BSP_Attributes__c>();
+		for(AMS_Settlement_System__c iss:settlementSystemList){
+			bspAttrLst.addAll(AMS_OSCAR_TestDataFactory.createOperationAttributes(iss));
+		}
+		insert bspAttrLst;
+
+		IATA_ISO_Country__c ctry = new IATA_ISO_Country__c (Name='US',ISO_Code__c='US', ANG_Enable_NewGen__c = true, AMS_Settlement_System__c = settlementSystemList[0].id, Allow_Cash_FOP_for_Cashless_Agencies__c = false)  ;
 		insert ctry ;
 
 		IATA_ISO_State__c stt = new IATA_ISO_State__c(Name= 'Test', ISO_Code__c = 'TS', IATA_ISO_Country__c = ctry.Id);
@@ -52,7 +63,8 @@ public class ANG_AgencyChangesHelperTest {
 
 		insert new List<AMS_Agencies_relationhip__c>{r1,r2,r3};
 
-		Portal_Applications__c pa = new Portal_Applications__c(name = 'Risk Profile and RHC');
+		Portal_Applications__c pa = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		pa.Name = 'Risk Profile and RHC';
 		insert pa;
 		insert new Apex_Setting__c(Name='RT valid to reopen attachment trigger', Text_1__c='CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia, ComplaintIDFS,'
                                            +  'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');

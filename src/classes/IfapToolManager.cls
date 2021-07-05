@@ -2,6 +2,7 @@ global class IfapToolManager {
 
 	public  static final string IFAPCONFIGARATIONNAME = 'IFAP';
 	public static String testJsonResults;
+	public static String testJsonResultsGxA;
 	public static  integer BATCHSIZEFROMFT = Integer.ValueOf(UtilityCS__c.getInstance('ifapBatchSize').value__c);//ifapBatchsize();
 
 	private static void fillCS(){
@@ -97,6 +98,13 @@ global class IfapToolManager {
 									testJsonResults :
 									app.processPWCResults(AmazonCredentials.getCredentials(IFAPCONFIGARATIONNAME).IAS_configurationName,BATCHSIZEFROMFT);
 				PWCResponses r = (PWCResponses) JSON.deserialize(result, PWCResponses.class);
+				String result_GxA = Test.isRunningTest() ?
+									testJsonResultsGxA :
+									app.processPWCdocumentsGXA(AmazonCredentials.getCredentials(IFAPCONFIGARATIONNAME).IAS_configurationName,BATCHSIZEFROMFT);
+
+				PWCResponses gxa_response = (PWCResponses) JSON.deserialize(result_GxA, PWCResponses.class);
+				r.responses.addAll(gxa_response.responses); 
+
 				r.success = true;
 				System.debug(LoggingLevel.ERROR, '################# (WS) PWC RESULT RESTITUISCE '+result);
 				System.debug(LoggingLevel.ERROR, '################# (WS) DOPO IL PARSER '+r);
@@ -122,31 +130,34 @@ global class IfapToolManager {
 			r.success = true;
 			System.debug(LoggingLevel.ERROR, '################# (WS) PWC REJECTION RESTITUISCE '+result);
 			System.debug(LoggingLevel.ERROR, '################# (WS) DOPO IL PARSER '+r);
-
-			 transformationHelper.sendEmailSupport('salvo 1 submitCaseQualityIssuesToMFT IFAPtoolManager',r + '    ' + result);
-
 			return r;
 
 		}catch ( Exception e ) {
-
-
-			transformationHelper.sendEmailSupport('salvo  2 submitCaseQualityIssuesToMFT IFAPtoolManager',e.getStackTraceString() + e.getMessage() );
-
+			transformationHelper.sendEmailSupport('[IFAPtoolManager] processPWCRejections - submitCaseQualityIssuesToMFT',e.getStackTraceString() + e.getMessage() );
 			System.debug('**** ERROR ' + e.getMessage());
 			return new PWCResponses(e);
 		}
 	}
 
 
-	public static String submitPWCResultDeletions(String json){
+	public static String submitPWCResultDeletions(String json, Boolean isGxA){
 		try{
 				  fillCS();
 
+				  String result;
+
 			WSToolmasterIfap.IfapToolMaster app = new WSToolmasterIfap.IfapToolMaster();
 
-			String result = Test.isRunningTest() ?
+				if(isGxA){
+					result = Test.isRunningTest() ?
+								testJsonResults :
+								app.deletePWCdocumentsGXA(AmazonCredentials.getCredentials(IFAPCONFIGARATIONNAME).IAS_configurationName,json);
+				}
+				else {
+					result = Test.isRunningTest() ?
 							testJsonResults :
 							app.deletePWCResults(AmazonCredentials.getCredentials(IFAPCONFIGARATIONNAME).IAS_configurationName,json);
+				}
 
 			return result;
 		}catch(Exception e){
@@ -230,13 +241,14 @@ global class IfapToolManager {
 
 			global class PWCResponse{
 
-							  public Boolean success{get;set;}
-							  public string caseNumber {get;set;}
-							  public string originalFileName {get;set;}
-							  public string xml{get;set;}
-							  public string message {get;set;}
+							public Boolean success{get;set;}
+							public string caseNumber {get;set;}
+							public string originalFileName {get;set;}
+							public list<string> originalFileNames {get;set;} 
+							public string xml{get;set;}
+							public string message {get;set;}
 
-				  }
+			}
 
 
 

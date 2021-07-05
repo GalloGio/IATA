@@ -5,7 +5,8 @@ private class ANG_StandardConversionsTest {
 
 		Test.startTest();
 
-		Portal_Applications__c par = new Portal_Applications__c (Name = ANG_RHCHelper.RISK_PROFILE_AND_RHC_PORTAL_SERVICE);
+		Portal_Applications__c par = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		par.Name = ANG_RHCHelper.RISK_PROFILE_AND_RHC_PORTAL_SERVICE;
 		insert par;
 
 		Amazon_Cred__c amazon_Cred =  new Amazon_Cred__c(
@@ -94,6 +95,12 @@ private class ANG_StandardConversionsTest {
 		);
 
 		insert new List<AMS_Settlement_System__c>{bspPT, bspGB};
+
+		List<ANG_BSP_Attributes__c> bspAttrLst = new List<ANG_BSP_Attributes__c>();
+		for(AMS_Settlement_System__c iss:[select id, name from AMS_Settlement_System__c]){
+			bspAttrLst.addAll(AMS_OSCAR_TestDataFactory.createOperationAttributes(iss));
+		}
+		insert bspAttrLst;
 
 		IATA_ISO_Country__c countryPT = new IATA_ISO_Country__c();
 

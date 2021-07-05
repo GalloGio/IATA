@@ -1,0 +1,11 @@
+.displayImg{
+    object-fit: cover;
+    width: 100%;
+    height: 150px;
+}
+  
+.cardImagePropertiesDetail{
+    background-repeat: no-repeat !important;
+    background-size: contain !important;
+    background-position: center !important;
+}

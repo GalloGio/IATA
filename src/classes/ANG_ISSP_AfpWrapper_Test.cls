@@ -10,16 +10,19 @@ public class ANG_ISSP_AfpWrapper_Test {
 			defaultValue__c = '/ISSP_AvailableServices?MainNav=Services&subNav=Access&mid=M3S1'
 		);
 
-		Portal_Applications__c s1 = new Portal_Applications__c (Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED,
-			ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT,
-			ANG_Accredited_Agents_Only__c = false,
-			Agency__c = true);
+		List<Portal_Applications__c> portalApplicationList = TestDataFactory_PortalApplications.createDefaultPortalApplication(2);
+		Portal_Applications__c s1 = portalApplicationList.get(0);
+		s1.Name = ANG_ISSP_PortalServiceHelper.IATA_EASYPAY_EDENRED;
+		s1.ANG_Restrict_by_Agency_Sector__c = ANG_ISSP_PortalServiceHelper.TRAVEL_AGENT;
+		s1.ANG_Accredited_Agents_Only__c = false;
+		s1.Agency__c = true;
 
-		Portal_Applications__c s2 = new Portal_Applications__c (Name = AMS_Utils.IATA_ACCREDITATION_AND_CHANGES,
-			ANG_Accredited_Agents_Only__c = false,
-			Agency__c = true);
+		Portal_Applications__c s2 = portalApplicationList.get(1);
+		s2.Name = AMS_Utils.IATA_ACCREDITATION_AND_CHANGES;
+		s2.ANG_Accredited_Agents_Only__c = false;
+		s2.Agency__c = true;
 
-		insert new List<Portal_Applications__c>{s1, s2};
+		insert portalApplicationList;
 
 		IATA_ISO_Country__c indonesia = new IATA_ISO_Country__c(Name = 'Indonesia',
 			ISO_Code__c = 'ID',
@@ -391,7 +394,7 @@ public class ANG_ISSP_AfpWrapper_Test {
 		return [SELECT Id, ContactId, AccountId, Contact.Authorized_Signatory__c, Contact.Account.Id, Contact.Account.ANG_Accreditation_Model__c,
 			Contact.Account.ANG_IEP_Status_FF__c, Contact.Account.IATA_ISO_Country__c, Contact.Account.Location_Class__c,
 			Contact.Account.Category__c, Contact.Account.Location_Type__c, Contact.Account.Top_Parent__r.Location_Class__c,
-			Contact.Account.IATA_ISO_Country__r.ISO_Code__c, Contact.Account.IATA_ISO_Country__r.ANG_IEP_Model__c
+			Contact.Account.IATA_ISO_Country__r.ISO_Code__c, Contact.Account.IATA_ISO_Country__r.ANG_IEP_Model__c, Contact.Account.IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c
 				FROM User
 				WHERE Contact.Email = :email];
 	}

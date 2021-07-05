@@ -8,9 +8,8 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 		insert new Apex_Setting__c(Name='RT valid to reopen attachment trigger', Text_1__c='CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia, ComplaintIDFS,'
                                            +  'Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
 
-		Portal_Applications__c par = new Portal_Applications__c(
-			Name = ANG_RHCHelper.RISK_PROFILE_AND_RHC_PORTAL_SERVICE
-		);
+		Portal_Applications__c par = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		par.Name = ANG_RHCHelper.RISK_PROFILE_AND_RHC_PORTAL_SERVICE;
 
 		insert par;
 		AMS_ChangeCodes__c chgFin = new AMS_ChangeCodes__c();
@@ -45,6 +44,8 @@ private class ANG_FinancialReviewAutomaticOptOutTest {
 		);
 
 		insert new List<AMS_Settlement_System__c>{bspCN};
+
+		insert AMS_OSCAR_TestDataFactory.createOperationAttributes(bspCN);
 
 		IATA_ISO_Country__c countryWW = new IATA_ISO_Country__c(
 			Name = 'All Countries',

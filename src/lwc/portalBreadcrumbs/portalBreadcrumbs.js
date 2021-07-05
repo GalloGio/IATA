@@ -15,6 +15,8 @@ import CSP_Breadcrumb_Support_ReachUs from '@salesforce/label/c.CSP_Breadcrumb_S
 import CSP_Breadcrumb_Support_CreateNewCase from '@salesforce/label/c.CSP_Breadcrumb_Support_CreateNewCase';
 import CSP_Breadcrumb_FAQ_Title from '@salesforce/label/c.CSP_Breadcrumb_FAQ_Title';
 import CSP_Breadcrumb_Services_Title from '@salesforce/label/c.CSP_Breadcrumb_Services_Title';
+import CSP_Breadcrumb_Service_StartupHotlist from '@salesforce/label/c.CSP_Breadcrumb_Service_StartupHotlist';
+import CSP_Breadcrumb_Service_StartupHotlist_Pro from '@salesforce/label/c.CSP_Breadcrumb_Service_StartupHotlist_Pro';
 import CSP_Manage_Services from '@salesforce/label/c.CSP_Manage_Services';
 import CSP_Breadcrumb_Company_Profile_Title from '@salesforce/label/c.CSP_Breadcrumb_CompanyProfile_Title';
 import CSP_Breadcrump_MyProfile_Title from '@salesforce/label/c.CSP_Breadcrump_MyProfile_Title';
@@ -25,6 +27,7 @@ import CSP_Deduction_Notice from '@salesforce/label/c.CSP_Deduction_Notice';
 import CSP_Treasury_Dashboard_Report from '@salesforce/label/c.CSP_Treasury_Dashboard_Report';
 import CSP_Breadcrumb_Service_TIPReports from '@salesforce/label/c.CSP_Breadcrumb_Service_TIPReports';
 import CSP_Breadcrumb_AirlineDailySales from '@salesforce/label/c.CSP_Service_AirlineDailySales_Title';
+import CSP_Breadcrumb_SmartLite from '@salesforce/label/c.CSP_Service_SmartLite_Title';
 
 export default class PortalBreadcrumbs extends NavigationMixin(LightningElement) {
 
@@ -38,6 +41,8 @@ export default class PortalBreadcrumbs extends NavigationMixin(LightningElement)
         CSP_Breadcrumb_FAQ_Title,
 		CSP_Breadcrumb_CaseDetails_Title,
         CSP_Breadcrumb_Services_Title,
+        CSP_Breadcrumb_Service_StartupHotlist,
+        CSP_Breadcrumb_Service_StartupHotlist_Pro,
         CSP_Manage_Services,
         CSP_Breadcrumb_Company_Profile_Title,
         CSP_Breadcrump_MyProfile_Title,
@@ -45,6 +50,7 @@ export default class PortalBreadcrumbs extends NavigationMixin(LightningElement)
         CSP_Treasury_Dashboard,
         CSP_Breadcrumb_Service_TIPReports,
         CSP_Breadcrumb_AirlineDailySales,
+        CSP_Breadcrumb_SmartLite,
 		CSP_Deduction_Notice,
         CSP_Treasury_Dashboard_Report
     };

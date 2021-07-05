@@ -59,6 +59,10 @@ public class  AmsIataCodeGeneratorTest
 		public static String CATEGORYCASS = 'IATA Cargo Sales Agent';
 		public static String LOCCLASSCASS = 'C';
 
+		public static String SECTORPOSTAL = 'Postal Service';
+		public static String CATEGORYPOSTAL = 'Postal Operator';
+		public static String LOCCLASSPOSTAL = 'L';
+
 		public static String CHANGELOCATIONTYPE = 'Location type';
 		public static String CHANGEOWNERSHIPIATA= 'Ownership to IATA Agent';
 		public static String CHANGEOWNERSHIPNONIATA= 'Ownership to non-IATA Agent';
@@ -91,10 +95,6 @@ public class  AmsIataCodeGeneratorTest
 
 				//Load range from Controller
 				if(usingController){
-						AMS_IataCodeRangesLoaderCtrl2 ctrl = new AMS_IataCodeRangesLoaderCtrl2();
-						ctrl.importCSVFile();
-						ctrl.saveRecord();
-
 						AMS_SettlementsAndOperationLoaderCtrl ctrl2 = new AMS_SettlementsAndOperationLoaderCtrl();
 						ctrl2.fileLoaderType = ctrl2.getItems().get(0).getLabel();
 						ctrl2.selected=true;
@@ -179,15 +179,6 @@ public class  AmsIataCodeGeneratorTest
 						a.A_Code__c = icode.substring(2,3);
 						a.N_Code__c = icode.substring(3,7);
 				}*/
-				return a;
-		}
-
-		public static AMS_Address__c createAgencyPrimaryAddress(Account ag, IATA_ISO_Country__c c,IATA_ISO_State__c s ){
-				AMS_Address__c a = new AMS_Address__c(Account__c = ag.Id, Country__c = c.Id);
-				a.Address_Type__c = 'Primary';
-				a.Address_1__c = 'A street';
-				if(s!=null)
-						a.State__c = s.ID;
 				return a;
 		}
 
@@ -1787,7 +1778,7 @@ public class  AmsIataCodeGeneratorTest
 
 
 				System.assertEquals(resultUpdated.isFaulty,true);
-				System.assertEquals(resultUpdated.errorMessage,'C, I, R, Q and G Location Types must have a CASS number defined before generating the IATA code.');
+				System.assertEquals(resultUpdated.errorMessage,'C, I, R, Q, G and L Location Types must have a CASS number defined before generating the IATA code.');
 
 				System.assertEquals(resultUpdated2.isFaulty,true);
 				System.assertEquals(resultUpdated2.errorMessage.contains('This account has already an existing IATA code.'),true);
@@ -1973,7 +1964,8 @@ public class  AmsIataCodeGeneratorTest
 
 				 for(Integer i=1;i<16;i++){
 						String iCode = '102'+ AmsIataCodeGenerator.resizeNumericString(''+i,4)+'3';
-						Account ag = createAgency(iCode,ctries[1], 'Travel Agent');
+						Account ag = createAgency(iCode,ctries[1], SECTORPOSTAL);
+						ag.Location_Class__c = LOCCLASSPOSTAL;
 						ags.add(ag);
 
 				 }
@@ -1985,8 +1977,10 @@ public class  AmsIataCodeGeneratorTest
 				 }
 				 insert agsgts;
 
-				 Account ag = createAgency(null,ctries[1],'Travel Agent');
+				 Account ag = createAgency(null,ctries[1],SECTORPOSTAL);
 				 ag.CASS_Number__c = '123';
+				 ag.Location_Class__c = LOCCLASSPOSTAL;
+				 ag.Category__c = CATEGORYPOSTAL;
 				 insert ag;
 				 AMS_Agency_Segment__c aas = new AMS_Agency_Segment__c(account__c=ag.Id, Segment__c = p1.Id);
 				 insert aas;
@@ -1995,7 +1989,7 @@ public class  AmsIataCodeGeneratorTest
 				 Case cse = new Case();
 				 insert cse;
 
-				 AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse.id, IATA_ISO_State__c = stateFR.Id, Location_Class__c = 'L',Location_Type__c='HO', Branch_Office_Country__c = ctries[1].id);
+				 AMS_Pax_Accreditation_Form__c accre = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse.id, IATA_ISO_State__c = stateFR.Id, Location_Class__c = 'L',Location_Type__c='HO', Branch_Office_Country__c = ctries[1].id, CASS_Number__c = ag.CASS_Number__c);
 				 insert accre;
 
 				AMS_Accreditation_Contact__c owner = new AMS_Accreditation_Contact__c(
@@ -2029,20 +2023,23 @@ public class  AmsIataCodeGeneratorTest
 				 Test.stopTest();
 				 Account agf  = [select id, IATACode__c from Account where Id = :ag.Id ];
 
-				 System.assertEquals('99920000003', agf.IATACode__c);
+				 System.assertEquals('99920001230', agf.IATACode__c);
 
 
 				//PASS BR
-				 Account ag2 = createAgency(null,ctries[1],'Travel Agent');
-				 ag2.CASS_Number__c = '123';
-				 insert ag2;
+				Account ag2 = createAgency(null,ctries[1],SECTORPOSTAL);
+				ag2.Location_Class__c = LOCCLASSPOSTAL;
+				ag2.CASS_Number__c = '124';
+				ag2.Category__c = CATEGORYPOSTAL;
+				insert ag2;
 				 AMS_Agency_Segment__c aas2 = new AMS_Agency_Segment__c(account__c=ag2.Id, Segment__c = p1.Id);
 				 insert aas2;
 
 				 Case cse2 = new Case();
 				 insert cse2;
 
-				 AMS_Pax_Accreditation_Form__c accre2 = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse2.id, IATA_ISO_State__c = stateFR.Id, Location_Class__c = 'L', Location_Type__c ='BR', Branch_Office_Country__c = ctries[1].id);
+				 AMS_Pax_Accreditation_Form__c accre2 = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = cse2.id, IATA_ISO_State__c = stateFR.Id, Location_Class__c = 'L', Location_Type__c ='BR', Branch_Office_Country__c = ctries[1].id, CASS_Number__c = ag2.CASS_Number__c);
+				 accre2.Link_agent_name__c = ag.Id; // adding the HQ to this field is important to keep the N code, in this test 000, otherwise it would use 001
 				 insert accre2;
 
 				AMS_Accreditation_Contact__c owner2 = new AMS_Accreditation_Contact__c(
@@ -2074,7 +2071,7 @@ public class  AmsIataCodeGeneratorTest
 
 				 Account agf2  = [select id, IATACode__c from Account where Id = :ag2.Id ];
 
-				 System.assertEquals('99920010013', agf2.IATACode__c);
+				 System.assertEquals('99920001241', agf2.IATACode__c);
 		}
 
 

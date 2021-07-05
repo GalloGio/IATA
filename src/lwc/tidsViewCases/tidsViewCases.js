@@ -18,19 +18,24 @@ export default class TidsCases extends LightningElement {
 
 		// the above is how you would link the javascript to the html
 		caseValues() {
-				getSortedCases({accountIds:this.accountInfo.Id,name:this.sortCode,order:this.sortDirection, search:this.newsearch}).then(result => {
+				getSortedCases({
+					accountIds:this.accountInfo.Id
+					,name:this.sortCode
+					,order:this.sortDirection
+					,search:this.newsearch
+					,allrecords:this.allRecords
+				}).then(result => {
 					this.viewCaseList(result);          
 				});
 		}
 		viewCaseList(result){
 			this.morethanzero=false;
 			let count=0;
-			console.log('result', JSON.stringify(result));
 			result.forEach(function(item){
 				count++;
 				item.showContextMenu=false;
 				item.visible=true;
-				item.url="/csportal/s/case-details?caseId="+item.Id + '&Att=false';
+				item.url="/s/case-details?caseId="+item.Id + '&Att=false';
 				item.newId='$'+item.Id+'$';
 			});
 			if (count>0){
@@ -42,11 +47,16 @@ export default class TidsCases extends LightningElement {
 			var idx = event.currentTarget.id;
 			this.sortCode = this.categorize(idx);
 			this.sortDirection = this.determineSortDirection(idx);
-			getSortedCases({accountIds:this.accountInfo.Id,name:this.sortCode,order:this.sortDirection, search:this.newsearch}).then(result => {
+			getSortedCases({
+				accountIds:this.accountInfo.Id
+				,name:this.sortCode
+				,order:this.sortDirection
+				,search:this.newsearch
+				,allrecords:this.allRecords
+			}).then(result => {
 				this.viewCaseList(result);
 			});
 		}
-
 		determineSortDirection(direction){
 			let sorting='Asc';
 			if (direction.includes('Desc')){
@@ -68,20 +78,21 @@ export default class TidsCases extends LightningElement {
 			return field;
 		}
 		handlesearchCases(event){
-			//event.preventDefault();
-			//if (event.which == 13){
-			//  console.log('enter newsearch',newsearch);
-			//}
 			this.isSearchOn=false;
 			let newsearch = event.target.value;
-			console.log('newsearch',newsearch);
 			this.newsearch=newsearch;
 		}
 		handlegetCases(event){
 			event.preventDefault();
 			fireEvent(this.pageRef,'spinnerListener', {payload:{show:true}});
 		 
-			getSortedCases({accountIds:this.accountInfo.Id,name:this.sortCode,order:this.sortDirection, search:this.newsearch}).then(result => {
+			getSortedCases({
+				accountIds:this.accountInfo.Id
+				,name:this.sortCode
+				,order:this.sortDirection
+				,search:this.newsearch
+				,allrecords:this.allRecords
+			}).then(result => {
 				this.isSearchOn=true;
 				fireEvent(this.pageRef,'spinnerListener', {payload:{show:false}});
 				this.viewCaseList(result);
@@ -91,7 +102,13 @@ export default class TidsCases extends LightningElement {
 			event.preventDefault();
 			fireEvent(this.pageRef,'spinnerListener', {payload:{show:true}});
 			this.newsearch='';
-			getSortedCases({accountIds:this.accountInfo.Id,name:this.sortCode,order:this.sortDirection, search:this.newsearch}).then(result => {
+			getSortedCases({
+				accountIds:this.accountInfo.Id
+				,name:this.sortCode
+				,order:this.sortDirection
+				,search:this.newsearch
+				,allrecords:this.allRecords
+			}).then(result => {
 				this.isSearchOn=false;
 				fireEvent(this.pageRef,'spinnerListener', {payload:{show:false}});
 				this.viewCaseList(result);

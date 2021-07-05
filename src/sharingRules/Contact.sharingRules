@@ -64,20 +64,6 @@
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
-        <fullName>Old_RTs_to_E_F</fullName>
-        <accessLevel>Edit</accessLevel>
-        <description>Granting write access to E&amp;F so clean contacts in the old record types</description>
-        <label>Old RTs to E&amp;F</label>
-        <sharedTo>
-            <role>IDFSEFServices</role>
-        </sharedTo>
-        <criteriaItems>
-            <field>RecordTypeId</field>
-            <operation>equals</operation>
-            <value>MACS Sales</value>
-        </criteriaItems>
-    </sharingCriteriaRules>
-    <sharingCriteriaRules>
         <fullName>SIS_visibility</fullName>
         <accessLevel>Edit</accessLevel>
         <label>SIS visibility</label>
@@ -116,6 +102,7 @@
             <operation>notEqual</operation>
             <value></value>
         </criteriaItems>
+        <includeHVUOwnedRecords>false</includeHVUOwnedRecords>
     </sharingGuestRules>
     <sharingGuestRules>
         <fullName>Identity_Contact_Sharing</fullName>
@@ -129,6 +116,7 @@
             <operation>notEqual</operation>
             <value></value>
         </criteriaItems>
+        <includeHVUOwnedRecords>false</includeHVUOwnedRecords>
     </sharingGuestRules>
     <sharingGuestRules>
         <fullName>Share_Contacts_with_IATA_Portal_Site_Guest_User</fullName>
@@ -143,5 +131,6 @@
             <operation>notEqual</operation>
             <value></value>
         </criteriaItems>
+        <includeHVUOwnedRecords>false</includeHVUOwnedRecords>
     </sharingGuestRules>
 </SharingRules>

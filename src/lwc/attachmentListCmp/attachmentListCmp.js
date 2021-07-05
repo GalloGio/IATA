@@ -71,6 +71,17 @@ export default class AttachmentListCmp extends LightningElement {
         this.trackedIsExpired = value;
     }
 
+    
+    @track hideAddNewDocumentsDGR;
+
+    @api
+    get expireddgr() {
+        return this.hideAddNewDocumentsDGR;
+    }
+    set expireddgr(value) {
+        this.hideAddNewDocumentsDGR = value;
+    }
+
    label = {
     AddNewDocuments,
     Datelabel,

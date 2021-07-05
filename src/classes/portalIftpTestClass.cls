@@ -36,7 +36,9 @@ public class portalIftpTestClass {
 		insert addressList;
 
 		//Create Portal Application
-		Portal_Applications__c portalApp = new Portal_Applications__c(Name = 'IFTP');
+		Portal_Applications__c portalApp = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		portalApp.Name = 'IFTP';
+		portalApp.Functional_Role__c = 'IFTP';
 		insert portalApp;
 
 		//Create Accounts Roles
@@ -68,7 +70,6 @@ public class portalIftpTestClass {
 		accountList.add(accAirline);
 		accountList.add(accAirline2);
 		insert accountList;
-		System.debug('accountList - ' + accountList);
 
 		//Create OJT Document
 		Document OJTdocument = new Document();
@@ -98,7 +99,6 @@ public class portalIftpTestClass {
 		accRoleList.add(accRoleAirline);
 		accRoleList.add(accRoleAirline_2);
 		insert accRoleList;
-		System.debug('accRoleList - ' + accRoleList);
 
 
 		//Create Accounts Service
@@ -110,8 +110,6 @@ public class portalIftpTestClass {
 		accRoleServiceList.add(accRoleServiceAirline);
 		accRoleServiceList.add(accRoleServiceAirline_2);
 		insert accRoleServiceList;
-
-		System.debug('accRoleServiceList - ' + accRoleServiceList);
 
 		//Create Contact Roles
 		List<Contact_Roles__c> contactRolesList = new List<Contact_Roles__c>();
@@ -226,11 +224,9 @@ public class portalIftpTestClass {
 		String user3Id = Site.createPortalUser(u3, accITP.Id, 'testpassword');
 
 		// User Portal_Application_Right__c
-		Portal_Applications__c pa = new Portal_Applications__c(Name = 'IFTP');
-		insert pa;
 		List<Portal_Application_Right__c> lUserPAR = new List<Portal_Application_Right__c>() ;
-		Portal_Application_Right__c u3PAR = new Portal_Application_Right__c(Right__c = 'Access Granted', Portal_Application__c = pa.Id, Contact__c = cont3.Id);
-		Portal_Application_Right__c u4PAR = new Portal_Application_Right__c(Right__c = 'Access Granted', Portal_Application__c = pa.Id, Contact__c = cont4.Id);
+		Portal_Application_Right__c u3PAR = new Portal_Application_Right__c(Right__c = 'Access Granted', Portal_Application__c = portalApp.Id, Contact__c = cont3.Id);
+		Portal_Application_Right__c u4PAR = new Portal_Application_Right__c(Right__c = 'Access Granted', Portal_Application__c = portalApp.Id, Contact__c = cont4.Id);
 		lUserPAR.add(u3PAR);
 		lUserPAR.add(u4PAR);
 
@@ -315,9 +311,6 @@ public class portalIftpTestClass {
 		certificationList.add(certPlaneDL3);
 		insert certificationList;
 
-		System.debug('certificationList' + certificationList);
-		System.debug('certGeneralTraining1' + certGeneralTraining1);
-
 		//Create IFTP Certification Detail
 		List<IFTP_Certification_Detail__c> iftpCertDetailList = new List<IFTP_Certification_Detail__c>();
 		IFTP_Certification_Detail__c certDetail1 = new IFTP_Certification_Detail__c(Name = 'General Training 1' , Certification__c = certGeneralTraining1.Id,
@@ -363,9 +356,6 @@ public class portalIftpTestClass {
 		iftpCertDetailList.add(certDetailPCL3);
 		iftpCertDetailList.add(certDetailPDL3);
 		insert iftpCertDetailList;
-
-		System.debug('iftpCertDetailList' + iftpCertDetailList);
-		System.debug('certDetail1' + certDetail1);
 
 		//Create Contact Role Certification
 		List<Contact_Role_Certification__c> contRoleCertifList = new List<Contact_Role_Certification__c>();
@@ -594,8 +584,6 @@ public class portalIftpTestClass {
 		Role_Address__c proficiencyS2PDL2 = new Role_Address__c(Name = 'Proficiency S2 Plane D L2', Address__c = add1.Id, Contact_Role_Certification__c = contRoleCertifS2PDL2.id, Proficiency_Status__c = 'Active', Proficiency_level__c = 'No', Proficiency_Granted_By__c = 'COORDINATOR, ITP Coordinator');
 		Role_Address__c proficiencyS2PDL2R1 = new Role_Address__c(Name = 'Proficiency S2 Plane D L2 Renew 1', Address__c = add1.Id, Contact_Role_Certification__c = contRoleCertifS2PDL2R1.id, Proficiency_Status__c = 'Active', Proficiency_level__c = 'No', Proficiency_Granted_By__c = 'COORDINATOR, ITP Coordinator');
 
-
-
 		Role_Address__c proficiencyS2PAL3 = new Role_Address__c(Name = 'Proficiency S2 Plane A L3', Address__c = add1.Id, Contact_Role_Certification__c = contRoleCertifS2PAL3.id, Proficiency_Status__c = 'Active', Proficiency_level__c = 'Yes', Proficiency_Granted_By__c = 'COORDINATOR, ITP Coordinator');
 		Role_Address__c proficiencyS2PAL3R1 = new Role_Address__c(Name = 'Proficiency S2 Plane A L3 Renew 1', Address__c = add1.Id, Contact_Role_Certification__c = contRoleCertifS2PAL3R1.id, Proficiency_Status__c = 'Active', Proficiency_level__c = 'Yes', Proficiency_Granted_By__c = 'COORDINATOR, ITP Coordinator');
 		Role_Address__c proficiencyS2PBL3 = new Role_Address__c(Name = 'Proficiency S2 Plane B L3', Address__c = add1.Id, Contact_Role_Certification__c = contRoleCertifS2PBL3.id, Proficiency_Status__c = 'Active', Proficiency_level__c = 'Yes', Proficiency_Granted_By__c = 'COORDINATOR, ITP Coordinator');
@@ -718,6 +706,6 @@ public class portalIftpTestClass {
 		isspCs.add( new ISSP_CS__c(Name = 'IFTP-DocumentLibrary',Value__c = '0581j00000050jV'));
 		insert isspCs;
 
+		insert new Apex_Setting__c(Name = 'RT valid to reopen attachment trigger', Text_1__c = 'CasesEurope,Cases_Global,CasesAmericas,CasesMENA,ExternalCasesIDFSglobal,Cases_China_North_Asia,ComplaintIDFS,Inter_DPCs,Invoicing_Collection_Cases,Cases_SIS_Help_Desk,InternalCasesEuropeSCE,CS_Process_IDFS_ISS,ID_Card_Application');
 	}
-
 }

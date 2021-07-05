@@ -4,16 +4,49 @@ This controller is used on ID CArd Manageöent part to manage Pending Mass opera
 
 It is based on List of application for current account
 */
-global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
+global without sharing class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 
 	/**
 	List of pneding operation:
 	Mass_order_application__c = null and recordTypeId =Single
 	 and IATA_code__c = currentIATACode and Application_Status__c = 'Pending'
 	*/
-	public List<ID_Card_Application__c> pendingApplications {get; set;}
-	public Promotion__c promotion {get; set;} 
+	public Promotion__c promotion {get; set;}
+	public map<integer, ApplicationWrapper> mapAppWrap	{get; set;}
 
+	private map<integer, id> mapAppID;
+
+	public class ApplicationWrapper{
+		public string appCounter {get;set;}
+		public string AppName {get; set;}
+		public id appId	{get;set;}
+		public ID_Card_Application__c ICA {get;set;}
+		public string appStatus {get; set;} //DoNothing, Validate, Unvalidate
+
+		public contact AppContact {get; set;}
+		public string ContactVerNum	{get; set;}
+
+		public boolean IsApplicationValid	{get; set;}
+
+		private list<string> lsFields = TransformationHelper.selectAllWritableFieldsByCurrentUser('ID_Card_Application__c');
+
+		public ApplicationWrapper(integer appCounter, ID_Card_Application__c app){
+			if(!this.lsFields.contains('RecordTypeId')) lsFields.add('recordtypeId');
+
+			this.appCounter = string.valueOf(appCounter);
+			ID_Card_Application__c WrapICA = new ID_Card_Application__c();
+			for(string field:lsFields)
+				WrapICA.put(field, app.get(field));
+			
+			this.ICA = WrapICA;
+			this.AppName = app.Name;
+			this.appId = app.Id;
+			this.appStatus = 'doNothing';
+
+			if (!Test.isRunningtest() && app.Photo__c == null || app.Photo__c == '')    this.IsApplicationValid=false;
+			else this.isApplicationValid = true;
+		}
+	}
 	/**
 	Contact informaetion per pending applicatioj
 	*/
@@ -25,12 +58,12 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 	/**
 	applciation list whcih shluldbe processed
 	*/
-	public  Map<String, ID_Card_Application__c> validatedApplication {get; set;}
+	public set<integer> setValidApplicationId {get;set;}
 
 	/**
 	Pending application whcich should be rejected
 	*/
-	public  Map<String, ID_Card_Application__c> unvalidatedApplication {get; set;}
+	public set<integer> setRejectedApplicationId {get;set;}
 
 	/*
 	Global and calculated var priunted on page
@@ -59,7 +92,6 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 	private Id singeAppRT = null;
 
 	/* information for each pending information*/
-	public Map<String, boolean> isApplicationreadyMap {get; set;}
 
 	public Map<String, Boolean> isNotDigitalOnly {get; set;}
 
@@ -102,10 +134,16 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 
 	private  Map<String, String> accountTypesPerIATACode = new Map<String, String>();
 
+	public Map<String, Promotion__c> mapPromotion {get; set;}
 
 	/*Constructor*/
 	public IDCard_AdmPendingOpsController() {
 		initialize(true);
+		mapPromotion = new Map<String, Promotion__c>();
+		List<Promotion__c> listPromotion = [Select Promotion_Value__c, Promotion_Duration_Valid_Up_to__c, Promotion_Duration_Valid_From__c, Promotion_Code__c, Type_of_Application__c From Promotion__c LIMIT 50000];
+		for(Promotion__c p : listPromotion) {
+			mapPromotion.put(p.Promotion_Code__c, p);
+		}
 		selectall = false;
 		//init vars
 		appsCurrency = '-';
@@ -119,16 +157,16 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 		discountFee = 0;
 		cyberSrcData = null;
 		fastExpedition =  false;
-		cyberSrcData = new Map<String, String>()     ;
-		pendingApplications = new List<ID_Card_Application__c>();
+		cyberSrcData = new Map<String, String>();
 		promotion = new Promotion__c();
-		unvalidatedApplication = new Map<String, ID_Card_Application__c> ();
-		validatedApplication = new Map<String, ID_Card_Application__c> ();
+		setRejectedApplicationId = new Set<Integer>();
+		setValidApplicationId = new Set<Integer>();
 		contactsPerApplication = new Map<String, ContactProxy>();
-		isApplicationreadyMap = new Map<String, boolean> ();
 		isNotDigitalOnly = new Map<String, Boolean>();
 		discountPerKeyAccount = new Map<String, Decimal>();
 		taxesPerKeyAccount = new Map<String, Account>();
+		mapAppID = new map<integer, id>();
+		mapAppWrap = new map<integer, ApplicationWrapper>();
 		Promotion__c validPromotion = null;
 		singeAppRT = RecordTypeSingleton.getInstance().getRecordTypeId('ID_Card_Application__c', 'Single_ID_Card_Operation');
 
@@ -149,10 +187,10 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 	private  void  loadList() {
 
 		//clear exsiting
-		pendingApplications.clear();
-		validatedApplication.clear();
+		mapAppWrap.clear();
 		contactsPerApplication.clear();
-		unvalidatedApplication.clear();
+		setRejectedApplicationId.clear();
+		setValidApplicationId.clear();
 
 		system.debug('[IDCard_AdmPendingOpsController]load list');
 
@@ -172,46 +210,46 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 		
 
 		system.debug('[IDCard_AdmPendingOpsController]load list iataCodeSubstring=' + iataCodeSubstring);
-		//pendingApplications   = new List<PendingApplicationProxy>();
 		string IdCardApplicationQuery = 'SELECT ' + TransformationHelper.getAllFields(Schema.SObjectType.ID_Card_Application__c.fields.getMap()) +
 										'  FROM ID_Card_Application__c  ' +
 										'  WHERE Mass_order_application__c = null and recordTypeId = \'' + singeAppRT + '\'' +
 										' and (' + iataCodeSubstring + ') and Application_Status__c = \'Pending\' ';
 
-		pendingApplications = (list<ID_Card_Application__c>)(database.query(IdCardApplicationQuery));
 
-		//pendingApplications = [Select i.VER_Number__c, i.UIR__c, i.Type_of_application__c, i.Title__c, i.Terms_and_Conditions_Time_Stamp__c, i.Telephone__c, i.Tax_2_Value__c, i.Tax_2_Name__c, i.Tax_1_Value__c, i.Tax_1_Name__c, i.SystemModstamp, i.Start_Date_Industry__c, i.Start_Date_Agency_Year__c, i.Start_Date_Agency_Month__c, i.Solicitation_Flag__c, i.Single_Application_Processing_Step__c, i.Selected_Preferred_Language__c, i.Revenue_Confirmation__c, i.Revenue_Confirmation_Validation_Failed__c, i.Renewal_From_Replace__c, i.Regional_Office__c, i.RecordTypeId, i.Promotion_Code__c, i.Profit_Center__c, i.Position_in_Current_Agency__c, i.Position_Code__c, i.Photo__c, i.Payment_Type__c, i.Payment_Transaction_Number__c, i.Payment_Date__c, i.Payment_Currency__c, i.Payment_Credit_Card_Number__c, i.Payment_Amount__c, i.Package_of_Travel_Professionals_Course_2__c, i.Package_of_Travel_Professionals_Course_1__c, i.OwnerId, i.Name, i.Middle_Initial__c, i.Mass_order_Application__c, i.Last_Name__c, i.LastViewedDate, i.LastReferencedDate, i.LastModifiedDate, i.LastModifiedById, i.LastActivityDate, i.IsDeleted, i.Id, i.ITDI_Courses_Fee__c, i.ID_Card_Fee__c, i.IDCard_Prefered_Language__c, i.IDCard_Expedite_Delivery__c, i.IDCard_Expedite_Delivery_Fee__c, i.IATA_numeric_code_previous_employer_4__c, i.IATA_numeric_code_previous_employer_3__c, i.IATA_numeric_code_previous_employer_2__c, i.IATA_numeric_code_previous_employer_1__c, i.IATA_Code_for_previous_agency__c, i.IATA_Code__c, i.Hours_worked__c, i.Hours_Worked_Validation_Failed__c, i.Hours_Worked_Code__c, i.Gender__c, i.First_Name__c, i.Email_admin__c, i.Duties_in_Current_Agency__c, i.Duties_Code__c, i.Displayed_Name__c, i.Date_of_Birth__c, i.CurrencyIsoCode, i.CreatedDate, i.CreatedById, i.ConnectionSentId, i.ConnectionReceivedId, i.Case_Number__c, i.Approving_Manager_s_Name__c, i.Approving_Manager_s_Email__c, i.Application_Status__c, i.Applicable_Fee__c, i.AgencyShare_Confirmation__c From ID_Card_Application__c i where    Mass_order_application__c = null and recordTypeId = :singeAppRT and IATA_Code__c in :keyContactAndDelegateForAccountList.keySet() and Application_Status__c = 'Pending' ];
-		system.debug('[IDCard_AdmPendingOpsController] Found application:' + pendingApplications.size());
 		Set<String> iataCodes = new Set<String>();
-		if (pendingApplications.size() > 0) {
-			List<String> verNums = new List<String>();
-			Map<String, ID_Card_Application__c> tmpMap = new Map<String, ID_Card_Application__c>();
+		Map<String, ID_Card_Application__c> tmpMap = new Map<String, ID_Card_Application__c>();
 
-			for (ID_Card_Application__c app : pendingApplications) {
-				iataCodes.add(app.IATA_Code__C);
-				if (app.Ver_Number__c != null) {
-					verNums.add(app.Ver_Number__c);
-					tmpMap.put(app.Ver_Number__c, app);
-				} else {
-					system.debug('[IDCard_AdmPendingOpsController] nO VERNUM FOR APP ' + app.iD);
-					contactsPerApplication.put(app.id, new ContactProxy(null, app));
-				}
-				isApplicationreadyMap.put(app.Id, isApplicationValid(app));
+		for(ID_Card_Application__c app:database.query(IdCardApplicationQuery)){
+			iataCodes.add(app.IATA_Code__C);
+			
+			integer appCounter = mapAppWrap.size()+1;
+
+			mapAppID.put(appCounter, app.Id);
+			mapAppWrap.put(appCounter, new ApplicationWrapper(appCounter, app));
+			
+
+			if (app.Ver_Number__c != null) {
+				tmpMap.put(app.Ver_Number__c, app);
+			} else {
+				system.debug('[IDCard_AdmPendingOpsController] nO VERNUM FOR APP ' + app.iD);
+				contactsPerApplication.put(app.id, new ContactProxy(null, app));
 			}
+		}
 
+		if (mapAppWrap.size() > 0) {
 			List<Contact> contacts = [select Id, UIR__C, Salutation,  FirstName, LastName, Name,  Title, VER_Number_2__c, Email , AccountID,
 									  IATA_Code__c, Date_of_Birth__c, Gender__c, Phone, Start_Date_Agency_Month__c, Hours_per_week__c,
 									  Middle_Initial__c, Position__c, Start_Date_Agency_Year__c, Start_Date_Industry__c, Duties__c
-									  from Contact where VER_Number_2__c in :verNums];
+									  from Contact where VER_Number_2__c in :tmpMap.keyset()];
 			system.debug('[IDCard_AdmPendingOpsController]Contact found from applications :' + contacts.size());
 			for (Contact c : contacts) {
 				contactsPerApplication.put(tmpMap.get(c.VER_Number_2__c).id, new ContactProxy(c, tmpMap.get(c.VER_Number_2__c)));
 			}
 
-			for (ID_Card_Application__c app : pendingApplications) {
-				if (contactsPerApplication.get(app.Id) == null) {
-					system.debug('[IDCard_AdmPendingOpsController] Warning  failed to find a contact for VERNUM ' + app.Ver_Number__c);
-					contactsPerApplication.put(app.Id, new ContactProxy(null, app));
+			for(integer i:mapAppWrap.keyset()){
+				if (contactsPerApplication.get(mapAppWrap.get(i).appId) == null) {
+					system.debug('[IDCard_AdmPendingOpsController] Warning  failed to find a contact for VERNUM ' + mapAppWrap.get(i).ICA.Ver_Number__c);
+					contactsPerApplication.put(mapAppWrap.get(i).appId, new ContactProxy(null, mapAppWrap.get(i).ICA));
 				}
 			}
 			system.debug('[IDCard_AdmPendingOpsController]returned contact per element ' + contactsPerApplication.size());
@@ -236,12 +274,13 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 			system.debug('[MASS APP FEE] find record ofr mass feees: class: ' + pt.Type_Class_of_Agent__c + ' country id :' + pt.ISO_Country__c + ' fee: ' + pt.Mass_Purchase_exp__c);
 			pricePerCountry.put(pt.ISO_Country__c+'-'+pt.Type_Class_of_Agent__c, pt);
 		}
-		for (ID_Card_Application__c app : pendingApplications) {
-			Price_Table__c priceTable = pricePerCountry.get(countriesPerIATACode2.get(app.IATA_Code__c)+'-'+accountTypesPerIATACode.get(app.IATA_Code__c));
+
+		for(integer i:mapAppWrap.keyset()){
+			Price_Table__c priceTable = pricePerCountry.get(countriesPerIATACode2.get(mapAppWrap.get(i).ICA.IATA_Code__c)+'-'+accountTypesPerIATACode.get(mapAppWrap.get(i).ICA.IATA_Code__c));
 			if(IDCard_MobileAppRenewalService.US_COUNTRY_ISO_CODES.contains(priceTable.ISO_Country__r.ISO_Code__c)){
-				isNotDigitalOnly.put(app.Id, false);
+				isNotDigitalOnly.put(mapAppWrap.get(i).appId, false);
 			} else {
-				isNotDigitalOnly.put(app.Id, true);
+				isNotDigitalOnly.put(mapAppWrap.get(i).appId, true);
 			}
 		}
 
@@ -255,28 +294,31 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 	public Pagereference createMassUpdateIdCardApplication() {
 		//nothing selected
 		cyberSrcData = new Map<String, String>()     ;
-		if ((validatedApplication.size() + unvalidatedApplication.size()) == 0) {
+		if ((setValidApplicationId.size() + setRejectedApplicationId.size()) == 0) {
 			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.WARNING, Label.IDCard_Pending_Apps_Missing_Args));
 			return null;
 		}
 		//unvalidate
-		List<String> contact2deleteIids = new List<String>();
-		for (ID_Card_Application__c a : unvalidatedApplication.values()) {
-			a.Application_Status__c = 'Rejected';
-			if (a.VER_Number__c != null && a.VER_Number__c.startsWith('Z')) {
-				ContactProxy cp = contactsPerApplication.get(a.Id);
-				if (cp.verNum.startsWith('Z'))
+		set<id> contact2deleteIids = new set<id>();
+		set<id> setRejectAppIDToDelete = new set<id>();
+		for(integer i:setRejectedApplicationId){
+			ApplicationWrapper rejApp = mapAppWrap.get(i);
+			//rejApp.ICA.Application_Status__c = 'Rejected';
+			if (rejApp.ICA.VER_Number__c != null && rejApp.ICA.VER_Number__c.startsWith('Z')) {
+				ContactProxy cp = contactsPerApplication.get(rejApp.appId);
+				if (cp.verNum.startsWith('Z') && string.isNotBlank(cp.Id)){
 					contact2deleteIids.add(cp.Id);
+				}
 			}
+			setRejectAppIDToDelete.add(rejApp.appId);
 		}
-		delete unvalidatedApplication.values();
+		if(!setRejectAppIDToDelete.isEmpty()) IDCardUtilWithoutSharing.deleteApplications(setRejectAppIDToDelete);
+
 		// delete contact with tmp ver num too
-		if (contact2deleteIids.size() > 0) {
-			List<Contact> c2d = [select Id from Contact where ID in:contact2deleteIids];
-			delete c2d;
-		}
+		if (!contact2deleteIids.isEmpty()) IDCardUtilWithoutSharing.deleteContacts(contact2deleteIids);
+		
 		ID_Card_Application__c massUpdateApplication = null;
-		if (validatedApplication.size() > 0) {
+		if (setValidApplicationId.size() > 0) {
 			if (paymentMode == null || paymentMode.equals( '')) {
 				system.debug('[Mass creation] No payment information provided');
 				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO, Label.IDCard_Pending_Apps_Missing_Args));
@@ -294,8 +336,14 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 									  Middle_Initial__c, Position__c, Start_Date_Agency_Year__c, Start_Date_Industry__c, Duties__c, IDCard_Email__c
 									  from Contact where Ver_Number_2__c = :vernumParameter limit 1];
 			//switch account status will be paid by wire / check or by CB
-			massUpdateApplication = IDCardApplicationFactory.createMassIDCardApplication(currentContact, validatedApplication.values());
-			for (ID_Card_Application__c idca : validatedApplication.values()) {
+			List<ID_Card_Application__c> tmpLst = new List<ID_Card_Application__c>();
+			for(integer i:setValidApplicationId){
+				ID_Card_Application__c tmpApp = mapAppWrap.get(i).ICA;
+				//tmpApp.id = mapAppWrap.get(i).appId;
+				tmpLst.add(tmpApp);
+			}
+			massUpdateApplication = IDCardApplicationFactory.createMassIDCardApplication(currentContact, tmpLst);
+			for (ID_Card_Application__c idca : tmpLst) {
 				if (idca != null)
 					massUpdateApplication.CurrencyIsoCode = idca.CurrencyIsoCode;
 					massUpdateApplication.ID_Card_Fee_Discount__c = discountFee;
@@ -321,20 +369,26 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 				massUpdateApplication.Applicable_Fee__c += massAppDeliveryFee;
 			}
 			system.debug('[Mass creation] id created : ' + massUpdateApplication.Id);
-			for (ID_Card_Application__c a : validatedApplication.values()) {
-				if(validatePromotion(a) != null){
-					a.Promotion_Code__c = promotion.Promotion_Code__c;
+			for(integer i:setValidApplicationId){
+				if(validatePromotion(mapAppWrap.get(i).ICA) != null){
+					mapAppWrap.get(i).ICA.Promotion_Code__c = promotion.Promotion_Code__c;
 				}
-				a.Application_Status__c = 'Unpaid';
-				a.Mass_order_Application__c = massUpdateApplication.id;
-				a.Single_Application_Processing_Step__c = IDcardUtil.single_application_status_waiting;
+				mapAppWrap.get(i).ICA.Application_Status__c = 'Unpaid';
+				mapAppWrap.get(i).ICA.Mass_order_Application__c = massUpdateApplication.id;
+				mapAppWrap.get(i).ICA.Single_Application_Processing_Step__c = IDcardUtil.single_application_status_waiting;
 				if (paymentMode.toLowerCase().contains('credit card'))
-					a.Payment_Type__c = IDCardUtil.PAYMENT_TYPE_CC;
+					mapAppWrap.get(i).ICA.Payment_Type__c = IDCardUtil.PAYMENT_TYPE_CC;
 				else if (paymentMode.toLowerCase().contains('wire'))
-					a.Payment_Type__c = IDCardUtil.PAYMENT_TYPE_CHECK;
+					mapAppWrap.get(i).ICA.Payment_Type__c = IDCardUtil.PAYMENT_TYPE_CHECK;
 
 			}
-			update validatedApplication.values();
+
+			map<id, ID_Card_Application__c> mapToCommit = new map<id, ID_Card_Application__c>();
+			for(integer i:setValidApplicationId)
+				mapToCommit.put(mapAppWrap.get(i).appId, mapAppWrap.get(i).ICA);
+			
+			//update validatedApplication.values();
+			IDCardUtilWithoutSharing.saveCommittedICAS(mapToCommit);
 
 			IATA_ISO_Country__c contactCountry = IDCardUtil.GetIATAISOCountryOfContact(iataCodeParameter);
 			system.debug('[Mass creation] contact country : ' + contactCountry);
@@ -348,7 +402,8 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 				fillcyberSourceData(acc, currentContact, massUpdateApplication, contactCountry, IDCardApplicationFactory.getPriceTables( IDCardUtil.GetAgentTypeFromAccountType(acc.type), contactCountry.Id)[0]);
 				massUpdateApplication.Payment_Type__c = IDCardUtil.PAYMENT_TYPE_CC;
 				massUpdateApplication.Application_Status__c = 'Pending';
-				update massUpdateApplication;
+				//update massUpdateApplication;
+				IDCardUtilWithoutSharing.saveCommittedICA(massUpdateApplication, massUpdateApplication.id);
 				//return null;
 			} else if (paymentMode.toLowerCase().contains('wire')) {
 				system.debug('[Mass creation] WIRE asked: for Id  : ' + massUpdateApplication.Id);
@@ -356,7 +411,8 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 				checkoutPage.getParameters().put('req_reference_number', massUpdateApplication.Name);
 				massUpdateApplication.Application_Status__c = 'Pending';
 				massUpdateApplication.Payment_Type__c = IDCardUtil.PAYMENT_TYPE_CHECK;
-				update massUpdateApplication;
+				//update massUpdateApplication;
+				IDCardUtilWithoutSharing.saveCommittedICA(massUpdateApplication, massUpdateApplication.id);
 				checkoutPage.setRedirect(true);
 				return checkoutPage;
 			}
@@ -409,7 +465,7 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 		cyberSrcData.put('transaction_uuid', String.ValueOf(massUpdateApplication.Id) + DateTime.now().format('yyyy-MM-dd\'T\'HH:mm:ss\'Z\''));
 
 		cyberSrcData.put('currency', massUpdateApplication.CurrencyIsoCode);
-		cyberSrcData.put('amount', String.valueOf(massUpdateApplication.Applicable_Fee__c != null ? massUpdateApplication.Applicable_Fee__c : 0));
+		cyberSrcData.put('amount', String.valueOf(massUpdateApplication.Applicable_Fee__c != null ? massUpdateApplication.Applicable_Fee__c.setscale(2) : 0));
 		cyberSrcData.put('reference_number', orderNumber);
 
 		// hardcoded values
@@ -473,22 +529,21 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 
 
 	public  Pagereference validateAllApplication() {
-		unvalidatedApplication.clear();
+		setRejectedApplicationId.clear();
 		selectAll = !selectAll;
-		for (ID_Card_Application__c app : pendingApplications) {
-			if (isApplicationreadyMap.get(app.Id)) {
-				if (isApplicationExpediteAvailable(app))
-					app.IDCard_Expedite_Delivery__c = fastExpedition;
+		for(integer i:mapAppWrap.keyset()){
+			if (mapAppWrap.get(i).IsApplicationValid){
+				if (isApplicationExpediteAvailable(mapAppWrap.get(i).ICA))
+					mapAppWrap.get(i).ICA.IDCard_Expedite_Delivery__c = fastExpedition;
 				if (selectAll)
-					validatedApplication.put(app.Id, app);
+					setValidApplicationId.add(i);
 				else
-					validatedApplication.remove(app.Id);
+					setValidApplicationId.remove(i);
 			}
 		}
-		rejectedSize = unvalidatedApplication.size();
+		rejectedSize = setRejectedApplicationId.size();
 		testIsExpediteAvailable();
 		calculateAllPrices();
-
 		return null;
 	}
 
@@ -496,27 +551,32 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 	Ajax call: process validation
 	*/
 	public Pagereference validationApplication() {
-
-		string id = Apexpages.currentPage().getParameters().get('id');
+		string pageId = Apexpages.currentPage().getParameters().get('id');
+		integer id = -1;
+		if(pageId!=null) id = integer.valueOf(pageId);
 		system.debug('add ' + id);
-		unvalidatedApplication.remove(id);
-		for (ID_Card_Application__c app : pendingApplications) {
-			if (app.Id.equals(id) && isApplicationreadyMap.get(Id)) {
-				if (ccurrency == null)
-					ccurrency = app.CurrencyIsoCode;
-				else if (ccurrency != app.CurrencyIsoCode) {
-					ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, 'You cannot add card in different currencies in the purchase.' ));
-					system.debug('[ERROR] You cannot add card in different currencies in the purchase.');
-					return null;
-				}
-				system.debug('FIND it ' + id);
-				if (isApplicationExpediteAvailable(app) )
-					app.IDCard_Expedite_Delivery__c = fastExpedition;
-				validatedApplication.put(id, app);
+		setRejectedApplicationId.remove(id);
+
+		ApplicationWrapper currentSelectedApp = mapAppWrap.get(id);
+		
+		if(currentSelectedApp!= null && currentSelectedApp.IsApplicationValid){
+			if (ccurrency == null) //initialized after the first app getting Approved
+				ccurrency = currentSelectedApp.ICA.CurrencyIsoCode;
+			
+			if(ccurrency != currentSelectedApp.ICA.CurrencyIsoCode){
+				ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, 'You cannot add card in different currencies in the purchase.' ));
+				system.debug('[ERROR] You cannot add card in different currencies in the purchase.');
+				return null;
 			}
+
+			if (isApplicationExpediteAvailable(currentSelectedApp.ICA) )
+				mapAppWrap.get(id).ICA.IDCard_Expedite_Delivery__c = fastExpedition;
+
+			setValidApplicationId.add(id);
 		}
-		system.debug(LoggingLevel.ERROR,'[validationApplication] Calculated price using  ' + validatedApplication.size());
-		rejectedSize = unvalidatedApplication.size();
+
+		system.debug(LoggingLevel.ERROR,'[validationApplication] Calculated price using  ' + setValidApplicationId.size());
+		rejectedSize = setRejectedApplicationId.size();
 
 		testIsExpediteAvailable();
 		calculateAllPrices();
@@ -527,15 +587,16 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 	Ajax call: reject application
 	*/
 	public  Pagereference unvalidationApplication() {
-		string id = Apexpages.currentPage().getParameters().get('id');
-		validatedApplication.remove(id);
-		for (ID_Card_Application__c app : pendingApplications)
-			if (app.Id.equals(id))
-				unvalidatedApplication.put(id, app);
-		if (validatedApplication.size() == 0)
+		string pageId = Apexpages.currentPage().getParameters().get('id');
+		integer id = pageId==null?-1:integer.valueOf(pageId);
+
+		setValidApplicationId.remove(id);
+		setRejectedApplicationId.add(id);
+		
+		if (setValidApplicationId.size() == 0)
 			ccurrency = null;
-		system.debug('Calculated price using  ' + validatedApplication.size());
-		rejectedSize = unvalidatedApplication.size();
+		system.debug('Calculated price using  ' + setValidApplicationId.size());
+		rejectedSize = setRejectedApplicationId.size();
 		selectAll = false;
 		calculateAllPrices();
 		testIsExpediteAvailable();
@@ -546,12 +607,14 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 	Ajax call: do not nothing on application
 	*/
 	public  Pagereference doNotProcessApplication() {
-		string id = Apexpages.currentPage().getParameters().get('id');
-		validatedApplication.remove(id);
-		unvalidatedApplication.remove(id);
-		if (validatedApplication.size() == 0)
+		string pageId = Apexpages.currentPage().getParameters().get('id');
+		integer id = pageID==null?-1:integer.valueOf(pageId);
+		
+		setValidApplicationId.remove(id);
+		setRejectedApplicationId.remove(id);
+		if (setValidApplicationId.size() == 0)
 			ccurrency = null;
-		rejectedSize = unvalidatedApplication.size();
+		rejectedSize = setRejectedApplicationId.size();
 		selectAll = false;
 		calculateAllPrices();
 		testIsExpediteAvailable();
@@ -572,8 +635,9 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 		discountFee = 0;
 		Promotion__c validPromotion = null;
 
-		for (ID_Card_Application__c app : pendingApplications) {
-			
+		for(integer i:mapAppWrap.keyset()){
+			ID_Card_Application__c app = mapAppWrap.get(i).ICA;
+
 			Account theAccount = taxesPerKeyAccount.get(app.IATA_Code__c);										
 			Map<String, String> taxes = IDCardTaxUtil.GetTaxes(theAccount.BillingState, theAccount.BillingCountry);
 			List<String> taxNames = new List<String>();
@@ -605,10 +669,10 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 				app.Applicable_Fee__c = IDCardUtil.GetApplicableFee(priceTable, isReissue, false, isITDIPackage, null, isToPrint);
 			}
 
-			if(validatedApplication.isEmpty()){
+			if(setValidApplicationId.isEmpty()){
 				validPromotion = validatePromotion(app);
 			}			
-			else if(validatedApplication.keyset().contains(app.Id)){
+			else if(setValidApplicationId.contains(i)){
 				validPromotion = validatePromotion(app);
 				detailledFees = IDCardUtil.GetDetailledFees(priceTable, isReissue, false, isITDIPackage, validPromotion, null, isToPrint);
 				app.ID_Card_Fee__c = detailledFees.get('IDCardFee');
@@ -660,6 +724,8 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 
 			
 			}
+
+			mapAppWrap.get(i).ICA = app;
 		}
 		tPrice += massAppDeliveryFee;
 
@@ -670,7 +736,13 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 									  Account.CurrencyIsoCode
 									  from Contact where Ver_Number_2__c = :vernumParameter limit 1];
 		//switch account status will be paid by wire / check or by CB
-		ID_Card_Application__c app = IDCardApplicationFactory.createMassIDCardApplication(currentContact, validatedApplication.values());
+		List<ID_Card_Application__c> tmpLst = new List<ID_Card_Application__c>();
+		for(integer i:mapAppWrap.keySet()){
+			ID_Card_Application__c tmpApp = mapAppWrap.get(i).ICA;
+			//tmpApp.id = mapAppWrap.get(i).appId;
+			tmpLst.add(tmpApp);
+		}
+		ID_Card_Application__c app = IDCardApplicationFactory.createMassIDCardApplication(currentContact, tmpLst);
 		vatPrice = Double.valueOf(Decimal.valueOf(Double.valueOf(app.Tax_1_Value__c.split(' ', 0)[0])).setScale(2) +
 								  Decimal.valueOf(Double.valueOf(app.Tax_2_Value__c.split(' ', 0)[0])).setScale(2));
 
@@ -678,26 +750,19 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 	}
 
 	public void processAllDigital(){
-		for (ID_Card_Application__c app : pendingApplications) {
-			app.Card_Type__c = 'digital';
-		}
+		for(integer i:mapAppWrap.keyset())
+			mapAppWrap.get(i).ICA.Card_Type__c = 'digital';
+		
 		calculateAllPrices();
 	}
-
-	private boolean isApplicationValid(ID_Card_Application__c app) {
-		if (Test.isRunningtest())return true;
-		if (app.Photo__c == null || app.Photo__c == '')    return false;
-		return true;
-	}
-
-
 
 
 	private void testIsExpediteAvailable() {
 		IsExpediteAvailable = false;
-		for (ID_Card_Application__c app : validatedApplication.values())  {
-			if (isApplicationExpediteAvailable(app)) {
+		for(integer i:mapAppWrap.keyset()){
+			if (isApplicationExpediteAvailable(mapAppWrap.get(i).ICA)) {
 				IsExpediteAvailable = true;
+				break;
 			}
 		}
 	}
@@ -760,14 +825,12 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 		// validate the promotion
 		// Promotion code must exists, must be associated to the corresponding Price Table and be between the validity period
 		if (promotion.Promotion_Code__c != null && promotion.Promotion_Code__c != '') {
-
-			Promotion__c[] listPromotion = [Select Promotion_Value__c, Promotion_Duration_Valid_Up_to__c, Promotion_Duration_Valid_From__c, Promotion_Code__c, Type_of_Application__c From Promotion__c where Promotion_Code__c = :promotion.Promotion_Code__c];
-			if (listPromotion == null || listPromotion.size() == 0) {
+			Promotion__c promo = mapPromotion.get(promotion.Promotion_Code__c);
+			if (promo == null) {
 				ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, String.Format(Label.ID_Card_Invalid_Promotion_Code, new String[] {promotion.Promotion_Code__c})));
 				return null;
 			}
-
-			 String[] typeOfAppInPromoCode =  listPromotion[0].Type_of_Application__c.split(';');
+			 String[] typeOfAppInPromoCode =  promo.Type_of_Application__c.split(';');
 
 				for(String typeOfApp : typeOfAppInPromoCode){
 					if(typeOfApp == app.Type_of_Application__c) {
@@ -776,10 +839,10 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 					}
 				}
 
-			if (listPromotion[0].Promotion_Duration_Valid_Up_to__c < Date.today()) {
+			if (promo.Promotion_Duration_Valid_Up_to__c < Date.today()) {
 				ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ID_Card_Promotion_Code_No_Longer_Valid));
 				return null;
-			} else if (listPromotion[0].Promotion_Duration_Valid_From__c > Date.today()) {
+			} else if (promo.Promotion_Duration_Valid_From__c > Date.today()) {
 				ApexPages.addMessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ID_Card_Promotion_Code_Not_Yet_Valid));
 				return null;
 			}
@@ -787,7 +850,7 @@ global class IDCard_AdmPendingOpsController extends IDCardAbstractController {
 				ApexPages.addMessage(new ApexPages.message(ApexPages.severity.WARNING, String.Format(Label.ID_Card_Invalid_Promotion_Code_3, new String[] {promotion.Promotion_Code__c})));
 				return null;
 			}
-			return listPromotion[0];
+			return promo;
 		}
 		return null;
 	}

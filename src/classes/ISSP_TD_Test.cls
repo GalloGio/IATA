@@ -46,7 +46,8 @@ private class ISSP_TD_Test {
 		tdCS3.Order__c = 3;
 		insert tdCS3;
 		PortalServiceAccessTriggerHandler.avoidAppTrigger = true;
-		Portal_Applications__c app = new Portal_Applications__c(Name = 'Treasury Dashboard - Premium');
+		Portal_Applications__c app = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+		app.Name = 'Treasury Dashboard - Premium';
 		app.TD_Included_Dashboards__c = 'ISSP_TD_1;ISSP_TD_2;ISSP_TD_3;ISSP_TD_4;ISSP_TD_5';
 		app.TD_Included_Reports__c = 'Test1;Test2';
 		insert app;
@@ -160,7 +161,8 @@ private class ISSP_TD_Test {
 
 			ISSP_Record_Type_Mgmt__c rtMgmt = new ISSP_Record_Type_Mgmt__c (Name = 'Treasury Dashboard', Record_Type_Name__c = 'FDS_ICCS_Email_to_Case');
 			insert rtMgmt;
-			Portal_Applications__c app = new Portal_Applications__c(Name = 'Treasury Dashboard');
+			Portal_Applications__c app = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
+			app.Name = 'Treasury Dashboard';
 			insert app;
 			Portal_Application_Right__c appRight = new Portal_Application_Right__c(Contact__c = contact.Id, Portal_Application__c = app.Id, Right__c = 'Access Requested');
 			insert appRight;

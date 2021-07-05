@@ -1,4 +1,4 @@
-public with sharing class IDCardPendingCaseController{
+public without sharing class IDCardPendingCaseController{
 
 
  public String Language {get; set;}

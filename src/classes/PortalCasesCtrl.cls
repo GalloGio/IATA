@@ -223,7 +223,7 @@ public with sharing class PortalCasesCtrl {
 			fieldPathSet.add(f.getFieldPath());
 		}
 
-		String query = 'BSP_CASS__c, IATA_Code__c, Remittance_period__c, CaseArea__c, Contact.Name, Reason1__c, CNSCase__c, Origin, IsClosed, Classification_SIS__c, TIP_Partner_Product__c, RecordType.Name, RecordType.DeveloperName, Owner.Name, LastModifiedDate, CreatedBy.Name, (SELECT Id FROM Participation_Online_Applications__r) ';
+		String query = 'BSP_CASS__c, IATA_Code__c, Remittance_period__c, CaseArea__c, Contact.Name, Reason1__c, CNSCase__c, Origin, IsClosed, Classification_SIS__c, TIP_Partner_Product__c, Verification__c, RecordType.Name, RecordType.DeveloperName, Owner.Name, LastModifiedDate, CreatedBy.Name, (SELECT Id FROM Participation_Online_Applications__r) ';
 		Boolean hasStatus = false;
 
 		for(String fieldPath : fieldPathSet) {
@@ -599,10 +599,17 @@ public with sharing class PortalCasesCtrl {
 			} else if((record.Status == TIP_Utils.CASE_STATUS_DRAFT || record.Status == 'Open - EDMC' || record.Status == 'Return application to customer') &&
 					apListForm != null && apListForm.contains(record.Id) &&
 					airlineRightList != null && !airlineRightList.isEmpty()) {
-						return new Map<Id, String>{
-							record.Id =>
-							OneIdUtils.getOrgUrl() +  '/ISSP_APProcess2?caseId=' + record.Id + '&step=2'
-						};
+						if (record.Verification__c == 'PASS') {
+							return new Map<Id, String>{
+								record.Id =>
+								OneIdUtils.getOrgUrl() +  '/ISSP_APProcess4?caseId=' + record.Id + '&step=4&airline=PASS'
+							};
+						} else {
+							return new Map<Id, String>{
+								record.Id =>
+								OneIdUtils.getOrgUrl() +  '/ISSP_APProcess2?caseId=' + record.Id + '&step=2'
+							};
+						}
 			}
 		}
 
@@ -710,7 +717,7 @@ public with sharing class PortalCasesCtrl {
 						Description,E2CP__AdditionalCC__c,Account_Concerned__c, Status,RecordType__c,Has_the_agent_paid_invoice__c,
 						RecordType.Name, WhoClosedCase__c,WhoClosedCase__r.UserRole.Name, BSPCountry__c, AccountId,
 						Account.Name, ContactId, Contact.FirstName, Contact.LastName, Contact.Email,Contact.Phone,RecordType.Id,RecordType.DeveloperName,
-						Airline__c, Airline_E_mail__c, Document_number__c, Reporting_date__c, Amount_disputed__c, Portal_Closure_Status__c
+						Airline__c, Airline_E_mail__c, Document_number__c, Reporting_date__c, Amount_disputed__c, Portal_Closure_Status__c, OSCAR__c, OSCAR__r.recordType.DeveloperName
 						FROM Case 
 						WHERE Id = :caseId];
 
@@ -741,6 +748,14 @@ public with sharing class PortalCasesCtrl {
 		
 		return ((!cases.isEmpty() && newCase.ClosedDate < Date.today().addDays(-13))
 			|| (newCase.Status == 'Pending Closure' && newCase.Portal_Closure_Status__c == 'Started') || isMSO);
+	}
+
+	@AuraEnabled
+	public static Boolean getHideAddNewDocumentsDGR(String caseId) {
+		Case newCase = getCaseById(caseId);
+		return ((newCase.OSCAR__c != null && newCase.OSCAR__r.recordType.DeveloperName == 'CERTIFICATION')
+				&& newCase.recordType.DeveloperName == 'OSCAR_Communication'
+				&& newCase.Status == 'Closed');
 	}
 	
 	private Static boolean isMSOcase(Case newCase){
@@ -811,9 +826,9 @@ public with sharing class PortalCasesCtrl {
 		String surveyLink = 'http://survey.clicktools.com/go?iv='
 				+System.Label.ISSP_SurveyClosedCase
 				+'&q1='+newCase.Id
-				+'&q2='+newCase.CaseNumber+
+				+'&q2='+newCase.CaseNumber
 				+'&q3='+newCase.ContactId
-				+'&q9='+fName+'|'+lName+'|'+email+'|'+phone
+				+'&q9='+EncodingUtil.urlEncode(fName+'|'+lName+'|'+email+'|'+phone,'UTF-8')
 				+'&language='+surveyLanguage;
 
 		return surveyLink;
@@ -828,11 +843,8 @@ public with sharing class PortalCasesCtrl {
 
 		Case caseToFirstComment = [SELECT Id, Description, CreatedBy.Name, CreatedDate,RecordType__c FROM Case WHERE Id =:caseId];
 
-		List<CaseComment> lstCaseCommentsAux = [SELECT Id, ParentId, CommentBody, IsPublished,
-												CreatedDate, CreatedById, CreatedBy.Name, IsDeleted
-												FROM CaseComment
-												WHERE ParentId = :caseId AND IsDeleted = false
-																						ORDER BY CreatedDate ASC];
+		PortalCasesCtrl.PortalCasesCtrl_WithoutSharing CasesNoSharing = new PortalCasesCtrl.PortalCasesCtrl_WithoutSharing();
+		List<CaseComment> lstCaseCommentsAux = CasesNoSharing.getCaseComments(caseId);
 
 		String caseDescription = caseToFirstComment.Description != null && CaseRecordTypesDescriptionVisibleSet.contains(caseToFirstComment.RecordType__c) ? caseToFirstComment.Description : '';
 
@@ -1211,7 +1223,17 @@ public with sharing class PortalCasesCtrl {
 			return returnWrapper;
 		}
 
+		public List<CaseComment> getCaseComments(String caseId){
+			List<CaseComment> lstCaseComments =	[SELECT Id, ParentId, CommentBody, IsPublished,
+												CreatedDate, CreatedById, CreatedBy.Name, IsDeleted
+												FROM CaseComment
+												WHERE ParentId = :caseId AND IsDeleted = false
+																						ORDER BY CreatedDate ASC];
+	
+			return lstCaseComments;
+		}
+
 	}
 
-
 }
+

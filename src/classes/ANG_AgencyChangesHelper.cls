@@ -1436,24 +1436,12 @@ public with sharing class ANG_AgencyChangesHelper {
 			The selected agencies will be transformed into AE and linked to the new paren, therefore they will automatically get the Accreditation type "XXX"
 		*/
 
-		Account newHEaccount = toReturn.accountsMap.get(oscarToProcess.New_parent__c);
-
-		Account oscarAccount = toReturn.accountsMap.get(oscarToProcess.Account__c);
-
-		if(oscarAccount == null) {
-			oscarAccount = [SELECT Id, ANG_Accreditation_Model__c, Remittance_frequency__c, CNS_Agency__c,
-								IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c, Location_Class__c, Sector__c , Category__c
-							FROM Account
-							WHERE Id = :oscarToProcess.Account__c];
-		}
+		Map<Id, Account> mapAccounts = new Map<Id, Account>([Select Id, ANG_Accreditation_Model__c, Parent_account_IATAcode__c, IATACode__c, Remittance_frequency__c,
+		IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c, ANG_FA_Opt_out__c FROM Account WHERE Id IN :accountIdsInvolvedSet OR Id = :oscarToProcess.New_parent__c OR Id = :oscarToProcess.Account__c]);
+		Account newHEaccount = mapAccounts.get(oscarToProcess.New_parent__c);
+		Account oscarAccount = mapAccounts.get(oscarToProcess.Account__c);
 
 		if((!accountIdsInvolvedSet.contains(oscarToProcess.New_parent__c) && oscarToProcess.Account__c != oscarToProcess.New_parent__c)){
-
-			//Map<Id,Account> accountsMap;
-
-			if(newHEaccount == null) {
-				newHEaccount = [Select Id , ANG_Accreditation_Model__c, Remittance_frequency__c, CNS_Agency__c, ANG_FA_Opt_out__c, Location_Class__c, Sector__c , Category__c from Account where Id = :oscarToProcess.New_parent__c];
-			}
 
 			if(!doesItContainAccreditationType && newHEaccount.ANG_Accreditation_Model__c != oscarAccount.ANG_Accreditation_Model__c){
 				switchAccreditationModel = true;
@@ -1538,6 +1526,13 @@ public with sharing class ANG_AgencyChangesHelper {
 			newRel.Hierarchy__c = hierarchyId;
 
 			toReturn.addRelation(newRel);
+			AMS_ChangeCodesHelper.ObjectChange objectChangesHierarchy = new AMS_ChangeCodesHelper.ObjectChange('Account', 'Parent.IATACode__c', oscarAccount.IATACode__c, newHEaccount.IATACode__c);
+			if (toReturn.changesStruct.get(oscarAccount.Id) == null) {
+				AMS_ChangeCodesHelper.ObjectChangesStruct acctChangesStruct = new AMS_ChangeCodesHelper.ObjectChangesStruct(new List <AMS_ChangeCodesHelper.ObjectChange>{objectChangesHierarchy});
+				toReturn.changesStruct.put(oscarAccount.Id, acctChangesStruct);
+			} else {
+				toReturn.changesStruct.get(oscarAccount.Id).changes.add(objectChangesHierarchy);
+			}
 
 			if(switchAccreditationModel){
 
@@ -1600,6 +1595,14 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		for(Id accountID: accountIdsInvolvedSet){
 
+			AMS_ChangeCodesHelper.ObjectChange objectChangesHierarchy = new AMS_ChangeCodesHelper.ObjectChange('Account', 'Parent.IATACode__c', mapAccounts.get(accountID).Parent_account_IATAcode__c, (accountID == oscarToProcess.New_parent__c ? null : mapAccounts.get(oscarToProcess.New_parent__c).IATACode__c));
+			if (toReturn.changesStruct.get(accountID) == null) {
+				AMS_ChangeCodesHelper.ObjectChangesStruct acctChangesStruct = new AMS_ChangeCodesHelper.ObjectChangesStruct(new List <AMS_ChangeCodesHelper.ObjectChange>{objectChangesHierarchy});
+				toReturn.changesStruct.put(accountID, acctChangesStruct);
+			} else {
+				toReturn.changesStruct.get(accountID).changes.add(objectChangesHierarchy);
+			}
+
 			if(accountID == oscarToProcess.New_parent__c){ // this means that one of the old AE's is going to be the new HE, so let's change it !
 
 				Account newHe = toReturn.accountsMap.get(oscarToProcess.New_parent__c) != null ? toReturn.accountsMap.get(oscarToProcess.New_parent__c) : new Account(Id = oscarToProcess.New_parent__c);
@@ -1615,7 +1618,6 @@ public with sharing class ANG_AgencyChangesHelper {
 				if (AMS_Utils.pickListContains(oscarToProcess.Change_of_Hierarchy_Scenario__c, AMS_Utils.MULTICOUNTRY_BSP_SPLIT) && switchAccreditationModel) {
 					newHe.ANG_Accreditation_Model__c = newAccreditationModel;
 				}
-
 				toReturn.addAccount(newHe);
 
 				continue;
@@ -1950,7 +1952,11 @@ public with sharing class ANG_AgencyChangesHelper {
 		List<ANG_RHC_Information__c> rhcInfoList = new List<ANG_RHC_Information__c>();
 		Set<Id> accountIdsToProcess = new Set<Id>();
 
-		for(ANG_RHC_Information__c r : [SELECT ANG_RHC_Amount_Equals_FS__c, CurrencyIsoCode, Id, ANG_AccountId__c, ANG_CashCondition__c, ANG_Financial_Security__c, ANG_RHC_Amount__c, ANG_RHC_Amount_Forecasted__c, ANG_RME_Amount__c, ANG_Exceeding_Financial_Security__c, ANG_RHC_Amount_Provisional__c, RHC_Amount_Equals_FS_Percent__c, ANG_Minimum_Financial_Security__c FROM ANG_RHC_Information__c WHERE ANG_AccountId__c IN :accountIds and ANG_AccountId__r.ANG_CashCondition__c = false]){
+		for(ANG_RHC_Information__c r : [SELECT ANG_RHC_Amount_Equals_FS__c, CurrencyIsoCode, Id, ANG_AccountId__c, ANG_CashCondition__c, 
+												ANG_Financial_Security__c, ANG_RHC_Amount__c, ANG_RHC_Amount_Forecasted__c, ANG_RME_Amount__c, 
+												ANG_Exceeding_Financial_Security__c, ANG_RHC_Amount_Provisional__c, RHC_Amount_Equals_FS_Percent__c, ANG_Minimum_Financial_Security__c,
+												Amount_At_Risk_USD__c, Forecasted_Tier__c, RHC_Amount_USD__c, Tier__c, Tiered_Provisional_Amount__c
+												FROM ANG_RHC_Information__c WHERE ANG_AccountId__c IN :accountIds and ANG_AccountId__r.ANG_CashCondition__c = false]){
 			rhcInfoList.add(r);
 			accountIdsToProcess.add(r.ANG_AccountId__c);
 		}
@@ -2050,12 +2056,23 @@ public with sharing class ANG_AgencyChangesHelper {
 			for(Id accountId: accountsAffected)
 				if(toReturn.accountsMap.get(accountId) != null)
 					toReturn.accountsMap.get(accountId).Has_a_Financial_Assessment_Contact__c = false;
+			
+			Account acc = toReturn.accountsMap.get(oscarToProcess.Account__c);
 
-			ANG_RHCHelper.deactivateRHCInfo(new Set<Id>{oscarToProcess.Account__c});
+			if(acc==null){
+				acc = [select id, IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c, (SELECT Id, ANG_AccountId__c, Amount_At_Risk_USD__c FROM RHC_Informations__r) from account where id =:oscarToProcess.Account__c];
+			}
+
+			//countries where Cashless agencies can have CASH FOP need to have the RHC recalculated (set=1)
+			if(acc.IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c && acc.RHC_Informations__r<>null && !acc.RHC_Informations__r.isEmpty()){
+				ANG_RHCHelper.calculateRHCAmount(new list<ANG_RHC_Information__c>{acc.RHC_Informations__r}, true);
+			}
+			else
+				ANG_RHCHelper.deactivateRHCInfo(new Set<Id>{oscarToProcess.Account__c});
 		}
 		if(oscarOnlineAccreditation.ANG_Accreditation_Type__c ==  'Cash'){
 			toUpsert = performCashTransformation(accountsAffected);
-			if(toReturn.accountsMap.get(oscarToProcess.Account__c)!=null)
+			if(toReturn.accountsMap.get(oscarToProcess.Account__c)!=null && toReturn.accountsMap.get(oscarToProcess.Account__c).RHC_Informations__r.isEmpty())
 				ANG_RHCHelper.createRHCInfo(new List<Account>{toReturn.accountsMap.get(oscarToProcess.Account__c)}, false);
 		}
 
@@ -2105,10 +2122,13 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		List<Agency_Authorization__c> toUpsert = new List<Agency_Authorization__c>();
 
-		For(Agency_Authorization__c aa: [Select Id , Status__c from Agency_Authorization__c where Account__c in:accountsAffected and ANG_FormOfPayment_ID__c = 'CA' and Status__c != 'Not Authorized' and RecordType.DeveloperName = 'FormOfPayment']){
-
-			aa.Status__c = 'Not Authorized';
-			toUpsert.add(aa);
+		For(Agency_Authorization__c aa: [Select Id , Status__c, Account__r.IATA_ISO_Country__r.ANG_Enable_NewGen__c, Account__r.IATA_ISO_Country__r.ANG_Portal_Service__c, Account__r.IATA_ISO_Country__r.ANG_IEP_Model__c, Account__r.IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c
+										from Agency_Authorization__c 
+										where Account__c in:accountsAffected and ANG_FormOfPayment_ID__c = 'CA' and Status__c != 'Not Authorized' and RecordType.DeveloperName = 'FormOfPayment']){
+			if(aa.Account__r.IATA_ISO_Country__r.ANG_Enable_NewGen__c && aa.Account__r.IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c==false){
+				aa.Status__c = 'Not Authorized';
+				toUpsert.add(aa);
+			}
 
 		}
 
@@ -2252,7 +2272,7 @@ public with sharing class ANG_AgencyChangesHelper {
 	}
 
 	private static Map<Id, Account> getAccounts(Set<Id> accountIds) {
-		return new Map<Id, Account>([SELECT Status__c,ParentId, Top_Parent__c, Name, IATACode__c, Company_Type__c, Short_Name__c, TradeName__c, License_Number__c, VAT_Number__c, GDS__c, Operation__c,
+		return new Map<Id, Account>([SELECT Status__c,ParentId, Top_Parent__c, Name, IATACode__c, Company_Type__c, Short_Name__c, TradeName__c, License_Number__c, VAT_Number__c, GDS__c, Operation__c, Parent_account_IATAcode__c,
 				BillingCountry, BillingStreet, BillingPostalCode, BillingState, BillingCity, IATA_ISO_Country__c, Iso_State__c, ShippingCountry, Is_Branch_Abroad__c,
 				ShippingStreet, ShippingPostalCode, ShippingState, ShippingCity, Email__c, Website, Phone, Fax, In_a_Airport__c, Abbreviated_name__c, Abbreviated_address__c,
 				Remittance_frequency__c, Solicitation_Flag__c, VAT_Number_2__c, CASS_Number__c, Location_Class__c, Location_Type__c, Mobile__c, Is_your_firm_handling_Dangerous_Goods__c,
@@ -2261,7 +2281,7 @@ public with sharing class ANG_AgencyChangesHelper {
 				ANG_IsNewGenAgency__c, ANG_FA_Opt_out__c, CNS_Agency__c, ANG_PCI_compliance_expiry_date__c, IATA_ISO_Country__r.AMS_Settlement_System__r.ANG_RHC_Amount_Equals_FS__c, Covered_Ownership__c,
 				ANG_IEP_Status__c, ANG_HE_RiskStatus__c, ANG_IEP_HE_AccntNum__c, ANG_HE_CashCondition__c, Financial_Review_Result__c, ANG_HE_RiskHistoryAssessment__c, Financial_Assessment_Points__c, IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c,
 				Identify_as_Multicountry_Key_Hierarchy__c, Multicountry_Key_Hierarchy__c, IATA_ISO_Country__r.AMS_Settlement_System__c, IATA_ISO_Country__r.ANG_RHC_LocationType__c,
-				Sector__c , Category__c,
+				Sector__c , Category__c, IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c, 
 				(SELECT Id, ANG_AccountId__c FROM RHC_Informations__r), (SELECT Id FROM Location_Risk_Events__r), (SELECT Id FROM Main_Accounts__r), (SELECT Id, ANG_Account__c FROM Risk_Alerts__r),
 				(SELECT Id FROM ChildAccounts WHERE Status__c IN ('', NULL, :AMS_Utils.ACC_S0_TERMINATED, :AMS_Utils.ACC_S1_NOTACCREDITED, :AMS_Utils.ACC_S3_NOTINOPERATION)),
 				(SELECT Id, Account__c, Reason_Code__c, Reason_Description__c, Bulletin_Information__c FROM Agencies_Applied_Change_codes__r WHERE Active__c = true),

@@ -68,6 +68,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		public Boolean isNewAccount{get;set;}
 		public String selectedCustomerType {get;set;}
 		public String registrationTime {get;set;}
+		public String sourceService {get;set;}
 		public String termsAndUsageIds {get;set;}
 
 		/*YAS info for matching contact based on additional email temporary*/
@@ -358,13 +359,6 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 	public static Boolean checkIsUsernameIsAvailableInGlobalSalesforce(String email, List<Contact> conList) {
 		// Method to test if another user existin in all SF instances to avoid having an error at the end of the process
 		Savepoint sp = Database.setSavepoint();
-		List<Profile> profileList = [SELECT Id, Name FROM Profile];
-		map<ID, Profile> profileMap = new map<ID, Profile> (
-		[SELECT Id, Name,
-				UserLicenseId,
-				UserLicense.Name
-		FROM Profile
-		WHERE (UserLicense.Name = 'Partner Community' OR UserLicense.Name = 'Identity')]);
 
 		Contact[] recordCont = [SELECT Id FROM Contact WHERE Id NOT IN (SELECT ContactId FROM User) LIMIT 1];
 
@@ -480,6 +474,7 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 			params.phone     = (inputMap.get('phone') != null) ? String.valueOf(inputMap.get('phone')) : '';
 			params.country   = (inputMap.get('country') != null) ? String.valueOf(inputMap.get('country')) : '';
 			params.language  = (inputMap.get('language') != null) ? String.valueOf(inputMap.get('language')) : '';
+			params.sourceService = (inputMap.get('sourceService') != null) ? String.valueOf(inputMap.get('sourceService')) : '';
 			params.contactId = contactId != null ? contactId : '';
 			params.accountId = accountId != null ? accountId : '';
 			params.selectedCustomerType = (inputMap.get('selectedCustomerType') != null) ? String.valueOf(inputMap.get('selectedCustomerType')) : '';
@@ -751,8 +746,11 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 		if(selectedMetadataCustomerType.Filter_on_Sector__c != null){
 			sector = selectedMetadataCustomerType.Filter_on_Sector__c;
 			category = selectedMetadataCustomerType.Filter_on_Category__c;
+		} else if (selectedMetadataCustomerType.Created_Account_Sector__c != null){
+			sector = selectedMetadataCustomerType.Created_Account_Sector__c;
+			category = 'General Public';
 		}
-		else{
+		else {
 			sector = selectedMetadataCustomerType.MasterLabel;
 			category = 'General Public';
 		}
@@ -984,6 +982,10 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 	public static String generateOneTimeUrl(RegistrationParameters params, String lang, Map<String,String> urlParams){
 		String paramsJson = JSON.serialize(params);
 		paramsJson = paramsJson.replace('+', PortalPasswordHandler.plusReplacer);
+		if(params.sourceService != null && params.sourceService != '') {
+			if(urlParams == null) urlParams = new Map<String,String>();
+			urlParams.put('sourceService',params.sourceService);
+		}
 
 		return CSP_Utils.generateURl('createPassword', paramsJson, lang, urlParams);
 	}
@@ -1139,11 +1141,11 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 	}
 
 	public class CustomerTypePicklist{
-		@AuraEnabled String picklistName {get; set;}
+		@AuraEnabled public String picklistName {get; set;}
 
-		@AuraEnabled String picklistLabel { get; private set; }
+		@AuraEnabled public String picklistLabel { get; private set; }
 
-		@AuraEnabled List<CustomerTypePicklistOption> picklistOptions { get; private set; }
+		@AuraEnabled public List<CustomerTypePicklistOption> picklistOptions { get; private set; }
 
 		public CustomerTypePicklist(String picklistLabel){
 			this.picklistLabel = picklistLabel;
@@ -1152,11 +1154,11 @@ public without sharing class PortalRegistrationFirstLevelCtrl {
 	}
 
 	public class CustomerTypePicklistOption{
-		@AuraEnabled String key { get; private set; }
+		@AuraEnabled public String key { get; private set; }
 
-		@AuraEnabled String label { get; private set; }
+		@AuraEnabled public String label { get; private set; }
 
-		@AuraEnabled Boolean isSelected { get; private set; }
+		@AuraEnabled public Boolean isSelected { get; private set; }
 
 		public CustomerTypePicklistOption(String key, String label, Boolean isSelected){
 			this.key = key;

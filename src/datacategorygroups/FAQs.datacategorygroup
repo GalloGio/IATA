@@ -5,6 +5,18 @@
         <dataCategory>
             <dataCategory>
                 <dataCategory>
+                    <label>Participation</label>
+                    <name>IATA_Pay_Participation</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>General Information</label>
+                    <name>IATA_Pay_General_Information</name>
+                </dataCategory>
+                <label>IATA Pay</label>
+                <name>IATA_Pay</name>
+            </dataCategory>
+            <dataCategory>
+                <dataCategory>
                     <label>General Information</label>
                     <name>General_Information_Accreditation_IATAN_US</name>
                 </dataCategory>
@@ -167,10 +179,6 @@
                 <dataCategory>
                     <label>General Information</label>
                     <name>General_Information_IATA_Codes</name>
-                </dataCategory>
-                <dataCategory>
-                    <label>Other</label>
-                    <name>Other_IATA_Codes</name>
                 </dataCategory>
                 <dataCategory>
                     <label>Closure / Cancellation</label>
@@ -705,10 +713,6 @@
                     <name>Technical_Issue_NDClink</name>
                 </dataCategory>
                 <dataCategory>
-                    <label>Other</label>
-                    <name>Other_NDClink</name>
-                </dataCategory>
-                <dataCategory>
                     <label>User Management</label>
                     <name>User_Management_NDClink</name>
                 </dataCategory>
@@ -848,10 +852,6 @@
                     <label>Closure / Cancellation</label>
                     <name>Closure_Cancellation_TD</name>
                 </dataCategory>
-                <dataCategory>
-                    <label>Other</label>
-                    <name>Other_TD</name>
-                </dataCategory>
                 <label>Treasury Dashboard</label>
                 <name>TD</name>
             </dataCategory>
@@ -859,6 +859,26 @@
             <name>Financial_Services</name>
         </dataCategory>
         <dataCategory>
+            <dataCategory>
+                <dataCategory>
+                    <label>General Information</label>
+                    <name>General_Information_IDX</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>Sign Up / Join</label>
+                    <name>Sign_Up_Join_IDX</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>User Management</label>
+                    <name>User_Management_IDX</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>Technical Issue</label>
+                    <name>Technical_Issue_IDX</name>
+                </dataCategory>
+                <label>IDX - Incident Data Exchange</label>
+                <name>IDX_Incident_Data_Exchange</name>
+            </dataCategory>
             <dataCategory>
                 <dataCategory>
                     <label>General Information</label>
@@ -1037,10 +1057,6 @@
                     <name>Technical_Issue_CargoIS</name>
                 </dataCategory>
                 <dataCategory>
-                    <label>Other</label>
-                    <name>Other_CargoIS</name>
-                </dataCategory>
-                <dataCategory>
                     <label>Events</label>
                     <name>Events_CargoIS</name>
                 </dataCategory>
@@ -1077,10 +1093,6 @@
                     <name>Technical_Issue_DDS</name>
                 </dataCategory>
                 <dataCategory>
-                    <label>Other</label>
-                    <name>Other_DDS</name>
-                </dataCategory>
-                <dataCategory>
                     <label>Events</label>
                     <name>Events_DDS</name>
                 </dataCategory>
@@ -1109,10 +1121,6 @@
                     <name>Technical_Issue_FFP</name>
                 </dataCategory>
                 <dataCategory>
-                    <label>Other</label>
-                    <name>Other_FFP</name>
-                </dataCategory>
-                <dataCategory>
                     <label>Events</label>
                     <name>Events_FFP</name>
                 </dataCategory>
@@ -1139,10 +1147,6 @@
                 <dataCategory>
                     <label>Technical Issue</label>
                     <name>Technical_Issue_Flight_Data_Connect</name>
-                </dataCategory>
-                <dataCategory>
-                    <label>Other</label>
-                    <name>Other_Flight_Data_Connect</name>
                 </dataCategory>
                 <label>Flight Data Connect</label>
                 <name>Flight_Data_Connect</name>
@@ -1175,10 +1179,6 @@
                 <dataCategory>
                     <label>Technical Issue</label>
                     <name>Technical_Issue_GAP</name>
-                </dataCategory>
-                <dataCategory>
-                    <label>Other</label>
-                    <name>Other_GAP</name>
                 </dataCategory>
                 <dataCategory>
                     <label>Events</label>
@@ -1323,10 +1323,6 @@
                 <dataCategory>
                     <label>Technical Issue</label>
                     <name>Technical_Issue_PaxIS</name>
-                </dataCategory>
-                <dataCategory>
-                    <label>Other</label>
-                    <name>Other_PaxIS</name>
                 </dataCategory>
                 <dataCategory>
                     <label>Events</label>
@@ -1753,6 +1749,50 @@
             </dataCategory>
             <dataCategory>
                 <dataCategory>
+                    <label>Digital Identity</label>
+                    <name>Digital_Identity</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>Lab Information</label>
+                    <name>Lab_Information</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>Vaccination</label>
+                    <name>Vaccination</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>Changes / Updates</label>
+                    <name>Changes_Updates_trvpass</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>Closure / Cancellation</label>
+                    <name>Closure_Cancellation_trvpass</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>General Information</label>
+                    <name>General_Information_trvpass</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>Invoicing</label>
+                    <name>Invoicing_trvpass</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>Report issue / Technical issue</label>
+                    <name>Report_Technical_issue_trvpass</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>Sign Up / Join</label>
+                    <name>Sign_Up_Join_trvpass</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>User Management</label>
+                    <name>User_Management_trvpass</name>
+                </dataCategory>
+                <label>IATA Travel Pass</label>
+                <name>IATA_Travel_Pass</name>
+            </dataCategory>
+            <dataCategory>
+                <dataCategory>
                     <label>iiNet General Information</label>
                     <name>iiNet_General_Information</name>
                 </dataCategory>
@@ -1786,6 +1826,38 @@
                 </dataCategory>
                 <label>IINet</label>
                 <name>IINet</name>
+            </dataCategory>
+            <dataCategory>
+                <dataCategory>
+                    <label>General Information</label>
+                    <name>General_Information_MRO</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>Payment</label>
+                    <name>Payment_MRO</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>Sign Up / Join</label>
+                    <name>Sign_Up_Join_MRO</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>Technical Issue</label>
+                    <name>Technical_Issue_MRO</name>
+                </dataCategory>
+                <dataCategory>
+                    <label>User Management</label>
+                    <name>User_Management_MRO</name>
+                </dataCategory>
+                <label>MRO SmartHub</label>
+                <name>MRO_SmartHub</name>
+            </dataCategory>
+            <dataCategory>
+                <dataCategory>
+                    <label>General Information</label>
+                    <name>General_Information_OS</name>
+                </dataCategory>
+                <label>OneSource</label>
+                <name>OneSource</name>
             </dataCategory>
             <dataCategory>
                 <dataCategory>
@@ -1826,10 +1898,6 @@
                 </dataCategory>
                 <label>Weblink</label>
                 <name>Weblink</name>
-            </dataCategory>
-            <dataCategory>
-                <label>Video FAQs</label>
-                <name>Video_FAQs</name>
             </dataCategory>
             <label>Platforms</label>
             <name>Platforms</name>

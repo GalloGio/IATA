@@ -310,8 +310,27 @@
         <columns>NAME</columns>
         <columns>GeonameName__c</columns>
         <columns>GeonameAlternateNames__c</columns>
+        <columns>IATA_ISO_State__c</columns>
+        <columns>Status__c</columns>
         <filterScope>Everything</filterScope>
         <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Criteria_based</fullName>
+        <columns>OBJECT_ID</columns>
+        <columns>NAME</columns>
+        <columns>Country__c</columns>
+        <columns>Status__c</columns>
+        <columns>GeonameName__c</columns>
+        <columns>GeonameId__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>NAME</field>
+            <operation>contains</operation>
+            <value>Mun</value>
+        </filters>
+        <label>Criteria based</label>
         <language>en_US</language>
     </listViews>
     <nameField>

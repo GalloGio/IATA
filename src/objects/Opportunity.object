@@ -578,7 +578,7 @@
     <fields>
         <fullName>ContractId</fullName>
         <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -1637,7 +1637,7 @@
         <relationshipName>Opportunities1</relationshipName>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Lookup</type>
     </fields>
@@ -3720,6 +3720,11 @@
                     <label>MER Products</label>
                 </value>
                 <value>
+                    <fullName>PASS</fullName>
+                    <default>false</default>
+                    <label>PASS</label>
+                </value>
+                <value>
                     <fullName>Pax IS</fullName>
                     <default>false</default>
                     <label>Pax IS</label>
@@ -3735,9 +3740,9 @@
                     <label>Strategic Partnerships</label>
                 </value>
                 <value>
-                    <fullName>TACT</fullName>
+                    <fullName>TACT Air Cargo Solutions</fullName>
                     <default>false</default>
-                    <label>TACT</label>
+                    <label>TACT Air Cargo Solutions</label>
                 </value>
                 <value>
                     <fullName>TIESS</fullName>
@@ -4022,9 +4027,19 @@
                     <label>Boris Padilla</label>
                 </value>
                 <value>
+                    <fullName>Bruno Roussel</fullName>
+                    <default>false</default>
+                    <label>Bruno Roussel</label>
+                </value>
+                <value>
                     <fullName>Burkhard Lahr</fullName>
                     <default>false</default>
                     <label>Burkhard Lahr</label>
+                </value>
+                <value>
+                    <fullName>Caroline Karanja</fullName>
+                    <default>false</default>
+                    <label>Caroline Karanja</label>
                 </value>
                 <value>
                     <fullName>Claudine Breton</fullName>
@@ -4045,6 +4060,11 @@
                     <fullName>Dominic Freienstein</fullName>
                     <default>false</default>
                     <label>Dominic Freienstein</label>
+                </value>
+                <value>
+                    <fullName>Ewemade Atake</fullName>
+                    <default>false</default>
+                    <label>Ewemade Atake</label>
                 </value>
                 <value>
                     <fullName>Gurjit Gill</fullName>
@@ -4090,6 +4110,11 @@
                     <fullName>Madeleine Dufour</fullName>
                     <default>false</default>
                     <label>Madeleine Dufour</label>
+                </value>
+                <value>
+                    <fullName>Mariem Agouzoul</fullName>
+                    <default>false</default>
+                    <label>Mariem Agouzoul</label>
                 </value>
                 <value>
                     <fullName>Michael Huntington</fullName>
@@ -4232,6 +4257,11 @@
                     <fullName>Regional Sales</fullName>
                     <default>false</default>
                     <label>Regional Sales</label>
+                </value>
+                <value>
+                    <fullName>CSC Sales Opportunities</fullName>
+                    <default>false</default>
+                    <label>CSC Sales Opportunities</label>
                 </value>
             </valueSetDefinition>
         </valueSet>
@@ -4407,6 +4437,33 @@
             <value>Opportunity.RCRM_Opportunity</value>
         </filters>
         <label>All Opportunities</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>CSC_Sales_Opportunities</fullName>
+        <columns>OPPORTUNITY.NAME</columns>
+        <columns>ACCOUNT.NAME</columns>
+        <columns>OPPORTUNITY.AMOUNT</columns>
+        <columns>OPPORTUNITY.CLOSE_DATE</columns>
+        <columns>OPPORTUNITY.STAGE_NAME</columns>
+        <columns>CORE.USERS.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>OPPORTUNITY.RECORDTYPE</field>
+            <operation>equals</operation>
+            <value>Opportunity.FieldSales</value>
+        </filters>
+        <filters>
+            <field>OPPORTUNITY.LEAD_SOURCE</field>
+            <operation>equals</operation>
+            <value>CSC Sales</value>
+        </filters>
+        <filters>
+            <field>OPPORTUNITY.NAME</field>
+            <operation>contains</operation>
+            <value>AvMP,WATS,PSCM</value>
+        </filters>
+        <label>CSC Sales Opportunities</label>
         <language>en_US</language>
     </listViews>
     <listViews>
@@ -6331,6 +6388,10 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>CSC Sales</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Cold Call</fullName>
                 <default>false</default>
             </values>
@@ -6507,6 +6568,10 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>PASS</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>SFO Products</fullName>
                 <default>false</default>
             </values>
@@ -6565,7 +6630,15 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>Bruno Roussel</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Burkhard Lahr</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Caroline Karanja</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6582,6 +6655,10 @@
             </values>
             <values>
                 <fullName>Dominic Freienstein</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ewemade Atake</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6614,6 +6691,10 @@
             </values>
             <values>
                 <fullName>Madeleine Dufour</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mariem Agouzoul</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -6679,6 +6760,10 @@
         </picklistValues>
         <picklistValues>
             <picklist>Sales_Team__c</picklist>
+            <values>
+                <fullName>CSC Sales Opportunities</fullName>
+                <default>false</default>
+            </values>
             <values>
                 <fullName>Events %28Worldtek%29</fullName>
                 <default>false</default>
@@ -8435,6 +8520,10 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>PASS</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Pax IS</fullName>
                 <default>false</default>
             </values>
@@ -8443,7 +8532,7 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>TACT</fullName>
+                <fullName>TACT Air Cargo Solutions</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -8532,7 +8621,15 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>Bruno Roussel</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Burkhard Lahr</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Caroline Karanja</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -8549,6 +8646,10 @@
             </values>
             <values>
                 <fullName>Dominic Freienstein</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ewemade Atake</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -8581,6 +8682,10 @@
             </values>
             <values>
                 <fullName>Madeleine Dufour</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mariem Agouzoul</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -10325,6 +10430,10 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>PASS</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>SFO Products</fullName>
                 <default>false</default>
             </values>
@@ -10367,7 +10476,19 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>Bruno Roussel</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Burkhard Lahr</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Caroline Karanja</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ewemade Atake</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -10380,6 +10501,10 @@
             </values>
             <values>
                 <fullName>Louise Denis</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mariem Agouzoul</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -12141,6 +12266,10 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>PASS</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Pax IS</fullName>
                 <default>false</default>
             </values>
@@ -12153,7 +12282,7 @@
                 <default>false</default>
             </values>
             <values>
-                <fullName>TACT</fullName>
+                <fullName>TACT Air Cargo Solutions</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -12242,7 +12371,15 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>Bruno Roussel</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Burkhard Lahr</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Caroline Karanja</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -12255,6 +12392,10 @@
             </values>
             <values>
                 <fullName>Daniel Shemi</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ewemade Atake</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -12283,6 +12424,10 @@
             </values>
             <values>
                 <fullName>Madeleine Dufour</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mariem Agouzoul</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -14056,6 +14201,10 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>PASS</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>SFO Products</fullName>
                 <default>false</default>
             </values>
@@ -14098,7 +14247,19 @@
                 <default>false</default>
             </values>
             <values>
+                <fullName>Bruno Roussel</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Burkhard Lahr</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Caroline Karanja</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Ewemade Atake</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -14127,6 +14288,10 @@
             </values>
             <values>
                 <fullName>Madeleine Dufour</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Mariem Agouzoul</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -14302,8 +14467,7 @@ NOT(OR($Profile.Name=&quot;IATA IDFS - IDO Sales&quot;, $Profile.Name=&quot;IATA
     )
   ),
   $Profile.Name &lt;&gt; &apos;System Administrator&apos;,
-  $Profile.Name &lt;&gt; &apos;Developer&apos;,
-  $Profile.Name &lt;&gt; &apos;MACS - Administrator&apos;
+  !$Permission.Can_reopen_opportunities
 )</errorConditionFormula>
         <errorMessage>Closed opportunities can no longer be modified. Please contact Support or a System Administrator for help.</errorMessage>
     </validationRules>
@@ -14366,13 +14530,6 @@ NOT(OR($Profile.Name=&quot;IATA IDFS - IDO Sales&quot;, $Profile.Name=&quot;IATA
         <errorConditionFormula>AND (
   ISPICKVAL(  LeadSource , &apos;Event&apos; ),  Event_Source_lk__c =&apos;&apos; )</errorConditionFormula>
         <errorMessage>If the lead source was an event you need to specify the event</errorMessage>
-    </validationRules>
-    <validationRules>
-        <fullName>Opportujnity_products_required</fullName>
-        <active>false</active>
-        <description>Opportunity products are required before saving changes to an existing opportunity</description>
-        <errorConditionFormula>NOT(OR(ISNEW(),HasOpportunityLineItem))</errorConditionFormula>
-        <errorMessage>You must add products to this opportunity before saving.</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>PM_Validation_for_Closing</fullName>
@@ -14489,34 +14646,6 @@ COPY THE URL FROM THIS BUTTON and paste it into your own custom button or link. 
 &amp;serverUrl={!API.Partner_Server_URL_290}
 &amp;id={!Opportunity.Id}</url>
         <width>625</width>
-    </webLinks>
-    <webLinks>
-        <fullName>BLND_FormFactory_Opportunity_Link</fullName>
-        <availability>online</availability>
-        <displayType>link</displayType>
-        <encodingKey>UTF-8</encodingKey>
-        <hasMenubar>false</hasMenubar>
-        <hasScrollbars>true</hasScrollbars>
-        <hasToolbar>false</hasToolbar>
-        <height>600</height>
-        <isResizable>true</isResizable>
-        <linkType>url</linkType>
-        <masterLabel>FormFactory Opportunity Link</masterLabel>
-        <openType>newWindow</openType>
-        <position>none</position>
-        <protected>false</protected>
-        <showsLocation>false</showsLocation>
-        <showsStatus>false</showsStatus>
-        <url>https://www.dreamfactory.net/sforce/formfactory/formfactory.html? 
-sforce_session_id={!API.Session_ID}&amp; 
-sforce_server_url={!API.Partner_Server_URL_120}&amp; 
-sforce_user_name={!User.Username}&amp; 
-sforce_full_name={!User.Name}&amp; 
-sforce_user_id={!User.Id}&amp; 
-custom_link_name=FormFactory Form Name&amp; 
-myaccount={!Account.Id}&amp; 
-myopportunity={!Opportunity.Id}&amp; 
-myuser={!User.Id}</url>
     </webLinks>
     <webLinks>
         <fullName>Create_Contract</fullName>

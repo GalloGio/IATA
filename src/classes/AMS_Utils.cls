@@ -75,6 +75,7 @@ public without sharing class AMS_Utils {
 	public static final String HE = 'HE';
 	public static final String AE = 'AE';
 	public static final String GE = 'GE';
+	public static final String AW = 'AW';
 
 
 	public static final String PORTAL_APP_ACCESS_GRANTED = 'Access Granted';
@@ -145,21 +146,26 @@ public without sharing class AMS_Utils {
 		AMS_Utils.ACC_S1_NOTACCREDITED
 	};
 
+
 	//Process of type PASS
-	public static final String new_PASS_HO        = 'NEW.PASS.HO.1.0' ;
-	public static final String new_PASS_BR        = 'NEW.PASS.BR.1.0' ;
-	public static final String SECTOR_PASS        = 'Postal Service';
-	public static final String sectorValuePass    = 'Postal_Service' ;
-	public static final String categoryPass       = 'Postal Operator' ;
-	public static final String customerTypePass   = 'Postal_Operator' ;
-	public static final String passParticipation  = 'PASS' ;
-	public static final String passAirlineCaseReason = 'PASS Participation';
-	public static final String passGSSACaseReason = 'PASS Participation via GSSA';
-	public static final String passCountryCaseReason = 'PASS Country';
-	public static final String passAggregatorCaseReason = 'PASS Country Aggregator';
-	public static final String passIATAMultipleCountries = 'Multiple';
-	public static final String accountReasonForCreationPASS = 'New Airline joining PASS';
-	public static final String passSSOPortalService = 'PASSlink Single Sign-On';
+	public static final String new_PASS_HO	= 'NEW.PASS.HO.1.0';
+	public static final String new_PASS_BR	= 'NEW.PASS.BR.1.0';
+	public static final String SECTOR_PASS	= 'Postal Service';
+	public static final String sectorValuePass	= 'Postal_Service';
+	public static final String categoryPass	= 'Postal Operator';
+	public static final String customerTypePass	= 'Postal_Operator';
+	public static final String passParticipation	= 'PASS';
+	public static final String passAirlineCaseReason	= 'PASS Participation';
+	public static final String passGSSACaseReason	= 'PASS Participation via GSSA';
+	public static final String passCountryCaseReason	= 'PASS Country';
+	public static final String passAggregatorCaseReason	= 'PASS Country Aggregator';
+	public static final String passIATAMultipleCountries	= 'Multiple';
+	public static final String accountReasonForCreationPASS	= 'New Airline joining PASS';
+	public static final String passSSOPortalService	= 'PASSlink Single Sign-On';
+
+	//Process IATA Pay
+	public static final String iataPayParticipation  = 'IATA Pay Participation';
+	public static final String iataPayCountryAggregator  = 'IATA Pay Country Aggregator';
 
 	public static final Set<String> setAMS = new Set<String> {HO, BR, SA, AO};
 	public static final Set<String> setNewGen = new Set<String> {HE, AE, GE};
@@ -195,6 +201,7 @@ public without sharing class AMS_Utils {
 	public static final String CERT_DGA         = 'DGA';
 	public static final String CERT_CATA        = 'CATA';
 	public static final String CERT_TSA         = 'TSA';
+	public static final String CERT_ULD         = 'ULD';
 
 	//Record Types
 	public static final String RECTYPE_NEW          = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_OSCAR__c', 'NEW');
@@ -234,7 +241,6 @@ public without sharing class AMS_Utils {
 	public static final String RECTYPE_IEP_MODEL_A  = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Accreditation_Requirement__c','IEP_Model_A');
 
 	public static final String RECTYPE_BSP          = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Settlement_System__c', 'BSP');
-	public static final Id OSCAR_COMUNICATION       = RecordTypeSingleton.getInstance().getRecordTypeId('Case', 'OSCAR_Communication');
 	public static final String RECTYPE_GDI_FS       = RecordTypeSingleton.getInstance().getRecordTypeId('Opportunity','GDI_FinancialSecurity');
 	public static final String RECTYPE_NEWGEN_CHANGES_PAX = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'New_Gen_Changes');
 	public static final String RECTYPE_GENERAL_ONLINE_PAX = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Pax_Accreditation_Form__c', 'GeneralOnlineAccreditation');
@@ -277,6 +283,7 @@ public without sharing class AMS_Utils {
 	public static final String CHLOCTYPEBEHAVIOR_STANDARD = CHLOCTYPEBEHAVIOR_SWAP;
 	public static final String SECTOR_CARGO = 'Cargo Agent';
 	public static final String SECTOR_PASSENGER = 'Travel Agent';
+	public static final String SECTOR_POSTAL_SERVICE = 'Postal Service';
 	public static final String SECTOR_AIRLINE = 'Airline';
 	public static final String SECTOR_INFRASTRUCTURE = 'Infrastructure Partner';
 	public static final String SECTOR_IATA = 'IATA';
@@ -310,6 +317,7 @@ public without sharing class AMS_Utils {
 
 	public static final String FINANCIAL_REVIEW_ANNUAL = 'Annual';
 	public static final String FINANCIAL_REVIEW_MAJOR_CHANGES = 'Major Changes';
+	public static final String FINANCIAL_REVIEW_NEW_APPLICATION = 'New applications';
 
 	public static final String FINANCIAL_REVIEW_MULTICOUNTRY_ANNUAL = 'Multicountry Annual';
 	public static final String FINANCIAL_REVIEW_MULTICOUNTRY_ADHOC = 'Multicountry Adhoc';
@@ -366,6 +374,7 @@ public without sharing class AMS_Utils {
 	public static final String CASE_TYPE_OF_CUSTOMER_IATA_TRAVEL_AGENT = 'IATA Travel Agent';
 
 	public static final String CATEGORY_TRAVEL_AGENT = 'Travel Agent';// To replaces uses with SECTOR_PASSENGER
+	public static final String CATEGORY_TIDS = 'TIDS Agent';
 	public static final String CATEGORY_PASSENGER_SALES_AGENT = 'IATA Passenger Sales Agent';
 	public static final String CATEGORY_NON_IATA_PASSENGER = 'Non-IATA Passenger Agent';
 	public static final String CATEGORY_NON_IATA_TRAVEL = 'Non-IATA Travel Agent';
@@ -383,6 +392,7 @@ public without sharing class AMS_Utils {
 	public static final String CATEGORY_TOUR_OPERATOR = 'Tour Operator';
 	public static final String CATEGORY_IATA_HEAD_OFFICE = 'IATA Head Office';
 	public static final String CATEGORY_CNS_ENDORSEMENT = 'CNS Endorsement';
+	public static final String CATEGORY_POSTAL_OPERATOR = 'Postal Operator';
 
 	public static final String TYPECHANGE_OWNERIATA2IATA = 'Ownership to IATA Agent';
 	public static final String TYPECHANGE_OWNERIATA2NONIATA = 'Ownership to non-IATA Agent';
@@ -429,6 +439,8 @@ public without sharing class AMS_Utils {
 
 	//Account - Location_Class__c
 	public static final String LC_PASSENGER = 'P';
+	public static final String LC_POSTAL_OPERATOR = 'L';
+	public static final String LC_TIDS = 'T';
 
 	//CNS new PROCESS Location Type requested
 	public static final String CNS_LOCATION_TYPE_REQUESTED_CNS_ENDORSEMENT_NEW_BRANCH = 'New BR / IP - CNS Endorsement';
@@ -1245,7 +1257,7 @@ public without sharing class AMS_Utils {
 				,IATA_ISO_Billing_State__c, IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_Country__r.Name, IATA_ISO_Shipping_State__c, IATA_ISO_Shipping_State__r.Name, ISO_State__r.Name,
 				Link_agent_name__c, ANG_Accreditation_Model__c, IATA_ISO_Country__r.CurrencyIsoCode, Covered_Ownership__c,
 				(SELECT Id FROM RHC_Informations__r), Is_PCI_compliant__c, IATA_ISO_Country__r.AMS_Settlement_System__r.CurrencyIsoCode, IATA_ISO_Country__r.AMS_Settlement_System__r.ANG_RHC_Amount_Equals_FS__c,
-				Geoname_Billing_City__c, Geoname_Shipping_City__c, Geoname_Billing_City__r.Name, Geoname_Shipping_City__r.Name, NDC_Agent__c
+				Geoname_Billing_City__c, Geoname_Shipping_City__c, Geoname_Billing_City__r.Name, Geoname_Shipping_City__r.Name, NDC_Agent__c, IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c
 				FROM Account
 				WHERE Id IN :oscarAccountIds]);
 
@@ -1268,11 +1280,11 @@ public without sharing class AMS_Utils {
 			Account acc = accounts.get(oscar.Account__c);
 
 			AMS_Pax_Accreditation_Form__c onlineAcc = onlineAccreditations.get(oscar.AMS_Online_Accreditation__c);
-			mapOscarOrigin.put(oscar.ID, onlineAcc.SAAM_Case__r.Origin);
+			
 			Map<Id, List<AMS_Agencies_relationhip__c>> accountHierarchyRelationships = AMS_HierarchyHelper.getAccountsHierarchies(new Set<Id>{acc.Id});
 
 			if (acc != null && onlineAcc != null) {
-
+				mapOscarOrigin.put(oscar.ID, onlineAcc.SAAM_Case__r.Origin);
 				List<AMS_ChangeCodesHelper.ObjectChange> accChanges = new List<AMS_ChangeCodesHelper.ObjectChange>();
 
 				for (String accfield : fieldsMapping.keySet()) {
@@ -1347,7 +1359,9 @@ public without sharing class AMS_Utils {
 					accountHasChanges = true;
 				}
 
-				if(oscar.Process__c == NEWHESTANDARD && acc.RHC_Informations__r.isEmpty()) createRHCInfo.add(acc);
+				if((oscar.Process__c == NEWHESTANDARD || 
+					(acc.IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c && oscar.Process__c == NEWHELITE))
+					&& acc.RHC_Informations__r.isEmpty()) createRHCInfo.add(acc);
 
 				onlineAccToCreateAccountRole.add(onlineAcc);
 
@@ -1433,22 +1447,6 @@ public without sharing class AMS_Utils {
 
 		return oldAccountValue;
 
-	}
-
-	private static boolean isEmptyAccountHierarchyRelationshipsMap(Map<Id, List<AMS_Agencies_relationhip__c>> accountHierarchyRelationships){
-
-		if(accountHierarchyRelationships.isEmpty())
-			return true;
-
-		if(accountHierarchyRelationships.values().isEmpty())
-			return true;
-
-		for(List<AMS_Agencies_relationhip__c> agency:accountHierarchyRelationships.values()){
-			if(!agency.isEmpty())
-				return false;
-		}
-
-		return true;
 	}
 
 	public static Boolean ownershipIsToBeMigrated(String typesOfChange){
@@ -2001,6 +1999,41 @@ public without sharing class AMS_Utils {
 
 		return result;
 
+	}
+
+	private static final map<String,String> MAP_GDS_ACCOUNT_TO_FORM  = new map<String,String>{
+		'ABAC' => 'Abacus',
+		'AGTD' => 'Amadeus',
+		'AXSS' => 'Axess',
+		'CMAS' => 'Kiu System',
+		'DERD' => 'Deutsche Reiseburo',
+		'FLGX' => 'Farelogix',
+		'GDSL' => 'Travelport (Galileo)',
+		'INFI' => 'Infini',
+		'KOTI' => 'Kotis Travel Info SE',
+		'MINS' => 'Travelsky',
+		'RESI' => 'Resiber',
+		'SABR' => 'Sabre',
+		'SITA' => 'SITA',
+		'STRA' => 'Sirena',
+		'TOPAS' => 'Topas',
+		'UALA' => 'Travelport (Apollo)',
+		'WSPN' => 'Travelport (Worldspan)'
+	};
+	/**
+		Method to transform values from Account.GDS__c to AMS_Accreditaion_Form__c.ISSP_AMS_GDS_with_signed_contract__c
+	*/
+	public static String transformGDSAccountToForm(String gdsString) {
+		if (String.isBlank(gdsString)) return '';
+
+		Set<String> setResult = new Set<String>();
+		for (String value: gdsString.split(';')) {
+			setResult.add(MAP_GDS_ACCOUNT_TO_FORM.get(value));
+		}
+
+		list<String> listResult = new list<String>(setResult);
+		listResult.sort();
+		return String.join(listResult,';');
 	}
 
 	public static String errorMessageBeautifyer(Exception ex) {
@@ -2829,7 +2862,7 @@ public static String getChangeCodeMemoText(String process,String changeCodeId, A
 		public static final List<Schema.FieldSetMember> ACCOUNT_FIELDS_TO_VALIDATE = SObjectType.Account.FieldSets.AMS_ACCOUNT_FIELDS_TO_VALIDATE.getFields();
 
 	/*** AMSU-173 ***/
-	public static final Set<String> CLASS_REQ_CASS_NUMBER = new Set<String> {'C', 'I', 'R', 'Q', 'G'};
+	public static final Set<String> CLASS_REQ_CASS_NUMBER = new Set<String> {'C', 'I', 'R', 'Q', 'G', 'L'};
 
 
 	/*** AMSU-195 Start ***/
