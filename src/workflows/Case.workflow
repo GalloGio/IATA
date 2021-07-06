@@ -3188,19 +3188,6 @@
         <template>SIS_Help_Desk/SIS_Escalated_Case_Notification_to_the_Customer</template>
     </alerts>
     <alerts>
-        <fullName>SIS_Escalated_case_notification_to_CS_Manager</fullName>
-        <ccEmails>simardd@iata.org</ccEmails>
-        <description>SIS Escalated case notification to CS Manager</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>IATASISCustomerSupport</recipient>
-            <type>group</type>
-        </recipients>
-        <senderAddress>sishelp@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>SIS_Help_Desk/SIS_Escalated_Notification_to_CS_manager</template>
-    </alerts>
-    <alerts>
         <fullName>SIS_HD_New_case_comment_notification</fullName>
         <ccEmails>SIS_Servicedesk@kaleconsultants.com</ccEmails>
         <ccEmails>smitha@iata.org</ccEmails>
@@ -3230,30 +3217,6 @@
         <senderAddress>noreply@iata.org</senderAddress>
         <senderType>OrgWideEmailAddress</senderType>
         <template>SIS_Help_Desk/SIS_Case_Closure_Notification_to_the_customer</template>
-    </alerts>
-    <alerts>
-        <fullName>SIS_new_case_notification_to_SIS_customer_support_team</fullName>
-        <description>SIS new case notification to SIS customer support team</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>IATASISCustomerSupport</recipient>
-            <type>group</type>
-        </recipients>
-        <senderAddress>sishelp@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>SIS_Help_Desk/SIS_Help_Desk_New_Case_Notification_Template_Web</template>
-    </alerts>
-    <alerts>
-        <fullName>SIS_new_case_notification_to_SIS_customer_support_team_web_details</fullName>
-        <description>SIS new case notification to SIS customer support team - web details</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>IATASISCustomerSupport</recipient>
-            <type>group</type>
-        </recipients>
-        <senderAddress>sishelp@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>SIS_Help_Desk/SIS_Help_Desk_New_Case_Notification_Template_Web</template>
     </alerts>
     <alerts>
         <fullName>Salesforce_Change_Request_Approval_Request</fullName>
@@ -4728,16 +4691,6 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>Development_Start_Date_Today</fullName>
-        <description>Updates Development Start Date with Today&apos;s Data</description>
-        <field>Development_Start_Date__c</field>
-        <formula>TODAY()</formula>
-        <name>Development Start Date = Today</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>ESCCaseStatusInProgress</fullName>
         <description>Update Case Status to In Progress once the Escalated Status is set to Completed.</description>
         <field>Status</field>
@@ -5575,17 +5528,6 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Manager_ACR</fullName>
-        <field>Product_Manager_ACR__c</field>
-        <lookupValue>byrnej@iata.org</lookupValue>
-        <lookupValueType>User</lookupValueType>
-        <name>Manager ACR</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>true</reevaluateOnChange>
     </fieldUpdates>
     <fieldUpdates>
         <fullName>Move_to_Recycle_Bin_Europe</fullName>
@@ -6604,16 +6546,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>UAT_Date_Today</fullName>
-        <description>Updates the UAT Date with Today&apos;s date</description>
-        <field>UAT_Date__c</field>
-        <formula>TODAY()</formula>
-        <name>UAT Date = Today</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>Uncheck_is_from_IfapRest_Checkbox</fullName>
         <field>From_IFAPRest__c</field>
         <literalValue>0</literalValue>
@@ -7151,66 +7083,6 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
             <value>Approved</value>
         </criteriaItems>
         <description>Updates the Approval Date when the Case Status is changed to Approval</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>ACR AIMS%3A Update Deployment Date</fullName>
-        <actions>
-            <name>Deployment_Date_Today2</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Application Change Request (AIMS)</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Deployment</value>
-        </criteriaItems>
-        <description>Updates the Deployment Date when the Case Status is changed to Deployment</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>ACR AIMS%3A Update Development Start Date</fullName>
-        <actions>
-            <name>Development_Start_Date_Today</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Application Change Request (AIMS)</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Development</value>
-        </criteriaItems>
-        <description>Updates the Development Start Date when the Case Status is changed to Development</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>ACR AIMS%3A Update UAT Date</fullName>
-        <actions>
-            <name>UAT_Date_Today</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Application Change Request (AIMS)</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>UAT</value>
-        </criteriaItems>
-        <description>Updates the UAT Date when the Case Status is changed to UAT</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -8121,21 +7993,6 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
             <value>6.0 UAT Approval - DD - s/holder comm</value>
         </criteriaItems>
         <description>Create a communication task for the case owner (to inform about stakeholder impact communication) when the case status changes to 6.0 UAT Approval - DD - s/holder comm</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>DPC System Picklist</fullName>
-        <actions>
-            <name>Manager_ACR</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.DPC_Software__c</field>
-            <operation>equals</operation>
-            <value>Germany-D,Korea-D,Maestro-D</value>
-        </criteriaItems>
-        <description>Update ACR Manger when picklist Maestro-D / Korea-D /Germany-D</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
@@ -13932,29 +13789,6 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <field>Case.Status</field>
             <operation>equals</operation>
             <value>Closed</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>SIS Help Desk - Case escalation notification to CS Manager</fullName>
-        <actions>
-            <name>SIS_Escalated_case_notification_to_CS_Manager</name>
-            <type>Alert</type>
-        </actions>
-        <active>true</active>
-        <criteriaItems>
-            <field>Case.CaseArea__c</field>
-            <operation>equals</operation>
-            <value>SIS</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Escalated</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.External_Reference_Number__c</field>
-            <operation>equals</operation>
         </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
