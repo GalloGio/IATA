@@ -639,8 +639,9 @@ public without sharing class IGOMComplianceReviewUtil {
 		// 3. Check the station doing the publish, for "leaf stations" (ground handlers) allow publishing, the rest can only template
 		IGOMAccountRoleRelationshipsUtil.AllRelationships allRelationships = IGOMAccountRoleRelationshipsUtil.getAllRelationships(accountRoleDetailId);
 		gapToPublish.Publish_Status__c = allRelationships.childStations.isEmpty() ? IGOMConstants.COMPLIANCE_REVIEW.STATUS.PUBLISHED : IGOMConstants.COMPLIANCE_REVIEW.STATUS.TEMPLATE;
-		// 4. Set the effective date and the reminder date if theres more than 7 days
+		// 4. Set the effective date, mark that it's a latest published gap and the reminder date if theres more than 7 days
 		gapToPublish.Effective_Date__c = effectiveDate;
+		gapToPublish.Is_Latest_Published__c = true;
 		if (notificationReminderDate != null && notificationReminderDate.daysBetween(effectiveDate) >= 7) {
 			gapToPublish.Notification_Date__c = notificationReminderDate;
 		}
@@ -679,16 +680,25 @@ public without sharing class IGOMComplianceReviewUtil {
 	 * @param		stationId <Id of the station as an account role id>
 	 * @return		List with every gap analysis' information.
 	 */
-	@AuraEnabled(cacheable=true)
-	public static List<ComplianceReview> getActualGapAnalyses(Id stationId) {
+	@AuraEnabled
+	public static List<ComplianceReview> getActualGapAnalyses(Id stationId, Id documentId, Boolean retrievePublishedGaps) {
+		if (retrievePublishedGaps && !IGOMPermissions.hasPermission(IGOMConstants.PERMISSIONS.VIEW_ALL_VARIATIONS) &&
+			!IGOMPermissions.hasPermission(stationId, IGOMConstants.PERMISSIONS.VIEW_OWN_VARIATIONS)) {
+			throw new AuraHandledException(String.format(IGOMConstants.ERRORS.REQUIRED_PERMISSIONS_MISSING_ERROR, new List<String>{'publish a GAP Analysis'}));
+		}
 		// validate permissions
 		List<ComplianceReview> complianceReviews = new List<ComplianceReview>();
-		for (Compliance_Review__c sfComplianceReview :
-			 [SELECT Id, Name, Effective_Date__c, Publish_Status__c, Document__c, Previous_Version__c,
-					  Document__r.Effective_Date__c, Title__c, Station__c, Document__r.Abbreviated_Name__c, Document__r.Edition__c, Document__r.Version__c, Document__r.Revision__c
-			  FROM Compliance_Review__c
-			  WHERE Station__c = :stationId AND Document__r.Is_Active__c = true
-			  ORDER BY Effective_Date__c DESC])
+
+		String query = 'SELECT Id, Name, Effective_Date__c, Publish_Status__c, Document__c, Previous_Version__c, Document__r.Effective_Date__c, '+
+		'Title__c, Station__c, Document__r.Abbreviated_Name__c, Document__r.Edition__c, Document__r.Version__c, Document__r.Revision__c ' + 
+		'FROM Compliance_Review__c WHERE Station__c = :stationId AND Document__c = :documentId ';
+		if(retrievePublishedGaps){
+			String publishedStatus = IGOMConstants.COMPLIANCE_REVIEW.STATUS.PUBLISHED;
+			query += 'AND Publish_Status__c = :publishedStatus ';
+		}
+		query += 'ORDER BY Effective_Date__c DESC';
+
+		for (Compliance_Review__c sfComplianceReview : (List<Compliance_Review__c>) Database.query(query))
 		{
 			complianceReviews.add(new ComplianceReview(sfComplianceReview));
 		}
@@ -710,7 +720,7 @@ public without sharing class IGOMComplianceReviewUtil {
 		List<ComplianceReview> complianceReviews = new List<ComplianceReview>();
 		for (Compliance_Review__c sfComplianceReview :
 			 [SELECT Id, Name, Effective_Date__c, Publish_Status__c, Document__c, Previous_Version__c,
-					  Document__r.Effective_Date__c, Title__c, Station__c,  Document__r.Abbreviated_Name__c, Document__r.Edition__c, Document__r.Version__c, Document__r.Revision__c
+					  Document__r.Effective_Date__c, Title__c, Station__c, Document__r.Abbreviated_Name__c, Document__r.Edition__c, Document__r.Version__c, Document__r.Revision__c
 			  FROM Compliance_Review__c
 			  WHERE Station__c = :accountRoleId AND Publish_Status__c = :IGOMConstants.COMPLIANCE_REVIEW.STATUS.PUBLISHED
 			  ORDER BY Effective_Date__c DESC])

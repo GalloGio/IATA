@@ -60,7 +60,7 @@
                 <div if:true={isOtherLangAdded}>
                     <div class="form-group slds-select_container">
                         <select class="slds-select form-control width-100" data-field="variationCommentLang" onchange={updateEditingItem}>
-                            <template for:each={commentLanguages.data} for:item="language">
+                            <template for:each={commentLanguages} for:item="language">
                                 <option key={language} value={language}>{language}</option>
                             </template>
                         </select>
