@@ -375,22 +375,22 @@ public class AMS_OSCAR_ProcessViewerController {
 
 	public void populateRiskEventAndChangeCodes(ID accountID){
 
-        riskEventList = [SELECT Id, ANG_expiration_date_ff__c, Applicable_for_re_activation__c, ang_event_status__c
-                        FROM ANG_Agency_Risk_Event__c 
-                        WHERE ANG_AccountId__c  =: accountID 
-                            AND  ang_event_status__c =: ANG_Risk_Helper.STATUS_INACTIVE_CASHLESS 
-                            AND Applicable_for_re_activation__c =: true
-                            AND ANG_expiration_date_ff__c >=: Date.today()
-                            ];
+		riskEventList = [SELECT Id, ANG_expiration_date_ff__c, Applicable_for_re_activation__c, ang_event_status__c
+						FROM ANG_Agency_Risk_Event__c 
+						WHERE ANG_AccountId__c  =: accountID 
+							AND  ang_event_status__c =: ANG_Risk_Helper.STATUS_INACTIVE_CASHLESS 
+							AND Applicable_for_re_activation__c =: true
+							AND ANG_expiration_date_ff__c >=: Date.today()
+						];
         
-        agencyAppliedChangeCodes = [SELECT id, Account__c, OSCAR__r.ANG_Type_Of_Change__c, 
-                                            OSCAR__r.AMS_Online_Accreditation__r.ANG_Accreditation_Model_to_Change__c, CreatedDate 
-                                        FROM Agency_Applied_Change_code__c 
-                                        WHERE Account__c =: accountID
-                                            AND Change_Code__c =: 'CHA'
-                                            AND CreatedDate <: Date.today()
-                                            ORDER BY CreatedDate DESC];
-    }
+		agencyAppliedChangeCodes = [SELECT id, Account__c, OSCAR__r.ANG_Type_Of_Change__c, 
+											OSCAR__r.AMS_Online_Accreditation__r.ANG_Accreditation_Model_to_Change__c, CreatedDate 
+										FROM Agency_Applied_Change_code__c 
+										WHERE Account__c =: accountID
+											AND Change_Code__c =: AMS_Utils.CHA_CHANGE_CODE
+											AND CreatedDate <: Date.today()
+											ORDER BY CreatedDate DESC];
+	}
 
 	public String convertToString(Blob value){
 		return EncodingUtil.urlDecode(value.toString(), 'UTF-8');
@@ -485,8 +485,8 @@ public class AMS_OSCAR_ProcessViewerController {
 				if (step.name == 'STEP36' && process.name == 'ANG.MAJOR.CHANGES.1.0'
 					&& oscar.ANG_Type_Of_Change__c == AMS_Utils.ANG_ACCREDITATION_TYPE 
 					&& oscar.AMS_Online_Accreditation__r.ANG_Accreditation_Model_to_Change__c == AMS_Utils.ACCREDITATIONMODEL_CASH 
-					&& (agencyAppliedChangeCodes != null && !agencyAppliedChangeCodes.isEmpty())
-					&& (riskEventList != null && !riskEventList.isEmpty())){
+					&& agencyAppliedChangeCodes != null && !agencyAppliedChangeCodes.isEmpty()
+					&& riskEventList != null && !riskEventList.isEmpty()){
 					for(Agency_Applied_Change_code__c cc: agencyAppliedChangeCodes){
 						if(cc.OSCAR__r.ANG_Type_Of_Change__c == AMS_Utils.ANG_ACCREDITATION_TYPE
 								&& cc.OSCAR__r.AMS_Online_Accreditation__r.ANG_Accreditation_Model_to_Change__c == AMS_Utils.ACCREDITATIONMODEL_CASHLESS
