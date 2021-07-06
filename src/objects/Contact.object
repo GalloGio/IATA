@@ -15190,7 +15190,6 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
         <label>SIS Contacts</label>
         <language>en_US</language>
         <sharedTo>
-            <group>IATASISCustomerSupport</group>
             <group>IATASISHelpDeskAgent</group>
             <group>IATASISOperations</group>
         </sharedTo>
@@ -15212,7 +15211,6 @@ IF( ISPICKVAL(ValidContactDomainName__c, &quot;invalid&quot;),
         <label>SIS Service Provider Contacts</label>
         <language>en_US</language>
         <sharedTo>
-            <group>IATASISCustomerSupport</group>
             <group>IATASISHelpDeskAgent</group>
             <group>IATASISOperations</group>
         </sharedTo>
