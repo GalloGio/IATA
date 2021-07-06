@@ -524,6 +524,7 @@ public without sharing class AMS_Utils {
 	public static final String NFS_CHANGE_CODE = 'NFS';
 	public static final String GDI_CHANGE_CODE = 'GDI';
 	public static final String GDN_CHANGE_CODE = 'GDN';
+	public static final String CHA_CHANGE_CODE = 'CHA';
 	
 	public static final String INVOICE_STATUS_NA = 'N/A';
 	public static final String INVOICE_STATUS_PAID = 'Paid';
