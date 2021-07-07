@@ -4,15 +4,9 @@
     <name>Airline Settlement Risk</name>
     <queueMembers>
         <users>
-            <user>ferratec@iata.org</user>
             <user>gonzalezce@iata.org</user>
-            <user>wangc@iata.org</user>
             <user>xuj@iata.org</user>
-            <user>navarroij@iata.org</user>
             <user>shaikhn@iata.org</user>
-            <user>govenderr@iata.org</user>
-            <user>pangsc@iata.org</user>
-            <user>jiangxu@iata.org</user>
         </users>
     </queueMembers>
     <queueSobject>
