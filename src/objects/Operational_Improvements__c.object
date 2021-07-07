@@ -11869,7 +11869,7 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
         <filters>
             <field>Region__c</field>
             <operation>contains</operation>
-            <value>Africa &amp; Middle East,Americas,Asia &amp; Pacific,China &amp; North Asia,Europe,GVA</value>
+            <value>Africa &amp; Middle East,Americas,Asia &amp; Pacific,China &amp; North Asia,Europe,Global</value>
         </filters>
         <filters>
             <field>OI_Type__c</field>
