@@ -6,6 +6,10 @@ public with sharing class IA_HomeController {
 	//5 sections available: CONTACTS, MEMOS, ALL, REQ and NEW
 	public String showSection {get;set;}
 
+	public String getMapAgreementsByNameJson() {
+		return Json.serialize(IA_util.MAP_AGREEMENTS_BY_NAME);
+	}
+
 	private User currentUser;
 
 	public IA_HomeController(){
