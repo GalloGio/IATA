@@ -4,6 +4,7 @@
     
     <aura:attribute name="processOrchestratorId" type="String"  />
     <aura:attribute name="stage" type="String" required="false" />
+    <aura:attribute name="counter" type="Integer"/>
     <aura:attribute name="stageStatus" type="String" /><!-- WMO-630 -->
     <aura:attribute name="previousVariant" type="String" required="false" default="neutral" />
     <aura:attribute name="nextVariant" type="String" required="false" default="brand" />
