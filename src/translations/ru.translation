@@ -3010,6 +3010,10 @@
         <name>CSP_Breadcrump_MyProfile_Title</name>
     </customLabels>
     <customLabels>
+        <label>Рабочий адрес электронной почты (если она у вас есть)</label>
+        <name>CSP_Business_Email</name>
+    </customLabels>
+    <customLabels>
         <label>Приобрести Онлайн</label>
         <name>CSP_Buy_Online</name>
     </customLabels>

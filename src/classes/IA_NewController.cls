@@ -185,6 +185,7 @@ public without sharing class IA_NewController {
 						availableAgreementsRows.add(row);
 					}
 				}
+				availableAgreementsRows.sort();
 			}
 			return availableAgreementsRows;
 		}
@@ -194,13 +195,16 @@ public without sharing class IA_NewController {
 	/**
 	 * wrapper class to store a table row
 	 */
-	public class AvailableAgreementsRow {
+	public class AvailableAgreementsRow implements Comparable{
 		public String designator {get;set;}
 		public String iatacode {get;set;}
 		public String Prefix {get;set;}
 		public String airlinename {get;set;}
 		public list<AvailableAgreementsDetailRow> details {get;set;}
 		public String otherAccount {get;set;}
+		public Integer compareTo(Object compareTo) {
+			return (designator > ((AvailableAgreementsRow)compareTo).designator)? 1:-1;
+		}
 	}
 	public class AvailableAgreementsDetailRow {
 		public String agreementname {get;set;}

@@ -3013,6 +3013,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Breadcrump_MyProfile_Title</name>
     </customLabels>
     <customLabels>
+        <label>Email Doanh nghiệp (trong trường hợp bạn có)</label>
+        <name>CSP_Business_Email</name>
+    </customLabels>
+    <customLabels>
         <label>Mua trực tuyến</label>
         <name>CSP_Buy_Online</name>
     </customLabels>
