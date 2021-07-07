@@ -29,6 +29,9 @@ public class AMS_OSCAR_ProcessViewerController {
 	};
 
 	private static final String CLASS_BLACK = '';
+	private static final String STEP52 = 'STEP52';
+	private static final String STEP36 = 'STEP36';
+	private static final String STEP06 = 'STEP6';
 	private static final String CLASS_RED = 'red';
 	private static final String CLASS_GREEN = 'green';
 	private static final String CLASS_BLUE = 'blue';
@@ -475,14 +478,14 @@ public class AMS_OSCAR_ProcessViewerController {
 					firstExpanded = true;
 				}
 
-				if (step.name == 'STEP6') { // sanity check
+				if (step.name == STEP06) { // sanity check
 					if (oscar.Process__c == NGCONVERSIONMCTOSTANDARD && isParentOscar && oscar.Child_OSCAR_Status__c != AMS_Utils.OSCAR_CHILD_PROCESSING_FINISHED)
 						step.saveActionEnabled = false;
 					else if (oscar.Process__c == NGCONVERSIONMCTOSTANDARD && oscar.Child_OSCAR_Status__c == AMS_Utils.OSCAR_CHILD_PROCESSING_FINISHED_CASE)
 						step.saveActionEnabled = false;
 				}
 				// Re-active Risk Event
-				if (step.name == 'STEP36' && process.name == 'ANG.MAJOR.CHANGES.1.0'
+				if (step.name == STEP36 && process.name == AMS_Utils.NGCHANGES
 					&& oscar.ANG_Type_Of_Change__c == AMS_Utils.ANG_ACCREDITATION_TYPE 
 					&& oscar.AMS_Online_Accreditation__r.ANG_Accreditation_Model_to_Change__c == AMS_Utils.ACCREDITATIONMODEL_CASH 
 					&& agencyAppliedChangeCodes != null && !agencyAppliedChangeCodes.isEmpty()
@@ -498,7 +501,7 @@ public class AMS_OSCAR_ProcessViewerController {
 					}
 				}
 				
-				if(step.name == 'STEP52'){
+				if(step.name == STEP52){
 					indexStep52ToRemove = indexSteps; 
 					indexFlow52ToRemove = indexFlows;
 				}
@@ -508,7 +511,7 @@ public class AMS_OSCAR_ProcessViewerController {
 		}
 		if(haveSomeMenuToRemove){
 			process.flows[indexFlowsToRemove].steps.remove(indexStepsToRemove);
-		}else if(process.flows[indexFlow52ToRemove].steps[indexStep52ToRemove].name == 'STEP52'){
+		}else if(process.flows[indexFlow52ToRemove].steps[indexStep52ToRemove].name == STEP52){
 				process.flows[indexFlow52ToRemove].steps.remove(indexStep52ToRemove);
 		}
 	}
