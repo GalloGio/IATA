@@ -366,5 +366,120 @@ ISBLANK(Participant_Contact__r.Account.IATA_ISO_Country__c)
         <errorMessage>The contact chosen must have a value for the following fields:
 First Name, Last Name, Job Title, Email and Account Name. Please complete these information and try again.</errorMessage>
     </validationRules>
+    <validationRules>
+        <fullName>Local_Groups_Meeting_Attendees</fullName>
+        <active>true</active>
+        <description>This validation rule reflects the rules established by resolution to allow only specific entities to attend meetings of specific local group types.</description>
+        <errorConditionFormula>AND(
+AND(
+NOT(
+AND(
+OR(
+Participant_Contact__r.Account.RecordType.DeveloperName=&quot;IATA_Airline&quot;, 
+Participant_Contact__r.Account.RecordType.DeveloperName=&quot;IATA_Airline_BR&quot;),
+OR(
+Local_Governance_Meeting__r.Local_Group_Type__c=&quot;APJC&quot;,
+Local_Governance_Meeting__r.Local_Group_Type__c=&quot;APJC /FAG&quot;,
+Local_Governance_Meeting__r.Local_Group_Type__c=&quot;LCAG-P&quot;,
+Local_Governance_Meeting__r.Local_Group_Type__c=&quot;LCAG-P / Credit Card WG&quot;,
+Local_Governance_Meeting__r.Local_Group_Type__c=&quot;ICAP&quot;,
+Local_Governance_Meeting__r.Local_Group_Type__c=&quot;LCAG-C&quot;,
+Local_Governance_Meeting__r.Local_Group_Type__c=&quot;CCC&quot;,
+Local_Governance_Meeting__r.Local_Group_Type__c=&quot;CEC&quot;,
+Local_Governance_Meeting__r.Local_Group_Type__c=&quot;CGA&quot;,
+Local_Governance_Meeting__r.Local_Group_Type__c=&quot;CAPJC&quot;
+)
+)
+),
+NOT(
+AND(
+OR(
+AND(
+ISPICKVAL(Participant_Contact__r.Account.Sector__c,&quot;Association&quot;),
+OR(
+Participant_Contact__r.Account.RecordType.DeveloperName=&quot;Standard_Account&quot;,
+Participant_Contact__r.Account.RecordType.DeveloperName=&quot;Others&quot;
+)
+),
+Participant_Contact__r.Account.RecordType.DeveloperName=&quot;IATA_Agency&quot;
+),
+OR(
+Local_Governance_Meeting__r.Local_Group_Type__c=&quot;APJC&quot;,
+Local_Governance_Meeting__r.Local_Group_Type__c=&quot;APJC / FAG&quot;,
+Local_Governance_Meeting__r.Local_Group_Type__c=&quot;CCC&quot;,
+Local_Governance_Meeting__r.Local_Group_Type__c=&quot;CEC&quot;,
+Local_Governance_Meeting__r.Local_Group_Type__c=&quot;CGA&quot;,
+Local_Governance_Meeting__r.Local_Group_Type__c=&quot;CAPJC&quot;
+)
+)
+),
+NOT(
+AND(
+Participant_Contact__r.Account.RecordType.DeveloperName=&quot;IATA_GSA&quot;,
+OR(
+Local_Governance_Meeting__r.Local_Group_Type__c=&quot;LCAG-C&quot;,
+Local_Governance_Meeting__r.Local_Group_Type__c=&quot;CAPJC&quot;
+)
+)
+),
+Local_Governance_Meeting__r.Local_Governance__r.RecordType.DeveloperName=&quot;Local_Groups&quot;
+),
+AND(    
+NOT(
+AND(
+OR(
+Participant_Contact__r.Account.RecordType.DeveloperName=&quot;IATA_Airline&quot;, 
+Participant_Contact__r.Account.RecordType.DeveloperName=&quot;IATA_Airline_BR&quot;
+),
+OR(
+Local_Governance_Meeting__r.Local_Group_Type__c=&quot;APJC&quot;,
+Local_Governance_Meeting__r.Local_Group_Type__c=&quot;APJC / FAG&quot;,
+Local_Governance_Meeting__r.Local_Group_Type__c=&quot;LCAG-P&quot;,
+Local_Governance_Meeting__r.Local_Group_Type__c=&quot;LCAG-P / Credit Card WG&quot;,
+Local_Governance_Meeting__r.Local_Group_Type__c=&quot;ICAP&quot;,
+Local_Governance_Meeting__r.Local_Group_Type__c=&quot;LCAG-C&quot;,
+Local_Governance_Meeting__r.Local_Group_Type__c=&quot;CCC&quot;,
+Local_Governance_Meeting__r.Local_Group_Type__c=&quot;CEC&quot;,
+Local_Governance_Meeting__r.Local_Group_Type__c=&quot;CGA&quot;,
+Local_Governance_Meeting__r.Local_Group_Type__c=&quot;CAPJC&quot;
+)
+)
+),
+NOT(
+AND( 
+OR( 
+AND(
+ISPICKVAL(Participant_Contact__r.Account.Sector__c,&quot;Association&quot;),
+OR(
+Participant_Contact__r.Account.RecordType.DeveloperName=&quot;Standard_Account&quot;, 
+Participant_Contact__r.Account.RecordType.DeveloperName=&quot;Others&quot;
+)
+),
+Participant_Contact__r.Account.RecordType.DeveloperName=&quot;IATA_Agency&quot;
+),
+OR(
+Local_Governance_Meeting__r.Local_Group_Type__c=&quot;APJC&quot;,
+Local_Governance_Meeting__r.Local_Group_Type__c=&quot;APJC / FAG&quot;,
+Local_Governance_Meeting__r.Local_Group_Type__c=&quot;CCC&quot;,
+Local_Governance_Meeting__r.Local_Group_Type__c=&quot;CEC&quot;,
+Local_Governance_Meeting__r.Local_Group_Type__c=&quot;CGA&quot;,
+Local_Governance_Meeting__r.Local_Group_Type__c=&quot;CAPJC&quot;
+)
+)
+),
+NOT(
+AND( 
+Participant_Contact__r.Account.RecordType.DeveloperName=&quot;IATA_GSA&quot;,
+OR(
+Local_Governance_Meeting__r.Local_Group_Type__c=&quot;LCAG-C&quot;,
+Local_Governance_Meeting__r.Local_Group_Type__c=&quot;CAPJC&quot;
+)
+)
+),
+Local_Governance_Meeting__r.Local_Governance__r.RecordType.DeveloperName=&quot;Local_Groups&quot;
+)
+)</errorConditionFormula>
+        <errorMessage>The meeting attendee that you are trying to add is not allowed by Resolution.</errorMessage>
+    </validationRules>
     <visibility>Public</visibility>
 </CustomObject>
