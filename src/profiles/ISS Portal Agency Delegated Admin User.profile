@@ -48004,6 +48004,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>LocalGovernance_Meeting__c.Local_Group_Type__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>LocalGovernance_Meeting__c.Meeting_Responsible__c</field>
         <readable>false</readable>
     </fieldPermissions>

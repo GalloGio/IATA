@@ -3853,6 +3853,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <value>User Profile</value>
     </labels>
     <labels>
+        <fullName>CSP_Business_Email</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Business Email</shortDescription>
+        <value>Business Email (in case you have one)</value>
+    </labels>
+    <labels>
         <fullName>CSP_Buy_Online</fullName>
         <language>en_US</language>
         <protected>false</protected>

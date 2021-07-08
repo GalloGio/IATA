@@ -706,7 +706,7 @@ public class AMS_OSCARTriggerHandler {
 																	AMS_Utils.new_GSA,
 																	AMS_Utils.new_GSSA,
 																	AMS_Utils.new_AHA
-																	};
+																};
 
 		/*** AMSU-31 Start ***/
 		Set<AMS_Oscar__c> oscarsToCreateAuth = new Set<AMS_Oscar__c>();
@@ -4008,7 +4008,6 @@ public class AMS_OSCARTriggerHandler {
 			boolean bGenerateCC =  false;
 			String changeCodeId = '';
 			if (oldOSCAR.STEP2__c != 'Passed' && updatedOscar.STEP2__c == 'Passed') {
-
 				/*** AMSU-31 Start ***/
 				Set<String> processesToCheck = new Set<String> {AMS_Utils.new_HO, AMS_Utils.new_BR, AMS_Utils.new_SA, AMS_Utils.new_BR_ABROAD, AMS_Utils.NEWHELITE, AMS_Utils.NEWHESTANDARD, AMS_Utils.NEWAE, AMS_Utils.MCAE, AMS_Utils.NEWGESTANDARD};
 				Set<String> classesToCheck = new Set<String> {'P', 'D'};
@@ -4022,8 +4021,11 @@ public class AMS_OSCARTriggerHandler {
 				bGenerateCC = true;
 				changeCodeId = 'DIS-' + updatedOscar.Business_Process__c;
 			}else if (oldOSCAR.STEP4__c != AMS_Utils.PASSED && updatedOscar.STEP4__c == AMS_Utils.PASSED) {
-				bGenerateCC = true;
-				changeCodeId = 'NWD-' + updatedOscar.Business_Process__c;
+				Account oscarAccount = getAccounts(updatedOscar.Account__c).get(0);
+				if(!String.isBlank(oscarAccount.IATACode__c)){
+					bGenerateCC = true;
+					changeCodeId = 'NWD-' + updatedOscar.Business_Process__c;
+				}
 			}else if (oldOSCAR.STEP5__c != AMS_Utils.PASSED && updatedOscar.STEP5__c == AMS_Utils.PASSED) {
 				bGenerateCC = true;
 				changeCodeId = 'REC-' + updatedOscar.Business_Process__c;
