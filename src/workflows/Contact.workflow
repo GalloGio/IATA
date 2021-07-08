@@ -196,15 +196,6 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>Deleting_IS_date_post_30</fullName>
-        <description>This rule will delete the IS received date on Contact object after 30 days</description>
-        <field>Instant_Survey_Last_feedback_received__c</field>
-        <name>Deleting IS date post 30</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Null</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>IFAP_Enable_portal_self_registration</fullName>
         <field>CanAllowPortalSelfReg</field>
         <literalValue>1</literalValue>
@@ -299,19 +290,6 @@
         <operation>Literal</operation>
         <protected>false</protected>
     </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Update_Record</fullName>
-        <description>This field is updated with Record Sharing Criteria values</description>
-        <field>Record_Sharing_Criteria_AUX__c</field>
-        <formula>IF(INCLUDES(Record_Sharing_Criteria__c, &quot;IFG Active Users&quot;),&quot;IFG Active Users;&quot;,&quot;&quot;)
-&amp;
-IF(INCLUDES(Record_Sharing_Criteria__c, &quot;TIP User&quot;),&quot;TIP User;&quot;,&quot;&quot;)</formula>
-        <name>Update Record Sharing Criteria AUX</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>true</reevaluateOnChange>
-    </fieldUpdates>
     <rules>
         <fullName>E%26F %3A Notification On Client Contact Deactivation</fullName>
         <actions>
@@ -361,16 +339,6 @@ IF(INCLUDES(Record_Sharing_Criteria__c, &quot;TIP User&quot;),&quot;TIP User;&qu
         </criteriaItems>
         <description>Notification of deactivated operator E&amp;F contact</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Field update with values of field Record Sharing Criteria</fullName>
-        <actions>
-            <name>Update_Record</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <formula>ISCHANGED(Record_Sharing_Criteria__c)</formula>
-        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>IDCard_RenewalNotice</fullName>

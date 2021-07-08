@@ -757,7 +757,7 @@ public with sharing class ISSP_AvailableServices{
 
 		Boolean isAdmin = isPortalAdminUser();
 		Portal_Applications__c parentApp = [SELECT Id, Cannot_be_managed_by_portal_admin__c, Auto_approved_for__c, Requires_Service_Admin_Approval__c FROM Portal_Applications__c WHERE Id=:applicationId];
-		if(isRequestableWithoutApproval(isAdmin,parentApp,currentPortalUser.Profile) || !parentApp.Requires_Service_Admin_Approval__c) {
+		if(isRequestableWithoutApproval(isAdmin,parentApp,currentPortalUser.Profile)) {
 			appRight = 'Access Granted';
 			res = 'okauto';
 		}
@@ -765,7 +765,8 @@ public with sharing class ISSP_AvailableServices{
 		Portal_Application_Right__c app =  new Portal_Application_Right__c(Contact__c = contactId, Portal_Application__c = applicationId,Right__c = appRight, ANG_Portal_Service_Role__c = appRole);
 		app.Application_uniqueness_for_contact__c = contactId.left(15) + applicationId.left(15);
 		upsert app Application_uniqueness_for_contact__c;
-		submitApprovalProcess(app.id);
+		if(!parentApp.Requires_Service_Admin_Approval__c)
+			submitApprovalProcess(app.id);
 		return res;
 	}
 

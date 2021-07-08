@@ -36,4 +36,23 @@ public class TestDataFactory_Accounts {
 		}
 		return accountList;
 	}
+
+	public static List<Account> createAirlines (Integer numberOfRecords){
+		//get airline HQ record type
+		Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
+
+		//create and return Account List
+		List<Account> accountList = new List<Account>();
+		for (Integer x = 0; x < numberOfRecords; x ++){
+			Account account = new Account(
+				Name = DEFAULTNAME + ' ' + x,
+				RecordTypeId = recordTypeId,
+				IATACode__c = x.format().leftPad(6, '0'),
+				Airline_designator__c = x.format().leftPad(2, '0'),
+				Airline_Prefix__c = x.format().leftPad(3, '0')
+			);
+			accountList.add(account);
+		}
+		return accountList;
+	}
 }

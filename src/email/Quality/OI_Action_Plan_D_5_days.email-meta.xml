@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>OI_Action Plan D- 5 days</description>
+    <encodingKey>UTF-8</encodingKey>
+    <letterhead>IATADynamicSkyLetterhead</letterhead>
+    <name>OI_Action Plan D- 5 days</name>
+    <style>freeForm</style>
+    <subject>{!Operational_Improvements__c.Name} - {!Operational_Improvements__c.Subject__c} - Action Plan Reminder D-5 days</subject>
+    <textOnly>Dear {!OI_Action_Plan__c.Action_Owner__c},
+
+
+We would like to remind you that you are the owner of the following Action Plan for Continuous Improvement {!Operational_Improvements__c.Name} whose deadline expires in 5 days.
+
+
+Specific Action
+
+Description: {!OI_Action_Plan__c.Description__c}
+
+Due Date: {!OI_Action_Plan__c.Due_Date__c}
+
+
+Please note the deadline is indicative. In case you wish to modify it or your action is already completed, notify me.
+
+
+Below you may find the link to the Continuous Improvement for more details.
+
+
+Subject: {!Operational_Improvements__c.Subject__c}
+
+{!Operational_Improvements__c.Link}
+
+
+Thank you and Best Regards,
+
+{!Operational_Improvements__c.OwnerFullName}</textOnly>
+    <type>html</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

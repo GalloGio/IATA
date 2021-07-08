@@ -783,6 +783,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>GDP_Products_Account_View__c.Json_WS_NDC__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>GDP_Products_Account_View__c.Json_WS_Simple__c</field>
         <readable>true</readable>
     </fieldPermissions>

@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
-    <doesSendEmailToMembers>true</doesSendEmailToMembers>
-    <name>Airline Risk Management - GDC Madrid</name>
+    <doesSendEmailToMembers>false</doesSendEmailToMembers>
+    <name>Airline Settlement Risk</name>
     <queueMembers>
         <users>
-            <user>ferratec@iata.org</user>
             <user>gonzalezce@iata.org</user>
-            <user>navarroij@iata.org</user>
-            <user>govenderr@iata.org</user>
+            <user>xuj@iata.org</user>
+            <user>shaikhn@iata.org</user>
         </users>
     </queueMembers>
     <queueSobject>

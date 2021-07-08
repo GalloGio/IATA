@@ -1,0 +1,319 @@
+<apex:page controller="IA_HomeController"
+	cache="false"
+	sidebar="false"
+	showHeader="false"
+	applyBodyTag="false"
+	applyHtmlTag="false"
+	docType="html-5.0"
+	standardStylesheets="false"
+	action="{!initActions}"
+	id="page">
+
+<html>
+	<c:ISSP_Header/>
+
+	<style>
+		:root {
+			--IA-approve-hover-svg: url("{!URLFOR($Resource.InterlineAgreements, 'img/approve-hover.svg')}");
+			--IA-approve-svg: url("{!URLFOR($Resource.InterlineAgreements, 'img/approve.svg')}");
+			--IA-arrow-first-svg: url("{!URLFOR($Resource.InterlineAgreements, 'img/arrow_first.svg')}");
+			--IA-arrow-last-svg: url("{!URLFOR($Resource.InterlineAgreements, 'img/arrow_last.svg')}");
+			--IA-arrow-next-svg: url("{!URLFOR($Resource.InterlineAgreements, 'img/arrow_next.svg')}");
+			--IA-arrow-prev-svg: url("{!URLFOR($Resource.InterlineAgreements, 'img/arrow_prev.svg')}");
+			--IA-check-svg: url("{!URLFOR($Resource.InterlineAgreements, 'img/check.svg')}");
+			--IA-close-svg: url("{!URLFOR($Resource.InterlineAgreements, 'img/close.svg')}");
+			--IA-date-picker-svg: url("{!URLFOR($Resource.InterlineAgreements, 'img/date_picker.svg')}");
+			--IA-delete-svg: url("{!URLFOR($Resource.InterlineAgreements, 'img/delete.svg')}");
+			--IA-download-svg: url("{!URLFOR($Resource.InterlineAgreements, 'img/download.svg')}");
+			--IA-edit-svg: url("{!URLFOR($Resource.InterlineAgreements, 'img/edit.svg')}");
+			--IA-filter-svg: url("{!URLFOR($Resource.InterlineAgreements, 'img/filter.svg')}");
+			--IA-filtered-svg: url("{!URLFOR($Resource.InterlineAgreements, 'img/filtered.svg')}");
+			--IA-plus-svg: url("{!URLFOR($Resource.InterlineAgreements, 'img/plus.svg')}");
+			--IA-plushover-svg: url("{!URLFOR($Resource.InterlineAgreements, 'img/plushover.svg')}");
+			--IA-print-svg: url("{!URLFOR($Resource.InterlineAgreements, 'img/print.svg')}");
+			--IA-radioOff-svg: url("{!URLFOR($Resource.InterlineAgreements, 'img/radio_off.svg')}");
+			--IA-radioOn-svg: url("{!URLFOR($Resource.InterlineAgreements, 'img/radio_on.svg')}");
+			--IA-reject-hover-svg: url("{!URLFOR($Resource.InterlineAgreements, 'img/reject-hover.svg')}");
+			--IA-reject-svg: url("{!URLFOR($Resource.InterlineAgreements, 'img/reject.svg')}");
+			--IA-searchColored-svg: url("{!URLFOR($Resource.InterlineAgreements, 'img/searchColored.svg')}");
+			--IA-select-arrow-svg: url("{!URLFOR($Resource.InterlineAgreements, 'img/select_arrow.svg')}");
+			--IA-sort-marker-svg: url("{!URLFOR($Resource.InterlineAgreements, 'img/sort_marker.svg')}");
+		}
+		@font-face {font-family: "AktivGrotesk";
+			src: url("{!URLFOR($Resource.aktiv_grotesk_regular,'@font-face/4337eeb93213c64896f2df77962a405e.eot')}"); /* IE9*/
+			src: url("{!URLFOR($Resource.aktiv_grotesk_regular,'@font-face/4337eeb93213c64896f2df77962a405e.eot?#iefix')}") format("embedded-opentype"), /* IE6-IE8 */
+			url("{!URLFOR($Resource.aktiv_grotesk_regular,'@font-face/4337eeb93213c64896f2df77962a405e.woff2')}") format("woff2"), /* chrome、firefox */
+			url("{!URLFOR($Resource.aktiv_grotesk_regular,'@font-face/4337eeb93213c64896f2df77962a405e.woff')}") format("woff"), /* chrome、firefox */
+			url("{!URLFOR($Resource.aktiv_grotesk_regular,'@font-face/4337eeb93213c64896f2df77962a405e.ttf')}") format("truetype"), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+			url("{!URLFOR($Resource.aktiv_grotesk_regular,'@font-face/4337eeb93213c64896f2df77962a405e.svg#Aktiv Grotesk W01 Regular')}") format("svg"); /* iOS 4.1- */
+		}
+	</style>
+
+	<apex:includeScript value="{!URLFOR($Resource.InterlineAgreements, 'js/xtable/xtable.min.js')}"/>
+	<apex:includeScript value="{!URLFOR($Resource.InterlineAgreements, 'js/tostify/tostify.min.js')}"/>
+	<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.InterlineAgreements, 'js/tostify/tostify.min.css')}"/>
+	<link rel="stylesheet" type="text/css" href="{!URLFOR($Resource.InterlineAgreements, 'css/main.min.css')}"/>
+
+	<script>
+		const ready = function (cb) {
+			document.readyState === "loading"
+				? document.addEventListener("DOMContentLoaded", function (e) {
+					cb();
+				})
+				: cb();
+		};
+		//prevent enter key action
+		const preventEnterKey = function(evt) {
+			evt = (evt) ? evt : ((event) ? event : null);
+			let node = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null);
+			if ((evt.keyCode == 13) && (node.type=="text")) {return false;}
+		}
+
+		//download content to file
+		const download = function(text, fileName) {
+			const link = document.createElement('a');
+			link.setAttribute('href', `data:text/csv;charset=utf-8,${encodeURIComponent(text)}`);
+			link.setAttribute('download', fileName);
+
+			link.style.display = 'none';
+			document.body.appendChild(link);
+
+			link.click();
+
+			document.body.removeChild(link);
+		};
+
+		const downloadURI = function(uri, filename) {
+			let link = document.createElement("a");
+			link.download = filename;
+			link.href = uri;
+			document.body.appendChild(link);
+			link.click();
+			document.body.removeChild(link);
+			delete link;
+		}
+
+		const downloadContentFile = function(id) {
+			downloadURI("{!URLFOR('/sfc/servlet.shepherd/document/download/')}" + id, 'file');
+		}
+		const viewContentFile = function(id) {
+			return window.open("{!URLFOR('/sfc/servlet.shepherd/document/download/')}" + id);
+		}
+
+		const modalOnComplete = function(overflow) {
+			document.body.style.overflow = overflow;
+		};
+
+		const onChangeNotification = function(obj) {
+			obj.setAttribute("disabled", "disabled");
+			document.getElementById("notif-slider").style.cursor="progress";
+			let switchBtn = document.getElementById("notif-switch");
+			if (switchBtn.classList.contains('switched')) {
+				switchBtn.classList.remove('switched');
+			} else {
+				switchBtn.classList.add('switched');
+			}
+			updateAppRight();
+		};
+
+		const startLoading = function() {
+			document.getElementById('spinner').style.display = 'block';
+		};
+		const stopLoading = function() {
+			document.getElementById('spinner').style.display = 'none';
+		};
+
+		const toggleTab = function(tabNumber) {
+			for (let i=1; i<=5; i++) {
+				document.getElementById("main-tab-header-"+i).childNodes[1].classList.remove('IA-TabSelected');
+				document.getElementById("main-tab-"+i).style.display = 'none';
+			}
+			document.getElementById("main-tab-header-"+tabNumber).childNodes[1].classList.add('IA-TabSelected');
+			document.getElementById("main-tab-"+tabNumber).style.display = 'block';
+		};
+
+		const scrollToTarget = function(target, duration=100) {
+			const top = target.getBoundingClientRect().top;
+			const startPos = window.pageYOffset;
+			const diff = top;
+			let startTime = null;
+			let requestId;
+			const loop = function(currentTime) {
+				if (!startTime) {
+					startTime = currentTime;
+				}
+				// Elapsed time in miliseconds
+				const time = currentTime - startTime;
+				const percent = Math.min(time / duration, 1);
+				window.scrollTo(0, startPos + diff * percent);
+				if (time < duration) {
+					// Continue moving
+					requestId = window.requestAnimationFrame(loop);
+				} else {
+					window.cancelAnimationFrame(requestId);
+				}
+			};
+			requestId = window.requestAnimationFrame(loop);
+		};
+
+		const MAP_AGREEMENTS_BY_NAME = {!mapAgreementsByNameJson};
+		const filterControlledPicklist = function(controller, dependent, mapDependency) {
+			let agreementName = controller.value;
+			for (let item of dependent.children) {
+				item.hidden = (agreementName != "" && agreementName != mapDependency[item.value]);
+				if (item.hidden && item.value == dependent.value) {
+					dependent.value = "";
+				}
+			}
+			dependent.children[0].hidden = false;
+		}
+
+		ready(function() {
+			document.onkeypress = preventEnterKey;
+			// add data-value attribute to all SELECT tags
+			document.addEventListener('change', function(evt) {
+				if (evt.target.tagName === "SELECT") {
+					evt.target.setAttribute('data-value',evt.target.value)
+				}
+			});
+		});
+	</script>
+
+	<body>
+		<apex:slds />
+		<c:ISSP_AlertModal />
+
+		<apex:actionStatus id="loadingStatus" onStart="startLoading();" onStop="stopLoading();" />
+		<!-- Spinner -->
+		<div class="slds-scope">
+			<div id="spinner" style="display: none;">
+				<div class="slds-spinner_container">
+					<div role="status" class="slds-spinner slds-spinner_large">
+						<div class="slds-spinner__dot-a"></div>
+						<div class="slds-spinner__dot-b"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="IA-Body">
+			<c:ISSP_CustomNavigation />
+
+			<apex:pageMessages />
+
+			<!-- MAIN Form -->
+			<apex:form id="mainForm" styleclass="form-inline">
+
+				<apex:actionFunction name="goToAllAgreements" action="{!null}" rerender="mainPageBlock" oncomplete="modalOnComplete('auto');" status="loadingStatus">
+					<apex:param name="key" value="ALL" assignTo="{!showSection}"/>
+				</apex:actionFunction>
+				<apex:actionFunction name="goToPendingRequests" action="{!null}" rerender="mainPageBlock" oncomplete="modalOnComplete('auto');" status="loadingStatus">
+					<apex:param name="key" value="REQ" assignTo="{!showSection}"/>
+				</apex:actionFunction>
+				<apex:actionFunction name="goToNewAgreements" action="{!null}" rerender="mainPageBlock" oncomplete="modalOnComplete('auto');" status="loadingStatus">
+					<apex:param name="key" value="NEW" assignTo="{!showSection}"/>
+				</apex:actionFunction>
+				<apex:actionFunction name="goToContacts" action="{!null}" rerender="mainPageBlock" oncomplete="modalOnComplete('auto');" status="loadingStatus">
+					<apex:param name="key" value="CONTACTS" assignTo="{!showSection}"/>
+				</apex:actionFunction>
+				<apex:actionFunction name="goToMemorandums" action="{!null}" rerender="mainPageBlock" oncomplete="modalOnComplete('auto');" status="loadingStatus">
+					<apex:param name="key" value="MEMOS" assignTo="{!showSection}"/>
+				</apex:actionFunction>
+
+				<div class="alert alert-danger" style="display:{!if(listMessages.size==0,'none','')}">
+					<apex:repeat value="{!listMessages}" var="er" id="theRepeat">
+						<p><apex:outputText value="{!er}" escape="false" /></p>
+					</apex:repeat>
+				</div>
+
+				<!-- MAIN PAGE BLOCK for Account Statements when Terms And Conditions are accepted -->
+				<apex:pageBlock id="mainPageBlock" rendered="{!listMessages.size==0}">
+					<!-- HEADER -->
+					<div class="IA-Header">
+						<div class="container">
+							<div class="IA-Breadcrumb">
+								<a href="/ISSP_Homepage?mid=M0S1">{!$Label.ISSP_Home}</a>
+								<span> &gt; </span>
+								<a href="/csportal/s/services">{!$Label.ISSP_Services}</a>
+								<span> &gt; </span>
+								<a href="#">{!$Label.IA_Interline_Agreements}</a>
+							</div>
+							<div class="row">
+								<span>
+									<apex:image styleclass="IA-logo" value="{!appLogoURL}"/>
+								</span>
+								<span class="IA-MainTitle">{!$Label.IA_Interline_Agreements}</span>
+							</div>
+						</div>
+					</div>
+
+					<!-- MAIN TAB selector -->
+					<apex:variable value="{!OR(showSection=='ALL',showSection=='REQ',showSection=='NEW')}" var="isAgreementsTab"/>
+					<div class="IA-TabHeader">
+						<div class="container">
+							<span id="main-tab-header-1" class="col-1 IA-Tab" onclick="{!IF(isAgreementsTab,'return false;','goToAllAgreements();')}">
+								<span class="{!IF(isAgreementsTab,'IA-TabSelected','')}">{!$Label.IA_Agreements}</span>
+							</span>
+							<span id="main-tab-header-2" class="col-1 IA-Tab" onclick="{!IF(showSection=='CONTACTS','return false;','goToContacts();')}">
+								<span class="{!IF(showSection=='CONTACTS','IA-TabSelected','')}">{!$Label.IA_Airline_Contacts}</span>
+							</span>
+							<span id="main-tab-header-3" class="col-1 IA-Tab" onclick="{!IF(showSection=='MEMOS','return false;','goToMemorandums();')}">
+								<span class="{!IF(showSection=='MEMOS','IA-TabSelected','')}">{!$Label.IA_Memorandums}</span>
+							</span>
+						</div>
+					</div>
+					<!-- /MAIN TAB selector -->
+
+					<!-- SUBTAB selector -->
+					<apex:outputPanel layout="block" styleclass="IA-TabSecondary" rendered="{!isAgreementsTab}">
+						<div class="container">
+							<div class="row">
+								<span class="col-1 {!IF(showSection=='ALL','selected','')}" onclick="{!IF(showSection=='ALL','return false;','goToAllAgreements();')}">
+									<span class="IA-RadioButton {!IF(showSection=='ALL','checked','')}"></span>
+									<label>{!$Label.IA_All_agreements}</label>
+								</span>
+								<span class="col-1 {!IF(showSection=='REQ','selected','')}" onclick="{!IF(showSection=='REQ','return false;','goToPendingRequests();')}">
+									<span class="IA-RadioButton {!IF(showSection=='REQ','checked','')}"></span>
+									<label>{!$Label.IA_Agreement_Requests}</label>
+								</span>
+								<span class="col-1 {!IF(showSection=='NEW','selected','')}" onclick="{!IF(showSection=='NEW','return false;','goToNewAgreements();')}">
+									<span class="IA-RadioButton {!IF(showSection=='NEW','checked','')}"></span>
+									<label>{!$Label.IA_New_Agreement}</label>
+								</span>
+							</div>
+						</div>
+					</apex:outputPanel>
+					<!-- /SUBTAB selector -->
+
+					<!-- TAB All Agreements-->
+					<c:IA_All id="sectionAll" rendered="{!showSection=='ALL'}" airline="{!airlineHQ}" WithdrawPermission="{!WithdrawPermission}"/>
+
+					<!-- TAB Pending Requests -->
+					<c:IA_Requests id="sectionReq" rendered="{!showSection=='REQ'}" airline="{!airlineHQ}" approvePermission="{!approvePermission}"/>
+
+					<!-- TAB New Agreement -->
+					<c:IA_New id="sectionNew" rendered="{!showSection=='NEW'}" airline="{!airlineHQ}" requestPermission="{!requestPermission}"/>
+					<!-- /TAB New Agreement -->
+
+					<!-- TAB Contacts -->
+					<c:IA_Contacts id="sectionContacts" rendered="{!showSection=='CONTACTS'}" airline="{!airlineHQ}" editContactsPermission="{!editContactsPermission}"/>
+					<!-- /TAB Contacts -->
+
+					<!-- TAB Memorandums -->
+					<c:IA_Memorandums id="sectionMemorandums" rendered="{!showSection=='MEMOS'}"/>
+					<!-- /TAB Memorandums -->
+
+					<div class="row IA-TableFooter"></div>
+
+				</apex:pageBlock>
+				<!-- /MAIN PAGE BLOCK -->
+
+			</apex:form>
+			<!-- /MAIN Form -->
+
+			<c:ISSP_CustomFooter />
+		</div>
+	</body>
+
+</html>
+</apex:page>

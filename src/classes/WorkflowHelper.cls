@@ -20,6 +20,19 @@ public without sharing class WorkflowHelper {
 
 	private static Map<Id,List<Account>> accountsToSearchParents = new Map<Id,List<Account>>();
 
+	private static Map<Id,Account> mapAcc = new Map<Id,Account>();
+
+	private static Map<Id,Account> getMapAccounts() {
+		if(mapAcc.isEmpty() || Test.isRunningTest()){
+			Set<Id> acctIds = new Set<Id>();
+			for(Contact con : (List<Contact>)Trigger.new){
+				acctIds.add(con.AccountId);
+			}
+			mapAcc = new Map<Id,Account>([SELECT Id, IATA_ISO_Country__r.CNS_Country__c FROM Account WHERE Id IN:acctIds]);
+		}
+		return mapAcc;
+	}
+
 	public static void performActions(String objectType){
 
 		switch on objectType {
@@ -361,6 +374,17 @@ public without sharing class WorkflowHelper {
 			}
 
 	}
+
+	public static void updateCNSAccountCheckbox(Account newAccount){
+		
+		if(newAccount.IATA_ISO_Country__c != null
+			&& !IATAIsoCountryDAO.getIsoCountriesByIds(new Set<Id>{newAccount.IATA_ISO_Country__c}).isEmpty()
+			&& IATAIsoCountryDAO.getIsoCountriesByIds(new Set<Id>{newAccount.IATA_ISO_Country__c}).get(0).CNS_Country__c
+			&& (!newAccount.CNS_Account__c
+			|| newAccount.CNS_Account__c == null)
+		) newAccount.CNS_Account__c = true;
+	}
+
 	/*ACCOUNT ACTIONS END*/
 
 	/*CONTACT ACTIONS START*/
@@ -399,6 +423,22 @@ public without sharing class WorkflowHelper {
 		if(newContact.VER_Number__c != null && !newContact.ID_Card_Holder__c)
 			newContact.ID_Card_Holder__c = true;
 	}
+
+	public static void updateCNSContactCheckbox(Contact newContact){
+
+		Map<Id,Account> newMap = new Map<Id,Account>();
+		
+		newMap = getMapAccounts();
+		
+		if(!newMap.isEmpty() 
+
+			&& newContact.AccountId != null
+			&& newMap.get(newContact.AccountId) != null
+			&& newMap.get(newContact.AccountId).IATA_ISO_Country__r.CNS_Country__c
+			&& (!newContact.CNS_Contact__c
+			|| newContact.CNS_Contact__c == null)
+		) newContact.CNS_Contact__c = true;
+	}	
 
 	/*CONTACT ACTIONS END*/
 

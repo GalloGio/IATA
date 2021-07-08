@@ -268,7 +268,7 @@ public class ANG_AccountTriggerHandler {
 					Operation__c, ShippingCity, ShippingCountry, ShippingPostalCode, ShippingState, ShippingStreet,
 					Short_Name__c, Solicitation_Flag__c, TradeName__c, VAT_Number_2__c, Website, Company_Type__c, ANG_RiskStatus__c, ANG_Accreditation_Model__c,
 					(SELECT Id, Account__c, ANG_FormOfPayment_ID__c, Authority__c, Status__c, ISO_Country__c,
-					Account__r.IATA_ISO_Country__r.ANG_Enable_NewGen__c, Account__r.IATA_ISO_Country__r.ANG_Portal_Service__c, Account__r.IATA_ISO_Country__r.ANG_IEP_Model__c //for the NewGen operation without a IEP Provider
+					Account__r.IATA_ISO_Country__r.ANG_Enable_NewGen__c, Account__r.IATA_ISO_Country__r.ANG_Portal_Service__c, Account__r.IATA_ISO_Country__r.ANG_IEP_Model__c, Account__r.IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c //for the NewGen operation without a IEP Provider
 					 FROM Agency_Authorizations__r WHERE RecordTypeId = :aaRTId)
 					from Account where Id in :accountIds]);
 	}
@@ -850,7 +850,7 @@ public class ANG_AccountTriggerHandler {
 				//INC516962 - When FOP Cash & Acc Model = Cashless - Status Non-Active
 				else if(aa.ANG_FormOfPayment_ID__c == AMS_Utils.CA && currentAccount.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASHLESS)
 					//Country active in Newgen but withoyut IEP should have Active CA form of payment
-					if(aa.Account__r.IATA_ISO_Country__r.ANG_Enable_NewGen__c && string.isBlank(aa.Account__r.IATA_ISO_Country__r.ANG_Portal_Service__c) && aa.Account__r.IATA_ISO_Country__r.ANG_IEP_Model__c == AMS_Utils.IEPModel_PrePayment) aa.Status__c = 'Active';
+					if(aa.Account__r.IATA_ISO_Country__r.ANG_Enable_NewGen__c && aa.Account__r.IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c) aa.Status__c = 'Active';
 					else aa.Status__c = 'Non-Active';
  
 				else aa.Status__c = 'Active';

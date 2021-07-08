@@ -697,6 +697,7 @@
             <operation>notEqual</operation>
             <value></value>
         </criteriaItems>
+        <includeHVUOwnedRecords>false</includeHVUOwnedRecords>
     </sharingGuestRules>
     <sharingOwnerRules>
         <fullName>Timba_Survey_Account_Sharing_Rule</fullName>

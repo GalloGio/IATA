@@ -232,6 +232,11 @@
         <label>Parking</label>
     </standardValue>
     <standardValue>
+        <fullName>PASS</fullName>
+        <default>false</default>
+        <label>PASS</label>
+    </standardValue>
+    <standardValue>
         <fullName>Passenger Services</fullName>
         <default>false</default>
         <label>Passenger Services</label>

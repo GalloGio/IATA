@@ -843,11 +843,8 @@ public with sharing class PortalCasesCtrl {
 
 		Case caseToFirstComment = [SELECT Id, Description, CreatedBy.Name, CreatedDate,RecordType__c FROM Case WHERE Id =:caseId];
 
-		List<CaseComment> lstCaseCommentsAux = [SELECT Id, ParentId, CommentBody, IsPublished,
-												CreatedDate, CreatedById, CreatedBy.Name, IsDeleted
-												FROM CaseComment
-												WHERE ParentId = :caseId AND IsDeleted = false
-																						ORDER BY CreatedDate ASC];
+		PortalCasesCtrl.PortalCasesCtrl_WithoutSharing CasesNoSharing = new PortalCasesCtrl.PortalCasesCtrl_WithoutSharing();
+		List<CaseComment> lstCaseCommentsAux = CasesNoSharing.getCaseComments(caseId);
 
 		String caseDescription = caseToFirstComment.Description != null && CaseRecordTypesDescriptionVisibleSet.contains(caseToFirstComment.RecordType__c) ? caseToFirstComment.Description : '';
 
@@ -1226,7 +1223,17 @@ public with sharing class PortalCasesCtrl {
 			return returnWrapper;
 		}
 
+		public List<CaseComment> getCaseComments(String caseId){
+			List<CaseComment> lstCaseComments =	[SELECT Id, ParentId, CommentBody, IsPublished,
+												CreatedDate, CreatedById, CreatedBy.Name, IsDeleted
+												FROM CaseComment
+												WHERE ParentId = :caseId AND IsDeleted = false
+																						ORDER BY CreatedDate ASC];
+	
+			return lstCaseComments;
+		}
+
 	}
 
-
 }
+
