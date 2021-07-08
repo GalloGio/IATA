@@ -44,7 +44,7 @@ public class NewLocalGroupMeetingCtrlTest{
 
 			Id rtLGId = RecordTypeSingleton.getInstance().getRecordTypeId('LocalGovernance__c','Local_Groups');
 
-			lg = new LocalGovernance__c(Cargo_Passenger__c='BSP', Local_Governance_type__c='ALWG', Country__c=isocs[0].Id, Active__c=true, recordtypeId=rtLGId);
+			lg = new LocalGovernance__c(Cargo_Passenger__c='BSP', Local_Governance_type__c='APJC', Country__c=isocs[0].Id, Active__c=true, recordtypeId=rtLGId);
 			insert lg;
 
 			Id rtHQ =  RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
@@ -85,7 +85,7 @@ public class NewLocalGroupMeetingCtrlTest{
 
 			//First create a new Local Group Meeting
 			Test.setCurrentPage(Page.NewLocalGroupMeeting);
-			NewLocalGroupMeetingCtrl ctrl = new NewLocalGroupMeetingCtrl(new ApexPages.StandardController(new LocalGovernance_Meeting__c(Local_Governance__c = lg.id)));
+			NewLocalGroupMeetingCtrl ctrl = new NewLocalGroupMeetingCtrl(new ApexPages.StandardController(new LocalGovernance_Meeting__c(Local_Governance__c = lg.id, Local_Governance__r = lg)));
 
 			system.assertEquals(false, ctrl.isEdit, 'Should be "New" mode');
 
@@ -156,9 +156,6 @@ public class NewLocalGroupMeetingCtrlTest{
 			system.assertEquals(parts[2].Id, atts[1].Local_Governance_Participant__c);
 			system.assertEquals(conts[2].Id, atts[1].Participant_Contact__c);
 
-
-
-
 			Test.stopTest();
 		}
 	}
@@ -175,7 +172,7 @@ public class NewLocalGroupMeetingCtrlTest{
 			NewLocalGroupCtrl lgctrl = new NewLocalGroupCtrl(new ApexPages.StandardController(new LocalGovernance__c(RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('LocalGovernance__c', 'Local_Groups'))));
 
 			lgctrl.lg.Cargo_Passenger__c = 'BSP';
-			lgctrl.lg.Local_Governance_type__c = 'ICAP';
+			lgctrl.lg.Local_Governance_type__c = 'CEC';
 			lgctrl.lg.Active__c = true;
 			lgctrl.lg.Country__c = isocs[0].ID;
 
@@ -184,7 +181,7 @@ public class NewLocalGroupMeetingCtrlTest{
 
 			// Add 2 participants
 			ApexPages.currentPage().getParameters().put('retURL', '/' + lgctrl.lg.Id);
-
+			
 			NewParticipantByEmailCtrl pctrl = new NewParticipantByEmailCtrl(new ApexPages.StandardController(new Participant__c(Local_Governance__c = lgctrl.lg.Id)));
 			pctrl.c.Email = conts[0].Email;
 			pctrl.MySave();
@@ -198,7 +195,7 @@ public class NewLocalGroupMeetingCtrlTest{
 			//Test.StartTest();
 
 			// Create a local group meeting
-			NewLocalGroupMeetingCtrl mctrl = new NewLocalGroupMeetingCtrl(new ApexPages.StandardController(new LocalGovernance_Meeting__c(Local_Governance__c=lgctrl.lg.Id)));
+			NewLocalGroupMeetingCtrl mctrl = new NewLocalGroupMeetingCtrl(new ApexPages.StandardController(new LocalGovernance_Meeting__c(Local_Governance__c=lgctrl.lg.Id, Local_Governance__r=lgctrl.lg)));
 
 			mctrl.lm.Name = 'theMeeting';
 			mctrl.lm.Meeting_Responsible__c = UserInfo.getUserId();
@@ -272,7 +269,7 @@ public class NewLocalGroupMeetingCtrlTest{
 
 
 			// Create a local group meeting
-			NewLocalGroupMeetingCtrl mctrl = new NewLocalGroupMeetingCtrl(new ApexPages.StandardController(new LocalGovernance_Meeting__c(Local_Governance__c=lgctrl.lg.Id)));
+			NewLocalGroupMeetingCtrl mctrl = new NewLocalGroupMeetingCtrl(new ApexPages.StandardController(new LocalGovernance_Meeting__c(Local_Governance__c=lgctrl.lg.Id, Local_Governance__r=lgctrl.lg)));
 
 			mctrl.lm.Name = 'theMeeting';
 			mctrl.lm.Meeting_Responsible__c = UserInfo.getUserId();
@@ -323,7 +320,7 @@ public class NewLocalGroupMeetingCtrlTest{
 			NewLocalGroupCtrl lgctrl = new NewLocalGroupCtrl(new ApexPages.StandardController(new LocalGovernance__c(RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('LocalGovernance__c', 'Local_Groups'))));
 
 			lgctrl.lg.Cargo_Passenger__c = 'BSP';
-			lgctrl.lg.Local_Governance_type__c = 'ICAP';
+			lgctrl.lg.Local_Governance_type__c = 'CGA';
 			lgctrl.lg.Active__c = true;
 			lgctrl.lg.Country__c = isocs[0].ID;
 
@@ -344,7 +341,7 @@ public class NewLocalGroupMeetingCtrlTest{
 
 
 			// Create a local group meeting
-			NewLocalGroupMeetingCtrl mctrl = new NewLocalGroupMeetingCtrl(new ApexPages.StandardController(new LocalGovernance_Meeting__c(Local_Governance__c=lgctrl.lg.Id)));
+			NewLocalGroupMeetingCtrl mctrl = new NewLocalGroupMeetingCtrl(new ApexPages.StandardController(new LocalGovernance_Meeting__c(Local_Governance__c=lgctrl.lg.Id, Local_Governance__r=lgctrl.lg)));
 
 			mctrl.lm.Name = 'theMeeting';
 			mctrl.lm.Meeting_Responsible__c = UserInfo.getUserId();
@@ -382,7 +379,7 @@ public class NewLocalGroupMeetingCtrlTest{
 			Test.StartTest();
 
 			// Create a local group meeting
-			NewLocalGroupMeetingCtrl mctrl = new NewLocalGroupMeetingCtrl(new ApexPages.StandardController(new LocalGovernance_Meeting__c(Local_Governance__c=lg.Id)));
+			NewLocalGroupMeetingCtrl mctrl = new NewLocalGroupMeetingCtrl(new ApexPages.StandardController(new LocalGovernance_Meeting__c(Local_Governance__c=lg.Id, Local_Governance__r=lg)));
 			mctrl.lm.Name = 'theMeeting';
 			mctrl.lm.Meeting_Responsible__c = UserInfo.getUserId();
 

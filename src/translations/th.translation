@@ -3011,6 +3011,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Breadcrump_MyProfile_Title</name>
     </customLabels>
     <customLabels>
+        <label>อีเมลธุรกิจ (ในกรณีที่คุณมี)</label>
+        <name>CSP_Business_Email</name>
+    </customLabels>
+    <customLabels>
         <label>ซื้อทางออนไลน์</label>
         <name>CSP_Buy_Online</name>
     </customLabels>
@@ -42925,7 +42929,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
                 <label><!-- Comments --></label>
                 <name>Comments</name>
             </columns>
-            <label><!-- Comments --></label>
+            <label>รายงาน</label>
             <name>Comments</name>
         </sections>
         <sections>
@@ -43054,7 +43058,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Opportunities with products and Sub-regions (ISO) --></label>
         <name>Opportunities_with_products_custom</name>
         <sections>
-            <label><!-- Opportunities --></label>
+            <label>รายงาน</label>
             <name>Opportunities</name>
         </sections>
         <sections>
@@ -43298,7 +43302,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
                 <label><!-- Service Description --></label>
                 <name>Service Description</name>
             </columns>
-            <label><!-- Service information --></label>
+            <label>รายงาน</label>
             <name>Service information</name>
         </sections>
     </reportTypes>

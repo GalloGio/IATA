@@ -3014,6 +3014,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Breadcrump_MyProfile_Title</name>
     </customLabels>
     <customLabels>
+        <label>Geschäftliche E-Mail (falls Sie eine haben)</label>
+        <name>CSP_Business_Email</name>
+    </customLabels>
+    <customLabels>
         <label>Online kaufen</label>
         <name>CSP_Buy_Online</name>
     </customLabels>
@@ -43010,7 +43014,7 @@ Wenn Sie Ihr Passwort zurücksetzen möchten, gehen Sie bitte zum Log-in-Bildsch
         <label><!-- Opportunities with Accounts and Contracts --></label>
         <name>Opportunities_with_Accounts_and_Contracts</name>
         <sections>
-            <label><!-- Accounts --></label>
+            <label>Berichte</label>
             <name>Accounts</name>
         </sections>
         <sections>
@@ -43057,7 +43061,7 @@ Wenn Sie Ihr Passwort zurücksetzen möchten, gehen Sie bitte zum Log-in-Bildsch
         <label><!-- Opportunities with products and Sub-regions (ISO) --></label>
         <name>Opportunities_with_products_custom</name>
         <sections>
-            <label><!-- Opportunities --></label>
+            <label>Berichte</label>
             <name>Opportunities</name>
         </sections>
         <sections>
@@ -43301,7 +43305,7 @@ Wenn Sie Ihr Passwort zurücksetzen möchten, gehen Sie bitte zum Log-in-Bildsch
                 <label><!-- Service Description --></label>
                 <name>Service Description</name>
             </columns>
-            <label><!-- Service information --></label>
+            <label>Berichte</label>
             <name>Service information</name>
         </sections>
     </reportTypes>

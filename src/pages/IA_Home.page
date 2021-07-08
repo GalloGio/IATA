@@ -156,6 +156,18 @@
 			requestId = window.requestAnimationFrame(loop);
 		};
 
+		const MAP_AGREEMENTS_BY_NAME = {!mapAgreementsByNameJson};
+		const filterControlledPicklist = function(controller, dependent, mapDependency) {
+			let agreementName = controller.value;
+			for (let item of dependent.children) {
+				item.hidden = (agreementName != "" && agreementName != mapDependency[item.value]);
+				if (item.hidden && item.value == dependent.value) {
+					dependent.value = "";
+				}
+			}
+			dependent.children[0].hidden = false;
+		}
+
 		ready(function() {
 			document.onkeypress = preventEnterKey;
 			// add data-value attribute to all SELECT tags

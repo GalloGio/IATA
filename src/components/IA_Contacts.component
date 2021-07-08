@@ -28,6 +28,8 @@
 		ready(function() {
 			refreshPage();
 
+			const IS_CHROME = /Chrome/.test(navigator.userAgent);
+
 			getXtable = function() {
 				let table = document.getElementById("ContactsTable");
 				let box = document.getElementById("ContactsTablePaginator");
@@ -89,6 +91,10 @@
 						return;
 					}
 				}
+				//chrome fix // force search on datalist selection
+				if (IS_CHROME && evt.target.id==="searchAddContacts") {
+					openSearchedContact(evt.target.value);
+				}
 			});
 			keypressSearchedContact = function(obj, event) {
 				if (event.key === "Enter") {
@@ -106,8 +112,6 @@
 				const filterSearch = document.getElementById('searchAddContacts');
 				filterSearchClean.hidden = filterSearch.value === '';
 			}
-
-			initXtable();
 		});
 	</script>
 

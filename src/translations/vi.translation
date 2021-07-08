@@ -3013,6 +3013,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Breadcrump_MyProfile_Title</name>
     </customLabels>
     <customLabels>
+        <label>Email Doanh nghiệp (trong trường hợp bạn có)</label>
+        <name>CSP_Business_Email</name>
+    </customLabels>
+    <customLabels>
         <label>Mua trực tuyến</label>
         <name>CSP_Buy_Online</name>
     </customLabels>
@@ -42922,7 +42926,7 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
                 <label><!-- Comments --></label>
                 <name>Comments</name>
             </columns>
-            <label><!-- Comments --></label>
+            <label>Các báo cáo</label>
             <name>Comments</name>
         </sections>
         <sections>
@@ -43051,7 +43055,7 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <label><!-- Opportunities with products and Sub-regions (ISO) --></label>
         <name>Opportunities_with_products_custom</name>
         <sections>
-            <label><!-- Opportunities --></label>
+            <label>Các báo cáo</label>
             <name>Opportunities</name>
         </sections>
         <sections>
@@ -43295,7 +43299,7 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
                 <label><!-- Service Description --></label>
                 <name>Service Description</name>
             </columns>
-            <label><!-- Service information --></label>
+            <label>Các báo cáo</label>
             <name>Service information</name>
         </sections>
     </reportTypes>

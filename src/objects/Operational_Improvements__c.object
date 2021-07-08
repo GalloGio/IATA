@@ -1361,7 +1361,7 @@
     <fields>
         <fullName>Closest_Action_Plan_due_date__c</fullName>
         <externalId>false</externalId>
-        <label>Closest Action Plan due date</label>
+        <label>Latest Action Plan due date</label>
         <summarizedField>OI_Action_Plan__c.Due_Date__c</summarizedField>
         <summaryFilterItems>
             <field>OI_Action_Plan__c.Closure_Date__c</field>
@@ -1369,7 +1369,7 @@
             <value></value>
         </summaryFilterItems>
         <summaryForeignKey>OI_Action_Plan__c.OI__c</summaryForeignKey>
-        <summaryOperation>min</summaryOperation>
+        <summaryOperation>max</summaryOperation>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Summary</type>
