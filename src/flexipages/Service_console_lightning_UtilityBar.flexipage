@@ -152,7 +152,7 @@
             <componentInstanceProperties>
                 <name>label</name>
                 <type>decorator</type>
-                <value>Odigo</value>
+                <value>OdigoProxy</value>
             </componentInstanceProperties>
             <componentInstanceProperties>
                 <name>scrollable</name>
@@ -164,7 +164,7 @@
                 <type>decorator</type>
                 <value>340</value>
             </componentInstanceProperties>
-            <componentName>OdigoCti:Odigo</componentName>
+            <componentName>OdigoCti:OdigoProxy</componentName>
         </componentInstances>
         <name>utilityItems</name>
         <type>Region</type>
