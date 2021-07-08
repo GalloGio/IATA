@@ -42960,7 +42960,7 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
                 <label><!-- Comments --></label>
                 <name>Comments</name>
             </columns>
-            <label><!-- Comments --></label>
+            <label>Informes</label>
             <name>Comments</name>
         </sections>
         <sections>
@@ -43089,7 +43089,7 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
         <label><!-- Opportunities with products and Sub-regions (ISO) --></label>
         <name>Opportunities_with_products_custom</name>
         <sections>
-            <label><!-- Opportunities --></label>
+            <label>Informes</label>
             <name>Opportunities</name>
         </sections>
         <sections>
@@ -43333,7 +43333,7 @@ Si desea restablecer su contraseña, vuelva a la pantalla de inicio de sesión y
                 <label><!-- Service Description --></label>
                 <name>Service Description</name>
             </columns>
-            <label><!-- Service information --></label>
+            <label>Informes</label>
             <name>Service information</name>
         </sections>
     </reportTypes>

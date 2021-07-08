@@ -42544,7 +42544,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
             <name>Local Governance</name>
         </sections>
         <sections>
-            <label><!-- Local Governance Meetings --></label>
+            <label>Portal Erişim Ismi</label>
             <name>Local Governance Meetings</name>
         </sections>
         <sections>
@@ -42683,7 +42683,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
             <name>IEC Addresses</name>
         </sections>
         <sections>
-            <label><!-- Locations --></label>
+            <label>Portal Erişim Ismi</label>
             <name>Locations</name>
         </sections>
     </reportTypes>
@@ -42840,7 +42840,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <label><!-- Notifications --></label>
         <name>Notifications</name>
         <sections>
-            <label><!-- Notifications --></label>
+            <label>Portal Erişim Ismi</label>
             <name>Notifications</name>
         </sections>
     </reportTypes>
@@ -42896,7 +42896,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
             <name>ONE Source Contact Role Details</name>
         </sections>
         <sections>
-            <label><!-- OS Stations --></label>
+            <label>Portal Erişim Ismi</label>
             <name>OS Stations</name>
         </sections>
     </reportTypes>
@@ -42933,7 +42933,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
                 <label><!-- Comments --></label>
                 <name>Comments</name>
             </columns>
-            <label><!-- Comments --></label>
+            <label>Portal Erişim Ismi</label>
             <name>Comments</name>
         </sections>
         <sections>
@@ -43062,7 +43062,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <label><!-- Opportunities with products and Sub-regions (ISO) --></label>
         <name>Opportunities_with_products_custom</name>
         <sections>
-            <label><!-- Opportunities --></label>
+            <label>Portal Erişim Ismi</label>
             <name>Opportunities</name>
         </sections>
         <sections>

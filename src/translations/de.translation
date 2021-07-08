@@ -43014,7 +43014,7 @@ Wenn Sie Ihr Passwort zurücksetzen möchten, gehen Sie bitte zum Log-in-Bildsch
         <label><!-- Opportunities with Accounts and Contracts --></label>
         <name>Opportunities_with_Accounts_and_Contracts</name>
         <sections>
-            <label><!-- Accounts --></label>
+            <label>Berichte</label>
             <name>Accounts</name>
         </sections>
         <sections>
@@ -43061,7 +43061,7 @@ Wenn Sie Ihr Passwort zurücksetzen möchten, gehen Sie bitte zum Log-in-Bildsch
         <label><!-- Opportunities with products and Sub-regions (ISO) --></label>
         <name>Opportunities_with_products_custom</name>
         <sections>
-            <label><!-- Opportunities --></label>
+            <label>Berichte</label>
             <name>Opportunities</name>
         </sections>
         <sections>
@@ -43305,7 +43305,7 @@ Wenn Sie Ihr Passwort zurücksetzen möchten, gehen Sie bitte zum Log-in-Bildsch
                 <label><!-- Service Description --></label>
                 <name>Service Description</name>
             </columns>
-            <label><!-- Service information --></label>
+            <label>Berichte</label>
             <name>Service information</name>
         </sections>
     </reportTypes>

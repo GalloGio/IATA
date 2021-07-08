@@ -42971,7 +42971,7 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
             <name>One Id User Applications</name>
         </sections>
         <sections>
-            <label><!-- User Provisioning Requests --></label>
+            <label>Relatorios / Reportes</label>
             <name>User Provisioning Requests</name>
         </sections>
     </reportTypes>
@@ -43057,7 +43057,7 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
         <label><!-- Opportunities with products and Sub-regions (ISO) --></label>
         <name>Opportunities_with_products_custom</name>
         <sections>
-            <label><!-- Opportunities --></label>
+            <label>Relatorios / Reportes</label>
             <name>Opportunities</name>
         </sections>
         <sections>
@@ -43301,7 +43301,7 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
                 <label><!-- Service Description --></label>
                 <name>Service Description</name>
             </columns>
-            <label><!-- Service information --></label>
+            <label>Relatorios / Reportes</label>
             <name>Service information</name>
         </sections>
     </reportTypes>

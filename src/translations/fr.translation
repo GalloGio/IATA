@@ -42891,7 +42891,7 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
             <name>Account Roles</name>
         </sections>
         <sections>
-            <label><!-- OS contact role details --></label>
+            <label>Fichiers</label>
             <name>OS contact role details</name>
         </sections>
     </reportTypes>
@@ -42971,7 +42971,7 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
                 <label><!-- Comments --></label>
                 <name>Comments</name>
             </columns>
-            <label><!-- Comments --></label>
+            <label>Fichiers</label>
             <name>Comments</name>
         </sections>
         <sections>
@@ -43100,7 +43100,7 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         <label><!-- Opportunities with products and Sub-regions (ISO) --></label>
         <name>Opportunities_with_products_custom</name>
         <sections>
-            <label><!-- Opportunities --></label>
+            <label>Fichiers</label>
             <name>Opportunities</name>
         </sections>
         <sections>
@@ -43344,7 +43344,7 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
                 <label><!-- Service Description --></label>
                 <name>Service Description</name>
             </columns>
-            <label><!-- Service information --></label>
+            <label>Fichiers</label>
             <name>Service information</name>
         </sections>
     </reportTypes>

@@ -43003,7 +43003,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Opportunities with Accounts and Contracts --></label>
         <name>Opportunities_with_Accounts_and_Contracts</name>
         <sections>
-            <label><!-- Accounts --></label>
+            <label>报告/报表</label>
             <name>Accounts</name>
         </sections>
         <sections>
@@ -43050,7 +43050,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Opportunities with products and Sub-regions (ISO) --></label>
         <name>Opportunities_with_products_custom</name>
         <sections>
-            <label><!-- Opportunities --></label>
+            <label>报告/报表</label>
             <name>Opportunities</name>
         </sections>
         <sections>
@@ -43294,7 +43294,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
                 <label><!-- Service Description --></label>
                 <name>Service Description</name>
             </columns>
-            <label><!-- Service information --></label>
+            <label>报告/报表</label>
             <name>Service information</name>
         </sections>
     </reportTypes>
