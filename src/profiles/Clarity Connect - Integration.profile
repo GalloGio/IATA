@@ -47979,6 +47979,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>LocalGovernance_Meeting__c.Local_Group_Type__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>LocalGovernance_Meeting__c.Meeting_Responsible__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -63959,6 +63964,11 @@
     <layoutAssignments>
         <layout>xtma_Link_Detail__c-Link Detail Layout</layout>
     </layoutAssignments>
+    <loginIpRanges>
+        <description>Odigo Test</description>
+        <endAddress>83.169.124.65</endAddress>
+        <startAddress>83.169.124.65</startAddress>
+    </loginIpRanges>
     <loginIpRanges>
         <description>Claritysi.iata.org</description>
         <endAddress>103.47.77.135</endAddress>

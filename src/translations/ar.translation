@@ -3010,6 +3010,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Breadcrump_MyProfile_Title</name>
     </customLabels>
     <customLabels>
+        <label>البريد الإلكتروني للأعمال (في حال كان لديك واحد)</label>
+        <name>CSP_Business_Email</name>
+    </customLabels>
+    <customLabels>
         <label>الشراء عبر الإنترنت</label>
         <name>CSP_Buy_Online</name>
     </customLabels>
@@ -41816,7 +41820,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
             <name>Contracts</name>
         </sections>
         <sections>
-            <label><!-- E&amp;F Location Currencies --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>E&amp;F Location Currencies</name>
         </sections>
     </reportTypes>
@@ -41869,7 +41873,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- GADM Data Submissions --></label>
         <name>GADM_Data_Submissions</name>
         <sections>
-            <label><!-- Data Submissions --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>Data Submissions</name>
         </sections>
     </reportTypes>
@@ -42651,7 +42655,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Locations with Contacts &amp; Addresses --></label>
         <name>Locations_with_Contacts_Addresses</name>
         <sections>
-            <label><!-- Contacts --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>Contacts</name>
         </sections>
         <sections>
@@ -42798,7 +42802,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Notification template custom --></label>
         <name>Notification_template_custom</name>
         <sections>
-            <label><!-- Notification templates --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>Notification templates</name>
         </sections>
     </reportTypes>
@@ -42926,7 +42930,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Objective with Tasks --></label>
         <name>Objective_with_Tasks</name>
         <sections>
-            <label><!-- Objectives --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>Objectives</name>
         </sections>
     </reportTypes>
@@ -42939,7 +42943,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
             <name>Account Information</name>
         </sections>
         <sections>
-            <label><!-- Objectives --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>Objectives</name>
         </sections>
     </reportTypes>
@@ -42952,7 +42956,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
             <name>One Id User Applications</name>
         </sections>
         <sections>
-            <label><!-- User Provisioning Requests --></label>
+            <label>التقارير</label>
             <name>User Provisioning Requests</name>
         </sections>
     </reportTypes>
@@ -43025,7 +43029,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Opportunities with or without RSL --></label>
         <name>Opportunities_with_or_without_RSL</name>
         <sections>
-            <label>التقارير</label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>Opportunities</name>
         </sections>
         <sections>
@@ -43038,7 +43042,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Opportunities with products and Sub-regions (ISO) --></label>
         <name>Opportunities_with_products_custom</name>
         <sections>
-            <label>حقوق تطبيقات البوابة</label>
+            <label>التقارير</label>
             <name>Opportunities</name>
         </sections>
         <sections>
@@ -43051,11 +43055,11 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Opportunitis with Accounts --></label>
         <name>Opportunitis_with_Accounts</name>
         <sections>
-            <label><!-- Accounts --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>Accounts</name>
         </sections>
         <sections>
-            <label><!-- Opportunities --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>Opportunities</name>
         </sections>
     </reportTypes>
@@ -43206,7 +43210,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
                 <label><!-- Contact User Portal Status --></label>
                 <name>Contact User Portal Status</name>
             </columns>
-            <label><!-- Contact Information --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>Contact Information</name>
         </sections>
         <sections>
@@ -43282,7 +43286,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
                 <label><!-- Service Description --></label>
                 <name>Service Description</name>
             </columns>
-            <label><!-- Service information --></label>
+            <label>التقارير</label>
             <name>Service information</name>
         </sections>
     </reportTypes>
