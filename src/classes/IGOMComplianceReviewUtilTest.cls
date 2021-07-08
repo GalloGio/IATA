@@ -747,15 +747,33 @@ public inherited sharing class IGOMComplianceReviewUtilTest {
 	@isTest
 	public static void getActualGapAnalysesTest_Success(){
 		IGOM_Account_Role_Detail__c station = [SELECT Id, Account_Role__c FROM IGOM_Account_Role_Detail__c LIMIT 1];
+		Document__c igom = [SELECT Id FROM Document__c WHERE RecordType.Name = :IGOMConstants.DOCUMENT.RECORD_TYPE.IGOM LIMIT 1];
 
 		List<IGOMComplianceReviewUtil.ComplianceReview> retrievedGaps = new List<IGOMComplianceReviewUtil.ComplianceReview>();
 		Test.startTest();
-		retrievedGaps = IGOMComplianceReviewUtil.getActualGapAnalyses(station.Account_Role__c);
+		retrievedGaps = IGOMComplianceReviewUtil.getActualGapAnalyses(station.Account_Role__c, igom.Id, false);
 		Test.stopTest();
 
-		List<Compliance_Review__c> complianceReviewsFromTestSetup = [SELECT Id FROM Compliance_Review__c];
+		List<Compliance_Review__c> complianceReviewsFromTestSetup = [SELECT Id FROM Compliance_Review__c WHERE Document__c = :igom.Id AND Station__c = :station.Account_Role__c];
 		System.assertEquals(complianceReviewsFromTestSetup.size(), retrievedGaps.size());
-		System.assertEquals(1, retrievedGaps.size());
+	}
+
+	/**
+	 * @description Test the getActualGapAnalyses method with only the published gaps.
+	 */
+	@isTest
+	public static void getActualGapAnalysesTest_Published_Success(){
+		IGOM_Account_Role_Detail__c station = [SELECT Id, Account_Role__c FROM IGOM_Account_Role_Detail__c LIMIT 1];
+		Document__c igom = [SELECT Id FROM Document__c WHERE RecordType.Name = :IGOMConstants.DOCUMENT.RECORD_TYPE.IGOM LIMIT 1];
+
+		List<IGOMComplianceReviewUtil.ComplianceReview> retrievedGaps = new List<IGOMComplianceReviewUtil.ComplianceReview>();
+		Test.startTest();
+		retrievedGaps = IGOMComplianceReviewUtil.getActualGapAnalyses(station.Account_Role__c, igom.Id, true);
+		Test.stopTest();
+
+		List<Compliance_Review__c> complianceReviewsFromTestSetup = [SELECT Id FROM Compliance_Review__c WHERE Document__c = :igom.Id
+		AND Station__c = :station.Account_Role__c AND Publish_Status__c = :IGOMConstants.COMPLIANCE_REVIEW.STATUS.PUBLISHED];
+		System.assertEquals(complianceReviewsFromTestSetup.size(), retrievedGaps.size());
 	}
 
 

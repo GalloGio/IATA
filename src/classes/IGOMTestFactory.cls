@@ -439,6 +439,10 @@ public class IGOMTestFactory {
 		complianceReview3.Publish_Status__c = IGOMConstants.COMPLIANCE_REVIEW.STATUS.PUBLISHED;
 		complianceReview4.Publish_Status__c = IGOMConstants.COMPLIANCE_REVIEW.STATUS.TEMPLATE;
 		complianceReview5.Publish_Status__c = IGOMConstants.COMPLIANCE_REVIEW.STATUS.PUBLISHED;
+		complianceReview2.Is_Latest_Published__c = true;
+		complianceReview3.Is_Latest_Published__c = true;
+		complianceReview4.Is_Latest_Published__c = true;
+		complianceReview5.Is_Latest_Published__c = false;
 		complianceReview5.Effective_Date__c = Date.today().addDays(1);
 		complianceReviews.addAll(new List<Compliance_Review__c>{ complianceReview1, complianceReview2, complianceReview3, complianceReview4, complianceReview5 });
 		insert complianceReviews;

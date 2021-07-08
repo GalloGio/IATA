@@ -192,9 +192,9 @@ export default class IgAdministrationPanel extends LightningElement {
 			this.userSearchParam = event.target.value;
 
 			//Find specific users in other stations when there are no users with specified name in it
-			searchUserInOtherStations({stationId : this.stationId, searchTerm: this.userSearchParam}).then(userData =>{
+			/* searchUserInOtherStations({stationId : this.stationId, searchTerm: this.userSearchParam}).then(userData =>{
 				this.searchedUser = userData;
-			});
+			}); */
 		}else{
 			this.searching = false;
 			this.userSearchParam = '';

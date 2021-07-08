@@ -1,12 +1,17 @@
 import { LightningElement, track, api, wire } from 'lwc';
 import { resources, util, constants } from 'c/igUtility';
+import { getPicklistValues } from 'lightning/uiObjectInfoApi';
+import { getRecord } from "lightning/uiRecordApi";
 import { permissions } from 'c/igConstants';
 import { getObjectInfo } from 'lightning/uiObjectInfoApi';
 import { refreshApex } from '@salesforce/apex';
 import { label } from 'c/igLabels';
+
 import IGOM_PROCEDURE_COMPLIANCE_OBJECT from '@salesforce/schema/Compliance_Review_Part__c';
+import COMMENT_LANG from '@salesforce/schema/Compliance_Review_Part__c.Comment_Language__c';
+import COMPLIANCE_REVIEW_PART_OBJECT from '@salesforce/schema/Compliance_Review_Part__c';
+
 import getFullGapAnalysis from '@salesforce/apex/IGOMComplianceReviewUtil.getFullGapAnalysis';
-import getAvailableLanguages from '@salesforce/apex/IGOMComplianceReviewPartUtil.getVariationCommentAvailableLanguages';
 import upsertProcedureCompliance from '@salesforce/apex/IGOMComplianceReviewPartUtil.upsertProcedureCompliance';
 import deleteProcedureCompliance from '@salesforce/apex/IGOMComplianceReviewPartUtil.deleteProcedureCompliance';
 import getPermissionsApex from '@salesforce/apex/IGOMPermissions.getPermissions';
@@ -15,8 +20,9 @@ import deleteAttachment from '@salesforce/apex/IGOMAttachmentUtil.deleteAttachme
 export default class IgGapAnalysisReferenceProcedureEditor extends LightningElement {
 	@track label = label;
 
-    // Exposed properties
+    igomRecordType;
 
+    // Exposed properties
     @api documentList;
 
     // Internal properties
@@ -27,11 +33,24 @@ export default class IgGapAnalysisReferenceProcedureEditor extends LightningElem
     @track _editingGapAnalysisItem;
     @track gapAnalysisId;
 
+    // Recover Comment Language values for IGOM record type
+    @wire(getPicklistValues, { recordTypeId: '$igomRecordType', fieldApiName: COMMENT_LANG })
+    igomComplianceReviewPicklistValues;
+
+    // Get compliance review part object
+    @wire(getObjectInfo, { objectApiName: COMPLIANCE_REVIEW_PART_OBJECT })
+    Function({error,data}){
+        if(data){
+            for (var property in data.recordTypeInfos) {
+                if(data.recordTypeInfos[property].name === 'IGOM'){
+                    this.igomRecordType = property;
+                }
+            }
+        }
+    };
+
     @wire(getObjectInfo, { objectApiName: IGOM_PROCEDURE_COMPLIANCE_OBJECT })
     igomProcedureComplianceInfo;
-    
-    @wire(getAvailableLanguages)
-    commentLanguages;
 
     @wire(getFullGapAnalysis, { gapAnalysisId :'$gapAnalysisId' })
     _gapInUse;
@@ -337,5 +356,13 @@ export default class IgGapAnalysisReferenceProcedureEditor extends LightningElem
         let msgToReturn = this.label.custom.ig_reference_will_be_removed;
         msgToReturn = msgToReturn.replace('{0}', (this.editingGapAnalysisItem.userProvisionDocument === undefined ? '' : this.editingGapAnalysisItem.userProvisionDocument));
         return msgToReturn.replace('{1}', (this.editingGapAnalysisItem.userProvisionProcedure === undefined ? '' : this.editingGapAnalysisItem.userProvisionProcedure));
+    }
+
+    get commentLanguages(){
+        var langs = [];
+        this.igomComplianceReviewPicklistValues.data.values.forEach(element => {
+            langs.push(element.value);
+        });
+        return langs;
     }
 }
