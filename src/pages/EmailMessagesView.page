@@ -28,7 +28,7 @@
 
                 sforce.connection.sessionId = "{!$Api.Session_ID}";
 
-                var isEmailDeleted = sforce.apex.execute("IDFS_Util", "DeleteEmail", { EmailID: id });
+                var isEmailDeleted = sforce.apex.execute("IDFS_Util", "DeleteEmail", { messageID: id });
 
                 if(isEmailDeleted == 'true')
                 {
@@ -36,7 +36,7 @@
                     //window.top.location.reload();
                     //window.parent.location.reload();
                     // var temp = window.top.location;
-                    window.top.location = ("{!$Site.BaseURL}/" + caseId);
+                    window.open("{!$Site.BaseURL}/" + caseId, '_blank');                    
                 }
                 else
                 {
