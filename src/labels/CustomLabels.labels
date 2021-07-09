@@ -9362,7 +9362,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - Area in Case Global</shortDescription>
-        <value>Airline and Location Coding,AirportIS,Airsat,BIETA,CargoIS,CheckACode,Digital ID Card (Mobile App),Direct Data Solutions (DDS),Distance Learning,E&amp;F Operations,eBroadcast,FDC,FFP,GAP,Global Agency Directory,Global System Solution,IASC,IATA AgentExperience,IATAN,ICCS,ICH,ID Card,iiNet,IMX,Instructor-led Training (groups),Instructor-led Training (individual),MarketIS,MITA,NDClink,PaxIS,SIS,TACT,TIMATIC,Travel Agency Data Products,Treasury Dashboard,Weblink,IDX - Incident Data Exchange,YMQ Publications,MRO SmartHub,IATA Travel Pass</value>
+        <value>Airline and Location Coding,AirportIS,Airsat,BIETA,CargoIS,CheckACode,Digital ID Card (Mobile App),Direct Data Solutions (DDS),Distance Learning,E&amp;F Operations,eBroadcast,FDC,FFP,GAP,Global Agency Directory,Global System Solution,IASC,IATA AgentExperience,IATAN,ICCS,ICH,ID Card,iiNet,IMX,Instructor-led Training (groups),Instructor-led Training (individual),MarketIS,MITA,NDClink,PaxIS,SIS,TACT,TIMATIC,Travel Agency Data Products,Treasury Dashboard,Weblink,IDX - Incident Data Exchange,YMQ Publications,MRO SmartHub,IATA Travel Pass,TIDS</value>
     </labels>
     <labels>
         <fullName>CaseValidation_InDepthArea</fullName>
