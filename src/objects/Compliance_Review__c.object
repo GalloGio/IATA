@@ -177,6 +177,15 @@
         <type>Date</type>
     </fields>
     <fields>
+        <fullName>Is_Latest_Published__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Indicates whether the compliance review was the latest published one for a document edition and a specific account</description>
+        <externalId>false</externalId>
+        <label>Is Latest Published?</label>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
         <fullName>Notification_Date__c</fullName>
         <description>Date that a notification to complete the Compliance Review should be/was sent.</description>
         <externalId>false</externalId>
