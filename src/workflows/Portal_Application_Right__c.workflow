@@ -387,42 +387,4 @@
         </criteriaItems>
         <triggerType>onAllChanges</triggerType>
     </rules>
-    <rules>
-        <fullName>Notify contact of access rejected by Portal Admin</fullName>
-        <actions>
-            <name>Notify_Access_denied_by_PortalAdmin</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Portal_Application_Right__c.Right__c</field>
-            <operation>equals</operation>
-            <value>Access Denied</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>User.ProfileId</field>
-            <operation>contains</operation>
-            <value>ISS</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Notify contact of access rejected by internal user</fullName>
-        <actions>
-            <name>Notify_Access_denied_by_internal_user</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Portal_Application_Right__c.Right__c</field>
-            <operation>equals</operation>
-            <value>Access Denied</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>User.ProfileId</field>
-            <operation>notContain</operation>
-            <value>ISS</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
 </Workflow>

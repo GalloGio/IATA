@@ -2092,14 +2092,6 @@
         <template>All/New_DPC_ACR_Case_Notification</template>
     </alerts>
     <alerts>
-        <fullName>New_DPC_ACR_for_ILDS_Notification</fullName>
-        <ccEmails>JIANGHT@iata.org, ZHOUJN@IATA.ORG , liuhy@iata.org</ccEmails>
-        <description>New DPC ACR for ILDS Notification</description>
-        <protected>false</protected>
-        <senderType>CurrentUser</senderType>
-        <template>All/New_DPC_ACR_for_ILDS_Notification</template>
-    </alerts>
-    <alerts>
         <fullName>Notification_new_comment_idpc_case</fullName>
         <description>Send email notification for a new comment on a Inter DPCs case</description>
         <protected>false</protected>
@@ -3611,24 +3603,6 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>AccreditationCaseAreaACCProcess</fullName>
-        <field>CaseArea__c</field>
-        <literalValue>Accreditation Process</literalValue>
-        <name>Case Area=ACC Process</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>AccreditationDataEntryReason</fullName>
-        <field>Reason1__c</field>
-        <literalValue>AIMS Data Entry</literalValue>
-        <name>Accreditation - Data Entry - Reason</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>Ad_hoc_Calendar_approval_update_status</fullName>
         <field>Status</field>
         <literalValue>Approved</literalValue>
@@ -3662,16 +3636,6 @@
         <name>Airline Master List</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Approval_Date_Today</fullName>
-        <description>Updates the Approval Date with today&apos;s date</description>
-        <field>Approval_Date_cr__c</field>
-        <formula>TODAY()</formula>
-        <name>Approval Date = Today</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
@@ -3993,33 +3957,6 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>ChangeIATACountrytoFR</fullName>
-        <field>BSPCountry__c</field>
-        <literalValue>France</literalValue>
-        <name>Change IATA Country to FR</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>ChangeIATACountrytoIT</fullName>
-        <field>BSPCountry__c</field>
-        <literalValue>Italy</literalValue>
-        <name>Change IATA Country to IT</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>ChangeIATACountrytoUK</fullName>
-        <field>BSPCountry__c</field>
-        <literalValue>United Kingdom</literalValue>
-        <name>Change IATA Country to UK</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>ChangeOwnertoACCqueue</fullName>
         <field>OwnerId</field>
         <lookupValue>CasesACCEuropeRisk</lookupValue>
@@ -4246,15 +4183,6 @@
         <operation>Literal</operation>
         <protected>false</protected>
         <reevaluateOnChange>true</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Change_Reason_to_BankThird_party</fullName>
-        <field>Reason1__c</field>
-        <literalValue>Bank / 3rd party</literalValue>
-        <name>Change Reason to Bank/ Third party</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
         <fullName>Change_Status_to_Reassessment_Approved</fullName>
@@ -4865,28 +4793,6 @@ TEXT(ICCS_Product__c)+
 TEXT(ICCS_Country__c)+
 TEXT(ICCS_Currencies__c)+&quot;Open&quot;)</formula>
         <name>ICCS Unique Case</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>ICCS_Unique_Case_Closed</fullName>
-        <field>ICCS_Unique_Case__c</field>
-        <formula>CASESAFEID(Id)</formula>
-        <name>ICCS Unique Case - Closed</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>ICCS_Unique_Case_Open</fullName>
-        <field>ICCS_Unique_Case__c</field>
-        <formula>CASESAFEID(Account.Id) +
-TEXT(ICCS_Product__c)+
-TEXT(ICCS_Country__c)+
-TEXT(ICCS_Currencies__c)+
-IF(IsClosed, &quot;Closed&quot;, &quot;Open&quot;)</formula>
-        <name>ICCS Unique Case - Open</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
         <protected>false</protected>
@@ -5540,15 +5446,6 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>New_Attachment_From_Portal_User_False</fullName>
-        <field>New_Attachment_From_Portal_User__c</field>
-        <literalValue>0</literalValue>
-        <name>New Attachment From Portal User - False</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>New_Comment_From_Connection_User_False</fullName>
         <field>New_Comment_From_Connection_User__c</field>
         <literalValue>0</literalValue>
@@ -5698,17 +5595,6 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <lookupValue>ComplaintIDFS</lookupValue>
         <lookupValueType>RecordType</lookupValueType>
         <name>RecType Complaint (IDFS ISS)</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Record_Type_ACR_DPC_ACCA</fullName>
-        <description>Changes the case record type to Application Change Request (DPC) - ACCA</description>
-        <field>RecordTypeId</field>
-        <lookupValue>Application_Change_Request_DPC_Systems_ACCA</lookupValue>
-        <lookupValueType>RecordType</lookupValueType>
-        <name>Record Type = ACR DPC ACCA</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>LookupValue</operation>
         <protected>false</protected>
@@ -6199,17 +6085,6 @@ Case(month(datevalue(now()))+1,1,31,2,28,3,31,4,30,5,31,6,30,7,31,8,31,9,30,10,3
         <name>SIDRA_Update Date/Time IRRWD Approval</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>SIS_Assign_Case_Record_Type</fullName>
-        <description>Assign Case Record Type as Cases - SIS Help Desk</description>
-        <field>RecordTypeId</field>
-        <lookupValue>Cases_SIS_Help_Desk</lookupValue>
-        <lookupValueType>RecordType</lookupValueType>
-        <name>SIS Assign Case Record Type</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
@@ -7066,26 +6941,6 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
-        <fullName>ACR AIMS%3A Update Approval Date</fullName>
-        <actions>
-            <name>Approval_Date_Today</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Application Change Request (AIMS)</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Approved</value>
-        </criteriaItems>
-        <description>Updates the Approval Date when the Case Status is changed to Approval</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>ACR%3A Change in Escalated Status DPC</fullName>
         <actions>
             <name>Status_Approved</name>
@@ -7134,51 +6989,6 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
             <value>Application Change Request (DPC System)</value>
         </criteriaItems>
         <description>Changes the Record Type of a CR for DPC to enable a page layout with the fields entered by the requestor locked from editing.</description>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
-        <fullName>ACR%3A DPC Change Record Type for ACCA</fullName>
-        <actions>
-            <name>Record_Type_ACR_DPC_ACCA</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Application Change Request (DPC Systems - locked),Application Change Request (DPC System)</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>2.0 IE approved - Escalated DPC for PQ</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.DPC_Software__c</field>
-            <operation>equals</operation>
-            <value>IBSP1,IBSPs,IBSPs-D</value>
-        </criteriaItems>
-        <description>Used to change the case record type of a CR for DPC that is escalated to ACCA, to a record type and page layout that they can see.</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>ACR%3A Notification of new ACR to ITS BJS for ILDS</fullName>
-        <actions>
-            <name>New_DPC_ACR_for_ILDS_Notification</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Application Change Request (DPC System)</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.DPC_Software__c</field>
-            <operation>equals</operation>
-            <value>ILDS</value>
-        </criteriaItems>
-        <description>Used to inform ITS BJS that a new ACR has been escalated to them. Also to notify any notification there after.</description>
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
@@ -8568,44 +8378,6 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         </actions>
         <active>true</active>
         <formula>RecordType.DeveloperName == &apos;FDS_ICCS_Product_Management&apos; &amp;&amp; ISCHANGED(IsClosed)</formula>
-        <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>ICCS Unique Case - Closed</fullName>
-        <actions>
-            <name>ICCS_Unique_Case_Closed</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>FDS ICCS Product Management</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.IsClosed</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>ICCS Unique Case - Open</fullName>
-        <actions>
-            <name>ICCS_Unique_Case_Open</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>FDS ICCS Product Management</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.IsClosed</field>
-            <operation>equals</operation>
-            <value>False</value>
-        </criteriaItems>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -10254,47 +10026,6 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
-        <fullName>IDFS_SIDRA_EURDEF_Default confirmation assign to ACC</fullName>
-        <actions>
-            <name>ChangeOwnertoACCqueue</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>ReopenCase</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>contains</operation>
-            <value>SIDRA</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Confirmation_moneys_not_received__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.DEF_Approval_Rejection__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Region__c</field>
-            <operation>equals</operation>
-            <value>Europe</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Region__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <description>SCE</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <offsetFromField>Case.Propose_Default__c</offsetFromField>
-            <timeLength>2</timeLength>
-            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
         <fullName>IDFS_SIDRA_IRIS manual_process</fullName>
         <actions>
             <name>IDFS_SIDRA_IRIS_manual_IRRApproval</name>
@@ -10780,48 +10511,6 @@ CONTAINS( $UserRole.Name, &quot;Operational Management&quot;)
         </criteriaItems>
         <description>SIDRA</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>IDFS_SIDRA_TER approved - email to R%26S new</fullName>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.Update_AIMS_DEF__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>SIDRA,SIDRA BR</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Termination_date__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.REI_ApprovalRejectin__c</field>
-            <operation>notEqual</operation>
-            <value>Approved</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.DEF_Withdrawal_Approval_Rejection__c</field>
-            <operation>notEqual</operation>
-            <value>Approved</value>
-        </criteriaItems>
-        <description>SIDRA</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>IDFS_SIDRA_email_to_R_S_on_TER_date</name>
-                <type>Alert</type>
-            </actions>
-            <actions>
-                <name>R_S_feedback_pending</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Case.Termination_date__c</offsetFromField>
-            <timeLength>-1</timeLength>
-            <workflowTimeTriggerUnit>Hours</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
     </rules>
     <rules>
         <fullName>IDFS_SIDRA_TER approved - email to R%26S v3</fullName>
@@ -12631,30 +12320,6 @@ Change the case status to “Agent Notified (mail)” if case status was “Agen
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>SCE%3A Accreditation Europe - Data Entry</fullName>
-        <actions>
-            <name>AccreditationCaseAreaACCProcess</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>AccreditationDataEntryReason</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.Origin</field>
-            <operation>equals</operation>
-            <value>E-mail to Case - Accreditation Europe</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Subject</field>
-            <operation>startsWith</operation>
-            <value>AIMS</value>
-        </criteriaItems>
-        <description>Madrid - Data Entry for Offshore countries needing AIMS Data entry</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>SCE%3A Change IATA Country_BELUX</fullName>
         <actions>
             <name>ChangeIATACountrytoBELUX</name>
@@ -12764,29 +12429,6 @@ For cases coming from web forms</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>SCE%3A Classify ATCAN files cases</fullName>
-        <actions>
-            <name>Change_Case_Area_Customer_Service</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>Change_Reason_to_BankThird_party</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>ChangerecordtypetoInternalSCE</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.SuppliedEmail</field>
-            <operation>equals</operation>
-            <value>uatpan@uatp.mconnect.aero</value>
-        </criteriaItems>
-        <description>workflow created for the automatic classification of ATCAN files</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>SCE%3A Classify RET Control cases</fullName>
         <actions>
             <name>ChangeCaseAreatoOM</name>
@@ -12838,62 +12480,6 @@ For cases coming from web forms</description>
         </criteriaItems>
         <description>When a case subject is equal to Serial Number Allocation the case must be assigned to Reporting &amp; Billing</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>SCE%3A Update IATA Country - Info%2Ees</fullName>
-        <actions>
-            <name>ChangeIATACountrytoES</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.Origin</field>
-            <operation>equals</operation>
-            <value>E-mail to Case - Spain</value>
-        </criteriaItems>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
-        <fullName>SCE%3A Update IATA Country - Info%2Efr</fullName>
-        <actions>
-            <name>ChangeIATACountrytoFR</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.Origin</field>
-            <operation>equals</operation>
-            <value>E-mail to Case - France</value>
-        </criteriaItems>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
-        <fullName>SCE%3A Update IATA Country - Info%2Eit</fullName>
-        <actions>
-            <name>ChangeIATACountrytoIT</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.Origin</field>
-            <operation>equals</operation>
-            <value>E-mail to Case - Italy</value>
-        </criteriaItems>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
-        <fullName>SCE%3A Update IATA Country - Info%2Euk</fullName>
-        <actions>
-            <name>ChangeIATACountrytoUK</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.Origin</field>
-            <operation>equals</operation>
-            <value>E-mail to Case - UK</value>
-        </criteriaItems>
-        <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
         <fullName>SEDA update IRIS staff action</fullName>
@@ -13901,35 +13487,6 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>SIS Help Desk - New Case</fullName>
-        <actions>
-            <name>SIS_Assign_Case_Record_Type</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>SIS_Assign_Case_to_SIS_Help_Desk_queue</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>SIS_Make_new_case_visible_in_CustPortal</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>1 AND 2</booleanFilter>
-        <criteriaItems>
-            <field>Case.CaseArea__c</field>
-            <operation>equals</operation>
-            <value>SIS</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Origin</field>
-            <operation>equals</operation>
-            <value>Web</value>
-        </criteriaItems>
-        <description>Whenever a new SIS case is created, assign case owner and notify, record type, case origin and notify SIS Customer Support team</description>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
         <fullName>SIS Help Desk - New Case Except Web</fullName>
         <actions>
             <name>SIS_Assign_Case_to_SIS_Help_Desk_queue</name>
@@ -13981,57 +13538,6 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <value>Cases - SIS Help Desk</value>
         </criteriaItems>
         <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
-        <fullName>SIS Help Desk - New Case web details</fullName>
-        <actions>
-            <name>SIS_Assign_Case_Record_Type</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>SIS_Assign_Case_to_SIS_Help_Desk_queue</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>SIS_Make_new_case_visible_in_CustPortal</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <booleanFilter>(1 AND 2) AND 3</booleanFilter>
-        <criteriaItems>
-            <field>Case.CaseArea__c</field>
-            <operation>equals</operation>
-            <value>SIS</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Origin</field>
-            <operation>equals</operation>
-            <value>Web</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.ContactEmail</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
-        <fullName>SIS Help Desk - Re-assign rejected case to SIS Help Desk queue</fullName>
-        <actions>
-            <name>SIS_Update_Assigned_to_SIS_Agent</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Cases - SIS Help Desk</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Case.Status</field>
-            <operation>equals</operation>
-            <value>Rejected</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>SIS Help Desk - Reassign case to SIS HD queue when reviewed and accepted</fullName>
@@ -14183,30 +13689,6 @@ when over-remittance is less than USD 1, the case be closed automatically</descr
             <value>ICH Application Support</value>
         </criteriaItems>
         <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>Send email notification for all Cases when is added a new attachment by a portal user</fullName>
-        <actions>
-            <name>Send_email_notification_for_a_new_attachment_on_a_case</name>
-            <type>Alert</type>
-        </actions>
-        <actions>
-            <name>New_Attachment_From_Portal_User_False</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.New_Attachment_From_Portal_User__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>User.UserType</field>
-            <operation>equals</operation>
-            <value>Partner</value>
-        </criteriaItems>
-        <description>Send email notification on all Cases when is added a new attachment by a portal user</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
         <fullName>Send email notification for all Cases when is added a new comment by a portal user</fullName>

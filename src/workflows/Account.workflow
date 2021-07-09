@@ -143,18 +143,6 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>Acc_Update_Record_Sharing_Criteria_AUX</fullName>
-        <description>This field is updated with Record Sharing Criteria values</description>
-        <field>Record_Sharing_Criteria_AUX__c</field>
-        <formula>IF(INCLUDES(Record_Sharing_Criteria__c, &quot;IFG Active Users&quot;),&quot;IFG Active Users;&quot;,&quot;&quot;)
-&amp;
-IF(INCLUDES(Record_Sharing_Criteria__c, &quot;TIP User&quot;),&quot;TIP User;&quot;,&quot;&quot;)</formula>
-        <name>Acc Update Record Sharing Criteria AUX</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>AccountIATAAirlineSetName</fullName>
         <description>Set the name of an IATA Airline Account, first using Trade Name, in second place using Legal Name and in third place Name_on_AOC__c</description>
         <field>Name</field>
@@ -312,24 +300,6 @@ IF(INCLUDES(Record_Sharing_Criteria__c, &quot;TIP User&quot;),&quot;TIP User;&qu
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>Short_Name_Agency</fullName>
-        <description>Update the short name as the Trade name, and if there is no trade name it takes the Account name</description>
-        <field>Short_Name__c</field>
-        <formula>IF(
-OR( ISNULL( TradeName__c ), TradeName__c == &apos;&apos;),
-IF (
-OR( ISNULL( Name ), Name == &apos;&apos;),
-Short_Name__c,
-Name
-),
-TradeName__c
-)</formula>
-        <name>Short Name Agency</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>Site_index_field_updt</fullName>
         <field>Site_index__c</field>
         <formula>IF( OR( ISPICKVAL(Industry,&apos;Travel Agent&apos;), ISPICKVAL(Industry,&apos;Cargo Agent&apos;)),
@@ -348,15 +318,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <field>Industry</field>
         <literalValue>Travel Agency</literalValue>
         <name>Update Industry</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>UpdateIndustryCargoAgent</fullName>
-        <field>Industry</field>
-        <literalValue>Cargo Agent</literalValue>
-        <name>Update Industry - Cargo Agent</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>
@@ -447,30 +408,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </criteriaItems>
         <description>AIMS Accounts record type Assignment rule</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>AIMS%3A Update Industry - cargo agents</fullName>
-        <actions>
-            <name>UpdateIndustryCargoAgent</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Is_AIMS_Account__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Type</field>
-            <operation>equals</operation>
-            <value>IATA Cargo Agent,Import Agent,CASS Associate,Couriers</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Is_AIMS_Account__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <description>Updates the field Industry in the cargo agent accounts that are uploaded from AIMS</description>
-        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>AIMS%3A Update Industry - travel agents</fullName>
@@ -573,17 +510,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <active>false</active>
         <description>Update account site if the account Record Type is Airline Branch or Airline Headquarters</description>
         <formula>and( or(RecordType.DeveloperName= &apos;IATA_Airline_BR&apos;, RecordType.DeveloperName= &apos;IATA_Airline&apos;,RecordType.DeveloperName= &apos;IATA_GSA&apos; ,(and (RecordType.DeveloperName= &apos;Standard_Account&apos;, ISPICKVAL(Sector__c,&apos;Airline&apos;)))))</formula>
-        <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>Agency Short Name</fullName>
-        <actions>
-            <name>Short_Name_Agency</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <description>Used for updating the agency short name with the trade name if exist, if not then it updates it with the account name</description>
-        <formula>AND ( RecordType.DeveloperName = &apos;IATA_Agency&apos;, OR(ISNEW(), ISCHANGED( TradeName__c ), ISCHANGED( Name ),ISCHANGED(Short_Name__c), ISCHANGED(IATACode__c) ) )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -742,16 +668,6 @@ It copies the value of IATAcode field to an auxiliary unique field. It allows us
             <timeLength>-30</timeLength>
             <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Field update with values of field Record Sharing Criteria</fullName>
-        <actions>
-            <name>Acc_Update_Record_Sharing_Criteria_AUX</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <formula>ISCHANGED(Record_Sharing_Criteria__c)</formula>
-        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>IW - Check InvoiceWorks Customer Account</fullName>
