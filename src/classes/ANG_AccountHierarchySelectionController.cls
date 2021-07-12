@@ -999,6 +999,11 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		}
 	}
 
+	public void cleanApexMessages(){
+		ApexPages.getmessages().clear();
+		chechSplitOfAccountHE();
+	}
+
 	public void chechSplitOfAccountHE(){
 		Integer countManyAE = 0; 
 		Id newParentAe = null;

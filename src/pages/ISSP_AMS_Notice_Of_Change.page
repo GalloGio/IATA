@@ -621,37 +621,40 @@
 		<apex:outputText rendered="{!newform.Is_change_bank_account_details__c==true && PDFPerRegionCS!=null}">
 			<p><a href="#nav_one" style="{!IF(isChangeOfAccreditationType,'color: gray!important;', '')}">{!$Label.ISSP_AMS_NoC_Change_Bank_Details}</a></p>
 		</apex:outputText>
-		<apex:outputText rendered="{!AND(isAccreditationModelNotNullOrLegacy, NOT(isBankAccountChange))}">
+		<apex:outputText rendered="{!AND(OR(!isGEAccountHierarchy, isChangeOfAccreditationType), isAccreditationModelNotNullOrLegacy, NOT(isBankAccountChange))}">
 			<p><a href="#nav_one" style="{!IF(isChangeOfAccreditationType,'color: #gray!important;', '')}">{!$Label.ISSP_AMS_NoC_Acreditation_Type_Section_Header}</a></p>
 		</apex:outputText>
 		<apex:outputText rendered="{!newform.Is_change_legal_name__c==true}">
 			<p><a href="#nav_two" style="{!IF(isChangeOfAccreditationType,'color: gray!important;', '')}">
-				<apex:outputText rendered="{!!isAccreditationModelNotNullOrLegacy}">{!IF(newlabels, $Label.ISSP_AMS_NoC_Change_of_Legal_Name_New, $Label.ISSP_AMS_NoC_Change_of_Legal_Name)}</apex:outputText>
-				<apex:outputText rendered="{!isAccreditationModelNotNullOrLegacy}">
+				<apex:outputText rendered="{!AND(isGEAccountHierarchy, !isChangeOfAccreditationType)}">{!$Label.ISSP_AMS_NoC_Change_of_Legal_Name}</apex:outputText>
+				<apex:outputText rendered="{!AND(!isAccreditationModelNotNullOrLegacy,OR(!isGEAccountHierarchy, isChangeOfAccreditationType))}">{!IF(newlabels, $Label.ISSP_AMS_NoC_Change_of_Legal_Name_New, $Label.ISSP_AMS_NoC_Change_of_Legal_Name)}</apex:outputText>
+				<apex:outputText rendered="{!AND(isAccreditationModelNotNullOrLegacy,OR(!isGEAccountHierarchy, isChangeOfAccreditationType))}">
 					{!SUBSTITUTE(IF(newlabels, $Label.ISSP_AMS_NoC_Change_of_Legal_Name_New, $Label.ISSP_AMS_NoC_Change_of_Legal_Name), '1', '2')}
 				</apex:outputText>
 			</a></p>
 		</apex:outputText>
 		<apex:outputText rendered="{!newform.Is_change_location__c==true}">
 			<p><a href="#nav_three" style="{!IF(isChangeOfAccreditationType,'color: gray!important;', '')}">
-				<apex:outputText rendered="{!!isAccreditationModelNotNullOrLegacy}">{!IF(newlabels, $Label.ISSP_AMS_NoC_Change_of_Location_New, $Label.ISSP_AMS_NoC_Change_of_Location)}</apex:outputText>
-				<apex:outputText rendered="{!isAccreditationModelNotNullOrLegacy}">
+				<apex:outputText rendered="{!AND(isGEAccountHierarchy, !isChangeOfAccreditationType)}">{!$Label.ISSP_AMS_NoC_Change_of_Location}</apex:outputText>
+				<apex:outputText rendered="{!AND(!isAccreditationModelNotNullOrLegacy,OR(!isGEAccountHierarchy, isChangeOfAccreditationType))}">{!IF(newlabels, $Label.ISSP_AMS_NoC_Change_of_Location_New, $Label.ISSP_AMS_NoC_Change_of_Location)}</apex:outputText>
+				<apex:outputText rendered="{!AND(isAccreditationModelNotNullOrLegacy,OR(!isGEAccountHierarchy, isChangeOfAccreditationType))}">
 					{!SUBSTITUTE(IF(newlabels, $Label.ISSP_AMS_NoC_Change_of_Location_New, $Label.ISSP_AMS_NoC_Change_of_Location), '2', '3')}
 				</apex:outputText>
 			</a></p>
 		</apex:outputText>
 		<apex:outputText rendered="{!newform.Is_change_bank_account_details__c==false}">
 			<p><a href="#nav_four" style="{!IF(isChangeOfAccreditationType,'color: gray!important;', '')}">
-				<apex:outputText rendered="{!!isAccreditationModelNotNullOrLegacy}">{!IF(IsPostalOperator, $Label.ISSP_AMS_NoC_Change_Ownership_Legal_Status, IF(newlabels, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding_New, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding))}</apex:outputText>
-				<apex:outputText rendered="{!isAccreditationModelNotNullOrLegacy}">
+				<apex:outputText rendered="{!AND(isGEAccountHierarchy, !isChangeOfAccreditationType)}">{!$Label.ISSP_AMS_NoC_Change_Ownership_Shareholding}</apex:outputText>
+				<apex:outputText rendered="{!AND(!isAccreditationModelNotNullOrLegacy,AND(isGEAccountHierarchy, !isChangeOfAccreditationType))}">{!IF(IsPostalOperator, $Label.ISSP_AMS_NoC_Change_Ownership_Legal_Status, IF(newlabels, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding_New, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding))}</apex:outputText>
+				<apex:outputText rendered="{!AND(isAccreditationModelNotNullOrLegacy,AND(isGEAccountHierarchy, isChangeOfAccreditationType))}">
 					{!SUBSTITUTE(IF(IsPostalOperator, $Label.ISSP_AMS_NoC_Change_Ownership_Legal_Status, IF(newlabels, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding_New, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding)), '3', '4')}
 				</apex:outputText>
 			</a></p>
 		</apex:outputText>
 		<apex:outputText rendered="{!NOT(newform.Is_change_bank_account_details__c) && !isPostalOperator}">
 			<p><a href="#nav_five">
-				<apex:outputText rendered="{!!isAccreditationModelNotNullOrLegacy}">{!$Label.ISSP_AMS_NoC_Additional_Information}</apex:outputText>
-				<apex:outputText rendered="{!isAccreditationModelNotNullOrLegacy}">
+				<apex:outputText rendered="{!OR(!isAccreditationModelNotNullOrLegacy, AND(isGEAccountHierarchy, !isChangeOfAccreditationType))}">{!$Label.ISSP_AMS_NoC_Additional_Information}</apex:outputText>
+				<apex:outputText rendered="{!AND(isAccreditationModelNotNullOrLegacy, AND(isGEAccountHierarchy, isChangeOfAccreditationType))}">
 					{!SUBSTITUTE($Label.ISSP_AMS_NoC_Additional_Information, '4', '5')}
 				</apex:outputText>
 			</a></p>
@@ -782,7 +785,7 @@
 				<apex:pageBlockSection columns="1" rendered="{!AND(NOT(newform.Is_change_bank_account_details__c), !isChangeOfAccreditationType)}">
 					<apex:outputText escape="false" value="{!IF(isCNSAgency, $Label.ISSP_AMS_NOC_Instructions_CNS, IF(newlabels, $Label.ISSP_AMS_NOC_Instructions_New, $Label.ISSP_AMS_NOC_Instructions))}"/>
 				</apex:pageBlockSection>
-				<apex:outputPanel rendered="{!AND(isAccreditationModelNotNullOrLegacy, NOT(isBankAccountChange))}">
+				<apex:outputPanel rendered="{!AND(OR(!isGEAccountHierarchy, isChangeOfAccreditationType), isAccreditationModelNotNullOrLegacy, NOT(isBankAccountChange))}">
 					<span id="nav_one"></span>
 					<apex:pageBlockSection columns="2" collapsible="false" id="accreditationModelSection">
 						<apex:facet name="header">
@@ -954,8 +957,9 @@
 
 						<apex:facet name="header">
 							<apex:outputpanel >
-								<apex:outputText rendered="{!!isAccreditationModelNotNullOrLegacy}">{!IF(newlabels, $Label.ISSP_AMS_NoC_Change_of_Legal_Name_New, $Label.ISSP_AMS_NoC_Change_of_Legal_Name)}</apex:outputText>
-                                <apex:outputText rendered="{!isAccreditationModelNotNullOrLegacy}">
+								<apex:outputText rendered="{!AND(isGEAccountHierarchy, !isChangeOfAccreditationType)}">{!$Label.ISSP_AMS_NoC_Change_of_Legal_Name}</apex:outputText>
+								<apex:outputText rendered="{!AND(!isAccreditationModelNotNullOrLegacy, OR(!isGEAccountHierarchy, isChangeOfAccreditationType))}">{!IF(newlabels, $Label.ISSP_AMS_NoC_Change_of_Legal_Name_New, $Label.ISSP_AMS_NoC_Change_of_Legal_Name)}</apex:outputText>
+                                <apex:outputText rendered="{!AND(isAccreditationModelNotNullOrLegacy,OR(!isGEAccountHierarchy, isChangeOfAccreditationType))}">
                                     {!SUBSTITUTE(IF(newlabels, $Label.ISSP_AMS_NoC_Change_of_Legal_Name_New, $Label.ISSP_AMS_NoC_Change_of_Legal_Name), '1', '2')}
                                 </apex:outputText>
 							</apex:outputpanel>
@@ -1035,8 +1039,9 @@
 					<apex:pageBlockSection columns="2" id="locationSection" collapsible="false">
 						<apex:facet name="header">
 							<apex:outputpanel >
-								<apex:outputText rendered="{!!isAccreditationModelNotNullOrLegacy}">{!IF(newlabels, $Label.ISSP_AMS_NoC_Change_of_Location_New, $Label.ISSP_AMS_NoC_Change_of_Location)}</apex:outputText>
-                                <apex:outputText rendered="{!isAccreditationModelNotNullOrLegacy}">
+								<apex:outputText rendered="{!AND(isGEAccountHierarchy, !isChangeOfAccreditationType)}">{!$Label.ISSP_AMS_NoC_Change_of_Location}</apex:outputText>
+								<apex:outputText rendered="{!AND(!isAccreditationModelNotNullOrLegacy, OR(!isGEAccountHierarchy, isChangeOfAccreditationType))}">{!IF(newlabels, $Label.ISSP_AMS_NoC_Change_of_Location_New, $Label.ISSP_AMS_NoC_Change_of_Location)}</apex:outputText>
+                                <apex:outputText rendered="{!AND(isAccreditationModelNotNullOrLegacy,OR(!isGEAccountHierarchy, isChangeOfAccreditationType))}">
                                     {!SUBSTITUTE(IF(newlabels, $Label.ISSP_AMS_NoC_Change_of_Location_New, $Label.ISSP_AMS_NoC_Change_of_Location), '2', '3')}
                                 </apex:outputText>
 							</apex:outputpanel>
@@ -1186,8 +1191,9 @@
 				<apex:pageBlockSection columns="2" id="LegalStatusSection" collapsible="false" rendered="{!newform.Is_change_bank_account_details__c==false}">
 					<apex:facet name="header">
 						<apex:outputpanel >
-							<apex:outputText rendered="{!!isAccreditationModelNotNullOrLegacy}">{!IF(IsPostalOperator, $Label.ISSP_AMS_NoC_Change_Ownership_Legal_Status, IF(newlabels, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding_New, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding))}</apex:outputText>
-							<apex:outputText rendered="{!isAccreditationModelNotNullOrLegacy}">
+							<apex:outputText rendered="{!AND(isGEAccountHierarchy, !isChangeOfAccreditationType)}">{!$Label.ISSP_AMS_NoC_Change_Ownership_Shareholding}</apex:outputText>
+							<apex:outputText rendered="{!AND(!isAccreditationModelNotNullOrLegacy, OR(!isGEAccountHierarchy, isChangeOfAccreditationType))}">{!IF(IsPostalOperator, $Label.ISSP_AMS_NoC_Change_Ownership_Legal_Status, IF(newlabels, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding_New, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding))}</apex:outputText>
+							<apex:outputText rendered="{!AND(isAccreditationModelNotNullOrLegacy, OR(!isGEAccountHierarchy, isChangeOfAccreditationType))}">
 								{!SUBSTITUTE(IF(IsPostalOperator, $Label.ISSP_AMS_NoC_Change_Ownership_Legal_Status, IF(newlabels, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding_New, $Label.ISSP_AMS_NoC_Change_Ownership_Shareholding)), '3', '4')}
 							</apex:outputText>
 						</apex:outputpanel>
@@ -1554,8 +1560,8 @@
 						<apex:pageBlockSection collapsible="false" columns="1" id="section4_1" rendered="{!newform.Is_change_bank_account_details__c==false && !isPostalOperator}">
 							<apex:facet name="header">
 								<apex:outputpanel >
-									<apex:outputText rendered="{!!isAccreditationModelNotNullOrLegacy}">{!$Label.ISSP_AMS_NoC_Additional_Information}</apex:outputText>
-									<apex:outputText rendered="{!isAccreditationModelNotNullOrLegacy}">
+									<apex:outputText rendered="{!OR(!isAccreditationModelNotNullOrLegacy, AND(isGEAccountHierarchy, !isChangeOfAccreditationType))}">{!$Label.ISSP_AMS_NoC_Additional_Information}</apex:outputText>
+									<apex:outputText rendered="{!AND(isAccreditationModelNotNullOrLegacy, AND(isGEAccountHierarchy, isChangeOfAccreditationType))}">
 										{!SUBSTITUTE($Label.ISSP_AMS_NoC_Additional_Information, '4', '5')}
 									</apex:outputText>
 								</apex:outputpanel>

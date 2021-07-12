@@ -226,7 +226,7 @@
 
 
                 <apex:pageBlockSectionItem labelStyleClass="{!IF(OR(isAgencyChanges, isConversionFromStandardToMulticountry), field.styleClass, '')}" dataStyleClass="{!IF(OR(isAgencyChanges, isConversionFromStandardToMulticountry), field.styleClass, '')}" rendered="{!AND(field.name == 'Remittance_frequency__c', allowMultipleRemittances == false)}">      
-                    <apex:outputLabel id="rfLabel" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields[field.name].Label}" />
+                    <apex:outputLabel id="rfLabel" value="{!$ObjectType.AMS_Pax_Accreditation_Form__c.fields[field.name].Label} + 3" />
                     <apex:outputPanel >  
                         <apex:outputLabel id="outputRF" value="{!remittanceFrequencyToShow}"/> 
                         <apex:selectList id="cPicklist" value="{!accreditationObj[field.name]}" multiselect="false" size="1" disabled="{!OR(NOT(field.inlineEdit),isCertificationOSCAR)}" onchange="remittanceFrequencyChange()" style="display: none;"> 

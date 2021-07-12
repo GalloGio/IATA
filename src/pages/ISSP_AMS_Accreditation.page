@@ -431,7 +431,7 @@
         function setArrowListeners() {
             $('[id$=rightList]').on('DOMNodeInserted', function(e) {
                 multiSelectListAction();
-
+                checkCleanApexMessages();
                 if ($('[id$=leftList]')[0].children.length === 0) {
                     $('[id$=selectAll]')[0].checked = true;
                 }
@@ -439,7 +439,7 @@
 
             $('[id$=rightList]').on('DOMNodeRemoved', function(e) {
                 multiSelectListAction();
-
+                checkCleanApexMessages();
                 $('[id$=selectAll]')[0].checked = false;
             });
         }
@@ -681,6 +681,11 @@
             }
         }
 
+
+		function checkCleanApexMessages(){
+			cleanApexMessages();
+		}
+
     </script>
 
     <apex:outputPanel id="correctHierarchy">
@@ -731,8 +736,8 @@
                         </h3>
                     </div>
                     <div class="panel-body" id="body-enquiries">
-
                         <apex:form id="step1Form" styleClass="form-horizontal">
+                            <apex:actionFunction action="{!cleanApexMessages}" name="cleanApexMessages" rerender="clearallappMessages"></apex:actionFunction>
                             <apex:outputPanel styleclass="progress iata-tabs" rendered="{! !isPostalOperator}">
                                 <div class="progress-bar iata-tab tabl-active" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 22%;">
                                     <apex:outputText value="{!IF(NOT(isNoticeOfChange), lblStepA, lblNoCStepA)}" escape="false"/>
@@ -820,7 +825,7 @@
                     </apex:facet>
                                     </apex:actionStatus>
                                 </apex:pageBlockButtons>
-                                <apex:pageMessages escape="false"></apex:pageMessages>
+                                <apex:pageMessages escape="false" id="clearallappMessages"></apex:pageMessages>
                                 <apex:outputPanel id="formContainer" rendered="{!NOT(amsIsGSA=='YES')}">
 
                                     <div class="alert alert-info" role="alert" style="display:{!IF(NOT(isNoticeOfChange),'','none')}">

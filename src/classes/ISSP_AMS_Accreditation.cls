@@ -567,6 +567,10 @@ public without sharing class ISSP_AMS_Accreditation {
 		return con.Account.RecordType.DeveloperName == 'IATA_Agency' && this.con.Account.Location_Class__c == AMS_Utils.LC_POSTAL_OPERATOR;
 	}
 
+	public void cleanApexMessages(){
+		ApexPages.getmessages().clear();
+	}
+
 	public ISSP_AMS_Accreditation() {
 		isNewCase = true;
 		isStep1 = false;
@@ -7116,7 +7120,7 @@ public without sharing class ISSP_AMS_Accreditation {
 				errorFound = true;
 			}
 
-			if (!newform.Confirm_accreditation_type_are_correct__c && !newForm.Notify_Change_Accreditation_Type__c && getIsAccreditationModelNotNullOrLegacy() && !isChangeOfAccreditationType) {
+			if (!newform.Confirm_accreditation_type_are_correct__c && !newForm.Notify_Change_Accreditation_Type__c && getIsAccreditationModelNotNullOrLegacy() && !isChangeOfAccreditationType && !isGEAccountHierarchy) {
 				ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR, Label.ISSP_AMS_NoC_error_Accreditation_Type));
 				errorFound = true;
 			}else if(isChangeOfAccreditationType && !newForm.Notify_Change_Accreditation_Type__c){
@@ -7131,6 +7135,8 @@ public without sharing class ISSP_AMS_Accreditation {
 					newForm.ANG_Accreditation_Model_to_Change__c = 'Cash';
 				}
 				update newForm;
+			}else if(isGEAccountHierarchy && !newForm.Notify_Change_Accreditation_Type__c){
+				newForm.Notify_Change_Accreditation_Type__c = true;
 			}
 
 			if (!newform.Confirm_Legal_Details_are_correct__c && !newForm.Notify_Change_Legal_Details__c) {
