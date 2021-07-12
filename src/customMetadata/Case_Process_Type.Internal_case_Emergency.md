@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>Other_Conditions__c</field>
-        <value xsi:type="xsd:string">Priority IN (&apos;Emergency&apos;)</value>
+        <value xsi:type="xsd:string">Priority IN (&apos;Emergency&apos;) AND Parent.RecordTypeDeveloperName__c NOT IN (&apos;ComplaintIDFS&apos;)</value>
     </values>
     <values>
         <field>Reason__c</field>
