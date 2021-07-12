@@ -6,17 +6,17 @@
 	initTable: function (component) {
 		component.set("v.columns", [
 			{ title: "", fieldname: "contactId", sortable: false },
-			{ title: "Name", fieldname: "contactName", sortable: true },
+			{ title: "Name", fieldname: "contactName", sortable: false },
 			{ title: "Type", fieldname: "contactType", sortable: false },
-			{ title: "Status", fieldname: "status", sortable: true },
-			{ title: "Title", fieldname: "title", sortable: true },
+			{ title: "Status", fieldname: "status", sortable: false },
+			{ title: "Title", fieldname: "title", sortable: false },
 			{ title: "Email", fieldname: "email", sortable: false },
 			{ title: "Phone", fieldname: "phone", sortable: false },
-			{ title: "Last Activity Date", fieldname: "lastActivityDate", sortable: true },
+			{ title: "Last Activity Date", fieldname: "lastActivityDate", sortable: false },
 		]);
 		component.set("v.columnsPortalServices", [
-			{ title: "Portal Service", fieldname: "contactName", sortable: true },
-			{ title: "Access Status", fieldname: "status", sortable: true },
+			{ title: "Portal Service", fieldname: "contactName", sortable: false },
+			{ title: "Access Status", fieldname: "status", sortable: false },
 		]);
 	},
 	loadContacts: function (component, helper) {
@@ -108,6 +108,15 @@
 
 		return year + "-" + month + "-" + day + " " + hour + ":" + min + ":" + sec;
 	},
+	openUrlOnSubTab: function (component, theUrl) {
+		var workspaceAPI = component.find("workspaceContact");
+		if (workspaceAPI != undefined) {
+			workspaceAPI.openSubtab({
+				url: theUrl,
+				focus: true,
+			});
+		}
+	},
 	createNewCaseForContactId: function (component, helper, contactSelected) {
 		if (contactSelected != "") {
 			let accountId = component.get("v.accountId");
@@ -128,41 +137,29 @@
 				}
 			}
 
-			if (component.get("v.UIThemeDescription") == "Theme3") {
-				url_new_case += "/setup/ui/recordtypeselect.jsp?ent=Case&retURL=%2Fapex%2FAccountDashboardCTI%3Fid%3D" + accountId;
-				url_new_case += "&save_new_url=%2F500%2Fe%3FretURL%3D%2Fapex%2FAccountDashboardCTI%3Fid%3D" + accountId;
-				url_new_case += "%26" + "def_contact_id" + "%3D" + contactId;
-				url_new_case += "%26" + "def_account_id" + "%3D" + accountId;
-				url_new_case += "%26" + "def_Region__c" + "%3D" + encodeURIComponent(contactDataSelected.AccountRegionName);
-				url_new_case += "%26" + "def_Origin" + "%3D" + caseOrigin;
-				url_new_case += "%26" + "def_Subject" + "%3D" + caseSubject;
-				url_new_case += "%26" + "def_Description" + "%3D" + caseDescription;
-				open_page_method = "_blank";
-			} else {
-				url_new_case += "/lightning/o/Case/new?count=1&useRecordTypeCheck=1&defaultFieldValues=";
-				url_new_case += "ContactId" + "%3D" + contactId;
+			url_new_case += "/lightning/o/Case/new?count=1&useRecordTypeCheck=1&defaultFieldValues=";
+			url_new_case += "ContactId" + "%3D" + contactId;
+			url_new_case += "%2C";
+			url_new_case += "AccountId" + "%3D" + accountId;
+			url_new_case += "%2C";
+			url_new_case += "Region__c" + "%3D" + encodeURIComponent(contactDataSelected.AccountRegionName);
+			url_new_case += "%2C";
+			url_new_case += "BSPCountry__c" + "%3D" + encodeURIComponent(contactDataSelected.AccountCountryName);
+			url_new_case += "%2C";
+			url_new_case += "Origin" + "%3D" + caseOrigin;
+			url_new_case += "%2C";
+			url_new_case += "Subject" + "%3D" + caseSubject;
+			url_new_case += "%2C";
+			url_new_case += "Description" + "%3D" + caseDescription;
+			url_new_case += "%2C";
+			url_new_case += "Visible_on_ISS_Portal__c" + "%3D" + caseVisibleISSPortal;
+			url_new_case += "%2C";
+			url_new_case += "IATAcode__c" + "%3D" + contactDataSelected.accountIATACode;
+			if (contactDataSelected.AccountTypeCustomer != "" && contactDataSelected.AccountTypeCustomer != undefined) {
 				url_new_case += "%2C";
-				url_new_case += "AccountId" + "%3D" + accountId;
-				url_new_case += "%2C";
-				url_new_case += "Region__c" + "%3D" + encodeURIComponent(contactDataSelected.AccountRegionName);
-				url_new_case += "%2C";
-				url_new_case += "BSPCountry__c" + "%3D" + encodeURIComponent(contactDataSelected.AccountCountryName);
-				url_new_case += "%2C";
-				url_new_case += "Origin" + "%3D" + caseOrigin;
-				url_new_case += "%2C";
-				url_new_case += "Subject" + "%3D" + caseSubject;
-				url_new_case += "%2C";
-				url_new_case += "Description" + "%3D" + caseDescription;
-				url_new_case += "%2C";
-				url_new_case += "Visible_on_ISS_Portal__c" + "%3D" + caseVisibleISSPortal;
-				url_new_case += "%2C";
-				url_new_case += "IATAcode__c" + "%3D" + contactDataSelected.accountIATACode;
-				if (contactDataSelected.AccountTypeCustomer != "" && contactDataSelected.AccountTypeCustomer != undefined) {
-					url_new_case += "%2C";
-					url_new_case += "Type_of_customer__c" + "%3D" + encodeURIComponent(contactDataSelected.AccountTypeCustomer);
-				}
+				url_new_case += "Type_of_customer__c" + "%3D" + encodeURIComponent(contactDataSelected.AccountTypeCustomer);
 			}
-			window.open(url_new_case, open_page_method);
+			helper.openUrlOnSubTab(component, url_new_case);
 		} else {
 			alert("No Contact was selected! Please, choose one contact before create a new case.");
 		}

@@ -9,6 +9,9 @@
 *               implement in Visualforce Page AccountDashboadCTI.page
 * =================================================================
 */-->
-<aura:application extends="ltng:outAppUnstyled" access="GLOBAL">
-	<aura:dependency resource="c:AccountDashboardCTI" />
+<aura:application access="GLOBAL" extends="force:slds">
+	<ltng:require styles="{!$Resource.CSP_Stylesheet}" />
+	<aura:attribute name="accountId" type="Id" />
+	<aura:attribute name="contactId" type="Id" />
+	<c:AccountDashboardCTI accountId="{!v.accountId}" contactId="{!v.contactId}" />
 </aura:application>

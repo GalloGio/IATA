@@ -9,12 +9,12 @@
 *               (Odigo contact center)
 * =================================================================
 */-->
-<aura:component implements="flexipage:availableForAllPageTypes,force:lightningQuickAction,force:hasRecordId" access="global" controller="AWW_AccountProfileCtrl">
+<aura:component implements="flexipage:availableForAllPageTypes,lightning:isUrlAddressable" access="global" controller="AWW_AccountProfileCtrl">
 	<aura:attribute name="accountId" type="Id" />
 	<aura:attribute name="contactId" type="Id" />
 	<aura:attribute name="accessLevel" type="String" default="no access" />
+	<lightning:workspaceAPI aura:id="workspace" />
 	<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
-
 	<aura:if isTrue="{!v.accessLevel == 'no access'}">
 		<div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_offline" role="alert">
 			<span class="slds-assistive-text">error</span>

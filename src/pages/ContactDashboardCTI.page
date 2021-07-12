@@ -1,3 +1,0 @@
-<apex:page standardController="Contact" extensions="AccountDashboardCTI" action="{!checkandredirect}" standardStylesheets="false" lightningStylesheets="true" title="Odigo Contact Page">
-
-</apex:page>

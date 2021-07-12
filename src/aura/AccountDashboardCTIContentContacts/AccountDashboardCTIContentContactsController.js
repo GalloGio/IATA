@@ -40,13 +40,15 @@
 		}
 	},
 	gotoAllContacts: function (component, event, helper) {
-		let accountId = component.get("v.accountId");
-		let urlToGo = "/003?rlid=RelatedContactList&id=" + accountId;
-		let urlMethod = "_blank";
-		if (component.get("v.UIThemeDescription") !== "Theme3") {
-			urlToGo = "/lightning/r/" + accountId + "/related/Contacts/view";
-			//urlMethod = "_parent";
+		let urlToOpen = "/lightning/r/" + component.get("v.accountId") + "/related/Contacts/view";
+		helper.openUrlOnSubTab(component, urlToOpen);
+	},
+	openContact: function (component, event, helper) {
+		let ctarget = event.currentTarget;
+		let id_contact = ctarget.dataset.value;
+		if (id_contact != undefined) {
+			let urlToOpen = "/lightning/r/Contact/" + id_contact + "/view";
+			helper.openUrlOnSubTab(component, urlToOpen);
 		}
-		window.open(urlToGo, urlMethod);
 	},
 });

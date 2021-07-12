@@ -14,4 +14,13 @@
 
 		$A.enqueueAction(action);
 	},
+	openUrlOnSubTab: function (component, theUrl) {
+		var workspaceAPI = component.find("workspaceAccount");
+		if (workspaceAPI != undefined) {
+			workspaceAPI.openSubtab({
+				url: theUrl,
+				focus: true,
+			});
+		}
+	},
 });

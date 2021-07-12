@@ -5,18 +5,16 @@
 	<aura:attribute name="UIThemeisLEX" type="Boolean" />
 
 	<aura:handler name="init" action="{!c.doInit}" value="{!this}" />
-
+	<lightning:workspaceAPI aura:id="workspaceAccount" />
 	<div class="slds-page-header slds-box">
 		<div class="slds-box slds-box_x-small slds-align_absolute-center slds-clearfix">
 			<div class="slds-float_left">
 				<div class="slds-grid slds-clearfix">
 					<div class="slds-col"><h1 class="slds-text-heading_medium">{!v.record.Name}</h1></div>
 					<div class="slds-col"><lightning:button label="{!$Label.c.AccountCTI_Account_ATeam}" title="{!$Label.c.AccountCTI_Account_ATeam}" onclick="{!c.viewAccountTeam}" /></div>
-					<aura:renderIf isTrue="{!v.UIThemeDescription=='Theme3'}">
-						<div class="slds-col">
-							<lightning:button label="{!$Label.c.AccountCTI_Account_ADetails}" title="{!$Label.c.AccountCTI_Account_ADetails}" onclick="{!c.viewAccountDetails}" />
-						</div>
-					</aura:renderIf>
+					<div class="slds-col">
+						<lightning:button label="{!$Label.c.AccountCTI_Account_ADetails}" title="{!$Label.c.AccountCTI_Account_ADetails}" onclick="{!c.viewAccountDetails}" />
+					</div>
 				</div>
 			</div>
 		</div>

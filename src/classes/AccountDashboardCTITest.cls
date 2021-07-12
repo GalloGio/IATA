@@ -58,9 +58,6 @@ public with sharing class AccountDashboardCTITest {
 	public static void accountDashboardCTICheckAndRedirectTest(){
 		Contact con = [SELECT Id, Name FROM contact LIMIT 1];
 		Test.startTest();
-			pageReference pageRef = page.ContactDashboardCTI;
-			pageRef.getParameters().put('id', string.valueOf(con.id));
-			Test.setCurrentPage(pageRef);
 			ApexPages.currentPage().getParameters().put('id',con.Id);
 			ApexPages.StandardController stdCtrl = new ApexPages.StandardController(con);
 			AccountDashboardCTI cdCTI = new AccountDashboardCTI(stdCtrl);
@@ -72,9 +69,6 @@ public with sharing class AccountDashboardCTITest {
 	@isTest
 	public static void accountDashboardCTIErrorCheckAndRedirectTest(){
 		Test.startTest();
-			pageReference pageRef = page.ContactDashboardCTI;
-			pageRef.getParameters().put('id', '');
-			Test.setCurrentPage(pageRef);
 			ApexPages.currentPage().getParameters().put('id','');
 			AccountDashboardCTI cdCTI = new AccountDashboardCTI(null);
 			cdCTI.checkandredirect();

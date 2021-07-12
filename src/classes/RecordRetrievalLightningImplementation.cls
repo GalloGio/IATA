@@ -76,7 +76,7 @@ global class RecordRetrievalLightningImplementation extends odigocti.RecordRetri
 						if (contacts.size() == 1) {
 							result.objectType = 'Url';
 							Set < String > setIds = new Set < String > ();
-							setIds.add('/apex/AccountDashboardCTI?Id=' + contacts[0].AccountId + '&contactId=' + contacts[0].Id);
+							setIds.add('/lightning/cmp/c__AccountDashboardCTI?c__origin=Account&c__accountId=' + contacts[0].AccountId + '&c__contactId=' + contacts[0].Id);
 							result.recordIds = setIds;
 							return result;
 
@@ -98,7 +98,7 @@ global class RecordRetrievalLightningImplementation extends odigocti.RecordRetri
 						if (accounts.size() == 1) {
 							result.objectType = 'Url';
 							Set < String > setIds = new Set < String > ();
-							setIds.add('/apex/AccountDashboardCTI?Id=' + accounts[0].id);
+							setIds.add('/lightning/cmp/c__AccountDashboardCTI?c__origin=Account&c__accountId=' + accounts[0].id);
 							result.recordIds = setIds;
 							return result;
 

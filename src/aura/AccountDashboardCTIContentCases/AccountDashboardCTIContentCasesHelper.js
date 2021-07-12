@@ -5,14 +5,14 @@
 	},
 	initTable: function (component) {
 		component.set("v.columnsCases", [
-			{ title: "Contact", fieldname: "contactName", sortable: true },
+			{ title: "Contact", fieldname: "contactName", sortable: false },
 			{ title: "Case Type", fieldname: "caseTypeImg", sortable: false },
-			{ title: "Channel", fieldname: "caseChannel", sortable: true },
-			{ title: "Case", fieldname: "caseNumber", sortable: true },
+			{ title: "Channel", fieldname: "caseChannel", sortable: false },
+			{ title: "Case", fieldname: "caseNumber", sortable: false },
 			{ title: "Subject", fieldname: "caseSubject", sortable: false },
 			{ title: "Date", fieldname: "caseDate", sortable: false },
 			{ title: "Resol. Time", fieldname: "caseResolTime", sortable: false },
-			{ title: "Owner", fieldname: "caseOwnerName", sortable: true },
+			{ title: "Owner", fieldname: "caseOwnerName", sortable: false },
 		]);
 	},
 	loadCases: function (component, helper) {
@@ -34,5 +34,14 @@
 		});
 
 		$A.enqueueAction(action);
+	},
+	openUrlOnSubTab: function (component, theUrl) {
+		var workspaceAPI = component.find("workspaceCase");
+		if (workspaceAPI != undefined) {
+			workspaceAPI.openSubtab({
+				url: theUrl,
+				focus: true,
+			});
+		}
 	},
 });

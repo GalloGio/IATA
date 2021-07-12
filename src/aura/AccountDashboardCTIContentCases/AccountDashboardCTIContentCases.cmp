@@ -9,7 +9,7 @@
 	<aura:attribute name="UIThemeisLEX" type="Boolean" />
 
 	<aura:handler name="init" value="{!this}" action="{!c.init}" />
-
+	<lightning:workspaceAPI aura:id="workspaceCase" />
 	<div class="slds-p-around_medium">
 		<div class="slds-box slds-p-around_none slds-theme_shade">
 			<lightning:card class="bckColor" title="{!$Label.c.AccountCTI_Cases_Interactions}" iconName="standard:case">
@@ -41,9 +41,9 @@
 										<lightning:formattedText value="{!item.caseChannel}" />
 									</th>
 									<th data-label="Case" scope="row" class="slds-cell-wrap">
-										<a href="{!item.caseLink}" target="_blank">
+										<div onclick="{!c.openCase}" data-value="{!item.caseId}" style="cursor: pointer; color: rgb(1, 118, 211)">
 											<lightning:formattedText value="{!item.caseNumber}" />
-										</a>
+										</div>
 									</th>
 									<th data-label="Subject" scope="row" class="slds-cell-wrap">
 										<lightning:formattedText value="{!item.caseSubject}" />
