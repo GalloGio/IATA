@@ -61437,10 +61437,6 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-Case Layout</layout>
-        <recordType>Case.Cases_Global_TEST</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Case-Case Layout</layout>
         <recordType>Case.Cases_IFG</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -61534,10 +61530,6 @@
     <layoutAssignments>
         <layout>Case-Case Layout</layout>
         <recordType>Case.ID_Card_Mass_Application</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Case-Case Layout</layout>
-        <recordType>Case.ID_Card_Queries</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-Case Layout</layout>
@@ -61757,10 +61749,6 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>CaseClose-ACCA Bug Fix Close</layout>
-        <recordType>Case.ID_Card_Queries</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>CaseClose-ACCA Bug Fix Close</layout>
         <recordType>Case.ISS_Portal_PwC</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -61838,10 +61826,6 @@
     <layoutAssignments>
         <layout>CaseClose-ACCA Close Case - Extended</layout>
         <recordType>Case.Cases_China_North_Asia</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>CaseClose-ACCA Close Case - Extended</layout>
-        <recordType>Case.Cases_Global_TEST</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>CaseClose-ACCA Close Case - Extended</layout>
@@ -63014,18 +62998,18 @@
         <layout>Individual-Individual Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Instant_Surveys__c-Instant Survey Layout</layout>
+        <layout>Instant_Surveys__c-2015 Instant Survey Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Instant_Surveys__c-Instant Survey Layout</layout>
+        <layout>Instant_Surveys__c-2015 Instant Survey Layout</layout>
         <recordType>Instant_Surveys__c.Espiritu_IS_Record_Type</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Instant_Surveys__c-Instant Survey Layout</layout>
+        <layout>Instant_Surveys__c-2015 Instant Survey Layout</layout>
         <recordType>Instant_Surveys__c.Live_Agent_Chat</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Instant_Surveys__c-Instant Survey Layout</layout>
+        <layout>Instant_Surveys__c-2015 Instant Survey Layout</layout>
         <recordType>Instant_Surveys__c.SF_ACR_Survey</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -67945,11 +67929,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
-        <recordType>Case.Cases_Global_TEST</recordType>
-        <visible>false</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <default>false</default>
         <recordType>Case.Cases_IFG</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
@@ -68087,11 +68066,6 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Case.ID_Card_Mass_Application</recordType>
-        <visible>false</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <default>false</default>
-        <recordType>Case.ID_Card_Queries</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
