@@ -73,34 +73,6 @@
         <template>unfiled$public/Airline_Becomes_Re_Activated_Notification</template>
     </alerts>
     <alerts>
-        <fullName>FDS_CodingAOC</fullName>
-        <description>FDS Coding - AOC Expiry alert</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>gonzalezce@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>kalajil@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>osinskan@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>pietranget@iata.org.prod</recipient>
-            <type>user</type>
-        </recipients>
-        <recipients>
-            <recipient>szajkod@iata.org</recipient>
-            <type>user</type>
-        </recipients>
-        <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>Airline_Coding/AUTO_Expiry_of_AOC_approaching</template>
-    </alerts>
-    <alerts>
         <fullName>FDS_CodingAOC2</fullName>
         <description>FDS Coding - AOC Expiry alert 2</description>
         <protected>false</protected>
@@ -168,18 +140,6 @@
         <name>AIMS Accounts RT Assignment</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>LookupValue</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Acc_Update_Record_Sharing_Criteria_AUX</fullName>
-        <description>This field is updated with Record Sharing Criteria values</description>
-        <field>Record_Sharing_Criteria_AUX__c</field>
-        <formula>IF(INCLUDES(Record_Sharing_Criteria__c, &quot;IFG Active Users&quot;),&quot;IFG Active Users;&quot;,&quot;&quot;)
-&amp;
-IF(INCLUDES(Record_Sharing_Criteria__c, &quot;TIP User&quot;),&quot;TIP User;&quot;,&quot;&quot;)</formula>
-        <name>Acc Update Record Sharing Criteria AUX</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
@@ -251,15 +211,6 @@ IF(INCLUDES(Record_Sharing_Criteria__c, &quot;TIP User&quot;),&quot;TIP User;&qu
         <name>Airline Designator Backup</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>AutoDDSOptIn</fullName>
-        <field>DDS_Status__c</field>
-        <literalValue>Opt-In</literalValue>
-        <name>AutoDDSOptIn</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
@@ -340,46 +291,10 @@ IF(INCLUDES(Record_Sharing_Criteria__c, &quot;TIP User&quot;),&quot;TIP User;&qu
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>SIS_Update_Account_Site</fullName>
-        <field>Site</field>
-        <formula>Airline_designator__c +  Member_Code_Numeric__c</formula>
-        <name>SIS - Update Account Site</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>SetDDSToNoReply</fullName>
-        <field>DDS_Status__c</field>
-        <literalValue>No Reply</literalValue>
-        <name>SetDDSToNoReply</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>Set_ID_Card_Discount</fullName>
         <field>ID_Card_Key_Account_Discount__c</field>
         <formula>0</formula>
         <name>Set ID Card Discount</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Short_Name_Agency</fullName>
-        <description>Update the short name as the Trade name, and if there is no trade name it takes the Account name</description>
-        <field>Short_Name__c</field>
-        <formula>IF(
-OR( ISNULL( TradeName__c ), TradeName__c == &apos;&apos;),
-IF (
-OR( ISNULL( Name ), Name == &apos;&apos;),
-Short_Name__c,
-Name
-),
-TradeName__c
-)</formula>
-        <name>Short Name Agency</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
         <protected>false</protected>
@@ -408,15 +323,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>UpdateIndustryCargoAgent</fullName>
-        <field>Industry</field>
-        <literalValue>Cargo Agent</literalValue>
-        <name>Update Industry - Cargo Agent</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>UpdateIndustrywithTravelAgency</fullName>
         <field>Industry</field>
         <literalValue>Travel Agent</literalValue>
@@ -440,15 +346,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <description>Clears the Account Type field</description>
         <field>Account_Type__c</field>
         <name>Update Account Type to empty</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Update_Cash_Condition</fullName>
-        <field>ANG_HE_CashCondition__c</field>
-        <literalValue>1</literalValue>
-        <name>Update Cash Condition</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>
@@ -511,30 +408,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         </criteriaItems>
         <description>AIMS Accounts record type Assignment rule</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>AIMS%3A Update Industry - cargo agents</fullName>
-        <actions>
-            <name>UpdateIndustryCargoAgent</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Is_AIMS_Account__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Type</field>
-            <operation>equals</operation>
-            <value>IATA Cargo Agent,Import Agent,CASS Associate,Couriers</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.Is_AIMS_Account__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <description>Updates the field Industry in the cargo agent accounts that are uploaded from AIMS</description>
-        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>AIMS%3A Update Industry - travel agents</fullName>
@@ -640,17 +513,6 @@ Airline_designator__c + &apos; &apos; + IATACode__c + &apos; &apos; + IATA_ISO_C
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
-        <fullName>Agency Short Name</fullName>
-        <actions>
-            <name>Short_Name_Agency</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <description>Used for updating the agency short name with the trade name if exist, if not then it updates it with the account name</description>
-        <formula>AND ( RecordType.DeveloperName = &apos;IATA_Agency&apos;, OR(ISNEW(), ISCHANGED( TradeName__c ), ISCHANGED( Name ),ISCHANGED(Short_Name__c), ISCHANGED(IATACode__c) ) )</formula>
-        <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
         <fullName>Airline Becomes Active for the First Time</fullName>
         <actions>
             <name>Airline_Becomes_Active_for_the_First_Time_Alert</name>
@@ -719,26 +581,6 @@ It copies the value of IATAcode field to an auxiliary unique field. It allows us
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
-        <fullName>DDS Auto Opt-in</fullName>
-        <actions>
-            <name>SetDDSToNoReply</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <description>45 days after notification sent, automatically set to opt-in if no opt-out done</description>
-        <formula>TEXT(DDS_Status__c) = &quot;No Reply&quot;</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>AutoDDSOptIn</name>
-                <type>FieldUpdate</type>
-            </actions>
-            <offsetFromField>Account.DDS_Last_Notification_Date__c</offsetFromField>
-            <timeLength>45</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
         <fullName>DDS Update Date</fullName>
         <actions>
             <name>Update_DDS_Date</name>
@@ -794,40 +636,6 @@ It copies the value of IATAcode field to an auxiliary unique field. It allows us
         </workflowTimeTriggers>
     </rules>
     <rules>
-        <fullName>FDS Coding AOC Expiry date alert 3 months before</fullName>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.ACLI_Status__c</field>
-            <operation>equals</operation>
-            <value>Active Company</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.AOC_Expiry_Date__c</field>
-            <operation>greaterThan</operation>
-            <value>TODAY</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Airline Headquarters</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>Account.ACLI_SAP_Id__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <description>FDS Coding (Airline Management) - developped as part of changes for coding, Manuel G. - Used to alert a few users in the coding team, via email alert, than an AOC expiry date is approaching for the airline - business owner:  Ann Farrell</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-        <workflowTimeTriggers>
-            <actions>
-                <name>FDS_CodingAOC</name>
-                <type>Alert</type>
-            </actions>
-            <offsetFromField>Account.AOC_Expiry_Date__c</offsetFromField>
-            <timeLength>-90</timeLength>
-            <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
-        </workflowTimeTriggers>
-    </rules>
-    <rules>
         <fullName>FDS Coding AOC Expiry date alert 30 days before</fullName>
         <active>true</active>
         <criteriaItems>
@@ -860,16 +668,6 @@ It copies the value of IATAcode field to an auxiliary unique field. It allows us
             <timeLength>-30</timeLength>
             <workflowTimeTriggerUnit>Days</workflowTimeTriggerUnit>
         </workflowTimeTriggers>
-    </rules>
-    <rules>
-        <fullName>Field update with values of field Record Sharing Criteria</fullName>
-        <actions>
-            <name>Acc_Update_Record_Sharing_Criteria_AUX</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <formula>ISCHANGED(Record_Sharing_Criteria__c)</formula>
-        <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
         <fullName>IW - Check InvoiceWorks Customer Account</fullName>
@@ -941,20 +739,6 @@ It copies the value of IATAcode field to an auxiliary unique field. It allows us
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>SIS Help Desk - Update Account Site</fullName>
-        <actions>
-            <name>SIS_Update_Account_Site</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.Source_System__c</field>
-            <operation>equals</operation>
-            <value>SIS</value>
-        </criteriaItems>
-        <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
         <fullName>Send Irregularity Email</fullName>
         <actions>
             <name>Irregularity_Thresold_Met</name>
@@ -994,19 +778,5 @@ It copies the value of IATAcode field to an auxiliary unique field. It allows us
         <description>it copies the site to this filed</description>
         <formula>true</formula>
         <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>Update Cash Condition Rule</fullName>
-        <actions>
-            <name>Update_Cash_Condition</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Account.ANG_Limit_Cash_Condition__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
 </Workflow>

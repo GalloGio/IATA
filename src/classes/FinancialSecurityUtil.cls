@@ -73,7 +73,9 @@ public with sharing class FinancialSecurityUtil {
 				}
 
 			} catch (Exception e) {
-				system.debug('## ERROR: ' + e.getMessage());
+				insert new Technical_Logs__c(Operation__c= 'Financial Security Util ',
+				Status__c= 'Error',
+				Log__c= e.getMessage() + '/' + e.getStackTraceString());
 			}
 		}
 	}

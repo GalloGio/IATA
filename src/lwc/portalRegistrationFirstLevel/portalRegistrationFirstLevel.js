@@ -30,7 +30,7 @@ import PhoneFormatter16                         from '@salesforce/resourceUrl/Ph
 /* Custom Labels
 /* ==============================================================================================================*/
 import Login                                    from '@salesforce/label/c.Login';
-import CSP_Email                                from '@salesforce/label/c.CSP_Email';
+import CSP_Business_Email                       from '@salesforce/label/c.CSP_Business_Email';
 import CSP_Registration_Description             from '@salesforce/label/c.CSP_Registration_Description';
 import CSP_Change_Email                         from '@salesforce/label/c.CSP_Change_Email';
 import CSP_Invalid_Email                        from '@salesforce/label/c.CSP_Invalid_Email';
@@ -125,7 +125,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 
 	_labels = {
 		Login,
-		CSP_Email,
+		CSP_Business_Email,
 		CSP_Registration_Description,
 		CSP_Change_Email,
 		CSP_Invalid_Email,
@@ -469,7 +469,7 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 
 	handleSubmit(){
 
-		if(typeof this.canSubmit === 'undefined')
+		if(typeof this.canSubmit === 'undefined' || this.canSubmit == false)
 			this.canSubmit = (Math.floor(Date.now() / 1000) - this.timeStamp <= 15) ?  false : true; //Check 15 sec to populate form
 		this.isLoading = true;
         if(this.registrationForm.phone.length < 5){

@@ -2,12 +2,6 @@
 <Queue xmlns="http://soap.sforce.com/2006/04/metadata">
     <doesSendEmailToMembers>true</doesSendEmailToMembers>
     <name>Airline Risk Management - GDC Singapore</name>
-    <queueMembers>
-        <users>
-            <user>shaikhn@iata.org</user>
-            <user>pangsc@iata.org</user>
-        </users>
-    </queueMembers>
     <queueSobject>
         <sobjectType>Case</sobjectType>
     </queueSobject>

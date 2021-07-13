@@ -706,7 +706,7 @@ public class AMS_OSCARTriggerHandler {
 																	AMS_Utils.new_GSA,
 																	AMS_Utils.new_GSSA,
 																	AMS_Utils.new_AHA
-																	};
+																};
 
 		/*** AMSU-31 Start ***/
 		Set<AMS_Oscar__c> oscarsToCreateAuth = new Set<AMS_Oscar__c>();
@@ -2870,7 +2870,7 @@ public class AMS_OSCARTriggerHandler {
 
 				Set<String> nextMonthLocations = new Set<String>{'P', 'D'};
 				Date terminationDate = nextMonthLocations.contains(updatedOSCAR.Location_Class__c) ? AMS_Utils.lastDayOfMonth(Date.today().addMonths(1)) : Date.today().addDays(15);
-				updatedOSCAR.Termination_date__c = BusinessHours.nextStartDate(updatedOSCAR.BusinessHours__c, DateTime.newInstance(terminationDate, System.now().time())).date();
+				updatedOSCAR.Termination_Date__c = BusinessHours.nextStartDate(updatedOSCAR.BusinessHours__c, DateTime.newInstance(terminationDate, Time.newInstance(0, 0, 0, 0))).date();
 
 				if(updatedOSCAR.Process__c == AMS_Utils.VOLRELINQUISH){
 					updatedOSCAR.Process_Start_Date__c = updatedOSCAR.Termination_Date__c;
@@ -2957,7 +2957,7 @@ public class AMS_OSCARTriggerHandler {
 					Parent.Location_Type__c, ParentId, Top_Parent__c, Phone, Remittance_frequency__c, ShippingCity, ShippingCountry, 
 					ShippingPostalCode, ShippingState, ShippingStreet, Short_Name__c, Solicitation_Flag__c, Status__c, TradeName__c, 
 					VAT_Number_2__c, VAT_Number__c, Website, Reason__c,Sector__c, Category__c, recordTypeID,
-					IATA_ISO_Country__r.ANG_Enable_NewGen__c, IATA_ISO_Country__r.ANG_Portal_Service__c, IATA_ISO_Country__r.ANG_IEP_Model__c,
+					IATA_ISO_Country__r.ANG_Enable_NewGen__c, IATA_ISO_Country__r.ANG_Portal_Service__c, IATA_ISO_Country__r.ANG_IEP_Model__c, IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c, 
 					(SELECT Id, ParentId, Top_Parent__c, ANG_FA_Opt_out__c, Guaranteed_amount__c FROM ChildAccounts),
 					(SELECT Id, Account__c, Reason_Code__c, Reason_Description__c, Bulletin_Information__c FROM Agencies_Applied_Change_codes__r WHERE Active__c = true ORDER BY CreatedDate DESC)
 				FROM Account WHERE Id IN :accountIds]);
@@ -3919,7 +3919,7 @@ public class AMS_OSCARTriggerHandler {
 			}
 
 			if (oldOSCAR.Notify_Agent_Termination__c == false && updatedOscar.Notify_Agent_Termination__c == true) {
-				DateTime nextMonthEnd = DateTime.newInstance(AMS_Utils.lastDayOfMonth(System.today().addMonths(1)), DateTime.now().time());
+				DateTime nextMonthEnd = DateTime.newInstance(AMS_Utils.lastDayOfMonth(System.today().addMonths(1)), Time.newInstance(0, 0, 0, 0));
 				updatedOSCAR.Termination_Date__c = BusinessHours.nextStartDate(updatedOSCAR.BusinessHours__c, nextMonthEnd).date();
 				System.debug(loggingLevel.Debug, '____ [trg AMS_OSCARTrigger - beforUpdate] updatedOSCAR.Termination_Date__c - ' + updatedOSCAR.Termination_Date__c);
 			}
@@ -3978,7 +3978,7 @@ public class AMS_OSCARTriggerHandler {
 			}
 
 			if (oldOSCAR.Terminate_Agency__c == false && updatedOscar.Terminate_Agency__c == true) {
-				DateTime nextMonthEnd = DateTime.newInstance(AMS_Utils.lastDayOfMonth(System.today().addMonths(1)), DateTime.now().time());
+				DateTime nextMonthEnd = DateTime.newInstance(AMS_Utils.lastDayOfMonth(System.today().addMonths(1)), Time.newInstance(0, 0, 0, 0));
 				updatedOSCAR.Termination_Date__c = BusinessHours.nextStartDate(updatedOSCAR.BusinessHours__c, nextMonthEnd).date();
 				System.debug(loggingLevel.Debug, '____ [trg AMS_OSCARTrigger - beforUpdate] updatedOSCAR.Termination_Date__c - ' + updatedOSCAR.Termination_Date__c);
 			}
@@ -4008,7 +4008,6 @@ public class AMS_OSCARTriggerHandler {
 			boolean bGenerateCC =  false;
 			String changeCodeId = '';
 			if (oldOSCAR.STEP2__c != 'Passed' && updatedOscar.STEP2__c == 'Passed') {
-
 				/*** AMSU-31 Start ***/
 				Set<String> processesToCheck = new Set<String> {AMS_Utils.new_HO, AMS_Utils.new_BR, AMS_Utils.new_SA, AMS_Utils.new_BR_ABROAD, AMS_Utils.NEWHELITE, AMS_Utils.NEWHESTANDARD, AMS_Utils.NEWAE, AMS_Utils.MCAE, AMS_Utils.NEWGESTANDARD};
 				Set<String> classesToCheck = new Set<String> {'P', 'D'};
@@ -4022,8 +4021,11 @@ public class AMS_OSCARTriggerHandler {
 				bGenerateCC = true;
 				changeCodeId = 'DIS-' + updatedOscar.Business_Process__c;
 			}else if (oldOSCAR.STEP4__c != AMS_Utils.PASSED && updatedOscar.STEP4__c == AMS_Utils.PASSED) {
-				bGenerateCC = true;
-				changeCodeId = 'NWD-' + updatedOscar.Business_Process__c;
+				Account oscarAccount = getAccounts(updatedOscar.Account__c).get(0);
+				if(!String.isBlank(oscarAccount.IATACode__c)){
+					bGenerateCC = true;
+					changeCodeId = 'NWD-' + updatedOscar.Business_Process__c;
+				}
 			}else if (oldOSCAR.STEP5__c != AMS_Utils.PASSED && updatedOscar.STEP5__c == AMS_Utils.PASSED) {
 				bGenerateCC = true;
 				changeCodeId = 'REC-' + updatedOscar.Business_Process__c;
@@ -4542,7 +4544,7 @@ public class AMS_OSCARTriggerHandler {
 		authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = 'CC', Status__c = (AMS_Utils.setChinaCountries.contains(oscar.Country_ISO_Code__c) ? 'Authorized' : statusForCC), RecordTypeId = FormOfPaymentRT));
 		if(oscar.Process__c == AMS_Utils.NEWHESTANDARD || oscar.Process__c == AMS_Utils.NEWGESTANDARD || 
 			(oscar.process__c == AMS_Utils.NEWHELITE && (accounts.containsKey(oscar.Account__c)
-														?(string.isBlank(accounts.get(oscar.Account__c).IATA_ISO_Country__r.ANG_Portal_Service__c) && accounts.get(oscar.Account__c).IATA_ISO_Country__r.ANG_IEP_Model__c == AMS_Utils.IEPModel_PrePayment)
+														?accounts.get(oscar.Account__c).IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c
 														:false)))
 			authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = 'CA', Status__c = (AMS_Utils.setChinaCountries.contains(oscar.Country_ISO_Code__c) ? 'Authorized' : 'Active'), RecordTypeId = FormOfPaymentRT));
 		authorizations.add(new Agency_Authorization__c(Account__c = oscar.Account__c, ANG_FormOfPayment_ID__c = (AMS_Utils.setChinaCountries.contains(oscar.Country_ISO_Code__c) ? 'BOP' : 'EP'), Status__c = (AMS_Utils.setChinaCountries.contains(oscar.Country_ISO_Code__c) ? 'Authorized' : statusForIEP), RecordTypeId = FormOfPaymentRT));
