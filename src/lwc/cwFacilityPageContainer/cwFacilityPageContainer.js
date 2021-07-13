@@ -1,7 +1,7 @@
 import { LightningElement, track, wire, api } from "lwc";
 import { NavigationMixin, CurrentPageReference } from "lightning/navigation";
 import getURL from "@salesforce/apex/CW_Utilities.getURLPage";
-import getResults from "@salesforce/apex/CW_SearchEngine.getInfo";
+import _getResults from "@salesforce/apex/CW_SearchEngine.getInfo";
 import getUserRole from "@salesforce/apex/CW_Utilities.getUserRole";
 import resources from "@salesforce/resourceUrl/ICG_Resources";
 import getCompanyAdmins from "@salesforce/apex/CW_Utilities.getCompanyAdminContactsFromAccountId";
@@ -83,6 +83,7 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 	@track contactInfoValid = true;
 	@track editOn = false;
 	@track editOnAirport = false;
+    @track handlingServicesCpm = {isCreateView: false , isSummary: false};
 
 	//  Params to manage child component cwHandlerDetail
 	@track airlineHandlers;
@@ -292,6 +293,10 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 		return this.facility.recordTypeDevName === "Airport_Operator" || this.facility.recordTypeDevName === "Airline";
 	}
 
+	get showHandlingServices(){
+		return this.facility.recordTypeDevName === "Ramp_Handler";
+	}
+
 	mapresize() {
 		let databox = this.template.querySelector(".databox");
 		let maincol = this.template.querySelector(".main-col");
@@ -329,7 +334,7 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 	getResults(searchWrapper) {
 		this.dispatchEvent(new CustomEvent('loading'));
 		this.loaded = false;
-		getResults({ attributes: JSON.stringify(searchWrapper), getOpeningHours: true, getHandledAirlines: true, orderByOnAirport: false, isPendingApproval: this.isPendingApproval })
+		_getResults({ attributes: JSON.stringify(searchWrapper), getOpeningHours: true, getHandledAirlines: true, orderByOnAirport: false, isPendingApproval: this.isPendingApproval })
 			.then(result => {
 				this.results = result ? JSON.parse(result) : null;
 				if (this.results && this.results.length > 0) {
@@ -356,6 +361,10 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 							this.populateOperatingStations(facility);
 						});
 					}
+					else if(this.facility.recordTypeDevName === "Ramp_Handler"){
+						
+					}
+					
 					this.updateLocationValid();
 					this.getCompanyAdminsFromDB(this.facility.companyId);
 					this.getFacilityManagersFromDB(this.facility.Id);
@@ -885,6 +894,17 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 					.join(";");
 			}
 
+			let inHouseServices = '';
+			let thirdPartyServices = '';
+
+			this.facility.inHouseServices.forEach(item => {
+				inHouseServices += item.api +';';
+			});
+
+			this.facility.thirdPartyServices.forEach(item => {
+				thirdPartyServices += item.api +';';
+			});
+
 			let objToSave = {
 				Number_of_Employees__c: this.facility.NumberEmployees,
 				Overall_Facility_Size_m2__c: this.facility.recordTypeDevName === 'Cargo_Handling_Facility' ? this.facility.FacilitySize : 0,
@@ -908,7 +928,9 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 				Secondary_Address__c: this.facility.secondAddress,
 				name: this.facility.name,
 				Id: this.facility.Id,
-				Pilot_Information__c: this.facility.pilotInformation
+				Pilot_Information__c: this.facility.pilotInformation,
+				In_House_Services__c: this.facility.recordTypeDevName == 'Ramp_Handler' ? inHouseServices : '',
+				Third_Party_Services__c: this.facility.recordTypeDevName == 'Ramp_Handler' ? thirdPartyServices : ''
 			}
 				
 			if (this.facility.nearestAirportObj != null){
@@ -971,15 +993,12 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 	saveChildEvent(eventData) {
 		// Save event
 		if (eventData.name === 'save' && eventData.handlerType === 'airline') {
-			this.airlineHandlers = eventData.handlerData;
 			this.readOnlyHandlersAirline = true;
 		}
 		if (eventData.name === 'save' && eventData.handlerType === 'cargo') {
-			this.cargoHandlers = eventData.handlerData;
 			this.readOnlyHandlersCargo = true;
 		}
 		if (eventData.name === 'save' && eventData.handlerType === 'ramp') {
-			this.rampHandlers = eventData.handlerData;
 			this.readOnlyHandlersRamp = true;
 		}
 		if (eventData.name === 'save' && this.readOnlyHandlersAirline === true && this.readOnlyHandlersCargo === true && this.readOnlyHandlersRamp === true) {
@@ -1001,12 +1020,31 @@ export default class CwFacilityPageContainer extends NavigationMixin(LightningEl
 	onSelectItemChildEvent(eventData) {
 		// On select item event
 		if (eventData.name === 'selectItem' && eventData.handlerType === 'airline') {
+			this.updateHandlers(this.airlineHandlers, eventData);
 			this.setFacilityInfo(this.facility.Id, "handledAirlines", "newSelectedAirlines");
 		}
 		if (eventData.name === 'selectItem' && (eventData.handlerType === 'cargo' || eventData.handlerType === 'ramp')) {
+			if (eventData.handlerType === 'cargo') {
+				this.updateHandlers(this.cargoHandlers, eventData);
+			} else if (eventData.handlerType === 'ramp') {
+				this.updateHandlers(this.rampHandlers, eventData);
+			}
 			this.setFacilityInfo(
 				this.facility.Id, 
 				"handled" + eventData.handlerType.charAt(0).toUpperCase() + eventData.handlerType.slice(1) + "Stations", "new" + eventData.handlerType.charAt(0).toUpperCase() + eventData.handlerType.slice(1) + "Stations");
+		}
+	}
+
+	updateHandlers(handlerData, eventData){
+		let found = false;
+		for (let cont = 0; cont < handlerData.length && found === false; cont++) {
+			if (handlerData[cont].value === eventData.itemSelected.value) {
+				handlerData[cont].selected = eventData.itemSelected.selected;
+				found = true;
+			}
+		}
+		if (found === false) {
+			handlerData.push(eventData.itemSelected);
 		}
 	}
 

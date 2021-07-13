@@ -163,8 +163,13 @@ public with sharing class CW_SearchEngineTest {
 		Test.startTest();
 		String response = CW_SearchEngine.getInfo(queryLike, true, true, true, false, false, null, null, false);
 		List<CW_SearchEngine.OutputRow> wrapperParams = (List<CW_SearchEngine.OutputRow>) JSON.deserialize(response, List<CW_SearchEngine.OutputRow>.class);
-		System.assert(!wrapperParams.isEmpty(), 'No results were gotten');
+		System.assert(!wrapperParams.isEmpty(), 'No results were gotten for CW_SearchEngine.getInfo');
 		System.assertEquals(wrapperParams[0].isSuccess, true, 'communication with query mapquery fails'+ response);
+
+		List<CW_SearchEngine.Param> params = (List<CW_SearchEngine.Param>) JSON.deserialize(queryLike, List<CW_SearchEngine.Param>.class);
+		List<CW_SearchEngine.OutputRow> filterResult = CW_SearchEngine.filterResultsAfterQuery(wrapperParams, params);
+		System.assert(!filterResult.isEmpty(), 'No results were gotten for CW_SearchEngine.filterResultsAfterQuery');
+
 		Test.stopTest();
 	}
 }

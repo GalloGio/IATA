@@ -1,0 +1,6 @@
+@media (min-width:1025px) {
+	.slds-spinner_container {
+		top: 50% !important;
+		bottom: 50% !important;
+	}
+}

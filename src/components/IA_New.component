@@ -1,0 +1,302 @@
+<apex:component id="sectionNewComponent" controller="IA_NewController" allowDML="true">
+	<apex:attribute name="airline" description="This is the parent airline to show their available agreements and lets it to create new ones" type="Account" required="true" assignTo="{!account}"/>
+	<apex:attribute name="requestPermission" description="if this permission is enabled the Request agreement button is visible" type="Boolean" required="true" assignTo="{!hasRequestPermission}"/>
+
+	<apex:actionFunction name="openModalNewAgreement" action="{!openModalNewAgreement}" rerender="modalNewAgreement" oncomplete="modalOnComplete('hidden');" status="loadingStatus">
+		<apex:param name="param1" value="" assignTo="{!selectedAccount}"/>
+		<apex:param name="param2" value="" assignTo="{!selectedAgreementName}"/>
+	</apex:actionFunction>
+	<apex:actionFunction name="closeModalNewAgreement" action="{!closeModalNewAgreement}" rerender="modalNewAgreement" oncomplete="initXtable(true);modalOnComplete('auto');" status="loadingStatus" immediate="true"/>
+	<apex:actionFunction name="saveNewAgreement" action="{!saveNewAgreement}" rerender="modalNewAgreement,modalAlertNewAgreement,newAgreementsTable,modalNewAgreementsFilter" oncomplete="modalOnComplete('auto');" status="loadingStatus"/>
+	<apex:actionFunction name="resetAlertModal" action="{!resetAlertModal}" rerender="null"/>
+	<apex:actionFunction name="refreshPage" action="{!refreshPage}" rerender="newAgreementsTable" oncomplete="initXtable(); modalOnComplete('auto');" status="loadingStatus"/>
+
+	<script>
+		ready(function() {
+			refreshPage();
+
+			getXtable = function() {
+				let table = document.getElementById("newAgreementsTable");
+				let box = document.getElementById("newAgreementsTablePaginator");
+				return Xtable(table,box);
+			}
+
+			initXtable = function(applyFilters) {
+				let xtable = getXtable();
+				xtable.initPagination();
+				xtable.initSortable();
+				if (applyFilters) applyAllAgreementsFilter();
+			}
+
+			/** filter functions **/
+			openModalNewAgreementsFilter = function() {
+				document.getElementById('modalNewAgreementsFilter').hidden = false;
+			}
+			closeModalNewAgreementsFilter = function() {
+				document.getElementById('modalNewAgreementsFilter').hidden = true;
+			}
+
+			// get all input filters to fitler the New agreements table
+			applyNewAgreementsFilter = function() {
+				const filterSearch = document.getElementById('searchNewAgreementsTable');
+				const filterSearchClean = document.getElementById('searchNewAgreementsTableClean');
+				const filterName = document.getElementById('{!$Component.mainForm.mainPageBlock.sectionNew.sectionNewComponent.filterName}');
+				const filterType = document.getElementById('{!$Component.mainForm.mainPageBlock.sectionNew.sectionNewComponent.filterType}');
+
+				const searches = [];
+				if(filterSearch.value > '') searches.push(filterSearch.value);
+				if(filterName.value > '') searches.push(filterName.value);
+				if(filterType.value > '') searches.push(filterType.value);
+
+				const filterbutton = document.getElementById("NewAgreementsFilterButton");
+				if (filterName.value > '' || filterType.value > '') {
+					filterbutton.classList.add("IA-button-filtering");
+					filterbutton.textContent = "{!$Label.CSP_Filtered}";
+				} else {
+					filterbutton.classList.remove("IA-button-filtering");
+					filterbutton.textContent = "{!$Label.CSP_Filter}";
+				}
+				filterSearchClean.hidden = filterSearch.value === '';
+
+				let xtable = getXtable();
+				xtable.initPagination();
+				xtable.filter(searches);
+				closeModalNewAgreementsFilter();
+			}
+			//clear search input
+			clearSearchNewAgreementsTable = function() {
+				document.getElementById('searchNewAgreementsTable').value = "";
+				applyNewAgreementsFilter();
+			}
+			//clear filter inputs
+			clearNewModalFilter = function() {
+				document.getElementById('{!$Component.mainForm.mainPageBlock.sectionNew.sectionNewComponent.filterName}').value = '';
+				document.getElementById('{!$Component.mainForm.mainPageBlock.sectionNew.sectionNewComponent.filterType}').value = '';
+				applyNewAgreementsFilter();
+			}
+			//validate the new agreement form, it enables/disables the submit button
+			validateNewAgreement = function() {
+				let type = document.getElementById('{!$Component.mainForm.mainPageBlock.sectionNew.sectionNewComponent.newAgreementType}');
+				let date = document.getElementById('{!$Component.mainForm.mainPageBlock.sectionNew.sectionNewComponent.newEffectiveDate}');
+				let button = document.getElementById('saveNewAgreementButton');
+				let now = new Date();
+				let yesterday = now.setDate(now.getDate()-1);
+				if (type.value > '' && date.valueAsDate > yesterday) {
+					button.removeAttribute('disabled');
+				} else {
+					button.setAttribute('disabled', 'true');
+				}
+			}
+			// close modal agreement when clicking outside the popup
+			document.addEventListener('click', function(evt) {
+				let modalDetail = document.getElementById('modalNewAgreementContent');
+				if (modalDetail && !modalDetail.contains(evt.target)) {
+					closeModalNewAgreement();
+				}
+				let modalFilter = document.getElementById('modalNewAgreementsFilterContent');
+				if (modalFilter && !modalFilter.contains(evt.target)) {
+					closeModalNewAgreementsFilter();
+				}
+				if (evt.target.id === "NewAgreementsFilterButton") openModalNewAgreementsFilter();
+			});
+
+			filterAgreementPicklist = function() {
+				let controller = document.getElementById('{!$Component.mainForm.mainPageBlock.sectionNew.sectionNewComponent.filterName}');
+				let dependent = document.getElementById('{!$Component.mainForm.mainPageBlock.sectionNew.sectionNewComponent.filterType}');
+				filterControlledPicklist(controller,dependent,MAP_AGREEMENTS_BY_NAME);
+			}
+
+			clearAllModalFilter();
+		});
+	</script>
+
+	<!-- show alertmodal from controller -->
+	<apex:outputPanel id="modalAlertNewAgreement">
+		<script>
+			if ("{!alertModal}">"") {
+				showAlertModal("{!alertModal.msgType}", "{!alertModal.msgTitle}", "{!alertModal.msgHeader}", "{!alertModal.msgBody}");
+				resetAlertModal();
+			}
+		</script>
+	</apex:outputPanel>
+	<!-- /show alertmodal from controller -->
+
+	<!-- TABLE Available Agreements -->
+	<div class="IA-TabLayout">
+		<div class="container IA-TableFilters">
+			<div class="row">
+				<div class="IA-SearchContainer col-sm-4">
+					<input id="searchNewAgreementsTable" class="IA-SearchInput" placeholder="{!$Label.IA_Find_Airline_or_Agreement}" onkeyup="applyNewAgreementsFilter();"/>
+					<span id="searchNewAgreementsTableClean" class="IA-SearchInputClean" onclick="clearSearchNewAgreementsTable();" hidden="true"/>
+				</div>
+				<div class="col-sm-8 text-right nopadding">
+					<button type="button" id="NewAgreementsFilterButton" class="IA-button IA-button-faded IA-button-filter" style="margin-left: 26px;" onclick="openModalNewAgreementsFilter(); return false;">{!$Label.CSP_Filter}</button>
+				</div>
+			</div>
+		</div>
+
+		<div class="container IA-TableContainer">
+			<div class="row IA-TableTitleHeader">
+				<span class="IA-TableTitle" >
+					<apex:outputText value="{!account.Company_Logo__c}" styleclass="baseline" escape="false"/>
+					<span style="margin-left: 29px;">{!account.Name}&nbsp;-&nbsp;{!$Label.IA_Interline_Available_Agreements}</span>
+				</span>
+			</div>
+
+			<apex:outputPanel id="newAgreementsTable" layout="block" styleclass="row IA-Table" >
+				<div class="table">
+					<table id="newAgreementsTable" class="table table-hover table-condensed">
+						<thead>
+							<tr>
+								<th sortable="true">{!$Label.ISSP_IATA_Designator}</th>
+								<th class="hidden">{!$Label.ISSP_3_Digit_Code}</th>
+								<th class="hidden">{!$Label.ISSP_Airline_Prefix}</th>
+								<th sortable="true">{!$Label.ISSP_Airline}</th>
+								<th sortable="true">{!$Label.IA_Agreement_Type}</th>
+								<th sortable="true">{!$Label.IA_Agreement}</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<apex:repeat var="availableAgreementsRow" value="{!availableAgreementsRows}">
+								<apex:repeat var="availableAgreementsRowDetail" value="{!availableAgreementsRow.details}">
+									<tr searchable="true">
+										<td>
+											{!availableAgreementsRow.designator}
+										</td>
+										<td class=" hidden">
+											{!availableAgreementsRow.iatacode}
+										</td>
+										<td class=" hidden">
+											{!availableAgreementsRow.Prefix}
+										</td>
+										<td>
+											{!availableAgreementsRow.airlinename}
+										</td>
+										<td>
+											{!availableAgreementsRowDetail.agreementname}
+										</td>
+										<td>
+											<apex:dataList value="{!availableAgreementsRowDetail.agreements}" var="agrementType">
+												{!agrementType}
+											</apex:dataList>
+										</td>
+										<td>
+											<apex:outputPanel styleclass="IA-tooltip">
+												<div class="IA-Circle IA-Plus" onclick="event.stopPropagation(); openModalNewAgreement('{!availableAgreementsRow.otherAccount}','{!availableAgreementsRowDetail.agreementname}'); return false;"/>
+											</apex:outputPanel>
+										</td>
+									</tr>
+								</apex:repeat>
+							</apex:repeat>
+						</tbody>
+					</table>
+
+					<div id="newAgreementsTablePaginator" class="IA-Pagination"></div>
+
+				</div>
+			</apex:outputPanel>
+
+		</div>
+	</div>
+	<!-- /TABLE Available Agreements -->
+
+	<!-- MODAL Table Filter -->
+	<div id="modalNewAgreementsFilter" class="IA-modal-container IA-modal-filter" hidden="true">
+		<div class="modal showModal modalBackgound">
+			<div class="modal-dialog modal-dialog-scrollable" role="document">
+				<div id="modalNewAgreementsFilterContent" class="IA-Modal IA-Modal-Filter modal-content">
+					<div class="modal-header">
+						<div class="row">
+							<span class="IA-TableTitle">{!$Label.CSP_Filter}</span>&nbsp;
+							<span class="IA-Close" onclick="closeModalNewAgreementsFilter(); return false;"></span>
+						</div>
+					</div>
+					<!-- New Agreements Filter body -->
+					<div class="modal-body">
+						<div class="row">
+							<label>{!$Label.IA_Agreement_Name}</label>
+							<apex:selectList id="filterName" size="1" html-data-value="" onchange="filterAgreementPicklist();">
+								<apex:selectOption itemValue="" itemLabel="{!$Label.IA_Choose_agreement_name}"/>
+								<apex:selectOptions value="{!OptionNames}"/>
+							</apex:selectList>
+						</div>
+						<div class="row">
+							<label>{!$Label.IA_Agreement_Type}</label>
+							<apex:selectList id="filterType" size="1" html-data-value="">
+								<apex:selectOption itemValue="" itemLabel="{!$Label.IA_Choose_agreement_type}"/>
+								<apex:selectOptions value="{!OptionTypes}"/>
+							</apex:selectList>
+						</div>
+					</div>
+					<!-- /New Agreements Filter body -->
+					<div class="modal-footer">
+						<div class="IA-button-box row">
+							<button type="button" class="IA-button-white" onclick="clearNewModalFilter(); return false;">{!$Label.CSP_RemoveAllFilters}</button>
+							<button type="button" class="IA-button" onclick="applyNewAgreementsFilter(); return false;">{!$Label.CSP_Apply}</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /MODAL Table Filter -->
+
+	<!-- MODAL New Agreement -->
+	<apex:outputPanel id="modalNewAgreement" styleclass="IA-modal-container">
+		<apex:outputPanel rendered="{!showModalNewAgreement}">
+			<div class="modal showModal modalBackgound">
+				<div class="modal-dialog modal-dialog-scrollable" role="document">
+					<div id="modalNewAgreementContent" class="IA-Modal IA-Modal-New modal-content">
+						<div class="modal-header">
+							<div class="row">
+								<div class="IA-ModalTitle">{!$Label.IA_New_Agreement}</div>
+								<span class="IA-Close" onclick="closeModalNewAgreement(); return false;"></span>
+							</div>
+							<div class="row">
+								<div class="IA-ModalSubtitle">{!$Label.IA_New_Agreement_Subtitle}</div>
+							</div>
+						</div>
+						<!-- New Agreement body -->
+						<div class="modal-body">
+							<div class="row">
+								<div class="col col-sm-6">
+									<label>{!$Label.ISSP_Airline}</label>
+									<div>{!newAgreementAirlineName}</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col col-sm-6">
+									<label>{!$Label.IA_Agreement_Type}</label>
+									<div>{!newAgreement.MITAorBIETA__c}</div>
+								</div>
+								<div class="col col-sm-6">
+									<label>{!$Label.IA_Agreement}</label>
+									<apex:selectList id="newAgreementType" value="{!newAgreement.Agreement_type__c}" size="1" required="true" onchange="validateNewAgreement();">
+										<apex:selectOptions value="{!listOptionAgreementTypes}"/>
+									</apex:selectList>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col col-sm-6">
+									<label>{!$Label.Effective_Date}</label>
+									<apex:inputField id="newEffectiveDate" type="date" value="{!newAgreement.Effective_date__c}" html-min="{!MinEffectiveAge}" onchange="validateNewAgreement();"/>
+								</div>
+							</div>
+						</div>
+						<!-- /New Agreement body -->
+						<div class="modal-footer">
+							<div class="IA-button-box row center">
+								<button type="button" class="IA-button-white" onclick="closeModalNewAgreement(); return false;">{!$Label.CSP_Cancel}</button>
+								<apex:outputPanel rendered="{!requestPermission}">
+									<button id="saveNewAgreementButton" type="button" class="IA-button" onclick="saveNewAgreement(); return false;" disabled="true">{!$Label.CSP_Submit}</button>
+								</apex:outputPanel>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</apex:outputPanel>
+	</apex:outputPanel>
+	<!-- /MODAL New Agreement -->
+</apex:component>

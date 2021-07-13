@@ -16,7 +16,7 @@
         <inputParameters>
             <name>emailBody</name>
             <value>
-                <stringValue>The One_Source_User_Access-2 invocable process failed to start because no records in your org match the record Id specified. In the entities that invoke One_Source_User_Access-2, such as other processes, check the value for this input: SObjectId.</stringValue>
+                <stringValue>The One_Source_User_Access-5 invocable process failed to start because no records in your org match the record Id specified. In the entities that invoke One_Source_User_Access-5, such as other processes, check the value for this input: SObjectId.</stringValue>
             </value>
         </inputParameters>
         <inputParameters>
@@ -42,7 +42,7 @@
         <inputParameters>
             <name>emailBody</name>
             <value>
-                <stringValue>The One_Source_User_Access-2 invocable process failed to start because a valid value wasn&apos;t found. This can happen when entities that invoke One_Source_User_Access-2, such as other processes, don&apos;t have values for either the SObject or SObjectId. For example: 
+                <stringValue>The One_Source_User_Access-5 invocable process failed to start because a valid value wasn&apos;t found. This can happen when entities that invoke One_Source_User_Access-5, such as other processes, don&apos;t have values for either the SObject or SObjectId. For example: 
 -An SObject or SObject ID wasn&apos;t specified.
 -A value might have been included, but it was null at runtime. </stringValue>
             </value>
@@ -61,9 +61,149 @@
                 <stringValue>Modify Permission Set Assignments To Community Contacts</stringValue>
             </value>
         </processMetadataValues>
-        <name>myRule_1_A1</name>
+        <name>myRule_1_A2</name>
         <label>Assign One Source Permission Set</label>
         <locationX>100</locationX>
+        <locationY>300</locationY>
+        <actionName>PermissionSetAssignments</actionName>
+        <actionType>apex</actionType>
+        <inputParameters>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Permission Set Action (Add, Remove)</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>maxOccurs</name>
+                <value>
+                    <numberValue>0.0</numberValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>objectType</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>operation</name>
+            <value>
+                <stringValue>Add</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>SObject</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Contact</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>maxOccurs</name>
+                <value>
+                    <numberValue>0.0</numberValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>objectType</name>
+                <value>
+                    <stringValue>Contact</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>SObject</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>inputContact</name>
+            <value>
+                <elementReference>SObject.Contact__r</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Permission Set Name</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>maxOccurs</name>
+                <value>
+                    <numberValue>0.0</numberValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>objectType</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>inputPermissionSetName</name>
+            <value>
+                <stringValue>One_Source_Partner_User_Management</stringValue>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <processMetadataValues>
+            <name>apexSelection</name>
+            <value>
+                <stringValue>Modify Permission Set Assignments To Community Contacts</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>myRule_3_A1</name>
+        <label>Assign One Source Permission Set</label>
+        <locationX>300</locationX>
         <locationY>200</locationY>
         <actionName>PermissionSetAssignments</actionName>
         <actionType>apex</actionType>
@@ -201,9 +341,9 @@
                 <stringValue>Modify Permission Set Assignments To Community Contacts</stringValue>
             </value>
         </processMetadataValues>
-        <name>myRule_3_A1</name>
+        <name>myRule_5_A1</name>
         <label>Unassign One Source Permission Set</label>
-        <locationX>300</locationX>
+        <locationX>500</locationX>
         <locationY>200</locationY>
         <actionName>PermissionSetAssignments</actionName>
         <actionType>apex</actionType>
@@ -405,13 +545,13 @@
                 <leftValueReference>SObject.Right__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Access Granted</stringValue>
+                    <stringValue>Access Requested</stringValue>
                 </rightValue>
             </conditions>
             <connector>
                 <targetReference>myRule_1_A1</targetReference>
             </connector>
-            <label>Status is Access Granted</label>
+            <label>Status is Access Pending</label>
         </rules>
     </decisions>
     <decisions>
@@ -425,9 +565,64 @@
         <label>myDecision2</label>
         <locationX>50</locationX>
         <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>myDecision4</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
             <name>myRule_3</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>SObject.Right__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Access Granted</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_3_A1</targetReference>
+            </connector>
+            <label>Status is Access Granted</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <processMetadataValues>
+            <name>index</name>
+            <value>
+                <numberValue>2.0</numberValue>
+            </value>
+        </processMetadataValues>
+        <name>myDecision4</name>
+        <label>myDecision4</label>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>myRule_5</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <processMetadataValues>
@@ -461,7 +656,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>myRule_3_A1</targetReference>
+                <targetReference>myRule_5_A1</targetReference>
             </connector>
             <label>Status is Access Denied</label>
         </rules>
@@ -507,7 +702,7 @@
         </rules>
     </decisions>
     <description>Manages permissions set assignment User for One Source.</description>
-    <interviewLabel>One_Source_User_Access-2_InterviewLabel</interviewLabel>
+    <interviewLabel>One_Source_User_Access-5_InterviewLabel</interviewLabel>
     <label>One Source User Access</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -537,6 +732,89 @@
         <queriedFields>Right__c</queriedFields>
         <queriedFields>Contact__c</queriedFields>
     </recordLookups>
+    <recordUpdates>
+        <processMetadataValues>
+            <name>evaluationType</name>
+            <value>
+                <stringValue>always</stringValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>extraTypeInfo</name>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>isChildRelationship</name>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>reference</name>
+            <value>
+                <stringValue>[Portal_Application_Right__c]</stringValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>referenceTargetField</name>
+        </processMetadataValues>
+        <name>myRule_1_A1</name>
+        <label>Set to Access Granted</label>
+        <locationX>100</locationX>
+        <locationY>200</locationY>
+        <connector>
+            <targetReference>myRule_1_A2</targetReference>
+        </connector>
+        <filters>
+            <processMetadataValues>
+                <name>implicit</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </processMetadataValues>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>SObject.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>Picklist</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Access Status</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Picklist</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>Right__c</field>
+            <value>
+                <stringValue>Access Granted</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Portal_Application_Right__c</object>
+    </recordUpdates>
     <startElementReference>sobjectInputCheckDecision</startElementReference>
     <status>Active</status>
     <variables>

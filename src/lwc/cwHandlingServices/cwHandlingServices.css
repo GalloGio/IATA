@@ -1,0 +1,96 @@
+.img-company-type {
+	padding: 0px 0px 5px 5px;
+	width: 30px;
+	display: inline;
+}
+.title-facility-page {
+	font-size: 1.5rem;
+	min-height: 0px;
+}
+
+.inactive-service{
+    font-size: 0.8rem;
+    color: #289632 !important;
+}
+
+.inactive-service .width-20{
+    -webkit-filter: opacity(0.3) grayscale(100%);
+    filter: opacity(0.3) grayscale(100%);
+}
+
+.inactive-service .text-truncate{
+    -webkit-filter: opacity(0.3) grayscale(100%);
+    filter: opacity(0.3) grayscale(100%);
+}
+
+.active-service{
+    font-size: 0.8rem;
+    color: #289632 !important;
+}
+
+.active-third-service{
+    font-size: 0.8rem;
+    color: black !important;
+}
+
+.tooltip-service{
+    display: flex;
+}
+  
+.tooltiptext {
+    visibility: hidden;
+    min-width: 120px;
+    max-width: 300px;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    width: fit-content; 
+    position: absolute;
+    z-index: 20;
+    top: 25px;
+}
+
+.tooltip-service:hover .tooltiptext {
+    visibility: visible;
+}
+
+.display-block{
+    display: block;
+}
+  
+.tooltiptextinfo {
+    visibility: hidden;
+    max-width: 300px;
+    text-align: left;
+    border-radius: 6px;
+    padding: 5px;
+    width: fit-content; 
+    position: absolute;
+    z-index: 20;
+    top: 30px;
+	font-size: 0.8rem;
+}
+
+.tooltip-service-info:hover .tooltiptextinfo {
+    visibility: visible;
+}
+
+.tooltiptextinfo-createmode {
+    visibility: hidden;
+    max-width: 300px;
+    text-align: left;
+    border-radius: 6px;
+    padding: 30px;
+    width: fit-content; 
+    position: absolute;
+    z-index: 20;
+	font-size: 0.8rem;
+}
+
+.tooltip-service-info:hover .tooltiptextinfo-createmode {
+    visibility: visible;
+}
+
+.tooltiptextinfoSection{
+    left:-35px;
+}

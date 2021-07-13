@@ -85,6 +85,17 @@ export default class NotificationCenter extends LightningElement {
 
 			//notifications template setup
 			aux = [];
+			
+			notTemplates.sort(function (a, b) {
+				if (a.Subject__c > b.Subject__c) {
+				  return 1;
+				}
+				if (a.Subject__c < b.Subject__c) {
+				  return -1;
+				}
+				return 0;
+			  });
+
 			notTemplates.forEach( row =>{
 				aux.push({label: row.Subject__c, value: row.Name });
 			});

@@ -39,6 +39,7 @@
             <operation>notEqual</operation>
             <value></value>
         </criteriaItems>
+        <includeHVUOwnedRecords>false</includeHVUOwnedRecords>
     </sharingGuestRules>
     <sharingGuestRules>
         <fullName>IDCard_Share_guest_permissions_for_ISO_Country</fullName>
@@ -53,5 +54,6 @@
             <operation>notEqual</operation>
             <value></value>
         </criteriaItems>
+        <includeHVUOwnedRecords>false</includeHVUOwnedRecords>
     </sharingGuestRules>
 </SharingRules>

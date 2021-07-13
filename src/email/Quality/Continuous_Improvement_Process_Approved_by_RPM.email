@@ -1,0 +1,51 @@
+<table border="0" cellpadding="5" width="550" cellspacing="5" height="400" >
+<tr valign="top" height="400" >
+<td tEditID="c1r1" style=" background-color:#FFFFFF; bEditID:r3st1; color:#000000; bLabel:main; font-size:12pt; font-family:arial;" aEditID="c1r1" locked="0" >
+<![CDATA[<div align="center">
+
+<table class="MsoNormalTable" border="0" cellspacing="0" cellpadding="0" width="500" style="width:375.0pt;mso-cellspacing:0cm;mso-yfti-tbllook:1184;mso-padding-alt:
+ 0cm 0cm 0cm 0cm">
+ <tbody><tr style="mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes;
+  height:180.0pt">
+  <td valign="top" style="background:white;padding:0cm 0cm 0cm 0cm;height:180.0pt">
+  <table class="MsoNormalTable" border="0" cellspacing="5" cellpadding="0" width="550" style="width:412.5pt;mso-cellspacing:3.0pt;mso-yfti-tbllook:1184;mso-padding-alt:
+   0cm 0cm 0cm 0cm">
+   <tbody><tr style="mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes;
+    height:240.0pt">
+    <td valign="top" style="background:white;padding:3.0pt 3.0pt 3.0pt 3.0pt;
+    height:240.0pt">
+    <p class="MsoNormal"><span style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;
+    color:black">Dear&nbsp;</span><font face="Arial, sans-serif">{!OI_Action_Plan__c.Action_Owner__c},</font></p>
+    <p class="MsoNormal"><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif;
+    color:black"><o:p>&nbsp;</o:p></span></p>
+    <p class="MsoNormal"><span style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;
+    color:black">The Continuous Improvement&nbsp;-&nbsp;</span><font face="Arial, sans-serif">{!Operational_Improvements__c.Name}</font><span style="font-family: Arial, sans-serif; font-size: 12pt;">&nbsp;-
+    has been submitted for your approval.</span></p>
+    <p class="MsoNormal"><span style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;
+    color:black"><o:p>&nbsp;</o:p></span></p>
+    <p class="MsoNormal"><span style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;
+    color:black">Improvement Target:&nbsp;</span><font face="Arial, sans-serif">{!Operational_Improvements__c.Improvement_Target__c}</font></p>
+    <p class="MsoNormal"><span style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;
+    color:black">Category:&nbsp;</span><font face="Arial, sans-serif">{!Operational_Improvements__c.OI_Category__c}</font></p>
+    <p class="MsoNormal"><span style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;
+    color:black">Subcategory:&nbsp;</span><font face="Arial, sans-serif">{!Operational_Improvements__c.OI_Subcategory__c}</font></p>
+    <p class="MsoNormal"><span style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;
+    color:black"><o:p>&nbsp;</o:p></span></p>
+    <p class="MsoNormal" style="background:white"><span style="font-size:12.0pt;
+    font-family:&quot;Arial&quot;,sans-serif;color:black">Please click the below link to
+    review and approve it:<o:p></o:p></span></p>
+    <p class="MsoNormal" style="background:white"><span style="font-size: 16px;">{!Operational_Improvements__c.Link}</span></p>
+    <p class="MsoNormal"><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif;
+    color:black"><o:p>&nbsp;</o:p></span></p>
+    <p class="MsoNormal"><span style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;
+    color:black">Thank you and Best Regards,&nbsp;</span></p><p class="MsoNormal">{!Operational_Improvements__c.OwnerFullName}</p><p class="MsoNormal"><span style="font-size: 12pt; font-family: Arial, sans-serif; color: black;"><span style="background:yellow;mso-highlight:yellow"><br></span></span></p>
+    </td>
+   </tr>
+  </tbody></table>
+  </td>
+ </tr>
+</tbody></table>
+
+</div>]]></td>
+</tr>
+</table>

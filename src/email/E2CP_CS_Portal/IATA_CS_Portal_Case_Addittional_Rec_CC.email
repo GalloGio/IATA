@@ -1,0 +1,33 @@
+<messaging:emailTemplate replyTo="{!$Label.ISSP_CaseCommentEmail}"
+        subject="{!$Label.CS_Portal_Addittional_Recipients_Subject} {!relatedTo.CaseNumber}" 
+        recipientType="Contact" relatedToType="Case" language="{!CASE(recipient.Preferred_Language__c, 'Arabic', 'ar', 'Chinese','zh_CN', 'English','en_US', 'German','de', 'French','fr', 'Italian','it', 'Indonesian', 'in', 'Japanese','ja',  'Korean', 'ko', 'Portuguese','pt_BR', 'Spanish', 'es', 'Thai', 'th', 'Vietnamese', 'vi', 'en_US')}">
+    <messaging:emailHeader name="CaseId">
+        {!relatedTo.Id}
+    </messaging:emailHeader>
+    <messaging:htmlEmailBody >
+        <div style="margin:auto; width:600px">
+            <span style="font-family:'Arial','sans-serif'; color:#000000;">  
+                <apex:image value="https://iata--c.eu3.content.force.com/servlet/servlet.ImageServer?id=01520000000ej3A&oid=00D2000000008TF&lastMod=1246550288000"/>
+                <br/>
+                <br/>
+            </span>
+            <apex:outputPanel >
+                <p>{!$Label.CSP_Dear} {!recipient.FirstName} {!recipient.LastName},</p>
+                <p>{!relatedTo.contact.FirstName} {!relatedTo.contact.LastName} {!$Label.CS_Portal_Addittional_Recipients_Body} {!relatedTo.CaseNumber}:</p>
+                <br/>
+                <p>---------------------------------------------------------------------------------------</p><br/>
+                <p>{!relatedTo.Subject}</p>
+                <p>{!relatedTo.Description}</p>
+                <br/>
+                <p>---------------------------------------------------------------------------------------</p><br/>
+                <p><b><a href="{!$Label.ISSP_Email_PortalUrl}s/case-details?caseId={!relatedTo.id}">{!$Label.Click_here}</a></b> {!$Label.CS_Portal_Addittional_Recipients_URL_Description}.</p>
+            </apex:outputPanel>
+            <b><apex:outputText value="{!$Label.CSP_IATA_CSC_Email_Greetings}" escape="false" /></b>
+            <br/>
+            <br/>
+            <apex:outputPanel>
+                <apex:outputLabel value="{!relatedTo.Case_Thread_ID__c}" escape="false"></apex:outputLabel>
+            </apex:outputPanel>
+        </div>
+    </messaging:htmlEmailBody>
+</messaging:emailTemplate>

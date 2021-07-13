@@ -120,6 +120,7 @@ public class CW_CreateFacilityControllerTest {
 		Test.startTest();
 		String response = CW_CreateFacilityController.createFacility(accRole.Account__c, JSON.serialize(accRoleDetail), JSON.serialize(info), geoLocationsJSON, accRoleDetail.Id, airport.Code__c, true,false, false,'[]','[]');
 		System.assert(response.containsIgnoreCase('true'));
+		
 		Test.stopTest();
 	}
 
@@ -383,5 +384,27 @@ public class CW_CreateFacilityControllerTest {
 
 		Test.stopTest();
 	}
-	
+
+	@isTest
+	private static void testStationValidationServices(){
+		String msgError = '';
+		try{
+			List<CW_Utilities.PicklistVal> services = CW_Utilities.getAllServicesAvailable();
+			Airport_Detail__c airport = [Select Id, IATA_ISO_Country__c from Airport_Detail__c limit 1];
+			Account_Role__c accRole = [Select Id, Account__c from Account_Role__c limit 1];
+
+			ICG_Account_Role_Detail__c accRoleDetail = CW_TestDataFactory.testICGAccountRoleDetail(
+				accRole.Id,
+				airport
+			);
+			accRoleDetail.In_House_Services__c = services[0].api;
+			accRoleDetail.Third_Party_Services__c = services[0].api;
+			insert accRoleDetail;
+		}
+		catch(Exception e){
+			msgError = e.getMessage();
+		}
+		
+		System.assertEquals(String.isNotEmpty(msgError), true, 'You cannot have the same value into In_House_Services__c and Third_Party_Services__c picklists');
+	}
 }

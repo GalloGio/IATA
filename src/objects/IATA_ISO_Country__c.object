@@ -372,6 +372,7 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
                 <value>
                     <fullName>Pre-Payment (NO IEP)</fullName>
                     <default>false</default>
+                    <isActive>false</isActive>
                     <label>Pre-Payment (NO IEP)</label>
                 </value>
             </valueSetDefinition>
@@ -441,6 +442,19 @@ Default state must NOT be set for countries that have it mandatory (US, Canada, 
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>Allow_Cash_FOP_for_Cashless_Agencies__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>If set to true, allows Cash form of payment for Cashless agencies.
+It will create a RHC Information even for Cashless agencies and will force the RHC Amount to 1 (Local Currency)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>If set to true, allows Cash form of payment for Cashless agencies.
+It will create a RHC Information even for Cashless agencies and will force the RHC Amount to 1 (Local Currency)</inlineHelpText>
+        <label>Allow Cash FOP for Cashless Agencies</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
     </fields>
     <fields>
         <fullName>BSP_Country_free_text__c</fullName>
@@ -3340,11 +3354,6 @@ Enabled: Sufficient for Agents to simply upload scanned copy to online applicati
         <filters>
             <field>ANG_Portal_Service__c</field>
             <operation>equals</operation>
-        </filters>
-        <filters>
-            <field>ANG_IEP_Model__c</field>
-            <operation>equals</operation>
-            <value>Pre-Payment (NO IEP)</value>
         </filters>
         <label>NGISS enabled Countries Without EasyPay</label>
         <language>en_US</language>
