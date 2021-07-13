@@ -48,8 +48,8 @@ public without sharing class PortalResetPasswordController {
 		result.success       = true;
 
 		try{
-			system.setPassword(user.id, password);
-			update user;
+		system.setPassword(user.id, password);
+		update user;
 		}
 		catch(Exception ex){
 			result.success = false;

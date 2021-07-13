@@ -61458,6 +61458,10 @@
         <recordType>Case.Cases_Global</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Case-IDFS Cases %28GLOBAL%29</layout>
+        <recordType>Case.ISS_Portal_New_Case_RT</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Case-IFG Cases</layout>
         <recordType>Case.Cases_IFG</recordType>
     </layoutAssignments>
@@ -61526,10 +61530,6 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-ISS Portal Case Layout</layout>
-        <recordType>Case.Cases_Global_TEST</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Case-ISS Portal Case Layout</layout>
         <recordType>Case.Cases_SIS_Help_Desk</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -61587,10 +61587,6 @@
     <layoutAssignments>
         <layout>Case-ISS Portal Case Layout</layout>
         <recordType>Case.IDFS_Confidential</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Case-ISS Portal Case Layout</layout>
-        <recordType>Case.ID_Card_Queries</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-ISS Portal Case Layout</layout>
@@ -61653,10 +61649,6 @@
         <recordType>Case.IATA_Financial_Review</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Case-ISS Portal New Case Layout</layout>
-        <recordType>Case.ISS_Portal_New_Case_RT</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>Case-Inter DPC - Internal</layout>
         <recordType>Case.Inter_DPCs</recordType>
     </layoutAssignments>
@@ -61710,10 +61702,6 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>CaseClose-ACCA Close Case - Extended</layout>
-        <recordType>Case.Cases_Global_TEST</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>CaseClose-ACCA Close Case - Extended</layout>
         <recordType>Case.Cases_IFG</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -61751,10 +61739,6 @@
     <layoutAssignments>
         <layout>CaseClose-ACCA Close Case - Extended</layout>
         <recordType>Case.ID_Card_Mass_Application</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>CaseClose-ACCA Close Case - Extended</layout>
-        <recordType>Case.ID_Card_Queries</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>CaseClose-ACCA Close Case - Extended</layout>
@@ -68682,11 +68666,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
-        <recordType>Case.Cases_Global_TEST</recordType>
-        <visible>false</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <default>false</default>
         <recordType>Case.Cases_IFG</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
@@ -68823,11 +68802,6 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Case.ID_Card_Mass_Application</recordType>
-        <visible>false</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <default>false</default>
-        <recordType>Case.ID_Card_Queries</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>

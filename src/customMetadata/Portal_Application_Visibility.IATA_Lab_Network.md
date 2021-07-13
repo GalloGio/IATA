@@ -20,6 +20,6 @@
     </values>
     <values>
         <field>Sector__c</field>
-        <value xsi:type="xsd:string">Healthcare Industry</value>
+        <value xsi:type="xsd:string">Health Industry</value>
     </values>
 </CustomMetadata>
