@@ -1,5 +1,7 @@
 public with sharing class SIDRARepaymentInstalmentsController {
 
+	public class SIDRARepaymentInstalmentsException extends Exception {}
+
 	public static final Id RT_REPAYMENT_INSTALMENT_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case_Detail__c', 'Repayment_Instalment');
 	public static final Id RT_REPAYM_INSTAL_DETAILS_ID = RecordTypeSingleton.getInstance().getRecordTypeId('Case_Detail__c', 'Repayment_Instalment_Details');  //ACAMBAS - WMO-546
 	public static final Integer REPAYMENT_INSTALMENTS_QUANTITY = 6;
@@ -33,9 +35,16 @@ public with sharing class SIDRARepaymentInstalmentsController {
 		} set;}
 	public Integer rpiIndexToDelete {get; set;}
 
+	/**
+	 * According to story WMO-1297 we need to block all actions in this page for SIDRA CASS cases
+	 */
+	public Boolean getBlockEdit() {
+		return cs!=null && cs.BSP_CASS__c == 'CASS';
+	}
+
 	public SIDRARepaymentInstalmentsController (final ApexPages.StandardController controller) {
 		if (controller.getRecord().Id != null ) {
-			this.cs = [SELECT Id, Currency__c FROM Case WHERE Id = :controller.getRecord().Id];
+			this.cs = [SELECT Id, BSP_CASS__c, Currency__c FROM Case WHERE Id = :controller.getRecord().Id];
 			this.instalmentsDetails = getInstalmentsDetails(this.cs.Id); //ACAMBAS - WMO-546
 			this.lstRepaymentInstalments = getListInstalments(this.cs.Id);
 			this.isEditMode = ApexPages.currentPage().getParameters().get('isEditMode') == 'true';
@@ -77,6 +86,10 @@ public with sharing class SIDRARepaymentInstalmentsController {
 		Go to edit mode
 	**/
 	public void Edit () {
+		if (getBlockEdit()) {
+			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,Label.SIDRA_Repayment_Instalments_not_allowed_for_CASS));
+			return;
+		}
 		this.isEditMode = true;
 	}
 
@@ -104,6 +117,11 @@ public with sharing class SIDRARepaymentInstalmentsController {
 		}
 
 		try {
+
+			if (getBlockEdit()) {
+				throw new SIDRARepaymentInstalmentsException(Label.SIDRA_Repayment_Instalments_not_allowed_for_CASS);
+			}
+
 			upsert lstRepaymentInstalments;
 
 			//ACAMBAS - WMO-546: Begin
@@ -119,6 +137,8 @@ public with sharing class SIDRARepaymentInstalmentsController {
 		}
 		catch (DMLException e) {
 			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,e.getDmlMessage(0)));
+		} catch (Exception e) {
+			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,e.getMessage()));
 		}
 		return null;
 	}
@@ -129,6 +149,10 @@ public with sharing class SIDRARepaymentInstalmentsController {
 	**/
 	public void DeleteRpi () {
 		try {
+			if (getBlockEdit()) {
+				throw new SIDRARepaymentInstalmentsException(Label.SIDRA_Repayment_Instalments_not_allowed_for_CASS);
+			}
+
 			Case_Detail__c instalmentToDelete = this.lstRepaymentInstalments.remove(this.rpiIndexToDelete);
 			if (instalmentToDelete.Id != null) {
 				delete instalmentToDelete;
@@ -154,6 +178,10 @@ public with sharing class SIDRARepaymentInstalmentsController {
 	**/
 	public void AddNewPaymentInstalment () {
 		try {
+			if (getBlockEdit()) {
+				throw new SIDRARepaymentInstalmentsException(Label.SIDRA_Repayment_Instalments_not_allowed_for_CASS);
+			}
+
 			this.lstRepaymentInstalments = getListInstalments(this.cs.Id);
 
 			//if there are no instalment by default we create 6, but if thery
