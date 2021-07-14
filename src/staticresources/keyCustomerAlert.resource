@@ -21,7 +21,7 @@ function displayKeyCustomerAlert(targetURL, popupTitle, popupText, newWindow) {
         var button = document.getElementById('ok');
         button.addEventListener('click', function(){
             if(targetURL != null) {
-                goToURL(targetURL, newWindow);
+                window.open(targetURL, '_blank');
             }
             dialog.close('keyAlert');
         });
