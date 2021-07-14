@@ -667,6 +667,19 @@ public with sharing class AMS_OSCAR_Automation {
 					oscar.Approval_disapproval_date__c = Date.today();
 					oscar.Status__c = 'On Hold_Internal';
 					res = True;
+					AMS_Pax_Accreditation_Form__c pax = [SELECT ANG_Accreditation_Model_to_Change__c 
+															FROM AMS_Pax_Accreditation_Form__c 
+															WHERE Id =:oscar.AMS_Online_Accreditation__c LIMIT 1];
+
+					if(oscar.ANG_Type_Of_Change__c == AMS_Utils.ANG_ACCREDITATION_TYPE
+						&& pax.ANG_Accreditation_Model_to_Change__c == AMS_Utils.ACCREDITATIONMODEL_CASH){
+						List<Agency_Authorization__c> toUpsert = new List<Agency_Authorization__c>();
+						Set<Id> accountsAffected = new Set<Id>();
+						accountsAffected.add(oscar.Account__c);
+						toUpsert = ANG_AgencyChangesHelper.performCashTransformation(accountsAffected);
+						if(!toUpsert.isEmpty())
+							upsert toUpsert;
+					}
 
 				} else if(oscar != null && oscar.STEP12__c == 'Failed') {
 					oscar.addError('Approval can\'t be set when Manage Financial Security step is Failed.');
