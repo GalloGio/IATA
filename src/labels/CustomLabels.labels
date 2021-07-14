@@ -67,10 +67,11 @@
     </labels>
     <labels>
         <fullName>AMS_Console_Account_Hierarchy_Split_account_multicountry</fullName>
+        <categories>AMS Console</categories>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>AMS Console Account Hierarchy Split account multicountry</shortDescription>
-        <value>Please, re-org BSP  &lt;the HE account.iso_country__c&gt; by assigning a new HE</value>
+        <value>Please reorganize the hierarchy for Saudi Arabia by assigning a new HE through a separate case by choosing &apos;&apos;Location Type&apos;&apos; under &apos;&apos;Type Of Change</value>
     </labels>
     <labels>
         <fullName>AMS_CountrySAttr_Validation</fullName>
@@ -31810,7 +31811,7 @@ Can you please confirm which country you&apos;ve previously received support for
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>ISSP Change of Accreditation Type More Than one Country Error</shortDescription>
-        <value>For the Change of Accreditation Type process you can only choose one country</value>
+        <value>For the Change of Accreditation Type process, only one country can be chosen. If you want to submit a change for another country, please log a separate change request through the Customer Portal</value>
     </labels>
     <labels>
         <fullName>ISSP_China_Domestic</fullName>
@@ -37167,6 +37168,14 @@ If the product is an Agent&apos;s multi-use VANs, then it is an Agent&apos;s uni
         <protected>false</protected>
         <shortDescription>ISSP_Portal Services</shortDescription>
         <value>Portal services</value>
+    </labels>
+    <labels>
+        <fullName>ISSP_Portal_Updated_Legal_Status_GE_message</fullName>
+        <categories>Issp, portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ISSP Portal Updated Legal Status GE message</shortDescription>
+        <value>You are only able to change the accreditation type in the current form. If you want to notify IATA of any other legal changes, please log a separate case through &apos;&apos;Other Changes&apos;&apos; in the IATA Accreditation &amp; Changes service</value>
     </labels>
     <labels>
         <fullName>ISSP_Portal_further_clarification</fullName>

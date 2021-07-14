@@ -2404,6 +2404,11 @@
 			}
 			setWarningBoxOnHoverMC($j('[id$=notifyLegalDetailsChange]'), "{!$Label.ISSP_NoC_HE_with_AEs_Warning_MC}");
 		}
+
+		if ({!isChangeOfAccreditationType}) {
+			setWarningBoxOnHoverMC($j('[id$=notifyOwnershipChange]'), "{!$Label.ISSP_Portal_Updated_Legal_Status_GE_message}");
+		}
+		
 		
 		if ({!multipleCountriesSelected} && ('{!BranchAccounts}'.match(/label=/g) || []).length > 0) {
 			$j('[id$=notifyLegalDetailsChange]').prop('disabled', true);

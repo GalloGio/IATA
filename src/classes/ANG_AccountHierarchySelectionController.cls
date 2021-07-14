@@ -109,7 +109,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 								notes.add('The selected agencies will be grouped into a new hierarchy, having as GE the new parent: ' + newParent.Name + '(' + newParent.IATACode__c + ')');
 							}
 						}
-						if (isOnlyGeBspLeft()) {
+						if (isOnlyGeBspLeft() && oscar.Process__c != AMS_Utils.ANGPARTCONVERTMCTOLT && oscar.Process__c != AMS_Utils.ANGPARTCONVERTMCTOST) {
 							notes.add('A conversion case from GoGlobal to GoStandard has been created, please proceed to that case to complete the process of the remaining locations.');
 						}
 					} else if (diffDestination) {
@@ -128,7 +128,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 					notes.add('VMFR must be applied to the full hierarchy');
 				}
 
-				if (tocList.contains(AMS_Utils.ANG_ACCREDITATION_TYPE)) {
+				if (tocList.contains(AMS_Utils.ANG_ACCREDITATION_TYPE) && oscar.Process__c != AMS_Utils.ANGPARTCONVERTMCTOLT && oscar.Process__c != AMS_Utils.ANGPARTCONVERTMCTOST) {
 					notes.add('Change of accreditation type must be applied to the full hierarchy unless you are also selecting change of Hierarchy');
 				}
 
