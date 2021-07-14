@@ -7,7 +7,7 @@ public with sharing class AccountDashboardCTIContactsTest {
 		List<IATA_ISO_Country__c> iataISOCountryList = TestDataFactory_IATAISOCountries.createDefaultIATAISOCountries(1);
 		insert iataISOCountryList;
 		//get standard record type
-		Id recordTypeId = RecordTypeSelector.selectIdBySObjectAndName('Account', 'Others');
+		Id recordTypeId = RecordTypeSelector.selectIdBySObjectAndDeveloperName('Account', 'Others');
 		//get iataISOCountry ID
 		IATA_ISO_Country__c iataISOCountry = [SELECT Id FROM IATA_ISO_Country__c WHERE Name = :TestDataFactory_IATAISOCountries.DEFAULTCOUNTRYNAME].get(0);
 		Integer numberOfRecords = 1;

@@ -276,7 +276,7 @@ private class ANG_AccountTriggerHandlerTest {
 
 	static testMethod void test_shortNameModification() {
 		Id accRT = AMS_Utils.RECTYPE_IATAAGENCY;
-		ID standardRT = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'Standard_Account') ;
+		ID standardRT = RecordTypeSelector.selectIdBySObjectAndDeveloperName('Account', 'Standard_Account');
 
 		Account a1 = new Account(Name = 'NameTest1', IATACode__c = '12344560', TradeName__c = 'tradeName1', RecordTypeId = standardRT,      Short_Name__c = 'ShortNameTest1Example1');
 		Account a2 = new Account(Name = 'NameTest2', IATACode__c = '12344568', TradeName__c = 'tradeName2', RecordTypeId = accRT, Short_Name__c = 'ShortNameTest1Example2');
