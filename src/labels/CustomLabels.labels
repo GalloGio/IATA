@@ -47084,6 +47084,14 @@ Remittance date: {4}
         <value>This SIDRA case is related to Multicountry Agent</value>
     </labels>
     <labels>
+        <fullName>SIDRA_Repayment_Instalments_not_allowed_for_CASS</fullName>
+        <categories>SIDRA CASS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SIDRA Repayment Instalments not allowed for CASS</shortDescription>
+        <value>As per resolution, Repayment Plan is not allowed for CASS Agents.</value>
+    </labels>
+    <labels>
         <fullName>SIS</fullName>
         <categories>Portal, S10</categories>
         <language>en_US</language>
