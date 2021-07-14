@@ -1345,7 +1345,7 @@
         <name>ANG_ISSP_ProductComparisonTitle2</name>
     </customLabels>
     <customLabels>
-        <label>Ver aqui</label>
+        <label>Clique aqui</label>
         <name>ANG_ISSP_ProductComparisonViewHere</name>
     </customLabels>
     <customLabels>
@@ -2929,7 +2929,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Announcement</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Apply --></label>
+        <label>Aplicar</label>
         <name>CSP_Apply</name>
     </customLabels>
     <customLabels>
@@ -3021,11 +3021,11 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Cancel</name>
     </customLabels>
     <customLabels>
-        <label>Cancelar {0} serviço</label>
+        <label>Cancelar serviço: {0}</label>
         <name>CSP_CancelServiceActionLabel</name>
     </customLabels>
     <customLabels>
-        <label>Você pode cancelar seu acesso ao {0}</label>
+        <label>Você pode cancelar seu acesso ao seu serviço: {0}</label>
         <name>CSP_CancelServiceMessage</name>
     </customLabels>
     <customLabels>
@@ -5041,7 +5041,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Remittantce_Date</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_RemoveAllFilters --></label>
+        <label>Remover todos os filtros</label>
         <name>CSP_RemoveAllFilters</name>
     </customLabels>
     <customLabels>
@@ -14808,7 +14808,7 @@ and
         <name>ISSP_AMS_If_Approved_Gross_Amnt</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Info Accreditation Types --></label>
+        <label>Para mais detalhes sobre Tipos de Credenciamento:</label>
         <name>ISSP_AMS_Info_Accreditation_Types</name>
     </customLabels>
     <customLabels>
@@ -16780,7 +16780,7 @@ and
         <name>ISSP_AMS_Step1_Two_Weeks_Expiry</name>
     </customLabels>
     <customLabels>
-        <label>Lista de verificação para</label>
+        <label>Check list para</label>
         <name>ISSP_AMS_Step2_Check_List</name>
     </customLabels>
     <customLabels>
@@ -17432,7 +17432,7 @@ and
         <name>ISSP_AMS_StepsAll_Passenger_Title_New</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS StepsAll Travel Title --></label>
+        <label>Aplicação para aprovação como Agência de Viagem IATA</label>
         <name>ISSP_AMS_StepsAll_Travel_Title</name>
     </customLabels>
     <customLabels>
