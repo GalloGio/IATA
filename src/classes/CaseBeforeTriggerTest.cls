@@ -2465,7 +2465,7 @@ private class CaseBeforeTriggerTest {
 		caseParent.firstFAnonComplianceDate__c = date.today();
 		caseParent.secondFAnonComplianceDate__c = null;
 		caseParent.Deadline_Date__c = date.newinstance(2023, 06, 29);
-		caseParent.FA_Second_Deadline_Date__c = date.newinstance(2021, 06, 30);
+		caseParent.FA_Second_Deadline_Date__c = date.newinstance(2023, 06, 30);
 		insert caseParent;
 
 	Case caseChild3 = new case ();
