@@ -147,8 +147,6 @@ global class ANG_FOPOSCARNotificationBatch implements Database.Batchable<Case>, 
 					populateAnnualRevalidationContactMap(annualRevDeadlineReminderCases, annualRevReminderCases, cse, mapCaseContacts);
 				}
 			} else if (dt == DATE_REMINDER_30) {
-				nonComplianceCases.put(cse.id,cse);
-					
 				if (cse.origin == MASSIVE_FOP_ORIGIN) {
 					populateContactsMap(nonComplianceCases, cse, mapCaseContacts, null);
 				} else if (cse.origin == AUTOMATIC_RENEWAL_FOP_ORIGIN) {
@@ -235,7 +233,6 @@ global class ANG_FOPOSCARNotificationBatch implements Database.Batchable<Case>, 
 				AND IsEmailBounced = false
 				AND (
 					User_Portal_Status__c = :AMS_Utils.CONTACT_TYPE_ADMIN
-					OR Financial_Assessment_Contact__c = true
 					OR BSP_CASS_Payment_contact__c = true
 				))
 			FROM Account
