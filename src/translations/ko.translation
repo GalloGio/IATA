@@ -30631,6 +30631,10 @@ If 귀하는 IATA 코드가 없습니다. &quot;&quot;고객 유형&quot;&quot;�
         <name>SIDRA_GE_Info</name>
     </customLabels>
     <customLabels>
+        <label><!-- SIDRA Repayment Instalments not allowed for CASS --></label>
+        <name>SIDRA_Repayment_Instalments_not_allowed_for_CASS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- SIS --></label>
         <name>SIS</name>
     </customLabels>
