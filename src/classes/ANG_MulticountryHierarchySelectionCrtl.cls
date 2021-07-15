@@ -35,7 +35,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 				accountFields = new Set<String>();
 				
 				accountFields.add('Name');
-				accountFields.add('IataCode_c');
+				accountFields.add('IataCode__c');
 				accountFields.add('Location_Type__c');
 				accountFields.add('Status__c');
 				accountFields.add('Remittance_frequency__c');
