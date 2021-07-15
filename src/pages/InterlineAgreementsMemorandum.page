@@ -1,4 +1,4 @@
-<apex:page renderas="pdf" controller="InterlineAgreementsMemorandumController" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false" showheader="false" sidebar="false" readOnly="true">
+<apex:page renderas="pdf" controller="IA_MemorandumController" standardStylesheets="false" applyBodyTag="false" applyHtmlTag="false" showheader="false" sidebar="false" readOnly="true">
 	<html>
 		<head>
 			<style>

@@ -1496,6 +1496,7 @@ public without sharing class ISSP_CurrencyCenterMonthSurveyCtrl {
 			if (newParentId != null) {
 				Currency_Center_Survey__c clonedSurvey = survey.clone();
 				clonedSurvey.Parent_Id__c = newParentId;
+				clonedSurvey.Average_Exchange_Rate__c = this.countriesProfileMap.get(clonedSurvey.Country_Name__c)?.Currency_Exchange_Rate__c;
 				listNewSurvey.add(clonedSurvey);
 			}
 		}
