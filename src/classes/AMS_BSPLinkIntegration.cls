@@ -413,8 +413,11 @@ global class AMS_BSPLinkIntegration {
 
 		String result = 'Error';
 
-		if (isSuccess.equals('Y'))
-			result = 'Success';
+		if (isSuccess.equals('Y')){
+		result = 'Success';
+		} else if(isSuccess.equals('P')){
+		result = 'Success_Partial';
+		}
 
 		Attachment att = new Attachment();
 		att.ParentID = caseId;
