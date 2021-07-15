@@ -1033,6 +1033,13 @@
         <value>Confirm full hierarchy conversion to GoStandard</value>
     </labels>
     <labels>
+        <fullName>AMS_OSCAR_STEP52</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR STEP52</shortDescription>
+        <value>Re-activate Risk Event</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_STEP6</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -46924,6 +46931,13 @@ respect to decisions and/or actions affecting Agents and applicants under the IA
         <protected>false</protected>
         <shortDescription>RTS TAR Notification Title</shortDescription>
         <value>Prejudiced Collection of Funds</value>
+    </labels>
+    <labels>
+        <fullName>Reactivate_Risk_Event_warning_message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Reactivate Risk Event warning message</shortDescription>
+        <value>This agency meets the conditions of being GoStandard for more than 2 years and subsequently being GoLite for less than 6 months and is therefore eligible to trade as GoStandard under their previous Risk Status, RHC, Risk Events, and Financial Security.</value>
     </labels>
     <labels>
         <fullName>Reader_Main_Content</fullName>

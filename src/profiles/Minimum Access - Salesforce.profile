@@ -54930,7 +54930,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Quality__c.Region__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
