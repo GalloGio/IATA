@@ -4,6 +4,6 @@
     <protected>false</protected>
     <values>
         <field>Value__c</field>
-        <value xsi:type="xsd:string">&quot;Busy Call&quot;,&quot;Call customer!&quot;,&quot;Call - Busy&quot;,&quot;Call - No Answer&quot;,&quot;Call - Successful&quot;,&quot;Call - Voice Mail&quot;,&quot;Call - Wrong Number - Answered&quot;,&quot;Contract elaboration&quot;,&quot;Email&quot;,&quot;FAX&quot;,&quot;Feedback request&quot;,&quot;Follow up&quot;,&quot;Needs assessment&quot;,&quot;No Answer&quot;,&quot;Other&quot;</value>
+        <value xsi:type="xsd:string">Busy Call|Call customer!|Call - Busy|Call - No Answer|Call - Successful|Call - Voice Mail|Call - Wrong Number - Answered|Contract elaboration|Email|FAX|Feedback request|Follow up|Needs assessment|No Answer|Other</value>
     </values>
 </CustomMetadata>

@@ -46,16 +46,22 @@
                     }
                 }
 
-                /*
-                if(finalStage == "Stage B" && 
-                   (stageA_Status != "Completed" || 
-                    stageB_Status != "Completed")){
-                    component.set("v.nextVariant", "destructive");
+                var currentStageStatus = "";
+                currentStage = currentStage.replace("Subprocesses_ACLI:","");
+                if (currentStage === "Stage_A") currentStageStatus = stageA_Status;
+                else if (currentStage === "Stage_B") currentStageStatus = stageB_Status;
+                else if (currentStage === "Stage_C") currentStageStatus = stageC_Status;
+                else if (currentStage === "Stage_D") currentStageStatus = stageD_Status;
+                else if (currentStage === "Stage_E") currentStageStatus = stageE_Status;
+                else if (currentStage === "Stage_F") currentStageStatus = stageF_Status;
+
+                var cont = component.get("v.counter");
+                component.set("v.counter", cont++);
+                // redirect to next step if curent is completed, but only first time the screen is opened
+                if (currentStage !== "Stage_F" && currentStageStatus === "Completed" && cont === 1) {
+                    var navigate = component.get("v.navigateFlow");
+                    navigate("NEXT");
                 }
-                else {
-                    component.set("v.nextVariant", "brand");
-                }
-                */
 
                 if(finalStage == "Stage D" && 
                         (stageA_Status != "Completed" || 

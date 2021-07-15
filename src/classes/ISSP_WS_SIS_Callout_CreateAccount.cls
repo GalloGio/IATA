@@ -147,6 +147,25 @@ public with sharing class ISSP_WS_SIS_Callout_CreateAccount {
 		}
 	}
 
+	public static Id makeCall(ISSP_Web_Service_Log__c log) {
+		String requestString = log.Input_Description__c;
+		Account account = new Account(Id=log.account__c);
+
+		//make ws call
+		ISSP_WS_SIS_Callout.IcpWsInterfaceSoap ws = ISSP_WS_SIS_Callout_Common.getWSInterface();
+		String xmlResponse = Test.isRunningTest()? TEST_RESPONSE: ws.CreateAccount(requestString);
+
+		//prepare response
+		ResponseData response = new ResponseData(xmlResponse, requestString);
+		response.account = account;
+		
+		//insert log
+		ISSP_Web_Service_Log__c newLog = createLog(response);
+		insert newLog;
+
+		return newLog.Id;
+	}
+
 	public static ISSP_Web_Service_Log__c createLog(ResponseData responseData) {
 		ISSP_Web_Service_Log__c newLog = new ISSP_Web_Service_Log__c();
 		newLog.Web_Service__c = 'ISSP_WS_SIS_Callout';
