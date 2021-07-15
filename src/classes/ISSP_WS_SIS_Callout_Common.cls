@@ -1,4 +1,4 @@
-public with sharing class ISSP_WS_SIS_Callout_Common {
+global with sharing class ISSP_WS_SIS_Callout_Common {
 	private static final Boolean IS_SANDBOX{
 		get{
 			if(IS_SANDBOX == null) IS_SANDBOX = [SELECT Id, IsSandbox FROM Organization LIMIT 1].IsSandbox;
@@ -73,5 +73,45 @@ public with sharing class ISSP_WS_SIS_Callout_Common {
 
 	private static String nvl(String str) {
 		return str==null?'':str;
+	}
+
+	public class WSException extends Exception {}
+
+	/**
+	 * Retry the same call as in the incoming log and return the new log Id
+	 */
+	webservice static Id retryCall(Id logId) {
+		try {
+			ISSP_Web_Service_Log__c log = [
+				SELECT Id, System__c, Web_Service__c, Method__c, Error_Code__c, Error_Message__c, Input_Description__c, Account__c, User__c, Contact__c
+				FROM ISSP_Web_Service_Log__c
+				WHERE Id = :logId
+				AND System__c = 'SIS'
+				AND Web_Service__c = 'ISSP_WS_SIS_Callout'];
+
+			if (log.Method__c == 'CreateAccount') {
+				return ISSP_WS_SIS_Callout_CreateAccount.makeCall(log);
+			}
+			if (log.Method__c == 'UpdateAccount') {
+				return ISSP_WS_SIS_Callout_UpdateAccount.makeCall(log);
+			}
+			if (log.Method__c == 'ActivateUser') {
+				return ISSP_WS_SIS_Callout_ActivateUser.makeCall(log,true);
+			}
+			if (log.Method__c == 'DeactivateUser') {
+				return ISSP_WS_SIS_Callout_ActivateUser.makeCall(log,false);
+			}
+			if (log.Method__c == 'CreateUser') {
+				return ISSP_WS_SIS_Callout_CreateUser.makeCall(log);
+			}
+			if (log.Method__c == 'UpdateUser') {
+				return ISSP_WS_SIS_Callout_UpdateUser.makeCall(log);
+			}
+
+			throw new WSException('No retry function was found for ' + log.Web_Service__c + '.' + log.Method__c);
+
+		} catch (Exception e) {
+			throw new WSException(e.getMessage());
+		}
 	}
 }
