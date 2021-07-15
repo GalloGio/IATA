@@ -33,15 +33,10 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 		get{
 			if(accountFields == null){
 				accountFields = new Set<String>();
-				
-				accountFields.add('Name');
-				accountFields.add('IataCode_c');
-				accountFields.add('Location_Type__c');
-				accountFields.add('Remittance_frequency__c');
-				accountFields.add('Status__c');
-				accountFields.add('BillingStreet');
-				accountFields.add('BillingCity');
-				accountFields.add('BillingPostalCode');
+				Map<String, Schema.SObjectField> schemaFieldMapAccounts = Account.sObjectType.getDescribe().fields.getMap();
+				for (String field : schemaFieldMapAccounts.keySet()){
+					accountFields.add(field);
+				}
 				accountFields.add('IATA_ISO_Country__r.Name');
 				accountFields.add('IATA_ISO_Country__r.ISO_Code__c');
 				accountFields.add('IATA_ISO_Country__r.Region__c');
