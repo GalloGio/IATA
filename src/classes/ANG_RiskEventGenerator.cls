@@ -150,6 +150,7 @@ public class ANG_RiskEventGenerator {
 					fields.add('Parent.RecordTypeId');
 					fields.add('Parent.IFAP_Financial_Year__c');
 					fields.add('Parent.Financial_Review_Type__c');
+					fields.add('Update_AIMS_DEF__c');
 					reQuery = true;
 				}
 				when 'AMS_OSCAR__c' {
@@ -237,6 +238,10 @@ public class ANG_RiskEventGenerator {
 						risk.ANG_Event_Status__c = config.ANG_Risk_Event_Status__c;
 						risk.put(sourceFields.get(objectName), o.Id);
 						risk.ANG_UniqueKey__c = uniqueKey;
+
+						if(config.ANG_Risk_Event_Type__r.Name == ANG_Risk_Helper.RISK_TYPE_PAYMENT_DEFAULT){
+							risk.ANG_Issued_Date__c = Date.valueof(o.get('Update_AIMS_DEF__c'));
+						}
 
 						if(config.ANG_Activate_In__c != null) risk.ANG_Issued_Date__c = System.today().addDays(Integer.valueOf(config.ANG_Activate_In__c));
 
