@@ -16380,6 +16380,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>AMS_OSCAR__c.STEP52__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>AMS_OSCAR__c.STEP5__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -19046,6 +19051,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>ANG_Agency_Risk_Event__c.ANG_isCashlessAgency__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ANG_Agency_Risk_Event__c.Applicable_for_re_activation__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -61636,7 +61646,7 @@
         <recordType>Case.ISS_Portal_PwC_Edit</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Case-ISS Portal PwC Edit1</layout>
+        <layout>Case-ISS Portal PwC Edit</layout>
         <recordType>Case.ISS_Portal_PwC_for_IATA_user</recordType>
     </layoutAssignments>
     <layoutAssignments>
