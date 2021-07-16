@@ -346,7 +346,7 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
             <criteriaItems>
                 <field>Case.Topic__c</field>
                 <operation>equals</operation>
-                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
+                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk,TIDS-Travel Industry Designator Service</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
@@ -411,7 +411,7 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
             <criteriaItems>
                 <field>Case.Topic__c</field>
                 <operation>equals</operation>
-                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
+                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk,TIDS-Travel Industry Designator Service</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
@@ -476,7 +476,7 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
             <criteriaItems>
                 <field>Case.Topic__c</field>
                 <operation>equals</operation>
-                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
+                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk,TIDS-Travel Industry Designator Service</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
@@ -541,7 +541,7 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
             <criteriaItems>
                 <field>Case.Topic__c</field>
                 <operation>equals</operation>
-                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
+                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk,TIDS-Travel Industry Designator Service</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
@@ -606,7 +606,7 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
             <criteriaItems>
                 <field>Case.Topic__c</field>
                 <operation>equals</operation>
-                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
+                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk,TIDS-Travel Industry Designator Service</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
@@ -671,7 +671,7 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
             <criteriaItems>
                 <field>Case.Topic__c</field>
                 <operation>equals</operation>
-                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
+                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk,TIDS-Travel Industry Designator Service</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
@@ -736,7 +736,7 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
             <criteriaItems>
                 <field>Case.Topic__c</field>
                 <operation>equals</operation>
-                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
+                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk,TIDS-Travel Industry Designator Service</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Subject</field>
@@ -801,7 +801,7 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
             <criteriaItems>
                 <field>Case.Topic__c</field>
                 <operation>equals</operation>
-                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
+                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk,TIDS-Travel Industry Designator Service</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
@@ -866,7 +866,7 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
             <criteriaItems>
                 <field>Case.Topic__c</field>
                 <operation>equals</operation>
-                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
+                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk,TIDS-Travel Industry Designator Service</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Subject</field>
@@ -931,7 +931,7 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
             <criteriaItems>
                 <field>Case.Topic__c</field>
                 <operation>equals</operation>
-                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
+                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk,TIDS-Travel Industry Designator Service</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
@@ -996,7 +996,7 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
             <criteriaItems>
                 <field>Case.Topic__c</field>
                 <operation>equals</operation>
-                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
+                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk,TIDS-Travel Industry Designator Service</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
@@ -1061,7 +1061,7 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
             <criteriaItems>
                 <field>Case.Topic__c</field>
                 <operation>equals</operation>
-                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
+                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk,TIDS-Travel Industry Designator Service</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
@@ -1126,7 +1126,7 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
             <criteriaItems>
                 <field>Case.Topic__c</field>
                 <operation>equals</operation>
-                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
+                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk,TIDS-Travel Industry Designator Service</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
@@ -1191,7 +1191,7 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
             <criteriaItems>
                 <field>Case.Topic__c</field>
                 <operation>equals</operation>
-                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
+                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk,TIDS-Travel Industry Designator Service</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
@@ -1349,7 +1349,7 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
             <criteriaItems>
                 <field>Case.Topic__c</field>
                 <operation>equals</operation>
-                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
+                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk,TIDS-Travel Industry Designator Service</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
@@ -1414,7 +1414,7 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
             <criteriaItems>
                 <field>Case.Topic__c</field>
                 <operation>equals</operation>
-                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
+                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk,TIDS-Travel Industry Designator Service</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
@@ -1484,7 +1484,7 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
             <criteriaItems>
                 <field>Case.Topic__c</field>
                 <operation>equals</operation>
-                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
+                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk,TIDS-Travel Industry Designator Service</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
@@ -1559,7 +1559,7 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
             <criteriaItems>
                 <field>Case.Topic__c</field>
                 <operation>equals</operation>
-                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
+                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk,TIDS-Travel Industry Designator Service</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
@@ -1634,7 +1634,7 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
             <criteriaItems>
                 <field>Case.Topic__c</field>
                 <operation>equals</operation>
-                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
+                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk,TIDS-Travel Industry Designator Service</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.RecordTypeId</field>
@@ -1709,7 +1709,7 @@ TIMEVALUE(CreatedDate)&lt;TIMEVALUE(&quot;23:00:00.000&quot;)
             <criteriaItems>
                 <field>Case.Topic__c</field>
                 <operation>equals</operation>
-                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk</value>
+                <value>Endorsement Cargo Agent,IATA Annual Fees (BSP/CASS),IATA EasyPay,IATA Store,ID Card (Print/Digital),IFACP Endorsed Forwarder,New BSPlink,Remittance Holding Capacity,TIP Helpdesk,TIDS-Travel Industry Designator Service</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.Subject</field>

@@ -745,6 +745,10 @@
         <name>AMS_OSCAR_STEP51</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS OSCAR STEP52 --></label>
+        <name>AMS_OSCAR_STEP52</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS OSCAR STEP6 --></label>
         <name>AMS_OSCAR_STEP6</name>
     </customLabels>
@@ -3011,6 +3015,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- CSP_Breadcrump_MyProfile_Title --></label>
         <name>CSP_Breadcrump_MyProfile_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>Email Doanh nghiệp (trong trường hợp bạn có)</label>
+        <name>CSP_Business_Email</name>
     </customLabels>
     <customLabels>
         <label>Mua trực tuyến</label>
@@ -30545,6 +30553,10 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <name>RTS_TAR_Notification_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- Reactivate Risk Event warning message --></label>
+        <name>Reactivate_Risk_Event_warning_message</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Reader Main Content --></label>
         <name>Reader_Main_Content</name>
     </customLabels>
@@ -30625,6 +30637,10 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <name>SIDRA_GE_Info</name>
     </customLabels>
     <customLabels>
+        <label><!-- SIDRA Repayment Instalments not allowed for CASS --></label>
+        <name>SIDRA_Repayment_Instalments_not_allowed_for_CASS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- SIS --></label>
         <name>SIS</name>
     </customLabels>
@@ -30655,6 +30671,10 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
     <customLabels>
         <label><!-- SIS L2 Customer Support --></label>
         <name>SIS_L2_Customer_Support</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- SIS Notify Change in SIS 3digit Code --></label>
+        <name>SIS_Notify_Change_in_SIS_3digit_Code</name>
     </customLabels>
     <customLabels>
         <label><!-- SIS Operations --></label>
@@ -42918,7 +42938,7 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
                 <label><!-- Comments --></label>
                 <name>Comments</name>
             </columns>
-            <label><!-- Comments --></label>
+            <label>Các báo cáo</label>
             <name>Comments</name>
         </sections>
         <sections>
@@ -43047,7 +43067,7 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <label><!-- Opportunities with products and Sub-regions (ISO) --></label>
         <name>Opportunities_with_products_custom</name>
         <sections>
-            <label><!-- Opportunities --></label>
+            <label>Các báo cáo</label>
             <name>Opportunities</name>
         </sections>
         <sections>
@@ -43291,7 +43311,7 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
                 <label><!-- Service Description --></label>
                 <name>Service Description</name>
             </columns>
-            <label><!-- Service information --></label>
+            <label>Các báo cáo</label>
             <name>Service information</name>
         </sections>
     </reportTypes>

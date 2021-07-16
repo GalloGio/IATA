@@ -745,6 +745,10 @@
         <name>AMS_OSCAR_STEP51</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS OSCAR STEP52 --></label>
+        <name>AMS_OSCAR_STEP52</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS OSCAR STEP6 --></label>
         <name>AMS_OSCAR_STEP6</name>
     </customLabels>
@@ -3008,6 +3012,10 @@ Daha fazla ayrıntı için, Müşteri Portalı&apos;nda &quot;Resolution 812&quo
     <customLabels>
         <label><!-- CSP_Breadcrump_MyProfile_Title --></label>
         <name>CSP_Breadcrump_MyProfile_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>İş E-postası (eğer varsa)</label>
+        <name>CSP_Business_Email</name>
     </customLabels>
     <customLabels>
         <label>Çevrim içi satın alın</label>
@@ -30550,6 +30558,10 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <name>RTS_TAR_Notification_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- Reactivate Risk Event warning message --></label>
+        <name>Reactivate_Risk_Event_warning_message</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Reader Main Content --></label>
         <name>Reader_Main_Content</name>
     </customLabels>
@@ -30632,6 +30644,10 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <name>SIDRA_GE_Info</name>
     </customLabels>
     <customLabels>
+        <label><!-- SIDRA Repayment Instalments not allowed for CASS --></label>
+        <name>SIDRA_Repayment_Instalments_not_allowed_for_CASS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- SIS --></label>
         <name>SIS</name>
     </customLabels>
@@ -30662,6 +30678,10 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
     <customLabels>
         <label><!-- SIS L2 Customer Support --></label>
         <name>SIS_L2_Customer_Support</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- SIS Notify Change in SIS 3digit Code --></label>
+        <name>SIS_Notify_Change_in_SIS_3digit_Code</name>
     </customLabels>
     <customLabels>
         <label><!-- SIS Operations --></label>
@@ -42536,7 +42556,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
             <name>Local Governance</name>
         </sections>
         <sections>
-            <label><!-- Local Governance Meetings --></label>
+            <label>Portal Erişim Ismi</label>
             <name>Local Governance Meetings</name>
         </sections>
         <sections>
@@ -42675,7 +42695,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
             <name>IEC Addresses</name>
         </sections>
         <sections>
-            <label><!-- Locations --></label>
+            <label>Portal Erişim Ismi</label>
             <name>Locations</name>
         </sections>
     </reportTypes>
@@ -42832,7 +42852,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <label><!-- Notifications --></label>
         <name>Notifications</name>
         <sections>
-            <label><!-- Notifications --></label>
+            <label>Portal Erişim Ismi</label>
             <name>Notifications</name>
         </sections>
     </reportTypes>
@@ -42888,7 +42908,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
             <name>ONE Source Contact Role Details</name>
         </sections>
         <sections>
-            <label><!-- OS Stations --></label>
+            <label>Portal Erişim Ismi</label>
             <name>OS Stations</name>
         </sections>
     </reportTypes>
@@ -42925,7 +42945,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
                 <label><!-- Comments --></label>
                 <name>Comments</name>
             </columns>
-            <label><!-- Comments --></label>
+            <label>Portal Erişim Ismi</label>
             <name>Comments</name>
         </sections>
         <sections>
@@ -43054,7 +43074,7 @@ Parolanızı sıfırlamak istiyorsanız, oturum açma sayfasına geri dönün ve
         <label><!-- Opportunities with products and Sub-regions (ISO) --></label>
         <name>Opportunities_with_products_custom</name>
         <sections>
-            <label><!-- Opportunities --></label>
+            <label>Portal Erişim Ismi</label>
             <name>Opportunities</name>
         </sections>
         <sections>

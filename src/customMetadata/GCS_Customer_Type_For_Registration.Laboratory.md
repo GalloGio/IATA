@@ -40,7 +40,7 @@
     </values>
     <values>
         <field>Filter_on_Record_Type__c</field>
-        <value xsi:type="xsd:string">Other, Standard Account</value>
+        <value xsi:type="xsd:string">Other, Standard_Account</value>
     </values>
     <values>
         <field>Filter_on_Sector__c</field>

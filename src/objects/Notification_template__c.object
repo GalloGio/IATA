@@ -481,14 +481,13 @@ Language__c ,
         <fullName>Custom_editable_criteria</fullName>
         <columns>NAME</columns>
         <columns>OBJECT_ID</columns>
-        <columns>Due_date__c</columns>
         <columns>Message__c</columns>
+        <columns>Identifier__c</columns>
         <columns>Subject__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>Subject__c</field>
-            <operation>contains</operation>
-            <value>Invoice - PAX</value>
+            <field>Identifier__c</field>
+            <operation>notEqual</operation>
         </filters>
         <label>Custom - editable criteria</label>
         <language>en_US</language>

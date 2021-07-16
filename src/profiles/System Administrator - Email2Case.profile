@@ -16374,6 +16374,11 @@ Also used as default WF, Lead, Case</description>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>AMS_OSCAR__c.STEP52__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>AMS_OSCAR__c.STEP5__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -19040,6 +19045,11 @@ Also used as default WF, Lead, Case</description>
     <fieldPermissions>
         <editable>false</editable>
         <field>ANG_Agency_Risk_Event__c.ANG_isCashlessAgency__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ANG_Agency_Risk_Event__c.Applicable_for_re_activation__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -41209,6 +41219,11 @@ Also used as default WF, Lead, Case</description>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>GVR__mdt.Value__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>GadmAccountServiceDetail__e.EventType__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -47981,6 +47996,11 @@ Also used as default WF, Lead, Case</description>
         <editable>true</editable>
         <field>LocalGovernance_Meeting__c.Legal_Remarks_Minutes__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LocalGovernance_Meeting__c.Local_Group_Type__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -61533,10 +61553,6 @@ Also used as default WF, Lead, Case</description>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-IDFS Cases %28GLOBAL%29</layout>
-        <recordType>Case.Cases_Global_TEST</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Case-IDFS Cases %28GLOBAL%29</layout>
         <recordType>Case.ExternalCasesIDFSglobal</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -61546,10 +61562,6 @@ Also used as default WF, Lead, Case</description>
     <layoutAssignments>
         <layout>Case-IDFS Cases %28GLOBAL%29</layout>
         <recordType>Case.IATA_Service_Request</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Case-IDFS Cases %28GLOBAL%29</layout>
-        <recordType>Case.ID_Card_Queries</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-IDFS Cases %28GLOBAL%29</layout>
@@ -61690,10 +61702,6 @@ Also used as default WF, Lead, Case</description>
     <layoutAssignments>
         <layout>CaseClose-ACCA Close Case - Extended</layout>
         <recordType>Case.ID_Card_Mass_Application</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>CaseClose-ACCA Close Case - Extended</layout>
-        <recordType>Case.ID_Card_Queries</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>CaseClose-ACCA Close Case - Extended</layout>
@@ -61838,10 +61846,6 @@ Also used as default WF, Lead, Case</description>
     <layoutAssignments>
         <layout>CaseClose-IDFS Close Case - Extended</layout>
         <recordType>Case.Case_Operational_Management_Head_Office</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>CaseClose-IDFS Close Case - Extended</layout>
-        <recordType>Case.Cases_Global_TEST</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>CaseClose-IDFS Close Case - Extended</layout>
@@ -62658,6 +62662,9 @@ Also used as default WF, Lead, Case</description>
     </layoutAssignments>
     <layoutAssignments>
         <layout>GST_Information__c-GST Information Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>GVR__mdt-Global Validation Rules Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Global-Global Layout</layout>
@@ -71318,11 +71325,6 @@ Also used as default WF, Lead, Case</description>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
-        <recordType>Case.Cases_Global_TEST</recordType>
-        <visible>false</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <default>false</default>
         <recordType>Case.Cases_IFG</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
@@ -71460,11 +71462,6 @@ Also used as default WF, Lead, Case</description>
         <default>false</default>
         <recordType>Case.ID_Card_Mass_Application</recordType>
         <visible>false</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <default>false</default>
-        <recordType>Case.ID_Card_Queries</recordType>
-        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>

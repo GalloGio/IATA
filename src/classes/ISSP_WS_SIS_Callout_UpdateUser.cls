@@ -87,6 +87,25 @@ public with sharing class ISSP_WS_SIS_Callout_UpdateUser {
 		}
 	}
 
+	public static Id makeCall(ISSP_Web_Service_Log__c log) {
+		String requestString = log.Input_Description__c;
+
+		//make ws call
+		ISSP_WS_SIS_Callout.IcpWsInterfaceSoap ws = ISSP_WS_SIS_Callout_Common.getWSInterface();
+		String xmlResponse = Test.isRunningTest()? TEST_RESPONSE: ws.UpdateSisUser(requestString);
+
+		//prepare response
+		ResponseData response = new ResponseData(xmlResponse, requestString);
+		response.userId = log.User__c;
+		response.contactId = log.Contact__c;
+	
+		//insert log
+		ISSP_Web_Service_Log__c newLog = createLog(response);
+		insert newLog;
+
+		return newLog.Id;
+	}
+
 	public static ISSP_Web_Service_Log__c createLog(ResponseData responseData) {
 		ISSP_Web_Service_Log__c newLog = new ISSP_Web_Service_Log__c();
 		newLog.Web_Service__c = 'ISSP_WS_SIS_Callout';

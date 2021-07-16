@@ -563,12 +563,18 @@ var dyn_functions = {
         
         var result;
 
-        var oscarData = sforce.connection.query("SELECT Risk_event_creation_date__c FROM AMS_OSCAR__C WHERE Id ='" + arg + "'");
+        var oscarData = sforce.connection.query("SELECT Risk_event_creation_date__c, Process__c, Account__r.Location_Type__c, Account__r.ANG_Accreditation_Model__c FROM AMS_OSCAR__C WHERE Id ='" + arg + "'");
 
         var records = oscarData.getArray("records");
 
         if(records[0].Risk_event_creation_date__c != null){
             result = 'This button has already been clicked before, no further action will be performed.';  
+        } else if(
+                records[0].Process__c === 'ANG.MAJOR.CHANGES.1.0' &&
+                ['AE','HE'].includes(records[0].Account__r.Location_Type__c) &&
+                records[0].Account__r.ANG_Accreditation_Model__c === 'Multicountry'
+        ){
+            result = 'For Multi Country Accreditation, this Risk Event is only applicable at changes managed at GE level';
         }else{
             result = sforce.apex.execute("AMS_OSCAR_Webservice", "createRiskEvent", {oscarId: arg});
         }
