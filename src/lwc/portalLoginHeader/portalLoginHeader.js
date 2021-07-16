@@ -12,7 +12,7 @@ import CSP_PortalPath                   from '@salesforce/label/c.CSP_PortalPath
 
 export default class PortalLoginHeader extends LightningElement {
 
-    @track selectedLang = 'en_US';
+    @track selectedLang = 'en_us';
     @track langOptions = [];
     @track loadingLangs = true;
     @api preventrefresh = false;
@@ -22,7 +22,15 @@ export default class PortalLoginHeader extends LightningElement {
     connectedCallback(){
         var pageParams = getParamsFromPage();
         if(pageParams !== undefined && pageParams.language !== undefined){
-            this.selectedLang = pageParams.language.toLowerCase();;
+            this.selectedLang = pageParams.language.toLowerCase();
+        }else if(pageParams.retURL !== undefined){
+            let languageResult = pageParams.retURL.match(/language=(.*)&/g);
+            if(languageResult){
+                this.selectedLang = languageResult[0].replace('language=', '').replace('&', '').toLowerCase();
+            }else{
+                languageResult = pageParams.retURL.match(/language=(.*)/g);
+                this.selectedLang = languageResult[0].replace('language=', '').toLowerCase();
+            }
         }
         this.getLanguagesOptions();
 
@@ -33,9 +41,9 @@ export default class PortalLoginHeader extends LightningElement {
         getCommunityAvailableLanguages().then(result => {
             if (result) {
                 var lowerCaseLangOpts = result.map(function(a) {
-                     a.value = a.value.toLowerCase();
-                     return a;
-                 });
+                    a.value = a.value.toLowerCase();
+                    return a;
+                });
 
                 this.langOptions = lowerCaseLangOpts;
             }
@@ -50,7 +58,12 @@ export default class PortalLoginHeader extends LightningElement {
         var search = location.search;
         var param = new RegExp('language=[^&$]*', 'i');
         if(~search.indexOf('language')){
-            search = search.replace(param, 'language=' + this.selectedLang );
+            if (search.includes('retURL')) {
+                param = new RegExp('language%3D[^&$]*', 'i');
+                search = search.replace(param, 'language%3D' + this.selectedLang);
+            }else{
+                search = search.replace(param, 'language=' + this.selectedLang );
+            }
         }else{
             if(search.length > 0) search += '&';
             search += 'language='+this.selectedLang;
@@ -61,7 +74,6 @@ export default class PortalLoginHeader extends LightningElement {
         }else{
             this.dispatchEvent(new CustomEvent('languagechange',{detail : this.selectedLang}));
         }
-
     }
 
     handleNavigateToLogin(){

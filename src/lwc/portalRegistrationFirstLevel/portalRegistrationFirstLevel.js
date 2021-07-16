@@ -705,7 +705,6 @@ export default class PortalRegistrationFirstLevel extends LightningElement {
 	}
 
 	handleLanguageChange(event){
-
 		this.isLoading = true;
 		this.registrationForm.language = event.detail;
 		var search = location.search;

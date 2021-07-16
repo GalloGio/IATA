@@ -1,0 +1,13 @@
+.align-right {
+    text-align: right;
+}
+
+a {
+    color: inherit;
+    font-weight: 500;
+}
+
+.around-border {
+    border: solid 1px;
+    border-color: #ececec;
+}

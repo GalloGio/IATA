@@ -1,0 +1,13 @@
+input:disabled{
+    border: none;
+    background-color: #f7f8fa;
+    color: #525252;
+}
+
+.error {
+    color: red;
+}
+
+.error-border {
+    border: 1px solid red;
+}

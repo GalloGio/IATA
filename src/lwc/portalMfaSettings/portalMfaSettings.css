@@ -1,0 +1,9 @@
+.txt-medium {
+    font-size: medium;
+}
+
+.slds-modal__header {
+    border: 0px;
+    border-radius: 0px;
+    padding: 0px;
+}
