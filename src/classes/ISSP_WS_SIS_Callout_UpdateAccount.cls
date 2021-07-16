@@ -159,6 +159,25 @@ public with sharing class ISSP_WS_SIS_Callout_UpdateAccount {
 		return newLog;
 	}
 
+	public static Id makeCall(ISSP_Web_Service_Log__c log) {
+		String requestString = log.Input_Description__c;
+		Account account = new Account(Id=log.account__c);
+
+		//make ws call
+		ISSP_WS_SIS_Callout.IcpWsInterfaceSoap ws = ISSP_WS_SIS_Callout_Common.getWSInterface();
+		String xmlResponse = Test.isRunningTest()? TEST_RESPONSE: ws.updateAccount(requestString);
+
+		//prepare response
+		ResponseData response = new ResponseData(xmlResponse, requestString);
+		response.account = account;
+		
+		//insert log
+		ISSP_Web_Service_Log__c newLog = createLog(response);
+		insert newLog;
+
+		return newLog.Id;
+	}
+
 	private static String nvl(String str) {
 		return str==null?'':str;
 	}
