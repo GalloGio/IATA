@@ -188,7 +188,7 @@
         <label>Action Plan Effectiveness Assessment</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -1039,6 +1039,21 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Apparent_Cause__c</fullName>
+        <description>Field copied from Case object to store the Apparent Cause of the issue</description>
+        <externalId>false</externalId>
+        <label>Apparent Cause</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Apparent_Cause</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>Approval_process_selector__c</fullName>
         <externalId>false</externalId>
         <label>Approval process selector</label>
@@ -1062,6 +1077,408 @@
                     <label>OI Extension Process</label>
                 </value>
             </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Area_of_Concern__c</fullName>
+        <description>Field copied from Case object to store the Area of concern</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Only available when the Apparent Cause is “Technical Error” or “Third Party – No answer”</inlineHelpText>
+        <label>Area of Concern</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <controllingField>Apparent_Cause__c</controllingField>
+            <restricted>true</restricted>
+            <valueSetName>Area_of_Concern</valueSetName>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>1EF Application</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>ACCA</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>Accelya</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>ACLI</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>Admin User Account issue</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>Agent Experience Portal</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>Agentexp mobile app</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>AirportIS</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>AMS</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>Bi-Lateral Crimit processing</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>BSP Cash processing</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>BSPlink</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>Business rules execution</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>Business rules setup</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>Cancellation / Refund</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>CargoIS</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>CASSlink</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>Change Request</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>Check a Code webpage</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>Clearing Bank</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>Corporates definition / update</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>Crard Processing</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>Customer Portal</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>Customer Portal mobile app</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>Cybersource</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>Data Validation</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>DB India</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>DDD tool</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>Direct Data Solutions</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>Direct Debit processing</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>EasyPay</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>EasyPay processing</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>Edenred</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>Extranet</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>Fraud Prevention rules execution</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>Fraud Prevention rules setup</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>GFA</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>Harling Warehouse</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>How To?</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>IATA Implementation &amp; Service Fee Issues</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>IATA store</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>iBSPs</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>ICCS 2</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>ICCS tool</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>ICE</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>ICH4</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>IFAP</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>iiNET</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>ILDS</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>Integrated Connectivity and API</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>IRIS</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>Maestro</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>MDM</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>MediaCompetence</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>MSTS</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>Other</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>Participation TACT online</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>PaxIS</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>Payer Validation</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>RET Files Processing</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>RHC</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>Salesforce</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>SAP</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>Scheduler</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>SIS</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>Surcharge / Discount</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>System Performance and availability</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>System reports</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>System Security</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>Timaticweb</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>TIP Post Trans. Reporting</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>Treasury Dashboard</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>Upfront Validation API</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>WebHelp</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>Web Injection Payment Module</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>Webstar</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <valueName>Yardstick</valueName>
+            </valueSettings>
         </valueSet>
     </fields>
     <fields>
@@ -4443,7 +4860,7 @@
         <label>Impact</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -4509,7 +4926,7 @@
         <label>Improvement Target</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
         <valueSet>
@@ -4765,7 +5182,7 @@
         <label>Issue Categorization</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -4812,7 +5229,7 @@
         <label>Issue Sub Category</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -5604,7 +6021,7 @@
         <label>OI Category</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -5620,7 +6037,7 @@
         <length>255</length>
         <required>false</required>
         <trackFeedHistory>true</trackFeedHistory>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -7397,7 +7814,7 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
         <label>QRM Analysis Conclusions</label>
         <length>32768</length>
         <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
         <visibleLines>3</visibleLines>
@@ -7659,7 +8076,7 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
         <label>Root Cause (s)</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
         <valueSet>
@@ -12819,6 +13236,49 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Apparent_Cause__c</picklist>
+            <values>
+                <fullName>Customer Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Human Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA staff Delay %2F No Reply</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Internal Procedure</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lack of Communication</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Procedure Not Clear</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Process Not Followed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Technical Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Third party delayed %2F no answer</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Approval_process_selector__c</picklist>
             <values>
                 <fullName>OI Approval Process</fullName>
@@ -12826,6 +13286,317 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
             </values>
             <values>
                 <fullName>OI Extension Process</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Area_of_Concern__c</picklist>
+            <values>
+                <fullName>1EF Application</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ACCA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ACLI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AMS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Accelya</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Admin User Account issue</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agent Experience Portal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agentexp mobile app</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AirportIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BSP Cash processing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BSPlink</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bi-Lateral Crimit processing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Business rules execution</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Business rules setup</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASSlink</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cancellation %2F Refund</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CargoIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Change Request</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Check a Code webpage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Clearing Bank</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Corporates definition %2F update</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Crard Processing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer Portal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer Portal mobile app</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cybersource</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DB India</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DDD tool</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Data Validation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Direct Data Solutions</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Direct Debit processing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EasyPay</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EasyPay processing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Edenred</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Extranet</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fraud Prevention rules execution</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fraud Prevention rules setup</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GFA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Harling Warehouse</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>How To%3F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Implementation %26 Service Fee Issues</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA store</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICCS 2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICCS tool</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH4</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IFAP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ILDS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IRIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Integrated Connectivity and API</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MDM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MSTS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Maestro</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MediaCompetence</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Participation TACT online</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PaxIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Payer Validation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RET Files Processing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RHC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SAP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Salesforce</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Scheduler</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Surcharge %2F Discount</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>System Performance and availability</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>System Security</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>System reports</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIP Post Trans%2E Reporting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Timaticweb</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Treasury Dashboard</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Upfront Validation API</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Web Injection Payment Module</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WebHelp</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Webstar</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yardstick</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iBSPs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -28362,6 +29133,18 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
     <searchLayouts/>
     <sharingModel>ReadWrite</sharingModel>
     <startsWith>Vowel</startsWith>
+    <validationRules>
+        <fullName>Apparent_Cause_is_mandatory</fullName>
+        <active>true</active>
+        <description>This field is mandatory for RT CPS Checks and for certain values in the field Issue Subcategory</description>
+        <errorConditionFormula>AND(
+  RecordType.DeveloperName=&apos;CPS_Checks&apos;,
+  ISBLANK(TEXT(Apparent_Cause__c)),
+  REGEX(TEXT(Issue_Sub_Category__c),$CustomMetadata.GVR__mdt.Operational_Improvements_Subcat_Yes.Value__c)
+)</errorConditionFormula>
+        <errorDisplayField>Apparent_Cause__c</errorDisplayField>
+        <errorMessage>This field is mandatory for the selected Issue Subcategory</errorMessage>
+    </validationRules>
     <validationRules>
         <fullName>Currency_is_mandatory_if_amount_LC</fullName>
         <active>true</active>
