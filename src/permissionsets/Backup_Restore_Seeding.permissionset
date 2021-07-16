@@ -43298,6 +43298,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Quality__c.Region__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Quality__c.Regional_Cargo_Manager_Regional__c</field>
         <readable>true</readable>
     </fieldPermissions>

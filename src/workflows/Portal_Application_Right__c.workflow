@@ -257,25 +257,6 @@
         <template>ISS_Portal/Notify_Admin_of_app_requestVF_CNS</template>
     </alerts>
     <fieldUpdates>
-        <fullName>Application_Name_Text_Field_Update</fullName>
-        <field>Application_Name_Text_Field__c</field>
-        <formula>Portal_Application__r.Name</formula>
-        <name>Application Name Text Field Update</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Biller_Direct_Rights</fullName>
-        <field>RecordTypeId</field>
-        <lookupValue>Biller_Direct</lookupValue>
-        <lookupValueType>RecordType</lookupValueType>
-        <name>Biller Direct Rights</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>Grant_Access</fullName>
         <description>Change the app right status to &apos;Grant Access&apos;</description>
         <field>Right__c</field>
@@ -324,31 +305,6 @@
         <protected>false</protected>
         <targetObject>Contact__c</targetObject>
     </fieldUpdates>
-    <rules>
-        <fullName>Application Name Text Field Update</fullName>
-        <actions>
-            <name>Application_Name_Text_Field_Update</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <description>Updates application name text field to be used in roll-up fields.</description>
-        <formula>true</formula>
-        <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>Biller Direct Rights</fullName>
-        <actions>
-            <name>Biller_Direct_Rights</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Portal_Applications__c.Name</field>
-            <operation>equals</operation>
-            <value>Biller Direct</value>
-        </criteriaItems>
-        <triggerType>onAllChanges</triggerType>
-    </rules>
     <rules>
         <fullName>ISS Portal - SIS Portal service</fullName>
         <actions>
