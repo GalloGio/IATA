@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>Global Normal</label>
+    <label>Global Normal_Not diff.</label>
     <protected>false</protected>
     <values>
         <field>KPI_Reference_Field__c</field>
@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>Other_Conditions__c</field>
-        <value xsi:type="xsd:string">Priority NOT IN (&apos;Emergency&apos;)</value>
+        <value xsi:type="xsd:string">Account.HQ_Service_Model__c NOT IN (&apos;Differentiated&apos;)</value>
     </values>
     <values>
         <field>Reason__c</field>
