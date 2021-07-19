@@ -12,6 +12,6 @@
     </values>
     <values>
         <field>Value__c</field>
-        <value xsi:type="xsd:string">For security reasons, your user requires two-factor authentication to login. Check out why by clicking &lt;a href=&quot;https://www.google.com&quot; target=&quot;_blank&quot;&gt;here&lt;/a&gt;.</value>
+        <value xsi:type="xsd:string">For security reasons, your user requires two-factor authentication to login. Check out why by clicking &lt;a href=&quot;&quot; target=&quot;_blank&quot;&gt;here&lt;/a&gt;.</value>
     </values>
 </CustomMetadata>
