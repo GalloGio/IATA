@@ -37,7 +37,7 @@ public class TestDataFactory_Accounts {
 		return accountList;
 	}
 
-	public static List<Account> createAirlineAccounts(Integer numberOfRecords){
+	public static List<Account> createAirlineAccounts (Integer numberOfRecords){
 		//get airline HQ record type
 		Id recordTypeId = RecordTypeSingleton.getInstance().getRecordTypeId('Account', 'IATA_Airline');
 
