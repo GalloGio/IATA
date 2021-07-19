@@ -657,7 +657,7 @@ private class SIDRARnSIntegrationWS_Test {
 		country.ISO_Code__c = 'FR';
 		insert country;
 
-		Account account = TestDataFactory_Accounts.createAirlines(1)[0];
+		Account account = TestDataFactory_Accounts.createAirlineAccounts(1)[0];
 		account.IATA_ISO_Country__c = country.Id;
 		insert account;
 
