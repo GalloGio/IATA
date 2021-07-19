@@ -7,6 +7,8 @@ import { getRecord} from 'lightning/uiRecordApi';
 import { getObjectInfo } from 'lightning/uiObjectInfoApi';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
+import errorMsg from '@salesforce/label/c.General_Error_Message';
+
 //import Opportunity fields
 import OPP_OBJECT from '@salesforce/schema/Opportunity';
 import OPP_RECORDTYPE_FIELD from '@salesforce/schema/Opportunity.RecordTypeId';
@@ -151,7 +153,6 @@ export default class NewOpportunityAction extends LightningElement {
 	//when an error has occured
 	handleError(event){
 		this.loading = false;
-		var errorMsg = $A.get("$Label.c.General_Error_Message");
 		this.dispatchEvent(
 			new ShowToastEvent({
 				message: errorMsg,
