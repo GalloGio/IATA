@@ -1,8 +1,13 @@
+/**
+ * Controller for the quick action to create a new opportunity from a case
+ */
+
 import { LightningElement, api, track, wire} from 'lwc';
 import { getRecord} from 'lightning/uiRecordApi';
 import { getObjectInfo } from 'lightning/uiObjectInfoApi';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
+//import Opportunity fields
 import OPP_OBJECT from '@salesforce/schema/Opportunity';
 import OPP_RECORDTYPE_FIELD from '@salesforce/schema/Opportunity.RecordTypeId';
 import OPP_NAME_FIELD from '@salesforce/schema/Opportunity.Name';
@@ -16,6 +21,7 @@ import OPP_CLOSEDATE_FIELD from '@salesforce/schema/Opportunity.CloseDate';
 import OPP_LEADSOURCE_FIELD from '@salesforce/schema/Opportunity.LeadSource';
 import OPP_CONTACT_FIELD from '@salesforce/schema/Opportunity.Related_Contact__c';
 
+//import case fields
 import CASE_OBJECT from '@salesforce/schema/Case';
 import CASE_CONTACT_FIELD from '@salesforce/schema/Case.ContactId';
 import CASE_ACCOUNT_FIELD from '@salesforce/schema/Case.AccountId';
@@ -40,6 +46,7 @@ export default class NewOpportunityAction extends LightningElement {
 	buttonclicked = '';
 	loading = true;
 
+	//map opportunity fields to local variables
 	oppObject = OPP_OBJECT;
     oppRecType = OPP_RECORDTYPE_FIELD;
     oppName = OPP_NAME_FIELD;
@@ -53,7 +60,7 @@ export default class NewOpportunityAction extends LightningElement {
 	oppLeadSource = OPP_LEADSOURCE_FIELD;
 	oppContact = OPP_CONTACT_FIELD;
 
-
+	//get case record and fields and map it to the opportunity fields
 	@wire(getRecord, { recordId: '$recordId', fields: CASE_FIELDS})
 	wiredCase({ error, data }) {
 		if (data) {
@@ -66,6 +73,7 @@ export default class NewOpportunityAction extends LightningElement {
 		}
 	}
 
+	//get the available Opportunity Record Types and populate the picklist
 	@wire(getObjectInfo ,{objectApiName: OPP_OBJECT})
 	oppObjectInfo({ error, data }) {
 		if (data) {
@@ -94,18 +102,22 @@ export default class NewOpportunityAction extends LightningElement {
 		}
 	};
 
+	//when the recordType picklist has changed
 	handleRecordtypeChange(event) {
 		this.recordtypeValue = event.detail.value;
 	}
 
+	//when the close button was pressed
 	handleClose(){
 		this.closeModal();
 	}
 
+	//when the save and close button was pressed
 	handleSaveClose(){
 		this.buttonclicked = 'SaveClose';
 	}
 
+	//when the form is submitted
 	handleSubmit(event) {
 		event.preventDefault();
 		this.loading = true;
@@ -116,6 +128,7 @@ export default class NewOpportunityAction extends LightningElement {
 		this.template.querySelector('lightning-record-edit-form').submit(eventFields);
 	}
 
+	//when the record was successfully created
 	handleSuccess(event){
 		this.loading = false;
 		const oppId = event.detail.id;
@@ -135,16 +148,19 @@ export default class NewOpportunityAction extends LightningElement {
 		this.closeModal();
 	}
 
+	//when an error has occured
 	handleError(event){
 		this.loading = false;
+		var errorMsg = $A.get("$Label.c.General_Error_Message");
 		this.dispatchEvent(
 			new ShowToastEvent({
-				message: 'An error has occured, please contact your administrator',
+				message: errorMsg,
 				variant: 'error',
 			})
 		);
 	}
 
+	//to close the modal
 	closeModal() {
 		const closeModal = new CustomEvent('close');
 		this.dispatchEvent(closeModal);
