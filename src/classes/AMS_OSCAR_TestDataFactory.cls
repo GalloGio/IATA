@@ -57,6 +57,12 @@ public class AMS_OSCAR_TestDataFactory
 
 		insert customsettings;
 
+		AMS_Pax_Accreditation_Form__c stagingArea = new AMS_Pax_Accreditation_Form__c(SAAM_Case__c = oscarCase.Id, Account_Name__c=a1.Name, Short_Name__c=a1.Short_Name__c,IATA_ISO_State__c=stt.Id);
+		insert stagingArea;
+
+		OSCAR.AMS_Online_Accreditation__c = stagingArea.Id;
+		update OSCAR;
+
 	}
 
 	public static void createOSCARtestDataAccHier()

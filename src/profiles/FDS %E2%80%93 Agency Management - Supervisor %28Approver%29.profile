@@ -16376,6 +16376,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>AMS_OSCAR__c.STEP52__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>AMS_OSCAR__c.STEP5__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -19042,6 +19047,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>ANG_Agency_Risk_Event__c.ANG_isCashlessAgency__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ANG_Agency_Risk_Event__c.Applicable_for_re_activation__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -61445,10 +61455,6 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-Case Layout</layout>
-        <recordType>Case.ID_Card_Queries</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Case-Case Layout</layout>
         <recordType>Case.ISS_Portal_New_Case_RT</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -61562,10 +61568,6 @@
     <layoutAssignments>
         <layout>Case-IDFS Cases %28GLOBAL%29</layout>
         <recordType>Case.Cases_Global</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Case-IDFS Cases %28GLOBAL%29</layout>
-        <recordType>Case.Cases_Global_TEST</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-IDFS Cases %28GLOBAL%29</layout>
@@ -61693,10 +61695,6 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>CaseClose-ACCA Close Case - Extended</layout>
-        <recordType>Case.Cases_Global_TEST</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>CaseClose-ACCA Close Case - Extended</layout>
         <recordType>Case.Cases_IFG</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -61730,10 +61728,6 @@
     <layoutAssignments>
         <layout>CaseClose-ACCA Close Case - Extended</layout>
         <recordType>Case.ID_Card_Mass_Application</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>CaseClose-ACCA Close Case - Extended</layout>
-        <recordType>Case.ID_Card_Queries</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>CaseClose-ACCA Close Case - Extended</layout>
@@ -69084,11 +69078,6 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
-        <recordType>Case.Cases_Global_TEST</recordType>
-        <visible>false</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <default>false</default>
         <recordType>Case.Cases_IFG</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
@@ -69225,11 +69214,6 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Case.ID_Card_Mass_Application</recordType>
-        <visible>false</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <default>false</default>
-        <recordType>Case.ID_Card_Queries</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>

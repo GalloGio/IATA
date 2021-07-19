@@ -16369,6 +16369,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>AMS_OSCAR__c.STEP52__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>AMS_OSCAR__c.STEP5__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -19035,6 +19040,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>ANG_Agency_Risk_Event__c.ANG_isCashlessAgency__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>ANG_Agency_Risk_Event__c.Applicable_for_re_activation__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -31023,7 +31033,7 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Case.dgAI2__Case_Age__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -61374,6 +61384,10 @@
         <recordType>Case.Airline_Coding_Application</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Case-Airline Coding Application</layout>
+        <recordType>Case.FDS_ICCS_Product_Management</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Case-Airline Suspension Layout</layout>
         <recordType>Case.Airline_Suspension</recordType>
     </layoutAssignments>
@@ -61554,19 +61568,11 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-IDFS Cases %28GLOBAL%29</layout>
-        <recordType>Case.Cases_Global_TEST</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Case-IDFS Cases %28GLOBAL%29</layout>
         <recordType>Case.ExternalCasesIDFSglobal</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-IDFS Cases %28GLOBAL%29</layout>
         <recordType>Case.External_Cases_IDFS_Customer_Portal</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Case-IDFS Cases %28GLOBAL%29</layout>
-        <recordType>Case.ID_Card_Queries</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-IDFS Cases %28GLOBAL%29</layout>
@@ -61661,16 +61667,88 @@
         <recordType>Case.ACCA_Bug_Fix</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>CaseClose-ACCA Bug Fix Close</layout>
+        <recordType>Case.CNS_Collection_Process</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CaseClose-ACCA Bug Fix Close</layout>
+        <recordType>Case.Cases_IFG</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CaseClose-ACCA Bug Fix Close</layout>
+        <recordType>Case.DPC_Service_Request</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CaseClose-ACCA Bug Fix Close</layout>
+        <recordType>Case.FDS_ICCS_Membership_Management</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CaseClose-ACCA Bug Fix Close</layout>
+        <recordType>Case.GDPR_Request</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CaseClose-ACCA Bug Fix Close</layout>
+        <recordType>Case.IATA_Financial_Security_Monitoring</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CaseClose-ACCA Bug Fix Close</layout>
+        <recordType>Case.IATA_Service_Request</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CaseClose-ACCA Bug Fix Close</layout>
+        <recordType>Case.IATA_Training</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CaseClose-ACCA Bug Fix Close</layout>
+        <recordType>Case.ID_Card_Application</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CaseClose-ACCA Bug Fix Close</layout>
+        <recordType>Case.ID_Card_Mass_Application</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CaseClose-ACCA Bug Fix Close</layout>
+        <recordType>Case.ISS_Portal_New_Case_RT</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CaseClose-ACCA Bug Fix Close</layout>
+        <recordType>Case.ISS_Portal_PwC</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CaseClose-ACCA Bug Fix Close</layout>
+        <recordType>Case.ISS_Portal_PwC_Edit</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CaseClose-ACCA Bug Fix Close</layout>
+        <recordType>Case.ISS_Portal_PwC_for_IATA_user</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CaseClose-ACCA Bug Fix Close</layout>
+        <recordType>Case.Inter_DPCs</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CaseClose-ACCA Bug Fix Close</layout>
+        <recordType>Case.NDC_Management</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CaseClose-ACCA Bug Fix Close</layout>
+        <recordType>Case.OSCAR_Communication</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CaseClose-ACCA Bug Fix Close</layout>
+        <recordType>Case.SIDRA_Lite</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>CaseClose-ACCA Bug Fix Close</layout>
+        <recordType>Case.TIDS</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>CaseClose-ACCA Close Case - Extended</layout>
         <recordType>Case.CS_Process_IDFS_ISS</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>CaseClose-ACCA Close Case - Extended</layout>
         <recordType>Case.Case_Operational_Management_Head_Office</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>CaseClose-ACCA Close Case - Extended</layout>
-        <recordType>Case.Cases_Global_TEST</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>CaseClose-ACCA Close Case - Extended</layout>
@@ -68066,13 +68144,9 @@
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
-        <default>false</default>
-        <recordType>Case.Cases_Global</recordType>
-        <visible>false</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
         <default>true</default>
-        <recordType>Case.Cases_Global_TEST</recordType>
+        <personAccountDefault>true</personAccountDefault>
+        <recordType>Case.Cases_Global</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
@@ -68213,11 +68287,6 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Case.ID_Card_Mass_Application</recordType>
-        <visible>false</visible>
-    </recordTypeVisibilities>
-    <recordTypeVisibilities>
-        <default>false</default>
-        <recordType>Case.ID_Card_Queries</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>

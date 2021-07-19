@@ -745,6 +745,10 @@
         <name>AMS_OSCAR_STEP51</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS OSCAR STEP52 --></label>
+        <name>AMS_OSCAR_STEP52</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS OSCAR STEP6 --></label>
         <name>AMS_OSCAR_STEP6</name>
     </customLabels>
@@ -30549,6 +30553,10 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <name>RTS_TAR_Notification_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- Reactivate Risk Event warning message --></label>
+        <name>Reactivate_Risk_Event_warning_message</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Reader Main Content --></label>
         <name>Reader_Main_Content</name>
     </customLabels>
@@ -30627,6 +30635,10 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
     <customLabels>
         <label><!-- SIDRA_GE_Info --></label>
         <name>SIDRA_GE_Info</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- SIDRA Repayment Instalments not allowed for CASS --></label>
+        <name>SIDRA_Repayment_Instalments_not_allowed_for_CASS</name>
     </customLabels>
     <customLabels>
         <label><!-- SIS --></label>

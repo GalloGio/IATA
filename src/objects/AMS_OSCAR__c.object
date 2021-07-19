@@ -7863,6 +7863,32 @@ The values selected by the analyst will determine the reason why the application
         </valueSet>
     </fields>
     <fields>
+        <fullName>STEP52__c</fullName>
+        <description>Use in the Process to convert a GoGlobal hierarchy from GoLite to GoStandard hierarchies. Reactive Risk Event Inactive_cashless</description>
+        <externalId>false</externalId>
+        <label>STEP52</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <valueSetDefinition>
+                <sorted>false</sorted>
+                <value>
+                    <fullName>Passed</fullName>
+                    <default>false</default>
+                    <label>Passed</label>
+                </value>
+                <value>
+                    <fullName>Not Started</fullName>
+                    <default>true</default>
+                    <label>Not Started</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>STEP5__c</fullName>
         <externalId>false</externalId>
         <label>STEP5</label>
@@ -12529,6 +12555,13 @@ The values selected by the analyst will determine the reason why the application
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>STEP52__c</picklist>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>STEP5__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -16032,6 +16065,13 @@ The values selected by the analyst will determine the reason why the application
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>STEP52__c</picklist>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>STEP5__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -19496,6 +19536,13 @@ The values selected by the analyst will determine the reason why the application
                 <fullName>Not Applicable</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP52__c</picklist>
             <values>
                 <fullName>Passed</fullName>
                 <default>false</default>
@@ -23019,6 +23066,13 @@ The values selected by the analyst will determine the reason why the application
                 <fullName>Not Applicable</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP52__c</picklist>
             <values>
                 <fullName>Passed</fullName>
                 <default>false</default>
@@ -26776,6 +26830,13 @@ The values selected by the analyst will determine the reason why the application
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>STEP52__c</picklist>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>STEP5__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -30351,6 +30412,13 @@ The values selected by the analyst will determine the reason why the application
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>STEP52__c</picklist>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>STEP5__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -33864,6 +33932,13 @@ The values selected by the analyst will determine the reason why the application
                 <fullName>Not Applicable</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP52__c</picklist>
             <values>
                 <fullName>Passed</fullName>
                 <default>false</default>
@@ -37471,6 +37546,13 @@ The values selected by the analyst will determine the reason why the application
                 <fullName>Not Applicable</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP52__c</picklist>
             <values>
                 <fullName>Passed</fullName>
                 <default>false</default>
@@ -41124,6 +41206,13 @@ The values selected by the analyst will determine the reason why the application
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>STEP52__c</picklist>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>STEP5__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -44761,6 +44850,13 @@ The values selected by the analyst will determine the reason why the application
                 <fullName>Not Applicable</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP52__c</picklist>
             <values>
                 <fullName>Passed</fullName>
                 <default>false</default>
@@ -48494,6 +48590,13 @@ The values selected by the analyst will determine the reason why the application
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>STEP52__c</picklist>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>STEP5__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -52051,6 +52154,13 @@ The values selected by the analyst will determine the reason why the application
                 <fullName>Not Applicable</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP52__c</picklist>
             <values>
                 <fullName>Passed</fullName>
                 <default>false</default>
@@ -55752,6 +55862,13 @@ The values selected by the analyst will determine the reason why the application
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>STEP52__c</picklist>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>STEP5__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -59274,6 +59391,13 @@ The values selected by the analyst will determine the reason why the application
                 <fullName>Not Applicable</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP52__c</picklist>
             <values>
                 <fullName>Passed</fullName>
                 <default>false</default>
@@ -62891,6 +63015,13 @@ The values selected by the analyst will determine the reason why the application
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>STEP52__c</picklist>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>STEP5__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -65159,6 +65290,13 @@ The values selected by the analyst will determine the reason why the application
                 <fullName>Not Applicable</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP52__c</picklist>
             <values>
                 <fullName>Passed</fullName>
                 <default>false</default>
@@ -67438,6 +67576,13 @@ The values selected by the analyst will determine the reason why the application
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>STEP52__c</picklist>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>STEP5__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -69694,6 +69839,13 @@ The values selected by the analyst will determine the reason why the application
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>STEP52__c</picklist>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>STEP5__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -71848,6 +72000,13 @@ The values selected by the analyst will determine the reason why the application
                 <fullName>Not Applicable</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP52__c</picklist>
             <values>
                 <fullName>Passed</fullName>
                 <default>false</default>
@@ -74018,6 +74177,13 @@ The values selected by the analyst will determine the reason why the application
                 <fullName>Not Applicable</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP52__c</picklist>
             <values>
                 <fullName>Passed</fullName>
                 <default>false</default>
@@ -77487,6 +77653,13 @@ The values selected by the analyst will determine the reason why the application
                 <fullName>Not Applicable</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP52__c</picklist>
             <values>
                 <fullName>Passed</fullName>
                 <default>false</default>
@@ -81036,6 +81209,13 @@ The values selected by the analyst will determine the reason why the application
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>STEP52__c</picklist>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>STEP5__c</picklist>
             <values>
                 <fullName>Failed</fullName>
@@ -83148,6 +83328,13 @@ The values selected by the analyst will determine the reason why the application
                 <fullName>Not Applicable</fullName>
                 <default>false</default>
             </values>
+            <values>
+                <fullName>Passed</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>STEP52__c</picklist>
             <values>
                 <fullName>Passed</fullName>
                 <default>false</default>

@@ -126,4 +126,35 @@ private class SIDRARepaymentInstalmentsControllerTest {
 		Test.stopTest();
 	}
 
+	static testMethod void test_Controller_BlockForCASS() {
+		Case aCase = new Case();
+		acase.RecordTypeId = RecordTypeSingleton.getInstance().getRecordTypeID('Case', 'SIDRA');
+		acase.BSP_CASS__c = 'CASS';
+		acase.Subject = 'Test Case Subject';
+		acase.Late_Payment_Date__c = Date.today();
+		insert aCase;
+
+		ApexPages.StandardController stdc = new ApexPages.StandardController(aCase);
+		SIDRARepaymentInstalmentsController controller = new SIDRARepaymentInstalmentsController(stdc);
+
+		Test.startTest();
+		// initialize controller with no instalments
+		controller.AddNewPaymentInstalment();
+		list<Case_Detail__c> rpi = [SELECT Id FROM Case_Detail__c WHERE Case__c = :aCase.Id];
+		system.assertEquals(0, rpi.size());
+
+		// try to create instalments but must be blocked due to the CASS validation
+		controller.save();
+		rpi = [SELECT Id FROM Case_Detail__c WHERE Case__c = :aCase.Id];
+		system.assertEquals(0, rpi.size());
+
+		// try to delete an instalment but because there are no records nothing will happen
+		controller.rpiIndexToDelete = 0;
+		controller.DeleteRpi();
+		rpi = [SELECT Id FROM Case_Detail__c WHERE Case__c = :aCase.Id];
+		system.assertEquals(0, rpi.size());
+
+		Test.stopTest();
+	}
+
 }

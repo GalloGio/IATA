@@ -196,29 +196,10 @@
         <protected>false</protected>
     </fieldUpdates>
     <fieldUpdates>
-        <fullName>IFAP_Enable_portal_self_registration</fullName>
-        <field>CanAllowPortalSelfReg</field>
-        <literalValue>1</literalValue>
-        <name>IFAP   - Enable portal self-registration</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>ISS_Portal_deactivate_inactive_contact</fullName>
         <field>User_Portal_Status__c</field>
         <literalValue>Deactivated</literalValue>
         <name>ISS Portal deactivate inactive contact</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>IWCheckInvoiceWorksCustomers</fullName>
-        <description>Check the checkbox &apos;InvoiceWorks Customer&apos;</description>
-        <field>InvoiceWorks_Customer__c</field>
-        <literalValue>1</literalValue>
-        <name>IW - Check &apos;InvoiceWorks&apos; Customers</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>
@@ -229,15 +210,6 @@
         <field>SIS_Contact_Type__c</field>
         <literalValue>Super User</literalValue>
         <name>Make SIS Super User</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Marketing_Opt_out</fullName>
-        <field>Marketing_Communications_Opt_in__c</field>
-        <literalValue>0</literalValue>
-        <name>Marketing Opt out</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>
@@ -256,36 +228,6 @@
         <field>SendIDCardRenewalNotice__c</field>
         <literalValue>0</literalValue>
         <name>Reset SendIDCardRenewalNotice__c</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>STD_Opt_out</fullName>
-        <description>STD Opt out</description>
-        <field>HasOptedOutOfEmail</field>
-        <literalValue>1</literalValue>
-        <name>STD Opt out</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Literal</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Switch_to_standard_contact_RT</fullName>
-        <field>RecordTypeId</field>
-        <lookupValue>Standard_Contact</lookupValue>
-        <lookupValueType>RecordType</lookupValueType>
-        <name>Switch to standard contact RT</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
-        <protected>false</protected>
-        <reevaluateOnChange>true</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Update_ID_card_contact_checkbox</fullName>
-        <field>ID_Card_Holder__c</field>
-        <literalValue>1</literalValue>
-        <name>Update ID card contact checkbox</name>
         <notifyAssignee>false</notifyAssignee>
         <operation>Literal</operation>
         <protected>false</protected>
@@ -365,20 +307,6 @@
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>IFAP - Enable portal self-registration</fullName>
-        <actions>
-            <name>IFAP_Enable_portal_self_registration</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Contact.Financial_Assessment_Contact__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>ISSP - Change Owner to IATA System</fullName>
         <active>true</active>
         <criteriaItems>
@@ -452,20 +380,6 @@
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>ISSP switch to Standard Contact RT</fullName>
-        <actions>
-            <name>Switch_to_standard_contact_RT</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Contact.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>New contact for iss portal</value>
-        </criteriaItems>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
         <fullName>ISSP_BSPCASS Payment contact</fullName>
         <actions>
             <name>ISSP_BSPCASS_Payment_contact</name>
@@ -507,40 +421,6 @@
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>
-        <fullName>IW - Check %27InvoiceWorks%27 Customers</fullName>
-        <actions>
-            <name>IWCheckInvoiceWorksCustomers</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>User.ProfileId</field>
-            <operation>contains</operation>
-            <value>IATA IW</value>
-        </criteriaItems>
-        <description>This is used to automatically check the read-only field &apos;InvoiceWorks Customer&apos; when a Contact is created by one of the users with IW Profiles</description>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
-        <fullName>Key contact Opt out</fullName>
-        <actions>
-            <name>Marketing_Opt_out</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <actions>
-            <name>STD_Opt_out</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Contact.Account_Management_Key_Contact__c</field>
-            <operation>equals</operation>
-            <value>True</value>
-        </criteriaItems>
-        <description>Automatically Opt out all Key contact</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>Mark Invoicing contact as SIS Super User</fullName>
         <actions>
             <name>Make_SIS_Super_User</name>
@@ -554,19 +434,6 @@
         </criteriaItems>
         <description>Updates SIS Contact Type to super user to allow the web service for user creation in SIS to go smoothly.</description>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Update ID card contact checkbox</fullName>
-        <actions>
-            <name>Update_ID_card_contact_checkbox</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Contact.VER_Number__c</field>
-            <operation>notEqual</operation>
-        </criteriaItems>
-        <triggerType>onAllChanges</triggerType>
     </rules>
     <tasks>
         <fullName>ID_Card_Renewal_Notice</fullName>

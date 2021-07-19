@@ -1,12 +1,24 @@
 <apex:page standardController="Account" extensions="ImportantContactsController">
+<apex:includeScript value="/support/console/48.0/integration.js"/>
+<script type="text/javascript">
+function openRecord(recordId) {
+			if(!sforce.console.isInConsole()) {
+				window.top.location = '/'+recordId;
+			} else {
+				sforce.console.getEnclosingPrimaryTabId(function(result) {
+					sforce.console.openSubtab(result.id, '/'+recordId, true, '', null);
+				});				
+			}
+		}
+</script>
     <apex:pageMessages />
     
     <apex:form >
     <apex:pageBlock rendered="{!lstImportantContacts.size > 0}" id="childrenTable" >
         <apex:pageBlockTable value="{!lstImportantContacts}" var="contactVar" rendered="{!lstImportantContacts.size > 0}">              
             <apex:column >
-                <apex:facet name="header">Contact Name</apex:facet>
-                <apex:outputLink value="/{!contactVar.Id}" target="_top">{!contactVar.FirstName} {!contactVar.LastName}</apex:outputLink>
+                <apex:facet name="header">Contact Name</apex:facet>                
+                <apex:outputLink value="javascript:openRecord('{!contactVar.Id}')">{!contactVar.FirstName} {!contactVar.LastName}</apex:outputLink>
             </apex:column>
             <apex:column >
                 <apex:facet name="header">Title</apex:facet>

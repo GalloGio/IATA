@@ -570,4 +570,114 @@ private class AMS_OSCAR_Case_Detail_ControllerTest {
 
 	}
 
+	@isTest
+	public static void test_ProcessViewerReactiveRisckEvent()
+	{
+
+		Test.startTest();
+		Case testCase = [SELECT Id FROM Case WHERE Oscar__c IN (SELECT Id FROM AMS_OSCAR__c WHERE AMS_Online_Accreditation__c != '') LIMIT 1];
+
+		Id accRT = AMS_Utils.RECTYPE_IATAAGENCY;
+
+		IATA_ISO_Country__c country = new IATA_ISO_Country__c(
+			Name= 'Testland',
+			Region__c = 'Americas',
+			Iso_code__c = 'TL',
+			ISO_Code_Numeric__c=99,
+			BSP__c = 'Yes',
+			ANG_Enable_NewGen__c = true,
+			OSCAR_enabled__c = true
+		);
+
+		insert country;
+
+		Account accountToUpdateRiskEventCashAndCashless = new Account(
+				Name ='account To Update Risk Event Cash to Cashless',
+				Type = 'IATA Passenger Sales Agent',
+				Sector__c='Travel Agent',
+				Location_Type__c = AMS_Utils.HE,
+				Location_Class__c = 'P',
+				ANG_FA_Opt_out__c = false,
+				IATACode__c='12345600',
+				IATA_ISO_Country__c = country.Id,
+				BillingCountry='Iso Country Name Test',
+				ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH,
+				Status__c = AMS_Utils.ACC_S9_APPROVED,
+				ANG_HE_RiskHistoryAssessment__c = ANG_Risk_Helper.RISK_ASSESSMENT_PASSED,
+				Financial_Review_Result__c = ANG_Risk_Helper.FR_UNSATISFACTORY,
+				RecordTypeId = accRT
+			);
+		insert accountToUpdateRiskEventCashAndCashless;
+
+
+		AMS_Oscar__c oscar = [SELECT Id, Process__c, Account__c, ANG_Type_Of_Change__c FROM AMS_OSCAR__c WHERE AMS_Online_Accreditation__c != '' LIMIT 1];
+		
+		testCase.Oscar__c = oscar.id;
+		upsert testCase;
+		
+		IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Test', ISO_Code__c = 'TS');
+		insert isoc;
+
+		AMS_Pax_Accreditation_Form__c onlineAccreditation = new AMS_Pax_Accreditation_Form__c(IsGSA__c = 'No', CurrencyIsoCode = isoc.CurrencyIsoCode, SAAM_Case__c = testCase.Id, Account_Name__c = accountToUpdateRiskEventCashAndCashless.Name, ANG_Accreditation_Model_to_Change__c = AMS_Utils.ACCREDITATIONMODEL_CASH);
+		insert onlineAccreditation;
+		
+		oscar.RecordTypeId = AMS_Utils.RECTYPE_NGCHANGES;
+		oscar.Account__c = accountToUpdateRiskEventCashAndCashless.Id;
+		oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_ACCREDITATION_TYPE;
+		oscar.AMS_Online_Accreditation__c = onlineAccreditation.id;
+		upsert oscar;
+
+		AMS_Pax_Accreditation_Form__c onlineAccreditation2 = new AMS_Pax_Accreditation_Form__c(IsGSA__c = 'No', CurrencyIsoCode = isoc.CurrencyIsoCode, SAAM_Case__c = testCase.Id, Account_Name__c = accountToUpdateRiskEventCashAndCashless.Name, ANG_Accreditation_Model_to_Change__c = AMS_Utils.ACCREDITATIONMODEL_CASHLESS);
+		insert onlineAccreditation2;
+
+		AMS_OSCAR__c oscar2 = new AMS_OSCAR__c(AMS_Online_Accreditation__c = onlineAccreditation2.id, RecordTypeId = AMS_Utils.RECTYPE_NGCHANGES, Account__c = accountToUpdateRiskEventCashAndCashless.Id, ANG_Type_Of_Change__c = AMS_Utils.ANG_ACCREDITATION_TYPE);
+		insert oscar2;		
+
+		Agency_Applied_Change_code__c ch1 = new Agency_Applied_Change_code__c(OSCAR__c = oscar2.id, Account__c = accountToUpdateRiskEventCashAndCashless.Id, Change_Code__c = 'CHA');
+		insert ch1;
+
+		ANG_Agency_Risk_Calculation__c rule = new ANG_Agency_Risk_Calculation__c(
+			ANG_Order__c = 1,
+			ANG_Occurrence_Num__c = 1,
+			ANG_Adjusted__c = ANG_Risk_Helper.ADJ_NO,
+			ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH,
+			RecordTypeId = ANG_Risk_Helper.RECTYPE_RULES);
+		insert rule;
+		
+		ANG_Risk_Event_Type__c ret = new ANG_Risk_Event_Type__c(
+				Name = 'Risk Event Test',
+				ANG_Description__c = 'Risk Event Test',
+				ANG_Expiration__c = 24,
+				ANG_Risk_ID__c = 'testRiskId',
+				ANG_Agency_Risk_Calculation__c = rule.Id,
+				Limit_Cash_conditions__c = false
+			);
+		insert ret;
+
+		ANG_Agency_Risk_Event__c re1 = new ANG_Agency_Risk_Event__c(
+				ANG_AccountId__c = accountToUpdateRiskEventCashAndCashless.id,
+				ANG_Risk_Type__c = ret.id,
+				ANG_Issued_Date__c = System.today(),
+				Applicable_for_re_activation__c = true,
+				ANG_Expiration_Date__c = Date.today().addDays(-10),
+				ANG_Event_Status__c = ANG_Risk_Helper.STATUS_INACTIVE_CASHLESS 
+			);
+
+		insert re1;
+		
+		Test.stopTest();
+
+		Test.setCreatedDate(ch1.id, Date.today().addDays(-3));
+		Test.setCreatedDate(re1.id, Date.today().addDays(-10));
+
+
+		PageReference pg = Page.AMS_OSCAR_GeneralDetailsPage;
+		pg.getParameters().put('id', testCase.Id);
+		Test.setCurrentPage(pg);
+		
+
+		AMS_OSCAR_Case_Detail_Controller controller = new AMS_OSCAR_Case_Detail_Controller();
+		system.assertEquals(true, controller.isEventRiskToActivate);
+	}
+
 }
