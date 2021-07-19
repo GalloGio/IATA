@@ -8,6 +8,10 @@ import { getObjectInfo } from 'lightning/uiObjectInfoApi';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 import errorMsg from '@salesforce/label/c.General_Error_Message';
+import NEW_OPP_LABEL from '@salesforce/label/c.New_Opportunity';
+import CANCEL_LABEL from '@salesforce/label/c.General_Cancel';
+import SAVE_LABEL from '@salesforce/label/c.General_Save';
+import SAVE_CLOSE_LABEL from '@salesforce/label/c.SaveClose';
 
 //import Opportunity fields
 import OPP_OBJECT from '@salesforce/schema/Opportunity';
@@ -48,6 +52,11 @@ export default class NewOpportunityAction extends LightningElement {
 	buttonclicked = '';
 	loading = true;
 
+	newOppLabel = NEW_OPP_LABEL;
+	saveLabel = SAVE_LABEL;
+	saveCloseLabel = SAVE_CLOSE_LABEL;
+	cancelLabel = CANCEL_LABEL;
+	
 	//map opportunity fields to local variables
 	oppObject = OPP_OBJECT;
     oppRecType = OPP_RECORDTYPE_FIELD;

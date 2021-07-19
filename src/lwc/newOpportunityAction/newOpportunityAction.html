@@ -1,5 +1,5 @@
 <template>
-	<lightning-card title="New Opportunity" icon-name="action:new_opportunity" class="slds-size_2-of-2" if:false={loading}>
+	<lightning-card title={newOppLabel} icon-name="action:new_opportunity" class="slds-size_2-of-2" if:false={loading}>
 		<lightning-record-edit-form record-type-id={recordtypeValue} object-api-name={oppObject}
 			onsubmit={handleSubmit} onsuccess={handleSuccess} onerror={handleError}>
 			<lightning-messages></lightning-messages>
@@ -33,15 +33,15 @@
             <div class="slds-grid">
                 <ul class="slds-button-group-row slds-float_right">
                     <li class="slds-button-group-item">
-                        <lightning-button type="button" variant="brand-outline" label="Cancel" value="Cancel"
+                        <lightning-button type="button" variant="brand-outline" label={cancelLabel} value="Cancel"
                             onclick={handleClose}></lightning-button>
                     </li>
                     <li class="slds-button-group-item">
-                        <lightning-button id="saveclose" type="submit" variant="brand" label="Save & Close"
+                        <lightning-button id="saveclose" type="submit" variant="brand" label={saveCloseLabel}
                             onclick={handleSaveClose}></lightning-button>
                     </li>
                     <li class="slds-button-group-item">
-                        <lightning-button id="save" type="submit" variant="brand" label="Save"></lightning-button>
+                        <lightning-button id="save" type="submit" variant="brand" label={saveLabel}></lightning-button>
                     </li>
                 </ul>
             </div>
