@@ -1,12 +1,24 @@
 <apex:component access="global"  allowDML="true" rendered="true" controller="AirlineBranchController">
+<apex:includeScript value="/support/console/48.0/integration.js"/>
+<script type="text/javascript">
+function openRecord(recordId) {
+			if(!sforce.console.isInConsole()) {
+				window.top.location = '/'+recordId;
+			} else {
+				sforce.console.getEnclosingPrimaryTabId(function(result) {
+					sforce.console.openSubtab(result.id, '/'+recordId, true, '', null);
+				});				
+			}
+		}
+</script>
+
 <apex:attribute name="value" type="String"  description="The controller for the page." assignTo="{!parentAccountId}"/>
 <apex:componentBody >
     <apex:pageBlock rendered="{!servicesList.size > 0}">
         <apex:pageBlockTable value="{!servicesList}" var="service" id="theTable" rowClasses="odd,even" styleClass="tableClass" rendered="{!servicesList.size > 0}">              
             <apex:column >
                     <apex:facet name="header">Service</apex:facet>
-                  <!--  <apex:outputText value="{!service.Services_Rendered_Type__c}"/> -->
-                    <apex:outputLink value="/{!service.id}" target="_top">{!service.Services_Rendered_Type__c}</apex:outputLink>
+                    <apex:outputLink value="javascript:openRecord('{!service.Id}')">{!service.Services_Rendered_Type__c}</apex:outputLink>                    
             </apex:column>
             <apex:column >
                 <apex:facet name="header">ISO Country</apex:facet>
@@ -18,8 +30,7 @@
             </apex:column>            
             <apex:column >
                     <apex:facet name="header">Consumer</apex:facet>
-                    <!--<apex:outputText value="{!service.Services_Rendered_to_Airline__r.Name}"/>-->
-                    <apex:outputLink value="/{!service.Services_Rendered_to_Airline__c}" target="_top">{!service.Services_Rendered_to_Airline__r.Name}</apex:outputLink>
+                    <apex:outputLink value="javascript:openRecord('{!service.Services_Rendered_to_Airline__c}')">{!service.Services_Rendered_to_Airline__r.Name}</apex:outputLink>
             </apex:column>
             <apex:column >
                     <apex:facet name="header">Provider</apex:facet>
