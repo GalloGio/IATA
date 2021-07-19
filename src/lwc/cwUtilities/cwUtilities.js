@@ -698,3 +698,49 @@ export function reachedLimitWithAll(environmentVariables, array, count){
 	let potentialSelect = array ? array.reduce((acc, field) => field.selected ? ++acc : acc, 0) : 0;
 	return reachedLimit(environmentVariables, (count + potentialSelect));
 }
+
+// @description Get the result of the validation for each field for each equipment.
+// @return 		Array of objects.
+// 				Each object has two properties:
+// 				 - equipment: string that indicates the equipment in which the validation failed
+// 				 - fields: array of string wich contains every field in which the validation failed.
+export function requiredFieldsMissingResult(dataInput) {
+
+	let returnValue = [];
+	let moreInfoLinkField = "more_info_link__c";
+	let moreInfoDocumentField = "more_info_document__c";
+
+	dataInput.forEach((element) => {
+		let isValidationOk = true;
+		let fieldByEquipmentRequired = { equipment: "", fields: [] };
+
+		element.fields.forEach((field) => {
+			if (field.field != "equipment__c" && field.required.toString() === "true" && field.value === "") {
+				if (field.field === moreInfoLinkField || field.field === moreInfoDocumentField) {
+					let otherReqFieldName = field.field === moreInfoLinkField ? moreInfoDocumentField : moreInfoLinkField;
+					let otherReqField = element.fields.filter((row) => row.field === otherReqFieldName);
+					if (otherReqField.length > 0) {
+						isValidationOk = otherReqField[0].value != null && otherReqField[0].value != "" ? true : false;
+					} else {
+						isValidationOk = false;
+					}
+				} else {
+					isValidationOk = false;
+				}
+				fieldByEquipmentRequired.equipment = element.equipment_label || element.equipment;
+				fieldByEquipmentRequired.fields.push(field.label || field.field);
+			}
+		});
+		if (isValidationOk === false) {
+			returnValue.push(fieldByEquipmentRequired);
+		}
+	});
+	return returnValue;
+}
+
+// @description Get the result of the validation.
+// @return 		Boolean.
+// 				Indicates if the validation is ok or not. If one field of one equipment fail the validation, the result is false.
+export function areRequiredFieldsFilled(dataInput, srcDev) {
+	return requiredFieldsMissingResult(dataInput, srcDev).length === 0;
+}
