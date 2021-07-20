@@ -11,7 +11,7 @@ import getEnvironmentVariables from '@salesforce/apex/CW_Utilities.getEnvironmen
 
 
 export default class CwResultsPageContainer extends LightningElement {
-	recordsPerPage = 20;
+	@track recordsPerPage = 20;
 	label = labels.labels();
 	@track selectedPage = 1;
 

@@ -1,3 +1,7 @@
+const ACCOUNT_RT_OPERATOR = 'operator';
+const ACCOUNT_RT_AIRLINE = 'iata_airline';
+const STATION_RT_AIRLINE = 'airline';
+
 export function removeFromArray(array, value) {
 	return array.filter(function (element) {
 		return element !== value;
@@ -439,16 +443,26 @@ export function getIataSrc(showIcon, recordTypeDevName, location, locationClass,
 	return src;
 }
 
-export function getIataTooltip(showIcon, recordTypeDevName, location, locationClass, label) {
+export function getIataTooltip(showIcon, recordTypeDevName, location, locationClass, label, accountRecordType) {
 	let tooltip = "";
+
+	if (showIcon !== true) {
+		return tooltip;
+	}
 
 	let freightForwarderValid = recordTypeDevName === "Freight_Forwarder" && locationClass && locationClass.toLowerCase() === "c";
 	let locationIsUS = location && location.location && location.location.Country === "United States";
 
 	if (freightForwarderValid && locationIsUS) {
 		tooltip = label.icg_cns_endorsed_agent;
-	} else if (freightForwarderValid || showIcon) {
+	} else if (freightForwarderValid) {
 		tooltip = label.icg_accredited_agent;
+	}
+	else if (recordTypeDevName.toLowerCase() === STATION_RT_AIRLINE && accountRecordType.toLowerCase() === ACCOUNT_RT_OPERATOR) {
+		tooltip = label.icg_accredited_agent;
+	}
+	else if (recordTypeDevName.toLowerCase() === STATION_RT_AIRLINE && accountRecordType.toLowerCase() === ACCOUNT_RT_AIRLINE) {
+		tooltip = label.icg_accredited_airline;
 	}
 
 	return tooltip;

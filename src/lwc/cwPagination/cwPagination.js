@@ -1,18 +1,43 @@
 import { LightningElement, api, track } from 'lwc';
 
 export default class CwPagination extends LightningElement {
+    @api recordsPerPage;
+    totalPagesToShow = 20;
     @track pagNumArray = [];
+    @api totalPages;
     @api 
-    get pageNumbers(){
+     get pageNumbers(){
         return this.pagNumArray;
     }
-    set pageNumbers(value){
-        this.pagNumArray = [];
-        let val = Number(value);
-        for (let i = 1; i <= val; i++){
-            this.pagNumArray.push(i);
+
+    bindPages(){
+        if (this.totalPages && this.selectedPage){
+            this.pagNumArray = [];
+            let startValue = this.selectedPage;
+    
+            let countPage = 0;
+            for (let i = startValue; i <= this.totalPages; i++){
+                if (countPage < this.totalPagesToShow){
+                    this.pagNumArray.push(i);
+                    countPage++;
+                }
+            }
+
+            while(countPage < this.totalPagesToShow){
+                startValue--;
+                if(startValue > 0){
+                    this.pagNumArray.push(startValue);
+                    countPage++;
+                }
+                else{
+                    countPage = this.totalPagesToShow;
+                }
+            }
+
+            this.pagNumArray = this.pagNumArray.sort();
         }
     }
+
     @track _selectedPage;
     @api 
     get selectedPage(){
@@ -24,6 +49,14 @@ export default class CwPagination extends LightningElement {
 
     @api isLoading;
     initialized = false;
+
+    get showFirstPage(){
+        return (this.totalPages > 1) ? this.pagNumArray.indexOf(1) == -1 : false;
+    }
+
+	get showLastPage(){
+        return (this.totalPages > 1) ? this.pagNumArray.indexOf(this.totalPages) == -1 : false;
+	}
 
     get showPrevious(){
         return this.selectedPage && this.selectedPage > 1;
@@ -45,12 +78,21 @@ export default class CwPagination extends LightningElement {
         let page = event.currentTarget.dataset.page;
         this.dispatchEvent( new CustomEvent('gotopage',{detail: page}));
     }
+    fisrt(event){
+        this.dispatchEvent( new CustomEvent('gotopage',{detail: 1}));
+    }
+    last(event){
+        this.dispatchEvent( new CustomEvent('gotopage',{detail: this.totalPages}));
+    }
 
     renderedCallback(){
         if(!this.initialized){
-            this.alignSelectedPage(this.selectedPage);
+            this.bindPages();
             this.initialized = true;
         }
+        
+        if (this.selectedPage)
+            this.alignSelectedPage(this.selectedPage);
     }
     alignSelectedPage(value){
         this.template.querySelectorAll('.pagenumber').forEach(elem => {

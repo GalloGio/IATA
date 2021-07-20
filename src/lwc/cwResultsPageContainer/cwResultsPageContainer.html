@@ -103,7 +103,7 @@
                 </div>               
                     <c-cw-search-result-wrapper lst-results={results} is-detailed={isDetailed} map-data={mapData} onfilterctype={setCompanyTypeFilter} is-loading={isLoading} ongotologin={showJoinNowPopUp} isbeta={isBetaOrg}></c-cw-search-result-wrapper>
                 <template if:true={notLoadingAndHasValues}>
-                    <div class="text-center mb-3"><c-cw-pagination page-numbers={numberOfPages} selected-page={selectedPage} onnext={nextpage} onprevious={previouspage} ongotopage={gotopage} is-loading={isLoading}></c-cw-pagination></div>
+                    <div class="text-center mb-3"><c-cw-pagination total-pages={numberOfPages} selected-page={selectedPage} onnext={nextpage} onprevious={previouspage} ongotopage={gotopage} is-loading={isLoading}  records-per-page={recordsPerPage}></c-cw-pagination></div>
                 </template>                
             </div>
             
