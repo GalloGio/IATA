@@ -9064,6 +9064,15 @@ The values selected by the analyst will determine the reason why the application
         </sharedTo>
     </listViews>
     <listViews>
+        <fullName>Cases_GDC_EDMC_AMS_OSCAR</fullName>
+        <filterScope>Queue</filterScope>
+        <label>Cases - GDC EDMC</label>
+        <queue>Cases_GDC_EDMC</queue>
+        <sharedTo>
+            <allInternalUsers></allInternalUsers>
+        </sharedTo>
+    </listViews>
+    <listViews>
         <fullName>China_N_Asia_OSCAR_AMS_OSCAR</fullName>
         <filterScope>Queue</filterScope>
         <label>China &amp; N. Asia [OSCAR]</label>
