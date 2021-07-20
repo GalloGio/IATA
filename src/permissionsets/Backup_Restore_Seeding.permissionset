@@ -36398,7 +36398,42 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>LocalGovernance_Meeting__c.Legal_Remarks_Agenda__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>LocalGovernance_Meeting__c.Legal_Remarks_Minutes__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>LocalGovernance_Meeting__c.Local_Group_Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>LocalGovernance_Meeting__c.Meeting_Responsible__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>LocalGovernance_Meeting__c.Other__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>LocalGovernance_Meeting__c.Proposal_to_Conference__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>LocalGovernance_Meeting__c.Reason_for_Rejection_Agenda__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>LocalGovernance_Meeting__c.Reason_for_Rejection_Minutes__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
