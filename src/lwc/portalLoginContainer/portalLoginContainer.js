@@ -11,6 +11,13 @@ import csp_Footer_Legal_URL                   from '@salesforce/label/c.csp_Foot
 export default class PortalLoginContainer extends LightningElement {
 
     @api preventrefresh = false;
+    @api handleTranslations(translations){
+        this._translations = translations;
+        let welcomePanel = this.template.querySelector('c-portal-welcome-panel');
+        welcomePanel.handleTranslations(translations);
+    }
+
+    _translations;
 
     _labels = {
         ISSP_Registration_Privacy,
@@ -19,7 +26,7 @@ export default class PortalLoginContainer extends LightningElement {
         csp_Footer_Legal_URL
     }
     get labels() {
-        return this._labels;
+        return this._translations ? this._translations : this._labels;
     }
     set labels(value) {
         this._labels = value;

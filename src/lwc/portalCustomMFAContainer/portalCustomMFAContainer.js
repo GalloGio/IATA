@@ -28,6 +28,8 @@ export default class PortalCustomMFAContainer extends LightningElement {
 		var container = this;
 		labelUtil.getTranslations().then((result) => {
 			container.labels = result;
+			let loginContainer = this.template.querySelector('c-portal-login-container');
+			loginContainer.handleTranslations(this.translations);
 		});
 	}
 
