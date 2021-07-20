@@ -76,7 +76,7 @@
             if (sforce.console.isInConsole()) {
                 ServiceConsoleIntegration(redirectUrl);
             } else {
-                window.top.location=redirectUrl;
+                window.open(redirectUrl, '_blank');
             }
             //return false;
         }

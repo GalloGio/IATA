@@ -2668,6 +2668,134 @@ ASD is an innovative, internet-based system, which facilitates these interaction
         <value>Account:</value>
     </labels>
     <labels>
+        <fullName>AccountCTI_Account_ADetails</fullName>
+        <categories>AccountDashboardCTI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountCTI - Account - ADetails</shortDescription>
+        <value>Account Details</value>
+    </labels>
+    <labels>
+        <fullName>AccountCTI_Account_ATeam</fullName>
+        <categories>AccountDashboardCTI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountCTI - Account - ATeam</shortDescription>
+        <value>Account Team</value>
+    </labels>
+    <labels>
+        <fullName>AccountCTI_Account_Agency</fullName>
+        <categories>AccountDashboardCTI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountCTI - Account - Agency</shortDescription>
+        <value>Agency Loc. Type</value>
+    </labels>
+    <labels>
+        <fullName>AccountCTI_Account_Category</fullName>
+        <categories>AccountDashboardCTI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountCTI - Account - Category</shortDescription>
+        <value>Category</value>
+    </labels>
+    <labels>
+        <fullName>AccountCTI_Account_Ecomm</fullName>
+        <categories>AccountDashboardCTI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountCTI - Account - Ecomm</shortDescription>
+        <value>Ecomm C. type</value>
+    </labels>
+    <labels>
+        <fullName>AccountCTI_Account_IATACode</fullName>
+        <categories>AccountDashboardCTI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountCTI - Account - IATACode</shortDescription>
+        <value>IATA Code</value>
+    </labels>
+    <labels>
+        <fullName>AccountCTI_Account_Overall</fullName>
+        <categories>AccountDashboardCTI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountCTI - Account - Overall</shortDescription>
+        <value>Overall sat. (YTD)</value>
+    </labels>
+    <labels>
+        <fullName>AccountCTI_Account_Sector</fullName>
+        <categories>AccountDashboardCTI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountCTI - Account - Sector</shortDescription>
+        <value>Sector</value>
+    </labels>
+    <labels>
+        <fullName>AccountCTI_Account_Segmentation</fullName>
+        <categories>AccountDashboardCTI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountCTI - Account - Segmentation</shortDescription>
+        <value>Segmentation</value>
+    </labels>
+    <labels>
+        <fullName>AccountCTI_Account_ServiceModel</fullName>
+        <categories>AccountDashboardCTI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountCTI - Account - ServiceModel</shortDescription>
+        <value>Service Model</value>
+    </labels>
+    <labels>
+        <fullName>AccountCTI_Account_Status</fullName>
+        <categories>AccountDashboardCTI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountCTI - Account - Status</shortDescription>
+        <value>Status</value>
+    </labels>
+    <labels>
+        <fullName>AccountCTI_Cases_Interactions</fullName>
+        <categories>AccountDashboardCTI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountCTI - Cases - Interactions</shortDescription>
+        <value>Contact/Customer Interactions</value>
+    </labels>
+    <labels>
+        <fullName>AccountCTI_Contact_AllContacts</fullName>
+        <categories>AccountDashboardCTI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountCTI - Contact - AllContacts</shortDescription>
+        <value>All Contacts</value>
+    </labels>
+    <labels>
+        <fullName>AccountCTI_Contact_ChooseContact</fullName>
+        <categories>AccountDashboardCTI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountCTI - Contact - Choose Contact</shortDescription>
+        <value>Choose the correct Contact before to create the Case</value>
+    </labels>
+    <labels>
+        <fullName>AccountCTI_Contact_CreateCase</fullName>
+        <categories>AccountDashboardCTI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountCTI - Contact - Create Case</shortDescription>
+        <value>Create Case</value>
+    </labels>
+    <labels>
+        <fullName>AccountCTI_Contact_PortalServices</fullName>
+        <categories>AccountDashboardCTI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountCTI_Contact PortalServices</shortDescription>
+        <value>Portal Services</value>
+    </labels>
+    <labels>
         <fullName>AccountContextActivationEmailBody</fullName>
         <categories>Account Context Activation</categories>
         <language>en_US</language>
