@@ -127,7 +127,8 @@ global class SIDRARnSIntegrationWS {
 								// find related airline account, only for SEDA cases
 								// incoming caseType is SIDRA but if description contains "Follow up Settlement" it will be changed to SEDA
 								if (CaseType=='SIDRA' && description.contains('Follow up Settlement')) {
-									theCase.accountId = findRelatedAccount(IATACode, IATACountry);
+									String countryIsoCode = Subject.left(2);
+									theCase.accountId = findRelatedAccount(IATACode, countryIsoCode);
 								}
 
 								// Insert the case in the database
@@ -168,15 +169,15 @@ global class SIDRARnSIntegrationWS {
 	}
 
 	/**
-	 * Find an account based on the input site
+	 * Find the related account which is an airline with the input IATA code and for a specific country
 	 */
-	private static Id findRelatedAccount(String IATACode, String countryName) {
+	private static Id findRelatedAccount(String IATACode, String countryIsoCode) {
 		list<Account> listAccount = [
 			SELECT Id
 			FROM Account
 			WHERE RecordType.DeveloperName IN ('IATA_Airline','IATA_Airline_BR')
 			AND IATACode__c = :IATACode
-			AND IATA_Iso_Country_Name__c = :countryName];
+			AND Country_ISO_Code__c = :countryIsoCode];
 
 		if (listAccount.size()==1) {
 			return listAccount[0].Id;
