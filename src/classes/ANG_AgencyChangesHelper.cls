@@ -687,6 +687,7 @@ public with sharing class ANG_AgencyChangesHelper {
 			Set<Id> allAccountsInvolvedSet = fetchAccountIdsToBeProcessed(oscar.Id);
 			allAccountsInvolvedSet.add(oscar.New_parent__c);
 			changesContainer.accountsMap = getAccounts(allAccountsInvolvedSet);
+			String iataCodeNewParent = '';
 
 			System.debug(LoggingLevel.FINE, '____ [cls ANG_AgencyChangesHelper - handleConversionToStandard] accountsMap: ' + changesContainer.accountsMap);
 
@@ -697,6 +698,7 @@ public with sharing class ANG_AgencyChangesHelper {
 					acct.Location_Type__c = AMS_Utils.HE;
 					acct.Top_Parent__c = null;
 					acct.ParentId = null;
+					iataCodeNewParent = acct.IataCode__c;
 					// If there is an existing RHC record removes it
 					List<ANG_RHC_Information__c> rhcLst = (List<ANG_RHC_Information__c>) acct.getSObjects('RHC_Informations__r');
 
@@ -732,7 +734,47 @@ public with sharing class ANG_AgencyChangesHelper {
 				if(allAccountsInvolvedSetToProcessChangeCodeGeneration.contains(acct.Id)){
 					pushAccountCurrentChangeCodes(acct, accountsCurrentChangeCode);
 				}
+			}
+			
+			if(containsChange(New List<String>{AMS_Utils.ANG_HIERARCHY},oscar.ANG_Type_Of_Change__c)){
 
+				List<AMS_Agencies_relationhip__c> agenciesRelationhip = [SELECT Id
+																		FROM AMS_Agencies_relationhip__c
+																		WHERE Child_Account__c IN :allAccountsInvolvedSet ];
+				delete agenciesRelationhip;
+
+				if(allAccountsInvolvedSet.size() != 1){
+
+					AMS_Agencies_Hierarchy__c newHierarchy = new AMS_Agencies_Hierarchy__c();
+					List<AMS_Agencies_Hierarchy__c> newParentHasHierarchy = new List<AMS_Agencies_Hierarchy__c>();
+	
+					newParentHasHierarchy = [SELECT Id 
+												FROM  AMS_Agencies_Hierarchy__c 
+												WHERE Main_Account__c =: oscar.New_parent__c];
+	
+					if(newParentHasHierarchy.size() > 0){
+						newHierarchy = newParentHasHierarchy[0];
+					}else{						
+						newHierarchy.Hierarchy_Name__c = iataCodeNewParent+' Hierarchy';
+						newHierarchy.Main_Account__c = oscar.New_parent__c;
+						insert newHierarchy;
+					}					
+					
+					List<AMS_Agencies_relationhip__c> agenciesRelationhipToAdd = new List<AMS_Agencies_relationhip__c>();
+					for(Id acct : allAccountsInvolvedSetToProcessChangeCodeGeneration){
+						if(acct != oscar.New_parent__c){
+							AMS_Agencies_relationhip__c rel = new AMS_Agencies_relationhip__c(
+								Is_Newgen_Relation__c = true,
+								Child_Account__c = acct,
+								Parent_Account__c = oscar.New_parent__c,
+								Hierarchy__c = newHierarchy.Id
+							);
+		
+							agenciesRelationhipToAdd.add(rel);
+						}
+					}
+					insert agenciesRelationhipToAdd;
+				}
 			}
 
 			changesContainer = processChangeCodeGeneration(oscar, typeOfConversion, AMS_Utils.SANITYCHECK, allAccountsInvolvedSetToProcessChangeCodeGeneration, accountsCurrentChangeCode);
@@ -743,6 +785,8 @@ public with sharing class ANG_AgencyChangesHelper {
 			if(containsChange(New List<String>{AMS_Utils.ANG_ACCREDITATION_TYPE},oscar.ANG_Type_Of_Change__c)){
 				changesContainer = applyChangeOfAccreditationType(oscar, allAccountsInvolvedSet, changesContainer);
 			}
+
+			
 		}else if(oscar.RPM_Approval__c == AMS_Utils.AUTH_APPROVAL && oldOSCAR.RPM_Approval__c != AMS_Utils.AUTH_APPROVAL){
 
 			System.debug(LoggingLevel.FINE, '____ [cls ANG_AgencyChangesHelper - handleConversionToStandard] Approval step passed');
@@ -2194,7 +2238,11 @@ public with sharing class ANG_AgencyChangesHelper {
 			ANG_RHCHelper.deactivateRHCInfo(new Set<Id>{oscarToProcess.Account__c});
 		}
 		if(oscarOnlineAccreditation.ANG_Accreditation_Type__c ==  'Cash'){
-			toUpsert = performCashTransformation(accountsAffected);
+			if(oscarToProcess.Process__c == AMS_Utils.ANGPARTCONVERTMCTOST || oscarToProcess.Process__c == AMS_Utils.ANGPARTCONVERTMCTOLT){
+				toUpsert = performCashTransformationFoPArtConvertion(accountsAffected);
+			}else{
+				toUpsert = performCashTransformation(accountsAffected);
+			}
 			if(toReturn.accountsMap.get(oscarToProcess.Account__c)!=null)
 				ANG_RHCHelper.createRHCInfo(new List<Account>{toReturn.accountsMap.get(oscarToProcess.Account__c)}, false);
 		}
@@ -2257,6 +2305,53 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		return toUpsert;
 
+	}
+
+	public static List<Agency_Authorization__c> performCashTransformationFoPArtConvertion(Set<Id> accountsAffected){
+
+		List<Agency_Authorization__c> toUpsert = new List<Agency_Authorization__c>();
+
+		List<Account> accs = [SELECT ID,Country_ISO_Code__c, Location_Class__c, Sector__c , Category__c, (SELECT Id ,Account__c, Status__c FROM Agency_Authorizations__r
+																WHERE ANG_FormOfPayment_ID__c = 'CA' and RecordType.DeveloperName = 'FormOfPayment')
+							FROM ACCOUNT WHERE ID IN :accountsAffected];
+
+		Map<Id,List<Agency_Authorization__c>> agencyAuthorizationsByAccountActive = new Map<Id,List<Agency_Authorization__c>>();
+		Map<Id,List<Agency_Authorization__c>> agencyAuthorizationsByAccountNotActive = new Map<Id,List<Agency_Authorization__c>>();
+
+		Id formOfPaymentRT = RecordTypeSingleton.getInstance().getRecordTypeId('Agency_Authorization__c','FormOfPayment');
+		
+		for(Account a: accs){
+			for(Agency_Authorization__c aa: a.Agency_Authorizations__r){
+				if(aa.Status__c == 'Active'){
+					if(agencyAuthorizationsByAccountActive.containsKey(aa.Account__c)){   
+						agencyAuthorizationsByAccountActive.get(aa.Account__c).add(aa);
+					}else{   
+						agencyAuthorizationsByAccountActive.put(aa.Account__c,new List<Agency_Authorization__c>{aa}); 
+					}
+				}else{
+					if(agencyAuthorizationsByAccountNotActive.containsKey(aa.Account__c)){   
+						agencyAuthorizationsByAccountNotActive.get(aa.Account__c).add(aa);
+					}else{   
+						agencyAuthorizationsByAccountNotActive.put(aa.Account__c,new List<Agency_Authorization__c>{aa}); 
+					}
+				}
+			}
+		}
+
+		for(Account a: accs){
+			if(agencyAuthorizationsByAccountActive.get(a.id).isEmpty() && agencyAuthorizationsByAccountNotActive.get(a.id).isEmpty())
+				toUpsert.add(new Agency_Authorization__c(Account__c = a.id, ANG_FormOfPayment_ID__c = 'CA',
+					Status__c = AMS_Utils.setChinaCountries.contains(a.Country_ISO_Code__c) ? 'Authorized' : 'Active', RecordTypeId = FormOfPaymentRT));
+			else{
+				for(Agency_Authorization__c aa : a.Agency_Authorizations__r){
+					if(aa.Status__c != 'Active'){
+						aa.Status__c = AMS_Utils.setChinaCountries.contains(a.Country_ISO_Code__c) ? 'Authorized' : 'Active';
+						toUpsert.add(aa);
+					}
+				}
+			}
+		}
+		return toUpsert;
 	}
 
 	public static List<Agency_Authorization__c> performCashTransformation(Set<Id> accountsAffected){

@@ -172,12 +172,17 @@
 					<apex:outputField value="{!oscar.ANG_Type_Of_Change__c}" rendered="{!isChinaConversion}" />
 				</apex:pageBlockSection>
 				<apex:pageBlockSection id="dependentFields">
-					<apex:inputField id="newParentField" value="{!oscar.New_parent__c}" rendered="{!showTargetAgency}" onchange="checkCleanApexMessages()">
+					<apex:inputField id="newParentField2" value="{!oscar.New_parent__c}" rendered="{!AND(showTargetAgency, !isPARTCashOrCashless)}" onchange="checkCleanApexMessages()">
+						<apex:actionSupport event="onchange" onsubmit="beforeSubmitNewParent(this); return;" status="blockEditing" />
+					</apex:inputField>
+					<apex:inputField id="newParentField" value="{!oscar.New_parent__c}" rendered="{!AND(showTargetAgency, isPARTCashOrCashless)}" onchange="checkCleanApexMessages()">
 						<script type="text/javascript">
 								disableAndEnableNewParent({!newParentSelected});
 						</script>  
 						<apex:actionSupport event="onchange" onsubmit="beforeSubmitNewParent(this); return;" status="blockEditing" />
 					</apex:inputField>
+					<apex:outputText rendered="{!AND(showTargetAgency, isPARTCashOrCashless)}">{!IATACodeToShowOnSplitAccountMultiCountry}</apex:outputText>
+					
 				</apex:pageBlockSection>
 				
 				<apex:actionFunction name="fetchParent" status="blockEditing" rerender="notes, BSPTable, BSPList" action="{!FetchNewParent}"/>

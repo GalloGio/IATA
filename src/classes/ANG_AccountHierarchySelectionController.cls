@@ -5,6 +5,9 @@ public with sharing class ANG_AccountHierarchySelectionController {
 	public Boolean newParentSelected {get;set;} 
 	public ID countryIDToShowOnSplitAccountMultiCountry {get;set;} 
 	public String countryNameToShowOnSplitAccountMultiCountry {get;set;} 
+	public String IATACodeToShowOnSplitAccountMultiCountry {get;set;} 
+	public Boolean isPARTCashOrCashless {get;set;}
+	public List<String> IATAcodesSelecteds {get;set;}
 
 	public List<Account> results{get;set;} // search results
 	public Map<Id, List<HierarchyItem>> hierarchyItemByCountry {get;set;} 
@@ -713,7 +716,10 @@ public with sharing class ANG_AccountHierarchySelectionController {
 	// ***********************************
 	public ANG_AccountHierarchySelectionController(ApexPages.StandardController stdController){
 		showErrorMessageSplitAccountMultiCountry = false;
+		isPARTCashOrCashless = false;
+		IATACodeToShowOnSplitAccountMultiCountry = '';
 		newParentSelected = false;
+		IATAcodesSelecteds = new List<String>();
 		if(!Test.isRunningTest()) stdController.addFields(new List<String>(oscarFields));
 
 		oscarId = stdController.getId();
@@ -725,7 +731,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		Map<Id, List<HierarchyItem>> hierarchyItemByCountry = new Map<Id, List<HierarchyItem>>();
 		this.isMulticountry = oscar.Account__r.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_MULTICOUNTRY;
 		this.isCashOrCashless = (oscar.Account__r.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASH || oscar.Account__r.ANG_Accreditation_Model__c == AMS_Utils.ACCREDITATIONMODEL_CASHLESS);
-
+		this.isPARTCashOrCashless = oscar.Process__c == AMS_Utils.ANGPARTCONVERTMCTOLT || oscar.Process__c == AMS_Utils.ANGPARTCONVERTMCTOST;
 		if(String.isNotBlank(oscar.HE_per_BSP_Mapping__c)){
 			Map<Id, Id> savedHEPerBSP = (Map<Id, Id>) JSON.deserialize(oscar.HE_per_BSP_Mapping__c, Map<Id, Id>.class);
 			for(Id bspId : savedHEPerBsp.keySet()){
@@ -1006,12 +1012,17 @@ public with sharing class ANG_AccountHierarchySelectionController {
 
 	public void chechSplitOfAccountHE(){
 		Integer countManyAE = 0; 
+		String IATAcodeToShow = '';
 		Id newParentAe = null;
+		newParentSelected = false;
+		IATAcodesSelecteds = new List<String>();
+		IATACodeToShowOnSplitAccountMultiCountry = '';
 		if(oscar.Process__c == AMS_Utils.ANGPARTCONVERTMCTOLT || oscar.Process__c == AMS_Utils.ANGPARTCONVERTMCTOST){
 			List<HierarchyItem> hierarchyItemsSorted = hierarchy.values().clone();
 			hierarchyItemsSorted.sort();
 			for (HierarchyItem i : hierarchyItemsSorted){
 				if(i.selected == true && i.acc.Location_Type__c == 'HE'){
+					IATAcodesSelecteds.add(i.acc.IATACode__c);
 					if(hierarchyItemByCountry.get(i.acc.IATA_ISO_Country__c) != null){
 						Boolean moreThanOne = false;
 						for(HierarchyItem hi : hierarchyItemByCountry.get(i.acc.IATA_ISO_Country__c)){
@@ -1027,16 +1038,19 @@ public with sharing class ANG_AccountHierarchySelectionController {
 						if(!showErrorMessageSplitAccountMultiCountry){
 							oscar.New_parent__c = i.acc.Id;
 							newParentSelected = true;
+							IATACodeToShowOnSplitAccountMultiCountry = i.acc.IATACode__c;
 						}
 					}
 				}else if(i.selected == true && i.acc.Location_Type__c == 'AE'){
+					IATAcodesSelecteds.add(i.acc.IATACode__c);
 					newParentAe = i.acc.Id;
 					countManyAE++;
+					IATAcodeToShow = i.acc.IATACode__c;
 				}
 			}
 			if(countManyAE == 1 && !newParentSelected){
 				oscar.New_parent__c = newParentAe;
-				newParentSelected = true;
+				IATACodeToShowOnSplitAccountMultiCountry = IATAcodeToShow;
 			}
 		}
 	}
@@ -1108,14 +1122,15 @@ public with sharing class ANG_AccountHierarchySelectionController {
 				ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, Label.AMS_Console_Account_Hierarchy_Split_account_multicountry.replace('HEAccount.iso_country__c', countryNameToShowOnSplitAccountMultiCountry)));
 				return;
 			}
+			
 			if(tocList.contains(AMS_Utils.ANG_HIERARCHY)){
-				Account newParent = [SELECT Id, ANG_Accreditation_Model__c, IATA_ISO_Country__c, Status__c, Remittance_frequency__c FROM Account WHERE Id=: oscar.New_parent__c];
-				if(!newParentSelected && oscar.Process__c == AMS_Utils.ANGPARTCONVERTMCTOLT && newParent.ANG_Accreditation_Model__c != AMS_Utils.ACCREDITATIONMODEL_CASHLESS){
+				Account newParent = [SELECT Id, ANG_Accreditation_Model__c, IATACode__c, IATA_ISO_Country__c, Status__c, Remittance_frequency__c FROM Account WHERE Id=: oscar.New_parent__c];
+				if(!IATAcodesSelecteds.contains(newParent.IATACode__c) && !newParentSelected && oscar.Process__c == AMS_Utils.ANGPARTCONVERTMCTOLT && newParent.ANG_Accreditation_Model__c != AMS_Utils.ACCREDITATIONMODEL_CASHLESS){
 					ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, Label.ISSP_ANG_PARTCONVERT_MC_TO_LT_Accreditation_type_Error));
 					return;
 				}
 
-				if(!newParentSelected && oscar.Process__c == AMS_Utils.ANGPARTCONVERTMCTOST && newParent.ANG_Accreditation_Model__c != AMS_Utils.ACCREDITATIONMODEL_CASH){
+				if(!IATAcodesSelecteds.contains(newParent.IATACode__c) && !newParentSelected && oscar.Process__c == AMS_Utils.ANGPARTCONVERTMCTOST && newParent.ANG_Accreditation_Model__c != AMS_Utils.ACCREDITATIONMODEL_CASH){
 					ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, Label.ISSP_ANG_PARTCONVERT_MC_TO_ST_Accreditation_type_Error));
 					return;
 				}
