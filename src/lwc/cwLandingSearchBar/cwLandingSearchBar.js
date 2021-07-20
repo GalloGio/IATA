@@ -360,7 +360,7 @@ export default class CwLandingSearchBar extends LightningElement {
 	}
 
 	get logoLanding(){
-		logoLandingUrl = resources + "/img/one-source-visual-white.svg"
+		let logoLandingUrl = resources + "/img/one-source-visual-white.svg"
 		return logoLandingUrl;
 	}
 }
