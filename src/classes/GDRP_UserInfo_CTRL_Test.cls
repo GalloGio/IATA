@@ -11,9 +11,6 @@ public class GDRP_UserInfo_CTRL_Test {
 	   // Insert credential
 		Pardot_API__c pardotSetting = new Pardot_API__c();
 		pardotSetting.API_Version__c = '4';
-		pardotSetting.Password__c = 'fakePassword';
-		pardotSetting.User_Key__c = '111111111';
-		pardotSetting.Email__c = 'fake@fake.com';
 		pardotSetting.Assigned_User__c = '1111111';
 		insert pardotSetting;
 

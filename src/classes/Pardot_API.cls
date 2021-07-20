@@ -1,33 +1,40 @@
 public without sharing class Pardot_API {
 	private static final Pardot_API__c pardotSetting = Pardot_API__c.getInstance();
 	private static final String pardotAPIVersion = pardotSetting.API_Version__c; // 3 or 4
+	private static final String pardotHost = pardotSetting.Pardot_Host__c; 
+	private static final String pardotBusinessUnit = pardotSetting.Pardot_Business_Unit__c;
+	private static final String sfdcClientId = '&client_id='+pardotSetting.SFDC_Client_ID__c;
+	private static final String sfdcClientSecret = '&client_secret='+pardotSetting.SFDC_Client_Secret__c;
+	private static final String sfdcHost = pardotSetting.SFDC_Host__c;
+	private static final String sfdcUsername = '&username='+pardotSetting.SFDC_Username__c;
+	private static final String sfdcPassword = '&password='+pardotSetting.SFDC_Password__c;
+	private static final String grant_type = '?grant_type=password';
 
 	private static Map<String,String> headers{
 		get{
 			if(headers == null) headers = new Map<String,String>{
-				'Authorization'=>'Pardot api_key='+getAPIToken()+',user_key='+pardotSetting.User_Key__c
+				'Authorization'=>'Bearer ' + Pardot_API.getAPIToken(), 'Pardot-Business-Unit-Id'=> + pardotBusinessUnit
 			};
 			return headers;
 		}
 		set;
 	}
 
-	public static String getAPIToken() {
+	public static String getAPIToken() {		
 		
+		String url = sfdcHost + grant_type + sfdcClientId + sfdcClientSecret + sfdcUsername + sfdcPassword;
+		String token;
+
 		Http h = new Http();
-		String sBody='email='+EncodingUtil.urlEncode(pardotSetting.Email__c, 'UTF-8')+'&password='+EncodingUtil.urlEncode(pardotSetting.Password__c, 'UTF-8')+'&user_key='+EncodingUtil.urlEncode(pardotSetting.User_Key__c, 'UTF-8');
-
 		HttpRequest req = new HttpRequest();
+		req.setEndpoint(url);
+		req.setMethod('POST');			
 
-		req.setEndpoint('https://pi.pardot.com/api/login/version/'+pardotAPIVersion);
-		req.setMethod('POST');
-		req.setHeader('Content-Type', 'application/x-www-form-urlencoded');
-		req.setBody(sBody);
 		try {
 			HttpResponse res = h.send(req);
-			String responseBody = res.getBody();
-			// Get API_KEY from XML
-			return readNode(responseBody, 'api_key').getText();
+			Map<String, Object> m = (Map<String, Object>) JSON.deserializeUntyped(res.getBody());
+			// Get access_token from JSON
+			return token = string.valueOf(m.get('access_token'));
 		} catch(Exception e) {
 			System.debug(loggingLevel.ERROR, '____ [cls Pardot_API - getAPIToken] e - ' + e);
 			return null;
@@ -35,7 +42,7 @@ public without sharing class Pardot_API {
 	}
 
 	public static Pardot_Prospect getProspect(String email) {
-		String url = 'https://pi.pardot.com/api/prospect/version/'+pardotAPIVersion+'/do/read/email/'+EncodingUtil.urlEncode(email, 'UTF-8')+'?limit_related_records=true';
+		String url = pardotHost+'/api/prospect/version/4/do/read/email/'+EncodingUtil.urlEncode(email, 'UTF-8')+'?limit_related_records=true';
 
 		Pardot_Prospect prospect;
 		try {
@@ -94,7 +101,7 @@ public without sharing class Pardot_API {
 	public static boolean updateProspect(Pardot_Prospect prospect) {
 		if( prospect == null || String.isBlank(prospect.id)) return false;
 
-		String url = 'https://pi.pardot.com/api/prospect/version/'+pardotAPIVersion+'/do/update/id/'+prospect.id;
+		String url = pardotHost+'/api/prospect/version/'+pardotAPIVersion+'/do/update/id/'+prospect.id;
 		url = url+prospect.buildURLParameter();
 
 		try {
@@ -110,7 +117,7 @@ public without sharing class Pardot_API {
 
 	public static boolean createProspect(Pardot_Prospect prospect) {
 		if( prospect == null || String.isBlank(prospect.email)) return false;
-		String url = 'https://pi.pardot.com/api/prospect/version/'+pardotAPIVersion+'/do/create/email/'+EncodingUtil.urlEncode(prospect.email, 'UTF-8');
+		String url = pardotHost+'/api/prospect/version/'+pardotAPIVersion+'/do/create/email/'+EncodingUtil.urlEncode(prospect.email, 'UTF-8');
 		url = url+prospect.buildURLParameter();
 		url += '&user_id='+pardotSetting.Assigned_User__c;
 
@@ -127,7 +134,7 @@ public without sharing class Pardot_API {
 
 	public static void updateProspectInterest(String prospectID, String email, list<String> interests) {
 		if( String.isBlank(prospectID) ) return;
-		String url = 'https://pi.pardot.com/api/prospect/version/'+pardotAPIVersion+'/do/update/id/'+prospectID;
+		String url = pardotHost+'/api/prospect/version/'+pardotAPIVersion+'/do/update/id/'+prospectID;
 
 		String params = '?';
 		if(interests != null && ! interests.isEmpty()){
@@ -159,7 +166,7 @@ public without sharing class Pardot_API {
 
 	public static boolean createListMembership(String prospect_id, String list_id) {
 		if( String.isBlank(prospect_id) || String.isBlank(list_id)) return false;
-		String url = 'https://pi.pardot.com/api/listMembership/version/'+pardotAPIVersion+'/do/create/list_id/'+list_id+'/prospect_id/'+prospect_id;
+		String url = pardotHost+'/api/listMembership/version/'+pardotAPIVersion+'/do/create/list_id/'+list_id+'/prospect_id/'+prospect_id;
 
 		try {
 			String resp = callout('GET', url, headers);
@@ -180,7 +187,7 @@ public without sharing class Pardot_API {
 
 	public static boolean deleteListMembership(String prospect_id, String list_id) {
 		if( String.isBlank(prospect_id) || String.isBlank(list_id)) return false;
-		String url = 'https://pi.pardot.com/api/listMembership/version/'+pardotAPIVersion+'/do/delete/list_id/'+list_id+'/prospect_id/'+prospect_id;
+		String url = pardotHost+'/api/listMembership/version/'+pardotAPIVersion+'/do/delete/list_id/'+list_id+'/prospect_id/'+prospect_id;
 
 
 		try {
