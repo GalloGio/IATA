@@ -459,6 +459,7 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <fullName>ALL</fullName>
         <columns>NAME</columns>
         <columns>Change_Code__c</columns>
+        <columns>Account_status_change__c</columns>
         <columns>Reason_Code__c</columns>
         <columns>Published_in_bulletin__c</columns>
         <columns>Record_Type__c</columns>
@@ -470,7 +471,6 @@ Values must be Separated by &quot;;&quot;</inlineHelpText>
         <columns>Field6__c</columns>
         <columns>Field7__c</columns>
         <columns>Bulletin_Memo_Text__c</columns>
-        <columns>Clear_Irregularities__c</columns>
         <columns>Risk_ChangeCode__c</columns>
         <filterScope>Everything</filterScope>
         <label>ALL</label>
