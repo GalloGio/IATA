@@ -241,7 +241,9 @@ global class Order_Ext
 				if(String.isNotEmpty(vfOrder.Opportunity.Related_Contact__c)){
 					vfOrder.ShipTo_same_BillTo__c = true;
 					vfOrder.BillToContactId = vfOrder.Opportunity.Related_Contact__c;
+					vfOrder.ShipToContactId = vfOrder.BillToContactId;
 					getContactLocations();
+					getContactShipToLocations();
 				}
 			}
 		}
