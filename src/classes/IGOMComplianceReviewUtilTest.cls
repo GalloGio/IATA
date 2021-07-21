@@ -775,7 +775,7 @@ public inherited sharing class IGOMComplianceReviewUtilTest {
 		Test.startTest();
 		System.runAs(user){
 			retrievedGaps = IGOMComplianceReviewUtil.getActualGapAnalyses(station.Account_Role__c, igom.Id, true);
-        }
+		}
 		Test.stopTest();
 
 		List<Compliance_Review__c> complianceReviewsFromTestSetup = [SELECT Id FROM Compliance_Review__c WHERE Document__c = :igom.Id
