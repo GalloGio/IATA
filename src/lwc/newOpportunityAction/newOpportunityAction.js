@@ -10,8 +10,8 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 //import custom labels
 import errorMsg from '@salesforce/label/c.General_Error_Message';
 import NEW_OPP_LABEL from '@salesforce/label/c.New_Opportunity';
-import CANCEL_LABEL from '@salesforce/label/c.General_Cancel';
-import SAVE_LABEL from '@salesforce/label/c.General_Save';
+import CANCEL_LABEL from '@salesforce/label/c.CSP_Cancel';
+import SAVE_LABEL from '@salesforce/label/c.CSP_Save';
 import SAVE_CLOSE_LABEL from '@salesforce/label/c.SaveClose';
 
 //import Opportunity fields

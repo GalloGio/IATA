@@ -11968,13 +11968,6 @@ You can use this Portal service to obtain more information on GDI or request a q
         <value>Country</value>
     </labels>
     <labels>
-        <fullName>General_Error_Message</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>General Error Message</shortDescription>
-        <value>An error has occured, please contact your administrator</value>
-    </labels>
-    <labels>
         <fullName>Generate_Quote</fullName>
         <categories>IEC</categories>
         <language>en_US</language>
@@ -53593,21 +53586,6 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <value>Your wire transfer payment has been received.</value>
     </labels>
     <labels>
-    <labels>
-        <fullName>General_Cancel</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Cancel</shortDescription>
-        <value>Cancel</value>
-    </labels>
-    <labels>
-        <fullName>General_Save</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Save</shortDescription>
-        <value>Save</value>
-    </labels>
-    <labels>
         <fullName>New_Opportunity</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -53620,5 +53598,12 @@ Please &lt;a href=&quot;/ISSP_FAQ2Case?MainNav=Queries&amp;subNav=MyQueries&amp;
         <protected>false</protected>
         <shortDescription>Save &amp; Close</shortDescription>
         <value>Save &amp; Close</value>
+    </labels>
+    <labels>
+        <fullName>General_Error_Message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>General Error Message</shortDescription>
+        <value>An error has occured, please contact your administrator</value>
     </labels>
 </CustomLabels>
