@@ -43,6 +43,9 @@ public with sharing class TaskTriggerHelper {
 			Integer points = Integer.valueOf(configMap.get(rtDevName).Points__c);
 			if(String.isNotBlank(t.Subject) && t.Subject.toUpperCase() == CALL_SUCCESSFUL && rtDevName == 'SIDRA')
 				points = 2;
+			if(t.Subject.toUpperCase().startsWith('EMAIL')){
+				points = 0;
+			}
 			KPI_Value__c valueToInsert = createKPIReportingValue(t.WhatId, points, kpiReportingId);
 			kpiValuesToInsert.add(valueToInsert);
 		}
