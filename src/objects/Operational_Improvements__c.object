@@ -1142,7 +1142,7 @@
             <valueSettings>
                 <controllingFieldValue>Technical Error</controllingFieldValue>
                 <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
-                <valueName>Bi-Lateral Crimit processing</valueName>
+                <valueName>Bi-Lateral Credit limit processing</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Technical Error</controllingFieldValue>
@@ -1202,7 +1202,7 @@
             <valueSettings>
                 <controllingFieldValue>Technical Error</controllingFieldValue>
                 <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
-                <valueName>Crard Processing</valueName>
+                <valueName>Credit Card Processing</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Technical Error</controllingFieldValue>
@@ -13336,7 +13336,7 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
-                <fullName>Bi-Lateral Crimit processing</fullName>
+                <fullName>Bi-Lateral Credit limit processing</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -13376,7 +13376,7 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
-                <fullName>Crard Processing</fullName>
+                <fullName>Credit Card Processing</fullName>
                 <default>false</default>
             </values>
             <values>

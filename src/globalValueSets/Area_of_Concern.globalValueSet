@@ -46,9 +46,9 @@
         <label>AMS</label>
     </customValue>
     <customValue>
-        <fullName>Bi-Lateral Crimit processing</fullName>
+        <fullName>Bi-Lateral Credit limit processing</fullName>
         <default>false</default>
-        <label>Bi-Lateral Crimit processing</label>
+        <label>Bi-Lateral Credit limit processing</label>
     </customValue>
     <customValue>
         <fullName>BSP Cash processing</fullName>
@@ -106,9 +106,9 @@
         <label>Corporates definition / update</label>
     </customValue>
     <customValue>
-        <fullName>Crard Processing</fullName>
+        <fullName>Credit Card Processing</fullName>
         <default>false</default>
-        <label>Crard Processing</label>
+        <label>Credit Card Processing</label>
     </customValue>
     <customValue>
         <fullName>Customer Portal</fullName>
