@@ -22,7 +22,7 @@ public without sharing class Pardot_API {
 
 	public static String getAPIToken() {		
 		
-		String url = sfdcHost + grant_type + sfdcClientId + sfdcClientSecret + sfdcUsername + sfdcPassword;
+		String url = sfdcHost + grant_type + sfdcClientId + sfdcClientSecret + sfdcUsername + EncodingUtil.urlEncode(sfdcPassword, 'UTF-8');
 		String token;
 
 		Http h = new Http();
