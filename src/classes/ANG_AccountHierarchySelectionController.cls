@@ -8,6 +8,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 	public String IATACodeToShowOnSplitAccountMultiCountry {get;set;} 
 	public Boolean isPARTCashOrCashless {get;set;}
 	public List<String> IATAcodesSelecteds {get;set;}
+	public List<ID> IdAccountSelecteds {get;set;}
 
 	public List<Account> results{get;set;} // search results
 	public Map<Id, List<HierarchyItem>> hierarchyItemByCountry {get;set;} 
@@ -716,6 +717,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		IATACodeToShowOnSplitAccountMultiCountry = '';
 		newParentSelected = false;
 		IATAcodesSelecteds = new List<String>();
+		IdAccountSelecteds = new List<Id>();
 		if(!Test.isRunningTest()) stdController.addFields(new List<String>(oscarFields));
 
 		oscarId = stdController.getId();
@@ -1023,6 +1025,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 			for (HierarchyItem i : hierarchyItemsSorted){
 				if(i.selected == true && i.acc.Location_Type__c == 'HE'){
 					IATAcodesSelecteds.add(i.acc.IATACode__c);
+					IdAccountSelecteds.add(i.acc.Id);
 					if(hierarchyItemByCountry.get(i.acc.IATA_ISO_Country__c) != null){
 						Boolean moreThanOne = false;
 						for(HierarchyItem hi : hierarchyItemByCountry.get(i.acc.IATA_ISO_Country__c)){
@@ -1043,6 +1046,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 					}
 				}else if(i.selected == true && i.acc.Location_Type__c == 'AE' && newParent){
 					IATAcodesSelecteds.add(i.acc.IATACode__c);
+					IdAccountSelecteds.add(i.acc.Id);
 					newParentAe = i.acc.Id;
 					countManyAE++;
 					IATAcodeToShow = i.acc.IATACode__c;
@@ -1167,6 +1171,31 @@ public with sharing class ANG_AccountHierarchySelectionController {
 					return;
 				}
 
+			}
+			if(oscar.Process__c == AMS_Utils.ANGPARTCONVERTMCTOST){
+				List<Account> accs = [SELECT ID, IATACode__c, location_type__c, (SELECT Id ,Account__c, Status__c FROM Agency_Authorizations__r
+																WHERE ANG_FormOfPayment_ID__c = 'CA' AND Status__c = 'Active' AND RecordType.DeveloperName = 'FormOfPayment')
+										FROM ACCOUNT 
+										WHERE ID IN :IdAccountSelecteds OR ID =: oscar.New_parent__c];
+
+				
+				Boolean showErrorFOP = false;
+				String showErrorFOPMessage = '';
+				for(Account a: accs){
+					if(a.Agency_Authorizations__r.isEmpty()){
+						showErrorFOP = true;
+						if(showErrorFOPMessage == ''){
+							showErrorFOPMessage = ' ' + a.location_type__c + ' ' + a.IATACode__c;
+						}else{
+							showErrorFOPMessage += ', ' + a.location_type__c + ' ' + a.IATACode__c;
+						}
+						
+					}
+				}
+				if(showErrorFOP){
+					ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Console_Multicountry_FOP_Error_Message + showErrorFOPMessage));
+					return;
+				}
 			}
 		}
 
