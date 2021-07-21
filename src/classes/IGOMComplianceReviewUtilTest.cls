@@ -763,12 +763,19 @@ public inherited sharing class IGOMComplianceReviewUtilTest {
 	 */
 	@isTest
 	public static void getActualGapAnalysesTest_Published_Success(){
+		IGOM_Contact_Role_Detail__c contactRoleDetail = [SELECT Id, Account_Contact_Role__r.Contact__c FROM IGOM_Contact_Role_Detail__c LIMIT 1];
+		contactRoleDetail.Role__c = IGOMConstants.ROLES.ADMIN;
+		update contactRoleDetail;
+		User user = [SELECT Id FROM User WHERE ContactId = :contactRoleDetail.Account_Contact_Role__r.Contact__c LIMIT 1];
+
 		IGOM_Account_Role_Detail__c station = [SELECT Id, Account_Role__c FROM IGOM_Account_Role_Detail__c LIMIT 1];
 		Document__c igom = [SELECT Id FROM Document__c WHERE RecordType.Name = :IGOMConstants.DOCUMENT.RECORD_TYPE.IGOM LIMIT 1];
 
 		List<IGOMComplianceReviewUtil.ComplianceReview> retrievedGaps = new List<IGOMComplianceReviewUtil.ComplianceReview>();
 		Test.startTest();
-		retrievedGaps = IGOMComplianceReviewUtil.getActualGapAnalyses(station.Account_Role__c, igom.Id, true);
+		Syst	em.runAs(user){
+			retrievedGaps = IGOMComplianceReviewUtil.getActualGapAnalyses(station.Account_Role__c, igom.Id, true);
+        }
 		Test.stopTest();
 
 		List<Compliance_Review__c> complianceReviewsFromTestSetup = [SELECT Id FROM Compliance_Review__c WHERE Document__c = :igom.Id
