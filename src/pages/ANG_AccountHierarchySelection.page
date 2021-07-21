@@ -159,7 +159,7 @@
 	</style>
 	<apex:sectionHeader title="Newgen ISS Account Hierarchy Selection" subtitle="{!AMS_OSCAR__c.Account__r.Name}"/>
 	<apex:form id="myForm" styleClass="pos-relative">
-		<apex:actionFunction name="chechSplitOfAccountHE" action="{!chechSplitOfAccountHE}" reRender="myForm"/>
+		<apex:actionFunction name="chechSplitOfAccountHE" action="{!chechSplitOfAccountHEForStart}" reRender="myForm"/>
 		<apex:pageBlock mode="edit" rendered="{!editable}" id="firstPageBlock">
 		<apex:actionFunction name="rerenderNotes" rerender="notes" />
 		<apex:actionFunction action="{!cleanApexMessages}" name="cleanApexMessages" rerender="myForm"></apex:actionFunction>
@@ -172,7 +172,7 @@
 					<apex:outputField value="{!oscar.ANG_Type_Of_Change__c}" rendered="{!isChinaConversion}" />
 				</apex:pageBlockSection>
 				<apex:pageBlockSection id="dependentFields">
-					<apex:inputField id="newParentField2" value="{!oscar.New_parent__c}" rendered="{!AND(showTargetAgency, !isPARTCashOrCashless)}" onchange="checkCleanApexMessages()">
+					<apex:inputField id="newParentField2" value="{!oscar.New_parent__c}" rendered="{!AND(showTargetAgency, !isPARTCashOrCashless)}">
 						<apex:actionSupport event="onchange" onsubmit="beforeSubmitNewParent(this); return;" status="blockEditing" />
 					</apex:inputField>
 					<apex:inputField id="newParentField" value="{!oscar.New_parent__c}" rendered="{!AND(showTargetAgency, isPARTCashOrCashless)}" onchange="checkCleanApexMessages()">
@@ -216,7 +216,7 @@
 					<apex:column >
 						<apex:facet name="header">
 							<apex:inputCheckbox value="{!selectAll}" disabled="{!isChinaConversion}">
-								<apex:actionSupport event="onchange" action="{!doSelectAll}" status="blockEditing" reRender="table, notes, BSPTable, BSPList, bspErrors"/>
+								<apex:actionSupport event="onchange" action="{!doSelectAll}" status="blockEditing" reRender="table, notes, BSPTable, BSPList, bspErrors, myForm"/>
 							</apex:inputCheckbox>
 						</apex:facet>
 						

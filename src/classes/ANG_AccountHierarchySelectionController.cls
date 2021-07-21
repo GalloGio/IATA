@@ -360,12 +360,8 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		get{
 			if(oscar.ANG_Type_Of_Change__c != null){
 
-				if(tocList.contains(AMS_Utils.ANG_HIERARCHY)){
-					if(oscar.Process__c == AMS_Utils.ANGPARTCONVERTMCTOLT || oscar.Process__c == AMS_Utils.ANGPARTCONVERTMCTOST){
-						chechSplitOfAccountHE();
-					}
+				if(tocList.contains(AMS_Utils.ANG_HIERARCHY))
 					return true;
-				}
 
 			}
 
@@ -1001,16 +997,20 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		}
 
 		if(oscar.Process__c == AMS_Utils.ANGPARTCONVERTMCTOLT || oscar.Process__c == AMS_Utils.ANGPARTCONVERTMCTOST){
-			chechSplitOfAccountHE();
+			chechSplitOfAccountHE(true);
 		}
 	}
 
 	public void cleanApexMessages(){
 		ApexPages.getmessages().clear();
-		chechSplitOfAccountHE();
+		chechSplitOfAccountHE(false);
 	}
 
-	public void chechSplitOfAccountHE(){
+	public void chechSplitOfAccountHEForStart(){
+		chechSplitOfAccountHE(true);
+	}
+
+	public void chechSplitOfAccountHE(Boolean newParent){
 		Integer countManyAE = 0; 
 		String IATAcodeToShow = '';
 		Id newParentAe = null;
@@ -1035,20 +1035,20 @@ public with sharing class ANG_AccountHierarchySelectionController {
 								}
 							}
 						}
-						if(!showErrorMessageSplitAccountMultiCountry){
+						if(!showErrorMessageSplitAccountMultiCountry && newParent){
 							oscar.New_parent__c = i.acc.Id;
 							newParentSelected = true;
 							IATACodeToShowOnSplitAccountMultiCountry = i.acc.IATACode__c;
 						}
 					}
-				}else if(i.selected == true && i.acc.Location_Type__c == 'AE'){
+				}else if(i.selected == true && i.acc.Location_Type__c == 'AE' && newParent){
 					IATAcodesSelecteds.add(i.acc.IATACode__c);
 					newParentAe = i.acc.Id;
 					countManyAE++;
 					IATAcodeToShow = i.acc.IATACode__c;
 				}
 			}
-			if(countManyAE == 1 && !newParentSelected){
+			if(countManyAE == 1 && !newParentSelected && newParent){
 				oscar.New_parent__c = newParentAe;
 				IATACodeToShowOnSplitAccountMultiCountry = IATAcodeToShow;
 			}
