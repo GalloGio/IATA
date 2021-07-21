@@ -7,6 +7,7 @@ import { getRecord} from 'lightning/uiRecordApi';
 import { getObjectInfo } from 'lightning/uiObjectInfoApi';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
+//import custom labels
 import errorMsg from '@salesforce/label/c.General_Error_Message';
 import NEW_OPP_LABEL from '@salesforce/label/c.New_Opportunity';
 import CANCEL_LABEL from '@salesforce/label/c.General_Cancel';
@@ -45,7 +46,7 @@ export default class NewOpportunityAction extends LightningElement {
 	@track error;
 	@track recordtypeValue;
 	@track recordtypePicklist;
-	cse;
+	relatedContactRequired = false;
 	defaultOppName = '';
 	defaultOppAccount = '';
     defaultOppContact = '';
@@ -116,6 +117,8 @@ export default class NewOpportunityAction extends LightningElement {
 	//when the recordType picklist has changed
 	handleRecordtypeChange(event) {
 		this.recordtypeValue = event.detail.value;
+		var label = event.target.options.find(opt => opt.value === event.detail.value).label
+		this.relatedContactRequired = (label == 'Opportunity' || label == 'Sales Order');
 	}
 
 	//when the close button was pressed
