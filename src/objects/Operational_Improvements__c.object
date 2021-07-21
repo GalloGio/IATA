@@ -1447,7 +1447,7 @@
             <valueSettings>
                 <controllingFieldValue>Technical Error</controllingFieldValue>
                 <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
-                <valueName>TIP Post Trans. Reporting</valueName>
+                <valueName>TIP  Post Trans. Reporting</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Technical Error</controllingFieldValue>
@@ -13560,7 +13560,7 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
-                <fullName>TIP Post Trans%2E Reporting</fullName>
+                <fullName>TIP  Post Trans%2E Reporting</fullName>
                 <default>false</default>
             </values>
             <values>
