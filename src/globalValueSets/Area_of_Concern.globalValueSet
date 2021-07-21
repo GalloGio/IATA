@@ -351,9 +351,9 @@
         <label>Timaticweb</label>
     </customValue>
     <customValue>
-        <fullName>TIP Post Trans. Reporting</fullName>
+        <fullName>TIP  Post Trans. Reporting</fullName>
         <default>false</default>
-        <label>TIP Post Trans. Reporting</label>
+        <label>TIP  Post Trans. Reporting</label>
     </customValue>
     <customValue>
         <fullName>Treasury Dashboard</fullName>
