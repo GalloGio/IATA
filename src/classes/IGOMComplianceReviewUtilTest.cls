@@ -773,7 +773,7 @@ public inherited sharing class IGOMComplianceReviewUtilTest {
 
 		List<IGOMComplianceReviewUtil.ComplianceReview> retrievedGaps = new List<IGOMComplianceReviewUtil.ComplianceReview>();
 		Test.startTest();
-		Syst	em.runAs(user){
+		System.runAs(user){
 			retrievedGaps = IGOMComplianceReviewUtil.getActualGapAnalyses(station.Account_Role__c, igom.Id, true);
         }
 		Test.stopTest();
