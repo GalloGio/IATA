@@ -1033,6 +1033,13 @@
         <value>Confirm full hierarchy conversion to GoStandard</value>
     </labels>
     <labels>
+        <fullName>AMS_OSCAR_STEP52</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AMS OSCAR STEP52</shortDescription>
+        <value>Re-activate Risk Event</value>
+    </labels>
+    <labels>
         <fullName>AMS_OSCAR_STEP6</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -2661,6 +2668,134 @@ ASD is an innovative, internet-based system, which facilitates these interaction
         <value>Account:</value>
     </labels>
     <labels>
+        <fullName>AccountCTI_Account_ADetails</fullName>
+        <categories>AccountDashboardCTI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountCTI - Account - ADetails</shortDescription>
+        <value>Account Details</value>
+    </labels>
+    <labels>
+        <fullName>AccountCTI_Account_ATeam</fullName>
+        <categories>AccountDashboardCTI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountCTI - Account - ATeam</shortDescription>
+        <value>Account Team</value>
+    </labels>
+    <labels>
+        <fullName>AccountCTI_Account_Agency</fullName>
+        <categories>AccountDashboardCTI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountCTI - Account - Agency</shortDescription>
+        <value>Agency Loc. Type</value>
+    </labels>
+    <labels>
+        <fullName>AccountCTI_Account_Category</fullName>
+        <categories>AccountDashboardCTI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountCTI - Account - Category</shortDescription>
+        <value>Category</value>
+    </labels>
+    <labels>
+        <fullName>AccountCTI_Account_Ecomm</fullName>
+        <categories>AccountDashboardCTI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountCTI - Account - Ecomm</shortDescription>
+        <value>Ecomm C. type</value>
+    </labels>
+    <labels>
+        <fullName>AccountCTI_Account_IATACode</fullName>
+        <categories>AccountDashboardCTI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountCTI - Account - IATACode</shortDescription>
+        <value>IATA Code</value>
+    </labels>
+    <labels>
+        <fullName>AccountCTI_Account_Overall</fullName>
+        <categories>AccountDashboardCTI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountCTI - Account - Overall</shortDescription>
+        <value>Overall sat. (YTD)</value>
+    </labels>
+    <labels>
+        <fullName>AccountCTI_Account_Sector</fullName>
+        <categories>AccountDashboardCTI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountCTI - Account - Sector</shortDescription>
+        <value>Sector</value>
+    </labels>
+    <labels>
+        <fullName>AccountCTI_Account_Segmentation</fullName>
+        <categories>AccountDashboardCTI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountCTI - Account - Segmentation</shortDescription>
+        <value>Segmentation</value>
+    </labels>
+    <labels>
+        <fullName>AccountCTI_Account_ServiceModel</fullName>
+        <categories>AccountDashboardCTI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountCTI - Account - ServiceModel</shortDescription>
+        <value>Service Model</value>
+    </labels>
+    <labels>
+        <fullName>AccountCTI_Account_Status</fullName>
+        <categories>AccountDashboardCTI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountCTI - Account - Status</shortDescription>
+        <value>Status</value>
+    </labels>
+    <labels>
+        <fullName>AccountCTI_Cases_Interactions</fullName>
+        <categories>AccountDashboardCTI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountCTI - Cases - Interactions</shortDescription>
+        <value>Contact/Customer Interactions</value>
+    </labels>
+    <labels>
+        <fullName>AccountCTI_Contact_AllContacts</fullName>
+        <categories>AccountDashboardCTI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountCTI - Contact - AllContacts</shortDescription>
+        <value>All Contacts</value>
+    </labels>
+    <labels>
+        <fullName>AccountCTI_Contact_ChooseContact</fullName>
+        <categories>AccountDashboardCTI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountCTI - Contact - Choose Contact</shortDescription>
+        <value>Choose the correct Contact before to create the Case</value>
+    </labels>
+    <labels>
+        <fullName>AccountCTI_Contact_CreateCase</fullName>
+        <categories>AccountDashboardCTI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountCTI - Contact - Create Case</shortDescription>
+        <value>Create Case</value>
+    </labels>
+    <labels>
+        <fullName>AccountCTI_Contact_PortalServices</fullName>
+        <categories>AccountDashboardCTI</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>AccountCTI_Contact PortalServices</shortDescription>
+        <value>Portal Services</value>
+    </labels>
+    <labels>
         <fullName>AccountContextActivationEmailBody</fullName>
         <categories>Account Context Activation</categories>
         <language>en_US</language>
@@ -3851,6 +3986,14 @@ If you are already CNS Endorsed, you can use this service to update information 
         <protected>false</protected>
         <shortDescription>CSP_Breadcrump_MyProfile_Title</shortDescription>
         <value>User Profile</value>
+    </labels>
+    <labels>
+        <fullName>CSP_Business_Email</fullName>
+        <categories>CS Portal</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CSP Business Email</shortDescription>
+        <value>Business Email (in case you have one)</value>
     </labels>
     <labels>
         <fullName>CSP_Buy_Online</fullName>
@@ -9354,7 +9497,7 @@ Default,Default withdrawal,Review,Review withdrawal,Irregularity,Termination,Irr
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>CaseValidation - Area in Case Global</shortDescription>
-        <value>Airline and Location Coding,AirportIS,Airsat,BIETA,CargoIS,CheckACode,Digital ID Card (Mobile App),Direct Data Solutions (DDS),Distance Learning,E&amp;F Operations,eBroadcast,FDC,FFP,GAP,Global Agency Directory,Global System Solution,IASC,IATA AgentExperience,IATAN,ICCS,ICH,ID Card,iiNet,IMX,Instructor-led Training (groups),Instructor-led Training (individual),MarketIS,MITA,NDClink,PaxIS,SIS,TACT,TIMATIC,Travel Agency Data Products,Treasury Dashboard,Weblink,IDX - Incident Data Exchange,YMQ Publications,MRO SmartHub,IATA Travel Pass</value>
+        <value>Airline and Location Coding,AirportIS,Airsat,BIETA,CargoIS,CheckACode,Digital ID Card (Mobile App),Direct Data Solutions (DDS),Distance Learning,E&amp;F Operations,eBroadcast,FDC,FFP,GAP,Global Agency Directory,Global System Solution,IASC,IATA AgentExperience,IATAN,ICCS,ICH,ID Card,iiNet,IMX,Instructor-led Training (groups),Instructor-led Training (individual),MarketIS,MITA,NDClink,PaxIS,SIS,TACT,TIMATIC,Travel Agency Data Products,Treasury Dashboard,Weblink,IDX - Incident Data Exchange,YMQ Publications,MRO SmartHub,IATA Travel Pass,TIDS</value>
     </labels>
     <labels>
         <fullName>CaseValidation_InDepthArea</fullName>
@@ -46932,6 +47075,13 @@ respect to decisions and/or actions affecting Agents and applicants under the IA
         <value>Prejudiced Collection of Funds</value>
     </labels>
     <labels>
+        <fullName>Reactivate_Risk_Event_warning_message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Reactivate Risk Event warning message</shortDescription>
+        <value>This agency meets the conditions of being GoStandard for more than 2 years and subsequently being GoLite for less than 6 months and is therefore eligible to trade as GoStandard under their previous Risk Status, RHC, Risk Events, and Financial Security.</value>
+    </labels>
+    <labels>
         <fullName>Reader_Main_Content</fullName>
         <categories>Content</categories>
         <language>en_US</language>
@@ -47088,6 +47238,14 @@ Remittance date: {4}
         <protected>false</protected>
         <shortDescription>SIDRA_GE_Info</shortDescription>
         <value>This SIDRA case is related to Multicountry Agent</value>
+    </labels>
+    <labels>
+        <fullName>SIDRA_Repayment_Instalments_not_allowed_for_CASS</fullName>
+        <categories>SIDRA CASS</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SIDRA Repayment Instalments not allowed for CASS</shortDescription>
+        <value>As per resolution, Repayment Plan is not allowed for CASS Agents.</value>
     </labels>
     <labels>
         <fullName>SIS</fullName>

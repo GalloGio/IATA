@@ -5923,6 +5923,22 @@
                 "IsDependent": false
               },
               {
+                "Name": "STEP52",
+                "Required": [],
+                "Actions": [
+                ],
+                "Automations": [
+                  {
+                    "Status": "Passed",
+                    "ClassName": "AMS_OSCAR_Automation.AMS_OSCAR_Step52_succeeded"
+                  }
+                ],
+                "DisplayFields": [
+                  "STEP52__c"
+                ],
+                "IsDependent": false
+              },
+              {
                 "Name": "STEP1",
                 "Required": [],
                 "Actions": [],

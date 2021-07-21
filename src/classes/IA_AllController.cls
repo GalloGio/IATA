@@ -100,6 +100,7 @@ public without sharing class IA_AllController {
 					this.setFilterTypes.add(row.agreementType);
 					this.setFilterStatus.add(row.agreementStatusLabel);
 				}
+				AllAgreementsRows.sort();
 			}
 			return AllAgreementsRows;
 		}
@@ -109,7 +110,7 @@ public without sharing class IA_AllController {
 	/**
 	 * Wrapper class with the minimal agreement info to be used in the page table
 	 */
-	private class AllAgreementsRow {
+	private class AllAgreementsRow implements Comparable {
 		public String agreementId {get;set;}
 		public String otherAirlineName {get;set;}
 		public String otherAirlineDesignator {get;set;}
@@ -123,6 +124,12 @@ public without sharing class IA_AllController {
 			get{ 
 				return IA_util.MAP_STATUS_LABELS.get(agreementStatus);
 			}
+		}
+		public Integer compareTo(Object compareTo) {
+			if (this.agreementStatus==((AllAgreementsRow)compareTo).agreementStatus) {
+				return (this.otherAirlineDesignator > ((AllAgreementsRow)compareTo).otherAirlineDesignator)? 1:-1;
+			}
+			return (agreementStatus > ((AllAgreementsRow)compareTo).agreementStatus)? 1:-1;
 		}
 	}
 

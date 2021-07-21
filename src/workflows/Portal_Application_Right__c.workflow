@@ -257,25 +257,6 @@
         <template>ISS_Portal/Notify_Admin_of_app_requestVF_CNS</template>
     </alerts>
     <fieldUpdates>
-        <fullName>Application_Name_Text_Field_Update</fullName>
-        <field>Application_Name_Text_Field__c</field>
-        <formula>Portal_Application__r.Name</formula>
-        <name>Application Name Text Field Update</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>Formula</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
-        <fullName>Biller_Direct_Rights</fullName>
-        <field>RecordTypeId</field>
-        <lookupValue>Biller_Direct</lookupValue>
-        <lookupValueType>RecordType</lookupValueType>
-        <name>Biller Direct Rights</name>
-        <notifyAssignee>false</notifyAssignee>
-        <operation>LookupValue</operation>
-        <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
         <fullName>Grant_Access</fullName>
         <description>Change the app right status to &apos;Grant Access&apos;</description>
         <field>Right__c</field>
@@ -325,31 +306,6 @@
         <targetObject>Contact__c</targetObject>
     </fieldUpdates>
     <rules>
-        <fullName>Application Name Text Field Update</fullName>
-        <actions>
-            <name>Application_Name_Text_Field_Update</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <description>Updates application name text field to be used in roll-up fields.</description>
-        <formula>true</formula>
-        <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>Biller Direct Rights</fullName>
-        <actions>
-            <name>Biller_Direct_Rights</name>
-            <type>FieldUpdate</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Portal_Applications__c.Name</field>
-            <operation>equals</operation>
-            <value>Biller Direct</value>
-        </criteriaItems>
-        <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
         <fullName>ISS Portal - SIS Portal service</fullName>
         <actions>
             <name>Update_SIS_User</name>
@@ -386,43 +342,5 @@
             <value>Access Denied</value>
         </criteriaItems>
         <triggerType>onAllChanges</triggerType>
-    </rules>
-    <rules>
-        <fullName>Notify contact of access rejected by Portal Admin</fullName>
-        <actions>
-            <name>Notify_Access_denied_by_PortalAdmin</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Portal_Application_Right__c.Right__c</field>
-            <operation>equals</operation>
-            <value>Access Denied</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>User.ProfileId</field>
-            <operation>contains</operation>
-            <value>ISS</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>Notify contact of access rejected by internal user</fullName>
-        <actions>
-            <name>Notify_Access_denied_by_internal_user</name>
-            <type>Alert</type>
-        </actions>
-        <active>false</active>
-        <criteriaItems>
-            <field>Portal_Application_Right__c.Right__c</field>
-            <operation>equals</operation>
-            <value>Access Denied</value>
-        </criteriaItems>
-        <criteriaItems>
-            <field>User.ProfileId</field>
-            <operation>notContain</operation>
-            <value>ISS</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
 </Workflow>

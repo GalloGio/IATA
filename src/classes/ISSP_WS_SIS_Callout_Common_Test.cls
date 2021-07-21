@@ -420,4 +420,156 @@ public class ISSP_WS_SIS_Callout_Common_Test {
 		try{ws.UpdateAccount('');} catch(Exception e){}
 		Test.stopTest();
 	}
+
+	static testMethod void test_RetryCall_Error() {
+		ISSP_Web_Service_Log__c log = new ISSP_Web_Service_Log__c();
+		log.System__c = 'SIS';
+		log.Web_Service__c = 'ISSP_WS_SIS_Callout';
+		log.Method__c = 'wrongmethod';
+		insert log;
+
+		Test.startTest();
+		try {
+			Id resultId = ISSP_WS_SIS_Callout_Common.retryCall(log.Id);
+			System.assert(false,'Exception expected');
+		} catch (Exception e) {
+		}
+		Test.stopTest();
+	}
+
+	static testMethod void test_RetryCreateAccount() {
+		ISSP_WS_SIS_Callout_CreateAccount.TEST_RESPONSE = '<Response><IsSuccess>true</IsSuccess></Response>';
+		Account account = new Account( Name = 'Test');
+		ISSP_WS_SIS_Callout_CreateAccount.ResponseData response = ISSP_WS_SIS_Callout_CreateAccount.createAccount(account);
+		ISSP_Web_Service_Log__c log = ISSP_WS_SIS_Callout_CreateAccount.createLog(response);
+		insert log;
+
+		System.assertEquals('ISSP_WS_SIS_Callout', log.Web_Service__c);
+		System.assertEquals('CreateAccount', log.Method__c);
+
+		Test.startTest();
+		Id resultId = ISSP_WS_SIS_Callout_Common.retryCall(log.Id);
+		Test.stopTest();
+
+		System.assert(resultId!=null);
+		ISSP_Web_Service_Log__c result = [SELECT Id, Web_Service__c, Method__c FROM ISSP_Web_Service_Log__c WHERE Id = :resultId];
+		System.assertEquals('ISSP_WS_SIS_Callout', result.Web_Service__c);
+		System.assertEquals('CreateAccount', result.Method__c);
+	}
+
+	static testMethod void test_RetryUpdateAccount() {
+		ISSP_WS_SIS_Callout_UpdateAccount.TEST_RESPONSE = '<Response><IsSuccess>true</IsSuccess></Response>';
+		Account account = new Account(
+			Name = 'test',
+			BillingStreet = 'Street',
+			BillingCity = 'City',
+			BillingState = 'State',
+			BillingPostalCode = '8888',
+			SIS_ID__c = '123456'
+		);
+		insert account;
+
+		ISSP_WS_SIS_Callout_UpdateAccount.ResponseData response = ISSP_WS_SIS_Callout_UpdateAccount.UpdateAccount(account);
+		ISSP_Web_Service_Log__c log = ISSP_WS_SIS_Callout_UpdateAccount.createLog(response);
+		insert log;
+
+		Test.startTest();
+		Id resultId = ISSP_WS_SIS_Callout_Common.retryCall(log.Id);
+		Test.stopTest();
+
+		System.assert(resultId!=null);
+		ISSP_Web_Service_Log__c result = [SELECT Id, Web_Service__c, Method__c FROM ISSP_Web_Service_Log__c WHERE Id = :resultId];
+		System.assertEquals('ISSP_WS_SIS_Callout', result.Web_Service__c);
+		System.assertEquals('UpdateAccount', result.Method__c);
+	}
+
+	static testMethod void test_retryActivateUser() {
+		ISSP_WS_SIS_Callout_ActivateUser.TEST_RESPONSE = '<Response><IsSuccess>true</IsSuccess></Response>';
+		User user = new User(
+			FederationIdentifier = '1234567'
+		);
+		ISSP_WS_SIS_Callout_ActivateUser.ResponseData response = ISSP_WS_SIS_Callout_ActivateUser.ActivateUser(user);
+		ISSP_Web_Service_Log__c log = ISSP_WS_SIS_Callout_ActivateUser.createLog(response);
+		insert log;
+
+		Test.startTest();
+		Id resultId = ISSP_WS_SIS_Callout_Common.retryCall(log.Id);
+		Test.stopTest();
+
+		System.assert(resultId!=null);
+		ISSP_Web_Service_Log__c result = [SELECT Id, Web_Service__c, Method__c FROM ISSP_Web_Service_Log__c WHERE Id = :resultId];
+		System.assertEquals('ISSP_WS_SIS_Callout', log.Web_Service__c);
+		System.assertEquals('ActivateUser', log.Method__c);
+	}
+
+	static testMethod void test_RetryDeactivateUser() {
+		ISSP_WS_SIS_Callout_ActivateUser.TEST_RESPONSE = '<Response><IsSuccess>true</IsSuccess></Response>';
+		User user = new User(
+			FederationIdentifier = '1234567'
+		);
+		ISSP_WS_SIS_Callout_ActivateUser.ResponseData response = ISSP_WS_SIS_Callout_ActivateUser.DeactivateUser(user);
+		ISSP_Web_Service_Log__c log = ISSP_WS_SIS_Callout_ActivateUser.createLog(response);
+		insert log;
+
+		Test.startTest();
+		Id resultId = ISSP_WS_SIS_Callout_Common.retryCall(log.Id);
+		Test.stopTest();
+
+		System.assert(resultId!=null);
+		ISSP_Web_Service_Log__c result = [SELECT Id, Web_Service__c, Method__c FROM ISSP_Web_Service_Log__c WHERE Id = :resultId];
+		System.assertEquals('ISSP_WS_SIS_Callout', log.Web_Service__c);
+		System.assertEquals('DeactivateUser', log.Method__c);
+	}
+
+	static testMethod void test_retryCreateUser() {
+		ISSP_WS_SIS_Callout_CreateUser.TEST_RESPONSE = '<Response><IsSuccess>true</IsSuccess></Response>';
+		User user = new User(
+			FederationIdentifier = '1234567',
+			FirstName = 'firstname',
+			LastName = 'lastname',
+			Email = 'test@email.com'
+		);
+		Contact contact = new Contact(
+			SIS_Contact_Type__c = 'type'
+		);
+		ISSP_WS_SIS_Callout_CreateUser.ResponseData response = ISSP_WS_SIS_Callout_CreateUser.CreateUser(user, contact);
+		ISSP_Web_Service_Log__c log = ISSP_WS_SIS_Callout_CreateUser.createLog(response);
+		insert log;
+
+		Test.startTest();
+		Id resultId = ISSP_WS_SIS_Callout_Common.retryCall(log.Id);
+		Test.stopTest();
+
+		System.assert(resultId!=null);
+		ISSP_Web_Service_Log__c result = [SELECT Id, Web_Service__c, Method__c FROM ISSP_Web_Service_Log__c WHERE Id = :resultId];
+		System.assertEquals('ISSP_WS_SIS_Callout', log.Web_Service__c);
+		System.assertEquals('CreateUser', log.Method__c);
+	}
+
+	static testMethod void test_retryUpdateUser() {
+		ISSP_WS_SIS_Callout_UpdateUser.TEST_RESPONSE = '<Response><IsSuccess>true</IsSuccess></Response>';
+		User user = new User(
+			FederationIdentifier = '1234567',
+			FirstName = 'firstname',
+			LastName = 'lastname',
+			Email = 'test@email.com'
+		);
+		Contact contact = new Contact(
+			FirstName = 'firstname',
+			LastName = 'lastname',
+			Email = 'test@email.com'
+		);
+		ISSP_WS_SIS_Callout_UpdateUser.ResponseData response = ISSP_WS_SIS_Callout_UpdateUser.UpdateUser(user, contact);
+		ISSP_Web_Service_Log__c log = ISSP_WS_SIS_Callout_UpdateUser.createLog(response);
+		insert log;
+
+		Test.startTest();
+		Id resultId = ISSP_WS_SIS_Callout_Common.retryCall(log.Id);
+		Test.stopTest();
+
+		System.assert(resultId!=null);
+		ISSP_Web_Service_Log__c result = [SELECT Id, Web_Service__c, Method__c FROM ISSP_Web_Service_Log__c WHERE Id = :resultId];
+		System.assertEquals('ISSP_WS_SIS_Callout', log.Web_Service__c);
+		System.assertEquals('UpdateUser', log.Method__c);
+	}
 }

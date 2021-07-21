@@ -3698,7 +3698,6 @@ Currently (26/10/15) used to identify which user haven&apos;t complete the suppo
         <label>SIS Help Desk Users</label>
         <language>en_US</language>
         <sharedTo>
-            <group>IATASISCustomerSupport</group>
             <group>IATASISHelpDeskAgent</group>
             <group>IATASISOperations</group>
         </sharedTo>

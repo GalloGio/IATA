@@ -745,6 +745,10 @@
         <name>AMS_OSCAR_STEP51</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS OSCAR STEP52 --></label>
+        <name>AMS_OSCAR_STEP52</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS OSCAR STEP6 --></label>
         <name>AMS_OSCAR_STEP6</name>
     </customLabels>
@@ -1579,6 +1583,70 @@
     <customLabels>
         <label><!-- Account --></label>
         <name>Account</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Account - ADetails --></label>
+        <name>AccountCTI_Account_ADetails</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Account - ATeam --></label>
+        <name>AccountCTI_Account_ATeam</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Account - Agency --></label>
+        <name>AccountCTI_Account_Agency</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Account - Category --></label>
+        <name>AccountCTI_Account_Category</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Account - Ecomm --></label>
+        <name>AccountCTI_Account_Ecomm</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Account - IATACode --></label>
+        <name>AccountCTI_Account_IATACode</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Account - Overall --></label>
+        <name>AccountCTI_Account_Overall</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Account - Sector --></label>
+        <name>AccountCTI_Account_Sector</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Account - Segmentation --></label>
+        <name>AccountCTI_Account_Segmentation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Account - ServiceModel --></label>
+        <name>AccountCTI_Account_ServiceModel</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Account - Status --></label>
+        <name>AccountCTI_Account_Status</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Cases - Interactions --></label>
+        <name>AccountCTI_Cases_Interactions</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Contact - AllContacts --></label>
+        <name>AccountCTI_Contact_AllContacts</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Contact - Choose Contact --></label>
+        <name>AccountCTI_Contact_ChooseContact</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Contact - Create Case --></label>
+        <name>AccountCTI_Contact_CreateCase</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI_Contact PortalServices --></label>
+        <name>AccountCTI_Contact_PortalServices</name>
     </customLabels>
     <customLabels>
         <label><!-- AccountContextActivationEmailBody --></label>
@@ -3008,6 +3076,10 @@ The configuration instructions are in the DupeBlocker install guide.</label>
     <customLabels>
         <label><!-- CSP_Breadcrump_MyProfile_Title --></label>
         <name>CSP_Breadcrump_MyProfile_Title</name>
+    </customLabels>
+    <customLabels>
+        <label>البريد الإلكتروني للأعمال (في حال كان لديك واحد)</label>
+        <name>CSP_Business_Email</name>
     </customLabels>
     <customLabels>
         <label>الشراء عبر الإنترنت</label>
@@ -30532,6 +30604,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>RTS_TAR_Notification_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- Reactivate Risk Event warning message --></label>
+        <name>Reactivate_Risk_Event_warning_message</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Reader Main Content --></label>
         <name>Reader_Main_Content</name>
     </customLabels>
@@ -30612,6 +30688,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>SIDRA_GE_Info</name>
     </customLabels>
     <customLabels>
+        <label><!-- SIDRA Repayment Instalments not allowed for CASS --></label>
+        <name>SIDRA_Repayment_Instalments_not_allowed_for_CASS</name>
+    </customLabels>
+    <customLabels>
         <label><!-- SIS --></label>
         <name>SIS</name>
     </customLabels>
@@ -30642,6 +30722,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
     <customLabels>
         <label><!-- SIS L2 Customer Support --></label>
         <name>SIS_L2_Customer_Support</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- SIS Notify Change in SIS 3digit Code --></label>
+        <name>SIS_Notify_Change_in_SIS_3digit_Code</name>
     </customLabels>
     <customLabels>
         <label><!-- SIS Operations --></label>
@@ -41812,7 +41896,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
             <name>Contracts</name>
         </sections>
         <sections>
-            <label><!-- E&amp;F Location Currencies --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>E&amp;F Location Currencies</name>
         </sections>
     </reportTypes>
@@ -41865,7 +41949,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- GADM Data Submissions --></label>
         <name>GADM_Data_Submissions</name>
         <sections>
-            <label><!-- Data Submissions --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>Data Submissions</name>
         </sections>
     </reportTypes>
@@ -42647,7 +42731,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Locations with Contacts &amp; Addresses --></label>
         <name>Locations_with_Contacts_Addresses</name>
         <sections>
-            <label><!-- Contacts --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>Contacts</name>
         </sections>
         <sections>
@@ -42794,7 +42878,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Notification template custom --></label>
         <name>Notification_template_custom</name>
         <sections>
-            <label><!-- Notification templates --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>Notification templates</name>
         </sections>
     </reportTypes>
@@ -42922,7 +43006,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Objective with Tasks --></label>
         <name>Objective_with_Tasks</name>
         <sections>
-            <label><!-- Objectives --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>Objectives</name>
         </sections>
     </reportTypes>
@@ -42935,7 +43019,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
             <name>Account Information</name>
         </sections>
         <sections>
-            <label><!-- Objectives --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>Objectives</name>
         </sections>
     </reportTypes>
@@ -42948,7 +43032,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
             <name>One Id User Applications</name>
         </sections>
         <sections>
-            <label><!-- User Provisioning Requests --></label>
+            <label>التقارير</label>
             <name>User Provisioning Requests</name>
         </sections>
     </reportTypes>
@@ -43021,7 +43105,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Opportunities with or without RSL --></label>
         <name>Opportunities_with_or_without_RSL</name>
         <sections>
-            <label>التقارير</label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>Opportunities</name>
         </sections>
         <sections>
@@ -43034,7 +43118,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Opportunities with products and Sub-regions (ISO) --></label>
         <name>Opportunities_with_products_custom</name>
         <sections>
-            <label>حقوق تطبيقات البوابة</label>
+            <label>التقارير</label>
             <name>Opportunities</name>
         </sections>
         <sections>
@@ -43047,11 +43131,11 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Opportunitis with Accounts --></label>
         <name>Opportunitis_with_Accounts</name>
         <sections>
-            <label><!-- Accounts --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>Accounts</name>
         </sections>
         <sections>
-            <label><!-- Opportunities --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>Opportunities</name>
         </sections>
     </reportTypes>
@@ -43202,7 +43286,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
                 <label><!-- Contact User Portal Status --></label>
                 <name>Contact User Portal Status</name>
             </columns>
-            <label><!-- Contact Information --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>Contact Information</name>
         </sections>
         <sections>
@@ -43278,7 +43362,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
                 <label><!-- Service Description --></label>
                 <name>Service Description</name>
             </columns>
-            <label><!-- Service information --></label>
+            <label>التقارير</label>
             <name>Service information</name>
         </sections>
     </reportTypes>

@@ -11,10 +11,101 @@ private class AMS_OSCAR_AutomationTest {
 		pa.Name = 'Risk Profile and RHC';
 		pa.Functional_Role__c = 'Risk Profile and RHC';
 		insert pa;
+
+		IATA_ISO_Country__c isoTest = new IATA_ISO_Country__c(
+			Name = 'Iso Country Name Test',
+			CurrencyIsoCode = 'EUR',
+			ISO_Code_Numeric__c = 620,
+			ISO_Code__c = 'PT',
+			AIMS_Area_ID__c='1',
+			ANG_Enable_NewGen__c = true,
+			ANG_IEP_Model__c = 'Model A',
+			Multicountry_Enabled__c = true
+		);
+		insert isoTest;
+
+		Id accRT = AMS_Utils.RECTYPE_IATAAGENCY;
+
+		Account accountToUpdateRiskEventCashAndCashless = new Account(
+				Name ='account To Update Risk Event Cash to Cashless',
+				Type = 'IATA Passenger Sales Agent',
+				Sector__c='Travel Agent',
+				Location_Type__c = AMS_Utils.HE,
+				Location_Class__c = 'P',
+				ANG_FA_Opt_out__c = false,
+				IATACode__c='12345600',
+				IATA_ISO_Country__c = isoTest.Id,
+				BillingCountry='Iso Country Name Test',
+				ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH,
+				Status__c = AMS_Utils.ACC_S9_APPROVED,
+				ANG_HE_RiskHistoryAssessment__c = ANG_Risk_Helper.RISK_ASSESSMENT_PASSED,
+				Financial_Review_Result__c = ANG_Risk_Helper.FR_UNSATISFACTORY,
+				RecordTypeId = accRT
+			);
+		insert accountToUpdateRiskEventCashAndCashless;
+		AMS_OSCAR__c oscar = new AMS_OSCAR__c(RecordTypeId = AMS_Utils.RECTYPE_NGCHANGES, Account__c = accountToUpdateRiskEventCashAndCashless.Id, ANG_Type_Of_Change__c = AMS_Utils.ANG_ACCREDITATION_TYPE);
+		insert oscar;
+
+		Case testCase = ISSP_ObjectFactory.createNewCase();
+		testCase.BSPCountry__c = 'Hong Kong (SAR), China';
+		testCase.Reason1__c = 'Agency';
+		testCase.Customer_recovery__c = false;
+		testCase.BounceEmailCounter__c = 0.0;
+		testCase.Case_Language__c = 'English';
+		testCase.Subject = 'Test 006';
+		testCase.Reopened_case__c = 0.0;
+		testCase.IFAP_Country_ISO__c = 'tq';
+		testCase.AccountId = accountToUpdateRiskEventCashAndCashless.id;
+		testCase.Oscar__c = oscar.Id;
+		insert testCase;
+
+		IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Test', ISO_Code__c = 'TS');
+		insert isoc;
+
+		AMS_Pax_Accreditation_Form__c onlineAccreditation = new AMS_Pax_Accreditation_Form__c(IsGSA__c = 'No', CurrencyIsoCode = isoc.CurrencyIsoCode, SAAM_Case__c = testCase.Id, Account_Name__c = accountToUpdateRiskEventCashAndCashless.Name, ANG_Accreditation_Model_to_Change__c = AMS_Utils.ACCREDITATIONMODEL_CASH);
+		insert onlineAccreditation;
+
+		oscar.AMS_Online_Accreditation__c = onlineAccreditation.id;
+		update oscar;
+
+
+		Agency_Applied_Change_code__c ch1 = new Agency_Applied_Change_code__c(OSCAR__c = oscar.id, Account__c = accountToUpdateRiskEventCashAndCashless.Id, Change_Code__c = 'CHA');
+		insert ch1;
+		Test.setCreatedDate(ch1.id, Date.today().addYears(-3));
+
+		ANG_Agency_Risk_Calculation__c rule = new ANG_Agency_Risk_Calculation__c(
+			ANG_Order__c = 1,
+			ANG_Occurrence_Num__c = 1,
+			ANG_Adjusted__c = ANG_Risk_Helper.ADJ_NO,
+			ANG_Accreditation_Model__c = AMS_Utils.ACCREDITATIONMODEL_CASH,
+			RecordTypeId = ANG_Risk_Helper.RECTYPE_RULES);
+		insert rule;
+		
+		ANG_Risk_Event_Type__c ret = new ANG_Risk_Event_Type__c(
+				Name = 'Risk Event Test',
+				ANG_Description__c = 'Risk Event Test',
+				ANG_Expiration__c = 24,
+				ANG_Risk_ID__c = 'testRiskId',
+				ANG_Agency_Risk_Calculation__c = rule.Id,
+				Limit_Cash_conditions__c = false
+			);
+		insert ret;
+
+		ANG_Agency_Risk_Event__c re1 = new ANG_Agency_Risk_Event__c(
+				ANG_AccountId__c = accountToUpdateRiskEventCashAndCashless.id,
+				ANG_Risk_Type__c = ret.id,
+				ANG_Issued_Date__c = System.today(),
+				Applicable_for_re_activation__c = true,
+				ANG_Expiration_Date__c = Date.today().addDays(-10),
+				ANG_Event_Status__c = ANG_Risk_Helper.STATUS_INACTIVE_CASHLESS 
+			);
+
+		insert re1;
+		Test.setCreatedDate(re1.id, Date.today().addDays(-10));
 	}
 
 	static testMethod void test_AMS_OSCAR_Automation() {
-		AMS_Oscar__c oscar = [SELECT Id, Account__c FROM AMS_Oscar__c LIMIT 1];
+		AMS_Oscar__c oscar = [SELECT Id, ANG_Type_Of_Change__c, Account__c, AMS_Online_Accreditation__r.ANG_Accreditation_Model_to_Change__c FROM AMS_Oscar__c LIMIT 1];
 		AMS_OSCAR_Event__c event = new AMS_OSCAR_Event__c();
 		AMS_OSCAR_AutomationManager manager = new AMS_OSCAR_AutomationManager();
 		AMS_OSCAR_Automation.IClassFactory factory;
@@ -153,9 +244,24 @@ private class AMS_OSCAR_AutomationTest {
 				Step 02
 			*/
 			oscar.STEP15__c = 'Passed';
+			oscar.ANG_Type_Of_Change__c = AMS_Utils.ANG_ACCREDITATION_TYPE;
+			oscar.AMS_Online_Accreditation__r.ANG_Accreditation_Model_to_Change__c = AMS_Utils.ACCREDITATIONMODEL_CASH;
 			factory = manager.newClassInstance('AMS_OSCAR_Automation.AMS_OSCAR_Step2_succeeded');
 			System.assertEquals(true, factory.processWork(event, oscar));
 			System.assertEquals('On Hold_Internal', oscar.Status__c);
+			
+			List<Agency_Authorization__c> toUpsert = new List<Agency_Authorization__c>();
+			For(Agency_Authorization__c aa: [Select Id , Status__c, Account__r.IATA_ISO_Country__r.ANG_Enable_NewGen__c, Account__r.IATA_ISO_Country__r.ANG_Portal_Service__c, Account__r.IATA_ISO_Country__r.ANG_IEP_Model__c
+											from Agency_Authorization__c 
+											where Account__c =: oscar.Account__C and ANG_FormOfPayment_ID__c = 'CA' and Status__c != 'Not Authorized' and RecordType.DeveloperName = 'FormOfPayment']){
+				aa.Status__c = 'Not Authorized';
+				toUpsert.add(aa);
+			}
+			Update toUpsert;
+
+			Set<Id> accountsAffected = new Set<Id>();
+			accountsAffected.add(oscar.Account__c);
+			ANG_AgencyChangesHelper.performCashTransformation(accountsAffected);
 
 			factory = manager.newClassInstance('AMS_OSCAR_Automation.AMS_OSCAR_Step2_failed');
 			System.assertEquals(true, factory.processWork(event, oscar));
@@ -487,6 +593,15 @@ private class AMS_OSCAR_AutomationTest {
 
 			factory = manager.newClassInstance('AMS_OSCAR_Automation.AMS_OSCAR_Step50_failed');
 			System.assertEquals(true, factory.processWork(event, oscar));
+
+			/*
+			 	Step 52
+			*/
+
+			Account accountToUpdateRiskEventCashAndCashless = [SELECT Id, Name, ANG_Accreditation_Model__c FROM Account WHERE Name = 'account To Update Risk Event Cash to Cashless' LIMIT 1];
+			AMS_OSCAR__c oscar52 = [SELECT id, Account__c FROM AMS_OSCAR__c WHERE Account__c =: accountToUpdateRiskEventCashAndCashless.id];
+			factory = manager.newClassInstance('AMS_OSCAR_Automation.AMS_OSCAR_Step52_succeeded');
+			System.assertEquals(true, factory.processWork(event, oscar52));
 
 		Test.stopTest();
 
