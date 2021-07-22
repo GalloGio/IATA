@@ -51,7 +51,7 @@
             </div>
         </div>
 
-        <div if:true={is2FASetup} class="slds-grid slds-gutters_medium slds-grid_align-center slds-p-horizontal_medium">
+        <div if:true={is2FASetup} class="slds-grid slds-grid_align-center slds-p-horizontal_medium">
             <div class="slds-x-small-size_1-of-1 slds-large-size_2-of-3">
                 <c-portal-mfa-activation-container if:true={userInfo.isSecurityQuestionActivated} translations={translations} is-settings qr-code={qrCodeURL}
                 secret={secret} onvalidatemfacode={validateQrCode}></c-portal-mfa-activation-container>

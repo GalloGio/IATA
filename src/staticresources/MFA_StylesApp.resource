@@ -3,8 +3,12 @@ body, .slds-scope {
 }
 
 .mfa-main-title {
-    font-weight: bold;
-    font-size: 1.2rem;
+    font-weight: 500;
+    font-size: 22px;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.45;
+    letter-spacing: normal;
 }
 
 .mfa-main-body {
@@ -237,6 +241,7 @@ body, .slds-scope {
     outline-style: none;
     box-shadow: none;
     border-color: transparent;
+    cursor: pointer;
 }
 
 .slds-scope .slds-form-element__label{
