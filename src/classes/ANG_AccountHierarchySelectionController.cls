@@ -1172,31 +1172,6 @@ public with sharing class ANG_AccountHierarchySelectionController {
 				}
 
 			}
-			if(oscar.Process__c == AMS_Utils.ANGPARTCONVERTMCTOST){
-				List<Account> accs = [SELECT ID, IATACode__c, location_type__c, (SELECT Id ,Account__c, Status__c FROM Agency_Authorizations__r
-																WHERE ANG_FormOfPayment_ID__c = 'CA' AND Status__c = 'Active' AND RecordType.DeveloperName = 'FormOfPayment')
-										FROM ACCOUNT 
-										WHERE ID IN :IdAccountSelecteds OR ID =: oscar.New_parent__c];
-
-				
-				Boolean showErrorFOP = false;
-				String showErrorFOPMessage = '';
-				for(Account a: accs){
-					if(a.Agency_Authorizations__r.isEmpty()){
-						showErrorFOP = true;
-						if(showErrorFOPMessage == ''){
-							showErrorFOPMessage = ' ' + a.location_type__c + ' ' + a.IATACode__c;
-						}else{
-							showErrorFOPMessage += ', ' + a.location_type__c + ' ' + a.IATACode__c;
-						}
-						
-					}
-				}
-				if(showErrorFOP){
-					ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Console_Multicountry_FOP_Error_Message + showErrorFOPMessage));
-					return;
-				}
-			}
 		}
 
 		//Make sure that the proper main account is selected

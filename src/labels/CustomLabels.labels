@@ -22211,14 +22211,6 @@ A provisional assignment shall be valid for a non-renewable period of six (6) mo
         <value>Completed dangerous goods training</value>
     </labels>
     <labels>
-        <fullName>ISSP_AMS_Console_Multicountry_FOP_Error_Message</fullName>
-        <categories>ISSP, AMS Console</categories>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>ISSP AMS Console Multicountry FOP Error Message</shortDescription>
-        <value>The following locations do not have an active Cash FOP:</value>
-    </labels>
-    <labels>
         <fullName>ISSP_AMS_Console_new_parent_HE_error</fullName>
         <language>en_US</language>
         <protected>false</protected>

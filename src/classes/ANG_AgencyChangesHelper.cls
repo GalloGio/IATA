@@ -711,15 +711,16 @@ public with sharing class ANG_AgencyChangesHelper {
 					acct.Top_Parent__c = accountHE.Id;
 					acct.ParentId = accountHE.Id;
 				}
-
-				//Initialize risk information
-				acct.ANG_Accreditation_Model__c = typeOfConversion;
-				acct.ANG_HE_CashCondition__c = false;
-				acct.Financial_Review_Result__c = null;
-				acct.Assessment_Performed_Date__c = null;
-				acct.Financial_Assessment_Points__c = null;
-				acct.ANG_HE_RiskStatus__c = AMS_Utils.NOT_APPLICABLE;
-				acct.ANG_HE_RiskHistoryAssessment__c = AMS_Utils.NOT_APPLICABLE;
+				if(oscar.Process__c == AMS_Utils.ANGPARTCONVERTMCTOST && allAccountsInvolvedSetToProcessChangeCodeGeneration.contains(oscar.New_parent__c)){
+					//Initialize risk information
+					acct.ANG_Accreditation_Model__c = typeOfConversion;
+					acct.ANG_HE_CashCondition__c = false;
+					acct.Financial_Review_Result__c = null;
+					acct.Assessment_Performed_Date__c = null;
+					acct.Financial_Assessment_Points__c = null;
+					acct.ANG_HE_RiskStatus__c = AMS_Utils.NOT_APPLICABLE;
+					acct.ANG_HE_RiskHistoryAssessment__c = AMS_Utils.NOT_APPLICABLE;
+				}
 				
 				//Parent OSCAR Account Id stores the account Id of the agency that was initially the GE 
 				if(oscar.Parent_OSCAR_Account_Id__c != acct.Id && oscar.Parent_OSCAR_Account_Id__c != acct.ParentId){
