@@ -9,6 +9,7 @@ import CASE_OBJECT from '@salesforce/schema/Case';
 import CASE_CASEAREA_FIELD from '@salesforce/schema/Case.CaseArea__c';
 import CASE_LANGUAGE_FIELD from '@salesforce/schema/Case.Case_Language__c';
 import CASE_RECORDTYPE_FIELD from '@salesforce/schema/Case.RecordTypeId';
+import CASE_CASERECORDTYPE_FIELD from '@salesforce/schema/Case.Case_record_type__c';
 import CASE_CONTACT_FIELD from '@salesforce/schema/Case.ContactId';
 import CASE_DESCRIPTION_FIELD from '@salesforce/schema/Case.Description';
 import CASE_COUNTRY_FIELD from '@salesforce/schema/Case.BSPCountry__c';
@@ -24,6 +25,7 @@ const CASE_FIELDS = [
 	CASE_CASEAREA_FIELD,
 	CASE_LANGUAGE_FIELD,
 	CASE_RECORDTYPE_FIELD,
+	CASE_CASERECORDTYPE_FIELD,
 	CASE_CONTACT_FIELD,
 	CASE_DESCRIPTION_FIELD,
 	CASE_COUNTRY_FIELD,
@@ -63,6 +65,7 @@ export default class LogPhoneCallAction extends LightningElement {
 	@track error;
 	@track recordtypeValue;
 	@track recordtypePicklist;
+	mapRecordtypePicklist;
 	@track caseareaPicklist = [];
 
 	@api get objectFields() {
@@ -86,6 +89,7 @@ export default class LogPhoneCallAction extends LightningElement {
 	casearea = CASE_CASEAREA_FIELD;
 	language = CASE_LANGUAGE_FIELD;
 	recordtype = CASE_RECORDTYPE_FIELD;
+	caserecordtype = CASE_CASERECORDTYPE_FIELD;
 	contact = CASE_CONTACT_FIELD;
 	description = CASE_DESCRIPTION_FIELD;
 	country = CASE_COUNTRY_FIELD;
@@ -101,35 +105,39 @@ export default class LogPhoneCallAction extends LightningElement {
 	wiredCase({ error, data }) {
 		if (data) {
 			if (data.apiName === "Contact") {
-				let contact = data;
-				let account = contact.fields.Account.value;
-				let country = account.fields.IATA_ISO_Country__r.value;
-				this.defaultSubject = 'Phone call received on the ' + new Date().toDateString();
-				this.defaultCaseArea = '';
-				this.defaultReason = '';
-				this.defaultType = account.fields.Account_Type__c.value;
-				this.defaultLanguage = contact.fields.Preferred_Language__c.value;
-				this.defaultContact = contact.id;
-				this.defaultCountry = country.fields.Name.value;
-				this.defaultRegion = account.fields.Region_formula__c.value;
-				this.defaultTypecustomer = account.fields.Account_Type__c.value;
-				this.defaultAccount = account.id;
+				try {
+					let contact = data;
+					let account = contact.fields.Account.value;
+					let country = account.fields.IATA_ISO_Country__r.value;
+					this.defaultSubject = 'Phone call received on the ' + new Date().toDateString();
+					this.defaultCaseArea = '';
+					this.defaultReason = '';
+					this.defaultType = account.fields.Account_Type__c.value;
+					this.defaultLanguage = contact.fields.Preferred_Language__c.value;
+					this.defaultContact = contact.id;
+					this.defaultCountry = country.fields.Name.value;
+					this.defaultRegion = account.fields.Region_formula__c.value;
+					this.defaultTypecustomer = account.fields.Account_Type__c.value;
+					this.defaultAccount = account.id;
+				} catch(e) {}
 				this.error = undefined;
 			}
 			if (data.apiName === "Case") {
-				let cse = data.fields;
-				this.defaultSubject = 'Phone call received on the ' + new Date().toDateString();
-				this.defaultCaseArea = cse.CaseArea__c.value;
-				this.defaultReason = cse.Reason1__c.value;
-				this.defaultType = cse.Type.value;
-				this.defaultLanguage = cse.Case_Language__c.value;
-				this.defaultContact = cse.ContactId.value;
-				this.defaultCountry = cse.BSPCountry__c.value;
-				this.defaultRegion = cse.Region__c.value;
-				this.defaultTypecustomer = cse.Type_of_customer__c.value;
-				this.defaultAccount = cse.AccountId.value;
+				try {
+					let cse = data.fields;
+					this.defaultSubject = 'Phone call received on the ' + new Date().toDateString();
+					this.defaultCaseArea = cse.CaseArea__c.value;
+					this.defaultReason = cse.Reason1__c.value;
+					this.defaultType = cse.Type.value;
+					this.defaultLanguage = cse.Case_Language__c.value;
+					this.defaultContact = cse.ContactId.value;
+					this.defaultCountry = cse.BSPCountry__c.value;
+					this.defaultRegion = cse.Region__c.value;
+					this.defaultTypecustomer = cse.Type_of_customer__c.value;
+					this.defaultAccount = cse.AccountId.value;
+					this.recordtypeValue = data.recordTypeId;
+				} catch(e) {}
 				this.error = undefined;
-				this.recordtypeValue = data.recordTypeId;
 			}
 
 		} else if (error) {
@@ -169,10 +177,11 @@ export default class LogPhoneCallAction extends LightningElement {
 	handleSubmit(event) {
 		event.preventDefault();
 		this.loading = true;
-		var eventFields = event.detail.fields;
+		let eventFields = event.detail.fields;
 		if (this.buttonclicked === 'SaveClose') {
 			eventFields.Status = 'Closed';
 		}
+		eventFields.Case_record_type__c = this.mapRecordtypePicklist.get(this.recordtypeValue);
 		this.template.querySelector('lightning-record-edit-form').submit(eventFields);
 	}
 
@@ -210,8 +219,10 @@ export default class LogPhoneCallAction extends LightningElement {
 		.then(results => {
 			if(results !== undefined){
 				this.recordtypePicklist = [];
+				this.mapRecordtypePicklist = new Map();
 				results.forEach(result => {
 					this.recordtypePicklist.push({ label: result.Name, value: result.Id });
+					this.mapRecordtypePicklist.set(result.Id, result.Name);
 				});
 			}
 		}).catch(error => {
