@@ -10,6 +10,7 @@ public class GDPR_SubscriptionsAndInterests_CTRL_TEST {
 		Pardot_API__c pardotSetting = new Pardot_API__c();
 		pardotSetting.API_Version__c = '4';
 		pardotSetting.Assigned_User__c = '1111111';
+		pardotSetting.Pardot_Business_Unit__c = '2222222222222222';
 		insert pardotSetting;
 
 		Contact c = new Contact(FirstName = 'fred', LastName = 'dev', Salutation = 'Mr.',  Email = 'fred.dev@iatatest.com');
