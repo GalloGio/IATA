@@ -43011,7 +43011,7 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
                 <label><!-- Comments --></label>
                 <name>Comments</name>
             </columns>
-            <label><!-- Comments --></label>
+            <label>Relatorios / Reportes</label>
             <name>Comments</name>
         </sections>
         <sections>
@@ -43101,7 +43101,7 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
             <name>Contracts</name>
         </sections>
         <sections>
-            <label><!-- Opportunities --></label>
+            <label>Relatorios / Reportes</label>
             <name>Opportunities</name>
         </sections>
         <sections>
@@ -43222,7 +43222,7 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
             <name>Agencies Applied Change codes</name>
         </sections>
         <sections>
-            <label><!-- OSCARs --></label>
+            <label>Relatorios / Reportes</label>
             <name>OSCARs</name>
         </sections>
     </reportTypes>
