@@ -50,6 +50,11 @@
         <default>false</default>
         <label>Third party delayed / no answer</label>
     </customValue>
+    <customValue>
+        <fullName>Key Control Failed</fullName>
+        <default>false</default>
+        <label>Key Control Failed</label>
+    </customValue>
     <description>Values used in Apparent_Cause__c fields in Case Object and in Operational_Improvements__c object</description>
     <masterLabel>Apparent Cause</masterLabel>
     <sorted>false</sorted>

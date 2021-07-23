@@ -7820,6 +7820,62 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
         <visibleLines>3</visibleLines>
     </fields>
     <fields>
+        <fullName>Quality_Response_Categorization__c</fullName>
+        <externalId>false</externalId>
+        <label>Quality Response Categorization</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Business Decision</fullName>
+                    <default>false</default>
+                    <label>Business Decision</label>
+                </value>
+                <value>
+                    <fullName>Clearing Bank Error</fullName>
+                    <default>false</default>
+                    <label>Clearing Bank Error</label>
+                </value>
+                <value>
+                    <fullName>Exception</fullName>
+                    <default>false</default>
+                    <label>Exception</label>
+                </value>
+                <value>
+                    <fullName>Highlighted to R&amp;S</fullName>
+                    <default>false</default>
+                    <label>Highlighted to R&amp;S</label>
+                </value>
+                <value>
+                    <fullName>N/A</fullName>
+                    <default>false</default>
+                    <label>N/A</label>
+                </value>
+                <value>
+                    <fullName>OI Raised</fullName>
+                    <default>false</default>
+                    <label>OI Raised</label>
+                </value>
+                <value>
+                    <fullName>Rejected proposal</fullName>
+                    <default>false</default>
+                    <label>Rejected proposal</label>
+                </value>
+                <value>
+                    <fullName>Under Investigation</fullName>
+                    <default>false</default>
+                    <label>Under Investigation</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>Region__c</fullName>
         <externalId>false</externalId>
         <inlineHelpText>Region Impacted</inlineHelpText>
@@ -13254,6 +13310,10 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
+                <fullName>Key Control Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Lack of Communication</fullName>
                 <default>false</default>
             </values>
@@ -16827,6 +16887,41 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
             </values>
             <values>
                 <fullName>Medium</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Quality_Response_Categorization__c</picklist>
+            <values>
+                <fullName>Business Decision</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Clearing Bank Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Exception</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Highlighted to R%26S</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OI Raised</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected proposal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Under Investigation</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -22367,6 +22462,41 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Quality_Response_Categorization__c</picklist>
+            <values>
+                <fullName>Business Decision</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Clearing Bank Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Exception</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Highlighted to R%26S</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OI Raised</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected proposal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Under Investigation</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Region__c</picklist>
             <values>
                 <fullName>Africa %26 Middle East</fullName>
@@ -27682,6 +27812,41 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
             </values>
             <values>
                 <fullName>Medium</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Quality_Response_Categorization__c</picklist>
+            <values>
+                <fullName>Business Decision</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Clearing Bank Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Exception</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Highlighted to R%26S</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OI Raised</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected proposal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Under Investigation</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
