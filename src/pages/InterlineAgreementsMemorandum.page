@@ -124,7 +124,7 @@
 									<td><apex:outputText value="{!row.agreement.Agreement_type__c}"/></td>
 									<td>
 										<apex:outputText value="{0,date,d MMM yyyy}">
-											<apex:param value="{!row.agreement.Agreement_processed_date__c}"/>
+											<apex:param value="{!row.agreement.Effective_Date__c}"/>
 										</apex:outputText>
 									</td>
 								</tr>

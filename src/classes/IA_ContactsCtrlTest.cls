@@ -14,6 +14,7 @@ public class IA_ContactsCtrlTest {
 		contact.Phone = '123456789';
 		contact.Status__c = 'Active';
 		contact.MITA_Contact_Type__c = null;
+		contact.MITA_Contact__c = false;
 		insert contact;
 	}
 
@@ -27,7 +28,7 @@ public class IA_ContactsCtrlTest {
 			WHERE Name = :(TestDataFactory_Accounts.DEFAULTNAME + ' 0')];
 
 		contact = [
-			SELECT Id, RecordTypeId, AccountId, Name, FirstName, LastName, Email, Phone, Status__c, MITA_Contact_Type__c
+			SELECT Id, RecordTypeId, AccountId, Name, FirstName, LastName, Email, Phone, Status__c, MITA_Contact_Type__c, MITA_Contact__c
 			FROM Contact
 			WHERE Email = :(TestDataFactory_Contacts.DEFAULTEMAIL + '0')];
 	}
@@ -72,9 +73,12 @@ public class IA_ContactsCtrlTest {
 		System.assertEquals(contact.Id,ctrl.selectedContact.Id);
 
 		//save a contact
-		contact.MITA_Contact_Type__c = IA_util.GENERIC_CONTACT;
+		ctrl.selectedContact.MITA_Contact_Type__c = IA_util.GENERIC_CONTACT;
+		
+		ctrl.MITAContactOptionWrappers[0].checked = true;
 		ctrl.saveContact();
 		System.assertEquals(contact.Id,ctrl.selectedContact.Id);
+		System.assertEquals(true,ctrl.selectedContact.MITA_Contact__c);
 		System.assertEquals(true,ctrl.showModalAddContact);
 		System.assert(ctrl.alertModal!=null);
 		System.assertEquals(IA_util.ALERTMODAL_SUCCESSNEW,ctrl.alertModal.msgType);
@@ -92,6 +96,7 @@ public class IA_ContactsCtrlTest {
 		queryRecords();
 
 		contact.MITA_Contact_Type__c = IA_util.GENERIC_CONTACT;
+		contact.MITA_Contact__c = true;
 		update contact;
 
 		IA_ContactsCtrl ctrl = new IA_ContactsCtrl();
@@ -115,9 +120,10 @@ public class IA_ContactsCtrlTest {
 		System.assertEquals(null,ctrl.alertModal);
 
 		// update contact
-		contact.MITA_Contact_Type__c = IA_util.GENERIC_CONTACT;
+		ctrl.MITAContactOptionWrappers[0].checked = true;
 		ctrl.saveContact();
 		System.assertEquals(contact.Id,ctrl.selectedContact.Id);
+		System.assertEquals(true,ctrl.selectedContact.MITA_Contact__c);
 		System.assertEquals(true,ctrl.showModalContact);
 		System.assert(ctrl.alertModal!=null);
 		System.assertEquals(IA_util.ALERTMODAL_SUCCESSNEW,ctrl.alertModal.msgType);
@@ -125,6 +131,7 @@ public class IA_ContactsCtrlTest {
 		// close modal
 		contact.MITA_Contact_Type__c = IA_util.GENERIC_CONTACT + ';' + IA_util.CARGO_MANAGER;
 		ctrl.closeModalContact();
+		System.assertEquals(true,ctrl.selectedContact.MITA_Contact__c);
 		System.assertEquals(false,ctrl.showModalContact);
 		System.assertEquals(null,ctrl.selectedContactId);
 		System.assertEquals(null,ctrl.alertModal);
@@ -139,6 +146,7 @@ public class IA_ContactsCtrlTest {
 		queryRecords();
 
 		contact.MITA_Contact_Type__c = IA_util.GENERIC_CONTACT;
+		contact.MITA_Contact__c = true;
 		update contact;
 
 		IA_ContactsCtrl ctrl = new IA_ContactsCtrl();
@@ -165,6 +173,7 @@ public class IA_ContactsCtrlTest {
 		ctrl.selectedContactId = IA_util.Encrypt(IA_ContactsCtrl.EncDecKey,contact.Id);
 		ctrl.openModalRemoveContact();
 		ctrl.deleteContact();
+		System.assertEquals(false,ctrl.selectedContact.MITA_Contact__c);
 		System.assertEquals(null,ctrl.selectedContactId);
 		System.assertEquals(null,ctrl.selectedContact);
 		System.assertEquals(true,ctrl.showModalContact);
@@ -175,6 +184,7 @@ public class IA_ContactsCtrlTest {
 		// close modal
 		contact.MITA_Contact_Type__c = IA_util.GENERIC_CONTACT + ';' + IA_util.CARGO_MANAGER;
 		ctrl.closeModalContact();
+		System.assertEquals(false,ctrl.selectedContact.MITA_Contact__c);
 		System.assertEquals(false,ctrl.showModalContact);
 		System.assertEquals(null,ctrl.selectedContactId);
 		System.assertEquals(null,ctrl.alertModal);
