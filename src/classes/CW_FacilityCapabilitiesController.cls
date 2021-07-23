@@ -421,7 +421,7 @@ public without sharing class CW_FacilityCapabilitiesController {
 		//Get certifications allowed for user
 		String stationRT = [SELECT RecordType.DeveloperName FROM ICG_Account_Role_Detail__c WHERE Id =: id].RecordType.DeveloperName;
 		List<String> CERTIFICATIONS_ALLOWED_USER =  CW_CapabilitiesUtilities.getCertificationsAllowedByDepartments(stationRT,validationPrograms);
-		Boolean userHasPermissionToEdit = CW_Utilities.hasSpecialPermissionsToEdit();
+		Boolean userHasPermissionToEdit = CW_Utilities.hasSpecialPermissionsToEdit() || CW_Utilities.getPermissionToEdit();
 
 		//Get recordtypes id for category
 		Map<String, String> mapRecordTypeIdByCategory = CW_FacilityCapabilitiesController.getRecordTypesIdByCategoryName();
