@@ -2060,7 +2060,7 @@ public with sharing class ANG_AgencyChangesHelper {
 			Account acc = toReturn.accountsMap.get(oscarToProcess.Account__c);
 
 			if(acc==null){
-				acc = [select id, IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c, (SELECT Id, ANG_AccountId__c, Amount_At_Risk_USD__c, ANG_Financial_Security__c, ANG_RHC_Amount_Forecasted__c, ANG_RHC_Amount__c, RHC_Amount_Equals_FS_Percent__c, ANG_RHC_Amount_Equals_FS__c, ANG_CashCondition__c FROM RHC_Informations__r) from account where id =:oscarToProcess.Account__c];
+				acc = [select id, IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c, (SELECT Id, ANG_AccountId__c, Amount_At_Risk_USD__c, ANG_Financial_Security__c, ANG_RHC_Amount_Forecasted__c, ANG_RHC_Amount__c, RHC_Amount_Equals_FS_Percent__c, ANG_RHC_Amount_Equals_FS__c, ANG_CashCondition__c, ANG_RME_Amount__c, ANG_RHC_Amount_Provisional__c, CurrencyIsoCode, ANG_Minimum_Financial_Security__c FROM RHC_Informations__r) from account where id =:oscarToProcess.Account__c];
 			}
 
 			//countries where Cashless agencies can have CASH FOP need to have the RHC recalculated (set=1)
@@ -2281,7 +2281,7 @@ public with sharing class ANG_AgencyChangesHelper {
 				ANG_IEP_Status__c, ANG_HE_RiskStatus__c, ANG_IEP_HE_AccntNum__c, ANG_HE_CashCondition__c, Financial_Review_Result__c, ANG_HE_RiskHistoryAssessment__c, Financial_Assessment_Points__c, IATA_ISO_Country__r.AMS_Settlement_System__r.Remittance_Frequency_per_State__c,
 				Identify_as_Multicountry_Key_Hierarchy__c, Multicountry_Key_Hierarchy__c, IATA_ISO_Country__r.AMS_Settlement_System__c, IATA_ISO_Country__r.ANG_RHC_LocationType__c,
 				Sector__c , Category__c, IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c, 
-				(SELECT Id, ANG_AccountId__c, Amount_At_Risk_USD__c, ANG_Financial_Security__c, ANG_RHC_Amount_Forecasted__c, ANG_RHC_Amount__c, RHC_Amount_Equals_FS_Percent__c, ANG_RHC_Amount_Equals_FS__c, ANG_CashCondition__c FROM RHC_Informations__r), (SELECT Id FROM Location_Risk_Events__r), (SELECT Id FROM Main_Accounts__r), (SELECT Id, ANG_Account__c FROM Risk_Alerts__r),
+				(SELECT Id, ANG_AccountId__c, Amount_At_Risk_USD__c, ANG_Financial_Security__c, ANG_RHC_Amount_Forecasted__c, ANG_RHC_Amount__c, RHC_Amount_Equals_FS_Percent__c, ANG_RHC_Amount_Equals_FS__c, ANG_CashCondition__c, ANG_RME_Amount__c, ANG_RHC_Amount_Provisional__c, CurrencyIsoCode, ANG_Minimum_Financial_Security__c FROM RHC_Informations__r), (SELECT Id FROM Location_Risk_Events__r), (SELECT Id FROM Main_Accounts__r), (SELECT Id, ANG_Account__c FROM Risk_Alerts__r),
 				(SELECT Id FROM ChildAccounts WHERE Status__c IN ('', NULL, :AMS_Utils.ACC_S0_TERMINATED, :AMS_Utils.ACC_S1_NOTACCREDITED, :AMS_Utils.ACC_S3_NOTINOPERATION)),
 				(SELECT Id, Account__c, Reason_Code__c, Reason_Description__c, Bulletin_Information__c FROM Agencies_Applied_Change_codes__r WHERE Active__c = true),
 				(SELECT Id, Account__c, Status__c, RecordTypeId, ANG_FormOfPayment_ID__c FROM Agency_Authorizations__r WHERE RecordType.DeveloperName = 'FormOfPayment')

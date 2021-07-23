@@ -93,7 +93,7 @@
     "ISOCountryCodes":"JP",
     "AgentType":"IATA Passenger Sales Agent",
     "Country":"Japan",
-    "Documents":"Financial Statement which consists of profit and loss statement, balance sheet and Statements of Shareholders' Equity (With Notes to accounts and Financial Statement with seal and/or stamp by an independent KONINKAIKEISHI or ZEIRISHI is mandatory); Cover letter is attached; the Financial Year End on the financial statements should not be more than 4 months from the date of submission.公認会計士の監査証明または税理士作成証明（記名押印必須）のある財務決算書（損益計算書、貸借対照表、株主資本等変動計算書、その他財務報告書）;カバーレターの添付がある; 財務決算書上の年次決算期より4ヶ月以上経過していない。"
+    "Documents":"Financial Statement which consists of profit and loss statement, balance sheet and Statements of Shareholders’ Equity (With Notes to accounts) and Financial Statement with seal and /or stamp by an independent KONINKAIKEISHI or ZEIRISHI is mandatory; The Financial Year End on the financial statements should not be more than 4 months from the date of submission 公認会計士の監査証明又は税理士作成証明（記名押印又は署名必須）のある財務決算書（損益計算書、貸借対照表、株主資本等変動計算書、その他財務報告書）財務決算書上の年次決算期より4ヶ月以上経過していない"
   },
   {
     "ISOCountryCodes":"KR",
