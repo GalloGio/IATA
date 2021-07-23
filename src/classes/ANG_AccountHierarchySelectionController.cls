@@ -1019,6 +1019,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		newParentSelected = false;
 		IATAcodesSelecteds = new List<String>();
 		IATACodeToShowOnSplitAccountMultiCountry = '';
+		system.debug('MR::: oscar.New_parent__c' + oscar.New_parent__c);
 		if(oscar.Process__c == AMS_Utils.ANGPARTCONVERTMCTOLT || oscar.Process__c == AMS_Utils.ANGPARTCONVERTMCTOST){
 			List<HierarchyItem> hierarchyItemsSorted = hierarchy.values().clone();
 			hierarchyItemsSorted.sort();
@@ -1038,13 +1039,13 @@ public with sharing class ANG_AccountHierarchySelectionController {
 								}
 							}
 						}
-						if(!showErrorMessageSplitAccountMultiCountry && newParent){
+						if(!showErrorMessageSplitAccountMultiCountry && oscar.New_parent__c == null){
 							oscar.New_parent__c = i.acc.Id;
 							newParentSelected = true;
 							IATACodeToShowOnSplitAccountMultiCountry = i.acc.IATACode__c;
 						}
 					}
-				}else if(i.selected == true && i.acc.Location_Type__c == 'AE' && newParent){
+				}else if(i.selected == true && i.acc.Location_Type__c == 'AE'){
 					IATAcodesSelecteds.add(i.acc.IATACode__c);
 					IdAccountSelecteds.add(i.acc.Id);
 					newParentAe = i.acc.Id;
@@ -1052,9 +1053,9 @@ public with sharing class ANG_AccountHierarchySelectionController {
 					IATAcodeToShow = i.acc.IATACode__c;
 				}
 			}
-			if(countManyAE == 1 && !newParentSelected && newParent){
-				oscar.New_parent__c = newParentAe;
-				IATACodeToShowOnSplitAccountMultiCountry = IATAcodeToShow;
+			if(countManyAE == 1 && !newParentSelected && oscar.New_parent__c == null){
+					oscar.New_parent__c = newParentAe;
+					IATACodeToShowOnSplitAccountMultiCountry = IATAcodeToShow;
 			}
 		}
 	}

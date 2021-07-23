@@ -711,9 +711,9 @@ public with sharing class ANG_AgencyChangesHelper {
 					acct.Top_Parent__c = accountHE.Id;
 					acct.ParentId = accountHE.Id;
 				}
+				acct.ANG_Accreditation_Model__c = typeOfConversion;
 				if(oscar.Process__c == AMS_Utils.ANGPARTCONVERTMCTOST && allAccountsInvolvedSetToProcessChangeCodeGeneration.contains(oscar.New_parent__c)){
 					//Initialize risk information
-					acct.ANG_Accreditation_Model__c = typeOfConversion;
 					acct.ANG_HE_CashCondition__c = false;
 					acct.Financial_Review_Result__c = null;
 					acct.Assessment_Performed_Date__c = null;
