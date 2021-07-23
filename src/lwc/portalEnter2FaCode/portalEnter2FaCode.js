@@ -26,7 +26,11 @@ export default class PortalEnter2FaCode extends LightningElement {
 	 */
 	handleCodeValid(){
 		this._otp = this.template.querySelector('c-portal-mfa-activation-code').getCode();
-		this.template.querySelector('c-portal-login-step-container').setButtonDisabled(false);
+		if (this._otp && this._otp.length === 6) {
+			this.template.querySelector('c-portal-login-step-container').setButtonDisabled(false);	
+		}else{
+			this.template.querySelector('c-portal-login-step-container').setButtonDisabled(true);
+		}
 	}
 
 	/**

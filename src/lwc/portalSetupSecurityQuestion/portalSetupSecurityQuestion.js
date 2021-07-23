@@ -76,9 +76,9 @@ export default class PortalSetupSecurityQuestion extends LightningElement {
      */
     get isActivatedClass(){
         if(this.userInfo.isSecurityQuestionActivated){
-            return 'mfa-security-question-activated-lbl slds-p-top_xxx-small';
+            return 'mfa-security-question-activated-lbl slds-m-top_xx-small';
         }else{
-            return 'mfa-security-question-not-activated-lbl slds-p-top_xxx-small';
+            return 'mfa-security-question-not-activated-lbl slds-m-top_xx-small';
         }
     }
 

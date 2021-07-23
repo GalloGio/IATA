@@ -4,7 +4,7 @@ body, .slds-scope {
 
 .mfa-main-title {
     font-weight: 500;
-    font-size: 22px;
+    font-size: 24px;
     font-style: normal;
     font-stretch: normal;
     line-height: 1.45;
@@ -13,23 +13,27 @@ body, .slds-scope {
 
 .mfa-main-body {
     text-align: justify;
-    text-justify: inter-word; 
+    text-justify: inter-word;
+    font-weight: 400;
+    font-size: 16px;
 }
 
 .mfa-secondary-title {
     font-weight: 500;
     font-weight: bold;
-    font-size: 18px;
-    line-height: 32px;
+    font-size: 20px;
+    line-height: 26px;
 }
 
 .mfa-tertiary-title {
-    font-size: 0.9rem;
+    font-size: 20px;
 }
 
 .mfa-tertiary-body {
     text-align: justify;
-    text-justify: inter-word; 
+    text-justify: inter-word;
+    font-weight: 400;
+    font-size: 16px;
 }
 
 
@@ -57,7 +61,6 @@ body, .slds-scope {
     background: none;
     background-color:#f6f8fa;
     color:#999999 !important;
-    font-weight: bold;
     border-radius: 1px;
 }
 
@@ -68,6 +71,8 @@ body, .slds-scope {
     border: none;
     padding: 1rem 3rem;
     border-radius: 1px;
+    font-weight: 500;
+    font-size: 16px;
 }
 
 .mfa-centered-btn:hover {
@@ -85,13 +90,14 @@ body, .slds-scope {
     border: none;
     padding: 6% 35%;
     border-radius: 1px;
+    font-weight: 500;
+    font-size: 16px;
 }
 
 .mfa-right-btn:disabled {
     background: none;	
     background-color:#f6f8fa;	
-    color:#999999;	
-    font-weight: bold;	
+    color:#999999;
     border-radius: 1px;	
 }
 
@@ -107,7 +113,8 @@ body, .slds-scope {
     background: none;
     border: none;
     color: #3333ff;
-    font-weight: bold;
+    font-weight: 500;
+    font-size: 16px;
     padding: 6% 35%;
     border-radius: 1px;
     background-color: white;
@@ -171,17 +178,20 @@ body, .slds-scope {
 .mfa-security-question-vl {
     border-left: 1px solid #999999;
     height: 25px;
+    margin-top: 6px;
 }
 
 .mfa-security-question-activated-lbl {
-    color: #51aa59;
+    color: #289632;
     font-size: 1rem;
     font-weight: bold;
+    padding-top: 3px;
 }
 
 .mfa-security-question-not-activated-lbl {
     color: #999999;
     font-size: 1rem;
+    padding-top: 3px;
 }
 
 .mfa-security-question-input-lbl {

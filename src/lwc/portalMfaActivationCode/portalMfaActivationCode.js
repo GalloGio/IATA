@@ -56,6 +56,7 @@ export default class PortalMfaActivationCode extends LightningElement {
 				this._codeVal[posInList] = null;
 				this.inputCode = null;
 				prevInput.focus();
+				this.isCodeSet();
 			}
 			return;
 		}

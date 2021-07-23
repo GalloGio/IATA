@@ -59,6 +59,7 @@
     <relatedLists>
         <fields>DeveloperName</fields>
         <fields>Language__c</fields>
+        <fields>Value__c</fields>
         <relatedList>Custom_metadata_label_translation__mdt.Custom_metadata_label__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
