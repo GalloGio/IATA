@@ -2,11 +2,8 @@
 private class UsersTest {
 	@TestSetup
 	static void makeData(){
-		User adminUser = [Select Id, UserRoleId From User Where IsActive = TRUE AND Profile.Name='System Administrator' Limit 1];
-		UserRole userRole = [Select Id, DeveloperName From UserRole Where DeveloperName = 'DirectorGeneral' Limit 1];
-		adminUser.UserRoleId = userRole.Id;
-		adminUser.Email = TestDataFactory_Contacts.DEFAULTEMAIL;
-		update adminUser;
+		User adminUser = TestDataFactory_Users.createInternalSystemAdminUsers(1).get(0);
+		insert adminUser;
 
 		System.runAs(adminUser){
 			Account account = TestDataFactory_Accounts.createDefaultAccounts(1).get(0);

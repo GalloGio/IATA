@@ -1,37 +1,61 @@
 @IsTest
 public class TestDataFactory_Users {
-	public static final Profile DEFAULTPROFILE = [SELECT Id FROM Profile WHERE Name='ISS Portal Airline User (Partner)'];
+	public static final Profile DEFAULTPROFILE = [SELECT Id FROM Profile WHERE Name = 'ISS Portal Airline User (Partner)'];
+	public static final Profile SYSTEMADMINPROFILE = [SELECT Id FROM Profile WHERE Name = 'System Administrator'];
+	public static final String DEFAULTEMAIL = 'abc@def.com.invalid';
 
-	/**
-	 * Creates a portal user for each input account
-	 * input contacts are also modified and require to be updated after inserting users
-	 * 
-	 * IMPORTANT: INSERT RETURNED USERS AND UPDATE INPUT CONTACTS
-	 */
-	public static List<User> createPortalUsers(list<Contact> listContact){
-		List<User> listUser = new List<User>();
-
-		for(Contact contact: listContact){
-			String alias = contact.LastName.replaceAll(' ','_');
-			User portalUser = new User(
-				Alias = alias.left(8),
-				Email= alias + '@testorg.com',
-				UserName= alias + '@testorg.com',
-				EmailEncodingKey='UTF-8',
-				LastName=contact.LastName,
-				LanguageLocaleKey='en_US',
-				LocaleSidKey='en_US',
-				ProfileId = DEFAULTPROFILE.Id,
-				ContactId = contact.Id,
-				IsActive = true,
-				TimeZoneSidKey='America/Los_Angeles'
-			);
-			//updating input contact
-			contact.User_Portal_Status__c = 'Approved Admin';
-			contact.Community__c = 'Community__c';
-			listUser.add(portalUser);
-		}
+	public static List<User> createPortalUsers(List<Contact> contactList){
+		List<User> userList = new List<User>();
 		
-		return listUser;
+		String orgId = UserInfo.getOrganizationId();
+		String dateString = String.valueof(Datetime.now()).replace(' ','').replace(':','').replace('-','');
+
+		UserRole userRole = [SELECT Id, DeveloperName FROM UserRole WHERE PortalType = 'Partner' LIMIT 1];
+
+		for(Contact contact: contactList){
+			User user = (User) Schema.getGlobalDescribe().get('User').newSObject();
+			Integer randomInt = Integer.valueOf(math.rint(math.random()*1000000));
+			String uniqueName = orgId + dateString + randomInt;
+			user.Alias = uniqueName.substring(18, 23);
+			user.ContactId = contact.Id;
+			user.Email = contact.Email;
+			user.EmailEncodingKey = 'UTF-8';
+			user.IsActive = true;
+			user.LastName = contact.LastName;
+			user.LanguageLocaleKey = 'en_US';
+			user.LocaleSidKey = 'en_US';
+			user.ProfileId = DEFAULTPROFILE.Id;
+			user.TimeZoneSidKey = 'America/Los_Angeles';
+			user.UserName = uniqueName + '@test' + orgId + '.org';
+			user.UserRoleId = userRole.Id;
+			userList.add(user);
+		}
+		return userList;
+	}
+
+	public static List<User> createInternalSystemAdminUsers(Integer numberOfRecords){
+		List<User> userList = new List<User>();
+		
+		String orgId = UserInfo.getOrganizationId();
+		String dateString = String.valueof(Datetime.now()).replace(' ','').replace(':','').replace('-','');
+
+		for(Integer x = 0; x < numberOfRecords; x++){
+			User user = (User) Schema.getGlobalDescribe().get('User').newSObject();
+			Integer randomInt = Integer.valueOf(math.rint(math.random()*1000000));
+			String uniqueName = orgId + dateString + randomInt;
+			user.Alias = uniqueName.substring(18, 23);
+			user.Email= DEFAULTEMAIL + 'x';
+			user.UserName= uniqueName + '@test' + orgId + '.org';
+			user.EmailEncodingKey='UTF-8';
+			user.LastName = 'LastName';
+			user.LanguageLocaleKey='en_US';
+			user.License_Cost_Center__c = 'ISF005CH01';
+			user.LocaleSidKey='en_US';
+			user.ProfileId = SYSTEMADMINPROFILE.Id;
+			user.IsActive = true;
+			user.TimeZoneSidKey='America/Los_Angeles';
+			userList.add(user);
+		}
+		return userList;
 	}
 }

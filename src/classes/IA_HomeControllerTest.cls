@@ -1,42 +1,36 @@
 @isTest
 public class IA_HomeControllerTest {
-
 	private static final String TEST_LOGO = 'logo_url';
-
-	private static Contact portalcontact;
-	private static User portaluser;
-	private static Account airline1;
 
 	@TestSetup
 	public static void setup(){
-		airline1 = TestDataFactory_Accounts.createAirlines(1).get(0);
+		Account airline1 = TestDataFactory_Accounts.createAirlineAccounts(1).get(0);
 		insert airline1;
 
 		portalcontact = TestDataFactory_Contacts.createDefaultContact(airline1.Id, 1).get(0);
 		insert portalcontact;
-
-		portalUser = TestDataFactory_Users.createPortalUsers(new list<Contact>{portalcontact}).get(0);
-		insert portalUser;
-
-		update portalcontact;
 
 		Portal_Applications__c app = TestDataFactory_PortalApplications.createDefaultPortalApplication(1).get(0);
 		app.Name = IA_HomeController.APP_NAME;
 		app.Application_icon_URL__c = TEST_LOGO;
 		insert app;
 
-		insert TestDataFactory_PortalApplicationRights.createGrantedPortalApplicationRight(app.Id, portalcontact.Id);
-	}
+		Portal_Application_Right__c par = TestDataFactory_PortalApplicationRights.createPortalApplicationRight(app.Id, portalcontact.Id);
+		par.Right__c = TestDataFactory_PortalApplicationRights.GRANTED;
+		insert par;
 
-	private static void queryRecords() {
-		portalcontact = [SELECT Id FROM Contact WHERE Email = :(TestDataFactory_Contacts.DEFAULTEMAIL+'0')];
-		portaluser = [SELECT Id, Name, ContactId FROM User WHERE ContactId = :portalcontact.Id];
+		User adminUser = [SELECT Id, UserRoleId FROM User WHERE IsActive = TRUE AND UserRoleId != NULL AND Profile.Name='System Administrator' LIMIT 1];
+		System.runAs(adminUser){
+			User portalUser = TestDataFactory_Users.createPortalUsers(new list<Contact>{portalcontact}).get(0);
+			insert portalUser;
+		}
 	}
 
 	static TestMethod void testController_NoAccess(){
-		queryRecords();
+		Contact portalcontact = [SELECT Id FROM Contact WHERE Email = :TestDataFactory_Contacts.DEFAULTEMAIL + '0'];
+		User portaluser = [SELECT Id, Name, ContactId FROM User WHERE ContactId = :portalcontact.Id];
 
-		Portal_Application_Right__c right = [Select Right__c from Portal_Application_Right__c where Contact__c = :portalUser.ContactId];
+		Portal_Application_Right__c right = [SELECT Right__c FROM Portal_Application_Right__c WHERE Contact__c = :portalUser.ContactId];
 		right.Right__c = TestDataFactory_PortalApplicationRights.DENIED;
 		update right;
 
@@ -50,7 +44,8 @@ public class IA_HomeControllerTest {
 	}
 
 	static testMethod void testController(){
-		queryRecords();
+		Contact portalcontact = [SELECT Id FROM Contact WHERE Email = :TestDataFactory_Contacts.DEFAULTEMAIL + '0'];
+		User portaluser = [SELECT Id, Name, ContactId FROM User WHERE ContactId = :portalcontact.Id];
 
 		Test.startTest();
 		System.runAs(portalUser){
@@ -67,5 +62,4 @@ public class IA_HomeControllerTest {
 		}
 		Test.stopTest();
 	}
-
 }

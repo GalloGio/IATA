@@ -6,7 +6,7 @@ public class IA_ContactsCtrlTest {
 
 	@TestSetup
 	public static void setup(){
-		airline = TestDataFactory_Accounts.createAirlines(1).get(0);
+		airline = TestDataFactory_Accounts.createAirlineAccounts(1).get(0);
 		insert airline;
 
 		contact = TestDataFactory_Contacts.createDefaultContact(airline.id,1).get(0);

@@ -19,12 +19,8 @@ public with sharing class AccountDashboardCTIContactsTest {
 		}
 		insert accountList;
 
-		List<Contact> contactList = TestDataFactory_Contacts.createDefaultContact(2);
+		List<Contact> contactList = TestDataFactory_Contacts.createDefaultContact(accountList[0].id,2);
 		insert contactList;
-
-		contactList[0].AccountId = accountList.get(0).Id;
-		contactList[1].AccountId = accountList.get(0).Id;
-		update contactList;
 
 		List<Portal_Applications__c> portalApplicationList = TestDataFactory_PortalApplications.createDefaultPortalApplication(2);
 		Portal_Applications__c app1 = portalApplicationList.get(0);
