@@ -97,7 +97,7 @@ export default class NewOpportunityAction extends LightningElement {
             let rtValues = Object.values(rtInfos);
 
             for(let i = 0; i < rtValues.length; i++) {
-                if(rtValues[i].name !== 'Master') {
+                if(rtValues[i].name !== 'Master' && rtValues[i].available) {
                     optionsValues.push({
                         label: rtValues[i].name,
                         value: rtValues[i].recordTypeId
