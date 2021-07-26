@@ -163,6 +163,9 @@ export default class LogPhoneCallAction extends LightningElement {
 			if (each.fieldName === 'CaseArea__c' || each.fieldName === 'Reason__c') {
 				each.value = '';
 			}
+			if (each.fieldName === 'Case_record_type__c') {
+				each.value = this.mapRecordtypePicklist.get(this.recordtypeValue);
+			}
 		});
 	}
 
@@ -181,7 +184,6 @@ export default class LogPhoneCallAction extends LightningElement {
 		if (this.buttonclicked === 'SaveClose') {
 			eventFields.Status = 'Closed';
 		}
-		eventFields.Case_record_type__c = this.mapRecordtypePicklist.get(this.recordtypeValue);
 		this.template.querySelector('lightning-record-edit-form').submit(eventFields);
 	}
 
