@@ -37,6 +37,10 @@ body, .slds-scope {
 }
 
 
+.mfa-login-tertiary-title {
+    font-size: 16px;
+}
+
 .mfa-text-center {
     text-align: center;
 }
@@ -289,4 +293,8 @@ body, .slds-scope {
 
 .slds-scope .slds-input__icon-group_right {
     top: 65%;
+}
+
+::placeholder {
+    color: lightgray;
 }

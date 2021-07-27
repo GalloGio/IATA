@@ -144,7 +144,7 @@ export default class PortalSettingsContainer extends LightningElement {
         let componentCMP = event.target;
         saveQuestionAnswer({question: question.trim(), answer: answer.trim()}).then(data => {
             if(closeModal){
-                componentCMP.setUp2FaAuthApp();
+                componentCMP.hideModal();
             }
             refreshApex(this.userWired);
             refreshApex(this.isSecurityQA_ActivatedWired);
@@ -206,7 +206,6 @@ export default class PortalSettingsContainer extends LightningElement {
         this.startLoad();
         deregisterVerificationTotp().then(data => {
             refreshApex(this.isMFA_ActivatedWired);
-            this.cleanUserSecurityQandA();
             deleteMFAPermissionSet();
             refreshApex(this.userWired);
         });
@@ -223,15 +222,6 @@ export default class PortalSettingsContainer extends LightningElement {
             refreshApex(this.userWired);
             this.display2FASetup = true;
             this.finishLoad();
-        });
-    }
-
-    /**
-     * @description Removes the related security question and answer set by the user
-     */
-    cleanUserSecurityQandA(){
-        cleanQuestionAnswerCurrentUser().then(data => {
-            refreshApex(this.isSecurityQA_ActivatedWired);
         });
     }
 

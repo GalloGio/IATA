@@ -10,7 +10,7 @@
 				</div>
 
 				<span class="slds-grid slds-align_absolute-center mfa-secondary-title">{labels.Portal_Security_Form_Body_Title1}</span>
-				<span class="slds-grid slds-align_absolute-center mfa-tertiary-title slds-p-bottom_large">{labels.Portal_Security_Form_Body_Title2}</span>
+				<span class="slds-grid slds-align_absolute-center mfa-login-tertiary-title slds-p-bottom_large">{labels.Portal_Security_Form_Body_Title2}</span>
 				<span class="slds-grid mfa-tertiary-body">{labels.Portal_Security_Question_Form_Body}</span>
 
 				<div class={secQandAClass}>
@@ -18,13 +18,13 @@
 						<div class="slds-row">
 							<div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click">
 								<label class="mfa-text-input-label">{labels.Portal_Question}</label>
-								<input class="slds-input mfa-text-input" type="text" oninput={updateQuestion} value={currentUserQuestion}/>
+								<input class="slds-input mfa-text-input" type="text" placeholder={labels.Portal_MFA_Security_Question_Placeholder} oninput={updateQuestion} value={currentUserQuestion}/>
 							</div>
 						</div>
 						<div class="slds-row">
 							<div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click">
 								<label class="mfa-text-input-label">{labels.Portal_Answer}</label>
-								<input class="slds-input mfa-text-input" type="text" oninput={updateAnswer} value={currentUserAnswer}/>
+								<input class="slds-input mfa-text-input" type="text" placeholder={labels.Portal_MFA_Security_Answer_Placeholder} oninput={updateAnswer} value={currentUserAnswer}/>
 							</div>
 						</div>
 					</div>
@@ -75,14 +75,14 @@
 						<div class="slds-row">
 							<div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click">
 								<label class="mfa-text-input-label">{labels.Portal_Question}</label>
-								<input class="slds-input mfa-text-input" type="password" oninput={updateQuestion} value={currentUserQuestion}
+								<input class="slds-input mfa-text-input" type="password" placeholder={labels.Portal_MFA_Security_Question_Placeholder} oninput={updateQuestion} value={currentUserQuestion}
 								autocomplete="off"/>
 							</div>
 						</div>
 						<div class="slds-row">
 							<div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click">
 								<label class="mfa-text-input-label">{labels.Portal_Answer}</label>
-								<input class="slds-input mfa-text-input" type="password" oninput={updateAnswer} value={currentUserAnswer}
+								<input class="slds-input mfa-text-input" type="password" placeholder={labels.Portal_MFA_Security_Answer_Placeholder} oninput={updateAnswer} value={currentUserAnswer}
 								autocomplete="off"/>
 							</div>
 						</div>

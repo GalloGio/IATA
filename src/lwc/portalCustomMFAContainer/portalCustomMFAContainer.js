@@ -14,6 +14,7 @@ export default class PortalCustomMFAContainer extends LightningElement {
 	secret;
 	isLoading = false;
 	otpCode;
+	showQuestionAndAnser = false;
 	
 	//Init
 	renderedCallback(){
@@ -94,6 +95,8 @@ export default class PortalCustomMFAContainer extends LightningElement {
 	 * @description	Hide spinner in component
 	 */
 	@api finishLoad(){
+		this.showQuestionAndAnser = false;
+		console.log('Set security question ');
 		this.isLoading = false;
 	}
 
@@ -110,6 +113,13 @@ export default class PortalCustomMFAContainer extends LightningElement {
 	setOPT(event){
 		this.otpCode = event.detail.value;
 	}
+
+	/**
+	 * @description	Display the security question and anser section
+	 */
+	displaySecurityQuestion(){
+		this.showQuestionAndAnser = true;
+	}
 	
 	/* HTML attributes */
 	get stepResetMFA(){
@@ -117,11 +127,11 @@ export default class PortalCustomMFAContainer extends LightningElement {
 	}
 
 	get stepQA(){
-		return this.hasQuestionAndAnswer !== 'true' && this.hasMFAEnabled === 'true' && this.hasAuthConfigured !== 'true';
+		return (this.hasQuestionAndAnswer !== 'true' && this.hasMFAEnabled === 'true' && this.hasAuthConfigured !== 'true') || this.showQuestionAndAnser;
 	}
 
 	get stepSetAuth(){
-		let showSetAuth = (this.hasQuestionAndAnswer === 'true' && this.hasAuthConfigured !== 'true' && this.hasMFAEnabled === 'true');	
+		let showSetAuth = (this.hasQuestionAndAnswer === 'true' && this.hasAuthConfigured !== 'true' && this.hasMFAEnabled === 'true' && !this.showQuestionAndAnser);	
 			
 		if(showSetAuth && !this.qrCode ){			
 			showSetAuth = true;

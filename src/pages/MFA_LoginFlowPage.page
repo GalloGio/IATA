@@ -21,12 +21,28 @@
 			font-family: 'DaMaWebFont';
 			font-weight: 400;
 			font-style: normal;
-			src: url("{!URLFOR($Resource.aktiv_grotesk_regular,'@font-face/4337eeb93213c64896f2df77962a405e.eot')}"); /* IE9*/
-			src: url("{!URLFOR($Resource.aktiv_grotesk_regular,'@font-face/4337eeb93213c64896f2df77962a405e.eot?#iefix')}") format("embedded-opentype"), /* IE6-IE8 */
-			url("{!URLFOR($Resource.aktiv_grotesk_regular,'@font-face/4337eeb93213c64896f2df77962a405e.woff2')}") format("woff2"), /* chrome、firefox */
-			url("{!URLFOR($Resource.aktiv_grotesk_regular,'@font-face/4337eeb93213c64896f2df77962a405e.woff')}") format("woff"), /* chrome、firefox */
-			url("{!URLFOR($Resource.aktiv_grotesk_regular,'@font-face/4337eeb93213c64896f2df77962a405e.ttf')}") format("truetype"), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
-			url("{!URLFOR($Resource.aktiv_grotesk_regular,'@font-face/4337eeb93213c64896f2df77962a405e.svg#Aktiv Grotesk W01 Regular')}") format("svg"); /* iOS 4.1- */
+			font-style: normal;
+			src: url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Medium/AktivGrotesk_W_Md.eot')}");
+			/* IE9 Compat Modes */
+			src: url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Medium/AktivGrotesk_W_Md.eot?#iefix')}") format('embedded-opentype'),
+			/* IE6-IE8 */
+			url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Medium/AktivGrotesk_W_Md.woff2')}") format('woff2'),
+			/* Super Modern Browsers */
+			url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Medium/AktivGrotesk_W_Md.woff')}") format('woff');
+			/* Pretty Modern Browsers */
+		}
+		@font-face {
+			font-family: 'DaMaWebFont';
+			font-weight: 500;
+			font-style: normal;
+			src: url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Medium/AktivGrotesk_W_Md.eot')}");
+			/* IE9 Compat Modes */
+			src: url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Medium/AktivGrotesk_W_Md.eot?#iefix')}") format('embedded-opentype'),
+			/* IE6-IE8 */
+			url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Medium/AktivGrotesk_W_Md.woff2')}") format('woff2'),
+			/* Super Modern Browsers */
+			url("{!URLFOR($Resource.LiveAgentCustomWindow, '/Fonts/WEB-AG/WEB-AG-Medium/AktivGrotesk_W_Md.woff')}") format('woff');
+			/* Pretty Modern Browsers */
 		}
         body *{
             font-family: DaMaWebFont;

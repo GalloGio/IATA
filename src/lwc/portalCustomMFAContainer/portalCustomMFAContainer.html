@@ -8,7 +8,7 @@
 				<c-portal-mfa-reset-2-fa translations={translations} security-question={securityQuestion} ongoback={toggleResetMFA}></c-portal-mfa-reset-2-fa>
 			</div>
 			<div if:true={stepSetAuth}>
-				<c-portal-mfa-activation-container translations={translations} qr-code={qrCode} secret={secret}></c-portal-mfa-activation-container>
+				<c-portal-mfa-activation-container translations={translations} qr-code={qrCode} secret={secret} ongoback={displaySecurityQuestion}></c-portal-mfa-activation-container>
 			</div>
 			<div if:true={stepCode}>
 				<c-portal-enter2-fa-code translations={translations} onreset={toggleResetMFA}></c-portal-enter2-fa-code>
