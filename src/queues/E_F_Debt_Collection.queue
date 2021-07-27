@@ -4,13 +4,11 @@
     <name>E&amp;F Debt Collection</name>
     <queueMembers>
         <users>
-            <user>popac@iata.org</user>
-            <user>chretienc@iata.org</user>
-            <user>malaebd@iata.org</user>
-            <user>gutierreze@iata.org</user>
-            <user>almuflehh@iata.org</user>
+            <user>paraisoj@external.iata.org</user>
+            <user>hernandezp@external.iata.org</user>
             <user>govenderr@iata.org</user>
-            <user>concessios@iata.org</user>
+            <user>hinglajiys@external.iata.org</user>
+            <user>laras@iata.org</user>
         </users>
     </queueMembers>
     <queueSobject>

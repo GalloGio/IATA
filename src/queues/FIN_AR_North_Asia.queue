@@ -5,10 +5,11 @@
     <name>FIN AR - North Asia</name>
     <queueMembers>
         <users>
+            <user>weih@external.iata.org</user>
             <user>lij@iata.org</user>
             <user>fanww@iata.org</user>
-            <user>xuxx@iata.org</user>
             <user>huangxy@iata.org</user>
+            <user>huzh@iata.org</user>
         </users>
     </queueMembers>
     <queueSobject>
