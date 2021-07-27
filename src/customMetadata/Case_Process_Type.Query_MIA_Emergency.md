@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>Other_Conditions__c</field>
-        <value xsi:type="xsd:string">Priority IN (&apos;Emergency&apos;)</value>
+        <value xsi:type="xsd:string">Priority IN (&apos;Emergency&apos;) AND Type NOT IN (&apos;Complaint&apos;)</value>
     </values>
     <values>
         <field>Reason__c</field>

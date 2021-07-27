@@ -24,6 +24,6 @@
     </values>
     <values>
         <field>Type__c</field>
-        <value xsi:type="xsd:string">4 Biz Days</value>
+        <value xsi:type="xsd:string">Internal 4 Biz Days</value>
     </values>
 </CustomMetadata>
