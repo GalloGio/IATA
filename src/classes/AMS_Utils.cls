@@ -20,6 +20,7 @@ public without sharing class AMS_Utils {
 
 	public static final String ACTIVE = 'Active';
 	public static final String AUTHORIZED = 'Authorized';
+	public static final String NOTAUTHORIZED = 'Not Authorized';
 	public static final String NON_ACTIVE = 'Non-Active';
 
 	public static final String AUTH_APPROVAL = 'Authorize Approval';

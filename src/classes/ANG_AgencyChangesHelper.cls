@@ -693,6 +693,8 @@ public with sharing class ANG_AgencyChangesHelper {
 
 			//The new parent account related with the oscar is the HE
 			Account accountHE = changesContainer.accountsMap.get(oscar.New_parent__c);
+			List<ANG_Agency_Risk_Event__c> riskEventsLst = new List<ANG_Agency_Risk_Event__c>();
+			Set<Id> riskEventsIdsToUpdate = new Set<Id>();
 			for(Account acct : changesContainer.accountsMap.values()){
 				if(acct.Location_Type__c == AMS_Utils.HE || acct.Id == accountHE.Id){
 					acct.Location_Type__c = AMS_Utils.HE;
@@ -722,18 +724,30 @@ public with sharing class ANG_AgencyChangesHelper {
 					acct.ANG_HE_RiskHistoryAssessment__c = AMS_Utils.NOT_APPLICABLE;
 				}
 				
-				//Parent OSCAR Account Id stores the account Id of the agency that was initially the GE 
-				if(oscar.Parent_OSCAR_Account_Id__c != acct.Id && oscar.Parent_OSCAR_Account_Id__c != acct.ParentId){
-					//Move risk events on every location except the previous GE and AEs in the same GEs BSP
-					List<ANG_Agency_Risk_Event__c> riskEventsLst = (List<ANG_Agency_Risk_Event__c>) acct.getSObjects('Location_Risk_Events__r');
-					if(riskEventsLst != null && !riskEventsLst.isEmpty()){
-						changesContainer.addRiskEventsToInactivate(riskEventsLst, accountHE.Id);
-					}
-				}
-
 				changesContainer.addAccount(acct);
 				if(allAccountsInvolvedSetToProcessChangeCodeGeneration.contains(acct.Id)){
 					pushAccountCurrentChangeCodes(acct, accountsCurrentChangeCode);
+				}
+				if(oscar.Process__c == AMS_Utils.ANGPARTCONVERTMCTOST){
+					riskEventsLst = (List<ANG_Agency_Risk_Event__c>) acct.getSObjects('Location_Risk_Events__r');
+					if(riskEventsLst != null && !riskEventsLst.isEmpty()){
+						for(ANG_Agency_Risk_Event__c are : riskEventsLst){
+							riskEventsIdsToUpdate.add(are.id);
+						}
+					}
+				}
+			}
+
+			if(oscar.Process__c == AMS_Utils.ANGPARTCONVERTMCTOST){
+				List<ANG_Agency_Risk_Event__c> riskEvents = [SELECT Id, ANG_Event_Status__c, ANG_expiration_date_ff__c, ANG_HE_AccountId__c FROM ANG_Agency_Risk_Event__c WHERE id IN: riskEventsIdsToUpdate];
+				for(ANG_Agency_Risk_Event__c are : riskEvents){
+					are.ANG_HE_AccountId__c = accountHE.Id;
+					if(are.ANG_expiration_date_ff__c > Date.today()){
+						are.ANG_Event_Status__c = AMS_Utils.ACTIVE;
+					}
+				}
+				if(riskEvents != null && !riskEvents.isEmpty()){
+					Update riskEvents;
 				}
 			}
 			
@@ -804,17 +818,28 @@ public with sharing class ANG_AgencyChangesHelper {
 			}
 
 			for(Account acct : changesContainer.accountsMap.values()){
-				Agency_Authorization__c cashMethodFoP = getAccountCashFoP(acct);
-				if(cashMethodFoP != null){
-					cashMethodFoP.Status__c = AMS_Utils.ACTIVE;
-					changesContainer.addAgencyAuthorizationToUpdate(cashMethodFoP);
+				Agency_Authorization__c cashMethodFoPCA = getAccountCashFoP(acct);
+				Agency_Authorization__c cashMethodFoPEP  = new Agency_Authorization__c();
+				if(oscar.Process__c == AMS_Utils.ANGPARTCONVERTMCTOST){
+					cashMethodFoPEP = getAccountCashFoPEP(acct);
+				}
+				if(cashMethodFoPCA != null){
+					if(oscar.Process__c == AMS_Utils.ANGPARTCONVERTMCTOST){
+						cashMethodFoPCA.Status__c = AMS_Utils.ACTIVE;
+					}else{
+						cashMethodFoPCA.Status__c = AMS_Utils.NOTAUTHORIZED;
+					}
+					changesContainer.addAgencyAuthorizationToUpdate(cashMethodFoPCA);
+				}
+				if(cashMethodFoPEP != null && oscar.Process__c == AMS_Utils.ANGPARTCONVERTMCTOST){
+					cashMethodFoPEP.Status__c = AMS_Utils.ACTIVE;
+					changesContainer.addAgencyAuthorizationToUpdate(cashMethodFoPEP);
 				}
 				pushAccountCurrentChangeCodes(acct, accountsCurrentChangeCode);
 				if(allAccountsInvolvedSetToProcessChangeCodeGeneration.contains(acct.Id)){
 					pushAccountCurrentChangeCodes(acct, accountsCurrentChangeCode);
 				}
 			}
-
 			changesContainer = processChangeCodeGeneration(oscar, typeOfConversion, AMS_Utils.APPROVAL, allAccountsInvolvedSetToProcessChangeCodeGeneration, accountsCurrentChangeCode);
 
 		}
@@ -2286,9 +2311,9 @@ public with sharing class ANG_AgencyChangesHelper {
 
 		For(Agency_Authorization__c aa: [Select Id , Status__c, Account__r.IATA_ISO_Country__r.ANG_Enable_NewGen__c, Account__r.IATA_ISO_Country__r.ANG_Portal_Service__c, Account__r.IATA_ISO_Country__r.ANG_IEP_Model__c
 										from Agency_Authorization__c 
-										where Account__c in:accountsAffected and ANG_FormOfPayment_ID__c = 'CA' and Status__c != 'Not Authorized' and RecordType.DeveloperName = 'FormOfPayment']){
+										where Account__c in:accountsAffected and ANG_FormOfPayment_ID__c = 'CA' and Status__c !=: AMS_Utils.NOTAUTHORIZED AND RecordType.DeveloperName = 'FormOfPayment']){
 			if(aa.Account__r.IATA_ISO_Country__r.ANG_Enable_NewGen__c && aa.Account__r.IATA_ISO_Country__r.ANG_IEP_Model__c!=AMS_Utils.IEPModel_PrePayment){
-				aa.Status__c = 'Not Authorized';
+				aa.Status__c = AMS_Utils.NOTAUTHORIZED;
 				toUpsert.add(aa);
 			}
 
@@ -2751,6 +2776,19 @@ public with sharing class ANG_AgencyChangesHelper {
 		if (formOfPaymentsLst != null) {
 			for (Agency_Authorization__c aa : formOfPaymentsLst) {
 				if (aa.ANG_FormOfPayment_ID__c == AMS_Utils.CA)
+					return aa;
+			}
+		}
+		
+		return null;
+	}
+
+	private static Agency_Authorization__c getAccountCashFoPEP(Account account) {
+		List<Agency_Authorization__c> formOfPaymentsLst = (List<Agency_Authorization__c>) account.getSObjects('Agency_Authorizations__r');
+		
+		if (formOfPaymentsLst != null) {
+			for (Agency_Authorization__c aa : formOfPaymentsLst) {
+				if (aa.ANG_FormOfPayment_ID__c == AMS_Utils.EP)
 					return aa;
 			}
 		}
