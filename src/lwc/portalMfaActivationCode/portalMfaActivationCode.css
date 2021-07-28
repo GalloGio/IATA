@@ -35,3 +35,12 @@ span {
 a {
     font-weight: normal;
 }
+
+@supports (-webkit-touch-callout: none) {
+    @media screen and (max-width:480px){
+        /* CSS specific to iOS mobile devices */ 
+        input[type="text"] {
+            font-size: 10px;
+        }
+    }
+}
