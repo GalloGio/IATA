@@ -2095,12 +2095,18 @@ global class ANG_OscarProcessHelper {
 					if (user!=null) {
 						user.Contact = contact;
 						recipients.add(user);
+						mapContacts.put(user.Id,contact);
 					} else {
 						recipients.add(contact);
 					}
 
 					List<Messaging.SingleEmailMessage> mailListAux = AMS_AgencyRegulationAutoRenewal.sendEmailAlert(recipients, caseToProcess.OSCAR__c, countryTemplates, caseToProcess.Id, owea[0], false, null, false);
-					mailsToSend.put(caseToProcess.Id, mailListAux);
+					list<Messaging.SingleEmailMessage> listEmailMessage = mailsToSend.get(caseToProcess.Id);
+					if (listEmailMessage == null) {
+						listEmailMessage = new list<Messaging.SingleEmailMessage>();
+					}
+					listEmailMessage.addAll(mailListAux);
+					mailsToSend.put(caseToProcess.Id, listEmailMessage);
 					emailsToSend.addAll(mailListAux);
 				}
 			}
