@@ -1019,7 +1019,6 @@ public with sharing class ANG_AccountHierarchySelectionController {
 		newParentSelected = false;
 		IATAcodesSelecteds = new List<String>();
 		IATACodeToShowOnSplitAccountMultiCountry = '';
-		system.debug('MR::: oscar.New_parent__c' + oscar.New_parent__c);
 		if(oscar.Process__c == AMS_Utils.ANGPARTCONVERTMCTOLT || oscar.Process__c == AMS_Utils.ANGPARTCONVERTMCTOST){
 			List<HierarchyItem> hierarchyItemsSorted = hierarchy.values().clone();
 			hierarchyItemsSorted.sort();
@@ -1144,7 +1143,7 @@ public with sharing class ANG_AccountHierarchySelectionController {
 					ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Console_new_parent_HE_error + ' ' + countryNameToShowOnSplitAccountMultiCountry));
 					return;
 				}
-				List<string> statusForNewParent = new List<String>{'Approved','Cash basis/no commission','Cash basis/with commission','Changes processed','Listed','Under review'};
+				List<string> statusForNewParent = new List<String>{AMS_Utils.ACC_S9_APPROVED, AMS_Utils.ACC_S5_CASHNOCOMMISSION, AMS_Utils.ACC_S6_CASHWITHCOMMISSION, AMS_Utils.ACC_S8_CHANGESPROCESSED, AMS_Utils.ACC_S4_LISTED, AMS_Utils.ACC_S7_UNDERREVIEW};
 				if(!statusForNewParent.contains(newParent.Status__c)){
 					ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.ERROR, Label.ISSP_AMS_Console_new_parent_Status_error));
 					return;

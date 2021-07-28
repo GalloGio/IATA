@@ -14,7 +14,7 @@ private class AMS_OSCAR_AutomationTest {
 	}
 
 	static testMethod void test_AMS_OSCAR_Automation() {
-		AMS_Oscar__c oscar = [SELECT Id, Account__c FROM AMS_Oscar__c LIMIT 1];
+		AMS_Oscar__c oscar = [SELECT Id, Account__c, Process__c FROM AMS_Oscar__c LIMIT 1];
 		AMS_OSCAR_Event__c event = new AMS_OSCAR_Event__c();
 		AMS_OSCAR_AutomationManager manager = new AMS_OSCAR_AutomationManager();
 		AMS_OSCAR_Automation.IClassFactory factory;
@@ -487,6 +487,15 @@ private class AMS_OSCAR_AutomationTest {
 
 			factory = manager.newClassInstance('AMS_OSCAR_Automation.AMS_OSCAR_Step50_failed');
 			System.assertEquals(true, factory.processWork(event, oscar));
+
+			
+			/*
+			 	Step 6 in progress
+			*/
+			
+			AMS_Oscar__c oscar2 = [SELECT Id, Account__c, Process__c FROM AMS_Oscar__c WHERE Process__c = :AMS_Utils.ANGPARTCONVERTMCTOLT LIMIT 1];
+			factory = manager.newClassInstance('AMS_OSCAR_Automation.AMS_OSCAR_Step6_inProgress');
+			system.assertEquals(true, factory.processWork(event, oscar2));
 
 		Test.stopTest();
 
