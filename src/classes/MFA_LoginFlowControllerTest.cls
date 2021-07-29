@@ -299,6 +299,69 @@ public with sharing class MFA_LoginFlowControllerTest {
 	}
 
 	@isTest
+	static void is2FaOptionalForUser_HasMFAPermissionSetAssignment(){
+		// "Partner Community User" Profile needs to have the MFA Enabled custom permission assigned in configuration to fully test functionality
+		Profile partnerProfile = new List<Profile>([SELECT Id FROM Profile WHERE UserLicense.MasterLabel = 'Partner Community' AND Name = 'Partner Community User' LIMIT 1]).get(0);
+		User testPartnerUser = [SELECT Id FROM User WHERE FirstName = 'MFAPortalUser' LIMIT 1];
+		testPartnerUser.ProfileId = partnerProfile.Id;
+		update testPartnerUser;
+
+		Boolean hadMFAEnabled;
+		System.runAs(testPartnerUser){
+			hadMFAEnabled = MFA_LoginFlowController.hasMFAEnabled();
+			MFA_LoginFlowController.addMFAPermissionSet();
+		}
+		
+		Boolean is2FaOptional;
+		System.runAs(testPartnerUser){
+			Test.startTest();
+			is2FaOptional = MFA_LoginFlowController.is2FaOptionalForUser();
+			Test.stopTest();
+		}
+		if(!hadMFAEnabled){
+			System.assertEquals(true, is2FaOptional);
+		}
+	}
+
+	@isTest
+	static void is2FaOptionalForUser_HasMFA_Enabled_NoPS(){
+		// "ISS Portal (Portal)" Profile needs to have the MFA Enabled custom permission assigned in configuration to fully test functionality
+		User testPartnerUser = [SELECT Id FROM User WHERE FirstName = 'MFAPortalUser' LIMIT 1];
+		Boolean hasMFAEnabled;
+		System.runAs(testPartnerUser){
+			hasMFAEnabled = MFA_LoginFlowController.hasMFAEnabled();
+		}
+
+		Boolean is2FaOptional;
+		System.runAs(testPartnerUser){
+			MFA_LoginFlowController.addMFAPermissionSet();
+			Test.startTest();
+			is2FaOptional = MFA_LoginFlowController.is2FaOptionalForUser();
+			Test.stopTest();
+		}
+
+		if(hasMFAEnabled){
+			System.assertEquals(false, is2FaOptional);
+		}
+	}
+
+	@isTest
+	static void is2FaOptionalForUser_NoPermission(){
+		Profile partnerProfile = new List<Profile>([SELECT Id FROM Profile WHERE UserLicense.MasterLabel = 'Partner Community' AND Name = 'Partner Community User' LIMIT 1]).get(0);
+		User testPartnerUser = [SELECT Id FROM User WHERE FirstName = 'MFAPortalUser' LIMIT 1];
+		testPartnerUser.ProfileId = partnerProfile.Id;
+		update testPartnerUser;
+
+		Boolean is2FaOptional;
+		System.runAs(testPartnerUser){
+			Test.startTest();
+			is2FaOptional = MFA_LoginFlowController.is2FaOptionalForUser();
+			Test.stopTest();
+		}
+		System.assertEquals(false, is2FaOptional);
+	}
+
+	@isTest
 	static void getAuthenticatorLinks(){
 		User testPartnerUser = [SELECT Id FROM User WHERE FirstName = 'MFAPortalUser' LIMIT 1];
 		System.runAs(testPartnerUser){

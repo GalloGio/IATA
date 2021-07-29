@@ -9,7 +9,7 @@
                         <span class={isActivatedClass}>{isActivatedLbl}</span>
                     </div>
                 </div>
-                <div if:true={userInfo.isAuhtAppActivated} class="slds-large-size_1-of-3 slds-small-size_1-of-12">
+                <div if:true={isCriticalForUser} class="slds-large-size_1-of-3 slds-small-size_1-of-12">
                     <div class="slds-clearfix">
                         <div class="slds-float_right">
                             <span class="mfa-red-txt cursorPointer" onclick={deactivate2FA}>{labels.Portal_Deactivate}</span>

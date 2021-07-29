@@ -1,6 +1,8 @@
-import { LightningElement, api } from 'lwc';
+import { LightningElement, api, wire } from 'lwc';
 import { loadStyle } from 'lightning/platformResourceLoader';
 
+import is2FaOptionalForUser from '@salesforce/apex/MFA_LoginFlowController.is2FaOptionalForUser';
+import hasMFAEnabled from '@salesforce/apex/MFA_LoginFlowController.hasMFAEnabled';
 import MFAStylesResources from '@salesforce/resourceUrl/MFA_StylesApp';
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
@@ -23,6 +25,9 @@ export default class PortalMfaSettings extends LightningElement {
     remove = 'remove';
     change = 'change';
     change2fa = 'change2fa';
+
+	@wire(is2FaOptionalForUser) is2FaOptional;
+	@wire(hasMFAEnabled) mfaEnabled;
 
     /**
      * @description If oppened in a modal screen sets edit mode to false
@@ -134,6 +139,13 @@ export default class PortalMfaSettings extends LightningElement {
 
     get labels(){
         return this.translations;
+    }
+
+    get isCriticalForUser(){
+        return this.userInfo.isAuhtAppActivated && this.is2FaOptional.data;
+    }
+    get isMfaEnabled(){
+        return this.mfaEnabled.data;
     }
     /**
      * @description Getters for displaying modal or differnt sections on screen END
