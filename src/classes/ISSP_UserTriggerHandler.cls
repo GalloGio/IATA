@@ -353,54 +353,61 @@ public without sharing class ISSP_UserTriggerHandler {
 			Set <Id> fedIdSet = new Set <Id>();
 			Set <Id> userIdSet = new Set <Id>();
 			Set <Id> contactFedIdSet = contactMap.keySet();
-		List <User> userList = [SELECT Id, ContactId, FederationIdentifier, FedContactId__c FROM User WHERE ContactId IN :contactFedIdSet];
-		if (!userList.isEmpty()){
-			for (User thisUser : userList){
-				userIdSet.add(thisUser.Id);
-				thisUser.FederationIdentifier = thisUser.FedContactId__c;
-				fedIdSet.add(thisUser.FedContactId__c);
-			}
-			List <User> duplicateUserList = [SELECT Id, FederationIdentifier FROM User WHERE FederationIdentifier IN :fedIdSet];
-			if (!duplicateUserList.isEmpty()){
-				for (User thisUser : duplicateUserList){
-					thisUser.FederationIdentifier = '';
-				}
-				update duplicateUserList;
-			}
-			update userList;
-
-			// NonTD report sharing
-			//addNonTdReportSharing(contactFedIdSet);
-
-			// Remove TD permission set
-			List <PermissionSet> psList = [SELECT Id, Name FROM PermissionSet
-										WHERE Name IN ('ISSP_Treasury_Dashboard_Premium', 'ISSP_Treasury_Dashboard_Basic')];
-			Map <String, Id> permissionSetMap = new Map <String, Id>();
-			Set <Id> psListIds = new Set <Id>();
-			for (PermissionSet thisSet : psList){
-				psListIds.add(thisSet.Id);
-				permissionSetMap.put(thisSet.Name, thisSet.Id);
-			}
-			List <PermissionSetAssignment> psAssList = [SELECT Id FROM PermissionSetAssignment
-										WHERE AssigneeId IN :userIdSet AND PermissionSetId IN :psListIds];
-				if (!psAssList.isEmpty())
-				delete psAssList;
-			// Give correct TD permission set
-			List <PermissionSetAssignment> assignList = new List <PermissionSetAssignment>();
-			for (User thisUser : userList){
-				if (contactMap.containsKey(thisUser.ContactId)){
-					if (permissionSetMap.containsKey(contactMap.get(thisUser.ContactId))){
-						PermissionSetAssignment newAssign = new PermissionSetAssignment();
-						newAssign.AssigneeId = thisUser.Id;
-											newAssign.PermissionSetId = permissionSetMap.get(contactMap.get(thisUser.ContactId));
-											assignList.add(newAssign);
+			List<User> userListToUpdate = new List<User>();
+			List <User> userList = [SELECT Id, ContactId, FederationIdentifier, FedContactId__c FROM User WHERE ContactId IN :contactFedIdSet];
+			if (!userList.isEmpty()){
+				for (User thisUser : userList){
+					userIdSet.add(thisUser.Id);
+					if(thisUser.FederationIdentifier != thisUser.FedContactId__c){
+						thisUser.FederationIdentifier = thisUser.FedContactId__c;
+						userListToUpdate.add(thisUser);
+						fedIdSet.add(thisUser.FedContactId__c);
 					}
 				}
+
+				List <User> duplicateUserList = [SELECT Id, FederationIdentifier FROM User WHERE FederationIdentifier IN :fedIdSet and Id NOT IN :userIdSet];
+
+				if (!duplicateUserList.isEmpty()){
+					for (User thisUser : duplicateUserList){
+						thisUser.FederationIdentifier = '';
+					}
+					update duplicateUserList;
+				}
+				if(!userListToUpdate.isEmpty())
+					update userListToUpdate;
+
+				// NonTD report sharing
+				//addNonTdReportSharing(contactFedIdSet);
+
+				// Remove TD permission set
+				List <PermissionSet> psList = [SELECT Id, Name FROM PermissionSet
+											WHERE Name IN ('ISSP_Treasury_Dashboard_Premium', 'ISSP_Treasury_Dashboard_Basic')];
+				Map <String, Id> permissionSetMap = new Map <String, Id>();
+				Set <Id> psListIds = new Set <Id>();
+				for (PermissionSet thisSet : psList){
+					psListIds.add(thisSet.Id);
+					permissionSetMap.put(thisSet.Name, thisSet.Id);
+				}
+				List <PermissionSetAssignment> psAssList = [SELECT Id FROM PermissionSetAssignment
+											WHERE AssigneeId IN :userIdSet AND PermissionSetId IN :psListIds];
+					if (!psAssList.isEmpty())
+					delete psAssList;
+				// Give correct TD permission set
+				List <PermissionSetAssignment> assignList = new List <PermissionSetAssignment>();
+				for (User thisUser : userList){
+					if (contactMap.containsKey(thisUser.ContactId)){
+						if (permissionSetMap.containsKey(contactMap.get(thisUser.ContactId))){
+							PermissionSetAssignment newAssign = new PermissionSetAssignment();
+							newAssign.AssigneeId = thisUser.Id;
+												newAssign.PermissionSetId = permissionSetMap.get(contactMap.get(thisUser.ContactId));
+												assignList.add(newAssign);
+						}
+					}
+				}
+				if (!assignList.isEmpty()){
+					insert assignList;
+				}
 			}
-			if (!assignList.isEmpty()){
-				insert assignList;
-			}
-		}
 
 		}
 
