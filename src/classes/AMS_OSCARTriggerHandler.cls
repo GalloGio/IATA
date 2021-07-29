@@ -2868,9 +2868,21 @@ public class AMS_OSCARTriggerHandler {
 
 			if (oldOSCAR.STEP30__c != AMS_Utils.PASSED && updatedOSCAR.STEP30__c == AMS_Utils.PASSED) {
 				updatedOSCAR.Status__c = 'Accepted_Future Date';
+				Account oscarAccount = accounts.get(updatedOSCAR.Account__c);
 
-				Set<String> nextMonthLocations = new Set<String>{'P', 'D'};
-				Date terminationDate = nextMonthLocations.contains(updatedOSCAR.Location_Class__c) ? AMS_Utils.lastDayOfMonth(Date.today().addMonths(1)) : Date.today().addDays(15);
+				Set<String> nextMonthLocations = new Set<String>{'P', 'D', 'C', 'R', 'Q'};
+				Set<String> next3MonthsLocations = new Set<String>{'I'};
+				Boolean cnsAgent = (oscarAccount.CNS_Agency__c || oscarAccount.CNS_Account__c) && (updatedOSCAR.Location_Class__c == 'R' || updatedOSCAR.Location_Class__c == 'C');
+				Date terminationDate = Date.today().addDays(15);
+
+				if(cnsAgent){
+					terminationDate = Date.today();
+				} else if(next3MonthsLocations.contains(updatedOSCAR.Location_Class__c)){
+					terminationDate = AMS_Utils.lastDayOfMonth(Date.today().addMonths(3));
+				} else if(nextMonthLocations.contains(updatedOSCAR.Location_Class__c)){
+					terminationDate = AMS_Utils.lastDayOfMonth(Date.today().addMonths(1));
+				}
+
 				updatedOSCAR.Termination_Date__c = BusinessHours.nextStartDate(updatedOSCAR.BusinessHours__c, DateTime.newInstance(terminationDate, Time.newInstance(0, 0, 0, 0))).date();
 
 				if(updatedOSCAR.Process__c == AMS_Utils.VOLRELINQUISH){
@@ -2950,7 +2962,7 @@ public class AMS_OSCARTriggerHandler {
 			if(accounts == null){
 				accounts = new Map<Id, Account>([SELECT Id, Name, Abbreviated_address__c, Abbreviated_name__c, ANG_FA_Opt_out__c, 
 					ANG_isNewGenAgency__c, BillingCity, BillingCountry, BillingPostalCode, BillingState, BillingStreet, CASS_Number__c, 
-					CNS_Agency__c, Company_Type__c, Covered_Ownership__c, Due_Diligence_Status__c, Email__c, Fax, GDS__c, Guaranteed_amount__c, 
+					CNS_Agency__c, CNS_Account__c, Company_Type__c, Covered_Ownership__c, Due_Diligence_Status__c, Email__c, Fax, GDS__c, Guaranteed_amount__c, 
 					IATA_ISO_Billing_State__c, IATA_ISO_Billing_State__r.Name, IATA_ISO_Country__c, IATA_ISO_Country__r.Name, 
 					IATA_ISO_Shipping_Country__c, IATA_ISO_Shipping_Country__r.Name, IATA_ISO_Shipping_State__r.Name, IATACode__c, 
 					In_a_Airport__c, Is_Branch_Abroad__c, Is_PCI_compliant__c, Is_your_firm_handling_Dangerous_Goods__c, Iso_State__c, 
