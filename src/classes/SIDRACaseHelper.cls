@@ -317,9 +317,10 @@ public with sharing class SIDRACaseHelper {
 	
 	/**
 	 * Validate if there isn't more than 3 cases with "Bank Error" in the last 365 days.
+	 * CASS cases are excluded from this validation
 	 */
 	private static Boolean validateBankError(Case thisCase, Account acct) {
-		if (thisCase.IRR_Withdrawal_Reason__c != BANK_ERROR && thisCase.DEF_Withdrawal_Reason__c != BANK_ERROR)
+		if (thisCase.BSP_CASS__c == 'CASS' || (thisCase.IRR_Withdrawal_Reason__c != BANK_ERROR && thisCase.DEF_Withdrawal_Reason__c != BANK_ERROR))
 			return true; // don't block other cases
 
 		Integer countIRR = 0;
