@@ -1,4 +1,4 @@
-public  class AmazonCredentials {
+public without sharing class AmazonCredentials {
 
 	//
 	private static map<string,AmazonCredentials> CredPerName;
