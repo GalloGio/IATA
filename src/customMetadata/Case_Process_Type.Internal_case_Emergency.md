@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>KPI_Reference_Field__c</field>
-        <value xsi:type="xsd:string">dgAI2__Case_Age__c</value>
+        <value xsi:type="xsd:string">Case_age_natural_hours__c</value>
     </values>
     <values>
         <field>KPI_Reference_Value__c</field>
