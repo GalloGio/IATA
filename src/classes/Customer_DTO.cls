@@ -1,4 +1,4 @@
-public class Customer_DTO
+public without sharing class Customer_DTO
 {
 	// Ecommerce Enhancements
 	private static Boolean isLoginEvent = false;
