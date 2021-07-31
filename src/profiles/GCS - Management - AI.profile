@@ -2400,7 +2400,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>AccountDashboardCTIContactsCtrl</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>AccountDashboardCTIContactsTest</apexClass>
