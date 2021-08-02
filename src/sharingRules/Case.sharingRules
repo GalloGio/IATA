@@ -240,19 +240,6 @@
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingCriteriaRules>
-        <fullName>ID_Card_case_sharing</fullName>
-        <accessLevel>Edit</accessLevel>
-        <label>ID Card case sharing</label>
-        <sharedTo>
-            <group>ID_Card_portal_user_group</group>
-        </sharedTo>
-        <criteriaItems>
-            <field>RecordTypeId</field>
-            <operation>equals</operation>
-            <value>ID Card Application</value>
-        </criteriaItems>
-    </sharingCriteriaRules>
-    <sharingCriteriaRules>
         <fullName>ILDS</fullName>
         <accessLevel>Edit</accessLevel>
         <label>ILDS</label>
