@@ -1363,11 +1363,6 @@
         <externalId>false</externalId>
         <label>Latest Action Plan due date</label>
         <summarizedField>OI_Action_Plan__c.Due_Date__c</summarizedField>
-        <summaryFilterItems>
-            <field>OI_Action_Plan__c.Closure_Date__c</field>
-            <operation>equals</operation>
-            <value></value>
-        </summaryFilterItems>
         <summaryForeignKey>OI_Action_Plan__c.OI__c</summaryForeignKey>
         <summaryOperation>max</summaryOperation>
         <trackHistory>false</trackHistory>
@@ -5725,6 +5720,7 @@ There are 2 different calculation, one for the RT CPS Checks, and another for th
                 <controllingFieldValue>YMQ Publications</controllingFieldValue>
                 <controllingFieldValue>AirportIS</controllingFieldValue>
                 <controllingFieldValue>IATA Travel Pass</controllingFieldValue>
+                <controllingFieldValue>Quality</controllingFieldValue>
                 <controllingFieldValue>Airsat</controllingFieldValue>
                 <controllingFieldValue>Banking</controllingFieldValue>
                 <controllingFieldValue>CargoIS</controllingFieldValue>
@@ -5853,6 +5849,58 @@ There are 2 different calculation, one for the RT CPS Checks, and another for th
                 <controllingFieldValue>IATAN</controllingFieldValue>
                 <controllingFieldValue>Accreditation</controllingFieldValue>
                 <valueName>Reinstatement</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Treasury dashboard</controllingFieldValue>
+                <controllingFieldValue>weblink</controllingFieldValue>
+                <controllingFieldValue>YMQ Publications</controllingFieldValue>
+                <controllingFieldValue>MRO SmartHub</controllingFieldValue>
+                <controllingFieldValue>IATA Travel Pass</controllingFieldValue>
+                <controllingFieldValue>Quality</controllingFieldValue>
+                <controllingFieldValue>Airline Participation</controllingFieldValue>
+                <controllingFieldValue>Airline Suspension</controllingFieldValue>
+                <controllingFieldValue>E&amp;F</controllingFieldValue>
+                <controllingFieldValue>iiNet</controllingFieldValue>
+                <controllingFieldValue>SIS</controllingFieldValue>
+                <controllingFieldValue>ICH</controllingFieldValue>
+                <controllingFieldValue>BIS – Business Intelligence Services</controllingFieldValue>
+                <controllingFieldValue>TACT</controllingFieldValue>
+                <controllingFieldValue>TIMATIC Solutions</controllingFieldValue>
+                <controllingFieldValue>Publications</controllingFieldValue>
+                <controllingFieldValue>Accreditation</controllingFieldValue>
+                <controllingFieldValue>Agency Risk Management</controllingFieldValue>
+                <controllingFieldValue>Remittance &amp; Settlement</controllingFieldValue>
+                <controllingFieldValue>Reporting &amp; Billing</controllingFieldValue>
+                <controllingFieldValue>Invoicing &amp; Collection</controllingFieldValue>
+                <controllingFieldValue>Customer Services</controllingFieldValue>
+                <controllingFieldValue>Airline Management</controllingFieldValue>
+                <controllingFieldValue>Operational Systems</controllingFieldValue>
+                <controllingFieldValue>Airline Coding, MITA &amp; BIETA</controllingFieldValue>
+                <controllingFieldValue>Instructor Led</controllingFieldValue>
+                <controllingFieldValue>Distance Learning</controllingFieldValue>
+                <controllingFieldValue>ID cards</controllingFieldValue>
+                <controllingFieldValue>IATAN</controllingFieldValue>
+                <controllingFieldValue>GDP</controllingFieldValue>
+                <controllingFieldValue>BIS</controllingFieldValue>
+                <controllingFieldValue>AirportIS</controllingFieldValue>
+                <controllingFieldValue>Airsat</controllingFieldValue>
+                <controllingFieldValue>Banking</controllingFieldValue>
+                <controllingFieldValue>CargoIS</controllingFieldValue>
+                <controllingFieldValue>CheckACode</controllingFieldValue>
+                <controllingFieldValue>DDS</controllingFieldValue>
+                <controllingFieldValue>Ebroadcast</controllingFieldValue>
+                <controllingFieldValue>FDC</controllingFieldValue>
+                <controllingFieldValue>FFP</controllingFieldValue>
+                <controllingFieldValue>GAP</controllingFieldValue>
+                <controllingFieldValue>Global Agency Directory</controllingFieldValue>
+                <controllingFieldValue>IASC</controllingFieldValue>
+                <controllingFieldValue>IATA AgentExperience</controllingFieldValue>
+                <controllingFieldValue>ICCS</controllingFieldValue>
+                <controllingFieldValue>IMX</controllingFieldValue>
+                <controllingFieldValue>MarketIS</controllingFieldValue>
+                <controllingFieldValue>PAXIS</controllingFieldValue>
+                <controllingFieldValue>TASF</controllingFieldValue>
+                <valueName>SOP</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>weblink</controllingFieldValue>
@@ -5986,6 +6034,42 @@ There are 2 different calculation, one for the RT CPS Checks, and another for th
                 <controllingFieldValue>IATA Travel Pass</controllingFieldValue>
                 <controllingFieldValue>Airline Coding, MITA &amp; BIETA</controllingFieldValue>
                 <valueName>Invoicing / payment</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Quality</controllingFieldValue>
+                <valueName>Compliance related</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Quality</controllingFieldValue>
+                <valueName>Reports</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Quality</controllingFieldValue>
+                <valueName>Exceptions</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Quality</controllingFieldValue>
+                <valueName>Incidents</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Quality</controllingFieldValue>
+                <valueName>ISO / Service Charter</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Quality</controllingFieldValue>
+                <valueName>BCP</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Quality</controllingFieldValue>
+                <valueName>Complaints</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Quality</controllingFieldValue>
+                <valueName>Continuous Improvement</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Quality</controllingFieldValue>
+                <valueName>BPM</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Banking</controllingFieldValue>
@@ -15261,6 +15345,10 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
+                <fullName>Quality</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Remittance %26 Settlement</fullName>
                 <default>false</default>
             </values>
@@ -15364,6 +15452,14 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
+                <fullName>BCP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BPM</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>BSP billing discrepancies</fullName>
                 <default>false</default>
             </values>
@@ -15448,6 +15544,10 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
+                <fullName>Complaints</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Compliance related</fullName>
                 <default>false</default>
             </values>
@@ -15457,6 +15557,10 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
             </values>
             <values>
                 <fullName>Content enquiry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Continuous Improvement</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -15529,6 +15633,10 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
             </values>
             <values>
                 <fullName>EasyPay</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Exceptions</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -15648,11 +15756,19 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
+                <fullName>ISO %2F Service Charter</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>ISS Joining</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Immediate suspension %28non-RHC related%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Incidents</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -15885,6 +16001,10 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
             </values>
             <values>
                 <fullName>SIS related</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SOP</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -20797,6 +20917,10 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
+                <fullName>Quality</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Remittance %26 Settlement</fullName>
                 <default>false</default>
             </values>
@@ -20900,6 +21024,14 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
+                <fullName>BCP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BPM</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>BSP billing discrepancies</fullName>
                 <default>false</default>
             </values>
@@ -20984,6 +21116,10 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
+                <fullName>Complaints</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Compliance related</fullName>
                 <default>false</default>
             </values>
@@ -20993,6 +21129,10 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
             </values>
             <values>
                 <fullName>Content enquiry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Continuous Improvement</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -21065,6 +21205,10 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
             </values>
             <values>
                 <fullName>EasyPay</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Exceptions</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -21184,11 +21328,19 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
+                <fullName>ISO %2F Service Charter</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>ISS Joining</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Immediate suspension %28non-RHC related%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Incidents</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -21421,6 +21573,10 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
             </values>
             <values>
                 <fullName>SIS related</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SOP</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -26104,6 +26260,10 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
+                <fullName>Quality</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Remittance %26 Settlement</fullName>
                 <default>false</default>
             </values>
@@ -26207,6 +26367,14 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
+                <fullName>BCP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BPM</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>BSP billing discrepancies</fullName>
                 <default>false</default>
             </values>
@@ -26291,6 +26459,10 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
+                <fullName>Complaints</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Compliance related</fullName>
                 <default>false</default>
             </values>
@@ -26300,6 +26472,10 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
             </values>
             <values>
                 <fullName>Content enquiry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Continuous Improvement</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -26372,6 +26548,10 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
             </values>
             <values>
                 <fullName>EasyPay</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Exceptions</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -26491,11 +26671,19 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
+                <fullName>ISO %2F Service Charter</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>ISS Joining</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Immediate suspension %28non-RHC related%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Incidents</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -26728,6 +26916,10 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
             </values>
             <values>
                 <fullName>SIS related</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SOP</fullName>
                 <default>false</default>
             </values>
             <values>

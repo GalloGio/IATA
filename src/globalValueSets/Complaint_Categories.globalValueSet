@@ -240,6 +240,11 @@
         <default>false</default>
         <label>YMQ Publications</label>
     </customValue>
+    <customValue>
+        <fullName>Quality</fullName>
+        <default>false</default>
+        <label>Quality</label>
+    </customValue>
     <description>Values used for Case complaint categories and Continuous Improvement Process categories</description>
     <masterLabel>Complaint Categories</masterLabel>
     <sorted>false</sorted>

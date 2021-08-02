@@ -811,6 +811,46 @@
         <label>Web interface</label>
     </customValue>
     <customValue>
+        <fullName>Exceptions</fullName>
+        <default>false</default>
+        <label>Exceptions</label>
+    </customValue>
+    <customValue>
+        <fullName>Incidents</fullName>
+        <default>false</default>
+        <label>Incidents</label>
+    </customValue>
+    <customValue>
+        <fullName>ISO / Service Charter</fullName>
+        <default>false</default>
+        <label>ISO / Service Charter</label>
+    </customValue>
+    <customValue>
+        <fullName>BCP</fullName>
+        <default>false</default>
+        <label>BCP</label>
+    </customValue>
+    <customValue>
+        <fullName>Complaints</fullName>
+        <default>false</default>
+        <label>Complaints</label>
+    </customValue>
+    <customValue>
+        <fullName>Continuous Improvement</fullName>
+        <default>false</default>
+        <label>Continuous Improvement</label>
+    </customValue>
+    <customValue>
+        <fullName>SOP</fullName>
+        <default>false</default>
+        <label>SOP</label>
+    </customValue>
+    <customValue>
+        <fullName>BPM</fullName>
+        <default>false</default>
+        <label>BPM</label>
+    </customValue>
+    <customValue>
         <fullName>Validation management</fullName>
         <default>false</default>
         <isActive>false</isActive>
