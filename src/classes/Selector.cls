@@ -1,4 +1,4 @@
-public abstract with sharing class Selector
+public abstract without sharing class Selector
 {
 
 	abstract List<Schema.SObjectField> getSObjectFieldList();
