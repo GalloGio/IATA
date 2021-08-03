@@ -8850,7 +8850,7 @@ ISPICKVAL(Reason1__c, &quot;IEP Due Diligence&quot;)
             <criteriaItems>
                 <field>Case.Region__c</field>
                 <operation>equals</operation>
-                <value>Europe,Africa &amp; Middle East,Americas</value>
+                <value>Europe,Africa &amp; Middle East</value>
             </criteriaItems>
             <criteriaItems>
                 <field>Case.IsComplaint__c</field>
