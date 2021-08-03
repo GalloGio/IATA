@@ -81,6 +81,7 @@ export default class LogPhoneCallAction extends LightningElement {
 	defaultRegion = '';
 	defaultTypecustomer = '';
 	defaultAccount = '';
+	defaultCaseRecordtype = '';
 	caseareaValue = '';
 	buttonclicked = '';
 	loading = true;
@@ -136,6 +137,7 @@ export default class LogPhoneCallAction extends LightningElement {
 					this.defaultTypecustomer = cse.Type_of_customer__c.value;
 					this.defaultAccount = cse.AccountId.value;
 					this.recordtypeValue = data.recordTypeId;
+					this.defaultCaseRecordtype = this.mapRecordtypePicklist.get(this.recordtypeValue);
 				} catch(e) {}
 				this.error = undefined;
 			}
@@ -238,6 +240,7 @@ export default class LogPhoneCallAction extends LightningElement {
 			.then(result => {
 				if(result !== undefined){
 					this.recordtypeValue = result;
+					this.defaultCaseRecordtype = this.mapRecordtypePicklist.get(this.recordtypeValue);
 				}
 			}).catch(error => {
 				if (error.body.message) {
