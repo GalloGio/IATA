@@ -9,6 +9,7 @@ export default class PortalMfaActivationCode extends LightningElement {
 	@api length = 3;
 
 	_codeHasError = false;
+	_pastedCodeFullyFilled = true;
 
 	_codeVal = [];
 	inputCode;
@@ -36,11 +37,53 @@ export default class PortalMfaActivationCode extends LightningElement {
 		}
 	}
 
+	/**
+	 * Method to set the code and navigate through the multiple inputs that can exist
+	 * @param {*} event Dispatched event, can be triggered inputting a value on the input fields
+	 */
 	setInput(event){
 		let elem = event.target;
 		let pos = parseInt(elem.dataset.pos);
 		let posInList = pos-1;
-		
+
+		//Control CTRL+V action + Paste action
+		if(this._pastedCodeFullyFilled){
+			if(isNaN(elem.value) || elem.value === undefined || elem.value === ' ' || elem.value === ''){
+				//Only allow numeric values in inputs
+				let currentInput = this.template.querySelector(`[data-pos="${pos}"]`);
+				currentInput.value = null;
+				return;
+			}
+			this._codeHasError = false;
+			this._codeVal[posInList] = elem.value;
+
+			if (pos !== this.maxLength) {
+				//Navigate between inputs once value is inserted
+				let nextPos = (pos + 1);
+				let nextInput = this.template.querySelector(`[data-pos="${nextPos}"]`);
+				nextInput.focus();
+			}else{
+				//Once every input has a value, check if code is same
+				if(!this._codeVal.includes(null)){
+					this.inputCode = this._codeVal.join('');
+					this.isCodeSet();
+				}
+			}
+		}else{
+			this._pastedCodeFullyFilled = true;
+			let currentInput = this.template.querySelector(`[data-pos="${pos}"]`);
+			currentInput.value = null;
+			currentInput.focus();
+		}
+	}
+
+	/**
+	 * Method to handle the onkeyup event
+	 */
+	removeValues(event){
+		let elem = event.target;
+		let pos = parseInt(elem.dataset.pos);
+		let posInList = pos-1;
 		if(event.keyCode === 8){
 			//When delete, return to previous input
 			if(posInList !== 0){
@@ -56,29 +99,45 @@ export default class PortalMfaActivationCode extends LightningElement {
 				this._codeVal[posInList] = null;
 				this.inputCode = null;
 				prevInput.focus();
+				this.isCodeSet();
 			}
 			return;
 		}
+	}
 
-		if(isNaN(elem.value) || elem.value === undefined || elem.value === ' ' || elem.value === ''){
-			//Only allow numeric values in inputs
-			let currentInput = this.template.querySelector(`[data-pos="${pos}"]`);
-			currentInput.value = null;
-			return;
+	/**
+	 * Method that filles the code up whenever the code is pasted
+	 */
+	fillCodeUp(event){
+		let clipboard = (event.clipboardData || window.clipboardData).getData('text');
+		let codeFullyFilled = false;
+		let latestInputPos = 0;
+		for (let i = 0; i < this.length; i++) {
+			const character = clipboard[i];
+			let currentInput = this.template.querySelector(`[data-pos="${i+1}"]`);
+			if (character !== undefined && character !== ' ' && character !== '' && !isNaN(character)) {
+				this._codeVal[i] = character;
+				currentInput.value = character;
+				if (i === (this.length-1)) {
+					codeFullyFilled = true;
+				}
+			}else{
+				latestInputPos = i;
+				currentInput.value = null;
+				currentInput.focus();
+				break;
+			}
 		}
-        this._codeHasError = false;
-		this._codeVal[posInList] = elem.value;
-
-		if (pos !== this.maxLength) {
-			//Navigate between inputs once value is inserted
-			let nextPos = (pos + 1);
-			let nextInput = this.template.querySelector(`[data-pos="${nextPos}"]`);
-			nextInput.focus();
+		if(codeFullyFilled){
+			let lastInput = this.template.querySelector(`[data-pos="${this.length-1}"]`);
+			lastInput.focus();
+			this.inputCode = this._codeVal.join('');
+			this.isCodeSet();
 		}else{
-			//Once every input has a value, check if code is same
-			if(!this._codeVal.includes(null)){
-				this.inputCode = this._codeVal.join('');
-				this.isCodeSet();
+			this._pastedCodeFullyFilled = false;
+			for (let index = latestInputPos; index < this.length; index++) {
+				let inputToEmpty = this.template.querySelector(`[data-pos="${index+1}"]`);
+				inputToEmpty.value = null;
 			}
 		}
 	}

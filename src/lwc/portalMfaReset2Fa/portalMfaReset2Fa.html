@@ -1,7 +1,8 @@
 <template>
     <template if:true={labels}>
         <c-portal-login-step-container title={labels.Portal_MFA_Reset_2FA_Title} button-label={labels.CSP_Submit}
-        back-label={labels.Portal_MFA_Reset_2FA_Back} onbuttonclick={submitHandle} onbackclick={navigateStepBack} remove-footer-border>
+        back-label={labels.Portal_MFA_Reset_2FA_Back} onbuttonclick={submitHandle} onbackclick={navigateStepBack}
+        link-p-class="slds-p-top_small" remove-footer-border>
             <div slot="mfa-login-body" class="slds-col">
                 <div class="slds-grid slds-align_absolute-center">
                     <div class="slds-col">

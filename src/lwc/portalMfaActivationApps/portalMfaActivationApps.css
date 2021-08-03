@@ -11,3 +11,10 @@ a {
     border: solid 1px;
     border-color: #ececec;
 }
+
+
+@media (max-width: 479px){
+    .middle-div{
+        padding: 0px 10px;
+    }
+}

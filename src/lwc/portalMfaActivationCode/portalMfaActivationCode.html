@@ -5,9 +5,10 @@
                 <b>{labels.Portal_MFA_Activation_Code}</b>
             </div>
             <div class={separatorClass}>
-                <div class={borderClass}>
+                <div class={borderClass} onpaste={fillCodeUp}>
                     <template for:each={dataPositions}  for:item="position">
-                        <input key={position} data-pos={position} class="inputs" type="text" pattern="[0-9]" maxlength="1" onkeyup={setInput}>
+                        <input key={position} data-pos={position} class="inputs" type="text" maxlength="1" pattern="\d*"
+                        oninput={setInput} onkeyup={removeValues}>
                     </template>
                 </div>
             </div>

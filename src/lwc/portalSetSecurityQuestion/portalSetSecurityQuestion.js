@@ -98,7 +98,11 @@ export default class PortalSetSecurityQuestion extends LightningElement {
 		if(!this.isOnSettings){
 			return 'slds-p-horizontal_x-large';
 		}else{
-			return 'slds-align_absolute-center slds-p-bottom_x-large';
+			let classes = 'slds-p-bottom_x-large';
+			if (this.showCenteredBtn) {
+				classes += ' slds-p-horizontal_xx-large';
+			}
+			return classes;
 		}
 	}
 
@@ -139,5 +143,12 @@ export default class PortalSetSecurityQuestion extends LightningElement {
 			return "slds-grid";
 		}
 		return "";
+	}
+
+	get btnDivClass(){
+		if(this.showCenteredBtn){
+			return "slds-p-horizontal_large slds-grid slds-gutters slds-align_absolute-center";
+		}
+		return "slds-p-horizontal_large slds-grid slds-gutters";
 	}
 }

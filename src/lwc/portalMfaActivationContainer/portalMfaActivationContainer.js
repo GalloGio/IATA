@@ -40,6 +40,13 @@ export default class PortalMfaActivationContainer extends LightningElement {
 		this._otp = this.template.querySelector('c-portal-mfa-activation-code').getCode();
 	}
 
+	/**
+	 * @description	Display the security question step
+	 */
+	handleBack(){
+		this.dispatchEvent(new CustomEvent("goback"));
+	}
+
 	/* HTML attributes - START */
 	get isContinueDisabled(){
 		return !this._otp || this.codeHasError;

@@ -16,7 +16,11 @@ function getLangFromURL(){
 			selectedLang = languageResult[0].replace('language=', '').replace('&', '');
 		}else{
 			languageResult = pageParams.retURL.match(/language=(.*)/g);
-			selectedLang = languageResult[0].replace('language=', '');
+			if(languageResult){
+				selectedLang = languageResult[0].replace('language=', '');
+			}else{
+				selectedLang = 'en_US';
+			}
 		}
 	}
 

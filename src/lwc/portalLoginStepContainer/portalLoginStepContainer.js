@@ -14,6 +14,8 @@ export default class PortalLoginStepContainer extends LightningElement {
 	@api removeFooter = false;
 	@api removeFooterBorder = false;
 
+	@api linkPClass;
+
 	isButtonDisabled = true;
 
 	/**
@@ -62,6 +64,12 @@ export default class PortalLoginStepContainer extends LightningElement {
 		}else{
 			return 'slds-p-vertical_medium';
 		}
+	}
+
+	get linkClass(){
+		var classes = "slds-float_right slds-p-right_large slds-text-align_center ";
+		classes += this.linkPClass;
+		return classes;
 	}
 	/* HTML attributes - END */
 }

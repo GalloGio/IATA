@@ -29,7 +29,11 @@ export default class PortalLoginHeader extends LightningElement {
                 this.selectedLang = languageResult[0].replace('language=', '').replace('&', '').toLowerCase();
             }else{
                 languageResult = pageParams.retURL.match(/language=(.*)/g);
-                this.selectedLang = languageResult[0].replace('language=', '').toLowerCase();
+                if (languageResult) {
+                    this.selectedLang = languageResult[0].replace('language=', '').toLowerCase();
+                }else{
+                    this.selectedLang = 'en_US';
+                }
             }
         }
         this.getLanguagesOptions();

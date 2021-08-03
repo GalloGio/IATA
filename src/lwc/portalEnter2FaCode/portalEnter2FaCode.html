@@ -9,7 +9,7 @@
                             <span class="slds-text-align_center" style="margin: auto;">{labels.Portal_MFA_Login_Code_Body}</span>
                         </div>
                         <div class="slds-p-top_large slds-grid slds-align_absolute-center">
-                            <div class="slds-size_5-of-12">
+                            <div class="slds-size_7-of-12">
                                 <c-portal-mfa-activation-code length=6 is-only-input oncodeset={handleCodeValid}></c-portal-mfa-activation-code>
                             </div>
                         </div>
@@ -19,7 +19,7 @@
 
             <div slot="mfa-login-footer">
                 <div class="slds-grid sdls-p-vertical_small">
-                    <div class="mfa-link slds-align_absolute-center" onclick={displayResetSection}>
+                    <div class="mfa-link slds-align_absolute-center cursorPointer" onclick={displayResetSection}>
                         {labels.Portal_MFA_Troubleshooting_Title}
                     </div>
                 </div>

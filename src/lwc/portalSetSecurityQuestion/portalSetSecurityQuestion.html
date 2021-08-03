@@ -9,9 +9,8 @@
 					</span>
 				</div>
 
-				<span class="slds-grid slds-align_absolute-center mfa-secondary-title slds-p-bottom_xx-small">{labels.Portal_Security_Form_Body_Title1}</span>
-
-				<span class="slds-grid slds-align_absolute-center mfa-tertiary-title slds-p-bottom_large">{labels.Portal_Security_Form_Body_Title2}</span>
+				<span class="slds-grid slds-align_absolute-center mfa-secondary-title">{labels.Portal_Security_Form_Body_Title1}</span>
+				<span class="slds-grid slds-align_absolute-center mfa-login-tertiary-title slds-p-bottom_large">{labels.Portal_Security_Form_Body_Title2}</span>
 				<span class="slds-grid mfa-tertiary-body">{labels.Portal_Security_Question_Form_Body}</span>
 
 				<div class={secQandAClass}>
@@ -19,13 +18,13 @@
 						<div class="slds-row">
 							<div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click">
 								<label class="mfa-text-input-label">{labels.Portal_Question}</label>
-								<input class="slds-input mfa-text-input" type="text" oninput={updateQuestion} value={currentUserQuestion}/>
+								<input class="slds-input mfa-text-input" type="text" placeholder={labels.Portal_MFA_Security_Question_Placeholder} oninput={updateQuestion} value={currentUserQuestion}/>
 							</div>
 						</div>
 						<div class="slds-row">
 							<div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click">
 								<label class="mfa-text-input-label">{labels.Portal_Answer}</label>
-								<input class="slds-input mfa-text-input" type="text" oninput={updateAnswer} value={currentUserAnswer}/>
+								<input class="slds-input mfa-text-input" type="text" placeholder={labels.Portal_MFA_Security_Answer_Placeholder} oninput={updateAnswer} value={currentUserAnswer}/>
 							</div>
 						</div>
 					</div>
@@ -62,7 +61,7 @@
 				<span if:false={displayIntroInfo} class="slds-grid mfa-secondary-title slds-p-bottom_medium slds-align_absolute-center">
 					{labels.Portal_Security_Question_Form_Title}
 				</span>
-				<span if:true={displayIntroInfo} class="slds-grid mfa-secondary-title slds-p-bottom_medium slds-align_absolute-center">
+				<span if:true={displayIntroInfo} class="slds-grid mfa-secondary-title slds-align_absolute-center">
 					{labels.Portal_Security_Form_Body_Title1}
 				</span>
 	
@@ -76,21 +75,21 @@
 						<div class="slds-row">
 							<div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click">
 								<label class="mfa-text-input-label">{labels.Portal_Question}</label>
-								<input class="slds-input mfa-text-input" type="password" oninput={updateQuestion} value={currentUserQuestion}
+								<input class="slds-input mfa-text-input" type="password" placeholder={labels.Portal_MFA_Security_Question_Placeholder} oninput={updateQuestion} value={currentUserQuestion}
 								autocomplete="off"/>
 							</div>
 						</div>
 						<div class="slds-row">
 							<div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click">
 								<label class="mfa-text-input-label">{labels.Portal_Answer}</label>
-								<input class="slds-input mfa-text-input" type="password" oninput={updateAnswer} value={currentUserAnswer}
+								<input class="slds-input mfa-text-input" type="password" placeholder={labels.Portal_MFA_Security_Answer_Placeholder} oninput={updateAnswer} value={currentUserAnswer}
 								autocomplete="off"/>
 							</div>
 						</div>
 					</div>
 				</div>
 	
-				<div class="slds-p-horizontal_large slds-grid slds-gutters">
+				<div class={btnDivClass}>
 					<div if:false={showCenteredBtn} class="slds-size_1-of-2">
 						<button class="mfa-left-btn" onclick={hideModal}>{labels.ISSP_Back}</button>
 					</div>
