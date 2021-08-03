@@ -29301,7 +29301,7 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
     <validationRules>
         <fullName>Apparent_Cause_is_mandatory</fullName>
         <active>true</active>
-        <description>This field is mandatory for RT CPS Checks and for certain values in the field Issue Subcategory</description>
+        <description>This field is mandatory for the selected Issue Subcategory</description>
         <errorConditionFormula>AND(
   RecordType.DeveloperName=&apos;CPS_Checks&apos;,
   ISBLANK(TEXT(Apparent_Cause__c)),
@@ -29309,6 +29309,18 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
 )</errorConditionFormula>
         <errorDisplayField>Apparent_Cause__c</errorDisplayField>
         <errorMessage>This field is mandatory for the selected Issue Subcategory</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Area_of_Concern_is_mandatory</fullName>
+        <active>true</active>
+        <description>This field is mandatory when Apparent Cause has certain values</description>
+        <errorConditionFormula>AND(
+  RecordType.DeveloperName=&apos;CPS_Checks&apos;,
+  ISBLANK(TEXT(Area_of_Concern__c)),
+  REGEX(TEXT(Apparent_Cause__c),$CustomMetadata.GVR__mdt.Operational_Improvements_Area_of_Concern.Value__c)
+)</errorConditionFormula>
+        <errorDisplayField>Area_of_Concern__c</errorDisplayField>
+        <errorMessage>This field is mandatory for the selected Apparent Cause</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Currency_is_mandatory_if_amount_LC</fullName>
@@ -29349,6 +29361,18 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
         <description>OI Conclusion is not allowed when there are pending action plans</description>
         <errorConditionFormula>AND(NOT(ISNULL(Conclusion_Date__c)),Action_Plan_Count__c != Action_Plan_Closed_Count__c)</errorConditionFormula>
         <errorMessage>OI can not be concluded. Please make sure all action plans are closed</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Quality_Response_is_mandatory</fullName>
+        <active>true</active>
+        <description>This field is mandatory for RT CPS Checks and for certain values in the field Issue Subcategory</description>
+        <errorConditionFormula>AND(
+  RecordType.DeveloperName=&apos;CPS_Checks&apos;,
+  ISBLANK(TEXT(Quality_Response_Categorization__c)),
+  REGEX(TEXT(Issue_Sub_Category__c),$CustomMetadata.GVR__mdt.Operational_Improvements_Subcat_Yes.Value__c)
+)</errorConditionFormula>
+        <errorDisplayField>Quality_Response_Categorization__c</errorDisplayField>
+        <errorMessage>This field is mandatory for the selected Issue Subcategory</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Root_Cause_check_Man_option</fullName>
