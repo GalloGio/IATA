@@ -1,0 +1,34 @@
+<messaging:emailTemplate subject="Confirmation IATA/IATAN ID Card {!relatedTo.Related_ID_Card_Application__r.Type_of_application__c} Application " renderUsingSystemContextWithoutSharing="True" recipientType="Contact"  relatedToType="Case">
+<messaging:htmlEmailBody >
+
+
+<html>
+<body>
+<font face="arial">
+<table>
+<tr align ="center"><td align="center"><apex:image url="https://c.eu0.content.force.com/servlet/servlet.ImageServer?id=0152000000111UE&oid=00D2000000008TF"/></td></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+
+
+<tr><td><c:IDCARD_VFEmailTemplate CID="{!relatedTo.Id}" isRenew="false"/></td></tr>
+
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+<tr></tr>
+
+<tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr><tr></tr>
+<tr><td><apex:outputText escape="false" value="{!relatedTo.Case_Thread_ID__c}" ></apex:outputText></td></tr>
+</table>
+</font>
+</body>
+</html>
+
+
+</messaging:htmlEmailBody>
+</messaging:emailTemplate>
