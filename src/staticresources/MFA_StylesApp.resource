@@ -298,3 +298,23 @@ body, .slds-scope {
 ::placeholder {
     color: lightgray;
 }
+
+@media screen and (min-width:1600px){
+    .settingsContainerWidth{
+        width: 60%;
+    }
+
+    .settings2FAWidth{
+        width: 52%;
+    }
+}
+
+@media screen and (min-width:2400px){
+    .settingsContainerWidth{
+        width: 50%;
+    }
+
+    .settings2FAWidth{
+        width: 42%;
+    }
+}

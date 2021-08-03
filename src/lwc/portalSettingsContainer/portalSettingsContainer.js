@@ -2,6 +2,7 @@ import { LightningElement, wire, track } from 'lwc';
 import { getRecord } from 'lightning/uiRecordApi';
 import { refreshApex } from '@salesforce/apex';
 import { labelUtil } from 'c/portalLabels';
+import { NavigationMixin } from 'lightning/navigation';
 
 import USER_2FA_QUESTION from '@salesforce/schema/User.X2FA_Security_Question__c';
 import userId from '@salesforce/user/Id';
@@ -18,7 +19,7 @@ import cleanQuestionAnswerCurrentUser from '@salesforce/apex/MFA_LoginFlowContro
 
 import MFAStylesResources from '@salesforce/resourceUrl/MFA_Styles';
 
-import Portal_Home from '@salesforce/label/c.Portal_Home';
+import CSP_Breadcrumb_Home_Title from '@salesforce/label/c.CSP_Breadcrumb_Home_Title';
 import Portal_Settings from '@salesforce/label/c.Portal_Settings';
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
@@ -29,7 +30,7 @@ const elementBySection = {'SecurityQuestion': 'c-portal-setup-security-question'
 /**
  * @description Stores the settings page elements
  */
-export default class PortalSettingsContainer extends LightningElement {
+export default class PortalSettingsContainer extends NavigationMixin(LightningElement) {
 
     backgroundImg = MFAStylesResources + '/background/settings_back.png';
 
@@ -37,7 +38,7 @@ export default class PortalSettingsContainer extends LightningElement {
     labels;
 
     label = {
-        Portal_Home,
+        CSP_Breadcrumb_Home_Title,
         Portal_Settings
     };
     /**
@@ -61,8 +62,6 @@ export default class PortalSettingsContainer extends LightningElement {
     secret;
     qrCodeURL;
     @track userInfo = {question:'', isSecurityQuestionActivated: false, isAuhtAppActivated: false };
-
-    display2FASetup = false;
 
     /**
      * @description Gets the logged user's security question 
@@ -106,6 +105,9 @@ export default class PortalSettingsContainer extends LightningElement {
 		labelUtil.getTranslations().then((result) => {
 			container.labels = result;
 		});
+        if (this.isSetupAuthApp) {
+            this.initAuthApp();
+        }
 	}
 
     /**
@@ -121,8 +123,9 @@ export default class PortalSettingsContainer extends LightningElement {
      * @description Display the 2FA process
      */
     setUp2FA(){
-        this.display2FASetup = true;
-        this.scrollToPos(0);
+        let url = new URL(window.location.href);
+        url.searchParams.set('setup2FA', 1);
+        window.location.href = url.toString();
     }
 
     /**
@@ -161,10 +164,9 @@ export default class PortalSettingsContainer extends LightningElement {
      * @description Displays the set 2FA methods screen
      */
     displayAuthApp(){
-        this.startLoad();
-        this.initAuthApp();
-        this.display2FASetup = true;
-        this.finishLoad();
+        let url = new URL(window.location.href);
+        url.searchParams.set('setup2FA', 2);
+        window.location.href = url.toString();
     }
 
     /**
@@ -186,11 +188,10 @@ export default class PortalSettingsContainer extends LightningElement {
         this.startLoad();
         verifyRegisterTotp({secret: this.secret, otp: event.detail.vcode}).then(res =>{
             if(res.isValid){
-                addMFAPermissionSet().then(r => {
-                    this.display2FASetup = false;
-                    refreshApex(this.isMFA_ActivatedWired);
-                    this.finishLoad();
-                    this.scrollToPos(0);
+                addMFAPermissionSet().then(r => {            
+                    let url = new URL(window.location.href);
+                    url.searchParams.delete('setup2FA');
+                    window.location.href = url.toString();
                 });
             }else{
                 this.finishLoad();
@@ -220,8 +221,10 @@ export default class PortalSettingsContainer extends LightningElement {
             refreshApex(this.isMFA_ActivatedWired);
             this.initAuthApp();
             refreshApex(this.userWired);
-            this.display2FASetup = true;
             this.finishLoad();
+            let url = new URL(window.location.href);
+            url.searchParams.set('setup2FA', 2);
+            window.location.href = url.toString();
         });
     }
 
@@ -236,7 +239,17 @@ export default class PortalSettingsContainer extends LightningElement {
      * @description True if the 2fa setup should be displayed
      */
     get is2FASetup(){
-        return this.display2FASetup;
+        return new URL(window.location.href).searchParams.get('setup2FA');
+    }
+
+    get isSetupSecQandA(){
+        var setup2FAStep = this.is2FASetup;
+        return setup2FAStep && setup2FAStep == 1;
+    }
+
+    get isSetupAuthApp(){
+        var setup2FAStep = this.is2FASetup;
+        return setup2FAStep && setup2FAStep == 2;
     }
 
     get topBackgroundImg(){

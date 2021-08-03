@@ -1,5 +1,7 @@
 import { LightningElement, api } from 'lwc';
 import { loadStyle } from 'lightning/platformResourceLoader';
+
+import CSP_Change_Password      from '@salesforce/label/c.CSP_Change_Password';
 import MFAStylesResources from '@salesforce/resourceUrl/MFA_StylesApp';
 
 /**
@@ -8,6 +10,10 @@ import MFAStylesResources from '@salesforce/resourceUrl/MFA_StylesApp';
 export default class PortalSettingsMenu extends LightningElement {
     @api translations;
     activeSection = 'security-question';
+
+    label = {
+        CSP_Change_Password
+    }
 
     renderedCallback() {
         if(this.styleResources === 'default'){

@@ -1,8 +1,8 @@
 <template>
     <div if:false={is2FASetup} class="slds-size_full slds-grid back-image slds-grid_align-center" style={topBackgroundImg}>
-        <div class="slds-size_3-of-4 slds-m-top_medium">
+        <div class="slds-size_3-of-4 settingsContainerWidth slds-m-top_medium">
             <span class="slds-m-vertical_medium">
-                <span class="white-label" onclick={navigateHome}>{label.Portal_Home}</span>
+                <span class="white-label" onclick={navigateHome}>{label.CSP_Breadcrumb_Home_Title}</span>
 
                 <span class="slds-m-horizontal_small gray-label">
                     <span> > </span>
@@ -19,7 +19,7 @@
     </div>
     <div class="slds-p-bottom_large slds-p-top_xx-large mfa-font-family">
         <div if:false={is2FASetup} class="slds-grid slds-grid_align-center">
-            <div class="slds-grid sldsx-small-size_1-of-1 slds-large-size_9-of-12">
+            <div class="slds-grid sldsx-small-size_1-of-1 slds-large-size_9-of-12 settingsContainerWidth">
                 <div class="slds-grid slds-gutters_large">
                     <div class="slds-col slds-size_1-of-3 mfa-side-menu">
                         <c-portal-settings-menu translations={translations} onscroll={navigateToPosition}></c-portal-settings-menu>
@@ -52,11 +52,11 @@
         </div>
 
         <div if:true={is2FASetup} class="slds-grid slds-grid_align-center slds-p-horizontal_medium">
-            <div class="slds-x-small-size_1-of-1 slds-large-size_2-of-3">
-                <c-portal-mfa-activation-container if:true={userInfo.isSecurityQuestionActivated} translations={translations} is-settings qr-code={qrCodeURL}
-                secret={secret} onvalidatemfacode={validateQrCode}></c-portal-mfa-activation-container>
-                <c-portal-set-security-question if:false={userInfo.isSecurityQuestionActivated} is-settings display-intro-info translations={translations}
+            <div class="slds-x-small-size_1-of-1 slds-large-size_2-of-3 settings2FAWidth">
+                <c-portal-set-security-question if:true={isSetupSecQandA} is-settings display-intro-info translations={translations}
                 onsavesecurityquestion={handleSecQuestionActivate}></c-portal-set-security-question>
+                <c-portal-mfa-activation-container if:true={isSetupAuthApp} translations={translations} is-settings qr-code={qrCodeURL}
+                secret={secret} onvalidatemfacode={validateQrCode}></c-portal-mfa-activation-container>
             </div>
         </div>
     </div>
