@@ -32428,7 +32428,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Contact.Airline_Credit_Risk_Manager__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -32763,7 +32763,7 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Contact.Distribution_Risk_Expert__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -69055,6 +69055,7 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
+        <personAccountDefault>true</personAccountDefault>
         <recordType>Contact.Standard_Contact</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
