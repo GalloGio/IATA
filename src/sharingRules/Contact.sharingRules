@@ -90,20 +90,6 @@
         </criteriaItems>
     </sharingCriteriaRules>
     <sharingGuestRules>
-        <fullName>Identity_Contact_Sharing</fullName>
-        <accessLevel>Read</accessLevel>
-        <label>Identity Contact Sharing</label>
-        <sharedTo>
-            <guestUser>identity1</guestUser>
-        </sharedTo>
-        <criteriaItems>
-            <field>LastName</field>
-            <operation>notEqual</operation>
-            <value></value>
-        </criteriaItems>
-        <includeHVUOwnedRecords>false</includeHVUOwnedRecords>
-    </sharingGuestRules>
-    <sharingGuestRules>
         <fullName>Share_Contacts_with_IATA_Portal_Site_Guest_User</fullName>
         <accessLevel>Read</accessLevel>
         <description>Share Contacts with IATA Portal Site Guest User</description>
