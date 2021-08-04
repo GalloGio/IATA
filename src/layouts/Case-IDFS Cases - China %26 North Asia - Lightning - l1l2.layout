@@ -512,7 +512,7 @@
         <platformActionListItems>
             <actionName>Case.NewOppAction</actionName>
             <actionType>QuickAction</actionType>
-            <sortOrder>13</sortOrder>
+            <sortOrder>14</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <quickActionList>
