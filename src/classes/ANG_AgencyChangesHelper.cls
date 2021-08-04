@@ -870,8 +870,17 @@ public with sharing class ANG_AgencyChangesHelper {
 					if(riskEventsLst != null && !riskEventsLst.isEmpty()){
 						changesContainer.addRiskEventsToInactivate(riskEventsLst, accountGE.Id);
 					}
-
-					List<ANG_Risk_Alert__c> riskAlertsLst = (List<ANG_Risk_Alert__c>) acct.getSObjects('Risk_Alerts__r');
+					List<ANG_Risk_Alert__c> riskAlertsLst = new List<ANG_Risk_Alert__c>();
+					try {
+						riskAlertsLst = (List<ANG_Risk_Alert__c>) acct.getSObjects('Risk_Alerts__r');
+					}
+					catch( QueryException e ){
+						
+						for( sObject raSo :acct.getSObjects('Risk_Alerts__r')) {
+							ANG_Risk_Alert__c ra = (ANG_Risk_Alert__c) raSo;
+							riskAlertsLst.add(ra);
+						}
+					}
 
 					if(riskAlertsLst != null && !riskAlertsLst.isEmpty()){
 						moveRiskAlerts(riskAlertsLst, accountGE.Id);
