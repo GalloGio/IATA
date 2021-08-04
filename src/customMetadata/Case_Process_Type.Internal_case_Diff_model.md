@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>Other_Conditions__c</field>
-        <value xsi:type="xsd:string">Account.HQ_Service_Model__c IN (&apos;Differentiated&apos;) AND Parent.RecordTypeDeveloperName__c NOT IN (&apos;ComplaintIDFS&apos;) AND Parent.Type NOT IN (&apos;Complaint&apos;) AND Priority NOT IN (&apos;Emergency&apos;) AND Parent.Type NOT IN (&apos;Request&apos;)</value>
+        <value xsi:type="xsd:string">Account.HQ_Service_Model__c IN (&apos;Differentiated&apos;) AND Parent.RecordTypeDeveloperName__c NOT IN (&apos;ComplaintIDFS&apos;) AND Parent.Type NOT IN (&apos;Complaint&apos;,&apos;Request&apos;) AND Priority NOT IN (&apos;Emergency&apos;)</value>
     </values>
     <values>
         <field>Reason__c</field>
