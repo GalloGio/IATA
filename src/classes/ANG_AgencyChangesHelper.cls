@@ -871,13 +871,8 @@ public with sharing class ANG_AgencyChangesHelper {
 						changesContainer.addRiskEventsToInactivate(riskEventsLst, accountGE.Id);
 					}
 					List<ANG_Risk_Alert__c> riskAlertsLst = new List<ANG_Risk_Alert__c>();
-					try {
-						riskAlertsLst = (List<ANG_Risk_Alert__c>) acct.getSObjects('Risk_Alerts__r');
-					}
-					catch( QueryException e ){
-						
-						for( sObject raSo :acct.getSObjects('Risk_Alerts__r')) {
-							ANG_Risk_Alert__c ra = (ANG_Risk_Alert__c) raSo;
+					if(acct.Risk_Alerts__r != null){
+						for( ANG_Risk_Alert__c ra :acct.Risk_Alerts__r) {
 							riskAlertsLst.add(ra);
 						}
 					}
