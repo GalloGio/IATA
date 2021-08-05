@@ -153,9 +153,9 @@
         function sendTrackedRedirection(redirectURL) {
             if({!$Permission.Can_send_a_tracked_email}){
             if (sforce.console.isInConsole()) {
-                ServiceConsoleIntegration(redirectURL + "&isInConsole=true");
+                ServiceConsoleIntegration(redirectURL );
             } else {
-                window.open(redirectURL, '_blank');
+                window.top.location = redirectURL;
             }
         }
             else {
