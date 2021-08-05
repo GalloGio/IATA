@@ -491,14 +491,6 @@
                 <label>IATA Annual Fees (BSP/CASS)</label>
                 <name>IATA_Annual_Fees_BSP_CASS_crg</name>
             </dataCategory>
-            <dataCategory>
-                <dataCategory>
-                    <label>IFACP General Information</label>
-                    <name>IFACP_General_Information</name>
-                </dataCategory>
-                <label>IFACP Endorsed Forwarder</label>
-                <name>IFACP_Endorsed_Forwarder</name>
-            </dataCategory>
             <label>Cargo</label>
             <name>Cargo</name>
         </dataCategory>
