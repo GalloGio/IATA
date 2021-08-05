@@ -2,7 +2,6 @@ import { LightningElement, wire, track } from 'lwc';
 import { getRecord } from 'lightning/uiRecordApi';
 import { refreshApex } from '@salesforce/apex';
 import { labelUtil } from 'c/portalLabels';
-import { NavigationMixin } from 'lightning/navigation';
 
 import USER_2FA_QUESTION from '@salesforce/schema/User.X2FA_Security_Question__c';
 import userId from '@salesforce/user/Id';
@@ -15,7 +14,6 @@ import verifyRegisterTotp from '@salesforce/apex/MFA_LoginFlowController.verifyR
 import addMFAPermissionSet from '@salesforce/apex/MFA_LoginFlowController.addMFAPermissionSet';
 import deleteMFAPermissionSet from '@salesforce/apex/MFA_LoginFlowController.deleteMFAPermissionSet';
 import deregisterVerificationTotp from '@salesforce/apex/MFA_LoginFlowController.deregisterVerificationTotp';
-import cleanQuestionAnswerCurrentUser from '@salesforce/apex/MFA_LoginFlowController.cleanQuestionAnswerCurrentUser';
 
 import MFAStylesResources from '@salesforce/resourceUrl/MFA_Styles';
 
@@ -30,7 +28,7 @@ const elementBySection = {'SecurityQuestion': 'c-portal-setup-security-question'
 /**
  * @description Stores the settings page elements
  */
-export default class PortalSettingsContainer extends NavigationMixin(LightningElement) {
+export default class PortalSettingsContainer extends LightningElement {
 
     backgroundImg = MFAStylesResources + '/background/settings_back.png';
 
