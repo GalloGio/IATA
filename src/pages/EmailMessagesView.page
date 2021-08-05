@@ -2,12 +2,11 @@
 
     <apex:messages />
     <apex:message />
-    <apex:includeScript value="/support/console/30.0/integration.js" />
+    <apex:includeScript value="/support/console/48.0/integration.js" />
     <apex:includeScript value="/soap/ajax/26.0/connection.js" />
     <apex:includeScript value="/soap/ajax/26.0/apex.js" />
     <apex:includeScript value="{!$Resource.jquery2_1_4}" />
-    <apex:includeScript value="{!$Resource.keyCustomerAlert}"/>
-
+    <apex:includeScript value="{!$Resource.keyCustomerAlert}" />
 
     <script type="text/javascript">
 
@@ -30,16 +29,19 @@
 
                 var isEmailDeleted = sforce.apex.execute("IDFS_Util", "DeleteEmail", { messageID: id });
 
-                if(isEmailDeleted == 'true')
-                {
-                    // TODO: reload page
-                    //window.top.location.reload();
-                    //window.parent.location.reload();
-                    // var temp = window.top.location;
-                    window.open("{!$Site.BaseURL}/" + caseId, '_blank');                    
+                if (isEmailDeleted == 'true') {
+                    var redirectUrlOne = "{!$Label.SF_Base_URL}/" + caseId;
+                    if (sforce.console.isInConsole()) {
+                        sforce.console.getEnclosingTabId(function (enclosingResult) {
+                            sforce.console.getEnclosingPrimaryTabId(function (primaryResult) {
+                                sforce.console.refreshSubtabById(primaryResult.id, false);
+                            });
+                        });
+                    } else {
+                        window.top.location = redirectUrlOne;
+                    }
                 }
-                else
-                {
+                else {
                     alert('Email cannot be deleted at the moment');
                 }
             }
@@ -51,21 +53,18 @@
             var redirectUrlOne = "{!$Label.SF_Base_URL}/_ui/core/email/author/EmailAuthor?email_id=" + id + "&replyToAll=1&retURL=" + caseId + "&p26=" + countryEmail;
             var redirectUrlTwo = "{!$Label.SF_Base_URL}/_ui/core/email/author/EmailAuthor?email_id=" + id + "&replyToAll=1&retURL=" + caseId;
 
-            if(countryEmail != '')
-            {
-                //window.top.location = redirectUrlOne;
+            if (countryEmail != '') {
                 if (sforce.console.isInConsole()) {
                     ServiceConsoleIntegration(redirectUrlOne);
                 } else {
-                    window.open(redirectUrlOne, '_blank');
+                    window.top.location = redirectUrlOne;
                 }
             } else {
                 if (sforce.console.isInConsole()) {
                     ServiceConsoleIntegration(redirectUrlTwo);
                 } else {
-                    window.open(redirectUrlTwo, '_blank');
+                    window.top.location = redirectUrlTwo;
                 }
-
             }
         }
 
@@ -75,26 +74,24 @@
             var redirectUrlOne = "{!$Label.SF_Base_URL}/_ui/core/email/author/EmailAuthor?email_id=" + id + "&replyToAll=0&retURL=" + caseId + "&p26=" + countryEmail;
             var redirectUrlTwo = "{!$Label.SF_Base_URL}/_ui/core/email/author/EmailAuthor?email_id=" + id + "&replyToAll=0&retURL=" + caseId;
 
-            if(countryEmail != '')
-            {
-                //window.top.location = redirectUrlOne;
+            if (countryEmail != '') {
+
                 if (sforce.console.isInConsole()) {
                     ServiceConsoleIntegration(redirectUrlOne);
                 } else {
-                    window.open(redirectUrlOne, '_blank');
+                    window.top.location = redirectUrlOne;
                 }
             } else {
                 if (sforce.console.isInConsole()) {
                     ServiceConsoleIntegration(redirectUrlTwo);
                 } else {
-                    window.open(redirectUrlTwo, '_blank');
+                    window.top.location = redirectUrlTwo;
                 }
 
             }
         }
 
-        function ServiceConsoleIntegration(redirectUrl)
-        {
+        function ServiceConsoleIntegration(redirectUrl) {
             if (sforce.console.isInConsole()) {
                 sforce.console.getEnclosingTabId(function (enclosingResult) {
                     sforce.console.getEnclosingPrimaryTabId(function (primaryResult) {
@@ -108,24 +105,21 @@
 
         function SendEmail() {
 
-            //ACAMBAS - WMO-436 - Begin
-            
             var countryEmail = getCountryEmail();
-            var targetURL = "{!$Label.SF_Base_URL}/email/author/emailauthor.jsp?retURL=" + caseId + "&p2_lkid={!cse.ContactId}&p3_lkid=" + caseId + "&rtype=003";
+            var targetURL = "{!$Label.SF_Base_URL}/_ui/core/email/author/EmailAuthor?retURL=" + caseId + "&p2_lkid={!cse.ContactId}&p3_lkid=" + caseId + "&rtype=003";
 
-            if(countryEmail != '') {
+            if (countryEmail != '') {
                 targetURL = targetURL + "&p26=" + countryEmail;
-            }  
-
-            if({!cse.Account.Identify_as_Key_Customer__c} == true && {!isEligibleForKeyCustomerAlert} == true) {
+            }
+            if ({!cse.Account.Identify_as_Key_Customer__c} == true && {!isEligibleForKeyCustomerAlert} == true) {
                 displayKeyCustomerAlert(targetURL, "{!$Label.KEY_CUSTOMER_ALERT_TITLE}", "{!$Label.KEY_CUSTOMER_ALERT}");
-            }
-            else {
-                window.open(targetURL, '_blank');
-            }
-
-            //ACAMBAS - WMO-436 - End
-            
+            } else {
+                    if (sforce.console.isInConsole()) {
+                        ServiceConsoleIntegration(targetURL);
+                    } else {
+                        window.top.location = targetURL;
+                    }
+            }            
         }
 
         function openSubTab(id) {
