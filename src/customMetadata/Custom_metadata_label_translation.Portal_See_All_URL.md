@@ -12,6 +12,6 @@
     </values>
     <values>
         <field>Value__c</field>
-        <value xsi:type="xsd:string">https://www.google.it</value>
+        <value xsi:type="xsd:string">https://portal.iata.org/faq/s/article/What-do-I-need-to-set-up-two-factor-authentication</value>
     </values>
 </CustomMetadata>
