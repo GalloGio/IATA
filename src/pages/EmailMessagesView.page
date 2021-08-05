@@ -11,6 +11,9 @@
     <script type="text/javascript">
 
         var caseId = ("{!cse.Id}").substring(0, 15);
+        var keyCustomer = "{!cse.Account.Identify_as_Key_Customer__c}";
+        var isEligibleForKeyCustomerAlert = "{!isEligibleForKeyCustomerAlert}";
+        var canSendTrackedEmails = "{!$Permission.Can_send_a_tracked_email}";
 
         function getCountryEmail() {
             sforce.connection.sessionId = "{!$Api.Session_ID}";
@@ -87,7 +90,6 @@
                 } else {
                     window.top.location = redirectUrlTwo;
                 }
-
             }
         }
 
@@ -111,15 +113,15 @@
             if (countryEmail != '') {
                 targetURL = targetURL + "&p26=" + countryEmail;
             }
-            if ({!cse.Account.Identify_as_Key_Customer__c} == true && {!isEligibleForKeyCustomerAlert} == true) {
+            if (keyCustomer == true && isEligibleForKeyCustomerAlert == true) {
                 displayKeyCustomerAlert(targetURL, "{!$Label.KEY_CUSTOMER_ALERT_TITLE}", "{!$Label.KEY_CUSTOMER_ALERT}");
             } else {
-                    if (sforce.console.isInConsole()) {
-                        ServiceConsoleIntegration(targetURL);
-                    } else {
-                        window.top.location = targetURL;
-                    }
-            }            
+                if (sforce.console.isInConsole()) {
+                    ServiceConsoleIntegration(targetURL);
+                } else {
+                    window.top.location = targetURL;
+                }
+            }
         }
 
         function openSubTab(id) {
@@ -151,28 +153,42 @@
         }
 
         function sendTrackedRedirection(redirectURL) {
-            if({!$Permission.Can_send_a_tracked_email}){
-            if (sforce.console.isInConsole()) {
-                ServiceConsoleIntegration(redirectURL );
-            } else {
-                window.top.location = redirectURL;
+            if (canSendTrackedEmails) {
+                if (sforce.console.isInConsole()) {
+                    ServiceConsoleIntegration(redirectURL);
+                } else {
+                    window.top.location = redirectURL;
+                }
+            }
+            else {
+                alert("You don't have access to this tracked email feature, please contact the administrator for more details.");
             }
         }
-            else {
-            alert("You don't have access to this tracked email feature, please contact the administrator for more details.");
-        }
-        }
+    
     </script>
 
     <apex:pageMessages />
 
     <style type="text/css">
-    A:link {text-decoration: none; color: #015ba7;}
-    A:visited {text-decoration: none}
-    A:active {text-decoration: none}
-    A:hover {text-decoration: underline; color: #015ba7;}
+        A:link {
+            text-decoration: none;
+            color: #015ba7;
+        }
+
+        A:visited {
+            text-decoration: none
+        }
+
+        A:active {
+            text-decoration: none
+        }
+
+        A:hover {
+            text-decoration: underline;
+            color: #015ba7;
+        }
     </style>
-    <apex:form >
+    <apex:form>
 
         <apex:pageblock id="CustomList" Title="Emails" helpTitle="Emails Help" helpUrl="https://help.salesforce.com/htviewhelpdoc?id=cases_email.htm&siteLang=en_US">
             <apex:facet name="header">
@@ -185,9 +201,11 @@
                                     <h3 id="50011000000m9Uv_RelatedEmailMessageList_title">&nbsp;Emails</h3>
                                 </td>
                                 <td class="pbButton">
-                                <input value="Send an Email" class="btn" name="newEmail" onclick="SendEmail();return false;" title="Send an Email" type="button"/>
-                                <input value="Send a Tracked Email" class="btn" name="newEmail" onclick="sendTrackedEmail();return false;" title="Send a Tracked Email"
-                                    type="button" style="display: {!IF($Permission.Can_send_a_tracked_email && ShowSendTrackedEmailButton,'','none')}" />
+                                    <input value="Send an Email" class="btn" name="newEmail" onclick="SendEmail();return false;" title="Send an Email" type="button"
+                                    />
+                                    <input value="Send a Tracked Email" class="btn" name="newEmail" onclick="sendTrackedEmail();return false;" title="Send a Tracked Email"
+                                        type="button" style="display: {!IF($Permission.Can_send_a_tracked_email && ShowSendTrackedEmailButton,'','none')}"
+                                    />
                                 </td>
                                 <td class="pbHelp">
                                     <span class="help" title="Emails Help (New Window)">
@@ -261,14 +279,16 @@
                                     </div>
                                 </td>
                                 <td class=" dataCell ">
-                                <a style="font-weight: bold;"  href="/{!IF(message.isArchived,message.archivedEmailId,message.emailId)}" target="_blank" onclick="openSubTab('{!IF(message.isArchived,message.archivedEmailId,message.emailId)}');return false;">{!message.subject}</a>
+                                    <a style="font-weight: bold;" href="/{!IF(message.isArchived,message.archivedEmailId,message.emailId)}" target="_blank" onclick="openSubTab('{!IF(message.isArchived,message.archivedEmailId,message.emailId)}');return false;">{!message.subject}</a>
                                     <br/>
                                     <font style="font-style: italic; font-decoration: none; font-size: 11px;">{!message.body}...</font>
                                 </td>
                                 <td class=" dataCell ">
                                     <apex:outputText value="{!message.emailAddress}" />
                                 </td>
-                            <td class=" dataCell "><apex:outputText value=" {!message.MessageDate}"/></td>
+                                <td class=" dataCell ">
+                                    <apex:outputText value=" {!message.MessageDate}" />
+                                </td>
                             </tr>
                         </apex:repeat>
                     </tbody>
