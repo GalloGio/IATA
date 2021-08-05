@@ -5,7 +5,7 @@ public without sharing class Pardot_API {
 	private static final String pardotBusinessUnit = pardotSetting.Pardot_Business_Unit__c;
 
 	public static Pardot_Prospect getProspect(String email) {
-		String url = '/api/prospect/version/4/do/read/email/'+EncodingUtil.urlEncode(email, 'UTF-8')+'?limit_related_records=true';
+		String url = '/api/prospect/version/'+pardotAPIVersion+'/do/read/email/'+EncodingUtil.urlEncode(email, 'UTF-8')+'?limit_related_records=true';
 
 		Pardot_Prospect prospect;
 		try {
