@@ -26237,6 +26237,10 @@ Se desideri ripristinare la password, torna alla schermata di accesso e utilizza
         <name>PortalService</name>
     </customLabels>
     <customLabels>
+        <label>Impostazioni</label>
+        <name>Portal_Settings</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Postal_code --></label>
         <name>Postal_code</name>
     </customLabels>

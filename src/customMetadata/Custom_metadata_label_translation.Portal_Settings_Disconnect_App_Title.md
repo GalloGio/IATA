@@ -12,6 +12,6 @@
     </values>
     <values>
         <field>Value__c</field>
-        <value xsi:type="xsd:string">Your existing 2FA App will be disconnected</value>
+        <value xsi:type="xsd:string">Your existing two-factor authentication app will be disconnected</value>
     </values>
 </CustomMetadata>

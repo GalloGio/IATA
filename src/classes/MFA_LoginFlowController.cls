@@ -6,7 +6,7 @@
  * 					MFA_LoginFlowPage and the 2FA related functionality in the CS Portal Settings page.
 **************************************************************************************************************/
 public without sharing class MFA_LoginFlowController{
-	private static String loginURL = getRetURL() + '?language=';
+	private static String loginURL = getRetURL();
 	public static String retURL = Label.CSP_PortalPath;
 
 	//Checks the user that access the page.
@@ -95,7 +95,7 @@ public without sharing class MFA_LoginFlowController{
 	 * @return			Pagereference: current site home page.
 	**********************************************************************************************************/
 	public static Pagereference setFirstSetupParameter(){
-		String portalHomePage = loginURL + activeLanguage + '&first2FAActivated=\'true\'';
+		String portalHomePage = loginURL + '&first2FAActivated=\'true\'';
 		PageReference pr = Test.isRunningTest() ? apexpages.currentpage() : Auth.SessionManagement.finishLoginFlow(portalHomePage);
 		return pr;
 	}
@@ -109,7 +109,7 @@ public without sharing class MFA_LoginFlowController{
 	 * @return			Pagereference: current site home page (finish login flow)
 	**********************************************************************************************************/
 	public static PageReference finishLoginFlowHome(){
-		String portalHomePage = loginURL + activeLanguage;
+		String portalHomePage = loginURL;
 		PageReference pr = Test.isRunningTest() ? apexpages.currentpage() : Auth.SessionManagement.finishLoginFlow(portalHomePage);
 		return pr;
 	}
@@ -420,7 +420,6 @@ public without sharing class MFA_LoginFlowController{
 	public static Boolean is2FaOptionalForUser(){
 		Boolean hasMFAEnabled = hasMFAEnabled();
 		List<PermissionSetAssignment> mfaPermissionSetAssignment = new List<PermissionSetAssignment>([SELECT Id FROM PermissionSetAssignment WHERE AssigneeId = :getCurrentUser().Id AND PermissionSet.Name = 'MFA' LIMIT 1]);
-
 		if(hasMFAEnabled && !mfaPermissionSetAssignment.isEmpty()){
 			return true;
 		}else{

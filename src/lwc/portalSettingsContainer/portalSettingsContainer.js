@@ -18,7 +18,6 @@ import deregisterVerificationTotp from '@salesforce/apex/MFA_LoginFlowController
 import MFAStylesResources from '@salesforce/resourceUrl/MFA_Styles';
 
 import CSP_Breadcrumb_Home_Title from '@salesforce/label/c.CSP_Breadcrumb_Home_Title';
-import Portal_Settings from '@salesforce/label/c.Portal_Settings';
 import CSP_PortalPath from '@salesforce/label/c.CSP_PortalPath';
 
 const elementBySection = {'SecurityQuestion': 'c-portal-setup-security-question',
@@ -36,8 +35,7 @@ export default class PortalSettingsContainer extends LightningElement {
     labels;
 
     label = {
-        CSP_Breadcrumb_Home_Title,
-        Portal_Settings
+        CSP_Breadcrumb_Home_Title
     };
     /**
      * @description Stops the spinner img
@@ -255,6 +253,7 @@ export default class PortalSettingsContainer extends LightningElement {
     }
     
 	get translations(){
+        console.log('Labels ' + JSON.stringify(this.labels));
 		return this.labels;
 	}
 }

@@ -12,6 +12,6 @@
     </values>
     <values>
         <field>Value__c</field>
-        <value xsi:type="xsd:string">Change the 2FA app</value>
+        <value xsi:type="xsd:string">Change the two-factor authentication app</value>
     </values>
 </CustomMetadata>

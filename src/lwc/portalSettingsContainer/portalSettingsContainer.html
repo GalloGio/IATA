@@ -8,12 +8,12 @@
                     <span> > </span>
                 </span>
                 <span class="slds-m-horizontal_small gray-label">
-                    <span> {label.Portal_Settings} </span>
+                    <span if:true={translations}> {translations.Portal_Settings} </span>
                 </span>
             </span>
 
             <div class="slds-m-vertical_x-large text-white text-xlarge text-bold headerContainerShadow">
-                <div>{label.Portal_Settings}</div>
+                <div if:true={translations}>{translations.Portal_Settings}</div>
             </div>
         </div>
     </div>
