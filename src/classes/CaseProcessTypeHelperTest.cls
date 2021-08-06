@@ -182,4 +182,62 @@ private class CaseProcessTypeHelperTest {
 		cse = [SELECT Id, Reason1__c, Status, Case_Age_with_IATA__c, KPI_Calculation__c FROM Case WHERE id = :cse.Id];
 		System.assertEquals(0, cse.KPI_Calculation__c);
 	}
+
+	@isTest
+	static void testKPI_InternalCaseRequest_KPI1_Passed() {
+		Case cse = [SELECT Id, Reason1__c, Status, Case_Age_with_IATA__c FROM Case WHERE Subject = 'IDFS Case Test' LIMIT 1];
+
+		// create a parent Request case
+		Case parent = cse.clone();
+		parent.Type = 'Request';
+		insert parent;
+
+		cse.Time_Unassigned__c = 5.0;
+		cse.Time_With_Customer__c = 0;
+		cse.Time_With_Support__c = 0;
+		cse.ParentId = parent.Id;
+		update cse;
+
+		// test initial values
+		cse = [SELECT Id, Reason1__c, Status, Case_Age_with_IATA__c, KPI_Calculation__c FROM Case WHERE id = :cse.Id];
+		System.assertEquals(5.0,cse.Case_Age_with_IATA__c);
+		System.assertEquals(null,cse.KPI_Calculation__c);
+
+		Test.startTest();
+		cse.Status = 'Closed';
+		update cse;
+		Test.stopTest();
+
+		cse = [SELECT Id, Reason1__c, Status, Case_Age_with_IATA__c, KPI_Calculation__c FROM Case WHERE id = :cse.Id];
+		System.assertEquals(1, cse.KPI_Calculation__c);
+	}
+
+	@isTest
+	static void testKPI_InternalCaseRequest_KPI0_TestDecimals() {
+		Case cse = [SELECT Id, Reason1__c, Status, Case_Age_with_IATA__c FROM Case WHERE Subject = 'IDFS Case Test' LIMIT 1];
+
+		// create a parent Request case
+		Case parent = cse.clone();
+		parent.Type = 'Request';
+		insert parent;
+
+		cse.Time_Unassigned__c = 5.01;
+		cse.Time_With_Customer__c = 0;
+		cse.Time_With_Support__c = 0;
+		cse.ParentId = parent.Id;
+		update cse;
+
+		// test initial values
+		cse = [SELECT Id, Reason1__c, Status, Case_Age_with_IATA__c, KPI_Calculation__c FROM Case WHERE id = :cse.Id];
+		System.assertEquals(5.01,cse.Case_Age_with_IATA__c);
+		System.assertEquals(null,cse.KPI_Calculation__c);
+
+		Test.startTest();
+		cse.Status = 'Closed';
+		update cse;
+		Test.stopTest();
+
+		cse = [SELECT Id, Reason1__c, Status, Case_Age_with_IATA__c, KPI_Calculation__c FROM Case WHERE id = :cse.Id];
+		System.assertEquals(0, cse.KPI_Calculation__c);
+	}
 }

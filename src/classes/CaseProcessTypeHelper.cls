@@ -342,14 +342,13 @@ public with sharing class CaseProcessTypeHelper {
 	private static void calculateKPI(Case cse, AMS_OSCAR__c oscar, Case_Process_Type__mdt process) {
 		//WMO-564 - ACAMBAS: Begin
 		List<String> refFieldList = process.KPI_Reference_Field__c.split('\\.');
-		Integer recordValue;
 
 		if(refFieldList.size() == 2 && refFieldList[0] == 'AMS_Oscar__c') {
-		 	recordValue = Integer.valueOf(oscar.get(refFieldList[1]));
+			Double recordValue = Double.valueOf(oscar.get(refFieldList[1]));
 			cse.KPI_Calculation__c = recordValue == process.KPI_Reference_Value__c ? 1 : 0;
 		}
 		else if(refFieldList.size() == 1) { //Case
-			recordValue = Integer.valueOf(cse.get(process.KPI_Reference_Field__c));
+			Double recordValue = Double.valueOf(cse.get(process.KPI_Reference_Field__c));
 			cse.KPI_Calculation__c = recordValue <= process.KPI_Reference_Value__c ? 1 : 0;
 		}
 		else {
