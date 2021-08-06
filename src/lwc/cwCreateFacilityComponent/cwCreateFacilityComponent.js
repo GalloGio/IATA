@@ -115,7 +115,7 @@ export default class CwCreateFacilityComponent extends NavigationMixin(
 		return station;
 	}
 
-	autoSelection = false;
+	autoSelection = true;
 	airlineHandledItemsToAdd;
 	airlineHandledItemsToDel;
 	cargoShownOperatingStationIds;
