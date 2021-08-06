@@ -899,8 +899,8 @@ public with sharing class ANG_AgencyChangesHelper {
 				changesContainer.addAccount(acct);
 				
 				//Fetch all child accounts that are inactive (terminated, not in operation, not accreditated, listed, blank)
-				if(acct.getSObjects('ChildAccounts') != null){
-					for(Account childAcct : acct.getSObjects('ChildAccounts')){
+				if(acct.ChildAccounts != null){
+					for(Account childAcct : acct.ChildAccounts){
 						childAcct.Top_Parent__c = null;
 						childAcct.ParentId = null;
 						changesContainer.addAccount(childAcct);
