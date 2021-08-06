@@ -793,7 +793,7 @@
     <customValue>
         <fullName>Hold_baggage_Security_System</fullName>
         <default>false</default>
-        <label>Hold baggage Security System</label>
+        <label>Hold Baggage Security System</label>
     </customValue>
     <customValue>
         <fullName>Security_Program_Details</fullName>
