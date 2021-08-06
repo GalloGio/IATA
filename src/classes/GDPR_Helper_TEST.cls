@@ -74,10 +74,8 @@ public class GDPR_Helper_TEST {
 	   // Insert credential
 		Pardot_API__c pardotSetting = new Pardot_API__c();
 		pardotSetting.API_Version__c = '4';
-		pardotSetting.Password__c = 'fakePassword';
-		pardotSetting.User_Key__c = '111111111';
-		pardotSetting.Email__c = 'fake@fake.com';
 		pardotSetting.Assigned_User__c = '1111111';
+		pardotSetting.Pardot_Business_Unit__c = '2222222222222222';
 		insert pardotSetting;
 		Pardot_API_RequestMock_Test fakeResponse =  new Pardot_API_RequestMock_Test('MOCK_READ_PROSPECT');
 		Test.setMock(HttpCalloutMock.class, fakeResponse);

@@ -5656,6 +5656,16 @@ IF(Authorized_Signatory__c,IMAGE(&quot;/resource/authsign&quot; ,&quot;&quot;,40
         </valueSet>
     </fields>
     <fields>
+        <fullName>Course_Outline_PDF__c</fullName>
+        <externalId>false</externalId>
+        <label>Course Outline PDF</label>
+        <length>75</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Credit_Card_Payment_Link__c</fullName>
         <externalId>false</externalId>
         <formula>/*PreProd*/
