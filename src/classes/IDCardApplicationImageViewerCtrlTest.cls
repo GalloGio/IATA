@@ -13,6 +13,7 @@ private class IDCardApplicationImageViewerCtrlTest {
 		ID_Card_Application__c app = CreateAIdCardApplication();
 
 		ApexPages.StandardController stdController = new ApexPages.StandardController(app);
+		ApexPages.currentPage().getParameters().put('id', app.Id);
 		IDCardApplicationImageViewerController controller = new IDCardApplicationImageViewerController(stdController);
 
 		system.assertNotEquals(null, controller.authorizationLink);
