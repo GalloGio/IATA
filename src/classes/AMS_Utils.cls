@@ -75,6 +75,7 @@ public without sharing class AMS_Utils {
 	public static final String HE = 'HE';
 	public static final String AE = 'AE';
 	public static final String GE = 'GE';
+	public static final String AW = 'AW';
 
 
 	public static final String PORTAL_APP_ACCESS_GRANTED = 'Access Granted';
@@ -524,6 +525,7 @@ public without sharing class AMS_Utils {
 	public static final String NFS_CHANGE_CODE = 'NFS';
 	public static final String GDI_CHANGE_CODE = 'GDI';
 	public static final String GDN_CHANGE_CODE = 'GDN';
+	public static final String CHA_CHANGE_CODE = 'CHA';
 	
 	public static final String INVOICE_STATUS_NA = 'N/A';
 	public static final String INVOICE_STATUS_PAID = 'Paid';

@@ -33,10 +33,44 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 		get{
 			if(accountFields == null){
 				accountFields = new Set<String>();
-				Map<String, Schema.SObjectField> schemaFieldMapAccounts = Account.sObjectType.getDescribe().fields.getMap();
-				for (String field : schemaFieldMapAccounts.keySet()){
-					accountFields.add(field);
-				}
+			
+				accountFields.add('Name');
+				accountFields.add('IataCode__c');
+				accountFields.add('Location_Type__c');
+				accountFields.add('Location_Class__c');
+				accountFields.add('Status__c');
+				accountFields.add('Remittance_frequency__c');
+				accountFields.add('BillingStreet');
+				accountFields.add('BillingCity');
+				accountFields.add('BillingPostalCode');
+				accountFields.add('BillingState');
+				accountFields.add('ANG_Accreditation_Model__c');
+				accountFields.add('Top_Parent__c');
+				accountFields.add('ParentId');
+				accountFields.add('Abbreviated_address__c');
+				accountFields.add('Abbreviated_name__c');
+				accountFields.add('IATA_ISO_Country__c');
+				accountFields.add('Email__c');
+				accountFields.add('Fax');
+				accountFields.add('Phone');
+				accountFields.add('Iso_State__c');
+				accountFields.add('Company_Type__c');
+				accountFields.add('License_Number__c');
+				accountFields.add('VAT_Number__c');
+				accountFields.add('Mobile__c');
+				accountFields.add('Operation__c');
+				accountFields.add('ShippingCity');
+				accountFields.add('ShippingCountry');
+				accountFields.add('IATA_ISO_Shipping_Country__c');
+				accountFields.add('IATA_ISO_Shipping_State__c');
+				accountFields.add('ShippingPostalCode');
+				accountFields.add('ShippingState');
+				accountFields.add('ShippingStreet');
+				accountFields.add('Short_Name__c');
+				accountFields.add('Solicitation_Flag__c');
+				accountFields.add('TradeName__c');
+				accountFields.add('VAT_Number_2__c');
+				accountFields.add('Website');
 				accountFields.add('IATA_ISO_Country__r.Name');
 				accountFields.add('IATA_ISO_Country__r.ISO_Code__c');
 				accountFields.add('IATA_ISO_Country__r.Region__c');
@@ -262,7 +296,7 @@ public with sharing class ANG_MulticountryHierarchySelectionCrtl {
 	}
 
 	@TestVisible
-	private Integer rowsPerPage = 100;
+	private Integer rowsPerPage = 25;
 
 	public Integer currentPage{
 		get{

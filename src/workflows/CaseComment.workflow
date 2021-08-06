@@ -81,22 +81,6 @@
         <template>All/New_Case_Comment</template>
     </alerts>
     <alerts>
-        <fullName>SIS_Help_Desk_New_Case_Comment_notification_to_SIS_customer_support</fullName>
-        <description>SIS Help Desk - New Case Comment notification to SIS customer support</description>
-        <protected>false</protected>
-        <recipients>
-            <recipient>IATASISCustomerSupport</recipient>
-            <type>group</type>
-        </recipients>
-        <recipients>
-            <recipient>IATASISHelpDeskAgent</recipient>
-            <type>group</type>
-        </recipients>
-        <senderAddress>noreply@iata.org</senderAddress>
-        <senderType>OrgWideEmailAddress</senderType>
-        <template>SIS_Help_Desk/SIS_HD_New_Case_Comment</template>
-    </alerts>
-    <alerts>
         <fullName>SIS_Help_Desk_New_Case_Comment_notification_to_SIS_customer_support_Aaron</fullName>
         <description>SIS Help Desk - New Case Comment notification to SIS customer support_Aaron</description>
         <protected>false</protected>
@@ -554,6 +538,7 @@
       NOT(ISNULL(Parent.Update_AIMS_DEF__c))
     ),
     Parent.RecordType.DeveloperName = &quot;CS_Process_IDFS_ISS&quot;,
+    Parent.RecordType.DeveloperName = &quot;SEDA&quot;,
     Parent.RecordType.DeveloperName = &quot;ProcessEuropeSCE&quot;,
     Parent.RecordType.DeveloperName = &quot;InternalCasesEuropeSCE&quot;,
     Parent.RecordType.DeveloperName = &quot;IDFS_Airline_Participation_Process&quot;,
@@ -669,20 +654,6 @@
         <active>true</active>
         <description>Used to Request R&amp;S feedback</description>
         <formula>AND( CONTAINS( $UserRole.Name, &quot;R&amp;S&quot;) ,   ISPICKVAL(Parent.R_S_feedback_pending__c, &quot;CS requests feedback&quot;) )</formula>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
-        <fullName>SIS Help Desk -New Case Comment added</fullName>
-        <actions>
-            <name>SIS_Help_Desk_New_Case_Comment_notification_to_SIS_customer_support</name>
-            <type>Alert</type>
-        </actions>
-        <active>true</active>
-        <criteriaItems>
-            <field>Case.RecordTypeId</field>
-            <operation>equals</operation>
-            <value>Cases - SIS Help Desk</value>
-        </criteriaItems>
         <triggerType>onCreateOrTriggeringUpdate</triggerType>
     </rules>
     <rules>

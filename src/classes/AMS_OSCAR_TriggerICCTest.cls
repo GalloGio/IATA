@@ -97,7 +97,8 @@ private class AMS_OSCAR_TriggerICCTest {
 		AMS_Oscar__c oscar = new AMS_Oscar__c(
 				Name = 'Test Oscar 1',
 				Account__c = account.Id,
-				STEP1__c = 'In Progress'
+				STEP1__c = 'In Progress',
+				AMS_Online_Accreditation__c = stagingArea.Id
 			);
 
 		insert oscar;

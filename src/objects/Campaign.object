@@ -902,6 +902,17 @@ else {
         <url>https://emea.salesforce.com/servlet/servlet.FileDownload?file=015200000000kIC</url>
     </webLinks>
     <webLinks>
+        <fullName>OdigoCti__BT_Launch_CallBack_Campaign</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <height>600</height>
+        <linkType>page</linkType>
+        <masterLabel>Launch CallBack Campaign</masterLabel>
+        <openType>sidebar</openType>
+        <page>OdigoCti__VFP02CallBackCampaign</page>
+        <protected>false</protected>
+    </webLinks>
+    <webLinks>
         <fullName>SendExactTargetEmail</fullName>
         <availability>online</availability>
         <displayType>link</displayType>

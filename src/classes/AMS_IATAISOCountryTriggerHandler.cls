@@ -73,7 +73,7 @@ public class AMS_IATAISOCountryTriggerHandler {
 			}
 		}
 
-		List<Portal_Applications__c> portals = [select id, ANG_Country_Coverage__c from Portal_Applications__c where id in :portalApplicationIds];
+		List<Portal_Applications__c> portals = [select id, ANG_Country_Coverage__c, ANG_Country_Coverage_2__c from Portal_Applications__c where id in :portalApplicationIds];
 
 		boolean flagDone;
 		for (IATA_ISO_Country__c isoc : triggerNew) {
@@ -88,6 +88,8 @@ public class AMS_IATAISOCountryTriggerHandler {
 
 				if(portal.ANG_Country_Coverage__c == null) {
 					portal.ANG_Country_Coverage__c = '';
+				} else if(portal.ANG_Country_Coverage_2__c == null) {
+					portal.ANG_Country_Coverage_2__c = '';
 				}
 
 				if (isUpdate) {
@@ -134,8 +136,10 @@ public class AMS_IATAISOCountryTriggerHandler {
 					if (!flagDone && !portal.ANG_Country_Coverage__c.contains(isoc.ISO_Code__c) && isoc.ANG_Portal_Service__c != null) {
 						if (portal.ANG_Country_Coverage__c == '') {
 							portal.ANG_Country_Coverage__c = isoc.ISO_Code__c;
-						} else {
+						} else if(portal.ANG_Country_Coverage__c.length() < 253){
 							portal.ANG_Country_Coverage__c += ',' + isoc.ISO_Code__c;
+						} else {
+							portal.ANG_Country_Coverage_2__c += (portal.ANG_Country_Coverage_2__c == '' ? isoc.ISO_Code__c : ',' + isoc.ISO_Code__c);
 						}
 					}
 				}

@@ -70,9 +70,9 @@ global without sharing class ISSP_AMC_Invocable {
 					else{
 
 						stageActionList.add('Application Form');
-						stageActionList.add('AOC');
+						stageActionList.add('AOC/CAA');
 						stageActionList.add('Scheduled Airlines');
-						stageActionList.add('Non-Scheduled Airlines');
+						stageActionList.add('Non-Schedules Airlines /PAX Docs / CGO Docs');
 						stageActionList.add('Certificate of Incorporation or Registration');
 						stageActionList.add('Breakdown of Shareholders with Percentages');
 					}

@@ -443,6 +443,7 @@ Language__c ,
         <fullName>All</fullName>
         <columns>NAME</columns>
         <columns>Subject__c</columns>
+        <columns>Identifier__c</columns>
         <columns>Language__c</columns>
         <columns>Type__c</columns>
         <columns>Expire_in_days__c</columns>
@@ -453,6 +454,10 @@ Language__c ,
         <columns>Alert_Contact_By_Email__c</columns>
         <columns>Admins_Users__c</columns>
         <filterScope>Everything</filterScope>
+        <filters>
+            <field>Identifier__c</field>
+            <operation>notEqual</operation>
+        </filters>
         <label>All</label>
         <language>en_US</language>
     </listViews>
@@ -481,14 +486,15 @@ Language__c ,
         <fullName>Custom_editable_criteria</fullName>
         <columns>NAME</columns>
         <columns>OBJECT_ID</columns>
-        <columns>Due_date__c</columns>
         <columns>Message__c</columns>
+        <columns>Identifier__c</columns>
         <columns>Subject__c</columns>
+        <columns>Language__c</columns>
         <filterScope>Everything</filterScope>
         <filters>
-            <field>Subject__c</field>
-            <operation>contains</operation>
-            <value>Invoice - PAX</value>
+            <field>Language__c</field>
+            <operation>equals</operation>
+            <value>French</value>
         </filters>
         <label>Custom - editable criteria</label>
         <language>en_US</language>

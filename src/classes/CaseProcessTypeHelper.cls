@@ -124,7 +124,9 @@ public with sharing class CaseProcessTypeHelper {
 				Boolean hasConfig = getMapRTsToReasons().get(cse.RecordTypeId) != null &&
 					(getMapRTsToReasons().get(cse.RecordTypeId).get(cse.Reason1__c) != null || getMapRTsToReasons().get(cse.RecordTypeId).get(ALL_REASONS) != null);
 				Boolean validSubject = String.isNotBlank(cse.Subject) && !cse.Subject.contains('PROCOM');
-				if(hasConfig && beingClosed && validSubject) {
+				Boolean isOscar = cse.RecordTypeId == CASE_RT_OSCAR;
+				if(hasConfig && beingClosed && validSubject &&
+						( (isOscar && cse.OSCAR__c!=null) || !isOscar)) {
 					SET_CASE_KPI_PROCESSED.add(cse.Id);
 					casesToProcess.add(cse);
 					if (cse.OSCAR__c!=null) { 
@@ -272,7 +274,7 @@ public with sharing class CaseProcessTypeHelper {
 				return values.contains(fieldValue);
 			}
 		} catch (Exception e) {
-			TransformationHelper.sendEmailSupport( 'CaseProcessTypeHelper - ProcessOtherConditions Exception', 'Exception: ' + e + ' || case: ' + cse + ' || conditions ' + conditions + ' || StackTrace: ' + e.getStackTraceString());
+			TransformationHelper.sendEmailSupport( 'CaseProcessTypeHelper - ProcessOtherConditions Exception', 'Exception: ' + e + ' || case: ' + JSON.serialize(cse) + ' || conditions ' + conditions + ' || StackTrace: ' + e.getStackTraceString());
 		}
 		return false;
 	}
