@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>IATA_Financial_Review_2</label>
+    <label>IATA_Financial_Review_3</label>
     <protected>false</protected>
     <values>
         <field>Always_Visible__c</field>
@@ -20,11 +20,11 @@
     </values>
     <values>
         <field>Field_Filter__c</field>
-        <value xsi:type="xsd:string">Reason1__c =, Origin =, Status !=</value>
+        <value xsi:type="xsd:string">Status !=</value>
     </values>
     <values>
         <field>Origin__c</field>
-        <value xsi:type="xsd:string">Internal Case</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>OwnerID__c</field>
@@ -32,7 +32,7 @@
     </values>
     <values>
         <field>Reason1__c</field>
-        <value xsi:type="xsd:string">PCI DSS Compliant</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>RecordTypeId__c</field>
