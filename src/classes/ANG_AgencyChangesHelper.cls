@@ -707,8 +707,10 @@ public with sharing class ANG_AgencyChangesHelper {
 					if(rhcLst != null && !rhcLst.isEmpty()){
 						changesContainer.addRhcInformationToDeactivate(rhcLst.get(0));
 					}
-					//Create a new RHC record
-					changesContainer.addAccountToCreateRHC(acct);
+					if(oscar.Process__c == AMS_Utils.ANGPARTCONVERTMCTOST){
+						//Create a new RHC record
+						changesContainer.addAccountToCreateRHC(acct);
+					}
 				}else{
 					acct.Top_Parent__c = accountHE.Id;
 					acct.ParentId = accountHE.Id;
@@ -728,27 +730,23 @@ public with sharing class ANG_AgencyChangesHelper {
 				if(allAccountsInvolvedSetToProcessChangeCodeGeneration.contains(acct.Id)){
 					pushAccountCurrentChangeCodes(acct, accountsCurrentChangeCode);
 				}
-				if(oscar.Process__c == AMS_Utils.ANGPARTCONVERTMCTOST){
-					riskEventsLst = (List<ANG_Agency_Risk_Event__c>) acct.getSObjects('Location_Risk_Events__r');
-					if(riskEventsLst != null && !riskEventsLst.isEmpty()){
-						for(ANG_Agency_Risk_Event__c are : riskEventsLst){
-							riskEventsIdsToUpdate.add(are.id);
-						}
+				riskEventsLst = (List<ANG_Agency_Risk_Event__c>) acct.getSObjects('Location_Risk_Events__r');
+				if(riskEventsLst != null && !riskEventsLst.isEmpty()){
+					for(ANG_Agency_Risk_Event__c are : riskEventsLst){
+						riskEventsIdsToUpdate.add(are.id);
 					}
 				}
 			}
 
-			if(oscar.Process__c == AMS_Utils.ANGPARTCONVERTMCTOST){
-				List<ANG_Agency_Risk_Event__c> riskEvents = [SELECT Id, ANG_Event_Status__c, ANG_expiration_date_ff__c, ANG_HE_AccountId__c FROM ANG_Agency_Risk_Event__c WHERE id IN: riskEventsIdsToUpdate];
-				for(ANG_Agency_Risk_Event__c are : riskEvents){
-					are.ANG_HE_AccountId__c = accountHE.Id;
-					if(are.ANG_expiration_date_ff__c > Date.today()){
-						are.ANG_Event_Status__c = AMS_Utils.ACTIVE;
-					}
+			List<ANG_Agency_Risk_Event__c> riskEvents = [SELECT Id, ANG_Event_Status__c, ANG_expiration_date_ff__c, ANG_HE_AccountId__c FROM ANG_Agency_Risk_Event__c WHERE id IN: riskEventsIdsToUpdate];
+			for(ANG_Agency_Risk_Event__c are : riskEvents){
+				are.ANG_HE_AccountId__c = accountHE.Id;
+				if(are.ANG_expiration_date_ff__c > Date.today() && oscar.Process__c == AMS_Utils.ANGPARTCONVERTMCTOST){
+					are.ANG_Event_Status__c = AMS_Utils.ACTIVE;
 				}
-				if(riskEvents != null && !riskEvents.isEmpty()){
-					Update riskEvents;
-				}
+			}
+			if(riskEvents != null && !riskEvents.isEmpty()){
+				Update riskEvents;
 			}
 			
 			if(containsChange(New List<String>{AMS_Utils.ANG_HIERARCHY},oscar.ANG_Type_Of_Change__c)){
