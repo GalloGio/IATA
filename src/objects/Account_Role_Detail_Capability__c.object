@@ -1993,7 +1993,7 @@ FALSE
     </fields>
     <fields>
         <fullName>LAC_Temperature_Control__c</fullName>
-        <description>Describes if the temperature is controlled and the range in ºC</description>
+        <description>Describes if the temperature is controlled and the range in ÂºC</description>
         <externalId>false</externalId>
         <label>Temperature Control</label>
         <length>255</length>
@@ -2153,7 +2153,7 @@ FALSE
         <externalId>false</externalId>
         <inlineHelpText>visible: show or not the document publicly
 url: url where is stored the document</inlineHelpText>
-        <label>Upload obligation documentation</label>
+        <label>Upload Supporting Documentation</label>
         <length>131072</length>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
