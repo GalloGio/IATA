@@ -6,7 +6,7 @@ public class IA_DetailCtrlTest {
 
 	@TestSetup
 	public static void setup(){
-		list<Account> listAccount = TestDataFactory_Accounts.createAirlines(2);
+		list<Account> listAccount = TestDataFactory_Accounts.createAirlineAccounts(2);
 		for (Account account: listAccount) {
 			account.ACLI_Status__c = 'Active Company';
 			account.MITA_Member__c = true;

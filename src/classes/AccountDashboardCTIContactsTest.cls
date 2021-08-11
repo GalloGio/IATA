@@ -7,7 +7,7 @@ public with sharing class AccountDashboardCTIContactsTest {
 		List<IATA_ISO_Country__c> iataISOCountryList = TestDataFactory_IATAISOCountries.createDefaultIATAISOCountries(1);
 		insert iataISOCountryList;
 		//get standard record type
-		Id recordTypeId = RecordTypeSelector.selectIdBySObjectAndName('Account', 'Others');
+		Id recordTypeId = RecordTypeSelector.selectIdBySObjectAndDeveloperName('Account', 'Others');
 		//get iataISOCountry ID
 		IATA_ISO_Country__c iataISOCountry = [SELECT Id FROM IATA_ISO_Country__c WHERE Name = :TestDataFactory_IATAISOCountries.DEFAULTCOUNTRYNAME].get(0);
 		Integer numberOfRecords = 1;
@@ -19,12 +19,8 @@ public with sharing class AccountDashboardCTIContactsTest {
 		}
 		insert accountList;
 
-		List<Contact> contactList = TestDataFactory_Contacts.createDefaultContact(2);
+		List<Contact> contactList = TestDataFactory_Contacts.createDefaultContact(accountList[0].id,2);
 		insert contactList;
-
-		contactList[0].AccountId = accountList.get(0).Id;
-		contactList[1].AccountId = accountList.get(0).Id;
-		update contactList;
 
 		List<Portal_Applications__c> portalApplicationList = TestDataFactory_PortalApplications.createDefaultPortalApplication(2);
 		Portal_Applications__c app1 = portalApplicationList.get(0);
