@@ -6,6 +6,9 @@ private class ISSP_AMS_MSO_Controller_Test {
 		Id accRtId = RecordTypeSelector.selectIdBySObjectAndDeveloperName('Account', 'IATA_Airline');
 		Id agcRtId = RecordTypeSelector.selectIdBySObjectAndDeveloperName('Account', 'IATA_Agency');
 
+		IATA_ISO_Country__c isoc = new IATA_ISO_Country__c(Name = 'Test', ISO_Code__c = 'TS');
+		insert isoc;
+
 		List<Account> accountList = TestDataFactory_Accounts.createDefaultAccounts(4);
 
 		Account acc = accountList.get(0);
@@ -34,7 +37,7 @@ private class ISSP_AMS_MSO_Controller_Test {
 
 		insert accountList;
 
-		List<Contact> contactList = TestDataFactory_Contacts.createDefaultContact(acc.id,1).get(0);
+		List<Contact> contactList = TestDataFactory_Contacts.createDefaultContact(acc.id,1);
 		Contact con = contactList.get(0);
 		con.Email = TestDataFactory_Contacts.DEFAULTEMAIL;
 		con.RecordTypeId = conRtId;
@@ -50,7 +53,6 @@ private class ISSP_AMS_MSO_Controller_Test {
 		AMS_Inspection__c appG = new AMS_Inspection__c(Airline__c = acc.Id, Account__c = agencyG.Id);
 		insert appG;
 
-		IATA_ISO_Country__c isoc = [SELECT Id FROM IATA_ISO_Country__c LIMIT 1];
 		AMS_Territory__c ter = new AMS_Territory__c(Appointment__c = app.Id, ISO_Country__c = isoc.Id);
 		insert ter;
 
@@ -60,11 +62,10 @@ private class ISSP_AMS_MSO_Controller_Test {
 		AMS_Inspection__c app2 = new AMS_Inspection__c(Airline__c = acc.Id, Account__c = agency2.Id, Accreditation_Endorsement_organisation__c = org.Id);
 		insert app2;
 
-		Profile p = [SELECT Id, Name FROM Profile WHERE Name = 'ISS Portal Airline User (Partner)' LIMIT 1];
-
 		User newUser = TestDataFactory_Users.createPortalUsers(new List<Contact>{con}).get(0);
-		newUser.profileId = p.Id;
 		insert newUser;
+		con.OwnerId = newUser.Id;
+		update con;
 
 		Test.startTest();
 

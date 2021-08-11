@@ -10,8 +10,6 @@ public class TestDataFactory_Users {
 		String orgId = UserInfo.getOrganizationId();
 		String dateString = String.valueof(Datetime.now()).replace(' ','').replace(':','').replace('-','');
 
-		UserRole userRole = [SELECT Id, DeveloperName FROM UserRole WHERE PortalType = 'Partner' LIMIT 1];
-
 		for(Contact contact: contactList){
 			User user = (User) Schema.getGlobalDescribe().get('User').newSObject();
 			Integer randomInt = Integer.valueOf(math.rint(math.random()*1000000));
@@ -27,7 +25,6 @@ public class TestDataFactory_Users {
 			user.ProfileId = DEFAULTPROFILE.Id;
 			user.TimeZoneSidKey = 'America/Los_Angeles';
 			user.UserName = uniqueName + '@test' + orgId + '.org';
-			user.UserRoleId = userRole.Id;
 			userList.add(user);
 		}
 		return userList;

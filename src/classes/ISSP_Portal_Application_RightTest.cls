@@ -116,7 +116,7 @@ public class ISSP_Portal_Application_RightTest {
 		newContact.AccountId = newAccount.id;
 		insert newContact;
 
-		User newPortalUser = TestDataFactory_Users.createInternalSystemAdminUsers(1).get(0);
+		User newPortalUser = TestDataFactory_Users.createPortalUsers(new List<Contact>{newContact}).get(0);
 		insert newPortalUser;
 		newContact.OwnerId = newPortalUser.Id;
 		update newContact;

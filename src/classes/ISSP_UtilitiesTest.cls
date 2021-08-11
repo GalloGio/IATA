@@ -10,8 +10,8 @@ private  class ISSP_UtilitiesTest {
 		Case testCase = ISSP_ObjectFactory.createNewCase();
 		insert testCase;
 		ISSP_Utilities.SendErrorNotificationEMail('test');
-		ISSP_Utilities.getContactTypeById(con.Id);
-		ISSP_Utilities.sendEmailToAdmins(Con.Id);
+		ISSP_Utilities.getContactTypeById(contact.Id);
+		ISSP_Utilities.sendEmailToAdmins(contact.Id);
 		ISSP_Utilities.DMLOpt(new set<ID>{testCase.Id});
 		ISSP_Utilities.isCNS();
 	}
@@ -27,8 +27,8 @@ private  class ISSP_UtilitiesTest {
 			acc.CNS_Account__c = true;
 			insert acc;
 
-			Contact contact = TestDataFactory_Contacts.createDefaultContact(acc.id,1).get(0);
-			insert contact;
+			con = TestDataFactory_Contacts.createDefaultContact(acc.id,1).get(0);
+			insert con;
 
 			testCase = ISSP_ObjectFactory.createNewCase();
 			insert testCase;
@@ -37,6 +37,8 @@ private  class ISSP_UtilitiesTest {
 			user = TestDataFactory_Users.createPortalUsers(new List<Contact>{con}).get(0);
 			user.ProfileId = profileId;
 			insert user;
+			con.OwnerId = user.Id;
+			update con;
 		}
 
 		System.runAs(user) {
@@ -65,7 +67,7 @@ private  class ISSP_UtilitiesTest {
 		Account account = TestDataFactory_Accounts.createStandardAccounts(1).get(0);
 		insert account;
 		// test contacts
-		List<Contact> contactList = TestDataFactory_Contacts.createDefaultContact(acc.id,2);
+		List<Contact> contactList = TestDataFactory_Contacts.createDefaultContact(account.id,2);
 		insert contactList;
 		// create portal right as denied to test the change to granted
 		Portal_Application_Right__c par = TestDataFactory_PortalApplicationRights.createPortalApplicationRight(app.Id, contactList[1].Id);

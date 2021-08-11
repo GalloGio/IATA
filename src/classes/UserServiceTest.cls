@@ -3,16 +3,19 @@ private class UserServiceTest {
 	@TestSetup
 	static void makeData(){
 		User adminUser = TestDataFactory_Users.createInternalSystemAdminUsers(1).get(0);
+		UserRole userRole = [SELECT Id, DeveloperName FROM UserRole Where DeveloperName = 'DirectorGeneral' Limit 1];
+		adminUser.UserRoleId = userRole.Id;
 		insert adminUser;
 
 		System.runAs(adminUser){
 			Account account = TestDataFactory_Accounts.createDefaultAccounts(1).get(0);
 			insert account;
-			Contact contact = TestDataFactory_Contacts.createDefaultContact(1).get(0);
-			contact.AccountId = account.Id;
+			Contact contact = TestDataFactory_Contacts.createDefaultContact(account.Id, 1).get(0);
 			insert contact;
 			User user = TestDataFactory_Users.createPortalUsers(new List<Contact>{contact}).get(0);
 			insert user;
+			contact.OwnerId = user.Id;
+			update contact;
 		}
 	}
 

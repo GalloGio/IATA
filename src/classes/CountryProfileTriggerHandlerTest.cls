@@ -90,8 +90,8 @@ private class CountryProfileTriggerHandlerTest {
 
 		User newUser = new User(
 		profileId = p.id,
-		username = 'someuser@iata.org',
-		email = 'someuser@iata.org',
+		username = 'someuser@test.org',
+		email = 'someuser@test.org',
 		emailencodingkey = 'UTF-8',
 		localesidkey = 'en_US',
 		languagelocalekey = 'en_US',
