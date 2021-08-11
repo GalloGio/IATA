@@ -244,6 +244,20 @@
     </fields>
     <label>AMS Accreditation Country Checklist</label>
     <listViews>
+        <fullName>All_AMS_Accreditation_Country_Checklist</fullName>
+        <columns>NAME</columns>
+        <columns>IATA_ISO_Country__c</columns>
+        <columns>Operation__c</columns>
+        <columns>CURRENCY_ISO_CODE</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>CREATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <label>All AMS Accreditation Country Checklist</label>
+        <sharedTo>
+            <role>IATAInformationTechnologyServices</role>
+        </sharedTo>
+    </listViews>
+    <listViews>
         <fullName>Enhanced_view</fullName>
         <columns>NAME</columns>
         <columns>IATA_ISO_Country__c</columns>

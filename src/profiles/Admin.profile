@@ -26914,12 +26914,12 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Campaign.Data_Quality_Description__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Campaign.Data_Quality_Score__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -26944,7 +26944,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Campaign.Generate_Members_Completed_On__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -27209,7 +27209,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Campaign_Product__c.Product_Last_Version__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -27219,7 +27219,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Campaign_Product__c.Product__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -27229,7 +27229,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Campaign_Product__c.Swapping_Product__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -32651,6 +32651,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Contact.Country__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Contact.Course_Outline_PDF__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -47456,6 +47461,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Lead.Contact_Role__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Lead.Course_Outline_PDF__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

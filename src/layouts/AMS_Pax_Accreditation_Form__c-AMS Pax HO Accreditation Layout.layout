@@ -39,6 +39,10 @@
                 <behavior>Readonly</behavior>
                 <field>ANG_IsNewGenAgency__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ANG_Accreditation_type__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -68,6 +72,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Remittance_frequency__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ANG_Accreditation_Model_to_Change__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>

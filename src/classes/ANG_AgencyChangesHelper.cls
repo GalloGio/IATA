@@ -870,8 +870,12 @@ public with sharing class ANG_AgencyChangesHelper {
 					if(riskEventsLst != null && !riskEventsLst.isEmpty()){
 						changesContainer.addRiskEventsToInactivate(riskEventsLst, accountGE.Id);
 					}
-
-					List<ANG_Risk_Alert__c> riskAlertsLst = (List<ANG_Risk_Alert__c>) acct.getSObjects('Risk_Alerts__r');
+					List<ANG_Risk_Alert__c> riskAlertsLst = new List<ANG_Risk_Alert__c>();
+					if(acct.Risk_Alerts__r != null){
+						for( ANG_Risk_Alert__c ra :acct.Risk_Alerts__r) {
+							riskAlertsLst.add(ra);
+						}
+					}
 
 					if(riskAlertsLst != null && !riskAlertsLst.isEmpty()){
 						moveRiskAlerts(riskAlertsLst, accountGE.Id);
@@ -893,18 +897,15 @@ public with sharing class ANG_AgencyChangesHelper {
 				}
 
 				changesContainer.addAccount(acct);
-
+				
 				//Fetch all child accounts that are inactive (terminated, not in operation, not accreditated, listed, blank)
-				List<Account> childAcctsLst = (List<Account>) acct.getSObjects('ChildAccounts');
-
-				if(childAcctsLst != null && !childAcctsLst.isEmpty()){
-					for(Account childAcct : childAcctsLst){
+				if(acct.ChildAccounts != null){
+					for(Account childAcct : acct.ChildAccounts){
 						childAcct.Top_Parent__c = null;
 						childAcct.ParentId = null;
 						changesContainer.addAccount(childAcct);
 					}
 				}
-
 				pushAccountCurrentChangeCodes(acct, accountsCurrentChangeCode);
 
 			}

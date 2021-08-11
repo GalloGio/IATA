@@ -60,7 +60,7 @@
                 <field>Business_State_Name__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
+                <behavior>Edit</behavior>
                 <field>Business_City_Name__c</field>
             </layoutItems>
             <layoutItems>
@@ -190,7 +190,7 @@
         <relatedList>Airport_Detail__c.Account__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <excludeButtons>New</excludeButtons>
+        <excludeButtons>MassChangeOwner</excludeButtons>
         <fields>NAME</fields>
         <fields>Is_Business_Address__c</fields>
         <fields>IATA_ISO_Country__c</fields>

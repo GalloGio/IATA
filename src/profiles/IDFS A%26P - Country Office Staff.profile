@@ -32651,6 +32651,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Contact.Course_Outline_PDF__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Contact.Credit_Card_Payment_Link__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -47452,6 +47457,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Lead.Contact_Role__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Lead.Course_Outline_PDF__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -64400,8 +64410,17 @@
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
-        <object>Financial_Security__c</object>
+        <object>Financial_Institution__c</object>
         <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>Financial_Security__c</object>
+        <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
         <allowCreate>false</allowCreate>
@@ -69077,6 +69096,7 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>true</default>
+        <personAccountDefault>true</personAccountDefault>
         <recordType>Financial_Institution__c.Generic_FI</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>

@@ -32648,6 +32648,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Contact.Course_Outline_PDF__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Contact.Credit_Card_Payment_Link__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -47450,6 +47455,11 @@
         <editable>false</editable>
         <field>Lead.Contact_Role__c</field>
         <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Lead.Course_Outline_PDF__c</field>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>

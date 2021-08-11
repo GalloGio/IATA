@@ -338,7 +338,7 @@ public with sharing class SIDRACaseHelper {
 			}
 		}
 
-		if (countIRR > 3 || countDEF > 3) {
+		if (countIRR > 4 || countDEF > 3) {
 			thisCase.addError(BANK_ERROR_MESSAGE);
 			return false;
 		}
