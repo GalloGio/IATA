@@ -16,6 +16,7 @@ public with sharing class Users {
 	// private void initialise(){
 	// }
 	
+	/* Commented because the methods are dummy and are impacting the release due to the lack of coverage
 	public void onAfterInsert(){
 	}
 	public void onAfterUpdate(Map<Id, User> oldRecordMap){
@@ -23,7 +24,7 @@ public with sharing class Users {
 	public void onAfterDelete(){
 	}
 	public void onAfterUndelete(){
-	}
+	}*/
 
 	public void onBeforeInsert(){
 		try {
@@ -39,8 +40,10 @@ public with sharing class Users {
 			throw new UserDomainException(e.getMessage());
 		}
 	}
+
+	/*Commented because the methods are dummy and are impacting the release due to the lack of coverage
 	public void onBeforeDelete(){
-	} 
+	} */
 
 	//return a 'default' User record (ONLY USED TO DEFAULT AND RETURN MANDATORY FIELDS)
 	public List<User> createDefaultPortalUser(List<Contact> contactList){
