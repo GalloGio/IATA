@@ -10475,6 +10475,22 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>UserSelector</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>UserSelectorTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>UserService</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>UserServiceTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>User_Sel</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -10492,6 +10508,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>UserprovisioningRequestControllerTests</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>Users</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>UsersTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -41295,6 +41319,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>IATA_Email_Domain_Name__mdt.Allowed_for_Portal_Users__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>IATA_ISO_City__c.Country__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -62739,6 +62768,9 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>IATA_Code_Search_Special_Countries__mdt-IATA Code Search Special Country Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>IATA_Email_Domain_Name__mdt-IATA Email Domain Name Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>IATA_ISO_City__c-IATA Geonames City Layout</layout>
