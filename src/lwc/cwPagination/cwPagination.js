@@ -4,7 +4,15 @@ export default class CwPagination extends LightningElement {
     @api recordsPerPage;
     totalPagesToShow = 20;
     @track pagNumArray = [];
-    @api totalPages;
+    _totalPages;
+    @api 
+    get totalPages () {
+        return this._totalPages;
+    }
+    set totalPages (value){
+        this._totalPages = value;
+        this.bindPages();
+    }
     @api 
      get pageNumbers(){
         return this.pagNumArray;
@@ -13,42 +21,36 @@ export default class CwPagination extends LightningElement {
     bindPages(){
         if (this.totalPages && this.selectedPage){
             this.pagNumArray = [];
-            let startValue = this.selectedPage;
-    
-            let countPage = 0;
-            for (let i = startValue; i <= this.totalPages; i++){
-                if (countPage < this.totalPagesToShow){
-                    this.pagNumArray.push(i);
-                    countPage++;
-                }
+            for (let i = Number(this.selectedPage); i > 0 && (this.totalPagesToShow / 2) > this.pagNumArray.length; i--) {
+                this.pagNumArray.push(i);
+            }
+            for (let i = Number(this.selectedPage) + 1; i <= this.totalPages && this.totalPagesToShow > this.pagNumArray.length; i++) {
+                this.pagNumArray.push(i);
             }
 
-            while(countPage < this.totalPagesToShow){
-                startValue--;
-                if(startValue > 0){
-                    this.pagNumArray.push(startValue);
-                    countPage++;
-                }
-                else{
-                    countPage = this.totalPagesToShow;
-                }
-            }
-
-            this.pagNumArray = this.pagNumArray.sort();
+            this.pagNumArray.sort((a, b) => {
+                if (a < b) { return -1; }
+                if (a > b) { return 1; }
+                return 0;
+            });
         }
     }
 
-    @track _selectedPage;
+    renderedCallback() {
+        this.alignSelectedPage();
+    }
+
+    _selectedPage;
     @api 
     get selectedPage(){
         return this._selectedPage;
     }
     set selectedPage(value){
-        this.alignSelectedPage(value);        
+        this._selectedPage = value;
+        this.bindPages();
     }
 
     @api isLoading;
-    initialized = false;
 
     get showFirstPage(){
         return (this.totalPages > 1) ? this.pagNumArray.indexOf(1) == -1 : false;
@@ -85,26 +87,14 @@ export default class CwPagination extends LightningElement {
         this.dispatchEvent( new CustomEvent('gotopage',{detail: this.totalPages}));
     }
 
-    renderedCallback(){
-        if(!this.initialized){
-            this.bindPages();
-            this.initialized = true;
-        }
-        
-        if (this.selectedPage)
-            this.alignSelectedPage(this.selectedPage);
-    }
-    alignSelectedPage(value){
+    alignSelectedPage(){
         this.template.querySelectorAll('.pagenumber').forEach(elem => {
             elem.classList.remove('selected');
-        })
-        if(value){
-            this._selectedPage = Number(value);
-            let num = this.template.querySelector('[data-page="'+this._selectedPage+'"]');
-            if (num) num.classList.add('selected');
-        }else{
-            let num = this.template.querySelector('[data-page="'+1+'"]');
-            if (num) num.classList.add('selected');
+        });
+
+        let num = this.template.querySelector('[data-page="' + (this.selectedPage || 1) + '"]');
+        if (num) {
+            num.classList.add('selected');
         }
     }
 }
