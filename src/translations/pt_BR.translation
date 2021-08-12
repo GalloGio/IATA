@@ -1349,7 +1349,7 @@
         <name>ANG_ISSP_ProductComparisonTitle2</name>
     </customLabels>
     <customLabels>
-        <label>Ver aqui</label>
+        <label>Clique aqui</label>
         <name>ANG_ISSP_ProductComparisonViewHere</name>
     </customLabels>
     <customLabels>
@@ -1583,6 +1583,70 @@
     <customLabels>
         <label><!-- Account --></label>
         <name>Account</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Account - ADetails --></label>
+        <name>AccountCTI_Account_ADetails</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Account - ATeam --></label>
+        <name>AccountCTI_Account_ATeam</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Account - Agency --></label>
+        <name>AccountCTI_Account_Agency</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Account - Category --></label>
+        <name>AccountCTI_Account_Category</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Account - Ecomm --></label>
+        <name>AccountCTI_Account_Ecomm</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Account - IATACode --></label>
+        <name>AccountCTI_Account_IATACode</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Account - Overall --></label>
+        <name>AccountCTI_Account_Overall</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Account - Sector --></label>
+        <name>AccountCTI_Account_Sector</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Account - Segmentation --></label>
+        <name>AccountCTI_Account_Segmentation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Account - ServiceModel --></label>
+        <name>AccountCTI_Account_ServiceModel</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Account - Status --></label>
+        <name>AccountCTI_Account_Status</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Cases - Interactions --></label>
+        <name>AccountCTI_Cases_Interactions</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Contact - AllContacts --></label>
+        <name>AccountCTI_Contact_AllContacts</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Contact - Choose Contact --></label>
+        <name>AccountCTI_Contact_ChooseContact</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Contact - Create Case --></label>
+        <name>AccountCTI_Contact_CreateCase</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI_Contact PortalServices --></label>
+        <name>AccountCTI_Contact_PortalServices</name>
     </customLabels>
     <customLabels>
         <label><!-- AccountContextActivationEmailBody --></label>
@@ -2917,7 +2981,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Add_New_Documents</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Add_New_User --></label>
+        <label>Adicionar Novo Usuário</label>
         <name>CSP_Add_New_User</name>
     </customLabels>
     <customLabels>
@@ -2937,7 +3001,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Announcement</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Apply --></label>
+        <label>Aplicar</label>
         <name>CSP_Apply</name>
     </customLabels>
     <customLabels>
@@ -3033,11 +3097,11 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Cancel</name>
     </customLabels>
     <customLabels>
-        <label>Cancelar {0} serviço</label>
+        <label>Cancelar serviço: {0}</label>
         <name>CSP_CancelServiceActionLabel</name>
     </customLabels>
     <customLabels>
-        <label>Você pode cancelar seu acesso ao {0}</label>
+        <label>Você pode cancelar seu acesso ao seu serviço: {0}</label>
         <name>CSP_CancelServiceMessage</name>
     </customLabels>
     <customLabels>
@@ -3613,7 +3677,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Filter</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_Filtered --></label>
+        <label>Filtro</label>
         <name>CSP_Filtered</name>
     </customLabels>
     <customLabels>
@@ -5081,7 +5145,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Remittantce_Date</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_RemoveAllFilters --></label>
+        <label>Remover todos os filtros</label>
         <name>CSP_RemoveAllFilters</name>
     </customLabels>
     <customLabels>
@@ -5589,7 +5653,7 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>CSP_Unexcepted_Error</name>
     </customLabels>
     <customLabels>
-        <label><!-- CSP_User --></label>
+        <label>Usuário</label>
         <name>CSP_User</name>
     </customLabels>
     <customLabels>
@@ -8781,7 +8845,14 @@ The configuration instructions are in the DupeBlocker install guide.</label>
         <name>Home_Page_New_Release_Msg</name>
     </customLabels>
     <customLabels>
-        <label><!-- IATA Acr Changes Service Description --></label>
+        <label>O credenciamento IATA simplifica muito a relação comercial entre agentes e companhias aéreas. 
+Sendo uma agência credenciada pela IATA, você se destacará como um parceiro reconhecido da indústria.
+
+Você terá um código numérico IATA exclusivo, abrindo oportunidades para trabalhar com companhias aéreas globais. 
+
+Através deste serviço Credenciamento IATA &amp; Alterações, você pode se inscrever diretamente para se tornar um IATA Accredited Agency (Agente Credenciado IATA). 
+
+Se você já for credenciado IATA, pode usar este serviço para atualizar as informações sobre alteração de endereço ou propriedade. Você também pode usar este serviço para adicionar filiais.</label>
         <name>IATA_Acr_Changes_Service_Description</name>
     </customLabels>
     <customLabels>
@@ -15085,7 +15156,7 @@ and
         <name>ISSP_AMS_If_Approved_Gross_Amnt</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Info Accreditation Types --></label>
+        <label>Para mais detalhes sobre Tipos de Credenciamento:</label>
         <name>ISSP_AMS_Info_Accreditation_Types</name>
     </customLabels>
     <customLabels>
@@ -16857,7 +16928,7 @@ and
         <name>ISSP_AMS_Step0_Intro</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS Step0 Intro Accred --></label>
+        <label>Observe que as solicitações de credenciamento online devem ser apresentadas por um Signatário Autorizado da Agência.</label>
         <name>ISSP_AMS_Step0_Intro_Accred</name>
     </customLabels>
     <customLabels>
@@ -17057,7 +17128,7 @@ and
         <name>ISSP_AMS_Step1_Two_Weeks_Expiry</name>
     </customLabels>
     <customLabels>
-        <label>Lista de verificação para</label>
+        <label>Check list para</label>
         <name>ISSP_AMS_Step2_Check_List</name>
     </customLabels>
     <customLabels>
@@ -17709,7 +17780,7 @@ and
         <name>ISSP_AMS_StepsAll_Passenger_Title_New</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP AMS StepsAll Travel Title --></label>
+        <label>Aplicação para aprovação como Agência de Viagem IATA</label>
         <name>ISSP_AMS_StepsAll_Travel_Title</name>
     </customLabels>
     <customLabels>
@@ -19263,7 +19334,7 @@ Em caso de suspensão de uma companhia aérea, que resulte na regularização de
         <name>ISSP_Banner_link</name>
     </customLabels>
     <customLabels>
-        <label>IATA Accreditation &amp; Changes</label>
+        <label>Credenciamento IATA e Alterações</label>
         <name>ISSP_Become_Accredited_Agent</name>
     </customLabels>
     <customLabels>
@@ -20929,7 +21000,7 @@ Você poderia por favor confimar de qual pais voce foi previamente atendido.</la
         <name>ISSP_IATA_Designator</name>
     </customLabels>
     <customLabels>
-        <label><!-- ISSP_IATA_Location_Code --></label>
+        <label>Localidade do código IATA</label>
         <name>ISSP_IATA_Location_Code</name>
     </customLabels>
     <customLabels>
@@ -42940,7 +43011,7 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
                 <label><!-- Comments --></label>
                 <name>Comments</name>
             </columns>
-            <label><!-- Comments --></label>
+            <label>Relatorios / Reportes</label>
             <name>Comments</name>
         </sections>
         <sections>
@@ -43030,7 +43101,7 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
             <name>Contracts</name>
         </sections>
         <sections>
-            <label><!-- Opportunities --></label>
+            <label>Relatorios / Reportes</label>
             <name>Opportunities</name>
         </sections>
         <sections>
@@ -43151,7 +43222,7 @@ Se quiser redefinir sua senha, volte à tela de login e use a função &quot;Esq
             <name>Agencies Applied Change codes</name>
         </sections>
         <sections>
-            <label><!-- OSCARs --></label>
+            <label>Relatorios / Reportes</label>
             <name>OSCARs</name>
         </sections>
     </reportTypes>

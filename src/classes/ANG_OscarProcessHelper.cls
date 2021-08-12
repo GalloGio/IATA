@@ -1926,7 +1926,7 @@ global class ANG_OscarProcessHelper {
 				.replace('#CONTACTNAME', contactsMap.get(nt.Contact__c).Name)
 				.replace('#IATACODE', acct.IataCode__c)
 				.replace('#ACCOUNTNAME', acct.Name)
-				.replace('#TODAY30',String.valueOf(Datetime.now().addDays(30).format('MM/dd/yyyy')))
+				.replace('#TODAY90',String.valueOf(Datetime.now().addDays(90).format('MM/dd/yyyy')))
 				.replace('#CASENUMBER',acctIdCasesMap.get(contactAccts.get(nt.Contact__c)).CaseNumber);
 
 			nt.Subject__c = nt.Subject__c

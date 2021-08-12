@@ -66,7 +66,7 @@ public class ANG_RHCHelper {
 											   IATA_ISO_Country__r.AMS_Settlement_System__r.ANG_RHC_Amount_Equals_FS__c, ANG_CashCondition__c,
 											   (SELECT Id, CurrencyIsoCode, Security_Status__c, ANG_ConvertedAmount__c, Amount__c
 												FROM Financial_Securities__r),
-											   (SELECT Id, ANG_Financial_Security__c, ANG_RHC_Amount__c
+											   (SELECT Id, ANG_Financial_Security__c, ANG_RHC_Amount__c, ANG_Minimum_Financial_Security__c
 												FROM RHC_Informations__r
 												WHERE RecordTypeId = :RECTYPE_STDRHCINFO)
 										   FROM Account
@@ -112,7 +112,7 @@ public class ANG_RHCHelper {
 	}
 
 	public static void deactivateRHCInfo(Set<Id> accounts) {
-		deactivateRHCInfo([SELECT Id FROM ANG_RHC_Information__c WHERE ANG_AccountId__c IN :accounts]);
+		deactivateRHCInfo([SELECT Id, ANG_Minimum_Financial_Security__c, ANG_RHC_Amount_Provisional__c FROM ANG_RHC_Information__c WHERE ANG_AccountId__c IN :accounts]);
  	}
 
 	public static void deactivateRHCInfo(List<ANG_RHC_Information__c> rhcInfos) {
@@ -151,7 +151,7 @@ public class ANG_RHCHelper {
 
 			for (Account a : [SELECT Id, IATA_ISO_Country__c, IATA_ISO_Country__r.ISO_Code__c, IATA_ISO_Country__r.AMS_Settlement_System__c,
 								  Financial_Assessment_Points__c, ANG_RiskStatus__c, Remittance_frequency__c, ANG_Accreditation_Model__c,IATA_ISO_Country__r.Allow_Cash_FOP_for_Cashless_Agencies__c,
-								  (SELECT id, ANG_RHC_Amount_Equals_FS__c FROM RHC_Informations__r)
+								  (SELECT id, ANG_RHC_Amount_Equals_FS__c, ANG_Minimum_Financial_Security__c FROM RHC_Informations__r)
 							  FROM Account
 							  WHERE Id IN :accountsIds]) {
 
@@ -441,7 +441,9 @@ public class ANG_RHCHelper {
 				ANG_RHC_Amount_Forecasted__c,
 				ANG_RHC_Effective_Date__c,
 				ANG_AccountId__r.ANG_HE_RiskStatus__c,
-				ANG_AccountId__r.ANG_HE_CashCondition__c
+				ANG_AccountId__r.ANG_HE_CashCondition__c,
+				ANG_Minimum_Financial_Security__c,
+				ANG_RHC_Amount_Provisional__c
 			 FROM ANG_RHC_Information__c
 			 WHERE ANG_AccountId__c IN :accountIdSet
 			]

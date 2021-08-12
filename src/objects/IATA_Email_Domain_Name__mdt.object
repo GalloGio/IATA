@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>A list of email domain names used internally by IATA.</description>
+    <fields>
+        <fullName>Allowed_for_Portal_Users__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Can this email domain be used for external user email addresses?</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Allowed for Portal Users?</label>
+        <type>Checkbox</type>
+    </fields>
+    <label>IATA Email Domain Name</label>
+    <pluralLabel>IATA Email Domain Names</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>
