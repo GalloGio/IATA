@@ -35,7 +35,7 @@ private class Comm_User_HelperTest {
 				Contact con = new Contact(FirstName = 'myName',
 																	LastName = 'lstname',
 																	Salutation = 'sig',
-																	Email = 'myemail@iata.org',
+																	Email = 'myemail@test.org',
 																	accountid = Hqrter.id
 																		);
 				insert con;
@@ -100,7 +100,7 @@ private class Comm_User_HelperTest {
 				Contact con = new Contact(FirstName = 'myName',
 																	LastName = 'lstname',
 																	Salutation = 'sig',
-																	Email = 'myemail@iata.org',
+																	Email = 'myemail@test.org',
 																	accountid = Hqrter.id
 																		);
 				insert con;
@@ -206,7 +206,7 @@ private class Comm_User_HelperTest {
 				Contact con = new Contact(FirstName = 'myName',
 																	LastName = 'lstname',
 																	Salutation = 'sig',
-																	Email = 'myemail@iata.org',
+																	Email = 'myemail@test.org',
 																	accountid = account.id);
 				insert con;
 
@@ -256,12 +256,12 @@ private class Comm_User_HelperTest {
 				Contact con = new Contact(FirstName = 'myName',
 																	LastName = 'lstname',
 																	Salutation = 'sig',
-																	Email = 'myemail@iata.org',
+																	Email = 'myemail@test.org',
 																	accountid = account.id);
 				Contact con2 = new Contact(FirstName = 'myName2',
 																	LastName = 'lstname2',
 																	Salutation = 'sig',
-																	Email = 'myemail2@iata.org',
+																	Email = 'myemail2@test.org',
 																	accountid = account.id);
 				insert new list<Contact>{con,con2};
 
