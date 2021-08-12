@@ -28,7 +28,7 @@
 
                 sforce.connection.sessionId = "{!$Api.Session_ID}";
 
-                var isEmailDeleted = sforce.apex.execute("IDFS_Util", "DeleteEmail", { EmailID: id });
+                var isEmailDeleted = sforce.apex.execute("IDFS_Util", "DeleteEmail", { messageID: id });
 
                 if(isEmailDeleted == 'true')
                 {
@@ -36,7 +36,7 @@
                     //window.top.location.reload();
                     //window.parent.location.reload();
                     // var temp = window.top.location;
-                    window.top.location = ("{!$Site.BaseURL}/" + caseId);
+                    window.open("{!$Site.BaseURL}/" + caseId, '_blank');                    
                 }
                 else
                 {
@@ -57,14 +57,13 @@
                 if (sforce.console.isInConsole()) {
                     ServiceConsoleIntegration(redirectUrlOne);
                 } else {
-                    window.top.location = redirectUrlOne;
+                    window.open(redirectUrlOne, '_blank');
                 }
             } else {
                 if (sforce.console.isInConsole()) {
                     ServiceConsoleIntegration(redirectUrlTwo);
                 } else {
-                    window.top.location = redirectUrlTwo;
-
+                    window.open(redirectUrlTwo, '_blank');
                 }
 
             }
@@ -82,14 +81,13 @@
                 if (sforce.console.isInConsole()) {
                     ServiceConsoleIntegration(redirectUrlOne);
                 } else {
-                    window.top.location = redirectUrlOne;
+                    window.open(redirectUrlOne, '_blank');
                 }
             } else {
                 if (sforce.console.isInConsole()) {
                     ServiceConsoleIntegration(redirectUrlTwo);
                 } else {
-                    window.top.location = redirectUrlTwo;
-
+                    window.open(redirectUrlTwo, '_blank');
                 }
 
             }
@@ -123,7 +121,7 @@
                 displayKeyCustomerAlert(targetURL, "{!$Label.KEY_CUSTOMER_ALERT_TITLE}", "{!$Label.KEY_CUSTOMER_ALERT}");
             }
             else {
-                goToURL(targetURL);
+                window.open(targetURL, '_blank');
             }
 
             //ACAMBAS - WMO-436 - End
@@ -147,7 +145,7 @@
             if (sforce.console.isInConsole()) {
                 ServiceConsoleIntegration(retUrl);
             } else {
-                window.top.location = retUrl;
+                window.open(retUrl, '_blank');
             }
         }
 
@@ -175,7 +173,7 @@
             if (sforce.console.isInConsole()) {
                 ServiceConsoleIntegration(redirectURL + "&isInConsole=true");
             } else {
-                window.top.location = redirectURL;
+                window.open(redirectURL, '_blank');
             }
         }
             else {
@@ -285,7 +283,7 @@
                                     </div>
                                 </td>
                                 <td class=" dataCell ">
-                                <a style="font-weight: bold;"  href="/{!IF(message.isArchived,message.archivedEmailId,message.emailId)}" target="_parent" onclick="openSubTab('{!IF(message.isArchived,message.archivedEmailId,message.emailId)}');return false;">{!message.subject}</a>
+                                <a style="font-weight: bold;"  href="/{!IF(message.isArchived,message.archivedEmailId,message.emailId)}" target="_blank" onclick="openSubTab('{!IF(message.isArchived,message.archivedEmailId,message.emailId)}');return false;">{!message.subject}</a>
                                     <br/>
                                     <font style="font-style: italic; font-decoration: none; font-size: 11px;">{!message.body}...</font>
                                 </td>

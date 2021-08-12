@@ -578,16 +578,6 @@
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
-        <fullName>Air Mercury - Next Gen - Notification</fullName>
-        <active>false</active>
-        <criteriaItems>
-            <field>Lead.Web_form_Code__c</field>
-            <operation>equals</operation>
-            <value>PAX1002140</value>
-        </criteriaItems>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>Airport IS - New lead notification</fullName>
         <active>true</active>
         <criteriaItems>
@@ -649,17 +639,6 @@
             <operation>equals</operation>
             <value>CAR-1002819</value>
         </criteriaItems>
-        <triggerType>onCreateOnly</triggerType>
-    </rules>
-    <rules>
-        <fullName>CargoIS Forum 2014</fullName>
-        <active>false</active>
-        <criteriaItems>
-            <field>Lead.Web_form_Code__c</field>
-            <operation>contains</operation>
-            <value>car1003026</value>
-        </criteriaItems>
-        <description>Email Alert sent to PM when a request is made on the website for CargoIS Forum 2014 -  campaign/ lead web form code car1003026</description>
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>

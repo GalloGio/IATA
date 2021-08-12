@@ -95,7 +95,7 @@ public without sharing class CW_CreateFacilityController {
 			templateName = (isNewAccount || !accountAlreadyApproved) ? STATION_CREATION_REQ_CONF_NEW_ACCOUNT : STATION_CREATION_REQ_CONF_TO_REQUESTOR;
 			emailsToBeSent.addAll(CW_EmailManager.prepareInternalEmails(templateName, facility.Id, whoIdsRequestor));
 		}
-				
+
 		String subject = 'Station Creation request submitted';
 		String body = subject;
 		contactIds.add(createdArd.CreatedBy.ContactId);
@@ -112,7 +112,7 @@ public without sharing class CW_CreateFacilityController {
 		if (!String.isBlank(ardRelIds)) {
 			List<ICG_Account_Role_Detail_Relationship__c> ardrelationship = new List<ICG_Account_Role_Detail_Relationship__c>();
 			for (String airId : ardRelIds.split(';')) {
-			//Handled airline points to Account, ICG ARD points to Account Role Detail.
+				//Handled airline points to Account, ICG ARD points to Account Role Detail.
 				if(String.isNotBlank(airId) && Id.valueOf(airId).getSobjectType() == Schema.Account.SObjectType) {
 					ardrelationship.add(new ICG_Account_Role_Detail_Relationship__c(ICG_Account_Role_Detail__c = facilityId, Handled_Airline__c = airId));
 				}

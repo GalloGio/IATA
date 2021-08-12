@@ -1110,7 +1110,6 @@
         <label>SIS Help Desk Solutions</label>
         <language>en_US</language>
         <sharedTo>
-            <group>IATASISCustomerSupport</group>
             <group>IATASISHelpDeskAgent</group>
             <group>IATASISOperations</group>
         </sharedTo>

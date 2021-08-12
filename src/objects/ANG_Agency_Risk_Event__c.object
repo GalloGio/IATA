@@ -157,7 +157,7 @@
         <fullName>RelatedList</fullName>
         <description>This is used on the Risk Event HIstory related list on the account layout</description>
         <displayedFields>
-            <field>ANG_Name_Link_FF__c</field>
+            <field>Name</field>
             <isFieldManaged>false</isFieldManaged>
             <isRequired>false</isRequired>
         </displayedFields>
@@ -518,6 +518,16 @@
         <externalId>false</externalId>
         <formula>ISPICKVAL(ANG_AccountId__r.ANG_Accreditation_Model__c,&apos;Cashless&apos;)</formula>
         <label>Is Cashless Agency</label>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Applicable_for_re_activation__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>This field will be true to be able to reactivate the Risk Event if the Agent has held its previous accreditation type for at least 2 years</description>
+        <externalId>false</externalId>
+        <label>Applicable for re-activation</label>
         <trackHistory>false</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Checkbox</type>

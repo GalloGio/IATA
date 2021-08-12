@@ -25,6 +25,11 @@
         <default>false</default>
         <label>Europe</label>
     </customValue>
-    <masterLabel>Financial Security Regional Coverage</masterLabel>
+    <customValue>
+        <fullName>Global</fullName>
+        <default>false</default>
+        <label>Global</label>
+    </customValue>
+    <masterLabel>Region</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

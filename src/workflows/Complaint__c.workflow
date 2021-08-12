@@ -150,16 +150,6 @@
         <triggerType>onCreateOnly</triggerType>
     </rules>
     <rules>
-        <fullName>COMPLAINT_Automatic messsage to customer_ENG</fullName>
-        <active>false</active>
-        <criteriaItems>
-            <field>Case.BSPCountry__c</field>
-            <operation>equals</operation>
-        </criteriaItems>
-        <description>Automatic message to customer to inform that the case is being categorized as a complaint</description>
-        <triggerType>onCreateOrTriggeringUpdate</triggerType>
-    </rules>
-    <rules>
         <fullName>SCA%3A COMPLAINT_Notify Complaint Owner</fullName>
         <actions>
             <name>SCA_Complaint_Notification_email_to_Complaint_Owner</name>

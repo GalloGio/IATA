@@ -877,6 +877,11 @@
         <label>NI - Cost</label>
     </standardValue>
     <standardValue>
+        <fullName>NI- Cost</fullName>
+        <default>false</default>
+        <label>NI- Cost</label>
+    </standardValue>
+    <standardValue>
         <fullName>NI - Cost/Budget</fullName>
         <default>false</default>
         <label>NI - Cost/Budget</label>
@@ -1400,6 +1405,11 @@
         <fullName>Renewal Sent</fullName>
         <default>false</default>
         <label>Renewal Sent</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Replaced by a New Contact</fullName>
+        <default>false</default>
+        <label>Replaced by a New Contact</label>
     </standardValue>
     <standardValue>
         <fullName>Replaced by New Contact</fullName>

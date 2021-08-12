@@ -102,6 +102,70 @@
             height: 40px !important;
             background-image: none !important;
         }
+
+        /** new modal styles **/
+        .customAlertModalBox .modal-contentAB.NewStyle {
+            width: 544px;
+            height: 358px;
+        }
+        .customAlertModalBox .modal-contentAB.NewStyle #MsgImage{
+            position: relative;
+            left: 189px;
+            top: -108px;
+            height: 100px;
+        }
+        .customAlertModalBox .modal-contentAB.NewStyle .circleOuter{
+            background: linear-gradient(0deg,rgba(40,150,50,.3),rgba(40,150,50,.3)),#fff;
+            height: 96px;
+            width: 96px;
+            border-radius: 50%;
+            display: flex;
+        }
+        .customAlertModalBox .modal-contentAB.NewStyle .circleInner {
+            background: linear-gradient(0deg,rgba(40,150,50,.6),rgba(40,150,50,.6)),#fff;
+            height: 80px;
+            width: 80px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-content: center;
+            align-items: center;
+            margin: auto;
+        }
+        .customAlertModalBox .modal-contentAB.NewStyle .circleCheck {
+            display: inline-block;
+            background-image: var(--IA-check-svg);
+            background-repeat: no-repeat;
+            background-position-x: center;
+            background-position-y: center;
+            background-color: white;
+            transform: scale(2);
+            height: 28px;
+            width: 28px;
+            border-radius: 28px;
+        }
+        .customAlertModalBox .modal-contentAB.NewStyle .IATA-AlertModalTitle {
+            position: relative;
+            top: -70px;
+        }
+        .customAlertModalBox .modal-contentAB.NewStyle .IATA-Page-SubTitle {
+            position: relative;
+            top: -60px;
+        }
+        .customAlertModalBox .modal-contentAB.NewStyle .IATA-form-textAB {
+            position: relative;
+            top: -50px;
+        }
+        .customAlertModalBox .modal-contentAB.NewStyle .IATA-buttonInPopupModalAB {
+            width: 84% !important;
+            max-width: 84% !important;
+            min-width: 50% !important;
+            height: 56px !important;
+            box-shadow: 0px 1px 2px rgba(56, 86, 235, 0.16), 0px 6px 16px rgba(56, 86, 235, 0.24);
+            border-radius: 1px;
+            position: relative;
+            top: -22px;
+        }
     </style>
 
     <apex:outputPanel id="customAlertModalBox" styleclass="customAlertModalBox hidden" >
@@ -114,6 +178,13 @@
                             <div id="MsgImage" class="IATA-Image row hidden">
                                 <span id="successMsg" class="img hidden"><apex:image url="{!URLFOR($Resource.ISSP_RightIcon)}"/></span>
                                 <span id="errorMsg" class="img hidden"><apex:image url="{!URLFOR($Resource.ISSP_ErrorIcon)}"/></span>
+                                <span id="successMsgNew" class="img hidden">
+                                    <span class="circleOuter">
+                                        <span class="circleInner">
+                                            <apex:image styleclass="circleCheck" url="{!URLFOR($Resource.ISSP_RightIconNew)}"/>
+                                        </span>
+                                    </span>
+                                </span>
                             </div>
                             <div class="IATA-AlertModalTitle row" >
                                 <span id="AlertModal-title-01"></span>
@@ -176,9 +247,14 @@
             if(typ != null){
                 typ.classList.remove("hidden");
             }
-            if(msgType === 'successMsg' || msgType === 'errorMsg'){
+            if(msgType === 'successMsg' || msgType === 'errorMsg' || msgType === 'successMsgNew'){
                 let typDiv = document.getElementById('MsgImage');
                 typDiv.classList.remove("hidden");
+            }
+            if (msgType === 'successMsgNew'){
+                document.getElementById('AlertModalBox').classList.add('NewStyle');
+            } else {
+                document.getElementById('AlertModalBox').classList.remove('NewStyle');
             }
 
             let ttl = document.getElementById("AlertModal-title-01");

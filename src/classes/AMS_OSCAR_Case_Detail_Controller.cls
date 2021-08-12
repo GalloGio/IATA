@@ -11,6 +11,9 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 	public AMS_Pax_Accreditation_Form__c accreditationObj { get; set; }
 
 	public Boolean saveAction { get; set; }
+	public Boolean isEventRiskToActivate { get; set; }
+	List<ANG_Agency_Risk_Event__c> riskEventList {get;set;}
+	List<Agency_Applied_Change_code__c>  agencyAppliedChangeCodes {get;set;}
 	public Boolean isCargoAgency{get;set;}
 	public Boolean isCertificationOSCAR{get;set;}
 	public Boolean isNewGenProcess{get;set;}
@@ -397,7 +400,11 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 		Set<String> auxOptions = new Set<String>();
 
 				if(!allowMultipleRemittances){
-					rfPicklistValues.add(new SelectOption('','--None--'));
+					if (oscarObj.Account__r.Remittance_frequency__c == null ){
+						rfPicklistValues.add(new SelectOption('','--None--'));
+					} else {
+						rfPicklistValues.add(new SelectOption (oscarObj.Account__r.Remittance_frequency__c,getPicklistLabels('AMS_Pax_Accreditation_Form__c','Remittance_frequency__c').get(oscarObj.Account__r.Remittance_Frequency__c))); 
+					}
 				// if multipicklist is being displayed, check the rightOptions to prevent record duplication between the left and right lists
 				}else if(accreditationObj.Remittance_frequency__c != null){
 					rightOptions = new Set<String>(accreditationObj.Remittance_frequency__c.Split(';'));
@@ -681,7 +688,7 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 	public AMS_OSCAR_Case_Detail_Controller() {
 
 		this.objectId = ApexPages.currentPage().getParameters().get('id');
-
+		this.isEventRiskToActivate = false;
 		if(objectId == null) return;
 
 		this.oscarObj = fetchOscarFields(objectId, isObjectCase(objectId));
@@ -692,6 +699,22 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 			this.isCertificationOSCAR = oscarObj.Process__c == AMS_Utils.CERTIFICATION;
 			this.isNewGenProcess = AMS_Utils.oscarNewGenProcesses.contains(oscarObj.Process__c); 
 			this.isNewApplication = isNewGenProcess && AMS_Utils.oscarNewGenNewAppProcesses.contains(oscarObj.Process__c);
+			if(this.oscarObj.Account__c != null){
+				populateRiskEventAndChangeCodes(this.oscarObj.Account__c);
+				if (this.oscarObj.ANG_Type_Of_Change__c == AMS_Utils.ANG_ACCREDITATION_TYPE 
+						&& this.oscarObj.AMS_Online_Accreditation__r.ANG_Accreditation_Model_to_Change__c == AMS_Utils.ACCREDITATIONMODEL_CASH 
+						&& agencyAppliedChangeCodes != null && !agencyAppliedChangeCodes.isEmpty()
+						&& riskEventList != null && !riskEventList.isEmpty()){
+						for(Agency_Applied_Change_code__c cc: agencyAppliedChangeCodes){
+							if(cc.OSCAR__r.ANG_Type_Of_Change__c == AMS_Utils.ANG_ACCREDITATION_TYPE
+									&& cc.OSCAR__r.AMS_Online_Accreditation__r.ANG_Accreditation_Model_to_Change__c == AMS_Utils.ACCREDITATIONMODEL_CASHLESS
+									&& cc.CreatedDate > = Date.today().addMonths(-6)){
+										this.isEventRiskToActivate = true;
+							}
+						}
+				}
+			}
+
 		}else{
 			System.debug('## Could not fetch any Oscar or does not have an accreditation object');
 		}
@@ -738,6 +761,25 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 			ApexPages.addMessage(new ApexPages.message(ApexPages.Severity.WARNING, Label.ANG_OnGoing_OSCAR_Warning));
 		}
 
+	}
+
+	public void populateRiskEventAndChangeCodes(ID accountID){
+
+		riskEventList = [SELECT Id, ANG_expiration_date_ff__c, Applicable_for_re_activation__c, ang_event_status__c
+						FROM ANG_Agency_Risk_Event__c 
+						WHERE ANG_AccountId__c  =: accountID 
+							AND  ang_event_status__c =: ANG_Risk_Helper.STATUS_INACTIVE_CASHLESS 
+							AND Applicable_for_re_activation__c =: true
+							AND ANG_expiration_date_ff__c >=: Date.today()
+						];
+        
+		agencyAppliedChangeCodes = [SELECT id, Account__c, OSCAR__r.ANG_Type_Of_Change__c, 
+											OSCAR__r.AMS_Online_Accreditation__r.ANG_Accreditation_Model_to_Change__c, CreatedDate 
+										FROM Agency_Applied_Change_code__c 
+										WHERE Account__c =: accountID
+											AND Change_Code__c =: AMS_Utils.CHA_CHANGE_CODE
+											AND CreatedDate <: Date.today()
+											ORDER BY CreatedDate DESC];
 	}
 
 	private AMS_Pax_Accreditation_Form__c fetchAccreditationFields(Id accreditationId){
@@ -790,9 +832,9 @@ public with sharing class AMS_OSCAR_Case_Detail_Controller {
 						ANG_Type_of_change__c, Account__r.Top_Parent__r.Remittance_Frequency__c, Account__r.Iso_State__c,
 						AMS_Target_Agency__c, Account__r.Is_Branch_Abroad__c, STEP6__c, //FM AMSU-1
 						Account__r.IATA_ISO_Country__r.ISO_Code__c, Location_Class__c, Account__r.Location_Class__c, //AMSU-151 
-						Location_Type__c,  //NEWGEN-4850
+						Location_Type__c, AMS_Online_Accreditation__r.ANG_Accreditation_Model_to_Change__c, //NEWGEN-4850
 						Account__r.ANG_Accreditation_Model__c, //NEWGEN-5859
-						New_parent__c, Change_of_Hierarchy_Scenario__c 
+						New_parent__c, Change_of_Hierarchy_Scenario__c, Account__r.Remittance_frequency__c 
 						FROM AMS_OSCAR__c where id = :idToSearch LIMIT 1];
 
 		if(oSCARs.isEmpty()) return null;

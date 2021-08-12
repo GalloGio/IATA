@@ -438,6 +438,12 @@ export default class PortalServicesManageServices extends NavigationMixin(Lightn
                         + '<br/>' + this.label.csp_TDP_ServiceRequest_MediumLabel2;
                 }
             }
+			else if(this.serviceName.includes('IATA Lab Network')){
+				this.ShowLabRegistryModal = true;
+				this.defaultMessage = false;
+				this.DefaultRequestButton = false;
+				this.showButtons = false;
+			}
 
             //get the parameters for this page  
             this.pageParams = getParamsFromPage();

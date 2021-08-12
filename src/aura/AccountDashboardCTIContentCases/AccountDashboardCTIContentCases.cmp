@@ -1,0 +1,71 @@
+<aura:component controller="AccountDashboardCTICasesCtrl" access="public">
+	<aura:attribute name="accountId" type="Id" />
+	<aura:attribute name="dataCases" type="List" />
+	<aura:attribute name="filteredDataCases" type="List" />
+	<aura:attribute name="columnsCases" type="List" />
+	<aura:attribute name="sortFieldCases" type="String" default="Name" />
+	<aura:attribute name="ascOrderCases" type="Boolean" default="true" />
+	<aura:attribute name="UIThemeDescription" type="String" />
+	<aura:attribute name="UIThemeisLEX" type="Boolean" />
+
+	<aura:handler name="init" value="{!this}" action="{!c.init}" />
+	<lightning:workspaceAPI aura:id="workspaceCase" />
+	<div class="slds-p-around_medium">
+		<div class="slds-box slds-p-around_none slds-theme_shade">
+			<lightning:card class="bckColor" title="{!$Label.c.AccountCTI_Cases_Interactions}" iconName="standard:case">
+				<aura:set attribute="actions"> </aura:set>
+
+				<div class="slds-p-around_none slds-m-around_medium">
+					<table class="slds-table slds-table_bordered slds-border_left slds-border_right">
+						<thead>
+							<tr>
+								<aura:iteration items="{!v.columnsCases}" var="item">
+									<th scope="col">
+										<div class="sortColumn" title="{!item.title}" data-sortable="{!item.sortable}" data-fieldname="{!item.fieldname}">
+											<lightning:formattedText class="slds-text-title_caps slds-text-title--caps" value="{!item.title}" />
+										</div>
+									</th>
+								</aura:iteration>
+							</tr>
+						</thead>
+						<tbody>
+							<aura:iteration items="{!v.filteredDataCases}" var="item">
+								<tr class="slds-hint-parent">
+									<th data-label="Contact" scope="row" class="slds-cell-wrap">
+										<lightning:formattedText value="{!item.contactName}" />
+									</th>
+									<th data-label="Case Type" scope="row" class="slds-cell-wrap">
+										<lightning:formattedRichText value="{!item.caseTypeImg}" />
+									</th>
+									<th data-label="Channel" scope="row" class="slds-cell-wrap">
+										<lightning:formattedText value="{!item.caseChannel}" />
+									</th>
+									<th data-label="Case" scope="row" class="slds-cell-wrap">
+										<div onclick="{!c.openCase}" data-value="{!item.caseId}" style="cursor: pointer; color: rgb(1, 118, 211)">
+											<lightning:formattedText value="{!item.caseNumber}" />
+										</div>
+									</th>
+									<th data-label="Subject" scope="row" class="slds-cell-wrap">
+										<lightning:formattedText value="{!item.caseSubject}" />
+									</th>
+									<th data-label="Date" scope="row" class="slds-cell-wrap">
+										<lightning:formattedText value="{!item.caseDate}" />
+									</th>
+									<th data-label="Resol. Time" scope="row" class="slds-cell-wrap">
+										<lightning:formattedText value="{!item.caseResolTime}" />
+									</th>
+									<th data-label="Onwer" scope="row" class="slds-cell-wrap">
+										<lightning:formattedText value="{!item.caseOwnerName}" />
+									</th>
+								</tr>
+							</aura:iteration>
+						</tbody>
+					</table>
+				</div>
+			</lightning:card>
+		</div>
+	</div>
+	<div aura:id="cases-spinner" class="slds-hide">
+		<lightning:spinner class="slds-is-fixed" alternativeText="Loading" size="large" />
+	</div>
+</aura:component>

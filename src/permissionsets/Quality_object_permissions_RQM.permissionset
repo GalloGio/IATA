@@ -397,11 +397,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>Quality__c.Region__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>Quality__c.Related_Int_Case_Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
