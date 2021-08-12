@@ -745,6 +745,10 @@
         <name>AMS_OSCAR_STEP51</name>
     </customLabels>
     <customLabels>
+        <label><!-- AMS OSCAR STEP52 --></label>
+        <name>AMS_OSCAR_STEP52</name>
+    </customLabels>
+    <customLabels>
         <label><!-- AMS OSCAR STEP6 --></label>
         <name>AMS_OSCAR_STEP6</name>
     </customLabels>
@@ -1579,6 +1583,70 @@
     <customLabels>
         <label><!-- Account --></label>
         <name>Account</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Account - ADetails --></label>
+        <name>AccountCTI_Account_ADetails</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Account - ATeam --></label>
+        <name>AccountCTI_Account_ATeam</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Account - Agency --></label>
+        <name>AccountCTI_Account_Agency</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Account - Category --></label>
+        <name>AccountCTI_Account_Category</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Account - Ecomm --></label>
+        <name>AccountCTI_Account_Ecomm</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Account - IATACode --></label>
+        <name>AccountCTI_Account_IATACode</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Account - Overall --></label>
+        <name>AccountCTI_Account_Overall</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Account - Sector --></label>
+        <name>AccountCTI_Account_Sector</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Account - Segmentation --></label>
+        <name>AccountCTI_Account_Segmentation</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Account - ServiceModel --></label>
+        <name>AccountCTI_Account_ServiceModel</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Account - Status --></label>
+        <name>AccountCTI_Account_Status</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Cases - Interactions --></label>
+        <name>AccountCTI_Cases_Interactions</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Contact - AllContacts --></label>
+        <name>AccountCTI_Contact_AllContacts</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Contact - Choose Contact --></label>
+        <name>AccountCTI_Contact_ChooseContact</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI - Contact - Create Case --></label>
+        <name>AccountCTI_Contact_CreateCase</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- AccountCTI_Contact PortalServices --></label>
+        <name>AccountCTI_Contact_PortalServices</name>
     </customLabels>
     <customLabels>
         <label><!-- AccountContextActivationEmailBody --></label>
@@ -30594,6 +30662,10 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
         <name>RTS_TAR_Notification_Title</name>
     </customLabels>
     <customLabels>
+        <label><!-- Reactivate Risk Event warning message --></label>
+        <name>Reactivate_Risk_Event_warning_message</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Reader Main Content --></label>
         <name>Reader_Main_Content</name>
     </customLabels>
@@ -30672,6 +30744,10 @@ Pour réinitialiser votre mot de passe, retournez à l&apos;écran de connexion 
     <customLabels>
         <label><!-- SIDRA_GE_Info --></label>
         <name>SIDRA_GE_Info</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- SIDRA Repayment Instalments not allowed for CASS --></label>
+        <name>SIDRA_Repayment_Instalments_not_allowed_for_CASS</name>
     </customLabels>
     <customLabels>
         <label><!-- SIS --></label>

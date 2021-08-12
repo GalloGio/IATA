@@ -230,7 +230,7 @@
             <operation>equals</operation>
             <value>TODAY,LAST_N_DAYS:30</value>
         </filters>
-        <label>ENCODED:{!FilterNames.Task_CompletedTasks}</label>
+        <label>Completed Tasks</label>
     </listViews>
     <listViews>
         <fullName>DelegatedTasks</fullName>
@@ -405,7 +405,7 @@
             <field>DUE_DATE</field>
             <operation>equals</operation>
         </filters>
-        <label>ENCODED:{!FilterNames.Task_UnscheduledTasks}</label>
+        <label>Unscheduled Tasks</label>
     </listViews>
     <recordTypes>
         <fullName>Airlines_Industry_Communication</fullName>
@@ -2325,8 +2325,8 @@
         <active>true</active>
         <description>Only the values in the subject picklist are valid</description>
         <errorConditionFormula>AND(
-  NOT(CONTAINS($CustomMetadata.GVR__mdt.Task_Valid_Subjects.Value__c, &apos;&quot;&apos; + Subject + &apos;&quot;&apos;)),
-  NOT(CONTAINS($CustomMetadata.GVR__mdt.Task_Valid_Subjects2.Value__c, &apos;&quot;&apos; + Subject + &apos;&quot;&apos;)),
+  NOT(REGEX(Subject,$CustomMetadata.GVR__mdt.Task_Valid_Subjects.Value__c)),
+  NOT(REGEX(Subject,$CustomMetadata.GVR__mdt.Task_Valid_Subjects2.Value__c)),
   CONTAINS($CustomMetadata.GVR__mdt.Task_Valid_Profiles.Value__c,$User.Profile_Name__c)
 )</errorConditionFormula>
         <errorDisplayField>Subject</errorDisplayField>

@@ -2387,6 +2387,46 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>AccountDashboardCTI</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AccountDashboardCTICasesCtrl</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AccountDashboardCTICasesTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AccountDashboardCTIContactsCtrl</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AccountDashboardCTIContactsTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AccountDashboardCTIContentCtrl</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AccountDashboardCTIContentTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AccountDashboardCTIHeaderCtrl</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AccountDashboardCTIHeaderTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AccountDashboardCTITest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>AccountDomainContactHandler</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -9259,6 +9299,14 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>RecordRetrievalLightningImpTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>RecordRetrievalLightningImplementation</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>RecordSharingController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -10427,6 +10475,22 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>UserSelector</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>UserSelectorTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>UserService</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>UserServiceTest</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>User_Sel</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -10444,6 +10508,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>UserprovisioningRequestControllerTests</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>Users</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>UsersTest</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -16372,6 +16444,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>AMS_OSCAR__c.STEP52__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>AMS_OSCAR__c.STEP5__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -19038,6 +19115,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>ANG_Agency_Risk_Event__c.ANG_isCashlessAgency__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ANG_Agency_Risk_Event__c.Applicable_for_re_activation__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -26856,12 +26938,12 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Campaign.Data_Quality_Description__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>true</editable>
+        <editable>false</editable>
         <field>Campaign.Data_Quality_Score__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -26886,7 +26968,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Campaign.Generate_Members_Completed_On__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -27151,7 +27233,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Campaign_Product__c.Product_Last_Version__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -27161,7 +27243,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Campaign_Product__c.Product__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -27171,7 +27253,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Campaign_Product__c.Swapping_Product__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -32593,6 +32675,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Contact.Country__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Contact.Course_Outline_PDF__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -41232,6 +41319,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>IATA_Email_Domain_Name__mdt.Allowed_for_Portal_Users__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>IATA_ISO_City__c.Country__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -47398,6 +47490,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Lead.Contact_Role__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Lead.Course_Outline_PDF__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -54936,7 +55033,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>Quality__c.Region__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -62671,6 +62768,9 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>IATA_Code_Search_Special_Countries__mdt-IATA Code Search Special Country Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>IATA_Email_Domain_Name__mdt-IATA Email Domain Name Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>IATA_ISO_City__c-IATA Geonames City Layout</layout>

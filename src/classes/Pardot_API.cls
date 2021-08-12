@@ -1,45 +1,15 @@
 public without sharing class Pardot_API {
+
 	private static final Pardot_API__c pardotSetting = Pardot_API__c.getInstance();
 	private static final String pardotAPIVersion = pardotSetting.API_Version__c; // 3 or 4
-
-	private static Map<String,String> headers{
-		get{
-			if(headers == null) headers = new Map<String,String>{
-				'Authorization'=>'Pardot api_key='+getAPIToken()+',user_key='+pardotSetting.User_Key__c
-			};
-			return headers;
-		}
-		set;
-	}
-
-	public static String getAPIToken() {
-		
-		Http h = new Http();
-		String sBody='email='+EncodingUtil.urlEncode(pardotSetting.Email__c, 'UTF-8')+'&password='+EncodingUtil.urlEncode(pardotSetting.Password__c, 'UTF-8')+'&user_key='+EncodingUtil.urlEncode(pardotSetting.User_Key__c, 'UTF-8');
-
-		HttpRequest req = new HttpRequest();
-
-		req.setEndpoint('https://pi.pardot.com/api/login/version/'+pardotAPIVersion);
-		req.setMethod('POST');
-		req.setHeader('Content-Type', 'application/x-www-form-urlencoded');
-		req.setBody(sBody);
-		try {
-			HttpResponse res = h.send(req);
-			String responseBody = res.getBody();
-			// Get API_KEY from XML
-			return readNode(responseBody, 'api_key').getText();
-		} catch(Exception e) {
-			System.debug(loggingLevel.ERROR, '____ [cls Pardot_API - getAPIToken] e - ' + e);
-			return null;
-		}
-	}
+	private static final String pardotBusinessUnit = pardotSetting.Pardot_Business_Unit__c;
 
 	public static Pardot_Prospect getProspect(String email) {
-		String url = 'https://pi.pardot.com/api/prospect/version/'+pardotAPIVersion+'/do/read/email/'+EncodingUtil.urlEncode(email, 'UTF-8')+'?limit_related_records=true';
+		String url = '/api/prospect/version/'+pardotAPIVersion+'/do/read/email/'+EncodingUtil.urlEncode(email, 'UTF-8')+'?limit_related_records=true';
 
 		Pardot_Prospect prospect;
 		try {
-			String resp = callout('GET', url, headers);
+			String resp = callout('GET', url);
 			// Get prospect information from XML
 			Dom.XMLNode prospectNode = readNode(resp, 'prospect');
 
@@ -94,11 +64,11 @@ public without sharing class Pardot_API {
 	public static boolean updateProspect(Pardot_Prospect prospect) {
 		if( prospect == null || String.isBlank(prospect.id)) return false;
 
-		String url = 'https://pi.pardot.com/api/prospect/version/'+pardotAPIVersion+'/do/update/id/'+prospect.id;
+		String url = '/api/prospect/version/'+pardotAPIVersion+'/do/update/id/'+prospect.id;
 		url = url+prospect.buildURLParameter();
 
 		try {
-			String resp = callout('GET', url, headers);
+			String resp = callout('GET', url);
 			// Get prospect information from XML
 			readNode(resp, 'prospect');
 			return true;
@@ -110,12 +80,12 @@ public without sharing class Pardot_API {
 
 	public static boolean createProspect(Pardot_Prospect prospect) {
 		if( prospect == null || String.isBlank(prospect.email)) return false;
-		String url = 'https://pi.pardot.com/api/prospect/version/'+pardotAPIVersion+'/do/create/email/'+EncodingUtil.urlEncode(prospect.email, 'UTF-8');
+		String url = '/api/prospect/version/'+pardotAPIVersion+'/do/create/email/'+EncodingUtil.urlEncode(prospect.email, 'UTF-8');
 		url = url+prospect.buildURLParameter();
 		url += '&user_id='+pardotSetting.Assigned_User__c;
 
 		try {
-			String resp = callout('GET', url, headers);
+			String resp = callout('GET', url);
 			// Get prospect information from XML
 			readNode(resp, 'prospect');
 			return true;
@@ -127,7 +97,7 @@ public without sharing class Pardot_API {
 
 	public static void updateProspectInterest(String prospectID, String email, list<String> interests) {
 		if( String.isBlank(prospectID) ) return;
-		String url = 'https://pi.pardot.com/api/prospect/version/'+pardotAPIVersion+'/do/update/id/'+prospectID;
+		String url = '/api/prospect/version/'+pardotAPIVersion+'/do/update/id/'+prospectID;
 
 		String params = '?';
 		if(interests != null && ! interests.isEmpty()){
@@ -141,7 +111,7 @@ public without sharing class Pardot_API {
 		url += params;
 
 		try {
-			String resp = callout('GET', url, headers);
+			String resp = callout('GET', url);
 			// Get prospect information from XML
 			readNode(resp, 'prospect');
 			GDPR_Helper.sendSubscriptionModificationEmail(email, false);
@@ -159,10 +129,10 @@ public without sharing class Pardot_API {
 
 	public static boolean createListMembership(String prospect_id, String list_id) {
 		if( String.isBlank(prospect_id) || String.isBlank(list_id)) return false;
-		String url = 'https://pi.pardot.com/api/listMembership/version/'+pardotAPIVersion+'/do/create/list_id/'+list_id+'/prospect_id/'+prospect_id;
+		String url = '/api/listMembership/version/'+pardotAPIVersion+'/do/create/list_id/'+list_id+'/prospect_id/'+prospect_id;
 
 		try {
-			String resp = callout('GET', url, headers);
+			String resp = callout('GET', url);
 			// Get prospect information from XML
 			readNode(resp, 'list_membership');
 			return true;
@@ -180,11 +150,11 @@ public without sharing class Pardot_API {
 
 	public static boolean deleteListMembership(String prospect_id, String list_id) {
 		if( String.isBlank(prospect_id) || String.isBlank(list_id)) return false;
-		String url = 'https://pi.pardot.com/api/listMembership/version/'+pardotAPIVersion+'/do/delete/list_id/'+list_id+'/prospect_id/'+prospect_id;
+		String url = '/api/listMembership/version/'+pardotAPIVersion+'/do/delete/list_id/'+list_id+'/prospect_id/'+prospect_id;
 
 
 		try {
-			String resp = callout('GET', url, headers);
+			String resp = callout('GET', url);
 			// Get prospect information from XML
 			readNode(resp, 'list_membership');
 			return true;
@@ -203,17 +173,12 @@ public without sharing class Pardot_API {
 		return node;
 	}
 
-	private static string callout(String verb, String url, map<String, String> headers) {
+	private static string callout(String verb, String url) {
 		Http h = new Http();
 		HttpRequest req = new HttpRequest();
-		req.setEndpoint(url);
+		req.setEndpoint('callout:Pardot_API' + url);
 		req.setMethod(verb);
-
-		if(headers != null) {
-			for (String aHeader : headers.keySet()) {
-				req.setHeader(aHeader, headers.get(aHeader));
-			}
-		}
+		req.setHeader('Pardot-Business-Unit-Id', pardotBusinessUnit);
 		HttpResponse res = h.send(req);
 		String responseBody = res.getBody();
 		System.debug(loggingLevel.FINE, '____ [cls Pardot_API - callout] response - ' + responseBody);

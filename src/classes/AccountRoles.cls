@@ -37,7 +37,7 @@ public with sharing class AccountRoles {
 		if(!Test.isRunningTest() && FunctionalRoleMetadataSelector.selectByName(functionalRoleName) == null)
 			throw new AccountRoleDomainException('Functional role by name ' + functionalRoleName + ' does not exist in Functional Role Custom Metadata');
 
-		Id recordTypeId = RecordTypeSelector.selectIdBySObjectAndName('Account_Role__c', 'Default');
+		Id recordTypeId = RecordTypeSelector.selectIdBySObjectAndDeveloperName('Account_Role__c', 'Default');
 		for(Id accountId : accountIdSet){
 			if(Test.isRunningTest())
 				records.add(new Account_Role__c(RecordTypeId = recordTypeId, Account__c = accountId));

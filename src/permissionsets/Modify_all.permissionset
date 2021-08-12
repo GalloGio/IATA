@@ -5205,10 +5205,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>E2CP__Config01</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>E2CP__Config1</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -60236,11 +60232,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Quality__c.Reason_for_requesting_exception_if_othe__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>Quality__c.Region__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

@@ -5656,6 +5656,16 @@ IF(Authorized_Signatory__c,IMAGE(&quot;/resource/authsign&quot; ,&quot;&quot;,40
         </valueSet>
     </fields>
     <fields>
+        <fullName>Course_Outline_PDF__c</fullName>
+        <externalId>false</externalId>
+        <label>Course Outline PDF</label>
+        <length>75</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
         <fullName>Credit_Card_Payment_Link__c</fullName>
         <externalId>false</externalId>
         <formula>/*PreProd*/
@@ -9583,12 +9593,6 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
                     <label>Chính trị hàng không</label>
                 </value>
                 <value>
-                    <fullName>Comercial</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Comercial</label>
-                </value>
-                <value>
                     <fullName>Commercial</fullName>
                     <default>false</default>
                     <label>Commercial</label>
@@ -9902,12 +9906,6 @@ IF( INCLUDES(Function__c, &apos;Training&apos;),41,
                     <default>false</default>
                     <isActive>false</isActive>
                     <label>opeartions</label>
-                </value>
-                <value>
-                    <fullName>Operaciones</fullName>
-                    <default>false</default>
-                    <isActive>false</isActive>
-                    <label>Operaciones</label>
                 </value>
                 <value>
                     <fullName>Operações</fullName>

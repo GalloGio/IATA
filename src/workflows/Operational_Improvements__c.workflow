@@ -2,13 +2,14 @@
 <Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
     <alerts>
         <fullName>Notify_on_Operational_Improvement_Creation</fullName>
+        <ccEmails>GDCQuality@iata.org</ccEmails>
         <description>Notify on Operational Improvement Creation</description>
         <protected>false</protected>
         <recipients>
             <type>owner</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>Quality/Continuous_Improvement_Process_Creation_Notification</template>
+        <template>All/Continuous_Improvement_Process_Creation_Notification</template>
     </alerts>
     <alerts>
         <fullName>OI_Approval_notification</fullName>
@@ -18,7 +19,7 @@
             <type>owner</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>Quality/Continuous_Improvement_Process_Approved_by_RPM</template>
+        <template>unfiled$public/Continuous_Improvement_Process_Approved_by_RPM</template>
     </alerts>
     <alerts>
         <fullName>OI_Approved_by_RPM</fullName>

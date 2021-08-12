@@ -2316,7 +2316,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>AWW_AccountProfileCtrl</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>AWW_AgencyManagementTest</apexClass>
@@ -2384,6 +2384,46 @@
     </classAccesses>
     <classAccesses>
         <apexClass>AccountCreationCtrlTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AccountDashboardCTI</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AccountDashboardCTICasesCtrl</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AccountDashboardCTICasesTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AccountDashboardCTIContactsCtrl</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AccountDashboardCTIContactsTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AccountDashboardCTIContentCtrl</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AccountDashboardCTIContentTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AccountDashboardCTIHeaderCtrl</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AccountDashboardCTIHeaderTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>AccountDashboardCTITest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -9259,6 +9299,14 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>RecordRetrievalLightningImpTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>RecordRetrievalLightningImplementation</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>RecordSharingController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -10427,6 +10475,22 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>UserSelector</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>UserSelectorTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>UserService</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>UserServiceTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>User_Sel</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -10444,6 +10508,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>UserprovisioningRequestControllerTests</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>Users</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>UsersTest</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -16377,6 +16449,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>AMS_OSCAR__c.STEP52__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>AMS_OSCAR__c.STEP5__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -19043,6 +19120,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>ANG_Agency_Risk_Event__c.ANG_isCashlessAgency__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ANG_Agency_Risk_Event__c.Applicable_for_re_activation__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -32602,6 +32684,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Contact.Course_Outline_PDF__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Contact.Credit_Card_Payment_Link__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -41237,6 +41324,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>IATA_Email_Domain_Name__mdt.Allowed_for_Portal_Users__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>IATA_ISO_City__c.Country__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -47403,6 +47495,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Lead.Contact_Role__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Lead.Course_Outline_PDF__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -62682,6 +62779,9 @@
         <layout>IATA_Code_Search_Special_Countries__mdt-IATA Code Search Special Country Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>IATA_Email_Domain_Name__mdt-IATA Email Domain Name Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>IATA_ISO_City__c-IATA Geonames City Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -69883,7 +69983,7 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Operational_Improvements__c.CPS_Checks</recordType>
-        <visible>false</visible>
+        <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>

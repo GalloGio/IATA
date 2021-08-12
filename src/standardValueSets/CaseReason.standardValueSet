@@ -259,4 +259,10 @@
         <label>NonNewGen RHC</label>
         <cssExposed>false</cssExposed>
     </standardValue>
+    <standardValue>
+        <fullName>ACIC</fullName>
+        <default>false</default>
+        <label>ACIC</label>
+        <cssExposed>true</cssExposed>
+    </standardValue>
 </StandardValueSet>

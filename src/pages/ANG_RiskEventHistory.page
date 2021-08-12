@@ -1,6 +1,6 @@
 <apex:page showHeader="false" sidebar="false" standardController="Account" extensions="ANG_RiskEventHistoryExtension">
 		
-	<apex:includeScript value="/support/console/37.0/integration.js"/>
+	<apex:includeScript value="/support/console/48.0/integration.js"/>
 	<apex:includeScript value="{!$Resource.jquery2_1_4}"/>
 
 	<apex:variable var="accountLink" value="{!URLFOR($Action.Account.View, Account.Id)}"/>
@@ -60,7 +60,7 @@
 		function bindLinks(){			
 			var links = [].slice.call(document.querySelectorAll(".targetTable a:not(.preventRedirection)"));
 			links.forEach(function(el){
-				if(el.innerHTML != 'Del'){
+				if(el.innerHTML == 'Edit'){
 					var linkURL = el.getAttribute("href");
 					var title = el.getAttribute('data-tabname');
 					el.addEventListener('click', function(e){
@@ -149,8 +149,10 @@
 						<apex:outputPanel layout="none" rendered="{!AND(r.accountsInvolved.size > 1, OR(fld == 'Name', fld == 'ANG_Name_Link_FF__c', fld == 'ANG_Account_IATA_Code__c'))}">
 							<apex:outputLink styleclass="preventRedirection" onclick="return openPopUp('{!r.risk.Id}');">{!IF(fld == 'ANG_Account_IATA_Code__c', 'Multiple Agencies', r.risk.Name)}</apex:outputLink>
 						</apex:outputPanel>
-						<apex:outputPanel layout="none" rendered="{!OR(r.accountsInvolved.size = 1, AND(fld != 'Name', fld != 'ANG_Name_Link_FF__c', fld != 'ANG_Account_IATA_Code__c'))}">
-							<apex:outputField value="{!r.risk[fld]}"/>
+						<apex:outputPanel layout="none" rendered="{!OR(r.accountsInvolved.size = 1, AND(fld != 'Name', fld != 'ANG_Name_Link_FF__c', fld != 'ANG_Account_IATA_Code__c'))}">													
+							<apex:outputField value="{!r.risk[fld]}" rendered="{! AND(fld != 'Name', fld != 'ANG_Risk_Type__c')}"/>
+							<apex:outputLink value="javascript:navigate('/{!r.risk.id}')" rendered="{!fld=='Name'}">{!r.risk[fld]}</apex:outputLink>
+							<apex:outputLink value="javascript:navigate('/{!r.risk.ANG_Risk_Type__c}')" rendered="{!fld=='ANG_Risk_Type__c'}">{!r.risk.ANG_Risk_Type__r.Name}</apex:outputLink>
 						</apex:outputPanel>
 					</apex:column>
 				</apex:repeat>
