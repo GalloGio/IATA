@@ -5347,4 +5347,54 @@ Location_Type__c = 'BR');
 		list<AMS_Accreditation_Contact__c> listContacts = [SELECT Id FROM AMS_Accreditation_Contact__c WHERE AMS_Pax_Accreditation_Form__c = :ctrl.newForm.Id];
 		System.assertEquals(2,listContacts.size());
 	}
+
+	@isTest static void ISSP_AMS_Accreditation_MulticountryPartConvertion() {
+		User user = fetchUser('parenttravel@test11.com');
+		AMS_Settlement_System__c bspPT = new AMS_Settlement_System__c(
+			Name = 'BSP-PT',
+			RecordTypeId = AMS_Utils.RECTYPE_BSP,
+			ANG_RHC_Amount_Equals_FS__c = true
+		);
+		insert bspPT;
+		IATA_ISO_Country__c ctryPT = new IATA_ISO_Country__c (Name='UK',ISO_Code__c='UK', ANG_Enable_NewGen__c = true, Multicountry_Enabled__c = true, AMS_Settlement_System__c = bspPT.id);
+		insert ctryPT;
+		Account account = user.Contact.Account;
+		account.Location_class__c = AMS_Utils.LC_TIDS;
+		account.Sector__c = AMS_Utils.SECTOR_PASSENGER;
+		account.Category__c = AMS_Utils.CATEGORY_TIDS;
+		account.GDS__c = 'ABAC;AGTD;AXSS';
+		account.location_type__c = AMS_Utils.GE;
+		account.IATA_ISO_Country__c = ctryPT.id;
+		update account;
+
+
+		ISSP_AMS_Accreditation ctrl;
+
+		Test.startTest();
+		System.runAs(user) { 
+			PageReference pageRef = Page.ISSP_AMS_Accreditation;
+			pageRef.getParameters().put('isGEMulticountry', 'true');
+			ApexPages.currentPage().getParameters().put('isNoticeOfChange', 'true');
+			Test.setCurrentPage(pageRef);
+			ctrl = new ISSP_AMS_Accreditation();
+			ctrl.goToStep1();
+			ctrl.goToStep2();
+			ctrl.goToStep3Section1();
+			ctrl.goToStep3Section2();
+			ctrl.goToStep3Section3();
+			ctrl.goToStep3Section4();
+			ctrl.goToStep3Section5();
+			ctrl.goToStep3Section6();
+			ctrl.goToStep3Section7();
+			ctrl.goToStep3Section8();
+			ctrl.goToStep3();
+			ctrl.goToStep4();
+			ctrl.goToStep5();
+			ctrl.save();
+
+		}
+		Test.stopTest();
+
+	}
+
 }

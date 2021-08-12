@@ -168,6 +168,10 @@
                 }
             }
 
+            function checkEligibilityMulticountry(isBankAccountChange){
+                navigateToUrl('/ISSP_AMS_Accreditation?isNoticeOfChange=true&isBankAccountChange='+isBankAccountChange + '{!commParam}' + "{!IF(IsPostalOperator,'&accType=PASS','')}" + '&isGEMulticountry=true&retUrl=/ISSP_HomePage','LIST_VIEW','newCase');
+            }
+
             function proofOfPCI(){
                 navigateToUrl('/ISSP_ANG_PCI?&retUrl=/ISSP_HomePage','LIST_VIEW','newCase');
             }
@@ -462,13 +466,21 @@
                                         
                                 <div class="row">
                                     <div class="col-md-12" style="padding-top: 20px; padding-bottom: 10px;">
+                                        <apex:commandButton styleClass="iatabtn btn btn_iata_primary" onClick="checkEligibilityMulticountry('false');return false;" style="{!IF(isGEAccountHierarchy,'', 'display:none;')}"
+                                            value="{!$Label.ISSP_AMS_Step0_Change_Of_Accreditation_Type}" />
+                                        <div style="padding-top: 20px; {!IF(isGEAccountHierarchy,'', 'display:none;')}">
+                                            <apex:outputText escape="false" value="{!$Label.ISSP_Milticountry_Request_Change_of_Accreditation_Type}"/>
+                                            <br/>
+                                            <br/>
+                                        </div>
                                         <apex:commandButton styleClass="iatabtn btn btn_iata_primary" onClick="checkEligibility('false');return false;" disabled="{! revCaseOpen}"
                                             value="{!IF(IsPostalOperator, $Label.ISSP_AMS_Step0_Changes, $Label.ISSP_AMS_Step0_Other_Changes)}" />
-                                        <br/>
+                                        <br/>   
                                         <div style="padding-top: 20px; {!IF(!revCaseOpen, 'display:block', 'display:none')}">
                                             <apex:outputText id="otherChangesNotPax" rendered="{! NOT(namPaxAgent)}" escape="false" value="{!IF(IsPostalOperator,$Label.ISSP_AMS_Step0_Other_Changes_Msg_PostalOperator,$Label.ISSP_AMS_Step0_Other_Changes_Msg)}"/>
-
-                                            <apex:outputText id="otherChangesPax" rendered="{! namPaxAgent}" escape="false" value="{!IF(IsPostalOperator,$Label.ISSP_ANG_Step0_Other_Changes_Msg_NamPaxAgent_PostalOperator,$Label.ISSP_ANG_Step0_Other_Changes_Msg_NamPaxAgent)}"/><br/><br/>
+                                            
+                                            <apex:outputText id="otherChangesPaxMulti" rendered="{!isGEAccountHierarchy}" escape="false" value="{!IF(IsPostalOperator,$Label.ISSP_ANG_Step0_Other_Changes_Msg_NamPaxAgent_PostalOperator,$Label.ISSP_AMS_Step0_Other_Changes_Msg_for_Nam_Pax_Agent_Multicountry)}"/>
+                                            <apex:outputText id="otherChangesPax" rendered="{!AND(!isGEAccountHierarchy,namPaxAgent)}" escape="false" value="{!IF(IsPostalOperator,$Label.ISSP_ANG_Step0_Other_Changes_Msg_NamPaxAgent_PostalOperator,$Label.ISSP_ANG_Step0_Other_Changes_Msg_NamPaxAgent)}"/><br/><br/>
 
                                             <apex:outputText id="minorChanges" escape="false" value="{!$Label.ISSP_AMS_Step0_Minor_Changes}" rendered="{!AND(isoCountry.Enable_Notice_of_Change__c,isoCountry.Enable_Minor_Changes_from_Portal__c,bIsAdmin,!IsPostalOperator)}"/>
 

@@ -62,6 +62,34 @@ public class AMS_OSCAR_TestDataFactory
 
 		OSCAR.AMS_Online_Accreditation__c = stagingArea.Id;
 		update OSCAR;
+		
+		AMS_OSCAR__c OSCAR2 = new AMS_OSCAR__c(STEP1__c = 'In Progress', Account__c = a1.id,Change_effective_as_of__c = Date.today(), Process__c = AMS_Utils.ANGPARTCONVERTMCTOLT);
+		insert OSCAR2;
+
+		List<AMS_Agencies_Hierarchy__c> hierachieslist = new List<AMS_Agencies_Hierarchy__c>();
+		AMS_Agencies_Hierarchy__c ah1 = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c='Test Hierarchy');
+		AMS_Agencies_Hierarchy__c ah2 = new AMS_Agencies_Hierarchy__c(Hierarchy_Name__c='Another Test Hierarchy');
+		hierachieslist.add(ah1);
+		hierachieslist.add(ah2);
+		insert hierachieslist;
+
+		List<Account> agencylist = new List<Account>();
+		Account agencyContentA1 = new Account(Name='Test1 Parent Agency',IATA_ISO_Country__c = ctry.id);
+		Account a3 = new Account(Name='Test2 Parent Agency',IATA_ISO_Country__c = ctry.id);
+		agencylist.add(agencyContentA1);
+		agencylist.add(a3);
+		insert agencylist;
+
+		List<AMS_Agencies_relationhip__c> relationshiplist = new List<AMS_Agencies_relationhip__c>();
+		AMS_Agencies_relationhip__c ar1 = new AMS_Agencies_relationhip__c(Relationship_details__c='Test',Hierarchy__c=ah1.id,Child_Account__c=a1.id,Parent_Account__c=agencyContentA1.id);
+		AMS_Agencies_relationhip__c ar2 = new AMS_Agencies_relationhip__c(Relationship_details__c='Test',Hierarchy__c=ah2.id,Child_Account__c=a1.id,Parent_Account__c=a3.id);
+		relationshiplist.add(ar1);
+		relationshiplist.add(ar2);
+		insert relationshiplist;
+
+		
+		ID rtAgencyInvolved = RecordTypeSingleton.getInstance().getRecordTypeId('AMS_Process_Detail__c', 'Agency_Involved');
+		insert new AMS_Process_Detail__c(Oscar__c = OSCAR2.Id, Account__c = a3.Id, RecordTypeId = rtAgencyInvolved);
 
 	}
 
