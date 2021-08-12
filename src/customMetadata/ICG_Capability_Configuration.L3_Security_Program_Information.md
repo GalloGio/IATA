@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>Airline</label>
+    <label>L3 Security Program Information</label>
     <protected>false</protected>
     <values>
         <field>Data__c</field>
-        <value xsi:type="xsd:string">Environmental_Compliance;Hold_Baggage_Security_System_Classification;Security_Program_Information</value>
+        <value xsi:type="xsd:string">Equipment__c;Version_Edition_No__c;Approved_By__c;Approver_Email__c;Approval_Date__c;Approval_Reference_No__c;More_Info_Document__c;</value>
     </values>
     <values>
         <field>Extra_Data__c</field>
@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>Key__c</field>
-        <value xsi:type="xsd:string">Airline</value>
+        <value xsi:type="xsd:string">Security_Program_Information#Security_Program_Information</value>
     </values>
     <values>
         <field>Order__c</field>
@@ -20,6 +20,6 @@
     </values>
     <values>
         <field>Type__c</field>
-        <value xsi:type="xsd:string">Categories_By_Account_Role_Detail_Record_Type</value>
+        <value xsi:type="xsd:string">Fields_By_Record_Type_And_Category</value>
     </values>
 </CustomMetadata>
