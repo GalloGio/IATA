@@ -276,9 +276,9 @@ private class ANG_AccountTriggerHandlerTest {
 
 	static testMethod void test_shortNameModification() {
 		Id accRT = AMS_Utils.RECTYPE_IATAAGENCY;
-		Id standardRT = RecordTypeSelector.selectIdBySObjectAndName('Account', 'Standard Account');
+		ID standardRT = RecordTypeSelector.selectIdBySObjectAndDeveloperName('Account', 'Standard_Account');
 
-		Account a1 = new Account(Name = 'NameTest1', IATACode__c = '12344560', TradeName__c = 'tradeName1', RecordTypeId = standardRT, Short_Name__c = 'ShortNameTest1Example1');
+		Account a1 = new Account(Name = 'NameTest1', IATACode__c = '12344560', TradeName__c = 'tradeName1', RecordTypeId = standardRT,      Short_Name__c = 'ShortNameTest1Example1');
 		Account a2 = new Account(Name = 'NameTest2', IATACode__c = '12344568', TradeName__c = 'tradeName2', RecordTypeId = accRT, Short_Name__c = 'ShortNameTest1Example2');
 		Account a3 = new Account(Name = 'NameTest3', IATACode__c = '12344569', TradeName__c = '', RecordTypeId = accRT, Short_Name__c = 'ShortNameTest1Example3');
 		insert new List<Account>{a1,a2,a3};
@@ -639,8 +639,6 @@ private class ANG_AccountTriggerHandlerTest {
 
 	@isTest static void dueDiligenceModelBPlusTest(){
 
-		Account account = AccountSelector.selectIdByNames(new Set<String>{'UK Test'}).get(0);
-		
 		List<Account> accs = [SELECT Id, ANG_IEP_Status__c FROM Account WHERE Name = 'UK Test'];
 
 		List<Contact> cons = new List<Contact>();
