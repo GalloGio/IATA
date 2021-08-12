@@ -1,5 +1,6 @@
-import { LightningElement, api } from "lwc";
+import { LightningElement, api, track } from "lwc";
 import ICG_RESOURCES from "@salesforce/resourceUrl/ICG_Resources";
+import getDateExtraData from "@salesforce/apex/CW_FacilityCapabilitiesController.getDateExtraData";
 
 export default class CwCapabilitiesManagerInputs extends LightningElement {
 	defaultcheckedIconFilename = "ic-tic-green.svg";
@@ -15,6 +16,7 @@ export default class CwCapabilitiesManagerInputs extends LightningElement {
 
 	@api isHeader = false;
 	@api editMode;
+	@api isCommunity = false;
 	@api item = "";
 	@api propertyName = "";
 	@api rowIndex = "0";
@@ -25,6 +27,10 @@ export default class CwCapabilitiesManagerInputs extends LightningElement {
 	@api type = "";
 	@api values =[];
 	@api viewType = "";
+	
+	@track tooltipToDisplay = "";
+	@track tooltipObject;
+	toolTipsDates;
 
 	rangeFrom;
 	rangeTo;
@@ -63,6 +69,15 @@ export default class CwCapabilitiesManagerInputs extends LightningElement {
 				this.rangeFrom = '';	
 				this.rangeTo = '';
 			}
+		}
+
+		if (this.item && this.item.id){
+			getDateExtraData({capabilityId: this.item.id}).then(result => {
+				if (result){
+					this.toolTipsDates = JSON.parse(result);
+				}
+			})
+			.catch(err => console.error(err));
 		}
 	}
 
@@ -199,6 +214,14 @@ export default class CwCapabilitiesManagerInputs extends LightningElement {
 		return this.type === 'STRING' || this.type === 'URL';
 	}
 
+	get isEmail(){
+		return this.type === 'EMAIL';
+	}
+
+	get isDate(){
+		return this.type === 'DATE';
+	}
+
 	get isTextArea(){
 		return this.type === 'TEXTAREA';
 	}
@@ -217,7 +240,10 @@ export default class CwCapabilitiesManagerInputs extends LightningElement {
 
 	get getCssClass(){
 		if (this.isPicklist || this.isMultiPicklist) {
-			return '';
+			return 'picklist-scroll';
+		}
+		else if (this.isDate) {
+			return 'capDatePicker';
 		} else {
 			return (this.editMode && this.propertyName !== 'equipment__c') ? 'disable-content' : '';
 		}
@@ -277,5 +303,87 @@ export default class CwCapabilitiesManagerInputs extends LightningElement {
 			});
 			this.dispatchEvent(newEvent);
 		}
+	}
+
+	getTooltipMetaData() {
+		let forceShowTooltip = false;
+		let value = this.item[this.propertyName] ? this.item[this.propertyName].toString() : "";
+
+		if (!this.toolTipsDates || this.isCommunity == false){
+			return "";
+		}
+
+		if (this.item.tooltips && this.propertyName in this.item.tooltips) {
+			forceShowTooltip = true;
+			value = this.item.tooltips[this.propertyName];
+
+			if (value.indexOf('{') > 0 && value.indexOf('}') > 0){
+				let valueToBeReplaced = value.split('{')[1].split('}')[0];
+
+				if (value && this.toolTipsDates){
+					let dates = JSON.parse(JSON.stringify(this.toolTipsDates));
+
+					var date;
+					if (valueToBeReplaced === 'Contract_Management_Date__c'){
+						date = dates.Contract_Management_Date;
+					}
+					else if (valueToBeReplaced === 'Quality_Control_Compliance_Date__c'){
+						date = dates.Quality_Control_Compliance_Date;
+					}
+					else if (valueToBeReplaced === 'Screeners_Performance_Date__c'){
+						date = dates.Screeners_Performance_Date;
+					}
+					else if (valueToBeReplaced === 'Security_Equipment_Date__c'){
+						date = dates.Security_Equipment_Date;
+					}
+					else if (valueToBeReplaced === 'System_Assurance_Date__c'){
+						date = dates.System_Assurance_Date;
+					}
+
+					if (date){
+						value = value.split('{')[0] + date + value.split('}')[1];
+						return value;
+					}
+					else{
+						return "";
+					}
+				}
+			}
+		}
+		else{
+			for (let property in this.item.tooltips) {
+				if (property == (this.propertyName + '#' + this.item[this.propertyName].toLowerCase().replace(' ','_').replaceAll('.',''))) {
+					forceShowTooltip = true;
+					value = this.item.tooltips[this.propertyName + '#' + this.item[this.propertyName].toLowerCase().replace(' ','_').replaceAll('.','')];
+				}
+			}
+		}
+
+		let maxChars = isNaN(Number(this.maxCharacters)) ? 0 : Number(this.maxCharacters);
+		if ((maxChars > 0 && value.length > maxChars) || forceShowTooltip) {
+			return value;
+		}
+
+		return "";
+	}
+
+	showPopover(event) {
+		let item = event.currentTarget.dataset.item;
+		this.tooltipToDisplay = item;
+
+		const text = this.getTooltipMetaData();
+		let tooltipObject = {
+			item: item,
+			text: text,
+			marginLeft: (text.length > 20) ? -75 : -25,
+			marginTop: 0
+		}
+		
+		this.tooltipObject = tooltipObject;
+	}
+
+	hidePopover() {
+		this.tooltipToDisplay = "";
+		this.tooltipObject = null;
 	}
 }
