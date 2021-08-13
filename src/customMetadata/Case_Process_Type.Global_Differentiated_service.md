@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>Global Normal</label>
+    <label>Global - Differentiated service</label>
     <protected>false</protected>
     <values>
         <field>KPI_Reference_Field__c</field>
@@ -8,11 +8,11 @@
     </values>
     <values>
         <field>KPI_Reference_Value__c</field>
-        <value xsi:type="xsd:double">24.0</value>
+        <value xsi:type="xsd:double">9.0</value>
     </values>
     <values>
         <field>Other_Conditions__c</field>
-        <value xsi:type="xsd:string">Account.HQ_Service_Model__c NOT IN (&apos;Differentiated&apos;) AND Priority NOT IN (&apos;Emergency&apos;) AND Type NOT IN (&apos;Complaint&apos;)</value>
+        <value xsi:type="xsd:string">Account.HQ_Service_Model__c IN (&apos;Differentiated&apos;) AND Priority NOT IN (&apos;Emergency&apos;) AND Type NOT IN (&apos;Complaint&apos;)</value>
     </values>
     <values>
         <field>Reason__c</field>
@@ -24,6 +24,6 @@
     </values>
     <values>
         <field>Type__c</field>
-        <value xsi:type="xsd:string">24 Natural hrs</value>
+        <value xsi:type="xsd:string">9 biz hours</value>
     </values>
 </CustomMetadata>
