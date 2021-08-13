@@ -1,7 +1,7 @@
 /****************************************************************************************************
 	Created by David D 2015-09-28
 ****************************************************************************************************/
-public with sharing class OrderItem_Sel  extends Selector
+public without sharing class OrderItem_Sel  extends Selector
 {
 
 	public List<Schema.SObjectField> getSObjectFieldList()
