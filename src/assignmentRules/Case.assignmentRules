@@ -2055,7 +2055,9 @@ ISPICKVAL(Topic__c, &quot;IATA Travel Pass&quot;)
             <assignedToType>Queue</assignedToType>
             <formula>And(
 RecordType.Name = &quot;Cases - Global&quot;,
-ISPICKVAL(Topic__c, &quot;IATA Travel Pass&quot;)
+OR(
+ISPICKVAL(Topic__c, &quot;IATA Travel Pass&quot;),
+ISPICKVAL(Topic__c, &quot;IATA Lab Network&quot;))
 )</formula>
         </ruleEntry>
         <ruleEntry>
