@@ -73,7 +73,7 @@ public without sharing class CW_CapabilitiesManagerController {
 		//Get certifications allowed for user
 		String stationRT = [SELECT RecordType.DeveloperName FROM ICG_Account_Role_Detail__c WHERE Id =: id].RecordType.DeveloperName;
 		List<String> CERTIFICATIONS_ALLOWED_USER =  CW_CapabilitiesUtilities.getCertificationsAllowedByDepartments(stationRT,validationPrograms);
-		Boolean userHasPermissionToEdit = CW_Utilities.hasSpecialPermissionsToEdit();
+		Boolean userHasPermissionToEdit = CW_Utilities.hasSpecialPermissionsToEdit() || CW_Utilities.getPermissionToEdit();
 
 		//Get recordtypes id for category
 		Map<String, String> mapRecordTypeIdByCategory = CW_FacilityCapabilitiesController.getRecordTypesIdByCategoryName();
@@ -255,6 +255,34 @@ public without sharing class CW_CapabilitiesManagerController {
 
 			if (mapAccountRoleDetailAssignmentRtsById.isEmpty() || categoriesToRetrieve == null) {
 				return returnValue;
+			}
+
+			// Apply the security logic for Editable RecordTypes if it is required
+			List<String> pSets = CW_Utilities.getCurrentUserPermissionSets();
+
+			if (!CW_Utilities.isCurrentUserSystemAdministrator() && !pSets.contains(CW_Utilities.PSET_OS_BACKEND_ADMIN) && pSets.contains(CW_Utilities.PSET_OS_CERT_MANAGER)) {
+				Map<String, List<String>> mapEditableRecordTypes = CW_FacilityCapabilitiesController.getMapEditableRecordTypes();
+				
+				// Get groups linked to the user
+				List<String> myGroups = new List<String>();
+				for (Group currentGroup : [SELECT DeveloperName FROM Group WHERE Id IN (SELECT GroupId FROM GroupMember WHERE UserOrGroupId = :UserInfo.getUserId())]) {
+					myGroups.add(currentGroup.DeveloperName.toLowerCase());
+				}
+
+				for (String currentEditableRt : mapEditableRecordTypes.keySet()) {
+					if ( mapCategoriesByRecordTypeDevName.containsKey(currentEditableRt.toLowerCase()) ) {
+						// Check if the user is in the public group allowed to edit this RT
+						Boolean allowed = false;
+						for (String grpAllowedToEdit : mapEditableRecordTypes.get(currentEditableRt)) {
+							if (!allowed) {
+								allowed = grpAllowedToEdit == '*' || myGroups.contains(grpAllowedToEdit.toLowerCase());
+							}
+						}
+						if (!allowed) {
+							mapCategoriesByRecordTypeDevName.remove(currentEditableRt.toLowerCase());
+						}
+					}
+				}
 			}
 
 			Map<String, Object> generatedData = generateData(
