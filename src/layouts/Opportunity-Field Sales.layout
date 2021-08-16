@@ -111,6 +111,10 @@
                 <behavior>Edit</behavior>
                 <field>Block_alerts_on_updates__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Related_Contact__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
