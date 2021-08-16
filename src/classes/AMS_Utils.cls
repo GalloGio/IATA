@@ -291,6 +291,7 @@ public without sharing class AMS_Utils {
 	public static final String NEWFORM_AGENTTYPE_CASH = 'Standard with Cash';
 	public static final String NEWFORM_AGENTTYPE_NO_CASH = 'Standard no Cash';
 	public static final String NEWFORM_AGENTTYPE_MULTICOUNTRY = 'Multicountry';
+
 	public static final String CASE_REASON_HE_STANDARD = 'New HE standard';
 	public static final String CASE_REASON_HE_LITE = 'New HE lite';
 	public static final String CASE_REASON_HE_MULTICOUNTRY = 'New HE Multicountry';
@@ -301,23 +302,28 @@ public without sharing class AMS_Utils {
 	public static final String CASE_REASON_AE_STANDARD = 'New AE standard';
 	public static final String CASE_REASON_AE_LITE = 'New AE lite';
 	public static final String CASE_REASON_AE_MULTICOUNTRY = 'New AE Multicountry';
-
 	public static final String CASE_REASON_BR_ABROAD = 'New BR Abroad';
 	public static final String CASE_REASON_BR_INDEPENDENT = 'New Independent BR';
 	public static final String CASE_REASON_BR_IP = 'New BR / IP';
 	public static final String CASE_REASON_BR_COMERCIAL = 'New Commercial BR';
-	public static final String CASE_AREA_ACCREDITATION_PROCESS = 'Accreditation Process';
-	public static final String CASE_AREA_AGENCY_RISK_MANAGEMENT = 'Agency Risk Management';
 	public static final String CASE_REASON_FOR_MANAGEMENT = 'FoP Management';
 	public static final String CASE_REASON_VR_CLOSURE = 'CLO - Closure';
 	public static final String CASE_REASON_OPT_OUT = 'Financial review opt-in / opt-out';
 	public static final String CASE_REASON_PCI_DSS_COMPLIANT = 'PCI DSS Compliant';
 	public static final String CASE_REASON_EDS = 'EDS';
 	public static final String CASE_REASON_NONNEWGEN_RHC = 'NonNewGen RHC';
+	public static final String CASE_REASON_ONBOARDING_IEP_MODEL_B_PLUS = 'Onboarding IEP Model B+';
+	public static final String CASE_REASON_SCREENING_IEP_MODEL_B = 'Screening IEP Model B';
+	public static final String CASE_REASON_IEP_DUE_DILIGENCE = 'IEP Due Diligence';
+
+	public static final String CASE_AREA_ACCREDITATION_PROCESS = 'Accreditation Process';
+	public static final String CASE_AREA_AGENCY_RISK_MANAGEMENT = 'Agency Risk Management';
+	public static final String CASE_AREA_CORPORATE_COMPLIANCE = 'Corporate Compliance';
 
 	public static final String FINANCIAL_REVIEW_ANNUAL = 'Annual';
 	public static final String FINANCIAL_REVIEW_MAJOR_CHANGES = 'Major Changes';
 	public static final String FINANCIAL_REVIEW_NEW_APPLICATION = 'New applications';
+	public static final String FINANCIAL_REVIEW_ADHOC = 'Adhoc';
 
 	public static final String FINANCIAL_REVIEW_MULTICOUNTRY_ANNUAL = 'Multicountry Annual';
 	public static final String FINANCIAL_REVIEW_MULTICOUNTRY_ADHOC = 'Multicountry Adhoc';
@@ -357,7 +363,9 @@ public without sharing class AMS_Utils {
 	public static final String CASE_STATUS_SUBMITTED = 'Submitted';
 	public static final String CASE_STATUS_ASSESSMENT_CANCELED = 'Assessment Cancelled';
 	public static final String CASE_STATUS_FINANCIAL_ASSESSMENT_CHALLENGED = 'Financial Assessment Challenged';
-
+	public static final String CASE_STATUS_ON_HOLD_INTERNAL = 'On Hold_Internal';
+	
+	
 	public static final Set<String> IFAP_CLOSED_STATUS = new Set<String>{
 		CASE_STATUS_CLOSED,
 		CASE_STATUS_CLOSED_OPT_OUT,

@@ -65,7 +65,7 @@ public with sharing class EmailMessageHandler {
 	public static final String ORG_ADDRESS_FROM = 'noreply@iata.org';
 	public static final list<String> LIST_VALID_RT = new list<String>{
 		'IDFS_Airline_Participation_Process', 'OSCAR_Communication', 'CasesMENA', 'CasesAmericas', 'ExternalCasesIDFSglobal',
-		'Cases_China_North_Asia', 'CasesEurope', 'Cases_Global', 'ComplaintIDFS', 'Inter_DPCs', 'ProcessEuropeSCE', 'IATA_Financial_Review'
+		'Cases_China_North_Asia', 'CasesEurope', 'Cases_Global', 'ComplaintIDFS', 'Inter_DPCs', 'ProcessEuropeSCE', 'IATA_Financial_Review', 'Airline_Coding_Application'
 	};
 	public static void sendEmailToSenderWhenCaseClosed(list<EmailMessage> listNewEmail) {
 		// create a map with parent cases as key and their emails as value
@@ -92,7 +92,7 @@ public with sharing class EmailMessageHandler {
 				AND RecordType.DeveloperName IN :LIST_VALID_RT
 				AND ContactId != null AND Contact.IsEmailBounced = false AND (NOT Contact.Email LIKE '%.inactive')]
 				) {
-			if (cse.ClosedDate < Date.today().addDays(-14)) {
+			if (cse.ClosedDate < Date.today().addDays(-14) && !isModelBcase(cse)) {
 				mapCases.put(cse.Id, cse);
 			}
 		}
@@ -123,6 +123,10 @@ public with sharing class EmailMessageHandler {
 
 		// send emails created if exist
 		if (!listSendEmail.isEmpty()) Messaging.sendEmail(listSendEmail);
+	}
+
+	private Static boolean isModelBcase(Case newCase){
+		return (newCase.RecordTypeId == AMS_UTILS.RECTYPE_OSCARCOMM && (newCase.Reason1__c == AMS_UTILS.CASE_REASON_ONBOARDING_IEP_MODEL_B_PLUS || newCase.Reason1__c == AMS_UTILS.CASE_REASON_SCREENING_IEP_MODEL_B ));
 	}
 
 	public static map<String,Id> CASE_CLOSED_TEMPLATES;
