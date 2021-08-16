@@ -12111,6 +12111,13 @@ You can use this Portal service to obtain more information on GDI or request a q
         <value>Country</value>
     </labels>
     <labels>
+        <fullName>General_Error_Message</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>General Error Message</shortDescription>
+        <value>An error has occured, please contact your administrator</value>
+    </labels>
+    <labels>
         <fullName>Generate_Quote</fullName>
         <categories>IEC</categories>
         <language>en_US</language>
@@ -43641,6 +43648,13 @@ Participation in MITA is open to all IATA and non-IATA member airlines holding v
         <value>{0} service have new requests to be approved/rejected.</value>
     </labels>
     <labels>
+        <fullName>New_Opportunity</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>New Opportunity</shortDescription>
+        <value>New Opportunity</value>
+    </labels>
+    <labels>
         <fullName>New_password</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -47372,6 +47386,13 @@ Automated process from a new account activation</value>
         <protected>false</protected>
         <shortDescription>Save</shortDescription>
         <value>Save</value>
+    </labels>
+    <labels>
+        <fullName>SaveClose</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Save &amp; Close</shortDescription>
+        <value>Save &amp; Close</value>
     </labels>
     <labels>
         <fullName>Search</fullName>
