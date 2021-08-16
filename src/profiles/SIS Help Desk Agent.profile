@@ -7616,75 +7616,75 @@
     </classAccesses>
     <classAccesses>
         <apexClass>ISSP_WS_SIS_Callout</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>ISSP_WS_SIS_Callout_AccountInfo</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>ISSP_WS_SIS_Callout_ActivateUser</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>ISSP_WS_SIS_Callout_Common</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>ISSP_WS_SIS_Callout_Common_Test</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>ISSP_WS_SIS_Callout_CreateAccount</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>ISSP_WS_SIS_Callout_CreateUser</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>ISSP_WS_SIS_Callout_UpdateAccount</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>ISSP_WS_SIS_Callout_UpdateUser</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>ISSP_WS_SIS_Common</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>ISSP_WS_SIS_ModifyUser</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>ISSP_WS_SIS_ModifyUser_Test</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>ISSP_WS_SIS_NewUser</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>ISSP_WS_SIS_NewUser_Test</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>ISSP_WS_SIS_UpdateAccount</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>ISSP_WS_SIS_UpdateAccount_Test</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>ISSP_WS_SIS_UpdateUser</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>ISSP_WS_SIS_UpdateUser_Test</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>ISSP_WS_Test</apexClass>
@@ -7692,7 +7692,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>ISSP_WS_Utilities</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>ISSP_contacts_Test</apexClass>
@@ -8260,6 +8260,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>OSCARstatusBatchTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>OS_Account_Role_Detail_CapabilityHandler</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -23765,6 +23769,26 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Approval_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Approval_Reference_No__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Approved_By__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Approver_Email__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account_Role_Detail_Capability__c.Availability__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -23956,6 +23980,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Account_Role_Detail_Capability__c.Cart_Type__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Contract_Management_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Contract_Management__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -24235,6 +24269,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Quality_Control_Compliance_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Quality_Control_Compliance__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account_Role_Detail_Capability__c.Quantity__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -24395,6 +24439,26 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Screeners_Performance_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Screeners_Performance__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Security_Equipment_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Security_Equipment__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Account_Role_Detail_Capability__c.Servicing_Height_Max__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -24406,6 +24470,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Account_Role_Detail_Capability__c.Supply_Flowrate_In_Kg_Sec__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.System_Assurance_Date__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.System_Assurance__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -24526,6 +24600,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Account_Role_Detail_Capability__c.VPPC_Quarantine_Room_Dimensions_W__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account_Role_Detail_Capability__c.Version_Edition_No__c</field>
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -61080,6 +61159,10 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Account_Role_Detail_Capability__c-Account Role Detail Capability Layout</layout>
+        <recordType>Account_Role_Detail_Capability__c.Hold_Baggage_Security_System_Classification</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Account_Role_Detail_Capability__c-Account Role Detail Capability Layout</layout>
         <recordType>Account_Role_Detail_Capability__c.IATA_XML_Messages_Cargo_Handling_System_Capabilities</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -61113,6 +61196,10 @@
     <layoutAssignments>
         <layout>Account_Role_Detail_Capability__c-Account Role Detail Capability Layout</layout>
         <recordType>Account_Role_Detail_Capability__c.Security_Equipment_And_Measures</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Account_Role_Detail_Capability__c-Account Role Detail Capability Layout</layout>
+        <recordType>Account_Role_Detail_Capability__c.Security_Program_Information</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Account_Role_Detail_Capability__c-Account Role Detail Capability Layout</layout>
@@ -67901,6 +67988,11 @@
     </recordTypeVisibilities>
     <recordTypeVisibilities>
         <default>false</default>
+        <recordType>Account_Role_Detail_Capability__c.Hold_Baggage_Security_System_Classification</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
         <recordType>Account_Role_Detail_Capability__c.IATA_XML_Messages_Cargo_Handling_System_Capabilities</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
@@ -67942,6 +68034,11 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Account_Role_Detail_Capability__c.Security_Equipment_And_Measures</recordType>
+        <visible>false</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>Account_Role_Detail_Capability__c.Security_Program_Information</recordType>
         <visible>false</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
