@@ -1,9 +1,14 @@
 @isTest
 public class SidraLiteManagerTest {
 
-	private static final String PASSENGER = 'IATA Passenger Sales Agent';
-	private static final String CARGO = 'IATA Cargo Agent';
-	private static final String AGENT = 'TIDS Agent';
+	private static final String PASSENGER = 'P';
+	private static final String CARGO = 'R';
+	private static final String TIDS_AGENT = 'T';
+	private static final Map<String,String> MAP_TYPES = new Map<String,String>{
+		PASSENGER => 'IATA Passenger Sales Agent',
+		CARGO => 'IATA Cargo Agent',
+		TIDS_AGENT => 'TIDS Agent'
+	};
 
 	public static Case createIFAPPassenger() {
 		return createParentCase(SidraLiteManager.RECORDTYPE_IFAP, PASSENGER);
@@ -30,7 +35,7 @@ public class SidraLiteManagerTest {
 	}
 
 	public static Case createSAAMAgent() {
-		return createParentCase(SidraLiteManager.RECORDTYPE_SAAM, AGENT);
+		return createParentCase(SidraLiteManager.RECORDTYPE_SAAM, TIDS_AGENT);
 	}
 
 	public static Case createInvoicingPassenger() {
@@ -38,18 +43,16 @@ public class SidraLiteManagerTest {
 	}
 
 	public static Case createInvoicingAgent() {
-		return createParentCase(SidraLiteManager.RECORDTYPE_INVOICING, AGENT);
+		return createParentCase(SidraLiteManager.RECORDTYPE_INVOICING, TIDS_AGENT);
 	}
 
 	public static Case createInvoicingCargo() {
 		return createParentCase(SidraLiteManager.RECORDTYPE_INVOICING, CARGO);
 	}
 
-	//ACAMBAS - WMO-483: Begin
 	public static Case createCNSAgent() {
-		return createParentCase(SidraLiteManager.RECORDTYPE_CNS, AGENT);
+		return createParentCase(SidraLiteManager.RECORDTYPE_CNS, CARGO);
 	}
-	//ACAMBAS - WMO-483: End
 
 	private static Case createParentCase(Id recordtypeID, String type) {
 		IATA_ISO_Country__c country = new IATA_ISO_Country__c(
@@ -57,7 +60,8 @@ public class SidraLiteManagerTest {
 			ISO_Code__c = 'CA',
 			AIMS_Area_Name__c = 'Canada',
 			AIMS_Area_ID__c = '1',
-			CNS_Country__c = (recordtypeId == SidraLiteManager.RECORDTYPE_CNS) ? true : false  //ACAMBAS - WMO-483
+			CNS_Country__c = (recordtypeId == SidraLiteManager.RECORDTYPE_CNS),
+			ANG_Enable_NewGen__c = (recordtypeId == SidraLiteManager.RECORDTYPE_CNS)
 		);
 		insert country;
 
@@ -69,9 +73,9 @@ public class SidraLiteManagerTest {
 			IATA_ISO_Country__c = country.Id,
 			Location_Type__c = 'HO',
 			IATACode__c = '1234567',
-			Location_Class__c = 'C',    //ACAMBAS - WMO-483
-			Type = type==AGENT?PASSENGER: type
+			Location_Class__c = type==TIDS_AGENT?PASSENGER: type
 		);
+		account.Type = MAP_TYPES.get(account.Location_Class__c);
 		insert account;
 
 		IATA_ISO_Country__c[] associatedCountry = [Select i.Name, i.Id From IATA_ISO_Country__c i where Name = :account.BillingCountry];
@@ -121,8 +125,9 @@ public class SidraLiteManagerTest {
 		}
 
 
-		if (type==AGENT) {
-			account.type = 'TIDS Agent';
+		if (type==TIDS_AGENT) {
+			account.Location_Class__c = TIDS_AGENT;
+			account.Type = MAP_TYPES.get(TIDS_AGENT);
 			update account;
 		}
 		return cse;
@@ -1059,7 +1064,8 @@ public class SidraLiteManagerTest {
 			IATA_ISO_Country__c = country.Id,
 			Location_Type__c = 'HE',
 			IATACode__c = '1234567',
-			Location_Class__c = 'P'
+			Location_Class__c = PASSENGER,
+			Type = MAP_TYPES.get(PASSENGER)
 		);
 		insert accountHE;
 
@@ -1072,7 +1078,8 @@ public class SidraLiteManagerTest {
 			IATA_ISO_Country__c = country.Id,
 			Location_Type__c = 'AE',
 			IATACode__c = '1234567',
-			Location_Class__c = 'P'
+			Location_Class__c = PASSENGER,
+			Type = MAP_TYPES.get(PASSENGER)
 		);
 		insert accountAE;
 

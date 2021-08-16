@@ -77,7 +77,7 @@ public with sharing class SidraLiteHelperForOSCAR {
 			newCase.NOT_Date__c = Date.today();
 			newCase.SIDRA_Lite_Default_Date__c = Date.Today();
 			newCase.Reason_for_Default__c = 'Suspension - ARV non compliance';
-			newCase.Termination_date_manual_entry__c = SidraLiteUtil.lastMonthDay(Date.today().addMonths(1));
+			newCase.Termination_date_manual_entry__c = SidraLiteUtil.getDefaultTerminationDate(cse.account);
 			newCase.Total_Irregularities__c = String.ValueOf(cse.account.Accumulated_Irregularities__c);
 		} else {
 			newCase.IRR_Withdrawal_Reason__c = 'Default Prev';
@@ -104,7 +104,7 @@ public with sharing class SidraLiteHelperForOSCAR {
 			newCase.SIDRA_Lite_Default_Date__c = Date.Today();
 			newCase.Reason_for_Default__c = 'DGR Certificate';
 			newCase.NOT_Date__c = Date.today();
-			newCase.Termination_date_manual_entry__c = SidraLiteUtil.lastMonthDay(Date.today().addMonths(1));
+			newCase.Termination_date_manual_entry__c = SidraLiteUtil.getDefaultTerminationDate(cse.account);
 		} else {
 			newCase.IRR_Withdrawal_Reason__c = 'Default Prev';
 			newCase.Termination_date_manual_entry__c = WSSidraLite.getTerminationDateFromRelatedCase(cse.account);

@@ -153,7 +153,7 @@ public class SidraLiteUtilTest {
 
 	@isTest
 	public static void testisPassenger_OK() {
-		Account account = new Account(Name='test', Type='IATA Passenger Sales Agent');
+		Account account = new Account(Name='test', Type='IATA Passenger Sales Agent',Location_Class__c='P');
 		Test.startTest();
 		Boolean result = SidraLiteUtil.isPassenger(account);
 		System.assertEquals(true, result);
@@ -174,7 +174,7 @@ public class SidraLiteUtilTest {
 
 	@isTest
 	public static void testisCargoCASS_OK() {
-		Account account = new Account(Name='test', Type='IATA Cargo Agent');
+		Account account = new Account(Name='test', Type='IATA Cargo Agent',Location_Class__c='R');
 		Test.startTest();
 		Boolean result = SidraLiteUtil.isCargoCASS(account);
 		System.assertEquals(true, result);
@@ -182,10 +182,10 @@ public class SidraLiteUtilTest {
 	}
 
 	@isTest
-	public static void testisAgent_ERROR() {
+	public static void testisTIDSAgent_ERROR() {
 		Test.startTest();
 		try {
-			Boolean result = SidraLiteUtil.isAgent(null);
+			Boolean result = SidraLiteUtil.isTIDSAgent(null);
 			System.assert(false, 'Exception expected');
 		} catch (Exception e) {
 			System.assert(true);
@@ -194,10 +194,10 @@ public class SidraLiteUtilTest {
 	}
 
 	@isTest
-	public static void testisAgent_OK() {
-		Account account = new Account(Name='test', Type='TIDS Agent');
+	public static void testisTIDSAgent_OK() {
+		Account account = new Account(Name='test', Type='TIDS Agent',Location_Class__c='T');
 		Test.startTest();
-		Boolean result = SidraLiteUtil.isAgent(account);
+		Boolean result = SidraLiteUtil.isTIDSAgent(account);
 		System.assertEquals(true, result);
 		Test.stopTest();
 	}
@@ -216,7 +216,7 @@ public class SidraLiteUtilTest {
 
 	@isTest
 	public static void testgetBSPCASS_IsBSP() {
-		Account account = new Account(Name='test', Type='TIDS Agent');
+		Account account = new Account(Name='test', Type='TIDS Agent',Location_Class__c='T');
 		Test.startTest();
 		String result = SidraLiteUtil.getBSPCASS(account);
 		System.assertEquals('BSP', result);
@@ -225,7 +225,7 @@ public class SidraLiteUtilTest {
 
 	@isTest
 	public static void testgetBSPCASS_IsCASS() {
-		Account account = new Account(Name='test', Type='IATA Cargo Agent');
+		Account account = new Account(Name='test', Type='IATA Cargo Agent',Location_Class__c='R');
 		Test.startTest();
 		String result = SidraLiteUtil.getBSPCASS(account);
 		System.assertEquals('CASS', result);
@@ -234,7 +234,7 @@ public class SidraLiteUtilTest {
 
 	@isTest
 	public static void testgetBSPCASS_Else() {
-		Account account = new Account(Name='test', Type='dummy value');
+		Account account = new Account(Name='test', Type='dummy value',Location_Class__c='X');
 		Test.startTest();
 		String result = SidraLiteUtil.getBSPCASS(account);
 		System.assertEquals('', result);
