@@ -18,11 +18,11 @@ public without sharing class IA_ContactsCtrl {
 		get{
 			if (mapContacts==null) {
 				mapContacts = new Map<Id,Contact>(
-					[SELECT id, Name, Email, Phone, MITA_Contact_Type__c, Title, Account.Name
+					[SELECT id, Name, Email, Phone, MITA_Contact_Type__c, MITA_Contact__c, Title, Account.Name
 					FROM Contact
 					WHERE Recordtype.Developername = 'Standard_Contact'
 					AND Status__c = 'Active'
-					AND MITA_Contact_Type__c != null
+					AND MITA_Contact__c = true
 					AND (AccountId = :this.account.Id OR Account.Top_Parent__c = :this.account.Id)
 					ORDER BY Name ASC
 					LIMIT 1000]
@@ -60,6 +60,7 @@ public without sharing class IA_ContactsCtrl {
 			this.phone = contact.Phone;
 			this.email = contact.Email;
 			this.types = new list<IA_util.MitaType>();
+			contact.MITA_Contact_Type__c = contact.MITA_Contact_Type__c == null? '': contact.MITA_Contact_Type__c;
 			for (String name: contact.MITA_Contact_Type__c.split(';')) {
 				this.types.add(new IA_util.MitaType(name));
 			}
@@ -69,7 +70,7 @@ public without sharing class IA_ContactsCtrl {
 
 	/**
 	 * gets the map for all contacts in the account hierarchy which are NOT mita contacts
-	 * (having MITA_Contact_Type__c empty)
+	 * (having MITA_Contact__c = false)
 	 * they will appear in the search contact popup
 	 */
 	private map<String,Contact> mapSearchableContacts {
@@ -77,11 +78,11 @@ public without sharing class IA_ContactsCtrl {
 			if (mapSearchableContacts==null) {
 				mapSearchableContacts = new Map<String,Contact>();
 				for (Contact contact:
-					[SELECT id, Name, Email, Phone, MITA_Contact_Type__c, Title, Account.Name
+					[SELECT id, Name, Email, Phone, MITA_Contact_Type__c, MITA_Contact__c, Title, Account.Name
 					FROM Contact
 					WHERE Recordtype.Developername = 'Standard_Contact'
 					AND Status__c = 'Active'
-					AND MITA_Contact_Type__c = null
+					AND MITA_Contact__c = false
 					AND (AccountId = :this.account.Id OR Account.Top_Parent__c = :this.account.Id)
 					ORDER BY Name ASC
 					LIMIT 1000]) {
@@ -180,11 +181,11 @@ public without sharing class IA_ContactsCtrl {
 		// if the search key is not in the preselected contact try to find it
 		if (this.selectedContact==null) {
 			list<Contact> listContact =
-				[SELECT id, Name, Email, Phone, MITA_Contact_Type__c, Title, Account.Name
+				[SELECT id, Name, Email, Phone, MITA_Contact_Type__c, MITA_Contact__c, Title, Account.Name
 				FROM Contact
 				WHERE Recordtype.Developername = 'Standard_Contact'
 				AND Status__c = 'Active'
-				AND MITA_Contact_Type__c = null
+				AND MITA_Contact__c = false
 				AND (AccountId = :this.account.Id OR Account.Top_Parent__c = :this.account.Id)
 				AND (Name = :this.selectedContactSearchKey OR Email = :this.selectedContactSearchKey)
 				LIMIT 1];
@@ -205,6 +206,7 @@ public without sharing class IA_ContactsCtrl {
 	public void openModalContact() {
 		if (String.isEmpty(this.selectedContactId)) {
 			this.selectedContact = new Contact();
+			this.selectedContact.MITA_Contact__c = false;
 			this.selectedContact.MITA_Contact_Type__c = '';
 		} else {
 			this.selectedContact = this.mapContacts.get(IA_util.decrypt(EncDecKey,this.selectedContactId));
@@ -231,6 +233,7 @@ public without sharing class IA_ContactsCtrl {
 		try {
 			Boolean isAdded = String.isEmpty(this.selectedContact.MITA_Contact_Type__c);
 			this.selectedContact.MITA_Contact_Type__c = getMITAContactFieldValue();
+			this.selectedContact.MITA_Contact__c = String.isNotBlank(this.selectedContact.MITA_Contact_Type__c);
 
 			Database.SaveResult result = Database.update(this.selectedContact,false);
 			if (result.isSuccess()) {
@@ -271,13 +274,14 @@ public without sharing class IA_ContactsCtrl {
 	}
 
 	/**
-	 * This removes the contact from the list, but it is not actually removed from databes
-	 * Only empties the field MITA_Contact_Type__c
+	 * This removes the contact from the list, but it is not actually removed from database
+	 * Only set the field MITA_Contact__c to false and empries the MITA_Contact_Type__c
 	 */
 	public void deleteContact(){
 		if(!this.hasEditContactsPermission || this.selectedContact==null) return;
 
 		try {
+			this.selectedContact.MITA_Contact__c = false;
 			this.selectedContact.MITA_Contact_Type__c = '';
 			Database.SaveResult result = Database.update(this.selectedContact,false);
 			if (result.isSuccess()) {
