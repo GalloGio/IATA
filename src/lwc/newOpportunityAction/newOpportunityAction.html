@@ -1,0 +1,58 @@
+<template>
+	<lightning-card title={newOppLabel} icon-name="action:new_opportunity" class="slds-size_2-of-2" if:false={loading}>
+		<lightning-record-edit-form record-type-id={recordtypeValue} object-api-name={oppObject}
+			onsubmit={handleSubmit} onsuccess={handleSuccess} onerror={handleError}>
+			<lightning-messages></lightning-messages>
+			<div class="slds-grid">
+				<div class="slds-col slds-size_1-of-2">
+					<template if:true={recordtypePicklist}>
+						<lightning-combobox required="true" name="Recordtype" label="Record Type" value={recordtypeValue}
+							options={recordtypePicklist} onchange={handleRecordtypeChange}>
+						</lightning-combobox>
+					</template>
+				</div>
+			</div>
+			<div class="slds-grid">
+				<div class="slds-col slds-size_1-of-2">
+					<lightning-input-field required="true" field-name={oppName} value={defaultOppName}></lightning-input-field>
+					<lightning-input-field field-name={oppAccount} value={defaultOppAccount}></lightning-input-field>
+					<lightning-input-field field-name={oppAmount} value=""></lightning-input-field>
+					<lightning-input-field field-name={oppType} value=""></lightning-input-field>
+					<lightning-input-field field-name={oppLeadSource} value=""></lightning-input-field>
+				</div>
+				<div class="slds-col slds-size_1-of-2">
+					<lightning-input-field required="true" field-name={oppStage} value=""></lightning-input-field>
+					<lightning-input-field field-name={oppPrimaryCampaign} value=""></lightning-input-field>
+					<lightning-input-field required="true" field-name={oppCloseDate} value=""></lightning-input-field>
+					<lightning-input-field required={relatedContactRequired} field-name={oppContact} value={defaultOppContact}></lightning-input-field>
+                    <lightning-input-field field-name={oppDescription} value=""></lightning-input-field>
+					
+				</div>
+			</div>
+			
+            <div class="slds-grid">
+                <ul class="slds-button-group-row slds-float_right">
+                    <li class="slds-button-group-item">
+                        <lightning-button type="button" variant="brand-outline" label={cancelLabel} value="Cancel"
+                            onclick={handleClose}></lightning-button>
+                    </li>
+                    <li class="slds-button-group-item">
+                        <lightning-button id="save" type="submit" variant="brand" label={saveLabel}></lightning-button>
+                    </li>
+                </ul>
+            </div>
+		</lightning-record-edit-form>
+	</lightning-card>
+
+	<template if:true={loading}>
+        <div class="demo-only" style="height:20rem;position:relative">
+            <div class="slds-spinner_container">
+              <div role="status" class="slds-spinner slds-spinner_medium slds-spinner_brand">
+                <span class="slds-assistive-text">Loading</span>
+                <div class="slds-spinner__dot-a"></div>
+                <div class="slds-spinner__dot-b"></div>
+              </div>
+            </div>
+          </div>
+	</template>
+</template>
