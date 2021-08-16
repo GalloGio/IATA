@@ -30,8 +30,8 @@ public class IA_MemorandumCtrlTest {
 			Airline_2__c = airline2.Id,
 			MITAorBIETA__c = IA_util.MITA,
 			Agreement_Type__c = IA_util.TYPE_PAX,
-			Created_date__c = Date.newInstance(2021,1,15),
-			Agreement_processed_date__c = Date.newInstance(2021,1,15),
+			Created_date__c = Date.newInstance(2020,12,15),
+			Agreement_processed_date__c = Date.newInstance(2020,12,15),
 			Effective_date__c = Date.newInstance(2021,1,15)
 		);
 
@@ -40,8 +40,8 @@ public class IA_MemorandumCtrlTest {
 			Airline_2__c = airline2.Id,
 			MITAorBIETA__c = IA_util.MITA,
 			Agreement_Type__c = IA_util.TYPE_ISSUING_AIRLINE,
-			Created_date__c = Date.newInstance(2021,1,15),
-			Agreement_processed_date__c = Date.newInstance(2021,1,15),
+			Created_date__c = Date.newInstance(2020,12,15),
+			Agreement_processed_date__c = Date.newInstance(2020,12,15),
 			Effective_date__c = Date.newInstance(2021,1,15)
 		);
 
@@ -50,8 +50,8 @@ public class IA_MemorandumCtrlTest {
 			Airline_2__c = airline1.Id,
 			MITAorBIETA__c = IA_util.MITA,
 			Agreement_Type__c = IA_util.TYPE_ISSUING_AIRLINE,
-			Created_date__c = Date.newInstance(2021,1,15),
-			Agreement_processed_date__c = Date.newInstance(2021,1,15),
+			Created_date__c = Date.newInstance(2020,12,15),
+			Agreement_processed_date__c = Date.newInstance(2020,12,15),
 			Effective_date__c = Date.newInstance(2021,1,15)
 		);
 
@@ -63,8 +63,9 @@ public class IA_MemorandumCtrlTest {
 			Created_date__c = Date.newInstance(2020,12,20),
 			Agreement_processed_date__c = Date.newInstance(2020,12,20),
 			Effective_date__c = Date.newInstance(2020,12,20),
-			Cancellation_Processed_Date__c = Date.newInstance(2021,1,20),
-			Cancellation_Reason__c = IA_util.REASON_REQUESTED_AIRLINE1
+			Cancellation_Processed_Date__c = Date.newInstance(2020,12,20),
+			Cancellation_Date__c = Date.newInstance(2021,1,20),
+			Cancellation_Reason__c = IA_util.REASON_CANCELLATION_AIRLINE1
 		);
 
 		MITA_Agreement__c agreement5 = new MITA_Agreement__c(
@@ -75,8 +76,9 @@ public class IA_MemorandumCtrlTest {
 			Created_date__c = Date.newInstance(2020,12,20),
 			Agreement_processed_date__c = Date.newInstance(2020,12,20),
 			Effective_date__c = Date.newInstance(2020,12,20),
-			Cancellation_Processed_Date__c = Date.newInstance(2021,1,20),
-			Cancellation_Reason__c = IA_util.REASON_REQUESTED_AIRLINE1
+			Cancellation_Processed_Date__c = Date.newInstance(2020,12,20),
+			Cancellation_Date__c = Date.newInstance(2021,1,20),
+			Cancellation_Reason__c = IA_util.REASON_CANCELLATION_AIRLINE1
 		);
 
 		MITA_Agreement__c agreement6 = new MITA_Agreement__c(
@@ -87,8 +89,9 @@ public class IA_MemorandumCtrlTest {
 			Created_date__c = Date.newInstance(2020,12,20),
 			Agreement_processed_date__c = Date.newInstance(2020,12,20),
 			Effective_date__c = Date.newInstance(2020,12,20),
-			Cancellation_Processed_Date__c = Date.newInstance(2021,1,20),
-			Cancellation_Reason__c = IA_util.REASON_REQUESTED_AIRLINE1
+			Cancellation_Processed_Date__c = Date.newInstance(2020,12,20),
+			Cancellation_Date__c = Date.newInstance(2021,1,20),
+			Cancellation_Reason__c = IA_util.REASON_CANCELLATION_AIRLINE2
 		);
 
 		MITA_Agreement__c agreement7 = new MITA_Agreement__c(
@@ -99,8 +102,9 @@ public class IA_MemorandumCtrlTest {
 			Created_date__c = Date.newInstance(2020,12,20),
 			Agreement_processed_date__c = Date.newInstance(2020,12,20),
 			Effective_date__c = Date.newInstance(2020,12,20),
-			Cancellation_Processed_Date__c = Date.newInstance(2021,1,20),
-			Cancellation_Reason__c = IA_util.REASON_REQUESTED_AIRLINE1
+			Cancellation_Processed_Date__c = Date.newInstance(2020,12,20),
+			Cancellation_Date__c = Date.newInstance(2021,1,20),
+			Cancellation_Reason__c = IA_util.REASON_CANCELLATION_AIRLINE2
 		);
 
 		insert new list<MITA_Agreement__c>{agreement1,agreement2, agreement3, agreement4, agreement5, agreement6, agreement7};
@@ -121,11 +125,11 @@ public class IA_MemorandumCtrlTest {
 
 		System.assertEquals(6,data.size());
 		System.assertEquals(3,data.get(IA_util.MITA + ' ' + IA_util.CONCURRENCES).size());
-		System.assertEquals(1,data.get(IA_util.MITA + ' ' + IA_util.WITHDRAWALS).size());
+		System.assertEquals(1,data.get(IA_util.MITA + ' ' + IA_util.WITHDRAWALS).size()); //1, 0
 		System.assertEquals(0,data.get(IA_util.BIETA + ' ' + IA_util.CONCURRENCES).size());
 		System.assertEquals(2,data.get(IA_util.BIETA + ' ' + IA_util.WITHDRAWALS).size());
 		System.assertEquals(0,data.get(IA_util.EMD + ' ' + IA_util.CONCURRENCES).size());
-		System.assertEquals(1,data.get(IA_util.EMD + ' ' + IA_util.WITHDRAWALS).size());
+		System.assertEquals(1,data.get(IA_util.EMD + ' ' + IA_util.WITHDRAWALS).size()); //1, 0
 	}
 
 }
