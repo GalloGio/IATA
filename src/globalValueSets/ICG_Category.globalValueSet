@@ -431,6 +431,16 @@
         <label>Forklift Truck (FKL)</label>
     </customValue>
     <customValue>
+        <fullName>Hold_Baggage_Security_System_Classification</fullName>
+        <default>false</default>
+        <label>Hold Baggage Security System Classification</label>
+    </customValue>
+    <customValue>
+        <fullName>Security_Program_Information</fullName>
+        <default>false</default>
+        <label>Security Program Information</label>
+    </customValue>
+    <customValue>
         <fullName>Temperature_Controlled_Ground_Service_Equipment_In_Facility</fullName>
         <default>false</default>
         <isActive>false</isActive>
