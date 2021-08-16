@@ -18,6 +18,10 @@
         <type>user</type>
     </allowedSubmitters>
     <allowedSubmitters>
+        <submitter>mcewend.iata.org@partner.iata.org</submitter>
+        <type>user</type>
+    </allowedSubmitters>
+    <allowedSubmitters>
         <submitter>mulai@iata.org</submitter>
         <type>user</type>
     </allowedSubmitters>

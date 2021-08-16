@@ -4,6 +4,10 @@
  */
 public without sharing class CW_Utilities {
 
+	public final static String PROFILE_SYSTEM_ADMINISTRATOR  = 'System Administrator';
+	public final static String PSET_OS_BACKEND_ADMIN = 'One_Source_Backend_Admin';
+	public final static String PSET_OS_CERT_MANAGER = 'One_Source_Certification_Manager';
+
 	public final static string VALIDATION_PROGRAMS = 'IATA';
 
 	public final static string FACILITY_MANAGER = 'Facility Manager';
@@ -157,17 +161,38 @@ public without sharing class CW_Utilities {
 	}
 
 	/*
+	 * @description		Checks if the current user is System Administrator
+	 * @return			Boolean
+	 */
+	public static Boolean isCurrentUserSystemAdministrator() {
+		List<Profile> profileFound = [SELECT Name FROM Profile WHERE Id =: UserInfo.getProfileId() AND Name = :PROFILE_SYSTEM_ADMINISTRATOR];
+		return !profileFound.isEmpty();
+	}
+
+	/*
+	 * @description		Get the permission sets assigned to the current user
+	 * @return			List<String> Permission Set Names
+	 */
+	public static List<String> getCurrentUserPermissionSets() {
+		List<String> psets = new List<String>();
+		for (PermissionSetAssignment currentPSetAssign : [SELECT PermissionSet.Name FROM PermissionSetAssignment WHERE AssigneeId =: UserInfo.getUserId() ]) {
+			psets.add(currentPSetAssign.PermissionSet.Name);
+		}
+		return psets;
+	}
+
+	/*
 	 * @description		Check if the user has edit permissions
 	 * @return			Bollean result if you have permission
 	 */
 	@AuraEnabled (cacheable = true)
 	public static Boolean getPermissionToEdit() {
-		Boolean result=false;
+		if (isCurrentUserSystemAdministrator()) {
+			return true;
+		}
 
-		List<PermissionSetAssignment> exist = [SELECT Id FROM PermissionSetAssignment WHERE AssigneeId =: UserInfo.getUserId() AND (PermissionSet.Name = 'One_Source_Certification_Manager')];
-		result = !exist.isEmpty();
-
-		return (result || hasSpecialPermissionsToEdit());
+		List<String> pSets = getCurrentUserPermissionSets();
+		return psets.contains(PSET_OS_BACKEND_ADMIN) || psets.contains(PSET_OS_CERT_MANAGER);
 	}
 
 	/*
@@ -176,12 +201,11 @@ public without sharing class CW_Utilities {
 	 * @return			Boolean true if current user is system admin or One_Source_Backend_Admin
 	 */
 	public static Boolean hasSpecialPermissionsToEdit(){
-		Boolean result=false;
+		if (isCurrentUserSystemAdministrator()) {
+			return true;
+		}
 
-		List<PermissionSetAssignment> exist = [SELECT Id, PermissionSetId, PermissionSetGroupId, AssigneeId, PermissionSet.name, Assignee.Profile.name FROM PermissionSetAssignment WHERE AssigneeId =: UserInfo.getUserId() AND ((PermissionSet.Name = 'One_Source_Backend_Admin') or (Assignee.Profile.name = 'System Administrator'))];
-		
-		result = !exist.isEmpty();
-		return result;
+		return getCurrentUserPermissionSets().contains(PSET_OS_BACKEND_ADMIN);
 	}
 
 	/*

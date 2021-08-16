@@ -87,6 +87,16 @@
                     <label>Specific Processing</label>
                 </value>
                 <value>
+                    <fullName>Tooltip_By_Section</fullName>
+                    <default>false</default>
+                    <label>Tooltip By Section</label>
+                </value>
+                <value>
+                    <fullName>Tooltip_By_SuperCategory</fullName>
+                    <default>false</default>
+                    <label>Tooltip By SuperCategory</label>
+                </value>
+                <value>
                     <fullName>Tooltip_Fields_By_Field</fullName>
                     <default>false</default>
                     <label>Tooltip Fields By Field</label>
@@ -300,6 +310,23 @@
             <value>Tooltip_Fields_By_Field</value>
         </filters>
         <label>EXTRA - Tooltip Fields By Field</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Tooltips</fullName>
+        <columns>Type__c</columns>
+        <columns>MasterLabel</columns>
+        <columns>DeveloperName</columns>
+        <columns>Key__c</columns>
+        <columns>Data__c</columns>
+        <columns>Extra_Data__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Type__c</field>
+            <operation>equals</operation>
+            <value>Tooltip_By_Section,Tooltip_By_SuperCategory,Tooltip_Fields_By_Field</value>
+        </filters>
+        <label>EXTRA - Tooltips</label>
         <language>en_US</language>
     </listViews>
     <pluralLabel>OS Capability Configuration</pluralLabel>

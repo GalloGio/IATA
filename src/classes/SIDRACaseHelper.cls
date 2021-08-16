@@ -19,7 +19,7 @@ public with sharing class SIDRACaseHelper {
 	public final static set<String> IRR_WITH_REASONS = new set<String> {IATACHARGES, FRACTION, SMALLAMOUNT, MINORPOLICY};
 	
 	public final static string BANK_ERROR = 'Bank Error';
-	public final static string BANK_ERROR_MESSAGE = 'Bank error cannot be used more than 3 times in the last 365 days';
+	public final static string BANK_ERROR_MESSAGE = 'Bank error cannot be used more than 4 times in the last 365 days';
 
 	/**
 		After insert action
@@ -337,7 +337,7 @@ public with sharing class SIDRACaseHelper {
 			}
 		}
 
-		if (countIRR > 3 || countDEF > 3) {
+		if (countIRR > 4 || countDEF > 3) {
 			thisCase.addError(BANK_ERROR_MESSAGE);
 			return false;
 		}

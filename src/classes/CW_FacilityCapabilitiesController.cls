@@ -5,6 +5,8 @@ public without sharing class CW_FacilityCapabilitiesController {
 	final static String MD_FIELDS_BY_RT_AND_CATEGORY = 'Fields_By_Record_Type_And_Category';
 	final static String MD_GROUPED_FIELDS = 'Grouped_Fields';
 	final static String MD_SPECIFIC_PROCESSING = 'Specific_Processing';
+	final static String MD_TOOLTIP_BY_SUPERCATEGORY = 'Tooltip_By_SuperCategory';
+	final static String MD_TOOLTIP_BY_SECTION = 'Tooltip_By_Section';
 	final static String MD_TOOLTIP_FIELDS_BY_FIELD = 'Tooltip_Fields_By_Field';
 	final static String MD_CONFIG = 'Config';
 	final static String MD_SECTIONS_BY_SUPERCATEGORY = 'Sections_By_Supercategory';
@@ -127,7 +129,7 @@ public without sharing class CW_FacilityCapabilitiesController {
 	public static Map<String, List<String>> getMapFieldsByExtraDataType() {
 		Map<String, List<String>> output = new Map<String, List<String>>();
 		for (ICG_capability_configuration__mdt currentConfig : getCapabilityConfigurationMetadataByType(MD_FIELDS_BY_RT_AND_CATEGORY, SEARCH_WITH_EXTRADATA)) {
-			output.put(currentConfig.Key__c.toLowerCase(), (String.isBlank(currentConfig.Extra_Data__c)) ? new List<String>() : currentConfig.Data__c.toLowerCase().split(';'));
+			output.put(currentConfig.Key__c.toLowerCase(), (String.isBlank(currentConfig.Extra_Data__c)) ? new List<String>() : currentConfig.Extra_Data__c.toLowerCase().split(';'));
 		}
 
 		return output;
@@ -160,16 +162,66 @@ public without sharing class CW_FacilityCapabilitiesController {
 	}
 
 	/*
+	 * @description		Retrieves metadata related to Capability filtered by 'Tooltip_By_SuperCategory'
+	 * @return			Map<String, List<String>> => key => Section | string[0] => icon path, string[1] => tooltip
+	 */
+	public static Map<String, List<String>> getMapTooltipBySuperCategory() {
+		Map<String, List<String>> output = new Map<String, List<String>>();
+		for (ICG_capability_configuration__mdt currentConfig : getCapabilityConfigurationMetadataByType(MD_TOOLTIP_BY_SUPERCATEGORY, SEARCH_WITH_EXTRADATA)) {
+			output.put(
+				currentConfig.Key__c.toLowerCase(), 
+				new List<String> {
+					(String.isBlank(currentConfig.Data__c)) ? '' : currentConfig.Data__c, 
+					(String.isBlank(currentConfig.Extra_Data__c)) ? '' : currentConfig.Extra_Data__c
+				}
+			);
+		}
+
+		return output;
+	}
+
+	/*
+	 * @description		Retrieves metadata related to Capability filtered by 'Tooltip_By_Section'
+	 * @return			Map<String, List<String>> => key => Section | string[0] => icon path, string[1] => tooltip
+	 */
+	public static Map<String, List<String>> getMapTooltipBySection() {
+		Map<String, List<String>> output = new Map<String, List<String>>();
+		for (ICG_capability_configuration__mdt currentConfig : getCapabilityConfigurationMetadataByType(MD_TOOLTIP_BY_SECTION, SEARCH_WITH_EXTRADATA)) {
+			output.put(
+				currentConfig.Key__c.toLowerCase(), 
+				new List<String> {
+					(String.isBlank(currentConfig.Data__c)) ? '' : currentConfig.Data__c, 
+					(String.isBlank(currentConfig.Extra_Data__c)) ? '' : currentConfig.Extra_Data__c
+				}
+			);
+		}
+
+		return output;
+	}
+
+	/*
 	 * @description		Retrieves metadata related to Capability filtered by 'Tooltip_Fields_By_Field' or 'Data__c' record type
 	 * @return			List of strings splitted by ',' from ICG_capability_configuration__mdt.Data__c)
 	 */
 	public static Map<String, List<String>> getMapTooltipFieldsByField() {
 		Map<String, List<String>> output = new Map<String, List<String>>();
-		for (ICG_capability_configuration__mdt currentConfig : getCapabilityConfigurationMetadataByType(MD_TOOLTIP_FIELDS_BY_FIELD, SEARCH_ONLY_DATA)) {
-			output.put(currentConfig.Key__c.toLowerCase(), (String.isBlank(currentConfig.Data__c)) ? new List<String>() : currentConfig.Data__c.split(';'));
+		for (ICG_capability_configuration__mdt currentConfig : getCapabilityConfigurationMetadataByType(MD_TOOLTIP_FIELDS_BY_FIELD, SEARCH_WITH_EXTRADATA)) {
+			if (string.isBlank(currentConfig.Extra_Data__c)){
+				output.put(currentConfig.Key__c.toLowerCase(), (String.isBlank(currentConfig.Data__c)) ? new List<String>() : currentConfig.Data__c.split(';'));
+			}
+			else{
+				output.put(currentConfig.Key__c.toLowerCase(), currentConfig.Extra_Data__c.split(';'));
+			}
 		}
 
 		return output;
+	}
+
+	@AuraEnabled
+	public static String getDateExtraData(String capabilityId){
+		Account_Role_Detail_Capability__c capConfig = [SELECT Id, Security_Equipment_Date__c, Quality_Control_Compliance_Date__c, Screeners_Performance_Date__c, System_Assurance_Date__c, Contract_Management_Date__c FROM Account_Role_Detail_Capability__c WHERE Id =: capabilityId LIMIT 1];
+		DateExtraData result = new DateExtraData(capConfig);
+		return JSON.serialize(result);
 	}
 
 	/*
@@ -205,7 +257,7 @@ public without sharing class CW_FacilityCapabilitiesController {
 	public static Map<String, List<String>> getMapEditableRecordTypes() {
 		Map<String, List<String>> output = new Map<String, List<String>>();
 		for (ICG_capability_configuration__mdt currentConfig : getCapabilityConfigurationMetadataByType(MD_EDITABLE_RECORDTYPES)) {
-			output.put(currentConfig.Key__c, (String.isBlank(currentConfig.Data__c)) ? new List<String>() : currentConfig.Data__c.toLowerCase().split(';'));
+			output.put(currentConfig.Key__c.toLowerCase(), (String.isBlank(currentConfig.Data__c)) ? new List<String>() : currentConfig.Data__c.toLowerCase().split(';'));
 		}
 
 		return output;
@@ -217,11 +269,11 @@ public without sharing class CW_FacilityCapabilitiesController {
 	 */
 	public static List<Id> getListEditableRecordTypesID() {
 		List<Id> output = new List<Id>();
-		List<String> editableRecordTypes = getMapEditableRecordTypes().get(MD_EDITABLE_RECORDTYPES);
+		Map<String, List<String>> editableRecordTypes = getMapEditableRecordTypes();
 
 		Map<String, String> recordTypes = RecordTypeSingleton.getInstance().getMapRecordTypesBySObject('Account_Role_Detail_Capability__c');        
 		for(String key : recordTypes.keySet()){
-			if (editableRecordTypes.contains(key.replaceAll(' ', '_').toLowerCase())){
+			if (editableRecordTypes.containsKey(key.replaceAll(' ', '_').toLowerCase())){
 				output.add(Id.valueOf(recordTypes.get(key)));
 			}
 		}
@@ -235,7 +287,7 @@ public without sharing class CW_FacilityCapabilitiesController {
 	 * @return			List of ICG_capability_configuration__mdt
 	 */
 	public static List<ICG_capability_configuration__mdt> getCapabilityConfigurationMetadataByType(String type) {
-		return [SELECT Key__c, Data__c, Order__c FROM ICG_capability_configuration__mdt WHERE Type__c = :type ORDER BY Order__c ASC, Key__c ASC];
+		return [SELECT Key__c, Data__c, Extra_Data__c, Order__c FROM ICG_capability_configuration__mdt WHERE Type__c = :type ORDER BY Order__c ASC, Key__c ASC];
 	}
 
 	public static Map<String, Id> getRecordTypesIdByCategoryName() {
@@ -369,7 +421,7 @@ public without sharing class CW_FacilityCapabilitiesController {
 		//Get certifications allowed for user
 		String stationRT = [SELECT RecordType.DeveloperName FROM ICG_Account_Role_Detail__c WHERE Id =: id].RecordType.DeveloperName;
 		List<String> CERTIFICATIONS_ALLOWED_USER =  CW_CapabilitiesUtilities.getCertificationsAllowedByDepartments(stationRT,validationPrograms);
-		Boolean userHasPermissionToEdit = CW_Utilities.hasSpecialPermissionsToEdit();
+		Boolean userHasPermissionToEdit = CW_Utilities.hasSpecialPermissionsToEdit() || CW_Utilities.getPermissionToEdit();
 
 		//Get recordtypes id for category
 		Map<String, String> mapRecordTypeIdByCategory = CW_FacilityCapabilitiesController.getRecordTypesIdByCategoryName();
@@ -1270,5 +1322,30 @@ public without sharing class CW_FacilityCapabilitiesController {
 		public String label { get; set; }
 		@AuraEnabled
 		public String id { get; set; }
+	}
+
+	public class DateExtraData {
+		public DateExtraData(Account_Role_Detail_Capability__c cap){
+			if (cap.Security_Equipment_Date__c != null)
+				this.Security_Equipment_Date = cap.Security_Equipment_Date__c.day() + '/' + cap.Security_Equipment_Date__c.month() + '/' + cap.Security_Equipment_Date__c.year();
+		
+			if (cap.Quality_Control_Compliance_Date__c != null)
+				this.Quality_Control_Compliance_Date = cap.Quality_Control_Compliance_Date__c.day() + '/' + cap.Quality_Control_Compliance_Date__c.month() + '/' + cap.Quality_Control_Compliance_Date__c.year();
+
+			if (cap.Screeners_Performance_Date__c != null)
+				this.Screeners_Performance_Date = cap.Screeners_Performance_Date__c.day() + '/' + cap.Screeners_Performance_Date__c.month() + '/' + cap.Screeners_Performance_Date__c.year();
+
+			if (cap.System_Assurance_Date__c != null)
+				this.System_Assurance_Date = cap.System_Assurance_Date__c.day() + '/' + cap.System_Assurance_Date__c.month() + '/' + cap.System_Assurance_Date__c.year();
+
+			if (cap.Contract_Management_Date__c != null)
+				this.Contract_Management_Date = cap.Contract_Management_Date__c.day() + '/' + cap.Contract_Management_Date__c.month() + '/' + cap.Contract_Management_Date__c.year();
+
+		}
+		public String Security_Equipment_Date {get;set;}
+		public String Quality_Control_Compliance_Date {get;set;}
+		public String Screeners_Performance_Date {get;set;}
+		public String System_Assurance_Date {get;set;}
+		public String Contract_Management_Date {get;set;}
 	}
 }
