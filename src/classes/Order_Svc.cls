@@ -2992,11 +2992,22 @@ public without sharing class Order_Svc
 				return String.format(Label.ErrMsg_Shipping_Tax_SAP_Error, new List<String>{response.Error.Type_x, response.Error.Code, response.Error.Message});
 
 			//*** set tax and freight on order item and update at the end
+			Map<String, Decimal> shippingChargeMap = new Map<String, Decimal>();
+
 			for (Integer i1 = 0; i1 < lstResponse.size(); i1++)
 				for (SAP_Freight_and_Tax.CalculationResult_element calc : lstResponse[i1].CalculationResult) {
 					updOrderItem = mapProduct_OrderItem.get(calc.ProductNumber);
+
+					if(shippingChargeMap.containsKey(calc.ProductNumber)){
+						Decimal shippingCharge = shippingChargeMap.get(calc.ProductNumber);
+						shippingCharge += calc.ShippingCharge == null ? 0 : calc.ShippingCharge;
+						shippingChargeMap.put(calc.ProductNumber, shippingCharge);
+					}else{
+						shippingChargeMap.put(calc.ProductNumber, calc.ShippingCharge == null ? 0 : calc.ShippingCharge);
+					}
+
 					if (updOrderItem != null) {
-						updOrderItem.Freight_Charge__c = ((calc.ShippingCharge == null) ? 0 : calc.ShippingCharge);
+						updOrderItem.Freight_Charge__c = shippingChargeMap.containsKey(calc.ProductNumber) ? shippingChargeMap.get(calc.ProductNumber) : 0;
 						updOrderItem.Tax__c = ((calc.Tax == null) ? 0 : calc.Tax);
 						updOrderItem.Handling_charges__c = calc.SpecialHandlingCharge;
 					}

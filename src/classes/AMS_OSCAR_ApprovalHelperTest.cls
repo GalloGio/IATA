@@ -21,7 +21,7 @@ private class AMS_OSCAR_ApprovalHelperTest {
 		List<Id> workingItemIds = AMS_OSCAR_ApprovalHelper.getAllApprovals(new List<Id>{oscar.Id});
 		System.assertEquals(workingItemIds[0], approvalId);
 
-		AMS_OSCAR_ApprovalHelper.processForObject('Approve', oscar.Id, new List<Id>{userId}, 'Approval testing');
+		AMS_OSCAR_ApprovalHelper.processForObject('Approve', oscar.Id, new List<Id>{userId}, 'Approval testing', workingItemIds);
 
 		try {
 			AMS_OSCAR_ApprovalHelper.approveAll(new List<Id>{approvalId}, new List<Id>{userId}, 'Failed process');
