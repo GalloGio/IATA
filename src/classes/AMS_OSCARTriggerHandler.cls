@@ -2391,7 +2391,7 @@ public class AMS_OSCARTriggerHandler {
 
 		if(oscarsToProcessId.isEmpty()) return;
 
-		Map<Id,AMS_OSCAR__c> oscarAux = new Map<Id, AMS_OSCAR__c>([SELECT Id, Account__r.Status__c, Account__r.Sector__c, Account__r.CNS_Agency__c,Account__r.Category__c FROM AMS_OSCAR__c WHERE Id IN :Trigger.New]);
+		Map<Id,AMS_OSCAR__c> oscarAux = new Map<Id, AMS_OSCAR__c>([SELECT Id, Account__r.Status__c, Account__r.Sector__c, Account__r.CNS_Agency__c,Account__r.Category__c, AMS_Online_Accreditation__c FROM AMS_OSCAR__c WHERE Id IN :Trigger.New]);
 
 		//check which oscars are related to Cargo Agencies and have passed sanity check
 		//for(AMS_OSCAR__c oscar:[SELECT Id, Account__r.Sector__c FROM AMS_OSCAR__c WHERE Id IN :Trigger.New]){
