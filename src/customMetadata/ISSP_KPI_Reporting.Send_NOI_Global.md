@@ -16,7 +16,7 @@
     </values>
     <values>
         <field>Points__c</field>
-        <value xsi:type="xsd:double">2.0</value>
+        <value xsi:type="xsd:double">1.0</value>
     </values>
     <values>
         <field>Reopening_Reason__c</field>
