@@ -8805,6 +8805,10 @@
         <name>GeneralPublicLocation</name>
     </customLabels>
     <customLabels>
+        <label><!-- General Error Message --></label>
+        <name>General_Error_Message</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Generate_Quote --></label>
         <name>Generate_Quote</name>
     </customLabels>
@@ -25154,6 +25158,10 @@ GSA - 3 буквы.
         <name>NewGenApp_ServiceRequested</name>
     </customLabels>
     <customLabels>
+        <label><!-- New Opportunity --></label>
+        <name>New_Opportunity</name>
+    </customLabels>
+    <customLabels>
         <label>Новый пароль</label>
         <name>New_password</name>
     </customLabels>
@@ -30789,6 +30797,10 @@ GSA - 3 буквы.
     <customLabels>
         <label><!-- Save --></label>
         <name>Save</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Save &amp; Close --></label>
+        <name>SaveClose</name>
     </customLabels>
     <customLabels>
         <label><!-- Search --></label>
