@@ -24,7 +24,6 @@ public class ContactHandler{
 		if (System.isFuture() || System.isBatch() || Test.isRunningTest()){ 
 			grantAccessToPortalApps(listCloned);
 		} else {
-			system.debug('listCloned' + listCloned);
 			grantAccessToPortalAppsFuture(JSON.serialize(listCloned));
 		}
 	}
@@ -221,7 +220,6 @@ public class ContactHandler{
 	public static void grantAccessToPortalAppsFuture(String contactsToUpdateIds){
 		
 		List<Contact> contactsToUpdate = (List<Contact>)JSON.deserialize(contactsToUpdateIds, List<Contact>.class);
-		system.debug('contactsToUpdate' + contactsToUpdate);
 		grantAccessToPortalApps(contactsToUpdate);
 	}
 
