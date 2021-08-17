@@ -1925,6 +1925,10 @@ IF(OR(
                 <default>false</default>
             </values>
             <values>
+                <fullName>Timatic</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Trained Staff Certification</fullName>
                 <default>false</default>
             </values>
