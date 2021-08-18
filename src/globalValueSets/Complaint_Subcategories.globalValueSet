@@ -851,28 +851,10 @@
         <label>Web interface</label>
     </customValue>
     <customValue>
-        <fullName>Validation management</fullName>
+        <fullName>Airline suspension</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>Validation management</label>
-    </customValue>
-    <customValue>
-        <fullName>Market communication</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Market communication</label>
-    </customValue>
-    <customValue>
-        <fullName>Airline joining</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Airline joining</label>
-    </customValue>
-    <customValue>
-        <fullName>Airline leaving</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Airline leaving</label>
+        <label>Airline suspension</label>
     </customValue>
     <customValue>
         <fullName>Airline changes</fullName>
@@ -881,16 +863,28 @@
         <label>Airline changes</label>
     </customValue>
     <customValue>
-        <fullName>Maestro</fullName>
+        <fullName>Airline leaving</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>Maestro</label>
+        <label>Airline leaving</label>
     </customValue>
     <customValue>
-        <fullName>myIATA</fullName>
+        <fullName>Airline joining</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>myIATA</label>
+        <label>Airline joining</label>
+    </customValue>
+    <customValue>
+        <fullName>Market communication</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Market communication</label>
+    </customValue>
+    <customValue>
+        <fullName>Validation management</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Validation management</label>
     </customValue>
     <customValue>
         <fullName>Yearly Review</fullName>
@@ -911,10 +905,16 @@
         <label>ISIS</label>
     </customValue>
     <customValue>
-        <fullName>Airline suspension</fullName>
+        <fullName>Maestro</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>Airline suspension</label>
+        <label>Maestro</label>
+    </customValue>
+    <customValue>
+        <fullName>myIATA</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>myIATA</label>
     </customValue>
     <description>Values used for Case complaint subcategories and Continuous Improvement Process subcategories</description>
     <masterLabel>Complaint Subcategories</masterLabel>

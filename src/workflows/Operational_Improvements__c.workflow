@@ -242,12 +242,7 @@ IF(NOT(ISNULL(Submission_for_Approval_Date__c)),
         <description>When a Improvement is approved by a CPS Manager it is closed automatically
 
 Note: Custom Metadata are not yet available for Workflows, when available replace the regex string by $CustomMetadata.GVR__mdt.Operational_Improvements_Subcat_N_A.Value__c</description>
-        <formula>AND(
-  RecordType.DeveloperName=&apos;CPS_Checks&apos;,
-  ISCHANGED(OI_Approval_date__c),
-  NOT(ISBLANK(OI_Approval_date__c)),
-  REGEX(TEXT(Issue_Sub_Category__c),&quot;Active AL Withholding|Agent Adjustment|Agent Termination late|AL instruction|Bank.Reg.Legal|Banking details|Calendar changes|Default Exceeding  .500k|Delay trf EP to Hinge|Delayed recovery adj|Financial Security timing|HAR.*|ICCS Settlement|Irregularity .Default|Late AL settlement .External .|Late AL settlement .External. &lt; .1k|Matching|Non Hinge &gt; 6 mths|Sanctions|Settlement adjustment|Signatories|Suspended AL|Value Date&quot;)
-)</formula>
+        <formula>AND(   RecordType.DeveloperName=&apos;CPS_Checks&apos;,   ISCHANGED(OI_Approval_date__c),   NOT(ISBLANK(OI_Approval_date__c)),   REGEX(TEXT(Issue_Sub_Category__c),&quot;Active AL Withholding|Agent Adjustment|Agent Termination late|AL instruction|Bank.Reg.Legal|Banking details|Calendar changes|Default Exceeding  .500k|Delay trf EP to Hinge|Delayed recovery adj|Financial Security timing|HAR.*|ICCS Settlement|Irregularity .Default|Late AL settlement .External .|Late AL settlement .External. &lt; .1k|Matching|Non Hinge &gt; 6 mths|Sanctions|Settlement adjustment|Signatories|Suspended AL|Value Date&quot;) )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
@@ -284,12 +279,7 @@ Note: Custom Metadata are not yet available for Workflows, when available replac
         <description>After CPS Manager approval “QRM Analysis Conclusions” is set to N/A.
 
 Note: Custom Metadata are not yet available for Workflows, when available replace the regex string by $CustomMetadata.GVR__mdt.Operational_Improvements_Subcat_No.Value__c</description>
-        <formula>AND(
-  RecordType.DeveloperName=&apos;CPS_Checks&apos;,
-  ISCHANGED(OI_Approval_date__c),
-  NOT(ISBLANK(OI_Approval_date__c)),
-  REGEX(TEXT(Issue_Sub_Category__c),&apos;AG &gt; 6 mths|AL .Bank mandates.  &gt; 6 mths|AL .Legal.   &gt; 6 mths|AL  .Other . &gt; 6 months|AL .Sanctions.   &gt; 6 mths|AL .Suspension.   &gt; 6 mths|Authorisation procedures|IATA AL.AG unbalanced &gt; 1 mth|Unidentified &gt;1&lt;3 mths|Unidentified &gt; 3 mths&apos;)
-)</formula>
+        <formula>AND(   RecordType.DeveloperName=&apos;CPS_Checks&apos;,   ISCHANGED(OI_Approval_date__c),   NOT(ISBLANK(OI_Approval_date__c)),   REGEX(TEXT(Issue_Sub_Category__c),&apos;AG &gt; 6 mths|AL .Bank mandates.  &gt; 6 mths|AL .Legal.   &gt; 6 mths|AL  .Other . &gt; 6 months|AL .Sanctions.   &gt; 6 mths|AL .Suspension.   &gt; 6 mths|Authorisation procedures|IATA AL.AG unbalanced &gt; 1 mth|Unidentified &gt;1&lt;3 mths|Unidentified &gt; 3 mths&apos;) )</formula>
         <triggerType>onAllChanges</triggerType>
     </rules>
     <rules>
