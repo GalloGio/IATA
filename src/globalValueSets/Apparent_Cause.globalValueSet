@@ -55,6 +55,24 @@
         <default>false</default>
         <label>Key Control Failed</label>
     </customValue>
+    <customValue>
+        <fullName>Agent Error</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Agent Error</label>
+    </customValue>
+    <customValue>
+        <fullName>Lack of Planning/Unavailability of Staff</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Lack of Planning/Unavailability of Staff</label>
+    </customValue>
+    <customValue>
+        <fullName>Lack of Training</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Lack of Training</label>
+    </customValue>
     <description>Values used in Apparent_Cause__c fields in Case Object and in Operational_Improvements__c object</description>
     <masterLabel>Apparent Cause</masterLabel>
     <sorted>false</sorted>
