@@ -85,9 +85,6 @@ public with sharing class MFA_LoginFlowControllerTest {
 			psAssignment.add(new PermissionSetAssignment(AssigneeId = guestUser.id, PermissionSetId = ps.Id));
 			insert psAssignment;
 		}
-
-		Network csNetwork = [SELECT Id FROM Network WHERE Name = 'CS Portal' LIMIT 1];
-		List<NetworkMember> networkMembers = new List<NetworkMember>([SELECT Id FROM NetworkMember WHERE NetworkId = :csNetwork.id]);
 	}
 
 	@isTest
