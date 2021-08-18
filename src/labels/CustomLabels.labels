@@ -45627,6 +45627,46 @@ Whether to use Paymentlink for your payments is either indicated on the IATA inv
         <value>Service</value>
     </labels>
     <labels>
+        <fullName>Portal_MFA_Portal_2FA_Activated_Body</fullName>
+        <categories>MFA Login</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Portal MFA Portal 2FA Activated Body</shortDescription>
+        <value>You can manage your 2FA setup in the Settings.</value>
+    </labels>
+    <labels>
+        <fullName>Portal_MFA_Portal_2FA_Activated_Button_1</fullName>
+        <categories>MFA Login</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Portal MFA Portal 2FA Activated Button 1</shortDescription>
+        <value>Continue to Homepage</value>
+    </labels>
+    <labels>
+        <fullName>Portal_MFA_Portal_2FA_Activated_Button_2</fullName>
+        <categories>MFA Login</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Portal MFA Portal 2FA Activated Button 2</shortDescription>
+        <value>Go to Settings</value>
+    </labels>
+    <labels>
+        <fullName>Portal_MFA_Portal_2FA_Activated_Title</fullName>
+        <categories>MFA Login</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Portal MFA Portal 2FA Activated Title</shortDescription>
+        <value>You have successfully set up 2FA</value>
+    </labels>
+    <labels>
+        <fullName>Portal_Settings</fullName>
+        <categories>MFA Settings</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Portal Settings</shortDescription>
+        <value>Settings</value>
+    </labels>
+    <labels>
         <fullName>Postal_code</fullName>
         <categories>IEC</categories>
         <language>en_US</language>
