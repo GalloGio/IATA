@@ -441,8 +441,8 @@ public without sharing class AMS_Utils {
 	public static final String LC_PASSENGER = 'P';
 	public static final String LC_POSTAL_OPERATOR = 'L';
 	public static final String LC_TIDS = 'T';
-	public static final String LC_CARGO = 'R';
-	public static final String LC_CASS_ASSOCIATE = 'C';
+	public static final String LC_CARGO = 'C';
+	public static final String LC_CASS_ASSOCIATE = 'R';
 	public static final String LC_IMPORT_AGENT = 'I';
 	public static final String LC_DOMESTIC_AGENT = 'D';
 
