@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>SEDA Case Escalation</label>
+    <label>ACCA external/BSPlink support team Cases</label>
     <protected>false</protected>
     <values>
         <field>Action__c</field>
@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>Case_Record_Type__c</field>
-        <value xsi:type="xsd:string">SEDA</value>
+        <value xsi:type="xsd:string">External_Cases_ACCA</value>
     </values>
     <values>
         <field>Field_API_Name__c</field>
@@ -24,11 +24,11 @@
     </values>
     <values>
         <field>Status_From__c</field>
-        <value xsi:type="xsd:string">Reopen,Open,Action Needed,In progress</value>
+        <value xsi:type="xsd:string">Open, Action Needed, In Progress</value>
     </values>
     <values>
         <field>Status_To__c</field>
-        <value xsi:type="xsd:string">Escalated,Escalated Internally,Escalated Externally</value>
+        <value xsi:type="xsd:string">Escalated,Escalated Internally, Escalated Externally</value>
     </values>
     <values>
         <field>Type_of_Task__c</field>
