@@ -5,8 +5,6 @@ private class IATAPayServiceTest {
 		List<Account> accountList = TestDataFactory_Accounts.createDefaultAccounts(1);
 		insert accountList;
 		List<Contact> contactList = TestDataFactory_Contacts.createDefaultContact(accountList.get(0).Id, 2);
-		contactList.get(0).AccountId = accountList.get(0).Id;
-		contactList.get(1).AccountId = accountList.get(0).Id;
 		insert contactList;
 		insert TestDataFactory_PortalApplications.createDefaultPortalApplication(1);		
 	}

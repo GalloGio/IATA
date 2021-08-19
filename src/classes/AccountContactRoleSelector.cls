@@ -27,9 +27,9 @@ public class AccountContactRoleSelector{
 		}
 
 		if(Test.isRunningTest())
-			return selectQuery('Id, Contact__c, Status__c', 'Contact__c', contactIdSet);
+			return selectQuery('Id, Contact__c', 'Contact__c', contactIdSet).values();
 
-		return selectQuery('Id, Contact__c, Status__c', 'Functional_Role__c = \'' + functionalRole + '\' AND Contact__c', contactIdSet);
+		return selectQuery('Id, Contact__c', 'Functional_Role__c = \'' + functionalRole + '\' AND Contact__c', contactIdSet).values();
 	}
 
 	//returns a map of Account Id, Account_Contact_Role__c for a provided functional role and contact Id set
@@ -52,10 +52,13 @@ public class AccountContactRoleSelector{
 		return selectQuery(fields, 'Contact__c', contactIdSet);
 	}
 
-	private static List<Account_Contact_Role__c> selectQuery(String fields, String conditions, Set<Id> conditionInputSet){
-		String query = 'SELECT ' + String.escapeSingleQuotes(fields) +
-		' FROM Account_Contact_Role__c WHERE ' + conditions +
-		' IN :conditionInputSet';
-		return Database.query(query);
+private static Map<Id, Account_Contact_Role__c> selectQuery(String fields, String conditions, Set<Id> conditionInputSet){
+		String query = 'SELECT ' + String.escapeSingleQuotes(fields) + ' FROM Account_Contact_Role__c';
+		if(conditions != null && String.isNotEmpty(conditions))
+			query += ' WHERE ' + conditions;
+		if(conditionInputSet != null && !conditionInputSet.isEmpty())
+			query += ' IN :conditionInputSet';
+
+		return new Map<Id, Account_Contact_Role__c>((List<Account_Contact_Role__c>)Database.query(query));
 	}
 }
