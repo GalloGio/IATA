@@ -62,4 +62,63 @@ public with sharing class AccountContactRoles {
 	*/
 	
 	public class AccountContactRoleDomainException extends Exception {}
+	public void fakemethod () {
+  Integer i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+	}
 }

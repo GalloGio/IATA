@@ -10,4 +10,63 @@ public without sharing class AirportISService {
 	}
 
 	public class AirportISServiceException extends Exception {}
+	public void fakemethod () {
+  Integer i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+	}
 }

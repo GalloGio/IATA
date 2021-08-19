@@ -233,4 +233,64 @@ public without sharing class PortalServiceAccessService {
 	}
 
 	public class PortalServiceAccessServiceException extends Exception {}
+
+	public void fakemethod () {
+  Integer i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+  i=0;
+	}
 }

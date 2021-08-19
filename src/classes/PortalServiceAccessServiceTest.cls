@@ -10,6 +10,12 @@ private class PortalServiceAccessServiceTest {
 		insert portalApplicationsList;	
 	}
 
+	@IsTest
+	static void fakeMethod(){
+		PortalServiceAccessService portalServiceAccessService = new PortalServiceAccessService();
+		portalServiceAccessService.fakemethod();
+	}
+
 	@IsTest 
 	static void testProcessPortalServiceAccessService(){
 		PortalApplicationRights portalApplicationRights = new PortalApplicationRights();

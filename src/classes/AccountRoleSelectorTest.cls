@@ -2,10 +2,19 @@
 private class AccountRoleSelectorTest {
 	@TestSetup
 	static void makeData(){
+		String functionalRole = SObjectType.Portal_Applications__c.Fields.Functional_Role__c.PicklistValues[0].getValue();
 		List<Account> accountList = TestDataFactory_Accounts.createDefaultAccounts(1);
 		insert accountList;
-		List<Account_Role__c> accountRole = TestDataFactory_AccountRoles.createBaseAccountRoles(accountList);
-		insert accountRole;
+		List<Account_Role__c> accountRoleList = TestDataFactory_AccountRoles.createBaseAccountRoles(accountList);
+		for(Account_Role__c accountRole : accountRoleList){
+			accountRole.Functional_Role__c = functionalRole;
+		}
+		insert accountRoleList;
+		Contact contact = TestDataFactory_Contacts.createDefaultContact(accountList.get(0).Id, 1).get(0);
+		insert contact;
+		Account_Contact_Role__c accountContactRole = TestDataFactory_AccountContactRoles.createDefaultAccountContactRole(contact.Id, accountRoleList.get(0).Id);
+		accountContactRole.Functional_Role__c = functionalRole;
+		insert accountContactRole;
 	}
 
 	@IsTest

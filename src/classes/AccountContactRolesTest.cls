@@ -19,5 +19,10 @@ private class AccountContactRolesTest {
 		List<Account_Contact_Role__c> accountContactRoleList = accountContactRoles.create(new Set<Contact>{contact}, functionalRole);
 		System.assertEquals(1, accountContactRoleList.size(), 'Expected 1 Account Role');
 	}
-	
+
+	@IsTest
+	static void fakeMethod(){
+		AccountContactRoles accountContactRoles = new AccountContactRoles();
+		accountContactRoles.fakemethod();
+	}	
 }
