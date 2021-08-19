@@ -1,4 +1,4 @@
-public with sharing class Users {
+public inherited sharing class Users {
 	public static final Profile DEFAULTPROFILE = [SELECT Id FROM Profile WHERE Name='ISS Portal Airline User (Partner)'];
 	public List<User> records { get; private set; }
 

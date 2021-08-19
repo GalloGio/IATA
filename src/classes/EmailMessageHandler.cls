@@ -65,7 +65,7 @@ public with sharing class EmailMessageHandler {
 	public static final String ORG_ADDRESS_FROM = 'noreply@iata.org';
 	public static final list<String> LIST_VALID_RT = new list<String>{
 		'IDFS_Airline_Participation_Process', 'OSCAR_Communication', 'CasesMENA', 'CasesAmericas', 'ExternalCasesIDFSglobal',
-		'Cases_China_North_Asia', 'CasesEurope', 'Cases_Global', 'ComplaintIDFS', 'Inter_DPCs', 'ProcessEuropeSCE', 'IATA_Financial_Review'
+		'Cases_China_North_Asia', 'CasesEurope', 'Cases_Global', 'ComplaintIDFS', 'Inter_DPCs', 'ProcessEuropeSCE', 'IATA_Financial_Review', 'Airline_Coding_Application'
 	};
 	public static void sendEmailToSenderWhenCaseClosed(list<EmailMessage> listNewEmail) {
 		// create a map with parent cases as key and their emails as value

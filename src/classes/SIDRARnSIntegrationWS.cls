@@ -3,8 +3,8 @@ global class SIDRARnSIntegrationWS {
 	private static final String PRIORITY = 'Urgent';
 	private static final String CASEORIGIN = 'Internal Case';
 	private static final String CASEAREA = 'Remittance & Settlement';
-	private static final String STATUSOK = 'OK';
-	private static final String STATUSFAIL = 'FAIL';
+	public static final String STATUSOK = 'OK';
+	public static final String STATUSFAIL = 'FAIL';
 
 	/**
 	*
@@ -124,6 +124,13 @@ global class SIDRARnSIntegrationWS {
 
 								//------------------------------------------------------------------------------------------------------
 
+								// find related airline account, only for SEDA cases
+								// incoming caseType is SIDRA but if description contains "Follow up Settlement" it will be changed to SEDA
+								if (CaseType=='SIDRA' && description.contains('Follow up Settlement')) {
+									String countryIsoCode = Subject.left(2);
+									theCase.accountId = findRelatedAccount(IATACode, countryIsoCode);
+								}
+
 								// Insert the case in the database
 								insert theCase;
 
@@ -159,6 +166,23 @@ global class SIDRARnSIntegrationWS {
 			} else { return GetXmlResponse(STATUSFAIL, caseNumber, errorMsg, caseId); }
 		}
 		// Date.valueOf(pString) Returns a Datetime that contains the value of the specified String. The String should use the standard date format ?yyyy-MM-dd HH:mm:ss? in the local time zone.
+	}
+
+	/**
+	 * Find the related account which is an airline with the input IATA code and for a specific country
+	 */
+	private static Id findRelatedAccount(String IATACode, String countryIsoCode) {
+		list<Account> listAccount = [
+			SELECT Id
+			FROM Account
+			WHERE RecordType.DeveloperName IN ('IATA_Airline','IATA_Airline_BR')
+			AND IATACode__c = :IATACode
+			AND Country_ISO_Code__c = :countryIsoCode];
+
+		if (listAccount.size()==1) {
+			return listAccount[0].Id;
+		}
+		return null;
 	}
 
 	webservice static string UpdateCase(string CaseNumber, string ShortPaymentAmount, string BillingAmount, string CollectedAmount,

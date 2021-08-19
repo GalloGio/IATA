@@ -2381,17 +2381,25 @@ public class AMS_OSCARTriggerHandler {
 
 		Map<Id, AMS_OSCAR__c> oldMap = (Map<Id,AMS_OSCAR__c>) Trigger.oldMap;
 
-		Map<Id,AMS_OSCAR__c> oscarAux = new Map<Id, AMS_OSCAR__c>([SELECT Id, Account__r.Status__c, Account__r.Sector__c, Account__r.CNS_Agency__c,Account__r.Category__c FROM AMS_OSCAR__c WHERE Id IN :Trigger.New]);
+		Set<Id> oscarsToProcessId = new Set<Id>();
+
+		for(AMS_OSCAR__c oscar:(List<AMS_OSCAR__c>)Trigger.New){
+			if ((oscar.RecordTypeId == AMS_Utils.RECTYPE_NEW || oscar.RecordTypeId == AMS_Utils.RECTYPE_CERT) && oldMap.get(oscar.Id).STEP6__c <> AMS_Utils.PASSED && oscar.STEP6__c == AMS_Utils.PASSED){
+				oscarsToProcessId.add(oscar.Id);
+			}
+		}
+
+		if(oscarsToProcessId.isEmpty()) return;
+
+		Map<Id,AMS_OSCAR__c> oscarAux = new Map<Id, AMS_OSCAR__c>([SELECT Id, Account__r.Status__c, Account__r.Sector__c, Account__r.CNS_Agency__c,Account__r.Category__c, AMS_Online_Accreditation__c FROM AMS_OSCAR__c WHERE Id IN :Trigger.New]);
 
 		//check which oscars are related to Cargo Agencies and have passed sanity check
 		//for(AMS_OSCAR__c oscar:[SELECT Id, Account__r.Sector__c FROM AMS_OSCAR__c WHERE Id IN :Trigger.New]){
-		for(AMS_OSCAR__c oscar:(List<AMS_OSCAR__c>)Trigger.New){
-			if ((oscar.RecordTypeId == AMS_Utils.RECTYPE_NEW || oscar.RecordTypeId == AMS_Utils.RECTYPE_CERT) && oldMap.get(oscar.Id).STEP6__c <> AMS_Utils.PASSED && oscar.STEP6__c == AMS_Utils.PASSED){
+		for(AMS_OSCAR__c oscar : oscarAux.values()){
 
 				//PASS - ignore the accounts with category "Postal Operators"
 				if(oscarAux.get(oscar.Id).Account__r.Sector__c == AMS_Utils.SECTOR_CARGO && oscarAux.get(oscar.Id).Account__r.Category__c != AMS_Utils.categoryPass)
 					oscarsToProcess.add(oscar);
-			}
 		}
 
 		if(!oscarsToProcess.isEmpty()){
@@ -3804,7 +3812,7 @@ public class AMS_OSCARTriggerHandler {
 			// Approve the Approval Process from the Manager's perspective
 			List<Id> currentApprovals = AMS_OSCAR_ApprovalHelper.getAllApprovals(new List<Id> {updatedOscar.Id});
 			if (currentApprovals.size() > 0) {
-				AMS_OSCAR_ApprovalHelper.processForObject('Approve', updatedOscar.Id, null, 'Automated approval based on Manager approval with comments: ' + updatedOscar.Comments_approval__c);
+				AMS_OSCAR_ApprovalHelper.processForObject('Approve', updatedOscar.Id, null, 'Automated approval based on Manager approval with comments: ' + updatedOscar.Comments_approval__c, currentApprovals);
 
 
 			}
@@ -3833,7 +3841,7 @@ public class AMS_OSCARTriggerHandler {
 			// Approve the Approval Process from the Manager's perspective
 			List<Id> currentApprovals = AMS_OSCAR_ApprovalHelper.getAllApprovals(new List<Id> {updatedOscar.Id});
 			if (currentApprovals.size() > 0) {
-				AMS_OSCAR_ApprovalHelper.processForObject('Reject', updatedOscar.Id, null, 'Automated approval based on Manager approval with comments: ' + updatedOscar.Comments_approval__c);
+				AMS_OSCAR_ApprovalHelper.processForObject('Reject', updatedOscar.Id, null, 'Automated approval based on Manager approval with comments: ' + updatedOscar.Comments_approval__c, currentApprovals);
 			}
 
 			updatedOSCAR.STEP2__c = 'Failed';
@@ -3842,7 +3850,7 @@ public class AMS_OSCARTriggerHandler {
 			// Reject the Approval Process from the Manager's perspective
 			List<Id> currentApprovals = AMS_OSCAR_ApprovalHelper.getAllApprovals(new List<Id> {updatedOscar.Id});
 			if (currentApprovals.size() > 0) {
-				AMS_OSCAR_ApprovalHelper.processForObject('Reject', updatedOscar.Id, null, 'Automated rejection based on Manager disapproval with comments: ' + updatedOscar.Comments_approval__c);
+				AMS_OSCAR_ApprovalHelper.processForObject('Reject', updatedOscar.Id, null, 'Automated rejection based on Manager disapproval with comments: ' + updatedOscar.Comments_approval__c, currentApprovals);
 			}
 			updatedOSCAR.STEP2__c = 'Failed';
 		}
@@ -3855,12 +3863,12 @@ public class AMS_OSCARTriggerHandler {
 					2) Continue with the step no. 2 (for the manager)
 				*/
 				if (currentApprovals.size() > 0) {
-					AMS_OSCAR_ApprovalHelper.processForObject('Approve', updatedOscar.Id, null, 'Automated approval based on Assistant Manager validation with comments: ' + updatedOscar.Comments_validate__c);
+					AMS_OSCAR_ApprovalHelper.processForObject('Approve', updatedOscar.Id, null, 'Automated approval based on Assistant Manager validation with comments: ' + updatedOscar.Comments_validate__c, currentApprovals);
 				}
 			} else if (updatedOscar.Validation_Status__c == 'Failed' || updatedOscar.Validation_Status__c == 'Not Applicable') {
 				// Reject the approval process
 				if (currentApprovals.size() > 0)
-					AMS_OSCAR_ApprovalHelper.processForObject('Reject', updatedOscar.Id, null, 'Automated rejection based on Assistant Manager validation rejection with comments: ' + updatedOscar.Comments_validate__c);
+					AMS_OSCAR_ApprovalHelper.processForObject('Reject', updatedOscar.Id, null, 'Automated rejection based on Assistant Manager validation rejection with comments: ' + updatedOscar.Comments_validate__c, currentApprovals);
 			}
 			if(updatedOscar.Process__c.equals(AMS_Utils.AGENCYCHANGES))
 				updatedOscar.STEP25__c = updatedOscar.Validation_Status__c;
