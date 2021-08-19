@@ -33,7 +33,7 @@ public with sharing class SidraLiteUtil{
 	/**
 		Return true if input is Passenger account
 	**/
-	public static final set<String> LOCATION_CLASS_BSP = new set<String>{'D','P'};
+	public static final set<String> LOCATION_CLASS_BSP = new set<String>{AMS_Utils.LC_DOMESTIC_AGENT,AMS_Utils.LC_PASSENGER};
 	public static Boolean isPassenger(Account account) {
 		if (account==null) {
 			throw new SidraLiteException('There is no related Account');
@@ -44,7 +44,7 @@ public with sharing class SidraLiteUtil{
 	/**
 		Return true if account is Cargo or CASS
 	**/
-	public static final set<String> LOCATION_CLASS_CASS = new set<String>{'C','R','I'};
+	public static final set<String> LOCATION_CLASS_CASS = new set<String>{AMS_Utils.LC_CASS_ASSOCIATE,AMS_Utils.LC_CARGO,AMS_Utils.LC_IMPORT_AGENT};
 	public static Boolean isCargoCASS(Account account) {
 		if (account==null) {
 			throw new SidraLiteException('There is no related Account');
@@ -55,7 +55,7 @@ public with sharing class SidraLiteUtil{
 	/**
 		Return true if account is only CASS
 	**/
-	public static final set<String> LOCATION_CLASS_CASS_ASSOCIATE = new set<String>{'C'};
+	public static final set<String> LOCATION_CLASS_CASS_ASSOCIATE = new set<String>{AMS_Utils.LC_CASS_ASSOCIATE};
 	public static Boolean isCASSAssociate(Account account) {
 		if (account==null) {
 			throw new SidraLiteException('There is no related Account');
@@ -66,12 +66,12 @@ public with sharing class SidraLiteUtil{
 	/**
 		Return true if account is TIDS Agent
 	**/
-	public static final set<String> TYPE_ACCOUNT_AGENT = new set<String>{'T'};
+	public static final set<String> LOCATION_CLASS_TIDS_AGENT = new set<String>{AMS_Utils.LC_TIDS};
 	public static Boolean isTIDSAgent(Account account) {
 		if (account==null) {
 			throw new SidraLiteException('There is no related Account');
 		}
-		return TYPE_ACCOUNT_AGENT.contains(account.Location_Class__c);
+		return LOCATION_CLASS_TIDS_AGENT.contains(account.Location_Class__c);
 	}
 
 	public static String getBSPCASS(Account account) {
@@ -205,7 +205,7 @@ public with sharing class SidraLiteUtil{
 	 * But an exception was added for United Arab Emirates and CASS Import (location class I)
 	 */
 	public static Date getDefaultTerminationDate(Account account) {
-		if (account.IATA_ISO_Country__r.ISO_Code__c == 'AE' && account.Location_Class__c == 'I') {
+		if (account.IATA_ISO_Country__r.ISO_Code__c == 'AE' && account.Location_Class__c == AMS_Utils.LC_IMPORT_AGENT) {
 			return lastMonthDay(Date.today().addMonths(3));
 		}
 		return lastMonthDay(Date.today().addMonths(1));
