@@ -188,7 +188,7 @@
         <label>Action Plan Effectiveness Assessment</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -1039,6 +1039,21 @@
         <unique>false</unique>
     </fields>
     <fields>
+        <fullName>Apparent_Cause__c</fullName>
+        <description>Field copied from Case object to store the Apparent Cause of the issue</description>
+        <externalId>false</externalId>
+        <label>Apparent Cause</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetName>Apparent_Cause</valueSetName>
+        </valueSet>
+    </fields>
+    <fields>
         <fullName>Approval_process_selector__c</fullName>
         <externalId>false</externalId>
         <label>Approval process selector</label>
@@ -1062,6 +1077,408 @@
                     <label>OI Extension Process</label>
                 </value>
             </valueSetDefinition>
+        </valueSet>
+    </fields>
+    <fields>
+        <fullName>Area_of_Concern__c</fullName>
+        <description>Field copied from Case object to store the Area of concern</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Only available when the Apparent Cause is “Technical Error” or “Third Party – No answer”</inlineHelpText>
+        <label>Area of Concern</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>true</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <controllingField>Apparent_Cause__c</controllingField>
+            <restricted>true</restricted>
+            <valueSetName>Area_of_Concern</valueSetName>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>1EF Application</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>ACCA</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>Accelya</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>ACLI</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>Admin User Account issue</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>Agent Experience Portal</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>Agentexp mobile app</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>AirportIS</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>AMS</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>Bi-Lateral Credit limit processing</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>BSP Cash processing</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>BSPlink</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>Business rules execution</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>Business rules setup</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>Cancellation / Refund</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>CargoIS</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>CASSlink</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>Change Request</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>Check a Code webpage</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>Clearing Bank</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>Corporates definition / update</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>Credit Card Processing</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>Customer Portal</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>Customer Portal mobile app</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>Cybersource</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>Data Validation</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>DB India</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>DDD tool</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>Direct Data Solutions</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>Direct Debit processing</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>EasyPay</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>EasyPay processing</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>Edenred</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>Extranet</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>Fraud Prevention rules execution</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>Fraud Prevention rules setup</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>GFA</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>Harling Warehouse</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>How To?</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>IATA Implementation &amp; Service Fee Issues</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>IATA store</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>iBSPs</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>ICCS 2</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>ICCS tool</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>ICE</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>ICH4</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>IFAP</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>iiNET</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>ILDS</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>Integrated Connectivity and API</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>IRIS</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>Maestro</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>MDM</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>MediaCompetence</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>MSTS</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>Other</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>Participation TACT online</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>PaxIS</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>Payer Validation</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>RET Files Processing</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>RHC</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>Salesforce</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>SAP</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>Scheduler</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>SIS</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>Surcharge / Discount</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>System Performance and availability</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>System reports</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>System Security</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>Timaticweb</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>TIP  Post Trans. Reporting</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>Treasury Dashboard</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>Upfront Validation API</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>WebHelp</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>Web Injection Payment Module</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>Webstar</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Third party delayed / no answer</controllingFieldValue>
+                <controllingFieldValue>Technical Error</controllingFieldValue>
+                <valueName>Yardstick</valueName>
+            </valueSettings>
         </valueSet>
     </fields>
     <fields>
@@ -1363,11 +1780,6 @@
         <externalId>false</externalId>
         <label>Latest Action Plan due date</label>
         <summarizedField>OI_Action_Plan__c.Due_Date__c</summarizedField>
-        <summaryFilterItems>
-            <field>OI_Action_Plan__c.Closure_Date__c</field>
-            <operation>equals</operation>
-            <value></value>
-        </summaryFilterItems>
         <summaryForeignKey>OI_Action_Plan__c.OI__c</summaryForeignKey>
         <summaryOperation>max</summaryOperation>
         <trackHistory>false</trackHistory>
@@ -4443,7 +4855,7 @@
         <label>Impact</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -4509,7 +4921,7 @@
         <label>Improvement Target</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
         <valueSet>
@@ -4765,7 +5177,7 @@
         <label>Issue Categorization</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -4812,7 +5224,7 @@
         <label>Issue Sub Category</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -5604,7 +6016,7 @@
         <label>OI Category</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Picklist</type>
         <valueSet>
@@ -5620,7 +6032,7 @@
         <length>255</length>
         <required>false</required>
         <trackFeedHistory>true</trackFeedHistory>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>Text</type>
         <unique>false</unique>
@@ -5679,104 +6091,6 @@ There are 2 different calculation, one for the RT CPS Checks, and another for th
             <restricted>true</restricted>
             <valueSetName>Complaint_Subcategories</valueSetName>
             <valueSettings>
-                <controllingFieldValue>ID cards</controllingFieldValue>
-                <controllingFieldValue>YMQ Publications</controllingFieldValue>
-                <controllingFieldValue>BIS</controllingFieldValue>
-                <controllingFieldValue>MRO SmartHub</controllingFieldValue>
-                <controllingFieldValue>TACT</controllingFieldValue>
-                <controllingFieldValue>TIMATIC Solutions</controllingFieldValue>
-                <controllingFieldValue>Publications</controllingFieldValue>
-                <controllingFieldValue>Instructor Led</controllingFieldValue>
-                <controllingFieldValue>Distance Learning</controllingFieldValue>
-                <valueName>Application/Order/Subscription</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>ID cards</controllingFieldValue>
-                <controllingFieldValue>IATAN</controllingFieldValue>
-                <controllingFieldValue>GDP</controllingFieldValue>
-                <controllingFieldValue>Airline Suspension</controllingFieldValue>
-                <controllingFieldValue>BIS – Business Intelligence Services</controllingFieldValue>
-                <valueName>Changes</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>ID cards</controllingFieldValue>
-                <controllingFieldValue>GDP</controllingFieldValue>
-                <controllingFieldValue>YMQ Publications</controllingFieldValue>
-                <controllingFieldValue>BIS</controllingFieldValue>
-                <controllingFieldValue>Airline Suspension</controllingFieldValue>
-                <controllingFieldValue>TACT</controllingFieldValue>
-                <controllingFieldValue>TIMATIC Solutions</controllingFieldValue>
-                <controllingFieldValue>Publications</controllingFieldValue>
-                <controllingFieldValue>Distance Learning</controllingFieldValue>
-                <valueName>Delivery Issues</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>ID cards</controllingFieldValue>
-                <controllingFieldValue>GDP</controllingFieldValue>
-                <controllingFieldValue>Airline Suspension</controllingFieldValue>
-                <controllingFieldValue>Publications</controllingFieldValue>
-                <valueName>Fraud</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>ID cards</controllingFieldValue>
-                <controllingFieldValue>Treasury dashboard</controllingFieldValue>
-                <controllingFieldValue>IATAN</controllingFieldValue>
-                <controllingFieldValue>weblink</controllingFieldValue>
-                <controllingFieldValue>YMQ Publications</controllingFieldValue>
-                <controllingFieldValue>AirportIS</controllingFieldValue>
-                <controllingFieldValue>IATA Travel Pass</controllingFieldValue>
-                <controllingFieldValue>Airsat</controllingFieldValue>
-                <controllingFieldValue>Banking</controllingFieldValue>
-                <controllingFieldValue>CargoIS</controllingFieldValue>
-                <controllingFieldValue>CheckACode</controllingFieldValue>
-                <controllingFieldValue>DDS</controllingFieldValue>
-                <controllingFieldValue>Airline Participation</controllingFieldValue>
-                <controllingFieldValue>Ebroadcast</controllingFieldValue>
-                <controllingFieldValue>FDC</controllingFieldValue>
-                <controllingFieldValue>E&amp;F</controllingFieldValue>
-                <controllingFieldValue>FFP</controllingFieldValue>
-                <controllingFieldValue>iiNet</controllingFieldValue>
-                <controllingFieldValue>GAP</controllingFieldValue>
-                <controllingFieldValue>SIS</controllingFieldValue>
-                <controllingFieldValue>Global Agency Directory</controllingFieldValue>
-                <controllingFieldValue>ICH</controllingFieldValue>
-                <controllingFieldValue>IASC</controllingFieldValue>
-                <controllingFieldValue>IATA AgentExperience</controllingFieldValue>
-                <controllingFieldValue>TACT</controllingFieldValue>
-                <controllingFieldValue>ICCS</controllingFieldValue>
-                <controllingFieldValue>TIMATIC Solutions</controllingFieldValue>
-                <controllingFieldValue>Accreditation</controllingFieldValue>
-                <controllingFieldValue>Agency Risk Management</controllingFieldValue>
-                <controllingFieldValue>Remittance &amp; Settlement</controllingFieldValue>
-                <controllingFieldValue>Reporting &amp; Billing</controllingFieldValue>
-                <controllingFieldValue>Invoicing &amp; Collection</controllingFieldValue>
-                <controllingFieldValue>Customer Services</controllingFieldValue>
-                <controllingFieldValue>Airline Coding, MITA &amp; BIETA</controllingFieldValue>
-                <controllingFieldValue>IMX</controllingFieldValue>
-                <controllingFieldValue>MarketIS</controllingFieldValue>
-                <controllingFieldValue>Instructor Led</controllingFieldValue>
-                <controllingFieldValue>PAXIS</controllingFieldValue>
-                <controllingFieldValue>Distance Learning</controllingFieldValue>
-                <controllingFieldValue>TASF</controllingFieldValue>
-                <valueName>Other</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>ID cards</controllingFieldValue>
-                <valueName>Payment /Refund Issues</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>ID cards</controllingFieldValue>
-                <valueName>Payment / Refund Issues</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>ID cards</controllingFieldValue>
-                <controllingFieldValue>Treasury dashboard</controllingFieldValue>
-                <controllingFieldValue>weblink</controllingFieldValue>
-                <controllingFieldValue>IATA Travel Pass</controllingFieldValue>
-                <controllingFieldValue>Airline Coding, MITA &amp; BIETA</controllingFieldValue>
-                <valueName>Report issue</valueName>
-            </valueSettings>
-            <valueSettings>
                 <controllingFieldValue>Treasury dashboard</controllingFieldValue>
                 <controllingFieldValue>weblink</controllingFieldValue>
                 <valueName>Invoicing</valueName>
@@ -5789,13 +6103,117 @@ There are 2 different calculation, one for the RT CPS Checks, and another for th
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Treasury dashboard</controllingFieldValue>
+                <controllingFieldValue>weblink</controllingFieldValue>
+                <controllingFieldValue>YMQ Publications</controllingFieldValue>
+                <controllingFieldValue>IATA Travel Pass</controllingFieldValue>
+                <controllingFieldValue>Quality</controllingFieldValue>
+                <controllingFieldValue>Airline Participation</controllingFieldValue>
+                <controllingFieldValue>E&amp;F</controllingFieldValue>
+                <controllingFieldValue>iiNet</controllingFieldValue>
+                <controllingFieldValue>SIS</controllingFieldValue>
+                <controllingFieldValue>ICH</controllingFieldValue>
+                <controllingFieldValue>TACT</controllingFieldValue>
+                <controllingFieldValue>TIMATIC Solutions</controllingFieldValue>
+                <controllingFieldValue>Accreditation</controllingFieldValue>
+                <controllingFieldValue>Agency Risk Management</controllingFieldValue>
+                <controllingFieldValue>Remittance &amp; Settlement</controllingFieldValue>
+                <controllingFieldValue>Reporting &amp; Billing</controllingFieldValue>
+                <controllingFieldValue>Invoicing &amp; Collection</controllingFieldValue>
+                <controllingFieldValue>Customer Services</controllingFieldValue>
+                <controllingFieldValue>Airline Coding, MITA &amp; BIETA</controllingFieldValue>
+                <controllingFieldValue>Instructor Led</controllingFieldValue>
+                <controllingFieldValue>Distance Learning</controllingFieldValue>
+                <controllingFieldValue>ID cards</controllingFieldValue>
+                <controllingFieldValue>IATAN</controllingFieldValue>
+                <controllingFieldValue>AirportIS</controllingFieldValue>
+                <controllingFieldValue>Airsat</controllingFieldValue>
+                <controllingFieldValue>Banking</controllingFieldValue>
+                <controllingFieldValue>CargoIS</controllingFieldValue>
+                <controllingFieldValue>CheckACode</controllingFieldValue>
+                <controllingFieldValue>DDS</controllingFieldValue>
+                <controllingFieldValue>Ebroadcast</controllingFieldValue>
+                <controllingFieldValue>FDC</controllingFieldValue>
+                <controllingFieldValue>FFP</controllingFieldValue>
+                <controllingFieldValue>GAP</controllingFieldValue>
+                <controllingFieldValue>Global Agency Directory</controllingFieldValue>
+                <controllingFieldValue>IASC</controllingFieldValue>
+                <controllingFieldValue>IATA AgentExperience</controllingFieldValue>
+                <controllingFieldValue>ICCS</controllingFieldValue>
+                <controllingFieldValue>IMX</controllingFieldValue>
+                <controllingFieldValue>MarketIS</controllingFieldValue>
+                <controllingFieldValue>PAXIS</controllingFieldValue>
+                <controllingFieldValue>TASF</controllingFieldValue>
+                <valueName>Other</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Treasury dashboard</controllingFieldValue>
+                <controllingFieldValue>weblink</controllingFieldValue>
+                <controllingFieldValue>IATA Travel Pass</controllingFieldValue>
+                <controllingFieldValue>Airline Coding, MITA &amp; BIETA</controllingFieldValue>
+                <controllingFieldValue>ID cards</controllingFieldValue>
+                <valueName>Report issue</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Treasury dashboard</controllingFieldValue>
+                <controllingFieldValue>weblink</controllingFieldValue>
+                <controllingFieldValue>YMQ Publications</controllingFieldValue>
+                <controllingFieldValue>MRO SmartHub</controllingFieldValue>
+                <controllingFieldValue>IATA Travel Pass</controllingFieldValue>
+                <controllingFieldValue>Quality</controllingFieldValue>
+                <controllingFieldValue>Airline Participation</controllingFieldValue>
+                <controllingFieldValue>Airline Suspension</controllingFieldValue>
+                <controllingFieldValue>E&amp;F</controllingFieldValue>
+                <controllingFieldValue>iiNet</controllingFieldValue>
+                <controllingFieldValue>SIS</controllingFieldValue>
+                <controllingFieldValue>ICH</controllingFieldValue>
+                <controllingFieldValue>BIS – Business Intelligence Services</controllingFieldValue>
+                <controllingFieldValue>TACT</controllingFieldValue>
+                <controllingFieldValue>TIMATIC Solutions</controllingFieldValue>
+                <controllingFieldValue>Publications</controllingFieldValue>
+                <controllingFieldValue>Accreditation</controllingFieldValue>
+                <controllingFieldValue>Agency Risk Management</controllingFieldValue>
+                <controllingFieldValue>Remittance &amp; Settlement</controllingFieldValue>
+                <controllingFieldValue>Reporting &amp; Billing</controllingFieldValue>
+                <controllingFieldValue>Invoicing &amp; Collection</controllingFieldValue>
+                <controllingFieldValue>Customer Services</controllingFieldValue>
+                <controllingFieldValue>Airline Management</controllingFieldValue>
+                <controllingFieldValue>Operational Systems</controllingFieldValue>
+                <controllingFieldValue>Airline Coding, MITA &amp; BIETA</controllingFieldValue>
+                <controllingFieldValue>Instructor Led</controllingFieldValue>
+                <controllingFieldValue>Distance Learning</controllingFieldValue>
+                <controllingFieldValue>ID cards</controllingFieldValue>
+                <controllingFieldValue>IATAN</controllingFieldValue>
+                <controllingFieldValue>GDP</controllingFieldValue>
+                <controllingFieldValue>BIS</controllingFieldValue>
+                <controllingFieldValue>AirportIS</controllingFieldValue>
+                <controllingFieldValue>Airsat</controllingFieldValue>
+                <controllingFieldValue>Banking</controllingFieldValue>
+                <controllingFieldValue>CargoIS</controllingFieldValue>
+                <controllingFieldValue>CheckACode</controllingFieldValue>
+                <controllingFieldValue>DDS</controllingFieldValue>
+                <controllingFieldValue>Ebroadcast</controllingFieldValue>
+                <controllingFieldValue>FDC</controllingFieldValue>
+                <controllingFieldValue>FFP</controllingFieldValue>
+                <controllingFieldValue>GAP</controllingFieldValue>
+                <controllingFieldValue>Global Agency Directory</controllingFieldValue>
+                <controllingFieldValue>IASC</controllingFieldValue>
+                <controllingFieldValue>IATA AgentExperience</controllingFieldValue>
+                <controllingFieldValue>ICCS</controllingFieldValue>
+                <controllingFieldValue>IMX</controllingFieldValue>
+                <controllingFieldValue>MarketIS</controllingFieldValue>
+                <controllingFieldValue>PAXIS</controllingFieldValue>
+                <controllingFieldValue>TASF</controllingFieldValue>
+                <valueName>SOP</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Treasury dashboard</controllingFieldValue>
+                <controllingFieldValue>E&amp;F</controllingFieldValue>
                 <controllingFieldValue>IATAN</controllingFieldValue>
                 <controllingFieldValue>AirportIS</controllingFieldValue>
                 <controllingFieldValue>Airsat</controllingFieldValue>
                 <controllingFieldValue>CargoIS</controllingFieldValue>
                 <controllingFieldValue>DDS</controllingFieldValue>
                 <controllingFieldValue>FDC</controllingFieldValue>
-                <controllingFieldValue>E&amp;F</controllingFieldValue>
                 <controllingFieldValue>FFP</controllingFieldValue>
                 <controllingFieldValue>GAP</controllingFieldValue>
                 <controllingFieldValue>IASC</controllingFieldValue>
@@ -5806,99 +6224,9 @@ There are 2 different calculation, one for the RT CPS Checks, and another for th
                 <valueName>User Management</valueName>
             </valueSettings>
             <valueSettings>
-                <controllingFieldValue>IATAN</controllingFieldValue>
-                <valueName>Accreditation Fees</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>IATAN</controllingFieldValue>
-                <valueName>Certificate</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>IATAN</controllingFieldValue>
-                <controllingFieldValue>BIS</controllingFieldValue>
-                <controllingFieldValue>BIS – Business Intelligence Services</controllingFieldValue>
-                <valueName>Closure</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>IATAN</controllingFieldValue>
-                <controllingFieldValue>Accreditation</controllingFieldValue>
-                <valueName>Default / Irregularity</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>IATAN</controllingFieldValue>
-                <controllingFieldValue>Accreditation</controllingFieldValue>
-                <valueName>GSA / MSO code managament</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>IATAN</controllingFieldValue>
-                <controllingFieldValue>BIS – Business Intelligence Services</controllingFieldValue>
-                <controllingFieldValue>Accreditation</controllingFieldValue>
-                <valueName>New Application</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>IATAN</controllingFieldValue>
-                <controllingFieldValue>Accreditation</controllingFieldValue>
-                <valueName>Post-Default Recovery</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>IATAN</controllingFieldValue>
-                <controllingFieldValue>GDP</controllingFieldValue>
-                <controllingFieldValue>Airline Suspension</controllingFieldValue>
-                <controllingFieldValue>SIS</controllingFieldValue>
-                <controllingFieldValue>BIS – Business Intelligence Services</controllingFieldValue>
-                <controllingFieldValue>Publications</controllingFieldValue>
-                <valueName>Product issues</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>IATAN</controllingFieldValue>
-                <controllingFieldValue>Accreditation</controllingFieldValue>
-                <valueName>Reinstatement</valueName>
-            </valueSettings>
-            <valueSettings>
                 <controllingFieldValue>weblink</controllingFieldValue>
                 <controllingFieldValue>iiNet</controllingFieldValue>
                 <valueName>Configuration / Service Account</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>GDP</controllingFieldValue>
-                <controllingFieldValue>BIS</controllingFieldValue>
-                <controllingFieldValue>MRO SmartHub</controllingFieldValue>
-                <controllingFieldValue>IATA Travel Pass</controllingFieldValue>
-                <controllingFieldValue>Airline Suspension</controllingFieldValue>
-                <controllingFieldValue>Publications</controllingFieldValue>
-                <valueName>Data privacy</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>GDP</controllingFieldValue>
-                <controllingFieldValue>YMQ Publications</controllingFieldValue>
-                <controllingFieldValue>Airline Suspension</controllingFieldValue>
-                <controllingFieldValue>TACT</controllingFieldValue>
-                <controllingFieldValue>TIMATIC Solutions</controllingFieldValue>
-                <controllingFieldValue>Publications</controllingFieldValue>
-                <valueName>Payment issues</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>GDP</controllingFieldValue>
-                <controllingFieldValue>YMQ Publications</controllingFieldValue>
-                <controllingFieldValue>Airline Suspension</controllingFieldValue>
-                <controllingFieldValue>TACT</controllingFieldValue>
-                <controllingFieldValue>TIMATIC Solutions</controllingFieldValue>
-                <controllingFieldValue>Publications</controllingFieldValue>
-                <valueName>Refund process</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>GDP</controllingFieldValue>
-                <controllingFieldValue>MRO SmartHub</controllingFieldValue>
-                <controllingFieldValue>IATA Travel Pass</controllingFieldValue>
-                <controllingFieldValue>Airline Suspension</controllingFieldValue>
-                <controllingFieldValue>BIS – Business Intelligence Services</controllingFieldValue>
-                <valueName>System</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>GDP</controllingFieldValue>
-                <controllingFieldValue>Airline Suspension</controllingFieldValue>
-                <controllingFieldValue>Publications</controllingFieldValue>
-                <valueName>Unclear procedures communications</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>YMQ Publications</controllingFieldValue>
@@ -5908,10 +6236,22 @@ There are 2 different calculation, one for the RT CPS Checks, and another for th
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>YMQ Publications</controllingFieldValue>
-                <controllingFieldValue>IATA AgentExperience</controllingFieldValue>
+                <controllingFieldValue>MRO SmartHub</controllingFieldValue>
+                <controllingFieldValue>TACT</controllingFieldValue>
+                <controllingFieldValue>TIMATIC Solutions</controllingFieldValue>
+                <controllingFieldValue>Publications</controllingFieldValue>
+                <controllingFieldValue>Instructor Led</controllingFieldValue>
+                <controllingFieldValue>Distance Learning</controllingFieldValue>
+                <controllingFieldValue>ID cards</controllingFieldValue>
+                <controllingFieldValue>BIS</controllingFieldValue>
+                <valueName>Application/Order/Subscription</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>YMQ Publications</controllingFieldValue>
                 <controllingFieldValue>TACT</controllingFieldValue>
                 <controllingFieldValue>TIMATIC Solutions</controllingFieldValue>
                 <controllingFieldValue>Airline Coding, MITA &amp; BIETA</controllingFieldValue>
+                <controllingFieldValue>IATA AgentExperience</controllingFieldValue>
                 <valueName>Changes / updates</valueName>
             </valueSettings>
             <valueSettings>
@@ -5929,7 +6269,46 @@ There are 2 different calculation, one for the RT CPS Checks, and another for th
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>YMQ Publications</controllingFieldValue>
+                <controllingFieldValue>Airline Suspension</controllingFieldValue>
+                <controllingFieldValue>TACT</controllingFieldValue>
+                <controllingFieldValue>TIMATIC Solutions</controllingFieldValue>
+                <controllingFieldValue>Publications</controllingFieldValue>
+                <controllingFieldValue>Distance Learning</controllingFieldValue>
+                <controllingFieldValue>ID cards</controllingFieldValue>
+                <controllingFieldValue>GDP</controllingFieldValue>
+                <controllingFieldValue>BIS</controllingFieldValue>
+                <valueName>Delivery Issues</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>YMQ Publications</controllingFieldValue>
                 <valueName>IATA store</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>YMQ Publications</controllingFieldValue>
+                <controllingFieldValue>Airline Suspension</controllingFieldValue>
+                <controllingFieldValue>TACT</controllingFieldValue>
+                <controllingFieldValue>TIMATIC Solutions</controllingFieldValue>
+                <controllingFieldValue>Publications</controllingFieldValue>
+                <controllingFieldValue>GDP</controllingFieldValue>
+                <valueName>Payment issues</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>YMQ Publications</controllingFieldValue>
+                <controllingFieldValue>Airline Suspension</controllingFieldValue>
+                <controllingFieldValue>TACT</controllingFieldValue>
+                <controllingFieldValue>TIMATIC Solutions</controllingFieldValue>
+                <controllingFieldValue>Publications</controllingFieldValue>
+                <controllingFieldValue>GDP</controllingFieldValue>
+                <valueName>Refund process</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>MRO SmartHub</controllingFieldValue>
+                <controllingFieldValue>IATA Travel Pass</controllingFieldValue>
+                <controllingFieldValue>Airline Suspension</controllingFieldValue>
+                <controllingFieldValue>Publications</controllingFieldValue>
+                <controllingFieldValue>GDP</controllingFieldValue>
+                <controllingFieldValue>BIS</controllingFieldValue>
+                <valueName>Data privacy</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>MRO SmartHub</controllingFieldValue>
@@ -5939,48 +6318,12 @@ There are 2 different calculation, one for the RT CPS Checks, and another for th
                 <valueName>Fees</valueName>
             </valueSettings>
             <valueSettings>
-                <controllingFieldValue>AirportIS</controllingFieldValue>
-                <controllingFieldValue>Airsat</controllingFieldValue>
-                <controllingFieldValue>CargoIS</controllingFieldValue>
-                <controllingFieldValue>DDS</controllingFieldValue>
-                <controllingFieldValue>FDC</controllingFieldValue>
-                <controllingFieldValue>FFP</controllingFieldValue>
-                <controllingFieldValue>GAP</controllingFieldValue>
-                <controllingFieldValue>IASC</controllingFieldValue>
-                <controllingFieldValue>IMX</controllingFieldValue>
-                <controllingFieldValue>MarketIS</controllingFieldValue>
-                <controllingFieldValue>PAXIS</controllingFieldValue>
-                <valueName>Invoicing / Refund  issues</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>AirportIS</controllingFieldValue>
-                <controllingFieldValue>Airsat</controllingFieldValue>
-                <controllingFieldValue>CargoIS</controllingFieldValue>
-                <controllingFieldValue>DDS</controllingFieldValue>
-                <controllingFieldValue>FDC</controllingFieldValue>
-                <controllingFieldValue>FFP</controllingFieldValue>
-                <controllingFieldValue>GAP</controllingFieldValue>
-                <controllingFieldValue>IASC</controllingFieldValue>
-                <controllingFieldValue>IMX</controllingFieldValue>
-                <controllingFieldValue>MarketIS</controllingFieldValue>
-                <controllingFieldValue>PAXIS</controllingFieldValue>
-                <valueName>Order / Subscription Issues</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>AirportIS</controllingFieldValue>
-                <controllingFieldValue>Airsat</controllingFieldValue>
-                <controllingFieldValue>CargoIS</controllingFieldValue>
-                <controllingFieldValue>CheckACode</controllingFieldValue>
-                <controllingFieldValue>DDS</controllingFieldValue>
-                <controllingFieldValue>FDC</controllingFieldValue>
-                <controllingFieldValue>FFP</controllingFieldValue>
-                <controllingFieldValue>GAP</controllingFieldValue>
-                <controllingFieldValue>Global Agency Directory</controllingFieldValue>
-                <controllingFieldValue>IASC</controllingFieldValue>
-                <controllingFieldValue>IMX</controllingFieldValue>
-                <controllingFieldValue>MarketIS</controllingFieldValue>
-                <controllingFieldValue>PAXIS</controllingFieldValue>
-                <valueName>Product</valueName>
+                <controllingFieldValue>MRO SmartHub</controllingFieldValue>
+                <controllingFieldValue>IATA Travel Pass</controllingFieldValue>
+                <controllingFieldValue>Airline Suspension</controllingFieldValue>
+                <controllingFieldValue>BIS – Business Intelligence Services</controllingFieldValue>
+                <controllingFieldValue>GDP</controllingFieldValue>
+                <valueName>System</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>IATA Travel Pass</controllingFieldValue>
@@ -5988,24 +6331,32 @@ There are 2 different calculation, one for the RT CPS Checks, and another for th
                 <valueName>Invoicing / payment</valueName>
             </valueSettings>
             <valueSettings>
-                <controllingFieldValue>Banking</controllingFieldValue>
-                <valueName>Clearing bank account change</valueName>
+                <controllingFieldValue>Quality</controllingFieldValue>
+                <valueName>BCP</valueName>
             </valueSettings>
             <valueSettings>
-                <controllingFieldValue>Banking</controllingFieldValue>
-                <valueName>Compliance related</valueName>
+                <controllingFieldValue>Quality</controllingFieldValue>
+                <valueName>BPM</valueName>
             </valueSettings>
             <valueSettings>
-                <controllingFieldValue>Banking</controllingFieldValue>
-                <valueName>Direct Debit related</valueName>
+                <controllingFieldValue>Quality</controllingFieldValue>
+                <valueName>Complaints</valueName>
             </valueSettings>
             <valueSettings>
-                <controllingFieldValue>Banking</controllingFieldValue>
-                <valueName>Incoming payment related</valueName>
+                <controllingFieldValue>Quality</controllingFieldValue>
+                <valueName>Continuous Improvement</valueName>
             </valueSettings>
             <valueSettings>
-                <controllingFieldValue>Banking</controllingFieldValue>
-                <valueName>Outgoing payment related</valueName>
+                <controllingFieldValue>Quality</controllingFieldValue>
+                <valueName>Exceptions</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Quality</controllingFieldValue>
+                <valueName>Incidents</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Quality</controllingFieldValue>
+                <valueName>ISO / Service Charter</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Airline Participation</controllingFieldValue>
@@ -6044,12 +6395,42 @@ There are 2 different calculation, one for the RT CPS Checks, and another for th
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Airline Suspension</controllingFieldValue>
+                <controllingFieldValue>BIS – Business Intelligence Services</controllingFieldValue>
+                <controllingFieldValue>ID cards</controllingFieldValue>
+                <controllingFieldValue>IATAN</controllingFieldValue>
+                <controllingFieldValue>GDP</controllingFieldValue>
+                <valueName>Changes</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Airline Suspension</controllingFieldValue>
+                <controllingFieldValue>Publications</controllingFieldValue>
+                <controllingFieldValue>ID cards</controllingFieldValue>
+                <controllingFieldValue>GDP</controllingFieldValue>
+                <valueName>Fraud</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Airline Suspension</controllingFieldValue>
                 <valueName>Funds Management</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Airline Suspension</controllingFieldValue>
+                <controllingFieldValue>SIS</controllingFieldValue>
+                <controllingFieldValue>BIS – Business Intelligence Services</controllingFieldValue>
+                <controllingFieldValue>Publications</controllingFieldValue>
+                <controllingFieldValue>IATAN</controllingFieldValue>
+                <controllingFieldValue>GDP</controllingFieldValue>
+                <valueName>Product issues</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Airline Suspension</controllingFieldValue>
                 <controllingFieldValue>Airline Management</controllingFieldValue>
                 <valueName>Suspension &amp; Reinstatement</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Airline Suspension</controllingFieldValue>
+                <controllingFieldValue>Publications</controllingFieldValue>
+                <controllingFieldValue>GDP</controllingFieldValue>
+                <valueName>Unclear procedures communications</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>E&amp;F</controllingFieldValue>
@@ -6153,22 +6534,25 @@ There are 2 different calculation, one for the RT CPS Checks, and another for th
                 <valueName>ICH Operations</valueName>
             </valueSettings>
             <valueSettings>
-                <controllingFieldValue>ICCS</controllingFieldValue>
-                <controllingFieldValue>Remittance &amp; Settlement</controllingFieldValue>
-                <valueName>Airline settlement</valueName>
+                <controllingFieldValue>BIS – Business Intelligence Services</controllingFieldValue>
+                <controllingFieldValue>IATAN</controllingFieldValue>
+                <controllingFieldValue>BIS</controllingFieldValue>
+                <valueName>Closure</valueName>
             </valueSettings>
             <valueSettings>
-                <controllingFieldValue>ICCS</controllingFieldValue>
-                <controllingFieldValue>Remittance &amp; Settlement</controllingFieldValue>
-                <valueName>Calendar error</valueName>
-            </valueSettings>
-            <valueSettings>
-                <controllingFieldValue>ICCS</controllingFieldValue>
-                <valueName>FX rate issue</valueName>
+                <controllingFieldValue>BIS – Business Intelligence Services</controllingFieldValue>
+                <controllingFieldValue>Accreditation</controllingFieldValue>
+                <controllingFieldValue>IATAN</controllingFieldValue>
+                <valueName>New Application</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Accreditation</controllingFieldValue>
                 <valueName>AIRS / CAIRS Bulletin</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Accreditation</controllingFieldValue>
+                <controllingFieldValue>IATAN</controllingFieldValue>
+                <valueName>Default / Irregularity</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Accreditation</controllingFieldValue>
@@ -6191,6 +6575,11 @@ There are 2 different calculation, one for the RT CPS Checks, and another for th
             <valueSettings>
                 <controllingFieldValue>Accreditation</controllingFieldValue>
                 <valueName>Form of Payment</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Accreditation</controllingFieldValue>
+                <controllingFieldValue>IATAN</controllingFieldValue>
+                <valueName>GSA / MSO code managament</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Accreditation</controllingFieldValue>
@@ -6219,6 +6608,16 @@ There are 2 different calculation, one for the RT CPS Checks, and another for th
             <valueSettings>
                 <controllingFieldValue>Accreditation</controllingFieldValue>
                 <valueName>Post-Default actions</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Accreditation</controllingFieldValue>
+                <controllingFieldValue>IATAN</controllingFieldValue>
+                <valueName>Post-Default Recovery</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Accreditation</controllingFieldValue>
+                <controllingFieldValue>IATAN</controllingFieldValue>
+                <valueName>Reinstatement</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Accreditation</controllingFieldValue>
@@ -6278,11 +6677,21 @@ There are 2 different calculation, one for the RT CPS Checks, and another for th
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Remittance &amp; Settlement</controllingFieldValue>
+                <controllingFieldValue>ICCS</controllingFieldValue>
+                <valueName>Airline settlement</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Remittance &amp; Settlement</controllingFieldValue>
                 <valueName>APS (Advance Payment Solution)</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Remittance &amp; Settlement</controllingFieldValue>
                 <valueName>Billing Adjustments</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Remittance &amp; Settlement</controllingFieldValue>
+                <controllingFieldValue>ICCS</controllingFieldValue>
+                <valueName>Calendar error</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>Remittance &amp; Settlement</controllingFieldValue>
@@ -6490,6 +6899,90 @@ There are 2 different calculation, one for the RT CPS Checks, and another for th
             <valueSettings>
                 <controllingFieldValue>Distance Learning</controllingFieldValue>
                 <valueName>Training Partner</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>ID cards</controllingFieldValue>
+                <valueName>Payment /Refund Issues</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>ID cards</controllingFieldValue>
+                <valueName>Payment / Refund Issues</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>IATAN</controllingFieldValue>
+                <valueName>Accreditation Fees</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>IATAN</controllingFieldValue>
+                <valueName>Certificate</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>AirportIS</controllingFieldValue>
+                <controllingFieldValue>Airsat</controllingFieldValue>
+                <controllingFieldValue>CargoIS</controllingFieldValue>
+                <controllingFieldValue>DDS</controllingFieldValue>
+                <controllingFieldValue>FDC</controllingFieldValue>
+                <controllingFieldValue>FFP</controllingFieldValue>
+                <controllingFieldValue>GAP</controllingFieldValue>
+                <controllingFieldValue>IASC</controllingFieldValue>
+                <controllingFieldValue>IMX</controllingFieldValue>
+                <controllingFieldValue>MarketIS</controllingFieldValue>
+                <controllingFieldValue>PAXIS</controllingFieldValue>
+                <valueName>Invoicing / Refund  issues</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>AirportIS</controllingFieldValue>
+                <controllingFieldValue>Airsat</controllingFieldValue>
+                <controllingFieldValue>CargoIS</controllingFieldValue>
+                <controllingFieldValue>DDS</controllingFieldValue>
+                <controllingFieldValue>FDC</controllingFieldValue>
+                <controllingFieldValue>FFP</controllingFieldValue>
+                <controllingFieldValue>GAP</controllingFieldValue>
+                <controllingFieldValue>IASC</controllingFieldValue>
+                <controllingFieldValue>IMX</controllingFieldValue>
+                <controllingFieldValue>MarketIS</controllingFieldValue>
+                <controllingFieldValue>PAXIS</controllingFieldValue>
+                <valueName>Order / Subscription Issues</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>AirportIS</controllingFieldValue>
+                <controllingFieldValue>Airsat</controllingFieldValue>
+                <controllingFieldValue>CargoIS</controllingFieldValue>
+                <controllingFieldValue>CheckACode</controllingFieldValue>
+                <controllingFieldValue>DDS</controllingFieldValue>
+                <controllingFieldValue>FDC</controllingFieldValue>
+                <controllingFieldValue>FFP</controllingFieldValue>
+                <controllingFieldValue>GAP</controllingFieldValue>
+                <controllingFieldValue>Global Agency Directory</controllingFieldValue>
+                <controllingFieldValue>IASC</controllingFieldValue>
+                <controllingFieldValue>IMX</controllingFieldValue>
+                <controllingFieldValue>MarketIS</controllingFieldValue>
+                <controllingFieldValue>PAXIS</controllingFieldValue>
+                <valueName>Product</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Banking</controllingFieldValue>
+                <valueName>Clearing bank account change</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Banking</controllingFieldValue>
+                <valueName>Compliance related</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Banking</controllingFieldValue>
+                <valueName>Direct Debit related</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Banking</controllingFieldValue>
+                <valueName>Incoming payment related</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>Banking</controllingFieldValue>
+                <valueName>Outgoing payment related</valueName>
+            </valueSettings>
+            <valueSettings>
+                <controllingFieldValue>ICCS</controllingFieldValue>
+                <valueName>FX rate issue</valueName>
             </valueSettings>
             <valueSettings>
                 <controllingFieldValue>TASF</controllingFieldValue>
@@ -7397,10 +7890,66 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
         <label>QRM Analysis Conclusions</label>
         <length>32768</length>
         <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>LongTextArea</type>
         <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Quality_Response_Categorization__c</fullName>
+        <externalId>false</externalId>
+        <label>Quality Response Categorization</label>
+        <required>false</required>
+        <trackFeedHistory>false</trackFeedHistory>
+        <trackHistory>false</trackHistory>
+        <trackTrending>false</trackTrending>
+        <type>Picklist</type>
+        <valueSet>
+            <restricted>true</restricted>
+            <valueSetDefinition>
+                <sorted>true</sorted>
+                <value>
+                    <fullName>Business Decision</fullName>
+                    <default>false</default>
+                    <label>Business Decision</label>
+                </value>
+                <value>
+                    <fullName>Clearing Bank Error</fullName>
+                    <default>false</default>
+                    <label>Clearing Bank Error</label>
+                </value>
+                <value>
+                    <fullName>Exception</fullName>
+                    <default>false</default>
+                    <label>Exception</label>
+                </value>
+                <value>
+                    <fullName>Highlighted to R&amp;S</fullName>
+                    <default>false</default>
+                    <label>Highlighted to R&amp;S</label>
+                </value>
+                <value>
+                    <fullName>N/A</fullName>
+                    <default>false</default>
+                    <label>N/A</label>
+                </value>
+                <value>
+                    <fullName>OI Raised</fullName>
+                    <default>false</default>
+                    <label>OI Raised</label>
+                </value>
+                <value>
+                    <fullName>Rejected proposal</fullName>
+                    <default>false</default>
+                    <label>Rejected proposal</label>
+                </value>
+                <value>
+                    <fullName>Under Investigation</fullName>
+                    <default>false</default>
+                    <label>Under Investigation</label>
+                </value>
+            </valueSetDefinition>
+        </valueSet>
     </fields>
     <fields>
         <fullName>Region__c</fullName>
@@ -7659,7 +8208,7 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
         <label>Root Cause (s)</label>
         <required>false</required>
         <trackFeedHistory>false</trackFeedHistory>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <trackTrending>false</trackTrending>
         <type>MultiselectPicklist</type>
         <valueSet>
@@ -12819,6 +13368,53 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Apparent_Cause__c</picklist>
+            <values>
+                <fullName>Customer Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Human Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA staff Delay %2F No Reply</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Internal Procedure</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Key Control Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lack of Communication</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Procedure Not Clear</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Process Not Followed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Technical Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Third party delayed %2F no answer</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Approval_process_selector__c</picklist>
             <values>
                 <fullName>OI Approval Process</fullName>
@@ -12826,6 +13422,317 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
             </values>
             <values>
                 <fullName>OI Extension Process</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Area_of_Concern__c</picklist>
+            <values>
+                <fullName>1EF Application</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ACCA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ACLI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AMS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Accelya</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Admin User Account issue</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agent Experience Portal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agentexp mobile app</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AirportIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BSP Cash processing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BSPlink</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bi-Lateral Credit limit processing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Business rules execution</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Business rules setup</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASSlink</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cancellation %2F Refund</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CargoIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Change Request</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Check a Code webpage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Clearing Bank</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Corporates definition %2F update</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit Card Processing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer Portal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer Portal mobile app</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cybersource</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DB India</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DDD tool</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Data Validation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Direct Data Solutions</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Direct Debit processing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EasyPay</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EasyPay processing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Edenred</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Extranet</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fraud Prevention rules execution</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fraud Prevention rules setup</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GFA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Harling Warehouse</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>How To%3F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Implementation %26 Service Fee Issues</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA store</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICCS 2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICCS tool</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH4</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IFAP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ILDS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IRIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Integrated Connectivity and API</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MDM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MSTS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Maestro</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MediaCompetence</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Participation TACT online</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PaxIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Payer Validation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RET Files Processing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RHC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SAP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Salesforce</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Scheduler</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Surcharge %2F Discount</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>System Performance and availability</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>System Security</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>System reports</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIP  Post Trans%2E Reporting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Timaticweb</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Treasury Dashboard</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Upfront Validation API</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Web Injection Payment Module</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WebHelp</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Webstar</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yardstick</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iBSPs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -15261,6 +16168,10 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
+                <fullName>Quality</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Remittance %26 Settlement</fullName>
                 <default>false</default>
             </values>
@@ -15364,6 +16275,14 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
+                <fullName>BCP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BPM</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>BSP billing discrepancies</fullName>
                 <default>false</default>
             </values>
@@ -15448,6 +16367,10 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
+                <fullName>Complaints</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Compliance related</fullName>
                 <default>false</default>
             </values>
@@ -15457,6 +16380,10 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
             </values>
             <values>
                 <fullName>Content enquiry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Continuous Improvement</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -15529,6 +16456,10 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
             </values>
             <values>
                 <fullName>EasyPay</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Exceptions</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -15648,11 +16579,19 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
+                <fullName>ISO %2F Service Charter</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>ISS Joining</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Immediate suspension %28non-RHC related%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Incidents</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -15888,6 +16827,10 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
+                <fullName>SOP</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Settlement</fullName>
                 <default>false</default>
             </values>
@@ -16056,6 +16999,41 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
             </values>
             <values>
                 <fullName>Medium</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Quality_Response_Categorization__c</picklist>
+            <values>
+                <fullName>Business Decision</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Clearing Bank Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Exception</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Highlighted to R%26S</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OI Raised</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected proposal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Under Investigation</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -18383,6 +19361,53 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Apparent_Cause__c</picklist>
+            <values>
+                <fullName>Customer Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Human Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA staff Delay %2F No Reply</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Internal Procedure</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Key Control Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lack of Communication</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Procedure Not Clear</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Process Not Followed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Technical Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Third party delayed %2F no answer</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Approval_process_selector__c</picklist>
             <values>
                 <fullName>OI Approval Process</fullName>
@@ -18390,6 +19415,317 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
             </values>
             <values>
                 <fullName>OI Extension Process</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Area_of_Concern__c</picklist>
+            <values>
+                <fullName>1EF Application</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ACCA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ACLI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AMS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Accelya</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Admin User Account issue</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agent Experience Portal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agentexp mobile app</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AirportIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BSP Cash processing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BSPlink</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bi-Lateral Credit limit processing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Business rules execution</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Business rules setup</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASSlink</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cancellation %2F Refund</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CargoIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Change Request</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Check a Code webpage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Clearing Bank</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Corporates definition %2F update</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit Card Processing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer Portal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer Portal mobile app</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cybersource</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DB India</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DDD tool</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Data Validation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Direct Data Solutions</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Direct Debit processing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EasyPay</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EasyPay processing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Edenred</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Extranet</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fraud Prevention rules execution</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fraud Prevention rules setup</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GFA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Harling Warehouse</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>How To%3F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Implementation %26 Service Fee Issues</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA store</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICCS 2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICCS tool</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH4</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IFAP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ILDS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IRIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Integrated Connectivity and API</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MDM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MSTS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Maestro</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MediaCompetence</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Participation TACT online</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PaxIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Payer Validation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RET Files Processing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RHC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SAP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Salesforce</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Scheduler</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Surcharge %2F Discount</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>System Performance and availability</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>System Security</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>System reports</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIP  Post Trans%2E Reporting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Timaticweb</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Treasury Dashboard</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Upfront Validation API</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Web Injection Payment Module</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WebHelp</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Webstar</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yardstick</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iBSPs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -20797,6 +22133,10 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
+                <fullName>Quality</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Remittance %26 Settlement</fullName>
                 <default>false</default>
             </values>
@@ -20900,6 +22240,14 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
+                <fullName>BCP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BPM</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>BSP billing discrepancies</fullName>
                 <default>false</default>
             </values>
@@ -20984,6 +22332,10 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
+                <fullName>Complaints</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Compliance related</fullName>
                 <default>false</default>
             </values>
@@ -20993,6 +22345,10 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
             </values>
             <values>
                 <fullName>Content enquiry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Continuous Improvement</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -21065,6 +22421,10 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
             </values>
             <values>
                 <fullName>EasyPay</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Exceptions</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -21184,11 +22544,19 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
+                <fullName>ISO %2F Service Charter</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>ISS Joining</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Immediate suspension %28non-RHC related%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Incidents</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -21424,6 +22792,10 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
+                <fullName>SOP</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Settlement</fullName>
                 <default>false</default>
             </values>
@@ -21592,6 +22964,41 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
             </values>
             <values>
                 <fullName>Medium</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Quality_Response_Categorization__c</picklist>
+            <values>
+                <fullName>Business Decision</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Clearing Bank Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Exception</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Highlighted to R%26S</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OI Raised</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected proposal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Under Investigation</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -23650,6 +25057,53 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
             </values>
         </picklistValues>
         <picklistValues>
+            <picklist>Apparent_Cause__c</picklist>
+            <values>
+                <fullName>Customer Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Human Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA staff Delay %2F No Reply</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Internal Procedure</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Key Control Failed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Lack of Communication</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Procedure Not Clear</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Process Not Followed</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Technical Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Third party delayed %2F no answer</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
             <picklist>Approval_process_selector__c</picklist>
             <values>
                 <fullName>OI Approval Process</fullName>
@@ -23657,6 +25111,317 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
             </values>
             <values>
                 <fullName>OI Extension Process</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Area_of_Concern__c</picklist>
+            <values>
+                <fullName>1EF Application</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ACCA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ACLI</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AMS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Accelya</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Admin User Account issue</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agent Experience Portal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Agentexp mobile app</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>AirportIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BSP Cash processing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BSPlink</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Bi-Lateral Credit limit processing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Business rules execution</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Business rules setup</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CASSlink</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cancellation %2F Refund</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>CargoIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Change Request</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Check a Code webpage</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Clearing Bank</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Corporates definition %2F update</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Credit Card Processing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer Portal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Customer Portal mobile app</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Cybersource</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DB India</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>DDD tool</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Data Validation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Direct Data Solutions</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Direct Debit processing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EasyPay</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>EasyPay processing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Edenred</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Extranet</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fraud Prevention rules execution</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Fraud Prevention rules setup</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>GFA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Harling Warehouse</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>How To%3F</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA Implementation %26 Service Fee Issues</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IATA store</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICCS 2</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICCS tool</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICE</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ICH4</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IFAP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>ILDS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>IRIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Integrated Connectivity and API</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MDM</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MSTS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Maestro</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>MediaCompetence</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Participation TACT online</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>PaxIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Payer Validation</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RET Files Processing</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>RHC</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SAP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>SIS</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Salesforce</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Scheduler</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Surcharge %2F Discount</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>System Performance and availability</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>System Security</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>System reports</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>TIP  Post Trans%2E Reporting</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Timaticweb</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Treasury Dashboard</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Upfront Validation API</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Web Injection Payment Module</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>WebHelp</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Webstar</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Yardstick</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iBSPs</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>iiNET</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -26104,6 +27869,10 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
+                <fullName>Quality</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Remittance %26 Settlement</fullName>
                 <default>false</default>
             </values>
@@ -26207,6 +27976,14 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
+                <fullName>BCP</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>BPM</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>BSP billing discrepancies</fullName>
                 <default>false</default>
             </values>
@@ -26291,6 +28068,10 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
+                <fullName>Complaints</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Compliance related</fullName>
                 <default>false</default>
             </values>
@@ -26300,6 +28081,10 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
             </values>
             <values>
                 <fullName>Content enquiry</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Continuous Improvement</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -26372,6 +28157,10 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
             </values>
             <values>
                 <fullName>EasyPay</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Exceptions</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -26491,11 +28280,19 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
+                <fullName>ISO %2F Service Charter</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>ISS Joining</fullName>
                 <default>false</default>
             </values>
             <values>
                 <fullName>Immediate suspension %28non-RHC related%29</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Incidents</fullName>
                 <default>false</default>
             </values>
             <values>
@@ -26731,6 +28528,10 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
                 <default>false</default>
             </values>
             <values>
+                <fullName>SOP</fullName>
+                <default>false</default>
+            </values>
+            <values>
                 <fullName>Settlement</fullName>
                 <default>false</default>
             </values>
@@ -26911,6 +28712,41 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
             </values>
             <values>
                 <fullName>Medium</fullName>
+                <default>false</default>
+            </values>
+        </picklistValues>
+        <picklistValues>
+            <picklist>Quality_Response_Categorization__c</picklist>
+            <values>
+                <fullName>Business Decision</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Clearing Bank Error</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Exception</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Highlighted to R%26S</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>N%2FA</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>OI Raised</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Rejected proposal</fullName>
+                <default>false</default>
+            </values>
+            <values>
+                <fullName>Under Investigation</fullName>
                 <default>false</default>
             </values>
         </picklistValues>
@@ -28363,6 +30199,30 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
     <sharingModel>ReadWrite</sharingModel>
     <startsWith>Vowel</startsWith>
     <validationRules>
+        <fullName>Apparent_Cause_is_mandatory</fullName>
+        <active>true</active>
+        <description>This field is mandatory for the selected Issue Subcategory</description>
+        <errorConditionFormula>AND(
+  RecordType.DeveloperName=&apos;CPS_Checks&apos;,
+  ISBLANK(TEXT(Apparent_Cause__c)),
+  REGEX(TEXT(Issue_Sub_Category__c),$CustomMetadata.GVR__mdt.Operational_Improvements_Subcat_Yes.Value__c)
+)</errorConditionFormula>
+        <errorDisplayField>Apparent_Cause__c</errorDisplayField>
+        <errorMessage>This field is mandatory for the selected Issue Subcategory</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Area_of_Concern_is_mandatory</fullName>
+        <active>true</active>
+        <description>This field is mandatory when Apparent Cause has certain values</description>
+        <errorConditionFormula>AND(
+  RecordType.DeveloperName=&apos;CPS_Checks&apos;,
+  ISBLANK(TEXT(Area_of_Concern__c)),
+  REGEX(TEXT(Apparent_Cause__c),$CustomMetadata.GVR__mdt.Operational_Improvements_Area_of_Concern.Value__c)
+)</errorConditionFormula>
+        <errorDisplayField>Area_of_Concern__c</errorDisplayField>
+        <errorMessage>This field is mandatory for the selected Apparent Cause</errorMessage>
+    </validationRules>
+    <validationRules>
         <fullName>Currency_is_mandatory_if_amount_LC</fullName>
         <active>true</active>
         <description>CPS Checks records - if the amount in local currency is not zero, currency needs to be filled in</description>
@@ -28401,6 +30261,18 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
         <description>OI Conclusion is not allowed when there are pending action plans</description>
         <errorConditionFormula>AND(NOT(ISNULL(Conclusion_Date__c)),Action_Plan_Count__c != Action_Plan_Closed_Count__c)</errorConditionFormula>
         <errorMessage>OI can not be concluded. Please make sure all action plans are closed</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Quality_Response_is_mandatory</fullName>
+        <active>true</active>
+        <description>This field is mandatory for RT CPS Checks and for certain values in the field Issue Subcategory</description>
+        <errorConditionFormula>AND(
+  RecordType.DeveloperName=&apos;CPS_Checks&apos;,
+  ISBLANK(TEXT(Quality_Response_Categorization__c)),
+  REGEX(TEXT(Issue_Sub_Category__c),$CustomMetadata.GVR__mdt.Operational_Improvements_Subcat_Yes.Value__c)
+)</errorConditionFormula>
+        <errorDisplayField>Quality_Response_Categorization__c</errorDisplayField>
+        <errorMessage>This field is mandatory for the selected Issue Subcategory</errorMessage>
     </validationRules>
     <validationRules>
         <fullName>Root_Cause_check_Man_option</fullName>
