@@ -1,0 +1,20 @@
+<template>
+    <template if:true={labels}>
+        <template if:true={labels}>
+            <div if:false={isOnlyInput} class="slds-grid slds-align_absolute-center">
+                <b>{labels.Portal_MFA_Activation_Code}</b>
+            </div>
+            <div class={separatorClass}>
+                <div class={borderClass} onpaste={fillCodeUp}>
+                    <template for:each={dataPositions}  for:item="position">
+                        <input key={position} data-pos={position} class="inputs" type="text" maxlength="1" pattern="\d*"
+                        oninput={setInput} onkeyup={removeValues}>
+                    </template>
+                </div>
+            </div>
+            <div class="slds-grid">
+                <span if:true={_codeHasError}>{labels.Portal_MFA_Activation_Code_Error_Message}</span>
+            </div>
+        </template>
+    </template>
+</template>

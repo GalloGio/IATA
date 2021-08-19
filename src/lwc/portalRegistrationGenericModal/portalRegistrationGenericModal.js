@@ -15,10 +15,16 @@ export default class PortalRegistrationGenericModal extends LightningElement {
         return this.icon !== undefined; 
     }
 
+    /**
+     * @description Dispatchs the event to the parent element to set the button action
+     */
     button1Action(){
         this.dispatchEvent(new CustomEvent('buttononeaction'));
     }
 
+    /**
+     * @description Dispatchs the event to the parent element to set the button action
+     */
     button2Action(){
         this.dispatchEvent(new CustomEvent('buttontwoaction'));
     }

@@ -30477,6 +30477,10 @@ Nếu bạn muốn đặt lại mật khẩu, hãy quay lại màn hình đăng 
         <name>PortalService</name>
     </customLabels>
     <customLabels>
+        <label>Cài đặt</label>
+        <name>Portal_Settings</name>
+    </customLabels>
+    <customLabels>
         <label><!-- Postal_code --></label>
         <name>Postal_code</name>
     </customLabels>

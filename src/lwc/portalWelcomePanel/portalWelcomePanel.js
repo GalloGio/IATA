@@ -6,7 +6,7 @@
 /* ==============================================================================================================*/
 /* Utils & Apex & Platform
 /* ==============================================================================================================*/
-import { LightningElement, track } from 'lwc';
+import { LightningElement, track, api } from 'lwc';
 import { navigateToPage } from'c/navigationUtils';
 
 /* ==============================================================================================================*/
@@ -42,7 +42,7 @@ export default class PortalWelcomePanel extends LightningElement {
         CSP_PortalPath
     }
     get labels() {
-        return this._labels;
+        return this._tranlsations ? this._tranlsations : this._labels;
     }
     set labels(value) {
         this._labels = value;
@@ -56,6 +56,11 @@ export default class PortalWelcomePanel extends LightningElement {
     arrowIcon = CSP_PortalPath + 'CSPortal/Images/Icons/arrow_right_recolor.png';
     bgImage = CSP_PortalPath + 'CSPortal/Images/Backgrounds/WelcomePanelBackground.jpg';
     @track backgroundStyle;
+
+    _tranlsations;
+    @api handleTranslations(tranlsations){
+        this._tranlsations = tranlsations;
+    }
 
     connectedCallback() {
         this.backgroundStyle = 'background-image: url("' + this.bgImage + '"); background-position: center; background-repeat: no-repeat; background-size: cover;';
