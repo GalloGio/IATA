@@ -30468,6 +30468,10 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>Postal_code</name>
     </customLabels>
     <customLabels>
+        <label>إعدادات</label>
+        <name>Portal_Settings</name>
+    </customLabels>
+    <customLabels>
         <label><!-- PreOrderAddToCart --></label>
         <name>PreOrderAddToCart</name>
     </customLabels>

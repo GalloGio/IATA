@@ -1,0 +1,50 @@
+<template>
+    <div if:true={labels}>
+        <div class="slds-theme_default mfa-custom-box-shadow">
+            <div class="slds-p-top_medium slds-p-horizontal_large">
+                <div class="slds-grid slds-wrap slds-p-top_small slds-size_1-of-1">
+                    <div class="slds-large-size_2-of-3 slds-small-size_1-of-1">
+                        <div class="slds-grid">
+                            <span class="mfa-main-title">{labels.Portal_Question}</span>
+                            <div class="slds-p-right_small slds-m-left_small slds-m-top_xx-small mfa-security-question-vl"></div>
+                            <span class={isActivatedClass}>{isActivatedLbl}</span>
+                        </div>
+                    </div>
+                    <div if:true={userInfo.isSecurityQuestionActivated} class="slds-large-size_1-of-3 slds-small-size_1-of-6">
+                        <div class="slds-clearfix">
+                            <div class="slds-float_right pointer-cursor">
+                                <lightning-icon icon-name="utility:edit" class="darkBlueIcon slds-p-left_small" size="x-small" onclick={enableEdit}></lightning-icon>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slds-grid slds-p-top_small">
+                    <span class="mfa-medium-txt">{labels.Portal_Security_Question_Body}</span>
+                </div>
+                <div if:false={userInfo.isSecurityQuestionActivated} class="slds-grid slds-p-vertical_x-large">
+                    <div class="slds-col slds-align_absolute-center">
+                        <button class="mfa-centered-btn" onclick={setQuestionUp}>{labels.Portal_Set_Up}</button>
+                    </div>
+                </div>
+                <div if:true={userInfo.isSecurityQuestionActivated} class="slds-grid slds-p-top_medium slds-p-bottom_x-large slds-medium-size_1-of-1 slds-large-size_1-of-2">
+                    <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click">
+                        <label class="mfa-security-question-input-lbl">{labels.Portal_Question}</label>
+                        <input class="slds-input slds-m-top_small mfa-text-input" type="text" value={currentUserQuestion} disabled/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div if:true={displayModal}>
+            <section class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <div class="slds-modal__content slds-p-around_medium text-center pb-5 pt-5">
+                        <c-portal-set-security-question is-settings translations={labels} style-resources={styleResources} user-question={userInfo.question}
+                        onsavesecurityquestion={saveQuestionInfo} onclosemodal={hideModal}></c-portal-set-security-question>
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
+    </div>
+</template>
