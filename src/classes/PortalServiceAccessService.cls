@@ -24,9 +24,8 @@ public without sharing class PortalServiceAccessService {
 		Map<Id,Contact> contactMap = ContactSelector.selectByIds(contactIdSet);
 		Map<Id, Account_Role__c> existingAccountRoleMap = AccountRoleSelector.selectAccountRoleWithRelatedAccountRolesByFunctionalRoleSet(functionalRoleSet);
 
-		Map<Id, List<Invitation__c>> contactIdInvitationMap = createContactIdInvitationMap(contactMap, portalServiceAccessList);
 		if(!grantedPortalServiceAccessList.isEmpty())
-			processGrantedPortalServiceAccesses(grantedPortalServiceAccessList, contactIdInvitationMap, functionalRoleSet, existingAccountRoleMap);
+			processGrantedPortalServiceAccesses(grantedPortalServiceAccessList, null, functionalRoleSet, existingAccountRoleMap);
 		if(!deniedPortalServiceAccessList.isEmpty())
 			processDeniedPortalServiceAccesses(deniedPortalServiceAccessList, contactMap, functionalRoleSet, existingAccountRoleMap);
 
@@ -185,8 +184,6 @@ public without sharing class PortalServiceAccessService {
 				if(existingAccountContactRole.Functional_Role__c.equals(portalServiceAccess.functionalRoleName) && existingAccountContactRole.Contact__c.equals(portalServiceAccess.contact.Id)){
 					//update the status to inactive
 					existingAccountContactRole.Status__c = accountContactRoles.STATUSINACTIVE;
-					//update the is service administrator to false
-					existingAccountContactRole.Is_Service_Administrator__c = false;
 					//add updated account contact role to domain class
 					accountContactRoles.records.add(existingAccountContactRole);
 					accountRoleWithModifiedContactRoleIdSet.add(existingAccountContactRole.Account_Role__c);
