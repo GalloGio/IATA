@@ -1,0 +1,26 @@
+<template>
+	<c-portal-login-container>
+		<span slot="pageBody">
+			<div if:true={stepQA}>
+				<c-portal-set-security-question translations={translations}></c-portal-set-security-question>
+			</div>
+			<div if:true={stepResetMFA}>
+				<c-portal-mfa-reset-2-fa translations={translations} security-question={securityQuestion} ongoback={toggleResetMFA}></c-portal-mfa-reset-2-fa>
+			</div>
+			<div if:true={stepSetAuth}>
+				<c-portal-mfa-activation-container translations={translations} qr-code={qrCode} secret={secret} ongoback={displaySecurityQuestion}></c-portal-mfa-activation-container>
+			</div>
+			<div if:true={stepCode}>
+				<c-portal-enter2-fa-code translations={translations} onreset={toggleResetMFA}></c-portal-enter2-fa-code>
+			</div>
+		</span>
+	</c-portal-login-container>
+
+	<div data-id="spinnerId" class="slds-spinner_container" style="position: fixed;" if:true={isLoading}>
+		<div class="slds-spinner slds-spinner_medium" role="status">
+			<span class="slds-assistive-text"></span>
+			<div class="slds-spinner__dot-a"></div>
+			<div class="slds-spinner__dot-b"></div>
+		</div>
+	</div>
+</template>

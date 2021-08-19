@@ -1,0 +1,32 @@
+<template>
+    <div style="background-color: white; border: 0px;">
+        <div class="slds-p-top_medium slds-p-bottom_x-small slds-grid">
+            <div class="slds-col slds-size_3-of-4">
+                <div class="slds-grid">
+                    <div class="triangle-right">&nbsp;</div>
+                    <span class="mfa-main-title text-darkGray text-bold slds-p-left_small vertical-align-center">{title}</span>    
+                </div>
+            </div>
+            <div if:false={isBackHidden} class="slds-col slds-size_1-of-4">
+                <div class="slds-clearfix">
+                    <div class={linkClass}>
+                        <a onclick={triggerBackLinkClick}><b class="mfa-link">{backLabel}</b></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slds-p-horizontal_large">
+            <div class="slds-p-top_medium slds-grid">
+                <slot name="mfa-login-body"></slot>
+            </div>
+            <div if:false={isButtonHidden} class="slds-p-top_x-large slds-p-bottom_medium slds-grid">
+                <button if:true={isButtonDisabled} class="mfa-login-btn" disabled>{buttonLabel}</button>
+                <button if:false={isButtonDisabled} class="mfa-login-btn" onclick={triggerBtnClick}>{buttonLabel}</button>
+            </div>
+
+            <div if:false={isFooterHidden} class={footerClass}>
+                <slot name="mfa-login-footer"></slot>
+            </div>
+        </div>
+    </div>
+</template>

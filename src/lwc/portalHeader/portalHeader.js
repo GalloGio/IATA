@@ -62,6 +62,11 @@ import CSP_Store from '@salesforce/label/c.CSP_Store';
 import CSP_Sign_Up from '@salesforce/label/c.CSP_Sign_Up';
 import CSP_Login from '@salesforce/label/c.CSP_Login';
 import CSP_Go_to_IataOrg from '@salesforce/label/c.CSP_Go_to_IataOrg';
+import Portal_Settings from '@salesforce/label/c.Portal_Settings';
+import Portal_MFA_Portal_2FA_Activated_Title from '@salesforce/label/c.Portal_MFA_Portal_2FA_Activated_Title';
+import Portal_MFA_Portal_2FA_Activated_Body from '@salesforce/label/c.Portal_MFA_Portal_2FA_Activated_Body';
+import Portal_MFA_Portal_2FA_Activated_Button_1 from '@salesforce/label/c.Portal_MFA_Portal_2FA_Activated_Button_1';
+import Portal_MFA_Portal_2FA_Activated_Button_2 from '@salesforce/label/c.Portal_MFA_Portal_2FA_Activated_Button_2';
 
 
 // Accept Terms
@@ -189,8 +194,12 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
         CSP_Sign_Up,
         CSP_Login,
         CSP_Go_to_IataOrg,
-        CSP_IATA_Invoices //WMO-627 - ACAMBAS
-        
+        CSP_IATA_Invoices, //WMO-627 - ACAMBAS
+        Portal_Settings,
+        Portal_MFA_Portal_2FA_Activated_Title,
+        Portal_MFA_Portal_2FA_Activated_Body,
+        Portal_MFA_Portal_2FA_Activated_Button_1,
+        Portal_MFA_Portal_2FA_Activated_Button_2    
     };
 
     get labels() {
@@ -220,6 +229,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     mobileMenuIcon = CSP_PortalPath + 'CSPortal/Images/Icons/menu.svg';
     arrowRightIcon = CSP_PortalPath + 'CSPortal/Images/Icons/arrow_blue_right.svg';
     storeIcon = CSP_PortalPath + 'CSPortal/Images/Icons/store_white_icon.svg';
+	successIcon = CSP_PortalPath + 'CSPortal/Images/Icons/youaresafe.png';
 
     //notifications
     @track numberOfNotifications;
@@ -278,6 +288,7 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
     // MODAL
     @track openModal = false;
+    is2FAFirstActivated = false;
 
     @track mainBackground = 'z-index: 9999;';
 
@@ -346,6 +357,9 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
                 if(pageParams && pageParams.firstLogin && pageParams.firstLogin !== 'false'){
                     this.firstLogin = true;
                     this.displayFirstLogin = true;
+                }
+                if (pageParams && pageParams.first2FAActivated && pageParams.first2FAActivated !== 'false') {
+                    this.is2FAFirstActivated = true;
                 }
 
                 //WMO-696 - ACAMBAS: Begin
@@ -593,10 +607,6 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
     }
     //WMO-627 - ACAMBAS: End
 
-    navigateToSettings() {
-        //this.navigateToOtherPage("");
-    }
-
     navigateToChangePassword() {
         goToOldChangePassword({}).then(results => {
             window.open(results, "_self");
@@ -604,8 +614,8 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
     }
 
-    navigateToCspChangePassword() {
-        this.navigationCheck("changePassword", "changePassword");
+    navigateToCspSettings() {
+        this.navigationCheck("settings", "settings");
     }
 
     //user logout
@@ -1018,5 +1028,14 @@ export default class PortalHeader extends NavigationMixin(LightningElement) {
 
     goToHome(){
        this.navigateToOtherPage('home');
+    }
+
+    button1Action2FASetUp(){
+        this.is2FAFirstActivated = false;
+    }
+
+    button2Action2FASetUp(){
+        this.is2FAFirstActivated = false;
+        this.navigateToOtherPage('settings');
     }
 }
