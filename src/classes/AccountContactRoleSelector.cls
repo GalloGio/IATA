@@ -48,11 +48,8 @@ public class AccountContactRoleSelector{
 	}
 
 	public static Map<Id, Account_Contact_Role__c> selectAccountContactRoleMap(Set<Id> contactIdSet){
-
 		String fields = 'Id, Contact__c, Functional_Role__c, Status__c, Account_Role__c, Account_Role__r.Functional_Role__c, Account_Role__r.Status__c';
-
 		return selectQuery(fields, 'Contact__c', contactIdSet);
-
 	}
 
 	private static List<Account_Contact_Role__c> selectQuery(String fields, String conditions, Set<Id> conditionInputSet){
