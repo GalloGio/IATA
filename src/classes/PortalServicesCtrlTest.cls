@@ -185,6 +185,7 @@ public class PortalServicesCtrlTest {
 
 		insert contactList;
 
+		PortalApplicationRights portalApplicationRights = new PortalApplicationRights();
 		Portal_Application_Right__c appRight = TestDataFactory_PortalApplicationRights.createPortalApplicationRight(easyPay1.id, c.Id);
 		appRight.Right__c = PortalApplicationRights.ACCESSGRANTED;	
 
@@ -640,7 +641,9 @@ public class PortalServicesCtrlTest {
 		List<String> contactIds = new List<String>();
 		contactIds.add(c.id);
 		User portalUser = ISSP_ObjectFactory.createPortalUser(c);
-		String test = PortalServicesCtrl.CreateNewPortalAccess(contactIds, portalServicelist[0].id, PortalServiceRole);
+		Test.startTest();
+			PortalServicesCtrl.CreateNewPortalAccess(contactIds, portalServicelist[0].id, PortalServiceRole);
+		Test.stopTest();
 	}
 
 	@IsTest static void testPortalGlobalSearch() {
