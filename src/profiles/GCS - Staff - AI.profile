@@ -8007,6 +8007,14 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>MFA_LoginFlowController</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>MFA_LoginFlowControllerTest</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>MITA_AgreementTriggerHandler</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -18571,7 +18579,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>AMS_Settlement_System__c.Enable_Provisional_RHC_Request__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -35705,6 +35713,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Custom_metadata_label_translation__mdt.Value__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Customer_Invoice__c.Bank_Account_Name__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -52800,6 +52813,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>Portal_MFA_Setting__mdt.Value__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>Portal_Service_Account_Preference__c.Category__c</field>
         <readable>false</readable>
     </fieldPermissions>
@@ -59254,6 +59272,16 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>User.X2FA_Security_Question__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>User.X2FA_Security_Questions_Answer__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>User.dgai__active_user_settings__c</field>
         <readable>true</readable>
@@ -62435,6 +62463,12 @@
         <layout>Custom_Related_case__c-Related case Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Custom_metadata_label__mdt-Custom metadata label Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Custom_metadata_label_translation__mdt-Custom metadata label translation Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Customer_Invoice_Payment_Link__mdt-Customer Invoice Payment Link Config Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -63659,6 +63693,9 @@
     <layoutAssignments>
         <layout>Portal_Applications__c-ISS Portal Page Layout</layout>
         <recordType>Portal_Applications__c.ISS_Portal_Application</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Portal_MFA_Setting__mdt-Portal MFA Setting Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Portal_Service_Account_Preference__c-Portal Service Account Preference Layout</layout>
@@ -67547,6 +67584,10 @@
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
+        <apexPage>MFA_LoginFlowPage</apexPage>
+        <enabled>false</enabled>
+    </pageAccesses>
+    <pageAccesses>
         <apexPage>MITA_Agreements</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
@@ -70472,7 +70513,7 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>AMS_Settlement_System__c</tab>
-        <visibility>Hidden</visibility>
+        <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>AMS_Voucher_Region__c</tab>
