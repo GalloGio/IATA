@@ -247,6 +247,16 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>Available_Services_Images__c</field>
+            <table>Contact</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Available_Services__c</field>
+            <table>Contact</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>Conctact_is_CNS__c</field>
             <table>Contact.Portal_Application_Rights__r</table>
         </columns>

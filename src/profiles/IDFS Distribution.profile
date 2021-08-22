@@ -18536,7 +18536,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>AMS_Settlement_System__c.ANG_RHC_Amount_Equals_FS__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -18546,12 +18546,12 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>AMS_Settlement_System__c.BSP_Billing__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>AMS_Settlement_System__c.CASS_facilities__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -18566,12 +18566,12 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>AMS_Settlement_System__c.Domestic_Only__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
         <field>AMS_Settlement_System__c.Enable_Provisional_RHC_Request__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -18586,7 +18586,7 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>AMS_Settlement_System__c.ISS_Region__c</field>
-        <readable>false</readable>
+        <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -64381,6 +64381,15 @@
         <allowEdit>false</allowEdit>
         <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
+        <object>AMS_Settlement_System__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
         <object>ANG_Account_Tracking_History__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
@@ -70281,7 +70290,7 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>AMS_Settlement_System__c</tab>
-        <visibility>Hidden</visibility>
+        <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>AMS_Voucher_Region__c</tab>
