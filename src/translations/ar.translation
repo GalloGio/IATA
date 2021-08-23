@@ -30464,12 +30464,28 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <name>PortalService</name>
     </customLabels>
     <customLabels>
-        <label><!-- Postal_code --></label>
-        <name>Postal_code</name>
+        <label><!-- Portal MFA Portal 2FA Activated Body --></label>
+        <name>Portal_MFA_Portal_2FA_Activated_Body</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Portal MFA Portal 2FA Activated Button 1 --></label>
+        <name>Portal_MFA_Portal_2FA_Activated_Button_1</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Portal MFA Portal 2FA Activated Button 2 --></label>
+        <name>Portal_MFA_Portal_2FA_Activated_Button_2</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Portal MFA Portal 2FA Activated Title --></label>
+        <name>Portal_MFA_Portal_2FA_Activated_Title</name>
     </customLabels>
     <customLabels>
         <label>إعدادات</label>
         <name>Portal_Settings</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Postal_code --></label>
+        <name>Postal_code</name>
     </customLabels>
     <customLabels>
         <label><!-- PreOrderAddToCart --></label>
@@ -41878,7 +41894,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- E&amp;F Contracts with Material Line Items --></label>
         <name>EF_Contracts_with_Material_Line_Items</name>
         <sections>
-            <label><!-- Contracts --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>Contracts</name>
         </sections>
         <sections>
@@ -41921,7 +41937,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Email Templates Report --></label>
         <name>Email_Templates_Report</name>
         <sections>
-            <label><!-- Activities --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>Activities</name>
         </sections>
         <sections>
@@ -42685,7 +42701,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
                 <label><!-- Salutation --></label>
                 <name>Salutation</name>
             </columns>
-            <label><!-- Contact --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>Contact</name>
         </sections>
         <sections>
@@ -42855,7 +42871,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
             <name>Accounts</name>
         </sections>
         <sections>
-            <label><!-- NDC Account Service Details --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>NDC Account Service Details</name>
         </sections>
     </reportTypes>
@@ -42955,7 +42971,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
             <name>Cases</name>
         </sections>
         <sections>
-            <label><!-- OSCARs --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>OSCARs</name>
         </sections>
     </reportTypes>
@@ -42968,7 +42984,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
             <name>ONE Source Contact Role Details</name>
         </sections>
         <sections>
-            <label><!-- OS Stations --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>OS Stations</name>
         </sections>
     </reportTypes>
@@ -43005,7 +43021,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
                 <label><!-- Comments --></label>
                 <name>Comments</name>
             </columns>
-            <label><!-- Comments --></label>
+            <label>التقارير</label>
             <name>Comments</name>
         </sections>
         <sections>
@@ -43087,7 +43103,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <label><!-- Opportunities with Accounts and Contracts --></label>
         <name>Opportunities_with_Accounts_and_Contracts</name>
         <sections>
-            <label>التقارير</label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>Accounts</name>
         </sections>
         <sections>
@@ -43095,7 +43111,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
             <name>Contracts</name>
         </sections>
         <sections>
-            <label>حقوق تطبيقات البوابة</label>
+            <label>التقارير</label>
             <name>Opportunities</name>
         </sections>
         <sections>
@@ -43112,7 +43128,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
             <name>Contracts</name>
         </sections>
         <sections>
-            <label><!-- Opportunities (Future renewal) --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>Opportunities (Future renewal)</name>
         </sections>
     </reportTypes>
@@ -43203,7 +43219,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
             <name>AMS Online Accreditations</name>
         </sections>
         <sections>
-            <label><!-- OSCARs --></label>
+            <label>حقوق تطبيقات البوابة</label>
             <name>OSCARs</name>
         </sections>
     </reportTypes>
@@ -43216,7 +43232,7 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
             <name>Agencies Applied Change codes</name>
         </sections>
         <sections>
-            <label><!-- OSCARs --></label>
+            <label>التقارير</label>
             <name>OSCARs</name>
         </sections>
     </reportTypes>
@@ -43683,6 +43699,19 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         </sections>
     </reportTypes>
     <reportTypes>
+        <description><!-- Service Resources and Skills --></description>
+        <label><!-- Service Resources and Skills --></label>
+        <name>Service_Resources_and_Skills</name>
+        <sections>
+            <label><!-- Service Resource Skills --></label>
+            <name>Service Resource Skills</name>
+        </sections>
+        <sections>
+            <label><!-- Service Resources --></label>
+            <name>Service Resources</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
         <description><!-- Services with contacts associated --></description>
         <label><!-- Services with contacts associated --></label>
         <name>Services_with_contacts_associated</name>
@@ -44099,6 +44128,15 @@ an IATA accredited agency, please press &quot;&quot;Back&quot;&quot; button and 
         <sections>
             <label><!-- User Provisioning Requests --></label>
             <name>User Provisioning Requests</name>
+        </sections>
+    </reportTypes>
+    <reportTypes>
+        <description><!-- Users with Service Resources and skills --></description>
+        <label><!-- Users with Service Resources and skills --></label>
+        <name>Users_with_Service_Resources_and_skills</name>
+        <sections>
+            <label><!-- Users --></label>
+            <name>Users</name>
         </sections>
     </reportTypes>
     <reportTypes>
