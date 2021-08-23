@@ -127,7 +127,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 			if(keyContactsPerAccount!=null && keyContactsPerAccount.get(agReg.Account__c)!= null && !keyContactsPerAccount.get(agReg.Account__c).isEmpty()){
 				//find portal admin
 				for(Contact c: keyContactsPerAccount.get(agReg.Account__c)){
-					if(c.User_Portal_Status__c == 'Approved Admin')
+					if(c.User_Portal_Status__c == AMS_Utils.CONTACT_TYPE_ADMIN)
 						comCasecontact = c;
 				}
 
@@ -379,7 +379,7 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 		sendEmailAlert(recipents, oscarId, countryTemplates, oscarCommCaseId, owea, isDGR, attachments, true);
 	}
 
-	public static List<Messaging.SingleEmailMessage> sendEmailAlert(List<Contact> recipents, Id oscarId, Map<String, Id> countryTemplates, String oscarCommCaseId, OrgWideEmailAddress owea, boolean isDGR, Messaging.EmailFileAttachment[] attachments, Boolean sendEmail) {
+	public static List<Messaging.SingleEmailMessage> sendEmailAlert(List<sObject> recipents, Id oscarId, Map<String, Id> countryTemplates, String oscarCommCaseId, OrgWideEmailAddress owea, boolean isDGR, Messaging.EmailFileAttachment[] attachments, Boolean sendEmail) {
 		Id templateId;
 		Boolean templateToIATA = false;
 		List<EmailTemplate> tempIata = new List<EmailTemplate>();
@@ -417,24 +417,34 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 			Map<String, List<String>> mPortalAdminsEmailsDGR = new Map<String, List<String>>();
 			Map<String, Contact> mRecipientPortalAdminsEmailsDGR = new Map<String, Contact>();
 
-			for(Contact recipient: recipents){
+			for(sObject recipient: recipents){
 
-				if(!isDGR || recipient.BSP_CASS_Payment_contact__c || recipient.Financial_Assessment_Contact__c || templateToIATA){
+				Contact recipientContact = (recipient.getSObjectType() == Contact.sObjectType)?
+					(Contact)recipient : ((User)recipient).Contact;
+
+				if (recipientContact==null) continue;
+
+				if(!isDGR || recipientContact.BSP_CASS_Payment_contact__c || recipientContact.Financial_Assessment_Contact__c || templateToIATA){
 
 					Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 					mail.saveAsActivity = true;
 					if(templateToIATA){
 						mail.setTemplateId(tempIata.get(0).Id);
 					} else {
-						mail.setTemplateId(getSpecificLangTemplate(recipient.Preferred_Language__c, countryTemplates));
+						mail.setTemplateId(getSpecificLangTemplate(recipientContact.Preferred_Language__c, countryTemplates));
 					}
-					mail.setTargetObjectId(recipient.Id);
+					mail.setTargetObjectId(recipientContact.Id);
 
 					if(attachments != null){
 						mail.setFileAttachments(attachments);
 					}
 					mail.setWhatId(oscarId);
 					mail.setOrgWideEmailAddressId(owea.Id);
+
+					if (recipient.getSObjectType() == User.sObjectType) {
+						mail = convertToUserEmail(mail, recipient.Id);
+					}
+
 					mailsToSend.add(mail);
 
 				//FM 07-07-2017 - AMSU-14 - added the test for the DGR in order to allow it to send the notification to multiple contacts
@@ -442,18 +452,18 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 				}else if(isDGR){
 
 					//FM 24/10/2017 - AMSU-32
-					if(recipient.User_Portal_Status__c == 'Approved Admin'){
+					if(recipientContact.User_Portal_Status__c == AMS_Utils.CONTACT_TYPE_ADMIN){
 
 						//lPortalAdminsEmailsDGR.add(recipient.Email);
-						if(mPortalAdminsEmailsDGR.containsKey(recipient.Preferred_Language__c)){
-							List<String> aux = mPortalAdminsEmailsDGR.get(recipient.Preferred_Language__c);
-							aux.add(recipient.Email);
-							mPortalAdminsEmailsDGR.put(recipient.Preferred_Language__c, aux);
+						if(mPortalAdminsEmailsDGR.containsKey(recipientContact.Preferred_Language__c)){
+							List<String> aux = mPortalAdminsEmailsDGR.get(recipientContact.Preferred_Language__c);
+							aux.add(recipientContact.Email);
+							mPortalAdminsEmailsDGR.put(recipientContact.Preferred_Language__c, aux);
 						}else{
 							List<String> aux = new List<String>();
-							aux.add(recipient.Email);
-							mPortalAdminsEmailsDGR.put(recipient.Preferred_Language__c, aux);
-							mRecipientPortalAdminsEmailsDGR.put(recipient.Preferred_Language__c,recipient);
+							aux.add(recipientContact.Email);
+							mPortalAdminsEmailsDGR.put(recipientContact.Preferred_Language__c, aux);
+							mRecipientPortalAdminsEmailsDGR.put(recipientContact.Preferred_Language__c,recipientContact);
 						}
 
 					}else{
@@ -462,11 +472,16 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 						if(templateToIATA){
 							mail.setTemplateId(tempIata.get(0).Id);
 						} else {
-							mail.setTemplateId(getSpecificLangTemplate(recipient.Preferred_Language__c, countryTemplates));
+							mail.setTemplateId(getSpecificLangTemplate(recipientContact.Preferred_Language__c, countryTemplates));
 						}
-						mail.setTargetObjectId(recipient.Id);
+						mail.setTargetObjectId(recipientContact.Id);
 						mail.setWhatId(oscarId);
 						mail.setOrgWideEmailAddressId(owea.Id);
+
+						if (recipient.getSObjectType() == User.sObjectType) {
+							mail = convertToUserEmail(mail, recipient.Id);
+						}
+
 						mailsToSend.add(mail);
 					}
 				}
@@ -546,18 +561,36 @@ global class AMS_AgencyRegulationAutoRenewal implements Database.Batchable<sObje
 
 				// add recipients to Case Team
 				list<CaseTeamMember > listCaseTeam = new list<CaseTeamMember>();
-				for (Contact contact: recipents) {
-					listCaseTeam.add(new CaseTeamMember(
-						ParentId = oscarCommCaseId,
-						MemberId = contact.Id,
-						TeamRoleId = partnerRole.Id
-					));
+				for (Sobject recipient: recipents) {
+					Contact recipientContact = (recipient.getSObjectType() == Contact.sObjectType)?
+						(Contact)recipient : ((User)recipient).Contact;
+
+					if (recipientContact!=null) {
+						listCaseTeam.add(new CaseTeamMember(
+							ParentId = oscarCommCaseId,
+							MemberId = recipientContact.Id,
+							TeamRoleId = partnerRole.Id
+						));
+					}
 				}
 				Database.insert(listCaseTeam, false);
 
 			}
 		}
 		return new List<Messaging.SingleEmailMessage>();
+	}
+
+	/**
+	 * Creates a new email, cloned from the input email, but with a user as recipient
+	 * This function takes the template from the input email and merges withits contact
+	 * Doing this we avoid the limitation to send emails with template to users with a WhatId parameter
+	 */
+	private static Messaging.SingleEmailMessage convertToUserEmail(Messaging.SingleEmailMessage contactEmail, Id userId) {
+		Messaging.SingleEmailMessage mail = Messaging.renderStoredEmailTemplate(contactEmail.getTemplateId(), contactEmail.getTargetObjectId(), contactEmail.getWhatId());
+		mail.setOrgWideEmailAddressId(contactEmail.getOrgWideEmailAddressId());
+		mail.setTargetObjectId(userId);
+		mail.saveAsActivity = false;
+		return mail;
 	}
 
 	public static Map<String, Id> getMapEmailTemplates(String type){
