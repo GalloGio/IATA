@@ -30238,7 +30238,7 @@ IF (OI_Status_auto__c =&quot;Terminated&quot;, Terminated_Date__c- DATEVALUE(Ope
     </validationRules>
     <validationRules>
         <fullName>OI_Overall_effectiveness_of_improvement</fullName>
-        <active>false</active>
+        <active>true</active>
         <description>Close OI only allowed if &quot;Overall effectiveness of improvement&quot; is filled.</description>
         <errorConditionFormula>AND(
   RecordType.DeveloperName=&apos;CPS_Checks&apos;,

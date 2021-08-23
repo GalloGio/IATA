@@ -9,7 +9,7 @@
             <type>owner</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>All/Continuous_Improvement_Process_Creation_Notification</template>
+        <template>Quality/Continuous_Improvement_Process_Creation_Notification</template>
     </alerts>
     <alerts>
         <fullName>OI_Approval_notification</fullName>
@@ -19,7 +19,7 @@
             <type>owner</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/Continuous_Improvement_Process_Approved_by_RPM</template>
+        <template>Quality/Continuous_Improvement_Process_Approved_by_RPM</template>
     </alerts>
     <alerts>
         <fullName>OI_Approved_by_RPM</fullName>
