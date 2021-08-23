@@ -5,7 +5,6 @@ public without sharing class UserService {
 		List<User> userList = UserSelector.selectUserStatusFields(contactIdList);
 		Users users = new Users(userList);
 		users.updatePortalUserFrozenCheckbox(FALSE);
-		users.populateFederationId();
 		update users.records;
 	}
 

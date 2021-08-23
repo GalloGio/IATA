@@ -28,6 +28,5 @@ private class UserServiceTest {
 
 		UserService.checkUserStatus(new List<Id>{contact.Id});
 		System.assertEquals(FALSE, [SELECT Portal_User_Frozen_Checkbox__c FROM User WHERE ContactId = :contact.Id].Portal_User_Frozen_Checkbox__c);
-		System.assertEquals(String.valueOf(contact.Id).substring(0,15), [SELECT FederationIdentifier FROM User WHERE ContactId = :contact.Id].FederationIdentifier);
 	}
 }
