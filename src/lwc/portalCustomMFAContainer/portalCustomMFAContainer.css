@@ -1,0 +1,203 @@
+/*HEADER*/
+/**
+ * Created by ukaya01 on 11/07/2019.
+ */
+
+ .slds-combobox__input{
+    background:transparent !important;
+    border:none !important;
+}
+
+.slds-combobox_container{
+    /*background:transparent !important;*/
+    border:none !important;
+}
+
+.slds-combobox_container input[role="textbox"]{
+    background:transparent !important;
+    border:none !important;
+}
+
+.languageSelectWrapper{
+    width: 160px;
+    padding-right: 20px;
+}
+
+.logoMobile{
+    display: none;
+}
+
+.slds-combobox_container .slds-input__icon_right .slds-icon:after{
+    border-top-color: #f0f2f5;
+}
+
+@media only screen and (max-width: 1023px){
+    .logoMobile{
+        display: block;
+        padding-top: 1rem;
+        width: 70%;
+        max-width: 400px;
+        margin: auto;
+        }
+
+    .loginHeaderWrapper{
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .selectorContainer{
+        padding-bottom: 1rem;
+    }
+}
+
+.selectorContainer{
+    padding-bottom: 1rem !important;
+}
+
+.innerHeaderCss {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.outerTitleCss {
+    display: flex;
+    flex: 1 1 auto;
+    align-items: center;
+    margin-left: 0;
+}
+
+.innerTitleCss {
+    display: block;
+    overflow: auto;
+}
+
+/*BODY*/
+@media only screen and (max-width: 400px) {
+    .customPadding {
+        padding-top: 0px !important;
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+    .containerHeight{
+        /*height:925px;
+        min-height:2500px;*/
+    }
+ 
+ }
+ 
+ @media only screen and (min-width: 401px) and (max-width: 960px) {
+    .customPadding {
+        padding-top: 15px !important;
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+    .containerHeight{
+        /*height:925px;
+        min-height:2500px;*/
+    }
+ }
+ 
+ @media only screen and (min-width: 961px) {
+    .customPadding {
+        padding-top: 5px !important;
+         margin-top: auto;
+         margin-bottom: auto;
+    }
+    .customPaddingHeader{
+        /*padding-top: 2rem !important;
+        padding-bottom: 6rem !important;*/
+    }
+    .fixedPosition{
+        max-width: inherit;
+        width: inherit;
+        left: 0;
+        position: fixed;
+    }
+    .containerHeight{
+        /*height:925px;
+        min-height:2000px;*/
+    }
+    .bodyContent{
+        /*overflow-y: scroll;
+        height: 925px;*/
+        flex-grow: 1;
+        overflow: auto;
+    }
+ 
+    .welcomePanelContainer{
+         width: 40%;
+     }
+ }
+ 
+ @media only screen and (max-width: 1023px) {
+    .welcomePanelContainer{
+        display: none;
+    }
+ }
+ 
+ .containerHeight{
+     align-items: stretch;
+     min-height: 100%;
+     position: absolute;
+     width: 100%;
+ } 
+ 
+ .contentWrapper{
+     height: 100%;
+     display: flex;
+     flex-direction: column;
+     flex-grow: 1;
+     justify-content: stretch;
+ }
+ 
+ .bodyContent{
+     background-color: #f0f2f5;
+     min-height: 100vh;
+ }
+ 
+ .fixedPosition{
+     left: 0;
+     height:100%;
+ }
+ 
+ 
+ 
+ /*----Footer----*/
+ .loginFooter{
+     display: flex;
+     justify-content: flex-end;
+     flex-grow: 1;
+     align-items: flex-end;
+ }
+ 
+ .footerlinks{
+     display: flex;
+     flex-direction: row;
+     justify-content: space-between;
+     padding: 0 20px 10px 20px;
+     font-size: 14px;
+ }
+ 
+ @media only screen and (max-width: 1023px) {
+     .loginFooter{
+         justify-content: center;
+     }
+ }
+ 
+ .leftLink{
+     padding-right: 10px;
+ }
+ 
+ .rightLink{
+     padding-left: 10px;
+ }
+ 
+ .welcomePanel{
+     display: flex;
+     height: 100%;
+ }
+ .fullHeight{
+     height:100%;
+ }

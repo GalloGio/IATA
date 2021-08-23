@@ -1,0 +1,121 @@
+<template >
+	<div if:true={labels}>
+		<c-portal-login-step-container if:false={isSettings} title={labels.Portal_MFA_Activation_Container_Title} remove-back-option remove-button remove-footer-border>
+			<div slot="mfa-login-body" class="slds-col">
+				<div class="slds-p-bottom_xx-large">
+					<span class="slds-grid slds-size_1-of-1 mfa-main-body">
+						<lightning-formatted-rich-text value={labels.Portal_MFA_Login_2FA_Required}>
+						</lightning-formatted-rich-text>
+					</span>
+				</div>
+
+				<span class="slds-grid slds-align_absolute-center mfa-secondary-title">{labels.Portal_Security_Form_Body_Title1}</span>
+				<span class="slds-grid slds-align_absolute-center mfa-login-tertiary-title slds-p-bottom_large">{labels.Portal_Security_Form_Body_Title2}</span>
+				<span class="slds-grid mfa-tertiary-body">{labels.Portal_Security_Question_Form_Body}</span>
+
+				<div class={secQandAClass}>
+					<div class="slds-col">
+						<div class="slds-row">
+							<div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click">
+								<label class="mfa-text-input-label">{labels.Portal_Question}</label>
+								<input class="slds-input mfa-text-input" type="text" placeholder={labels.Portal_MFA_Security_Question_Placeholder} oninput={updateQuestion} value={currentUserQuestion}/>
+							</div>
+						</div>
+						<div class="slds-row">
+							<div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click">
+								<label class="mfa-text-input-label">{labels.Portal_Answer}</label>
+								<input class="slds-input mfa-text-input" type="text" placeholder={labels.Portal_MFA_Security_Answer_Placeholder} oninput={updateAnswer} value={currentUserAnswer}/>
+							</div>
+						</div>
+					</div>
+				</div>
+			
+				<div class="slds-p-top_large slds-p-horizontal_large slds-align_absolute-center slds-grid slds-gutters">
+					<div class="slds-col">
+						<button if:true={showCenteredBtn} class="mfa-centered-btn" disabled={isContinueDisabled} onclick={goToNextStep}>{labels.CSP_Continue}</button>
+					</div>
+				</div>
+				<div if:true={showSuccessLbl} class="slds-p-top_large slds-grid">
+					<div class="slds-align_absolute-center">
+						<div class="slds-grid slds-size_3-of-4">
+							<div class="slds-col slds-size_1-of-4 slds-p-top_small">
+								<lightning-icon icon-name="utility:check" size="medium" variant="success"></lightning-icon>
+							</div>
+							<div class="slds-col slds-size_3-of-4 mfa-tertiary-title">
+								<span>{labels.Portal_Security_Question_Ok}</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</c-portal-login-step-container>
+
+		<div if:true={isSettings} class={secQuestionClass}>
+			<div if:true={displayIntroInfo} class="slds-theme_default slds-large-size_1-of-12 slds-x-small-size_0-of-12"></div>
+			<div class={containerClass}>
+				<div if:true={displayIntroInfo} class="slds-p-bottom_large">
+					<span class="slds-grid slds-size_1-of-1 mfa-main-title slds-p-bottom_medium slds-align_absolute-center">{labels.Portal_MFA_Activation_Container_Title}</span>
+					<span class="slds-grid slds-size_1-of-1 mfa-main-body">{labels.Portal_MFA_Activation_Container_Body}</span>
+				</div>
+				
+				<span if:false={displayIntroInfo} class="slds-grid mfa-secondary-title slds-p-bottom_medium slds-align_absolute-center">
+					{labels.Portal_Security_Question_Form_Title}
+				</span>
+				<span if:true={displayIntroInfo} class="slds-grid mfa-secondary-title slds-align_absolute-center">
+					{labels.Portal_Security_Form_Body_Title1}
+				</span>
+	
+				<div if:true={displayIntroInfo}>
+					<span class="slds-grid mfa-tertiary-title slds-p-bottom_medium slds-align_absolute-center">{labels.Portal_Security_Form_Body_Title2}</span>
+					<span class="slds-grid mfa-tertiary-body">{labels.Portal_Security_Question_Form_Body}</span>
+				</div>
+	
+				<div class={secQandAClass}>
+					<div class="slds-col">
+						<div class="slds-row">
+							<div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click">
+								<label class="mfa-text-input-label">{labels.Portal_Question}</label>
+								<input class="slds-input mfa-text-input" type="password" placeholder={labels.Portal_MFA_Security_Question_Placeholder} oninput={updateQuestion} value={currentUserQuestion}
+								autocomplete="off"/>
+							</div>
+						</div>
+						<div class="slds-row">
+							<div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click">
+								<label class="mfa-text-input-label">{labels.Portal_Answer}</label>
+								<input class="slds-input mfa-text-input" type="password" placeholder={labels.Portal_MFA_Security_Answer_Placeholder} oninput={updateAnswer} value={currentUserAnswer}
+								autocomplete="off"/>
+							</div>
+						</div>
+					</div>
+				</div>
+	
+				<div class={btnDivClass}>
+					<div if:false={showCenteredBtn} class="slds-size_1-of-2">
+						<button class="mfa-left-btn" onclick={hideModal}>{labels.ISSP_Back}</button>
+					</div>
+					<div if:false={displayIntroInfo} class="slds-size_1-of-2">
+							<button if:true={isSaveDisabled} class="mfa-right-btn" disabled>{labels.CSP_Save}</button>
+							<button if:false={isSaveDisabled} class="mfa-right-btn" onclick={saveInformation}>{labels.CSP_Save}</button>
+					</div>
+					
+					<div if:true={showCenteredBtn} class="slds-col">
+						<button class="mfa-centered-btn slds-m-bottom_large" disabled={isContinueDisabled} onclick={goToNextStep}>{labels.CSP_Continue}</button>
+					</div>
+				</div>
+				<div if:true={showSuccessLbl} class="slds-p-top_large slds-grid">
+					<div class="slds-align_absolute-center">
+						<div class="slds-grid slds-size_3-of-4">
+							<div class="slds-col slds-size_1-of-4 slds-p-top_small">
+								<lightning-icon icon-name="utility:check" size="medium" variant="success"></lightning-icon>
+							</div>
+							<div class="slds-col slds-size_3-of-4 mfa-tertiary-title">
+								<span>{labels.Portal_Security_Question_Ok}</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div if:true={displayIntroInfo} class="slds-theme_default slds-large-size_1-of-12 slds-x-small-size_0-of-12"></div>
+		</div>
+	</div>
+</template>

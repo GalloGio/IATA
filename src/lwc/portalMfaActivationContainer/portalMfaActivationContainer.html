@@ -1,0 +1,105 @@
+<template>
+    <template if:true={labels}>
+        <c-portal-login-step-container if:false={isSettings} title={labels.Portal_MFA_Activation_Container_Title} button-label={labels.CSP_Continue}
+        back-label={labels.Portal_Question} onbackclick={handleBack} link-p-class="slds-p-top_xx-small" remove-button remove-footer-border>
+            <div slot="mfa-login-body" class="slds-col">
+                <div class="font-family">
+                    <span class="slds-grid slds-align_absolute-center mfa-login-tertiary-title"><b>{labels.Portal_MFA_Activation_Cont_Step1_Title}</b></span>
+                    <span class="slds-grid slds-align_absolute-center mfa-login-tertiary-title slds-p-bottom_large">{labels.Portal_MFA_Activation_Cont_Step1_Body}</span>
+
+                    <div class="slds-grid">
+                        <div class="slds-size_1-of-1">
+                            <c-portal-mfa-activation-apps translations={labels} style-resources={styleResources}></c-portal-mfa-activation-apps>
+                        </div>
+                    </div>
+
+
+                    <div class="slds-m-top_large slds-p-bottom_large"></div>
+
+                    <span class="slds-grid slds-align_absolute-center mfa-login-tertiary-title"><b>{labels.Portal_MFA_Activation_Cont_Step2_Title}</b></span>
+                    <span class="slds-grid slds-align_absolute-center mfa-login-tertiary-title slds-p-horizontal_x-large slds-p-bottom_x-large slds-text-align_center">{labels.Portal_MFA_Activation_Cont_Step2_Body}</span>
+
+
+                    <div class="slds-grid">
+                        <div class="slds-size_1-of-1">
+                            <c-portal-mfa-activation-qr-code translations={labels} qr-code={qrCode} secret={secret}></c-portal-mfa-activation-qr-code>
+                        </div>
+                    </div>
+
+
+                    <div class="slds-p-bottom_x-large"></div>
+
+                    <span class="slds-grid slds-align_absolute-center mfa-login-tertiary-title"><b>{labels.Portal_MFA_Activation_Cont_Step3_Title}</b></span>
+                    <span class="slds-grid slds-align_absolute-center mfa-login-tertiary-title slds-p-horizontal_x-large slds-p-bottom_x-large slds-text-align_center">{labels.Portal_MFA_Activation_Cont_Step3_Body}</span>
+
+                    <div class="slds-grid slds-align_absolute-center">
+                        <div class="slds-size_7-of-12">
+                            <c-portal-mfa-activation-code is-only-input length=6 oncodeset={handleCodeValid}></c-portal-mfa-activation-code>
+                        </div>
+                    </div>
+
+                    <div class="slds-grid slds-p-top_xx-large slds-align_absolute-center">
+                        <button class="mfa-centered-btn" disabled={isContinueDisabled} onclick={continue2FAProcess}>{labels.CSP_Continue}</button>
+                    </div>
+                </div>
+            </div>
+        </c-portal-login-step-container>
+
+        <div if:true={isSettings} class="slds-theme_default slds-p-horizontal_large slds-p-vertical_xx-large slds-grid">
+			<div class="slds-large-size_1-of-12 slds-x-small-size_0-of-12"></div>
+			<div class="slds-large-size_10-of-12 slds-x-small-size_1-of-1">
+                <div class="font-family">
+                    <div class="slds-grid slds-align_absolute-center slds-p-bottom_large">
+                        <span class="mfa-main-title">{labels.Portal_MFA_Activation_Container_Title}</span>
+                    </div>
+
+                    <div class="slds-grid slds-p-bottom__large">
+                        <span class="mfa-medium-txt">{labels.Portal_MFA_Activation_Container_Body}</span>
+                    </div>
+
+                    <div class="mfa-separator slds-m-top_large slds-p-bottom_large"></div>
+
+                    <span class="slds-grid slds-align_absolute-center mfa-tertiary-title"><b>{labels.Portal_MFA_Activation_Cont_Step1_Title}</b></span>
+                    <span class="slds-grid slds-align_absolute-center mfa-tertiary-title slds-p-bottom_large">{labels.Portal_MFA_Activation_Cont_Step1_Body}</span>
+
+                    <div class="slds-grid">
+                        <div class="slds-large-size_1-of-12 slds-medium-size_0-of-1"></div>
+                        <div class="slds-large-size_10-of-12 slds-medium-size_1-of-1">
+                            <c-portal-mfa-activation-apps translations={labels} style-resources={styleResources}></c-portal-mfa-activation-apps>
+                        </div>
+                        <div class="slds-large-size_1-of-12 slds-medium-size_0-of-1"></div>
+                    </div>
+
+                    <div class="slds-m-top_large slds-p-bottom_large"></div>
+
+                    <span class="slds-grid slds-align_absolute-center mfa-tertiary-title"><b>{labels.Portal_MFA_Activation_Cont_Step2_Title}</b></span>
+                    <span class="slds-grid slds-align_absolute-center mfa-tertiary-title slds-p-bottom_large slds-text-align_center">{labels.Portal_MFA_Activation_Cont_Step2_Body}</span>
+
+
+                    <div class="slds-grid">
+                        <div class="slds-large-size_8-of-12 slds-medium-size_1-of-1 slds-align_absolute-center">
+                            <c-portal-mfa-activation-qr-code translations={labels} qr-code={qrCode} secret={secret}></c-portal-mfa-activation-qr-code>
+                        </div>
+                    </div>
+
+
+                    <div class="slds-p-bottom_large"></div>
+
+                    <span class="slds-grid slds-align_absolute-center mfa-tertiary-title"><b>{labels.Portal_MFA_Activation_Cont_Step3_Title}</b></span>
+                    <span class="slds-grid slds-align_absolute-center mfa-tertiary-title slds-p-bottom_large slds-text-align_center">{labels.Portal_MFA_Activation_Cont_Step3_Body}</span>
+
+                    <div class="slds-grid">
+                        <div class="slds-align_absolute-center">
+                            <c-portal-mfa-activation-code is-only-input length=6 translations={labels} oncodeset={handleCodeValid}></c-portal-mfa-activation-code>
+                        </div>
+                    </div>
+
+                    <div class="slds-grid slds-p-top_medium slds-align_absolute-center">
+                        <button class="mfa-centered-btn" disabled={isContinueDisabled} onclick={continue2FAProcess}>{labels.CSP_Continue}</button>
+                    </div>
+                </div>
+            </div>
+			<div class="slds-large-size_1-of-12 slds-x-small-size_0-of-12"></div>
+        </div>
+    </template>
+</template>

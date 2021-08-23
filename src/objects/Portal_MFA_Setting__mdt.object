@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>MFA Suggested authentication applications.</description>
+    <fields>
+        <fullName>Value__c</fullName>
+        <description>MFA download links, separated by &apos;;&apos; (Android, Apple, browser)</description>
+        <externalId>false</externalId>
+        <fieldManageability>DeveloperControlled</fieldManageability>
+        <label>Value</label>
+        <length>300</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <label>Portal MFA Setting</label>
+    <pluralLabel>Portal MFA Settings</pluralLabel>
+    <visibility>Public</visibility>
+</CustomObject>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+	<apiVersion>51.0</apiVersion>
+	<isExposed>false</isExposed>
+	<description>Portal MFA Activation Apps</description>
+	<isExposed>true</isExposed>
+	<masterLabel>Portal MFA Activation Apps</masterLabel>
+	<targets>
+		<target>lightningCommunity__Default</target>
+		<target>lightningCommunity__Page</target>
+		<target>lightning__FlowScreen</target>
+	</targets>
+</LightningComponentBundle>
