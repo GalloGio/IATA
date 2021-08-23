@@ -10,24 +10,33 @@ private class UserServiceTest {
 		System.runAs(adminUser){
 			Account account = TestDataFactory_Accounts.createDefaultAccounts(1).get(0);
 			insert account;
-			Contact contact = TestDataFactory_Contacts.createDefaultContact(account.Id, 1).get(0);
-			insert contact;
-			User user = TestDataFactory_Users.createPortalUsers(new List<Contact>{contact}).get(0);
-			insert user;
-			contact.OwnerId = user.Id;
-			update contact;
+			List<Contact> contactList = TestDataFactory_Contacts.createDefaultContact(account.Id, 2);
+			insert contactList;
+			List<User> portalUserList = TestDataFactory_Users.createPortalUsers(contactList);
+			portalUserList.get(1).LastName = 'Run As User';
+			insert portalUserList;
+			contactList.get(0).OwnerId = portalUserList.get(0).Id;
+			update contactList.get(0);
 		}
 	}
 
 	@IsTest
 	static void testCheckUserStatus(){
 		Contact contact = [SELECT Id FROM Contact LIMIT 1];
-		User user = [SELECT Id, Portal_User_Frozen_Checkbox__c, ContactId FROM User WHERE ContactId = :contact.Id];
+		User user = [SELECT Id, Portal_User_Frozen_Checkbox__c, FederationIdentifier, ContactId FROM User WHERE ContactId = :contact.Id];
 		user.Portal_User_Frozen_Checkbox__c = true;
 		update user;
 
-		UserService.checkUserStatus(new List<Id>{contact.Id});
-		System.assertEquals(FALSE, [SELECT Portal_User_Frozen_Checkbox__c FROM User WHERE ContactId = :contact.Id].Portal_User_Frozen_Checkbox__c);
-		System.assertEquals(String.valueOf(contact.Id).substring(0,15), [SELECT FederationIdentifier FROM User WHERE ContactId = :contact.Id].FederationIdentifier);
+		user = [SELECT Id, Portal_User_Frozen_Checkbox__c, FederationIdentifier, ContactId FROM User WHERE ContactId = :contact.Id];
+		System.assertEquals(true, user.Portal_User_Frozen_Checkbox__c);
+
+		//runAsPortalUser simulates a portal user triggering the invocable method in UserService
+		User runAsPortalUser = [SELECT Id FROM User WHERE LastName = 'Run As User'];
+		System.runAs(runAsPortalUser){
+			UserService.checkUserStatus(new List<Id>{contact.Id});
+		}
+		
+		user = [SELECT Id, Portal_User_Frozen_Checkbox__c, FederationIdentifier, ContactId FROM User WHERE ContactId = :contact.Id];
+		System.assertEquals(FALSE, user.Portal_User_Frozen_Checkbox__c);
 	}
 }
