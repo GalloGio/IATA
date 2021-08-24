@@ -310,7 +310,7 @@
 
         <tr><td colspan="4">
             <div class="strong-label">{!$Label.ISSP_SIS_Membership_ISPA_Section4_Subtitle1}</div>
-            <a class="link-highlighted" href="https://www.iata.org/services/finance/sis/Documents/ISPA-Attachment-A-Pricing-Schedule.pdf" target="#">Attachment A-Pricing Schedule</a>
+            <a class="link-highlighted" href="https://www.iata.org/contentassets/3c9d2e2266c74c77be3301f32aa0997e/ispa-attachment-a-pricing-schedule.pdf" target="#">Attachment A-Pricing Schedule</a>
             <div id="ISSP_SIS_Membership_ISPA_Section4_Subtitle2" class="strong-label"></div>
         </td></tr>
 
