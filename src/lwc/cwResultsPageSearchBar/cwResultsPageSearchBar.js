@@ -21,7 +21,7 @@ export default class CwResultsPageSearchBar extends LightningElement {
 	searchbycompanywhite = resources + "/icons/search-by-company-white.svg";
 	CertifiedAirline = resources + "/img/certifications/united_of_wildlife_stamp.png";
 	animatedBanner = resources + "/img/animated-banner.gif";
-	animatedBannerRegister = resources + "/img/animated-banner.gif";
+	animatedBannerRegister = resources + "/img/animated-banner-register.gif";
 
 	companyNameInput = "companynameinput";
 	locationInput = "locationinput";
