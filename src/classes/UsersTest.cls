@@ -39,16 +39,4 @@ private class UsersTest {
 			System.assertEquals(true, e.getMessage().contains('Email Domain is disallowed'));
 		}
 	}
-
-	@IsTest
-	static void testUpdatePortalUserFrozenCheckbox(){
-		List<User> userList = [SELECT Id, Portal_User_Frozen_Checkbox__c FROM User WHERE Email =:TestDataFactory_Contacts.DEFAULTEMAIL + '0' LIMIT 1];
-		userList.get(0).Portal_User_Frozen_Checkbox__c = true;
-		update userList;
-
-		Users users = new Users(userList);
-		users.updatePortalUserFrozenCheckbox(false);
-
-		System.assertEquals(false, users.records.get(0).Portal_User_Frozen_Checkbox__c);
-	}
 }
