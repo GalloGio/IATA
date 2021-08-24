@@ -19,6 +19,7 @@
         <locationY>200</locationY>
         <actionName>Startup_Hotlist_User_Access</actionName>
         <actionType>flow</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <processMetadataValues>
                 <name>dataType</name>
@@ -81,6 +82,7 @@
         <locationY>200</locationY>
         <actionName>Airport_IS_User_Access</actionName>
         <actionType>flow</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <processMetadataValues>
                 <name>dataType</name>
@@ -143,6 +145,7 @@
         <locationY>200</locationY>
         <actionName>MedAire_User_Access</actionName>
         <actionType>flow</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <processMetadataValues>
                 <name>dataType</name>
@@ -205,6 +208,7 @@
         <locationY>200</locationY>
         <actionName>OAG_User_Access</actionName>
         <actionType>flow</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <processMetadataValues>
                 <name>dataType</name>
@@ -267,6 +271,7 @@
         <locationY>200</locationY>
         <actionName>Treasury_Dashboard_User_Access</actionName>
         <actionType>flow</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <processMetadataValues>
                 <name>dataType</name>
@@ -329,6 +334,7 @@
         <locationY>200</locationY>
         <actionName>One_Source_User_Access</actionName>
         <actionType>flow</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <processMetadataValues>
                 <name>dataType</name>
@@ -391,6 +397,7 @@
         <locationY>200</locationY>
         <actionName>IATA_Pay_User_Access</actionName>
         <actionType>flow</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <processMetadataValues>
                 <name>dataType</name>
@@ -434,6 +441,7 @@
             </value>
         </inputParameters>
     </actionCalls>
+    <apiVersion>49.0</apiVersion>
     <decisions>
         <name>isChangedDecision10_myRule_9_Right_c</name>
         <label>isChangedDecision10_myRule_9_Right_c</label>
