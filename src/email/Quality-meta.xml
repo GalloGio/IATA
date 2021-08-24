@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailFolder xmlns="http://soap.sforce.com/2006/04/metadata">
+    <accessType>Shared</accessType>
+    <name>Quality</name>
+    <publicFolderAccess>ReadWrite</publicFolderAccess>
+    <sharedTo>
+        <group>IDFS_Africa_ME_Business_Delivery</group>
+        <group>IDFS_Americas_Business_Delivery</group>
+        <group>IDFS_Asia_Pacific_Business_Delivery</group>
+        <group>IDFS_China_N_Asia_Business_Delivery</group>
+        <group>IDFS_Europe_Business_Delivery</group>
+        <group>IDFS_HO_Business_Delivery</group>
+    </sharedTo>
+</EmailFolder>
