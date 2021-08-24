@@ -9,6 +9,7 @@
 	VERSION     AUTHOR                          DATE                DETAIL/CHANGE REFERENCE
 	1.0         DAVID BENTO & TIAGO MENDES    31-12-2018              INITIAL DEVELOPMENT
 */
+@IsTest
 public with sharing class ISSP_AMC_ParticipationFactory {
 
 	/*
