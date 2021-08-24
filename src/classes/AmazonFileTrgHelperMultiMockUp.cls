@@ -1,7 +1,5 @@
+@IsTest
 public class  AmazonFileTrgHelperMultiMockUp  implements HttpCalloutMock {
-
-
-
 
 	Map<String, HttpCalloutMock> requests;
 
