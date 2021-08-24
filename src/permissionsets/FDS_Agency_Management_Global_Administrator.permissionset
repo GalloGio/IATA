@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <classAccesses>
+        <apexClass>ANG_ConversionToolController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>ANG_RME_Alert_Service</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1136,6 +1140,14 @@
         <object>IATA_ISO_Country__c</object>
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
+    <pageAccesses>
+        <apexPage>ANG_ConversionTool</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
+    <pageAccesses>
+        <apexPage>ANG_ConversionToolDetail</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses>
     <pageAccesses>
         <apexPage>ANG_RiskEventHistory</apexPage>
         <enabled>true</enabled>
