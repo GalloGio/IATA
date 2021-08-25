@@ -8016,7 +8016,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>MFA_LoginFlowController</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>MFA_LoginFlowControllerTest</apexClass>
@@ -67036,7 +67036,7 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>MFA_LoginFlowPage</apexPage>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>MITA_Agreements</apexPage>

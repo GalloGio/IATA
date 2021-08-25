@@ -177,7 +177,7 @@
             <type>user</type>
         </recipients>
         <recipients>
-            <recipient>wangyy@iata.org</recipient>
+            <recipient>wangy@iata.org</recipient>
             <type>user</type>
         </recipients>
         <recipients>
