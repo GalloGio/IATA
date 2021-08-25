@@ -213,6 +213,14 @@
                 <behavior>Edit</behavior>
                 <field>Portal_User_Frozen_Checkbox__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>X2FA_Security_Question__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>X2FA_Security_Questions_Answer__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>

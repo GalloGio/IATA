@@ -205,7 +205,7 @@
         <criteriaItems>
             <field>RecordTypeId</field>
             <operation>equals</operation>
-            <value>Cases - Asia &amp; Pacific,Cases - Africa &amp; Middle East,Cases - China &amp; North Asia,Cases - Americas,Cases - Europe</value>
+            <value>Cases - Asia &amp; Pacific,Internal Cases (IDFS ISS),Cases - Africa &amp; Middle East,Cases - China &amp; North Asia,Cases - Americas,Cases - Europe</value>
         </criteriaItems>
         <criteriaItems>
             <field>CaseArea__c</field>
