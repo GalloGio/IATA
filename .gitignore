@@ -177,3 +177,9 @@ sfdx-project.json
 .vscode/
 src/lwc/jsconfig.json
 src/lwc/.eslintrc.json
+force-app/main/default/aura/.eslintrc.json
+force-app/main/default/lwc/.eslintrc.json
+force-app/main/default/lwc/jsconfig.json
+package.json
+jest.config.js
+scripts
