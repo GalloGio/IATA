@@ -11,8 +11,6 @@
     <script type="text/javascript">
 
         var caseId = ("{!cse.Id}").substring(0, 15);
-        var keyCustomer = "{!cse.Account.Identify_as_Key_Customer__c}";
-        var isEligibleForKeyCustomerAlert = "{!isEligibleForKeyCustomerAlert}";
         var canSendTrackedEmails = "{!$Permission.Can_send_a_tracked_email}";
 
         function getCountryEmail() {
@@ -113,7 +111,7 @@
             if (countryEmail != '') {
                 targetURL = targetURL + "&p26=" + countryEmail;
             }
-            if (keyCustomer == true && isEligibleForKeyCustomerAlert == true) {
+            if({!cse.Account.Identify_as_Key_Customer__c} == true && {!isEligibleForKeyCustomerAlert} == true) {
                 displayKeyCustomerAlert(targetURL, "{!$Label.KEY_CUSTOMER_ALERT_TITLE}", "{!$Label.KEY_CUSTOMER_ALERT}");
             } else {
                 if (sforce.console.isInConsole()) {
