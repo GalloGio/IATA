@@ -67,20 +67,6 @@ public inherited sharing class Users {
 		return records;
 	}
 
-	public List<User> updatePortalUserFrozenCheckbox(boolean newValue){
-		for(User user : records){
-			user.Portal_User_Frozen_Checkbox__c = newValue;
-		}
-		return records;
-	}
-
-	public List<User> populateFederationId(){
-		for(User user : records){
-			user.FederationIdentifier = String.valueOf(user.ContactId).substring(0,15);
-		}
-		return records;
-	}
-
 	private void preventInternalUserRegisteringAsExternal(Map<Id, User> oldRecordMap){
 		List<User> userList = new List<User>();
 		//if oldRecordMap == null then isUpdate == false
