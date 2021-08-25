@@ -262,12 +262,138 @@
         <processMetadataValues>
             <name>flowSelection</name>
             <value>
-                <stringValue>Treasury Dashboard User Access</stringValue>
+                <stringValue>Timatic User Access</stringValue>
             </value>
         </processMetadataValues>
         <name>myRule_25_A1</name>
-        <label>Treasury Dashboard User Access</label>
+        <label>Timatic User Access</label>
         <locationX>2500</locationX>
+        <locationY>200</locationY>
+        <actionName>Timatic_User_Access</actionName>
+        <actionType>flow</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>SObject</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>SObject</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>maxOccurs</name>
+                <value>
+                    <numberValue>0.0</numberValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>objectType</name>
+                <value>
+                    <stringValue>Portal_Application_Right__c</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>SObject</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>SObject</name>
+            <value>
+                <elementReference>myVariable_current</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <processMetadataValues>
+            <name>ActionCallType</name>
+            <value>
+                <stringValue>process</stringValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>flowSelection</name>
+            <value>
+                <stringValue>IGOM User Access</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>myRule_29_A1</name>
+        <label>IGOM User Access</label>
+        <locationX>2900</locationX>
+        <locationY>200</locationY>
+        <actionName>IGOM_User_Access</actionName>
+        <actionType>flow</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>SObject</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>SObject</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>maxOccurs</name>
+                <value>
+                    <numberValue>0.0</numberValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>objectType</name>
+                <value>
+                    <stringValue>Portal_Application_Right__c</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>SObject</stringValue>
+                </value>
+            </processMetadataValues>
+            <name>SObject</name>
+            <value>
+                <elementReference>myVariable_current</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <actionCalls>
+        <processMetadataValues>
+            <name>ActionCallType</name>
+            <value>
+                <stringValue>process</stringValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>flowSelection</name>
+            <value>
+                <stringValue>Treasury Dashboard User Access</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>myRule_31_A1</name>
+        <label>Treasury Dashboard User Access</label>
+        <locationX>3100</locationX>
         <locationY>200</locationY>
         <actionName>Treasury_Dashboard_User_Access</actionName>
         <actionType>flow</actionType>
@@ -608,7 +734,7 @@
         <locationX>0</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>myDecision</targetReference>
+            <targetReference>isChangedDecision32_myRule_31_Right_c</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
@@ -629,7 +755,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>myDecision</targetReference>
+                <targetReference>isChangedDecision32_myRule_31_Right_c</targetReference>
             </connector>
             <label>isChangedRule_26_myRule_25_Right_c</label>
         </rules>
@@ -664,6 +790,38 @@
                 <targetReference>isChangedDecision6_myRule_5_Right_c</targetReference>
             </connector>
             <label>isChangedRule_2_myRule_1_Right_c</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>isChangedDecision32_myRule_31_Right_c</name>
+        <label>isChangedDecision32_myRule_31_Right_c</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>myDecision</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>isChangedRule_32_myRule_31_Right_c</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>myVariable_old</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>myVariable_old.Right__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>myVariable_current.Right__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myDecision</targetReference>
+            </connector>
+            <label>isChangedRule_32_myRule_31_Right_c</label>
         </rules>
     </decisions>
     <decisions>
@@ -868,7 +1026,7 @@
                 <leftValueReference>myVariable_current.LastModifiedDate</leftValueReference>
                 <operator>LessThanOrEqualTo</operator>
                 <rightValue>
-                    <elementReference>formula_3_myRule_1_7930376748</elementReference>
+                    <elementReference>formula_3_myRule_1_1059241289</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -1047,7 +1205,7 @@
                 <leftValueReference>myVariable_current.LastModifiedDate</leftValueReference>
                 <operator>LessThanOrEqualTo</operator>
                 <rightValue>
-                    <elementReference>formula_15_myRule_13_1838115093</elementReference>
+                    <elementReference>formula_15_myRule_13_9241391411</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -1374,7 +1532,7 @@
                 <leftValueReference>myVariable_current.LastModifiedDate</leftValueReference>
                 <operator>LessThanOrEqualTo</operator>
                 <rightValue>
-                    <elementReference>formula_23_myRule_21_6703249053</elementReference>
+                    <elementReference>formula_23_myRule_21_5761712404</elementReference>
                 </rightValue>
             </conditions>
             <conditions>
@@ -1456,10 +1614,244 @@
         <label>myDecision24</label>
         <locationX>50</locationX>
         <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>myDecision28</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
             <name>myRule_25</name>
+            <conditionLogic>1 AND (2 OR 5) AND (3 OR 4)</conditionLogic>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.Portal_Application__r.Functional_Role__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Timatic</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Boolean</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Boolean</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>isChangedRule_26_myRule_25_Right_c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.Right__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Access Granted</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.Right__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Access Denied</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>DateTime</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>DateTime</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>DateTime</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Formula</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.LastModifiedDate</leftValueReference>
+                <operator>LessThanOrEqualTo</operator>
+                <rightValue>
+                    <elementReference>formula_27_myRule_25_0974339077</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_25_A1</targetReference>
+            </connector>
+            <label>Timatic?</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <processMetadataValues>
+            <name>index</name>
+            <value>
+                <numberValue>7.0</numberValue>
+            </value>
+        </processMetadataValues>
+        <name>myDecision28</name>
+        <label>myDecision28</label>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>myDecision30</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>myRule_29</name>
             <conditionLogic>and</conditionLogic>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.Portal_Application__r.Functional_Role__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>IGOM</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_29_A1</targetReference>
+            </connector>
+            <label>IGOM</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <processMetadataValues>
+            <name>index</name>
+            <value>
+                <numberValue>8.0</numberValue>
+            </value>
+        </processMetadataValues>
+        <name>myDecision30</name>
+        <label>myDecision30</label>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>myRule_31</name>
+            <conditionLogic>(1 OR 2) AND (3 OR 4) AND (5 OR 6)</conditionLogic>
             <conditions>
                 <processMetadataValues>
                     <name>inputDataType</name>
@@ -1609,7 +2001,7 @@
                         <stringValue>Boolean</stringValue>
                     </value>
                 </processMetadataValues>
-                <leftValueReference>isChangedRule_26_myRule_25_Right_c</leftValueReference>
+                <leftValueReference>isChangedRule_32_myRule_31_Right_c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -1643,11 +2035,11 @@
                 <leftValueReference>myVariable_current.LastModifiedDate</leftValueReference>
                 <operator>LessThanOrEqualTo</operator>
                 <rightValue>
-                    <elementReference>formula_27_myRule_25_5998610491</elementReference>
+                    <elementReference>formula_33_myRule_31_5628313189</elementReference>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>myRule_25_A1</targetReference>
+                <targetReference>myRule_31_A1</targetReference>
             </connector>
             <label>Treasury Dashboard + Premium?</label>
         </rules>
@@ -1822,7 +2214,7 @@
                 <leftValueReference>myVariable_current.LastModifiedDate</leftValueReference>
                 <operator>LessThanOrEqualTo</operator>
                 <rightValue>
-                    <elementReference>formula_7_myRule_5_5134130811</elementReference>
+                    <elementReference>formula_7_myRule_5_7402322537</elementReference>
                 </rightValue>
             </conditions>
             <conditions>
@@ -2032,7 +2424,7 @@
                 <leftValueReference>myVariable_current.LastModifiedDate</leftValueReference>
                 <operator>LessThanOrEqualTo</operator>
                 <rightValue>
-                    <elementReference>formula_11_myRule_9_7828092002</elementReference>
+                    <elementReference>formula_11_myRule_9_5006951042</elementReference>
                 </rightValue>
             </conditions>
             <connector>
@@ -2049,7 +2441,7 @@
                 <stringValue>[Portal_Application_Right__c].CreatedDate  + 0.000022</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_11_myRule_9_7828092002</name>
+        <name>formula_11_myRule_9_5006951042</name>
         <dataType>DateTime</dataType>
         <expression>{!myVariable_current.CreatedDate}  + 0.000022</expression>
     </formulas>
@@ -2060,7 +2452,7 @@
                 <stringValue>[Portal_Application_Right__c].CreatedDate  + 0.000022</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_15_myRule_13_1838115093</name>
+        <name>formula_15_myRule_13_9241391411</name>
         <dataType>DateTime</dataType>
         <expression>{!myVariable_current.CreatedDate}  + 0.000022</expression>
     </formulas>
@@ -2071,7 +2463,7 @@
                 <stringValue>[Portal_Application_Right__c].CreatedDate  + 0.000022</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_23_myRule_21_6703249053</name>
+        <name>formula_23_myRule_21_5761712404</name>
         <dataType>DateTime</dataType>
         <expression>{!myVariable_current.CreatedDate}  + 0.000022</expression>
     </formulas>
@@ -2082,7 +2474,7 @@
                 <stringValue>[Portal_Application_Right__c].CreatedDate + 0.000022</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_27_myRule_25_5998610491</name>
+        <name>formula_27_myRule_25_0974339077</name>
         <dataType>DateTime</dataType>
         <expression>{!myVariable_current.CreatedDate} + 0.000022</expression>
     </formulas>
@@ -2093,7 +2485,18 @@
                 <stringValue>[Portal_Application_Right__c].CreatedDate + 0.000022</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_3_myRule_1_7930376748</name>
+        <name>formula_33_myRule_31_5628313189</name>
+        <dataType>DateTime</dataType>
+        <expression>{!myVariable_current.CreatedDate} + 0.000022</expression>
+    </formulas>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>[Portal_Application_Right__c].CreatedDate + 0.000022</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_3_myRule_1_1059241289</name>
         <dataType>DateTime</dataType>
         <expression>{!myVariable_current.CreatedDate} + 0.000022</expression>
     </formulas>
@@ -2104,11 +2507,11 @@
                 <stringValue>[Portal_Application_Right__c].CreatedDate  + 0.000022</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_7_myRule_5_5134130811</name>
+        <name>formula_7_myRule_5_7402322537</name>
         <dataType>DateTime</dataType>
         <expression>{!myVariable_current.CreatedDate}  + 0.000022</expression>
     </formulas>
-    <interviewLabel>Service_User_Provisioning-27_InterviewLabel</interviewLabel>
+    <interviewLabel>Service_User_Provisioning-25_InterviewLabel</interviewLabel>
     <label>Service User Provisioning</label>
     <processMetadataValues>
         <name>ObjectType</name>
