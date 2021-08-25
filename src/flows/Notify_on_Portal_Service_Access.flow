@@ -13,7 +13,6 @@
         <locationY>200</locationY>
         <actionName>Portal_Application_Right__c.Application_access_granted_cns</actionName>
         <actionType>emailAlert</actionType>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>SObjectRowId</name>
             <value>
@@ -34,7 +33,6 @@
         <locationY>200</locationY>
         <actionName>Portal_Application_Right__c.Application_IEP_Portal_Service_Role_Change</actionName>
         <actionType>emailAlert</actionType>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>SObjectRowId</name>
             <value>
@@ -55,7 +53,6 @@
         <locationY>200</locationY>
         <actionName>Portal_Application_Right__c.KAVI_Access_Granted</actionName>
         <actionType>emailAlert</actionType>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>SObjectRowId</name>
             <value>
@@ -79,7 +76,6 @@
         <connector>
             <targetReference>myRule_16_A2</targetReference>
         </connector>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>SObjectRowId</name>
             <value>
@@ -100,7 +96,6 @@
         <locationY>300</locationY>
         <actionName>Portal_Application_Right__c.Send_email_to_administrators_to_validate_request_cns</actionName>
         <actionType>emailAlert</actionType>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>SObjectRowId</name>
             <value>
@@ -139,7 +134,6 @@
         <locationY>200</locationY>
         <actionName>Portal_Application_Right__c.Do_not_update</actionName>
         <actionType>quickAction</actionType>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <processMetadataValues>
                 <name>dataType</name>
@@ -199,7 +193,6 @@
         <connector>
             <targetReference>myRule_20_A2</targetReference>
         </connector>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>SObjectRowId</name>
             <value>
@@ -223,7 +216,6 @@
         <connector>
             <targetReference>myRule_20_A3</targetReference>
         </connector>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>SObjectRowId</name>
             <value>
@@ -247,7 +239,6 @@
         <connector>
             <targetReference>myRule_24_A2</targetReference>
         </connector>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>SObjectRowId</name>
             <value>
@@ -268,7 +259,6 @@
         <locationY>300</locationY>
         <actionName>Portal_Application_Right__c.ISSP_Alert_contact_of_Treasury_Dashboard_request</actionName>
         <actionType>emailAlert</actionType>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>SObjectRowId</name>
             <value>
@@ -292,7 +282,6 @@
         <connector>
             <targetReference>myRule_26_A2</targetReference>
         </connector>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>SObjectRowId</name>
             <value>
@@ -313,7 +302,6 @@
         <locationY>300</locationY>
         <actionName>Portal_Application_Right__c.ISSP_Alert_Treasury_Dashboard_Manager_of_access_request</actionName>
         <actionType>emailAlert</actionType>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>SObjectRowId</name>
             <value>
@@ -337,7 +325,6 @@
         <connector>
             <targetReference>myRule_28_A2</targetReference>
         </connector>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>SObjectRowId</name>
             <value>
@@ -358,7 +345,6 @@
         <locationY>300</locationY>
         <actionName>Portal_Application_Right__c.ISSP_Alert_Treasury_Dashboard_Manager_of_access_request</actionName>
         <actionType>emailAlert</actionType>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>SObjectRowId</name>
             <value>
@@ -379,7 +365,6 @@
         <locationY>200</locationY>
         <actionName>Portal_Application_Right__c.Application_access_granted</actionName>
         <actionType>emailAlert</actionType>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>SObjectRowId</name>
             <value>
@@ -400,7 +385,6 @@
         <locationY>200</locationY>
         <actionName>Portal_Application_Right__c.Application_access_granted</actionName>
         <actionType>emailAlert</actionType>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>SObjectRowId</name>
             <value>
@@ -421,7 +405,6 @@
         <locationY>200</locationY>
         <actionName>Portal_Application_Right__c.Application_access_granted</actionName>
         <actionType>emailAlert</actionType>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>SObjectRowId</name>
             <value>
@@ -442,7 +425,6 @@
         <locationY>200</locationY>
         <actionName>Portal_Application_Right__c.Application_access_granted</actionName>
         <actionType>emailAlert</actionType>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>SObjectRowId</name>
             <value>
@@ -481,7 +463,6 @@
         <locationY>200</locationY>
         <actionName>Portal_Application_Right__c.Do_not_update</actionName>
         <actionType>quickAction</actionType>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <processMetadataValues>
                 <name>dataType</name>
@@ -538,7 +519,6 @@
         <locationY>200</locationY>
         <actionName>Portal_Application_Right__c.Application_access_granted</actionName>
         <actionType>emailAlert</actionType>
-        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>SObjectRowId</name>
             <value>
@@ -546,7 +526,6 @@
             </value>
         </inputParameters>
     </actionCalls>
-    <apiVersion>49.0</apiVersion>
     <decisions>
         <name>isChangedDecision5_myRule_3_Right_c</name>
         <label>isChangedDecision5_myRule_3_Right_c</label>
@@ -2205,7 +2184,6 @@
         <label>Activate Financial contact</label>
         <locationX>1800</locationX>
         <locationY>200</locationY>
-        <filterLogic>and</filterLogic>
         <filters>
             <processMetadataValues>
                 <name>implicit</name>
@@ -2286,7 +2264,6 @@
         <label>Notify Admin of contact request</label>
         <locationX>2000</locationX>
         <locationY>400</locationY>
-        <filterLogic>and</filterLogic>
         <filters>
             <processMetadataValues>
                 <name>implicit</name>
@@ -2367,7 +2344,6 @@
         <label>Update SIS User</label>
         <locationX>2200</locationX>
         <locationY>200</locationY>
-        <filterLogic>and</filterLogic>
         <filters>
             <processMetadataValues>
                 <name>implicit</name>
