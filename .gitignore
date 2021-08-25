@@ -183,3 +183,4 @@ force-app/main/default/lwc/jsconfig.json
 package.json
 jest.config.js
 scripts
+manifest/package.xml
