@@ -85,7 +85,7 @@ public with sharing class EmailMessageHandler {
 		// a valid RT and closed fror more than 2 weeks
 		map<Id,Case> mapCases = new map<Id,Case>();
 		for (Case cse: [
-				SELECT Id, ClosedDate, ContactId,
+				SELECT Id, ClosedDate, ContactId, RecordTypeId,
 					contact.CNS_Contact__c, contact.Preferred_Language__c, account.Source_System__c
 				FROM Case
 				WHERE id IN :mapCaseIdEmail.keyset()
